@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "../packages",
+    "paths": {
+      "@brandingbrand/*": ["./*/src"]
+    }
+  },
+  "include": ["../**/*"]
+}

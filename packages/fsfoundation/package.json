@@ -1,0 +1,15 @@
+{
+  "name": "@brandingbrand/fsfoundation",
+  "version": "0.1.0",
+  "description": "Foundation types for Flagship",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@brandingbrand/fscheckout",
+  "version": "0.1.0",
+  "description": "Checkout Libaray",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-native": "^0.55.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

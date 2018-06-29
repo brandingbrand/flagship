@@ -1,0 +1,30 @@
+{
+  "name": "@brandingbrand/fsengage",
+  "version": "0.1.0",
+  "description": "Analytics, CMS, and Settings module for Flagship",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/fsfoundation": "^0.1.0",
+    "@brandingbrand/fsnetwork": "^0.1.0",
+    "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.0",
+    "@brandingbrand/react-native-google-analytics": "^2.1.0",
+    "@brandingbrand/react-native-leanplum": "^0.1.0",
+    "decimal.js": "^10.0.0",
+    "react": "^16.3.2",
+    "react-native": "^0.55.4",
+    "react-native-permissions": "^1.1.1",
+    "url-parse": "^1.4.1"
+  },
+  "devDependencies": {
+    "sinon": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@brandingbrand/fsnetwork",
+  "version": "0.1.0",
+  "description": "Networking libraries for Flagship",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/fsfoundation": "^0.1.0",
+    "axios": "^0.18.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

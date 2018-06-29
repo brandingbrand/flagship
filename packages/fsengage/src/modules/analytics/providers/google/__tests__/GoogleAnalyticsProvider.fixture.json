@@ -1,0 +1,304 @@
+{
+  "commonConfiguration": {
+    "userAgent": "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405",
+    "osType": "iPhone",
+    "osVersion": "10.1",
+    "appName": "Flagship",
+    "appId": "com.brandingbrand.flagship",
+    "appVersion": "0.0.1",
+    "appInstallerId": "0.0.1"
+  },
+
+  "configuration": {
+    "trackerId": "UA-12345-Y",
+    "clientId": "35009a79-1a05-49d7-b876-2b884d0f825b",
+    "trackerName": "Flagship",
+    "cookieDomain": "brandingbrand.com"
+  },
+
+  "lifecycle": {
+    "active": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "active"
+      }
+    },
+
+    "background": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "background"
+      }
+    },
+
+    "create": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "create"
+      }
+    },
+
+    "close": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "close"
+      }
+    },
+
+    "inactive": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "inactive"
+      }
+    },
+
+    "start": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "start"
+      }
+    },
+
+    "suspend": {
+      "response": {
+        "category": "lifecycle",
+        "action": "com.brandingbrand.flagship",
+        "label": "suspend"
+      }
+    }
+  },
+
+  "contact": {
+    "call": {
+      "module": {
+        "contact": {
+          "call": "CallButton"
+        }
+      },
+      "request": {
+        "number": "412.123.4567"
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "contact",
+          "label": "412.123.4567"
+        },
+        "custom": {
+          "action": "CallButton",
+          "category": "contact",
+          "label": "412.123.4567"
+        }
+      }
+    },
+    "email": {
+      "module": {
+        "contact": {
+          "email": "EmailForm"
+        }
+      },
+      "request": {
+        "to": "tech@bestbuy.com"
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "contact",
+          "label": "tech@bestbuy.com"
+        },
+        "custom": {
+          "action": "EmailForm",
+          "category": "contact",
+          "label": "tech@bestbuy.com"
+        }
+      }
+    }
+  },
+
+  "click": {
+    "generic": {
+      "module": {
+        "click": {
+          "generic": "CartButton"
+        }
+      },
+      "request": {
+        "identifier": "NavigationBar"
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "click",
+          "label": "NavigationBar"
+        },
+        "custom": {
+          "action": "CartButton",
+          "category": "click",
+          "label": "NavigationBar"
+        }
+      }
+    },
+    "product": {
+      "module": {
+        "click": {
+          "product": "ProductItem"
+        }
+      },
+      "request": {
+        "identifier": "ABCD1234",
+        "name": "541 ATHLETIC FIT JEANS",
+        "index": 0
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "click",
+          "label": "ABCD1234",
+          "value": 0
+        },
+        "custom": {
+          "action": "ProductItem",
+          "category": "click",
+          "label": "ABCD1234",
+          "value": 0
+        }
+      }
+    }
+  },
+
+  "location": {
+    "directions": {
+      "module": {
+        "location": {
+          "directions": "DirectionsButton"
+        }
+      },
+      "request": {
+        "identifier": "Flagship Shadyside",
+        "Address": "Shadyside Pittsburgh, PA"
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "location",
+          "label": "Flagship Shadyside"
+        },
+        "custom": {
+          "action": "DirectionsButton",
+          "category": "location",
+          "label": "Flagship Shadyside"
+        }
+      }
+    }
+  },
+
+  "search": {
+    "generic": {
+      "module": {
+        "search": {
+          "generic": "SeachBar"
+        }
+      },
+      "request": {
+        "term": "15213",
+        "count": 46
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "search",
+          "label": "15213",
+          "value": 46
+        },
+        "custom": {
+          "action": "SeachBar",
+          "category": "search",
+          "label": "15213",
+          "value": 46
+        }
+      }
+    }
+  },
+
+  "impression": {
+    "generic": {
+      "module": {
+        "impression": {
+          "generic": "CategoryItem"
+        }
+      },
+      "request": {
+        "identifier": "ABCD1234",
+        "name": "Accesories",
+        "index": 6
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "impression",
+          "label": "ABCD1234",
+          "value": 6
+        },
+        "custom": {
+          "action": "CategoryItem",
+          "category": "impression",
+          "label": "ABCD1234",
+          "value": 6
+        }
+      }
+    },
+    "product": {
+      "module": {
+        "impression": {
+          "product": "ProductItem"
+        }
+      },
+      "request": {
+        "identifier": "ABCD1234",
+        "name": "541 ATHLETIC FIT JEANS",
+        "index": 2
+      },
+      "response": {
+        "default": {
+          "action": "Component",
+          "category": "impression",
+          "label": "ABCD1234",
+          "value": 2
+        },
+        "custom": {
+          "action": "ProductItem",
+          "category": "impression",
+          "label": "ABCD1234",
+          "value": 2
+        }
+      }
+    }
+  },
+
+  "screenview": {
+    "module": {
+      "screenview": "StoreLocator"
+    },
+    "request": {
+      "url": "http://wwww.example.com/path1/path2"
+    },
+    "response": {
+      "default": {
+        "hostname": "http://wwww.example.com/path1/path2",
+        "page": "/path1/path2",
+        "title": "StoreLocator"
+      },
+      "custom": {
+        "hostname": "http://wwww.example.com/path1/path2",
+        "page": "/path1/path2",
+        "title": "StoreLocator"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+export const MailingAddress = `
+  id
+  address1
+  address2
+  city
+  company
+  country
+  firstName
+  formatted
+  lastName
+  latitude
+  longitude
+  phone
+  province
+  zip
+  name
+  countryCode
+  provinceCode
+`;
