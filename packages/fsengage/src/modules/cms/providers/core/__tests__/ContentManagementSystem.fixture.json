@@ -1,0 +1,101 @@
+ {
+  "location": {
+    "inside": {
+      "latitude": 10,
+      "longitude": 10,
+      "stateCode": "PA",
+      "countryCode": "us",
+      "city": "Pittsburgh",
+      "postalCode": "15222"
+    },
+    "outside": {
+      "latitude": 100,
+      "longitude": 100,
+      "stateCode": "CA",
+      "countryCode": "cr",
+      "city": "Boston",
+      "postalCode": "12345"
+    }
+  },
+  "payload": {
+    "data": {
+      "Homepage": {
+        "Hero-Carousel": {
+          "name": "Hero-Carousel",
+          "identifier": "Hero-Carousel",
+          "instantiable": false,
+          "template": "Image-with-Link",
+          "instances": [
+            {
+              "Link": "/example",
+              "Title": "Example Title",
+              "Modal": "0",
+              "New-Tab": "0",
+              "Retina-Image": {
+                "path": "https://www.example.com/img.jpg",
+                "width": 828,
+                "height": 464,
+                "maps": []
+              },
+              "start": "Tue, 12 Jul 2016 04:00:00 +0000",
+              "end": "Mon, 13 Jul 2090 04:00:00 +0000",
+              "overwrite": false,
+              "campaign": 1
+            },
+            {
+              "Link": "/example",
+              "Title": "Example Title",
+              "Modal": "0",
+              "New-Tab": "0",
+              "Retina-Image": {
+                "path": "https://www.example.com/img.jpg",
+                "width": 828,
+                "height": 464,
+                "maps": []
+              },
+              "start": "Tue, 12 Jul 2001 04:00:00 +0000",
+              "end": "Mon, 13 Jul 2006 04:00:00 +0000",
+              "overwrite": false,
+              "campaign": 1
+            }
+          ]
+        }
+      },
+      "_Targets": {
+        "1": {
+          "Region": {
+            "coordinates": [
+              [
+                [ 40, 40 ],
+                [ 40, -40 ],
+                [ -40, -40 ],
+                [ -40, 40 ]
+              ]
+            ]
+          },
+          "Country": {
+            "countries": {
+              "es": "Spain",
+              "us": "United States"
+            }
+          },
+          "US-Zipcodes": {
+            "zipcodes": [
+              "15222"
+            ]
+          },
+          "US-States": {
+            "selected_states": [
+              "PA"
+            ]
+          },
+          "US-Cities": {
+            "cities": [
+              "Pittsburgh"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.develop.json",
+  "typedocOptions": {
+    "name": "brandingbrand/flagship",
+    "out": "./docs",
+    "readme": "./README.md",
+    "mode": "modules",
+    "external-modulemap": ".*\/packages/([\\w\\-_]+)\/",
+    "excludeExternals": true,
+    "ignoreCompilerErrors": true,
+    "hideGenerator": true,
+    "theme": "./typedoc-theme"
+  },
+  "include": [
+    "../packages/**/src/**/*"
+  ],
+  "exclude": [
+    "../**/__*__/*",
+    "../packages/fscodestyle/**/*",
+    "../packages/fstestproject/**/*"
+  ]
+}

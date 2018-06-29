@@ -1,0 +1,38 @@
+language: node_js
+node_js: '10'
+sudo: false
+cache: yarn
+stages:
+- test
+- deploy
+install:
+- yarn global add lerna
+- yarn --silent --non-interactive --ignore-scripts
+jobs:
+  include:
+  - script: commitlint-travis || travis_terminate 1
+  - before_install: yarn global add greenkeeper-lockfile@1
+    before_script: greenkeeper-lockfile-update
+    script: yarn prepare || travis_terminate 1
+    after_script: greenkeeper-lockfile-upload
+  - script:
+    - yarn prepare:fscodestyle
+    - yarn lint || travis_terminate 1
+  - script: yarn test --ci && yarn test:success || travis_terminate 1
+  - script:
+    - yarn prepare
+    - yarn build:storybook || travis_terminate 1
+  - stage: deploy
+    if: branch = master AND head_branch IS blank
+    before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+    script:
+    - yarn prepare
+    - yarn docs
+    after_success: yarn run release --canary --yes --exact
+    deploy:
+      provider: pages
+      skip-cleanup: true
+      github-token: "$GITHUB_TOKEN"
+      local-dir: docs/
+      on:
+        branch: master
