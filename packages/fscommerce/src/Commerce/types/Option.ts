@@ -1,0 +1,50 @@
+/**
+ * Interface describing a single value of a key-value pair.
+ */
+export interface OptionValue {
+  /**
+   * The name of the value.
+   *
+   * @example '34L'
+   */
+  name: string;
+
+  /**
+   * Identifier for the value. This may be a database key or other non-human-readable
+   * string.
+   *
+   * @example 'bcs5vaOjgEQ9Uaaadk9zQIrXE6'
+   */
+  value: string;
+
+  /**
+   * Whether the value is available. This is typically utilized for products in which an
+   * OptionValue is used to represent product variant and thus indicates whether the variant
+   * can be purchased.
+   */
+  available?: boolean;
+}
+
+/**
+ * Interface describing key-value data types in which a single key can have multiple values.
+ */
+export interface Option {
+  /**
+   * A unique identifier for the option.
+   *
+   * @example 'bcs5vaOjgEQ9Uaaadk9zQIrXE6'
+   */
+  id: string;
+
+  /**
+   * A name for the option which is typically presented to the user.
+   *
+   * @example 'Length'
+   */
+  name: string;
+
+  /**
+   * Array of values for the option.
+   */
+  values: OptionValue[];
+}

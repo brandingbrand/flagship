@@ -1,0 +1,188 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-eslint-rules",
+    "tslint-react"
+  ],
+  "rules": {
+    "promise-function-async": true,
+    "number-literal-format": true,
+    "no-unnecessary-callback-wrapper": true,
+    "array-bracket-spacing": [
+      true,
+      "never"
+    ],
+    "array-type": [
+      true,
+      "array"
+    ],
+    "arrow-parens": [
+      true,
+      "ban-single-arg-parens"
+    ],
+    "await-promise": true,
+    "ban-types": false,
+    "block-spacing": [
+      true,
+      "always"
+    ],
+    "brace-style": [
+      true,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "cyclomatic-complexity": [
+      true,
+      10
+    ],
+    "handle-callback-err": [
+      true,
+      "^.*(e|E)rr"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "interface-name": false,
+    "jsx-boolean-value": false,
+    "jsx-no-multiline-js": false,
+    "jsx-use-translation-function": {
+      "options": [
+        "allow-htmlentities",
+        "allow-punctuation"
+      ]
+    },
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
+    "match-default-export-name": false,
+    "max-file-line-count": false,
+    "member-access": false,
+    "no-angle-bracket-type-assertion": false,
+    "no-bitwise": false,
+    "no-boolean-literal-compare": true,
+    "no-consecutive-blank-lines": [
+      true,
+      2
+    ],
+    "no-console": false,
+    "no-constant-condition": true,
+    "no-control-regex": true,
+    "no-duplicate-case": true,
+    "no-duplicate-variable": true,
+    "no-empty-character-class": true,
+    "no-ex-assign": true,
+    "no-extra-boolean-cast": false,
+    "no-extra-semi": true,
+    "no-floating-promises": true,
+    "no-inferred-empty-object-type": true,
+    "no-inner-declarations": [
+      true,
+      "functions"
+    ],
+    "no-invalid-regexp": true,
+    "no-invalid-this": true,
+    "no-magic-numbers": false,
+    "no-mergeable-namespace": true,
+    "no-multi-spaces": true,
+    "no-non-null-assertion": true,
+    "no-regex-spaces": true,
+    "no-shadowed-variable": false,
+    "no-switch-case-fall-through": true,
+    "no-unbound-method": true,
+    "no-unexpected-multiline": true,
+    "no-unnecessary-type-assertion": true,
+    "no-unsafe-any": false,
+    "no-unused-variable": true,
+    "no-use-before-declare": true,
+    "no-var-requires": false,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-sort-keys": false,
+    "one-variable-per-declaration": true,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "case-insensitive"
+      }
+    ],
+    "prefer-conditional-expression": false,
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "sort-imports": false,
+    "strict-boolean-expressions": false,
+    "switch-default": true,
+    "ter-arrow-body-style": false,
+    "ter-func-call-spacing": true,
+    "ter-indent": [
+      true,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "ter-max-len": [
+      true,
+      100,
+      4
+    ],
+    "ter-prefer-arrow-callback": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ],
+    "triple-equals": true,
+    "type-literal-delimiter": true,
+    "typedef-whitespace": [
+      true,
+      {
+        "property-declaration": "nospace"
+      }
+    ],
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "member-variable-declaration"
+    ],
+    "use-default-type-parameter": true,
+    "valid-jsdoc": [
+      true,
+      {
+        "requireReturn": false,
+        "prefer": {
+          "return": "returns"
+        }
+      }
+    ],
+    "valid-typeof": true,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case",
+      "ban-keywords"
+    ]
+  }
+}

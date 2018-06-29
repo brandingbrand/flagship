@@ -1,0 +1,27 @@
+{
+  "name": "@brandingbrand/fscommerce",
+  "version": "0.1.0",
+  "description": "Commerce Data Layer for Flagship",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/fsengage": "^0.1.0",
+    "@brandingbrand/fsfoundation": "^0.1.0",
+    "@brandingbrand/fsnetwork": "^0.1.0",
+    "decimal.js": "^10.0.1",
+    "lodash-es": "^4.17.10",
+    "qs": "^6.5.1",
+    "react": "^16.3.2",
+    "react-native": "^0.55.4",
+    "react-native-cookies": "^3.3.0",
+    "react-native-sensitive-info": "^5.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

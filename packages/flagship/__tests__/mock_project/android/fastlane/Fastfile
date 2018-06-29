@@ -1,0 +1,20 @@
+default_platform :android
+
+lane :beta do
+
+  # build the release variant
+  gradle(task: "assembleRelease")
+
+  # upload to HockeyApp
+  hockey(
+    api_token: "ENJECTED_FROM_ENV" #PROJECT_MODIFY_FLAG_hockey_api_token
+  )
+
+end
+
+lane :build do
+
+  # build the release variant
+  gradle(task: "assembleRelease")
+
+end

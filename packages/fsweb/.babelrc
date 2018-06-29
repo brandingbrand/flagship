@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "react-native",
+    "env",
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [
+    "react-native-web"
+  ]
+}

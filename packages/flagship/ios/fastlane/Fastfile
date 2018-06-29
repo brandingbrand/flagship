@@ -1,0 +1,30 @@
+default_platform :ios
+
+lane :beta do
+  gym(
+    scheme: "FLAGSHIP",
+    clean: true,
+    export_method: "enterprise", #PROJECT_MODIFY_FLAG_export_method
+    export_team_id: "762H5V79XV", #PROJECT_MODIFY_FLAG_export_team_id
+    export_options: {
+      provisioningProfiles: {
+        "com.brandingbrand.reactnative.FLAGSHIP" => #PROJECT_MODIFY_FLAG_export_options_export_team_id
+        "Branding Brand Enterprise" #PROJECT_MODIFY_FLAG_export_options_provisioning_profile
+      }
+    },
+    xcargs: "DEVELOPMENT_TEAM='762H5V79XV' PROVISIONING_PROFILE_SPECIFIER='Branding Brand Enterprise'" #PROJECT_MODIFY_FLAG_xcargs
+  )
+
+  # upload to HockeyApp
+  hockey(
+    api_token: "ENJECTED_FROM_ENV" #PROJECT_MODIFY_FLAG_hockey_api_token
+  )
+end
+
+
+lane :build do
+  xcodebuild(
+    scheme: "FLAGSHIP",
+    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO"
+  )
+end
