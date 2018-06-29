@@ -1,0 +1,17 @@
+{
+  "lerna": "2.10.2",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish",
+      "allowBranch": "master",
+      "npmClient": "npm"
+    }
+  }
+}

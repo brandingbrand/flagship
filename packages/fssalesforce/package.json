@@ -1,0 +1,27 @@
+{
+  "name": "@brandingbrand/fssalesforce",
+  "version": "0.0.1",
+  "description": "Salesforce Commerce Cloud Data Layer for Flagship",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput",
+    "gen-types": "node scripts/generateTypes.js"
+  },
+  "dependencies": {
+    "@brandingbrand/fscommerce": "^0.0.1",
+    "@brandingbrand/fsfoundation": "^0.0.1",
+    "@brandingbrand/fsnetwork": "^0.0.2",
+    "decimal.js": "^10.0.1",
+    "jwt-decode": "^2.2.0",
+    "qs": "^6.5.2"
+  },
+  "devDependencies": {
+    "dtsgenerator": "^1.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

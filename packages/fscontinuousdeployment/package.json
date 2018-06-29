@@ -1,0 +1,21 @@
+{
+  "name": "@brandingbrand/fscontinuousdeployment",
+  "version": "0.0.1",
+  "description": "Continuous deployment scripts",
+  "bin": {
+    "codepush": "dist/codepush.js",
+    "hockey": "dist/hockey.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "request": "^2.86.0",
+    "github": "^14.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

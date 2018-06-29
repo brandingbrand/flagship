@@ -1,0 +1,45 @@
+# You Podfile should look similar to this file. React Native currently does not support use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '10.3'
+
+# ignore all warnings from all pods
+inhibit_all_warnings!
+
+# Change 'FLAGSHIP' to match the target in your Xcode project.
+target 'FLAGSHIP' do
+
+  # Your 'node_modules' directory is probably in the root of your project,
+  # but if not, adjust the `:path` accordingly
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge', # Include this for RN >= 0.47
+    'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
+    'RCTText',
+    'RCTImage',
+    'RCTNetwork',
+    'RCTWebSocket', # needed for debugging
+    # Add any other subspecs you want to use in your project
+  ]
+  # Explicitly include Yoga if you are using RN >= 0.42.0
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  # Add new pods below this line
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  
+  # When you have pods that also depend on React (like any custom module),
+  # React can end up getting included multiple times. Remove React as a
+  # dependency from pods.
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      if target.name == "React"
+        target.remove_from_project
+      end
+    end
+  end
+end

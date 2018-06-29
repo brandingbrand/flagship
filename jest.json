@@ -1,0 +1,33 @@
+{
+  "globals": {
+    "ts-jest": {
+      "useBabelrc": true,
+      "tsConfigFile": "tsconfig/tsconfig.jest.json"
+    }
+  },
+  "preset": "react-native",
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json",
+    "node"
+  ],
+  "moduleNameMapper": {
+    "@brandingbrand/f(.*)": "<rootDir>/packages/f$1/src/index.ts"
+  },
+  "modulePathIgnorePatterns": [
+    "<rootDir>/packages/fstestproject/node_modules",
+    "<rootDir>/packages/pirateship/node_modules"
+  ],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "transformIgnorePatterns": [],
+  "testRegex": "/__tests__/.*\\.(test|spec)\\.(t|j)sx?$",
+  "setupFiles": [
+    "<rootDir>/jest/setup.js"
+  ]
+}

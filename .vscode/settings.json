@@ -1,0 +1,22 @@
+{
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": true,
+  "editor.rulers": [
+    100
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/dist": true,
+    "**/yarn-*": true,
+    "**/lerna-*": true,
+    "**/storybook-static": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "tslint.alwaysShowRuleFailuresAsWarnings": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

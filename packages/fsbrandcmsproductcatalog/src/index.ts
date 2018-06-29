@@ -1,0 +1,1 @@
+export {BrandCMSProductCatalog} from './BrandCMSDataSource';

@@ -1,0 +1,36 @@
+{
+  "name": "@brandingbrand/fsshopify",
+  "version": "0.0.1",
+  "description": "Shopify Commerce Data Layer for Flagship",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:test": "rm -rf ./test/dist && tsc -w -p tsconfig.test.json",
+    "tsc:watch": "tsc -w --preserveWatchOutput",
+    "test": "jest /fsshopify/ --colors --config ../../jest.json"
+  },
+  "dependencies": {
+    "@brandingbrand/fscommerce": "^0.0.1",
+    "@brandingbrand/fsfoundation": "^0.0.1",
+    "@brandingbrand/fsi18n": "^0.0.1",
+    "@brandingbrand/fsnetwork": "^0.0.2",
+    "decimal.js": "^10.0.1",
+    "react": "^16.3.2",
+    "react-native": "^0.55.4",
+    "react-native-navigation": "^1.1.462",
+    "react-native-payments": "^0.5.0"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0"
+  },
+  "rnpm": {
+    "commands": {
+      "prelink": "react-native link react-native-payments"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

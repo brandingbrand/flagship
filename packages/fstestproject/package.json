@@ -1,0 +1,53 @@
+{
+  "name": "@brandingbrand/fstestproject",
+  "private": true,
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "add-keys-android": "node node_modules/@brandingbrand/flagship/scripts/add-keys-android.js",
+    "add-keys-ios": "node node_modules/@brandingbrand/flagship/scripts/add-keys-ios.js",
+    "compile-android": "react-native run-android --no-packager",
+    "compile-ios": "react-native run-ios --no-packager --simulator=\"iPhone X\"",
+    "init": "flagship clean && flagship init native",
+    "prepare": "tsc",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/flagship": "^0.0.1",
+    "@brandingbrand/fsapp": "^0.0.1",
+    "@brandingbrand/fsbazaarvoice": "^0.0.1",
+    "@brandingbrand/fsbrandcmsproductcatalog": "^0.0.1",
+    "@brandingbrand/fscart": "^0.0.1",
+    "@brandingbrand/fscategory": "^0.0.1",
+    "@brandingbrand/fscheckout": "^0.0.1",
+    "@brandingbrand/fscodestyle": "^0.0.2",
+    "@brandingbrand/fscommerce": "^0.0.1",
+    "@brandingbrand/fsengage": "^0.0.2",
+    "@brandingbrand/fsi18n": "^0.0.1",
+    "@brandingbrand/fsnetwork": "^0.0.2",
+    "@brandingbrand/fspowerreviews": "^0.0.1",
+    "@brandingbrand/fsproductdetail": "^0.0.1",
+    "@brandingbrand/fsproductindex": "^0.0.1",
+    "@brandingbrand/fssalesforce": "^0.0.1",
+    "@brandingbrand/fsturnto": "^0.0.1",
+    "@brandingbrand/fsups": "^0.0.1",
+    "react": "^16.3.2",
+    "react-native": "^0.55.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "workspaces": {
+    "nohoist": [
+      "react-native*",
+      "**/fsapp",
+      "**/fsapp/react-native*",
+      "**/fsapp/react-native*/**",
+      "**/fsi18n",
+      "**/fsi18n/react-native*",
+      "**/fsi18n/react-native*/**"
+    ]
+  }
+}
