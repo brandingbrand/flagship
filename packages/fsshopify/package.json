@@ -20,7 +20,7 @@
     "react": "^16.3.2",
     "react-native": "^0.55.4",
     "react-native-navigation": "^1.1.462",
-    "react-native-payments": "^0.5.0"
+    "react-native-payments": "^0.7.0"
   },
   "devDependencies": {
     "axios": "^0.18.0"
