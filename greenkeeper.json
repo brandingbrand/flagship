@@ -29,9 +29,6 @@
         "packages/fsups/package.json",
         "packages/fsweb/package.json",
         "packages/pirateship/package.json"
-      ],
-      "ignore": [
-        "ts-loader"
       ]
     }
   }
