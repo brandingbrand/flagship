@@ -18,7 +18,7 @@ jobs:
   - script:
     - yarn prepare:fscodestyle
     - yarn lint || travis_terminate 1
-  - script: yarn test --ci && yarn test:success || travis_terminate 1
+  - script: yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
   - script:
     - yarn prepare
     - yarn build:storybook || travis_terminate 1
