@@ -49,8 +49,6 @@ Pull requests will not be merged if tests fail during integration testing.
 
 When creating a pull request, please include the following:
 
-* A JIRA ticket ID in the summary (when applicable)
-* Links to applicable JIRA tickets in the description
 * A useful description of the issue solved or new features implemented
 * Instructions for testing your changes
 
