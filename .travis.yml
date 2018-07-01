@@ -22,6 +22,42 @@ jobs:
   - script:
     - yarn prepare
     - yarn build:storybook || travis_terminate 1
+  - language: android
+    android:
+      components:
+      - build-tools-26.0.2
+      - build-tools-25.0.3
+      - build-tools-23.0.1
+      - android-26
+      - android-23
+      - extra-android-m2repository
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - addon-google_apis-google-26
+      - addon-google_apis-google-23
+    before_install:
+    - nvm install 10
+    # The default Android image has an old version of Yarn that doesn't support workspaces
+    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - node --version
+    - yarn --version
+    script:
+    - yarn prepare
+    - yarn ship:init
+    - yarn ship:compile-android || travis_terminate 1
+  - language: objective-c
+    os: osx
+    osx_image: xcode9.4
+    before_install:
+    - nvm install 10
+    - brew install yarn --without-node
+    - node --version
+    - yarn --version
+    script:
+    - yarn prepare
+    - yarn ship:init
+    - yarn ship:compile-ios || travis_terminate 1
   - stage: deploy
     if: branch = master AND head_branch IS blank
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
