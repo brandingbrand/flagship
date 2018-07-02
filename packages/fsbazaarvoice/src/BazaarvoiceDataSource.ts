@@ -4,6 +4,7 @@ import {
   ReviewTypes
 } from '@brandingbrand/fscommerce';
 import * as BazaarvoiceNormalizer from './BazaarvoiceNormalizer';
+import { BazaarvoiceReviewRequest } from './BazaarvoiceReviewRequest';
 
 export interface BazaarvoiceConfig {
   endpoint: string;
@@ -26,7 +27,7 @@ export class BazaarvoiceDataSource implements ReviewDataSource {
 
   async fetchReviewDetails(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewDetails[]> {
     const id = Array.isArray(query.ids) ? query.ids[0] : query.ids;
-    const params: any = {
+    const params: BazaarvoiceReviewRequest = {
       Filter: `ProductId:${id}`,
       Include: 'Products',
       Stats: 'Reviews',
