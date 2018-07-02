@@ -197,7 +197,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
                   key={index}
                   title={option.name}
                   items={option.values}
-                  defaultValue={defaultOption ? defaultOption.value : null}
+                  defaultValue={defaultOption ? defaultOption.value : undefined}
                   onChangeSwatch={this.updateOption.bind(this, option.id)}
                   {...swatchesProps}
                 />
