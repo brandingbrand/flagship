@@ -17,7 +17,7 @@ export interface AddToCartProps {
   defaultVariantId?: string;
 
   // Events
-  onChangeOption?: (name: string, value: string, variant: any) => void;
+  onChangeOption?: (name: string, value: string, variant?: CommerceTypes.Variant) => void;
   onAddToCart?: (cart: Promise<CommerceTypes.Cart>) => void;
 
   // Styles
