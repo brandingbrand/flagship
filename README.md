@@ -171,7 +171,7 @@ you ran `flagship init`. See [Environments](#environments).
 ## Packages
 
 * [flagship](packages/flagship): a toolchain for Android, iOS, and web apps
-* [fsapp](packages/flagship): a management utility for [react-native-navigation](https://github.com/wix/react-native-navigation)
+* [fsapp](packages/fsapp): a management utility for [react-native-navigation](https://github.com/wix/react-native-navigation)
 * [fsweb](packages/fsweb): a bootstrap package to run Flagship on the web
 
 ### Foundation Packages
