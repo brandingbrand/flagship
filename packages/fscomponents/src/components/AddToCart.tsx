@@ -76,7 +76,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     };
   }
 
-  determineVariant(props: any): string {
+  determineVariant(props: AddToCartProps): string {
     if (props.product &&
       props.product.id &&
       !props.product.variants) {
