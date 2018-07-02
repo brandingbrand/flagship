@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { cloneDeep, find, get } from 'lodash-es';
 import { Button } from './Button';
-import { Swatches } from './Swatches';
+import { Swatches, SwatchesProps } from './Swatches';
 import { Stepper, StepperProps } from './Stepper';
 
 import {
@@ -17,7 +17,7 @@ export interface AddToCartProps {
   defaultVariantId?: string;
 
   // Events
-  onChangeOption?: (name: string, value: string, variant: any) => void;
+  onChangeOption?: (name: string, value: string, variant?: CommerceTypes.Variant) => void;
   onAddToCart?: (cart: Promise<CommerceTypes.Cart>) => void;
 
   // Styles
@@ -28,7 +28,7 @@ export interface AddToCartProps {
   actionBarStyle?: StyleProp<ViewStyle>;
 
   // Child Props
-  swatchesProps?: any;
+  swatchesProps?: Partial<SwatchesProps>;
   stepperProps?: Partial<StepperProps>;
   buttonProps?: any;
 
@@ -76,7 +76,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     };
   }
 
-  determineVariant(props: any): string {
+  determineVariant(props: AddToCartProps): string {
     if (props.product &&
       props.product.id &&
       !props.product.variants) {
@@ -197,7 +197,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
                   key={index}
                   title={option.name}
                   items={option.values}
-                  defaultValue={defaultOption ? defaultOption.value : null}
+                  defaultValue={defaultOption ? defaultOption.value : undefined}
                   onChangeSwatch={this.updateOption.bind(this, option.id)}
                   {...swatchesProps}
                 />
