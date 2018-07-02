@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { cloneDeep, find, get } from 'lodash-es';
 import { Button } from './Button';
-import { Swatches } from './Swatches';
+import { Swatches, SwatchesProps } from './Swatches';
 import { Stepper, StepperProps } from './Stepper';
 
 import {
@@ -28,7 +28,7 @@ export interface AddToCartProps {
   actionBarStyle?: StyleProp<ViewStyle>;
 
   // Child Props
-  swatchesProps?: any;
+  swatchesProps?: Partial<SwatchesProps>;
   stepperProps?: Partial<StepperProps>;
   buttonProps?: any;
 
