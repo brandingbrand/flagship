@@ -17,7 +17,7 @@ export interface AddToCartProps {
   defaultVariantId?: string;
 
   // Events
-  onChangeOption?: (name: string, value: string, variant: any) => void;
+  onChangeOption?: (name: string, value: string, variant?: CommerceTypes.Variant) => void;
   onAddToCart?: (cart: Promise<CommerceTypes.Cart>) => void;
 
   // Styles
@@ -76,7 +76,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     };
   }
 
-  determineVariant(props: any): string {
+  determineVariant(props: AddToCartProps): string {
     if (props.product &&
       props.product.id &&
       !props.product.variants) {
