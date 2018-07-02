@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { cloneDeep, find, get } from 'lodash-es';
 import { Button } from './Button';
-import { Stepper } from './Stepper';
 import { Swatches } from './Swatches';
+import { Stepper, StepperProps } from './Stepper';
 
 import {
   CommerceDataSource,
@@ -29,7 +29,7 @@ export interface AddToCartProps {
 
   // Child Props
   swatchesProps?: any;
-  stepperProps?: any;
+  stepperProps?: Partial<StepperProps>;
   buttonProps?: any;
 
   // Custom Rendering
