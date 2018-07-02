@@ -1,7 +1,9 @@
 <p align="center">
-  <img alt="Flagship"
-    src="https://user-images.githubusercontent.com/556070/39432976-bd8520f4-4c62-11e8-863b-fe7ee694a4a0.png"
-    height="250">
+  <a href="https://brandingbrand.github.io/flagship/">
+    <img alt="Flagship"
+      src="https://user-images.githubusercontent.com/556070/39432976-bd8520f4-4c62-11e8-863b-fe7ee694a4a0.png"
+      height="250">
+  </a>
 </p>
 
 <p align="center">
@@ -12,6 +14,10 @@
   <a href="https://travis-ci.org/brandingbrand/flagship">
     <img alt="Travis Status"
       src="https://travis-ci.org/brandingbrand/flagship.svg?branch=master">
+  </a>
+  <a href="https://coveralls.io/github/brandingbrand/flagship?branch=master">
+    <img alt="Coverage Status"
+      src="https://coveralls.io/repos/github/brandingbrand/flagship/badge.svg?branch=master">
   </a>
   <a href="https://greenkeeper.io/">
     <img alt="Greenkeeper"
