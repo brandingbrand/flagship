@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { cloneDeep, find, get } from 'lodash-es';
-import { Button } from './Button';
+import { Button, ButtonProps } from './Button';
 import { Swatches, SwatchesProps } from './Swatches';
 import { Stepper, StepperProps } from './Stepper';
 
@@ -28,9 +28,9 @@ export interface AddToCartProps {
   actionBarStyle?: StyleProp<ViewStyle>;
 
   // Child Props
+  buttonProps?: Partial<ButtonProps>;
   swatchesProps?: Partial<SwatchesProps>;
   stepperProps?: Partial<StepperProps>;
-  buttonProps?: any;
 
   // Custom Rendering
   renderStepper?(onChange: (count: number) => void): JSX.Element;
