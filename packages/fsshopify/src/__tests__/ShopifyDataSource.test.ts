@@ -4,6 +4,7 @@ const mockDirName = __dirname;
 jest.mock('react-native', () => {
   return {
     default: {},
+    requireNativeComponent: () => false,
     NativeModules: {
       ReactNativePayments: {}
     },
