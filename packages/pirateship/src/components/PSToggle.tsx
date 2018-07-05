@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 
+import { border } from '../styles/variables';
+
 export interface PSToggleProps {
   enabled: boolean;
   label: JSX.Element;
@@ -29,8 +31,8 @@ const styles = StyleSheet.create({
   },
   disabled: {
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#ccc'
+    borderWidth: border.width,
+    borderColor: border.color
   }
 });
 

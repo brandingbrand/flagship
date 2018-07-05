@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { Total } from '@brandingbrand/fscomponents';
-import { palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 
 export interface PSTotalsLineItem {
   label: string;
@@ -30,8 +30,8 @@ const defaultLastItemTextStyle: TextStyle = {
 };
 
 const defaultLastItemViewStyle: ViewStyle = {
-  borderTopColor: '#000',
-  borderTopWidth: 1
+  borderTopColor: border.color,
+  borderTopWidth: border.width
 };
 
 export default class PSTotals extends Component<PSTotalsProps> {

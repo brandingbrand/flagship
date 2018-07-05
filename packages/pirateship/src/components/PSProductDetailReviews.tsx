@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#ccc',
-    borderWidth: 1,
+    borderColor: variables.border.color,
+    borderWidth: variables.border.width,
     backgroundColor: 'white'
   },
   loadingMore: {

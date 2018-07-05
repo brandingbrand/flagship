@@ -53,19 +53,16 @@ const CartStyle = StyleSheet.create({
   promoContainer: {
     marginTop: 10,
     paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#000'
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   },
   fieldsStyleConfig: {
     height: 50,
     borderRadius: 0,
     fontSize: 14,
     paddingHorizontal: 10,
-    borderTopColor: '#CCC',
-    borderBottomColor: '#CCC',
-    borderLeftColor: '#CCC',
-    borderRightColor: '#CCC',
-    borderWidth: 1
+    borderColor: border.color,
+    borderWidth: border.width
   },
   fieldsStyleErrorConfig: {
     height: 50,
@@ -79,11 +76,11 @@ const CartStyle = StyleSheet.create({
     borderWidth: 1
   },
   submitButtonStyle: {
-    backgroundColor: '#333',
+    backgroundColor: palette.primary,
     height: 50
   },
   submitTextStyle: {
-    color: '#FFF'
+    color: palette.onPrimary
   },
   summaryContainer: {
     marginBottom: 20

@@ -37,7 +37,7 @@ const PIPStyle = StyleSheet.create({
     flex: 1
   },
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: palette.background,
     paddingRight: 0,
     marginHorizontal: 15
   },
@@ -70,7 +70,7 @@ const PIPStyle = StyleSheet.create({
   arrow: {
     width: 14,
     height: 14,
-    borderColor: '#555',
+    borderColor: palette.accent,
     borderBottomWidth: 1,
     borderLeftWidth: 1
   },
@@ -90,8 +90,8 @@ const PIPStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   },
   refineTitle: {
     fontWeight: 'bold',
@@ -102,7 +102,7 @@ const PIPStyle = StyleSheet.create({
     color: palette.secondary
   },
   selectedValueStyle: {
-    color: '#999',
+    color: palette.primary,
     fontSize: 13,
     marginTop: 3,
     maxWidth: 300
