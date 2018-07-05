@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { Total } from '@brandingbrand/fscomponents';
-import { color } from '../styles/variables';
+import { palette } from '../styles/variables';
 
 export interface PSTotalsLineItem {
   label: string;
@@ -22,7 +22,7 @@ const defaultViewStyle: ViewStyle = {
 };
 
 const defaultPromoItemTextStyle: TextStyle = {
-  color: color.red
+  color: palette.accent
 };
 
 const defaultLastItemTextStyle: TextStyle = {

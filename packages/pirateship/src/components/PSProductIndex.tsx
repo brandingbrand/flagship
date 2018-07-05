@@ -27,7 +27,7 @@ import PSProductItem from '../components/PSProductItem';
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
 import { FilterItem } from '@brandingbrand/fscomponents';
-import { border, color, fontSize, grays, palette } from '../styles/variables';
+import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const window = Dimensions.get('window');
@@ -45,7 +45,7 @@ const PIPStyle = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: Platform.OS === 'android' ? 15 : 0,
     borderBottomColor: border.color,
-    borderBottomWidth: 1
+    borderBottomWidth: border.width
   },
   itemTotalText: {
     color: palette.primary
@@ -61,7 +61,7 @@ const PIPStyle = StyleSheet.create({
   filterBy: {
     padding: 15,
     paddingVertical: 10,
-    backgroundColor: grays.two
+    backgroundColor: palette.surface
   },
   filterByText: {
     fontSize: fontSize.small,
@@ -110,8 +110,8 @@ const PIPStyle = StyleSheet.create({
   secondLevelHeader: {
     height: 50,
     paddingHorizontal: 10,
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 1,
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -122,15 +122,15 @@ const PIPStyle = StyleSheet.create({
     height: 50,
     paddingLeft: 10,
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   secondLevelText: {
     fontSize: 16
   },
   tabView: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: border.width,
     borderBottomColor: border.color
   },
   tab: {

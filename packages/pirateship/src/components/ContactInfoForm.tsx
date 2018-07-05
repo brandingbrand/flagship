@@ -12,15 +12,15 @@ import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
 import { EMAIL_REGEX } from '../lib/constants';
 import { select, textbox } from '../lib/formTemplate';
-import { color, grays, padding, palette } from '../styles/variables';
+import { border, color, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { merge } from 'lodash-es';
 import translate, {translationKeys} from '../lib/translations';
 
 const styles = StyleSheet.create({
   helpBlockContainer: {
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: 1
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   }
 });
 
@@ -267,12 +267,12 @@ export default class ContactInfoForm extends Component<
         label: 'Send me emails about store specials.',
         onTintColor: palette.secondary,
         // Android changes the color of the thumb switch when toggled on to be a conflicting green
-        thumbTintColor: Platform.OS === 'android' ? grays.two : undefined,
+        thumbTintColor: Platform.OS === 'android' ? palette.surface : undefined,
         stylesheet: merge({}, t.form.Form.stylesheet, formFieldStyles, {
           formGroup: {
             normal: {
               paddingTop: 20,
-              backgroundColor: grays.one,
+              backgroundColor: palette.surface,
               padding: padding.base,
               paddingLeft: 0,
               borderBottomWidth: 0

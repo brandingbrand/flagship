@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   savings: {
     fontSize: 13,
     fontWeight: '500',
-    color: variables.color.red,
+    color: variables.palette.accent,
     paddingTop: 5
   },
   zoomCarouselDotStyle: {
@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
     paddingBottom: variables.padding.base
   },
   tabs: {
-    borderTopWidth: 1,
-    borderColor: '#EEEEEE'
+    borderTopWidth: variables.border.width,
+    borderColor: variables.border.color
   },
   tabRow: {
-    borderBottomWidth: 1,
-    borderColor: '#EEEEEE',
+    borderBottomWidth: variables.border.width,
+    borderColor: variables.border.color,
     paddingRight: 15
   },
   modalText: {
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   iconBarSeperator: {
     width: 1,
     height: 30,
-    backgroundColor: variables.color.lightGray
+    backgroundColor: variables.border.color
   },
   carouselTitle: {
-    color: variables.color.darkGray,
+    color: variables.palette.onBackground,
     fontSize: 17,
     fontWeight: '700',
     paddingLeft: 15,

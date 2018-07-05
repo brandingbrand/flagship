@@ -1,4 +1,4 @@
-import { color, fontSize, padding } from './variables';
+import { border, fontSize, padding, palette } from './variables';
 
 const kJustifyContent = 'space-between';
 
@@ -9,24 +9,24 @@ export default {
       flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: kJustifyContent,
-      backgroundColor: color.white,
+      backgroundColor: palette.background,
       marginBottom: 0,
       paddingTop: 6,
       paddingBottom: 1,
-      borderBottomWidth: 1,
-      borderBottomColor: color.lightGray
+      borderBottomWidth: border.width,
+      borderBottomColor: border.color
     },
     error: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: kJustifyContent,
-      backgroundColor: color.white,
+      backgroundColor: palette.background,
       marginBottom: 0,
       paddingTop: 6,
       paddingBottom: 1,
-      borderBottomWidth: 1,
-      borderBottomColor: color.lightGray
+      borderBottomWidth: border.width,
+      borderBottomColor: border.color
     }
   },
   textboxView: {
@@ -75,7 +75,7 @@ export default {
       fontWeight: 'bold',
       fontSize: fontSize.small,
       marginLeft: padding.wide,
-      color: color.red
+      color: palette.error
     }
   },
   errorBlock: {
@@ -83,7 +83,7 @@ export default {
     flexGrow: 1,
     marginLeft: padding.wide,
     marginRight: padding.base,
-    color: color.red
+    color: palette.error
   },
   helpBlock: {
     normal: {
@@ -92,8 +92,7 @@ export default {
       marginLeft: padding.wide,
       marginRight: padding.base,
       paddingTop: padding.base,
-      paddingBottom: padding.base,
-      color: color.lightGray
+      paddingBottom: padding.base
     },
     error: {
       fontSize: fontSize.small,
@@ -102,7 +101,7 @@ export default {
       marginRight: padding.base,
       paddingTop: padding.base,
       paddingBottom: padding.base,
-      color: color.red
+      color: palette.error
     }
   },
   selectContainer: {
@@ -138,7 +137,7 @@ export default {
   },
   selectPlaceholder: {
     normal: {
-      color: color.darkGray,
+      color: palette.onBackground,
       fontSize: fontSize.base
     },
     error: {
@@ -147,7 +146,7 @@ export default {
   },
   selectLabel: {
     normal: {
-      color: color.darkGray,
+      color: palette.onBackground,
       fontSize: fontSize.base
     },
     error: {

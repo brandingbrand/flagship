@@ -1,5 +1,5 @@
 import { StyleSheet} from 'react-native';
-import { color, grays, palette } from './variables';
+import { border, palette } from './variables';
 
 export default StyleSheet.create({
   container: {
@@ -7,13 +7,13 @@ export default StyleSheet.create({
     flexDirection: 'column'
   },
   formContainer: {
-    backgroundColor: grays.one
+    backgroundColor: palette.surface
   },
   formHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: grays.two
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   bottomRow: {
     flex: 1,
@@ -43,8 +43,8 @@ export default StyleSheet.create({
   addressContainer: {
     backgroundColor: 'white',
     padding: 15,
-    borderTopWidth: 1,
-    borderTopColor: color.lightGray
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   },
   addressTitleText: {
     fontWeight: 'bold',
@@ -62,16 +62,16 @@ export default StyleSheet.create({
     color: palette.secondary,
     fontSize: 15,
     paddingRight: 20,
-    borderRightWidth: 1,
-    borderRightColor: color.lightGray
+    borderRightWidth: border.width,
+    borderRightColor: border.color
   },
   deleteLinkText: {
-    color: color.red,
+    color: palette.accent,
     fontWeight: 'bold',
     fontSize: 15,
     paddingRight: 20,
     marginRight: 20,
-    borderRightWidth: 1,
-    borderRightColor: color.lightGray
+    borderRightWidth: border.width,
+    borderRightColor: border.color
   }
 });

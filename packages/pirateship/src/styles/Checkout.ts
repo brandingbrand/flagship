@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { color, fontSize, grays, palette } from '../styles/variables';
+import { border, fontSize, palette } from '../styles/variables';
 
 const cardSection = {
-  borderBottomWidth: StyleSheet.hairlineWidth,
-  borderBottomColor: color.lightGray,
+  borderBottomWidth: border.width,
+  borderBottomColor: border.color,
   padding: 15,
-  backgroundColor: color.white
+  backgroundColor: palette.surface
 };
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: grays.one
+    backgroundColor: palette.background
   },
   sectionTitle: {
     fontWeight: 'bold',
@@ -24,9 +24,9 @@ export default StyleSheet.create({
     fontSize: 11
   },
   formContainer: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray,
-    backgroundColor: color.white,
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
+    backgroundColor: palette.background,
     marginBottom: 25
   },
   loadingContainer: {
@@ -70,26 +70,26 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   creditCardContainer: {
-    backgroundColor: color.white
+    backgroundColor: palette.surface
   },
   shippingMethodList: {
-    backgroundColor: color.white,
+    backgroundColor: palette.surface,
     marginTop: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   },
   cartItemsContainer: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.lightGray,
-    backgroundColor: color.white
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color,
+    backgroundColor: palette.surface
   },
   cartItemContainer: {
     margin: 15,
     paddingBottom: 15,
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   },
   totalContainer: {
     padding: 30
@@ -109,7 +109,6 @@ export default StyleSheet.create({
   },
   copyrightText: {
     fontSize: 12,
-    color: color.gray,
     marginTop: 15
   },
   footerContainer: {
@@ -117,10 +116,10 @@ export default StyleSheet.create({
   },
   editSection: {
     marginTop: 15,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.lightGray
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   shippingMessage: {
     paddingHorizontal: 15
@@ -129,17 +128,17 @@ export default StyleSheet.create({
     fontSize: 15,
     paddingHorizontal: 5,
     paddingRight: 50,
-    backgroundColor: color.white
+    backgroundColor: palette.surface
   },
   selectableRowPaymentText: {
     fontSize: 15,
     paddingHorizontal: 5,
     paddingRight: 50,
     paddingLeft: 50,
-    backgroundColor: color.white
+    backgroundColor: palette.surface
   },
   selectableRow: {
-    backgroundColor: color.white
+    backgroundColor: palette.surface
   },
   selectableRowPayment: {
     flexDirection: 'row'
@@ -147,8 +146,8 @@ export default StyleSheet.create({
   billingAddressTypeSelect: {
     marginTop: 10,
     marginBottom: 25,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   },
   signInTitle: {
     fontSize: 17,
@@ -162,13 +161,13 @@ export default StyleSheet.create({
     paddingHorizontal: 15
   },
   signInContainer: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray,
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
     paddingTop: 15
   },
   seperator: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.lightGray,
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
     marginHorizontal: 15,
     marginVertical: 20
   },
@@ -176,9 +175,9 @@ export default StyleSheet.create({
     height: 50,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: color.lightGray,
-    backgroundColor: color.white,
+    borderWidth: border.width,
+    borderColor: border.color,
+    backgroundColor: palette.surface,
     paddingHorizontal: 15
   },
   savedAddressSelectorText: {
@@ -229,12 +228,12 @@ export default StyleSheet.create({
     padding: 15
   },
   giftCardInput: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: color.lightGray,
+    borderWidth: border.width,
+    borderColor: border.color,
     fontSize: 13,
     padding: 10,
     height: 40,
-    backgroundColor: color.white
+    backgroundColor: palette.surface
   },
   giftCardApplyButton: {
     position: 'absolute',
@@ -247,8 +246,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.lightGray,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color,
     margin: 15,
     marginTop: 0,
     padding: 10
@@ -325,7 +324,7 @@ export default StyleSheet.create({
   },
   shippingMethodError: {
     padding: 15,
-    color: color.red
+    color: palette.error
   },
   shipNote: {
     marginHorizontal: 15
@@ -334,5 +333,5 @@ export default StyleSheet.create({
 
 export const shipNoteStyle = StyleSheet.create({
   div: { fontSize: 13 },
-  span: { color: color.red }
+  span: { color: palette.accent }
 });

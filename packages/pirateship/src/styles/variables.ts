@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native';
+
 export const grays = {
   one: '#f5f5f5',
   two: '#e9e9e9',
@@ -55,6 +57,6 @@ export const padding = {
 
 export const border = {
   color: color.lightGray,
-  width: 1,
+  width: StyleSheet.hairlineWidth,
   radius: 3
 };

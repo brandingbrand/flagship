@@ -63,9 +63,9 @@ export const navBarProductDetail = {
 export const tabBarDefault = {
   bottomTabBadgeBackgroundColor: palette.secondary,
   forceTitlesDisplay: true,
-  tabBarBackgroundColor: color.white,
+  tabBarBackgroundColor: palette.background,
   tabBarButtonColor: color.gray,
   tabBarHideShadow: false,
-  tabBarSelectedButtonColor: color.black,
+  tabBarSelectedButtonColor: palette.onBackground,
   tabBarTranslucent: false
 };

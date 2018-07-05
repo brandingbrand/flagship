@@ -16,7 +16,7 @@ import PSCartItem from '../components/PSCartItem';
 import PSTotals from '../components/PSTotals';
 import PSRecentlyViewedCarousel from '../components/PSRecentlyViewedCarousel';
 
-import { border, color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import GlobalStyle from '../styles/Global';
 
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -27,7 +27,7 @@ import translate, { translationKeys } from '../lib/translations';
 
 const CartStyle = StyleSheet.create({
   loading: {
-    backgroundColor: color.white,
+    backgroundColor: palette.background,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -48,7 +48,7 @@ const CartStyle = StyleSheet.create({
     paddingBottom: 20,
     marginVertical: 15,
     borderBottomColor: border.color,
-    borderBottomWidth: 1
+    borderBottomWidth: border.width
   },
   promoContainer: {
     marginTop: 10,
@@ -124,7 +124,7 @@ const CartStyle = StyleSheet.create({
     borderWidth: 0
   },
   savingsText: {
-    color: color.red
+    color: palette.accent
   },
   footerButtonsContainer: {
     flex: 1,
@@ -184,7 +184,7 @@ const CartStyle = StyleSheet.create({
     fontWeight: 'bold'
   },
   emptyCartTopContainer: {
-    backgroundColor: color.lightGray,
+    backgroundColor: palette.surface,
     paddingHorizontal: 15,
     flex: 1,
     paddingBottom: 20
@@ -196,7 +196,7 @@ const CartStyle = StyleSheet.create({
     backgroundColor: palette.primary
   },
   scrollView: {
-    backgroundColor: color.white
+    backgroundColor: palette.background
   }
 });
 

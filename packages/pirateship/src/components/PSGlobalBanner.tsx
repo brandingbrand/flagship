@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { color, fontSize } from '../styles/variables';
+import { fontSize, palette } from '../styles/variables';
 import { fetchCMS } from '../lib/cms';
 import { ImageWithOverlay } from '@brandingbrand/fscomponents';
 
 const styles = StyleSheet.create({
   container: {
     height: 30,
-    backgroundColor: color.darkGray
+    backgroundColor: palette.primary
   },
   text: {
     fontSize: fontSize.small,
     textAlign: 'center',
-    color: color.white
+    color: palette.onPrimary
   },
   imageWithOverlay: {
     flex: 1

@@ -15,7 +15,7 @@ import { CartItem, Selector } from '@brandingbrand/fscomponents';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import PSStepper from './PSStepper';
 import PSToggle from './PSToggle';
-import { color, palette } from '../styles/variables';
+import { palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const noopPromise = async () => (Promise.resolve());
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   itemTextHeader: {
     fontWeight: 'bold',
-    color: color.darkGray,
+    color: palette.onBackground,
     fontSize: 15,
     flex: 1
   },
@@ -67,24 +67,21 @@ const styles = StyleSheet.create({
   },
   listPrice: {
     fontSize: 15,
-    color: color.gray,
     textDecorationLine: 'line-through',
     marginRight: 5
   },
   price: {
-    fontSize: 15,
-    color: color.darkGray
+    fontSize: 15
   },
   savings: {
     fontSize: 13,
-    color: color.red
+    color: palette.accent
   },
   availabilityText: {
     fontSize: 11,
-    color: color.red
+    color: palette.accent
   },
   detailsText: {
-    color: color.gray,
     fontSize: 11
   },
   giftWrapToggle: {
@@ -98,8 +95,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     fontSize: 13,
-    fontWeight: '700',
-    color: color.gray
+    fontWeight: '700'
   }
 });
 

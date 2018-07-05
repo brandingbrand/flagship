@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import PSLoading from './PSLoading';
 import PSRow from './PSRow';
-import { color, fontSize } from '../styles/variables';
+import { border, fontSize, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 const styles = StyleSheet.create({
@@ -18,15 +18,15 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: color.lightGray,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color,
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 50
   },
   title: {
     fontSize: fontSize.base,
-    color: color.darkGray
+    color: palette.onBackground
   }
 });
 
