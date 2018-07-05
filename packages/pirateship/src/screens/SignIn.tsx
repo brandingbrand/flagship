@@ -9,7 +9,7 @@ import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import { color, fontSize, grays, padding } from '../styles/variables';
+import { fontSize, padding, palette } from '../styles/variables';
 import PSButton from '../components/PSButton';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -19,7 +19,7 @@ const closeIcon = require('../../assets/images/close.png');
 
 const styles = StyleSheet.create({
   screenContainer: {
-    backgroundColor: grays.one,
+    backgroundColor: palette.surface,
     paddingTop: padding.base
   },
   container: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: grays.one
+    backgroundColor: palette.surface
   },
   headerContainer: {
     paddingHorizontal: padding.base
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: 'normal'
   },
   dismissButtonContainer: {
-    backgroundColor: grays.one,
+    backgroundColor: palette.surface,
     minHeight: 40,
     margin: padding.narrow
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: color.white
+    backgroundColor: palette.background
   }
 });
 

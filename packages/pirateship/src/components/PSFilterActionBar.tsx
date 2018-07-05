@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const filterIcon = require('../../assets/images/filter.png');
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: 1
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   },
   filterButton: {
     flexDirection: 'row',
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: 20
   },
   itemTotalText: {
-    color: color.darkGray
+    color: palette.onBackground
   }
 });
 

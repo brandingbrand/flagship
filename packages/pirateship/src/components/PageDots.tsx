@@ -7,7 +7,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-import { color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 
 export interface PageDotsProps {
   numDots: number;
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   inactive: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: color.darkGray
+    borderColor: border.color
   }
 });
 

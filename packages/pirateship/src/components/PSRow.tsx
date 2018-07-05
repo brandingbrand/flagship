@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { color, fontSize, grays } from '../styles/variables';
+import { border, fontSize, palette } from '../styles/variables';
 
 const arrowImg = require('../../assets/images/arrow.png');
 
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: color.lightGray
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   arrow: {
     width: 15,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSize.base,
-    color: color.darkGray
+    color: palette.onBackground
   }
 });
 
@@ -60,7 +60,7 @@ export default class PSRow extends Component<PSRowProps> {
     const { onPress, showImage, style, textStyle, title } = this.props;
 
     return (
-      <TouchableHighlight onPress={onPress} underlayColor={grays.one}>
+      <TouchableHighlight onPress={onPress} underlayColor={palette.surface}>
         <View style={[styles.container, style]}>
           <Text style={[styles.title, textStyle]}>{title}</Text>
           {showImage && this.renderImage()}

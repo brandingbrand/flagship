@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   headerContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: variables.color.lightGray,
+    borderBottomWidth: variables.border.width,
+    borderBottomColor: variables.border.color,
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',

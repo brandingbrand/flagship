@@ -11,7 +11,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { color, fontSize, grays, padding, palette } from '../styles/variables';
+import { border, color, fontSize, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { select, textbox } from '../lib/formTemplate';
 // @ts-ignore TODO: Add types for tcomb-form-native
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     alignContent: 'flex-start',
     justifyContent: 'flex-start',
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: 1
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   },
   apoLink: {
     color: palette.secondary,
@@ -331,11 +331,11 @@ export default class PSAddressForm extends Component<
         onTintColor: palette.secondary,
         // Android changes the color of the thumb switch when toggled on to be a conflicting green
         thumbTintColor:
-          Platform.OS === 'android' ? grays.two : undefined,
+          Platform.OS === 'android' ? palette.surface : undefined,
         stylesheet: merge({}, t.form.Form.stylesheet, formFieldStyles, {
           formGroup: {
             normal: {
-              backgroundColor: grays.one,
+              backgroundColor: palette.surface,
               padding: padding.base,
               paddingLeft: 0,
               borderBottomWidth: 0

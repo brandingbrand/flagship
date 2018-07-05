@@ -24,7 +24,7 @@ import PSShopLandingCategories from '../components/PSShopLandingCategories';
 import { openSignInModal } from '../lib/shortcuts';
 import { handleDeeplink } from '../lib/deeplinkHandler';
 import GlobalStyle from '../styles/Global';
-import { border, color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -39,7 +39,7 @@ const ShopStyle = StyleSheet.create({
     backgroundColor: palette.primary
   },
   container: {
-    backgroundColor: color.white,
+    backgroundColor: palette.background,
     flex: 1
   },
   heroCarousel: {},
@@ -50,7 +50,7 @@ const ShopStyle = StyleSheet.create({
     marginBottom: 20
   },
   scrollView: {
-    backgroundColor: color.white
+    backgroundColor: palette.background
   },
   shopButtonsContainer: {
     marginBottom: 20,

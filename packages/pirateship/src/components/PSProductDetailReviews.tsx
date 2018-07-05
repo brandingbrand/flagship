@@ -171,8 +171,8 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
               padding: 0,
               paddingTop: 10,
               paddingBottom: 10,
-              borderBottomWidth: 1,
-              borderBottomColor: variables.color.lightGray
+              borderBottomWidth: variables.border.width,
+              borderBottomColor: variables.border.color
             }}
             hideReviewIndicatorSubtitle={true}
             reviewIndicatorTitleText={'Overall'}
@@ -181,7 +181,7 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
               fontWeight: 'bold',
               fontSize: 15
             }}
-            reviewIndicatorRowStyle={{ borderBottomColor: variables.color.lightGray }}
+            reviewIndicatorRowStyle={{ borderBottomColor: variables.border.color }}
           />
         )}
         <ReviewsList
@@ -191,8 +191,8 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
               padding: 0,
               paddingTop: 10,
               paddingBottom: 10,
-              borderBottomWidth: 1,
-              borderBottomColor: variables.color.lightGray
+              borderBottomWidth: variables.border.width,
+              borderBottomColor: variables.border.color
             },
             titleStyle: {
               paddingLeft: 0,
@@ -204,7 +204,6 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
             verifiedStyle: {
               fontSize: 11,
               paddingBottom: 10,
-              color: variables.color.black,
               paddingLeft: 10
             },
             recommendedStyle: {

@@ -15,7 +15,7 @@ import { handleDeeplink } from '../lib/deeplinkHandler';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSProductIndex from '../components/PSProductIndex';
 
-import { color, fontSize } from '../styles/variables';
+import { border, fontSize, palette } from '../styles/variables';
 import GlobalStyle from '../styles/Global';
 import { navBarHide } from '../styles/Navigation';
 import translate, { translationKeys } from '../lib/translations';
@@ -32,7 +32,7 @@ const NoSearchResultsStyle = StyleSheet.create({
   },
   modalWrap: {
     flex: 1,
-    backgroundColor: color.white
+    backgroundColor: palette.background
   },
   header: {
     fontWeight: 'bold',
@@ -48,29 +48,29 @@ const NoSearchResultsStyle = StyleSheet.create({
     marginTop: 25,
     marginBottom: 25,
     paddingBottom: 25,
-    borderBottomWidth: 1,
-    borderBottomColor: color.lightGray
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   contactUsButton: {
-    borderWidth: 1,
-    borderColor: color.black,
-    borderRadius: 3,
-    backgroundColor: color.white,
+    borderWidth: border.width,
+    borderColor: border.color,
+    borderRadius: border.radius,
+    backgroundColor: palette.background,
     width: '48%',
     height: 40
   },
   contactUsText: {
     fontWeight: 'bold',
-    color: color.black
+    color: palette.onBackground
   },
   shopButton: {
-    backgroundColor: color.black,
+    backgroundColor: palette.primary,
     borderRadius: 3,
     width: '48%',
     height: 40
   },
   shopText: {
-    color: color.white,
+    color: palette.onPrimary,
     fontWeight: 'bold'
   },
   carouselView: {

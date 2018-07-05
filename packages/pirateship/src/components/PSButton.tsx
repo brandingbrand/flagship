@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { Button, ButtonProps } from '@brandingbrand/fscomponents';
-import { color, palette } from '../styles/variables';
+import { palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
   button: {
@@ -9,19 +9,19 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth
   },
   buttonSecondary: {
-    borderColor: color.darkGray
+    borderColor: palette.secondary
   },
   buttonSecondaryText: {
-    color: color.darkGray
+    color: palette.onSecondary
   },
   buttonWarningText: {
-    color: color.darkGray
+    color: palette.error
   },
   buttonLight: {
-    borderColor: color.darkGray
+    borderColor: palette.onPrimary
   },
   buttonLightText: {
-    color: color.darkGray
+    color: palette.primary
   },
   buttonLink: {
     borderWidth: 0
@@ -35,9 +35,9 @@ export type PSButtonProps = ButtonProps;
 
 const buttonVariables = {
   color: {
-    primary: color.darkGray,
-    warning: color.yellow,
-    light: color.white
+    primary: palette.primary,
+    warning: palette.error,
+    light: palette.onPrimary
   }
 };
 

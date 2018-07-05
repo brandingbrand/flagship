@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { color, grays, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import { dataSource } from '../lib/datasource';
@@ -20,16 +20,16 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 15,
-    color: color.darkGray,
+    color: palette.onSurface,
     fontWeight: 'bold'
   },
   container: {
-    backgroundColor: grays.one,
+    backgroundColor: palette.surface,
     paddingTop: 15
   },
   addAddressContainer: {
-    borderTopWidth: 1,
-    borderTopColor: color.lightGray,
+    borderTopWidth: border.width,
+    borderTopColor: border.color,
     paddingTop: 25,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: 30
   },
   defaultText: {
-    color: color.darkGray,
+    color: palette.onBackground,
     fontSize: 15,
     paddingLeft: 20
   },

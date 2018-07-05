@@ -9,13 +9,13 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { color, fontSize, padding, palette } from '../styles/variables';
+import { border, color, fontSize, padding, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
 
 const styles = StyleSheet.create({
   container: {
-    borderTopColor: color.lightGray,
+    borderTopColor: border.color,
     borderTopWidth: 1,
     paddingTop: padding.base,
     paddingRight: padding.base,

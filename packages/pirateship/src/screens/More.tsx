@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     color: palette.secondary
   },
   listItemBorder: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: border.width,
     borderBottomColor: border.color
   }
 });
