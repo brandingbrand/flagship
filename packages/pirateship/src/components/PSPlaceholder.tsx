@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { border, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,14 +18,14 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   text: {
-    color: 'white'
+    color: palette.onSurface
   },
-  containerLight: { backgroundColor: 'white' },
-  innerLight: { borderColor: '#eee' },
-  textLight: { color: '#555' },
-  containerDark: { backgroundColor: '#555' },
-  innerDark: { borderColor: 'white' },
-  textDark: { color: 'white' }
+  containerLight: { backgroundColor: palette.background },
+  innerLight: { borderColor: border.color },
+  textLight: { color: palette.onBackground },
+  containerDark: { backgroundColor: palette.surface },
+  innerDark: { borderColor: border.color },
+  textDark: { color: palette.onSurface }
 });
 
 export interface PSPlaceholderProps {

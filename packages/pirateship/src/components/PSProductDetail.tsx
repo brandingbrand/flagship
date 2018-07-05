@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
     height: 7,
     width: 7,
     borderRadius: 4,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: variables.palette.onPrimary,
     marginHorizontal: 3,
     marginVertical: 5,
     borderWidth: 0.5
   },
   zoomCarouselDotActiveStyle: {
-    backgroundColor: '#000000'
+    backgroundColor: variables.palette.primary
   },
   zoomCarouselZoomButtonStyle: {
     right: 15,
@@ -687,7 +687,7 @@ class PSProductDetailComponent extends Component<
         titleStyle={{
           fontWeight: '600',
           fontSize: 15,
-          color: '#ffffff'
+          color: variables.palette.onPrimary
         }}
       />
     );
