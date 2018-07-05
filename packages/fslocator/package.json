@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Locator React Components",
   "main": "dist/index.js",
-  "types": "./typings/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "tsc",
     "tsc:watch": "tsc -w --preserveWatchOutput"
