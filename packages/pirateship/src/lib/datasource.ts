@@ -3,7 +3,7 @@ import { env } from '@brandingbrand/fsapp';
 const { dataSourceConfigs } = env;
 
 export interface DataSourceConfig {
-  type: 'bbplatform' | 'commercecloud';
+  type: 'bbplatform' | 'commercecloud' | 'shopify';
   categoryFormat: 'grid' | 'list';
   apiConfig: any;
 }
@@ -27,5 +27,12 @@ if (config.networkClient) {
 
 export const dataSource = new CommerceCloudDataSource(config);
 export const dataSourceConfig: DataSourceConfig = dataSourceConfigs.commerceCloud;
+
+/*
+import { ShopifyDataSource } from '@brandingbrand/fsshopify';
+const config: any = dataSourceConfigs.shopify.apiConfig;
+export const dataSource = new ShopifyDataSource(config);
+export const dataSourceConfig = dataSourceConfigs.shopify;
+*/
 
 export const bvDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);
