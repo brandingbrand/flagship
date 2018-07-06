@@ -19,19 +19,28 @@ export interface CategoryLineProps extends CommerceTypes.Category {
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
+  imageBool?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
+  accessoryBool?: boolean;
   accessorySrc?: ImageURISource;
   accessoryStyle?: StyleProp<ImageStyle>;
   href?: string;
 }
 
 export class CategoryLine extends PureComponent<CategoryLineProps> {
+  static defaultProps: Partial<CategoryLineProps> = {
+    accessoryBool: true,
+    imageBool: true
+  };
+
   render(): JSX.Element {
     const {
+      accessoryBool,
       accessorySrc,
       accessoryStyle,
       href,
       image,
+      imageBool,
       imageStyle,
       style,
       title,
@@ -47,11 +56,11 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
         href={href}
       >
         <View style={S.rowInner}>
-          {image && <Image source={image} style={imageStyle} />}
+          {imageBool && image && <Image source={image} style={imageStyle} />}
           <Text style={[S.buttonText, titleStyle]}>
             {title}
           </Text>
-          {accessorySrc && <Image source={accessorySrc} style={accessoryStyle} />}
+          {accessoryBool && accessorySrc && <Image source={accessorySrc} style={accessoryStyle} />}
         </View>
       </TouchableHighlightLink>
     );
