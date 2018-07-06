@@ -18,12 +18,18 @@ export interface CategoryBoxProps extends CommerceTypes.Category {
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
   imageStyle?: StyleProp<ImageStyle>;
+  imageBool?: boolean;
 }
 
 export class CategoryBox extends PureComponent<CategoryBoxProps> {
+  static defaultProps: Partial<CategoryBoxProps> = {
+    imageBool: true
+  };
+
   render(): JSX.Element {
     const {
       image,
+      imageBool,
       imageStyle,
       style,
       title,
@@ -38,7 +44,7 @@ export class CategoryBox extends PureComponent<CategoryBoxProps> {
         onPress={this.handlePress}
       >
         <View style={S.boxInner}>
-          {image && <Image source={image} style={imageStyle} />}
+          {imageBool && image && <Image source={image} style={imageStyle} />}
           <Text style={[S.boxText, titleStyle]}>
             {title}
           </Text>
