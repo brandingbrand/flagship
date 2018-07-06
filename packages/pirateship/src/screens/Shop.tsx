@@ -169,8 +169,11 @@ class Shop extends Component<ShopProps> {
   }
 
   handleCategoryItemPress = (item: any) => {
+    // Shopify doesn't have the concept of subcategories so always direct users to product index
+    const screen = dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
+
     this.props.navigator.push({
-      screen: 'Category',
+      screen,
       title: item.title,
       passProps: {
         categoryId: item.id,
