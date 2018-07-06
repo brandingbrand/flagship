@@ -13,21 +13,17 @@ import { get } from 'lodash-es';
 import { Navigator } from 'react-native-navigation';
 
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import {
-  ProductIndex as PirateProductIndex,
-  ProductIndexSearch as PirateProductIndexSearch
-} from '@brandingbrand/fsproductindex';
+import { ProductIndex, ProductIndexSearch } from '@brandingbrand/fsproductindex';
 
 import { dataSource } from '../lib/datasource';
 import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle } from '../lib/commonTypes';
 
-import PSProductItem from '../components/PSProductItem';
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
 import { FilterItem } from '@brandingbrand/fscomponents';
-import { border, color, fontSize, palette } from '../styles/variables';
+import { border, color, fontSize, palette, pipColumns, PIPProductItem } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const window = Dimensions.get('window');
@@ -173,12 +169,12 @@ export interface ProductIndexState {
 }
 
 const renderProductIndex = (indexProps: any) => {
-  return <PirateProductIndex {...indexProps} />;
+  return <ProductIndex {...indexProps} />;
 };
 
 const renderSearch = (indexProps: any, keyword: string, renderNoResult: any) => {
   return (
-    <PirateProductIndexSearch {...indexProps} keyword={keyword} renderNoResult={renderNoResult} />
+    <ProductIndexSearch {...indexProps} keyword={keyword} renderNoResult={renderNoResult} />
   );
 };
 
@@ -235,9 +231,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
       const image = (item.images || []).find(img => !!img.uri);
 
       return (
-        <PSProductItem
-          navigator={this.props.navigator}
-          format={'horizontalList'}
+        <PIPProductItem
           image={image}
           reviewValue={get(item, 'review.statistics.averageRating')}
           reviewCount={get(item, 'review.statistics.reviewCount')}
@@ -267,12 +261,8 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
 
     const { keyword, renderNoResult } = this.props;
 
-    const formatProps: any = {
-      format: 'list'
-    };
-
     const indexProps: any = {
-      ...formatProps,
+      columns: pipColumns,
       listStyle: PIPStyle.container,
       renderRefineActionBar: this.renderRefineActionBar,
       commerceDataSource: dataSource,

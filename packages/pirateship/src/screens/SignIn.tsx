@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import PSLoading from '../components/PSLoading';
+import { Loading } from '@brandingbrand/fscomponents';
 import PSSignInForm from '../components/PSSignInForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
@@ -109,7 +108,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
 
   render(): JSX.Element {
     if (this.state.isLoading) {
-      return <PSLoading style={styles.loading} />;
+      return <Loading style={styles.loading} />;
     }
 
     const { saveCredentials, getCredentials } = this.props;
