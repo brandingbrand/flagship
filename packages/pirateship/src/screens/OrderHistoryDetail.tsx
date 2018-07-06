@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+
+import { Loading } from '@brandingbrand/fscomponents';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import PSLoading from '../components/PSLoading';
 import PSButton from '../components/PSButton';
 import PSTotals from '../components/PSTotals';
 import PSLabeledValues from '../components/PSLabeledValues';
@@ -181,7 +182,7 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   renderLoading = () => {
-    return <PSLoading style={styles.loading}/>;
+    return <Loading style={styles.loading}/>;
   }
 
   renderErrors = () => {

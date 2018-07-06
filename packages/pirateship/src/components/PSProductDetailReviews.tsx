@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import {
+  Loading,
   ReviewsList,
   ReviewsSummary
 } from '@brandingbrand/fscomponents';
@@ -20,7 +21,6 @@ import {
   WithReviewState
 } from '@brandingbrand/fscommerce';
 
-import PSLoading from '../components/PSLoading';
 import * as variables from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -114,7 +114,7 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
     }
 
     if (loadingMore) {
-      return <PSLoading style={styles.loadingMore} />;
+      return <Loading style={styles.loadingMore} />;
     } else {
       return (
         <View style={styles.footer}>
@@ -133,7 +133,7 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
     const { reviewsData } = this.props;
 
     if (!reviewsData) {
-      return <PSLoading style={{ marginTop: 80 }} />;
+      return <Loading style={{ marginTop: 80 }} />;
     }
 
     // TODO: Update this when reviewsData has a proper type

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { MultiCarousel } from '@brandingbrand/fscomponents';
-import PSProductItem, { PSProductItemProps } from './PSProductItem';
+import {
+  MultiCarousel,
+  ProductItemProps,
+  ProductItemVerticalTopSwatches
+} from '@brandingbrand/fscomponents';
 import { fontSize, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
 
 export interface PSProductCarouselProps {
   style?: StyleProp<ViewStyle>;
-  items: PSProductItemProps[];
+  items: ProductItemProps[];
 }
 
 export default class PSProductCarousel extends Component<
@@ -66,18 +69,15 @@ export default class PSProductCarousel extends Component<
     );
   }
 
-  renderItem = (item: PSProductItemProps) => {
+  renderItem = (item: ProductItemProps) => {
     return (
       <View style={styles.item}>
-        <PSProductItem
-          format='verticalTopSwatches'
+        <ProductItemVerticalTopSwatches
           titleStyle={styles.productTitle}
           priceStyle={styles.productPrice}
-          priceTextStyle={styles.productPriceText}
-          priceContainerStyle={styles.priceContainer}
           reviewStyle={styles.reviews}
           promoStyle={styles.promoText}
-          promosContainerStyle={styles.promosContainer}
+          promoContainerStyle={styles.promosContainer}
           reviewIndicatorProps={{ itemSize: 15 } as any}
           {...item}
         />

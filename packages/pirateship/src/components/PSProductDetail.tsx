@@ -10,6 +10,7 @@ import { cloneDeep, find, findIndex } from 'lodash-es';
 import { Navigator } from 'react-native-navigation';
 
 import {
+  Loading,
   ReviewIndicator,
   ShareButton,
   Swatches,
@@ -25,7 +26,6 @@ import withCart, { CartProps } from '../providers/cartProvider';
 import { RecentlyViewedProps } from '../providers/recentlyViewedProvider';
 
 import PSButton from './PSButton';
-import PSLoading from './PSLoading';
 import PSProductCarousel from './PSProductCarousel';
 import PSStepper from './PSStepper';
 import PSHTMLView from './PSHTMLView';
@@ -477,7 +477,7 @@ class PSProductDetailComponent extends Component<
     const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
 
     if (!commerceData) {
-      return <PSLoading style={{ marginTop: 80 }} />;
+      return <Loading style={{ marginTop: 80 }} />;
     }
 
     this.trackImpression();
