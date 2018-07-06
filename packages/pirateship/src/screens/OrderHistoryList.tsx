@@ -10,7 +10,7 @@ import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import PSRequireSignIn from '../components/PSRequireSignIn';
-import { color, fontSize, grays, padding, palette } from '../styles/variables';
+import { border, fontSize, padding, palette } from '../styles/variables';
 import PSButton from '../components/PSButton';
 import { handleAccountRequestError } from '../lib/shortcuts';
 import translate, { translationKeys } from '../lib/translations';
@@ -29,17 +29,17 @@ interface OrderHistoryListState {
 const arrowImg = require('../../assets/images/arrow.png');
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: grays.one,
+    backgroundColor: palette.surface,
     flex: 1
   },
   orderDetailsContainer: {
     paddingTop: padding.base
   },
   orderDetailsRow: {
-    borderTopColor: color.gray,
-    borderBottomWidth: 1,
-    borderBottomColor: color.gray,
-    backgroundColor: color.white,
+    borderTopColor: border.color,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color,
+    backgroundColor: palette.background,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
   orderDetailsHeader: {
     fontSize: fontSize.base,
     fontWeight: 'bold',
-    color: color.darkGray,
+    color: palette.onBackground,
     paddingTop: padding.narrow,
     paddingBottom: padding.narrow
   },
   orderDetailsText: {
     lineHeight: 18,
-    color: color.darkGray
+    color: palette.onBackground
   },
   orderDetailsTextHeader: {
     fontWeight: 'bold'
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15
   },
   emptyText: {
-    color: color.red
+    color: palette.accent
   },
   emptyTrackingContainer: {
     marginTop: 20

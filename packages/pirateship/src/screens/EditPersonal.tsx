@@ -2,7 +2,7 @@ import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import React, { Component } from 'react';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
-import { color, padding } from '../styles/variables';
+import { border, padding } from '../styles/variables';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
@@ -16,8 +16,8 @@ import translate, { translationKeys } from '../lib/translations';
 const styles = StyleSheet.create({
   form: {
     marginTop: padding.base,
-    borderTopWidth: 1,
-    borderTopColor: color.lightGray
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   }
 });
 

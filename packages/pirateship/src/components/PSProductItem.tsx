@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   savings: {
     fontSize: 11,
     fontWeight: '500',
-    color: color.red,
+    color: palette.accent,
     paddingTop: 5
   },
   signInLink: {

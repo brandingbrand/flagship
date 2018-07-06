@@ -16,7 +16,7 @@ import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { CMSProvider, fetchCMS } from '../lib/cms';
-import { fontSize, grays, palette } from '../styles/variables';
+import { fontSize, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { textbox } from '../lib/formTemplate';
 import PSButton from '../components/PSButton';
@@ -47,7 +47,7 @@ const FIELD_OPTIONS = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: grays.one
+    backgroundColor: palette.surface
   },
   cmsImage: {
     marginBottom: 14

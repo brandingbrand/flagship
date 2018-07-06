@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { MultiCarousel } from '@brandingbrand/fscomponents';
 import PSProductItem, { PSProductItemProps } from './PSProductItem';
-import { color, fontSize } from '../styles/variables';
+import { fontSize, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
   container: {},
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   promoText: {
-    color: color.red,
+    color: palette.accent,
     fontSize: fontSize.small,
     fontStyle: 'normal'
   },

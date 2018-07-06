@@ -8,7 +8,7 @@ import PSLoading from '../components/PSLoading';
 import PSButton from '../components/PSButton';
 import PSTotals from '../components/PSTotals';
 import PSLabeledValues from '../components/PSLabeledValues';
-import { color, fontSize, grays, padding, palette } from '../styles/variables';
+import { border, fontSize, padding, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const env = require('../../env/env');
@@ -21,22 +21,22 @@ export interface OrderHistoryDetailState {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: grays.one,
+    backgroundColor: palette.surface,
     flex: 1
   },
   orderDetailContainer: {
     padding: padding.base,
-    backgroundColor: grays.one
+    backgroundColor: palette.surface
   },
   shippingAddressContainer: {
     paddingBottom: padding.base,
     paddingTop: padding.base
   },
   orderDetailsRow: {
-    borderTopColor: color.gray,
-    borderBottomWidth: 1,
-    borderBottomColor: color.gray,
-    backgroundColor: color.white,
+    borderTopColor: border.color,
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color,
+    backgroundColor: palette.background,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -46,19 +46,19 @@ const styles = StyleSheet.create({
   },
   orderDetailsText: {
     lineHeight: fontSize.large,
-    color: color.darkGray
+    color: palette.onBackground
   },
   orderDetailsTextHeader: {
     lineHeight: fontSize.large,
-    color: color.darkGray,
+    color: palette.onBackground,
     fontWeight: 'bold'
   },
   shipmentContainer: {
-    backgroundColor: color.white,
-    borderTopColor: color.lightGray,
-    borderTopWidth: 1,
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: 1,
+    backgroundColor: palette.background,
+    borderTopColor: border.color,
+    borderTopWidth: border.width,
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width,
     padding: padding.base,
     marginBottom: padding.base
   },
@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
   shipmentDetailsText: {
     fontSize: fontSize.small,
     lineHeight: 15,
-    color: color.darkGray
+    color: palette.onBackground
   },
   shipmentDetailsTextHeader: {
     fontSize: fontSize.small,
     lineHeight: 15,
-    color: color.darkGray,
+    color: palette.onBackground,
     fontWeight: 'bold'
   },
   errorContainer: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   orderQuestionsText: {
     padding: padding.base,
-    color: color.darkGray,
+    color: palette.onBackground,
     fontWeight: 'bold',
     fontSize: 17
   },
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
     minWidth: 86
   },
   orderTotalsContainer: {
-    borderBottomColor: color.lightGray,
-    borderBottomWidth: 1,
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width,
     marginLeft: padding.base,
     marginRight: padding.base,
     padding: padding.base,

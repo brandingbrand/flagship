@@ -16,7 +16,7 @@ import PSCartItem from '../components/PSCartItem';
 import PSTotals from '../components/PSTotals';
 import PSRecentlyViewedCarousel from '../components/PSRecentlyViewedCarousel';
 
-import { border, color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import GlobalStyle from '../styles/Global';
 
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -27,7 +27,7 @@ import translate, { translationKeys } from '../lib/translations';
 
 const CartStyle = StyleSheet.create({
   loading: {
-    backgroundColor: color.white,
+    backgroundColor: palette.background,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -48,24 +48,21 @@ const CartStyle = StyleSheet.create({
     paddingBottom: 20,
     marginVertical: 15,
     borderBottomColor: border.color,
-    borderBottomWidth: 1
+    borderBottomWidth: border.width
   },
   promoContainer: {
     marginTop: 10,
     paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#000'
+    borderTopWidth: border.width,
+    borderTopColor: border.color
   },
   fieldsStyleConfig: {
     height: 50,
     borderRadius: 0,
     fontSize: 14,
     paddingHorizontal: 10,
-    borderTopColor: '#CCC',
-    borderBottomColor: '#CCC',
-    borderLeftColor: '#CCC',
-    borderRightColor: '#CCC',
-    borderWidth: 1
+    borderColor: border.color,
+    borderWidth: border.width
   },
   fieldsStyleErrorConfig: {
     height: 50,
@@ -79,11 +76,11 @@ const CartStyle = StyleSheet.create({
     borderWidth: 1
   },
   submitButtonStyle: {
-    backgroundColor: '#333',
+    backgroundColor: palette.primary,
     height: 50
   },
   submitTextStyle: {
-    color: '#FFF'
+    color: palette.onPrimary
   },
   summaryContainer: {
     marginBottom: 20
@@ -124,7 +121,7 @@ const CartStyle = StyleSheet.create({
     borderWidth: 0
   },
   savingsText: {
-    color: color.red
+    color: palette.accent
   },
   footerButtonsContainer: {
     flex: 1,
@@ -184,7 +181,7 @@ const CartStyle = StyleSheet.create({
     fontWeight: 'bold'
   },
   emptyCartTopContainer: {
-    backgroundColor: color.lightGray,
+    backgroundColor: palette.surface,
     paddingHorizontal: 15,
     flex: 1,
     paddingBottom: 20
@@ -196,7 +193,7 @@ const CartStyle = StyleSheet.create({
     backgroundColor: palette.primary
   },
   scrollView: {
-    backgroundColor: color.white
+    backgroundColor: palette.background
   }
 });
 

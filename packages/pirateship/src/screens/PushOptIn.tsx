@@ -11,7 +11,7 @@ import PSButton from '../components/PSButton';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { navBarNone } from '../styles/Navigation';
 import PushNotifications from '../lib/PushNotifications';
-import { fontSize, grays, palette } from '../styles/variables';
+import { fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 export interface PushOptInProps extends ScreenProps {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     padding: 10,
-    backgroundColor: grays.one
+    backgroundColor: palette.surface
   },
   image: {
     marginBottom: 26

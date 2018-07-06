@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from 'react-native';
 import PSProductCarousel from './PSProductCarousel';
-import { color, grays } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: grays.two,
+    borderTopColor: border.color,
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column'
   },
   recentTitle: {
-    color: color.darkGray,
+    color: palette.onBackground,
     fontSize: 17,
     fontWeight: 'bold',
     marginLeft: 15

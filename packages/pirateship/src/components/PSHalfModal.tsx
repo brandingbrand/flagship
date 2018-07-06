@@ -8,7 +8,7 @@ import {
 
 import { ModalHalfScreen } from '@brandingbrand/fscomponents';
 
-import { color, fontSize } from '../styles/variables';
+import { border, fontSize } from '../styles/variables';
 
 export interface PSHalfModalProps {
   title: string;
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: 'center',
     height: 50,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.gray
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   leftItem: {
     position: 'absolute',

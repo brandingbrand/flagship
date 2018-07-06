@@ -20,7 +20,7 @@ import {
 import { signOutButton } from '../lib/navStyles';
 import { navBarHide, navBarTabLanding } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import { color, palette } from '../styles/variables';
+import { border, palette } from '../styles/variables';
 import { Grid } from '@brandingbrand/fscomponents';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   gridLine: {
-    backgroundColor: color.lightGray
+    backgroundColor: border.color
   }
 });
 

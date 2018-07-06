@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     padding: variables.padding.base
   },
   question: {
-    borderBottomWidth: 1,
-    borderColor: '#EEEEEE',
+    borderBottomWidth: variables.border.width,
+    borderColor: variables.border.color,
     paddingBottom: 10,
     marginBottom: 25
   },

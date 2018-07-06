@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import { get } from 'lodash-es';
 import { MultiCarousel } from '@brandingbrand/fscomponents';
-import { color } from '../styles/variables';
+import { palette } from '../styles/variables';
 import { fetchCMS } from '../lib/cms';
 
 const styles = StyleSheet.create({
   container: {
     height: 175,
-    backgroundColor: color.lightGray
+    backgroundColor: palette.surface
   },
   containerLoaded: {
     backgroundColor: 'transparent'
@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
   dotStyle: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: color.white,
+    borderColor: palette.secondary,
     marginHorizontal: 5
   },
   dotActiveStyle: {
-    backgroundColor: color.white,
+    backgroundColor: palette.secondary,
     opacity: 1
   },
   item: {

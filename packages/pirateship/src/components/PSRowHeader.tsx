@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-import { color, fontSize } from '../styles/variables';
+import { fontSize, palette } from '../styles/variables';
 
 export interface PSRowHeaderProps {
   title: string;
@@ -20,11 +20,12 @@ export interface PSRowHeaderProps {
 const styles = StyleSheet.create({
   view: {
     padding: 10,
-    backgroundColor: color.lightGray
+    backgroundColor: palette.surface
   },
   title: {
     fontSize: fontSize.small,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: palette.onSurface
   }
 });
 

@@ -27,7 +27,7 @@ import PSProductItem from '../components/PSProductItem';
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
 import { FilterItem } from '@brandingbrand/fscomponents';
-import { border, color, fontSize, grays, palette } from '../styles/variables';
+import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const window = Dimensions.get('window');
@@ -37,7 +37,7 @@ const PIPStyle = StyleSheet.create({
     flex: 1
   },
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: palette.background,
     paddingRight: 0,
     marginHorizontal: 15
   },
@@ -45,7 +45,7 @@ const PIPStyle = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: Platform.OS === 'android' ? 15 : 0,
     borderBottomColor: border.color,
-    borderBottomWidth: 1
+    borderBottomWidth: border.width
   },
   itemTotalText: {
     color: palette.primary
@@ -61,7 +61,7 @@ const PIPStyle = StyleSheet.create({
   filterBy: {
     padding: 15,
     paddingVertical: 10,
-    backgroundColor: grays.two
+    backgroundColor: palette.surface
   },
   filterByText: {
     fontSize: fontSize.small,
@@ -70,7 +70,7 @@ const PIPStyle = StyleSheet.create({
   arrow: {
     width: 14,
     height: 14,
-    borderColor: '#555',
+    borderColor: palette.accent,
     borderBottomWidth: 1,
     borderLeftWidth: 1
   },
@@ -90,8 +90,8 @@ const PIPStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width
   },
   refineTitle: {
     fontWeight: 'bold',
@@ -102,7 +102,7 @@ const PIPStyle = StyleSheet.create({
     color: palette.secondary
   },
   selectedValueStyle: {
-    color: '#999',
+    color: palette.primary,
     fontSize: 13,
     marginTop: 3,
     maxWidth: 300
@@ -110,8 +110,8 @@ const PIPStyle = StyleSheet.create({
   secondLevelHeader: {
     height: 50,
     paddingHorizontal: 10,
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 1,
+    borderBottomColor: border.color,
+    borderBottomWidth: border.width,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -122,15 +122,15 @@ const PIPStyle = StyleSheet.create({
     height: 50,
     paddingLeft: 10,
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+    borderBottomWidth: border.width,
+    borderBottomColor: border.color
   },
   secondLevelText: {
     fontSize: 16
   },
   tabView: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: border.width,
     borderBottomColor: border.color
   },
   tab: {
