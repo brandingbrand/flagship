@@ -23,6 +23,7 @@ jobs:
     - yarn prepare
     - yarn build:storybook || travis_terminate 1
   - language: android
+    if: type = pull_request
     android:
       components:
       - build-tools-26.0.2
@@ -47,6 +48,7 @@ jobs:
     - yarn ship:init
     - yarn ship:compile-android || travis_terminate 1
   - language: objective-c
+    if: type = pull_request
     os: osx
     osx_image: xcode9.4
     before_install:
@@ -58,6 +60,20 @@ jobs:
     - yarn prepare
     - yarn ship:init
     - yarn ship:compile-ios || travis_terminate 1
+  - language: objective-c
+    if: type = push AND branch = master
+    os: osx
+    osx_image: xcode9.4
+    env:
+    - KEY_CHAIN=ios-build.keychain
+    before_install:
+    - nvm install 10
+    - brew install yarn --without-node
+    - node --version
+    - yarn --version
+    script:
+    - yarn prepare
+    - yarn ship:build-ios || travis_terminate 1
   - stage: deploy
     if: branch = master AND head_branch IS blank
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q

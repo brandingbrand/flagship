@@ -5,10 +5,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "add-keys-android": "node node_modules/@brandingbrand/flagship/scripts/add-keys-android.js",
-    "add-keys-ios": "node node_modules/@brandingbrand/flagship/scripts/add-keys-ios.js",
+    "add-keys-android": "node ../../node_modules/@brandingbrand/flagship/dist/add-keys-android.js",
+    "add-keys-ios": "node ../../node_modules/@brandingbrand/flagship/dist/add-keys-ios-internal.js",
     "compile-android": "react-native run-android --no-packager",
     "compile-ios": "react-native run-ios --no-packager --simulator=\"iPhone X\"",
+    "build-ios": "./scripts/buildiOS.sh",
     "init": "flagship clean && flagship init",
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
