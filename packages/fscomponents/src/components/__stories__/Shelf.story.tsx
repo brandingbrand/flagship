@@ -55,7 +55,7 @@ const testProduct: CommerceTypes.Product = {
 const renderProduct = (): JSX.Element => {
   return (
     <ProductItemVerticalList
-      {...object('Porduct', testProduct)}
+      {...object('Product', testProduct)}
       style={object('style', defaultStyle)}
       onPress={action(kActionOnPress)}
     />
