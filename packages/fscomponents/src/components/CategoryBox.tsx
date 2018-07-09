@@ -13,23 +13,23 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { style as S } from '../styles/CategoryBox';
 
 export interface CategoryBoxProps extends CommerceTypes.Category {
+  imageStyle?: StyleProp<ImageStyle>;
   onPress?: (item: CommerceTypes.Category) => void;
+  showImage?: boolean;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
-  imageStyle?: StyleProp<ImageStyle>;
-  imageBool?: boolean;
 }
 
 export class CategoryBox extends PureComponent<CategoryBoxProps> {
   static defaultProps: Partial<CategoryBoxProps> = {
-    imageBool: true
+    showImage: true
   };
 
   render(): JSX.Element {
     const {
       image,
-      imageBool,
+      showImage,
       imageStyle,
       style,
       title,
@@ -44,7 +44,7 @@ export class CategoryBox extends PureComponent<CategoryBoxProps> {
         onPress={this.handlePress}
       >
         <View style={S.boxInner}>
-          {imageBool && image && <Image source={image} style={imageStyle} />}
+          {showImage && image && <Image source={image} style={imageStyle} />}
           <Text style={[S.boxText, titleStyle]}>
             {title}
           </Text>

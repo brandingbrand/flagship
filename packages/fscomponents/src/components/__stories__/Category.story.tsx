@@ -46,7 +46,7 @@ const renderCategoryBox = (): JSX.Element => {
       style={object('style', defaultStyle)}
       onPress={action('CategoryBox onPress')}
       image={greyBox}
-      imageBool={boolean('thumbnail?', true)}
+      showImage={boolean('thumbnail?', true)}
       imageStyle={object('imageStyle', boxImageStyle)}
     />
   );
@@ -60,9 +60,9 @@ const renderCategoryLine = (): JSX.Element => {
       style={object('style', defaultStyle)}
       onPress={action(kActionOnPress)}
       image={greyBox}
-      imageBool={boolean('thumbnail?', true)}
+      showImage={boolean('thumbnail?', true)}
       imageStyle={object('imageStyle', lineImageStyle)}
-      accessoryBool={boolean('accessory?', true)}
+      showAccessory={boolean('accessory?', true)}
       accessorySrc={arrowRight}
       accessoryStyle={object('accessoryStyle', defaultAccessoryStyle)}
     />
@@ -77,20 +77,7 @@ storiesOf('Category', module)
       columns={select('number of columns', [1, 2, 3], 2)}
     />
   ))
-  .add('Category Line', () => (
-    <CategoryLine
-      id={'123'}
-      title={text('title', 'Category')}
-      style={object('style', defaultStyle)}
-      onPress={action(kActionOnPress)}
-      image={greyBox}
-      imageBool={boolean('thumbnail?', true)}
-      imageStyle={object('imageStyle', lineImageStyle)}
-      accessoryBool={boolean('accessory?', true)}
-      accessorySrc={arrowRight}
-      accessoryStyle={object('accessoryStyle', defaultAccessoryStyle)}
-    />
-  ))
+  .add('Category Line', renderCategoryLine)
   .add('Category Line in FlatList', () => (
     <FlatList
       renderItem={renderCategoryLine}
