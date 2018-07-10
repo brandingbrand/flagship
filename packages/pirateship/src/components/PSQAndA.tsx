@@ -7,8 +7,8 @@ import {
 
 import timeSince from '../lib/timeSince';
 import { bvDataSource } from '../lib/datasource';
-import PSLoading from './PSLoading';
 import * as variables from '../styles/variables';
+import { Loading } from '@brandingbrand/fscomponents';
 import { ReviewTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -118,7 +118,7 @@ export default class PSQAndA extends Component<PSQAndAProps, PSQAndAState> {
     const { isLoading, questions } = this.state;
 
     if (isLoading) {
-      return <PSLoading style={{ marginTop: 80 }} />;
+      return <Loading style={{ marginTop: 80 }} />;
     } else if (questions.length) {
       return (
         <View style={styles.questions}>

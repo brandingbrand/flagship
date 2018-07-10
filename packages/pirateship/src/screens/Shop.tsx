@@ -12,12 +12,13 @@ import {
 
 import { get } from 'lodash-es';
 
+import { SearchBar } from '@brandingbrand/fscomponents';
+
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSWelcome from '../components/PSWelcome';
 import PSHeroCarousel, {
   PSHeroCarouselItem
 } from '../components/PSHeroCarousel';
-import PSSearchBar from '../components/PSSearchBar';
 import PSButton from '../components/PSButton';
 import PSShopLandingCategories from '../components/PSShopLandingCategories';
 
@@ -33,6 +34,7 @@ import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
 
 const logo = require('../../assets/images/placeholder-100x100.png');
+const searchIcon = require('../../assets/images/search.png');
 
 const ShopStyle = StyleSheet.create({
   wrapper: {
@@ -169,8 +171,11 @@ class Shop extends Component<ShopProps> {
   }
 
   handleCategoryItemPress = (item: any) => {
+    // Shopify doesn't have the concept of subcategories so always direct users to product index
+    const screen = dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
+
     this.props.navigator.push({
-      screen: 'Category',
+      screen,
       title: item.title,
       passProps: {
         categoryId: item.id,
@@ -202,7 +207,12 @@ class Shop extends Component<ShopProps> {
             onItemPress={this.handleHeroCarouselPress}
           />
           <View style={ShopStyle.searchBarContainer}>
-            <PSSearchBar />
+            <SearchBar
+              containerStyle={GlobalStyle.searchBarInner}
+              inputTextStyle={GlobalStyle.searchBarInputTextStyle}
+              searchIcon={searchIcon}
+              placeholder={translate.string(translationKeys.search.placeholder)}
+            />
             <TouchableOpacity
               style={StyleSheet.absoluteFill}
               onPress={this.showSearchScreen}

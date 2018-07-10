@@ -9,7 +9,7 @@ import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
-// Default padding for CategoryBox component from PirateComponents
+// Default padding for CategoryBox component
 const CATEGORY_BOX_DEFAULT_PADDING = 20;
 const DEFAULT_IMAGE_WIDTH = 150;
 

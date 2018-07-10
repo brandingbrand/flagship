@@ -83,7 +83,11 @@ export class CommerceCloudDataSource extends Classes.DemandwareBase
     throw new Error(kErrorMessageStandIn);
   }
 
-  async addToCart(productId: string, qty: number = 1): Promise<FSCommerceTypes.Cart> {
+  async addToCart(
+    productId: string,
+    qty: number = 1,
+    product?: FSCommerceTypes.Product
+  ): Promise<FSCommerceTypes.Cart> {
     throw new Error(kErrorMessageStandIn);
   }
 

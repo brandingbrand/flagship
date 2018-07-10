@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { ProductItemHorizontalList } from '@brandingbrand/fscomponents';
 
 export const grays = {
   one: '#f5f5f5',
@@ -60,3 +61,9 @@ export const border = {
   width: StyleSheet.hairlineWidth,
   radius: 3
 };
+
+// Number of columns to show on product index pages, use 1 for a list view
+export const pipColumns = 1;
+
+// Specifiy a ProductItem component to use on product index pages
+export const PIPProductItem = ProductItemHorizontalList;

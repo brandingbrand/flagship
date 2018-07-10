@@ -2,8 +2,9 @@ import React, { Component, RefObject } from 'react';
 import { Linking, Platform, StyleSheet, View, WebView } from 'react-native';
 import url from 'url';
 
+import { Loading } from '@brandingbrand/fscomponents';
+
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import PSLoading from '../components/PSLoading';
 import { handleDeeplink } from '../lib/deeplinkHandler';
 
 import { backButton } from '../lib/navStyles';
@@ -163,7 +164,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
   renderLoading = (): JSX.Element => {
     return (
       <View style={[styles.flex1, styles.verticalAlignCenter]}>
-        <PSLoading />
+        <Loading />
       </View>
     );
   }

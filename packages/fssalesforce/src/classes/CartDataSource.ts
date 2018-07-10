@@ -236,10 +236,15 @@ export class DemandwareCartDataSource extends DemandwareBase
    *
    * @param {string} productId - An identifier corresponding to the product to be added to cart
    * @param {number} qty - The number of said product to be added to the cart
+   * @param {Product} product - A product object representing the product to be added to the cart
    * @returns {Promise.<Cart>} A Promise representing a noramlized cart after the product
    * has been added.
    */
-  async addToCart(productId: string, qty: number = 1): Promise<FSCommerceTypes.Cart> {
+  async addToCart(
+    productId: string,
+    qty: number = 1,
+    product?: FSCommerceTypes.Product
+  ): Promise<FSCommerceTypes.Cart> {
     const cartData = await this.fetchCart({ noExtraData: true });
     if (!cartData || !cartData.id) {
       throw new Error(kErrorMessageNoData);
