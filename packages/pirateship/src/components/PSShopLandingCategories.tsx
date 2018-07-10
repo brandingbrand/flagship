@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import PSLoading from './PSLoading';
 import PSRow from './PSRow';
 import { border, fontSize, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { Loading } from '@brandingbrand/fscomponents';
 
 const styles = StyleSheet.create({
   loading: {
@@ -45,7 +45,7 @@ export default class PSShopLandingCategories extends Component<
 
   renderContent(): JSX.Element | JSX.Element[] {
     if (!this.props.categories) {
-      return <PSLoading style={styles.loading} />;
+      return <Loading style={styles.loading} />;
     }
 
     return this.props.categories.map((category, i) => (
