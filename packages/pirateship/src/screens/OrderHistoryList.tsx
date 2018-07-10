@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import PSLoading from '../components/PSLoading';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { Loading } from '@brandingbrand/fscomponents';
 
 import { dataSource } from '../lib/datasource';
 import { backButton } from '../lib/navStyles';
@@ -184,7 +184,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   renderLoading = () => {
-    return <PSLoading />;
+    return <Loading />;
   }
 
   renderOrderList = () => {

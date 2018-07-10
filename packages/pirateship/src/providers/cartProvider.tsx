@@ -43,7 +43,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
       const productId = variantId ? variantId : product.id;
 
       return dataSource
-        .addToCart(productId, quantity)
+        .addToCart(productId, quantity, product)
         .then(async atcResponse => {
           Analytics.add.product('ProductDetail', mapProductToAnalytics(product, quantity));
 

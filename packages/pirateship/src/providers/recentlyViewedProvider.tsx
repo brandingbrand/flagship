@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { RecentlyViewedStore } from '../reducers/recentlyViewedReducer';
 import { AsyncStorage } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { find } from 'lodash-es';
 
 const RECENTLY_VIEWED_ITEMS = 'RECENTLY_VIEWED_ITEMS';
 const NUM_STORED_VIEWED_ITEMS = 10;
@@ -54,25 +55,23 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
     },
     addToRecentlyViewed: async product => {
       try {
-        const list = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS);
-        let items = [product];
-        if (list) {
-          const json = JSON.parse(list);
-          if (typeof json === 'object') {
-            items = [...json];
-            const commonItems = items.filter(prod => {
-              return prod.id === product.id;
-            });
-            if (!commonItems.length) {
-              items.unshift(product);
-              if (items.length > NUM_STORED_VIEWED_ITEMS) {
-                items.pop();
-              }
-            }
-          }
+        const existingItemsJson = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS);
+        let existingItems = JSON.parse(existingItemsJson);
+
+        if (!Array.isArray(existingItems)) {
+          existingItems = [];
         }
-        await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, JSON.stringify(items));
-        dispatch({ type: UPDATE_RECENTLY_VIEWED, items });
+
+        if (find(existingItems, { id: product.id }) === undefined) {
+          existingItems.unshift(product);
+
+          if (existingItems.length > NUM_STORED_VIEWED_ITEMS) {
+            existingItems.pop();
+          }
+
+          await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, JSON.stringify(existingItems));
+          dispatch({ type: UPDATE_RECENTLY_VIEWED, existingItems });
+        }
       } catch (e) {
         const items = [] as CommerceTypes.Product[];
         await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, '');
