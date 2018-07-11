@@ -71,12 +71,12 @@ export class Form extends PureComponent<FormProps> {
   };
 
   calculateStyles: CalculateStylesType = memoize(
-  (activeColor, errorColor, inactiveColor) => {
+  (activeColor: string, errorColor: string, inactiveColor: string) => {
     return styles({activeColor, errorColor, inactiveColor});
   });
 
   calculateBlurs: CalculateBlursType = memoize(
-    fieldsOptions => {
+    (fieldsOptions: Dictionary) => {
       Object.keys(fieldsOptions).forEach(path => {
         const prevOnBlur = fieldsOptions[path].onBlur;
         fieldsOptions[path].onBlur = () => {
