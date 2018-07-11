@@ -86,16 +86,16 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
     this.fieldsOptions = {
       emailAddress: {
-        label: '*Email Address',
+        label: 'Email',
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: 'Please enter a valid email address'
+        error: 'Please enter a valid email'
       },
       password: {
-        label: '*Password',
+        label: 'Password',
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
