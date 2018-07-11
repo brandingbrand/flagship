@@ -1,15 +1,27 @@
-import {inlineFormLabelTextbox} from './inlineFormLabelTextbox';
-import {floatingFormLabelTextbox} from './floatingFormLabelTextbox';
-import {hiddenFormLabelTextbox} from './hiddenFormLabelTextbox';
+import { labelInlineTextbox } from './inline';
+import { labelFloatingTextbox } from './floating';
+import { labelHiddenTextbox } from './hidden';
+import { labelAboveTextbox} from './above';
 
 export const inlineLabels = {
-  textbox: inlineFormLabelTextbox
+  textbox: labelInlineTextbox
 };
 
 export const hiddenLabels = {
-  textbox: hiddenFormLabelTextbox
+  textbox: labelHiddenTextbox
 };
 
 export const floatingLabels = {
-  textbox: floatingFormLabelTextbox
+  textbox: labelFloatingTextbox
 };
+
+export const aboveLabels = {
+  textbox: labelAboveTextbox
+};
+
+export * from './above';
+export * from './floating';
+export * from './hidden';
+export * from './inline';
+
+export * from './stylesheet';
