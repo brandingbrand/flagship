@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 
 export interface ModalHalfScreenProps {
   visible?: boolean;
+  height?: number;
   onRequestClose: () => void;
 }
 
@@ -94,10 +95,15 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
   render(): JSX.Element {
     const contentOffsetY = this.state.contentOffset.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, -400]
+      outputRange: [0, this.props.height ? 0 - this.props.height : -400]
     });
+    const heightFromProps = this.props.height ? {
+      height: this.props.height,
+      bottom: 0 - this.props.height
+    } : {};
     const stylesForAnimation = [
       styles.animatedContent,
+      heightFromProps,
       {
         transform: [
           {
