@@ -1,7 +1,17 @@
 module.exports = {
   desktopHost: 'https://www.brandingbrand.com',
+  name: 'PirateShip',
   displayName: 'PirateShip',
   enabledCapabilitiesIOS: [],
+  buildConfig: {
+    ios: {
+      exportTeamId: '',
+      deployScheme: '',
+      appCertDir: '',
+      provisioningProfileName: ''
+    }
+  },
+  entitlementsFileIOS: './uat.entitlements',
   googleAnalytics: {
     android: '',
     ios: ''
@@ -9,39 +19,6 @@ module.exports = {
   cmsEnvironment: 1,
   cmsPropertyId: 443,
   dataSourceConfigs: {
-    bbPlatform: {
-      type: 'bbplatform',
-      categoryFormat: 'grid',
-      apiConfig: {
-        apiHost: 'https://api.example.com'
-      }
-    },
-    commerceCloud: {
-      type: 'commercecloud',
-      categoryFormat: 'list',
-      apiConfig: {
-        clientId: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        endpoint: 'https://demo-ocapi.demandware.net/s/SiteGenesis/dw/shop/v18_6',
-        storeCurrencyCode: 'USD',
-        networkClient: {
-          baseURL: 'https://demo-ocapi.demandware.net/s/SiteGenesis/dw/shop/v18_6',
-          headers: {
-            origin: 'https://demo-ocapi.demandware.net/s/SiteGenesis/dw/shop/v18_6',
-            'x-dw-client-id': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-          }
-        }
-      }
-    },
-    shopify: {
-      type: 'shopify',
-      categoryFormat: 'list',
-      apiConfig: {
-        domain: 'https://flagshipdemo.myshopify.com/api/graphql',
-        storefrontAccessToken: '76f12786038b796aef137d56950644e7',
-        googlePayPublicKey: '',
-        storeCurrencyCode: 'USD'
-      }
-    },
     bazaarVoice: {
       endpoint: 'https://api.bazaarvoice.com',
       passkey: ''
