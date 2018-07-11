@@ -15,6 +15,12 @@ export const style = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
+  buttonView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'center'
+  },
   text: {
     textAlign: 'center',
     fontSize: 16
