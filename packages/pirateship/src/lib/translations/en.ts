@@ -156,7 +156,7 @@ export const en: ProjectTranslationKeys = {
     }
   },
   search: {
-    placeholder: 'Search by product, brand or part',
+    placeholder: 'Search',
     noResults: {
       text: 'We found 0 results for {{keyword}}',
       suggestions: [
