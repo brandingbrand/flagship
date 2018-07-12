@@ -300,6 +300,7 @@ interface Screens<KeyType> {
   };
   shop: ScreenTitle<KeyType> & {
     shopByCategoryBtn: KeyType;
+    shopAllBtn: KeyType;
     shopTopBtn: KeyType;
     viewAllBtn: KeyType;
   };
