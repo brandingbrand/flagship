@@ -13,7 +13,7 @@ import {
   Loading,
   Modal,
   ModalHalfScreen,
-  ProductItemVerticalReviews,
+  ProductItem,
   RefineActionBar,
   SelectableList,
   SelectableRow
@@ -86,7 +86,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     return (
-      <ProductItemVerticalReviews
+      <ProductItem
         style={S.productItem}
         title={item.title}
         brand={item.brand}

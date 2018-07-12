@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text
-} from 'react-native';
-import { ProductItemProps } from '../ProductItemProps';
+import { StyleSheet, Text } from 'react-native';
+import { ProductItemProps } from '../ProductItem';
+import { types, weights } from '../../../styles/variables';
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   title: {
-    fontSize: 16,
-    fontWeight: 'bold'
+    marginBottom: 7
   }
 });
 
@@ -26,6 +23,6 @@ export class ProductItemTitle extends Component<ProductItemTitleProps> {
       return null;
     }
 
-    return <Text style={[style.title, titleStyle]}>{title}</Text>;
+    return <Text style={[types.regular, weights.medium, styles.title, titleStyle]}>{title}</Text>;
   }
 }
