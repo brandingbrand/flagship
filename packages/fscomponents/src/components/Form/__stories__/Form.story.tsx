@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
+  color,
   object
 // tslint:disable-next-line no-submodule-imports no-implicit-dependencies
 } from '@storybook/addon-knobs/react';
@@ -23,26 +24,26 @@ const fieldsTypes = t.struct({
   rememberMe: t.Boolean
 });
 
-
 const fieldsOptions = {
   email: {
     placeholder: 'Email',
     returnKeyType: 'next',
     autoCorrect: false,
     keyboardType: 'email-address',
-    autoCapitalize: 'none'
+    autoCapitalize: 'none',
+    error: 'Please enter an email'
   },
   password: {
     placeholder: 'Password',
     returnKeyType: 'next',
     autoCorrect: false,
-    secureTextEntry: true
+    secureTextEntry: true,
+    error: 'Must be six characters or more'
   },
   rememberMe: {
     label: 'Remember Me'
   }
 };
-
 
 const defaultStyle = {
   padding: 10
@@ -51,6 +52,9 @@ const defaultStyle = {
 storiesOf('Form', module)
   .add('basic usage', () => (
     <Form
+      activeColor={color('Active Field Color', '#000000')}
+      errorColor={color('Error Color', '#d0021b')}
+      inactiveColor={color('Inactive Color', '#9B9B9B')}
       style={object('style', defaultStyle)}
       fieldsTypes={fieldsTypes}
       fieldsOptions={object('fieldsOptions', fieldsOptions)}
@@ -58,6 +62,9 @@ storiesOf('Form', module)
   ))
   .add('label hidden', () => (
     <Form
+      activeColor={color('Active Field Color', '#000000')}
+      errorColor={color('Error Color', '#d0021b')}
+      inactiveColor={color('Inactive Color', '#9B9B9B')}
       style={object('style', defaultStyle)}
       fieldsTypes={fieldsTypes}
       fieldsOptions={object('fieldsOptions', fieldsOptions)}
@@ -66,6 +73,9 @@ storiesOf('Form', module)
   ))
   .add('label above', () => (
     <Form
+      activeColor={color('Active Field Color', '#000000')}
+      errorColor={color('Error Color', '#d0021b')}
+      inactiveColor={color('Inactive Color', '#9B9B9B')}
       style={object('style', defaultStyle)}
       fieldsTypes={fieldsTypes}
       fieldsOptions={object('fieldsOptions', fieldsOptions)}
@@ -74,6 +84,9 @@ storiesOf('Form', module)
   ))
   .add('label floating', () => (
     <Form
+      activeColor={color('Active Field Color', '#000000')}
+      errorColor={color('Error Color', '#d0021b')}
+      inactiveColor={color('Inactive Color', '#9B9B9B')}
       style={object('style', defaultStyle)}
       fieldsTypes={fieldsTypes}
       fieldsOptions={object('fieldsOptions', fieldsOptions)}

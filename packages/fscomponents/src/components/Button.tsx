@@ -49,6 +49,7 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   };
   icon?: ImageURISource;
   iconStyle?: StyleProp<ImageStyle>;
+  viewStyle?: StyleProp<ViewStyle>;
 
   // color
   primary?: boolean;
@@ -138,7 +139,8 @@ export class Button extends PureComponent<ButtonProps> {
       icon,
       iconStyle,
       title,
-      titleStyle
+      titleStyle,
+      viewStyle
     } = this.props;
 
     const color = this.getColor(this.props);
@@ -148,7 +150,7 @@ export class Button extends PureComponent<ButtonProps> {
       return <Loading />;
     } else {
       return (
-        <View style={S.buttonView}>
+        <View style={[S.buttonView, viewStyle]}>
           {icon && <Image style={[S.icon, iconStyle]} source={icon} />}
           <Text
             style={[

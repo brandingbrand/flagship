@@ -183,6 +183,7 @@ export default class PSSignInForm extends Component<
   getFormFieldOptions = (fieldStyles: { [key: string]: any }): { [key: string]: any } => {
     const fieldOptions = {
       email: {
+        template: textboxWithRightIcon,
         placeholder: 'Required',
         placeholderTextColor: variables.color.gray,
         returnKeyType: 'next',

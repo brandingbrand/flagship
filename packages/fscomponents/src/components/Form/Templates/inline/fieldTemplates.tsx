@@ -1,77 +1,128 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Image, Text, View } from 'react-native';
 // @ts-ignore TODO: Update react-native-masked-text to support typing
+import { memoize } from 'lodash-es';
 import { TextInputMask } from 'react-native-masked-text';
+import { Dictionary } from '@brandingbrand/fsfoundation';
+import { CreditCardNumber } from '../../../CreditCardNumber';
+import {
+  ComputeFieldType,
+  defaultTextboxStyle,
+  errorIcon,
+  getColor,
+  StatefulTextboxProps,
+  StatefulTextboxState,
+  successIcon
+} from '../formBoilerplate';
 
-import { CreditCardNumber } from '../components/CreditCardNumber';
+class StatefulFieldTemplate extends Component<StatefulTextboxProps,
+StatefulTextboxState> {
 
-/* tslint:disable:jsx-no-lambda jsx-no-string-ref */
+  state: StatefulTextboxState = {
+    active: false,
+    validated: false
+  };
 
-/*
- * Input component that follows
- * https://github.com/gcanti/tcomb-form-native/blob/master/lib/templates/bootstrap/textbox.js
- * but allows you to use a custom component instead of TextInput
- */
-function customComponent(
-  locals: any,
-  componentFactory: (locals: any, textboxStyle: any) => JSX.Element
-): React.ReactNode {
-  if (locals.hidden) {
-    return null;
+  // memoizes returned function so as not to recompute on each rerender
+  private computeBlur: ComputeFieldType = memoize(prevOnBlur => () => {
+    this.onBlur();
+
+    if (typeof prevOnBlur === 'function') {
+      prevOnBlur();
+    }
+  });
+
+  private computeFocus: ComputeFieldType = memoize(prevOnFocus => () => {
+    this.onFocus();
+
+    if (typeof prevOnFocus === 'function') {
+      prevOnFocus();
+    }
+  });
+
+  constructor(props: StatefulTextboxProps) {
+    super(props);
   }
 
-  const stylesheet = locals.stylesheet;
-  let formGroupStyle = stylesheet.formGroup.normal;
-  let controlLabelStyle = stylesheet.controlLabel.normal;
-  let textboxStyle = stylesheet.textbox.normal;
-  let textboxViewStyle = stylesheet.textboxView.normal;
-  let helpBlockStyle = stylesheet.helpBlock.normal;
-  const errorBlockStyle = stylesheet.errorBlock;
+  render(): JSX.Element {
+    const {locals, componentFactory} = this.props;
 
-  if (locals.hasError) {
-    formGroupStyle = stylesheet.formGroup.error;
-    controlLabelStyle = stylesheet.controlLabel.error;
-    textboxStyle = stylesheet.textbox.error;
-    textboxViewStyle = stylesheet.textboxView.error;
-    helpBlockStyle = stylesheet.helpBlock.error;
-  }
+    const prevOnBlur = locals.onBlur;
+    const prevOnFocus = locals.onFocus;
 
-  if (locals.editable === false) {
-    textboxStyle = stylesheet.textbox.notEditable;
-    textboxViewStyle = stylesheet.textboxView.notEditable;
-  }
+    locals.onBlur = this.computeBlur(prevOnBlur);
+    locals.onFocus = this.computeFocus(prevOnFocus);
 
-  const label = locals.label ? (
-    <Text style={controlLabelStyle}>{locals.label}</Text>
-  ) : null;
-  const help = locals.help ? (
-    <Text style={helpBlockStyle}>{locals.help}</Text>
-  ) : null;
-  const error =
-    locals.hasError && locals.error ? (
-      <Text style={errorBlockStyle}>
-        {locals.error}
-      </Text>
-    ) : null;
 
-  return (
-    <View style={formGroupStyle}>
-      {label}
-      <View style={textboxViewStyle}>
-        {componentFactory(locals, textboxStyle)}
+    locals.placeholder = this.state.active ? null : locals.error;
+    locals.placeholderTextColor = locals.stylesheet.colors.error;
+
+    const defaultStyle = defaultTextboxStyle(locals);
+
+    const {
+      alertStyle,
+      checkStyle,
+      controlLabelStyle,
+      help,
+      inlineFormGroupStyle,
+      inlineLabelViewStyle,
+      rightTextboxIconStyle,
+      textboxInlineStyle,
+      textboxViewStyle
+    } = defaultStyle;
+
+    const getIcon = () => {
+      return (this.props.locals.hasError ?
+      <Image source={errorIcon} style={alertStyle}/> :
+      <Image source={successIcon} style={checkStyle}/>
+      );
+    };
+
+    const color = getColor(this.state, locals);
+
+    return (
+      <View>
+        <View style={[inlineFormGroupStyle, {borderColor: color}]}>
+          <View style={inlineLabelViewStyle}>
+            <Text style={[controlLabelStyle, {color}]}>{locals.label}</Text>
+          </View>
+          <View style={textboxViewStyle}>
+            {componentFactory(locals, textboxInlineStyle)}
+            <View style={rightTextboxIconStyle}>
+              {this.state.validated ? getIcon() : null}
+            </View>
+          </View>
+        </View>
+        <View>
+          {help}
+        </View>
       </View>
-      {help}
-      {error}
-    </View>
-  );
+    );
+  }
+
+  private onFocus = () => {
+    this.setState({
+      active: true,
+      validated: false
+    });
+  }
+
+  private onBlur = () => {
+    this.setState({
+      active: false,
+      validated: true
+    });
+  }
+
 }
 
-export function creditCardTemplate(locals: any): React.ReactNode {
-  return customComponent(locals, (locals, textboxStyle) => {
+
+export function creditCardInlineLabelTemplate(locals: any): React.ReactNode {
+  return labelInlineFieldTemplate(locals, (locals, textboxStyle) => {
+
     return (
       <CreditCardNumber
         accessibilityLabel={locals.label}
-        ref='input'
         autoCapitalize={locals.autoCapitalize}
         autoCorrect={locals.autoCorrect}
         autoFocus={locals.autoFocus}
@@ -104,7 +155,7 @@ export function creditCardTemplate(locals: any): React.ReactNode {
         onKeyPress={locals.onKeyPress}
         returnKeyType={locals.returnKeyType}
         selectionState={locals.selectionState}
-        onChangeText={value => locals.onChange(value)}
+        onChangeText={locals.onChange}
         onChange={locals.onChangeNative}
         placeholder={locals.placeholder}
         style={textboxStyle}
@@ -114,12 +165,24 @@ export function creditCardTemplate(locals: any): React.ReactNode {
   });
 }
 
-export function maskedInputTemplate(locals: any): React.ReactNode {
-  return customComponent(locals, (locals, textboxStyle) => {
+export function labelInlineFieldTemplate(
+  locals: Dictionary,
+  componentFactory: (locals: Dictionary, textboxStyle: any) => JSX.Element
+ ): React.ReactNode {
+  return (
+    <StatefulFieldTemplate
+      locals={locals}
+      componentFactory={componentFactory}
+    />
+  );
+}
+
+
+export function maskedInputInlineLabelTemplate(locals: any): React.ReactNode {
+  return labelInlineFieldTemplate(locals, (locals, textboxStyle) => {
     return (
       <TextInputMask
         accessibilityLabel={locals.label}
-        ref='input'
         autoCapitalize={locals.autoCapitalize}
         autoCorrect={locals.autoCorrect}
         autoFocus={locals.autoFocus}
@@ -148,7 +211,7 @@ export function maskedInputTemplate(locals: any): React.ReactNode {
         onKeyPress={locals.onKeyPress}
         returnKeyType={locals.returnKeyType}
         selectionState={locals.selectionState}
-        onChangeText={(value: string) => locals.onChange(value)}
+        onChangeText={locals.onChange}
         onChange={locals.onChangeNative}
         placeholder={locals.placeholder}
         style={textboxStyle}
