@@ -357,6 +357,7 @@ export const en: ProjectTranslationKeys = {
       title: 'Shop',
       shopByCategoryBtn: commonButtons.shopByCategory,
       shopTopBtn: 'Shop Top Categories',
+      shopAllBtn: 'Shop All Categories',
       viewAllBtn: 'View All'
     }
   },
