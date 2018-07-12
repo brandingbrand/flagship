@@ -1,17 +1,5 @@
-const common = require('./common');
+const commerceCloudDataSource = require('./env.commercecloud');
 
 module.exports = {
-  ...common,
-  apiHost: 'https://api.example.com',
-  name: 'PirateShipUAT',
-  displayName: 'PirateShip UAT',
-  buildConfig: {
-    ios: {
-      exportTeamId: '',
-      deployScheme: '',
-      appCertDir: '',
-      provisioningProfileName: ''
-    }
-  },
-  entitlementsFileIOS: './uat.entitlements'
+  ...commerceCloudDataSource
 };
