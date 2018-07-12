@@ -33,7 +33,7 @@ import withTopCategory, { TopCategoryProps } from '../providers/topCategoryProvi
 import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
 
-const logo = require('../../assets/images/placeholder-100x100.png');
+const logo = require('../../assets/images/pirateship-120.png');
 const searchIcon = require('../../assets/images/search.png');
 
 const ShopStyle = StyleSheet.create({
