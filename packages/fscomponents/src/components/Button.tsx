@@ -13,28 +13,15 @@ import {
 } from 'react-native';
 
 import { darken } from '../lib/color';
+import { border, palette } from '../styles/variables';
 import {
   style as S,
   stylesSize,
-  stylesTextColor,
   stylesTextSize
 } from '../styles/Button';
 import { Loading } from './Loading';
 
 const DEFAULT_TINT_PERC = 15;
-
-export interface StylesColor {
-  primary: string;
-  secondary: string;
-  success: string;
-  info: string;
-  warning: string;
-  alert: string;
-  dark: string;
-  light: string;
-  disabled: string;
-  link: string;
-}
 
 export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop'> {
   title: string;
@@ -44,20 +31,16 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   onLongPress?: () => void;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
-  variables?: {
-    color: any;
-  };
   icon?: ImageURISource;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
 
-  // color
-  primary?: boolean;
-  secondary?: boolean;
-  success?: boolean;
-  warning?: boolean;
-  alert?: boolean;
-  dark?: boolean;
+  // style
+  palette?: typeof palette;
+  color?: keyof typeof palette;
+  size?: keyof typeof stylesSize;
+
+  // types
   light?: boolean;
   link?: boolean;
 
@@ -65,34 +48,18 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   disabled?: boolean;
   loading?: boolean;
 
-  // size
-  large?: boolean;
-  small?: boolean;
+  // expand horizontally
   full?: boolean;
 }
 
-export class Button extends PureComponent<ButtonProps> {
-  stylesColor: StylesColor;
+export interface ButtonState {
+  palette: any;
+}
 
-  constructor(props: ButtonProps) {
-    super(props);
-
-    const { variables = { color: {} } } = props;
-
-    // TODO: stylesColor should be state and this should run inside getDerivedStateFromProps
-    this.stylesColor = {
-      alert: variables.color.alert || '#f9373e',
-      dark: variables.color.dark || '#555555',
-      disabled: variables.color.disabled || '#eeeeee',
-      info: variables.color.info || '#3adb76',
-      light: variables.color.light || '#eeeeee',
-      link: 'transparent',
-      primary: variables.color.primary || '#4078c0',
-      secondary: variables.color.secondary || '#707070',
-      success: variables.color.success || '#3adb76',
-      warning: variables.color.warning || '#ffae00'
-    };
-  }
+export class Button extends PureComponent<ButtonProps, ButtonState> {
+  state: ButtonState = {
+    palette: this.props.palette || palette
+  };
 
   render(): any {
     const {
@@ -103,11 +70,14 @@ export class Button extends PureComponent<ButtonProps> {
       underlayColor,
       full,
       accessibilityLabel,
-      hitSlop
+      hitSlop,
+      size = 'medium',
+      color = 'primary',
+      light,
+      link
     } = this.props;
 
-    const color = this.getColor(this.props);
-    const size = this.getSize(this.props);
+    const { palette } = this.state;
 
     return (
       <TouchableHighlight
@@ -115,12 +85,16 @@ export class Button extends PureComponent<ButtonProps> {
         onPress={onPress}
         onLongPress={onLongPress}
         underlayColor={
-          underlayColor || darken(this.stylesColor[color], DEFAULT_TINT_PERC)
+          underlayColor || darken(palette[color], DEFAULT_TINT_PERC)
         }
         hitSlop={hitSlop}
         style={[
           S.container,
-          { backgroundColor: this.stylesColor[color] },
+          {
+            backgroundColor: light || link ? 'transparent' : palette[color],
+            borderColor: light ? palette[color] : undefined,
+            borderWidth: light ? border.width : 0
+          },
           stylesSize[size],
           full && S.full,
           style
@@ -140,11 +114,15 @@ export class Button extends PureComponent<ButtonProps> {
       iconStyle,
       title,
       titleStyle,
-      viewStyle
+      viewStyle,
+      size = 'medium',
+      color = 'primary',
+      light,
+      link
     } = this.props;
 
-    const color = this.getColor(this.props);
-    const size = this.getSize(this.props);
+    const { palette } = this.state;
+    const onColor = 'on' + color.charAt(0).toUpperCase() + color.slice(1);
 
     if (loading) {
       return <Loading />;
@@ -155,12 +133,7 @@ export class Button extends PureComponent<ButtonProps> {
           <Text
             style={[
               S.text,
-              {
-                color:
-                  color === 'link'
-                    ? this.stylesColor.primary
-                    : stylesTextColor[color]
-              },
+              { color: light || link ? palette[color] : palette[onColor] },
               stylesTextSize[size],
               titleStyle
             ]}
@@ -170,43 +143,5 @@ export class Button extends PureComponent<ButtonProps> {
         </View>
       );
     }
-  }
-
-  private getColor = (props: ButtonProps) => {
-    if (props.primary) {
-      return 'primary';
-    }
-    if (props.secondary) {
-      return 'secondary';
-    }
-    if (props.success) {
-      return 'success';
-    }
-    if (props.warning) {
-      return 'warning';
-    }
-    if (props.alert) {
-      return 'alert';
-    }
-    if (props.dark) {
-      return 'dark';
-    }
-    if (props.light) {
-      return 'light';
-    }
-    if (props.disabled) {
-      return 'disabled';
-    }
-    if (props.link) {
-      return 'link';
-    }
-    return 'primary';
-  }
-
-  private getSize = (props: ButtonProps) => {
-    if (props.small) {
-      return 'small';
-    }
-    return 'large';
   }
 }

@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   variantText: {

@@ -5,7 +5,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
 
 const heartIcon = require('../../../../assets/images/heartIcon.png');
 
