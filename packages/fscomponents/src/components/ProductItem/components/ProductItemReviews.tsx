@@ -5,16 +5,19 @@ import {
   View
 } from 'react-native';
 import { ReviewIndicator } from '../../ReviewIndicator';
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   reviewConatiner: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   reviewCountStyle: {
     fontSize: 12,
-    marginLeft: 5
+    marginTop: 2,
+    lineHeight: 18,
+    marginLeft: 6
   }
 });
 
@@ -26,7 +29,8 @@ export type ProductItemReviewsProps = Pick<
     'reviewIndicatorProps' |
     'renderReviews' |
     'reviewValue' |
-    'reviewCount'
+    'reviewCount' |
+    'showReviewCount'
 >;
 
 export class ProductItemReviews extends Component<ProductItemReviewsProps> {
@@ -37,6 +41,7 @@ export class ProductItemReviews extends Component<ProductItemReviewsProps> {
       reviewCountStyle,
       reviewIndicatorProps = {},
       renderReviews,
+      showReviewCount = true,
       reviewValue, // deprecated
       reviewCount  // deprecated
     } = this.props;
@@ -54,8 +59,11 @@ export class ProductItemReviews extends Component<ProductItemReviewsProps> {
 
     return (
       <View style={[style.reviewConatiner, reviewStyle]}>
-        <ReviewIndicator value={avgRating} {...reviewIndicatorProps} />
-        {count && (
+        <ReviewIndicator
+          value={avgRating}
+          {...reviewIndicatorProps}
+        />
+        {showReviewCount && count && (
           <Text style={[style.reviewCountStyle, reviewCountStyle]}>
             ({count})
           </Text>

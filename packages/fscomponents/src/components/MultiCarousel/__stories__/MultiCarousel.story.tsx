@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
 import { MultiCarousel } from '../MultiCarousel';
-import { ProductItemVerticalList } from '../../ProductItem/ProductItemVerticalList';
+import { ProductItem } from '../../ProductItem';
 import Decimal from 'decimal.js';
 
 const productItems = [...Array(10)].map((a, i) => ({
@@ -13,7 +13,7 @@ const productItems = [...Array(10)].map((a, i) => ({
 
 const renderItem = (item: any) => {
   return (
-    <ProductItemVerticalList
+    <ProductItem
       id={item.id}
       handle={item.title}
       title={item.title}
