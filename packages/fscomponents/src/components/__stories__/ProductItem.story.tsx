@@ -31,7 +31,7 @@ const testProduct: CommerceTypes.Product = {
     value: new Decimal('200.00'),
     currencyCode: 'USD'
   },
-  images: [{ uri: 'https://placehold.it/345x200' }],
+  images: [{ uri: 'https://placehold.it/345x200?text=%20' }],
   review: {
     id: '101',
     statistics: {
