@@ -1,5 +1,6 @@
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { DefaultCurrencyCode, Products } from '.';
+import { DefaultCurrencyCode } from './Misc';
+import { Products } from './Products';
 import Decimal from 'decimal.js';
 
 export class Cart {
