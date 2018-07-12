@@ -210,6 +210,14 @@ const styles = StyleSheet.create({
   atcImage: {
     height: 15,
     width: 15
+  },
+  quantityText: {
+    fontWeight: '600',
+    fontSize: 15,
+    paddingBottom: 6
+  },
+  quantityView: {
+    marginTop: 15
   }
 });
 
@@ -596,10 +604,10 @@ class PSProductDetailComponent extends Component<
         </View>
         <View style={styles.edgePadding}>
           {options && this.renderSwatches(options)}
-          <View>
+          <View style={styles.quantityView}>
             <View style={{ paddingBottom: 20 }}>
               <Text
-                style={{ fontWeight: '600', fontSize: 15, paddingBottom: 6 }}
+                style={styles.quantityText}
               >
                 {translate.string(translationKeys.item.qty)}:
               </Text>
