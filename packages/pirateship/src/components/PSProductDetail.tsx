@@ -329,7 +329,11 @@ class PSProductDetailComponent extends Component<
       // Search for matching variant
       const variant = find(variants, { optionValues: newOptionValues }) as any;
 
-      if (variant && variant.id && dataSourceConfig.type === 'commercecloud') {
+      if (
+        variant &&
+        variant.id &&
+        ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
+      ) {
         this.props.navigator.push({
           screen: 'ProductDetail',
           passProps: {
