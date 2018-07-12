@@ -63,7 +63,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
     }
 
     async fetchCategory(
-      id?: string,
+      id: string = 'root',
       query?: CommerceTypes.CategoryQuery
     ): Promise<CommerceTypes.Category> {
       if (id === 'root') {
