@@ -1,6 +1,14 @@
 import { BazaarvoiceDataSource } from '@brandingbrand/fsbazaarvoice';
+import BBPlatformDataSource from './BBPlatformDataSource';
+import { CommerceCloudDataSource } from '@brandingbrand/fssalesforce';
+import FSNetwork from '@brandingbrand/fsnetwork';
+import { commerceCloudMiddleware } from './commerceCloudMiddleware';
+import { ShopifyDataSource } from '@brandingbrand/fsshopify';
 import { env } from '@brandingbrand/fsapp';
+
 const { dataSourceConfigs } = env;
+
+let dataSourceToExport;
 
 export interface DataSourceConfig {
   type: 'bbplatform' | 'commercecloud' | 'shopify';
@@ -8,31 +16,25 @@ export interface DataSourceConfig {
   apiConfig: any;
 }
 
-/*
-import BBPlatformDataSource from './BBPlatformDataSource';
-export const dataSource = new BBPlatformDataSource(dataSourceConfigs.bbPlatform.apiConfig.apiHost);
-export const dataSourceConfig: DataSourceConfig = dataSourceConfigs.bbPlatform;
-*/
+if (env.dataSource.type === 'bbplatform') {
+  dataSourceToExport = new BBPlatformDataSource(env.dataSource.apiConfig.apiHost);
+} else if (env.dataSource.type === 'commercecloud') {
+  const config: any = env.dataSource.apiConfig;
+  config.middleware = commerceCloudMiddleware;
 
-import { CommerceCloudDataSource } from '@brandingbrand/fssalesforce';
-import FSNetwork from '@brandingbrand/fsnetwork';
-import { commerceCloudMiddleware } from './commerceCloudMiddleware';
+  if (config.networkClient) {
+    config.networkClient = new FSNetwork(config.networkClient);
+  }
 
-const config: any = dataSourceConfigs.commerceCloud.apiConfig;
-config.middleware = commerceCloudMiddleware;
-
-if (config.networkClient) {
-  config.networkClient = new FSNetwork(config.networkClient);
+  dataSourceToExport = new CommerceCloudDataSource(config);
+} else if (env.dataSource.type === 'shopify') {
+  const config: any = env.dataSource.apiConfig;
+  dataSourceToExport = new ShopifyDataSource(config);
+} else {
+  throw new Error('No data source specified in env!');
 }
 
-export const dataSource = new CommerceCloudDataSource(config);
-export const dataSourceConfig: DataSourceConfig = dataSourceConfigs.commerceCloud;
-
-/*
-import { ShopifyDataSource } from '@brandingbrand/fsshopify';
-const config: any = dataSourceConfigs.shopify.apiConfig;
-export const dataSource = new ShopifyDataSource(config);
-export const dataSourceConfig = dataSourceConfigs.shopify;
-*/
+export const dataSource = dataSourceToExport;
+export const dataSourceConfig: DataSourceConfig = env.dataSource;
 
 export const bvDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);

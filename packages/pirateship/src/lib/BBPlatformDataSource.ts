@@ -522,7 +522,11 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     return this.updateCartSchema(response.data);
   }
 
-  async addToCart(id: string, qty: number = 1): Promise<CommerceTypes.Cart> {
+  async addToCart(
+    id: string,
+    qty: number = 1,
+    product?: CommerceTypes.Product
+  ): Promise<CommerceTypes.Cart> {
     try {
       const encodedId = encodeURIComponent(id);
       const response = await this.client.get(`cart/add/${encodedId}/${qty}`);
@@ -612,7 +616,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
   }
 
   async register(
-    account: CustomerAccount,
+    account: CommerceTypes.CustomerAccount,
     password: string
   ): Promise<CustomerAccount> {
     const response = await this.client.post(`account`, {
