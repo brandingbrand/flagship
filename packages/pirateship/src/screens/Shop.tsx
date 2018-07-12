@@ -25,7 +25,7 @@ import PSShopLandingCategories from '../components/PSShopLandingCategories';
 import { openSignInModal } from '../lib/shortcuts';
 import { handleDeeplink } from '../lib/deeplinkHandler';
 import GlobalStyle from '../styles/Global';
-import { border, palette } from '../styles/variables';
+import { border, color, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -33,10 +33,17 @@ import withTopCategory, { TopCategoryProps } from '../providers/topCategoryProvi
 import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
 
+const arrow = require('../../assets/images/arrow.png');
 const logo = require('../../assets/images/pirateship-120.png');
 const searchIcon = require('../../assets/images/search.png');
 
 const ShopStyle = StyleSheet.create({
+  arrow: {
+    maxWidth: 15,
+    maxHeight: 15,
+    marginHorizontal: 10,
+    transform: [{ rotate: '180deg' }]
+  },
   wrapper: {
     backgroundColor: palette.primary
   },
@@ -91,8 +98,14 @@ const ShopStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  viewAllButtonTitle: {
+    fontSize: 16,
+    color: color.black
+  },
   viewAllButton: {
-    marginRight: 15
+    flexDirection: 'row-reverse',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   }
 });
 
@@ -234,6 +247,11 @@ class Shop extends Component<ShopProps> {
               link
               title={translate.string(translationKeys.screens.shop.viewAllBtn)}
               onPress={this.goToAllCategories}
+              icon={arrow}
+              iconStyle={ShopStyle.arrow}
+              style={ShopStyle.container}
+              titleStyle={ShopStyle.viewAllButtonTitle}
+              viewStyle={ShopStyle.viewAllButton}
             />
           </View>
           <PSShopLandingCategories
