@@ -55,13 +55,13 @@ const ShopStyle = StyleSheet.create({
     backgroundColor: palette.background
   },
   shopButtonsContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
     marginHorizontal: 15
   },
   shopCategoryButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 0
   },
   searchBarContainer: {
     marginBottom: 10,
@@ -70,7 +70,10 @@ const ShopStyle = StyleSheet.create({
   },
   sectionTitle: {
     marginHorizontal: 15,
-    marginBottom: 15
+    marginTop: 0,
+    paddingTop: 15,
+    paddingBottom: 15,
+    justifyContent: 'center'
   },
   shopLandingCategories: {
     borderTopWidth: 1,
@@ -225,7 +228,7 @@ class Shop extends Component<ShopProps> {
 
           <View style={ShopStyle.topCategoriesContainer}>
             <Text style={[GlobalStyle.h2, ShopStyle.sectionTitle]}>
-              {translate.string(translationKeys.screens.shop.shopTopBtn)}
+              {translate.string(translationKeys.screens.shop.shopAllBtn)}
             </Text>
             <PSButton
               link
