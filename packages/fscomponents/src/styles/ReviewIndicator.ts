@@ -12,16 +12,21 @@ export const style = StyleSheet.create({
     flexDirection: 'row'
   },
   star: {
-    fontSize: 20,
-    width: 20,
-    height: 24,
-    color: '#ffd351',
+    fontSize: 18,
+    lineHeight: 18,
+    width: 18,
+    height: 18,
+    color: '#333132',
     textAlign: 'center',
-    fontFamily: 'Arial'
+    fontFamily: 'Arial',
+    includeFontPadding: false
+  },
+  emptyStar: {
+    color: '#e0e1e2'
   },
   halfStarContainer: {
-    width: 20,
-    height: 24,
+    width: 18,
+    height: 18,
     flexDirection: 'row'
   },
   starHalfLeft: {

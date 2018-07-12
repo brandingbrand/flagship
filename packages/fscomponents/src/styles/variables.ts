@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+export * from './weights';
+
 export const grays = {
   one: '#f5f5f5',
   two: '#e9e9e9',
@@ -38,17 +40,6 @@ export const palette = {
   onError: color.white
 };
 
-export const fontSize = {
-  base: 14,
-  huge: 25,
-  large: 16,
-  small: 12
-};
-
-export const fontWeightLight = '300';
-export const fontWeightNormal = '400';
-export const fontWeightBold = '800';
-
 export const padding = {
   base: 10,
   wide: 15,
@@ -61,5 +52,37 @@ export const border = {
   radius: 3
 };
 
-// Number of columns to show on product index pages, use 1 for a list view
-export const pipColumns = 1;
+export const types = StyleSheet.create({
+  title1: {
+    fontSize: 44,
+    lineHeight: 56
+  },
+  title2: {
+    fontSize: 32,
+    lineHeight: 36
+  },
+  title3: {
+    fontSize: 24,
+    lineHeight: 28
+  },
+  large: {
+    fontSize: 19,
+    lineHeight: 24
+  },
+  regular: {
+    fontSize: 16,
+    lineHeight: 22
+  },
+  small: {
+    fontSize: 14,
+    lineHeight: 18
+  },
+  caption: {
+    fontSize: 12,
+    lineHeight: 16
+  },
+  micro: {
+    fontSize: 10,
+    lineHeight: 12
+  }
+});

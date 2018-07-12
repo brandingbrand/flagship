@@ -7,3 +7,4 @@ export * from './ProductItemReviews';
 export * from './ProductItemSwatches';
 export * from './ProductItemTitle';
 export * from './ProductItemVariant';
+export * from './ProductItemButton';
