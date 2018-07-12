@@ -1,6 +1,6 @@
 // tslint:disable:ter-max-len max-line-length
 import Decimal from 'decimal.js';
-import { DefaultCurrencyCode } from '.';
+import { DefaultCurrencyCode } from './Misc';
 
 export const Products: import ('@brandingbrand/fscommerce').CommerceTypes.Product[] = [
   {
@@ -1274,7 +1274,7 @@ export const Products: import ('@brandingbrand/fscommerce').CommerceTypes.Produc
 
 export const ProductSortingOptions: import ('@brandingbrand/fscommerce').CommerceTypes.SortingOption[] = [
   {
-    id: 'title-desc',
+    id: 'title-asc',
     title: 'Name (asc)'
   }, {
     id: 'title-desc',
