@@ -148,7 +148,7 @@ export class Button extends PureComponent<ButtonProps> {
       return <Loading />;
     } else {
       return (
-        <View>
+        <View style={S.buttonView}>
           {icon && <Image style={[S.icon, iconStyle]} source={icon} />}
           <Text
             style={[
