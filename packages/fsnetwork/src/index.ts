@@ -1,4 +1,10 @@
-import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosPromise,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // Export AxiosResponse type so its type definitions are not "private" and other packages depending
@@ -6,6 +12,11 @@ import { Dictionary } from '@brandingbrand/fsfoundation';
 export { AxiosPromise, AxiosRequestConfig, AxiosResponse };
 
 // As of Axios 0.18, the typings don't show the Axios property even though it exists
+
+/**
+ * Error response object from the network.
+ */
+export type FSNetworkError = AxiosError;
 
 /**
  * Configuration for the network request.
