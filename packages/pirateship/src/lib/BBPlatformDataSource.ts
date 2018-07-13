@@ -442,13 +442,11 @@ export interface ProductIndex extends CommerceTypes.ProductIndex {
   fullCategoryId?: string; // internal category id, used for vehicle filter
 }
 
-export default class BBPlatformDataSource extends CommerceDataSource {
+export default class BBPlatformDataSource implements CommerceDataSource {
   client: FSNetwork;
   minRefinements: number = 0;
 
   constructor(apiHost: string) {
-    super();
-
     this.client = new FSNetwork({
       baseURL: apiHost + '/api/'
     });
