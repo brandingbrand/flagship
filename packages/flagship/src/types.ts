@@ -15,6 +15,12 @@ export interface Config {
     ios: CodepushConfig;
   };
 
+  pushIcons?: {
+    android?: string;
+    ios?: string;
+  };
+  firebaseGoogleServices?: any;
+
   zendeskChat?: {
     accountKey: string;
   };
