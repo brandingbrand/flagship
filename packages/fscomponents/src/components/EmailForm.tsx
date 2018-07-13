@@ -37,7 +37,6 @@ export class EmailForm extends Component<EmailFormProps> {
 
     this.fieldsOptions = {
       email: {
-        auto: 'none',
         placeholder: 'Email',
         returnKeyType: 'next',
         autoCorrect: false,
