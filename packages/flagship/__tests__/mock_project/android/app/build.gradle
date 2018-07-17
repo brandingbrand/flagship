@@ -104,7 +104,7 @@ android {
         multiDexEnabled true
         applicationId "com.brandingbrand.reactnative.and.flagship"
         minSdkVersion project.MIN_SDK_VERSION.toInteger()
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionName project.VERSION_NAME
         versionCode "${project.MIN_SDK_VERSION}${project.VERSION_CODE_SHORT}".toInteger()
         ndk {
@@ -159,7 +159,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:11.+'
     compile 'com.google.android.gms:play-services-gcm:11.+'
     compile 'com.google.android.gms:play-services-maps:11.+'
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
 
     compile 'com.facebook.react:react-native:+'  // From node_modules
 
