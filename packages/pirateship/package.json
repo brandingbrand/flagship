@@ -25,6 +25,7 @@
     "@brandingbrand/fscomponents": "^0.1.0",
     "@brandingbrand/fsengage": "^0.1.0",
     "@brandingbrand/fsi18n": "^0.1.0",
+    "@brandingbrand/fsmockdatasources": "^0.1.0",
     "@brandingbrand/fsnetwork": "^0.1.0",
     "@brandingbrand/fsproductdetail": "^0.1.0",
     "@brandingbrand/fsproductindex": "^0.1.0",

@@ -1,0 +1,19 @@
+{
+  "name": "@brandingbrand/fsmockdatasources",
+  "version": "0.1.0",
+  "description": "Mock Commerce and Review Data Sources for Flagship",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/fscommerce": "^0.1.0",
+    "decimal.js": "^10.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

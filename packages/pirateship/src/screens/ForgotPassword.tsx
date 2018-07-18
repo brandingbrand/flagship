@@ -215,7 +215,6 @@ export default class ForgotPassword extends Component<
           <PSButton
             titleStyle={styles.signUpText}
             title={translate.string(forgotPasswordTranslations.completedBtn)}
-            primary={true}
             onPress={this.props.onDismiss}
             style={styles.button}
           />
@@ -255,7 +254,6 @@ export default class ForgotPassword extends Component<
           <PSButton
             title={translate.string(forgotPasswordTranslations.actionBtn)}
             onPress={this.resetPassword}
-            primary={true}
             style={styles.button}
             loading={isLoading}
           />

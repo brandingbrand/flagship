@@ -212,7 +212,6 @@ class SignUp extends Component<SignUpProps, SignUpState> {
         <PSButton
           title={translate.string(translationKeys.account.actions.signUp.actionBtn)}
           onPress={this.signUp}
-          primary={true}
           style={styles.button}
           loading={this.state.isLoading}
         />

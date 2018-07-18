@@ -13,6 +13,7 @@ import DataView from './DataView.js';
 import BrandCMS from './BrandCMS.js';
 import Address from './Address';
 import UPSAddressExample from './UPSAddressExample';
+import MockDataSource from './MockDataSource';
 
 export default {
   Home,
@@ -29,5 +30,6 @@ export default {
   DataView,
   BrandCMS,
   Address,
-  UPSAddressExample
+  UPSAddressExample,
+  MockDataSource
 };

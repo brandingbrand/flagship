@@ -269,7 +269,6 @@ class Shop extends Component<ShopProps> {
       <View style={ShopStyle.shopButtonsContainer}>
         <View style={ShopStyle.shopCategoryButtonsContainer}>
           <PSButton
-            primary
             style={ShopStyle.buttonCategoryLeft}
             title={translate.string(translationKeys.screens.shop.shopByCategoryBtn)}
             onPress={this.goToAllCategories}

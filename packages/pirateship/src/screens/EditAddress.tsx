@@ -97,7 +97,6 @@ class EditAddress extends Component<EditAddressScreenProps> {
             </View>
             <View style={AccountStyle.buttonContainer}>
               <PSButton
-                primary
                 title={translate.string(actionTranslations.confirmBtn)}
                 onPress={this.save}
               />

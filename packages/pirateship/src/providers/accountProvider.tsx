@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
     },
     signOut: async (clearSaved: boolean = true) => {
       return dataSource
-        .logout()
+        .logout('', '')
         .then(async () => {
           if (!clearSaved) {
             return;
