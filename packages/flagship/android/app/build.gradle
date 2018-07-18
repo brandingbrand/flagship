@@ -94,7 +94,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     dexOptions {
         jumboMode true
@@ -103,10 +104,10 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.brandingbrand.reactnative.and.flagship"
-        minSdkVersion project.MIN_SDK_VERSION.toInteger()
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
-        versionCode "${project.MIN_SDK_VERSION}${project.VERSION_CODE_SHORT}".toInteger()
+        versionCode "${rootProject.ext.minSdkVersion}${project.VERSION_CODE_SHORT}".toInteger()
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
