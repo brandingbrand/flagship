@@ -4,7 +4,7 @@ import {
   Text,
   View
 } from 'react-native';
-import FSI18n from '../../../../../fsi18n/dist';
+import FSI18n from '@brandingbrand/fsi18n';
 import { ProductItemProps } from '../ProductItem';
 import { types, weights } from '../../../styles/variables';
 
