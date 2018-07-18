@@ -9752,7 +9752,7 @@ react-native-htmlview@^0.13.0:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.2"
 
-react-native-i18n@^2.0.12, react-native-i18n@^2.0.15:
+react-native-i18n@^2.0.15:
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-2.0.15.tgz#09b5a9836116fa7dbd0054c46e2d1014c1ef3c65"
   dependencies:
