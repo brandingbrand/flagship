@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-import { CommerceTypes } from '../../../../fscommerce/dist';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ButtonProps } from '../Button';
 import { ReviewIndicatorProps } from '../ReviewIndicator';
 import { SwatchesProps, SwatchItemType } from '../Swatches';
