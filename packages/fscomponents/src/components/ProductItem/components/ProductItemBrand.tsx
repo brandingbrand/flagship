@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import {
+  StyleSheet,
   Text
 } from 'react-native';
 
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
+import { types } from '../../../styles/variables';
 
 export type ProductItemBrandProps = Pick<ProductItemProps, 'brand' | 'brandStyle' | 'renderBrand'>;
+
+const styles = StyleSheet.create({
+  brand: {
+    marginBottom: 4
+  }
+});
 
 export class ProductItemBrand extends Component<ProductItemBrandProps> {
   render(): React.ReactNode {
@@ -19,6 +27,6 @@ export class ProductItemBrand extends Component<ProductItemBrandProps> {
       return null;
     }
 
-    return <Text style={brandStyle}>{brand}</Text>;
+    return <Text style={[types.caption, styles.brand, brandStyle]}>{brand.toUpperCase()}</Text>;
   }
 }

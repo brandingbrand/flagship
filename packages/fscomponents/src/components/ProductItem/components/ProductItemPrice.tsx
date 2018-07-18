@@ -5,25 +5,21 @@ import {
   View
 } from 'react-native';
 import FSI18n from '@brandingbrand/fsi18n';
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
+import { types, weights } from '../../../styles/variables';
 
 const style = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginBottom: 10
-  },
-  price: {
-    fontSize: 16
+    marginBottom: 7
   },
   originalPrice: {
     textDecorationLine: 'line-through',
-    color: '#999'
+    color: '#ccc'
   },
   salePrice: {
-    color: '#F00',
-    fontSize: 16,
-    marginLeft: 5
+    marginLeft: 7
   }
 });
 
@@ -54,10 +50,10 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
     if (originalPrice && originalPrice !== price) {
       return (
         <View style={[style.priceContainer]}>
-          <Text style={[style.originalPrice, originalPriceStyle]}>
+          <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>
             {FSI18n.currency(originalPrice)}
           </Text>
-          <Text style={[style.salePrice, salePriceStyle]}>
+          <Text style={[types.small, weights.medium, style.salePrice, salePriceStyle]}>
             {FSI18n.currency(price)}
           </Text>
         </View>
@@ -65,7 +61,7 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
     } else {
       return (
         <View style={[style.priceContainer]}>
-          <Text style={[style.price, priceStyle]}>
+          <Text style={[types.small, weights.medium, priceStyle]}>
             {FSI18n.currency(price)}
           </Text>
         </View>

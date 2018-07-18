@@ -11,9 +11,9 @@ export const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    borderRadius: 3
   },
   buttonView: {
     flex: 1,
@@ -22,11 +22,11 @@ export const style = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    textAlign: 'center',
-    fontSize: 16
+    textAlign: 'center'
   },
   full: {
-    flex: 1
+    flex: 1,
+    width: '100%'
   },
   buttonInner: {
     flex: 1,
@@ -53,10 +53,13 @@ export const stylesTextColor = {
 
 export const stylesSize = StyleSheet.create({
   large: {
-    height: 50
+    height: 48
+  },
+  medium: {
+    height: 38
   },
   small: {
-    height: 30
+    height: 28
   }
 });
 
@@ -64,7 +67,10 @@ export const stylesTextSize = StyleSheet.create({
   large: {
     fontSize: 18
   },
+  medium: {
+    fontSize: 14
+  },
   small: {
-    fontSize: 13
+    fontSize: 12
   }
 });

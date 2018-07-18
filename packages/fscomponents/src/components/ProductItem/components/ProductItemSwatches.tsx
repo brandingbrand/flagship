@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import { Swatches } from '../../Swatches';
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
+
+const styles = StyleSheet.create({
+  swatches: {
+    marginBottom: 10
+  }
+});
 
 export type ProductItemSwatchesProps = Pick<
   ProductItemProps,
@@ -25,7 +32,7 @@ export class ProductItemSwatches extends Component<ProductItemSwatchesProps> {
     }
 
     return (
-      <Swatches items={swatchItems} style={swatchStyle} {...swatchesProps} />
+      <Swatches items={swatchItems} style={[styles.swatches, swatchStyle]} {...swatchesProps} />
     );
   }
 }

@@ -1,4 +1,5 @@
 import { CommerceCloudDataSource } from '@brandingbrand/fssalesforce';
+import { MockCommerceDataSource } from '@brandingbrand/fsmockdatasources';
 import {
   ContentManagementSystem,
   CoreContentManagementSystemProvider
@@ -66,3 +67,5 @@ export const cmsProductCatalog = new BrandCMSProductCatalog({
     environment: 1
   }))
 });
+
+export const mockDataSource = new MockCommerceDataSource();
