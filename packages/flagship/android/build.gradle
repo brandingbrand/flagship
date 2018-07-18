@@ -38,3 +38,15 @@ ext {
     targetSdkVersion = 26
     supportLibVersion = "26.1.0"
 }
+
+// Force subprojects to use the same SDK and build tools
+subprojects {
+    afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
