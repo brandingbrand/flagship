@@ -47,7 +47,8 @@ export const style = StyleSheet.create({
   colorContainerItem: {
     width: 25,
     height: 25,
-    margin: 3
+    margin: 5,
+    borderRadius: 25
   },
   selectedColorContainerItem: {
     borderColor: 'black',
@@ -55,7 +56,8 @@ export const style = StyleSheet.create({
     padding: 1
   },
   colorItem: {
-    flex: 1
+    flex: 1,
+    borderRadius: 25
   },
   imageContainerItem: {
     margin: 3
