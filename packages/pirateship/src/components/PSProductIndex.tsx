@@ -22,8 +22,8 @@ import { NavButton, NavigatorStyle } from '../lib/commonTypes';
 
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
-import { FilterItem } from '@brandingbrand/fscomponents';
-import { border, color, fontSize, palette, pipColumns, PIPProductItem } from '../styles/variables';
+import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
+import { border, color, fontSize, palette, pipColumns } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 const window = Dimensions.get('window');
@@ -231,8 +231,9 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
       const image = (item.images || []).find(img => !!img.uri);
 
       return (
-        <PIPProductItem
+        <ProductItem
           image={image}
+          buttonProps={{palette}}
           reviewValue={get(item, 'review.statistics.averageRating')}
           reviewCount={get(item, 'review.statistics.reviewCount')}
           onPress={this.onPress(item)}

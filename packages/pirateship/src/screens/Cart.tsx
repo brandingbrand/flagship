@@ -6,11 +6,12 @@ import {
   View
 } from 'react-native';
 
-import { Button, PromoForm } from '@brandingbrand/fscomponents';
+import { PromoForm } from '@brandingbrand/fscomponents';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { navBarFullBleed } from '../styles/Navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
+import PSButton from '../components/PSButton';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSCartItem from '../components/PSCartItem';
 import PSTotals from '../components/PSTotals';
@@ -318,12 +319,11 @@ class Cart extends Component<CartScreenProps> {
       );
 
       login.push(
-        <Button
+        <PSButton
           key='button'
           style={CartStyle.signIn}
           title={translate.string(translationKeys.account.actions.signIn.actionBtn)}
           titleStyle={CartStyle.signInButtonTitle}
-          variables={{ color: { primary: 'white' } }}
           onPress={this.signIn}
         />
       );
@@ -349,11 +349,10 @@ class Cart extends Component<CartScreenProps> {
             {translate.string(translationKeys.cart.emptyCartDetails)}
           </Text>
 
-          <Button
+          <PSButton
             style={CartStyle.continueShopping}
             title={translate.string(translationKeys.cart.actions.continueShopping.actionBtn)}
             titleStyle={CartStyle.continueShoppingButtonTitle}
-            variables={{ color: { primary: palette.primary } }}
             onPress={this.continueShopping}
           />
 
@@ -489,11 +488,10 @@ class Cart extends Component<CartScreenProps> {
   renderActionBar = () => {
     return (
       <View>
-        <Button
+        <PSButton
           icon={icons.secure}
           iconStyle={CartStyle.checkoutIcon}
           titleStyle={CartStyle.checkoutButtonTitle}
-          variables={{ color: { primary: palette.secondary } }}
           style={CartStyle.checkoutButton}
           title={translate.string(translationKeys.cart.actions.checkout.actionBtn)}
           onPress={this.startCheckout(false)}
@@ -501,16 +499,6 @@ class Cart extends Component<CartScreenProps> {
       </View>
     );
   }
-
-  /*<Button
-    icon={icons.applePay}
-    iconStyle={CartStyle.apCheckoutIconAP}
-    title='Pay'
-    titleStyle={CartStyle.apCheckoutButtonTitle}
-    variables={{ color: { primary: 'black' } }}
-    style={CartStyle.apCheckoutButton}
-    onPress={this.startCheckout(true)}
-  />*/
 
   startCheckout = (useApplePay: boolean): any => {
     return (): void => {
