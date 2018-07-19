@@ -62,6 +62,7 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
 
   onLayout = (event: any) => {
     const { images, imageStyle } = this.props;
+    const containerWidth = event.nativeEvent.layout.width;
 
     // If an imageStyle is provided don't attempt to caulcate one
     if (imageStyle) {
@@ -72,7 +73,6 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
     const image = images && images.find(img => !!img.uri) || this.props.image;
     if (image && image.uri) {
       Image.getSize(image.uri, (width, height) => {
-        const containerWidth = event.nativeEvent.layout.width;
         const calculatedHeight = Math.round((containerWidth * height) / width);
 
         this.setState({
