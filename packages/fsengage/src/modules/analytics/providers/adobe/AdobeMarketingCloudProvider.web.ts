@@ -74,7 +74,7 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
     this.trackEvent({
       elements: [{
         page: {
-          id: properties.subgroup
+          id: properties.eventCategory
         },
         metrics: [
           {
@@ -93,7 +93,7 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
     this.trackEvent({
       elements: [{
         search: {
-          id: properties.subgroup,
+          id: properties.eventCategory,
           keywords: properties.term.split(' ')
         }
       }]
