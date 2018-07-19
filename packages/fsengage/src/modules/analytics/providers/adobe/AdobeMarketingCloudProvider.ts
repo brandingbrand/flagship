@@ -36,22 +36,22 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
-    this.client.trackAction(properties.group, {
-      component: properties.subgroup,
+    this.client.trackAction(properties.eventAction, {
+      component: properties.eventCategory,
       number: properties.number
     });
   }
 
   contactEmail(properties: ContactEmail): void {
-    this.client.trackAction(properties.group, {
-      component: properties.subgroup,
+    this.client.trackAction(properties.eventAction, {
+      component: properties.eventCategory,
       to: properties.to
     });
   }
 
   clickGeneric(properties: ClickGeneric): void {
-    this.client.trackAction(properties.group, {
-      component: properties.subgroup,
+    this.client.trackAction(properties.eventAction, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       index: properties.index
@@ -64,8 +64,8 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   }
 
   locationDirections(properties: LocationDirections): void {
-    this.client.trackAction(properties.group, {
-      component: properties.subgroup,
+    this.client.trackAction(properties.eventAction, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       address: properties.address
     });
@@ -77,7 +77,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
 
   screenview(properties: Screenview): void {
     this.client.trackAction('ScreenView', {
-      component: properties.subgroup,
+      component: properties.eventCategory,
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
@@ -86,8 +86,8 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   }
 
   searchGeneric(properties: SearchGeneric): void {
-    this.client.trackAction(properties.group, {
-      component: properties.subgroup,
+    this.client.trackAction(properties.eventAction, {
+      component: properties.eventCategory,
       term: properties.term,
       count: properties.count
     });
@@ -146,7 +146,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   // App Lifecycle Functions
 
   lifecycle(properties: App): void {
-    this.client.trackAction(properties.group, {
+    this.client.trackAction(properties.eventAction, {
       appId: this.appId,
       lifecycle: properties.lifecycle
     });
