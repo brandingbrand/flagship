@@ -86,13 +86,13 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "contact",
+          "category": "Component",
+          "action": "contact",
           "label": "412.123.4567"
         },
         "custom": {
-          "action": "CallButton",
-          "category": "contact",
+          "category": "CallButton",
+          "action": "contact",
           "label": "412.123.4567"
         }
       }
@@ -108,13 +108,13 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "contact",
+          "category": "Component",
+          "action": "contact",
           "label": "tech@bestbuy.com"
         },
         "custom": {
-          "action": "EmailForm",
-          "category": "contact",
+          "category": "EmailForm",
+          "action": "contact",
           "label": "tech@bestbuy.com"
         }
       }
@@ -133,13 +133,13 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "click",
+          "category": "Component",
+          "action": "click",
           "label": "NavigationBar"
         },
         "custom": {
-          "action": "CartButton",
-          "category": "click",
+          "category": "CartButton",
+          "action": "click",
           "label": "NavigationBar"
         }
       }
@@ -157,14 +157,14 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "click",
+          "category": "Component",
+          "action": "click",
           "label": "ABCD1234",
           "value": 0
         },
         "custom": {
-          "action": "ProductItem",
-          "category": "click",
+          "category": "ProductItem",
+          "action": "click",
           "label": "ABCD1234",
           "value": 0
         }
@@ -185,13 +185,13 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "location",
+          "category": "Component",
+          "action": "location",
           "label": "Flagship Shadyside"
         },
         "custom": {
-          "action": "DirectionsButton",
-          "category": "location",
+          "category": "DirectionsButton",
+          "action": "location",
           "label": "Flagship Shadyside"
         }
       }
@@ -211,14 +211,14 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "search",
+          "category": "Component",
+          "action": "search",
           "label": "15213",
           "value": 46
         },
         "custom": {
-          "action": "SeachBar",
-          "category": "search",
+          "category": "SeachBar",
+          "action": "search",
           "label": "15213",
           "value": 46
         }
@@ -240,14 +240,14 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "impression",
+          "category": "Component",
+          "action": "impression",
           "label": "ABCD1234",
           "value": 6
         },
         "custom": {
-          "action": "CategoryItem",
-          "category": "impression",
+          "category": "CategoryItem",
+          "action": "impression",
           "label": "ABCD1234",
           "value": 6
         }
@@ -266,14 +266,14 @@
       },
       "response": {
         "default": {
-          "action": "Component",
-          "category": "impression",
+          "category": "Component",
+          "action": "impression",
           "label": "ABCD1234",
           "value": 2
         },
         "custom": {
-          "action": "ProductItem",
-          "category": "impression",
+          "category": "ProductItem",
+          "action": "impression",
           "label": "ABCD1234",
           "value": 2
         }

@@ -82,24 +82,24 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
 
   contactCall(properties: ContactCall): void {
     this._sendEvent({
-      action: properties.subgroup,
-      category: properties.group,
+      action: properties.eventAction,
+      category: properties.eventCategory,
       label: properties.number
     });
   }
 
   contactEmail(properties: ContactEmail): void {
     this._sendEvent({
-      action: properties.subgroup,
-      category: properties.group,
+      action: properties.eventAction,
+      category: properties.eventCategory,
       label: properties.to
     });
   }
 
   clickGeneric(properties: ClickGeneric): void {
     this._sendEvent({
-      action: properties.subgroup,
-      category: properties.group,
+      action: properties.eventAction,
+      category: properties.eventCategory,
       label: properties.identifier || properties.name,
       value: properties.index
     });
@@ -112,8 +112,8 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
 
   locationDirections(properties: LocationDirections): void {
     this._sendEvent({
-      action: properties.subgroup,
-      category: properties.group,
+      action: properties.eventAction,
+      category: properties.eventCategory,
       label: properties.identifier || properties.address
     });
   }
@@ -124,7 +124,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     this._sendPageView({
       hostname: parser && parser.host,
       page: parser && parser.pathname,
-      title: properties.subgroup
+      title: properties.eventCategory
     });
   }
 
@@ -134,14 +134,14 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       appInstallerId: this.appInstallerId,
       appName: this.appName,
       appVersion: this.appVersion,
-      screenName: properties.subgroup
+      screenName: properties.eventCategory
     });
   }
 
   searchGeneric(properties: SearchGeneric): void {
     this._sendEvent({
-      action: properties.subgroup,
-      category: properties.group,
+      action: properties.eventAction,
+      category: properties.eventCategory,
       label: properties.term,
       value: properties.count
     });
@@ -255,7 +255,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   lifecycle(properties: App): void {
     this._sendEvent({
       action: this.appId,
-      category: properties.group,
+      category: properties.eventAction,
       label: properties.lifecycle
     });
   }

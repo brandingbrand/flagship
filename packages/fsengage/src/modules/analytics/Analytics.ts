@@ -131,7 +131,7 @@ export default class Analytics {
     searchGeneric: 'searchGeneric'
   };
 
-  private readonly kFunctionsGroup: { [key: string]: string } = {
+  private readonly kFunctionsEventAction: { [key: string]: string } = {
     addProduct: 'add',
     checkout: 'checkout',
     checkoutOption: 'checkoutOption',
@@ -160,7 +160,7 @@ export default class Analytics {
     searchGeneric: 'search'
   };
 
-  private readonly kFunctionsSubgroupKey: { [key: string]: string } = {
+  private readonly kFunctionsEventCategoryKey: { [key: string]: string } = {
     addProduct: 'product',
     clickGeneric: 'generic',
     clickProduct: 'product',
@@ -197,52 +197,52 @@ export default class Analytics {
   // Private Commerce Properties
 
   private clickGeneric = (component: Component | string, properties: ClickGeneric): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.clickGeneric];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.clickGeneric]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickGeneric];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickGeneric]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.clickGeneric({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
 
   private contactCall = (component: Component | string, properties: ContactCall): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.contactCall];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.contactCall]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactCall];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.contactCall]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.contactCall({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
 
   private contactEmail = (component: Component | string, properties: ContactEmail): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.contactEmail];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.contactEmail]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactEmail];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.contactEmail]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.contactEmail({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -250,18 +250,18 @@ export default class Analytics {
   private impressionGeneric = (
     component: Component | string, properties: ImpressionGeneric
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.impressionGeneric];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.impressionGeneric]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionGeneric];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionGeneric]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.impressionGeneric({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -269,35 +269,37 @@ export default class Analytics {
   private locationDirections = (
     component: Component | string, properties: LocationDirections
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.locationDirections];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.locationDirections]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.locationDirections];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[
+        this.kFunctionsName.locationDirections
+      ]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.locationDirections({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
 
   private searchGeneric = (component: Component | string, properties: SearchGeneric): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.searchGeneric];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.searchGeneric]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.searchGeneric];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.searchGeneric]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.searchGeneric({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -305,18 +307,20 @@ export default class Analytics {
   // Private Enhanced Commerce Properties
 
   private impressionPromotion = (component: Component | string, properties: Promotion): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.impressionPromotion];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.impressionPromotion]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionPromotion];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[
+        this.kFunctionsName.impressionPromotion
+      ]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.impressionPromotion({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -324,35 +328,35 @@ export default class Analytics {
   private impressionProduct = (
     component: Component | string, properties: ImpressionProduct
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.impressionProduct];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.impressionProduct]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionProduct];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionProduct]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.impressionProduct({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
 
   private clickPromotion = (component: Component | string, properties: Promotion): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.clickPromotion];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.clickPromotion]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickPromotion];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickPromotion]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.clickPromotion({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -360,19 +364,19 @@ export default class Analytics {
   private clickProduct = (
     component: Component | string, properties: Product, action?: ProductAction
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.clickProduct];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.clickProduct]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickProduct];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickProduct]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties, action);
+      this.log(eventAction, eventCategory, properties, action);
     }
 
     this.triggerTask(provider => provider.clickProduct(
       {
-        group,
-        subgroup,
+        eventAction,
+        eventCategory,
         ...properties
       },
       action
@@ -382,19 +386,19 @@ export default class Analytics {
   private detailProduct = (
     component: Component | string, properties: Product, action?: ProductAction
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.detailProduct];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.detailProduct]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.detailProduct];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.detailProduct]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.detailProduct(
       {
-        group,
-        subgroup,
+        eventAction,
+        eventCategory,
         ...properties
       },
       action
@@ -402,35 +406,35 @@ export default class Analytics {
   }
 
   private addProduct = (component: Component | string, properties: Product): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.addProduct];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.addProduct]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.addProduct];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.addProduct]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.addProduct({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
 
   private removeProduct = (component: Component | string, properties: Product): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.removeProduct];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.removeProduct]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.removeProduct];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.removeProduct]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     this.triggerTask(provider => provider.removeProduct({
-      group,
-      subgroup,
+      eventAction,
+      eventCategory,
       ...properties
     }));
   }
@@ -438,19 +442,19 @@ export default class Analytics {
   private refundPartial = (
     component: Component | string, products: RefundProduct[], action: TransactionAction
   ): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.refundPartial];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.refundPartial]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundPartial];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.refundPartial]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, products, action);
+      this.log(eventAction, eventCategory, products, action);
     }
 
     this.triggerTask(provider => provider.refundPartial(
       {
-        group,
-        subgroup,
+        eventAction,
+        eventCategory,
         products
       },
       action
@@ -458,19 +462,19 @@ export default class Analytics {
   }
 
   private refundAll = (component: Component | string, action: TransactionAction): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.refundAll];
-    const subgroup = this.getSubgroupFromComponent(
-      component, group, this.kFunctionsSubgroupKey[this.kFunctionsName.refundAll]
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundAll];
+    const eventCategory = this.geteventCategoryFromComponent(
+      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.refundAll]
     );
 
     if (__DEV__) {
-      this.log(group, subgroup, undefined, action);
+      this.log(eventAction, eventCategory, undefined, action);
     }
 
     this.triggerTask(provider => provider.refundAll(
       {
-        group,
-        subgroup
+        eventAction,
+        eventCategory
       },
       action
     ));
@@ -479,133 +483,133 @@ export default class Analytics {
   // Private Apps Lifecyle Properties
 
   private lifecycleActive = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleActive];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleActive];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleActive];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleBackground = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleBackground];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleBackground];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleBackground];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleCreate = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleCreate];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleCreate];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleCreate];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleClose = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleClose];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleClose];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleClose];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleInactive = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleInactive];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleInactive];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleInactive];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleStart = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleStart];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleStart];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleStart];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   private lifecycleSuspend = (): void => {
-    const group = this.kFunctionsGroup[this.kFunctionsName.lifecycleSuspend];
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleSuspend];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleSuspend];
 
     if (__DEV__) {
-      this.log(group, lifecycle);
+      this.log(eventAction, lifecycle);
     }
 
     this.triggerTask(provider => provider.lifecycle({
-      group,
+      eventAction,
       lifecycle
     }));
   }
 
   // Private Log & Trigger Functions
 
-  private getSubgroupFromComponent(
-    component: Component | string, groupKey: string, subgroupKey?: string
+  private geteventCategoryFromComponent(
+    component: Component | string, eventActionKey: string, eventCategoryKey?: string
   ): string {
-    let subgroup: string;
+    let eventCategory: string;
 
     if (component instanceof Component) {
       const anyComponent: any = component;
 
-      groupKey = groupKey.toLowerCase();
-      subgroupKey = subgroupKey && subgroupKey.toLowerCase();
+      eventActionKey = eventActionKey.toLowerCase();
+      eventCategoryKey = eventCategoryKey && eventCategoryKey.toLowerCase();
 
-      if (subgroupKey) {
-        subgroup = (anyComponent.analytics &&
-                    anyComponent.analytics[groupKey] &&
-                    anyComponent.analytics[groupKey][subgroupKey]) ||
+      if (eventCategoryKey) {
+        eventCategory = (anyComponent.analytics &&
+                    anyComponent.analytics[eventActionKey] &&
+                    anyComponent.analytics[eventActionKey][eventCategoryKey]) ||
                     anyComponent.constructor.name;
       } else {
-        subgroup = (anyComponent.analytics &&
-                    anyComponent.analytics[groupKey]) ||
+        eventCategory = (anyComponent.analytics &&
+                    anyComponent.analytics[eventActionKey]) ||
                     anyComponent.constructor.name;
       }
     } else if ('string' === typeof component) {
-      subgroup = component;
+      eventCategory = component;
     } else {
-      subgroup = 'unknown';
+      eventCategory = 'unknown';
     }
 
-    return subgroup;
+    return eventCategory;
   }
 
   private triggerTask(task: (provider: AnalyticsProvider) => void): void {
@@ -614,10 +618,13 @@ export default class Analytics {
     });
   }
 
-  private log(group: string, subgroup?: string, properties?: {} | any[], action?: {}): void {
+  private log(
+    eventAction: string, eventCategory?: string, properties?: {} | any[], action?: {}
+  ): void {
     if (process.env.NODE_ENV === 'test') { return; }
     console.log(
-      `%cAnalytics\n%c Group: ${group}\n Subgroup: ${subgroup}\n Properties:\n`,
+      `%cAnalytics\n%c eventAction: ${eventAction}\n eventCategory: ${eventCategory}\n
+      Properties:\n`,
       'color: blue',
       'color: grey',
       properties,
@@ -691,21 +698,21 @@ export default class Analytics {
   // Public Commerce Functions
 
   screenview(component: Component | string, properties: Screenview): void {
-    const group = this.kFunctionsGroup[this.screenview.name];
-    const subgroup = this.getSubgroupFromComponent(component, group);
+    const eventAction = this.kFunctionsEventAction[this.screenview.name];
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
-      this.log(group, subgroup, properties);
+      this.log(eventAction, eventCategory, properties);
     }
 
     if ('ios' === Platform.OS || 'android' === Platform.OS) {
       this.triggerTask(provider => provider.screenview({
-        subgroup,
+        eventCategory,
         ...properties
       }));
     } else {
       this.triggerTask(provider => provider.pageview({
-        subgroup,
+        eventCategory,
         ...properties
       }));
     }
@@ -714,17 +721,17 @@ export default class Analytics {
   // Public Enhanced Commerce Functions
 
   checkout(component: Component | string, products: Product[], action: CheckoutAction): void {
-    const group = this.kFunctionsGroup[this.kFunctionsName.checkout];
-    const subgroup = this.getSubgroupFromComponent(component, group);
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkout];
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
-      this.log(group, subgroup, products, action);
+      this.log(eventAction, eventCategory, products, action);
     }
 
     this.triggerTask(provider => provider.checkout(
       {
-        group,
-        subgroup,
+        eventAction,
+        eventCategory,
         products
       },
       action
@@ -732,34 +739,34 @@ export default class Analytics {
   }
 
   checkoutOption(component: Component | string, action: CheckoutAction): void {
-    const group = this.kFunctionsGroup[this.kFunctionsName.checkoutOption];
-    const subgroup = this.getSubgroupFromComponent(component, group);
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkoutOption];
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
-      this.log(group, subgroup, undefined, action);
+      this.log(eventAction, eventCategory, undefined, action);
     }
 
     this.triggerTask(provider => provider.checkoutOption(
       {
-        group,
-        subgroup
+        eventAction,
+        eventCategory
       },
       action
     ));
   }
 
   purchase(component: Component | string, products: Product[], action: TransactionAction): void {
-    const group = this.kFunctionsGroup[this.kFunctionsName.purchase];
-    const subgroup = this.getSubgroupFromComponent(component, group);
+    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.purchase];
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
-      this.log(group, subgroup, products, action);
+      this.log(eventAction, eventCategory, products, action);
     }
 
     this.triggerTask(provider => provider.purchase(
       {
-        group,
-        subgroup,
+        eventAction,
+        eventCategory,
         products
       },
       action
