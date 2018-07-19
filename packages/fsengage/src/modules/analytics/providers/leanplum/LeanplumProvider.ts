@@ -52,22 +52,22 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       number: properties.number
     });
   }
 
   contactEmail(properties: ContactEmail): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       to: properties.to
     });
   }
 
   clickGeneric(properties: ClickGeneric): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       index: properties.index
@@ -80,8 +80,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   locationDirections(properties: LocationDirections): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       address: properties.address
     });
@@ -93,7 +93,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
 
   screenview(properties: Screenview): void {
     this.client.track('ScreenView', undefined, undefined, {
-      component: properties.subgroup,
+      component: properties.eventCategory,
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
@@ -102,8 +102,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   searchGeneric(properties: SearchGeneric): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       term: properties.term,
       count: properties.count
     });
@@ -112,8 +112,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // Enhanced Commerce Functions
 
   addProduct(properties: Product): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       brand: properties.brand,
@@ -132,8 +132,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach(product => {
-      this.client.track(properties.group, undefined, undefined, {
-        component: properties.subgroup,
+      this.client.track(properties.eventAction, undefined, undefined, {
+        component: properties.eventCategory,
         identifier: product.identifier,
         name: product.name,
         brand: product.brand,
@@ -151,23 +151,23 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // the checkout option, which do not need to be attached to every single product on the
     // checkout.
     this.client.track('checkoutOption', undefined, undefined, {
-      component: properties.subgroup,
+      component: properties.eventCategory,
       step: action.step,
       option: action.option
     });
   }
 
   checkoutOption(properties: Generics, action: CheckoutAction): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       step: action.step,
       option: action.option
     });
   }
 
   clickProduct(properties: Product, action?: ProductAction): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       brand: properties.brand,
@@ -182,8 +182,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   clickPromotion(properties: Promotion): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       creative: properties.creative,
@@ -192,8 +192,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   impressionProduct(properties: ImpressionProduct): void {
-    this.client.track(properties.group, undefined, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, undefined, undefined, {
+      component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
       brand: properties.brand,
@@ -222,7 +222,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach(product => {
       this.client.track('purchaseDetail', undefined, undefined, {
-        component: properties.subgroup,
+        component: properties.eventCategory,
         identifier: product.identifier,
         transactionIdentifier: action.identifier, // Same as 'identifier' on 'purchase' event.
         name: product.name,
@@ -239,7 +239,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
     this.client.track(this.monetizationEventName, total || 0, undefined, {
-      component: properties.subgroup,
+      component: properties.eventCategory,
       identifier: action.identifier, // Same as 'transactionIdentifier' on 'purchaseDetail' event.
       affiliation: action.affiliation,
       tax: action.tax,
@@ -251,8 +251,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
   refundAll(properties: Generics, action: TransactionAction): void {
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
-    this.client.track(properties.group, total || 0, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, total || 0, undefined, {
+      component: properties.eventCategory,
       identifier: action.identifier,
       affiliation: action.affiliation,
       tax: action.tax,
@@ -268,7 +268,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach(product => {
       this.client.track('refundPartialDetail', undefined, undefined, {
-        component: properties.subgroup,
+        component: properties.eventCategory,
         identifier: product.identifier,
         transactionIdentifier: action.identifier, // Same as 'identifier' on 'refundPartial' event.
         price: product.price,
@@ -279,8 +279,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
 
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
-    this.client.track(properties.group, total || 0, undefined, {
-      component: properties.subgroup,
+    this.client.track(properties.eventAction, total || 0, undefined, {
+      component: properties.eventCategory,
       identifier: action.identifier, // Same as 'transactionIdentifier' on 'refundPartialDetail'.
       affiliation: action.affiliation,
       tax: action.tax,
@@ -297,7 +297,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // App Lifecycle Functions
 
   lifecycle(properties: App): void {
-    this.client.track(properties.group, undefined, undefined, {
+    this.client.track(properties.eventAction, undefined, undefined, {
       appId: this.appId,
       lifecycle: properties.lifecycle
     });
