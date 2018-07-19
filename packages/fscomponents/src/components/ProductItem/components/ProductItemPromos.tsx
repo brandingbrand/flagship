@@ -4,12 +4,15 @@ import {
   Text,
   View
 } from 'react-native';
-
-import { ProductItemProps } from '../ProductItemProps';
+import { ProductItemProps } from '../ProductItem';
+import { types, weights } from '../../../styles/variables';
 
 const style = StyleSheet.create({
+  container: {
+    marginBottom: 10
+  },
   promo: {
-    color: '#F00'
+    fontStyle: 'italic'
   }
 });
 
@@ -38,9 +41,9 @@ export class ProductItemPromos extends Component<ProductItemPromosProps> {
     }
 
     return (
-      <View style={promoContainerStyle}>
+      <View style={[style.container, promoContainerStyle]}>
         {promosList.map((p, i) => (
-          <Text key={i} style={[style.promo, promoStyle]}>
+          <Text key={i} style={[types.caption, weights.light, style.promo, promoStyle]}>
             {p}
           </Text>
         ))}
