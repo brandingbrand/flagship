@@ -8,6 +8,7 @@ import {
 // tslint:disable-next-line no-submodule-imports no-implicit-dependencies
 } from '@storybook/addon-knobs/react';
 import { AddressForm } from '../AddressForm';
+import { FormLabelPosition } from '../Form';
 
 const defaultStyle = {
   padding: 10
@@ -26,33 +27,47 @@ const defaultValue = {
   email: 'test@bb.com'
 };
 
+const fieldsStyle = {
+  textbox: {
+    normal: {
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 5,
+      fontSize: 15,
+      backgroundColor: '#f8f8f8'
+    },
+    error: {
+      borderRadius: 5,
+      fontSize: 15
+    }
+  },
+  errorBlock: {
+    fontSize: 12
+  }
+};
+
+const fieldType = {
+  email: null
+};
+
+const renderAddressForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
+  return (
+    () => (
+      <AddressForm
+        style={object('Style', defaultStyle)}
+        value={object('Value', defaultValue)}
+        submitText={text('Submit Text', 'CONTINUE')}
+        onSubmit={action('Submit')}
+        fieldsStyleConfig={fieldsStyle}
+        fieldsTypes={fieldType}
+        labelPosition={labelPosition}
+      />
+    )
+  );
+};
+
 storiesOf('AddressForm', module)
-  .add('basic usage', () => (
-    <AddressForm
-      style={object('Style', defaultStyle)}
-      value={object('Value', defaultValue)}
-      submitText={text('Submit Text', 'CONTINUE')}
-      onSubmit={action('Submit')}
-      fieldsStyleConfig={{
-        textbox: {
-          normal: {
-            paddingHorizontal: 12,
-            paddingVertical: 8,
-            borderRadius: 5,
-            fontSize: 15,
-            backgroundColor: '#f8f8f8'
-          },
-          error: {
-            borderRadius: 5,
-            fontSize: 15
-          }
-        },
-        errorBlock: {
-          fontSize: 12
-        }
-      }}
-      fieldsTypes={{
-        email: null
-      }}
-    />
-  ));
+  .add('basic usage', renderAddressForm())
+  .add('label above', renderAddressForm(FormLabelPosition.Above))
+  .add('label floating', renderAddressForm(FormLabelPosition.Floating))
+  .add('label hidden', renderAddressForm(FormLabelPosition.Hidden));
