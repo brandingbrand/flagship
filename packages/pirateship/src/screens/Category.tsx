@@ -12,6 +12,7 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 // Default padding for CategoryBox component
 const CATEGORY_BOX_DEFAULT_PADDING = 20;
 const DEFAULT_IMAGE_WIDTH = 150;
+const categoryImage = require('../../assets/images/arrow.png');
 
 const gridItemProps = {
   style: {
@@ -36,6 +37,14 @@ const listItemProps = {
     textAlign: 'left',
     height: 35,
     marginTop: 20
+  },
+  showAccessory: true,
+  accessorySrc: categoryImage,
+  accessoryStyle: {
+    width: 15,
+    height: 15,
+    transform: [{ rotate: '180deg' }],
+    marginRight: 10
   }
 };
 
@@ -92,7 +101,8 @@ export default class Category extends Component<PropType, StateType> {
         'Category' : 'ProductIndex';
 
       const passProps: any = {
-        categoryId: category.id
+        categoryId: category.id,
+        title: category.title || ''
       };
 
       if (screen === 'Category') {

@@ -14,25 +14,29 @@ import * as creditCard from 'credit-card';
 import moment from 'moment';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
-import { Form } from './Form';
-import { creditCardTemplate, maskedInputTemplate } from '../lib/inputTemplates';
+import {
+  creditCardInlineLabelTemplate,
+  Form,
+  FormLabelPosition,
+  maskedInputInlineLabelTemplate
+} from './Form';
 import { CreditCardType } from '../types/Store';
 
+const NameType = t.refinement(t.String, (str: string) => {
+  return str.length >= 4;
+});
+
 const FIELD_TYPES = t.struct({
-  number: t.String,
+  number: NameType,
   name: t.String,
-  extra: t.struct({
-    expirationDate: t.String,
-    cvv: t.String
-  })
+  expirationDate: t.String,
+  cvv: t.String
 });
 
 const FIELD_TYPES_HIDE_NAME = t.struct({
-  number: t.String,
-  extra: t.struct({
-    expirationDate: t.String,
-    cvv: t.String
-  })
+  number: NameType,
+  expirationDate: t.String,
+  cvv: t.String
 });
 
 const styles = StyleSheet.create({
@@ -45,12 +49,6 @@ const styles = StyleSheet.create({
   inlineForm: {
     alignSelf: 'stretch',
     flexDirection: 'row'
-  },
-  inlineFormCVV: {
-    width: 100
-  },
-  inlineFormExpirationDate: {
-    width: 140
   },
   inlineFormWrap: {
     width: '40%',
@@ -76,6 +74,7 @@ export interface CreditCardFormProps {
   cscIcon?: ImageURISource;
   cscIconStyle?: StyleProp<ImageStyle>;
   defaultCardImage?: ImageURISource;
+  labelPosition?: FormLabelPosition;
   style?: StyleProp<ViewStyle>;
   supportedCards?: {
     type: CreditCardType;
@@ -89,20 +88,29 @@ export interface CreditCardFormProps {
 }
 
 export class CreditCardForm extends Component<CreditCardFormProps> {
+  static defaultProps: Partial<CreditCardFormProps> = {
+    labelPosition: FormLabelPosition.Inline
+  };
+
   formRef: any;
 
   fieldOptions = () => {
     const defaultFieldOptions = {
+      name: {
+        label: 'Name',
+        autoCorrect: false,
+        error: 'Please enter your name'
+      },
       number: {
         auto: 'none',
-        label: 'Credit Card Number',
+        label: 'Card Number',
         placeholder: 'Credit Card Number',
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'phone-pad',
-        error: 'Please enter a valid credit card number',
-        template: creditCardTemplate,
+        error: 'Please enter a valid card number',
+        template: creditCardInlineLabelTemplate,
         config: {
           cardImageStyle: {
             marginLeft: 2,
@@ -113,34 +121,29 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           defaultCardImage: this.props.defaultCardImage
         }
       },
-      extra: {
-        template: this.inlineFormTemplate,
-        fields: {
-          cvv: {
-            error: 'Invalid CSC',
-            keyboardType: 'phone-pad',
-            label: 'CSC',
-            placeholder: 'CSC',
-            template: maskedInputTemplate,
-            config: {
-              type: 'custom',
-              options: {
-                mask: '9999'
-              }
-            }
-          },
-          expirationDate: {
-            error: 'Invalid MM/YY',
-            template: maskedInputTemplate,
-            label: 'Expiration Date',
-            placeholder: 'MM/YY',
-            keyboardType: 'phone-pad',
-            config: {
-              type: 'custom',
-              options: {
-                mask: '99/99'
-              }
-            }
+      cvv: {
+        error: 'Invalid CSC',
+        keyboardType: 'phone-pad',
+        label: 'CSC',
+        placeholder: 'CSC',
+        template: maskedInputInlineLabelTemplate,
+        config: {
+          type: 'custom',
+          options: {
+            mask: '9999'
+          }
+        }
+      },
+      expirationDate: {
+        error: 'Invalid MM/YY',
+        template: maskedInputInlineLabelTemplate,
+        label: 'Exp. Date',
+        placeholder: 'MM/YY',
+        keyboardType: 'phone-pad',
+        config: {
+          type: 'custom',
+          options: {
+            mask: '99/99'
           }
         }
       }
@@ -182,6 +185,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           ref={this._saveFormRef}
           value={this.props.value}
           onChange={this.props.onChange}
+          labelPosition={this.props.labelPosition}
         />
       </View>
     );
@@ -198,38 +202,13 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  private inlineFormTemplate = (locals: any) => {
-    return (
-      <View style={styles.inlineForm}>
-        <View style={styles.inlineFormWrap}>
-          <View style={styles.inlineFormExpirationDate}>
-            {locals.inputs.expirationDate}
-          </View>
-        </View>
-        <View>
-          <View style={styles.inlineFormCVV}>
-            {locals.inputs.cvv}
-          </View>
-        </View>
-        {this.props.cscIcon && (
-          <View>
-            <Image
-              source={this.props.cscIcon}
-              style={this.props.cscIconStyle}
-            />
-          </View>
-        )}
-      </View>
-    );
-  }
-
   private validateCreditCard = (value: any) => {
-    const expirationDate = moment(value.extra.expirationDate, 'MM/YY');
+    const expirationDate = moment(value.expirationDate, 'MM/YY');
 
     const validationResult = creditCard.validate({
       cardType: creditCard.determineCardType(value.number),
       number: value.number,
-      cvv: value.extra.cvv,
+      cvv: value.cvv,
       expiryMonth: expirationDate.month() + 1, // moment months are 0-11, creditCard expects 1-12
       expiryYear: expirationDate.year()
     });
@@ -240,11 +219,11 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     }
     if (!validationResult.validExpiryMonth || !validationResult.validExpiryYear ||
         creditCard.isExpired(expirationDate.month() + 1, expirationDate.year())) {
-      this.formRef.getComponent('extra.expirationDate').setState({ hasError: true });
+      this.formRef.getComponent('expirationDate').setState({ hasError: true });
       valid = false;
     }
     if (!validationResult.validCvv) {
-      this.formRef.getComponent('extra.cvv').setState({ hasError: true });
+      this.formRef.getComponent('cvv').setState({ hasError: true });
       valid = false;
     }
     return valid;

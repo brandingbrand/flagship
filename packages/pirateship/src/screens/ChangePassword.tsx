@@ -154,7 +154,6 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
             <PSButton
               title={translate.string(translationKeys.account.actions.changePassword.actionBtn)}
               onPress={this.handleChangePasswordPress}
-              primary={true}
               style={styles.button}
               loading={isLoading}
             />

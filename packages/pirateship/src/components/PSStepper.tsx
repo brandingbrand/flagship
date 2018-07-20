@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: variables.padding.narrow,
-    maxWidth: 100
+    maxWidth: 80
   },
   counter: {
     textAlign: 'center',

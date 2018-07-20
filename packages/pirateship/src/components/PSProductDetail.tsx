@@ -210,6 +210,14 @@ const styles = StyleSheet.create({
   atcImage: {
     height: 15,
     width: 15
+  },
+  quantityText: {
+    fontWeight: '600',
+    fontSize: 15,
+    paddingBottom: 6
+  },
+  quantityView: {
+    marginTop: 15
   }
 });
 
@@ -329,7 +337,11 @@ class PSProductDetailComponent extends Component<
       // Search for matching variant
       const variant = find(variants, { optionValues: newOptionValues }) as any;
 
-      if (variant && variant.id && dataSourceConfig.type === 'commercecloud') {
+      if (
+        variant &&
+        variant.id &&
+        ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
+      ) {
         this.props.navigator.push({
           screen: 'ProductDetail',
           passProps: {
@@ -596,10 +608,10 @@ class PSProductDetailComponent extends Component<
         </View>
         <View style={styles.edgePadding}>
           {options && this.renderSwatches(options)}
-          <View>
+          <View style={styles.quantityView}>
             <View style={{ paddingBottom: 20 }}>
               <Text
-                style={{ fontWeight: '600', fontSize: 15, paddingBottom: 6 }}
+                style={styles.quantityText}
               >
                 {translate.string(translationKeys.item.qty)}:
               </Text>

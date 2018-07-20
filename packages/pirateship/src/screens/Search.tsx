@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import {
-  Button,
   SearchScreen as SearchSuggestionScreen
 } from '@brandingbrand/fscomponents';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import PSButton from '../components/PSButton';
 import PSProductCarousel from '../components/PSProductCarousel';
 import { debounce, flatten, get } from 'lodash-es';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
@@ -141,7 +141,7 @@ class Search extends Component<SearchProps, SearchState> {
             cancelTitleStyle: GlobalStyle.searchBarCancelTitleStyle,
             containerStyle: GlobalStyle.searchBarInner,
             inputTextStyle: GlobalStyle.searchBarInputTextStyle,
-            placeholder: 'Search by product, brand or part',
+            placeholder: 'Search',
             inputProps: {
               value: this.state.keyword === ' ' ? '' : this.state.keyword,
               autoCorrect: false,
@@ -183,13 +183,13 @@ class Search extends Component<SearchProps, SearchState> {
           </Text>
         ))}
         <View style={NoSearchResultsStyle.buttonContainer}>
-          <Button
+          <PSButton
             title={translate.string(translationKeys.search.noResults.actions.contact.actionBtn)}
             onPress={this.contactUs}
             style={NoSearchResultsStyle.contactUsButton}
             titleStyle={NoSearchResultsStyle.contactUsText}
           />
-          <Button
+          <PSButton
             title={
               translate.string(translationKeys.search.noResults.actions.shopByCategory.actionBtn)
             }

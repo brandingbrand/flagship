@@ -60,7 +60,9 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
           <Text style={[S.buttonText, titleStyle]}>
             {title}
           </Text>
-          {showAccessory && accessorySrc && <Image source={accessorySrc} style={accessoryStyle} />}
+          {showAccessory && accessorySrc &&
+            <Image source={accessorySrc} style={accessoryStyle} resizeMode='contain' />
+          }
         </View>
       </TouchableHighlightLink>
     );
