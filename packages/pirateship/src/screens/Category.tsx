@@ -101,7 +101,8 @@ export default class Category extends Component<PropType, StateType> {
         'Category' : 'ProductIndex';
 
       const passProps: any = {
-        categoryId: category.id
+        categoryId: category.id,
+        title: category.title || ''
       };
 
       if (screen === 'Category') {

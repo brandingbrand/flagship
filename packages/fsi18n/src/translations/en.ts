@@ -96,10 +96,10 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Refine'
         },
         filter: {
-          actionBtn: 'FILTER'
+          actionBtn: 'Filter'
         },
         sort: {
-          actionBtn: 'SORT'
+          actionBtn: 'Sort'
         }
       }
     },
