@@ -92,9 +92,8 @@ const CartStyle = StyleSheet.create({
     color: palette.secondary
   },
   checkoutButton: {
-    borderWidth: 2,
-    borderColor: 'black',
-    borderRadius: 5,
+    borderWidth: 0,
+    borderRadius: 3,
     marginBottom: 10
   },
   apCheckoutButton: {
@@ -103,7 +102,7 @@ const CartStyle = StyleSheet.create({
     marginBottom: 20
   },
   checkoutButtonTitle: {
-    color: 'black'
+    color: 'white'
   },
   apCheckoutButtonTitle: {
     color: 'white'
