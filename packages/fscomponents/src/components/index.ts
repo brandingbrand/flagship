@@ -33,6 +33,7 @@ export * from './Modal';
 export * from './ModalHalfScreen';
 export * from './MoreText';
 export * from './MultiCarousel';
+export * from './NavArrow';
 export * from './PageIndicator';
 export * from './ProductItem';
 export * from './ProductMetadata';

@@ -21,6 +21,7 @@ export interface CategoryLineProps extends CommerceTypes.Category {
   imageStyle?: StyleProp<ImageStyle>;
   onPress?: (item: CommerceTypes.Category) => void;
   showAccessory?: boolean;
+  renderAccessory?: () => React.ReactNode;
   showImage?: boolean;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
@@ -35,6 +36,7 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
 
   render(): JSX.Element {
     const {
+      renderAccessory,
       showAccessory,
       accessorySrc,
       accessoryStyle,
@@ -63,6 +65,7 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
           {showAccessory && accessorySrc &&
             <Image source={accessorySrc} style={accessoryStyle} resizeMode='contain' />
           }
+          {renderAccessory && renderAccessory()}
         </View>
       </TouchableHighlightLink>
     );
