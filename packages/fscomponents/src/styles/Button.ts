@@ -18,7 +18,7 @@ export const style = StyleSheet.create({
   buttonView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'center'
   },
   text: {
