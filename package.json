@@ -86,7 +86,8 @@
     "ts-loader": "^4.3.0",
     "typedoc": "^0.11.1",
     "typedoc-plugin-monorepo": "^0.1.0",
-    "typescript": "^2.9.1"
+    "typescript": "^2.9.1",
+    "greenkeeper-lockfile": "^2.4.0"
   },
   "greenkeeper": {
     "commitMessages": {
