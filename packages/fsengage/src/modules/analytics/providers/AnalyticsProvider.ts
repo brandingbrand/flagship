@@ -3,8 +3,8 @@ import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfigurati
 // Common Interface
 
 export interface Generics {
-  group: string;
-  subgroup: string;
+  eventAction: string;
+  eventCategory: string;
 }
 
 // Commerce Interfaces
@@ -40,7 +40,7 @@ export interface SearchGeneric extends Generics {
 }
 
 export interface Screenview {
-  subgroup: string;
+  eventCategory: string;
   url: string;
 }
 
@@ -130,7 +130,7 @@ export interface TransactionAction {
 // App Lifercyle Interfaces
 
 export interface App {
-  group: string;
+  eventAction: string;
   lifecycle: string;
 }
 
