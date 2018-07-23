@@ -8,11 +8,12 @@ import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { NavArrow } from '@brandingbrand/fscomponents';
+import { palette } from '../styles/variables';
 
 // Default padding for CategoryBox component
 const CATEGORY_BOX_DEFAULT_PADDING = 20;
 const DEFAULT_IMAGE_WIDTH = 150;
-const categoryImage = require('../../assets/images/arrow.png');
 
 const gridItemProps = {
   style: {
@@ -38,13 +39,10 @@ const listItemProps = {
     height: 35,
     marginTop: 20
   },
-  showAccessory: true,
-  accessorySrc: categoryImage,
-  accessoryStyle: {
-    width: 15,
-    height: 15,
-    transform: [{ rotate: '180deg' }],
-    marginRight: 10
+  renderAccessory: (): JSX.Element => {
+    return (
+      <NavArrow color={palette.primary} style={{marginRight: 10}} />
+    );
   }
 };
 
