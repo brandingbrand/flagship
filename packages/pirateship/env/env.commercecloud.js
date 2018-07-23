@@ -16,6 +16,10 @@ module.exports = {
             'x-dw-client-id': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
           }
         }
+      },
+      promoProducts: {
+        categoryId: 'newarrivals',
+        title: 'New Arrivals'
       }
   }
 };
