@@ -1,119 +1,24 @@
-import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
+import React from 'react';
 // @ts-ignore TODO: Update react-native-masked-text to support typing
 import { memoize } from 'lodash-es';
 import { TextInputMask } from 'react-native-masked-text';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import { CreditCardNumber } from '../../../CreditCardNumber';
-import {
-  ComputeFieldType,
-  defaultTextboxStyle,
-  errorIcon,
-  getColor,
-  StatefulTextboxProps,
-  StatefulTextboxState,
-  successIcon
-} from '../formBoilerplate';
-
-class StatefulFieldTemplate extends Component<StatefulTextboxProps,
-StatefulTextboxState> {
-
-  state: StatefulTextboxState = {
-    active: false,
-    validated: false
-  };
-
-  // memoizes returned function so as not to recompute on each rerender
-  private computeBlur: ComputeFieldType = memoize(prevOnBlur => () => {
-    this.onBlur();
-
-    if (typeof prevOnBlur === 'function') {
-      prevOnBlur();
-    }
-  });
-
-  private computeFocus: ComputeFieldType = memoize(prevOnFocus => () => {
-    this.onFocus();
-
-    if (typeof prevOnFocus === 'function') {
-      prevOnFocus();
-    }
-  });
-
-  constructor(props: StatefulTextboxProps) {
-    super(props);
-  }
-
-  render(): JSX.Element {
-    const {locals, componentFactory} = this.props;
-
-    const prevOnBlur = locals.onBlur;
-    const prevOnFocus = locals.onFocus;
-
-    locals.onBlur = this.computeBlur(prevOnBlur);
-    locals.onFocus = this.computeFocus(prevOnFocus);
+import { CreditCardNumber } from '../../CreditCardNumber';
+import { FormLabelPosition } from '../Form';
+import StatefulTextbox from './StatefulTextbox';
 
 
-    locals.placeholder = this.state.active ? null : locals.error;
-    locals.placeholderTextColor = locals.stylesheet.colors.error;
-
-    const defaultStyle = defaultTextboxStyle(locals);
-
-    const {
-      alertStyle,
-      checkStyle,
-      controlLabelStyle,
-      help,
-      inlineFormGroupStyle,
-      inlineLabelViewStyle,
-      rightTextboxIconStyle,
-      textboxInlineStyle,
-      textboxViewStyle
-    } = defaultStyle;
-
-    const getIcon = () => {
-      return (this.props.locals.hasError ?
-      <Image source={errorIcon} style={alertStyle}/> :
-      <Image source={successIcon} style={checkStyle}/>
-      );
-    };
-
-    const color = getColor(this.state, locals);
-
-    return (
-      <View>
-        <View style={[inlineFormGroupStyle, {borderColor: color}]}>
-          <View style={inlineLabelViewStyle}>
-            <Text style={[controlLabelStyle, {color}]}>{locals.label}</Text>
-          </View>
-          <View style={textboxViewStyle}>
-            {componentFactory(locals, textboxInlineStyle)}
-            <View style={rightTextboxIconStyle}>
-              {this.state.validated ? getIcon() : null}
-            </View>
-          </View>
-        </View>
-        <View>
-          {help}
-        </View>
-      </View>
-    );
-  }
-
-  private onFocus = () => {
-    this.setState({
-      active: true,
-      validated: false
-    });
-  }
-
-  private onBlur = () => {
-    this.setState({
-      active: false,
-      validated: true
-    });
-  }
-
+export function labelInlineFieldTemplate(
+  locals: Dictionary,
+  componentFactory: (locals: Dictionary, textboxStyle: any) => JSX.Element
+ ): React.ReactNode {
+  return (
+    <StatefulTextbox
+      locals={locals}
+      labelPosition={FormLabelPosition.Inline}
+      componentFactory={componentFactory}
+    />
+  );
 }
 
 
@@ -164,19 +69,6 @@ export function creditCardInlineLabelTemplate(locals: any): React.ReactNode {
     );
   });
 }
-
-export function labelInlineFieldTemplate(
-  locals: Dictionary,
-  componentFactory: (locals: Dictionary, textboxStyle: any) => JSX.Element
- ): React.ReactNode {
-  return (
-    <StatefulFieldTemplate
-      locals={locals}
-      componentFactory={componentFactory}
-    />
-  );
-}
-
 
 export function maskedInputInlineLabelTemplate(locals: any): React.ReactNode {
   return labelInlineFieldTemplate(locals, (locals, textboxStyle) => {

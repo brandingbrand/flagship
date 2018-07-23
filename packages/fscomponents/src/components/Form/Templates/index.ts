@@ -1,7 +1,10 @@
-import { labelInlineTextbox } from './inline';
-import { labelFloatingTextbox } from './floating';
-import { labelHiddenTextbox } from './hidden';
-import { labelAboveTextbox} from './above';
+import {
+  labelAboveTextbox,
+  labelFloatingTextbox,
+  labelHiddenTextbox,
+  labelInlineTextbox
+} from './textboxTemplates';
+
 
 export const inlineLabels = {
   textbox: labelInlineTextbox
@@ -19,9 +22,5 @@ export const aboveLabels = {
   textbox: labelAboveTextbox
 };
 
-export * from './above';
-export * from './floating';
-export * from './hidden';
-export * from './inline';
-
 export * from './stylesheet';
+export * from './fieldTemplates';
