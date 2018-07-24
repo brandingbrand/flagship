@@ -172,7 +172,7 @@ const CartStyle = StyleSheet.create({
     borderColor: border.color
   },
   signInButtonTitle: {
-    color: palette.primary,
+    color: 'white',
     fontSize: 15,
     fontWeight: 'bold'
   },
