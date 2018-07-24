@@ -172,7 +172,7 @@ const CartStyle = StyleSheet.create({
     borderColor: border.color
   },
   signInButtonTitle: {
-    color: palette.primary,
+    color: 'white',
     fontSize: 15,
     fontWeight: 'bold'
   },
@@ -238,7 +238,7 @@ class Cart extends Component<CartScreenProps> {
       this.props.navigator.setTabBadge({
         tabIndex: 1,
         badge: this.props.cart.cartCount || null,
-        badgeColor: palette.secondary
+        badgeColor: palette.primary
       });
 
       if (cartData.items.length === 0) {
