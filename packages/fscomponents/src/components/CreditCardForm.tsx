@@ -152,7 +152,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         config: {
           cardImageStyle: {
             marginLeft: 2,
-            marginTop: -3
+            marginTop: -1
           },
           cardImageWidth: 26,
           creditCardTypeImages: this.props.supportedCards,
@@ -203,7 +203,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     const cards = this.props.supportedCards || [];
     return (
       <View style={this.props.style}>
-        <View style={[styles.cardImages, this.props.supportedCardsStyle]}>
+        <View style={[styles.cardImages, this.props.supportedCardsStyle, {marginBottom: 15}]}>
           {this.props.supportedCardsLabel}
           {cards.map(({ type, image }) => {
             return (
