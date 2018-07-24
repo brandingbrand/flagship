@@ -238,7 +238,7 @@ class Cart extends Component<CartScreenProps> {
       this.props.navigator.setTabBadge({
         tabIndex: 1,
         badge: this.props.cart.cartCount || null,
-        badgeColor: palette.secondary
+        badgeColor: palette.primary
       });
 
       if (cartData.items.length === 0) {
