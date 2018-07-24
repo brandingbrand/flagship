@@ -6,7 +6,6 @@ import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export function getColor(state: Dictionary, locals: Dictionary): String {
   const colors = locals.stylesheet.colors;
-
   if (state.active) {
     return colors.active;
   } else {

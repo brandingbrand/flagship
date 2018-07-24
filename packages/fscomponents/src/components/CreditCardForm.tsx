@@ -15,12 +15,49 @@ import moment from 'moment';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import {
+  creditCardAboveLabelTemplate,
+  creditCardFloatingLabelTemplate,
+  creditCardHiddenLabelTemplate,
   creditCardInlineLabelTemplate,
   Form,
   FormLabelPosition,
+  maskedInputAboveLabelTemplate,
+  maskedInputFloatingLabelTemplate,
+  maskedInputHiddenLabelTemplate,
   maskedInputInlineLabelTemplate
 } from './Form';
 import { CreditCardType } from '../types/Store';
+import { Dictionary } from '@brandingbrand/fsfoundation';
+
+function getFieldTemplates(labelPosition?: FormLabelPosition): Dictionary {
+  switch (labelPosition) {
+    case FormLabelPosition.Above:
+      return {
+        creditCard: creditCardAboveLabelTemplate,
+        maskedInput: maskedInputAboveLabelTemplate
+      };
+    case FormLabelPosition.Floating:
+      return {
+        creditCard: creditCardFloatingLabelTemplate,
+        maskedInput: maskedInputFloatingLabelTemplate
+      };
+    case FormLabelPosition.Hidden:
+      return {
+        creditCard: creditCardHiddenLabelTemplate,
+        maskedInput: maskedInputHiddenLabelTemplate
+      };
+    case FormLabelPosition.Inline:
+      return {
+        creditCard: creditCardInlineLabelTemplate,
+        maskedInput: maskedInputInlineLabelTemplate
+      };
+    default:
+      return {
+        creditCard: creditCardInlineLabelTemplate,
+        maskedInput: maskedInputInlineLabelTemplate
+      };
+  }
+}
 
 const NameType = t.refinement(t.String, (str: string) => {
   return str.length >= 4;
@@ -94,10 +131,11 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
 
   formRef: any;
 
-  fieldOptions = () => {
+  fieldOptions = (labelPosition?: FormLabelPosition) => {
     const defaultFieldOptions = {
       name: {
         label: 'Name',
+        placeholder: 'Name',
         autoCorrect: false,
         error: 'Please enter your name'
       },
@@ -110,7 +148,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         autoCapitalize: 'none',
         keyboardType: 'phone-pad',
         error: 'Please enter a valid card number',
-        template: creditCardInlineLabelTemplate,
+        template: getFieldTemplates(labelPosition).creditCard,
         config: {
           cardImageStyle: {
             marginLeft: 2,
@@ -126,7 +164,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         keyboardType: 'phone-pad',
         label: 'CSC',
         placeholder: 'CSC',
-        template: maskedInputInlineLabelTemplate,
+        template: getFieldTemplates(labelPosition).maskedInput,
         config: {
           type: 'custom',
           options: {
@@ -136,9 +174,9 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
       },
       expirationDate: {
         error: 'Invalid MM/YY',
-        template: maskedInputInlineLabelTemplate,
+        template: getFieldTemplates(labelPosition).maskedInput,
         label: 'Exp. Date',
-        placeholder: 'MM/YY',
+        placeholder: 'Exp. Date (MM/YY)',
         keyboardType: 'phone-pad',
         config: {
           type: 'custom',
@@ -179,7 +217,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           })}
         </View>
         <Form
-          fieldsOptions={this.fieldOptions()}
+          fieldsOptions={this.fieldOptions(this.props.labelPosition)}
           fieldsStyleConfig={this.props.fieldsStyleConfig}
           fieldsTypes={this.props.hideName ? FIELD_TYPES_HIDE_NAME : FIELD_TYPES}
           ref={this._saveFormRef}
