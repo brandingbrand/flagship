@@ -7,7 +7,8 @@ import ScreenVisibilityListener from './lib/ScreenVisibilityListener';
 import {
   loadAccountData,
   loadCartData,
-  loadPromoProductsAndTopCategories
+  loadPromoProducts,
+  loadTopCategories
 } from './lib/globalDataLoaders';
 
 const projectEnv = require('../env/env');
@@ -56,7 +57,8 @@ export default app;
 // wait for app initialized
 requestAnimationFrame(loadCartData);
 requestAnimationFrame(loadAccountData);
-requestAnimationFrame(loadPromoProductsAndTopCategories);
+requestAnimationFrame(loadTopCategories);
+requestAnimationFrame(loadPromoProducts);
 
 const screenVisibilityListener = new ScreenVisibilityListener();
 screenVisibilityListener.register();

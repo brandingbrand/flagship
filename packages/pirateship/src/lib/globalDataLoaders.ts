@@ -1,8 +1,11 @@
 import { dataSource } from './datasource';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { env as appEnv } from '@brandingbrand/fsapp';
+
 import {
   UPDATE_ACCOUNT,
   UPDATE_CART,
+  UPDATE_PROMO_PRODUCTS,
   UPDATE_TOP_CATEGORIES
 } from './constants';
 
@@ -25,7 +28,7 @@ export async function loadAccountData(): Promise<void> {
     });
 }
 
-export async function loadPromoProductsAndTopCategories(): Promise<void> {
+export async function loadTopCategories(): Promise<void> {
   return dataSource
     .fetchCategory()
     .then(data => {
@@ -36,10 +39,29 @@ export async function loadPromoProductsAndTopCategories(): Promise<void> {
     })
     .catch(err => {
       console.error(
-        'error when fetching Promo Products And Top Categories',
+        'error when fetching Top Categories',
         err
       );
     });
+}
+
+export async function loadPromoProducts(): Promise<void> {
+  if (appEnv.dataSource && appEnv.dataSource.promoProducts) {
+    return dataSource
+      .fetchProductIndex({
+        categoryId: appEnv.dataSource.promoProducts.categoryId,
+        limit: 5
+      })
+      .then(data => {
+        app.store.dispatch({
+          type: UPDATE_PROMO_PRODUCTS,
+          data: data.products
+        });
+      })
+      .catch(err => {
+        console.error('error fetching promo products', err);
+      });
+  }
 }
 
 function formatCategories(rootCategory: CommerceTypes.Category): any {
