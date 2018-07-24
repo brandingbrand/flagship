@@ -91,7 +91,7 @@ export function styles(colors: FieldsColors): Dictionary {
     },
     errorBlock: {
       fontSize: 12,
-      marginBottom: 12,
+      marginBottom: 3,
       color: ERROR_COLOR
     },
     textboxView: {
@@ -119,6 +119,7 @@ export function styles(colors: FieldsColors): Dictionary {
         borderColor: BORDER_COLOR,
         borderWidth: 1,
         marginBottom: 5,
+        marginTop: 5,
         outline: 'none'
       },
       // the style applied when a validation error occours
@@ -352,11 +353,11 @@ export function styles(colors: FieldsColors): Dictionary {
     rightTextboxIcon: {
       position: 'absolute',
       right: 0,
-      top: 12
+      top: 15
     },
     floatingLabelView: {
       position: 'absolute',
-      top: -5
+      top: -12
     },
     inlineLabelView: {
       width: 80

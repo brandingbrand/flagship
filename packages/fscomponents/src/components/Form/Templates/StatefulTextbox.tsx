@@ -138,7 +138,7 @@ StatefulTextboxState> {
     if (labelPosition === FormLabelPosition.Floating) {
       locals.value ?
       label = (
-        <Text style={[this.controlLabelStyle, {color}]}>{locals.placeholder}</Text>
+        <Text style={[this.controlLabelStyle, {color}]}>{locals.label}</Text>
       ) :
       label = (
         <Text style={this.controlLabelStyle}>&nbsp;</Text>
@@ -169,7 +169,7 @@ StatefulTextboxState> {
           <View style={this.textboxViewStyle}>
             {
               (componentFactory instanceof Function) ?
-              componentFactory(locals, this.textboxStyle) :
+              componentFactory(locals, this.textboxStyle, color) :
               (
                 <TextInput
                   accessibilityLabel={locals.label}
