@@ -30,6 +30,10 @@ export default class Home extends Component<any, any> {
           text='DemandwareCart'
           onPress={this.goTo('DemandwareCart', 'DemandwareCart', 'Back')}
         />
+        <Row
+          text='Mock Data Source'
+          onPress={this.goTo('MockDataSource', 'MockDataSource', 'Back')}
+        />
       </ScrollView>
     );
   }

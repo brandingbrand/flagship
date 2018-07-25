@@ -97,7 +97,6 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
             </View>
             <View style={AccountStyle.buttonContainer}>
               <PSButton
-                primary
                 title={translate.string(translationKeys.contactInfo.actions.save.actionBtn)}
                 onPress={this.save}
               />

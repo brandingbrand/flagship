@@ -7,7 +7,7 @@ import {
 } from '@storybook/addon-knobs/react';
 import { Grid } from '../Grid';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { ProductItemVerticalList } from '../ProductItem/ProductItemVerticalList';
+import { ProductItem } from '../ProductItem';
 import { Shelf } from '../Shelf';
 import Decimal from 'decimal.js';
 
@@ -54,7 +54,7 @@ const testProduct: CommerceTypes.Product = {
 
 const renderProduct = (): JSX.Element => {
   return (
-    <ProductItemVerticalList
+    <ProductItem
       {...object('Product', testProduct)}
       style={object('style', defaultStyle)}
       onPress={action(kActionOnPress)}

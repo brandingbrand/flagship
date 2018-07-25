@@ -25,6 +25,7 @@
     "@brandingbrand/fscomponents": "^0.1.0",
     "@brandingbrand/fsengage": "^0.1.0",
     "@brandingbrand/fsi18n": "^0.1.0",
+    "@brandingbrand/fsmockdatasources": "^0.1.0",
     "@brandingbrand/fsnetwork": "^0.1.0",
     "@brandingbrand/fsproductdetail": "^0.1.0",
     "@brandingbrand/fsproductindex": "^0.1.0",
@@ -42,6 +43,7 @@
     "react-native-push-notification": "^3.0.2",
     "react-native-safe-area": "^0.4.1",
     "react-native-sensitive-info": "^5.1.0",
+    "react-native-svg": "^6.4.1",
     "react-native-touch-id": "^4.0.1",
     "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
@@ -57,7 +59,8 @@
       "@brandingbrand/fsproductdetail",
       "react-native-sensitive-info",
       "react-native-safe-area",
-      "react-native-push-notification"
+      "react-native-push-notification",
+      "react-native-svg"
     ],
     "webTitle": "PirateShip"
   },

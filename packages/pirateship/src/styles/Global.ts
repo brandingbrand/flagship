@@ -13,7 +13,7 @@ export default StyleSheet.create({
     color: palette.primary
   },
   h2: {
-    fontSize: fontSize.base,
+    fontSize: fontSize.large,
     fontWeight: fontWeightBold,
     color: palette.primary
   },

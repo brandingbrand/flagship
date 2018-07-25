@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import {
   MultiCarousel,
-  ProductItemProps,
-  ProductItemVerticalTopSwatches
+  ProductItem,
+  ProductItemProps
 } from '@brandingbrand/fscomponents';
 import { fontSize, palette } from '../styles/variables';
 
@@ -72,11 +72,12 @@ export default class PSProductCarousel extends Component<
   renderItem = (item: ProductItemProps) => {
     return (
       <View style={styles.item}>
-        <ProductItemVerticalTopSwatches
+        <ProductItem
           titleStyle={styles.productTitle}
           priceStyle={styles.productPrice}
           reviewStyle={styles.reviews}
           promoStyle={styles.promoText}
+          buttonProps={{palette}}
           promoContainerStyle={styles.promosContainer}
           reviewIndicatorProps={{ itemSize: 15 } as any}
           {...item}

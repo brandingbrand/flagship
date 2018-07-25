@@ -171,7 +171,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
             <PSButton
               title={translate.string(orderHistoryTranslations.actions.contact.actionBtn)}
               onPress={this.goToContactUs}
-              light={true}
+              light
               style={styles.button}
             />
             <PSButton
@@ -179,7 +179,6 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
                 phone: CUSTOMER_SERVICE_PHONE_NUMBER
               })}
               onPress={this.callCustomerService}
-              primary={true}
               style={[styles.button, styles.rightButton]}
             />
           </View>
