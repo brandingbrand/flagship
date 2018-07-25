@@ -17,8 +17,6 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
   return class ProductCatalogMixin extends superclass implements ProductCatalogDataSource,
                                                                  ProductRecommendationDataSource,
                                                                  ProductSearchDataSource {
-    public productsPerPage: number = 4;
-
     async fetchProduct(id: string): Promise<CommerceTypes.Product> {
       const product = Products.find(product => product.id === id);
 
@@ -40,7 +38,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         sortBy,
         keyword,
         refinements,
-        page = 0,
+        page = 1,
         limit
       } = query;
 
@@ -50,11 +48,16 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       products = this.applyKeywordFilter(products, keyword);
       products = this.applyRefinementFilters(products, refinements);
       products = this.applySorting(products, sortBy);
+
+      // calculate total before paginating
+      const total = products.length;
+
       products = this.applyPagination(products, page, limit);
 
       return {
         products,
-        total: products.length,
+        total,
+        page,
         keyword,
         sortingOptions: ProductSortingOptions,
         refinements: ProductRefinements,
@@ -221,11 +224,13 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
 
     public applyPagination(
       products: CommerceTypes.Product[],
-      page: number = 0,
+      page: number = 1,
       limit?: number
     ): CommerceTypes.Product[] {
-      if (page || limit) {
-        const start = page * this.productsPerPage;
+      const pageIndex = page - 1;
+
+      if (limit) {
+        const start = pageIndex * limit;
         const end = limit ? start + limit : undefined;
 
         products = products.slice(start, end);
