@@ -1,8 +1,41 @@
 # FSEngage
 
-Engagement libraries for Flagship
+FSEngage is Flagship's Engagement package. It Analytics library supports integrations for Google
+Analytics, Leanplum, and Adobe Cloud Marketing. Its CMS library supports our proprietary CMS and soon
+ will support Demandware.
 
-## Providers - Analytics
+* [Analytics](#analytics)
+  * [Analytics Providers](#analytics-providers)
+  * [Analytics Providers Configuration](#analytics-configurations)
+    * [Analytics Provider Configuration](#AnalyticsProviderConfiguration)
+    * [Leanplum](#LeanplumProviderConfiguration)
+    * [Adobe Marketing Congfiguration](#AdobeMarketingCloudWebProviderConfiguration)
+    * [Google Analytics](#GoogleAnalyticsProviderConfiguration)
+  * [Analytics Constructors](#analytics-constructors)
+  * [Analytics Tracking](#tracking-functions)
+    * [Ecommerce Function Signatures](#ecommerce)
+    * [Enhanced Ecommerce Function Signatures](#enhanced-ecommerce)
+    * [App Lifecycle Function Signatures](#app-lifecycle)
+    * [Full List of Property Parameters for Tracking](#parameters)
+* [CMS](#cms)
+  * [CMS Providers](#cms-providers)
+    * [Core](#core)
+    * [Demandware](#demandware)
+  * [CMS API](#cms-api)
+    * [CMS Configurations](#cms-configurations)
+    * [CMS Constructors](#cms-constructors)
+    * [Functionality](#cms-constructors)
+* [Tests](#tests)
+
+## Analytics
+
+The analytics library includes convenient integrations for Google Analytics, Leanplum, and Adobe
+Marketing cloud. Getting started with our analytics library is as easy as configuring your analytics
+providers and passing these configs into the Analytics constructor. Then you will be
+able to import your analytics object into your app's components for easy tracking of ecommerce,
+enhanced ecommerce, and lifecycle events.
+
+## Analytics Providers
 
 ### Leanplum
 
@@ -31,31 +64,12 @@ by Adobe Marketing Cloud.
 
 For more information please go [here](https://marketing.adobe.com/resources/help/en_US/mobile/ios/dev_qs.html).
 
-## Providers - CMS
-
-### Core
-
-Branding Brand's content management system is supported with some targets limitations at the moment.
-The targets currently supported are:
-
-+ City
-+ Country
-+ Date
-+ Postal Code
-+ Region
-+ State
-+ Time of Day
-+ Time Zone
-
-### Demandware
-
-Demandware's content management system support is on the roadmap, but it is still on the exploration
-stage. A strategy for how to manage slots' content need to be set, since they are coming from the
-Data API, instead of the Shop API.
-
 ## API - Analytics
 
 ### Analytics Configurations
+
+Before generating your analytics object, you must first successfully configure your providers according
+to the following configuration signatures.
 
 #### # AnalyticsProviderConfiguration
 
@@ -97,134 +111,38 @@ Data API, instead of the Shop API.
   | key | string | **yes** |
   | monetizationEventName | string | no |
 
-### Parameters
-
-#### # ClickGeneric
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | name | string | **yes*** |
-  | index | number | no |
-
-  \* Either **identifier** or **name** must be set.
-
-#### # ContactCall
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | number | string | **yes** |
-
-#### # ContactEmail
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | to | string | **yes** |
-
-#### # ImpressionGeneric
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | name | string | **yes*** |
-  | index | number | no |
-
-  \* Either **identifier** or **name** must be set.
-
-#### # ImpressionProduct
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | brand | string | no |
-  | category | string | no |
-  | list | string | no |
-  | variant | string | no |
-  | price | number | no |
-  | index | number | no |
-
-#### # LocationDirections
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | address | string | **yes*** |
-
-  \* Either **identifier** or **address** must be set.
-
-#### # Product
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | brand | string | no |
-  | category | string | no |
-  | variant | string | no |
-  | coupons | string[] | no |
-  | price | string | no |
-  | quantity | number | no |
-  | index | number | no |
-
-#### # Promotion
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | creative | string | no |
-  | slot | string | no |
-
-#### # RefundProduct
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | quantity | number | **yes** |
-  | price | string | no |
-  | coupons | string[] | no |
-
-#### # SearchGeneric
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | term | string | **yes** |
-  | count | number | no |
-
-#### # Screenview
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | url | string | **yes** |
-
-### Actions
-
-#### # ProductAction
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | list | string | no |
-
-#### # CheckoutAction
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | step | number | no |
-  | option | string | no |
-
-#### # TransactionAction
-
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | affiliation | string | no |
-  | revenue | string | no |
-  | tax | string | no |
-  | shippingCost | string | no |
-  | coupons | string[] | no |
-
 ### Analytics Constructors
+
+Once you have configured your providers, you will want to pass them to the Analytics constructor in
+order to output your own Analytics instance. Below you will find examples. The first user has chosen
+to Google Analytics alone, the second has chosen to use all three providers.
+
+```javascript
+
+const AnalyticsProviderConfiguration = {
+  userAgent: DeviceInfo.getUserAgent(),
+  osType: Platform.OS,
+  osVersion: (Platform.Version && Platform.Version.toString()) || '',
+  appName: DeviceInfo.getApplicationName(),
+  appId: DeviceInfo.getBundleId(),
+  appVersion: version
+};
+
+const googleAnalyticsConfiguration = {
+  trackerId: projectEnv.googleAnalytics[Platform.OS],
+  clientId: DeviceInfo.getUniqueID()
+};
+
+const google = new GoogleAnalyticsProvider(
+  AnalyticsProviderConfiguration,
+  GoogleAnalyticsProviderConfiguration
+)
+
+const analytics = new Analytics([
+  google
+])
+
+```
 
 ```javascript
 const adobe = new AdobeMarketingCloudProvider(
@@ -245,9 +163,35 @@ const analytics = new Analytics([
   google,
   leanplum
 ]): Analytics;
+
 ```
 
 ### Tracking Functions
+
+Once you have successfully configured your Analytics provider, you can import it into your components
+ and begin tracking users' interactions with your app or site. For example, on a Product Detail Page,
+ you might want to add a click tracker to your 'Add To Cart' button.  It's as simple as adding the
+ following code to your success handler (assuming you only want to tracks successful adds):
+
+ ```javascript
+       Analytics.click.generic('Add to Bag', {
+        identifier: variantId,
+        name: 'PDP'
+      });
+```
+
+Or maybe you want to track a screenview of a product page. In that case you would want to add
+something like this into your render function:
+
+```javascript
+     Analytics.screenview('ProductDetail', {
+        url: 'www.example.com/products/123'
+      });
+```
+
+The full list of function signatures for ecommerce, enhanced ecommerce, and lifecycle events can be
+found below. Following these are complete lists of all mandatory and optional properties for each
+function.
 
 #### # Ecommerce
 
@@ -392,7 +336,158 @@ analytics.lifecycle.start(): void;
 analytics.lifecycle.suspend(): void;
 ```
 
-## API - CMS
+### Parameters
+
+#### # ClickGeneric
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes*** |
+  | name | string | **yes*** |
+  | index | number | no |
+
+  \* Either **identifier** or **name** must be set.
+
+#### # ContactCall
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | number | string | **yes** |
+
+#### # ContactEmail
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | to | string | **yes** |
+
+#### # ImpressionGeneric
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes*** |
+  | name | string | **yes*** |
+  | index | number | no |
+
+  \* Either **identifier** or **name** must be set.
+
+#### # ImpressionProduct
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes** |
+  | name | string | **yes** |
+  | brand | string | no |
+  | category | string | no |
+  | list | string | no |
+  | variant | string | no |
+  | price | number | no |
+  | index | number | no |
+
+#### # LocationDirections
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes*** |
+  | address | string | **yes*** |
+
+  \* Either **identifier** or **address** must be set.
+
+#### # Product
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes** |
+  | name | string | **yes** |
+  | brand | string | no |
+  | category | string | no |
+  | variant | string | no |
+  | coupons | string[] | no |
+  | price | string | no |
+  | quantity | number | no |
+  | index | number | no |
+
+#### # Promotion
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes** |
+  | name | string | **yes** |
+  | creative | string | no |
+  | slot | string | no |
+
+#### # RefundProduct
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes** |
+  | quantity | number | **yes** |
+  | price | string | no |
+  | coupons | string[] | no |
+
+#### # SearchGeneric
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | term | string | **yes** |
+  | count | number | no |
+
+#### # Screenview
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | url | string | **yes** |
+
+### Actions
+
+#### # ProductAction
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | list | string | no |
+
+#### # CheckoutAction
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | step | number | no |
+  | option | string | no |
+
+#### # TransactionAction
+
+  | Property | Type | Required |
+  | - |:-:| :-:|
+  | identifier | string | **yes** |
+  | affiliation | string | no |
+  | revenue | string | no |
+  | tax | string | no |
+  | shippingCost | string | no |
+  | coupons | string[] | no |
+
+## CMS
+
+## CMS Providers
+
+### Core
+
+Branding Brand's content management system is supported with some targets limitations at the moment.
+The targets currently supported are:
+
+* City
+* Country
+* Date
+* Postal Code
+* Region
+* State
+* Time of Day
+* Time Zone
+
+### Demandware
+
+Demandware's content management system support is on the roadmap, but it is still on the exploration
+stage. A strategy for how to manage slots' content need to be set, since they are coming from the
+Data API, instead of the Shop API.
+
+## CMS API
 
 ### CMS Configurations
 
