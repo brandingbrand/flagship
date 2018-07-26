@@ -12,7 +12,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-import { CommerceTypes, ReviewTypes } from '@brandingbrand/fscommerce';
+import { ReviewTypes } from '@brandingbrand/fscommerce';
 import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
@@ -20,22 +20,9 @@ import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
-export interface ReviewItemProps {
-  id?: string;
-  title: string;
-  text: string;
-  rating: number;
-  user?: string;
-  created?: any;
-  photos?: CommerceTypes.Image[];
-  context?: ReviewTypes.ReviewContext[];
-  dimensions?: ReviewTypes.ReviewDimension[];
-  recommendedText?: string;
+export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedImage?: ImageURISource;
-
-  verified?: boolean;
   verifiedImage?: ImageURISource;
-  helpful?: number;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -52,7 +39,6 @@ export interface ReviewItemProps {
   recommendedImageStyle?: StyleProp<ImageStyle>;
   recommendedImageBoxStyle?: StyleProp<ViewStyle>;
   recommendedRowStyle?: StyleProp<ViewStyle>;
-
 
   // children
   reviewIndicatorProps?: ReviewIndicatorProps;
@@ -82,12 +68,11 @@ export class ReviewItem extends Component<ReviewItemProps> {
     const {
       rating,
       title,
-      text,
+      text = '',
       user,
       created,
-      verified = false,
       verifiedImage,
-      helpful = false,
+      feedback,
       reviewIndicatorProps = {},
       moreTextProps = {},
       style,
@@ -102,12 +87,12 @@ export class ReviewItem extends Component<ReviewItemProps> {
       onHelpful,
       onNotHelpful,
       moreTextStyle,
-      recommendedText,
       recommendedImage,
       recommendedStyle,
       recommendedImageStyle,
       recommendedImageBoxStyle,
-      recommendedRowStyle
+      recommendedRowStyle,
+      isRecommended
     } = this.props;
 
     return (
@@ -125,12 +110,12 @@ export class ReviewItem extends Component<ReviewItemProps> {
         {(user || created) && (
         <View style={[S.row, rowStyle]}>
           <Text style={[S.user, userStyle]}>
-            {user && 'By ' + user}
+            {user && user.name && 'By ' + user.name}
             {(created ? ' on ' + (new Date(created)).toLocaleDateString() : '')}
           </Text>
         </View>
         )}
-        {verified && (
+        {user && user.isVerifiedBuyer && (
           <View style={[S.row, { paddingBottom: 3 }, rowStyle, verifiedRowStyle]}>
             {verifiedImage && (
               <Image style={verifiedImageStyle} source={verifiedImage} />
@@ -147,21 +132,25 @@ export class ReviewItem extends Component<ReviewItemProps> {
           numberOfCharacters={325}
           {...moreTextProps}
         />
-        {recommendedText && (
+        {isRecommended !== undefined && (
           <View style={[S.row, rowStyle, recommendedRowStyle]}>
             {recommendedImage && (
               <View style={recommendedImageBoxStyle}>
                 <Image style={recommendedImageStyle} source={recommendedImage} />
               </View>
             )}
-            <Text style={[S.recommended, recommendedStyle]}>{recommendedText}</Text>
+            <Text style={[S.recommended, recommendedStyle]}>
+              {isRecommended ?
+                FSI18n.string(componentTranslationKeys.recommended) :
+                FSI18n.string(componentTranslationKeys.notRecommended)}
+            </Text>
           </View>
         )}
-        {helpful && (
+        {feedback && feedback.positive && (
         <View style={[S.row, rowStyle]}>
           <Text style={[S.helpful, helpfulStyle]}>
             {FSI18n.string(componentTranslationKeys.helpfulCount, {
-              count: helpful
+              count: feedback.positive
             })}
           </Text>
         </View>
