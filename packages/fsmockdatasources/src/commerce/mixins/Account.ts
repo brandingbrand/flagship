@@ -1,5 +1,5 @@
 import { AccountDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
-import { Constructor } from '../helpers';
+import { Constructor } from '../../helpers';
 
 export const AccountMixin = <T extends Constructor>(superclass: T) => {
   return class AccountMixin extends superclass implements AccountDataSource {

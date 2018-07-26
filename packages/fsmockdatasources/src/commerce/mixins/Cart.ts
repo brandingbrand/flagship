@@ -7,7 +7,7 @@ import {
   Products,
   Promos,
   ShippingMethods
-} from '../helpers';
+} from '../../helpers';
 
 export const CartMixin = <T extends Constructor>(superclass: T) => {
   return class CartMixin extends superclass implements CartDataSource {

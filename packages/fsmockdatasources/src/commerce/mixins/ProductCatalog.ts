@@ -11,7 +11,7 @@ import {
   ProductRefinements,
   Products,
   ProductSortingOptions
-} from '../helpers';
+} from '../../helpers';
 
 export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
   return class ProductCatalogMixin extends superclass implements ProductCatalogDataSource,
