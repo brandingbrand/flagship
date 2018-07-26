@@ -7,9 +7,13 @@ import { ShopifyDataSource } from '@brandingbrand/fsshopify';
 import { env } from '@brandingbrand/fsapp';
 import { MockCommerceDataSource } from '@brandingbrand/fsmockdatasources';
 
+type CommerceDataSource = import ('@brandingbrand/fscommerce').CommerceDataSource;
+type ReviewDataSource = import ('@brandingbrand/fscommerce').ReviewDataSource;
+
 const { dataSourceConfigs } = env;
 
-let dataSourceToExport: import ('@brandingbrand/fscommerce').CommerceDataSource;
+let dataSourceToExport: CommerceDataSource;
+const reviewDataSource: ReviewDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);
 
 export interface DataSourceConfig {
   type: 'bbplatform' | 'commercecloud' | 'shopify' | 'mock';
@@ -40,4 +44,4 @@ if (env.dataSource.type === 'bbplatform') {
 export const dataSource = dataSourceToExport;
 export const dataSourceConfig: DataSourceConfig = env.dataSource;
 
-export const bvDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);
+export { reviewDataSource };

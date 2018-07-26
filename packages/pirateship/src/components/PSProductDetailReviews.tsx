@@ -15,10 +15,7 @@ import {
 
 import {
   ReviewDataSource,
-  ReviewTypes,
-  withReviewData,
-  WithReviewProps,
-  WithReviewState
+  ReviewTypes
 } from '@brandingbrand/fscommerce';
 
 import * as variables from '../styles/variables';
@@ -59,18 +56,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface ProductDetailReviewsProps extends
-WithReviewProps,
-WithReviewState {
-
+export interface ProductDetailReviewsProps {
+  reviewQuery: ReviewTypes.ReviewQuery;
+  reviewDataSource: ReviewDataSource;
 }
 
 export interface ProductDetailReviewState {
   hasMore: boolean;
   loadingMore: boolean;
+  reviewsData?: ReviewTypes.ReviewDetails[];
 }
 
-class PSProductDetailReviewsComponent extends
+export default class PSProductDetailReviews extends
 Component<ProductDetailReviewsProps, ProductDetailReviewState> {
   constructor(props: ProductDetailReviewsProps) {
     super(props);
@@ -81,29 +78,38 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
     };
   }
 
-  componentWillReceiveProps(nextProps: ProductDetailReviewsProps): void {
-    const { reviewsData } = nextProps;
-    if (reviewsData && reviewsData[0]) {
-      const { page, limit, total } = reviewsData[0];
-      const hasMore = page && limit && total ? (page * limit) < total : false;
-      this.setState({
-        hasMore,
-        loadingMore: false
-      });
-    }
+  async componentDidMount(): Promise<void> {
+    const { reviewDataSource, reviewQuery } = this.props;
+
+    const reviewsData = await reviewDataSource.fetchReviewDetails(reviewQuery);
+    const { page, limit, total } = reviewsData[0];
+    const hasMore = page && limit && total ? (page * limit) < total : false;
+
+    this.setState({
+      reviewsData,
+      hasMore,
+      loadingMore: false
+    });
   }
 
-  loadMoreReviews = () => {
-    const { reviewProviderLoadMore, reviewsData } = this.props;
-    if (!reviewProviderLoadMore || !reviewsData || typeof reviewsData[0].page === 'undefined') {
+  loadMoreReviews = async () => {
+    const { reviewDataSource, reviewQuery } = this.props;
+    const { reviewsData } = this.state;
+
+    if (!Array.isArray(reviewsData) || !reviewsData[0] || reviewsData[0].page === undefined) {
       return;
     }
 
     this.setState({ loadingMore: true });
 
-    reviewProviderLoadMore({
-      ids: reviewsData[0].id,
+    const newReviewsData = await reviewDataSource.fetchReviewDetails({
+      ...reviewQuery,
       page: reviewsData[0].page as number + 1
+    });
+
+    this.setState({
+      loadingMore: false,
+      reviewsData: reviewDataSource.mergeReviewDetails(reviewsData, newReviewsData)
     });
   }
 
@@ -130,36 +136,13 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
   }
 
   render(): JSX.Element {
-    const { reviewsData } = this.props;
+    const { reviewsData } = this.state;
 
     if (!reviewsData) {
       return <Loading style={{ marginTop: 80 }} />;
     }
 
-    // TODO: Update this when reviewsData has a proper type
-    /* tslint:disable-next-line:no-unnecessary-type-assertion */
-    const { reviews = [], statistics } = reviewsData[0] as ReviewTypes.ReviewDetails;
-    const _reviews = reviews.map(r => {
-      const recommendText = r.isRecommended ?
-                            'Yes, I recommend this product.' :
-                            'No, I do not reccommend this product.';
-      const recommendedImage = r.isRecommended ? icons.checkmark : null;
-      // TODO: Update this to use the proper ReviewBadge[] type
-      /* tslint:disable-next-line:no-unnecessary-type-assertion */
-      const badges = r.badges as any;
-      const verified = badges && badges.verifiedPurchaser;
-      const verifiedImage = verified ? icons.verified : null;
-
-      return {
-        ...r,
-        text: r.text || '',
-        title: r.title || null,
-        recommendedText: recommendText,
-        recommendedImage,
-        verified,
-        verifiedImage
-      };
-    });
+    const { reviews, statistics } = reviewsData[0];
 
     return (
       <View style={styles.reviews}>
@@ -185,7 +168,9 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
           />
         )}
         <ReviewsList
-          reviews={_reviews}
+          reviews={reviews}
+          recommendedImage={icons.checkmark}
+          verifiedImage={icons.verified}
           reviewStyle={{
             style: {
               padding: 0,
@@ -248,10 +233,3 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
     );
   }
 }
-
-const PSProductDetailReviews = withReviewData(
-  async (DataSource: ReviewDataSource, reviewQuery: ReviewTypes.ReviewQuery) =>
-    DataSource.fetchReviewDetails(reviewQuery)
-)(PSProductDetailReviewsComponent);
-
-export default PSProductDetailReviews;
