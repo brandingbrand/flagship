@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductIndex } from '@brandingbrand/fsproductindex';
-import { demandware } from '../../lib/datasource';
+import { demandware, powerreviews } from '../../lib/datasource';
 
 export default class ProductIndexDemandwareList extends Component<any> {
   goTo = (data: any) => {
@@ -11,11 +11,12 @@ export default class ProductIndexDemandwareList extends Component<any> {
     return (
       <ProductIndex
         commerceDataSource={demandware}
+        reviewDataSource={powerreviews}
         commerceToReviewMap='id'
         onNavigate={this.goTo}
         format='list'
         productQuery={{
-          categoryId: 'personal-care'
+          categoryId: 'mens'
         }}
         productItemProps={{
           contentStyle: {
