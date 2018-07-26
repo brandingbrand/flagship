@@ -4,3 +4,4 @@ export * from './Cart';
 export * from './CheckoutOptions';
 export * from './Promos';
 export * from './Misc';
+export * from './Reviews';
