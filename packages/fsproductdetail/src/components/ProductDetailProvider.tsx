@@ -1,16 +1,15 @@
 import React, { Component, ComponentClass } from 'react';
 import { compose } from 'redux';
-import { cloneDeep, get, isEqual, isFunction, set } from 'lodash-es';
+import { cloneDeep, isEqual, set } from 'lodash-es';
 
 import {
   CommerceTypes,
   FetchDataFunction,
+  ReviewDataSource,
+  ReviewTypes,
   withCommerceData,
   WithCommerceProps,
-  WithCommerceProviderProps,
-  withReviewData,
-  WithReviewProps,
-  WithReviewState
+  WithCommerceProviderProps
 } from '@brandingbrand/fscommerce';
 
 // TODO: This should move into fscommerce
@@ -25,8 +24,9 @@ export type CommerceToReviewMapFunction<
  */
 export interface WithProductDetailProviderProps<
   T extends CommerceTypes.Product = CommerceTypes.Product
-> extends WithCommerceProviderProps<T>, WithReviewProps {
-  commerceToReviewMap: string | CommerceToReviewMapFunction<T>;
+> extends WithCommerceProviderProps<T> {
+  commerceToReviewMap: keyof T | CommerceToReviewMapFunction<T>;
+  reviewDataSource?: ReviewDataSource;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface WithProductDetailProviderProps<
  */
 export type WithProductDetailProps<
   T extends CommerceTypes.Product = CommerceTypes.Product
-> = WithCommerceProps<T> & WithReviewState;
+> = WithCommerceProps<T> & { reviewsData?: ReviewTypes.ReviewDetails[] };
 
 /**
  * The state of the ProductDetailProvider component which is passed to the wrapped component as a
@@ -46,7 +46,7 @@ export type WithProductDetailProps<
  */
 export type WithProductDetailState<
   T extends CommerceTypes.Product = CommerceTypes.Product
-> = Pick<WithCommerceProps<T>, 'commerceData'>;
+> = Pick<WithCommerceProps<T>, 'commerceData'> & { reviewsData?: ReviewTypes.ReviewDetails[] };
 
 /**
  * A function that wraps a a component and returns a new high order component. The wrapped
@@ -70,18 +70,16 @@ export type ProductDetailWrapper<P, T extends CommerceTypes.Product = CommerceTy
  * @template T The type of product data that will be provided. Defaults to `Product`
  *
  * @param {FetchDataFunction<P, T>} fetchProduct A function that will return product data.
- * @param {Function} fetchReview A function that will return review data.
  * @returns {ProductDetailWrapper<P>} A function that wraps a component and returns a new high order
  * component.
  */
 export default function withProductDetailData<
   P,
   T extends CommerceTypes.Product = CommerceTypes.Product
->(fetchProduct: FetchDataFunction<P, T>, fetchReview: Function): ProductDetailWrapper<P, T> {
+>(fetchProduct: FetchDataFunction<P, T>): ProductDetailWrapper<P, T> {
   type ResultProps = P &
     WithProductDetailProviderProps<T> &
-    WithCommerceProps<T> &
-    WithReviewState;
+    WithCommerceProps<T>;
 
   /**
    * A function that wraps a a component and returns a new high order component. The wrapped
@@ -93,32 +91,33 @@ export default function withProductDetailData<
    */
   return (WrappedComponent: ComponentClass<P & WithProductDetailProps<T>>) => {
     class ProductDetailProvider extends Component<ResultProps, WithProductDetailState<T>> {
-      // TODO: This should be replaced with getDerivedStateFromProps
-      componentWillReceiveProps(nextProps: ResultProps): void {
-        const { commerceData, commerceToReviewMap, reviewProviderDoUpdate } = this.props;
+      async componentDidUpdate(prevProps: ResultProps): Promise<void> {
+        const { commerceToReviewMap, reviewDataSource } = this.props;
 
-        const getReviewId = (product: T) => {
-          if (isFunction(commerceToReviewMap)) {
-            return commerceToReviewMap(product);
-          } else if ('string' === typeof commerceToReviewMap) {
-            return get(product, commerceToReviewMap);
-          }
+        // ts isn't detecting the commerceData type correctly, so we have to assert it
+        const commerceData = this.props.commerceData as T | undefined;
 
-          // Default to the product id
-          return product.id;
-        };
+        if (commerceData === undefined || reviewDataSource === undefined) {
+          return;
+        }
 
-        if (nextProps.commerceData) {
-          if (!isEqual(commerceData, nextProps.commerceData) && reviewProviderDoUpdate) {
-            // CommerceData has changed, update review data
-            const ids = getReviewId(nextProps.commerceData);
-            reviewProviderDoUpdate({ ids });
-          } else if (nextProps.reviewsData && nextProps.reviewsData.length) {
-            // Merge commerce and reviews data
-            const newCommerceData = cloneDeep(nextProps.commerceData);
-            set(newCommerceData, 'review', nextProps.reviewsData[0]);
-            this.setState({ commerceData: newCommerceData });
-          }
+        if (!isEqual(prevProps.commerceData, commerceData)) {
+          // CommerceData has changed, update review data
+
+          const ids = reviewDataSource.productIdMapper<T>(
+            [commerceData],
+            commerceToReviewMap
+          );
+
+          const reviewsData = await reviewDataSource.fetchReviewDetails({ ids });
+
+          // Merge commerce and reviews data
+          const newCommerceData = cloneDeep(commerceData);
+          set(newCommerceData, 'review', reviewsData[0]);
+          this.setState({
+            commerceData: newCommerceData,
+            reviewsData
+          });
         }
       }
 
@@ -132,14 +131,14 @@ export default function withProductDetailData<
           <WrappedComponent
             {...props}
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
+            reviewsData={(this.state && this.state.reviewsData)}
           />
         );
       }
     }
 
     return compose<ComponentClass<P & WithProductDetailProviderProps<T>>>(
-      withCommerceData<P, T>(fetchProduct),
-      withReviewData(fetchReview)
+      withCommerceData<P, T>(fetchProduct)
     )(ProductDetailProvider);
   };
 }
