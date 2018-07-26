@@ -69,7 +69,8 @@ export const cmsProductCatalog = new BrandCMSProductCatalog({
   }))
 });
 
-export const mockDataSource = new MockCommerceDataSource();
+export const mockCommerceDataSource = new MockCommerceDataSource();
+export const mockReviewDataSource = new MockReviewDataSource();
 export const powerreviews = new PowerReviewsDataSource({
   endpoint: 'https://readservices-b2c.powerreviews.com/',
   apikey: '',
