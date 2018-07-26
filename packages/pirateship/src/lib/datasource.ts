@@ -5,7 +5,7 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 import { commerceCloudMiddleware } from './commerceCloudMiddleware';
 import { ShopifyDataSource } from '@brandingbrand/fsshopify';
 import { env } from '@brandingbrand/fsapp';
-import { MockCommerceDataSource } from '@brandingbrand/fsmockdatasources';
+import { MockCommerceDataSource, MockReviewDataSource } from '@brandingbrand/fsmockdatasources';
 
 type CommerceDataSource = import ('@brandingbrand/fscommerce').CommerceDataSource;
 type ReviewDataSource = import ('@brandingbrand/fscommerce').ReviewDataSource;
@@ -13,7 +13,7 @@ type ReviewDataSource = import ('@brandingbrand/fscommerce').ReviewDataSource;
 const { dataSourceConfigs } = env;
 
 let dataSourceToExport: CommerceDataSource;
-const reviewDataSource: ReviewDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);
+let reviewDataSource: ReviewDataSource = new BazaarvoiceDataSource(dataSourceConfigs.bazaarVoice);
 
 export interface DataSourceConfig {
   type: 'bbplatform' | 'commercecloud' | 'shopify' | 'mock';
@@ -37,6 +37,7 @@ if (env.dataSource.type === 'bbplatform') {
   dataSourceToExport = new ShopifyDataSource(config);
 } else if (env.dataSource.type === 'mock') {
   dataSourceToExport = new MockCommerceDataSource();
+  reviewDataSource = new MockReviewDataSource();
 } else {
   throw new Error('No data source specified in env!');
 }
