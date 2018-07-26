@@ -9,9 +9,7 @@ import {
 
 import {
   CommerceDataSource,
-  CommerceTypes,
-  ReviewDataSource,
-  ReviewTypes
+  CommerceTypes
 } from '@brandingbrand/fscommerce';
 
 export interface UnwrappedProductDetailProps {
@@ -39,8 +37,5 @@ class ProductDetail extends Component<UnwrappedProductDetailProps & WithProductD
 export default withProductDetailData<UnwrappedProductDetailProps>(
   async (DataSource: CommerceDataSource, props: UnwrappedProductDetailProps) => {
     return DataSource.fetchProduct(props.id);
-  },
-  async (DataSource: ReviewDataSource, reviewQuery: ReviewTypes.ReviewQuery) => {
-    return DataSource.fetchReviewDetails(reviewQuery);
   }
 )(ProductDetail);
