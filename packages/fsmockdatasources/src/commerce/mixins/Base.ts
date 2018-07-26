@@ -1,4 +1,4 @@
-import { DefaultCurrencyCode } from '../helpers';
+import { DefaultCurrencyCode } from '../../helpers';
 
 export class Base {
   public minRefinements: number = 0;
