@@ -21,3 +21,9 @@ export interface Hour {
   open: string;
   close: string;
 }
+
+export type ClearButtonMode =
+  'never' |
+  'while-editing' |
+  'unless-editing' |
+  'always';
