@@ -8,12 +8,6 @@ import NativeConstants from '../lib/native-constants';
 import { FSAppBase } from './FSAppBase';
 import DevMenu from '../components/DevMenu';
 
-import EnvSwitcher from '../lib/env-switcher';
-// @ts-ignore project_env_index ignore and will be changed by init
-import projectEnvs from '../../project_env_index';
-
-export const env: any = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
-
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);

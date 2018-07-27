@@ -6,6 +6,9 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { GenericScreenProp } from './screenWrapper';
 import TouchableRow from './TouchableRow';
 import { Screen } from 'react-native-navigation';
+// @ts-ignore project_env_index ignore and will be changed by init
+import projectEnvs from '../../project_env_index';
+import EnvSwitcher from '../lib/env-switcher';
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -49,16 +52,29 @@ const styles = StyleSheet.create({
   },
   reloadBtnText: {
     color: 'white'
+  },
+  switchBtns: {
+    flexDirection: 'row',
+    margin: 10
+  },
+  envView: {
+    padding: 10,
+    flex: 1
+  },
+  envViewText: {
+    fontSize: 12
   }
 });
 
 export interface DevMenuState {
   devView: string;
+  selectedEnv: string;
 }
 
 export default class DevMenu extends Component<GenericScreenProp, DevMenuState> {
   state: DevMenuState = {
-    devView: 'menu'
+    devView: 'menu',
+    selectedEnv: 'prod'
   };
 
   render(): JSX.Element {
@@ -66,6 +82,14 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
     if (this.state.devView === 'app-config') {
       view = this.renderAppConfig();
+    }
+
+    if (this.state.devView === 'envSwitcher') {
+      view = this.renderEnvSwitcher();
+    }
+
+    if (this.state.devView === 'envDetail') {
+      view = this.renderEnvDetail();
     }
 
     return (
@@ -87,6 +111,7 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     return (
       <View style={styles.devViewcontainer}>
         <TouchableRow text={`View App Config`} onPress={this.showDevView('app-config')} />
+        <TouchableRow text={`Env Switcher`} onPress={this.showDevView('envSwitcher')} />
         {devMenuScreens.map(this.renderCustomDevScreen)}
       </View>
     );
@@ -116,6 +141,59 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
         })}
       </View>
     );
+  }
+
+  renderEnvSwitcher = () => {
+    const currentEnv = EnvSwitcher.envName;
+
+    return (
+      <View style={styles.configView}>
+        {Object.keys(projectEnvs).map((env, i) => {
+          return (
+            <TouchableRow
+              key={env}
+              text={`${env} ${currentEnv === env ? '[active]' : ''}`}
+              onPress={this.updateSelectedEnv(env)}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+
+  renderEnvDetail = () => {
+    const env = projectEnvs[this.state.selectedEnv];
+
+    return (
+      <View style={styles.configViewItem}>
+        <View style={styles.switchBtns}>
+          <TouchableOpacity style={styles.reloadBtn} onPress={this.switchToSelectedEnv}>
+            <Text style={styles.reloadBtnText}>Switch to [{this.state.selectedEnv}] env</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.closeBtn} onPress={this.updateSelectedEnv('')}>
+            <Text style={styles.closeBtnText}>Back</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.envView}>
+          <Text style={styles.envViewText}>{JSON.stringify(env, null, '  ')}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  updateSelectedEnv = (env: string) => () => {
+    this.setState({
+      devView: 'envDetail',
+      selectedEnv: env
+    });
+  }
+
+  switchToSelectedEnv = () => {
+    EnvSwitcher.envName = this.state.selectedEnv;
+    if (typeof window !== 'undefined' && window.location && window.location.assign) {
+      window.location.assign('/');
+    }
   }
 
   dismissModal = () => {
