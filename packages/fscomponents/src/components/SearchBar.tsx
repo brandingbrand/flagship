@@ -13,6 +13,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { ClearButtonMode } from '../types/Store';
 import { style as S } from '../styles/SearchBar';
 
 const kCancelButtonWidthDefault = 75; // In pts
@@ -30,6 +31,7 @@ export interface SearchBarProps {
   showSearchIcon?: boolean;
   showLocator?: boolean;
   showCancel?: boolean;
+  clearButtonMode?: ClearButtonMode;
 
   // button
   searchTitle?: string;
@@ -106,6 +108,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   renderInput = () => {
     const {
       placeholder,
+      clearButtonMode,
       searchIcon,
       inputProps,
       inputTextStyle,
@@ -133,7 +136,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           value={this.state.value}
           onSubmitEditing={this.handleSubmit}
           placeholder={placeholder}
-          clearButtonMode='never'
+          clearButtonMode={clearButtonMode || 'never'}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           returnKeyType='search'

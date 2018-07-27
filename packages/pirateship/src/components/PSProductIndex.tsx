@@ -9,13 +9,12 @@ import {
 } from 'react-native';
 
 import React, { Component } from 'react';
-import { get } from 'lodash-es';
 import { Navigator } from 'react-native-navigation';
 
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ProductIndex, ProductIndexSearch } from '@brandingbrand/fsproductindex';
 
-import { dataSource } from '../lib/datasource';
+import { dataSource, reviewDataSource } from '../lib/datasource';
 import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle } from '../lib/commonTypes';
@@ -243,8 +242,6 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
         <ProductItem
           image={image}
           buttonProps={{palette}}
-          reviewValue={get(item, 'review.statistics.averageRating')}
-          reviewCount={get(item, 'review.statistics.reviewCount')}
           onPress={this.onPress(item)}
           style={PIPStyle.productItem}
           {...item}
@@ -283,7 +280,8 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
       modalType: 'half-screen',
       filterType: 'drilldown',
       mergeSortToFilter: true,
-      disableReviews: true,
+      disableReviews: false,
+      reviewDataSource,
       handleFilterReset: this.handleFilterReset,
       FilterListDrilldownProps: {
         resetButtonTextStyle: PIPStyle.resetButtonText,

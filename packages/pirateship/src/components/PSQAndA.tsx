@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import timeSince from '../lib/timeSince';
-import { bvDataSource } from '../lib/datasource';
+import { reviewDataSource } from '../lib/datasource';
 import * as variables from '../styles/variables';
 import { Loading } from '@brandingbrand/fscomponents';
 import { ReviewTypes } from '@brandingbrand/fscommerce';
@@ -104,7 +104,11 @@ export default class PSQAndA extends Component<PSQAndAProps, PSQAndAState> {
   }
 
   componentDidMount(): void {
-    bvDataSource.fetchQuestions({ ids: this.props.id })
+    if (!reviewDataSource.fetchQuestions) {
+      return;
+    }
+
+    reviewDataSource.fetchQuestions({ ids: this.props.id })
       .then((data: any) => {
         this.setState({ questions: data, isLoading: false });
         if (this.props.onDataLoaded) {
