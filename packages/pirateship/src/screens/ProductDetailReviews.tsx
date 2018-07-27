@@ -8,8 +8,8 @@ import { navBarNoTabs } from '../styles/Navigation';
 import translate, { translationKeys } from '../lib/translations';
 
 export interface ProductDetailReviewsProps extends ScreenProps {
-  reviewQuery: any;
-  reviewProviderDataSource: any;
+  reviewQuery: import ('@brandingbrand/fscommerce').ReviewTypes.ReviewQuery;
+  reviewDataSource: import ('@brandingbrand/fscommerce').ReviewDataSource;
 }
 
 export default class ProductDetailReviews extends Component<ProductDetailReviewsProps> {
@@ -29,7 +29,7 @@ export default class ProductDetailReviews extends Component<ProductDetailReviews
       <PSScreenWrapper hideGlobalBanner={true}>
         <PSProductDetailReviews
           reviewQuery={this.props.reviewQuery}
-          reviewProviderDataSource={this.props.reviewProviderDataSource}
+          reviewDataSource={this.props.reviewDataSource}
         />
       </PSScreenWrapper>
     );

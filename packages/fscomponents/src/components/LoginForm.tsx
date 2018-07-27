@@ -4,7 +4,7 @@ import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import { emailRegex } from '../lib/email';
-import { Form } from './Form';
+import { Form, FormLabelPosition } from './Form';
 import { Button } from './Button';
 
 export interface LoginFormProps {
@@ -13,6 +13,10 @@ export interface LoginFormProps {
    */
   style?: StyleProp<ViewStyle>;
 
+  /**
+   * Label Position
+   */
+  labelPosition?: FormLabelPosition;
   /**
    * Form fields style
    */
@@ -73,6 +77,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
   fieldsStyleConfig: any;
   fieldsTypes: any;
   fieldsOptions: any;
+  labelPosition: FormLabelPosition;
 
   constructor(props: LoginFormProps) {
     super(props);
@@ -86,16 +91,18 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
     this.fieldsOptions = {
       emailAddress: {
-        label: '*Email Address',
+        label: 'Email',
+        placeholder: 'Email',
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: 'Please enter a valid email address'
+        error: 'Please enter a valid email'
       },
       password: {
-        label: '*Password',
+        label: 'Password',
+        placeholder: 'Password',
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
@@ -106,12 +113,12 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     };
 
     this.fieldsStyleConfig = {
-      errorBlock: {
-        fontSize: 11
-      },
       ...props.fieldsStyleConfig
     };
 
+    // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
+    this.labelPosition = (typeof props.labelPosition === 'number') ?
+      props.labelPosition : FormLabelPosition.Inline;
   }
 
   handleSubmit = () => {
@@ -146,6 +153,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
+          labelPosition={this.labelPosition}
           value={this.state.value}
           onChange={this.handleChange}
         />

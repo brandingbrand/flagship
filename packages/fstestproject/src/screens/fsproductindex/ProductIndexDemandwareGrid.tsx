@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductIndex } from '@brandingbrand/fsproductindex';
-import { demandware } from '../../lib/datasource';
+import { demandware, powerreviews } from '../../lib/datasource';
 
 export default class ProductIndexDemandwareGrid extends Component<any> {
   goTo = (data: any) => {
@@ -11,19 +11,14 @@ export default class ProductIndexDemandwareGrid extends Component<any> {
     return (
       <ProductIndex
         commerceDataSource={demandware}
-        reviewProvider='powerreviews'
-        reviewProviderConfig={{
-          endpoint: 'https://readservices-b2c.powerreviews.com/',
-          apikey: '',
-          merchantId: ''
-        }}
+        reviewDataSource={powerreviews}
         commerceToReviewMap='id'
         modalType='half-screen'
         filterType='drilldown'
         mergeSortToFilter={true}
         onNavigate={this.goTo}
         productQuery={{
-          categoryId: 'baking-cupcake-supplies',
+          categoryId: 'mens',
           limit: 6
         }}
         refineActionBarProps={{

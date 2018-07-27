@@ -19,6 +19,7 @@
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
+    "memoize-one": "^3.1.1",
     "photoswipe": "^4.1.2",
     "qs": "^6.5.2",
     "react": "^16.3.2",
@@ -29,7 +30,8 @@
     "react-native-swiper": "^1.5.13",
     "react-native-web-modal": "^1.0.1",
     "sweetalert": "^2.1.0",
-    "tcomb-form-native": "^0.6.12"
+    "tcomb-form-native": "^0.6.12",
+    "react-native-svg": "^6.4.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

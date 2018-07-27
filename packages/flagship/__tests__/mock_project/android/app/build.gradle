@@ -94,8 +94,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion rootProject.ext.minSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     dexOptions {
         jumboMode true
@@ -104,10 +104,10 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.brandingbrand.reactnative.and.flagship"
-        minSdkVersion project.MIN_SDK_VERSION.toInteger()
-        targetSdkVersion 24
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
-        versionCode "${project.MIN_SDK_VERSION}${project.VERSION_CODE_SHORT}".toInteger()
+        versionCode "${rootProject.ext.minSdkVersion}${project.VERSION_CODE_SHORT}".toInteger()
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -160,7 +160,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:11.+'
     compile 'com.google.android.gms:play-services-gcm:11.+'
     compile 'com.google.android.gms:play-services-maps:11.+'
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
 
     compile 'com.facebook.react:react-native:+'  // From node_modules
 

@@ -8,6 +8,8 @@ import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { NavArrow } from '@brandingbrand/fscomponents';
+import { palette } from '../styles/variables';
 
 // Default padding for CategoryBox component
 const CATEGORY_BOX_DEFAULT_PADDING = 20;
@@ -36,6 +38,11 @@ const listItemProps = {
     textAlign: 'left',
     height: 35,
     marginTop: 20
+  },
+  renderAccessory: (): JSX.Element => {
+    return (
+      <NavArrow color={palette.primary} style={{marginRight: 10}} />
+    );
   }
 };
 
@@ -92,7 +99,8 @@ export default class Category extends Component<PropType, StateType> {
         'Category' : 'ProductIndex';
 
       const passProps: any = {
-        categoryId: category.id
+        categoryId: category.id,
+        title: category.title || ''
       };
 
       if (screen === 'Category') {

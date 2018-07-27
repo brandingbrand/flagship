@@ -4,10 +4,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as t from 'tcomb-form-native';
 import { cloneDeep, pickBy } from 'lodash-es';
 import { emailRegex } from '../lib/email';
-import { Form } from './Form';
+import { Form, FormLabelPosition } from './Form';
 
 export interface AddressFormProps {
   fieldsStyleConfig?: any;
+  labelPosition?: FormLabelPosition;
   onSubmit?: (value: any) => void;
   submitButtonStyle?: any;
   submitTextStyle?: any;
@@ -37,6 +38,7 @@ export class AddressForm extends Component<AddressFormProps> {
   fieldsStyleConfig: any;
   fieldsTypes: any;
   fieldsOptions: any;
+  labelPosition: FormLabelPosition;
 
   constructor(props: AddressFormProps) {
     super(props);
@@ -51,9 +53,6 @@ export class AddressForm extends Component<AddressFormProps> {
           borderRadius: 0,
           fontSize: 14
         }
-      },
-      errorBlock: {
-        fontSize: 13
       },
       ...props.fieldsStyleConfig
     };
@@ -91,7 +90,6 @@ export class AddressForm extends Component<AddressFormProps> {
 
     this.fieldsOptions = {
       firstName: {
-        auto: 'none',
         placeholder: 'First name',
         returnKeyType: 'next',
         autoCorrect: false,
@@ -99,7 +97,6 @@ export class AddressForm extends Component<AddressFormProps> {
         error: 'Please enter the first name'
       },
       lastName: {
-        auto: 'none',
         placeholder: 'Last Name',
         returnKeyType: 'next',
         autoCorrect: false,
@@ -107,27 +104,23 @@ export class AddressForm extends Component<AddressFormProps> {
         error: 'Please enter the last name'
       },
       address1: {
-        auto: 'none',
         placeholder: 'Address Line 1',
         returnKeyType: 'next',
         onSubmitEditing: () => this.focusField('address2'),
         error: 'Please enter the address'
       },
       address2: {
-        auto: 'none',
         placeholder: 'Address Line 2',
         returnKeyType: 'next',
         onSubmitEditing: () => this.focusField('city')
       },
       city: {
-        auto: 'none',
         placeholder: 'City',
         returnKeyType: 'next',
         onSubmitEditing: () => this.focusField('postalCode'),
         error: 'Please enter the city'
       },
       postalCode: {
-        auto: 'none',
         placeholder: 'Zip Code',
         keyboardType: 'number-pad',
         autoCorrect: false,
@@ -136,13 +129,11 @@ export class AddressForm extends Component<AddressFormProps> {
         error: 'Please enter a valid zip code'
       },
       stateCode: {
-        auto: 'none',
         placeholder: 'State',
         onSubmitEditing: () => this.focusField('phone'),
         error: 'Please enter the state'
       },
       phone: {
-        auto: 'none',
         placeholder: 'Phone',
         keyboardType: 'number-pad',
         autoCorrect: false,
@@ -152,7 +143,6 @@ export class AddressForm extends Component<AddressFormProps> {
         error: 'Please enter a valid phone number'
       },
       email: {
-        auto: 'none',
         placeholder: 'Email',
         returnKeyType: 'next',
         autoCorrect: false,
@@ -166,6 +156,10 @@ export class AddressForm extends Component<AddressFormProps> {
       },
       ...props.fieldsOptions
     };
+
+    // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
+    this.labelPosition = (typeof props.labelPosition === 'number') ?
+      props.labelPosition : FormLabelPosition.Inline;
   }
 
   handleSubmit = () => {
@@ -193,6 +187,7 @@ export class AddressForm extends Component<AddressFormProps> {
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
+          labelPosition={this.labelPosition}
           value={this.props.value}
         />
         <TouchableOpacity

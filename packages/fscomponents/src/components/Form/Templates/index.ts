@@ -1,15 +1,29 @@
-import {inlineFormLabelTextbox} from './inlineFormLabelTextbox';
-import {floatingFormLabelTextbox} from './floatingFormLabelTextbox';
-import {hiddenFormLabelTextbox} from './hiddenFormLabelTextbox';
+import {
+  labelAboveTextbox,
+  labelFloatingTextbox,
+  labelHiddenTextbox,
+  labelInlineTextbox
+} from './textboxTemplates';
+
 
 export const inlineLabels = {
-  textbox: inlineFormLabelTextbox
+  textbox: labelInlineTextbox
 };
 
 export const hiddenLabels = {
-  textbox: hiddenFormLabelTextbox
+  textbox: labelHiddenTextbox
 };
 
 export const floatingLabels = {
-  textbox: floatingFormLabelTextbox
+  textbox: labelFloatingTextbox
 };
+
+export const aboveLabels = {
+  textbox: labelAboveTextbox
+};
+
+export * from './stylesheet';
+export * from './fieldTemplates';
+export * from './creditCardFieldTemplates';
+export * from './maskedFieldTemplates';
+export * from './StatefulTextbox';

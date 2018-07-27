@@ -12,10 +12,19 @@ import {
   TextInputMaskOptionProp,
   TextInputMaskProps
 } from 'react-native-masked-text';
-import { Omit } from '@brandingbrand/fsfoundation';
+import { Dictionary, Omit } from '@brandingbrand/fsfoundation';
 // @ts-ignore TODO: Update credit-card to support typing
 import { determineCardType } from 'credit-card';
 import { CreditCardType } from '../types/Store';
+
+
+const icons: Dictionary = {
+  AMERICANEXPRESS: require('../../assets/images/amex.png'),
+  null: require('../../assets/images/creditCard.png'),
+  DISCOVER: require('../../assets/images/discover.png'),
+  MASTERCARD: require('../../assets/images/mastercard.png'),
+  VISA: require('../../assets/images/visa.png')
+};
 
 const kMaskPatternAMEX = '9999 999999 99999';
 const kMaskPatternDefault = '9999 9999 9999 9999';
@@ -30,7 +39,9 @@ export interface TextInputMaskCustomOptionProp extends TextInputMaskOptionProp {
 
 const styles = StyleSheet.create({
   cardImage: {
-    position: 'absolute'
+    position: 'absolute',
+    height: 17,
+    width: 28
   },
   container: {
     justifyContent: 'center'
@@ -85,17 +96,19 @@ export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCar
       ...textInputProps
     } = this.props;
 
+    const { cardType } = this.state;
+
     return (
       <View style={styles.container}>
         <Image
-          source={this.state.cardImage}
+          source={icons[cardType]}
           style={[styles.cardImage, this.props.cardImageStyle]}
         />
         <TextInputMask
           {...textInputProps}
           type='custom'
           options={this.state.options}
-          style={[textInputProps.style, { paddingLeft: this.props.cardImageWidth + 5 }]}
+          style={[textInputProps.style, { paddingLeft: this.props.cardImageWidth + 10}]}
         />
       </View>
     );

@@ -1,4 +1,5 @@
 import { CommerceCloudDataSource } from '@brandingbrand/fssalesforce';
+import { MockCommerceDataSource, MockReviewDataSource } from '@brandingbrand/fsmockdatasources';
 import {
   ContentManagementSystem,
   CoreContentManagementSystemProvider
@@ -8,6 +9,7 @@ import {
   BrandCMSProductCatalog
 } from '@brandingbrand/fsbrandcmsproductcatalog';
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { PowerReviewsDataSource } from '@brandingbrand/fspowerreviews';
 
 const origin = 'https://demo-ocapi.demandware.net';
 const endpoint = 'https://demo-ocapi.demandware.net/s/SiteGenesis/dw/shop/v18_6';
@@ -65,4 +67,12 @@ export const cmsProductCatalog = new BrandCMSProductCatalog({
     propertyId: '443',
     environment: 1
   }))
+});
+
+export const mockCommerceDataSource = new MockCommerceDataSource();
+export const mockReviewDataSource = new MockReviewDataSource();
+export const powerreviews = new PowerReviewsDataSource({
+  endpoint: 'https://readservices-b2c.powerreviews.com/',
+  apikey: '',
+  merchantId: ''
 });
