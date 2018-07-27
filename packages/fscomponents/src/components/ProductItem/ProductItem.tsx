@@ -135,8 +135,6 @@ export class ProductItem extends Component<ProductItemProps> {
       reviewCountStyle,
       reviewIndicatorProps,
       renderReviews,
-      reviewValue, // deprecated
-      reviewCount,  // deprecated
       price,
       originalPrice,
       priceStyle,
@@ -171,6 +169,20 @@ export class ProductItem extends Component<ProductItemProps> {
     } = this.props;
 
     const isHorizontal = (orientation === 'horizontal');
+    let {
+      reviewCount, // deprecated
+      reviewValue // deprecated
+    } = this.props;
+
+    if (review) {
+      if (review.summary) {
+        reviewValue = review.summary.averageRating;
+        reviewCount = review.summary.reviewCount;
+      } else if (review.statistics) {
+        reviewValue = review.statistics.averageRating;
+        reviewCount = review.statistics.reviewCount;
+      }
+    }
 
     return (
       <TouchableWithoutFeedback

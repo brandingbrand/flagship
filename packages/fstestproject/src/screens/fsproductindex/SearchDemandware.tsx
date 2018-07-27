@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductIndexSearch } from '@brandingbrand/fsproductindex';
-import { demandware } from '../../lib/datasource';
+import { demandware, powerreviews } from '../../lib/datasource';
 
 export default class ProductIndexShopifyList extends Component<any> {
   goTo = (data: any) => {
@@ -11,12 +11,7 @@ export default class ProductIndexShopifyList extends Component<any> {
     return (
       <ProductIndexSearch
         commerceDataSource={demandware}
-        reviewProvider='powerreviews'
-        reviewProviderConfig={{
-          endpoint: 'https://readservices-b2c.powerreviews.com/',
-          apikey: '',
-          merchantId: ''
-        }}
+        reviewDataSource={powerreviews}
         commerceToReviewMap='id'
         onNavigate={this.goTo}
         productQuery={{

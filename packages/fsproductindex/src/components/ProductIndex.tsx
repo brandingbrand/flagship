@@ -3,9 +3,7 @@ import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { isEqual } from 'lodash-es';
 import {
   CommerceDataSource,
-  CommerceTypes,
-  ReviewDataSource,
-  ReviewTypes
+  CommerceTypes
 } from '@brandingbrand/fscommerce';
 import { Loading } from '@brandingbrand/fscomponents';
 
@@ -131,9 +129,5 @@ export class ProductIndex extends Component<UnwrappedProductIndexProps & WithPro
 export default withProductIndexData<UnwrappedProductIndexProps>(
   async (dataSource: CommerceDataSource, props: UnwrappedProductIndexProps) => {
     return dataSource.fetchProductIndex(props.productQuery);
-  },
-  async (DataSource: ReviewDataSource, reviewQuery: ReviewTypes.ReviewQuery) =>
-    DataSource
-      ? DataSource.fetchReviewSummary(reviewQuery)
-      : Promise.resolve(null)
+  }
 )(ProductIndex);

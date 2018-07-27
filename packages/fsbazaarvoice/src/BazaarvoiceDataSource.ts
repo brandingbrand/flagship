@@ -1,5 +1,6 @@
 import FSNetwork from '@brandingbrand/fsnetwork';
 import {
+  AbstractReviewDataSource,
   ReviewDataSource,
   ReviewTypes
 } from '@brandingbrand/fscommerce';
@@ -12,10 +13,12 @@ export interface BazaarvoiceConfig {
   apiversion?: string;
 }
 
-export class BazaarvoiceDataSource implements ReviewDataSource {
+export class BazaarvoiceDataSource extends AbstractReviewDataSource implements ReviewDataSource {
   private client: FSNetwork;
 
   constructor(config: BazaarvoiceConfig) {
+    super();
+
     this.client = new FSNetwork({
       baseURL: config.endpoint,
       params: {

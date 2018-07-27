@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
   CommerceDataSource,
-  CommerceTypes,
-  ReviewDataSource,
-  ReviewTypes
+  CommerceTypes
 } from '@brandingbrand/fscommerce';
 import { ProductIndex, UnwrappedProductIndexProps } from './ProductIndex';
 import {
@@ -53,8 +51,5 @@ class ProductIndexSearch extends Component<
 export default withProductIndexData<UnwrappedProductIndexSearchProps>(
   async (dataSource: CommerceDataSource, props: UnwrappedProductIndexSearchProps) => {
     return dataSource.search(props.productQuery.keyword, props.productQuery);
-  },
-  async (dataSource: ReviewDataSource, reviewQuery: ReviewTypes.ReviewQuery) => {
-    dataSource ? dataSource.fetchReviewSummary(reviewQuery) : Promise.resolve(null);
   }
 )(ProductIndexSearch);

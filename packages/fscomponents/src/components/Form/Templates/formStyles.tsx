@@ -4,31 +4,14 @@ import { Text } from 'react-native';
 import * as t from 'tcomb-form-native';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
-export type ComputeFieldType = (prevField: any) => () => void;
-
-export interface StatefulTextboxProps {
-  locals: Dictionary;
-  // for use w/ custom field templates
-  componentFactory?: any;
-}
-
-export interface StatefulTextboxState {
-  active: boolean;
-  validated: boolean;
-}
-
 export function getColor(state: Dictionary, locals: Dictionary): String {
   const colors = locals.stylesheet.colors;
-
   if (state.active) {
     return colors.active;
   } else {
     return locals.hasError ? colors.error : colors.inactive;
   }
 }
-
-export const successIcon = require('../../../../assets/images/checkmarkValidation.png');
-export const errorIcon = require('../../../../assets/images/alert.png');
 
 export function defaultTextboxStyle(locals: Dictionary): Dictionary {
 
@@ -68,16 +51,7 @@ export function defaultTextboxStyle(locals: Dictionary): Dictionary {
     textboxViewStyle = stylesheet.textboxView.notEditable;
   }
 
-  let error;
   let help;
-  let label;
-
-  if (typeof locals.label === 'string') {
-    label = <Text style={controlLabelStyle}>{locals.label}</Text>;
-  } else if (React.isValidElement(locals.label)) {
-    label = locals.label;
-  }
-
 
   if (typeof locals.help === 'string') {
     help = <Text style={helpBlockStyle}>{locals.help}</Text>;
@@ -91,18 +65,11 @@ export function defaultTextboxStyle(locals: Dictionary): Dictionary {
     </Text>
     );
 
-  error = locals.error ? (
-            <Text accessibilityLiveRegion='polite' style={errorBlockStyle}>
-              {locals.error}
-            </Text>
-            ) : activeErrorField;
-
   return {
     alertStyle,
     checkStyle,
     controlLabelStyle,
     activeErrorField,
-    error,
     errorBlockStyle,
     floatingLabelViewStyle,
     formGroupStyle,
@@ -110,7 +77,6 @@ export function defaultTextboxStyle(locals: Dictionary): Dictionary {
     helpBlockStyle,
     inlineFormGroupStyle,
     inlineLabelViewStyle,
-    label,
     rightTextboxIconStyle,
     textboxFullBorderStyle,
     textboxInlineStyle,
