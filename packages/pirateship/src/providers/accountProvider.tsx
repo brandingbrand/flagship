@@ -11,8 +11,7 @@ import { connect } from 'react-redux';
 import { AccountStore } from '../reducers/accountReducer';
 import {
   loadAccountData,
-  loadCartData,
-  loadPromoProductsAndTopCategories
+  loadCartData
 } from '../lib/globalDataLoaders';
 // @ts-ignore TODO: Add types for react-native-sensitive-info
 import SInfo from 'react-native-sensitive-info';
@@ -46,21 +45,39 @@ function mapStateToProps(
   };
 }
 
+const reloadSessionData = async (): Promise<any> => {
+  return Promise.all([
+    loadCartData(),
+    loadAccountData()
+  ]).catch(e => {
+    console.warn(
+      'Unable to fetch wishlist and/or account after authenticating',
+      e
+    );
+  });
+};
+
+export const signOut = (dispatch: any) => async (clearSaved: boolean = true) => {
+  return dataSource
+    .logout('', '')
+    .then(async () => {
+      if (!clearSaved) {
+        return;
+      }
+
+      return Promise.all([
+        SInfo.deleteItem(STORAGE_KEYS.username, {}),
+        SInfo.deleteItem(STORAGE_KEYS.password, {})
+      ]);
+    })
+    .then(() => {
+      dispatch({ type: SIGN_OUT });
+    })
+    .then(reloadSessionData);
+};
+
 // provide actions (that can change redux store) to wrapped component as props
 function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
-  async function reloadSessionData(): Promise<any> {
-    return Promise.all([
-      loadCartData(),
-      loadAccountData(),
-      loadPromoProductsAndTopCategories()
-    ]).catch(e => {
-      console.warn(
-        'Unable to fetch wishlist and/or account after authenticating',
-        e
-      );
-    });
-  }
-
   return {
     signIn: async (email, password) => {
       return dataSource
@@ -70,24 +87,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
         })
         .then(reloadSessionData);
     },
-    signOut: async (clearSaved: boolean = true) => {
-      return dataSource
-        .logout()
-        .then(async () => {
-          if (!clearSaved) {
-            return;
-          }
-
-          return Promise.all([
-            SInfo.deleteItem(STORAGE_KEYS.username, {}),
-            SInfo.deleteItem(STORAGE_KEYS.password, {})
-          ]);
-        })
-        .then(() => {
-          dispatch({ type: SIGN_OUT });
-        })
-        .then(reloadSessionData);
-    },
+    signOut: signOut(dispatch),
     updateAccount: async (details: CommerceTypes.CustomerAccount) => {
       return dataSource
         .updateAccount(details)

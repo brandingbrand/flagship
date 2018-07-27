@@ -96,10 +96,10 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Refine'
         },
         filter: {
-          actionBtn: 'FILTER'
+          actionBtn: 'Filter'
         },
         sort: {
-          actionBtn: 'SORT'
+          actionBtn: 'Sort'
         }
       }
     },
@@ -112,7 +112,9 @@ export const keys: FSTranslationKeys = {
         one: 'One person found this helpful',
         other: '{{count}} people found this helpful'
       },
-      recommendCount: '{{recommendPercent}}% of respondents would recommend this to a friend'
+      recommendCount: '{{recommendPercent}}% of respondents would recommend this to a friend',
+      recommended: 'Yes, I recommend this product.',
+      notRecommended: 'No, I do not reccommend this product.'
     },
     search: {
       recentSearches: 'RECENT SEARCHES',

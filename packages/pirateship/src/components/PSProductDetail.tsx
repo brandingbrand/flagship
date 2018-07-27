@@ -38,8 +38,7 @@ import * as variables from '../styles/variables';
 import {
   CommerceDataSource,
   CommerceTypes,
-  ReviewDataSource,
-  ReviewTypes
+  ReviewDataSource
 } from '@brandingbrand/fscommerce';
 
 const icons = {
@@ -227,6 +226,7 @@ export interface UnwrappedPSProductDetailProps extends RecentlyViewedProps {
   navigator: Navigator;
   onAddToCart?: (data: any) => any; // TODO: Update this with real types
   onOpenHTMLView?: (html: string, title?: string) => void;
+  reviewDataSource: ReviewDataSource;
 }
 
 export type PSProductDetailProps = UnwrappedPSProductDetailProps &
@@ -337,7 +337,11 @@ class PSProductDetailComponent extends Component<
       // Search for matching variant
       const variant = find(variants, { optionValues: newOptionValues }) as any;
 
-      if (variant && variant.id && dataSourceConfig.type === 'commercecloud') {
+      if (
+        variant &&
+        variant.id &&
+        ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
+      ) {
         this.props.navigator.push({
           screen: 'ProductDetail',
           passProps: {
@@ -721,7 +725,8 @@ class PSProductDetailComponent extends Component<
         'ProductDetailReviews',
         'Reviews (' + commerceData.review.total + ')',
         {
-          reviewQuery: { ids: commerceData.id }
+          reviewQuery: { ids: commerceData.id, limit: 2 },
+          reviewDataSource: this.props.reviewDataSource
         }
       );
     }
@@ -738,8 +743,6 @@ class PSProductDetailComponent extends Component<
 
 export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailProps>(
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
-    DataSource.fetchProduct(props.id),
-    async (DataSource: ReviewDataSource, query: ReviewTypes.ReviewQuery) =>
-    DataSource.fetchReviewDetails(query)
+    DataSource.fetchProduct(props.id)
 // TODO: Update cart provider to separate out types correctly
 )(withCart(PSProductDetailComponent) as any);

@@ -10,9 +10,8 @@ import {
   View
 } from 'react-native';
 
-import { get } from 'lodash-es';
-
 import { SearchBar } from '@brandingbrand/fscomponents';
+import { env as projectEnv } from '@brandingbrand/fsapp';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSWelcome from '../components/PSWelcome';
@@ -28,10 +27,12 @@ import GlobalStyle from '../styles/Global';
 import { border, color, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import withAccount, { AccountProps } from '../providers/accountProvider';
-import withTopCategory, { TopCategoryProps } from '../providers/topCategoryProvider';
+import { CombinedStore } from '../reducers';
 import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
+import { connect } from 'react-redux';
+import { AccountActionProps, signOut } from '../providers/accountProvider';
+import PSProductCarousel from '../components/PSProductCarousel';
 
 const arrow = require('../../assets/images/arrow.png');
 const logo = require('../../assets/images/pirateship-120.png');
@@ -109,7 +110,10 @@ const ShopStyle = StyleSheet.create({
   }
 });
 
-export interface ShopProps extends ScreenProps, AccountProps, TopCategoryProps {}
+export interface ShopProps
+  extends ScreenProps,
+          Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
+          Pick<AccountActionProps, 'signOut'> {}
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
@@ -210,8 +214,10 @@ class Shop extends Component<ShopProps> {
         <View style={ShopStyle.container}>
           <PSWelcome
             logo={logo}
-            userName={get(this.props, 'account.store.firstName')}
-            isLoggedIn={get(this.props, 'account.isLoggedIn')}
+            userName={this.props.account
+                      && this.props.account.store
+                      && this.props.account.store.firstName}
+            isLoggedIn={this.props.account && this.props.account.isLoggedIn}
             style={ShopStyle.welcome}
             onSignInPress={openSignInModal(this.props.navigator)}
             onSignOutPress={this.handleSignOut}
@@ -238,6 +244,7 @@ class Shop extends Component<ShopProps> {
           </View>
 
           {this.renderShopButtons()}
+          {this.renderPromoProducts()}
 
           <View style={ShopStyle.topCategoriesContainer}>
             <Text style={[GlobalStyle.h2, ShopStyle.sectionTitle]}>
@@ -255,7 +262,7 @@ class Shop extends Component<ShopProps> {
             />
           </View>
           <PSShopLandingCategories
-            categories={get(this.props, 'topCategory.categories')}
+            categories={this.props && this.props.topCategory && this.props.topCategory.categories}
             style={ShopStyle.shopLandingCategories}
             onItemPress={this.handleCategoryItemPress}
           />
@@ -269,7 +276,6 @@ class Shop extends Component<ShopProps> {
       <View style={ShopStyle.shopButtonsContainer}>
         <View style={ShopStyle.shopCategoryButtonsContainer}>
           <PSButton
-            primary
             style={ShopStyle.buttonCategoryLeft}
             title={translate.string(translationKeys.screens.shop.shopByCategoryBtn)}
             onPress={this.goToAllCategories}
@@ -311,6 +317,56 @@ class Shop extends Component<ShopProps> {
       }
     });
   }
+
+  private handlePromotedProductPress = (productId: string) => () => {
+    this.props.navigator.push({
+      screen: 'ProductDetail',
+      passProps: {
+        productId
+      }
+    });
+  }
+
+  private renderPromoProducts = (): React.ReactNode => {
+    if (!(this.props.promoProducts
+          && this.props.promoProducts.products
+          && projectEnv.dataSource
+          && projectEnv.dataSource.promoProducts)) {
+      return null;
+    }
+
+    return (
+      <View>
+        <Text style={[GlobalStyle.h2, ShopStyle.sectionTitle]}>
+          {projectEnv.dataSource.promoProducts.title}
+        </Text>
+        <View style={ShopStyle.shopButtonsContainer}>
+          <PSProductCarousel
+            items={this.props.promoProducts.products.map(prod => ({
+              ...prod,
+              image: (prod.images || []).find(img => !!img.uri),
+              onPress: this.handlePromotedProductPress(prod.id),
+              key: prod.id
+            }))}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
-export default withAccount(withTopCategory(Shop));
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+  return {
+    signOut: signOut(dispatch)
+  };
+};
+
+const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
+  return {
+    account: combinedStore.account,
+    promoProducts: combinedStore.promoProducts,
+    topCategory: combinedStore.topCategory
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Shop);

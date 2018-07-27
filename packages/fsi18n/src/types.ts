@@ -149,6 +149,8 @@ export interface ReviewsTranslations<KeyType> {
   notHelpful: KeyType;
   helpfulCount: KeyType;
   recommendCount: KeyType;
+  recommended: KeyType;
+  notRecommended: KeyType;
 }
 
 export interface SearchTranslations<KeyType> {

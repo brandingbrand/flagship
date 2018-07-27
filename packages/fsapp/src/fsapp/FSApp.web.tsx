@@ -4,8 +4,6 @@ import { FSAppBase } from './FSAppBase';
 import App from '../components/DrawerRouter.web';
 import DevMenu from '../components/DevMenu';
 
-export const env: any = {};
-
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);

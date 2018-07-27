@@ -1,5 +1,6 @@
 import FSNetwork from '@brandingbrand/fsnetwork';
 import {
+  AbstractReviewDataSource,
   ReviewDataSource,
   ReviewTypes
 } from '@brandingbrand/fscommerce';
@@ -11,10 +12,11 @@ export interface TurnToConfig {
   version?: string;
 }
 
-export class TurnToDataSource implements ReviewDataSource {
+export class TurnToDataSource extends AbstractReviewDataSource implements ReviewDataSource {
   client: FSNetwork;
 
   constructor(config: TurnToConfig) {
+    super();
     this.client = new FSNetwork({
       baseURL: config.endpoint + (config.version || 'v1.1/'),
       headers: {
