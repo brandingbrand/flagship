@@ -108,7 +108,7 @@ export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCar
           {...textInputProps}
           type='custom'
           options={this.state.options}
-          style={[textInputProps.style, { paddingLeft: this.props.cardImageWidth + 10 }]}
+          style={[textInputProps.style, { paddingLeft: this.props.cardImageWidth + 10}]}
         />
       </View>
     );

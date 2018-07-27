@@ -1,6 +1,7 @@
 import React, { PureComponent, RefObject } from 'react';
 import { View } from 'react-native';
 import memoize from 'memoize-one';
+// dynamically generates stylesheet w/ correct active, error, inactive colors
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // @ts-ignore TODO: Update tcomb-form-native to support typing
@@ -70,11 +71,13 @@ export class Form extends PureComponent<FormProps> {
     labelPosition: FormLabelPosition.Inline
   };
 
+  // dynamically generates stylesheet w/ correct active, error, inactive colors
   calculateStyles: CalculateStylesType = memoize(
   (activeColor: string, errorColor: string, inactiveColor: string) => {
     return styles({activeColor, errorColor, inactiveColor});
   });
 
+  // memoized function that ensures the user's onBlur function is retained
   calculateBlurs: CalculateBlursType = memoize(
     (fieldsOptions: Dictionary) => {
       Object.keys(fieldsOptions).forEach(path => {
@@ -109,6 +112,7 @@ export class Form extends PureComponent<FormProps> {
     }
   }
 
+  // for individual field validation
   validateField = (path: any) => {
     if (this.form.current) {
       return this.form.current.getComponent(path).validate();
@@ -157,7 +161,6 @@ export class Form extends PureComponent<FormProps> {
           type={fieldsTypes}
           onChange={onChange}
           value={value}
-          labelPosition={labelPosition}
         />
       </View>
     );

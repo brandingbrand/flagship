@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import Row from '../../components/Row';
-import { mockDataSource } from '../../lib/datasource';
+import { mockCommerceDataSource } from '../../lib/datasource';
 import { CommerceDataSource } from '@brandingbrand/fscommerce';
 
 const exampleCategoryId = 'electronics-digital-cameras';
@@ -15,14 +15,14 @@ const examplePipRefinement = { brand: 'Sony' };
 const validPromoCode = 'VALID';
 const invalidPromoCode = 'INVALID';
 
-export default class MockDataSource extends Component<any, any> {
+export default class MockCommerceDataSource extends Component<any, any> {
   private dataSource: CommerceDataSource;
 
   constructor(props: any) {
     super(props);
 
     // Capture and display any error messages that are created by the data source
-    this.dataSource = new Proxy(mockDataSource, {
+    this.dataSource = new Proxy(mockCommerceDataSource, {
       get: (target: any, prop: any) => {
         if (typeof target[prop] !== 'function') {
           return target[prop];
