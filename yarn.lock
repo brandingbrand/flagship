@@ -1187,15 +1187,9 @@
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
 
-"@types/url-parse@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/url-parse/-/url-parse-1.1.0.tgz#61f8e1b52024d07fceb73fd7f8292e5ddd2b60a1"
-  dependencies:
-    "@types/url-search-params" "*"
-
-"@types/url-search-params@*":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@types/url-search-params/-/url-search-params-0.10.1.tgz#a5b1f30bf4adad70b103e22c3e1a478869b51be7"
+"@types/url-parse@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@types/url-parse/-/url-parse-1.4.1.tgz#c7ad9eb4f409fc14b93ea5d0d3c3dd812ac5b372"
 
 "@types/webpack-env@*":
   version "1.13.6"
@@ -11791,9 +11785,16 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.1.8, url-parse@^1.4.1, url-parse@~1.4.0:
+url-parse@^1.1.8, url-parse@~1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.1.tgz#4dec9dad3dc8585f862fed461d2e19bbf623df30"
+  dependencies:
+    querystringify "^2.0.0"
+    requires-port "^1.0.0"
+
+url-parse@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
   dependencies:
     querystringify "^2.0.0"
     requires-port "^1.0.0"
