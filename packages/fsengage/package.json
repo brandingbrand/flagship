@@ -19,7 +19,7 @@
     "react": "^16.3.2",
     "react-native": "^0.55.4",
     "react-native-permissions": "^1.1.1",
-    "url-parse": "^1.4.1"
+    "url-parse": "^1.4.3"
   },
   "devDependencies": {
     "sinon": "^6.0.0"
