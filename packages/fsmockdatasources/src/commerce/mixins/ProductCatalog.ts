@@ -61,6 +61,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         keyword,
         sortingOptions: ProductSortingOptions,
         refinements: ProductRefinements,
+        selectedRefinements: refinements,
         selectedSortingOption: sortBy
       };
     }
@@ -190,7 +191,13 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       if (refinements) {
         products = Object.keys(refinements).reduce((filteredProducts, key) => {
           const val = refinements[key];
-          return filteredProducts.filter(product => (product as any)[key] === val);
+          return filteredProducts.filter(product => {
+            if (Array.isArray(val)) {
+              return val.indexOf((product as any)[key]) !== -1;
+            }
+
+            return (product as any)[key] === val;
+          });
         }, products);
       }
 
