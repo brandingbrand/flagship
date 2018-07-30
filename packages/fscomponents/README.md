@@ -23,7 +23,7 @@ It is often helpful to run a development version of storybook on your local syst
   into your terminal. If the terminal does not output a path, [install yarn](https://yarnpkg.com/lang/en/).
 2. Clone flagship
 3. `cd flagship`
-4. `yarn` to install all required dependencies.
+4. `yarn` to install all required dependencies
 5. `yarn dev:storybook` to compile and run local version that will watch for and update according to
  changes. The default port is 9001.
 
