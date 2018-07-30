@@ -44,7 +44,8 @@ const globalConfig = {
       '.tsx'
     ],
     alias: {
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      'react-native-svg': 'svgs'
     },
     modules: [
       path.resolve('./node_modules'),
