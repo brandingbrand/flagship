@@ -112,7 +112,7 @@ export default function wrapScreen(
 
       if (location && location.search) {
         passProps = {
-          ...qs.parse(location.search),
+          ...qs.parse(location.search, { ignoreQueryPrefix: true }),
           ...match.params
         };
       }
