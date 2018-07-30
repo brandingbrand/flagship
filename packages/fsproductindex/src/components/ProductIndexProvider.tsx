@@ -132,33 +132,12 @@ function withProductIndexData<
     type ResultState = WithProductIndexState<ProductType, IdxType>;
 
     class ProductIndexProvider extends Component<ResultProps, ResultState> {
-      static getDerivedStateFromProps(
-        nextProps: ResultProps,
-        prevState: ResultState
-      ): Partial<ResultState> | null {
-        if (!isEqual(nextProps.commerceData, prevState.commerceData)) {
-          return {
-            commerceData: nextProps.commerceData,
-            commerceDataDirty: true
-          };
-        }
-
-        return null;
-      }
-
-      constructor(props: ResultProps) {
-        super(props);
-
-        this.state = {
-          commerceDataDirty: true
-        };
-      }
-
       /**
-       * Request new reviews if commerce data is dirty
+       * Request new reviews if commerce data has changed
+       * @param {ResultProps} prevProps - Previously set Props
        */
-      componentDidUpdate(): void {
-        if (this.state.commerceDataDirty) {
+      componentDidUpdate(prevProps: ResultProps): void {
+        if (!isEqual(this.props.commerceData, prevProps.commerceData)) {
           if (!this.props.disableReviews) {
             this.requestReviews().catch(err => console.warn('Could not get reviews', err));
           }
