@@ -68,7 +68,6 @@ export interface WithProductIndexState<
    * Indicates that we've received new commerce data but have not yet requested and merged reviews
    * for that data
    */
-  commerceDataDirty: boolean;
   reviewsData?: ReviewTypes.ReviewSummary[];
 }
 
@@ -159,7 +158,7 @@ function withProductIndexData<
         return (
           <WrappedComponent
             {...props}
-            commerceData={this.state.commerceData || this.props.commerceData}
+            commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
             reviewsData={(this.state && this.state.reviewsData)}
           />
         );
@@ -170,10 +169,10 @@ function withProductIndexData<
        */
       private requestReviews = async (): Promise<void> => {
         const {
+          commerceData,
           commerceToReviewMap = 'id',
           reviewDataSource
-        } = this.props;
-        const { commerceData } = this.state;
+        } = this.props as ResultProps;
 
         if (
           !reviewDataSource ||
@@ -211,8 +210,7 @@ function withProductIndexData<
 
         this.setState({
           reviewsData: summaries,
-          commerceData: updatedCommerceData,
-          commerceDataDirty: false
+          commerceData: updatedCommerceData
         });
       }
     }
