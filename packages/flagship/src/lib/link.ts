@@ -25,7 +25,7 @@ export async function link(configuration: Config): Promise<boolean | object> {
     configuration.codepush.ios.deploymentKey;
 
   // Spawn react-native link
-  const spawned = spawn('react-native', ['link'], {
+  const spawned = spawn('react-native', ['link', '--verbose'], {
     cwd: path.project.path(),
     shell: os.win
   });
@@ -37,8 +37,6 @@ export async function link(configuration: Config): Promise<boolean | object> {
       .wait('What is your CodePush deployment key for iOS (hit <ENTER> to ignore)')
       .sendline(iosDeploymentKey)
       .sendEof();
-  } else {
-    spawned.sendEof();
   }
 
   return new Promise<boolean | object>((resolve, reject) => {
