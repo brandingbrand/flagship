@@ -5437,9 +5437,9 @@ fs-extra@^5.0.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
-fs-extra@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
+fs-extra@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.0.tgz#8cc3f47ce07ef7b3593a11b9fb245f7e34c041d6"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -7787,9 +7787,9 @@ markdown-it@8.4.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdownlint-cli@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.10.0.tgz#c64c57f188167b9f3f5e08476715d20d0514436e"
+markdownlint-cli@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.11.0.tgz#ba9ee55b7067e6c1c25f7e31cd171d03bc4830f5"
   dependencies:
     commander "~2.9.0"
     deep-extend "~0.5.1"
@@ -10448,6 +10448,10 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
+rip-out@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rip-out/-/rip-out-1.0.0.tgz#d622a7b607e1cdadc8b079bf9fb3da42c13b98e3"
+
 ripemd160@^2.0.0, ripemd160@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-2.0.2.tgz#a1c1a6f624751577ba5d07914cbc92850585890c"
@@ -11146,6 +11150,13 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+svgs@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/svgs/-/svgs-3.2.1.tgz#cf0804ab0cb346815d696cbc79b30f6343d710be"
+  dependencies:
+    prop-types "^15.5.10"
+    rip-out "^1.0.0"
 
 sw-precache-webpack-plugin@^0.11.5:
   version "0.11.5"
