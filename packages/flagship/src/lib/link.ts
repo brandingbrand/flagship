@@ -24,8 +24,14 @@ export async function link(configuration: Config): Promise<boolean | object> {
   const iosDeploymentKey = configuration.codepush &&
     configuration.codepush.ios.deploymentKey;
 
+  const spawnArgs = ['link'];
+
+  if (!(androidDeploymentKey && iosDeploymentKey)) {
+    spawnArgs.push('--verbose');
+  }
+
   // Spawn react-native link
-  const spawned = spawn('react-native', ['link', '--verbose'], {
+  const spawned = spawn('react-native', spawnArgs, {
     cwd: path.project.path(),
     shell: os.win
   });
