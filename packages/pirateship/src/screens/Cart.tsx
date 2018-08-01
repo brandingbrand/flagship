@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
@@ -22,7 +17,9 @@ import GlobalStyle from '../styles/Global';
 
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import withCart, { CartProps } from '../providers/cartProvider';
-import withRecentlyViewed, { RecentlyViewedProps } from '../providers/recentlyViewedProvider';
+import withRecentlyViewed, {
+  RecentlyViewedProps
+} from '../providers/recentlyViewedProvider';
 import Analytics from '../lib/analytics';
 import translate, { translationKeys } from '../lib/translations';
 
@@ -89,12 +86,13 @@ const CartStyle = StyleSheet.create({
   lastItemTextStyle: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: palette.secondary
+    color: palette.primary
   },
   checkoutButton: {
     borderWidth: 0,
     borderRadius: 3,
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: palette.accent
   },
   apCheckoutButton: {
     paddingVertical: 20,
@@ -269,7 +267,9 @@ class Cart extends Component<CartScreenProps> {
     return (
       <View style={CartStyle.cartContainer}>
         <Text style={[GlobalStyle.h1, CartStyle.title]}>
-          {translate.string(translationKeys.cart.cartCount, { count: cartData.items.length })}
+          {translate.string(translationKeys.cart.cartCount, {
+            count: cartData.items.length
+          })}
         </Text>
 
         {cartData.items.map(i => this.renderCartItem(i))}
@@ -321,7 +321,9 @@ class Cart extends Component<CartScreenProps> {
         <PSButton
           key='button'
           style={CartStyle.signIn}
-          title={translate.string(translationKeys.account.actions.signIn.actionBtn)}
+          title={translate.string(
+            translationKeys.account.actions.signIn.actionBtn
+          )}
           titleStyle={CartStyle.signInButtonTitle}
           onPress={this.signIn}
         />
@@ -329,7 +331,10 @@ class Cart extends Component<CartScreenProps> {
     }
 
     let recentProducts;
-    if (this.props.recentlyViewed.items && this.props.recentlyViewed.items.length) {
+    if (
+      this.props.recentlyViewed.items &&
+      this.props.recentlyViewed.items.length
+    ) {
       recentProducts = (
         <PSRecentlyViewedCarousel
           items={this.props.recentlyViewed.items}
@@ -350,7 +355,9 @@ class Cart extends Component<CartScreenProps> {
 
           <PSButton
             style={CartStyle.continueShopping}
-            title={translate.string(translationKeys.cart.actions.continueShopping.actionBtn)}
+            title={translate.string(
+              translationKeys.cart.actions.continueShopping.actionBtn
+            )}
             titleStyle={CartStyle.continueShoppingButtonTitle}
             onPress={this.continueShopping}
           />
@@ -492,7 +499,9 @@ class Cart extends Component<CartScreenProps> {
           iconStyle={CartStyle.checkoutIcon}
           titleStyle={CartStyle.checkoutButtonTitle}
           style={CartStyle.checkoutButton}
-          title={translate.string(translationKeys.cart.actions.checkout.actionBtn)}
+          title={translate.string(
+            translationKeys.cart.actions.checkout.actionBtn
+          )}
           onPress={this.startCheckout(false)}
         />
       </View>
