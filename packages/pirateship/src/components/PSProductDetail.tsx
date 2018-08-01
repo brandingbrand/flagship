@@ -725,8 +725,7 @@ class PSProductDetailComponent extends Component<
         'ProductDetailReviews',
         'Reviews (' + commerceData.review.total + ')',
         {
-          reviewQuery: { ids: commerceData.id, limit: 2 },
-          reviewDataSource: this.props.reviewDataSource
+          reviewQuery: { ids: commerceData.id }
         }
       );
     }
