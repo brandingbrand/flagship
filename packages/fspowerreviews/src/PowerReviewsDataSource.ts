@@ -1,5 +1,6 @@
 import FSNetwork from '@brandingbrand/fsnetwork';
 import {
+  AbstractReviewDataSource,
   ReviewDataSource,
   ReviewTypes
 } from '@brandingbrand/fscommerce';
@@ -12,10 +13,11 @@ export interface PowerReviewsConfig {
   locale?: string;
 }
 
-export class PowerReviewsDataSource implements ReviewDataSource {
+export class PowerReviewsDataSource extends AbstractReviewDataSource implements ReviewDataSource {
   client: FSNetwork;
 
   constructor(config: PowerReviewsConfig) {
+    super();
     this.client = new FSNetwork({
       baseURL: config.endpoint +
         'm/' + config.merchantId +

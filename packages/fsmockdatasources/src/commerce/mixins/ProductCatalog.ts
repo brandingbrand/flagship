@@ -11,14 +11,12 @@ import {
   ProductRefinements,
   Products,
   ProductSortingOptions
-} from '../helpers';
+} from '../../helpers';
 
 export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
   return class ProductCatalogMixin extends superclass implements ProductCatalogDataSource,
                                                                  ProductRecommendationDataSource,
                                                                  ProductSearchDataSource {
-    public productsPerPage: number = 4;
-
     async fetchProduct(id: string): Promise<CommerceTypes.Product> {
       const product = Products.find(product => product.id === id);
 
@@ -40,7 +38,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         sortBy,
         keyword,
         refinements,
-        page = 0,
+        page = 1,
         limit
       } = query;
 
@@ -50,14 +48,20 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       products = this.applyKeywordFilter(products, keyword);
       products = this.applyRefinementFilters(products, refinements);
       products = this.applySorting(products, sortBy);
+
+      // calculate total before paginating
+      const total = products.length;
+
       products = this.applyPagination(products, page, limit);
 
       return {
         products,
-        total: products.length,
+        total,
+        page,
         keyword,
         sortingOptions: ProductSortingOptions,
         refinements: ProductRefinements,
+        selectedRefinements: refinements,
         selectedSortingOption: sortBy
       };
     }
@@ -66,11 +70,11 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       id: string = 'root',
       query?: CommerceTypes.CategoryQuery
     ): Promise<CommerceTypes.Category> {
-      if (id === 'root') {
+      if (!id || id === 'root') {
         return Categories;
       }
 
-      const category = (Categories.categories || []).find(cat => cat.id === id);
+      const category = this.searchCategories(id, Categories.categories || []);
       if (category === undefined) {
         throw new Error(`Could not find category ${id}`);
       }
@@ -187,7 +191,13 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       if (refinements) {
         products = Object.keys(refinements).reduce((filteredProducts, key) => {
           const val = refinements[key];
-          return filteredProducts.filter(product => (product as any)[key] === val);
+          return filteredProducts.filter(product => {
+            if (Array.isArray(val)) {
+              return val.indexOf((product as any)[key]) !== -1;
+            }
+
+            return (product as any)[key] === val;
+          });
         }, products);
       }
 
@@ -221,17 +231,39 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
 
     public applyPagination(
       products: CommerceTypes.Product[],
-      page: number = 0,
+      page: number = 1,
       limit?: number
     ): CommerceTypes.Product[] {
-      if (page || limit) {
-        const start = page * this.productsPerPage;
+      const pageIndex = page - 1;
+
+      if (limit) {
+        const start = pageIndex * limit;
         const end = limit ? start + limit : undefined;
 
         products = products.slice(start, end);
       }
 
       return products;
+    }
+
+    public searchCategories(
+      id: string,
+      categories: CommerceTypes.Category[]
+    ): CommerceTypes.Category | undefined {
+      let match;
+
+      for (const category of categories) {
+        if (category.id === id) {
+          match = category;
+        } else if (category.categories !== undefined) {
+          const matchedCat = this.searchCategories(id, category.categories);
+          if (matchedCat) {
+            match = matchedCat;
+          }
+        }
+      }
+
+      return match;
     }
   };
 };
