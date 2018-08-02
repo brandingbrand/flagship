@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
   Image,
+  ImageStyle,
   ImageURISource,
   StyleProp,
   Text,
@@ -36,11 +37,13 @@ export interface StepperProps {
   // Decrease button
   onDecreaseButtonPress: (count: number) => void;
   decreaseButtonImage?: ImageURISource;
+  decreaseButtonStyle?: StyleProp<ImageStyle>;
   renderDecreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
 
   // Increase button
   onIncreaseButtonPress: (count: number) => void;
   increaseButtonImage?: ImageURISource;
+  increaseButtonStyle?: StyleProp<ImageStyle>;
   renderIncreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
 }
 
@@ -91,6 +94,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
   renderDecreaseButton = (style: {} = {}) => {
     const {
       decreaseButtonImage = icons.decrease,
+      decreaseButtonStyle,
       renderDecreaseButton
     } = this.props;
 
@@ -108,7 +112,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         <Image
           resizeMode='contain'
           source={decreaseButtonImage}
-          style={[S.buttonImage, style]}
+          style={[S.buttonImage, decreaseButtonStyle, style]}
         />
       </TouchableOpacity>
     );
@@ -118,6 +122,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const {
       countUpperLimit,
       increaseButtonImage = icons.increase,
+      increaseButtonStyle,
       renderIncreaseButton
     } = this.props;
 
@@ -135,7 +140,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         <Image
           resizeMode='contain'
           source={increaseButtonImage}
-          style={[S.buttonImage, style]}
+          style={[S.buttonImage, increaseButtonStyle, style]}
         />
       </TouchableOpacity>
     );
