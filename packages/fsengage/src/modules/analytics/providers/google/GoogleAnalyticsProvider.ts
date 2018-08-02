@@ -5,7 +5,7 @@ import {
   // @ts-ignore TODO: Update react-native-google-analytics to support typing
 } from '@brandingbrand/react-native-google-analytics';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import * as parseURL from 'url-parse';
+import parseURL from 'url-parse';
 import AnalyticsProvider, {
   App,
   Checkout,
