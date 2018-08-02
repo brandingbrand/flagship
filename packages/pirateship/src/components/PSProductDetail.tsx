@@ -18,7 +18,6 @@ import {
 } from '@brandingbrand/fscomponents';
 
 import {
-  withProductDetailData,
   WithProductDetailProps,
   WithProductDetailProviderProps
 } from '@brandingbrand/fsproductdetail';
@@ -31,14 +30,14 @@ import PSStepper from './PSStepper';
 import PSHTMLView from './PSHTMLView';
 import PSModal from './PSModal';
 import Analytics, { mapProductToAnalytics } from '../lib/analytics';
-import { dataSourceConfig } from '../lib/datasource';
+import { dataSource, dataSourceConfig, reviewDataSource } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
 
 import * as variables from '../styles/variables';
 import {
-  CommerceDataSource,
   CommerceTypes,
-  ReviewDataSource
+  ReviewDataSource,
+  ReviewTypes
 } from '@brandingbrand/fscommerce';
 
 const icons = {
@@ -241,6 +240,9 @@ export interface PSProductDetailState {
   modalTitle?: string;
   miniModalVisible: boolean;
   miniModalContent?: JSX.Element;
+  product?: CommerceTypes.Product;
+  productId?: string;
+  review?: ReviewTypes.ReviewDetails;
 }
 
 export type PSProductDetailComponentInternalProps = UnwrappedPSProductDetailProps &
@@ -251,36 +253,12 @@ class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
 > {
-  static getDerivedStateFromProps(nextProps: PSProductDetailComponentInternalProps):
-    Partial<PSProductDetailState> | null {
-
-    const { commerceData } = nextProps;
-
-    if (!commerceData) {
-      return null;
-    }
-
-    if (nextProps.addToRecentlyViewed) {
-      nextProps.addToRecentlyViewed(commerceData);
-    }
-
-    if (!commerceData.variants || commerceData.variants.length === 0) {
-      return {
-        variantId: commerceData.id
-      };
-    }
-
-    const variant = find(commerceData.variants, { id: commerceData.id })
-     || commerceData.variants[0];
-
-    if (variant) {
-      return {
-        variantId: variant.id,
-        optionValues: cloneDeep(variant.optionValues)
-      };
-    }
-
-    return null;
+  static getDerivedStateFromProps(
+    props: PSProductDetailComponentInternalProps
+  ): Pick<PSProductDetailState, 'productId'> {
+    return {
+      productId: props.id
+    };
   }
 
   miniModalTimer: any = null;
@@ -299,16 +277,59 @@ class PSProductDetailComponent extends Component<
 
   componentDidMount(): void {
     this.needsImpression = true;
+    this.fetchCommerceData();
+  }
+
+  fetchCommerceData = (id?: string): void => {
+    const productId = id || this.props.id;
+
+    dataSource.fetchProduct(productId)
+      .then((product: CommerceTypes.Product) => {
+        let variantId;
+        let optionValues: CommerceTypes.OptionValue[] = [];
+
+        if (this.props.addToRecentlyViewed) {
+          this.props.addToRecentlyViewed(product);
+        }
+
+        if (!product.variants || product.variants.length === 0) {
+          variantId = product.id;
+        } else {
+          const variant = find(product.variants, { id: product.id }) || product.variants[0];
+
+          if (variant) {
+            variantId = variant.id;
+            optionValues = cloneDeep(variant.optionValues);
+          }
+        }
+
+        this.setState({
+          product,
+          variantId,
+          optionValues
+        });
+      })
+      .catch((err: Error) => console.warn('Error fetching product', err));
+
+    reviewDataSource.fetchReviewDetails({ ids: [productId] })
+      .then((reviewData: ReviewTypes.ReviewDetails[]) => {
+        const review = reviewData && reviewData[0];
+
+        this.setState({
+          review: review || undefined
+        });
+      })
+      .catch((err: Error) => console.warn('Error fetching reviews', err));
   }
 
   trackImpression = (): void => {
     if (this.needsImpression) {
-      const { commerceData } = this.props;
+      const { product } = this.state;
 
-      if (commerceData) {
+      if (product) {
         Analytics.detail.product(
           'ProductDetail',
-          mapProductToAnalytics(commerceData)
+          mapProductToAnalytics(product)
         );
 
         Analytics.screenview('ProductDetail', {
@@ -321,8 +342,8 @@ class PSProductDetailComponent extends Component<
   }
 
   updateOption = (name: string) => (value: string) => {
-    if (this.props.commerceData) {
-      const { variants } = this.props.commerceData;
+    if (this.state.product) {
+      const { variants } = this.state.product;
       const { optionValues } = this.state;
 
       // Copy existing options
@@ -342,12 +363,11 @@ class PSProductDetailComponent extends Component<
         variant.id &&
         ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
       ) {
-        this.props.navigator.push({
-          screen: 'ProductDetail',
-          passProps: {
-            productId: variant.id
-          }
+        this.setState({
+          product: undefined
         });
+
+        this.fetchCommerceData(variant.id);
       } else {
         // Update State
         this.setState(prevState => {
@@ -372,8 +392,8 @@ class PSProductDetailComponent extends Component<
         'There was an error adding to cart. Please try again!',
         2000
       );
-    } else if (this.props.commerceData) {
-      let addToCart = this.props.addToCart(this.props.commerceData, quantity, variantId);
+    } else if (this.state.product) {
+      let addToCart = this.props.addToCart(this.state.product, quantity, variantId);
 
       if (this.props.onAddToCart) {
         addToCart = addToCart.then(this.props.onAddToCart);
@@ -461,7 +481,7 @@ class PSProductDetailComponent extends Component<
           navigator.push({
             screen: 'ProductDetail',
             passProps: {
-              productId: this.props.id
+              productId: this.state.productId
             }
           });
           navigator.dismissModal();
@@ -471,8 +491,8 @@ class PSProductDetailComponent extends Component<
   }
 
   renderShareButton = (): JSX.Element => {
-    const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
-    const { id, title } = commerceData;
+    const product = this.state.product as CommerceTypes.Product & { [key: string]: any };
+    const { id, title } = product;
 
     const content = {
       title: `I've shared ${title} with you`,
@@ -514,9 +534,9 @@ class PSProductDetailComponent extends Component<
   render(): JSX.Element {
     // TODO: Remove type assertion when we update this to match the commerce schema
     /* tslint:disable-next-line:no-unnecessary-type-assertion */
-    const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
+    const product = this.state.product as CommerceTypes.Product & { [key: string]: any };
 
-    if (!commerceData) {
+    if (!product) {
       return <Loading style={{ marginTop: 80 }} />;
     }
 
@@ -533,7 +553,7 @@ class PSProductDetailComponent extends Component<
       shipsMsg,
       description = '',
       images = []
-    } = commerceData;
+    } = product;
 
     // Update Image src (should be updated in ZoomCarousel component)
     const imagesSources = images.map((image: any) => {
@@ -718,14 +738,14 @@ class PSProductDetailComponent extends Component<
   }
 
   openReviews = () => {
-    const { commerceData } = this.props;
+    const { product, review } = this.state;
 
-    if (commerceData && commerceData.review) {
+    if (product && review) {
       this.navigateToScreen(
         'ProductDetailReviews',
-        'Reviews (' + commerceData.review.total + ')',
+        'Reviews (' + review.total + ')',
         {
-          reviewQuery: { ids: commerceData.id, limit: 2 },
+          reviewQuery: { ids: product.id, limit: 2 },
           reviewDataSource: this.props.reviewDataSource
         }
       );
@@ -741,8 +761,4 @@ class PSProductDetailComponent extends Component<
   }
 }
 
-export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailProps>(
-  async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
-    DataSource.fetchProduct(props.id)
-// TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent) as any);
+export const PSProductDetail = withCart(PSProductDetailComponent);
