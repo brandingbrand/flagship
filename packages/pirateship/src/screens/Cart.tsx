@@ -149,7 +149,7 @@ const CartStyle = StyleSheet.create({
     marginBottom: 20
   },
   emptyText: {
-    color: palette.primary,
+    color: palette.secondary,
     marginTop: 10,
     fontSize: 15
   },
