@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  Image,
   Keyboard,
   Linking,
   Platform,
@@ -24,7 +25,7 @@ import PSShopLandingCategories from '../components/PSShopLandingCategories';
 import { openSignInModal } from '../lib/shortcuts';
 import { handleDeeplink } from '../lib/deeplinkHandler';
 import GlobalStyle from '../styles/Global';
-import { border, color, palette } from '../styles/variables';
+import { border, color, fontSize, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { CombinedStore } from '../reducers';
@@ -49,7 +50,6 @@ const ShopStyle = StyleSheet.create({
     backgroundColor: palette.primary
   },
   container: {
-    backgroundColor: palette.background,
     flex: 1
   },
   heroCarousel: {},
@@ -97,23 +97,35 @@ const ShopStyle = StyleSheet.create({
   },
   topCategoriesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 5
+  },
+  viewAllArrow: {
+    maxWidth: 15,
+    maxHeight: 15,
+    marginHorizontal: 10,
+    transform: [{ rotate: '180deg' }]
   },
   viewAllButtonTitle: {
-    fontSize: 16,
+    fontSize: fontSize.large,
     color: color.black
   },
   viewAllButton: {
     flexDirection: 'row-reverse',
     justifyContent: 'flex-start',
     alignItems: 'center'
+  },
+  viewAllContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 });
 
 export interface ShopProps
   extends ScreenProps,
-          Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
-          Pick<AccountActionProps, 'signOut'> {}
+    Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
+    Pick<AccountActionProps, 'signOut'> {}
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
@@ -177,7 +189,8 @@ class Shop extends Component<ShopProps> {
 
         if (navAction.screen) {
           // switch to shop tab if it's not already visible
-          this.props.navigator.screenIsCurrentlyVisible()
+          this.props.navigator
+            .screenIsCurrentlyVisible()
             .then(visible => {
               if (!visible) {
                 this.props.navigator.switchToTab();
@@ -192,7 +205,8 @@ class Shop extends Component<ShopProps> {
 
   handleCategoryItemPress = (item: any) => {
     // Shopify doesn't have the concept of subcategories so always direct users to product index
-    const screen = dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
+    const screen =
+      dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
 
     this.props.navigator.push({
       screen,
@@ -214,9 +228,11 @@ class Shop extends Component<ShopProps> {
         <View style={ShopStyle.container}>
           <PSWelcome
             logo={logo}
-            userName={this.props.account
-                      && this.props.account.store
-                      && this.props.account.store.firstName}
+            userName={
+              this.props.account &&
+              this.props.account.store &&
+              this.props.account.store.firstName
+            }
             isLoggedIn={this.props.account && this.props.account.isLoggedIn}
             style={ShopStyle.welcome}
             onSignInPress={openSignInModal(this.props.navigator)}
@@ -250,19 +266,22 @@ class Shop extends Component<ShopProps> {
             <Text style={[GlobalStyle.h2, ShopStyle.sectionTitle]}>
               {translate.string(translationKeys.screens.shop.shopAllBtn)}
             </Text>
-            <PSButton
-              link
-              title={translate.string(translationKeys.screens.shop.viewAllBtn)}
-              onPress={this.goToAllCategories}
-              icon={arrow}
-              iconStyle={ShopStyle.arrow}
-              style={ShopStyle.container}
-              titleStyle={ShopStyle.viewAllButtonTitle}
-              viewStyle={ShopStyle.viewAllButton}
-            />
+            <TouchableOpacity onPress={this.goToAllCategories}>
+              <View style={ShopStyle.viewAllContainer}>
+                <Text style={ShopStyle.viewAllButtonTitle}>
+                  {translate.string(translationKeys.screens.shop.viewAllBtn)}
+                </Text>
+                <Image style={ShopStyle.arrow} source={arrow} />
+              </View>
+            </TouchableOpacity>
           </View>
+
           <PSShopLandingCategories
-            categories={this.props && this.props.topCategory && this.props.topCategory.categories}
+            categories={
+              this.props &&
+              this.props.topCategory &&
+              this.props.topCategory.categories
+            }
             style={ShopStyle.shopLandingCategories}
             onItemPress={this.handleCategoryItemPress}
           />
@@ -277,7 +296,9 @@ class Shop extends Component<ShopProps> {
         <View style={ShopStyle.shopCategoryButtonsContainer}>
           <PSButton
             style={ShopStyle.buttonCategoryLeft}
-            title={translate.string(translationKeys.screens.shop.shopByCategoryBtn)}
+            title={translate.string(
+              translationKeys.screens.shop.shopByCategoryBtn
+            )}
             onPress={this.goToAllCategories}
           />
         </View>
@@ -328,10 +349,14 @@ class Shop extends Component<ShopProps> {
   }
 
   private renderPromoProducts = (): React.ReactNode => {
-    if (!(this.props.promoProducts
-          && this.props.promoProducts.products
-          && projectEnv.dataSource
-          && projectEnv.dataSource.promoProducts)) {
+    if (
+      !(
+        this.props.promoProducts &&
+        this.props.promoProducts.products &&
+        projectEnv.dataSource &&
+        projectEnv.dataSource.promoProducts
+      )
+    ) {
       return null;
     }
 
@@ -369,4 +394,7 @@ const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Shop);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Shop);
