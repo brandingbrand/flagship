@@ -8,8 +8,16 @@ type PaymentRequestUpdateEvent = import ('react-native-payments').PaymentRequest
 
 export class PaymentRequest implements PaymentRequestInterface {
   id: string = '';
-  shippingAddress: null = null;
-  shippingOption: null = null;
+  shippingAddress: null | PaymentAddress = null;
+  shippingOption: null | string = null;
+
+  constructor(
+    methodData: PaymentMethodData[],
+    details?: PaymentDetailsInit,
+    options?: PaymentOptions
+  ) {
+    throw new Error('Unsupported');
+  }
 
   async show(): Promise<PaymentResponse> {
     throw new Error('Unsupported');
