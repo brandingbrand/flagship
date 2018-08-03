@@ -9818,9 +9818,9 @@ react-native-web-modal@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-web-modal/-/react-native-web-modal-1.0.1.tgz#d0e1d5fa020c88edb9258409054bec73a7726ea1"
 
-react-native-web@^0.8.2:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.8.6.tgz#86242909829b971e44d22b21a2d2cf3815cc0bf9"
+react-native-web@^0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.8.9.tgz#0c616ce666a5547e2d850f15c2cc56abd14083ca"
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
