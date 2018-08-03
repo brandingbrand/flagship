@@ -167,7 +167,8 @@ const CartStyle = StyleSheet.create({
   signIn: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: border.color
+    borderColor: border.color,
+    backgroundColor: palette.secondary
   },
   signInButtonTitle: {
     color: 'white',
@@ -204,9 +205,9 @@ const icons = {
 
 export interface CartScreenProps
   extends ScreenProps,
-    AccountProps,
-    CartProps,
-    RecentlyViewedProps {}
+  AccountProps,
+  CartProps,
+  RecentlyViewedProps { }
 
 class Cart extends Component<CartScreenProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
