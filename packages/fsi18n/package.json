@@ -15,11 +15,6 @@
     "lodash-es": "^4.17.10",
     "react-native-i18n": "^2.0.12"
   },
-  "rnpm": {
-    "commands": {
-      "prelink": "react-native link react-native-i18n"
-    }
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
