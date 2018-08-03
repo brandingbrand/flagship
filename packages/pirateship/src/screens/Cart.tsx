@@ -148,7 +148,7 @@ const CartStyle = StyleSheet.create({
     marginBottom: 20
   },
   emptyText: {
-    color: palette.primary,
+    color: palette.secondary,
     marginTop: 10,
     fontSize: 15
   },
@@ -204,9 +204,9 @@ const icons = {
 
 export interface CartScreenProps
   extends ScreenProps,
-    AccountProps,
-    CartProps,
-    RecentlyViewedProps {}
+  AccountProps,
+  CartProps,
+  RecentlyViewedProps { }
 
 class Cart extends Component<CartScreenProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
