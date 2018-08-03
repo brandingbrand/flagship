@@ -81,7 +81,8 @@ const ShopStyle = StyleSheet.create({
     marginTop: 0,
     paddingTop: 15,
     paddingBottom: 15,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: palette.secondary
   },
   shopLandingCategories: {
     borderTopWidth: 1,
@@ -112,8 +113,8 @@ const ShopStyle = StyleSheet.create({
 
 export interface ShopProps
   extends ScreenProps,
-          Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
-          Pick<AccountActionProps, 'signOut'> {}
+  Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
+  Pick<AccountActionProps, 'signOut'> { }
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
@@ -215,8 +216,8 @@ class Shop extends Component<ShopProps> {
           <PSWelcome
             logo={logo}
             userName={this.props.account
-                      && this.props.account.store
-                      && this.props.account.store.firstName}
+              && this.props.account.store
+              && this.props.account.store.firstName}
             isLoggedIn={this.props.account && this.props.account.isLoggedIn}
             style={ShopStyle.welcome}
             onSignInPress={openSignInModal(this.props.navigator)}
@@ -329,9 +330,9 @@ class Shop extends Component<ShopProps> {
 
   private renderPromoProducts = (): React.ReactNode => {
     if (!(this.props.promoProducts
-          && this.props.promoProducts.products
-          && projectEnv.dataSource
-          && projectEnv.dataSource.promoProducts)) {
+      && this.props.promoProducts.products
+      && projectEnv.dataSource
+      && projectEnv.dataSource.promoProducts)) {
       return null;
     }
 
