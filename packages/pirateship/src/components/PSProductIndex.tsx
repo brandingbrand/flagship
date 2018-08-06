@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 
 import React, { Component } from 'react';
-import { Navigator } from 'react-native-navigation';
-
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ProductIndex, ProductIndexSearch } from '@brandingbrand/fsproductindex';
 
@@ -24,6 +22,8 @@ import PSFilterActionBar from '../components/PSFilterActionBar';
 import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
+
+type Navigator = import ('react-native-navigation').Navigator;
 
 const window = Dimensions.get('window');
 

@@ -8,7 +8,7 @@ import Row from '../components/PSRow';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import { Screen } from 'react-native-navigation';
+type Screen = import ('react-native-navigation').Screen;
 
 const screens: Screen[] = [
   { title: 'Product Index', screen: 'ProductIndex' },

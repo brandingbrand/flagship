@@ -7,8 +7,6 @@ import {
   View
 } from 'react-native';
 import { cloneDeep, find, findIndex } from 'lodash-es';
-import { Navigator } from 'react-native-navigation';
-
 import {
   Loading,
   ReviewIndicator,
@@ -40,6 +38,8 @@ import {
   CommerceTypes,
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
+
+type Navigator = import ('react-native-navigation').Navigator;
 
 const icons = {
   zoom: require('../../assets/images/icon-zoom.png'),
@@ -725,8 +725,7 @@ class PSProductDetailComponent extends Component<
         'ProductDetailReviews',
         'Reviews (' + commerceData.review.total + ')',
         {
-          reviewQuery: { ids: commerceData.id, limit: 2 },
-          reviewDataSource: this.props.reviewDataSource
+          reviewQuery: { ids: commerceData.id }
         }
       );
     }
