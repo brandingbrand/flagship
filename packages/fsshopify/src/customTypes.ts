@@ -48,6 +48,13 @@ export interface ShopifyConfig {
   domain: string;
   storefrontAccessToken: string;
   googlePayPublicKey?: string;
+
+  /**
+   * The name of the registered screen that will be used to
+   * display the Google Pay Shipping Options modal
+   */
+  googlePayScreenName?: string;
+
   iosMerchantIdentifier?: string;
 
   /**
