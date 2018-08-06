@@ -36,7 +36,8 @@ const CartStyle = StyleSheet.create({
     fontWeight: 'bold'
   },
   title: {
-    marginTop: 15
+    marginTop: 15,
+    color: palette.secondary
   },
   cartContainer: {
     marginHorizontal: 15
