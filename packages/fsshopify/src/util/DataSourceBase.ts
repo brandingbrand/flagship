@@ -2,9 +2,6 @@ import * as Types from '../customTypes';
 import * as ShopifyResponseTypes from '../util/ShopifyResponseTypes';
 import ShopifyAPIError from './ShopifyAPIError';
 import ShopifyAPI from './ShopifyAPI';
-import { Navigation } from 'react-native-navigation';
-import gpayshippingoption from '../components/GooglePayShippingOptionsModal';
-import { AppRegistry } from 'react-native';
 
 export default class DataSourceBase {
   api: ShopifyAPI;
@@ -24,16 +21,9 @@ export default class DataSourceBase {
     this.api = new ShopifyAPI(config.domain, config.storefrontAccessToken);
     this.googlePayKey = config.googlePayPublicKey;
     this.iosMerchantIdentifier = config.iosMerchantIdentifier;
-
-    // if google pay is configured, push the default shipping options modal if the app has not
-    // already registered a custom one
-    if (this.googlePayKey) {
-      const registered = !!AppRegistry.getRunnable('GooglePayShippingOptionsModal');
-      if (!registered) {
-        Navigation.registerComponent('GooglePayShippingOptionsModal', (): any => {
-          return gpayshippingoption;
-        });
-      }
+    if (this.googlePayKey && !config.googlePayScreenName) {
+      throw new Error('You must provide the name of the screen to ' +
+        'be used for the Google Pay Shipping Options Modal');
     }
   }
 
