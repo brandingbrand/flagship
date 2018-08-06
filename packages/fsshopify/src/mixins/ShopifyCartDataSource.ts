@@ -16,7 +16,7 @@ import {
   PaymentMethodData,
   PaymentOptions,
   PaymentRequest
-} from 'react-native-payments';
+} from '../util/react-native-payments';
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { Navigator } from 'react-native-navigation';
@@ -376,9 +376,14 @@ export class ShopifyCartDataSource extends DataSourceBase
         throw new ShopifyAPIError('unable to update shipping method and request options');
       }
 
+      if (!this.config.googlePayScreenName) {
+        throw new Error('You must provide the name of the screen to ' +
+          'be used for the Google Pay Shipping Options Modal');
+      }
+
       // need to show modal here to present the user with shipping options
       navigator.showModal({
-        screen: 'GooglePayShippingOptionsModal',
+        screen: this.config.googlePayScreenName,
         title: 'Google Pay',
         passProps: {
           datasource: this,
