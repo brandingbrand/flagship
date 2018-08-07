@@ -220,6 +220,7 @@ class Cart extends Component<CartScreenProps> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
 
@@ -254,6 +255,7 @@ class Cart extends Component<CartScreenProps> {
         scroll={!isLoading}
         style={CartStyle.container}
         scrollViewProps={{ style: CartStyle.scrollView }}
+        navigator={navigator}
       >
         {cart}
       </PSScreenWrapper>
