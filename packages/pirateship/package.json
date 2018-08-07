@@ -14,7 +14,8 @@
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
-    "lint": "fscodestyle"
+    "lint": "fscodestyle",
+    "build-web-demo": "./scripts/buildWebDemo.sh"
   },
   "dependencies": {
     "@brandingbrand/flagship": "^0.1.0",
