@@ -197,7 +197,7 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
   }
 
   dismissModal = () => {
-    this.props.navigator.dismissModal();
+    this.props.navigator.pop();
   }
 
   showDevView = (devView: string) => () => {
