@@ -64,6 +64,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
@@ -73,6 +74,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
+        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
