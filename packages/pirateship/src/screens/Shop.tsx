@@ -133,19 +133,21 @@ class Shop extends Component<ShopProps> {
   constructor(props: ShopProps) {
     super(props);
 
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          handleDeeplink(url, props.navigator);
-        }
-      })
-      .catch(err => {
-        console.warn('Deeplinking error', err);
-      });
+    if (Platform.OS !== 'web') {
+      Linking.getInitialURL()
+        .then(url => {
+          if (url) {
+            handleDeeplink(url, props.navigator);
+          }
+        })
+        .catch(err => {
+          console.warn('Deeplinking error', err);
+        });
 
-    Linking.addEventListener('url', event => {
-      handleDeeplink(event.url, props.navigator);
-    });
+      Linking.addEventListener('url', event => {
+        handleDeeplink(event.url, props.navigator);
+      });
+    }
 
     // Listen for navigator events
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
