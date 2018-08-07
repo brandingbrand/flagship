@@ -24,9 +24,13 @@ export default class ProductDetailReviews extends Component<ProductDetailReviews
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
 
     return (
-      <PSScreenWrapper hideGlobalBanner={true}>
+      <PSScreenWrapper
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         <PSProductDetailReviews
           reviewQuery={this.props.reviewQuery}
           reviewDataSource={reviewDataSource}

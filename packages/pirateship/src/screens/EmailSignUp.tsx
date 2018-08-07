@@ -181,8 +181,14 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
+
     return (
-      <PSScreenWrapper style={styles.container} hideGlobalBanner={true}>
+      <PSScreenWrapper
+        style={styles.container}
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         <CMSBannerStacked
           cmsProviderManagementConfig={CMSProvider}
           cmsProviderGroup='EmailSignup'
