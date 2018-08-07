@@ -427,6 +427,7 @@ export default class ProductIndexGrid extends Component<
     };
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   renderFilterModal = () => {
     if (this.props.hideActionBar) {
       return null;
@@ -434,7 +435,7 @@ export default class ProductIndexGrid extends Component<
 
     const { commerceData } = this.props;
 
-    if (!commerceData) {
+    if (!(commerceData && commerceData.refinements)) {
       return null;
     }
 
