@@ -71,7 +71,7 @@ export default function wrapScreen(
     }
 
     openDevMenu = () => {
-      this.props.navigator.showModal({
+      this.props.navigator.push({
         screen: 'devMenu',
         title: 'FLAGSHIP Dev Menu'
       });
