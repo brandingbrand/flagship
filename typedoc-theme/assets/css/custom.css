@@ -19,11 +19,14 @@
 }
 
 #storybook {
-  margin-bottom: 30px;
   border-top: none;
 }
 
-#storybook-link {
+#web-demo {
+  margin-bottom: 30px;
+}
+
+a.demo-link {
   font-weight: bold;
   color: #FF4D56;
 }
