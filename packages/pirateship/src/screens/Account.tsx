@@ -135,10 +135,11 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     if (!this.props.account.isLoggedIn) {
       return (
         <SignIn
-          navigator={this.props.navigator}
+          navigator={navigator}
           onNav={this.props.onNav}
           onSignInSuccess={this.onSignInSuccess}
         />
@@ -148,7 +149,10 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     }
 
     return (
-      <PSScreenWrapper hideGlobalBanner={true}>
+      <PSScreenWrapper
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         <Grid
           style={styles.grid}
           columns={2}

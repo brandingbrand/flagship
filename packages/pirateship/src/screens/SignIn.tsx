@@ -111,7 +111,11 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
       return <Loading style={styles.loading} />;
     }
 
-    const { saveCredentials, getCredentials } = this.props;
+    const {
+      saveCredentials,
+      getCredentials,
+      navigator
+    } = this.props;
     /// default to close
     const dismissButtonStyle = this.props.dismissButtonStyle || DismissButtonStyle.Close;
 
@@ -123,6 +127,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
+        navigator={navigator}
       >
         <View style={styles.dismissButtonContainer}>
           {this.props.dismissible && (

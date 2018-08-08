@@ -133,19 +133,21 @@ class Shop extends Component<ShopProps> {
   constructor(props: ShopProps) {
     super(props);
 
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          handleDeeplink(url, props.navigator);
-        }
-      })
-      .catch(err => {
-        console.warn('Deeplinking error', err);
-      });
+    if (Platform.OS !== 'web') {
+      Linking.getInitialURL()
+        .then(url => {
+          if (url) {
+            handleDeeplink(url, props.navigator);
+          }
+        })
+        .catch(err => {
+          console.warn('Deeplinking error', err);
+        });
 
-    Linking.addEventListener('url', event => {
-      handleDeeplink(event.url, props.navigator);
-    });
+      Linking.addEventListener('url', event => {
+        handleDeeplink(event.url, props.navigator);
+      });
+    }
 
     // Listen for navigator events
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -219,23 +221,25 @@ class Shop extends Component<ShopProps> {
   }
 
   render(): JSX.Element {
+    const { account, navigator, topCategory } = this.props;
     return (
       <PSScreenWrapper
         needInSafeArea={true}
         style={ShopStyle.wrapper}
         scrollViewProps={{ style: ShopStyle.scrollView }}
+        navigator={navigator}
       >
         <View style={ShopStyle.container}>
           <PSWelcome
             logo={logo}
             userName={
-              this.props.account &&
-              this.props.account.store &&
-              this.props.account.store.firstName
+              account &&
+              account.store &&
+              account.store.firstName
             }
-            isLoggedIn={this.props.account && this.props.account.isLoggedIn}
+            isLoggedIn={account && account.isLoggedIn}
             style={ShopStyle.welcome}
-            onSignInPress={openSignInModal(this.props.navigator)}
+            onSignInPress={openSignInModal(navigator)}
             onSignOutPress={this.handleSignOut}
           />
           <PSHeroCarousel
@@ -277,11 +281,7 @@ class Shop extends Component<ShopProps> {
           </View>
 
           <PSShopLandingCategories
-            categories={
-              this.props &&
-              this.props.topCategory &&
-              this.props.topCategory.categories
-            }
+            categories={topCategory && topCategory.categories}
             style={ShopStyle.shopLandingCategories}
             onItemPress={this.handleCategoryItemPress}
           />
