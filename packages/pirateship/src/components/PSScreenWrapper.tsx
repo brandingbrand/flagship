@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-
+import { Navigator } from 'react-native-navigation';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
+
 export interface PSScreenWrapperProps {
   style?: StyleProp<ViewStyle>;
 
@@ -36,6 +37,7 @@ export interface PSScreenWrapperProps {
   overrideGlobalBanner?: PSGlobalBannerSlotItem;
 
   needInSafeArea?: boolean;
+  navigator?: Navigator;
 
   // Whether or not the wrapper should scroll it's children. Defaults to true
   scroll?: boolean;
@@ -46,7 +48,7 @@ export interface PSScreenWrapperProps {
 
 export default class PSScreenWrapper extends PureComponent<
   PSScreenWrapperProps
-> {
+  > {
   state: any = {
     safeAreaInsets: {
       top: 0,

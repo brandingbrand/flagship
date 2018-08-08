@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
 import {
   MultiCarousel,
   ProductItem,
