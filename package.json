@@ -29,10 +29,11 @@
     "ship:run-android": "run-p ship:run-bundler tsc:watch ship:compile-android",
     "ship:run-bundler": "lerna run --stream --scope @brandingbrand/pirateship start",
     "ship:build-ios": "lerna run --stream --scope @brandingbrand/pirateship build-ios",
+    "ship:build-web-demo": "lerna run --stream --scope @brandingbrand/pirateship build-web-demo",
     "ship:compile-ios": "lerna run --stream --scope @brandingbrand/pirateship compile-ios",
     "ship:compile-android": "lerna run --stream --scope @brandingbrand/pirateship compile-android",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
-    "docs": "run-s build:docs build:storybook"
+    "docs": "run-s build:docs build:storybook ship:build-web-demo"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
@@ -80,7 +81,7 @@
     "markdownlint-cli": "^0.11.0",
     "npm-run-all": "^4.1.3",
     "react-art": "^16.4.0",
-    "react-native-web": "^0.8.2",
+    "react-native-web": "^0.8.9",
     "rimraf": "^2.6.2",
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.3.0",
