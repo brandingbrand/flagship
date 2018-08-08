@@ -160,6 +160,7 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const { isLoading, errors } = this.state;
     let body;
 
@@ -175,7 +176,11 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
     }
 
     return (
-      <PSScreenWrapper style={styles.container} scroll={!isLoading}>
+      <PSScreenWrapper
+        style={styles.container}
+        scroll={!isLoading}
+        navigator={navigator}
+      >
         {body}
       </PSScreenWrapper>
     );

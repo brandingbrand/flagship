@@ -29,8 +29,12 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
   };
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     return (
-      <PSScreenWrapper hideGlobalBanner={true}>
+      <PSScreenWrapper
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         {screens.map((screen, i) => (
           <Row
             key={i}

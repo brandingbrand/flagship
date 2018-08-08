@@ -118,6 +118,7 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const result = this.state.showResult ? [] : this.state.suggestions;
 
     return (
@@ -125,6 +126,7 @@ class Search extends Component<SearchProps, SearchState> {
         scroll={false}
         hideGlobalBanner={true}
         needInSafeArea={true}
+        navigator={navigator}
       >
         <SearchSuggestionScreen
           results={result}

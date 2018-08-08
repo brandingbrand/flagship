@@ -65,6 +65,8 @@ class EditAddress extends Component<EditAddressScreenProps> {
       actionTranslations = translationKeys.address.actions.edit;
     }
 
+    const { navigator } = this.props;
+
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
@@ -74,6 +76,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
+        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}

@@ -167,6 +167,7 @@ export default class ForgotPassword extends Component<
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const { resetSent } = this.state;
     let body;
 
@@ -184,6 +185,7 @@ export default class ForgotPassword extends Component<
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
+        navigator={navigator}
       >
         <View style={styles.dismissButtonContainer}>
           <TouchableOpacity
