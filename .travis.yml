@@ -6,14 +6,14 @@ stages:
 - test
 - deploy
 install:
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
+- export PATH=$HOME/.yarn/bin:$PATH
 - yarn global add lerna
 - yarn --silent --non-interactive --ignore-scripts
 jobs:
   include:
   - script: commitlint-travis || travis_terminate 1
   - before_install:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-    - export PATH=$HOME/.yarn/bin:$PATH
     - node --version
     - yarn --version
     before_script: ./node_modules/.bin/greenkeeper-lockfile-update
@@ -41,10 +41,6 @@ jobs:
       - addon-google_apis-google-26
       - addon-google_apis-google-23
     before_install:
-    - nvm install 10
-    # The default Android image has an old version of Yarn that doesn't support workspaces
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-    - export PATH=$HOME/.yarn/bin:$PATH
     - node --version
     - yarn --version
     script:
@@ -56,8 +52,6 @@ jobs:
     os: osx
     osx_image: xcode9.4
     before_install:
-    - nvm install 10
-    - brew install yarn --without-node
     - node --version
     - yarn --version
     script:
@@ -71,8 +65,6 @@ jobs:
     env:
     - KEY_CHAIN=ios-build.keychain
     before_install:
-    - nvm install 10
-    - brew install yarn --without-node
     - node --version
     - yarn --version
     script:
