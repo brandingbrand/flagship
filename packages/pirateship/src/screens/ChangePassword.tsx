@@ -118,12 +118,14 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
 
   render(): JSX.Element {
     const { isLoading } = this.state;
+    const { navigator } = this.props;
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
         needInSafeArea={true}
         style={styles.screenContainer}
+        navigator={navigator}
       >
         <View style={styles.container}>
           <Image source={accountImage} style={styles.accountImage} />

@@ -14,9 +14,7 @@ export const style = StyleSheet.create({
   },
   star: {
     fontSize: 18,
-    lineHeight: 18,
     width: 18,
-    height: 18,
     color: '#333132',
     textAlign: 'center',
     fontFamily: 'Arial',
@@ -32,7 +30,6 @@ export const style = StyleSheet.create({
   },
   halfStarContainer: {
     width: 18,
-    height: 18,
     flexDirection: 'row'
   },
   starHalfLeft: {

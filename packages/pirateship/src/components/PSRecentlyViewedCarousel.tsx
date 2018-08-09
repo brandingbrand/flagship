@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Navigator } from 'react-native-navigation';
 import {
   StyleProp,
   StyleSheet,
@@ -12,6 +11,8 @@ import PSProductCarousel from './PSProductCarousel';
 import { border, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
+
+type Navigator = import ('react-native-navigation').Navigator;
 
 const styles = StyleSheet.create({
   container: {

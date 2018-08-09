@@ -119,7 +119,7 @@ export default class Category extends Component<PropType, StateType> {
   }
 
   render(): JSX.Element {
-    const { categoryId, format } = this.props;
+    const { categoryId, format, navigator } = this.props;
     const categoryFormat = format && format === 'list' ? 'list' : 'grid';
     const margin = categoryFormat === 'grid' ? 15 : 0;
     const itemProps: any =
@@ -143,7 +143,9 @@ export default class Category extends Component<PropType, StateType> {
     }
 
     return (
-      <PSScreenWrapper>
+      <PSScreenWrapper
+        navigator={navigator}
+      >
         <View style={{ margin }}>
           <FSCategory
             format={categoryFormat}

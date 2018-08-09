@@ -36,7 +36,8 @@ const CartStyle = StyleSheet.create({
     fontWeight: 'bold'
   },
   title: {
-    marginTop: 15
+    marginTop: 15,
+    color: palette.secondary
   },
   cartContainer: {
     marginHorizontal: 15
@@ -148,7 +149,7 @@ const CartStyle = StyleSheet.create({
     marginBottom: 20
   },
   emptyText: {
-    color: palette.primary,
+    color: palette.secondary,
     marginTop: 10,
     fontSize: 15
   },
@@ -167,7 +168,8 @@ const CartStyle = StyleSheet.create({
   signIn: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: border.color
+    borderColor: border.color,
+    backgroundColor: palette.secondary
   },
   signInButtonTitle: {
     color: 'white',
@@ -204,9 +206,9 @@ const icons = {
 
 export interface CartScreenProps
   extends ScreenProps,
-    AccountProps,
-    CartProps,
-    RecentlyViewedProps {}
+  AccountProps,
+  CartProps,
+  RecentlyViewedProps { }
 
 class Cart extends Component<CartScreenProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
@@ -218,6 +220,7 @@ class Cart extends Component<CartScreenProps> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
 
@@ -252,6 +255,7 @@ class Cart extends Component<CartScreenProps> {
         scroll={!isLoading}
         style={CartStyle.container}
         scrollViewProps={{ style: CartStyle.scrollView }}
+        navigator={navigator}
       >
         {cart}
       </PSScreenWrapper>

@@ -125,8 +125,8 @@ const ShopStyle = StyleSheet.create({
 
 export interface ShopProps
   extends ScreenProps,
-  Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
-  Pick<AccountActionProps, 'signOut'> { }
+    Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
+    Pick<AccountActionProps, 'signOut'> {}
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;

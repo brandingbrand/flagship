@@ -8,7 +8,7 @@ import * as Normalizers from '../normalizers';
 import ShopifyAPIError from '../util/ShopifyAPIError';
 
 export class ShopifyProductCatalogDataSource extends DataSourceBase
-                                             implements ProductCatalogDataSource {
+  implements ProductCatalogDataSource {
 
   async fetchProduct(id: string): Promise<FSCommerceTypes.Product> {
     return Normalizers.product(await this.api.getProduct(id), this.config.storeCurrencyCode);
@@ -21,7 +21,7 @@ export class ShopifyProductCatalogDataSource extends DataSourceBase
       throw new ShopifyAPIError('categoryId is required for fetchProductIndex');
     }
     const collectionId = query.categoryId;
-    const {limit = 250} = query;
+    const { limit = 250 } = query;
     const response = await this.api.getCollection(collectionId, limit);
     const hasNextPage = response.products.pageInfo.hasNextPage;
     const hasPreviousPage = response.products.pageInfo.hasPreviousPage;
@@ -42,14 +42,14 @@ export class ShopifyProductCatalogDataSource extends DataSourceBase
   ): Promise<FSCommerceTypes.Category> {
     if (id || query) {
       throw new ShopifyAPIError('ShopifyDataSource does not support fetching ' +
-                                'specific category ids, use fetchProductIndex');
+        'specific category ids, use fetchProductIndex');
     }
 
     const categories = await this.api.getAllCollections();
 
     return {
       id: '',
-      title: 'Root',
+      title: 'All Categories',
       handle: '',
       categories: categories.map(Normalizers.category)
     };

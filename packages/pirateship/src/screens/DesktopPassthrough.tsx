@@ -178,13 +178,17 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     if (this.path && this.path.split('.').pop() === 'pdf') {
       const pdfUrl =
         Platform.OS === 'android'
           ? 'http://docs.google.com/gview?embedded=true&url=' + this.props.url
           : apiHost + this.path;
       return (
-        <PSScreenWrapper scroll={false}>
+        <PSScreenWrapper
+          scroll={false}
+          navigator={navigator}
+        >
           <View style={styles.flex1}>
             <WebView source={{ uri: pdfUrl }} />
           </View>
@@ -195,7 +199,12 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
         { uri: apiHost + this.path + this.hash } :
         { html: this.props.html };
       return (
-        <PSScreenWrapper scroll={false} hideGlobalBanner={!!this.props.html}>
+        <PSScreenWrapper
+          scroll={false}
+          hideGlobalBanner={!!this.props.html}
+          hideWebHeader={!!this.props.html}
+          navigator={navigator}
+        >
           <View style={styles.flex1}>
             <WebView
               ref={this.desktopWebView}
