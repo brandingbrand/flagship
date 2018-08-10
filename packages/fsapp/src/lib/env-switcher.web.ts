@@ -1,10 +1,14 @@
+// __DEFAULT_ENV__ is injected by webpack.
+declare const __DEFAULT_ENV__: string;
+
 class WebEnvSwitcher {
   storageKey: string = 'envName';
+  defaultAppEnv: string = __DEFAULT_ENV__ || 'prod';
 
   get envName(): string {
     const storedEnvName = localStorage.getItem(this.storageKey);
 
-    return storedEnvName || 'prod';
+    return storedEnvName || this.defaultAppEnv;
   }
 
   set envName(name: string) {
