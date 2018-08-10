@@ -7,4 +7,4 @@ fi
 
 yarn run init web
 cd web
-yarn run build --output-public-path '/flagship/web-demo/' --output-path '../../../docs/web-demo'
+yarn run build --output-public-path '/flagship/web-demo/' --output-path '../../../docs/web-demo' --env.enableDev=true --env.defaultEnvName=mock
