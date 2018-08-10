@@ -172,7 +172,8 @@ module.exports = function(env, options) {
         filename: 'static/css/[name].[hash:8].css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: false
+        __DEV__: env.enableDev ? true : false,
+        __DEFAULT_ENV__: JSON.stringify(env.defaultEnvName)
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
