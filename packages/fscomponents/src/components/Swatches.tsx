@@ -228,7 +228,8 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     const {
       items,
       style,
-      maxSwatches
+      maxSwatches,
+      label
     } = this.props;
 
     const { shouldShowMoreLess, showMore } = this.state;
@@ -242,7 +243,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     return (
       <View>
-        {this._renderLabel(swatch)}
+        {label && this._renderLabel(swatch)}
         <View style={[S.container, style]}>
           {displayItems.map(this._renderSwatch)}
           {this._renderMoreLess()}
