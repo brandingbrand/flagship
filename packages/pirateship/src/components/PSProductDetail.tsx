@@ -250,7 +250,7 @@ export type PSProductDetailComponentInternalProps = UnwrappedPSProductDetailProp
 class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
-> {
+  > {
   static getDerivedStateFromProps(nextProps: PSProductDetailComponentInternalProps):
     Partial<PSProductDetailState> | null {
 
@@ -271,7 +271,7 @@ class PSProductDetailComponent extends Component<
     }
 
     const variant = find(commerceData.variants, { id: commerceData.id })
-     || commerceData.variants[0];
+      || commerceData.variants[0];
 
     if (variant) {
       return {
@@ -491,8 +491,8 @@ class PSProductDetailComponent extends Component<
           const defaultOption = find(optionValues, { name: option.id });
 
           if (Array.isArray(option.values)
-              && option.values.length === 1
-              && option.values[0].name === 'Default Title') {
+            && option.values.length === 1
+            && option.values[0].name === 'Default Title') {
             return null;
           }
 
@@ -503,6 +503,7 @@ class PSProductDetailComponent extends Component<
               items={option.values}
               defaultValue={defaultOption ? defaultOption.value : undefined}
               onChangeSwatch={this.updateOption(option.id)}
+              label={true}
             />
           );
         })}
@@ -744,5 +745,5 @@ class PSProductDetailComponent extends Component<
 export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailProps>(
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
     DataSource.fetchProduct(props.id)
-// TODO: Update cart provider to separate out types correctly
+  // TODO: Update cart provider to separate out types correctly
 )(withCart(PSProductDetailComponent) as any);
