@@ -8,6 +8,16 @@ for strings, [Number.prototype.toLocaleString](https://developer.mozilla.org/en/
 for numbers, and [Date.prototype.toLocaleString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString)
 under the hood.
 
+## Installation
+
+```sh
+yarn add @brandingbrand/fsi18n
+yarn add react-native-i18n
+```
+
+The `react-native-i18n` package must be added to your project as a dependency so the native modules
+will link correctly.
+
 ## Example Usage
 
 Assume the user's language preference is set to French (fr-FR).

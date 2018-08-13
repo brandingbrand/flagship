@@ -1,4 +1,4 @@
-import { Navigator } from 'react-native-navigation';
+type Navigator = import ('react-native-navigation').Navigator;
 
 export const openSignInModal = (navigator: Navigator) => () => {
   navigator.showModal({
