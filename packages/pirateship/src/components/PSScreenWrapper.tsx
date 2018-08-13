@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Navigator } from 'react-native-navigation';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -38,14 +37,14 @@ export interface PSScreenWrapperProps {
   overrideGlobalBanner?: PSGlobalBannerSlotItem;
 
   needInSafeArea?: boolean;
-  navigator?: Navigator;
 
   // Whether or not the wrapper should scroll it's children. Defaults to true
   scroll?: boolean;
   scrollViewProps?: ScrollViewProps;
 
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
-  navigator: import ('react-native-navigation').Navigator;
+  // tslint:disable-next-line:whitespace
+  navigator: import('react-native-navigation').Navigator;
   hideWebHeader?: boolean;
 }
 
