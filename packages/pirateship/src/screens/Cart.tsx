@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
@@ -398,9 +398,15 @@ class Cart extends Component<CartScreenProps> {
   }
 
   continueShopping = () => {
-    this.props.navigator.switchToTab({
-      tabIndex: 0
-    });
+    if (Platform.OS !== 'web') {
+      this.props.navigator.switchToTab({
+        tabIndex: 0
+      });
+    } else {
+      this.props.navigator.push({
+        screen: 'Shop'
+      });
+    }
   }
 
   renderCartItem = (item: any): JSX.Element => {
