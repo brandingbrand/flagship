@@ -43,13 +43,14 @@ export interface PSScreenWrapperProps {
   scrollViewProps?: ScrollViewProps;
 
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
-  navigator: import ('react-native-navigation').Navigator;
+  // tslint:disable-next-line:whitespace
+  navigator: import('react-native-navigation').Navigator;
   hideWebHeader?: boolean;
 }
 
 export default class PSScreenWrapper extends PureComponent<
   PSScreenWrapperProps
-> {
+  > {
   state: any = {
     safeAreaInsets: {
       top: 0,
