@@ -264,13 +264,14 @@ export class DemandwareCartDataSource extends DemandwareBase
       }
     );
 
+    const products = await this.mutateCartDataWithProductDetail(data);
+    (data as BasketWithProductDetails).product_details = products;
     const normalizedCartData = demandwareNormalizer.cart(data, this.storeCurrencyCode);
+
     if (!normalizedCartData) {
       throw new Error(kErrorMessageNoData);
     }
 
-    const products = await this.mutateCartDataWithProductDetail(data);
-    (data as BasketWithProductDetails).product_details = products;
     return runMiddleware(
       data as BasketWithProductDetails,
       normalizedCartData,
@@ -512,13 +513,14 @@ export class DemandwareCartDataSource extends DemandwareBase
       `/baskets/${encodeURIComponent(basketId)}/items/${itemId}`
     );
 
+    const products = await this.mutateCartDataWithProductDetail(data);
+    (data as BasketWithProductDetails).product_details = products;
     const normalizedData = demandwareNormalizer.cart(data, this.storeCurrencyCode);
+
     if (!normalizedData) {
       throw new Error(kErrorMessageNoData);
     }
 
-    const products = await this.mutateCartDataWithProductDetail(data);
-    (data as BasketWithProductDetails).product_details = products;
     return runMiddleware(
       data as BasketWithProductDetails,
       normalizedData,
@@ -548,13 +550,14 @@ export class DemandwareCartDataSource extends DemandwareBase
       { data: { quantity: qty } }
     );
 
+    const products = await this.mutateCartDataWithProductDetail(data);
+    (data as BasketWithProductDetails).product_details = products;
     const normalizedData = demandwareNormalizer.cart(data, this.storeCurrencyCode);
+
     if (!normalizedData) {
       throw new Error(kErrorMessageNoData);
     }
 
-    const products = await this.mutateCartDataWithProductDetail(data);
-    (data as BasketWithProductDetails).product_details = products;
     return runMiddleware(
       data as BasketWithProductDetails,
       normalizedData,

@@ -8,6 +8,9 @@ import {
 import { fontSize, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
+  brandText: {
+    color: palette.secondary
+  },
   container: {},
   item: {
     marginLeft: 15
@@ -19,6 +22,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   productTitle: {
+    color: palette.secondary,
     fontWeight: 'normal',
     fontSize: 13
   },
@@ -27,7 +31,8 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     justifyContent: 'center',
-    marginTop: 5
+    marginTop: 5,
+    color: palette.secondary
   },
   priceContainer: {
     marginBottom: 0
@@ -54,10 +59,12 @@ export interface PSProductCarouselProps {
 
 export default class PSProductCarousel extends Component<
   PSProductCarouselProps
-> {
+  > {
   render(): JSX.Element {
     return (
       <MultiCarousel
+        brandStyle={styles.brandText}
+        buttonProps={{ palette }}
         itemsPerPage={2}
         peekSize={50}
         style={[styles.container, this.props.style]}
@@ -77,7 +84,7 @@ export default class PSProductCarousel extends Component<
           priceStyle={styles.productPrice}
           reviewStyle={styles.reviews}
           promoStyle={styles.promoText}
-          buttonProps={{palette}}
+          buttonProps={{ palette }}
           promoContainerStyle={styles.promosContainer}
           reviewIndicatorProps={{ itemSize: 15 } as any}
           {...item}
