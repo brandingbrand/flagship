@@ -13,6 +13,11 @@ import { Accordion } from '../Accordion';
 
 const title = <Text>Menu Item</Text>;
 
+const icons = {
+  closed: require('../../../assets/images/alert.png'),
+  open: require('../../../assets/images/checkmarkValidation.png')
+};
+
 const content = (
   <View>
     <Text>Sub Menu Item</Text>
@@ -41,5 +46,21 @@ storiesOf('Accordion', module)
     <Accordion
       title={title}
       content={imageContent}
+    />
+  ))
+  .add('w/ arrow disclosure icon', () => (
+    <Accordion
+      title={title}
+      content={content}
+      iconFormat={'arrow'}
+    />
+  ))
+  .add('w/ custom disclosure icon', () => (
+    <Accordion
+      title={title}
+      content={content}
+      iconFormat={'image'}
+      openIconImage={icons.open}
+      closedIconImage={icons.closed}
     />
   ));
