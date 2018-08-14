@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
 import {
   MultiCarousel,
   ProductItem,
@@ -9,6 +10,9 @@ import { fontSize, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
   container: {},
+  brandText: {
+    color: palette.secondary
+  },
   item: {
     marginLeft: 15
   },
@@ -20,14 +24,16 @@ const styles = StyleSheet.create({
   },
   productTitle: {
     fontWeight: 'normal',
-    fontSize: 13
+    fontSize: 13,
+    color: palette.secondary
   },
   productPriceText: {
     fontSize: 15
   },
   productPrice: {
     justifyContent: 'center',
-    marginTop: 5
+    marginTop: 5,
+    color: palette.secondary
   },
   priceContainer: {
     marginBottom: 0
@@ -54,7 +60,7 @@ export interface PSProductCarouselProps {
 
 export default class PSProductCarousel extends Component<
   PSProductCarouselProps
-> {
+  > {
   render(): JSX.Element {
     return (
       <MultiCarousel
@@ -77,7 +83,8 @@ export default class PSProductCarousel extends Component<
           priceStyle={styles.productPrice}
           reviewStyle={styles.reviews}
           promoStyle={styles.promoText}
-          buttonProps={{palette}}
+          brandStyle={styles.brandText}
+          buttonProps={{ palette }}
           promoContainerStyle={styles.promosContainer}
           reviewIndicatorProps={{ itemSize: 15 } as any}
           {...item}

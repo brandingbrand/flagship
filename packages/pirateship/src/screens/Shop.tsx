@@ -81,7 +81,8 @@ const ShopStyle = StyleSheet.create({
     marginTop: 0,
     paddingTop: 15,
     paddingBottom: 15,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: palette.secondary
   },
   shopLandingCategories: {
     borderTopWidth: 1,
