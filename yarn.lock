@@ -487,9 +487,9 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-google-analytics/-/react-native-google-analytics-2.1.0.tgz#3c45f1d5135d0264af5ba30c0a11991825407044"
 
-"@brandingbrand/react-native-leanplum@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-0.1.0.tgz#339df845f9d3f68e4703df3abb7abfe26a7a701e"
+"@brandingbrand/react-native-leanplum@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-0.1.1.tgz#91f97df639412a8bd3916f633f7edf6722e58cca"
 
 "@commitlint/cli@^7.0.0":
   version "7.0.0"
