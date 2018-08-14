@@ -81,7 +81,8 @@ const ShopStyle = StyleSheet.create({
     marginTop: 0,
     paddingTop: 15,
     paddingBottom: 15,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: palette.secondary
   },
   shopLandingCategories: {
     borderTopWidth: 1,
@@ -124,8 +125,8 @@ const ShopStyle = StyleSheet.create({
 
 export interface ShopProps
   extends ScreenProps,
-    Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
-    Pick<AccountActionProps, 'signOut'> {}
+  Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
+  Pick<AccountActionProps, 'signOut'> { }
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
