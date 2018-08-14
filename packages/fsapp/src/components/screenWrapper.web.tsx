@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-
-import { ModalScreen, Screen } from 'react-native-navigation';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import qs from 'qs';
 import pushRoute from '../lib/push-route';
@@ -26,17 +24,13 @@ const styles = StyleSheet.create({
   }
 });
 
+type Navigator = import ('react-native-navigation').Navigator;
+const NOT_IMPLMENTED = (prop: keyof Navigator) => {
+  return (...args: any[]): any => console.log(`${prop} is not implemented`);
+};
+
 export interface GenericScreenDispatchProp {
-  navigator: {
-    push: (params: Screen) => void;
-    showModal: (params: ModalScreen) => void;
-    dismissModal: () => void;
-    pop: () => void;
-    toggleDrawer: (config: DrawerConfig) => void;
-    popToRoot: () => void;
-    setOnNavigatorEvent: () => void;
-    [key: string]: Function;
-  };
+  navigator: Navigator;
   hideDevMenu: () => void;
 }
 
@@ -77,7 +71,7 @@ export default function wrapScreen(
     }
 
     openDevMenu = () => {
-      this.props.navigator.showModal({
+      this.props.navigator.push({
         screen: 'devMenu',
         title: 'FLAGSHIP Dev Menu'
       });
@@ -112,7 +106,7 @@ export default function wrapScreen(
 
       if (location && location.search) {
         passProps = {
-          ...qs.parse(location.search),
+          ...qs.parse(location.search, { ignoreQueryPrefix: true }),
           ...match.params
         };
       }
@@ -134,17 +128,36 @@ export default function wrapScreen(
   ): GenericScreenDispatchProp {
     const { history } = ownProps;
 
+    const navigator: Navigator = {
+      push: route => pushRoute(route, history, appConfig),
+      showModal: route => pushRoute(route, history, appConfig),
+      pop: () => history.goBack(),
+      toggleDrawer: config => toggleDrawerFn && toggleDrawerFn(config),
+      switchToTab: route => pushRoute(route, history, appConfig),
+      popToRoot: () => pushRoute(appConfig.screen, history, appConfig),
+      setTitle: NOT_IMPLMENTED('setTitle'),
+      setSubTitle: NOT_IMPLMENTED('setSubTitle'),
+      resetTo: NOT_IMPLMENTED('resetTo'),
+      dismissModal: NOT_IMPLMENTED('dismissModal'),
+      dismissAllModals: NOT_IMPLMENTED('dismissAllModals'),
+      showLightBox: NOT_IMPLMENTED('showLightBox'),
+      dismissLightBox: NOT_IMPLMENTED('dismissLightBox'),
+      showInAppNotification: NOT_IMPLMENTED('showInAppNotification'),
+      handleDeepLink: NOT_IMPLMENTED('handleDeepLink'),
+      setButtons: NOT_IMPLMENTED('setButtons'),
+      setDrawerEnabled: NOT_IMPLMENTED('setDrawerEnabled'),
+      toggleTabs: NOT_IMPLMENTED('toggleTabs'),
+      setTabBadge: NOT_IMPLMENTED('setTabBadge'),
+      setTabButton: NOT_IMPLMENTED('setTabButton'),
+      toggleNavBar: NOT_IMPLMENTED('toggleNavBar'),
+      setOnNavigatorEvent: NOT_IMPLMENTED('setOnNavigatorEvent'),
+      addOnNavigatorEvent: NOT_IMPLMENTED('addOnNavigatorEvent'),
+      screenIsCurrentlyVisible: NOT_IMPLMENTED('screenIsCurrentlyVisible'),
+      setStyle: NOT_IMPLMENTED('setStyle')
+    };
+
     return {
-      navigator: {
-        push: route => pushRoute(route, history, appConfig),
-        showModal: route => pushRoute(route, history, appConfig),
-        dismissModal: () => console.log('dismiss modal'),
-        pop: () => history.goBack(),
-        toggleDrawer: config => toggleDrawerFn && toggleDrawerFn(config),
-        popToRoot: () => console.log('navigator popToRoot'),
-        setOnNavigatorEvent: () => console.log('navigator setOnNavigatorEvent'),
-        setTitle: () => console.log('navigator setTitle')
-      },
+      navigator,
       hideDevMenu: () => null
     };
   }

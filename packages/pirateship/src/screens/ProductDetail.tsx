@@ -44,7 +44,11 @@ class ProductDetail extends Component<ProductDetailProps> {
     const { navigator, productId } = this.props;
 
     return (
-      <PSScreenWrapper needInSafeArea={true} hideGlobalBanner={true}>
+      <PSScreenWrapper
+        needInSafeArea={true}
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         <PSProductDetail
           id={productId}
           commerceDataSource={dataSource}

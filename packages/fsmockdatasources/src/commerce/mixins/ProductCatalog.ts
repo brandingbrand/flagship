@@ -61,6 +61,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         keyword,
         sortingOptions: ProductSortingOptions,
         refinements: ProductRefinements,
+        selectedRefinements: refinements,
         selectedSortingOption: sortBy
       };
     }
@@ -69,11 +70,11 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       id: string = 'root',
       query?: CommerceTypes.CategoryQuery
     ): Promise<CommerceTypes.Category> {
-      if (id === 'root') {
+      if (!id || id === 'root') {
         return Categories;
       }
 
-      const category = (Categories.categories || []).find(cat => cat.id === id);
+      const category = this.searchCategories(id, Categories.categories || []);
       if (category === undefined) {
         throw new Error(`Could not find category ${id}`);
       }
@@ -190,7 +191,13 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       if (refinements) {
         products = Object.keys(refinements).reduce((filteredProducts, key) => {
           const val = refinements[key];
-          return filteredProducts.filter(product => (product as any)[key] === val);
+          return filteredProducts.filter(product => {
+            if (Array.isArray(val)) {
+              return val.indexOf((product as any)[key]) !== -1;
+            }
+
+            return (product as any)[key] === val;
+          });
         }, products);
       }
 
@@ -237,6 +244,26 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       }
 
       return products;
+    }
+
+    public searchCategories(
+      id: string,
+      categories: CommerceTypes.Category[]
+    ): CommerceTypes.Category | undefined {
+      let match;
+
+      for (const category of categories) {
+        if (category.id === id) {
+          match = category;
+        } else if (category.categories !== undefined) {
+          const matchedCat = this.searchCategories(id, category.categories);
+          if (matchedCat) {
+            match = matchedCat;
+          }
+        }
+      }
+
+      return match;
     }
   };
 };

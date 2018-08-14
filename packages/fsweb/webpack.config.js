@@ -6,6 +6,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const history = require('connect-history-api-fallback');
+const convert = require('koa-connect');
 
 const globalConfig = {
   optimization: {
@@ -44,7 +46,8 @@ const globalConfig = {
       '.tsx'
     ],
     alias: {
-      'react-native': 'react-native-web'
+      'react-native': 'react-native-web',
+      'react-native-svg': 'svgs'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -169,7 +172,8 @@ module.exports = function(env, options) {
         filename: 'static/css/[name].[hash:8].css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: false
+        __DEV__: env.enableDev ? true : false,
+        __DEFAULT_ENV__: JSON.stringify(env.defaultEnvName)
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -234,6 +238,12 @@ module.exports = function(env, options) {
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
+    globalConfig.serve = {
+      content: "./dev-server",
+      add: (app, middleware, options) => {
+        app.use(convert(history()));
+      }
+    }
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({

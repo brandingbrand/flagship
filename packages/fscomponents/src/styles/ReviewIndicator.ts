@@ -1,5 +1,6 @@
 import {
   ImageStyle,
+  Platform,
   RegisteredStyle,
   StyleSheet,
   TextStyle,
@@ -13,20 +14,22 @@ export const style = StyleSheet.create({
   },
   star: {
     fontSize: 18,
-    lineHeight: 18,
     width: 18,
-    height: 18,
     color: '#333132',
     textAlign: 'center',
     fontFamily: 'Arial',
-    includeFontPadding: false
+    // includeFontPadding is not a valid property for web/ios
+    ...Platform.select({
+      android: {
+        includeFontPadding: false
+      }
+    })
   },
   emptyStar: {
     color: '#e0e1e2'
   },
   halfStarContainer: {
     width: 18,
-    height: 18,
     flexDirection: 'row'
   },
   starHalfLeft: {

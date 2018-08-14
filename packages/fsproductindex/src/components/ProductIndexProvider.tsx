@@ -68,7 +68,6 @@ export interface WithProductIndexState<
    * Indicates that we've received new commerce data but have not yet requested and merged reviews
    * for that data
    */
-  commerceDataDirty: boolean;
   reviewsData?: ReviewTypes.ReviewSummary[];
 }
 
@@ -132,33 +131,12 @@ function withProductIndexData<
     type ResultState = WithProductIndexState<ProductType, IdxType>;
 
     class ProductIndexProvider extends Component<ResultProps, ResultState> {
-      static getDerivedStateFromProps(
-        nextProps: ResultProps,
-        prevState: ResultState
-      ): Partial<ResultState> | null {
-        if (!isEqual(nextProps.commerceData, prevState.commerceData)) {
-          return {
-            commerceData: nextProps.commerceData,
-            commerceDataDirty: true
-          };
-        }
-
-        return null;
-      }
-
-      constructor(props: ResultProps) {
-        super(props);
-
-        this.state = {
-          commerceDataDirty: true
-        };
-      }
-
       /**
-       * Request new reviews if commerce data is dirty
+       * Request new reviews if commerce data has changed
+       * @param {ResultProps} prevProps - Previously set Props
        */
-      componentDidUpdate(): void {
-        if (this.state.commerceDataDirty) {
+      componentDidUpdate(prevProps: ResultProps): void {
+        if (!isEqual(this.props.commerceData, prevProps.commerceData)) {
           if (!this.props.disableReviews) {
             this.requestReviews().catch(err => console.warn('Could not get reviews', err));
           }
@@ -180,7 +158,7 @@ function withProductIndexData<
         return (
           <WrappedComponent
             {...props}
-            commerceData={this.state.commerceData || this.props.commerceData}
+            commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
             reviewsData={(this.state && this.state.reviewsData)}
           />
         );
@@ -191,10 +169,10 @@ function withProductIndexData<
        */
       private requestReviews = async (): Promise<void> => {
         const {
+          commerceData,
           commerceToReviewMap = 'id',
           reviewDataSource
-        } = this.props;
-        const { commerceData } = this.state;
+        } = this.props as ResultProps;
 
         if (
           !reviewDataSource ||
@@ -232,8 +210,7 @@ function withProductIndexData<
 
         this.setState({
           reviewsData: summaries,
-          commerceData: updatedCommerceData,
-          commerceDataDirty: false
+          commerceData: updatedCommerceData
         });
       }
     }

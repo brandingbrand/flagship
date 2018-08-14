@@ -191,13 +191,13 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
   switchToSelectedEnv = () => {
     EnvSwitcher.envName = this.state.selectedEnv;
-    if (typeof window !== 'undefined' && window.location && window.location.assign) {
-      window.location.assign('/');
+    if (typeof window !== 'undefined' && window.location && window.location.reload) {
+      window.location.reload();
     }
   }
 
   dismissModal = () => {
-    this.props.navigator.dismissModal();
+    this.props.navigator.pop();
   }
 
   showDevView = (devView: string) => () => {
