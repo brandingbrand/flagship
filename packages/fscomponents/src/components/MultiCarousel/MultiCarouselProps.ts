@@ -8,6 +8,8 @@ export interface SlideChangeEvent {
 
 // TODO: Clean up these props
 export interface MultiCarouselProps<ItemT> {
+  brandStyle?: any;
+  buttonProps?: any;
   centerMode?: boolean;
   dotActiveStyle?: any;
   dotStyle?: any;
