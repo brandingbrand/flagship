@@ -2,6 +2,7 @@ import React, { Component, RefObject } from 'react';
 import {
   Animated,
   findNodeHandle,
+  Image,
   ImageStyle,
   ImageURISource,
   LayoutChangeEvent,
@@ -29,6 +30,22 @@ export interface AccordionProps {
    */
   arrowIconStyle?: StyleProp<ImageStyle>;
   /**
+   * Icon to use when open if icon format is 'image'
+   */
+  openIconImage?: ImageURISource;
+  /**
+   * Styles for open icon image
+   */
+  openIconStyle?: StyleProp<ImageStyle>;
+  /**
+   * Icon to use when closed if icon format is 'image'
+   */
+  closedIconImage?: ImageURISource;
+  /**
+   * Styles for open icon image
+   */
+  closedIconStyle?: StyleProp<ImageStyle>;
+  /**
    * Content of the accordion
    */
   content?: JSX.Element;
@@ -41,9 +58,10 @@ export interface AccordionProps {
    */
   disableAnimation?: boolean;
   /**
-   * Whether to display the icon as an image or plus minus (default plus minus)
+   * Whether to display the icon as an image w open/closed options,
+   * an arrow which rotates on open/close, or plus/minus (default is plus/minus)
    */
-  iconFormat?: 'image' | 'plusminus';
+  iconFormat?: 'image' | 'plusminus' | 'arrow';
   /**
    * Styles for the accordion container when open
    */
@@ -140,6 +158,10 @@ const AccordionStyles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 20,
     fontWeight: 'bold'
+  },
+  iconImage: {
+    width: 15,
+    height: 15
   }
 });
 
@@ -331,10 +353,20 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
   /**
    * Renders the accordion disclosure icon.
    *
-   * @returns {JSX.Element} The accordion disclosure icon.
+   * @returns {React.ReactNode} The accordion disclosure icon.
    */
-  private renderIcon(): JSX.Element {
-    if (this.props.iconFormat === 'image') {
+  private renderIcon(): React.ReactNode {
+
+    const {
+      arrowIconImage,
+      closedIconImage,
+      closedIconStyle,
+      iconFormat,
+      openIconImage,
+      openIconStyle
+    } = this.props;
+
+    if (iconFormat === 'arrow') {
       const computedArrowStyle = {
         transform: [
           {
@@ -348,7 +380,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
 
       return (
         <Animated.Image
-          source={this.props.arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
+          source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
           style={[
             AccordionStyles.arrowImage,
             this.props.arrowIconStyle,
@@ -356,6 +388,26 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
           ]}
         />
       );
+    }
+
+    if (iconFormat === 'image'
+    && (closedIconImage || openIconImage)) {
+      const { isOpen } = this.state;
+      const image = isOpen ? openIconImage : closedIconImage;
+      const imageStyle = isOpen ? openIconStyle : closedIconStyle;
+      if (image) {
+        return (
+          <Image
+            source={image}
+            style={[
+              AccordionStyles.iconImage,
+              imageStyle
+            ]}
+          />
+        );
+      } else {
+        return null;
+      }
     }
 
     const icon = this.state.isOpen ? '–' : '+';
