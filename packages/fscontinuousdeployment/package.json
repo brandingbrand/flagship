@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "github": "^14.0.0",
-    "request": "^2.86.0"
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "@types/request": "^2.47.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
