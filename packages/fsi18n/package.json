@@ -13,7 +13,7 @@
     "decimal.js": "^10.0.1",
     "i18n-js": "^3.0.8",
     "lodash-es": "^4.17.10",
-    "react-native-i18n": "^2.0.12"
+    "react-native-i18n": "^2.0.15"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
