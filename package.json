@@ -43,7 +43,7 @@
     "@storybook/addon-actions": "4.0.0-alpha.8",
     "@storybook/addon-knobs": "4.0.0-alpha.8",
     "@storybook/addon-viewport": "4.0.0-alpha.8",
-    "@storybook/addons": "4.0.0-alpha.8",
+    "@storybook/addons": "4.0.0-alpha.11",
     "@storybook/react": "4.0.0-alpha.8",
     "@types/credit-card-type": "^5.0.1",
     "@types/i18n-js": "^3.0.0",
