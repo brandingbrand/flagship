@@ -17,7 +17,7 @@
     "node-suspect": "^0.1.1",
     "react": "^16.3.2",
     "react-native": "^0.55.4",
-    "react-native-svg": "^6.4.1",
+    "react-native-svg": "^6.5.2",
     "replace-in-file": "^3.4.0",
     "yargs": "^12.0.1"
   },
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@brandingbrand/fsengage": "^0.1.0",
-    "@types/yargs": "^11.0.0",
+    "@types/yargs": "^11.1.1",
     "true-case-path": "^1.0.2"
   },
   "publishConfig": {
