@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@brandingbrand/fsengage": "^0.1.0",
-    "@types/request": "^2.47.0",
     "@types/yargs": "^11.0.0",
     "true-case-path": "^1.0.2"
   },
