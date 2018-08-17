@@ -31,7 +31,7 @@
     "svgs": "^3.2.1",
     "sw-precache-webpack-plugin": "^0.11.5",
     "ts-loader": "^4.3.0",
-    "webpack": "^4.8.3",
+    "webpack": "^4.16.5",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-cli": "^3.0.8",
     "webpack-hot-client": "^4.0.4",
