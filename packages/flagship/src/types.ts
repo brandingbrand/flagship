@@ -19,6 +19,15 @@ export interface Config {
     accountKey: string;
   };
 
+  firebase?: {
+    ios?: {
+      googleServicesPlistFile: string;
+    };
+    android?: {
+      googleServicesJsonFile: string;
+    };
+  };
+
   exceptionDomains: {
     domain: string;
     value: string;
