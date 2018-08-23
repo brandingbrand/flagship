@@ -41,34 +41,29 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
       params.Offset = params.Limit * (query.page - 1);
     }
 
-    return this.client.get('/data/reviews.json', { params })
-      .then(({ data }) => {
-        return [{
-          id,
-          reviews: data.Results.map(BazaarvoiceNormalizer.review),
-          statistics: BazaarvoiceNormalizer.reviewStatistics(data.Includes.Products[id]),
-          page: (data.Offset / data.Limit) + 1,
-          limit: data.Limit,
-          total: data.TotalResults
-        }];
-      });
+    const { data } = await this.client.get('/data/reviews.json', { params });
+
+    return [{
+      id,
+      reviews: data.Results.map(BazaarvoiceNormalizer.review),
+      statistics: BazaarvoiceNormalizer.reviewStatistics(data.Includes.Products[id]),
+      page: (data.Offset / data.Limit) + 1,
+      limit: data.Limit,
+      total: data.TotalResults
+    }];
   }
 
   async fetchReviewSummary(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewSummary[]> {
-    const filter = Array.isArray(query.ids) ?
-      query.ids.map(id => `ProductId:${id}`) :
-      `ProductId:${query.ids}`;
-
-    return this.client.get('/data/statistics.json', {
+    const { data } = await this.client.get('/data/statistics.json', {
       params: {
-        Filter: filter,
+        Filter: `ProductId:${query.ids}`,
         Stats: 'Reviews'
       }
-    }).then(({ data }) => {
-      return data.Results.map(
-        (data: any) => BazaarvoiceNormalizer.reviewSummary(data.ProductStatistics)
-      );
     });
+
+    return data.Results.map(
+      (data: any) => BazaarvoiceNormalizer.reviewSummary(data.ProductStatistics)
+    );
   }
 
   async fetchReviewStatistics(
@@ -76,26 +71,26 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
   ): Promise<ReviewTypes.ReviewStatistics[]> {
     const filter = Array.isArray(query.ids) ? query.ids.map(id => 'id:' + id) : 'id:' + query.ids;
 
-    return this.client.get('/data/products.json', {
+    const { data } = await this.client.get('/data/products.json', {
       params: {
         Filter: filter,
         Stats: 'Reviews'
       }
-    }).then(({ data }) => {
-      return data.Results.map(BazaarvoiceNormalizer.reviewStatistics);
     });
+
+    return data.Results.map(BazaarvoiceNormalizer.reviewStatistics);
   }
 
   async fetchQuestions(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewQuestion[]> {
     const id = Array.isArray(query.ids) ? query.ids[0] : query.ids;
 
-    return this.client.get('/data/questions.json', {
+    const { data } = await this.client.get('/data/questions.json', {
       params: {
         Filter: `ProductId:${id}`,
         Include: 'Answers'
       }
-    }).then(({ data }) => {
-      return BazaarvoiceNormalizer.questions(data);
     });
+
+    return BazaarvoiceNormalizer.questions(data);
   }
 }
