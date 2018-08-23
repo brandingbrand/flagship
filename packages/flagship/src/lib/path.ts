@@ -93,6 +93,15 @@ function getInfoPlistPath(configuration: Config): string {
 }
 
 /**
+ * Returns the path to AppDelegate.m file.
+ * @param {object} configuration The project configuration.
+ * @returns {string} The path
+ */
+function getAppDelegatePath(configuration: Config): string {
+  return resolvePathFromProject('ios', configuration.name, 'AppDelegate.m');
+}
+
+/**
  * Returns the path to the Podfile.
  * @returns {string} The path to the Podfile.
  */
@@ -257,6 +266,7 @@ export const project = {
 };
 
 export const ios = {
+  appDelegatePath: getAppDelegatePath,
   fastfilePath: getFastfilePathIOS,
   infoPlistPath: getInfoPlistPath,
   podfilePath: getPodfilePath,
