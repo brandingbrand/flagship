@@ -34,12 +34,12 @@ const gridStyle = StyleSheet.create({
   },
   rowSeparator: {
     width: '100%',
-    height: StyleSheet.hairlineWidth,
+    height: 1,
     backgroundColor: '#8E8E8E'
   },
   columnSeparator: {
     height: '100%',
-    width: StyleSheet.hairlineWidth,
+    width: 1,
     backgroundColor: '#8E8E8E'
   },
   scrollTopButtonContainer: {
