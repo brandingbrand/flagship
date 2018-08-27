@@ -27,7 +27,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "react-native-web-image-loader": "^0.0.5",
-    "style-loader": "^0.22.1",
+    "style-loader": "^0.23.0",
     "svgs": "^3.2.1",
     "sw-precache-webpack-plugin": "^0.11.5",
     "ts-loader": "^4.3.0",
