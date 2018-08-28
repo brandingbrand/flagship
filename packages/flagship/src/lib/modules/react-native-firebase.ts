@@ -1,7 +1,6 @@
-const { execSync } = require('child_process');
-
 import * as path from '../path';
 import * as fs from '../fs';
+import * as pods from '../cocoapods';
 import { Config } from '../../types';
 import {
   logError,
@@ -138,17 +137,12 @@ export function ios(configuration: Config): void {
   }
 
   // Add Firebase pod to Podfile
-  let podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
+  const podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
   const firebasePod = `pod 'Firebase/Core'`;
 
   if (podfile.indexOf(firebasePod) === -1) {
-    fs.removeSync(path.ios.podfilePath() + '.lock');
-
-    podfile = podfile.replace(/(target\s+?.+?do)/, `$1\n  ${firebasePod}`);
-    fs.writeFileSync(path.ios.podfilePath(), podfile);
-
-    execSync('pod install', { cwd: path.resolve('ios') });
-
+    pods.add(path.ios.podfilePath(), [firebasePod]);
+    pods.install();
     logInfo('updated Podfile with Firebase pod');
   }
 
