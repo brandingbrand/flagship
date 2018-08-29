@@ -3,8 +3,8 @@ package com.brandingbrand.reactnative.and.flagship;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class NativeConstants extends ReactContextBaseJavaModule {
     public NativeConstants(ReactApplicationContext reactContext) {
