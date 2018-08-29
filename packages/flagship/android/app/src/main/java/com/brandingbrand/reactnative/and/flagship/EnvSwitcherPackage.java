@@ -16,11 +16,9 @@ public class EnvSwitcherPackage implements ReactPackage {
     }
 
     @Override
-    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        List<NativeModule> modules = new ArrayList<>();
-
-        modules.add(new EnvSwitcher(reactContext));
-
-        return modules;
+    public List<NativeModule> createNativeModules(final ReactApplicationContext reactContext) {
+        return new ArrayList<NativeModule>() {{
+            add(new EnvSwitcher(reactContext));
+        }};
     }
 }
