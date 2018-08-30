@@ -38,7 +38,7 @@ exec(
   `security import ${certificatePath}/${buildConfig.distributionCert}.p12 -k ${keychain} \
 -P '${buildConfig.distributionPwd}' -T /usr/bin/codesign -A || true`
 );
-// - import .mobileproviosn
+// - import .mobileprovision
 exec(
   `uuid=\`grep UUID -A1 -a \
 ${profilePath}/${buildConfig.distributionCert}.mobileprovision \
