@@ -14,67 +14,42 @@ const keychainName = process.env.KEY_CHAIN || 'login.keychain';
 const buildConfig =
   (projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.ios) || {};
 
+const certificatePath = path.join(__dirname, '../../../../codesigning/ios/certificates');
+const profilePath = path.join(__dirname, '../../../../codesigning/ios/profiles');
+
 const keychain = `~/Library/Keychains/${keychainName}`;
 
 console.log(`keychain is ${keychain}`);
 
-// clean and download bb certificates and provisioning profiles from
-//   https://github.com/brandingbrand/app-builds/tree/ios-fastlane
-exec(
-  `rm -rf app-builds && git clone -b ios-fastlane git@github.com:brandingbrand/app-builds.git `
-);
-
 // add certificates and provisioning profiles to computer
 exec(
-  `security import ./app-builds/certs/apple.cer -k ${keychain} -T /usr/bin/codesign || true`
+  `security import ${certificatePath}/apple.cer -k ${keychain} \
+-T /usr/bin/codesign || true`
 );
 
-if (buildConfig.appCertDir && buildConfig.deployScheme) {
-  // add keys for store build
-  // - import project .cer
-  exec(
-    `security import \
-./app-builds/apps/${buildConfig.appCertDir}/certs/${buildConfig.deployScheme}.cer ${keychain} \
+// add keys for store build
+// - import project .cer
+exec(
+  `security import ${certificatePath}/${buildConfig.deployScheme}.cer -k ${keychain} \
 -T /usr/bin/codesign -A || true`
-  );
-  // - import project .p12
-  exec(
-    `security import \
-./app-builds/apps/${buildConfig.appCertDir}/certs/${buildConfig.deployScheme}.p12 -k ${keychain} \
+);
+// - import project .p12
+exec(
+  `security import ${certificatePath}/${buildConfig.deployScheme}.p12 -k ${keychain} \
 -P "Branders1234$" -T /usr/bin/codesign -A || true`
-  );
-  // - import .mobileproviosn
-  exec(
-    `uuid=\`grep UUID -A1 -a \
-./app-builds/apps/${buildConfig.appCertDir}/profiles/${buildConfig.deployScheme}.mobileprovision \
+);
+// - import .mobileproviosn
+exec(
+  `uuid=\`grep UUID -A1 -a \
+${profilePath}/${buildConfig.deployScheme}.mobileprovision \
 | grep -io "[-A-Z0-9]\\{36\\}"\`
-    cp \
-./app-builds/apps/${buildConfig.appCertDir}/profiles/${buildConfig.deployScheme}.mobileprovision \
+  cp \
+${profilePath}/${buildConfig.deployScheme}.mobileprovision \
 ~/Library/MobileDevice/Provisioning\\ Profiles/$uuid.mobileprovision`
-  );
-} else {
-  // add keys for internal build
-  // - import bb .cer
-  exec(
-    `security import ./app-builds/certs/dist.cer -k ${keychain} -T /usr/bin/codesign || true`
-  );
-  // - import bb .p12
-  exec(
-    `security import ./app-builds/certs/dist.p12 -k ${keychain} -P "Branders1234$" \
--T /usr/bin/codesign || true`
-  );
-  // - import bb .mobileproviosn
-  exec(`mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles/`);
-  exec(
-    `cp ./app-builds/profile/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
-  );
-}
+);
 
 console.log(
-  `\nDONE: iOS certificates and provisioning profiles added ${buildConfig.appCertDir &&
-  buildConfig.deployScheme
-    ? `for [${buildConfig.appCertDir}] [${buildConfig.deployScheme}]`
-    : 'with BB certs and profiles'}\n`
+  `\nDONE: iOS certificates and provisioning profiles added for [${buildConfig.deployScheme}]\n`
 );
 
 process.exit();
