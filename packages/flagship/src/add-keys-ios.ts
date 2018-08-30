@@ -23,7 +23,7 @@ console.log(`keychain is ${keychain}`);
 
 // add certificates and provisioning profiles to computer
 exec(
-  `security import ${certificatePath}/apple.cer -k ${keychain} \
+  `security import ${certificatePath}/${buildConfig.wwdrCert}.cer -k ${keychain} \
 -T /usr/bin/codesign || true`
 );
 
