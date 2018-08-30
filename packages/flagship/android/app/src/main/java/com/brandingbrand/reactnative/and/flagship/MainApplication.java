@@ -8,9 +8,14 @@ import com.reactnativenavigation.*;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.psykar.cookiemanager.CookieManagerPackage;
-import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.shell.MainReactPackage;
+import com.facebook.react.uimanager.UIImplementation;
+import com.facebook.react.uimanager.UIImplementationProvider;
+import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.uimanager.ViewManager;
+import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
@@ -44,6 +49,37 @@ public class MainApplication extends NavigationApplication {
     @Override
     public String getJSMainModuleName() {
         return "index";
+    }
+
+    @Override
+    protected UIImplementationProvider getUIImplementationProvider() {
+        return new UIImplementationProvider() {
+            @Override
+            public UIImplementation createUIImplementation(
+                    ReactApplicationContext reactContext,
+                    UIManagerModule.ViewManagerResolver viewManagerResolver,
+                    EventDispatcher eventDispatcher,
+                    int minTimeLeftInFrameForNonBatchedOperationMs) {
+                return new ThreadSafeUIImplementation(
+                        reactContext,
+                        viewManagerResolver,
+                        eventDispatcher,
+                        minTimeLeftInFrameForNonBatchedOperationMs);
+            }
+
+            @Override
+            public UIImplementation createUIImplementation(
+                    ReactApplicationContext reactContext,
+                    List<ViewManager> viewManagerList,
+                    EventDispatcher eventDispatcher,
+                    int minTimeLeftInFrameForNonBatchedOperationMs) {
+                return new ThreadSafeUIImplementation(
+                        reactContext,
+                        viewManagerList,
+                        eventDispatcher,
+                        minTimeLeftInFrameForNonBatchedOperationMs);
+            }
+        };
     }
 
     @Override
