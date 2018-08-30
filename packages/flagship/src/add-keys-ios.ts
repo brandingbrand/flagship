@@ -10,9 +10,6 @@ try {
 } catch (e) {
   console.log('WARNING: env/env.js not found, fallback to default.');
 }
-
-const keychainName = process.env.KEY_CHAIN || 'login.keychain';
-
 const buildConfig =
   (projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.ios) || {};
 
@@ -20,10 +17,17 @@ const certificatePath = path.join(__dirname, '../../../../codesigning/ios/certif
 const profilePath = path.join(__dirname, '../../../../codesigning/ios/profiles');
 const importedProfilePath =
   path.join(homedir, 'Library/MobileDevice/Provisioning Profiles');
+!fs.existsSync(importedProfilePath) && fs.mkdirSync(importedProfilePath);
 
+// create keychain & adjust settings for automated use
+const keychainName = process.env.KEYCHAIN || 'login.keychain';
+const keychainPwd = process.env.KEYCHAIN_PWD;
 const keychain = `~/Library/Keychains/${keychainName}`;
-
 console.log(`keychain is ${keychain}`);
+exec(`security create-keychain -p '${keychainPwd}' ${keychainName}`);
+exec(`security default-keychain -s ${keychainName}`);
+exec(`security unlock-keychain -p '${keychainPwd}' ${keychainName}`);
+exec(`security set-keychain-settings -t 3600 -u ${keychainName}`);
 
 // add certificates and provisioning profiles to computer
 exec(
@@ -51,6 +55,10 @@ fs.copyFileSync(
   `${profilePath}/${buildConfig.distributionCert}.mobileprovision`,
   `${importedProfilePath}/${uuid.toString().trim()}.mobileprovision`
 );
+
+exec(
+  `security set-key-partition-list -S apple-tool:,apple: -s -k '${keychainPwd}' ${keychain}`
+)
 
 console.log(
   `\nDONE: iOS certificates and provisioning profiles added for [${buildConfig.distributionCert}]\n`
