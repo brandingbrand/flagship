@@ -36,7 +36,7 @@ exec(
 // - import project .p12
 exec(
   `security import ${certificatePath}/${buildConfig.distributionCert}.p12 -k ${keychain} \
--P "Branders1234$" -T /usr/bin/codesign -A || true`
+-P '${buildConfig.distributionPwd}' -T /usr/bin/codesign -A || true`
 );
 // - import .mobileproviosn
 exec(
