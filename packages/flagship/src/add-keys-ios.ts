@@ -30,26 +30,26 @@ exec(
 // add keys for store build
 // - import project .cer
 exec(
-  `security import ${certificatePath}/${buildConfig.deployScheme}.cer -k ${keychain} \
+  `security import ${certificatePath}/${buildConfig.distributionCert}.cer -k ${keychain} \
 -T /usr/bin/codesign -A || true`
 );
 // - import project .p12
 exec(
-  `security import ${certificatePath}/${buildConfig.deployScheme}.p12 -k ${keychain} \
+  `security import ${certificatePath}/${buildConfig.distributionCert}.p12 -k ${keychain} \
 -P "Branders1234$" -T /usr/bin/codesign -A || true`
 );
 // - import .mobileproviosn
 exec(
   `uuid=\`grep UUID -A1 -a \
-${profilePath}/${buildConfig.deployScheme}.mobileprovision \
+${profilePath}/${buildConfig.distributionCert}.mobileprovision \
 | grep -io "[-A-Z0-9]\\{36\\}"\`
   cp \
-${profilePath}/${buildConfig.deployScheme}.mobileprovision \
+${profilePath}/${buildConfig.distributionCert}.mobileprovision \
 ~/Library/MobileDevice/Provisioning\\ Profiles/$uuid.mobileprovision`
 );
 
 console.log(
-  `\nDONE: iOS certificates and provisioning profiles added for [${buildConfig.deployScheme}]\n`
+  `\nDONE: iOS certificates and provisioning profiles added for [${buildConfig.distributionCert}]\n`
 );
 
 process.exit();
