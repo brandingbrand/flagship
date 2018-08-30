@@ -1,5 +1,7 @@
-const exec = require('child_process').execSync;
-const path = require('path');
+const exec    = require('child_process').execSync;
+const path    = require('path');
+const homedir = require('os').homedir();
+const fs      = require('fs');
 
 let projectEnv = null;
 
@@ -16,6 +18,8 @@ const buildConfig =
 
 const certificatePath = path.join(__dirname, '../../../../codesigning/ios/certificates');
 const profilePath = path.join(__dirname, '../../../../codesigning/ios/profiles');
+const importedProfilePath =
+  path.join(homedir, 'Library/MobileDevice/Provisioning Profiles');
 
 const keychain = `~/Library/Keychains/${keychainName}`;
 
@@ -38,14 +42,14 @@ exec(
   `security import ${certificatePath}/${buildConfig.distributionCert}.p12 -k ${keychain} \
 -P '${buildConfig.distributionPwd}' -T /usr/bin/codesign -A || true`
 );
-// - import .mobileprovision
-exec(
-  `uuid=\`grep UUID -A1 -a \
-${profilePath}/${buildConfig.distributionCert}.mobileprovision \
-| grep -io "[-A-Z0-9]\\{36\\}"\`
-  cp \
-${profilePath}/${buildConfig.distributionCert}.mobileprovision \
-~/Library/MobileDevice/Provisioning\\ Profiles/$uuid.mobileprovision`
+// - import project .mobileprovision
+const uuid = exec(
+  `grep UUID -A1 -a ${profilePath}/${buildConfig.distributionCert}.mobileprovision | \
+  grep -io "[-A-Z0-9]\\{36\\}"`
+);
+fs.copyFileSync(
+  `${profilePath}/${buildConfig.distributionCert}.mobileprovision`,
+  `${importedProfilePath}/${uuid.toString().trim()}.mobileprovision`
 );
 
 console.log(
