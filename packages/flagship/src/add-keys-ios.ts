@@ -1,5 +1,7 @@
-const exec = require('child_process').execSync;
-const path = require('path');
+const exec    = require('child_process').execSync;
+const path    = require('path');
+const homedir = require('os').homedir();
+const fs      = require('fs');
 
 let projectEnv = null;
 
@@ -8,74 +10,73 @@ try {
 } catch (e) {
   console.log('WARNING: env/env.js not found, fallback to default.');
 }
-
-const keychainName = process.env.KEY_CHAIN || 'login.keychain';
-
 const buildConfig =
   (projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.ios) || {};
 
+const certificatePath = path.join(__dirname, '../../../../codesigning/ios/certificates');
+const profilePath = path.join(__dirname, '../../../../codesigning/ios/profiles');
+const importedProfilePath =
+  path.join(homedir, 'Library/MobileDevice/Provisioning Profiles');
+!fs.existsSync(importedProfilePath) && fs.mkdirSync(importedProfilePath);
+
+// create keychain & adjust settings for automated use
+const keychainName = process.env.KEYCHAIN || 'login.keychain';
+const keychainPwd = process.env.KEYCHAIN_PWD;
 const keychain = `~/Library/Keychains/${keychainName}`;
+console.log(`creating ${keychain}`);
+try {
+  exec(`security create-keychain -p '${keychainPwd}' ${keychainName}`);
+} catch (e) {
+  console.log(`error creating ${keychain}`);
+}
+exec(`security default-keychain -s ${keychainName}`, { stdio: [0, 1, 2] });
+exec(`security unlock-keychain -p '${keychainPwd}' ${keychainName}`, { stdio: [0, 1, 2] });
+exec(`security set-keychain-settings -t 3600 -u ${keychainName}`, { stdio: [0, 1, 2] });
 
-console.log(`keychain is ${keychain}`);
-
-// clean and download bb certificates and provisioning profiles from
-//   https://github.com/brandingbrand/app-builds/tree/ios-fastlane
+// add certificates and provisioning profiles to build environment
+// import wwdr
+console.log(`\nimporting ${buildConfig.wwdrCert}`);
 exec(
-  `rm -rf app-builds && git clone -b ios-fastlane git@github.com:brandingbrand/app-builds.git `
+  `security import ${certificatePath}/${buildConfig.wwdrCert}.cer -k ${keychain} \
+-T /usr/bin/codesign || true`, { stdio: [0, 1, 2] }
 );
 
-// add certificates and provisioning profiles to computer
+// - import project .cer
+console.log(`\nimporting ${buildConfig.distributionCert} certificate`);
 exec(
-  `security import ./app-builds/certs/apple.cer -k ${keychain} -T /usr/bin/codesign || true`
+  `security import ${certificatePath}/${buildConfig.distributionCert}.cer -k ${keychain} \
+-T /usr/bin/codesign -A || true`, { stdio: [0, 1, 2] }
 );
 
-if (buildConfig.appCertDir && buildConfig.deployScheme) {
-  // add keys for store build
-  // - import project .cer
-  exec(
-    `security import \
-./app-builds/apps/${buildConfig.appCertDir}/certs/${buildConfig.deployScheme}.cer ${keychain} \
--T /usr/bin/codesign -A || true`
+// - import project .p12
+console.log(`\nimporting ${buildConfig.distributionCert} .p12`);
+exec(
+  `security import ${certificatePath}/${buildConfig.distributionCert}.p12 -k ${keychain} \
+-P '${buildConfig.distributionPwd}' -T /usr/bin/codesign -A || true`, { stdio: [0, 1, 2] }
+);
+
+// - import project .mobileprovision
+console.log(`\nimporting ${buildConfig.distributionCert} provisioning profile`);
+try {
+  const uuid = exec(
+    `grep UUID -A1 -a ${profilePath}/${buildConfig.distributionCert}.mobileprovision | \
+    grep -io "[-A-Z0-9]\\{36\\}"`
   );
-  // - import project .p12
-  exec(
-    `security import \
-./app-builds/apps/${buildConfig.appCertDir}/certs/${buildConfig.deployScheme}.p12 -k ${keychain} \
--P "Branders1234$" -T /usr/bin/codesign -A || true`
+  fs.copyFileSync(
+    `${profilePath}/${buildConfig.distributionCert}.mobileprovision`,
+    `${importedProfilePath}/${uuid.toString().trim()}.mobileprovision`
   );
-  // - import .mobileproviosn
-  exec(
-    `uuid=\`grep UUID -A1 -a \
-./app-builds/apps/${buildConfig.appCertDir}/profiles/${buildConfig.deployScheme}.mobileprovision \
-| grep -io "[-A-Z0-9]\\{36\\}"\`
-    cp \
-./app-builds/apps/${buildConfig.appCertDir}/profiles/${buildConfig.deployScheme}.mobileprovision \
-~/Library/MobileDevice/Provisioning\\ Profiles/$uuid.mobileprovision`
-  );
-} else {
-  // add keys for internal build
-  // - import bb .cer
-  exec(
-    `security import ./app-builds/certs/dist.cer -k ${keychain} -T /usr/bin/codesign || true`
-  );
-  // - import bb .p12
-  exec(
-    `security import ./app-builds/certs/dist.p12 -k ${keychain} -P "Branders1234$" \
--T /usr/bin/codesign || true`
-  );
-  // - import bb .mobileproviosn
-  exec(`mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles/`);
-  exec(
-    `cp ./app-builds/profile/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
-  );
+  console.log('1 provisioning profile imported.\n');
+} catch (e) {
+  console.log(`error importing ${buildConfig.distributionCert} provisioning profile\n`);
 }
 
-console.log(
-  `\nDONE: iOS certificates and provisioning profiles added ${buildConfig.appCertDir &&
-  buildConfig.deployScheme
-    ? `for [${buildConfig.appCertDir}] [${buildConfig.deployScheme}]`
-    : 'with BB certs and profiles'}\n`
-);
+exec(
+  `security set-key-partition-list -S apple-tool:,apple: -s -k '${keychainPwd}' ${keychain}`,
+  { stdio: [0, 1, 2] }
+)
+
+console.log(`\nDONE: iOS certificates and provisioning profiles added.\n`);
 
 process.exit();
 
