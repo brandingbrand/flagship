@@ -9,7 +9,7 @@
     "start": "webpack-serve ./webpack.config.js --mode development"
   },
   "dependencies": {
-    "autoprefixer": "^8.6.2",
+    "autoprefixer": "^9.1.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-react-native-web": "^0.8.4",
