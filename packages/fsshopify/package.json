@@ -25,11 +25,6 @@
   "devDependencies": {
     "axios": "^0.18.0"
   },
-  "rnpm": {
-    "commands": {
-      "prelink": "react-native link react-native-payments"
-    }
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   }
