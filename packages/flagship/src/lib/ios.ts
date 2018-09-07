@@ -51,6 +51,31 @@ export function capabilities(configuration: Config): void {
 }
 
 /**
+ * Sets the app's targeted build devices
+ *
+ * @param {object} configuration The project configuration.
+ */
+
+export function targetedDevice(configuration: Config): void {
+  if (configuration.targetedDevices) {
+    helpers.logInfo(`selecting targeted devices: ${configuration.targetedDevices}`);
+
+    const devices: {[key: string]: any} = {
+      iPhone: 1,
+      iPad: 2,
+      Universal: `"1,2"`
+    };
+
+    fs.update(
+      path.ios.pbxprojFilePath(configuration),
+      `PRODUCT_NAME = ${configuration.name}`,
+      `PRODUCT_NAME = ${configuration.name};
+        TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
+    );
+  }
+}
+
+/**
  * Enables entitlements for the project.
  *
  * @param {object} configuration The project configuration.

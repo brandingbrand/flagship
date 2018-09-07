@@ -190,6 +190,7 @@ function initIOS(
   // iOS Specific configuration
   ios.exceptionDomains(configuration); // Add ATS exception domains for iOS
   ios.capabilities(configuration); // Add app capabilities
+  ios.targetedDevice(configuration); // Set targeted device
   ios.entitlements(configuration); // Add app entitlements
   ios.usageDescription(configuration); // Add usage descriptions
   ios.sentryProperties(configuration);
