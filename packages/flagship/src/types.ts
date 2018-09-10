@@ -3,6 +3,12 @@ export interface CodepushConfig {
   appKey: string;
 }
 
+export enum TargetedDevices {
+  iPhone = 'iPhone',
+  iPad = 'iPad',
+  Universal = 'Universal'
+}
+
 export interface Config {
   name: string;
   displayName: string;
@@ -17,6 +23,15 @@ export interface Config {
 
   zendeskChat?: {
     accountKey: string;
+  };
+
+  firebase?: {
+    ios?: {
+      googleServicesPlistFile: string;
+    };
+    android?: {
+      googleServicesJsonFile: string;
+    };
   };
 
   exceptionDomains: {
@@ -66,6 +81,8 @@ export interface Config {
   sentry: {
     propertiesPath: string;
   };
+
+  targetedDevices?: TargetedDevices;
 
   webPath?: string;
   webTitle?: string;
