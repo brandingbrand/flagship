@@ -51,6 +51,7 @@ public class MainApplication extends NavigationApplication {
         return "index";
     }
 
+    @Override
     protected UIImplementationProvider getUIImplementationProvider() {
         return new UIImplementationProvider() {
             @Override
