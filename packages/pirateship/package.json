@@ -41,7 +41,7 @@
     "react-native-device-info": "^0.22.0",
     "react-native-htmlview": "^0.13.0",
     "react-native-i18n": "^2.0.15",
-    "react-native-navigation": "^1.1.469",
+    "react-native-navigation": "^1.1.483",
     "react-native-push-notification": "^3.1.1",
     "react-native-safe-area": "^0.4.1",
     "react-native-sensitive-info": "^5.1.0",
