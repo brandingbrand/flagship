@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@brandingbrand/fscommerce": "^0.1.0",
+    "@brandingbrand/fsfoundation": "^0.1.0",
     "decimal.js": "^10.0.1",
     "faker": "^4.1.0"
   },
