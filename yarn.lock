@@ -9863,7 +9863,7 @@ react-native-masked-text@^1.7.1:
     moment "2.19.3"
     tinymask "^1.0.2"
 
-react-native-navigation@^1.1.483:
+react-native-navigation@1.1.483:
   version "1.1.483"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.483.tgz#e97c8a80bb7c784383e99c94a4f8df0622c4627d"
   dependencies:
