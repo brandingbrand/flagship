@@ -31,7 +31,7 @@
     "react-native-web-modal": "^1.0.1",
     "sweetalert": "^2.1.0",
     "tcomb-form-native": "^0.6.12",
-    "react-native-svg": "^6.5.2"
+    "react-native-svg": "^7.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
