@@ -46,7 +46,7 @@
     "react-native-push-notification": "^3.1.1",
     "react-native-safe-area": "^0.4.1",
     "react-native-sensitive-info": "^5.1.0",
-    "react-native-svg": "^6.5.2",
+    "react-native-svg": "^7.0.0",
     "react-native-touch-id": "^4.0.1",
     "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
