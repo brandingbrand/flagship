@@ -8,7 +8,7 @@ export function review(bvReview: any): ReviewTypes.Review {
     title: bvReview.Title,
     text: bvReview.ReviewText,
     rating: bvReview.Rating,
-    user: bvReview.UserNickname,
+    user: user(bvReview),
     isRecommended: bvReview.IsRecommended,
     badges: bvReview.Badges,
     created: bvReview.SubmissionTime,
@@ -86,7 +86,7 @@ export function questions(bvResults: any): ReviewTypes.ReviewQuestion[] {
   return bvResults.Results.map((question: any) => {
     return {
       id: question.Id,
-      user: question.UserNickname,
+      user: user(question),
       text: question.QuestionDetails,
       summary: question.QuestionSummary,
       answers: question.AnswerIds.map((answerId: any) => {
@@ -105,7 +105,7 @@ export function questions(bvResults: any): ReviewTypes.ReviewQuestion[] {
 export function answer(bvAnswer: any): ReviewTypes.ReviewAnswer {
   return {
     id: bvAnswer.Id,
-    user: bvAnswer.UserNickname,
+    user: user(bvAnswer),
     text: bvAnswer.AnswerText,
     feedback: {
       total: bvAnswer.TotalFeedbackCount,
@@ -113,5 +113,12 @@ export function answer(bvAnswer: any): ReviewTypes.ReviewAnswer {
       negative: bvAnswer.TotalNegativeFeedbackCount
     },
     created: bvAnswer.SubmissionTime
+  };
+}
+
+function user(bvReview: any): ReviewTypes.ReviewUser {
+  return {
+    location: bvReview.UserLocation ? bvReview.UserLocation : undefined,
+    name: bvReview.UserNickname
   };
 }

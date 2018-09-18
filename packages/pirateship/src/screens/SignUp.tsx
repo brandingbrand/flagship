@@ -129,6 +129,8 @@ class SignUp extends Component<SignUpProps, SignUpState> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
+
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
@@ -137,6 +139,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
+        navigator={navigator}
       >
         {this.props.dismissible && (
           <View style={styles.dismissButtonContainer}>

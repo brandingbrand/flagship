@@ -6,10 +6,10 @@ import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
 import { navBarNoTabs } from '../styles/Navigation';
 import translate, { translationKeys } from '../lib/translations';
+import { reviewDataSource } from '../lib/datasource';
 
 export interface ProductDetailReviewsProps extends ScreenProps {
   reviewQuery: import ('@brandingbrand/fscommerce').ReviewTypes.ReviewQuery;
-  reviewDataSource: import ('@brandingbrand/fscommerce').ReviewDataSource;
 }
 
 export default class ProductDetailReviews extends Component<ProductDetailReviewsProps> {
@@ -24,12 +24,16 @@ export default class ProductDetailReviews extends Component<ProductDetailReviews
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
 
     return (
-      <PSScreenWrapper hideGlobalBanner={true}>
+      <PSScreenWrapper
+        hideGlobalBanner={true}
+        navigator={navigator}
+      >
         <PSProductDetailReviews
           reviewQuery={this.props.reviewQuery}
-          reviewDataSource={this.props.reviewDataSource}
+          reviewDataSource={reviewDataSource}
         />
       </PSScreenWrapper>
     );

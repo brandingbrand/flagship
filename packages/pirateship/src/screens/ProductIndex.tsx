@@ -18,8 +18,12 @@ export default class ProductIndex extends Component<ProductIndexProps> {
   static rightButtons: NavButton[] = [searchButton];
 
   render(): JSX.Element {
+    const { navigator } = this.props;
+
     return (
-      <PSScreenWrapper>
+      <PSScreenWrapper
+        navigator={navigator}
+      >
         <PSProductIndex {...this.props} />
       </PSScreenWrapper>
     );

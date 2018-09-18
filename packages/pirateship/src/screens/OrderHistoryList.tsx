@@ -151,6 +151,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   render(): JSX.Element {
+    const { navigator } = this.props;
     const { isLoggedIn } = this.props.account;
     const { isLoading, orders, errors } = this.state;
     let body;
@@ -173,7 +174,11 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
     }
 
     return (
-      <PSScreenWrapper style={styles.container} scroll={isLoggedIn}>
+      <PSScreenWrapper
+        style={styles.container}
+        scroll={isLoggedIn}
+        navigator={navigator}
+      >
         {body}
       </PSScreenWrapper>
     );

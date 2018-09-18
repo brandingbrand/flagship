@@ -34,8 +34,10 @@
     "@brandingbrand/fssalesforce": "^0.1.0",
     "@brandingbrand/fsturnto": "^0.1.0",
     "@brandingbrand/fsups": "^0.1.0",
+    "jsc-android": "224109.x.x",
     "react": "^16.3.2",
-    "react-native": "^0.55.4"
+    "react-native": "^0.55.4",
+    "react-native-i18n": "^2.0.15"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -46,9 +48,7 @@
       "**/fsapp",
       "**/fsapp/react-native*",
       "**/fsapp/react-native*/**",
-      "**/fsi18n",
-      "**/fsi18n/react-native*",
-      "**/fsi18n/react-native*/**"
+      "jsc-android"
     ]
   }
 }

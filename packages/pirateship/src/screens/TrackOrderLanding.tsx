@@ -111,6 +111,8 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
 
 
   render(): JSX.Element {
+    const { navigator } = this.props;
+
     return (
       <PSScreenWrapper
         style={styles.container}
@@ -122,6 +124,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 56 // offset tab bar
         }}
+        navigator={navigator}
       >
         <View>
           <Text style={styles.text}>

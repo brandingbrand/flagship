@@ -78,5 +78,6 @@ module.exports = {
       string: ''
     }
   ],
-  associatedDomains: []
+  associatedDomains: [],
+  targetedDevices: 'Universal'
 };
