@@ -998,9 +998,9 @@
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.1.tgz#9794c69c8385d0192acc471a540d1f8e0d16218a"
 
-"@types/credit-card-type@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@types/credit-card-type/-/credit-card-type-5.0.1.tgz#2108f36c31cb4bdd6c5ba5ad276f9f29a03c1b2f"
+"@types/credit-card-type@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@types/credit-card-type/-/credit-card-type-7.0.0.tgz#d484dae9c4c27fb7da73efb9880d936a680ab9c2"
 
 "@types/events@*":
   version "1.2.0"

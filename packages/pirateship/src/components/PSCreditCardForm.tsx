@@ -11,7 +11,7 @@ const months = require('../../assets/months.json');
 const icons: { [key in CardBrand]?: ImageRequireSource } = {
   'american-express': require('../../assets/images/amex.png'),
   discover: require('../../assets/images/discover.png'),
-  'master-card': require('../../assets/images/mastercard.png'),
+  mastercard: require('../../assets/images/mastercard.png'),
   visa: require('../../assets/images/visa.png')
 };
 
