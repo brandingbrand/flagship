@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   Animated,
   Image,
+  ImageSourcePropType,
   ImageStyle,
   ImageURISource,
   StyleProp,
@@ -54,6 +55,12 @@ export interface SearchBarProps {
 
   cancelButtonWidth?: number;
   cancelButtonAlwaysVisible?: boolean;
+
+  showRightBtnIcon?: boolean;
+  rightBtnIcon?: ImageSourcePropType;
+  onRightBtnPress?: () => void;
+  rightBtnStyle?: StyleProp<ViewStyle>;
+  rightBtnIconStyle?: StyleProp<ImageStyle>;
 }
 
 export interface SearchBarState {
@@ -144,7 +151,34 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           underlineColorAndroid='transparent'
           {...inputProps}
         />
+        {this.renderRightBtnIcon()}
       </View>
+    );
+  }
+
+  renderRightBtnIcon = () => {
+    const {
+      showRightBtnIcon,
+      rightBtnIcon,
+      onRightBtnPress,
+      rightBtnIconStyle,
+      rightBtnStyle
+    } = this.props;
+
+    if (!showRightBtnIcon || !rightBtnIcon) {
+      return null;
+    }
+
+    const icon = <Image source={rightBtnIcon} style={rightBtnIconStyle} resizeMode='contain' />;
+
+    if (!onRightBtnPress) {
+      return icon;
+    }
+
+    return (
+      <TouchableOpacity style={rightBtnStyle} onPress={onRightBtnPress}>
+        {icon}
+      </TouchableOpacity>
     );
   }
 
