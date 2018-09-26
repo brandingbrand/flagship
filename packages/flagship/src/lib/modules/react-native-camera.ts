@@ -15,6 +15,13 @@ export function android(configuration: Config): void {
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);
   logInfo('updated ./android/app/build.gradle');
 
+  // Disable aapt2 because it's not causes issues with our image assets. Add
+  // android.enableAapt2=false to gradle.properties
+  let gradleProps = fs.readFileSync(path.android.gradlePropertiesPath(), { encoding: 'utf8' });
+  gradleProps += '\nandroid.enableAapt2=false\n';
+  fs.writeFileSync(path.android.gradlePropertiesPath(), gradleProps);
+  logInfo('disabled aapt2 in gradle.properties');
+
   // Add dependencies to /android/build.gradle and update gradle version to 3.1.3
   let gradleBuild = fs.readFileSync(path.resolve('android', 'build.gradle'), { encoding: 'utf8' });
   gradleBuild = gradleBuild.replace(
