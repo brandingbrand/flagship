@@ -44,7 +44,9 @@ export function android(configuration: Config): void {
     `$1\n    ${firebaseDep}`
   );
 
-  gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'\n';
+  gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'';
+  // tslint:disable-next-line:ter-max-len
+  gradleAppBuild += '\ncom.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true\n';
   gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
   gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);
