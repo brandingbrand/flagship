@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import {
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   StyleProp,
   Text,
   TextStyle,
@@ -31,7 +31,7 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   onLongPress?: () => void;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
-  icon?: ImageURISource;
+  icon?: ImageSourcePropType;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
 
