@@ -2,21 +2,16 @@ import React, { Component } from 'react';
 
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
-import { SingleLineForm } from './SingleLineForm';
+import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
+import { Omit } from '@brandingbrand/fsfoundation';
 
 export interface PromoFormValue {
   promoCode: string;
 }
 
-export interface PromoFormProps {
-  fieldsStyleConfig?: any;
+export interface PromoFormProps extends Omit<SingleLineFormProps, 'fieldsTypes'> {
   onSubmit?: (value: PromoFormValue) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any;
   value?: PromoFormValue;
-  style?: any;
-  fieldsOptions?: any;
 }
 
 export class PromoForm extends Component<PromoFormProps> {
@@ -31,15 +26,16 @@ export class PromoForm extends Component<PromoFormProps> {
     });
 
     this.fieldsOptions = {
+      ...props.fieldsOptions,
       promoCode: {
         auto: 'none',
         placeholder: 'Enter Promo Code',
         returnKeyType: 'go',
         autoCorrect: false,
         autoCapitalize: 'none',
-        error: 'Please enter a valid promo code'
-      },
-      ...props.fieldsOptions
+        error: 'Please enter a valid promo code',
+        ...props.fieldsOptions.promoCode
+      }
     };
   }
 
