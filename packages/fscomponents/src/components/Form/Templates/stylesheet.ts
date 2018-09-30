@@ -18,6 +18,7 @@ export interface FieldsColors {
 // extra styles are to make label templates possible while allowing for user to overwrite speicfic
 // characteristics via fields style config
 
+// tslint:disable-next-line:cyclomatic-complexity
 export function styles(colors: FieldsColors): Dictionary {
   const LABEL_COLOR = colors.activeColor;
   const INPUT_COLOR = '#000000';
@@ -120,7 +121,11 @@ export function styles(colors: FieldsColors): Dictionary {
         borderWidth: 1,
         marginBottom: 5,
         marginTop: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when a validation error occours
       error: {
@@ -133,7 +138,11 @@ export function styles(colors: FieldsColors): Dictionary {
         borderColor: ERROR_COLOR,
         borderWidth: 1,
         marginBottom: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when the textbox is not editable
       notEditable: {
@@ -158,7 +167,11 @@ export function styles(colors: FieldsColors): Dictionary {
         paddingHorizontal: 7,
         borderRadius: 0,
         marginBottom: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when a validation error occours
       error: {
@@ -169,7 +182,11 @@ export function styles(colors: FieldsColors): Dictionary {
         paddingHorizontal: 7,
         borderRadius: 0,
         marginBottom: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when the textbox is not editable
       notEditable: {
@@ -193,7 +210,11 @@ export function styles(colors: FieldsColors): Dictionary {
         borderColor: BORDER_COLOR,
         borderBottomWidth: 1,
         marginBottom: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when a validation error occours
       error: {
@@ -205,7 +226,11 @@ export function styles(colors: FieldsColors): Dictionary {
         borderColor: ERROR_COLOR,
         borderBottomWidth: 1,
         marginBottom: 5,
-        outline: 'none'
+        ...Platform.select({
+          web: {
+            outline: 'none'
+          }
+        })
       },
       // the style applied when the textbox is not editable
       notEditable: {
