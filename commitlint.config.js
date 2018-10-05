@@ -1,4 +1,4 @@
-const {getPackages} = require('@commitlint/config-lerna-scopes').utils;
+const { getPackages } = require('@commitlint/config-lerna-scopes').utils;
 
 module.exports = {
   extends: [
@@ -9,6 +9,6 @@ module.exports = {
     'subject-case': [0],
     // greenkeeper-lockfile doesn't support customization of commit messages and always uses the
     // commit message "chore(package)..."
-    'scope-enum': () => [2, 'always', [...getPackages(), 'package']]
+    'scope-enum': ctx => getPackages(ctx).then(packages => [2, 'always', [...packages, 'package']])
   }
 };
