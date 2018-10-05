@@ -54,7 +54,7 @@ export function write(configuration: any): void {
  * @param {object} configuration The project environment configuration.
  * @returns {object} The project environment configuration with ENV variables replaced.
  */
-function overwiteEnv(configuration: any): any {
+function overwriteEnv(configuration: any): any {
   return Object
     .keys(configuration)
     .reduce((accumulator: any, key: string) => {
@@ -63,7 +63,7 @@ function overwiteEnv(configuration: any): any {
       if (value && !Array.isArray(value)) {
         switch (typeof value) {
           case 'object':
-            value = overwiteEnv(value);
+            value = overwriteEnv(value);
             break;
 
           case 'string':
@@ -104,7 +104,7 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
   helpers.logInfo(`selected environment ${helpers.colors.FgGreen}${env}${helpers.colors.Reset}`);
 
   return {
-    ...overwiteEnv(projectEnv),
+    ...overwriteEnv(projectEnv),
     version: projectPackageJson.version
   };
 }

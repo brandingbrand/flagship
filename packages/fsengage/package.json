@@ -12,14 +12,14 @@
   "dependencies": {
     "@brandingbrand/fsfoundation": "^0.1.0",
     "@brandingbrand/fsnetwork": "^0.1.0",
-    "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.0",
+    "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
     "@brandingbrand/react-native-google-analytics": "^2.1.0",
-    "@brandingbrand/react-native-leanplum": "^0.1.0",
+    "@brandingbrand/react-native-leanplum": "^1.0.1",
     "decimal.js": "^10.0.0",
     "react": "^16.3.2",
     "react-native": "^0.55.4",
     "react-native-permissions": "^1.1.1",
-    "url-parse": "^1.4.1"
+    "url-parse": "^1.4.3"
   },
   "devDependencies": {
     "sinon": "^6.0.0"
