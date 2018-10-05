@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import {
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   StyleProp,
   Text,
   TextStyle,
@@ -31,7 +31,7 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   onLongPress?: () => void;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
-  icon?: ImageURISource;
+  icon?: ImageSourcePropType;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
 
@@ -74,7 +74,8 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       size = 'medium',
       color = 'primary',
       light,
-      link
+      link,
+      disabled
     } = this.props;
 
     const { palette } = this.state;
@@ -87,6 +88,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
         underlayColor={
           underlayColor || darken(palette[color], DEFAULT_TINT_PERC)
         }
+        disabled={disabled}
         hitSlop={hitSlop}
         style={[
           S.container,

@@ -28,6 +28,7 @@
 		7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35269AFEFAACE147946929 /* libPods-FLAGSHIP.a */; };
 		7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B84D886876084ED9BA4BA9BF /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8B147E1A212DDF8F0053B1A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */; };
 		91F188DDDC6D4ACBBA33C1DE /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8604903917D3438D9C3981B0 /* libRNSensitiveInfo.a */; };
 		D55C468E38DA4AA793049CDD /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C5D471E35140FB93533363 /* libReactNativeNavigation.a */; };
 		F93CD7992065853900B6E5F3 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */; };
@@ -369,6 +370,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8604903917D3438D9C3981B0 /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
+		8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FLAGSHIP/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9E3B1C292C97417EA98C8A11 /* libRCTRestart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTRestart.a; sourceTree = "<group>"; };
 		A9E57FB8290B46769A2A2635 /* RNSensitiveInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSensitiveInfo.xcodeproj; path = "../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo.xcodeproj"; sourceTree = "<group>"; };
 		B318F05B83C644A4AEF5DA84 /* RNCookieManagerIOS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCookieManagerIOS.xcodeproj; path = "../node_modules/react-native-cookies/ios/RNCookieManagerIOS.xcodeproj"; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 		13B07FAE1A68108700A75B9A /* FLAGSHIP */ = {
 			isa = PBXGroup;
 			children = (
+				8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */,
 				28AB2B671F9176780083673A /* FLAGSHIP.entitlements */,
 				F93CD76E2065853300B6E5F3 /* CodePush.h */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -1170,6 +1173,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F93CD7992065853900B6E5F3 /* AppCenter-Config.plist in Resources */,
+				8B147E1A212DDF8F0053B1A9 /* GoogleService-Info.plist in Resources */,
 				289D054E2016D6E7008047F6 /* LaunchScreen.xib in Resources */,
 				F9F84A2A1FBBA294006783F0 /* LaunchImages.xcassets in Resources */,
 			);
