@@ -487,9 +487,9 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-google-analytics/-/react-native-google-analytics-2.1.0.tgz#3c45f1d5135d0264af5ba30c0a11991825407044"
 
-"@brandingbrand/react-native-leanplum@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-0.1.1.tgz#91f97df639412a8bd3916f633f7edf6722e58cca"
+"@brandingbrand/react-native-leanplum@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-1.0.1.tgz#a39a457c64c1ab2c457dd4710018b3a62c3d7620"
 
 "@commitlint/cli@^7.1.2":
   version "7.1.2"
@@ -1721,9 +1721,9 @@
   version "1.13.6"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.6.tgz#128d1685a7c34d31ed17010fc87d6a12c1de6976"
 
-"@types/yargs@^11.1.1":
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-11.1.1.tgz#2e724257167fd6b615dbe4e54301e65fe597433f"
+"@types/yargs@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.1.tgz#c5ce4ad64499010ae4dc2acd9b14d49749a44233"
 
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"
@@ -10668,9 +10668,9 @@ react-native-restart@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.7.tgz#e2ec764dcb0a82918a301c8664c30df75225f7e3"
 
-react-native-safe-area@^0.4.1:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area/-/react-native-safe-area-0.4.4.tgz#c9e267ef06cd6047da854c30e6c955eff7cc7105"
+react-native-safe-area@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area/-/react-native-safe-area-0.5.0.tgz#15523625d32b6f1b1685afbeebc045a9985f2d3a"
 
 react-native-sensitive-info@^5.1.0:
   version "5.1.0"
@@ -10694,9 +10694,9 @@ react-native-touch-id@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.0.2.tgz#80957198c43c4fcbfcaf4097bc6d409d42c154c2"
 
-react-native-web-image-loader@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/react-native-web-image-loader/-/react-native-web-image-loader-0.0.5.tgz#ff5e7cbd5dac68da1f96edb8a20bdff5f1c0dee1"
+react-native-web-image-loader@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-web-image-loader/-/react-native-web-image-loader-0.0.6.tgz#4c8a6d100838b7b975de05bd27f90fc09e71c247"
   dependencies:
     image-size "^0.5.1"
     loader-utils "^0.2.16"
