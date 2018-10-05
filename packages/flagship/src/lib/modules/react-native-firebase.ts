@@ -33,14 +33,13 @@ export function android(configuration: Config): void {
   // Add dependencies to /android/app/build.gradle and replace compile command with implementation
   // command due to Gradle 3 changes
   const firebaseDep = `
-    implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
       `;
 
   let gradleAppBuild = fs.readFileSync(path.android.gradlePath(), { encoding: 'utf8' });
 
   gradleAppBuild = gradleAppBuild.replace(
-    /(compile.+?native-device-info[^}]+?})/,
+    /(com.google.android.gms:play-services-base:.+)/,
     `$1\n    ${firebaseDep}`
   );
 
