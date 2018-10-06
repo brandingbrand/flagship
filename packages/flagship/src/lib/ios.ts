@@ -66,9 +66,11 @@ export function targetedDevice(configuration: Config): void {
       Universal: `"1,2"`
     };
 
+    const productNameRx = new RegExp(`PRODUCT_NAME\\s*=\\s*${configuration.name}`, 'g');
+
     fs.update(
       path.ios.pbxprojFilePath(configuration),
-      `PRODUCT_NAME = ${configuration.name}`,
+      productNameRx,
       `PRODUCT_NAME = ${configuration.name};
         TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
     );
