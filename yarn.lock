@@ -9171,10 +9171,6 @@ node-releases@^1.0.0-alpha.11:
   dependencies:
     semver "^5.3.0"
 
-node-suspect@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/node-suspect/-/node-suspect-0.1.1.tgz#e1432183e1f3954f9053bb4c052c01840d583e2a"
-
 "nopt@2 || 3":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"

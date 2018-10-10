@@ -1,8 +1,9 @@
+import { spawn } from 'child_process';
 import { Config } from '../types';
-import { spawn } from 'node-suspect';
 import * as path from './path';
 import * as helpers from '../helpers';
 import * as os from './os';
+
 
 /*
  * A set of platforms to link.
@@ -30,26 +31,39 @@ export async function link(configuration: Config): Promise<boolean | object> {
     shell: os.win
   });
 
-  if (androidDeploymentKey && iosDeploymentKey) {
-    spawned
-      .wait('What is your CodePush deployment key for Android (hit <ENTER> to ignore)')
-      .sendline(androidDeploymentKey)
-      .wait('What is your CodePush deployment key for iOS (hit <ENTER> to ignore)')
-      .sendline(iosDeploymentKey)
-      .sendEof();
-  } else {
-    spawned.sendEof();
-  }
-
   return new Promise<boolean | object>((resolve, reject) => {
-    return spawned.run((err: any) => {
-      if (!err) {
+    let stdout = '';
+    let androidDeploymentKeyEntered = false;
+    let iosDeploymentKeyEntered = false;
+    spawned.stdout.pipe(process.stdout);
+    spawned.stderr.pipe(process.stderr);
+
+    spawned.stdout.on('data', (data: Buffer) => {
+      stdout += data.toString();
+      if (!androidDeploymentKeyEntered &&
+        stdout.includes('What is your CodePush deployment key for Android')) {
+        spawned.stdin.write((androidDeploymentKey || '') + '\n');
+        androidDeploymentKeyEntered = true;
+        stdout = '';
+      }
+      if (!iosDeploymentKeyEntered &&
+        stdout.includes('What is your CodePush deployment key for iOS')) {
+        spawned.stdin.write((iosDeploymentKey || '') + '\n');
+        spawned.stdin.end(); // cannot exit the process if stdin is still active
+        iosDeploymentKeyEntered = true;
+        stdout = '';
+      }
+    });
+
+    spawned.on('exit', (code: number) => {
+      if (code === 0) {
         helpers.logInfo('react-native link finished successfully');
         return resolve(true);
       } else {
-        helpers.logError('react-native link could not complete', err);
-        return reject(err);
+        return reject('react-native link exited with code ' + code);
       }
     });
+
+    spawned.on('error', reject);
   });
 }
