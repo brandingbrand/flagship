@@ -12,6 +12,15 @@ export function android(configuration: Config): void {
 
   gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
   gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');
+
+  // Exclude com.android.support:support-v4 version conflict
+  gradleAppBuild = gradleAppBuild.replace(
+    /implementation project\(':react-native-camera'\)$/gmi,
+    `implementation (project(':react-native-camera')) {
+      exclude group: "com.android.support"
+    }`
+  );
+
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);
   logInfo('updated ./android/app/build.gradle');
 
