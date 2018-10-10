@@ -36,11 +36,11 @@ allprojects {
 }
 
 ext {
-    buildToolsVersion = "26.0.3"
+    buildToolsVersion = "27.0.3"
     minSdkVersion = 21
-    compileSdkVersion = 26
-    targetSdkVersion = 26
-    supportLibVersion = "26.1.0"
+    compileSdkVersion = 27
+    targetSdkVersion = 27
+    supportLibVersion = "27.0.2"
     googlePlayServicesVersion = "15.0.1" // Needed for react-native-camera & react-native-maps
 }
 
