@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
-import { cloneDeep, pickBy } from 'lodash-es';
+import { cloneDeep, merge, pickBy } from 'lodash-es';
 import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
 
@@ -88,7 +88,7 @@ export class AddressForm extends Component<AddressFormProps> {
       checkboxStyleConfig.controlLabel.normal.fontSize = 14;
     }
 
-    this.fieldsOptions = {
+    this.fieldsOptions = merge({}, {
       firstName: {
         placeholder: 'First name',
         returnKeyType: 'next',
@@ -153,9 +153,8 @@ export class AddressForm extends Component<AddressFormProps> {
       isPoBox: {
         label: 'Check if this is P.O Box',
         stylesheet: checkboxStyleConfig
-      },
-      ...props.fieldsOptions
-    };
+      }
+    }, this.props.fieldsOptions);
 
     // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
     this.labelPosition = (typeof props.labelPosition === 'number') ?
