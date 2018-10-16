@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsbazaarvoice",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "BazzarVoice Data Source",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,8 +10,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^0.1.0",
-    "@brandingbrand/fsnetwork": "^0.1.0"
+    "@brandingbrand/fscommerce": "2.0.0",
+    "@brandingbrand/fsnetwork": "2.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
