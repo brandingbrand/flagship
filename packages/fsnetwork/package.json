@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsnetwork",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Networking libraries for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsfoundation": "^0.1.0",
+    "@brandingbrand/fsfoundation": "2.0.0",
     "axios": "^0.18.0"
   },
   "publishConfig": {
