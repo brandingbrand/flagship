@@ -88,6 +88,15 @@ export interface Config {
   webTitle?: string;
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
+  ios: IOSConfig;
+}
+
+export interface IOSConfig {
+  pods: PodsConfig;
+}
+
+export interface PodsConfig {
+  sources: string[];
 }
 
 export interface NPMPackageConfig {
