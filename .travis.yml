@@ -85,7 +85,7 @@ jobs:
     script:
     - yarn prepare
     - yarn docs
-    after_success: yarn run release --canary --yes --exact
+    after_success: yarn run release --canary --yes --exact --registry "https://registry.npmjs.org/"
     deploy:
       provider: pages
       skip-cleanup: true
