@@ -1,5 +1,7 @@
 # You Podfile should look similar to this file. React Native currently does not support use_frameworks!
 source 'https://github.com/CocoaPods/Specs.git'
+# add more sources using environment key ios.pods.sources
+# ADDITIONAL_POD_SOURCES
 
 platform :ios, '10.3'
 
@@ -31,7 +33,7 @@ target 'FLAGSHIP' do
 
   # Add new pods below this line
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-  
+
   # When you have pods that also depend on React (like any custom module),
   # React can end up getting included multiple times. Remove React as a
   # dependency from pods.

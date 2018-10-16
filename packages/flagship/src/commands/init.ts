@@ -195,6 +195,11 @@ function initIOS(
   ios.usageDescription(configuration); // Add usage descriptions
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  if (configuration.ios) {
+    if (configuration.ios.pods) {
+      cocoapods.sources(configuration.ios.pods.sources);
+    }
+  }
 
   if (!configuration.disableDevFeature) {
     ios.addDevMenuFlag(configuration);
