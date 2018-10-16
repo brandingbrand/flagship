@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsmockdatasources",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Mock Commerce and Review Data Sources for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,8 +10,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^0.1.0",
-    "@brandingbrand/fsfoundation": "^0.1.0",
+    "@brandingbrand/fscommerce": "2.0.0",
+    "@brandingbrand/fsfoundation": "2.0.0",
     "decimal.js": "^10.0.1",
     "faker": "^4.1.0"
   },
