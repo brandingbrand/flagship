@@ -92,6 +92,13 @@ export default class ShopifyDataSource extends DataSourceBase
     return Promise.reject(kErrorMessageNotImplemented);
   }
 
+  async setShippingAddress(
+    address: FSCommerceTypes.Address,
+    cartId?: string
+  ): Promise<Types.ShopifyCheckoutData> {
+    return Promise.reject(kErrorMessageNotImplemented);
+  }
+
   async setShipmentAddress(
     options: Types.ShippingAddressOptions
   ): Promise<Types.ShopifyCheckoutData> {
