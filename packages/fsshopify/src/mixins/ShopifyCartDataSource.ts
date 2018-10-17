@@ -20,6 +20,7 @@ import {
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { Navigator } from 'react-native-navigation';
+import { mailingAddressInput as mailingAddressInputDenormalizer } from '../denormalizers';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -124,13 +125,22 @@ export class ShopifyCartDataSource extends DataSourceBase
     return Normalizers.cart(response, this.config.storeCurrencyCode);
   }
 
+  async setShippingAddress(
+    address: FSCommerceTypes.Address,
+    cartId?: string
+  ): Promise<ShopifyTypes.ShopifyCheckoutData> {
+    const shopifyAddress = mailingAddressInputDenormalizer(address);
+    const checkoutId = cartId || await this.getOrStartCart();
+    const response = await this.api.checkoutShippingAddressUpdate(checkoutId, shopifyAddress);
+
+    return Normalizers.cart(response, this.config.storeCurrencyCode);
+  }
+
   async setShipmentAddress(
     options: ShopifyTypes.ShippingAddressOptions
   ): Promise<ShopifyTypes.ShopifyCheckoutData> {
-    const checkoutId = options.cartId || await this.getOrStartCart();
-    const response = await this.api.checkoutShippingAddressUpdate(checkoutId, options.address);
-
-    return Normalizers.cart(response, this.config.storeCurrencyCode);
+    // Shopify doesn't have a concept of shipments so we can't use the ShippingAddressOptions type
+    throw new Error('setShipmentAddress not implemented; use setShippingAddress instead');
   }
 
   async setShipmentMethod(

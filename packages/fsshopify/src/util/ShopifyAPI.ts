@@ -267,22 +267,8 @@ export default class ShopifyAPI {
 
   async checkoutShippingAddressUpdate(
     checkoutId: string,
-    address: ResponseTypes.ShopifyAddress
+    shippingAddress: ShopifyMailingAddressInput
   ): Promise<ResponseTypes.ShopifyCheckout> {
-    // convert to ShopifyMailingAddressInput type
-    const shippingAddress: ShopifyMailingAddressInput = {
-      address1: address.address1,
-      address2: address.address2 || '',
-      city: address.city,
-      company: address.company,
-      country: address.countryCode,
-      firstName: address.firstName,
-      lastName: address.lastName,
-      phone: address.phone || '',
-      province: address.province,
-      zip: address.postalCode
-    };
-
     const response = await this.postQuery(`
       mutation checkoutShippingAddressUpdate(
         $shippingAddress: MailingAddressInput!,
