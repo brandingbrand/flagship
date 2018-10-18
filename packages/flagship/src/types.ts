@@ -17,6 +17,7 @@ export interface Config {
   googleMapApiKey: string;
 
   codepush?: {
+    appCenterToken: string;
     android: CodepushConfig;
     ios: CodepushConfig;
   };
