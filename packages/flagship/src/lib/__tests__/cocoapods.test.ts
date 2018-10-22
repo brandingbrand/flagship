@@ -69,3 +69,12 @@ test(`add pod to podfile`, () => {
   expect(Podfile).toMatch('PODTEST2');
 });
 
+test('add pod sources to podfile', () => {
+  cocoapods.sources(['POD_SOURCE_1', 'POD_SOURCE_2']);
+  const Podfile = fs
+    .readFileSync(nodePath.join(tempRootDir, `ios/Podfile`))
+    .toString();
+  expect(Podfile).toMatch('POD_SOURCE_1');
+  expect(Podfile).toMatch('POD_SOURCE_2');
+});
+
