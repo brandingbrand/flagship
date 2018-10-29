@@ -41,7 +41,7 @@
     "@commitlint/config-conventional": "^7.1.2",
     "@commitlint/config-lerna-scopes": "^7.1.2",
     "@commitlint/travis-cli": "^7.1.2",
-    "@storybook/addon-actions": "4.0.0-alpha.11",
+    "@storybook/addon-actions": "4.0.0",
     "@storybook/addon-knobs": "4.0.0-alpha.11",
     "@storybook/addon-viewport": "4.0.0-alpha.11",
     "@storybook/addons": "4.0.0",
