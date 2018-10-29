@@ -12,6 +12,7 @@ import {
  *
  * @param {object} configuration The project configuration.
  */
+// tslint:disable:cyclomatic-complexity
 export function android(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
 
@@ -19,8 +20,6 @@ export function android(configuration: Config): void {
         && configuration.codepush.appCenterToken)
   ) {
     logError('codepush.appCenterToken must be specified in project config');
-
-    return process.exit(1);
   }
 
   const assetsPath = path.android.assetsPath();
@@ -74,7 +73,10 @@ export function android(configuration: Config): void {
 
   // Include the readonly Branding Brand app center token ONLY in development
   // builds
-  if (!configuration.disableDevFeature) {
+  if (!configuration.disableDevFeature &&
+    configuration.codepush &&
+    configuration.codepush.appCenterToken
+  ) {
     nativeConstants.addAndroid(
       configuration,
       'AppCenterToken',
@@ -104,8 +106,6 @@ export function ios(configuration: Config): void {
         && configuration.codepush.appCenterToken)
   ) {
     logError('codepush.appCenterToken must be specified in project config');
-
-    return process.exit(1);
   }
 
   const appCenterConfigPath = path.resolve(
@@ -132,7 +132,10 @@ export function ios(configuration: Config): void {
 
   // Include the readonly Branding Brand app center token ONLY in development
   // builds
-  if (!configuration.disableDevFeature) {
+  if (!configuration.disableDevFeature &&
+    configuration.codepush &&
+    configuration.codepush.appCenterToken
+  ) {
     nativeConstants.addIOS(configuration, 'AppCenterToken', configuration.codepush.appCenterToken);
   }
 }
