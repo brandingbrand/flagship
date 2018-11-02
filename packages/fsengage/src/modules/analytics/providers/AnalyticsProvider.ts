@@ -1,8 +1,9 @@
 import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
+type Dictionary = import ('@brandingbrand/fsfoundation').Dictionary;
 
 // Common Interface
 
-export interface Generics {
+export interface Generics extends Dictionary {
   eventAction: string;
   eventCategory: string;
 }
@@ -39,7 +40,7 @@ export interface SearchGeneric extends Generics {
   count?: number;
 }
 
-export interface Screenview {
+export interface Screenview extends Dictionary {
   eventCategory: string;
   url: string;
 }
@@ -80,14 +81,14 @@ export interface Promotion extends Generics {
   slot?: string;
 }
 
-export interface RefundProduct {
+export interface RefundProduct extends Dictionary {
   identifier: string;
   quantity: number;
   price?: string;
   coupons?: string[];
 }
 
-export interface TransactionProduct {
+export interface TransactionProduct extends Dictionary {
   identifier: string;
   name: string;
   brand?: string;
@@ -109,16 +110,16 @@ export interface TransactionRefund extends Generics {
 
 // Enhanced Commerce Action Interfaces
 
-export interface ProductAction {
+export interface ProductAction extends Dictionary {
   list?: string;
 }
 
-export interface CheckoutAction {
+export interface CheckoutAction extends Dictionary {
   step?: number;
   option?: string;
 }
 
-export interface TransactionAction {
+export interface TransactionAction extends Dictionary {
   identifier: string;
   affiliation?: string;
   revenue?: string;
@@ -129,7 +130,7 @@ export interface TransactionAction {
 
 // App Lifercyle Interfaces
 
-export interface App {
+export interface App extends Dictionary {
   eventAction: string;
   lifecycle: string;
 }
