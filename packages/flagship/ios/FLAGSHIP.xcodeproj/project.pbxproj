@@ -20,6 +20,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		14A6AB6E2179BAEF0096DB28 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */; };
 		282E04471EB7979400C89EF3 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 282E04461EB7977600C89EF3 /* libART.a */; };
 		289D054E2016D6E7008047F6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289D054D2016D6E7008047F6 /* LaunchScreen.xib */; };
 		289DAC84207E9B9F00DFFECC /* EnvSwitcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */; };
@@ -357,6 +358,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FLAGSHIP/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FLAGSHIP/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = FLAGSHIP/ADBMobileConfig.json; sourceTree = "<group>"; };
 		282E04411EB7977600C89EF3 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		289D054D2016D6E7008047F6 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = FLAGSHIP/LaunchScreen.xib; sourceTree = "<group>"; };
 		289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EnvSwitcher.m; path = FLAGSHIP/EnvSwitcher.m; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */,
 				289D054D2016D6E7008047F6 /* LaunchScreen.xib */,
+				14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */,
 			);
 			name = FLAGSHIP;
 			sourceTree = "<group>";
@@ -1172,6 +1175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				14A6AB6E2179BAEF0096DB28 /* ADBMobileConfig.json in Resources */,
 				F93CD7992065853900B6E5F3 /* AppCenter-Config.plist in Resources */,
 				8B147E1A212DDF8F0053B1A9 /* GoogleService-Info.plist in Resources */,
 				289D054E2016D6E7008047F6 /* LaunchScreen.xib in Resources */,
