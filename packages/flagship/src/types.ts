@@ -90,6 +90,14 @@ export interface Config {
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
   ios: IOSConfig;
+  adobeAnalytics?: {
+    ios: {
+      configPath: string;
+    };
+    android: {
+      configPath: string;
+    };
+  };
 }
 
 export interface IOSConfig {
