@@ -83,6 +83,10 @@ export interface AccordionProps {
    */
   renderContent?: () => React.ReactNode;
   /**
+   * Function to be invoked to check the state of the accordion. Takes a callback."
+   */
+  onStateChange?: (stateChanged: boolean) => void;
+  /**
    * Whether to initialize as open or closed
    */
   state?: 'open' | 'closed';
@@ -219,6 +223,13 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
         height: props.titleHeight || ACCORDION_TITLE_HEIGHT_DEFAULT
       }
     };
+  }
+
+  componentDidUpdate(prevProps: AccordionProps, prevState: AccordionState): void {
+    if (!!this.props.onStateChange && prevState.isOpen !== this.state.isOpen) {
+      const stateChanged: boolean = true;
+      this.props.onStateChange(stateChanged);
+    }
   }
 
   render(): JSX.Element {
