@@ -1,4 +1,5 @@
-import FCM, { FCMEvent } from 'react-native-fcm';
+// import FCM from 'react-native-fcm';
+import FCM from 'react-native-fcm';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import * as DeviceInfo from 'react-native-device-info';
 import {
@@ -9,12 +10,16 @@ import {
 } from './types';
 const uuid = require('uuid-js');
 
-const baseURL = 'https://kong.uat.bbhosted.com/engagement/v1';
-
 export interface EngagementServiceConfig {
   appId: string;
   apiKey: string;
+  baseURL: string;
   cacheTTL?: number; // default = 10 mins
+}
+
+export interface Attribute {
+  key: string;
+  value: string;
 }
 
 export class EngagementService {
@@ -29,50 +34,17 @@ export class EngagementService {
 
   constructor(config: EngagementServiceConfig) {
     this.appId = config.appId;
-    if (config.cacheTTL) {
+    if (typeof config.cacheTTL === 'number') {
       this.cacheTTL = config.cacheTTL;
     }
 
     this.networkClient = new FSNetwork({
-      baseURL,
+      baseURL: config.baseURL,
       headers: {
         apikey: config.apiKey,
         'Content-Type': 'application/json'
       }
     });
-
-    // load profile
-    this.getProfile()
-      .then(async () => {
-
-        // debugging local notifications
-        // FCM.cancelAllLocalNotifications()
-        /*FCM.getScheduledLocalNotifications()
-          .then(notif => console.log('scheduled local push notifications', notif));*/
-
-        // get and store push token if available
-        FCM.getFCMToken()
-          .then(token => this.setPushToken(token))
-          .catch(e => console.log('getFCMToken error: ', e));
-        FCM.on(FCMEvent.RefreshToken, token => this.setPushToken(token));
-
-        // listen to notifications and handle them
-        FCM.on(FCMEvent.Notification, this.onNotification.bind(this));
-
-        // check if the app was opened from a notification and log it
-        // @TODO: follow the notifications link?
-        FCM.getInitialNotification()
-          .then(notif => {
-            if (notif && notif.messageId) {
-              this.logEvent('pushopen', { message: notif.messageId });
-            }
-          })
-          .catch();
-      })
-      .catch(e => {
-        console.log('EngagementService constructor catch', e);
-        // @TODO: setInterval to get profile till we get one
-      });
   }
 
   logEvent(type: string, data: any): void {
@@ -100,6 +72,21 @@ export class EngagementService {
     }
   }
 
+  async setProfileAttributes(attributes: Attribute[]): Promise<boolean> {
+    return this.networkClient
+      .post(`/Profiles/${this.profileId}/setAttributes`, JSON.stringify(attributes))
+      .then(response => {
+        if (response.status === 204) {
+          return true;
+        }
+        return false;
+      })
+      .catch(e => {
+        console.warn('Unable to set profile attribute', e);
+        return false;
+      });
+  }
+
   async setProfileAttribute(key: string, value: string): Promise<boolean> {
     const data = {
       key,
@@ -122,7 +109,7 @@ export class EngagementService {
   }
 
   // @TODO: does the profile need to be resynced anytime during a session?
-  async getProfile(): Promise<string> {
+  async getProfile(accountId?: string): Promise<string> {
     if (this.profileId && this.profileData) {
       return Promise.resolve(this.profileId);
     }
@@ -132,6 +119,7 @@ export class EngagementService {
       country: DeviceInfo.getDeviceCountry(),
       timezone: DeviceInfo.getTimezone(),
       deviceIdentifier: DeviceInfo.getUniqueID(),
+      accountId,
       deviceInfo: JSON.stringify({
         model: DeviceInfo.getModel(),
         appName: DeviceInfo.getBundleId(),
@@ -142,8 +130,6 @@ export class EngagementService {
     })
       .then(r => r.data)
       .then(data => {
-        console.log('gotProfile', data);
-
         this.profileId = data.id;
         this.profileData = data;
 
@@ -185,6 +171,7 @@ export class EngagementService {
     // cache
     if (this.messages.length) {
       if (+new Date() - this.messageCache < this.cacheTTL) {
+
         return Promise.resolve(this.messages);
       }
     }
@@ -218,7 +205,7 @@ export class EngagementService {
       });
   }
 
-  private async onNotification(notif: EngagmentNotification): Promise<void> {
+  async onNotification(notif: EngagmentNotification): Promise<void> {
     console.log('onNotification', notif);
 
     if (notif.local_notification) {

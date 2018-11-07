@@ -12,25 +12,11 @@ import {
 } from 'react-native';
 
 import {
-  Icon
+  Action,
+  Icon,
+  JSON,
+  ScreenProps
 } from '../types';
-
-export interface CTAActions {
-  type: string;
-  value?: string;
-  subject?: string;
-  body?: string;
-}
-
-export interface CTABlockProps {
-  actions: CTAActions;
-  text: string;
-  icon: Icon;
-  buttonStyle?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
-  clickHandler: (id: string, story?: any) => void;
-}
 
 const images: any = {
   rightArrow: require('../../assets/images/rightArrow.png')
@@ -54,20 +40,58 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CTABlock extends Component<CTABlockProps> {
+export interface CTABlockProps extends ScreenProps {
+  action: string;
+  text: string;
+  icon: Icon;
+  buttonStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  actions: Action;
+}
 
+export default class CTABlock extends Component<CTABlockProps> {
   static contextTypes: any = {
     story: PropTypes.object,
-    handleAction: PropTypes.func
+    cardActions: PropTypes.object,
+    handleAction: PropTypes.func,
+    handleStoryAction: PropTypes.func
   };
 
-  onButtonPress = () => {
-    switch (this.props.actions.type) {
-      case 'story':
-        const { story } = this.context;
-        return this.props.clickHandler(story.messageId, story);
-      default:
+  handleActionWithStory = (action: string, actions: Action, story: JSON) => {
+    const { handleAction, handleStoryAction } = this.context;
+    if (story.html) {
+      return handleAction({
+        type: 'blog-url',
+        value: story.html.link
+      });
+    } else if (action === 'story' || (story && actions &&
+      (actions.type === null || actions.type === 'story'))) {
+      // go to story card
+      return handleStoryAction(story);
     }
+    return null;
+  }
+
+  handleActionNoStory = (actions: Action) => {
+    const { handleAction, cardActions } = this.context;
+    if (actions && actions.type) {
+      return handleAction(actions);
+    }
+    // tappable card with no story - CTAs use actions of container card
+    return handleAction(cardActions);
+  }
+
+  takeAction = (action: string, actions: Action): void => {
+    const { story } = this.context;
+    if (action === 'story' || story) {
+      return this.handleActionWithStory(action, actions, story);
+    }
+    return this.handleActionNoStory(actions);
+  }
+
+  onButtonPress = () => {
+    this.takeAction(this.props.action, this.props.actions);
   }
 
   render(): JSX.Element {

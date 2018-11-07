@@ -7,13 +7,14 @@ import {
 } from 'react-native';
 
 import {
-  InboxBlock
+  JSON,
+  ScreenProps
 } from '../types';
 
 import CTABlock from './CTABlock';
 
-export interface CTABlockProps {
-  story?: InboxBlock;
+export interface CTABlockProps extends ScreenProps {
+  story?: JSON;
   contents: any;
   containerStyle?: StyleProp<ViewStyle>;
   buttonSpacing?: StyleProp<ViewStyle>;
