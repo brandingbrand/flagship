@@ -62,6 +62,7 @@ jobs:
     - yarn --version
     script:
     - yarn prepare
+    - pod repo update
     - yarn ship:init
     - yarn ship:compile-ios || travis_terminate 1
   - language: objective-c

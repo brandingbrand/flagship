@@ -143,7 +143,6 @@ export function ios(configuration: Config): void {
 
   if (podfile.indexOf(firebasePod) === -1) {
     pods.add(path.ios.podfilePath(), [firebasePod]);
-    pods.install();
     logInfo('updated Podfile with Firebase pod');
   }
 
