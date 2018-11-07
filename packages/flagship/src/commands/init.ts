@@ -74,6 +74,10 @@ export function handler(argv: HandlerArgs): void {
   // Run react-native link
   link.link(configuration)
     .then(() => {
+      if (doAndroid) {
+        modules.android(projectPackageJSON, configuration);
+      }
+
       if (doIOS) {
         cocoapods.install();
       }
@@ -145,8 +149,6 @@ function initAndroid(
   if (!configuration.disableDevFeature) {
     android.addDevMenuFlag(configuration);
   }
-
-  modules.android(packageJSON, configuration);
 
   helpers.logInfo('finished Android initialization');
 }
