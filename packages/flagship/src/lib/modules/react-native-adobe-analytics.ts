@@ -47,7 +47,6 @@ export async function ios(config: Config): Promise<void> {
 
   if (podfile.indexOf(adobeSdk) === -1) {
     pods.add(path.ios.podfilePath(), [adobeSdk]);
-    pods.install();
     logInfo('updated Podfile with Adobe Mobile SDK');
   }
 
