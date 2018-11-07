@@ -7,35 +7,52 @@ import {
 import PropTypes from 'prop-types';
 
 import {
-  InboxBlock,
-  InjectedProps
+  JSON,
+  ScreenProps,
+  StoryGradient
 } from '../types';
 
 import TextBlock from './TextBlock';
 import CTABlock from './CTABlock';
 import ImageBlock from './ImageBlock';
 
-export interface ComponentProps extends InjectedProps {
+export interface ComponentProps extends ScreenProps {
   containerStyle?: StyleProp<TextStyle>;
-  story?: InboxBlock;
+  story?: JSON;
   contents: any;
+  storyGradient?: StoryGradient;
 }
 
 export default class Card extends Component<ComponentProps> {
 
   static childContextTypes: any = {
-    story: PropTypes.object
+    story: PropTypes.object,
+    handleStoryAction: PropTypes.func
   };
 
   getChildContext = () => ({
-    story: this.props.story
+    story: this.props.story,
+    handleStoryAction: this.handleStoryAction
   })
 
+  handleStoryAction = (json: JSON) => {
+    this.props.navigator.push({
+      screen: 'LayoutBuilder',
+      navigatorStyle: {
+        navBarHidden: true
+      },
+      passProps: {
+        json,
+        backButton: true
+      }
+    });
+  }
+
   onCardPress = (): void => {
-    const { story } = this.props;
-    if (story) {
-      this.props.clickHandler(story.messageId, story);
-    }
+    const { story, storyGradient } = this.props;
+    const actionPayload: any = storyGradient ?
+      { ...story, storyGradient } : { ...story };
+    this.handleStoryAction(actionPayload);
   }
 
   render(): JSX.Element {

@@ -23,16 +23,16 @@ const styles = StyleSheet.create({
     paddingTop: 2
   },
   whenIcon: {
-    width: 22,
-    height: 22
+    width: 20,
+    height: 20
   },
   whereIcon: {
-    width: 15,
+    width: 16,
     height: 22
   },
   whyIcon: {
-    width: 24,
-    height: 21
+    width: 22,
+    height: 20
   },
   eventType: {
     flexDirection: 'row',
@@ -67,13 +67,13 @@ const whyIcon = require('../../assets/images/whyIcon.png');
 export default class EventBlock extends PureComponent<EventBlockProps> {
   render(): JSX.Element {
     const {
-        textStyle,
-        titleStyle,
-        containerStyle,
-        eventInfo: {
-          when,
-          where,
-          why
+      textStyle,
+      titleStyle,
+      containerStyle,
+      eventInfo: {
+        when,
+        where,
+        why
         }
     } = this.props;
 

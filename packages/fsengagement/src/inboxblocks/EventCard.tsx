@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import {
-  StyleProp,
   StyleSheet,
-  TextStyle,
   TouchableOpacity,
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
-  InboxBlock,
-  InjectedProps
+  CardProps,
+  JSON
 } from '../types';
 
 import TextBlock from './TextBlock';
@@ -19,28 +17,25 @@ import ImageBlock from './ImageBlock';
 
 const styles = StyleSheet.create({
   whenIcon: {
-    width: 11,
-    height: 11
+    width: 10,
+    height: 10
   },
   whereIcon: {
     width: 8,
     height: 11
   },
   eventContainer: {
-    flexDirection: 'row',
-    marginLeft: -50
+    marginLeft: 50,
+    paddingLeft: 100
   },
   eventType: {
     flexDirection: 'row',
     marginVertical: 5
   },
-  eventText: {
-    flex: 1,
-    marginLeft: 15
-  },
   imageContainer: {
-    width: 12,
-    alignItems: 'center'
+    position: 'absolute',
+    left: 30,
+    top: 40
   },
   dateRow: {
     width: 12,
@@ -51,9 +46,7 @@ const styles = StyleSheet.create({
 
 });
 
-export interface ComponentProps extends InjectedProps {
-  containerStyle?: StyleProp<TextStyle>;
-  story?: InboxBlock;
+export interface ComponentProps extends CardProps {
   contents: any;
 }
 
@@ -63,18 +56,32 @@ const whereIcon = require('../../assets/images/whereIcon.png');
 export default class EventCard extends Component<ComponentProps> {
 
   static childContextTypes: any = {
-    story: PropTypes.object
+    story: PropTypes.object,
+    handleStoryAction: PropTypes.func
   };
 
   getChildContext = () => ({
-    story: this.props.story
+    story: this.props.story,
+    handleStoryAction: this.handleStoryAction
   })
 
+  handleStoryAction = (json: JSON) => {
+    this.props.navigator.push({
+      screen: 'LayoutBuilder',
+      navigatorStyle: {
+        navBarHidden: true
+      },
+      passProps: {
+        json,
+        backButton: true
+      }
+    });
+  }
   onCardPress = (): void => {
-    const { story } = this.props;
-    if (story) {
-      this.props.clickHandler(story.messageId, story);
-    }
+    const { story, storyGradient } = this.props;
+    const actionPayload: any = storyGradient ?
+      { ...story, storyGradient } : { ...story };
+    this.handleStoryAction(actionPayload);
   }
 
   render(): JSX.Element {
@@ -85,43 +92,42 @@ export default class EventCard extends Component<ComponentProps> {
 
     return (
       <TouchableOpacity
-        style={containerStyle}
         activeOpacity={0.9}
         onPress={this.onCardPress}
       >
-        <View style={styles.eventContainer}>
+        <View style={[containerStyle, styles.eventContainer]}>
+          <TextBlock
+            {...contents.Title}
+          />
+          <View style={styles.eventType}>
+            <ImageBlock
+              source={whenIcon}
+              containerStyle={styles.dateRow}
+              imageStyle={styles.whenIcon}
+            />
+            <TextBlock
+              {...contents.When}
+            />
+          </View>
+          <View style={styles.eventType}>
+            <ImageBlock
+              source={whereIcon}
+              containerStyle={styles.dateRow}
+              imageStyle={styles.whereIcon}
+            />
+            <TextBlock
+              {...contents.Where}
+            />
+          </View>
+          <CTABlock
+            {...contents.CTA}
+            story={this.props.story}
+          />
+        </View>
+        <View style={styles.imageContainer}>
           <ImageBlock
             {...contents.Image}
           />
-          <View style={styles.eventText}>
-            <TextBlock
-              {...contents.Title}
-            />
-            <View style={styles.eventType}>
-              <ImageBlock
-                source={whenIcon}
-                containerStyle={styles.dateRow}
-                imageStyle={styles.whenIcon}
-              />
-              <TextBlock
-                {...contents.When}
-              />
-            </View>
-            <View style={styles.eventType}>
-              <ImageBlock
-                source={whereIcon}
-                containerStyle={styles.dateRow}
-                imageStyle={styles.whereIcon}
-              />
-              <TextBlock
-                {...contents.Where}
-              />
-            </View>
-            <CTABlock
-              {...contents.CTA}
-              story={this.props.story}
-            />
-          </View>
         </View>
       </TouchableOpacity>
     );

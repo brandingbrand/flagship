@@ -5,15 +5,70 @@ import {
   StyleProp,
   TextStyle
 } from 'react-native';
+import { Navigator } from 'react-native-navigation';
+
+export interface ScreenProps {
+  navigator: Navigator;
+}
+
+export interface Action {
+  type: string;
+  value: string;
+  subject?: string;
+  body?: string;
+}
 
 export interface ComponentList {
   [key: string]: ComponentClass<any>;
 }
 
+
 export interface Icon {
   type: string;
   tintColor?: string;
   iconStyle?: StyleProp<ImageStyle>;
+}
+
+export interface CardProps {
+  containerStyle?: StyleProp<TextStyle>;
+  private_blocks: BlockItem[];
+  story?: JSON;
+  plainCard?: boolean;
+  storyGradient?: StoryGradient;
+  navigator: Navigator;
+}
+
+export interface Empty {
+  message: string;
+  textStyle?: StyleProp<TextStyle>;
+}
+
+export interface StoryGradient {
+  enabled: boolean;
+  startFadePosition?: number;
+  endFadePosition?: number;
+}
+
+export interface HTML {
+  body: string;
+  link: string;
+  iframe: string;
+  image: JSON;
+  title: JSON;
+}
+
+export interface JSON {
+  isBlog?: boolean;
+  backArrow?: StyleProp<ImageStyle>;
+  private_blocks?: BlockItem[];
+  private_type: string;
+  empty?: Empty;
+  storyGradient?: StoryGradient;
+  html?: HTML;
+}
+
+export interface BlockItem extends ScreenProps, JSON {
+  story?: JSON;
 }
 
 export interface InjectedProps {
