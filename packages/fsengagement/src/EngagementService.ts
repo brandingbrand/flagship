@@ -1,5 +1,4 @@
-// import FCM from 'react-native-fcm';
-import FCM from 'react-native-fcm';
+import FCM, { FCMEvent } from 'react-native-fcm';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import * as DeviceInfo from 'react-native-device-info';
 import {
@@ -106,6 +105,31 @@ export class EngagementService {
         console.warn('Unable to set profile attribute', e);
         return false;
       });
+  }
+
+  setNotification(): void {
+    // debugging local notifications
+    // FCM.cancelAllLocalNotifications()
+    // FCM.getScheduledLocalNotifications()
+    //  .then(notif => console.log('scheduled local push notifications', notif));
+
+    // get and store push token if available
+    FCM.getFCMToken()
+      .then(token => this.setPushToken(token))
+      .catch(e => console.log('getFCMToken error: ', e));
+
+    FCM.on(FCMEvent.RefreshToken, token => this.setPushToken(token));
+    // listen to notifications and handle them
+    FCM.on(FCMEvent.Notification, this.onNotification.bind(this));
+    // check if the app was opened from a notification and log it
+    // @TODO: follow the notifications link?
+    FCM.getInitialNotification()
+      .then(notif => {
+        if (notif && notif.messageId) {
+          this.logEvent('pushopen', { message: notif.messageId });
+        }
+      })
+      .catch();
   }
 
   // @TODO: does the profile need to be resynced anytime during a session?
