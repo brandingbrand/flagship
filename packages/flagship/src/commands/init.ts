@@ -7,7 +7,7 @@ import * as fs from '../lib/fs';
 import * as ios from '../lib/ios';
 import * as link from '../lib/link';
 import * as helpers from '../helpers';
-import * as modules from '../lib/modules';
+import * as buildHooks from '../lib/buildHooks';
 import * as path from '../lib/path';
 import * as rename from '../lib/rename';
 import * as web from '../lib/web';
@@ -59,6 +59,10 @@ export function handler(argv: HandlerArgs): void {
   const projectPackageJSON = require(path.project.resolve('package.json'));
   const configuration = initEnvironment(argv.env, projectPackageJSON);
 
+  buildHooks.load(projectPackageJSON, doAndroid, doIOS, doWeb);
+
+  buildHooks.run(configuration, 'beforeCopyBoilerplate');
+
   if (doAndroid) {
     initAndroid(projectPackageJSON, configuration, projectPackageJSON.version, argv.env);
   }
@@ -71,19 +75,20 @@ export function handler(argv: HandlerArgs): void {
     initWeb(projectPackageJSON, configuration, argv.env);
   }
 
+  buildHooks.run(configuration, 'beforeLink');
+
   // Run react-native link
   link.link(configuration)
     .then(() => {
-      if (doAndroid) {
-        modules.android(projectPackageJSON, configuration);
-      }
-
       if (doIOS) {
+        buildHooks.run(configuration, 'beforeIOSPodInstall');
         cocoapods.install();
       }
+      buildHooks.run(configuration, 'afterLink');
     })
     .catch(err => {
       console.error(err);
+      buildHooks.run(configuration, 'failed');
       process.exit(1);
     });
 }
@@ -202,8 +207,6 @@ function initIOS(
   if (!configuration.disableDevFeature) {
     ios.addDevMenuFlag(configuration);
   }
-
-  modules.ios(packageJSON, configuration);
 
   helpers.logInfo('finished iOS initialization');
 }
