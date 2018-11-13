@@ -6,3 +6,7 @@ export {
   FSCheckoutStepProps
 } from './FSCheckout';
 
+export {
+  default as StepTracker,
+  StepTrackerProps
+} from './components/StepTracker';
