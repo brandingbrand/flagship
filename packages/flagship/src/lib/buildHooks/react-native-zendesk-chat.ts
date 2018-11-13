@@ -14,7 +14,7 @@ const buildHooks: BuildHook[] = [
     platforms: ['android'],
     lifeCycle: 'afterLink',
     packages: [{
-      packageName: 'react-native-zendesk-chat'
+      packageName: /^(@[^\/]+\/)?react-native-zendesk-chat$/
     }],
     script: configuration => {
       logInfo('patching Android for react-native-zendesk-chat');

@@ -1,22 +1,19 @@
 import * as path from '../path';
 import * as fs from '../fs';
 import * as pods from '../cocoapods';
-import { logInfo } from '../../helpers';
 import { BuildHook } from '../buildHooks';
 
 const kRepository = `maven { url 'https://repo.leanplum.com/' }`;
 
 const buildHooks: BuildHook[] = [
   {
-    name: 'react-native-leanplum ios patch',
+    name: 'react-native-leanplum android patch',
     platforms: ['android'],
     lifeCycle: 'afterLink',
     packages: [{
-      packageName: 'react-native-leanplum'
+      packageName: /^(@[^\/]+\/)?react-native-leanplum$/
     }],
     script: configuration => {
-      logInfo('patching Android for react-native-leanplum');
-
       // Add the repository to the project repositories.
       fs.update(path.android.gradlePath(),
         'repositories {', `repositories {\n        ${kRepository}`);
@@ -33,7 +30,7 @@ const buildHooks: BuildHook[] = [
     platforms: ['ios'],
     lifeCycle: 'beforeIOSPodInstall',
     packages: [{
-      packageName: 'react-native-leanplum'
+      packageName: /^(@[^\/]+\/)?react-native-leanplum$/
     }],
     script: configuration => {
       pods.add(path.ios.podfilePath(), [`pod "Leanplum-iOS-SDK", '2.1.0'`]);

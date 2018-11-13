@@ -15,9 +15,10 @@ All scripts should export an array of `BuildHook` Objects and pass these options
   platforms - (Optional) a list of platforms (`android`, `ios` and/or `web`) that the patch is
   target for. If not specified then the hook applies to all platforms;
 
-  packages - (Optional) a list of dependencies that the patch is target for. A semantic version
-  range string can be given in this option to restrict the hook to only apply to selected version.
-  If the list is empty then the hook is a global script that will always apply;
+  packages - (Optional) a list of dependencies that the patch is target for. Package name can be a
+  string or a regex expression. A semantic version range string can be given in this to restrict
+  the hook to only apply to selected version of the package.
+  If the list is empty then the hook is a global script that will always run;
 
   priority - (Optional) the grater the number is, the earlier the script will be executed in a
   single life cycle event. If not specified the number is 0 by default.
