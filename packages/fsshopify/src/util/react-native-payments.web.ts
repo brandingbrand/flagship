@@ -1,10 +1,12 @@
-export type PaymentDetailsInit = import ('react-native-payments').PaymentDetailsInit;
-export type PaymentMethodData = import ('react-native-payments').PaymentMethodData;
-export type PaymentOptions = import ('react-native-payments').PaymentOptions;
+import * as RNPayments from '@brandingbrand/react-native-payments';
 
-type PaymentRequestInterface = import ('react-native-payments').PaymentRequest;
-type PaymentResponse = import ('react-native-payments').PaymentResponse;
-type PaymentRequestUpdateEvent = import ('react-native-payments').PaymentRequestUpdateEvent;
+export type PaymentDetailsInit = RNPayments.PaymentDetailsInit;
+export type PaymentMethodData = RNPayments.PaymentMethodData;
+export type PaymentOptions = RNPayments.PaymentOptions;
+
+type PaymentRequestInterface = RNPayments.PaymentRequest;
+type PaymentResponse = RNPayments.PaymentResponse;
+type PaymentRequestUpdateEvent = RNPayments.PaymentRequestUpdateEvent;
 
 export class PaymentRequest implements PaymentRequestInterface {
   id: string = '';

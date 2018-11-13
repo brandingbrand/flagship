@@ -491,6 +491,14 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-1.0.1.tgz#a39a457c64c1ab2c457dd4710018b3a62c3d7620"
 
+"@brandingbrand/react-native-payments@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-payments/-/react-native-payments-0.9.1.tgz#a6f2715846c1b179b2419e79a236af8f089a19ce"
+  dependencies:
+    es6-error "^4.0.2"
+    uuid "^3.1.0"
+    validator "^7.0.0"
+
 "@commitlint/cli@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-7.1.2.tgz#9ad1b4703679e18e3b1972c4abf0441255219e78"
@@ -10647,14 +10655,6 @@ react-native-navigation@1.1.483:
 react-native-open-settings@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-open-settings/-/react-native-open-settings-1.0.1.tgz#1c0ae3d25fd3fd6de94b6d538333d47245cc5a0c"
-
-react-native-payments@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-payments/-/react-native-payments-0.7.0.tgz#fbb933cbc23ef771113efca0c2c4e415fe6a2071"
-  dependencies:
-    es6-error "^4.0.2"
-    uuid "^3.1.0"
-    validator "^7.0.0"
 
 react-native-permissions@^1.1.1:
   version "1.1.1"

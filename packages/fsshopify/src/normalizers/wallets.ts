@@ -5,7 +5,7 @@ import {
 import {
   PaymentAddress,
   PaymentShippingOption
-} from 'react-native-payments';
+} from '@brandingbrand/react-native-payments';
 import ShopifyAPIError from '../util/ShopifyAPIError';
 import * as ShopifyTypes from '../customTypes';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Picker, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { PaymentCurrencyAmount, PaymentRequest } from 'react-native-payments';
+import { PaymentCurrencyAmount, PaymentRequest } from '@brandingbrand/react-native-payments';
 import ShopifyAPIError from '../util/ShopifyAPIError';
 import { GooglePayShippingOptionsModalProps } from '../customTypes';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';

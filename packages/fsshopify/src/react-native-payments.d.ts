@@ -1,5 +1,5 @@
 /* tslint:disable:max-classes-per-file */
-declare module 'react-native-payments' {
+declare module '@brandingbrand/react-native-payments' {
   export class PaymentRequest {
     constructor(
       methodData: PaymentMethodData[] = [],
