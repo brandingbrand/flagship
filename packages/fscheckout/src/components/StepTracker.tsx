@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Animated, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import {
+  Animated,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import { Step } from '../types';
 
 const styles = StyleSheet.create({
@@ -49,6 +58,7 @@ export interface StepTrackerProps {
   titleDoneStyle?: StyleProp<TextStyle>;
   sliderStyle?: StyleProp<ViewStyle>;
   animated?: boolean;
+  onStepPress?: (step: Step) => () => void;
 }
 
 export interface StepTrackerState {
@@ -110,12 +120,11 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     return (
       <View style={[styles.stepsContainer, style]} onLayout={this.calculateWidth}>
         {steps.map((step, i) => {
-          const isActive = step.status === 'active';
-          const isDone = step.status === 'done';
-          const stepName = isDone ? step.displayName : `${i + 1}. ${step.displayName}`;
+          const { isActive, isDone, stepName, onPress, Container } = this.getStepDetails(step, i);
 
           return (
-            <View
+            <Container
+              onPress={onPress}
               style={[
                 styles.item,
                 itemStyle,
@@ -136,7 +145,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
               >
                 {stepName}
               </Text>
-            </View>
+            </Container>
           );
         })}
 
@@ -154,5 +163,18 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
         )}
       </View>
     );
+  }
+
+  protected getStepDetails = (step: Step, index: number) => {
+    const isActive = step.status === 'active';
+    const isDone = step.status === 'done';
+
+    const stepName = isDone ? step.displayName : `${index + 1}. ${step.displayName}`;
+    const onPress = this.props.onStepPress ? this.props.onStepPress(step) : undefined;
+
+    const isTouchable = onPress && isDone && !isActive;
+    const Container = isTouchable ? TouchableOpacity : View;
+
+    return { isActive, isDone, stepName, onPress, Container };
   }
 }
