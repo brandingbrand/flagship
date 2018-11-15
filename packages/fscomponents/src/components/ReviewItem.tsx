@@ -41,7 +41,7 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedRowStyle?: StyleProp<ViewStyle>;
 
   // children
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   moreTextProps?: MoreTextProps;
 
   // buttons
