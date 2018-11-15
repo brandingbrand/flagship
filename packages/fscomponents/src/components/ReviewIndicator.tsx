@@ -87,7 +87,7 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
         <View style={S.starHalfRightWrap}>
           <Star
             text='★'
-            style={[S.starHalfRight, S.emptyStar, customStarStyle, starHalfRightStyle]}
+            style={[customStarStyle, S.starHalfRight, starHalfRightStyle, S.emptyStar]}
           />
         </View>
       </View>
@@ -135,7 +135,7 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
           <Star
             text='★'
             renderStar={renderEmptyStar}
-            style={[S.emptyStar, customStarStyle]}
+            style={[customStarStyle, S.emptyStar]}
             key={v}
           />
         ))}
