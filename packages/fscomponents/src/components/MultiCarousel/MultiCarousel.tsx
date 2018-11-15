@@ -204,7 +204,9 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   }
 
   getPageWidth = () => {
-    return this.state.itemWidth * (this.props.itemsPerPage || this.defaultItemsPerPage);
+    return Math.ceil(
+      this.state.itemWidth * (this.props.itemsPerPage || this.defaultItemsPerPage)
+    );
   }
 
   getItemWidth = (containerWidth: number) => {
