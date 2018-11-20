@@ -40,7 +40,7 @@ ext {
     minSdkVersion = 21
     compileSdkVersion = 27
     targetSdkVersion = 27
-    supportLibVersion = "27.0.2"
+    supportLibVersion = "26.1.0" // TODO: we can upgrade this after react-native-navigation update
     googlePlayServicesVersion = "15.0.1" // Needed for react-native-camera & react-native-maps
 }
 
