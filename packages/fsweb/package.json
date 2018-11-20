@@ -36,7 +36,7 @@
     "webpack-cli": "^3.0.8",
     "webpack-hot-client": "^4.0.4",
     "webpack-manifest-plugin": "^2.0.2",
-    "webpack-serve": "^1.0.4"
+    "webpack-serve": "^2.0.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
