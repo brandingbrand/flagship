@@ -1,7 +1,7 @@
 import { EmailErrors, FSTranslationKeys, PasswordFormErrors } from '../types';
 
 export const passwordErrors: PasswordFormErrors = {
-  tooShort: 'Password should have at least {{ minCharacters }} characters',
+  tooShort: 'Password should have at least {{minCharacters}} characters',
   invalid: 'Password is missing or invalid',
   mismatch: 'Passwords must match'
 };
