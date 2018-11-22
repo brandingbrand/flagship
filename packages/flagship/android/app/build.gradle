@@ -73,6 +73,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+    bundleAssetName: "index.bundle",
     entryFile: "index.js"
 ]
 
