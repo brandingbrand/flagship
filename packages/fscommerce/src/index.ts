@@ -13,7 +13,11 @@ export {
 } from './Commerce/sessions/CommerceCookieSessionManager';
 
 export { default as ReviewTypes } from './Review/ReviewTypes';
-export { ReviewDataSource, AbstractReviewDataSource } from './Review/ReviewDataSource';
+export {
+  ReviewDataSource,
+  AbstractReviewDataSource,
+  WriteReviewDataSource
+} from './Review/ReviewDataSource';
 
 export { AddressType, AddressTypeValidation } from './Address/AddressTypes';
 export { default as AddressDataSource } from './Address/AddressDataSource';
