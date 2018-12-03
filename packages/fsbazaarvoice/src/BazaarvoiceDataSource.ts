@@ -5,10 +5,8 @@ import {
   ReviewTypes
 } from '@brandingbrand/fscommerce';
 import * as BazaarvoiceNormalizer from './BazaarvoiceNormalizer';
+import * as BazaarvoiceDenormalizer from './BazaarvoiceDenormalizer';
 import { BazaarvoiceReviewRequest } from './BazaarvoiceReviewRequest';
-import { BazaarvoiceWriteReviewRequest } from './BazaarvoiceWriteReviewRequest';
-
-interface StringDictionary { [key: string]: string; }
 
 export interface BazaarvoiceConfig {
   endpoint: string;
@@ -99,50 +97,12 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
 
   async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
     const params = {
-      ...this.mapWriteReviewCommandToRequest(command),
-      ...this.mapWriteReviewAdditionalFields('AdditionalField', command.additionalFields),
-      ...this.mapWriteReviewAdditionalFields('Rating', command.additionalRatings)
+      ...BazaarvoiceDenormalizer.writeReviewParams(command),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('AdditionalField', command.additionalFields),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('Rating', command.additionalRatings)
     };
     const { data } = await this.client.post('data/submitreview.json', undefined, { params });
 
     return data;
-  }
-
-  private mapWriteReviewCommandToRequest(
-    command: ReviewTypes.WriteReviewCommand
-  ): BazaarvoiceWriteReviewRequest {
-    return {
-      Action: command.actionType,
-      ProductId: command.productId,
-      Rating: command.rating,
-      ReviewText: command.reviewText,
-      AgreedToTermsAndConditions: command.agreedToTermsAndConditions,
-      CampaignId: command.campaignId,
-      IsRecommended: command.isRecommended,
-      Title: command.title,
-      User: command.user,
-      UserEmail: command.userEmail,
-      UserId: command.userId,
-      UserLocation: command.userLocation,
-      UserNickname: command.userNickname
-    };
-  }
-
-  private mapWriteReviewAdditionalFields(
-    propPrefix: string,
-    objectToMap?: StringDictionary
-  ): StringDictionary {
-    if (!objectToMap) {
-      return {};
-    }
-
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    return Object.keys(objectToMap)
-      .reduce((additionalFields: StringDictionary, key: string): StringDictionary => {
-        return {
-          ...additionalFields,
-          [`${propPrefix}_${key}`]: objectToMap[key]
-        };
-      }, {});
   }
 }
