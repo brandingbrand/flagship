@@ -103,6 +103,6 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     };
     const { data } = await this.client.post('data/submitreview.json', undefined, { params });
 
-    return data;
+    return BazaarvoiceNormalizer.writeReview(data);
   }
 }

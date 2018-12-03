@@ -51,7 +51,9 @@ export class PowerReviewsDataSource extends AbstractReviewDataSource implements 
       .then(({ data }) => data.results.map(PowerReviewsNormalizer.reviewStatistics));
   }
 
-  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+  async writeReview(
+    command: ReviewTypes.WriteReviewCommand
+  ): Promise<ReviewTypes.WriteReviewSubmission> {
     throw new Error('Not implemented');
   }
 }

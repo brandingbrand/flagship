@@ -90,7 +90,9 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
     return ids.map(id => Questions[id]).reduce((all, current) => [...all, ...current], []);
   }
 
-  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+  async writeReview(
+    command: ReviewTypes.WriteReviewCommand
+  ): Promise<ReviewTypes.WriteReviewSubmission> {
     throw new Error('Not implemented');
   }
 }

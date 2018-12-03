@@ -4,7 +4,8 @@ import {
   ReviewQuestion,
   ReviewStatistics,
   ReviewSummary,
-  WriteReviewCommand
+  WriteReviewCommand,
+  WriteReviewSubmission
 } from './ReviewTypes';
 
 import { Product } from '../Commerce/CommerceTypes';
@@ -25,7 +26,7 @@ export interface ReviewDataSource {
 }
 
 export interface WriteReviewDataSource {
-  writeReview(command: WriteReviewCommand): Promise<any>;
+  writeReview(command: WriteReviewCommand): Promise<WriteReviewSubmission>;
 }
 
 export abstract class AbstractReviewDataSource implements ReviewDataSource, WriteReviewDataSource {
@@ -33,7 +34,7 @@ export abstract class AbstractReviewDataSource implements ReviewDataSource, Writ
   abstract fetchReviewSummary(query: ReviewQuery): Promise<ReviewSummary[]>;
   abstract fetchReviewStatistics(query: ReviewQuery): Promise<ReviewStatistics[]>;
 
-  abstract writeReview(command: WriteReviewCommand): Promise<any>;
+  abstract writeReview(command: WriteReviewCommand): Promise<WriteReviewSubmission>;
 
   mergeReviewDetails(...detailsArray: ReviewDetails[][]): ReviewDetails[] {
     return detailsArray.reduce((merged, details) => {
