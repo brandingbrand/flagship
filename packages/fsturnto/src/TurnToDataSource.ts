@@ -61,4 +61,8 @@ export class TurnToDataSource extends AbstractReviewDataSource implements Review
       }
     }).then(({ data }) => data.map(TurnToNormalizer.reviewStatistics));
   }
+
+  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+    throw new Error('Not implemented');
+  }
 }

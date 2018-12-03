@@ -8,3 +8,4 @@ export * from './types/ReviewQuery';
 export * from './types/ReviewQuestion';
 export * from './types/ReviewStatistics';
 export * from './types/ReviewSummary';
+export * from './types/WriteReviewCommand';
