@@ -87,11 +87,14 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     }
   }
 
-  componentDidUpdate(prevProps: StepTrackerProps): void {
+  componentDidUpdate(prevProps: StepTrackerProps, prevState: StepTrackerState): void {
     const prevActiveStep = prevProps.steps.findIndex(step => step.status === 'active');
     const currActiveStep = this.props.steps.findIndex(step => step.status === 'active');
 
-    if (prevActiveStep !== currActiveStep) {
+    const prevItemWidth = prevState.itemWidth;
+    const currItemWidth = this.state.itemWidth;
+
+    if (prevActiveStep !== currActiveStep || prevItemWidth !== currItemWidth) {
       if (this.props.animated) {
         Animated.timing(this.sliderPosition, {
           useNativeDriver: true,
