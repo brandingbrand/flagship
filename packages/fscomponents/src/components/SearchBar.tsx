@@ -5,7 +5,9 @@ import {
   ImageSourcePropType,
   ImageStyle,
   ImageURISource,
+  Platform,
   StyleProp,
+  StyleSheet,
   Text,
   TextInput,
   TextInputProperties,
@@ -19,6 +21,9 @@ import { style as S } from '../styles/SearchBar';
 
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
+
+const cancelIcon = require('../../assets/images/clear.png');
+const isAndroid = Platform.OS === 'android';
 
 export interface SearchBarProps {
   placeholder?: string;
@@ -69,6 +74,12 @@ export interface SearchBarState {
   isFocused: boolean;
 }
 
+const styles = StyleSheet.create({
+  rightIcon: {
+    width: 25
+  }
+});
+
 export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   input: any;
   container: any;
@@ -92,10 +103,12 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   }
 
   render(): any {
+
+    console.log('this.state: ', this.state);
     const {
+      showCancel,
       style,
-      showLocator,
-      showCancel
+      showLocator
     } = this.props;
 
     return (
@@ -143,7 +156,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           value={this.state.value}
           onSubmitEditing={this.handleSubmit}
           placeholder={placeholder}
-          clearButtonMode={clearButtonMode || 'never'}
+          clearButtonMode={clearButtonMode || 'always'}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           returnKeyType='search'
@@ -151,8 +164,23 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           underlineColorAndroid='transparent'
           {...inputProps}
         />
+        {this.renderAndroidCancelSearchIcon()}
         {this.renderRightBtnIcon()}
       </View>
+    );
+  }
+
+  renderAndroidCancelSearchIcon = () => {
+    if (!isAndroid || !this.state.value.length) {
+      return null;
+    }
+
+    const icon = <Image source={cancelIcon} style={styles.rightIcon} resizeMode='contain' />;
+
+    return (
+      <TouchableOpacity onPress={this.handleClear}>
+        {icon}
+      </TouchableOpacity>
     );
   }
 
@@ -205,6 +233,14 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     this.input.blur();
     if (this.props.onCancel) {
       this.props.onCancel();
+    }
+  }
+
+  handleClear = () => {
+    this.input.blur();
+    this.setState({ value: '' });
+    if (this.props.onChange) {
+      this.props.onChange('');
     }
   }
 

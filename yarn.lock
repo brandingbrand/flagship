@@ -469,6 +469,218 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@brandingbrand/flagship@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/flagship/-/flagship-2.0.1-alpha.18.tgz#3322d9cf205ebe13f2f132c4e1d4365166d2e5b9"
+  dependencies:
+    fs-extra "^7.0.0"
+    glob "^7.1.2"
+    jsc-android "224109.x.x"
+    node-suspect "^0.1.1"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    react-native-svg "^7.0.2"
+    replace-in-file "^3.4.0"
+    yargs "^12.0.1"
+
+"@brandingbrand/fsapp@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsapp/-/fsapp-2.0.1-alpha.18.tgz#71ec605b251b7fa25d0c03175888951ad94b14ab"
+  dependencies:
+    "@brandingbrand/fsengage" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    path-to-regexp "^2.2.1"
+    qs "^6.5.2"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    react-native-cookies "^3.3.0"
+    react-native-device-info "^0.22.0"
+    react-native-navigation "1.1.483"
+    react-native-restart "^0.0.7"
+    react-native-sensitive-info "^5.1.0"
+    react-redux "^5.0.7"
+    react-router-dom "^4.3.1"
+    redux "^4.0.0"
+    redux-immutable-state-invariant "^2.1.0"
+    redux-logger "^3.0.6"
+    redux-thunk "^2.2.0"
+
+"@brandingbrand/fsbazaarvoice@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbazaarvoice/-/fsbazaarvoice-2.0.1-alpha.18.tgz#cfe16a1f6831d700de2994d56a3bcb88807722b3"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+
+"@brandingbrand/fscategory@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fscategory/-/fscategory-2.0.1-alpha.18.tgz#4f0f9a973f02da5f55e732911f0d30f51fff0ca0"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fscomponents" "2.0.1-alpha.18+b6ba811"
+    react "^16.3.2"
+    react-native "^0.55.4"
+
+"@brandingbrand/fscommerce@2.0.1-alpha.18", "@brandingbrand/fscommerce@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fscommerce/-/fscommerce-2.0.1-alpha.18.tgz#1001ded5f6424a469d1041478caa6d37cb2f619f"
+  dependencies:
+    "@brandingbrand/fsengage" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    decimal.js "^10.0.1"
+    lodash-es "^4.17.10"
+    qs "^6.5.1"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    react-native-cookies "^3.3.0"
+    react-native-sensitive-info "^5.1.0"
+
+"@brandingbrand/fscomponents@2.0.1-alpha.18", "@brandingbrand/fscomponents@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fscomponents/-/fscomponents-2.0.1-alpha.18.tgz#507cf747cd5394b01d2f2e09d6492ab7bc7d1a2b"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsengage" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsi18n" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    credit-card "^3.0.1"
+    decimal.js "^10.0.1"
+    lodash-es "^4.17.10"
+    memoize-one "^4.0.2"
+    moment "^2.22.2"
+    photoswipe "^4.1.2"
+    qs "^6.5.2"
+    react "^16.3.2"
+    react-dom "^16.3.2"
+    react-id-swiper "^1.6.6"
+    react-native "^0.55.4"
+    react-native-masked-text "^1.7.1"
+    react-native-svg "^7.0.2"
+    react-native-swiper "^1.5.13"
+    react-native-web-modal "^1.0.1"
+    sweetalert "^2.1.0"
+    tcomb-form-native "^0.6.12"
+
+"@brandingbrand/fsengage@2.0.1-alpha.18", "@brandingbrand/fsengage@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsengage/-/fsengage-2.0.1-alpha.18.tgz#ab8fdc4ca208c18e13552beaab39706a5b466912"
+  dependencies:
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/react-native-adobe-marketing-cloud" "^0.1.1"
+    "@brandingbrand/react-native-google-analytics" "^2.1.0"
+    "@brandingbrand/react-native-leanplum" "^1.0.1"
+    decimal.js "^10.0.0"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    react-native-permissions "^1.1.1"
+    url-parse "^1.4.3"
+
+"@brandingbrand/fsfoundation@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-2.0.1-alpha.18.tgz#a9e4f66f69571f1564bd8c49be1d948cdf4bf56a"
+
+"@brandingbrand/fsi18n@2.0.1-alpha.18", "@brandingbrand/fsi18n@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsi18n/-/fsi18n-2.0.1-alpha.18.tgz#aef6aaab80af1a321a1bfaef159e7f0f9f87d0b3"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    decimal.js "^10.0.1"
+    i18n-js "^3.0.8"
+    lodash-es "^4.17.10"
+    react-native-i18n "^2.0.15"
+
+"@brandingbrand/fsnetwork@2.0.1-alpha.18", "@brandingbrand/fsnetwork@2.0.1-alpha.18+b6ba811":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsnetwork/-/fsnetwork-2.0.1-alpha.18.tgz#f116d544c491308bc9b20d118ed46cf0897e7878"
+  dependencies:
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    axios "^0.18.0"
+
+"@brandingbrand/fsproductdetail@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsproductdetail/-/fsproductdetail-2.0.1-alpha.18.tgz#d08a8b6d23f627660ff98c2a15aa24f90f969031"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    lodash-es "^4.17.10"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    redux "^4.0.0"
+
+"@brandingbrand/fsproductindex@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsproductindex/-/fsproductindex-2.0.1-alpha.18.tgz#466ed6564ea08ae9604eaaa9cf63355e00b95bf9"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fscomponents" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsi18n" "2.0.1-alpha.18+b6ba811"
+    lodash-es "^4.17.10"
+    pluralize "^7.0.0"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    redux "^4.0.0"
+
+"@brandingbrand/fssalesforce@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fssalesforce/-/fssalesforce-2.0.1-alpha.18.tgz#2d03f02f4425a4b800d7cf7bcbc0362d362a2bd5"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    decimal.js "^10.0.1"
+    jwt-decode "^2.2.0"
+    qs "^6.5.2"
+
+"@brandingbrand/fsshopify@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsshopify/-/fsshopify-2.0.1-alpha.18.tgz#2c62f21ba8fb6c7253c181dc7b1889498a439bfc"
+  dependencies:
+    "@brandingbrand/fscommerce" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsfoundation" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsi18n" "2.0.1-alpha.18+b6ba811"
+    "@brandingbrand/fsnetwork" "2.0.1-alpha.18+b6ba811"
+    decimal.js "^10.0.1"
+    react "^16.3.2"
+    react-native "^0.55.4"
+    react-native-navigation "1.1.483"
+    react-native-payments "^0.7.0"
+
+"@brandingbrand/fsweb@2.0.1-alpha.18":
+  version "2.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsweb/-/fsweb-2.0.1-alpha.18.tgz#89fb32f2329c472529504e5c98a89b1905646761"
+  dependencies:
+    autoprefixer "^9.1.5"
+    babel-core "^6.26.3"
+    babel-loader "^7.1.4"
+    babel-plugin-react-native-web "^0.8.4"
+    babel-polyfill "^6.26.0"
+    babel-preset-env "^1.7.0"
+    babel-preset-react-native "^4.0.0"
+    cache-loader "^1.2.2"
+    connect-history-api-fallback "^1.5.0"
+    css-loader "^1.0.0"
+    extract-text-webpack-plugin "4.0.0-beta.0"
+    file-loader "^1.1.11"
+    global "^4.3.2"
+    html-webpack-plugin "^3.2.0"
+    koa-connect "^2.0.1"
+    postcss-flexbugs-fixes "^4.1.0"
+    postcss-loader "^3.0.0"
+    react-native-web-image-loader "^0.0.6"
+    style-loader "^0.23.0"
+    svgs "^3.2.1"
+    sw-precache-webpack-plugin "^0.11.5"
+    ts-loader "^4.3.0"
+    webpack "^4.16.5"
+    webpack-bundle-size-analyzer "^2.7.0"
+    webpack-cli "^3.0.8"
+    webpack-hot-client "^4.0.4"
+    webpack-manifest-plugin "^2.0.2"
+    webpack-serve "^1.0.4"
+
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@brandingbrand/greenkeeper-lockfile/-/greenkeeper-lockfile-0.0.1.tgz#fcdfdbff529aed0eb78ae2719c726f001f2d13ce"
