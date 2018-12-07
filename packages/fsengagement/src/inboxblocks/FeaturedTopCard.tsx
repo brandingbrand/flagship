@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  DeviceEventEmitter,
   StyleProp,
   TextStyle,
   TouchableOpacity
@@ -7,6 +8,7 @@ import {
 import PropTypes from 'prop-types';
 
 import {
+  EmitterProps,
   JSON,
   ScreenProps,
   StoryGradient
@@ -16,10 +18,11 @@ import TextBlock from './TextBlock';
 import CTABlock from './CTABlock';
 import ImageBlock from './ImageBlock';
 
-export interface ComponentProps extends ScreenProps {
+export interface ComponentProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<TextStyle>;
   story?: JSON;
   contents: any;
+  api?: any;
   storyGradient?: StoryGradient;
 }
 
@@ -36,6 +39,13 @@ export default class Card extends Component<ComponentProps> {
   })
 
   handleStoryAction = (json: JSON) => {
+    DeviceEventEmitter.emit('viewStory', {
+      title: this.props.name,
+      id: this.props.id
+    });
+    this.props.api.logEvent('viewInboxStory', {
+      messageId: this.props.id
+    });
     this.props.navigator.push({
       screen: 'LayoutBuilder',
       navigatorStyle: {
@@ -43,7 +53,9 @@ export default class Card extends Component<ComponentProps> {
       },
       passProps: {
         json,
-        backButton: true
+        backButton: true,
+        name: this.props.name,
+        id: this.props.id
       }
     });
   }

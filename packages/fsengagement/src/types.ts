@@ -16,12 +16,18 @@ export interface Action {
   value: string;
   subject?: string;
   body?: string;
+  name?: string;
+  id?: string;
+}
+
+export interface EmitterProps {
+  id?: string;
+  name?: string;
 }
 
 export interface ComponentList {
   [key: string]: ComponentClass<any>;
 }
-
 
 export interface Icon {
   type: string;
@@ -33,9 +39,12 @@ export interface CardProps {
   containerStyle?: StyleProp<TextStyle>;
   private_blocks: BlockItem[];
   story?: JSON;
+  api?: any;
   plainCard?: boolean;
   storyGradient?: StoryGradient;
   navigator: Navigator;
+  name?: string;
+  id?: string;
 }
 
 export interface Empty {

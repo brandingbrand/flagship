@@ -13,6 +13,7 @@ import {
 
 import {
   Action,
+  EmitterProps,
   Icon,
   JSON,
   ScreenProps
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface CTABlockProps extends ScreenProps {
+export interface CTABlockProps extends ScreenProps, EmitterProps {
   action: string;
   text: string;
   icon: Icon;
@@ -55,7 +56,9 @@ export default class CTABlock extends Component<CTABlockProps> {
     story: PropTypes.object,
     cardActions: PropTypes.object,
     handleAction: PropTypes.func,
-    handleStoryAction: PropTypes.func
+    handleStoryAction: PropTypes.func,
+    name: PropTypes.string,
+    id: PropTypes.string
   };
 
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
@@ -76,10 +79,18 @@ export default class CTABlock extends Component<CTABlockProps> {
   handleActionNoStory = (actions: Action) => {
     const { handleAction, cardActions } = this.context;
     if (actions && actions.type) {
-      return handleAction(actions);
+      return handleAction({
+        ...actions,
+        name: this.props.name,
+        id: this.props.id
+      });
     }
     // tappable card with no story - CTAs use actions of container card
-    return handleAction(cardActions);
+    return handleAction({
+      ...cardActions,
+      name: this.props.name,
+      id: this.props.id
+    });
   }
 
   takeAction = (action: string, actions: Action): void => {

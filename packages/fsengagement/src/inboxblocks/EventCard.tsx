@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  DeviceEventEmitter,
   StyleSheet,
   TouchableOpacity,
   View
@@ -66,6 +67,13 @@ export default class EventCard extends Component<ComponentProps> {
   })
 
   handleStoryAction = (json: JSON) => {
+    DeviceEventEmitter.emit('viewStory', {
+      title: this.props.name,
+      id: this.props.id
+    });
+    this.props.api.logEvent('viewInboxStory', {
+      messageId: this.props.id
+    });
     this.props.navigator.push({
       screen: 'LayoutBuilder',
       navigatorStyle: {
@@ -73,7 +81,9 @@ export default class EventCard extends Component<ComponentProps> {
       },
       passProps: {
         json,
-        backButton: true
+        backButton: true,
+        name: this.props.name,
+        id: this.props.id
       }
     });
   }
