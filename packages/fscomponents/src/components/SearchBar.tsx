@@ -103,8 +103,6 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   }
 
   render(): any {
-
-    console.log('this.state: ', this.state);
     const {
       showCancel,
       style,
@@ -171,7 +169,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   }
 
   renderAndroidCancelSearchIcon = () => {
-    if (!isAndroid || this.state.value.length === 0) {
+    if (!this.state.value || !isAndroid || this.state.value.length === 0) {
       return null;
     }
 
