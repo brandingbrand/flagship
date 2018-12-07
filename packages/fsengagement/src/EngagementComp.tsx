@@ -2,6 +2,7 @@
 import React, { Component, ComponentClass, Fragment } from 'react';
 import {
   Animated,
+  DeviceEventEmitter,
   Dimensions,
   Image,
   Linking,
@@ -19,6 +20,7 @@ import {
   Action,
   BlockItem,
   ComponentList,
+  EmitterProps,
   JSON,
   ScreenProps
  } from './types';
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
 const gradientImage = require('../assets/images/gradient.png');
 const backArrow = require('../assets/images/backArrow.png');
 
-export interface EngagementScreenProps extends ScreenProps {
+export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
   backButton?: boolean;
   noScrollView?: boolean;
@@ -107,6 +109,17 @@ export default function(
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
+      DeviceEventEmitter.emit('viewLink', {
+        title: actions.name,
+        id: actions.id,
+        type: actions.type,
+        value: actions.value
+      });
+      api.logEvent('clickInboxCta', {
+        messageId: actions.id,
+        ctaType: actions.type,
+        ctaValue: actions.value
+      });
       switch (actions.type) {
         case 'blog-url':
           this.props.navigator.push({
@@ -182,18 +195,24 @@ export default function(
         private_blocks,
         private_type,
         ...restProps } = item;
-      const { json } = this.props;
+      const { json, id, name } = this.props;
+      const props = {
+        id,
+        name,
+        ...restProps
+      };
 
       if (!layoutComponents[private_type]) {
         return;
       }
-      restProps.navigator = this.props.navigator;
+      props.navigator = this.props.navigator;
 
       return React.createElement(
         layoutComponents[private_type],
         {
-          ...restProps,
-          storyGradient: restProps.story ? json.storyGradient : null,
+          ...props,
+          storyGradient: props.story ? json.storyGradient : null,
+          api,
           key: Math.floor(Math.random() * 1000000)
         },
         private_blocks && private_blocks.map(this.renderBlock)

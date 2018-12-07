@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+  DeviceEventEmitter,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -19,7 +20,9 @@ export default class Card extends Component<ActionsCard> {
   static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func,
-    cardActions: PropTypes.object
+    cardActions: PropTypes.object,
+    id: PropTypes.string,
+    name: PropTypes.string
   };
   static contextTypes: any = {
     handleAction: PropTypes.func
@@ -28,10 +31,19 @@ export default class Card extends Component<ActionsCard> {
   getChildContext = () => ({
     story: this.props.story,
     handleStoryAction: this.handleStoryAction,
-    cardActions: this.props.actions
+    cardActions: this.props.actions,
+    id: this.props.id,
+    name: this.props.name
   })
 
   handleStoryAction = (json: JSON) => {
+    DeviceEventEmitter.emit('viewStory', {
+      title: this.props.name,
+      id: this.props.id
+    });
+    this.props.api.logEvent('viewInboxStory', {
+      messageId: this.props.id
+    });
     this.props.navigator.push({
       screen: 'EngagementComp',
       navigatorStyle: {
@@ -39,7 +51,9 @@ export default class Card extends Component<ActionsCard> {
       },
       passProps: {
         json,
-        backButton: true
+        backButton: true,
+        name: this.props.name,
+        id: this.props.id
       }
     });
   }
