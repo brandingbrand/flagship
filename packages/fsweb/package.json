@@ -18,7 +18,7 @@
     "babel-preset-react-native": "^4.0.0",
     "cache-loader": "^1.2.2",
     "connect-history-api-fallback": "^1.5.0",
-    "css-loader": "^1.0.0",
+    "css-loader": "^2.0.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "global": "^4.3.2",
