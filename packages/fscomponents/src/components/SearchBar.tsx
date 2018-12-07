@@ -171,7 +171,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   }
 
   renderAndroidCancelSearchIcon = () => {
-    if (!isAndroid || !this.state.value.length) {
+    if (!isAndroid || this.state.value.length === 0) {
       return null;
     }
 
