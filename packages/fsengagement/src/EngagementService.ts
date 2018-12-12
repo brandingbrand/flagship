@@ -183,7 +183,6 @@ export class EngagementService {
 
   /**
    * Get inbox messages for the current user
-   *
    * @returns {EngagementMessage[]} inbox messages
    */
   async getMessages(): Promise<EngagementMessage[]> {
