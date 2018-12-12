@@ -1,0 +1,27 @@
+{
+  "name": "@brandingbrand/fsengagement",
+  "version": "0.1.0",
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "main": "dist/index",
+  "dependencies": {
+    "@brandingbrand/fsnetwork": "2.0.0",
+    "@types/prop-types": "15.5.3",
+    "@types/react-native-video": "^2.0.8",
+    "lodash-es": "^4.17.10",
+    "prop-types": "^15.6.2",
+    "react": "^16.3.2",
+    "react-native": "^0.55.4",
+    "react-native-device-info": "^0.21.5",
+    "react-native-fcm": "16.0.0",
+    "react-native-navigation": "1.1.483",
+    "react-native-video": "^3.2.1",
+    "uuid-js": "0.7.5"
+  },
+  "rnpm": {
+    "commands": {
+      "prelink": "react-native link react-native-fcm"
+    }
+  }
+}
