@@ -1603,7 +1603,7 @@
 
 "@types/prop-types@15.5.3":
   version "15.5.3"
-  resolved "http://npm.in.bbhosted.com/@types%2fprop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
+  resolved "http://npm.in.bbhosted.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
 
 "@types/qs@^6.5.1":
   version "6.5.1"
@@ -1642,7 +1642,7 @@
 
 "@types/react-native-video@^2.0.8":
   version "2.0.8"
-  resolved "http://npm.in.bbhosted.com/@types%2freact-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
+  resolved "http://npm.in.bbhosted.com/@types/react-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
