@@ -1603,7 +1603,7 @@
 
 "@types/prop-types@15.5.3":
   version "15.5.3"
-  resolved "http://npm.in.bbhosted.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
 
 "@types/qs@^6.5.1":
   version "6.5.1"
@@ -1642,7 +1642,7 @@
 
 "@types/react-native-video@^2.0.8":
   version "2.0.8"
-  resolved "http://npm.in.bbhosted.com/@types/react-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
+  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -7945,7 +7945,7 @@ keygrip@~1.0.2:
 
 keymirror@0.1.1:
   version "0.1.1"
-  resolved "http://npm.in.bbhosted.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
 
 killable@^1.0.0:
   version "1.0.0"
@@ -10618,7 +10618,7 @@ react-native-cookies@^3.3.0:
 
 react-native-device-info@^0.21.5:
   version "0.21.5"
-  resolved "http://npm.in.bbhosted.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
+  resolved "http://registry.npmjs.org/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
 react-native-device-info@^0.22.0:
   version "0.22.2"
@@ -10626,7 +10626,7 @@ react-native-device-info@^0.22.0:
 
 react-native-fcm@16.0.0:
   version "16.0.0"
-  resolved "http://npm.in.bbhosted.com/react-native-fcm/-/react-native-fcm-16.0.0.tgz#22ff9de21a2fe5cb30f8d50b1a3b4bf3bccd6434"
+  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-16.0.0.tgz#22ff9de21a2fe5cb30f8d50b1a3b4bf3bccd6434"
 
 react-native-geocoder@^0.5.0:
   version "0.5.0"
@@ -10719,7 +10719,7 @@ react-native-touch-id@^4.0.1:
 
 react-native-video@^3.2.1:
   version "3.2.1"
-  resolved "http://npm.in.bbhosted.com/react-native-video/-/react-native-video-3.2.1.tgz#7ba3cbdfc5c747b5b00452811e98193824b16ce3"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-3.2.1.tgz#7ba3cbdfc5c747b5b00452811e98193824b16ce3"
   dependencies:
     keymirror "0.1.1"
     prop-types "^15.5.10"
@@ -12931,7 +12931,7 @@ utils-merge@1.0.1:
 
 uuid-js@0.7.5:
   version "0.7.5"
-  resolved "http://npm.in.bbhosted.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
+  resolved "https://registry.yarnpkg.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
 
 uuid@3.0.1:
   version "3.0.1"
