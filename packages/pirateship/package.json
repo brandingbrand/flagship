@@ -44,6 +44,7 @@
     "react-native-htmlview": "^0.13.0",
     "react-native-i18n": "^2.0.15",
     "react-native-navigation": "1.1.483",
+    "react-native-payments": "0.7.0",
     "react-native-push-notification": "^3.1.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.1.0",
@@ -64,7 +65,8 @@
       "react-native-sensitive-info",
       "react-native-safe-area",
       "react-native-push-notification",
-      "react-native-svg"
+      "react-native-svg",
+      "react-native-payments"
     ],
     "webTitle": "PirateShip"
   },
