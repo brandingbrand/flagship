@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fscodestyle",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "license": "MIT",
   "bin": {
     "fscodestyle": "index.js"
@@ -10,8 +10,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "tslint": "^5.10.0",
-    "tslint-eslint-rules": "^5.3.1",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^3.6.0"
   },
   "publishConfig": {

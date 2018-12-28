@@ -20,7 +20,7 @@ export interface ReviewsSummaryProps {
   averageStyle?: StyleProp<TextStyle>;
   recommendStyle?: StyleProp<TextStyle>;
   rowStyle?: StyleProp<ViewStyle>;
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   hideReviewIndicatorSubtitle?: boolean;
   reviewIndicatorSubtitle?: string;
   reviewIndicatorRowStyle?: StyleProp<ViewStyle>;
@@ -36,7 +36,7 @@ export class ReviewsSummary extends Component<ReviewsSummaryProps> {
       style,
       base= 5,
       recommend,
-      reviewIndicatorProps= {},
+      reviewIndicatorProps = {},
       countStyle,
       averageStyle,
       recommendStyle,
@@ -46,8 +46,9 @@ export class ReviewsSummary extends Component<ReviewsSummaryProps> {
       reviewIndicatorRowStyle,
       reviewIndicatorTitleText,
       reviewIndicatorTitleTextStyle
-     } = this.props;
+    } = this.props;
 
+    const numberFormatting = { maximumFractionDigits: 1 };
     const reviewIndicatorCopy = reviewIndicatorSubtitle ? reviewIndicatorSubtitle :
                     'based on ' + count + ' reviews';
 
@@ -58,7 +59,9 @@ export class ReviewsSummary extends Component<ReviewsSummaryProps> {
             <Text style={reviewIndicatorTitleTextStyle}>{reviewIndicatorTitleText}</Text>
           )}
           <ReviewIndicator value={value} {...reviewIndicatorProps} />
-          <Text style={[S.averageStyle, averageStyle]}>{value} / {base}</Text>
+          <Text style={[S.averageStyle, averageStyle]}>
+            {FSI18n.number(value, numberFormatting)} / {FSI18n.number(base, numberFormatting)}
+          </Text>
         </View>
         {!hideReviewIndicatorSubtitle && (
           <View style={[S.row, rowStyle]}>

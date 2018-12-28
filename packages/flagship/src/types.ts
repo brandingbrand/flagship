@@ -3,6 +3,12 @@ export interface CodepushConfig {
   appKey: string;
 }
 
+export enum TargetedDevices {
+  iPhone = 'iPhone',
+  iPad = 'iPad',
+  Universal = 'Universal'
+}
+
 export interface Config {
   name: string;
   displayName: string;
@@ -11,9 +17,16 @@ export interface Config {
   googleMapApiKey: string;
 
   codepush?: {
+    appCenterToken: string;
     android: CodepushConfig;
     ios: CodepushConfig;
   };
+
+  pushIcons?: {
+    android?: string;
+    ios?: string;
+  };
+  firebaseGoogleServices?: any;
 
   zendeskChat?: {
     accountKey: string;
@@ -76,10 +89,29 @@ export interface Config {
     propertiesPath: string;
   };
 
+  targetedDevices?: TargetedDevices;
+
   webPath?: string;
   webTitle?: string;
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
+  ios: IOSConfig;
+  adobeAnalytics?: {
+    ios: {
+      configPath: string;
+    };
+    android: {
+      configPath: string;
+    };
+  };
+}
+
+export interface IOSConfig {
+  pods: PodsConfig;
+}
+
+export interface PodsConfig {
+  sources: string[];
 }
 
 export interface NPMPackageConfig {

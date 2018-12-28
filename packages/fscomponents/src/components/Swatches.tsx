@@ -177,6 +177,9 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       renderLabel
     } = this.props;
 
+    const { selected } = this.state;
+    const name = selected.swatch.name;
+
     if (renderLabel) {
       return renderLabel(swatch);
     }
@@ -184,7 +187,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     return (
       <View style={[S.labelContainer, labelContainerStyle]}>
         <Text style={[S.labelTitle, labelTitleStyle]}>{title || 'Selected'}: </Text>
-        <Text style={labelValueStyle}>{swatch.name || ''}</Text>
+        <Text style={labelValueStyle}>{name || ''}</Text>
       </View>
     );
   }
@@ -223,10 +226,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
   render(): JSX.Element {
     const {
-      label,
       items,
       style,
-      maxSwatches
+      maxSwatches,
+      label
     } = this.props;
 
     const { shouldShowMoreLess, showMore } = this.state;

@@ -41,7 +41,7 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedRowStyle?: StyleProp<ViewStyle>;
 
   // children
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   moreTextProps?: MoreTextProps;
 
   // buttons
@@ -125,13 +125,15 @@ export class ReviewItem extends Component<ReviewItemProps> {
             </Text>
           </View>
         )}
-        <MoreText
-          text={text}
-          textMoreLessStyle={moreTextStyle}
-          containerStyle={S.row}
-          numberOfCharacters={325}
-          {...moreTextProps}
-        />
+        {!!text && (
+          <MoreText
+            text={text}
+            textMoreLessStyle={moreTextStyle}
+            containerStyle={S.row}
+            numberOfCharacters={325}
+            {...moreTextProps}
+          />
+        )}
         {isRecommended !== undefined && (
           <View style={[S.row, rowStyle, recommendedRowStyle]}>
             {recommendedImage && (
