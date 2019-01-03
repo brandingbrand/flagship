@@ -19,6 +19,7 @@ export interface CategoryBoxProps extends CommerceTypes.Category {
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
+  noFontWeight?: boolean;
 }
 
 export class CategoryBox extends PureComponent<CategoryBoxProps> {
@@ -34,7 +35,8 @@ export class CategoryBox extends PureComponent<CategoryBoxProps> {
       style,
       title,
       titleStyle,
-      underlayColor
+      underlayColor,
+      noFontWeight
     } = this.props;
 
     return (
@@ -45,7 +47,7 @@ export class CategoryBox extends PureComponent<CategoryBoxProps> {
       >
         <View style={S.boxInner}>
           {showImage && image && <Image source={image} style={imageStyle} />}
-          <Text style={[S.boxText, titleStyle]}>
+          <Text style={[!noFontWeight && S.fontWeight, S.boxText, titleStyle]}>
             {title}
           </Text>
         </View>

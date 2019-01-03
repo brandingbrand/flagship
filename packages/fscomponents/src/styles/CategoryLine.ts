@@ -23,7 +23,9 @@ export const style = StyleSheet.create({
   buttonText: {
     flex: 1,
     fontSize: 15,
-    fontWeight: '500',
     paddingLeft: 10
+  },
+  fontWeight: {
+    fontWeight: '500'
   }
 });

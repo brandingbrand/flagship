@@ -16,7 +16,9 @@ export const style = StyleSheet.create({
     alignItems: 'center'
   },
   boxText: {
-    fontSize: 15,
+    fontSize: 15
+  },
+  fontWeight: {
     fontWeight: '500'
   }
 });

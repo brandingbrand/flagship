@@ -26,6 +26,7 @@ export interface CategoryLineProps extends CommerceTypes.Category {
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
+  noFontWeight?: boolean;
 }
 
 export class CategoryLine extends PureComponent<CategoryLineProps> {
@@ -47,7 +48,8 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
       style,
       title,
       titleStyle,
-      underlayColor
+      underlayColor,
+      noFontWeight
     } = this.props;
 
     return (
@@ -59,7 +61,7 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
       >
         <View style={S.rowInner}>
           {showImage && image && <Image source={image} style={imageStyle} />}
-          <Text style={[S.buttonText, titleStyle]}>
+          <Text style={[!noFontWeight && S.fontWeight, S.buttonText, titleStyle]}>
             {title}
           </Text>
           {showAccessory && accessorySrc &&
