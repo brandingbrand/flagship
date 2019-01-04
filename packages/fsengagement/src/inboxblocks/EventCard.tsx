@@ -75,7 +75,7 @@ export default class EventCard extends Component<ComponentProps> {
       messageId: this.props.id
     });
     this.props.navigator.push({
-      screen: 'LayoutBuilder',
+      screen: 'EngagementComp',
       navigatorStyle: {
         navBarHidden: true
       },
