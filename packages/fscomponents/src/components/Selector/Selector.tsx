@@ -102,7 +102,7 @@ export class Selector extends PureComponent<
           </Text>
         ) : (
           <Text style={[styles.selectorLabel, labelStyle]}>
-            {selectorLabel || placeholder || title || items[0].label}
+            {selectorLabel || placeholder || title || items[0] && items[0].label || null}
           </Text>
         )}
         {this.renderDropdownArrow()}
