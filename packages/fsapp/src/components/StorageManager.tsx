@@ -117,7 +117,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
       .catch(e => console.log('cannot get all keys from AsyncStorage', e));
   }
 
-  clearSensitiveInfo = () => {
+  clearSensitiveInfo = async () => {
     SInfo.getAllItems({})
       .then((values: any) => {
         if (!values || !values[0]) {
@@ -126,7 +126,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
 
         const keys = values[0].map((item: any) => item.key);
 
-        Promise.all(keys.map((k: any) => SInfo.deleteItem(k, {})))
+        Promise.all(keys.map(async (k: any) => SInfo.deleteItem(k, {})))
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
@@ -135,9 +135,10 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
       .catch((e: any) => console.log('cannot get all items from react-native-sensitive-info', e));
   }
 
-  viewSensitiveInfo = () => {
+  viewSensitiveInfo = async () => {
     SInfo.getAllItems({}).then((values: any) => {
       this.showData(JSON.stringify(values, null, '  '));
-    });
+    })
+    .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
   }
 }

@@ -176,7 +176,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     const onPress = this.props.onStepPress ? this.props.onStepPress(step) : undefined;
 
     const isTouchable = onPress && isDone && !isActive;
-    const Container = isTouchable ? TouchableOpacity : View;
+    const Container: any = isTouchable ? TouchableOpacity : View;
 
     return { isActive, isDone, stepName, onPress, Container };
   }

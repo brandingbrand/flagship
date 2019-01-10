@@ -40,24 +40,24 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
     return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
       .then((tokenString: string) => {
         if (!tokenString) {
-          return null;
+          throw new Error('missing token string');
         }
         try {
           this.token = JSON.parse(tokenString);
-          // JSON stringify/parse doesn't handle dates
-          if (this.token) {
-            this.token.expiresAt = new Date(this.token.expiresAt);
-          }
-          return this.token;
         } catch (e) {
-          console.log('invalid stored token', e);
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {});
-          return null;
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(() => true);
+          throw new Error('invalid stored token');
         }
+        if (this.token) {
+          // JSON stringify/parse doesn't handle dates
+          this.token.expiresAt = new Date(this.token.expiresAt);
+          return this.token;
+        }
+        throw new Error('missing token');
       })
       .catch(async (e: any) => {
         console.log('error with mobile storage', e);
-        return Promise.resolve(null);
+        throw e;
       });
   }
 

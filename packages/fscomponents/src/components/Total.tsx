@@ -25,9 +25,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end'
   },
+  // typescript can't figure this out, so we need to be explicit
+  // tslint:disable-next-line:no-object-literal-type-assertion
   rightColumnText: {
     textAlign: 'right'
-  }
+  } as TextStyle
 });
 
 export interface TotalProps {

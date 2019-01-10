@@ -28,27 +28,26 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
     if (this.token) {
       return Promise.resolve(this.token);
     }
-    return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN)
+    return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
       .then((tokenString: string) => {
         if (!tokenString) {
-          return Promise.resolve(null);
+          throw new Error('missing token string');
         }
         try {
           this.token = JSON.parse(tokenString);
-          // JSON stringify/parse doesn't handle dates
-          if (this.token) {
-            this.token.expiresAt = new Date(this.token.expiresAt);
-          }
-          return Promise.resolve(this.token);
         } catch (e) {
-          console.log('invalid stored token', e);
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {});
-          return Promise.resolve(null);
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(() => true);
+          throw new Error('invalid stored token');
         }
+        if (this.token) {
+          // JSON stringify/parse doesn't handle dates
+          this.token.expiresAt = new Date(this.token.expiresAt);
+          return this.token;
+        }
+        throw new Error('missing token');
       })
-      .catch(async (e: any) => {
-        console.log('error with mobile storage', e);
-        return Promise.resolve(null);
+      .catch(e => {
+        throw e;
       });
   }
   // set the token
@@ -56,7 +55,8 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
     this.token = token;
     await SInfo.setItem(
       CommerceSessionManager.COMMERCE_TOKEN,
-      JSON.stringify(token)
+      JSON.stringify(token),
+      {}
     );
     this.setupRefreshTimeout(token);
     return true;

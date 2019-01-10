@@ -56,10 +56,16 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
     addToRecentlyViewed: async product => {
       try {
         const existingItemsJson = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS);
-        let existingItems = JSON.parse(existingItemsJson);
-
-        if (!Array.isArray(existingItems)) {
-          existingItems = [];
+        let existingItems: { id: string }[] = [];
+        if (existingItemsJson) {
+          try {
+            existingItems = JSON.parse(existingItemsJson);
+            if (!Array.isArray(existingItems)) {
+              existingItems = [];
+            }
+          } catch (e) {
+            console.warn('Failed to parse existing items', e);
+          }
         }
 
         if (find(existingItems, { id: product.id }) === undefined) {

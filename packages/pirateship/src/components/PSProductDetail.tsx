@@ -745,4 +745,4 @@ export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailPro
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
     DataSource.fetchProduct(props.id)
   // TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent) as any);
+)(withCart(PSProductDetailComponent as any));

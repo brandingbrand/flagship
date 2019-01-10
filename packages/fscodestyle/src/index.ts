@@ -11,10 +11,7 @@ const kTSLintArguments = [
   '--project', join(kProjectRoot, 'tsconfig.json'),
   join(kProjectRoot, '**', '*.{ts,tsx}')
 ];
-const kSpawnOptions = {
-  stdio: 'inherit',
-  shell: /^win/.test(platform)
-};
+const kSpawnShell = /^win/.test(platform);
 const kPaths = [
   resolve(__dirname, '..', 'node_modules', '.bin', 'tslint'),
   'tslint'
@@ -30,13 +27,16 @@ async function runTSLint(path: string): Promise<number> {
   return new Promise<number>((resolve, reject) => {
     let didFailToSpawn = false;
 
-    return spawn(path, kTSLintArguments, kSpawnOptions)
+    return spawn(path, kTSLintArguments, {
+      stdio: 'inherit',
+      shell: kSpawnShell
+    })
       .on('error', err => {
         didFailToSpawn = true;
 
         return reject(err);
       })
-      .on('exit', code => {
+      .on('exit', (code: number) => {
         if (!didFailToSpawn) {
           return resolve(code);
         }

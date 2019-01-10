@@ -88,13 +88,15 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
 
   getHistory = async (): Promise<SearchModalResult[]> => {
     const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY);
-    try {
-      const history = JSON.parse(historyData);
-      return history.slice(0, MAX_HISTORY_ITEM_NUM);
-    } catch (e) {
-      await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
-      return [];
+    if (historyData) {
+      try {
+        const history = JSON.parse(historyData);
+        return history.slice(0, MAX_HISTORY_ITEM_NUM) || [];
+      } catch (e) {
+        await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
+      }
     }
+    return [];
   }
 
   addToHistory = async (item: SearchModalResult) => {
@@ -293,7 +295,7 @@ function highlightStr(name: string, query: string): any {
 
   // TODO: Fix reduce usage here requiring @ts-ignore
   const textSplits = name.split(queryRegx).reduce(
-    (acc, item) => {
+    (acc: any, item: string) => {
       if (item) {
         // @ts-ignore
         acc.result.push({

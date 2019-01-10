@@ -56,7 +56,7 @@
     "@types/qs": "^6.5.1",
     "@types/react": "^16.3.16",
     "@types/react-dom": "^16.0.5",
-    "@types/react-native": "^0.55.17",
+    "@types/react-native": "^0.57.0",
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-navigation": "^1.1.11",
     "@types/react-native-permissions": "^1.1.1",
@@ -88,7 +88,7 @@
     "ts-loader": "^4.3.0",
     "typedoc": "^0.12.0",
     "typedoc-plugin-monorepo": "^0.1.0",
-    "typescript": "^3.0.1",
+    "typescript": "^3.2.0",
     "@brandingbrand/greenkeeper-lockfile": "^0.0.1"
   },
   "greenkeeper": {

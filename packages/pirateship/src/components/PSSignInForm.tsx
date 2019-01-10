@@ -418,7 +418,12 @@ export default class PSSignInForm extends Component<
     try {
       const success = await TouchId.authenticate(authPromptText, {
         title: 'Authentication Required',
-        color: variables.palette.secondary
+        color: variables.palette.secondary,
+        // Type definition requires this, but the real name is fallbackLabel, so this does nothing.
+        // react-native-touch-id has definitions on master, but not 4.0.1, so when 4.0.2
+        // is released, remove @types/react-native-touch-id from package.json and this line
+        // Also, change color to imageColor, because it isn't part of the new def
+        fallbackTitle: 'Show Password'
       });
       return !!success;
     } catch (e) {

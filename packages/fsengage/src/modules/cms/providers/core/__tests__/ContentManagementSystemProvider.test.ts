@@ -52,8 +52,8 @@ describe('Content Management System Provider', () => {
         'Hero-Carousel',
         undefined,
         context as ContentManagementSystemContext
-      ).then(content => {
-        const expectedContent = fixture.payload.data.Homepage['Hero-Carousel'];
+      ).then((content: any) => {
+        const expectedContent: any = fixture.payload.data.Homepage['Hero-Carousel'];
 
         // Removes the instance with invalid date.
         expectedContent.instances.pop();
@@ -89,7 +89,7 @@ describe('Content Management System Provider', () => {
         'header-text',
         undefined,
         context as ContentManagementSystemContext
-      ).then(content => {
+      ).then((content: any) => {
         expect(content).toBeNull();
 
         assert.calledOnce(

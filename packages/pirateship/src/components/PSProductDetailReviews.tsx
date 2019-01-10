@@ -104,7 +104,7 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
 
     const newReviewsData = await reviewDataSource.fetchReviewDetails({
       ...reviewQuery,
-      page: reviewsData[0].page as number + 1
+      page: reviewsData[0].page + 1
     });
 
     this.setState({
