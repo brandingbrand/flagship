@@ -27,12 +27,10 @@ import { handleDeeplink } from '../lib/deeplinkHandler';
 import GlobalStyle from '../styles/Global';
 import { border, color, fontSize, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { CombinedStore } from '../reducers';
+import { NavigatorStyle } from '../lib/commonTypes';
 import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
-import { connect } from 'react-redux';
-import { AccountActionProps, signOut } from '../providers/accountProvider';
+import withShop, { ShopProps } from '../providers/shopProvider';
 import PSProductCarousel from '../components/PSProductCarousel';
 
 const arrow = require('../../assets/images/arrow.png');
@@ -122,11 +120,6 @@ const ShopStyle = StyleSheet.create({
     alignItems: 'center'
   }
 });
-
-export interface ShopProps
-  extends ScreenProps,
-  Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
-  Pick<AccountActionProps, 'signOut'> { }
 
 class Shop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
@@ -381,21 +374,4 @@ class Shop extends Component<ShopProps> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-  return {
-    signOut: signOut(dispatch)
-  };
-};
-
-const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
-  return {
-    account: combinedStore.account,
-    promoProducts: combinedStore.promoProducts,
-    topCategory: combinedStore.topCategory
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Shop);
+export default withShop(Shop);

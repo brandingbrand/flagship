@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "react-native"
+  ],
+  "sourceMaps": "inline",
+  "env": {
+    "test": {
+      "presets": [
+        [ "env", {
+          "targets": {
+            "node": "current"
+          }
+        }],
+        "react-native"
+      ]
+    }
+  }
+}

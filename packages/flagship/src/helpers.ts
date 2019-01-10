@@ -89,7 +89,7 @@ export function doesKeywordExist(fileName: string, keyword: string): boolean {
 function logWithType(type: string, args: string[]): void {
   if (process.env.NODE_ENV === 'test') { return; }
 
-  const _args = args.slice(0);
+  const _args: any = args.slice(0);
   switch (type) {
     case 'error':
       _args.unshift(`\n${colors.BgRed} ERROR ${colors.Reset}`);

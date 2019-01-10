@@ -77,10 +77,7 @@ const globalConfig = {
                 }
               },
               {
-                loader: require.resolve("ts-loader"),
-                options: {
-                  configFile: 'tsconfig/tsconfig.storybook.json'
-                }
+                loader: require.resolve("ts-loader")
               }
             ]
           },
@@ -89,7 +86,9 @@ const globalConfig = {
             include: [
               /node_modules\/react-native-/,
               /node_modules\/tcomb-form-native/,
-              /packages\/fs/
+              /packages\/fs/,
+              /node_modules\/@brandingbrand\/fs/,
+              /node_modules\/@brandingbrand\/react-native-/
             ],
             exclude: /node_modules\/react-native-web\//,
             use: [
@@ -250,7 +249,8 @@ module.exports = function(env, options) {
         filename: 'static/css/bundle.css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: true
+        __DEV__: true,
+        __DEFAULT_ENV__: JSON.stringify('uat')
       })
     ]);
   }

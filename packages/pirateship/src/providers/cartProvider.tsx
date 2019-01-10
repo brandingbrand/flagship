@@ -74,8 +74,8 @@ function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
   };
 }
 
-export default function withCart<P>(
-  WrappedComponent: React.ComponentClass<P>
+export default function withCart(
+  WrappedComponent: React.ComponentClass<any>
 ): React.ComponentClass<any> {
   return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 }

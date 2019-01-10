@@ -108,7 +108,10 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
         return null;
       })
-      .catch(logAndRethrowError.bind(null));
+      .catch(() => {
+        logAndRethrowError.bind(null);
+        return null;
+      });
   }
 
 
