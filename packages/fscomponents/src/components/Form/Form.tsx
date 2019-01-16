@@ -47,6 +47,7 @@ export interface FormProps {
   activeColor?: string;
   errorColor?: string;
   inactiveColor?: string;
+  validateOnBlur?: boolean;
 }
 
 export interface FormTemplates {
@@ -138,14 +139,17 @@ export class Form extends PureComponent<FormProps> {
       style,
       value,
       onChange,
-      templates
+      templates,
+      validateOnBlur
     } = this.props;
 
 
     // returns a new version stylesheet customized with new or changed color props, if any
     const stylesheet = this.calculateStyles(activeColor, errorColor, inactiveColor);
 
-    this.calculateBlurs(fieldsOptions);
+    if (validateOnBlur !== false) {
+      this.calculateBlurs(fieldsOptions);
+    }
 
     const _options = {
       stylesheet: { ...stylesheet, ...fieldsStyleConfig },
