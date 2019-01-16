@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/flagship",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "node-suspect": "^0.1.1",
     "react": "^16.3.2",
     "react-native": "^0.55.4",
-    "react-native-svg": "^6.5.2",
+    "react-native-svg": "^7.0.2",
     "replace-in-file": "^3.4.0",
     "yargs": "^12.0.1"
   },
@@ -31,8 +31,8 @@
     }
   },
   "devDependencies": {
-    "@brandingbrand/fsengage": "^0.1.0",
-    "@types/yargs": "^11.1.1",
+    "@brandingbrand/fsengage": "2.0.0",
+    "@types/yargs": "^12.0.1",
     "true-case-path": "^1.0.3"
   },
   "publishConfig": {

@@ -33,18 +33,19 @@ export function android(configuration: Config): void {
   // Add dependencies to /android/app/build.gradle and replace compile command with implementation
   // command due to Gradle 3 changes
   const firebaseDep = `
-    implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
       `;
 
   let gradleAppBuild = fs.readFileSync(path.android.gradlePath(), { encoding: 'utf8' });
 
   gradleAppBuild = gradleAppBuild.replace(
-    /(compile.+?native-device-info[^}]+?})/,
+    /(com.google.android.gms:play-services-base:.+)/,
     `$1\n    ${firebaseDep}`
   );
 
-  gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'\n';
+  gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'';
+  // tslint:disable-next-line:ter-max-len
+  gradleAppBuild += '\ncom.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true\n';
   gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
   gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);
@@ -138,12 +139,20 @@ export function ios(configuration: Config): void {
 
   // Add Firebase pod to Podfile
   const podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
-  const firebasePod = `pod 'Firebase/Core'`;
+  const firebasePod = `pod 'Firebase/Core', '5.12.0'`;
 
   if (podfile.indexOf(firebasePod) === -1) {
     pods.add(path.ios.podfilePath(), [firebasePod]);
-    pods.install();
     logInfo('updated Podfile with Firebase pod');
+  }
+
+  // Firebase includes GoogleAppMeasurement as a dependency automatically, but the latest version
+  // 5.4.0 was compiled with Xcode 10 which is not yet supported by Flagship
+  const googleMeasurementPod = `pod 'GoogleAppMeasurement', '5.3.0'`;
+
+  if (podfile.indexOf(googleMeasurementPod) === -1) {
+    pods.add(path.ios.podfilePath(), [googleMeasurementPod]);
+    logInfo('updated Podfile with GoogleAppMeasurement pod');
   }
 
   logInfo('finished updating iOS for firebase');

@@ -2,9 +2,12 @@ import React, { PureComponent } from 'react';
 import {
   Animated,
   Image,
+  ImageSourcePropType,
   ImageStyle,
   ImageURISource,
+  Platform,
   StyleProp,
+  StyleSheet,
   Text,
   TextInput,
   TextInputProperties,
@@ -18,6 +21,9 @@ import { style as S } from '../styles/SearchBar';
 
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
+
+const cancelIcon = require('../../assets/images/clear.png');
+const isAndroid = Platform.OS === 'android';
 
 export interface SearchBarProps {
   placeholder?: string;
@@ -54,6 +60,12 @@ export interface SearchBarProps {
 
   cancelButtonWidth?: number;
   cancelButtonAlwaysVisible?: boolean;
+
+  showRightBtnIcon?: boolean;
+  rightBtnIcon?: ImageSourcePropType;
+  onRightBtnPress?: () => void;
+  rightBtnStyle?: StyleProp<ViewStyle>;
+  rightBtnIconStyle?: StyleProp<ImageStyle>;
 }
 
 export interface SearchBarState {
@@ -61,6 +73,12 @@ export interface SearchBarState {
   cancelButtonWidth: Animated.Value;
   isFocused: boolean;
 }
+
+const styles = StyleSheet.create({
+  rightIcon: {
+    width: 25
+  }
+});
 
 export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   input: any;
@@ -86,9 +104,9 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
 
   render(): any {
     const {
+      showCancel,
       style,
-      showLocator,
-      showCancel
+      showLocator
     } = this.props;
 
     return (
@@ -144,7 +162,55 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           underlineColorAndroid='transparent'
           {...inputProps}
         />
+        {this.renderAndroidClearButton()}
+        {this.renderRightBtnIcon()}
       </View>
+    );
+  }
+
+  renderAndroidClearButton = () => {
+    if (
+      this.props.clearButtonMode === 'never' ||
+      !isAndroid ||
+      !this.state.value ||
+      this.state.value.length === 0 ||
+      !this.props.clearButtonMode
+    ) {
+      return null;
+    }
+
+    const icon = <Image source={cancelIcon} style={styles.rightIcon} resizeMode='contain' />;
+
+    return (
+      <TouchableOpacity onPress={this.handleClear}>
+        {icon}
+      </TouchableOpacity>
+    );
+  }
+
+  renderRightBtnIcon = () => {
+    const {
+      showRightBtnIcon,
+      rightBtnIcon,
+      onRightBtnPress,
+      rightBtnIconStyle,
+      rightBtnStyle
+    } = this.props;
+
+    if (!showRightBtnIcon || !rightBtnIcon) {
+      return null;
+    }
+
+    const icon = <Image source={rightBtnIcon} style={rightBtnIconStyle} resizeMode='contain' />;
+
+    if (!onRightBtnPress) {
+      return icon;
+    }
+
+    return (
+      <TouchableOpacity style={rightBtnStyle} onPress={onRightBtnPress}>
+        {icon}
+      </TouchableOpacity>
     );
   }
 
@@ -171,6 +237,15 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     this.input.blur();
     if (this.props.onCancel) {
       this.props.onCancel();
+    }
+  }
+
+  handleClear = () => {
+    this.input.blur();
+    this.setState({ value: '' });
+
+    if (this.props.onChange) {
+      this.props.onChange('');
     }
   }
 
