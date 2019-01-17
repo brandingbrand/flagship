@@ -34,7 +34,7 @@
     "ship:compile-android": "lerna run --stream --scope @brandingbrand/pirateship compile-android",
     "ship:compile-web": "lerna run --stream --scope @brandingbrand/pirateship compile-web",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
-    "docs": "run-s build:docs build:storybook ship:build-web-demo"
+    "docs": "run-s build:docs build:storybook"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
