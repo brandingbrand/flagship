@@ -133,8 +133,8 @@ export class EngagementService {
   }
 
   // @TODO: does the profile need to be resynced anytime during a session?
-  async getProfile(accountId?: string): Promise<string> {
-    if (this.profileId && this.profileData) {
+  async getProfile(accountId?: string, forceProfileSync?: boolean): Promise<string> {
+    if (this.profileId && this.profileData && !forceProfileSync) {
       return Promise.resolve(this.profileId);
     }
 
