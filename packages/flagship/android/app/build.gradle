@@ -160,32 +160,32 @@ configurations.all {
     resolutionStrategy {
         eachDependency { DependencyResolveDetails details ->
             if (details.requested.name == 'android-jsc') {
-                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r224109'
+                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r236355'
             }
         }
     }
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services-base:15.+'
-    compile 'com.google.android.gms:play-services-gcm:15.+'
-    compile 'com.google.android.gms:play-services-maps:15.+'
-    compile 'com.google.android.gms:play-services-wallet:15.+'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:support-v4:26.1.0'
+    implementation 'com.google.android.gms:play-services-base:15.+'
+    implementation 'com.google.android.gms:play-services-gcm:15.+'
+    implementation 'com.google.android.gms:play-services-maps:15.+'
+    implementation 'com.google.android.gms:play-services-wallet:15.+'
+    implementation "com.android.support:appcompat-v7:27.1.0"
+    implementation 'com.android.support:support-v4:26.1.0'
 
-    compile 'com.facebook.react:react-native:+'  // From node_modules
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
 
-    compile fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    compile project(':react-native-cookies')
-    compile(project(':react-native-navigation')){
+    implementation project(':react-native-cookies')
+    implementation(project(':react-native-navigation')){
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
-    compile project(':react-native-sensitive-info')
-    compile project(':react-native-restart')
+    implementation project(':react-native-sensitive-info')
+    implementation project(':react-native-restart')
 
-    compile(project(':react-native-device-info')){
+    implementation(project(':react-native-device-info')){
         exclude group: 'com.google.android.gms', module: 'play-services-gcm'
     }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsweb",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "3.0.1-alpha.0",
   "scripts": {
     "clean": "rm -rf ./build/static && rm -f ./build/index.html && rm -f ./build/service-worker.js && rm -f ./build/asset-manifest.json",
     "build": "webpack --mode production",
@@ -9,13 +9,11 @@
     "start": "webpack-serve ./webpack.config.js --mode development"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.1.5",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^8.0.0",
     "babel-plugin-react-native-web": "^0.8.4",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react-native": "^4.0.0",
     "cache-loader": "^1.2.2",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^1.0.0",
@@ -24,6 +22,7 @@
     "global": "^4.3.2",
     "html-webpack-plugin": "^3.2.0",
     "koa-connect": "^2.0.1",
+    "metro-react-native-babel-preset": "^0.45.0",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "react-native-web-image-loader": "^0.0.6",

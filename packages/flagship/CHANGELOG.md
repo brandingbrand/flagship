@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
+
+
+### Bug Fixes
+
+* **flagship:** update iphoneos deployment target to 10.3 ([d592fe8](https://github.com/brandingbrand/flagship/commit/d592fe8))
+
+
+
+
+
+# [3.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0-alpha.0) (2019-02-08)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* upgrade react native to 0.57.8 ([77177b3](https://github.com/brandingbrand/flagship/commit/77177b3))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
 <a name="2.0.0"></a>
 # 2.0.0 (2018-10-16)
 
