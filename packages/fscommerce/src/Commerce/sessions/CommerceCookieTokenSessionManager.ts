@@ -23,12 +23,12 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
   }
 
   // return current token
-  async get(): Promise<SessionToken> {
+  async get(): Promise<SessionToken | null | undefined> {
     // if we have a token in memory use it
     if (this.token) {
       return Promise.resolve(this.token);
     }
-    return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN)
+    return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
       .then((tokenString: string) => {
         if (!tokenString) {
           return Promise.resolve(null);
@@ -42,7 +42,8 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
           return Promise.resolve(this.token);
         } catch (e) {
           console.log('invalid stored token', e);
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {});
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {})
+            .catch(e => console.warn('cannot delete token', e));
           return Promise.resolve(null);
         }
       })
@@ -56,14 +57,20 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
     this.token = token;
     await SInfo.setItem(
       CommerceSessionManager.COMMERCE_TOKEN,
-      JSON.stringify(token)
+      JSON.stringify(token),
+      {}
     );
     this.setupRefreshTimeout(token);
     return true;
   }
 
-  async restore(): Promise<SessionToken> {
+  async restore(): Promise<SessionToken | null> {
     const token = await this.get();
+
+    if (!token) {
+      return null;
+    }
+
     CookieManager.setFromResponse(
       token.token.url,
       Platform.OS === 'ios'
@@ -72,6 +79,7 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
     )
       .then(() => true)
       .catch(() => true);
+
     return token;
   }
 }

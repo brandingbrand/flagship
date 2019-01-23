@@ -16,6 +16,11 @@
 @implementation NativeConstants
 RCT_EXPORT_MODULE();
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 - (NSDictionary *)constantsToExport {
   return @{
     @"installed": @YES

@@ -93,19 +93,19 @@ function logWithType(type: string, args: string[]): void {
   switch (type) {
     case 'error':
       _args.unshift(`\n${colors.BgRed} ERROR ${colors.Reset}`);
-      console.error.apply(null, _args);
+      console.error.call(null, ..._args);
       break;
 
     case 'info':
       _args.unshift(`\n${colors.BgBlue} INFO ${colors.Reset}`);
-      console.log.apply(null, _args);
+      console.log.call(null, ..._args);
       break;
 
     case 'warn':
       _args.unshift(
         `\n${colors.BgYellow}${colors.FgBlack} WARN ${colors.Reset}`
       );
-      console.warn.apply(null, _args);
+      console.warn.call(null, ..._args);
       break;
 
     default:

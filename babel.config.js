@@ -1,6 +1,6 @@
-{
+module.exports = {
   "presets": [
-    "react-native"
+    "module:metro-react-native-babel-preset"
   ],
   "sourceMaps": "inline",
   "env": {
@@ -11,7 +11,7 @@
             "node": "current"
           }
         }],
-        "react-native"
+        "module:metro-react-native-babel-preset"
       ]
     }
   }

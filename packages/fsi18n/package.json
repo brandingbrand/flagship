@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsi18n",
-  "version": "2.0.0",
+  "version": "3.0.1-alpha.0",
   "description": "Internationalization helpers for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "2.0.0",
+    "@brandingbrand/fscommerce": "^3.0.1-alpha.0",
     "decimal.js": "^10.0.1",
     "i18n-js": "^3.0.8",
     "lodash-es": "^4.17.10",

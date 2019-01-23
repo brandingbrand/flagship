@@ -53,7 +53,7 @@ jobs:
   - language: objective-c
     if: type = pull_request
     os: osx
-    osx_image: xcode9.4
+    osx_image: xcode10.1
     before_install:
     - nvm install 10
     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
@@ -68,7 +68,7 @@ jobs:
   - language: objective-c
     if: type = push AND branch = master
     os: osx
-    osx_image: xcode9.4
+    osx_image: xcode10.1
     env:
     - KEY_CHAIN=ios-build.keychain
     before_install:

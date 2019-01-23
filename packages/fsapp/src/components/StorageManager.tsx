@@ -126,7 +126,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
 
         const keys = values[0].map((item: any) => item.key);
 
-        Promise.all(keys.map((k: any) => SInfo.deleteItem(k, {})))
+        Promise.all(keys.map(async (k: any) => SInfo.deleteItem(k, {})))
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
@@ -136,8 +136,10 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   viewSensitiveInfo = () => {
-    SInfo.getAllItems({}).then((values: any) => {
-      this.showData(JSON.stringify(values, null, '  '));
-    });
+    SInfo.getAllItems({})
+      .then((values: any) => {
+        this.showData(JSON.stringify(values, null, '  '));
+      })
+      .catch(e => console.warn('cannot view sensitive info', e));
   }
 }

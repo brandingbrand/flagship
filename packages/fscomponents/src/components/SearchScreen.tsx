@@ -91,7 +91,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   getHistory = async (): Promise<SearchScreenResult[]> => {
-    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY);
+    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY) || '[]';
     try {
       const history = JSON.parse(historyData);
       return history.slice(0, MAX_HISTORY_ITEM_NUM);

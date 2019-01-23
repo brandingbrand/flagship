@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsproductdetail",
-  "version": "2.0.0",
+  "version": "3.0.1-alpha.0",
   "description": "components for product detail pages",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,10 +10,10 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "2.0.0",
+    "@brandingbrand/fscommerce": "^3.0.1-alpha.0",
     "lodash-es": "^4.17.10",
-    "react": "^16.3.2",
-    "react-native": "^0.55.4",
+    "react": "16.6.3",
+    "react-native": "0.57.8",
     "redux": "^4.0.0"
   },
   "publishConfig": {

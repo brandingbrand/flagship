@@ -25,11 +25,11 @@ export default abstract class CommerceSessionManager {
   // remove the token from storage
   abstract delete(): Promise<boolean>;
   // return current token
-  abstract get(): Promise<SessionToken>;
+  abstract get(): Promise<SessionToken | null | undefined>;
   // set the token
   abstract set(token: SessionToken): Promise<boolean>;
   // restore token on app launch
-  abstract restore(): Promise<SessionToken>;
+  abstract restore(): Promise<SessionToken | null>;
 
   isExpired(token: SessionToken): boolean {
     return token.expiresAt < new Date();
@@ -64,7 +64,13 @@ export default abstract class CommerceSessionManager {
       this.refreshTimeout = setTimeout(() => {
         this.refreshTimeout = null;
         this.get()
-          .then(async token => this.options.refreshToken(token))
+          .then(async token => {
+            if (!token) {
+              return Promise.reject(new Error('token is null'));
+            }
+
+            return this.options.refreshToken(token);
+          })
           .then(async newToken => this.set(newToken))
           .catch(e => console.log('unable to refresh token:', e));
       }, refreshMilliseconds);

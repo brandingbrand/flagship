@@ -21,6 +21,7 @@ import {
 } from './targets';
 
 import { Location } from '../../requesters/ContentManagementSystemLocator';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 /**
  * Logs and rethrows a given error.
@@ -58,7 +59,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
   async contentForSlot(
     group: string, slot: string, identifier?: string, context?: ContentManagementSystemContext
-  ): Promise<{}> {
+  ): Promise<Dictionary> {
     return this.pullContent()
       .then(content => {
         const slotContent = content &&
@@ -108,7 +109,11 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
         return null;
       })
-      .catch(logAndRethrowError.bind(null));
+      .catch((e: Error) => {
+        console.log(`Error getting identifiers for group ${group} slot ${slot}`, e);
+
+        return null;
+      });
   }
 
 
