@@ -27,7 +27,8 @@ export async function link(configuration: Config): Promise<boolean | object> {
   // Spawn react-native link
   const spawned = spawn('react-native', ['link'], {
     cwd: path.project.path(),
-    shell: os.win
+    shell: os.win,
+    stream: 'stderr'
   });
 
   if (androidDeploymentKey && iosDeploymentKey) {

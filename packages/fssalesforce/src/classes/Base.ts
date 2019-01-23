@@ -75,7 +75,7 @@ export class DemandwareBase {
       config.masterToVariantProductId || (p => p.product_id);
     this.middleware = config.middleware || {};
     this.sessionManager = new CommerceCookieSessionManager({
-      refreshToken: this.refreshToken.bind(this),
+      refreshToken: this.refreshToken,
       createGuestToken: this.createGuestToken.bind(this),
       createLoginToken: this.createLoginToken.bind(this),
       destroyToken: this.destroyToken.bind(this),

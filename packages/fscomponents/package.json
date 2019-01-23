@@ -21,6 +21,7 @@
     "memoize-one": "^4.0.2",
     "moment": "^2.22.2",
     "photoswipe": "^4.1.2",
+    "prop-types": "^15.5.7",
     "qs": "^6.5.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

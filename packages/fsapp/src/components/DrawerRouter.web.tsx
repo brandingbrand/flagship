@@ -67,7 +67,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         leftDrawerComponent,
         appConfig,
         api,
-        this.toggleDrawer.bind(this)
+        this.toggleDrawer
       );
     }
 
@@ -78,7 +78,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         rightDrawerComponent,
         appConfig,
         api,
-        this.toggleDrawer.bind(this)
+        this.toggleDrawer
       );
     }
 
