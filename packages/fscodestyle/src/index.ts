@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, SpawnOptions } from 'child_process';
 import { join, resolve } from 'path';
 import { cwd, exit, platform } from 'process';
 
@@ -11,7 +11,7 @@ const kTSLintArguments = [
   '--project', join(kProjectRoot, 'tsconfig.json'),
   join(kProjectRoot, '**', '*.{ts,tsx}')
 ];
-const kSpawnOptions = {
+const kSpawnOptions: SpawnOptions = {
   stdio: 'inherit',
   shell: /^win/.test(platform)
 };
@@ -38,7 +38,7 @@ async function runTSLint(path: string): Promise<number> {
       })
       .on('exit', code => {
         if (!didFailToSpawn) {
-          return resolve(code);
+          return resolve(code || 0);
         }
       });
   });

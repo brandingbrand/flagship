@@ -71,7 +71,7 @@ export class Total extends PureComponent<TotalProps> {
         <View style={styles.rightColumn}>
           {this.renderData(
             this.props.value,
-            [styles.rightColumnText, this.props.valueStyle]
+            [styles.rightColumnText as StyleProp<TextStyle>, this.props.valueStyle]
           )}
         </View>
       </View>

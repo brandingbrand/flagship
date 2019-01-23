@@ -87,7 +87,7 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
   }
 
   getHistory = async (): Promise<SearchModalResult[]> => {
-    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY);
+    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY) || '[]';
     try {
       const history = JSON.parse(historyData);
       return history.slice(0, MAX_HISTORY_ITEM_NUM);

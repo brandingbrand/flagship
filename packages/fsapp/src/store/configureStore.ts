@@ -26,7 +26,7 @@ const composeEnhancers =
 export default function configureStore<S, A extends Action, Ext, StateExt>(
   initialState: DeepPartial<S> = {},
   reducers: ReducersMapObject<S, A>
-): Store<S & StateExt> & Ext {
+): Store<S & StateExt, A> & Ext {
   return createStore<S, A, Ext, StateExt>(
     setupReducers<S, A>(reducers),
     initialState,

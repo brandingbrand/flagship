@@ -16,6 +16,11 @@
 @implementation EnvSwitcher
 RCT_EXPORT_MODULE();
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 - (NSDictionary *)constantsToExport {
   NSString *initialEnvName =  @""; // [EnvSwitcher initialEnvName]
   NSString *envName = [[NSUserDefaults standardUserDefaults]

@@ -1,13 +1,9 @@
 {
   "presets": [
-    "react-native",
-    "env",
-    [
-      "es2015",
-      {
+    "module:metro-react-native-babel-preset",
+    ["env", {
         "modules": false
-      }
-    ]
+    }]
   ],
   "plugins": [
     "react-native-web"
