@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [3.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0-alpha.0) (2019-02-08)
+
+
+### Bug Fixes
+
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* Make scrollToTop function public ([497c601](https://github.com/brandingbrand/flagship/commit/497c601))
+
+
+### Features
+
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** specify if searchbar input should clear after submit ([8aaddba](https://github.com/brandingbrand/flagship/commit/8aaddba))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* upgrade react native to 0.57.8 ([77177b3](https://github.com/brandingbrand/flagship/commit/77177b3))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
 <a name="2.0.0"></a>
 # 2.0.0 (2018-10-16)
 
