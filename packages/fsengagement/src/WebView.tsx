@@ -35,7 +35,7 @@ export interface WebViewProps extends ScreenProps {
 export default class EngagementWebView extends PureComponent<WebViewProps> {
   constructor(props: WebViewProps) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
   }
 
   onNavigatorEvent = (event: any) => {

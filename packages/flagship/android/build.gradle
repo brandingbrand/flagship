@@ -3,13 +3,14 @@
 buildscript {
     repositories {
         jcenter()
+        google()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.1.4'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -32,6 +33,7 @@ allprojects {
             name 'Google'
         }
         jcenter()
+        google()
     }
 }
 
@@ -40,7 +42,7 @@ ext {
     minSdkVersion = 21
     compileSdkVersion = 27
     targetSdkVersion = 27
-    supportLibVersion = "27.0.2"
+    supportLibVersion = "27.1.1"
     googlePlayServicesVersion = "15.0.1" // Needed for react-native-camera & react-native-maps
 }
 
@@ -54,4 +56,9 @@ subprojects {
             }
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
+    distributionUrl = distributionUrl.replace("bin", "all")
 }

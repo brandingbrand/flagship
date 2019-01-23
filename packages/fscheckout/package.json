@@ -10,8 +10,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "react": "^16.3.2",
-    "react-native": "^0.55.4"
+    "react": "16.6.3",
+    "react-native": "0.57.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
