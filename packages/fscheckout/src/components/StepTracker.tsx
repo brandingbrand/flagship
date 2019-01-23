@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { Step } from '../types';
+import { Step, StepDetails } from '../types';
 
 const styles = StyleSheet.create({
   stepsContainer: {
@@ -168,7 +168,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     );
   }
 
-  protected getStepDetails = (step: Step, index: number) => {
+  protected getStepDetails = (step: Step, index: number): StepDetails => {
     const isActive = step.status === 'active';
     const isDone = step.status === 'done';
 
