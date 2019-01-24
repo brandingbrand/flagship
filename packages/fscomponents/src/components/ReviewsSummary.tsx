@@ -20,7 +20,7 @@ export interface ReviewsSummaryProps {
   averageStyle?: StyleProp<TextStyle>;
   recommendStyle?: StyleProp<TextStyle>;
   rowStyle?: StyleProp<ViewStyle>;
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   hideReviewIndicatorSubtitle?: boolean;
   reviewIndicatorSubtitle?: string;
   reviewIndicatorRowStyle?: StyleProp<ViewStyle>;
@@ -36,7 +36,7 @@ export class ReviewsSummary extends Component<ReviewsSummaryProps> {
       style,
       base= 5,
       recommend,
-      reviewIndicatorProps= {},
+      reviewIndicatorProps = {},
       countStyle,
       averageStyle,
       recommendStyle,
