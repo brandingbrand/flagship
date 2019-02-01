@@ -48,6 +48,7 @@ export interface SearchBarProps {
 
   // input
   inputProps?: TextInputProperties;
+  shouldClearOnSubmit?: boolean;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -81,6 +82,9 @@ const styles = StyleSheet.create({
 });
 
 export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
+  static defaultProps: Partial<SearchBarProps> = {
+    shouldClearOnSubmit: true
+  };
   input: any;
   container: any;
 
@@ -222,14 +226,16 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   }
 
   handleSubmit = () => {
-    const { onSubmit } = this.props;
+    const { onSubmit, shouldClearOnSubmit } = this.props;
 
     if (onSubmit) {
       onSubmit(this.state.value);
     }
 
     this.input.blur();
-    this.setState({ value: '' });
+    if (shouldClearOnSubmit) {
+      this.setState({ value: '' });
+    }
   }
 
   handleCancel = () => {
