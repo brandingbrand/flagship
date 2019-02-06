@@ -5,15 +5,14 @@
     100
   ],
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
     "**/.DS_Store": true,
-    "**/dist": true,
-    "**/yarn-*": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
     "**/lerna-*": true,
-    "**/storybook-static": true
+    "**/storybook-static": true,
+    "**/yarn-*": true
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
