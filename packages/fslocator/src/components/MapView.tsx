@@ -25,6 +25,7 @@ export interface PropType {
   isCollapsed?: boolean;
   onMakerPress?: (location: Location) => void;
   currentLocation?: GeoLocation;
+  defaultRegion?: Region;
   handleRegionChange?: (e: Region) => void;
   handleRegionChangeComplete?: (e: Region) => void;
   mapMarkerIcon?: ImageURISource;
@@ -95,10 +96,28 @@ export default class MapViewNative extends Component<PropType> {
     }
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): JSX.Element {
-    const { locations, style, currentLocation, mapMarkerIcon } = this.props;
+    const { locations, style, currentLocation, mapMarkerIcon, defaultRegion } = this.props;
     const marker = mapMarkerIcon || googleMapMaker;
     const markerSelected = mapMarkerIcon || googleMapMakerSelected;
+
+    if (!currentLocation && !(locations && locations.length) && defaultRegion) {
+      const initialRegion = {
+        latitude: defaultRegion.latitude || 0,
+        longitude: defaultRegion.longitude || 0,
+        latitudeDelta: defaultRegion.latitudeDelta || 0,
+        longitudeDelta: defaultRegion.longitudeDelta || 0
+      };
+
+      return (
+         <MapView
+           ref={map => (this.map = map)}
+           style={style}
+           initialRegion={initialRegion}
+         />
+      );
+    }
 
     return (
       <MapView

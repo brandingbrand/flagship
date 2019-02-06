@@ -37,6 +37,7 @@ export interface PropType {
   isCollapsed?: boolean;
   onMakerPress?: (location: Location) => void;
   currentLocation?: GeoLocation;
+  defaultRegion?: Region;
   handleRegionChange?: (e: Region) => void;
   handleRegionChangeComplete?: (e: Region) => void;
   mapMarkerIcon?: ImageURISource;

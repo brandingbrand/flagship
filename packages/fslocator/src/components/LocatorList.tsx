@@ -2,7 +2,7 @@ import { SearchBar } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { style as S } from '../styles/Locator';
-import { Location } from '../types/Location';
+import { Location, Region } from '../types/Location';
 import {
   PropType as LocatorContainerPropType,
   StateType as LocatorContainerStateType
@@ -20,6 +20,7 @@ export interface PropType
   handleRegionChange: (e: any) => void;
   handleRegionChangeComplete: (e: any) => void;
   searchArea: () => void;
+  defaultRegion?: Region;
   handleNavPress: (
     location: Location,
     locationId?: number,
