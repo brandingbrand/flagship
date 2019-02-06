@@ -123,6 +123,7 @@ export default class Locator extends Component<
       searchArea,
       mapMarkerIcon,
       showLocateMe,
+      defaultRegion,
       mapStyle
     } = this.props;
 
@@ -148,6 +149,7 @@ export default class Locator extends Component<
           handleRegionChange={handleRegionChange}
           handleRegionChangeComplete={handleRegionChangeComplete}
           mapMarkerIcon={mapMarkerIcon}
+          defaultRegion={defaultRegion}
         />
         <View>
           {this.renderSearchBar()}
