@@ -64,6 +64,7 @@ export interface PropType {
   renderLocationItemWithBack?: (data: LocationItemData) => JSX.Element;
   renderSearchBar?: (data: SearchBarData) => JSX.Element;
   filterResult?: (data: Location[]) => Location[];
+  defaultRegion?: Region;
   searchEndpoint: string;
   searchRadius?: number;
   resultLimit?: number;
