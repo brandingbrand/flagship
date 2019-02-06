@@ -67,6 +67,8 @@ export interface PropType {
   searchEndpoint: string;
   searchRadius?: number;
   resultLimit?: number;
+  handleAddressNotFound?: () => void;
+  handleLocationNotFound?: () => void;
 }
 
 export interface StateType {
@@ -130,8 +132,11 @@ export default class LocatorContainer extends Component<PropType, StateType> {
       .then(coords => {
         if (!coords) {
           this.setState({ isLoading: false });
-          // TODO: better error handling
-          alert('Address not found');
+          if (this.props.handleAddressNotFound) {
+            this.props.handleAddressNotFound();
+          } else {
+            alert('Address not found');
+          }
         } else {
           this.fetchLocations(
             searchValue,
@@ -143,8 +148,11 @@ export default class LocatorContainer extends Component<PropType, StateType> {
       })
       .catch(err => {
         this.setState({ isLoading: false });
-        // TODO: better error handling
-        alert(`Cannot get address: ${err}`);
+        if (this.props.handleAddressNotFound) {
+          this.props.handleAddressNotFound();
+        } else {
+          alert(`Cannot get address: ${err}`);
+        }
       });
   }
 
@@ -319,12 +327,20 @@ export default class LocatorContainer extends Component<PropType, StateType> {
               this.props.searchRadius || DEFAULT_RADIUS
             );
           } else {
-            this.handleLocationNotFound();
+            if (this.props.handleLocationNotFound) {
+              this.props.handleLocationNotFound();
+            } else {
+              this.handleLocationNotFound();
+            }
           }
         },
         // tslint:disable-next-line
         error => {
-          this.handleLocationNotFound();
+          if (this.props.handleLocationNotFound) {
+            this.props.handleLocationNotFound();
+          } else {
+            this.handleLocationNotFound();
+          }
         },
         {
           enableHighAccuracy: true,
