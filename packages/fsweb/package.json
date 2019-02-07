@@ -12,7 +12,7 @@
     "autoprefixer": "^9.1.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
-    "babel-plugin-react-native-web": "^0.8.4",
+    "babel-plugin-react-native-web": "^0.10.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-native": "^4.0.0",
