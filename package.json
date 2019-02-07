@@ -1,10 +1,15 @@
 {
   "private": true,
   "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "commit-msg": "commitlint -e $GIT_PARAMS"
+    }
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "rimraf packages/*/dist",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
     "reset:modules": "rimraf node_modules yarn.lock packages/*/node_modules",
     "reset": "yarn reset:modules & yarn clean",
     "lint:ts": "fscodestyle",
@@ -76,7 +81,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
     "coveralls": "^3.0.2",
-    "husky": "^0.14.3",
+    "husky": "^1.3.1",
     "jest": "^23.1.0",
     "lerna": "^3.4.0",
     "markdownlint-cli": "^0.13.0",
