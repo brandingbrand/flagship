@@ -10620,9 +10620,10 @@ react-native-device-info@^0.21.5:
   version "0.21.5"
   resolved "http://registry.npmjs.org/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
-react-native-device-info@^0.22.0:
-  version "0.22.2"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.22.2.tgz#ff2829ebe40d75be1d3b6560f0cd48e794a5a287"
+react-native-device-info@^0.26.2:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.26.2.tgz#c9e350e11f0c2f9a65f3e4fec8ddcab6881b7deb"
+  integrity sha512-Hbzc3sZxfJX0Do1yLF8Dt+tuz6+IZ61iTNGqF2LPpRhCDiJI5asrEtXF7g6bRS1H5lA2/eJDYCI/c35w63JpKA==
 
 react-native-fcm@16.0.0:
   version "16.0.0"
@@ -12199,8 +12200,9 @@ svgo@^0.7.0:
     whet.extend "~0.9.9"
 
 svgs@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/svgs/-/svgs-3.2.1.tgz#cf0804ab0cb346815d696cbc79b30f6343d710be"
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/svgs/-/svgs-3.3.1.tgz#10d9495077cf89dfebea682746cceb9b17d56fd2"
+  integrity sha512-4nORJv/NXeS6JqkeXZFMWSKruvHmxVraqXRSttwRqsGuxA/oOujcDtXuBze3rhr3EWsXUP2E4Yosm5TMpdEnKw==
   dependencies:
     prop-types "^15.5.10"
     rip-out "^1.0.0"
