@@ -46,7 +46,9 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     return [{
       id,
       reviews: data.Results.map(BazaarvoiceNormalizer.review),
-      statistics: BazaarvoiceNormalizer.reviewStatistics(data.Includes.Products[id]),
+      statistics: data.Includes && data.Includes.Products && data.Includes.Products[id] ?
+        BazaarvoiceNormalizer.reviewStatistics(data.Includes.Products[id])
+        : undefined,
       page: (data.Offset / data.Limit) + 1,
       limit: data.Limit,
       total: data.TotalResults

@@ -72,8 +72,7 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link
-    .link(configuration)
+  link.link(configuration)
     .then(() => {
       if (doAndroid) {
         modules.android(projectPackageJSON, configuration);
@@ -81,7 +80,6 @@ export function handler(argv: HandlerArgs): void {
 
       if (doIOS) {
         cocoapods.install();
-        modules.ios(projectPackageJSON, configuration);
       }
     })
     .catch(err => {
@@ -195,10 +193,17 @@ function initIOS(
   ios.usageDescription(configuration); // Add usage descriptions
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  if (configuration.ios) {
+    if (configuration.ios.pods) {
+      cocoapods.sources(configuration.ios.pods.sources);
+    }
+  }
 
   if (!configuration.disableDevFeature) {
     ios.addDevMenuFlag(configuration);
   }
+
+  modules.ios(packageJSON, configuration);
 
   helpers.logInfo('finished iOS initialization');
 }
