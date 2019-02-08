@@ -4637,9 +4637,10 @@ create-react-class@^15.5.2, create-react-class@^15.6.2, create-react-class@^15.6
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-credit-card-type@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/credit-card-type/-/credit-card-type-7.0.0.tgz#92b693bb24837fb2351f4b16f68ec9c56e13e9ae"
+credit-card-type@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/credit-card-type/-/credit-card-type-8.1.0.tgz#141ffe6ea6516d6c62357dfd5278e512da06fc43"
+  integrity sha512-Z2dBLgH04EYiGkOM7phfLFqRPJK42LRTdivOYIZRVQLBZiGswWhw3dbtFhszZQrlGF8vXtAEfm+seAWn4bETLQ==
 
 credit-card@^3.0.1:
   version "3.0.1"
