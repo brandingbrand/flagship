@@ -8,27 +8,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
 
 
 ### Features
 
-* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
 * upgrade react native to 0.57.8 ([77177b3](https://github.com/brandingbrand/flagship/commit/77177b3))
 
 
 ### BREAKING CHANGES
 
 * This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
-
-
-
-
-
-<a name="2.0.0"></a>
-# 2.0.0 (2018-10-16)
-
-
-### Features
-
-* inital commit ([039a84f](https://github.com/brandingbrand/flagship/commit/039a84f))
