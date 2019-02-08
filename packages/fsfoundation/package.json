@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsfoundation",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Foundation types for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",

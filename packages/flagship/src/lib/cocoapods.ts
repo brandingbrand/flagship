@@ -55,3 +55,17 @@ export function add(path: string, pods: string[]): void {
 
   helpers.logInfo(`Podfile updated: ${pods.join(', ')}`);
 }
+
+/**
+ * Add additional sources to the Podfile
+ * @param {string[]} sources - list of sources to add
+ */
+export function sources(sources: string[]): void {
+  if (sources && sources.length > 0) {
+    helpers.logInfo('adding additional pod sources: ' + sources.join(', '));
+    let podfileContents = fs.readFileSync(path.ios.podfilePath(), 'utf8');
+    podfileContents = podfileContents.replace('# ADDITIONAL_POD_SOURCES',
+      sources.map(s => `source '${s}'`).join('\n'));
+    fs.writeFileSync(path.ios.podfilePath(), podfileContents);
+  }
+}

@@ -3,46 +3,47 @@ import { Component } from 'react';
 import { Platform } from 'react-native';
 
 import AnalyticsProvider from './providers/AnalyticsProvider';
+type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
 
 // Commerce Interfaces
 
-export interface ClickGeneric {
+export interface ClickGeneric extends Dictionary {
   identifier?: string;
   name?: string;
   index?: number;
 }
 
-export interface ContactCall {
+export interface ContactCall extends Dictionary {
   number: string;
 }
 
-export interface ContactEmail {
+export interface ContactEmail extends Dictionary {
   to: string;
 }
 
-export interface ImpressionGeneric {
+export interface ImpressionGeneric extends Dictionary {
   identifier?: string;
   name?: string;
   index?: number;
 }
 
-export interface LocationDirections {
+export interface LocationDirections extends Dictionary {
   identifier?: string;
   address?: string;
 }
 
-export interface SearchGeneric {
+export interface SearchGeneric extends Dictionary {
   term: string;
   count?: number;
 }
 
-export interface Screenview {
+export interface Screenview extends Dictionary {
   url: string;
 }
 
 // Enhanced Commerce Interfaces
 
-export interface ImpressionProduct {
+export interface ImpressionProduct extends Dictionary {
   identifier: string;
   name: string;
   brand?: string;
@@ -53,7 +54,7 @@ export interface ImpressionProduct {
   index?: number;
 }
 
-export interface Product {
+export interface Product extends Dictionary {
   identifier: string;
   name: string;
   brand?: string;
@@ -65,14 +66,14 @@ export interface Product {
   index?: number;
 }
 
-export interface Promotion {
+export interface Promotion extends Dictionary {
   identifier: string;
   name: string;
   creative?: string;
   slot?: string;
 }
 
-export interface RefundProduct {
+export interface RefundProduct extends Dictionary {
   identifier: string;
   quantity: number;
   price?: string;
@@ -81,16 +82,16 @@ export interface RefundProduct {
 
 // Enhanced Commerce Action Interfaces
 
-export interface ProductAction {
+export interface ProductAction extends Dictionary {
   list?: string;
 }
 
-export interface CheckoutAction {
+export interface CheckoutAction extends Dictionary {
   step?: number;
   option?: string;
 }
 
-export interface TransactionAction {
+export interface TransactionAction extends Dictionary {
   identifier: string;
   affiliation?: string;
   revenue?: string;

@@ -7,15 +7,20 @@ import {
   logInfo
 } from '../../helpers';
 
-const kBrandingBrandAppCenterToken = '0fd777da29f2545597bf45c20149b087eaba5f3b';
-
 /**
  * Patches Android for the module.
  *
  * @param {object} configuration The project configuration.
  */
+// tslint:disable:cyclomatic-complexity
 export function android(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
+
+  if (!(configuration.codepush
+        && configuration.codepush.appCenterToken)
+  ) {
+    logError('codepush.appCenterToken must be specified in project config');
+  }
 
   const assetsPath = path.android.assetsPath();
   const appCenterConfigPath = path.resolve(assetsPath, 'appcenter-config.json');
@@ -68,8 +73,15 @@ export function android(configuration: Config): void {
 
   // Include the readonly Branding Brand app center token ONLY in development
   // builds
-  if (!configuration.disableDevFeature) {
-    nativeConstants.addAndroid(configuration, 'AppCenterToken', kBrandingBrandAppCenterToken);
+  if (!configuration.disableDevFeature &&
+    configuration.codepush &&
+    configuration.codepush.appCenterToken
+  ) {
+    nativeConstants.addAndroid(
+      configuration,
+      'AppCenterToken',
+      configuration.codepush.appCenterToken
+    );
   }
 
   fs.update(
@@ -89,6 +101,12 @@ export function android(configuration: Config): void {
  */
 export function ios(configuration: Config): void {
   logInfo('patching iOS for react-native-codepush');
+
+  if (!(configuration.codepush
+        && configuration.codepush.appCenterToken)
+  ) {
+    logError('codepush.appCenterToken must be specified in project config');
+  }
 
   const appCenterConfigPath = path.resolve(
     path.ios.nativeProjectPath(configuration),
@@ -114,7 +132,10 @@ export function ios(configuration: Config): void {
 
   // Include the readonly Branding Brand app center token ONLY in development
   // builds
-  if (!configuration.disableDevFeature) {
-    nativeConstants.addIOS(configuration, 'AppCenterToken', kBrandingBrandAppCenterToken);
+  if (!configuration.disableDevFeature &&
+    configuration.codepush &&
+    configuration.codepush.appCenterToken
+  ) {
+    nativeConstants.addIOS(configuration, 'AppCenterToken', configuration.codepush.appCenterToken);
   }
 }
