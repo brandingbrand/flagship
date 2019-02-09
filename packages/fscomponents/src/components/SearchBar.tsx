@@ -22,7 +22,7 @@ import { style as S } from '../styles/SearchBar';
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
 
-const cancelIcon = require('../../assets/images/clear.png');
+const clearIcon = require('../../assets/images/clear.png');
 const isAndroid = Platform.OS === 'android';
 
 export interface SearchBarProps {
@@ -192,7 +192,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       return null;
     }
 
-    const icon = <Image source={cancelIcon} style={styles.rightIcon} resizeMode='contain' />;
+    const icon = <Image source={clearIcon} style={styles.rightIcon} resizeMode='contain' />;
 
     return (
       <TouchableOpacity onPress={this.handleClear} accessibilityRole='button'>
