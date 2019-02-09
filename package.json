@@ -3,7 +3,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
+      "pre-commit": "yarn test",
       "commit-msg": "commitlint -e $GIT_PARAMS"
     }
   },
@@ -104,5 +104,5 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ]:
 }
