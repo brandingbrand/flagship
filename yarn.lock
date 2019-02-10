@@ -1707,15 +1707,18 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/storybook__addon-actions/-/storybook__addon-actions-3.0.3.tgz#99287c0b9ee6b84ea571ee4cb42d0779c56af208"
 
-"@types/storybook__addon-knobs@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@types/storybook__addon-knobs/-/storybook__addon-knobs-3.3.1.tgz#856e02dd8fe2ff8008f4bd3b65ed0afb98c7912e"
+"@types/storybook__addon-knobs@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/storybook__addon-knobs/-/storybook__addon-knobs-4.0.0.tgz#b218f0d84888833cc8b8d7a7b524175e8bb3030f"
+  integrity sha512-x3GNz8f0fQv7USvDuVXdZ4p/7nofFHyH6iB/qwR84Yp97xZxOzlQ0SY+6K14tVbdi9P7Qm5DZ2kZr0a+Io8qEQ==
   dependencies:
     "@types/react" "*"
+    "@types/storybook__react" "*"
 
-"@types/storybook__react@^3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@types/storybook__react/-/storybook__react-3.0.7.tgz#2ca6ab78e5fe777737aa5880b0bb5228f564e137"
+"@types/storybook__react@*", "@types/storybook__react@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/storybook__react/-/storybook__react-4.0.0.tgz#52cc452fbab599568d595075a90142ef4a1233f6"
+  integrity sha512-Iq3RX953fqZRwWN3jywm8pUx1/Atev+x/9tF7/2CNA+Ii55sGSJJRWMRthUKQXTa3zOexcvfksfVYdUaIZY91w==
   dependencies:
     "@types/react" "*"
     "@types/webpack-env" "*"
@@ -6689,14 +6692,6 @@ humanize@0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/humanize/-/humanize-0.0.9.tgz#1994ffaecdfe9c441ed2bdac7452b7bb4c9e41a4"
 
-husky@^0.14.3:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-0.14.3.tgz#c69ed74e2d2779769a17ba8399b54ce0b63c12c3"
-  dependencies:
-    is-ci "^1.0.10"
-    normalize-path "^1.0.0"
-    strip-indent "^2.0.0"
-
 hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
@@ -9221,10 +9216,6 @@ normalize-package-data@^2.0.0, normalize-package-data@^2.3.0, normalize-package-
     is-builtin-module "^1.0.0"
     semver "2 || 3 || 4 || 5"
     validate-npm-package-license "^3.0.1"
-
-normalize-path@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-1.0.0.tgz#32d0e472f91ff345701c15a8311018d3b0a90379"
 
 normalize-path@^2.0.0, normalize-path@^2.0.1, normalize-path@^2.1.1:
   version "2.1.1"
