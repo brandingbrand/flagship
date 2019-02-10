@@ -95,7 +95,12 @@
     "commitMessages": {
       "dependencyUpdate": "fix: update ${dependency} to version ${version}",
       "devDependencyUpdate": "chore: update ${dependency} to version ${version}"
-    }
+    },
+    "ignore": [
+      "react",
+      "react-native",
+      "react-native-navigation"
+    ]
   },
   "workspaces": [
     "packages/*"
