@@ -290,8 +290,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
       feedback: {
         label: FSI18n.string(componentTranslationKeys.form.feedback.label),
         error: FSI18n.string(componentTranslationKeys.form.feedback.error),
-        multiline: true,
-        stylesheet: MultilineStyle
+        multiline: true
       }
     };
 
