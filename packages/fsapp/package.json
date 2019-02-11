@@ -23,7 +23,7 @@
     "react-native-navigation": "1.1.483",
     "react-native-restart": "^0.0.7",
     "react-native-sensitive-info": "^5.1.0",
-    "react-redux": "^5.0.7",
+    "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "redux-immutable-state-invariant": "^2.1.0",
