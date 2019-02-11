@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
+
+
+### Bug Fixes
+
+* **flagship:** update iphoneos deployment target to 10.3 ([d592fe8](https://github.com/brandingbrand/flagship/commit/d592fe8))
+
+
+
+
+
 # [3.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0-alpha.0) (2019-02-08)
 
 
