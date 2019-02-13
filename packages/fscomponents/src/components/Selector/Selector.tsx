@@ -27,6 +27,8 @@ export interface SelectorProps {
   itemHeight?: number;
   renderDropdownArrow?: () => React.ReactNode;
   renderCloseButton?: (closeModal: Function) => React.ReactNode;
+  accessibility?: boolean;
+  accessibilityLabel?: string;
 
   // styles
   style?: StyleProp<ViewStyle>;
@@ -75,39 +77,61 @@ export class Selector extends PureComponent<
   }
 
   renderSelector = () => {
+    const { selectButtonStyle } = this.props;
+    if (this.props.accessibility || this.props.accessibilityLabel) {
+      const title = (!!this.props.title) ? (this.props.title + ' ') : '';
+      const newLabel = this.props.accessibilityLabel
+        ? this.props.accessibilityLabel : title + 'Button';
+      return (
+        <TouchableOpacity
+          style={[styles.selector, selectButtonStyle]}
+          onPress={this.openModal}
+          accessibilityLabel={newLabel}
+        >
+          {this.renderContents()}
+          {this.renderDropdownArrow()}
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          style={[styles.selector, selectButtonStyle]}
+          onPress={this.openModal}
+        >
+          {this.renderContents()}
+          {this.renderDropdownArrow()}
+        </TouchableOpacity>
+      );
+    }
+
+  }
+
+  renderContents = () => {
     const {
       title,
       items,
-      selectButtonStyle,
       labelStyle,
       placeholder,
       placeholderStyle
     } = this.props;
-
-    const { selectedValue } = this.state;
     const selectorLabel = (
-      items.find(it => it.value === selectedValue) || {
+      items.find(it => it.value === this.state.selectedValue) || {
         label: undefined
       }
     ).label;
-
-    return (
-      <TouchableOpacity
-        style={[styles.selector, selectButtonStyle]}
-        onPress={this.openModal}
-      >
-        {!selectorLabel && placeholder ? (
-          <Text style={[styles.placeholderStyle, placeholderStyle]}>
-            {placeholder}
-          </Text>
-        ) : (
-          <Text style={[styles.selectorLabel, labelStyle]}>
-            {selectorLabel || placeholder || title || items[0] && items[0].label || null}
-          </Text>
-        )}
-        {this.renderDropdownArrow()}
-      </TouchableOpacity>
-    );
+    if (selectorLabel && placeholder) {
+      return (
+        <Text style={[styles.placeholderStyle, placeholderStyle]}>
+          {placeholder}
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={[styles.selectorLabel, labelStyle]}>
+          {selectorLabel || placeholder || title || items[0].label}
+        </Text>
+      );
+    }
   }
 
   renderDropdownArrow = () => {
