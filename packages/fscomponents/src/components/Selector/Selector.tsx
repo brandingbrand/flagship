@@ -119,7 +119,7 @@ export class Selector extends PureComponent<
         label: undefined
       }
     ).label;
-    if (selectorLabel && placeholder) {
+    if (!selectorLabel && placeholder) {
       return (
         <Text style={[styles.placeholderStyle, placeholderStyle]}>
           {placeholder}
