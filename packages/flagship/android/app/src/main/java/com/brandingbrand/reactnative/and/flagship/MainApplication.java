@@ -3,11 +3,7 @@ package com.brandingbrand.reactnative.and.flagship;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
-import com.reactnativenavigation.*;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.psykar.cookiemanager.CookieManagerPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.shell.MainReactPackage;
@@ -17,21 +13,25 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.soloader.SoLoader;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.psykar.cookiemanager.CookieManagerPackage;
+import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 
+public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages(Application application, boolean debug) {
-        return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            new RNSensitiveInfoPackage(),
-            new RNDeviceInfo(),
-            new CookieManagerPackage(),
-            new NativeConstantsPackage(),
-            new EnvSwitcherPackage(),
-            new ReactNativeRestartPackage()
+        return Arrays.asList(
+                new MainReactPackage(),
+                new RNSensitiveInfoPackage(),
+                new RNDeviceInfo(),
+                new CookieManagerPackage(),
+                new NativeConstantsPackage(),
+                new EnvSwitcherPackage(),
+                new ReactNativeRestartPackage()
         );
     }
 
