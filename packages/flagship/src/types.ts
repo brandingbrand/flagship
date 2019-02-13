@@ -17,9 +17,16 @@ export interface Config {
   googleMapApiKey: string;
 
   codepush?: {
+    appCenterToken: string;
     android: CodepushConfig;
     ios: CodepushConfig;
   };
+
+  pushIcons?: {
+    android?: string;
+    ios?: string;
+  };
+  firebaseGoogleServices?: any;
 
   zendeskChat?: {
     accountKey: string;
@@ -88,6 +95,23 @@ export interface Config {
   webTitle?: string;
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
+  ios: IOSConfig;
+  adobeAnalytics?: {
+    ios: {
+      configPath: string;
+    };
+    android: {
+      configPath: string;
+    };
+  };
+}
+
+export interface IOSConfig {
+  pods: PodsConfig;
+}
+
+export interface PodsConfig {
+  sources: string[];
 }
 
 export interface NPMPackageConfig {

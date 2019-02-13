@@ -10,7 +10,7 @@ export interface ReviewsListProps {
   reviewStyle?: import ('@brandingbrand/fsfoundation').Dictionary<StyleProp<TextStyle | ViewStyle>>;
 
   // chidlren
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   moreTextProps?: MoreTextProps;
   recommendedImage?: ImageURISource;
   verifiedImage?: ImageURISource;
