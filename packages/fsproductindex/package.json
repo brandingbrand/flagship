@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fsproductindex",
-  "version": "3.0.1-alpha.0",
+  "version": "3.0.0",
   "description": "components for product index",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,9 +10,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^3.0.1-alpha.0",
-    "@brandingbrand/fscomponents": "^3.0.1-alpha.0",
-    "@brandingbrand/fsi18n": "^3.0.1-alpha.0",
+    "@brandingbrand/fscommerce": "^3.0.0",
+    "@brandingbrand/fscomponents": "^3.0.0",
+    "@brandingbrand/fsi18n": "^3.0.0",
     "lodash-es": "^4.17.10",
     "pluralize": "^7.0.0",
     "react": "16.6.3",
