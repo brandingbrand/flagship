@@ -9,7 +9,6 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 import { Platform } from 'react-native';
 
-// const DeviceInfo = require('react-native-device-info');
 import DeviceInfo from 'react-native-device-info';
 const { version } = projectEnv;
 
