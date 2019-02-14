@@ -1,4 +1,5 @@
 import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
+import Decimal from 'decimal.js';
 type Dictionary = import ('@brandingbrand/fsfoundation').Dictionary;
 
 // Common Interface
@@ -58,7 +59,7 @@ export interface ImpressionProduct extends Generics {
   category?: string;
   list: string;
   variant?: string;
-  price?: string;
+  price?: string | Decimal;
   index?: number;
 }
 
@@ -68,7 +69,7 @@ export interface Product extends Generics {
   brand?: string;
   category?: string;
   variant?: string;
-  price?: string;
+  price?: string | Decimal;
   quantity?: number;
   coupons?: string[];
   index?: number;
@@ -84,7 +85,7 @@ export interface Promotion extends Generics {
 export interface RefundProduct extends Dictionary {
   identifier: string;
   quantity: number;
-  price?: string;
+  price?: string | Decimal;
   coupons?: string[];
 }
 
@@ -94,7 +95,7 @@ export interface TransactionProduct extends Dictionary {
   brand?: string;
   category?: string;
   variant?: string;
-  price?: string;
+  price?: string | Decimal;
   quantity?: number;
   coupons?: string[];
   index?: number;
