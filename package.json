@@ -37,6 +37,7 @@
     "docs": "run-s build:docs build:storybook"
   },
   "devDependencies": {
+    "@brandingbrand/greenkeeper-lockfile": "^0.0.1",
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@commitlint/config-lerna-scopes": "^7.1.2",
@@ -87,8 +88,7 @@
     "ts-loader": "^4.3.0",
     "typedoc": "^0.12.0",
     "typedoc-plugin-monorepo": "^0.1.0",
-    "typescript": "^3.0.1",
-    "@brandingbrand/greenkeeper-lockfile": "^0.0.1"
+    "typescript": "^3.0.1"
   },
   "greenkeeper": {
     "commitMessages": {
