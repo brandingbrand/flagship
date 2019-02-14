@@ -50,7 +50,7 @@
     "react-native-sensitive-info": "^5.1.0",
     "react-native-svg": "^7.0.2",
     "react-native-touch-id": "^4.0.1",
-    "react-redux": "^6.0.0",
+    "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
   },
   "flagship": {
