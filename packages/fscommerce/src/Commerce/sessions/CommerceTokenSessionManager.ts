@@ -36,7 +36,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
     }
   }
 
-  async getTokenFromLocalStorage(): Promise<SessionToken | null | undefined> {
+  async getTokenFromLocalStorage(): Promise<SessionToken | null> {
     return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
       .then((tokenString: string) => {
         if (!tokenString) {
