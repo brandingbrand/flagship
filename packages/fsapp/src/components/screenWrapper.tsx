@@ -205,7 +205,12 @@ export default function wrapScreen(
         appConfig.version || appConfig.packageJson && appConfig.packageJson.version || '';
 
       return (
-        <TouchableOpacity style={styles.devNoteContainer} onPress={this.openDevMenu}>
+        <TouchableOpacity
+          accessible={true}
+          accessibilityLabel={'development menu'}
+          style={styles.devNoteContainer}
+          onPress={this.openDevMenu}
+        >
           <Text style={styles.devNote}>
             {`${versionlabel}`}
             {appConfig.codePushVersionLabel || ''}

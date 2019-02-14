@@ -1,4 +1,5 @@
 import AnalyticsProvider, * as Events from '../AnalyticsProvider';
+import Decimal from 'decimal.js';
 type AnalyticsProviderConfiguration = import ('../types/AnalyticsProviderConfiguration').default;
 type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
 type Arguments<F> = import ('@brandingbrand/fsfoundation').Arguments<F>;
@@ -41,8 +42,13 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
   }
 
   public static serializeProduct(product: GenericProduct): string {
-    const { category = '', identifier = '', quantity = '', price = '' } = product;
-    return [category, identifier, quantity, price].join(';');
+    const { category = '', identifier = '', quantity = '0', price = '0' } = product;
+
+    const unitPrice = price instanceof Decimal ? price : new Decimal(price);
+    const qty = new Decimal(quantity);
+    const totalPrice = unitPrice.times(qty).toString();
+
+    return [category, identifier, quantity, totalPrice].join(';');
   }
 
   protected disabledEvents: DisabledEvents;
