@@ -139,11 +139,20 @@ export function ios(configuration: Config): void {
 
   // Add Firebase pod to Podfile
   const podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
-  const firebasePod = `pod 'Firebase/Core'`;
+  const firebasePod = `pod 'Firebase/Core', '5.12.0'`;
 
   if (podfile.indexOf(firebasePod) === -1) {
     pods.add(path.ios.podfilePath(), [firebasePod]);
     logInfo('updated Podfile with Firebase pod');
+  }
+
+  // Firebase includes GoogleAppMeasurement as a dependency automatically, but the latest version
+  // 5.4.0 was compiled with Xcode 10 which is not yet supported by Flagship
+  const googleMeasurementPod = `pod 'GoogleAppMeasurement', '5.3.0'`;
+
+  if (podfile.indexOf(googleMeasurementPod) === -1) {
+    pods.add(path.ios.podfilePath(), [googleMeasurementPod]);
+    logInfo('updated Podfile with GoogleAppMeasurement pod');
   }
 
   logInfo('finished updating iOS for firebase');
