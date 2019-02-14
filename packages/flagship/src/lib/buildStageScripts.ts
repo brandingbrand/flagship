@@ -8,41 +8,51 @@ import { satisfies } from 'semver';
 import * as helpers from '../helpers';
 
 
-type Platform = 'android' | 'ios' | 'web';
-type LifeCycle = 'beforeCopyBoilerplate' | 'beforeLink' |
-  'beforeIOSPodInstall' | 'afterLink' | 'failed';
+export enum BuildPlatform {
+  android,
+  ios,
+  web
+}
+export enum BuildStage {
+  beforeCopyBoilerplate,
+  beforeLink,
+  beforeIOSPodInstall,
+  afterLink,
+  failed
+}
 interface Package {
   packageName: string | RegExp;
   version?: string;
 }
-export interface BuildHook {
+export interface BuildStageScript {
   name: string;
   script: (config: Config) => void;
-  lifeCycle: LifeCycle;
-  platforms?: Platform[];
+  buildStage: BuildStage;
+  platforms?: BuildPlatform[];
   packages?: Package[];
   priority?: number;
 }
 
 const hookDirectories =
-  [path.resolve(__dirname, 'buildHooks'), path.resolve('./buildHooks')].filter(fs.pathExistsSync);
+  [path.resolve(__dirname, 'buildStageScripts'), path.resolve('./buildStageScripts')]
+    .filter(fs.pathExistsSync);
 const hookFileExtension = '.js';
 
 // Loads all the .js files from the `modules` directory and creates a dictionary of filename to
 // the exported object from that file
-const loadedHooks: BuildHook[] = [];
+const loadedHooks: BuildStageScript[] = [];
 
 export function load(
   packageJSON: NPMPackageConfig, android: boolean, ios: boolean, web: boolean): void {
-  const platforms: Platform[] = [];
+  const platforms: BuildPlatform[] = [];
   if (android) {
-    platforms.push('android');
+    platforms.push(BuildPlatform.android);
   }
   if (ios) {
-    platforms.push('ios');
+    platforms.push(BuildPlatform.ios);
   }
   if (web) {
-    platforms.push('web');
+    platforms.push(BuildPlatform.web);
   }
   const dependencies = packageJSON.dependencies || {};
   const dependencyKeys = Object.keys(dependencies);
@@ -51,7 +61,7 @@ export function load(
       .filter((filename: string) => hookFileExtension === path.extname(filename))
       .forEach((filename: string) => {
         const src = path.resolve(directory, filename);
-        const hooks: BuildHook[] = require(src);
+        const hooks: BuildStageScript[] = require(src);
 
         hooks.forEach(hook => {
           if (hook.platforms) {
@@ -86,8 +96,8 @@ export function load(
   });
 }
 
-export function run(configuration: Config, lifeCycle: LifeCycle): void {
-  loadedHooks.filter(hook => hook.lifeCycle === lifeCycle)
+export function run(configuration: Config, buildStage: BuildStage): void {
+  loadedHooks.filter(hook => hook.buildStage === buildStage)
     .sort((a, b) => (a.priority || 0) - (b.priority || 0))
     .map(hook => {
       helpers.logInfo(`Running build hook script '${hook.name}'`);

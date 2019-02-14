@@ -7,7 +7,7 @@ import * as fs from '../lib/fs';
 import * as ios from '../lib/ios';
 import * as link from '../lib/link';
 import * as helpers from '../helpers';
-import * as buildHooks from '../lib/buildHooks';
+import * as buildStageScripts from '../lib/buildStageScripts';
 import * as path from '../lib/path';
 import * as rename from '../lib/rename';
 import * as web from '../lib/web';
@@ -59,9 +59,9 @@ export function handler(argv: HandlerArgs): void {
   const projectPackageJSON = require(path.project.resolve('package.json'));
   const configuration = initEnvironment(argv.env, projectPackageJSON);
 
-  buildHooks.load(projectPackageJSON, doAndroid, doIOS, doWeb);
+  buildStageScripts.load(projectPackageJSON, doAndroid, doIOS, doWeb);
 
-  buildHooks.run(configuration, 'beforeCopyBoilerplate');
+  buildStageScripts.run(configuration, buildStageScripts.BuildStage.beforeCopyBoilerplate);
 
   if (doAndroid) {
     initAndroid(projectPackageJSON, configuration, projectPackageJSON.version, argv.env);
@@ -75,20 +75,20 @@ export function handler(argv: HandlerArgs): void {
     initWeb(projectPackageJSON, configuration, argv.env);
   }
 
-  buildHooks.run(configuration, 'beforeLink');
+  buildStageScripts.run(configuration, buildStageScripts.BuildStage.beforeLink);
 
   // Run react-native link
   link.link(configuration)
     .then(() => {
       if (doIOS) {
-        buildHooks.run(configuration, 'beforeIOSPodInstall');
+        buildStageScripts.run(configuration, buildStageScripts.BuildStage.beforeIOSPodInstall);
         cocoapods.install();
       }
-      buildHooks.run(configuration, 'afterLink');
+      buildStageScripts.run(configuration, buildStageScripts.BuildStage.afterLink);
     })
     .catch(err => {
       console.error(err);
-      buildHooks.run(configuration, 'failed');
+      buildStageScripts.run(configuration, buildStageScripts.BuildStage.failed);
       process.exit(1);
     });
 }

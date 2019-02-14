@@ -4,15 +4,15 @@ import {
   logError,
   logInfo
 } from '../../helpers';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
 const kRepository = `maven { url 'https://zendesk.artifactoryonline.com/zendesk/repo' }`;
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-zendesk-chat android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: /^(@[^\/]+\/)?react-native-zendesk-chat$/
     }],
@@ -50,4 +50,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

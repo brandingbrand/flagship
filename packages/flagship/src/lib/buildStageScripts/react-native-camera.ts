@@ -3,13 +3,13 @@ import * as fs from '../fs';
 import {
   logInfo
 } from '../../helpers';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-camera android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: 'react-native-camera'
     }],
@@ -56,4 +56,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

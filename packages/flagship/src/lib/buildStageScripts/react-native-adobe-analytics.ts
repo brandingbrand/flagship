@@ -5,13 +5,13 @@ import {
   logError,
   logInfo
 } from '../../helpers';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-adobe-analytics android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: 'react-native-adobe-analytics'
     }],
@@ -35,11 +35,11 @@ const buildHooks: BuildHook[] = [
   },
   {
     name: 'react-native-adobe-analytics ios patch',
-    platforms: ['ios'],
+    platforms: [BuildPlatform.ios],
     packages: [{
       packageName: 'react-native-adobe-analytics'
     }],
-    lifeCycle: 'beforeIOSPodInstall',
+    buildStage: BuildStage.beforeIOSPodInstall,
     script: config => {
       if (
         !config.adobeAnalytics ||
@@ -72,4 +72,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

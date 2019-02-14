@@ -1,15 +1,15 @@
 import * as path from '../path';
 import * as fs from '../fs';
 import * as pods from '../cocoapods';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
 const kRepository = `maven { url 'https://repo.leanplum.com/' }`;
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-leanplum android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: /^(@[^\/]+\/)?react-native-leanplum$/
     }],
@@ -27,8 +27,8 @@ const buildHooks: BuildHook[] = [
   },
   {
     name: 'react-native-leanplum ios pod version temporary locking',
-    platforms: ['ios'],
-    lifeCycle: 'beforeIOSPodInstall',
+    platforms: [BuildPlatform.ios],
+    buildStage: BuildStage.beforeIOSPodInstall,
     packages: [{
       packageName: /^(@[^\/]+\/)?react-native-leanplum$/
     }],
@@ -38,4 +38,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

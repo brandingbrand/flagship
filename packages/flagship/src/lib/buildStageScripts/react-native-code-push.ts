@@ -5,7 +5,7 @@ import {
   logError,
   logInfo
 } from '../../helpers';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
 /**
  * Patches Android for the module.
@@ -13,11 +13,11 @@ import { BuildHook } from '../buildHooks';
  * @param {object} configuration The project configuration.
  */
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-code-push android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: 'react-native-code-push'
     }],
@@ -105,8 +105,8 @@ const buildHooks: BuildHook[] = [
   },
   {
     name: 'react-native-code-push ios patch',
-    platforms: ['ios'],
-    lifeCycle: 'beforeIOSPodInstall',
+    platforms: [BuildPlatform.ios],
+    buildStage: BuildStage.beforeIOSPodInstall,
     packages: [{
       packageName: 'react-native-code-push'
     }],
@@ -155,4 +155,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

@@ -6,13 +6,13 @@ import {
   logInfo,
   logWarn
 } from '../../helpers';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'react-native-firebase android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: 'react-native-firebase'
     }],
@@ -114,8 +114,8 @@ const buildHooks: BuildHook[] = [
   },
   {
     name: 'react-native-firebase ios patch',
-    platforms: ['ios'],
-    lifeCycle: 'beforeIOSPodInstall',
+    platforms: [BuildPlatform.ios],
+    buildStage: BuildStage.beforeIOSPodInstall,
     packages: [{
       packageName: 'react-native-firebase'
     }],
@@ -179,4 +179,4 @@ const buildHooks: BuildHook[] = [
   }
 ];
 
-module.exports = buildHooks;
+module.exports = buildStageScripts;

@@ -1,17 +1,17 @@
 import * as path from '../path';
 import * as fs from '../fs';
-import { BuildHook } from '../buildHooks';
+import { BuildPlatform, BuildStage, BuildStageScript } from '../buildStageScripts';
 
 /**
  * Patches Android for the module.
  *
  * @param {object} configuration The project configuration.
  */
-const buildHooks: BuildHook[] = [
+const buildStageScripts: BuildStageScript[] = [
   {
     name: 'appcenter-analytics android patch',
-    platforms: ['android'],
-    lifeCycle: 'afterLink',
+    platforms: [BuildPlatform.android],
+    buildStage: BuildStage.afterLink,
     packages: [{
       packageName: 'appcenter-analytics'
     }],
@@ -25,4 +25,4 @@ const buildHooks: BuildHook[] = [
     }
   }
 ];
-module.exports = buildHooks;
+module.exports = buildStageScripts;
