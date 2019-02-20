@@ -391,9 +391,9 @@ class PSProductDetailComponent extends Component<
     }
   }
 
-  changeQty = (count: number) => {
+  changeQty = (countToAdd: number) => {
     this.setState(prevState => {
-      return { quantity: count };
+      return { quantity: countToAdd };
     });
   }
 
