@@ -12548,10 +12548,10 @@ react-native-push-notification@^3.1.1:
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.2.tgz#a6129fb2897773a19c7b42bba1b51a9a4aac7df3"
   integrity sha512-MjjPNXb2Cw7g1D41DtVbTVuGFCAtADxb91pAEFSkQ0AZ2gIooqYkWFHBL6woc15QHhtaZS8VT2GQoyW5OWlxIg==
 
-react-native-restart@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.7.tgz#e2ec764dcb0a82918a301c8664c30df75225f7e3"
-  integrity sha512-/7TdL3pHM7H0Cut6U6SK1jd6fVYvLlQq0O4inJ7j4YD0w9BtAAFqLkLnBDOA0jL4oLw/89yR8HhLOzNFGvVsfw==
+react-native-restart@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.8.tgz#b19e99b6f0cb9820a3a900e57a564c69d2b0b1e2"
+  integrity sha512-rVtjvNZO4QwYHLn1fDzUGNqYFwJufRBkWdSFlxID/QM+2j7siV4rad138I4ejpPdtwdSsQ/EIIdk6VFUQQ9S9g==
 
 react-native-safe-area@^0.5.0:
   version "0.5.0"
