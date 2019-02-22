@@ -26,6 +26,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+
+
+### Features
+
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
 ## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
 
 
