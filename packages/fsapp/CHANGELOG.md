@@ -66,6 +66,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* update react-native-restart to version 0.0.8 ([db3ff02](https://github.com/brandingbrand/flagship/commit/db3ff02))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
 ## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
