@@ -135,10 +135,11 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
       .catch((e: any) => console.log('cannot get all items from react-native-sensitive-info', e));
   }
 
-  viewSensitiveInfo = async () => {
-    SInfo.getAllItems({}).then((values: any) => {
-      this.showData(JSON.stringify(values, null, '  '));
-    })
-    .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
+  viewSensitiveInfo = () => {
+    SInfo.getAllItems({})
+      .then((values: any) => {
+        this.showData(JSON.stringify(values, null, '  '));
+      })
+      .catch(e => console.warn('cannot view sensitive info', e));
   }
 }

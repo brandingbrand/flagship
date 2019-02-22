@@ -121,7 +121,7 @@ const ShopStyle = StyleSheet.create({
   }
 });
 
-class Shop extends Component<ShopProps> {
+export class UnwrappedShop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
 
   constructor(props: ShopProps) {
@@ -374,4 +374,4 @@ class Shop extends Component<ShopProps> {
   }
 }
 
-export default withShop(Shop);
+export default withShop(UnwrappedShop);

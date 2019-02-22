@@ -215,7 +215,10 @@ export default class PSSignInForm extends Component<
       rememberMe: {
         hidden: !this.state.biometricAuthSupported,
         label: 'Remember Me',
-        onTintColor: variables.palette.secondary,
+        trackColor: {
+          true: variables.palette.secondary,
+          false: null
+        },
         // Android changes the color of the thumb switch when toggled on to be a conflicting green
         thumbTintColor: Platform.OS === 'android' ? variables.palette.surface : undefined,
         stylesheet: merge({}, t.form.Form.stylesheet, fieldStyles, {
@@ -387,7 +390,7 @@ export default class PSSignInForm extends Component<
     });
   }
 
-  getBiometricIcon = async (authType: string | boolean | TouchId.TouchIDError) => {
+  getBiometricIcon = async (authType: string | boolean | undefined) => {
     return this.props.getCredentials()
       .then(({ email, password }) => {
         if (!email || !password) {
@@ -418,7 +421,6 @@ export default class PSSignInForm extends Component<
     try {
       const success = await TouchId.authenticate(authPromptText, {
         title: 'Authentication Required',
-        color: variables.palette.secondary,
         // Type definition requires this, but the real name is fallbackLabel, so this does nothing.
         // react-native-touch-id has definitions on master, but not 4.0.1, so when 4.0.2
         // is released, remove @types/react-native-touch-id from package.json and this line

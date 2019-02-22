@@ -36,7 +36,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
     }
   }
 
-  async getTokenFromLocalStorage(): Promise<SessionToken> {
+  async getTokenFromLocalStorage(): Promise<SessionToken | null | undefined> {
     return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
       .then((tokenString: string) => {
         if (!tokenString) {
@@ -45,7 +45,9 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
         try {
           this.token = JSON.parse(tokenString);
         } catch (e) {
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(() => true);
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(() =>
+            console.warn('cannot delete token', e)
+          );
           throw new Error('invalid stored token');
         }
         if (this.token) {

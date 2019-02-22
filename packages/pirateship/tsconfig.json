@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,7 +15,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2015",
-    "lib": [ "es7", "dom" ]
+    "rootDir": "src",
+    "outDir": "dist"
   },
   "exclude": [
     "**/*.test.ts",

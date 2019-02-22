@@ -38,7 +38,7 @@ async function runTSLint(path: string): Promise<number> {
       })
       .on('exit', (code: number) => {
         if (!didFailToSpawn) {
-          return resolve(code);
+          return resolve(code || 0);
         }
       });
   });
