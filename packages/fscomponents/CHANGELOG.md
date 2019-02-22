@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* Make scrollToTop function public ([ced8b2f](https://github.com/brandingbrand/flagship/commit/ced8b2f))
+* **fscomponents:** default show arrow on cms banner carousel story ([aa134e8](https://github.com/brandingbrand/flagship/commit/aa134e8))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* **fscomponents:** fix review summary percent recommend ([7bf0e9d](https://github.com/brandingbrand/flagship/commit/7bf0e9d))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fscomponents:** make clear what is image and what is overlay ([165585d](https://github.com/brandingbrand/flagship/commit/165585d))
+* **fscomponents:** remove outdated stylesheet on cmsfeedback component ([bab62c6](https://github.com/brandingbrand/flagship/commit/bab62c6))
+
+
+### Features
+
+* **fscomponents:**  add arrow knob to multicarousel storybook ([0b9cef9](https://github.com/brandingbrand/flagship/commit/0b9cef9))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** increase customizability of search bar ([9fd5357](https://github.com/brandingbrand/flagship/commit/9fd5357))
+* **fscomponents:** specify if searchbar input should clear after submit ([7a48cd3](https://github.com/brandingbrand/flagship/commit/7a48cd3))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
 ## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
