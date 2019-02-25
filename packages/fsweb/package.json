@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.3.4",
-    "@babel/polyfill": "^7.0.0",
+    "@babel/polyfill": "^7.2.5",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
     "babel-plugin-react-native-web": "^0.8.4",
