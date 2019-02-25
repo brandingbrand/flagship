@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -22,6 +22,22 @@ import {
 import { Loading } from './Loading';
 
 const DEFAULT_TINT_PERC = 15;
+
+export interface Palette {
+  primary: string;
+  secondary: string;
+  accent: string;
+  error: string;
+  background: string;
+  surface: string;
+  onPrimary: string;
+  onSecondary: string;
+  onAccent: string;
+  onBackground: string;
+  onSurface: string;
+  onError: string;
+  [key: string]: string;
+}
 
 export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop'> {
   title: string;
@@ -52,64 +68,24 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   full?: boolean;
 }
 
-export interface ButtonState {
-  palette: any;
-}
+export const Button = (props: ButtonProps) => {
+  const {
+    title,
+    style = {},
+    onPress,
+    onLongPress,
+    underlayColor,
+    full,
+    accessibilityLabel,
+    hitSlop,
+    size = 'medium',
+    color = 'primary',
+    light,
+    link,
+    disabled
+  } = props;
 
-export class Button extends PureComponent<ButtonProps, ButtonState> {
-  state: ButtonState = {
-    palette: this.props.palette || palette
-  };
-
-  render(): any {
-    const {
-      title,
-      style = {},
-      onPress,
-      onLongPress,
-      underlayColor,
-      full,
-      accessibilityLabel,
-      hitSlop,
-      size = 'medium',
-      color = 'primary',
-      light,
-      link,
-      disabled
-    } = this.props;
-
-    const { palette } = this.state;
-
-    return (
-      <TouchableHighlight
-        accessibilityLabel={accessibilityLabel || title}
-        onPress={onPress}
-        onLongPress={onLongPress}
-        underlayColor={
-          underlayColor || darken(palette[color], DEFAULT_TINT_PERC)
-        }
-        disabled={disabled}
-        hitSlop={hitSlop}
-        style={[
-          S.container,
-          {
-            backgroundColor: light || link ? 'transparent' : palette[color],
-            borderColor: light ? palette[color] : undefined,
-            borderWidth: light ? border.width : 0
-          },
-          stylesSize[size],
-          full && S.full,
-          style
-        ]}
-      >
-        <View style={S.buttonInner}>
-          {this.renderButtonInner()}
-        </View>
-      </TouchableHighlight>
-    );
-  }
-
-  private renderButtonInner = () => {
+  const renderButtonInner = () => {
     const {
       loading,
       icon,
@@ -120,11 +96,16 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       size = 'medium',
       color = 'primary',
       light,
-      link
-    } = this.props;
+      link,
+      palette
+    } = props;
 
-    const { palette } = this.state;
+    // color prop is passed as a string representing the key on palette, ie. "primary" or
+    // "onAcccent". Defaults to "primary", and applied to button background color
     const onColor = 'on' + color.charAt(0).toUpperCase() + color.slice(1);
+    const newPalette: Palette | undefined = props.palette ? props.palette : palette;
+    const newColor = newPalette &&
+      { color: light || link ? newPalette[color] : newPalette[onColor] };
 
     if (loading) {
       return <Loading />;
@@ -135,7 +116,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
           <Text
             style={[
               S.text,
-              { color: light || link ? palette[color] : palette[onColor] },
+              newColor,
               stylesTextSize[size],
               titleStyle
             ]}
@@ -145,5 +126,34 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
         </View>
       );
     }
-  }
-}
+  };
+
+  return (
+    <TouchableHighlight
+      accessibilityLabel={accessibilityLabel || title}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      underlayColor={
+        underlayColor || darken(palette[color], DEFAULT_TINT_PERC)
+      }
+      disabled={disabled}
+      hitSlop={hitSlop}
+      style={[
+        S.container,
+        {
+          backgroundColor: light || link ? 'transparent' : palette[color],
+          borderColor: light ? palette[color] : undefined,
+          borderWidth: light ? border.width : 0
+        },
+        stylesSize[size],
+        full && S.full,
+        style
+      ]}
+    >
+      <View style={S.buttonInner}>
+        {renderButtonInner()}
+      </View>
+    </TouchableHighlight>
+  );
+};
+
