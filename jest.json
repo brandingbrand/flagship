@@ -22,8 +22,9 @@
     "<rootDir>/packages/pirateship/node_modules"
   ],
   "transform": {
-    "^.+\\.jsx?$": "babel-jest",
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.[tj]sx$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+    "^.+\\.ts$": "ts-jest"
   },
   "transformIgnorePatterns": [],
   "testRegex": "/__tests__/.*\\.(test|spec)\\.(t|j)sx?$",
