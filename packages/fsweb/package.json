@@ -9,7 +9,7 @@
     "start": "webpack-serve ./webpack.config.js --mode development"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.3.4",
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
