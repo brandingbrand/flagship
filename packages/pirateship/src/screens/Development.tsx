@@ -2,18 +2,40 @@
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 import React, { Component } from 'react';
-
+import { StyleSheet, Text, View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import Row from '../components/PSRow';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarDefault } from '../styles/Navigation';
+import { navBarTabLanding } from '../styles/Navigation';
+import { fontSize } from '../styles/variables';
 import withAccount, { AccountProps } from '../providers/accountProvider';
+import {ImageWithOverlay} from '@brandingbrand/fscomponents';
+
 type Screen = import ('react-native-navigation').Screen;
 
 const screens: Screen[] = [
   { title: 'Product Index', screen: 'ProductIndex' },
   { title: 'Product Detail', screen: 'ProductDetail' }
 ];
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: fontSize.huge
+  },
+  overlay: {
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+  section: {
+    margin: 15
+  },
+  image: {
+    width: 350,
+    height: 150
+  }
+});
+
+const overlay = <Text style={styles.overlay}>Text Overlay</Text>;
 
 export interface DevelopmentScreenState {
   deviceToken: string;
@@ -22,7 +44,7 @@ export interface DevelopmentScreenState {
 export interface DevelopmentScreenProps extends ScreenProps, AccountProps {}
 
 class Development extends Component<DevelopmentScreenProps, DevelopmentScreenState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static navigatorStyle: NavigatorStyle = navBarTabLanding;
 
   state: DevelopmentScreenState = {
     deviceToken: 'NOT INITIALIZED'
@@ -35,17 +57,31 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
         hideGlobalBanner={true}
         navigator={navigator}
       >
-        {screens.map((screen, i) => (
+        <View style={styles.section}>
+          <Text style={styles.header}>{'PSRow Component'}</Text>
+          {screens.map((screen, i) => (
+            <Row
+              key={i}
+              title={screen.title || `Screen ${i}`}
+              onPress={this.goTo(screen)}
+            />
+          ))}
           <Row
-            key={i}
-            title={screen.title || `Screen ${i}`}
-            onPress={this.goTo(screen)}
+            title='Sign Out without clearing saved credentials'
+            onPress={this.softSignOut}
           />
-        ))}
-        <Row
-          title='Sign Out without clearing saved credentials'
-          onPress={this.softSignOut}
-        />
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.header}>{'ImageWithOverlay Component'}</Text>
+          <ImageWithOverlay
+            imageProps={{
+              source: { uri: 'https://placehold.it/350x150' },
+              style: styles.image
+            }}
+            overlay={overlay}
+            overlayPosition={'center'}
+          />
+        </View>
       </PSScreenWrapper>
     );
   }
