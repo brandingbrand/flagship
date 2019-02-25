@@ -75,11 +75,11 @@ export class DemandwareBase {
       config.masterToVariantProductId || (p => p.product_id);
     this.middleware = config.middleware || {};
     this.sessionManager = new CommerceCookieSessionManager({
-      refreshToken: this.refreshToken.bind(this),
-      createGuestToken: this.createGuestToken.bind(this),
-      createLoginToken: this.createLoginToken.bind(this),
-      destroyToken: this.destroyToken.bind(this),
-      sessionCookiesToToken: this.sessionCookiesToToken.bind(this),
+      refreshToken: this.refreshToken,
+      createGuestToken: this.createGuestToken,
+      createLoginToken: this.createLoginToken,
+      destroyToken: this.destroyToken,
+      sessionCookiesToToken: this.sessionCookiesToToken,
       restoreCookies: config.restoreCookies
     });
     this.storeCurrencyCode = config.storeCurrencyCode;
@@ -114,7 +114,7 @@ export class DemandwareBase {
    *
    * @returns {Promise.<SessionToken>} A Promise representing a new session token.
    */
-  async createGuestToken(): Promise<FSCommerceTypes.SessionToken> {
+  createGuestToken = async (): Promise<FSCommerceTypes.SessionToken> => {
     /*
      * to create guest token
      * - get jwt
@@ -148,7 +148,7 @@ export class DemandwareBase {
    *
    * @returns {Promise.<SessionToken>} A Promise representing a session token
    */
-  public async sessionCookiesToToken(): Promise<FSCommerceTypes.SessionToken | null> {
+  sessionCookiesToToken = async (): Promise<FSCommerceTypes.SessionToken | null> => {
     const data = await this.client.post<SFCC.Customer>(kEndpointAuth, {
       type: 'session'
     });
@@ -163,10 +163,10 @@ export class DemandwareBase {
    * @param {string} password - The password by which the user should be logged in
    * @returns {Promise.<SessionToken>} A Promise representing a token for an authenticated session
    */
-  async createLoginToken(
+  createLoginToken = async (
     username: string,
     password: string
-  ): Promise<FSCommerceTypes.SessionToken> {
+  ): Promise<FSCommerceTypes.SessionToken> => {
     const data = await this.client.post<SFCC.Customer>(
       kEndpointAuth,
       { type: 'credentials' },
@@ -203,7 +203,7 @@ export class DemandwareBase {
    * @returns {Promise.<Object>} A Promise representing the response from the operation. This
    * data is not normalized.
    */
-  async destroyToken(): Promise<FSNetworkResponse<void>> {
+  destroyToken = async (): Promise<FSNetworkResponse<void>> => {
     return this.authRequest<void>('delete', kEndpointAuth);
   }
 
