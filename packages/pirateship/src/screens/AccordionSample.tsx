@@ -24,7 +24,8 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
     const title = <Text>Menu Item</Text>;
     const icons = {
       closed: require('../../assets/images/alert.png'),
-      open: require('../../assets/images/check.png')
+      open: require('../../assets/images/check.png'),
+      arrow: require('../../assets/images/arrow-green.png')
     };
     const content = (
       <View>
@@ -59,6 +60,7 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
           <Accordion
             title={title}
             content={content}
+            arrowIconImage={icons.arrow}
             iconFormat={'arrow'}
           />
           <Accordion
