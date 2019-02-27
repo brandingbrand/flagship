@@ -21,7 +21,6 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
 
   render(): JSX.Element {
     const { navigator } = this.props;
-    const title = <Text>Menu Item</Text>;
     const icons = {
       closed: require('../../assets/images/alert.png'),
       open: require('../../assets/images/check.png'),
@@ -50,21 +49,21 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
       >
         <View style={styles.section}>
           <Accordion
-            title={title}
+            title={<Text>Basic Usage</Text>}
             content={content}
           />
           <Accordion
-            title={title}
+            title={<Text>Accordion with Image</Text>}
             content={imageContent}
           />
           <Accordion
-            title={title}
+            title={<Text>Accordion with Arrow Disclosure Icon</Text>}
             content={content}
             arrowIconImage={icons.arrow}
             iconFormat={'arrow'}
           />
           <Accordion
-            title={title}
+            title={<Text>Accordion with Custom Disclosure Icon</Text>}
             content={content}
             iconFormat={'image'}
             openIconImage={icons.open}
