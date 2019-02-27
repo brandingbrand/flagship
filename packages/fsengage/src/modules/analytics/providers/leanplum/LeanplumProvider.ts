@@ -1,4 +1,4 @@
-import Leanplum from '@brandingbrand/react-native-leanplum';
+import { default as RNLeanplum } from '@brandingbrand/react-native-leanplum';
 import Decimal from 'decimal.js';
 
 import AnalyticsProvider, {
@@ -31,7 +31,7 @@ export interface LeanplumProviderConfiguration {
 }
 
 export default class LeanplumProvider extends AnalyticsProvider {
-  client: Leanplum;
+  client: typeof RNLeanplum;
   monetizationEventName: string;
 
   constructor(commonConfiguration: AnalyticsProviderConfiguration,
@@ -43,7 +43,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-purchase-or-monetization-events
     this.monetizationEventName = configuration.monetizationEventName || 'Purchase';
 
-    this.client = new Leanplum(configuration.appId, configuration.key);
+    this.client = new RNLeanplum(configuration.appId, configuration.key);
     this.client.start();
 
     // TODO: Enable 'trackAllAppScreens'

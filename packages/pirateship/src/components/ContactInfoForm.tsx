@@ -265,7 +265,10 @@ export default class ContactInfoForm extends Component<
       },
       specials: {
         label: 'Send me emails about store specials.',
-        onTintColor: palette.secondary,
+        trackColor: {
+          true: palette.secondary,
+          false: null
+        },
         // Android changes the color of the thumb switch when toggled on to be a conflicting green
         thumbTintColor: Platform.OS === 'android' ? palette.surface : undefined,
         stylesheet: merge({}, t.form.Form.stylesheet, formFieldStyles, {
