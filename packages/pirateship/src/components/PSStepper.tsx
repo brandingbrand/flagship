@@ -6,8 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle
 } from 'react-native';
-
-import { Stepper } from '@brandingbrand/fscomponents';
+import { StatelessStepper } from '@brandingbrand/fscomponents';
 import * as variables from '../styles/variables';
 
 const icons = {
@@ -53,10 +52,10 @@ export default class PSStepper extends Component<PSStepperProps, PSStepperState>
     };
   }
 
-  changeQty = (currentCount: number) => {
-    this.setState({ quantity: currentCount });
+  changeQty = (quantityToAdd: number) => {
+    this.setState({ quantity: quantityToAdd });
     if (this.props.onChange) {
-      this.props.onChange(currentCount);
+      this.props.onChange(quantityToAdd);
     }
   }
 
@@ -98,7 +97,7 @@ export default class PSStepper extends Component<PSStepperProps, PSStepperState>
     const { stepperStyle } = this.props;
     const mergeStepperStyle: any = [styles.stepper, stepperStyle];
     return (
-      <Stepper
+      <StatelessStepper
         count={this.state.quantity}
         countUpperLimit={this.props.upperLimit || 10}
         stepperStyle={mergeStepperStyle}
