@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { style as S } from '../styles/ImageWithOverlay';
 import { FadeInImage, FadeInImageProps } from './FadeInImage';
@@ -20,7 +20,7 @@ export interface ImageWithOverlayProps {
     | 'topRight';
 }
 
-export const ImageWithOverlay = (props: ImageWithOverlayProps): JSX.Element => {
+export const ImageWithOverlay = memo((props: ImageWithOverlayProps): JSX.Element => {
   const {
     overlay,
     style,
@@ -38,4 +38,4 @@ export const ImageWithOverlay = (props: ImageWithOverlayProps): JSX.Element => {
         </View>}
     </View>
   );
-};
+});
