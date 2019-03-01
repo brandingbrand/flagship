@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -72,7 +72,7 @@ const BreadcrumbsStyles = StyleSheet.create({
   }
 });
 
-export const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
+export const Breadcrumbs = memo((props: BreadcrumbsProps): JSX.Element => {
   const defaultProps: Partial<BreadcrumbsProps> = {
     separator: BREADCRUMBS_SEPARATOR_DEFAULT
   };
@@ -119,5 +119,5 @@ export const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
       </View>
     );
   }
-};
+});
 
