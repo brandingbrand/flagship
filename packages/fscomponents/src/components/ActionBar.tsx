@@ -3,7 +3,7 @@
  * of configurable width (props.separatorWidth) between each child.
  */
 
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
 
 import {
   StyleProp,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ActionBar = (props: ActionBarProps): JSX.Element => {
+export const ActionBar = memo((props: ActionBarProps): JSX.Element => {
   const numChildren = React.Children.count(props.children);
   const separatorStyle = { width: props.separatorWidth || DEFAULT_SEPARATOR_WIDTH };
 
@@ -62,5 +62,5 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
       })}
     </View>
   );
-};
+});
 
