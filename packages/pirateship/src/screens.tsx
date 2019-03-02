@@ -26,6 +26,10 @@ import ChangePassword from './screens/ChangePassword';
 import EmailSignUp from './screens/EmailSignUp';
 import LeftDrawerMenu from './screens/LeftDrawerMenu';
 import Search from './screens/Search';
+import BreadCrumbsSample from './screens/BreadCrumbsSample';
+import AccordionSample from './screens/AccordionSample';
+import ActionBarSample from './screens/ActionBarSample';
+import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
 
 export default {
   Shop,
@@ -52,5 +56,9 @@ export default {
   ForgotPassword,
   EmailSignUp,
   ChangePassword,
-  Search
+  Search,
+  BreadCrumbsSample,
+  AccordionSample,
+  ActionBarSample,
+  ImageWithOverlaySample
 };
