@@ -9,9 +9,11 @@ export interface ReviewIndicatorProps {
   style?: StyleProp<ViewStyle>;
   itemSize?: number;
   itemColor?: string;
+  emptyColor?: string;
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
   renderEmptyStar?: () => React.ReactNode;
+  accessiblityLabel?: string;
 }
 
 export interface NormalizedValue {
@@ -87,7 +89,8 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
         <View style={S.starHalfRightWrap}>
           <Star
             text='★'
-            style={[customStarStyle, S.starHalfRight, starHalfRightStyle, S.emptyStar]}
+            style={[customStarStyle, S.starHalfRight,
+              starHalfRightStyle, { color: this.props.emptyColor || S.emptyStar }]}
           />
         </View>
       </View>
@@ -118,9 +121,15 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
     if (itemColor) {
       customStarStyle.color = itemColor;
     }
+    const label = this.props.accessiblityLabel ? this.props.accessiblityLabel :
+      `${this.props.value} out of 5 stars`;
 
     return (
-      <View style={[S.container, style]}>
+      <View
+        style={[S.container, style]}
+        accessible={true}
+        accessibilityLabel={label}
+      >
         {newArray(itemData.full).map(v => (
           <Star
             text='★'
@@ -135,7 +144,7 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
           <Star
             text='★'
             renderStar={renderEmptyStar}
-            style={[customStarStyle, S.emptyStar]}
+            style={[customStarStyle, { color: this.props.emptyColor || S.emptyStar }]}
             key={v}
           />
         ))}
