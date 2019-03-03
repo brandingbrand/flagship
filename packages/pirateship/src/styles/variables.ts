@@ -20,13 +20,15 @@ export const color = {
   green: '#227d74',
   yellow: '#dab10e',
   white: '#ffffff',
-  red: '#d0021b'
+  red: '#d0021b',
+  blue: '#0065FF',
+  purple: '#3F0F3F'
 };
 
 export const palette = {
-  primary: color.green,
+  primary: color.purple,
   secondary: color.darkGray,
-  accent: color.yellow,
+  accent: color.blue,
   error: color.red,
   background: color.white,
   surface: grays.one,
