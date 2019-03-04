@@ -280,14 +280,24 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
         {this.state.currentIndex !== 0 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToPrev} onPress={this.goToPrev}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={'Show previous'}
+              style={S.goToPrev}
+              onPress={this.goToPrev}
+            >
               <View style={S.buttonPrevIcon} />
             </TouchableOpacity>
           )}
 
         {this.state.currentIndex !== pageNum - 1 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToNext} onPress={this.goToNext}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={'Show next'}
+              style={S.goToNext}
+              onPress={this.goToNext}
+            >
               <View style={S.buttonNextIcon} />
             </TouchableOpacity>
           )}
