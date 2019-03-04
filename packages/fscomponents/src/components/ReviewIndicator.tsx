@@ -13,7 +13,7 @@ export interface ReviewIndicatorProps {
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
   renderEmptyStar?: () => React.ReactNode;
-  accessiblityLabel?: string;
+  accessibilityLabel?: string;
 }
 
 export interface NormalizedValue {
@@ -121,7 +121,7 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
     if (itemColor) {
       customStarStyle.color = itemColor;
     }
-    const label = this.props.accessiblityLabel ? this.props.accessiblityLabel :
+    const label = this.props.accessibilityLabel ? this.props.accessibilityLabel :
       `${this.props.value} out of 5 stars`;
 
     return (
