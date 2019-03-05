@@ -6,14 +6,23 @@ class WebEnvSwitcher {
   defaultAppEnv: string = __DEFAULT_ENV__ || 'prod';
 
   get envName(): string {
-    const storedEnvName = localStorage.getItem(this.storageKey);
+    let storedEnvName;
+    try {
+      storedEnvName = localStorage.getItem(this.storageKey);
+    } catch (e) {
+      return '';
+    }
 
     return storedEnvName || this.defaultAppEnv;
   }
 
   set envName(name: string) {
     if (typeof name === 'string') {
-      localStorage.setItem(this.storageKey, name);
+      try {
+        localStorage.setItem(this.storageKey, name);
+      } catch (e) {
+        return;
+      }
     }
   }
 
