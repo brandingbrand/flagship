@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const PSFilterActionBar = (props: PSFilterActionBarProps): JSX.Element => {
+const PSFilterActionBar: FunctionComponent<PSFilterActionBarProps> = (props): JSX.Element => {
 
   const renderButtonSpacer = (): JSX.Element => {
     return (
