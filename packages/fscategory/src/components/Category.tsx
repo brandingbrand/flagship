@@ -39,12 +39,6 @@ export type CategoryProps = UnwrappedCategoryProps &
 export class Category extends Component<
   UnwrappedCategoryProps & WithCommerceProps<CommerceTypes.Category>
 > {
-  componentDidMount(): void {
-    if (this.props.commerceLoadData) {
-      this.props.commerceLoadData();
-    }
-  }
-
   componentDidUpdate(
     prevProps: UnwrappedCategoryProps & WithCommerceProps<CommerceTypes.Category>
   ): void {
