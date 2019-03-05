@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import {
   StyleProp,
@@ -39,26 +39,28 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PageDots extends Component<PageDotsProps> {
-  renderDot = (index: number) => {
-    const otherStyles: any = index === this.props.activeIndex ?
-      [styles.active, this.props.activeDotStyle] :
-      [styles.inactive, this.props.inactiveDotStyle];
+const PageDots: FunctionComponent<PageDotsProps> = (props): JSX.Element => {
+  const renderDot = (index: number) => {
+    const otherStyles: any = index === props.activeIndex ?
+      [styles.active, props.activeDotStyle] :
+      [styles.inactive, props.inactiveDotStyle];
 
-    if (index === this.props.numDots - 1) {
+    if (index === props.numDots - 1) {
       otherStyles.push(styles.lastDot);
     }
 
     return (
       <View key={index} style={[styles.dot, ...otherStyles]} />
     );
-  }
+  };
 
-  render(): JSX.Element {
-    return (
-      <View style={[styles.container, this.props.style]}>
-        {[...Array(this.props.numDots)].map((value, index) => this.renderDot(index))}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={[styles.container, props.style]}>
+      {[...Array(props.numDots)].map((value, index) => renderDot(index))}
+    </View>
+  );
+
+};
+
+export default PageDots;
+
