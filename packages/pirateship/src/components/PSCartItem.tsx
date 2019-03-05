@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   Image,
   ImageRequireSource,
@@ -122,64 +122,33 @@ export interface PSCartItemProps {
   setItemDropshipValue?: Function;
 }
 
-export default class PSCartItem extends Component<PSCartItemProps> {
-  renderRemoveButton = (): React.ReactNode => {
+const PSCartItem: FunctionComponent<PSCartItemProps> = (props): JSX.Element => {
+  const renderRemoveButton = (): React.ReactNode => {
     // This component adds its own remove button in the form of an "x" that replaces
     // the minus quantity button when quantity is 1.
     return null;
-  }
+  };
 
-  render(): JSX.Element {
-    const {
-      containerStyle,
-      itemHeaderStyle,
-      itemTextHeaderStyle,
-      item,
-      addToFavorites,
-      addToFavoritesImage,
-      addToFavoritesStyle
-    } = this.props;
+  const {
+    containerStyle,
+    itemHeaderStyle,
+    itemTextHeaderStyle,
+    item,
+    addToFavorites,
+    addToFavoritesImage,
+    addToFavoritesStyle
+  } = props;
 
-    const favoriteBadge = addToFavoritesImage || icons.heart;
+  const favoriteBadge = addToFavoritesImage || icons.heart;
 
-    return (
-      <TouchableOpacity
-        disabled={!this.props.navigateToProduct}
-        style={[styles.container, containerStyle]}
-        onPress={this.handleNav}
-      >
-        <View style={[styles.itemHeader, itemHeaderStyle]}>
-          <Text style={[styles.itemTextHeader, itemTextHeaderStyle]}>
-            {item.title}
-          </Text>
-          {this.props.isLoggedIn &&
-          (<TouchableOpacity
-            style={[styles.itemHeaderFavorite, addToFavoritesStyle]}
-            onPress={addToFavorites}
-          >
-            <Image source={favoriteBadge} />
-          </TouchableOpacity>)}
-        </View>
-        <CartItem
-          renderDetails={this.renderDetails}
-          renderStepper={this.renderStepper}
-          renderRemoveButton={this.renderRemoveButton}
-          rightColumnStyle={styles.rightColumnStyle}
-          removeItem={noopPromise}
-          updateQty={noopPromise}
-          {...item}
-        />
-      </TouchableOpacity>
-    );
-  }
 
-  handleNav = () => {
-    if (this.props.navigateToProduct) {
-      this.props.navigateToProduct(this.props.item);
+  const handleNav = () => {
+    if (props.navigateToProduct) {
+      props.navigateToProduct(props.item);
     }
-  }
+  };
 
-  serializeDetails = (item: CommerceTypes.CartItem): ItemDetails[] => {
+  const serializeDetails = (item: CommerceTypes.CartItem): ItemDetails[] => {
     const details: ItemDetails[] = [];
 
     if (Array.isArray(item.options)) {
@@ -196,13 +165,19 @@ export default class PSCartItem extends Component<PSCartItemProps> {
     }
 
     return details;
-  }
+  };
+
+  const giftWrapToggle = (enable: boolean): void => {
+    if (props.onGiftWrapToggle) {
+      props.onGiftWrapToggle(enable);
+    }
+  };
 
   /* tslint:disable:cyclomatic-complexity */
-  renderDetails = () => {
+  const renderDetails = () => {
     const out = [] as JSX.Element[];
-    const { item, setItemDropshipValue } = this.props;
-    const details = this.serializeDetails(item).map((detail, index) => {
+    const { item, setItemDropshipValue } = props;
+    const details = serializeDetails(item).map((detail, index) => {
       return (
         <Text key={index} style={styles.detailsText}>
           {`${detail.label}: ${detail.value}`}
@@ -304,22 +279,16 @@ export default class PSCartItem extends Component<PSCartItemProps> {
               {translate.string(translationKeys.item.actions.addGiftWrap.actionBtn)}
             </Text>
           )}
-          onPress={this.giftWrapToggle}
+          onPress={giftWrapToggle}
         />
       );
     }
 
     return <View>{out}</View>;
-  }
+  };
 
-  giftWrapToggle = (enable: boolean): void => {
-    if (this.props.onGiftWrapToggle) {
-      this.props.onGiftWrapToggle(enable);
-    }
-  }
-
-  renderStepper = () => {
-    const { item, updateQty, maxQty } = this.props;
+  const renderStepper = () => {
+    const { item, updateQty, maxQty } = props;
 
     return (
       <View style={styles.stepperRow}>
@@ -344,5 +313,37 @@ export default class PSCartItem extends Component<PSCartItemProps> {
         }
       </View>
     );
-  }
-}
+  };
+
+  return (
+    <TouchableOpacity
+      disabled={!props.navigateToProduct}
+      style={[styles.container, containerStyle]}
+      onPress={handleNav}
+    >
+      <View style={[styles.itemHeader, itemHeaderStyle]}>
+        <Text style={[styles.itemTextHeader, itemTextHeaderStyle]}>
+          {item.title}
+        </Text>
+        {props.isLoggedIn &&
+        (<TouchableOpacity
+          style={[styles.itemHeaderFavorite, addToFavoritesStyle]}
+          onPress={addToFavorites}
+        >
+          <Image source={favoriteBadge} />
+        </TouchableOpacity>)}
+      </View>
+      <CartItem
+        renderDetails={renderDetails}
+        renderStepper={renderStepper}
+        renderRemoveButton={renderRemoveButton}
+        rightColumnStyle={styles.rightColumnStyle}
+        removeItem={noopPromise}
+        updateQty={noopPromise}
+        {...item}
+      />
+    </TouchableOpacity>
+  );
+};
+
+export default memo(PSCartItem);
