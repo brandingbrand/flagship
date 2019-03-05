@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass } from 'react';
+import React, { Component, ComponentClass, FunctionComponent } from 'react';
 import { compose } from 'redux';
 import { cloneDeep, isEqual, set } from 'lodash-es';
 
@@ -54,12 +54,12 @@ export type WithProductDetailState<
  *
  * @template T The type of product data that will be provided. Defaults to `Product`
  *
- * @param {ComponentClass<P & WithProductDetailProps>} WrappedComponent A component to wrap and
+ * @param {FunctionComponent<P & WithProductDetailProps>} WrappedComponent A component to wrap and
  * provide product detail data to as props.
  * @returns {ComponentClass<P & WithProductDetailProviderProps>} A high order component.
  */
 export type ProductDetailWrapper<P, T extends CommerceTypes.Product = CommerceTypes.Product> = (
-  WrappedComponent: ComponentClass<P & WithProductDetailProps<T>>
+  WrappedComponent: FunctionComponent<P & WithProductDetailProps<T>>
 ) => ComponentClass<P & WithProductDetailProviderProps<T>>;
 
 /**
@@ -85,11 +85,12 @@ export default function withProductDetailData<
    * A function that wraps a a component and returns a new high order component. The wrapped
    * component will be given product detail data as props.
    *
-   * @param {ComponentClass<P & WithProductDetailProps>} WrappedComponent A component to wrap and
+   * @param {FunctionComponent<P & WithProductDetailProps>} WrappedComponent A component to wrap and
    * provide product detail data to as props.
    * @returns {ComponentClass<P & WithProductDetailProviderProps>} A high order component.
    */
-  return (WrappedComponent: ComponentClass<P & WithProductDetailProps<T>>) => {
+  return (WrappedComponent: FunctionComponent<P & WithProductDetailProps<T>> |
+    FunctionComponent<P & WithProductDetailProps<T>>) => {
     class ProductDetailProvider extends Component<ResultProps, WithProductDetailState<T>> {
       async componentDidUpdate(prevProps: ResultProps): Promise<void> {
         const { commerceToReviewMap, reviewDataSource } = this.props;

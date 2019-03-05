@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { Platform, Text, View } from 'react-native';
 
 import {
@@ -19,20 +19,21 @@ export interface UnwrappedProductDetailProps {
 export type ProductDetailProduct = CommerceTypes.Product;
 export type ProductDetailProps = UnwrappedProductDetailProps & WithProductDetailProviderProps;
 
-class ProductDetail extends Component<UnwrappedProductDetailProps & WithProductDetailProps> {
-  render(): JSX.Element {
-    const data = JSON.stringify(this.props.commerceData, null, 2);
-    if (Platform.OS === 'web') {
-      return <pre>{data}</pre>;
-    } else {
-      return (
-        <View>
-          <Text>{data}</Text>
-        </View>
-      );
-    }
+const ProductDetail: FunctionComponent<UnwrappedProductDetailProps
+& WithProductDetailProps> = memo((props): JSX.Element => {
+  const data = JSON.stringify(props.commerceData, null, 2);
+
+  if (Platform.OS === 'web') {
+    return <pre>{data}</pre>;
+
+  } else {
+    return (
+      <View>
+        <Text>{data}</Text>
+      </View>
+    );
   }
-}
+});
 
 export default withProductDetailData<UnwrappedProductDetailProps>(
   async (DataSource: CommerceDataSource, props: UnwrappedProductDetailProps) => {
