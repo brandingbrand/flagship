@@ -110,6 +110,14 @@ export interface AccordionProps {
    * Color of the title touch highlight
    */
   titleUnderlayColor?: string;
+  /**
+   * Left and right padding (has defaults)
+   */
+  paddingHorizontal?: number;
+  /**
+   * Height of title touch highlight (has default)
+   */
+  titleTouchStyle?: StyleProp<ViewStyle>;
 }
 
 export interface AccordionState {
@@ -118,15 +126,6 @@ export interface AccordionState {
   isOpen: boolean;
   isMeasuring: boolean;
   hasMeasured: boolean;
-
-  padding: {
-    paddingLeft: number;
-    paddingRight: number;
-  };
-
-  titleTouchableHighlight: {
-    height: number;
-  };
 }
 
 const ACCORDION_PADDING_DEFAULT = 15;
@@ -179,24 +178,14 @@ const AccordionStyles = StyleSheet.create({
  * web the height is the padding + height of the children.)
  */
 export class Accordion extends Component<AccordionProps, AccordionState> {
-  static defaultProps: Partial<AccordionProps> = {
-    titleUnderlayColor: '#eee'
-  };
 
-  static getDerivedStateFromProps(
-    nextProps: AccordionProps,
-    prevState: AccordionState
-  ): Partial<AccordionState> | null {
-    return {
-      padding: {
-        paddingLeft: nextProps.padding || ACCORDION_PADDING_DEFAULT,
-        paddingRight: nextProps.padding || ACCORDION_PADDING_DEFAULT
-      },
-      titleTouchableHighlight: {
-        height: nextProps.titleHeight || ACCORDION_TITLE_HEIGHT_DEFAULT
-      }
-    };
-  }
+  static defaultProps: Partial<AccordionProps> = {
+    titleUnderlayColor: 'transparent',
+    paddingHorizontal: ACCORDION_PADDING_DEFAULT,
+    titleTouchStyle: {
+      height: ACCORDION_TITLE_HEIGHT_DEFAULT
+    }
+  };
 
   private contentView: RefObject<View>;
 
@@ -210,17 +199,11 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       contentHeightAnimation: new Animated.Value(0),
       isOpen: (props.state === 'open'),
       isMeasuring: false,
-      hasMeasured: false,
-      padding: {
-        paddingLeft: props.padding || ACCORDION_PADDING_DEFAULT,
-        paddingRight: props.padding || ACCORDION_PADDING_DEFAULT
-      },
-      titleTouchableHighlight: {
-        height: props.titleHeight || ACCORDION_TITLE_HEIGHT_DEFAULT
-      }
+      hasMeasured: false
     };
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): JSX.Element {
     let computedContentStyle;
 
@@ -258,14 +241,14 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
         ]}
       >
         <TouchableHighlight
-          style={this.state.titleTouchableHighlight}
-          underlayColor={this.props.titleUnderlayColor}
+          style={this.props.titleTouchStyle || Accordion.defaultProps.titleTouchStyle}
+          underlayColor={this.props.titleUnderlayColor || Accordion.defaultProps.titleUnderlayColor}
           onPress={this.toggleAccordion}
         >
           <View
             style={[
               AccordionStyles.titleContainer,
-              this.state.padding,
+              {paddingHorizontal: this.props.paddingHorizontal},
               this.props.titleContainerStyle
             ]}
           >
@@ -285,7 +268,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
           ref={this.contentView}
           style={[
             AccordionStyles.content,
-            this.state.padding,
+            {paddingHorizontal: this.props.paddingHorizontal},
             this.props.contentStyle,
             computedContentStyle
           ]}
@@ -334,8 +317,9 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       !this.state.isMeasuring &&
       this.state.isOpen
     ) {
+      const padding = this.props.padding || 0;
       this.state.contentHeightAnimation.setValue(
-        event.nativeEvent.layout.height + this.state.padding.paddingLeft
+        event.nativeEvent.layout.height + padding
       );
       this.setState({ hasMeasured: true });
     }
@@ -442,8 +426,9 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
                 isMeasuring: false,
                 hasMeasured: true
               });
+              const padding = this.props.padding || 0;
 
-              this.animateContent(height + this.state.padding.paddingLeft, true);
+              this.animateContent(height + padding, true);
             });
           }
         });
