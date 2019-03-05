@@ -34,6 +34,9 @@ export interface SearchBarProps {
   onCancel?: () => void;
   renderCancelButton?: () => React.ReactNode;
 
+  // accessibility
+  accessibilityLabel?: string;
+
   // visibility
   showSearchIcon?: boolean;
   showLocator?: boolean;
@@ -134,6 +137,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
 
   renderInput = () => {
     const {
+      accessibilityLabel,
       placeholder,
       clearButtonMode,
       searchIcon,
@@ -167,7 +171,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           returnKeyType='search'
-          accessibilityLabel={placeholder}
+          accessibilityLabel={accessibilityLabel || 'search bar'}
           underlineColorAndroid='transparent'
           {...inputProps}
         />
