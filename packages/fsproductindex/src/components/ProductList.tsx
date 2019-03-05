@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { Grid } from '@brandingbrand/fscomponents';
 
 export interface ProductListProps {
@@ -11,28 +11,28 @@ export interface ProductListProps {
   renderFooter?: any;
 }
 
-export default class ProductList extends PureComponent<ProductListProps> {
-  render(): JSX.Element {
-    const {
-      items,
-      style,
-      columns,
-      gridProps,
-      renderItem,
-      renderHeader,
-      renderFooter
-    } = this.props;
+const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {
+  const {
+    items,
+    style,
+    columns,
+    gridProps,
+    renderItem,
+    renderHeader,
+    renderFooter
+  } = props;
 
-    return (
-      <Grid
-        style={style}
-        columns={columns}
-        data={items}
-        renderItem={renderItem}
-        renderHeader={renderHeader}
-        renderFooter={renderFooter}
-        {...gridProps}
-      />
-    );
-  }
-}
+  return (
+    <Grid
+      style={style}
+      columns={columns}
+      data={items}
+      renderItem={renderItem}
+      renderHeader={renderHeader}
+      renderFooter={renderFooter}
+      {...gridProps}
+    />
+  );
+};
+
+export default memo(ProductList);
