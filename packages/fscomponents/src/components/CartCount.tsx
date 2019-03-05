@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 
 import {
   Image,
@@ -75,25 +75,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export class CartCount extends PureComponent<CartCountProps> {
-  render(): JSX.Element {
-    const textPosition = this.props.textPosition || 'center';
+export const CartCount: FunctionComponent<CartCountProps> = memo((props): JSX.Element => {
 
-    return (
-      <View style={[styles.container, this.props.style]}>
-        <Image
-          resizeMode='contain'
-          style={[styles.image, this.props.cartImageStyle]}
-          source={this.props.cartImage || DEFAULT_CART_IMAGE}
-        />
-        {this.props.count && (
-          <Text
-            style={[styles.text, styles[textPosition], this.props.textStyle]}
-          >
-            {this.props.count}
-          </Text>
-        )}
-      </View>
-    );
-  }
-}
+  const textPosition = props.textPosition || 'center';
+
+  return (
+    <View style={[styles.container, props.style]}>
+      <Image
+        resizeMode='contain'
+        style={[styles.image, props.cartImageStyle]}
+        source={props.cartImage || DEFAULT_CART_IMAGE}
+      />
+      {props.count && (
+        <Text
+          style={[styles.text, styles[textPosition], props.textStyle]}
+        >
+          {props.count}
+        </Text>
+      )}
+    </View>
+  );
+
+});
