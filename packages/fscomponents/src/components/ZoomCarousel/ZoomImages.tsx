@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Animated,
   Dimensions,
@@ -109,97 +109,95 @@ const S = StyleSheet.create({
   }
 });
 
-export class ZoomImages extends Component<ZoomImagesProps> {
-  render(): JSX.Element {
-    const {
-      style,
-      opacityStyle,
-      sizeStyle,
-      handleItemMoveOutX,
-      handleItemMoveOutY,
-      handleMoveRelease,
-      handleZoomRelease,
-      closeZoom,
-      goToZoomNext,
-      goToZoomPrev,
-      images,
-      zoomContainerWidth,
-      gapSizeScaled,
-      currentZoomIndex,
-      showArrow,
-      isOpeningZoom,
-      renderCloseButton,
-      closeButtonStyle
-    } = this.props;
+export const ZoomImages: FunctionComponent<ZoomImagesProps> = (props): JSX.Element => {
+  const {
+    style,
+    opacityStyle,
+    sizeStyle,
+    handleItemMoveOutX,
+    handleItemMoveOutY,
+    handleMoveRelease,
+    handleZoomRelease,
+    closeZoom,
+    goToZoomNext,
+    goToZoomPrev,
+    images,
+    zoomContainerWidth,
+    gapSizeScaled,
+    currentZoomIndex,
+    showArrow,
+    isOpeningZoom,
+    renderCloseButton,
+    closeButtonStyle
+  } = props;
 
-    return (
-      <View style={[{ flex: 1 }, style]}>
-        <Animated.View style={[S.scrollViewZoomBG, opacityStyle]} />
-        <View style={S.scrollViewContainer}>
-          <Animated.View
-            style={[
-              S.customScrollView,
-              { width: zoomContainerWidth },
-              sizeStyle
-            ]}
-          >
-            {images.map((item: any, i: number) => {
-              return (
-                <ZoomCarouselItem
-                  key={i}
+  return (
+    <View style={[{ flex: 1 }, style]}>
+      <Animated.View style={[S.scrollViewZoomBG, opacityStyle]} />
+      <View style={S.scrollViewContainer}>
+        <Animated.View
+          style={[
+            S.customScrollView,
+            { width: zoomContainerWidth },
+            sizeStyle
+          ]}
+        >
+          {images.map((item: any, i: number) => {
+            return (
+              <ZoomCarouselItem
+                key={i}
+                style={{
+                  marginRight: i !== images.length ? gapSizeScaled : 0,
+                  opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1
+                }}
+                onItemMoveOutX={handleItemMoveOutX}
+                onItemMoveOutY={handleItemMoveOutY}
+                onMoveRelease={handleMoveRelease}
+                onZoomRelease={handleZoomRelease}
+              >
+                <Image
                   style={{
-                    marginRight: i !== images.length ? gapSizeScaled : 0,
-                    opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1
+                    width: SCREEN_WIDTH,
+                    height: SCREEN_WIDTH
                   }}
-                  onItemMoveOutX={handleItemMoveOutX}
-                  onItemMoveOutY={handleItemMoveOutY}
-                  onMoveRelease={handleMoveRelease}
-                  onZoomRelease={handleZoomRelease}
-                >
-                  <Image
-                    style={{
-                      width: SCREEN_WIDTH,
-                      height: SCREEN_WIDTH
-                    }}
-                    source={item.zoomSrc || item.src}
-                    resizeMode='contain'
-                  />
-                </ZoomCarouselItem>
-              );
-            })}
-          </Animated.View>
+                  source={item.zoomSrc || item.src}
+                  resizeMode='contain'
+                />
+              </ZoomCarouselItem>
+            );
+          })}
+        </Animated.View>
 
-          <Animated.View style={[S.closeZoom, opacityStyle, closeButtonStyle]}>
-            {renderCloseButton ? (
-              renderCloseButton(closeZoom)
-            ) : (
-              <TouchableOpacity onPress={closeZoom}>
-                <View style={S.closeButtonIcon}>
-                  <View style={S.closeButtonLeft} />
-                  <View style={S.closeButtonRight} />
-                </View>
+        <Animated.View style={[S.closeZoom, opacityStyle, closeButtonStyle]}>
+          {renderCloseButton ? (
+            renderCloseButton(closeZoom)
+          ) : (
+            <TouchableOpacity onPress={closeZoom}>
+              <View style={S.closeButtonIcon}>
+                <View style={S.closeButtonLeft} />
+                <View style={S.closeButtonRight} />
+              </View>
+            </TouchableOpacity>
+          )}
+        </Animated.View>
+
+        {currentZoomIndex !== 0 &&
+          !!showArrow && (
+            <Animated.View style={opacityStyle}>
+              <TouchableOpacity style={S.goToZoomPrev} onPress={goToZoomPrev}>
+                <View style={S.buttonPrevIcon} />
               </TouchableOpacity>
-            )}
-          </Animated.View>
-
-          {currentZoomIndex !== 0 &&
-            !!showArrow && (
-              <Animated.View style={opacityStyle}>
-                <TouchableOpacity style={S.goToZoomPrev} onPress={goToZoomPrev}>
-                  <View style={S.buttonPrevIcon} />
-                </TouchableOpacity>
-              </Animated.View>
-            )}
-          {currentZoomIndex !== images.length - 1 &&
-            !!showArrow && (
-              <Animated.View style={opacityStyle}>
-                <TouchableOpacity style={S.goToZoomNext} onPress={goToZoomNext}>
-                  <View style={S.buttonNextIcon} />
-                </TouchableOpacity>
-              </Animated.View>
-            )}
-        </View>
+            </Animated.View>
+          )}
+        {currentZoomIndex !== images.length - 1 &&
+          !!showArrow && (
+            <Animated.View style={opacityStyle}>
+              <TouchableOpacity style={S.goToZoomNext} onPress={goToZoomNext}>
+                <View style={S.buttonNextIcon} />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
