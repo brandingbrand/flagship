@@ -2,7 +2,6 @@
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 import React, { Component } from 'react';
-
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import Row from '../components/PSRow';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
@@ -12,7 +11,12 @@ type Screen = import ('react-native-navigation').Screen;
 
 const screens: Screen[] = [
   { title: 'Product Index', screen: 'ProductIndex' },
-  { title: 'Product Detail', screen: 'ProductDetail' }
+  { title: 'Product Detail', screen: 'ProductDetail' },
+  { title: 'Accordion', screen: 'AccordionSample' },
+  { title: 'Action Bar', screen: 'ActionBarSample' },
+  { title: 'BreadCrumbs', screen: 'BreadCrumbsSample' },
+  { title: 'Image With Overlay', screen: 'ImageWithOverlaySample' },
+  { title: 'Cart Count', screen: 'CartCountSample'}
 ];
 
 export interface DevelopmentScreenState {
@@ -35,6 +39,10 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
         hideGlobalBanner={true}
         navigator={navigator}
       >
+        <Row
+          title='Sign Out without clearing saved credentials'
+          onPress={this.softSignOut}
+        />
         {screens.map((screen, i) => (
           <Row
             key={i}
@@ -42,10 +50,6 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
             onPress={this.goTo(screen)}
           />
         ))}
-        <Row
-          title='Sign Out without clearing saved credentials'
-          onPress={this.softSignOut}
-        />
       </PSScreenWrapper>
     );
   }

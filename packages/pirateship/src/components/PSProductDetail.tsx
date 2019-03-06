@@ -233,6 +233,7 @@ export type PSProductDetailProps = UnwrappedPSProductDetailProps &
   WithProductDetailProviderProps;
 
 export interface PSProductDetailState {
+  id?: string;
   quantity: number;
   optionValues: CommerceTypes.OptionValue[];
   variantId?: string;
@@ -251,33 +252,34 @@ class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
   > {
-  static getDerivedStateFromProps(nextProps: PSProductDetailComponentInternalProps):
+  static getDerivedStateFromProps(
+    nextProps: PSProductDetailComponentInternalProps,
+    state: PSProductDetailState
+  ):
     Partial<PSProductDetailState> | null {
+    if (nextProps.commerceData && state.id !== nextProps.commerceData.id) {
+      const { commerceData } = nextProps;
+      const nextState: Partial<PSProductDetailState> = { id: commerceData.id };
 
-    const { commerceData } = nextProps;
+      if (!commerceData.variants || commerceData.variants.length === 0) {
+        return {
+          ...nextState,
+          variantId: commerceData.id
+        };
+      }
 
-    if (!commerceData) {
-      return null;
-    }
+      const variant = find(commerceData.variants, { id: commerceData.id })
+        || commerceData.variants[0];
 
-    if (nextProps.addToRecentlyViewed) {
-      nextProps.addToRecentlyViewed(commerceData);
-    }
+      if (variant) {
+        return {
+          ...nextState,
+          variantId: variant.id,
+          optionValues: cloneDeep(variant.optionValues)
+        };
+      }
 
-    if (!commerceData.variants || commerceData.variants.length === 0) {
-      return {
-        variantId: commerceData.id
-      };
-    }
-
-    const variant = find(commerceData.variants, { id: commerceData.id })
-      || commerceData.variants[0];
-
-    if (variant) {
-      return {
-        variantId: variant.id,
-        optionValues: cloneDeep(variant.optionValues)
-      };
+      return nextState;
     }
 
     return null;
@@ -314,6 +316,10 @@ class PSProductDetailComponent extends Component<
         Analytics.screenview('ProductDetail', {
           url: ''
         });
+
+        if (this.props.addToRecentlyViewed) {
+          this.props.addToRecentlyViewed(commerceData);
+        }
 
         this.needsImpression = false;
       }
@@ -391,9 +397,9 @@ class PSProductDetailComponent extends Component<
     }
   }
 
-  changeQty = (count: number) => {
+  changeQty = (countToAdd: number) => {
     this.setState(prevState => {
-      return { quantity: count };
+      return { quantity: countToAdd };
     });
   }
 
@@ -745,4 +751,4 @@ export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailPro
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
     DataSource.fetchProduct(props.id)
   // TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent) as any);
+)(withCart(PSProductDetailComponent as any) as any);
