@@ -15,6 +15,9 @@ export class FSApp extends FSAppBase {
   registerScreens(): void {
     if (this.shouldShowDevMenu()) {
       this.appConfig.screens.devMenu = DevMenu as any;
+      if (this.appConfig.devMenuPath) {
+        this.appConfig.screens.devMenu.path = this.appConfig.devMenuPath;
+      }
     }
 
     AppRegistry.registerComponent('Flagship', () => App);
