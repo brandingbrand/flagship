@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fssalesforce",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Salesforce Commerce Cloud Data Layer for Flagship",
   "main": "dist/index.js",
