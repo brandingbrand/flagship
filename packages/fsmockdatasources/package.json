@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsmockdatasources",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Mock Commerce and Review Data Sources for Flagship",
   "main": "dist/index.js",

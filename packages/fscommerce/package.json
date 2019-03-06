@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fscommerce",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Commerce Data Layer for Flagship",
   "main": "dist/index.js",

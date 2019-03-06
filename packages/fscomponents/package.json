@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fscomponents",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
