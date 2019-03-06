@@ -191,8 +191,11 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
   switchToSelectedEnv = () => {
     EnvSwitcher.envName = this.state.selectedEnv;
+    this.dismissModal();
     if (typeof window !== 'undefined' && window.location && window.location.reload) {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 0);
     }
   }
 
