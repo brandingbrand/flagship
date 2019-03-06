@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import PSRow from './PSRow';
@@ -36,36 +36,36 @@ export interface PSShopLandingCategoriesProps {
   categories: CommerceTypes.Category[];
 }
 
-export default class PSShopLandingCategories extends Component<
-  PSShopLandingCategoriesProps
-> {
-  handleItemPress = (category: CommerceTypes.Category) => () => {
-    this.props.onItemPress(category);
-  }
+const PSShopLandingCategories: FunctionComponent<PSShopLandingCategoriesProps> = props => {
+  const handleItemPress = (category: CommerceTypes.Category) => () => {
+    props.onItemPress(category);
+  };
 
-  renderImage = (): JSX.Element => {
+  const renderImage = (): JSX.Element => {
     return (
       <NavArrow color={palette.primary} />
     );
-  }
+  };
 
-  renderContent(): React.ReactNode {
-    if (!this.props.categories) {
+  const renderContent = (): React.ReactNode => {
+    if (!props.categories) {
       return <Loading style={styles.loading} />;
     }
 
-    return this.props.categories.map((category, i) => (
+    return props.categories.map((category, i) => (
       <PSRow
         key={i}
         title={category.title}
-        onPress={this.handleItemPress(category)}
+        onPress={handleItemPress(category)}
         showImage={true}
-        renderImage={this.renderImage}
+        renderImage={renderImage}
       />
     ));
-  }
+  };
 
-  render(): JSX.Element {
-    return <View style={this.props.style}>{this.renderContent()}</View>;
-  }
-}
+
+  return <View style={props.style}>{renderContent()}</View>;
+
+};
+
+export default PSShopLandingCategories;
