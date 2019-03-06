@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text
@@ -15,18 +15,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ProductItemBrand extends Component<ProductItemBrandProps> {
-  render(): React.ReactNode {
-    const { brand, brandStyle, renderBrand } = this.props;
+export const ProductItemBrand: FunctionComponent<ProductItemBrandProps> =
+(props): React.ReactElement<any> | null => {
 
-    if (renderBrand) {
-      return renderBrand();
-    }
+  const { brand, brandStyle, renderBrand } = props;
 
-    if (!brand) {
-      return null;
-    }
-
-    return <Text style={[types.caption, styles.brand, brandStyle]}>{brand.toUpperCase()}</Text>;
+  if (renderBrand) {
+    return renderBrand();
   }
-}
+
+  if (!brand) {
+    return null;
+  }
+
+  return <Text style={[types.caption, styles.brand, brandStyle]}>{brand.toUpperCase()}</Text>;
+};
+

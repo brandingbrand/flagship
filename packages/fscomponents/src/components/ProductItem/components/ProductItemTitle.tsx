@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { ProductItemProps } from '../ProductItem';
 import { types, weights } from '../../../styles/variables';
@@ -11,18 +11,18 @@ const styles = StyleSheet.create({
 
 export type ProductItemTitleProps = Pick<ProductItemProps, 'title' | 'titleStyle' | 'renderTitle'>;
 
-export class ProductItemTitle extends Component<ProductItemTitleProps> {
-  render(): React.ReactNode {
-    const { title, titleStyle, renderTitle } = this.props;
+export const ProductItemTitle: FunctionComponent<ProductItemTitleProps> =
+(props): React.ReactElement<any> | null => {
+  const { title, titleStyle, renderTitle } = props;
 
-    if (renderTitle) {
-      return renderTitle();
-    }
-
-    if (!title) {
-      return null;
-    }
-
-    return <Text style={[types.regular, weights.medium, styles.title, titleStyle]}>{title}</Text>;
+  if (renderTitle) {
+    return renderTitle();
   }
-}
+
+  if (!title) {
+    return null;
+  }
+
+  return <Text style={[types.regular, weights.medium, styles.title, titleStyle]}>{title}</Text>;
+};
+

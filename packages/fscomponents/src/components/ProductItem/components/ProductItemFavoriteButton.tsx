@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Image,
   StyleSheet,
@@ -26,30 +26,31 @@ export type ProductItemFavoriteButtonProps = Pick<
   'renderFavButton' | 'onFavButtonPress' | 'favButtonImage'
 >;
 
-export class ProductItemFavoriteButton extends Component<ProductItemFavoriteButtonProps> {
-  render(): React.ReactNode {
-    const { renderFavButton, onFavButtonPress, favButtonImage } = this.props;
+export const ProductItemFavoriteButton:
+FunctionComponent<ProductItemFavoriteButtonProps> = (props): React.ReactElement<any> | null => {
 
-    if (renderFavButton) {
-      return renderFavButton();
-    }
+  const { renderFavButton, onFavButtonPress, favButtonImage } = props;
 
-    if (!onFavButtonPress) {
-      return null;
-    }
-
-    return (
-      <TouchableOpacity
-        accessibilityLabel='Toggle Favorite'
-        onPress={onFavButtonPress}
-        style={style.favButtonContainer}
-      >
-        <Image
-          resizeMode='contain'
-          source={favButtonImage || heartIcon}
-          style={style.favButton}
-        />
-      </TouchableOpacity>
-    );
+  if (renderFavButton) {
+    return renderFavButton();
   }
-}
+
+  if (!onFavButtonPress) {
+    return null;
+  }
+
+  return (
+    <TouchableOpacity
+      accessibilityLabel='Toggle Favorite'
+      onPress={onFavButtonPress}
+      style={style.favButtonContainer}
+    >
+      <Image
+        resizeMode='contain'
+        source={favButtonImage || heartIcon}
+        style={style.favButton}
+      />
+    </TouchableOpacity>
+  );
+};
+

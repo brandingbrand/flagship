@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text
@@ -17,18 +17,19 @@ export type ProductItemVariantProps = Pick<
   'variantText' | 'variantTextStyle' | 'renderVariantText'
 >;
 
-export class ProductItemVariant extends Component<ProductItemVariantProps> {
-  render(): React.ReactNode {
-    const { variantText, variantTextStyle, renderVariantText } = this.props;
+export const ProductItemVariant: FunctionComponent<ProductItemVariantProps> =
+(props): React.ReactNode | any => {
 
-    if (renderVariantText) {
-      return renderVariantText();
-    }
+  const { variantText, variantTextStyle, renderVariantText } = props;
 
-    if (!variantText) {
-      return null;
-    }
-
-    return <Text style={[style.variantText, variantTextStyle]}>{variantText}</Text>;
+  if (renderVariantText) {
+    return renderVariantText();
   }
-}
+
+  if (!variantText) {
+    return null;
+  }
+
+  return <Text style={[style.variantText, variantTextStyle]}>{variantText}</Text>;
+};
+

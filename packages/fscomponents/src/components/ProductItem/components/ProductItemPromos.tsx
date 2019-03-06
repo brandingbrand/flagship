@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -21,33 +21,34 @@ export type ProductItemPromosProps = Pick<
   'promotions' | 'promoStyle' | 'promoContainerStyle' | 'renderPromos' | 'promos'
 >;
 
-export class ProductItemPromos extends Component<ProductItemPromosProps> {
-  render(): React.ReactNode {
-    const {
-      promotions,
-      promoStyle,
-      promoContainerStyle,
-      renderPromos,
-      promos // deprecated
-    } = this.props;
-    const promosList = promotions || promos;
+export const ProductItemPromos: FunctionComponent<ProductItemPromosProps> =
+(props): React.ReactElement<any> | null => {
 
-    if (renderPromos) {
-      return renderPromos();
-    }
+  const {
+    promotions,
+    promoStyle,
+    promoContainerStyle,
+    renderPromos,
+    promos // deprecated
+  } = props;
+  const promosList = promotions || promos;
 
-    if (!promosList || !promosList.length) {
-      return null;
-    }
-
-    return (
-      <View style={[style.container, promoContainerStyle]}>
-        {promosList.map((p, i) => (
-          <Text key={i} style={[types.caption, weights.light, style.promo, promoStyle]}>
-            {p}
-          </Text>
-        ))}
-      </View>
-    );
+  if (renderPromos) {
+    return renderPromos();
   }
-}
+
+  if (!promosList || !promosList.length) {
+    return null;
+  }
+
+  return (
+    <View style={[style.container, promoContainerStyle]}>
+      {promosList.map((p, i) => (
+        <Text key={i} style={[types.caption, weights.light, style.promo, promoStyle]}>
+          {p}
+        </Text>
+      ))}
+    </View>
+  );
+};
+

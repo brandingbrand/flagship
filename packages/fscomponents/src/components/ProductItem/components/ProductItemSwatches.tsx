@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swatches } from '../../Swatches';
 import { ProductItemProps } from '../ProductItem';
@@ -14,25 +14,26 @@ export type ProductItemSwatchesProps = Pick<
   'swatchItems' | 'swatchStyle' | 'swatchesProps' | 'renderSwatches'
 >;
 
-export class ProductItemSwatches extends Component<ProductItemSwatchesProps> {
-  render(): React.ReactNode {
-    const {
-      swatchItems,
-      swatchStyle,
-      swatchesProps,
-      renderSwatches
-    } = this.props;
+export const ProductItemSwatches: FunctionComponent<ProductItemSwatchesProps> =
+(props): React.ReactElement<any> | null => {
 
-    if (renderSwatches) {
-      return renderSwatches();
-    }
+  const {
+    swatchItems,
+    swatchStyle,
+    swatchesProps,
+    renderSwatches
+  } = props;
 
-    if (!swatchItems) {
-      return null;
-    }
-
-    return (
-      <Swatches items={swatchItems} style={[styles.swatches, swatchStyle]} {...swatchesProps} />
-    );
+  if (renderSwatches) {
+    return renderSwatches();
   }
-}
+
+  if (!swatchItems) {
+    return null;
+  }
+
+  return (
+    <Swatches items={swatchItems} style={[styles.swatches, swatchStyle]} {...swatchesProps} />
+  );
+};
+

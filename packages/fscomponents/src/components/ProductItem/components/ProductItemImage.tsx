@@ -26,6 +26,8 @@ export interface ProductItemImageState {
   calculatedImageStyle: ImageStyle;
 }
 
+/*  TODO: When Hooks API becomes available with React 16.8, convert to stateless function
+component and calculate image size in useLayoutEffect hook. */
 export class ProductItemImage extends Component<ProductItemImageProps, ProductItemImageState> {
   state: ProductItemImageState = {
     calculatedImageStyle: {}

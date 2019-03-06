@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from '../../Button';
 import { ProductItemProps } from '../ProductItem';
@@ -20,34 +20,36 @@ const style = StyleSheet.create({
   }
 });
 
-export class ProductItemButton extends Component<ProductItemButtonProps> {
-  render(): React.ReactNode {
-    const {
-      buttonText,
-      buttonStyle,
-      buttonTextStyle,
-      buttonProps,
-      onButtonPress,
-      renderButton
-    } = this.props;
+export const ProductItemButton: FunctionComponent<ProductItemButtonProps> =
+(props): React.ReactElement<any> | null => {
 
-    if (renderButton) {
-      return renderButton();
-    }
+  const {
+    buttonText,
+    buttonStyle,
+    buttonTextStyle,
+    buttonProps,
+    onButtonPress,
+    renderButton
+  } = props;
 
-    if (!buttonText || !onButtonPress) {
-      return null;
-    }
-
-    return (
-      <Button
-        full
-        title={buttonText}
-        style={[style.button, buttonStyle]}
-        titleStyle={buttonTextStyle}
-        onPress={onButtonPress}
-        {...buttonProps}
-      />
-    );
+  if (renderButton) {
+    return renderButton();
   }
-}
+
+  if (!buttonText || !onButtonPress) {
+    return null;
+  }
+
+  return (
+    <Button
+      full
+      title={buttonText}
+      style={[style.button, buttonStyle]}
+      titleStyle={buttonTextStyle}
+      onPress={onButtonPress}
+      {...buttonProps}
+    />
+  );
+
+};
+

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -33,42 +33,44 @@ export type ProductItemReviewsProps = Pick<
     'showReviewCount'
 >;
 
-export class ProductItemReviews extends Component<ProductItemReviewsProps> {
-  render(): React.ReactNode {
-    const {
-      review,
-      reviewStyle,
-      reviewCountStyle,
-      reviewIndicatorProps = {},
-      renderReviews,
-      showReviewCount = true,
-      reviewValue, // deprecated
-      reviewCount  // deprecated
-    } = this.props;
-    const stats = review && review.statistics || {} as any;
-    const avgRating = stats.averageRating || reviewValue;
-    const count = stats.reviewCount || reviewCount;
+export const ProductItemReviews: FunctionComponent<ProductItemReviewsProps> =
+(props): React.ReactElement<any> | null => {
 
-    if (renderReviews) {
-      return renderReviews();
-    }
+  const {
+    review,
+    reviewStyle,
+    reviewCountStyle,
+    reviewIndicatorProps = {},
+    renderReviews,
+    showReviewCount = true,
+    reviewValue, // deprecated
+    reviewCount  // deprecated
+  } = props;
+  const stats = review && review.statistics || {} as any;
+  const avgRating = stats.averageRating || reviewValue;
+  const count = stats.reviewCount || reviewCount;
 
-    if (!avgRating) {
-      return null;
-    }
-
-    return (
-      <View style={[style.reviewConatiner, reviewStyle]}>
-        <ReviewIndicator
-          value={avgRating}
-          {...reviewIndicatorProps}
-        />
-        {showReviewCount && count && (
-          <Text style={[style.reviewCountStyle, reviewCountStyle]}>
-            ({count})
-          </Text>
-        )}
-      </View>
-    );
+  if (renderReviews) {
+    return renderReviews();
   }
-}
+
+  if (!avgRating) {
+    return null;
+  }
+
+  return (
+    <View style={[style.reviewConatiner, reviewStyle]}>
+      <ReviewIndicator
+        value={avgRating}
+        {...reviewIndicatorProps}
+      />
+      {showReviewCount && count && (
+        <Text style={[style.reviewCountStyle, reviewCountStyle]}>
+          ({count})
+        </Text>
+      )}
+    </View>
+  );
+
+};
+

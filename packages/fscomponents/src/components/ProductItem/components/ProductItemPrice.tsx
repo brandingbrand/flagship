@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -28,44 +28,45 @@ export type ProductItemPriceProps = Pick<
   'price' | 'originalPrice' | 'priceStyle' | 'originalPriceStyle' | 'salePriceStyle' | 'renderPrice'
 >;
 
-export class ProductItemPrice extends Component<ProductItemPriceProps> {
-  render(): React.ReactNode {
-    const {
-      price,
-      originalPrice,
-      priceStyle,
-      originalPriceStyle,
-      salePriceStyle,
-      renderPrice
-    } = this.props;
+export const ProductItemPrice: FunctionComponent<ProductItemPriceProps> =
+(props): React.ReactElement<any> | null => {
+  const {
+    price,
+    originalPrice,
+    priceStyle,
+    originalPriceStyle,
+    salePriceStyle,
+    renderPrice
+  } = props;
 
-    if (renderPrice) {
-      return renderPrice();
-    }
-
-    if (!price) {
-      return null;
-    }
-
-    if (originalPrice && originalPrice !== price) {
-      return (
-        <View style={[style.priceContainer]}>
-          <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>
-            {FSI18n.currency(originalPrice)}
-          </Text>
-          <Text style={[types.small, weights.medium, style.salePrice, salePriceStyle]}>
-            {FSI18n.currency(price)}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={[style.priceContainer]}>
-          <Text style={[types.small, weights.medium, priceStyle]}>
-            {FSI18n.currency(price)}
-          </Text>
-        </View>
-      );
-    }
+  if (renderPrice) {
+    return renderPrice();
   }
-}
+
+  if (!price) {
+    return null;
+  }
+
+  if (originalPrice && originalPrice !== price) {
+    return (
+      <View style={[style.priceContainer]}>
+        <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>
+          {FSI18n.currency(originalPrice)}
+        </Text>
+        <Text style={[types.small, weights.medium, style.salePrice, salePriceStyle]}>
+          {FSI18n.currency(price)}
+        </Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={[style.priceContainer]}>
+        <Text style={[types.small, weights.medium, priceStyle]}>
+          {FSI18n.currency(price)}
+        </Text>
+      </View>
+    );
+  }
+
+};
+

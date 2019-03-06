@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   ImageStyle,
   ImageURISource,
@@ -75,22 +75,22 @@ export interface ProductItemProps extends CommerceTypes.Product {
   buttonTextStyle?: StyleProp<TextStyle>;
   buttonProps?: Partial<ButtonProps>;
   onButtonPress?: () => void;
-  renderButton?: () => React.ReactNode;
+  renderButton?: () => React.ReactElement<any>;
 
   // fav button
   onFavButtonPress?: () => void;
   favButtonImage?: ImageURISource;
-  renderFavButton?: () => React.ReactNode;
+  renderFavButton?: () => React.ReactElement<any>;
 
   // custom render
-  renderPrice?: () => React.ReactNode;
-  renderPromos?: () => React.ReactNode;
-  renderTitle?: () => React.ReactNode;
+  renderPrice?: () => React.ReactElement<any>;
+  renderPromos?: () => React.ReactElement<any>;
+  renderTitle?: () => React.ReactElement<any>;
   renderVariantText?: () => React.ReactNode;
-  renderBrand?: () => React.ReactNode;
+  renderBrand?: () => React.ReactElement<any>;
   renderImage?: () => React.ReactNode;
-  renderReviews?: () => React.ReactNode;
-  renderSwatches?: () => React.ReactNode;
+  renderReviews?: () => React.ReactElement<any>;
+  renderSwatches?: () => React.ReactElement<any>;
 
   // hide components
   hidePrice?: boolean;
@@ -107,160 +107,159 @@ export interface ProductItemProps extends CommerceTypes.Product {
   orientation?: 'vertical' | 'horizontal';
 }
 
-export class ProductItem extends Component<ProductItemProps> {
+export const ProductItem: FunctionComponent<ProductItemProps> = (props): JSX.Element => {
 
-  // tslint:disable cyclomatic-complexity
-  render(): JSX.Element {
-    const {
-      style,
-      contentStyle,
-      onPress,
-      extraElement = null,
-      title,
-      images,
-      imageStyle,
-      imageContainerStyle,
-      renderImage,
-      image, // deprecated
-      variantText,
-      variantTextStyle,
-      renderVariantText,
-      brand,
-      brandStyle,
-      renderBrand,
-      titleStyle,
-      renderTitle,
-      review,
-      reviewStyle,
-      reviewCountStyle,
-      reviewIndicatorProps,
-      renderReviews,
-      price,
-      originalPrice,
-      priceStyle,
-      originalPriceStyle,
-      salePriceStyle,
-      renderPrice,
-      promotions,
-      promoStyle,
-      promoContainerStyle,
-      renderPromos,
-      promos, // deprecated
-      swatchItems,
-      swatchStyle,
-      swatchesProps,
-      renderSwatches,
-      hidePrice,
-      hidePromos,
-      hideTitle,
-      hideVariantText,
-      hideBrand,
-      hideImage,
-      hideReviews,
-      hideSwatches,
-      hideButton,
-      buttonText,
-      buttonStyle,
-      buttonTextStyle,
-      buttonProps,
-      onButtonPress,
-      renderButton,
-      orientation = 'vertical'
-    } = this.props;
+// tslint:disable cyclomatic-complexity
+  const {
+    style,
+    contentStyle,
+    onPress,
+    extraElement = null,
+    title,
+    images,
+    imageStyle,
+    imageContainerStyle,
+    renderImage,
+    image, // deprecated
+    variantText,
+    variantTextStyle,
+    renderVariantText,
+    brand,
+    brandStyle,
+    renderBrand,
+    titleStyle,
+    renderTitle,
+    review,
+    reviewStyle,
+    reviewCountStyle,
+    reviewIndicatorProps,
+    renderReviews,
+    price,
+    originalPrice,
+    priceStyle,
+    originalPriceStyle,
+    salePriceStyle,
+    renderPrice,
+    promotions,
+    promoStyle,
+    promoContainerStyle,
+    renderPromos,
+    promos, // deprecated
+    swatchItems,
+    swatchStyle,
+    swatchesProps,
+    renderSwatches,
+    hidePrice,
+    hidePromos,
+    hideTitle,
+    hideVariantText,
+    hideBrand,
+    hideImage,
+    hideReviews,
+    hideSwatches,
+    hideButton,
+    buttonText,
+    buttonStyle,
+    buttonTextStyle,
+    buttonProps,
+    onButtonPress,
+    renderButton,
+    orientation = 'vertical'
+  } = props;
 
-    const isHorizontal = (orientation === 'horizontal');
-    let {
-      reviewCount, // deprecated
-      reviewValue // deprecated
-    } = this.props;
+  const isHorizontal = (orientation === 'horizontal');
+  let {
+    reviewCount, // deprecated
+    reviewValue // deprecated
+  } = props;
 
-    if (review) {
-      if (review.summary) {
-        reviewValue = review.summary.averageRating;
-        reviewCount = review.summary.reviewCount;
-      } else if (review.statistics) {
-        reviewValue = review.statistics.averageRating;
-        reviewCount = review.statistics.reviewCount;
-      }
+  if (review) {
+    if (review.summary) {
+      reviewValue = review.summary.averageRating;
+      reviewCount = review.summary.reviewCount;
+    } else if (review.statistics) {
+      reviewValue = review.statistics.averageRating;
+      reviewCount = review.statistics.reviewCount;
     }
+  }
 
-    return (
-      <TouchableWithoutFeedback
-        accessibilityLabel={title}
-        onPress={onPress}
-      >
-        <View style={style}>
-          <View style={isHorizontal ? S.horizontalListContainer : null}>
-            <View style={isHorizontal ? S.horizontalLeft : null}>
-              {!hideImage && <ProductItemImage
-                images={images}
-                imageStyle={imageStyle}
-                imageContainerStyle={imageContainerStyle}
-                renderImage={renderImage}
-                image={image}
-              />}
-              {!hideVariantText && <ProductItemVariant
-                variantText={variantText}
-                variantTextStyle={variantTextStyle}
-                renderVariantText={renderVariantText}
-              />}
-            </View>
-            <View style={[isHorizontal ? S.horizontalRight : null, contentStyle]}>
-              {!hideSwatches && <ProductItemSwatches
-                swatchItems={swatchItems}
-                swatchStyle={swatchStyle}
-                swatchesProps={swatchesProps}
-                renderSwatches={renderSwatches}
-              />}
-              {!hideBrand && <ProductItemBrand
-                brand={brand}
-                brandStyle={brandStyle}
-                renderBrand={renderBrand}
-              />}
-              {!hideTitle && <ProductItemTitle
-                title={title}
-                titleStyle={titleStyle}
-                renderTitle={renderTitle}
-              />}
-              {!hidePrice && <ProductItemPrice
-                price={price}
-                originalPrice={originalPrice}
-                priceStyle={priceStyle}
-                originalPriceStyle={originalPriceStyle}
-                salePriceStyle={salePriceStyle}
-                renderPrice={renderPrice}
-              />}
-              {!hideReviews && <ProductItemReviews
-                review={review}
-                reviewStyle={reviewStyle}
-                reviewCountStyle={reviewCountStyle}
-                reviewIndicatorProps={reviewIndicatorProps}
-                renderReviews={renderReviews}
-                reviewValue={reviewValue}
-                reviewCount={reviewCount}
-              />}
-              {!hidePromos && <ProductItemPromos
-                promotions={promotions}
-                promoStyle={promoStyle}
-                promoContainerStyle={promoContainerStyle}
-                renderPromos={renderPromos}
-                promos={promos}
-              />}
-              {extraElement}
-            </View>
-          </View>
-          <View>
-            {!hideButton && <ProductItemButton
-              buttonText={buttonText}
-              buttonStyle={buttonStyle}
-              buttonTextStyle={buttonTextStyle}
-              onButtonPress={onButtonPress}
-              renderButton={renderButton}
-              {...buttonProps}
+  return (
+    <TouchableWithoutFeedback
+      accessibilityLabel={title}
+      onPress={onPress}
+    >
+      <View style={style}>
+        <View style={isHorizontal ? S.horizontalListContainer : null}>
+          <View style={isHorizontal ? S.horizontalLeft : null}>
+            {!hideImage && <ProductItemImage
+              images={images}
+              imageStyle={imageStyle}
+              imageContainerStyle={imageContainerStyle}
+              renderImage={renderImage}
+              image={image}
+            />}
+            {!hideVariantText && <ProductItemVariant
+              variantText={variantText}
+              variantTextStyle={variantTextStyle}
+              renderVariantText={renderVariantText}
             />}
           </View>
+          <View style={[isHorizontal ? S.horizontalRight : null, contentStyle]}>
+            {!hideSwatches && <ProductItemSwatches
+              swatchItems={swatchItems}
+              swatchStyle={swatchStyle}
+              swatchesProps={swatchesProps}
+              renderSwatches={renderSwatches}
+            />}
+            {!hideBrand && <ProductItemBrand
+              brand={brand}
+              brandStyle={brandStyle}
+              renderBrand={renderBrand}
+            />}
+            {!hideTitle && <ProductItemTitle
+              title={title}
+              titleStyle={titleStyle}
+              renderTitle={renderTitle}
+            />}
+            {!hidePrice && <ProductItemPrice
+              price={price}
+              originalPrice={originalPrice}
+              priceStyle={priceStyle}
+              originalPriceStyle={originalPriceStyle}
+              salePriceStyle={salePriceStyle}
+              renderPrice={renderPrice}
+            />}
+            {!hideReviews && <ProductItemReviews
+              review={review}
+              reviewStyle={reviewStyle}
+              reviewCountStyle={reviewCountStyle}
+              reviewIndicatorProps={reviewIndicatorProps}
+              renderReviews={renderReviews}
+              reviewValue={reviewValue}
+              reviewCount={reviewCount}
+            />}
+            {!hidePromos && <ProductItemPromos
+              promotions={promotions}
+              promoStyle={promoStyle}
+              promoContainerStyle={promoContainerStyle}
+              renderPromos={renderPromos}
+              promos={promos}
+            />}
+            {extraElement}
+          </View>
         </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-}
+        <View>
+          {!hideButton && <ProductItemButton
+            buttonText={buttonText}
+            buttonStyle={buttonStyle}
+            buttonTextStyle={buttonTextStyle}
+            onButtonPress={onButtonPress}
+            renderButton={renderButton}
+            {...buttonProps}
+          />}
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
