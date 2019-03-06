@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/pirateship",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Base App for Project using Flagship",
   "license": "MIT",
