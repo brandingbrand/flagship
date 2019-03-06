@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { color, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
@@ -52,23 +52,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PSFilterActionBar extends Component<
-  PSFilterActionBarProps
-> {
-  render(): JSX.Element {
-    return (
-      <View style={styles.actionBarContainer}>
-        {this.renderFilterButton()}
-        <View style={styles.buttonContainer}>
-          {this.renderSingleColumnButton()}
-          {this.renderButtonSpacer()}
-          {this.renderMultiColumnButton()}
-        </View>
-      </View>
-    );
-  }
+const PSFilterActionBar: FunctionComponent<PSFilterActionBarProps> = (props): JSX.Element => {
 
-  private renderButtonSpacer(): JSX.Element {
+  const renderButtonSpacer = (): JSX.Element => {
     return (
       <View style={styles.buttonSpacer}>
         <Svg height='30' width='1'>
@@ -82,63 +68,63 @@ export default class PSFilterActionBar extends Component<
         </Svg>
       </View>
     );
-  }
+  };
 
-  private renderSingleColumnButton(): JSX.Element {
+  const renderSingleColumnButton = (): JSX.Element => {
     return (
-      <TouchableOpacity onPress={this.props.handleColumnToggle}>
+      <TouchableOpacity onPress={props.handleColumnToggle}>
         <Svg height='21' width='21'>
           <Rect
             x='0'
             y='0'
             width='21'
             height='21'
-            fill={this.props.isMultiColumn ? buttonInactiveColor : buttonActiveColor}
+            fill={props.isMultiColumn ? buttonInactiveColor : buttonActiveColor}
           />
         </Svg>
       </TouchableOpacity>
     );
-  }
+  };
 
-  private renderMultiColumnButton(): JSX.Element {
+  const renderMultiColumnButton = (): JSX.Element => {
     return (
-      <TouchableOpacity onPress={this.props.handleColumnToggle}>
+      <TouchableOpacity onPress={props.handleColumnToggle}>
         <Svg height='21' width='21'>
           <Rect
             x='0'
             y='0'
             width='8'
             height='8'
-            fill={this.props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
+            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
           />
           <Rect
             x='13'
             y='0'
             width='8'
             height='8'
-            fill={this.props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
+            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
           />
           <Rect
             x='0'
             y='13'
             width='8'
             height='8'
-            fill={this.props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
+            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
           />
           <Rect
             x='13'
             y='13'
             width='8'
             height='8'
-            fill={this.props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
+            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
           />
         </Svg>
       </TouchableOpacity>
     );
-  }
+  };
 
-  private renderFilterButton(): JSX.Element {
-    const { selectedRefinements = {} } = this.props.commerceData;
+  const renderFilterButton = (): JSX.Element => {
+    const { selectedRefinements = {} } = props.commerceData;
     let numSelected = 0;
 
     for (const key in selectedRefinements) {
@@ -158,12 +144,25 @@ export default class PSFilterActionBar extends Component<
     return (
       <TouchableOpacity
         style={styles.filterButton}
-        onPress={this.props.showFilterModal}
+        onPress={props.showFilterModal}
       >
         <Text style={styles.filterButtonText}>
           {translate.string(translationKeys.flagship.sort.actions.filter.actionBtn) + btnXtra}
         </Text>
       </TouchableOpacity>
     );
-  }
-}
+  };
+
+  return (
+    <View style={styles.actionBarContainer}>
+      {renderFilterButton()}
+      <View style={styles.buttonContainer}>
+        {renderSingleColumnButton()}
+        {renderButtonSpacer()}
+        {renderMultiColumnButton()}
+      </View>
+    </View>
+  );
+};
+
+export default PSFilterActionBar;
