@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fscategory",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "components for category navigation",
   "main": "dist/index.js",
