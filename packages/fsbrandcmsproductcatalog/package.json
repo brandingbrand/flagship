@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsbrandcmsproductcatalog",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "BrandCMS Product Catalog Data Source",
   "main": "dist/index.js",
