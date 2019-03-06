@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fslocator",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Locator React Components",
   "main": "dist/index.js",

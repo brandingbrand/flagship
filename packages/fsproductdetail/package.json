@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsproductdetail",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "components for product detail pages",
   "main": "dist/index.js",
