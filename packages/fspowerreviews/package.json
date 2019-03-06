@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fspowerreviews",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Power Reviews Data Source",
   "main": "dist/index.js",
