@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
 import pushRoute from '../lib/push-route';
 import { AppConfigType, DrawerConfig } from '../types';
@@ -29,12 +30,16 @@ const NOT_IMPLMENTED = (prop: keyof Navigator) => {
   return (...args: any[]): any => console.log(`${prop} is not implemented`);
 };
 
+export interface GenericScreenStateProp {
+  devMenuHidden: boolean;
+}
+
 export interface GenericScreenDispatchProp {
   navigator: Navigator;
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenDispatchProp {
+export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
   appConfig: AppConfigType;
   api: FSNetwork;
   href: string;
@@ -56,6 +61,15 @@ export default function wrapScreen(
   }
 
   class GenericScreen extends Component<GenericScreenProp> {
+    showDevMenu: boolean;
+
+    constructor(props: GenericScreenProp) {
+      super(props);
+      this.showDevMenu =
+        __DEV__ ||
+        (appConfig.env && appConfig.env.isFLAGSHIP);
+
+    }
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
 
@@ -87,9 +101,11 @@ export default function wrapScreen(
     }
 
     renderVersion = () => {
-      if (PageComponent.name === 'DevMenu') {
+      // DEV feature
+      if (!this.showDevMenu || PageComponent.name === 'DevMenu' || this.props.devMenuHidden) {
         return null;
       }
+
       const versionlabel =
         appConfig.version || appConfig.packageJson && appConfig.packageJson.version || '';
 
@@ -120,6 +136,12 @@ export default function wrapScreen(
         />
       );
     }
+  }
+
+  function mapStateToProps(state: any, ownProps: GenericScreenProp): GenericScreenStateProp {
+    return {
+      devMenuHidden: state.global.devMenuHidden
+    };
   }
 
   function mapDispatchToProps(
@@ -158,9 +180,9 @@ export default function wrapScreen(
 
     return {
       navigator,
-      hideDevMenu: () => null
+      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true }))
     };
   }
 
-  return connect(null, mapDispatchToProps)(GenericScreen);
+  return connect(mapStateToProps, mapDispatchToProps)(GenericScreen);
 }
