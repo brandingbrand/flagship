@@ -128,7 +128,7 @@ export interface ShopProps
   Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
   Pick<AccountActionProps, 'signOut'> { }
 
-class Shop extends Component<ShopProps> {
+export class UnwrappedShop extends Component<ShopProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
 
   constructor(props: ShopProps) {
@@ -398,4 +398,4 @@ const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Shop);
+)(UnwrappedShop);
