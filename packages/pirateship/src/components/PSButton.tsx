@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, ButtonProps } from '@brandingbrand/fscomponents';
-
 import { palette } from '../styles/variables';
 
-export default class PSButton extends Component<ButtonProps> {
-  render(): React.ReactNode {
-    return <Button palette={palette} {...this.props} />;
-  }
-}
+const PSButton: FunctionComponent<ButtonProps> = (props): JSX.Element => {
+  return <Button palette={palette} {...props} />;
+};
+
+export default PSButton;
