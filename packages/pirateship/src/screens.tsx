@@ -31,6 +31,7 @@ import AccordionSample from './screens/AccordionSample';
 import ActionBarSample from './screens/ActionBarSample';
 import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
 import PageDotsSample from './screens/PageDotsSample';
+import CartCountSample from './screens/CartCountSample';
 
 export default {
   Shop,
@@ -62,5 +63,6 @@ export default {
   AccordionSample,
   ActionBarSample,
   ImageWithOverlaySample,
-  PageDotsSample
+  PageDotsSample,
+  CartCountSample
 };
