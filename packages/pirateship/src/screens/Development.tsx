@@ -16,7 +16,8 @@ const screens: Screen[] = [
   { title: 'Action Bar', screen: 'ActionBarSample' },
   { title: 'BreadCrumbs', screen: 'BreadCrumbsSample' },
   { title: 'Image With Overlay', screen: 'ImageWithOverlaySample' },
-  { title: 'PS Half Modal', screen: 'EmailSignUp' }
+  { title: 'PS Half Modal', screen: 'EmailSignUp' },
+  { title: 'Cart Count', screen: 'CartCountSample'}
 ];
 
 export interface DevelopmentScreenState {
