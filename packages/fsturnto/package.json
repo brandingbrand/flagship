@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsturnto",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "TurnTo Data Source",
   "main": "dist/index.js",
