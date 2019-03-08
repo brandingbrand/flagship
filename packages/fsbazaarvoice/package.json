@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsbazaarvoice",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "BazzarVoice Data Source",
   "main": "dist/index.js",
