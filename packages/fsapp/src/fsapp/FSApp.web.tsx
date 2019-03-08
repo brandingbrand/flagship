@@ -7,7 +7,9 @@ import DevMenu from '../components/DevMenu';
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);
-    this.startApp();
+    if (!appConfig.serverSide) {
+      this.startApp();
+    }
   }
 
   registerScreens(): void {

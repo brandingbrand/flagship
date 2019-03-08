@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsi18n",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Internationalization helpers for Flagship",
   "main": "dist/index.js",
