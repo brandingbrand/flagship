@@ -66,6 +66,8 @@ export interface AppConfigType {
   analytics?: Analytics;
   devMenuScreens?: Screen[];
   popToRootOnTabPressAndroid?: boolean;
+  serverSide?: boolean;
+  devMenuPath?: string;
 }
 
 export interface NavButton {

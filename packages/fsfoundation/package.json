@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fsfoundation",
+  "sideEffects": false,
   "version": "3.0.0",
   "description": "Foundation types for Flagship",
   "main": "dist/index.js",

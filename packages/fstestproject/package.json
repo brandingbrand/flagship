@@ -1,5 +1,6 @@
 {
   "name": "@brandingbrand/fstestproject",
+  "sideEffects": false,
   "private": true,
   "version": "3.0.0",
   "main": "dist/index.js",
