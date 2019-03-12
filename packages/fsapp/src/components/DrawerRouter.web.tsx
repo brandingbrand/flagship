@@ -153,12 +153,14 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         overflowX: 'hidden'
       },
       appDrawerDefault: {
-        flex: 1
+        flex: 1,
+        flexBasis: 'auto'
       },
       container: {
         transitionDuration: drawerDuration,
         width: '100%',
-        flex: 1
+        flex: 1,
+        flexBasis: 'auto'
       },
       containerDrawerLeftOpen: {
         marginLeft: drawerWidth
