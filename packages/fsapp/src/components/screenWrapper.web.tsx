@@ -9,7 +9,8 @@ import { AppConfigType, DrawerConfig } from '../types';
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1
+    flex: 1,
+    flexBasis: 'auto'
   },
   devNoteContainer: {
     position: 'absolute',
