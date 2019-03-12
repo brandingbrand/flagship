@@ -43,6 +43,7 @@ const S = StyleSheet.create({
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderColor: 'black',
+    borderBottomColor: 'transparent',
     transform: [
       {
         rotate: '-45deg'
@@ -55,6 +56,7 @@ const S = StyleSheet.create({
     borderTopWidth: 2,
     borderRightWidth: 2,
     borderColor: 'black',
+    borderLeftColor: 'transparent',
     transform: [
       {
         rotate: '45deg'
@@ -242,6 +244,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           onTouchStart={this.handleTouchStart}
           onTouchEnd={this.handleTouchEnd}
           onTouchMove={this.handleTouchMove}
+          style={{ flexBasis: 'auto' }}
         >
           <View
             style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
