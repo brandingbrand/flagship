@@ -20,7 +20,7 @@
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-cookies": "^3.3.0",
-    "react-native-device-info": "^0.22.0",
+    "react-native-device-info": "^0.29.1",
     "react-native-navigation": "1.1.493",
     "react-native-restart": "^0.0.9",
     "react-native-sensitive-info": "^5.1.0",
