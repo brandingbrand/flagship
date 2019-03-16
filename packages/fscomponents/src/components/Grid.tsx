@@ -281,6 +281,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     );
   }
 
+  // tslint:disable-next-line:use-default-type-parameter
   private renderRow = (info: ListRenderItemInfo<ItemT[]>): ReactElement<any> | null => {
     const {
       columns = DEFAULT_COLUMNS,

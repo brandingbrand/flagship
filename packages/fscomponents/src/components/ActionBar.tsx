@@ -41,6 +41,7 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
 
         if (React.isValidElement(child)) {
           // If child is a React Element, add default style prop of flex:1
+          // tslint:disable-next-line:use-default-type-parameter
           child = child as React.ReactElement<any>;
 
           returnElem = React.cloneElement(child, {
@@ -63,4 +64,3 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
     </View>
   );
 };
-
