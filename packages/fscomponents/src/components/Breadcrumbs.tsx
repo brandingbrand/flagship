@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -72,7 +72,7 @@ const BreadcrumbsStyles = StyleSheet.create({
   }
 });
 
-export const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
+export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Element => {
   const defaultProps: Partial<BreadcrumbsProps> = {
     separator: BREADCRUMBS_SEPARATOR_DEFAULT
   };
@@ -81,7 +81,7 @@ export const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
   return (
     <View style={[BreadcrumbsStyles.container, props.style]}>
       {props.items.map(
-        (item, index) => renderBreadcrumb(item, index, (index === numItems - 1))
+        (item: Breadcrumb, index: number) => renderBreadcrumb(item, index, (index === numItems - 1))
       )}
     </View>
   );
@@ -120,4 +120,3 @@ export const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
     );
   }
 };
-
