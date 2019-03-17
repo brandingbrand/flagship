@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Image,
   ImageStyle,
@@ -76,56 +76,57 @@ export interface PSPurchasedItemProps {
   totalItemPriceTextStyle?: StyleProp<TextStyle>;
 }
 
-export default class PSPurchasedItem extends Component<PSPurchasedItemProps> {
-  render(): JSX.Element {
-    const {
-      item,
-      containerStyle,
-      itemHeaderStyle,
-      itemDetailsContainerStyle,
-      productImageStyle,
-      itemDetailsStyle,
-      skuTextStyle,
-      unitPriceStyle,
-      qtyTotalPriceRowStyle,
-      purchasedQtyTextStyle,
-      totalItemPriceTextStyle
-    } = this.props;
+const PSPurchasedItem: FunctionComponent<PSPurchasedItemProps> = (props): JSX.Element => {
 
-    const image = (item.images || []).find(img => !!img.uri);
-    return (
-      <View
-        style={[styles.container, containerStyle]}
-      >
-        <Text style={[styles.itemHeader, itemHeaderStyle]}>{item.title}</Text>
-        <View style={[styles.itemDetailsContainer, itemDetailsContainerStyle]}>
-          { image && (
-            <Image
-              source={image}
-              resizeMode={'contain'}
-              style={[styles.productImage, productImageStyle]}
-            />
-          )}
-          <View style={[styles.itemDetails, itemDetailsStyle]}>
-            <Text style={[styles.skuText, skuTextStyle]}>
-              {translate.string(translationKeys.item.sku)}: {item.productId}
+  const {
+    item,
+    containerStyle,
+    itemHeaderStyle,
+    itemDetailsContainerStyle,
+    productImageStyle,
+    itemDetailsStyle,
+    skuTextStyle,
+    unitPriceStyle,
+    qtyTotalPriceRowStyle,
+    purchasedQtyTextStyle,
+    totalItemPriceTextStyle
+  } = props;
+
+  const image = (item.images || []).find(img => !!img.uri);
+  return (
+    <View
+      style={[styles.container, containerStyle]}
+    >
+      <Text style={[styles.itemHeader, itemHeaderStyle]}>{item.title}</Text>
+      <View style={[styles.itemDetailsContainer, itemDetailsContainerStyle]}>
+        { image && (
+          <Image
+            source={image}
+            resizeMode={'contain'}
+            style={[styles.productImage, productImageStyle]}
+          />
+        )}
+        <View style={[styles.itemDetails, itemDetailsStyle]}>
+          <Text style={[styles.skuText, skuTextStyle]}>
+            {translate.string(translationKeys.item.sku)}: {item.productId}
+          </Text>
+          {item.price && <Text style={[styles.unitPrice, unitPriceStyle]}>
+            {translate.currency(item.price)}
+          </Text>}
+          <View style={[styles.qtyTotalPriceRow, qtyTotalPriceRowStyle]}>
+            <Text style={[styles.purchasedQtyText, purchasedQtyTextStyle]}>
+            {translate.string(translationKeys.item.qty)}: {item.quantity}
             </Text>
-            {item.price && <Text style={[styles.unitPrice, unitPriceStyle]}>
-              {translate.currency(item.price)}
-            </Text>}
-            <View style={[styles.qtyTotalPriceRow, qtyTotalPriceRowStyle]}>
-              <Text style={[styles.purchasedQtyText, purchasedQtyTextStyle]}>
-              {translate.string(translationKeys.item.qty)}: {item.quantity}
+            {item.totalPrice &&
+              <Text style={[styles.totalItemPriceText, totalItemPriceTextStyle]}>
+                {translate.currency(item.totalPrice)}
               </Text>
-              {item.totalPrice &&
-                <Text style={[styles.totalItemPriceText, totalItemPriceTextStyle]}>
-                  {translate.currency(item.totalPrice)}
-                </Text>
-              }
-            </View>
+            }
           </View>
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default PSPurchasedItem;
