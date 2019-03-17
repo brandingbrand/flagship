@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import {
   StyleProp,
@@ -25,32 +25,31 @@ export interface CartItemDetailsProps extends Pick<
   detailTextStyle?: StyleProp<TextStyle>;
 }
 
-export class CartItemDetails extends PureComponent<CartItemDetailsProps> {
-  render(): JSX.Element {
-    const {
-      detailTextStyle,
-      itemText,
-      price,
-      productId,
-      style,
-      totalPrice
-    } = this.props;
+export const CartItemDetails: FunctionComponent<CartItemDetailsProps> =
+memo((props): JSX.Element => {
+  const {
+    detailTextStyle,
+    itemText,
+    price,
+    productId,
+    style,
+    totalPrice
+  } = props;
 
-    return (
-      <View style={style}>
-        {itemText && <Text style={[defaultStyles.detailText, detailTextStyle]}>{itemText}</Text>}
-        {productId && <Text style={[defaultStyles.detailText, detailTextStyle]}>#{productId}</Text>}
-        {price && (
-          <Text style={[defaultStyles.detailText, detailTextStyle]}>
-            {FSI18n.string(componentTranslationKeys.unitPrice)}:
-            {FSI18n.currency(price)}
-          </Text>
-        )}
-        {totalPrice && <Text style={detailTextStyle}>
-          {FSI18n.string(componentTranslationKeys.totalPrice)}:
-          {FSI18n.currency(totalPrice)}
-        </Text>}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={style}>
+      {itemText && <Text style={[defaultStyles.detailText, detailTextStyle]}>{itemText}</Text>}
+      {productId && <Text style={[defaultStyles.detailText, detailTextStyle]}>#{productId}</Text>}
+      {price && (
+        <Text style={[defaultStyles.detailText, detailTextStyle]}>
+          {FSI18n.string(componentTranslationKeys.unitPrice)}:
+          {FSI18n.currency(price)}
+        </Text>
+      )}
+      {totalPrice && <Text style={detailTextStyle}>
+        {FSI18n.string(componentTranslationKeys.totalPrice)}:
+        {FSI18n.currency(totalPrice)}
+      </Text>}
+    </View>
+  );
+});
