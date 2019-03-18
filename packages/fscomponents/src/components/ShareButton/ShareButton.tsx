@@ -1,29 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { Image, Share, TouchableOpacity } from 'react-native';
 import { ShareButtonProps } from './ShareButtonProps';
 
 const shareImage = require('../../../assets/images/share.png');
 
-export class ShareButton extends PureComponent<ShareButtonProps> {
-  onSharePress = async () => {
-    return Share.share(this.props.content, this.props.options);
-  }
+export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
+  const onSharePress = async () => {
+    return Share.share(props.content, props.options);
+  };
 
-  renderShareButton(): React.ReactNode {
-    if (this.props.renderShareButton) {
-      return this.props.renderShareButton();
+  const renderShareIcon = () => {
+    if (props.renderShareIcon) {
+      return props.renderShareIcon();
     }
 
-    return (
-      <Image style={this.props.style} source={shareImage} />
-    );
-  }
+    return <Image source={shareImage} />;
+  };
 
-  render(): JSX.Element {
-    return (
-      <TouchableOpacity onPress={this.onSharePress}>
-        {this.renderShareButton()}
-      </TouchableOpacity>
-    );
-  }
-}
+
+  return (
+    <TouchableOpacity onPress={onSharePress}>
+      {renderShareIcon()}
+    </TouchableOpacity>
+  );
+});
