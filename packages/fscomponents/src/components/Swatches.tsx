@@ -31,6 +31,8 @@ export interface SwatchesProps extends SwatchStyle {
   labelContainerStyle?: StyleProp<ViewStyle>;
   labelTitleStyle?: StyleProp<TextStyle>;
   labelValueStyle?: StyleProp<TextStyle>;
+  showingMoreStyle?: StyleProp<ViewStyle>;
+  showingLessStyle?: StyleProp<ViewStyle>;
   renderLabel?: (swatch: any) => void;
 
   onChangeSwatch?: (swatch: any) => void;
@@ -227,16 +229,18 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
   render(): JSX.Element {
     const {
       items,
-      style,
+      label,
       maxSwatches,
-      label
+      showingLessStyle,
+      showingMoreStyle,
+      style
     } = this.props;
 
     const { shouldShowMoreLess, showMore } = this.state;
     const { swatch } = this.state.selected;
 
     let displayItems = [...items];
-    if (shouldShowMoreLess && !showMore) {
+    if (shouldShowMoreLess && !showMore && (maxSwatches === undefined || maxSwatches > 0)) {
       // Show Less
       displayItems = displayItems.slice(0, maxSwatches);
     }
@@ -244,8 +248,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     return (
       <View>
         {label && this._renderLabel(swatch)}
-        <View style={[S.container, style]}>
-          {displayItems.map(this._renderSwatch)}
+        <View>
+          <View style={[S.container, showMore ? showingMoreStyle : showingLessStyle, style]}>
+            {displayItems.map(this._renderSwatch)}
+          </View>
           {this._renderMoreLess()}
         </View>
       </View>
