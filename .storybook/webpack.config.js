@@ -2,9 +2,8 @@ const webpack = require('webpack');
 const path = require("path");
 
 module.exports = (baseConfig, env, config) => {
-
   // Add babel-polyfill as the first entry, this allows for async/await
-  config.entry.preview.unshift('babel-polyfill');
+  config.entry.unshift('babel-polyfill');
 
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
