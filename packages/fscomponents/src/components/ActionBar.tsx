@@ -41,7 +41,7 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
 
         if (React.isValidElement(child)) {
           // If child is a React Element, add default style prop of flex:1
-          child = child as React.ReactElement<any>;
+          child = child as React.ReactElement;
 
           returnElem = React.cloneElement(child, {
             style: [

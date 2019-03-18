@@ -281,7 +281,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     );
   }
 
-  private renderRow = (info: ListRenderItemInfo<ItemT[]>): ReactElement<any> | null => {
+  private renderRow = (info: ListRenderItemInfo<ItemT[]>): ReactElement | null => {
     const {
       columns = DEFAULT_COLUMNS,
       columnSeparatorStyle,
