@@ -52,6 +52,21 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
 
+  NSMutableDictionary *copyOfLaunchOptions = [launchOptions mutableCopy];
+
+  if (launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] && [launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] isKindOfClass:[NSDictionary class]]) {
+      NSDictionary *notification = launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+      if (notification[@"_lpx"] && [notification[@"_lpx"] isKindOfClass:[NSDictionary class]]) {
+          NSDictionary *lpx = notification[@"_lpx"];
+          if (lpx[@"URL"] && [lpx[@"URL"] isKindOfClass:[NSString class]]) {
+              NSString *url = lpx[@"URL"];
+              copyOfLaunchOptions[@"UIApplicationLaunchOptionsURLKey"] = [NSURL URLWithString:url];
+          }
+      }
+  }
+
+  launchOptions = copyOfLaunchOptions;
+
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
 
    return YES;
