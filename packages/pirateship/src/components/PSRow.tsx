@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Image,
   StyleProp,
@@ -45,27 +45,27 @@ export interface PSRowProps {
   renderImage?: () => JSX.Element;
 }
 
-export default class PSRow extends Component<PSRowProps> {
-  renderImage(): JSX.Element {
-    if (this.props.renderImage) {
-      return this.props.renderImage();
+const PSRow: FunctionComponent<PSRowProps> = (props): JSX.Element => {
+  const renderImage = (): JSX.Element => {
+    if (props.renderImage) {
+      return props.renderImage();
     }
 
     return (
       <Image source={arrowImg} style={styles.arrow} resizeMode='contain' />
     );
-  }
+  };
 
-  render(): JSX.Element {
-    const { onPress, showImage, style, textStyle, title } = this.props;
+  const { onPress, showImage, style, textStyle, title } = props;
 
-    return (
-      <TouchableHighlight onPress={onPress} underlayColor={palette.surface}>
-        <View style={[styles.container, style]}>
-          <Text style={[styles.title, textStyle]}>{title}</Text>
-          {showImage && this.renderImage()}
-        </View>
-      </TouchableHighlight>
-    );
-  }
-}
+  return (
+    <TouchableHighlight onPress={onPress} underlayColor={palette.surface}>
+      <View style={[styles.container, style]}>
+        <Text style={[styles.title, textStyle]}>{title}</Text>
+        {showImage && renderImage()}
+      </View>
+    </TouchableHighlight>
+  );
+};
+
+export default PSRow;

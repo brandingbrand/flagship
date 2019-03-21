@@ -1,7 +1,7 @@
 {
   "presets": [
     "module:metro-react-native-babel-preset",
-    ["env", {
+    ["@babel/preset-env", {
         "modules": false
     }]
   ],
