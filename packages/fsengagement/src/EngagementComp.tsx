@@ -4,10 +4,11 @@ import {
   Animated,
   DeviceEventEmitter,
   Dimensions,
+  FlatList,
   Image,
   Linking,
+  ListRenderItem,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -190,7 +191,11 @@ export default function(
       this.props.navigator.pop();
     }
 
-    renderBlock = (item: BlockItem): JSX.Element | undefined => {
+    renderBlockItem: ListRenderItem<BlockItem> = ({item}) => {
+      return this.renderBlock(item);
+    }
+
+    renderBlock = (item: BlockItem): React.ReactElement | null => {
       const {
         private_blocks,
         private_type,
@@ -203,7 +208,7 @@ export default function(
       };
 
       if (!layoutComponents[private_type]) {
-        return;
+        return null;
       }
       props.navigator = this.props.navigator;
 
@@ -231,9 +236,50 @@ export default function(
       );
     }
 
-    renderScrollView(): JSX.Element {
+    renderStoryGradient(): JSX.Element {
       const { json: { storyGradient } } = this.props;
       const { scrollY } = this.state;
+      const empty: any = this.props.json.empty || {};
+      const {
+        startFadePosition = 0,
+        endFadePosition = 250
+      } = storyGradient || {};
+      const headerOpacity = scrollY.interpolate({
+        inputRange: [startFadePosition, endFadePosition],
+        outputRange: [0, 1],
+        extrapolate: 'clamp'
+      });
+      return (
+        <Fragment>
+          <FlatList
+            data={this.props.json.private_blocks || []}
+            renderItem={this.renderBlockItem}
+            ListEmptyComponent={(
+              <Text style={[styles.emptyMessage, empty.textStyle]}>
+                {empty.message || 'No content found.'}</Text>
+            )}
+            style={styles.growStretch}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }]
+            )}
+          >
+            {this.renderBlocks()}
+          </FlatList>
+          <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
+            <Image
+              style={styles.headerImage}
+              source={gradientImage}
+              resizeMode={'cover'}
+            />
+          </Animated.View>
+        </Fragment>
+      );
+    }
+
+    renderScrollView(): JSX.Element {
+      const { json: { storyGradient } } = this.props;
+      const empty: any = this.props.json.empty || {};
       if (this.props.noScrollView) {
         return (
           <Fragment>
@@ -241,38 +287,16 @@ export default function(
           </Fragment>
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
-        const {
-          startFadePosition = 0,
-          endFadePosition = 250
-        } = storyGradient;
-        const headerOpacity = scrollY.interpolate({
-          inputRange: [startFadePosition, endFadePosition],
-          outputRange: [0, 1],
-          extrapolate: 'clamp'
-        });
-        return (
-          <Fragment>
-            <ScrollView
-              style={styles.growStretch}
-              scrollEventThrottle={16}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: scrollY } } }]
-              )}
-            >
-              {this.renderBlocks()}
-            </ScrollView>
-            <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
-              <Image
-                style={styles.headerImage}
-                source={gradientImage}
-                resizeMode={'cover'}
-              />
-            </Animated.View>
-          </Fragment>
-        );
+        return this.renderStoryGradient();
       }
       return (
-        <ScrollView
+        <FlatList
+          data={this.props.json.private_blocks || []}
+          renderItem={this.renderBlockItem}
+          ListEmptyComponent={(
+            <Text style={[styles.emptyMessage, empty.textStyle]}>
+              {empty.message || 'No content found.'}</Text>
+          )}
           refreshControl={
             this.props.refreshControl && <RefreshControl
               refreshing={this.props.isLoading}
@@ -281,7 +305,7 @@ export default function(
           }
         >
           {this.renderBlocks()}
-        </ScrollView>
+        </FlatList>
       );
     }
 
