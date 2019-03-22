@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
-
+import React, { FunctionComponent } from 'react';
 import {
   StyleSheet,
   Text,
   View
 } from 'react-native';
-
-import { ModalHalfScreen } from '@brandingbrand/fscomponents';
-
+import { ModalHalfScreen, VerticalPosition } from '@brandingbrand/fscomponents';
 import { border, fontSize } from '../styles/variables';
 
 export interface PSHalfModalProps {
   title: string;
   onClose: () => void;
   visible: boolean;
-
   renderLeftItem?: () => JSX.Element;
   renderRightItem?: () => JSX.Element;
+  children?: any;
+  verticalPosition?: VerticalPosition;
 }
 
 const styles = StyleSheet.create({
@@ -48,27 +46,31 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PSHalfModal extends Component<PSHalfModalProps> {
-  render(): JSX.Element {
-    return (
-      <ModalHalfScreen onRequestClose={this.props.onClose} visible={this.props.visible}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{this.props.title}</Text>
-            {this.props.renderLeftItem && (
-              <View style={styles.leftItem}>
-                {this.props.renderLeftItem()}
-              </View>
-            )}
-            {this.props.renderRightItem && (
-              <View style={styles.rightItem}>
-                {this.props.renderRightItem()}
-              </View>
-            )}
-          </View>
-          {this.props.children}
+const PSHalfModal: FunctionComponent<PSHalfModalProps> = (props): JSX.Element => {
+  return (
+    <ModalHalfScreen
+      onRequestClose={props.onClose}
+      visible={props.visible}
+      verticalPosition={props.verticalPosition}
+    >
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{props.title}</Text>
+          {props.renderLeftItem && (
+            <View style={styles.leftItem}>
+              {props.renderLeftItem()}
+            </View>
+          )}
+          {props.renderRightItem && (
+            <View style={styles.rightItem}>
+              {props.renderRightItem()}
+            </View>
+          )}
         </View>
-      </ModalHalfScreen>
-    );
-  }
-}
+        {props.children}
+      </View>
+    </ModalHalfScreen>
+  );
+};
+
+export default PSHalfModal;

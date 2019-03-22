@@ -12862,6 +12862,11 @@ react-native-sensitive-info@^5.1.0:
   resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.3.0.tgz#dab9f346a6f7cc6d4c520c4973e60854b7a82ef8"
   integrity sha512-bAY05Tye8QDr1Bytv950P7ToxQjan6ZzVdF34Y/RWz7O5b2wvfRLJIafmuY/XN5DboQF+ShIUPxIuBf09vVBAg==
 
+react-native-status-bar-height@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.3.1.tgz#b92ce9112c2367290847ac11284d9d84a6330169"
+  integrity sha512-m9nGKYfFn6ljF1abafzF5cFaD9JCzXwj7kNE9CuF+g0TgtItH70eY2uHaCV9moENTftqd5XIS3Cx0mf4WfistA==
+
 react-native-svg@^8.0.0:
   version "8.0.10"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-8.0.10.tgz#b07e2342d1486220f5fda1a584e316e7d2d1f392"

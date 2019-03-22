@@ -9,7 +9,7 @@ import {
 
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as tcomb from 'tcomb-form-native';
-import { CMSBannerStacked, Form } from '@brandingbrand/fscomponents';
+import { CMSBannerStacked, Form, VerticalPosition } from '@brandingbrand/fscomponents';
 
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
@@ -23,10 +23,13 @@ import PSButton from '../components/PSButton';
 import PSHalfModal from '../components/PSHalfModal';
 import { EMAIL_REGEX } from '../lib/constants';
 import translate, { translationKeys } from '../lib/translations';
-
 export interface EmailSignUpState {
   descriptionText?: string;
   modalVisible: boolean;
+}
+
+export interface EmailSignUpProps extends ScreenProps {
+  verticalPosition?: VerticalPosition;
 }
 
 const FIELD_TYPES = tcomb.struct({
@@ -47,7 +50,10 @@ const FIELD_OPTIONS = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: palette.surface
+    backgroundColor: palette.surface,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingTop: 100
   },
   cmsImage: {
     marginBottom: 14
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState> {
+export default class EmailSignUp extends Component<EmailSignUpProps, EmailSignUpState> {
   static navigatorStyle: NavigatorStyle = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   form?: Form;
@@ -170,6 +176,7 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
         onClose={this.closeModal}
         visible={this.state.modalVisible}
         renderRightItem={this.renderModalRightItem}
+        verticalPosition={VerticalPosition.Top}
       >
         <View style={styles.modalBody}>
           <Text>

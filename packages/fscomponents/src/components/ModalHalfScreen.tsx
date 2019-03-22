@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
 import {
   Animated,
+  Dimensions,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -20,15 +23,23 @@ const styles = StyleSheet.create({
   }
 });
 
+export enum VerticalPosition {
+  Top = 'top',
+  Middle = 'middle',
+  Bottom = 'bottom'
+}
 export interface ModalHalfScreenProps {
   visible?: boolean;
   height?: number;
   onRequestClose: () => void;
+  verticalPosition?: VerticalPosition;
 }
 
 export interface ModalHalfScreenState {
   visible: boolean;
   contentOffset: Animated.Value;
+  calculatedPosition: number;
+  modalHeight: number;
 }
 
 export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHalfScreenState> {
@@ -36,14 +47,51 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     super(props);
     this.state = {
       visible: false,
-      contentOffset: new Animated.Value(0)
+      contentOffset: new Animated.Value(0),
+      calculatedPosition: 0 - Dimensions.get('window').height / 2 , // default bottom
+      modalHeight: props.height || Dimensions.get('window').height / 2
     };
+
   }
 
   componentDidMount(): void {
+    this.setState({
+      calculatedPosition: this.calculatePosition(Dimensions.get('window').height)
+    });
+
+    Dimensions.addEventListener('change', this.onDimensionsChange);
+
     if (this.props.visible) {
       this.showContent();
     }
+  }
+
+  calculatePosition = (screenHeight: number): number => {
+    let calculatedPosition;
+    const modalHeight = this.props.height || screenHeight / 2;
+
+    switch (this.props.verticalPosition) {
+      case VerticalPosition.Top:
+        calculatedPosition = 0 - getStatusBarHeight(true);
+        break;
+      case VerticalPosition.Middle:
+        calculatedPosition = 0 - (screenHeight - modalHeight * 1.5);
+        break;
+      case VerticalPosition.Bottom:
+        calculatedPosition = 0 - modalHeight;
+        break;
+      default:
+        calculatedPosition = 0 - modalHeight;
+    }
+    return calculatedPosition;
+  }
+
+  onDimensionsChange = (dimensions: { window: any; screen: any }): void => {
+    const screenHeight = dimensions.window.height;
+    this.setState({
+      calculatedPosition: this.calculatePosition(screenHeight),
+      modalHeight: screenHeight / 2
+    });
   }
 
   componentDidUpdate(prevProps: ModalHalfScreenProps): void {
@@ -52,6 +100,10 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     } else if (!prevProps.visible && this.props.visible) {
       this.showContent();
     }
+  }
+
+  componentWillUnmount(): void {
+    Dimensions.removeEventListener('change', this.onDimensionsChange);
   }
 
   showContent = () => {
@@ -95,7 +147,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
   render(): JSX.Element {
     const contentOffsetY = this.state.contentOffset.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, this.props.height ? 0 - this.props.height : -400]
+      outputRange: [0, this.props.height ? 0 - this.props.height : 0 - this.state.modalHeight]
     });
     const heightFromProps = this.props.height ? {
       height: this.props.height,
@@ -103,6 +155,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     } : {};
     const stylesForAnimation = [
       styles.animatedContent,
+      {bottom: this.state.calculatedPosition},
       heightFromProps,
       {
         transform: [
