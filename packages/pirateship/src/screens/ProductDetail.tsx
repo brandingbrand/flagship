@@ -24,6 +24,7 @@ export interface ProductDetailProps
     AccountProps,
     RecentlyViewedProps {
   productId: string; // passed by Navigator
+  renderShareIcon?: () => React.ReactNode;
 }
 
 class ProductDetail extends Component<ProductDetailProps> {
