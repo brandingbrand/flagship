@@ -20,9 +20,17 @@ import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
+export enum RecommendationDisplayTypes {
+  Never,
+  Always,
+  PositiveOnly,
+  NegativeOnly
+}
+
 export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedImage?: ImageURISource;
   verifiedImage?: ImageURISource;
+  showRecommendations?: RecommendationDisplayTypes;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -64,6 +72,59 @@ export class ReviewItem extends Component<ReviewItemProps> {
     }
   }
 
+  /**
+   * Display whether an item is recommended or not recommended for the user. This will only be
+   * displayed if isRecommended is a boolean, as null or undefined indicate that the feature isn't
+   * configured in the review API.
+   *
+   * In addition, whether and how the recommendations are displayed is controlled by the
+   * showRecommendations prop:
+   *   - Always (default): recommendations are displayed whether recommended or not
+   *   - PositiveOnly: recommendations are only displayed if the product is recommended
+   *   - NegativeOnly: recommendations are only displayed if the product is not recommended
+   *   - Never: recommendations are never displayed
+   */
+  renderRecommendation = (): React.ReactNode => {
+    const {
+      recommendedImage,
+      recommendedStyle,
+      recommendedImageStyle,
+      recommendedImageBoxStyle,
+      recommendedRowStyle,
+      rowStyle,
+      isRecommended,
+      showRecommendations
+    } = this.props;
+
+    const shouldDisplay =
+      (isRecommended === false || isRecommended === true)
+      && (
+        showRecommendations === undefined // Backwards compatibility: always display if not set
+        || showRecommendations === RecommendationDisplayTypes.Always
+        || (isRecommended && showRecommendations === RecommendationDisplayTypes.PositiveOnly)
+        || (!isRecommended && showRecommendations === RecommendationDisplayTypes.NegativeOnly)
+      );
+
+    if (shouldDisplay) {
+      return (
+        <View style={[S.row, rowStyle, recommendedRowStyle]}>
+          {recommendedImage && (
+            <View style={recommendedImageBoxStyle}>
+              <Image style={recommendedImageStyle} source={recommendedImage} />
+            </View>
+          )}
+          <Text style={[S.recommended, recommendedStyle]}>
+            {isRecommended ?
+              FSI18n.string(componentTranslationKeys.recommended) :
+              FSI18n.string(componentTranslationKeys.notRecommended)}
+          </Text>
+        </View>
+      );
+    }
+
+    return null;
+  }
+
   render(): JSX.Element {
     const {
       rating,
@@ -86,13 +147,7 @@ export class ReviewItem extends Component<ReviewItemProps> {
       rowStyle,
       onHelpful,
       onNotHelpful,
-      moreTextStyle,
-      recommendedImage,
-      recommendedStyle,
-      recommendedImageStyle,
-      recommendedImageBoxStyle,
-      recommendedRowStyle,
-      isRecommended
+      moreTextStyle
     } = this.props;
 
     return (
@@ -134,20 +189,7 @@ export class ReviewItem extends Component<ReviewItemProps> {
             {...moreTextProps}
           />
         )}
-        {isRecommended !== undefined && (
-          <View style={[S.row, rowStyle, recommendedRowStyle]}>
-            {recommendedImage && (
-              <View style={recommendedImageBoxStyle}>
-                <Image style={recommendedImageStyle} source={recommendedImage} />
-              </View>
-            )}
-            <Text style={[S.recommended, recommendedStyle]}>
-              {isRecommended ?
-                FSI18n.string(componentTranslationKeys.recommended) :
-                FSI18n.string(componentTranslationKeys.notRecommended)}
-            </Text>
-          </View>
-        )}
+        {this.renderRecommendation()}
         {feedback && feedback.positive && (
         <View style={[S.row, rowStyle]}>
           <Text style={[S.helpful, helpfulStyle]}>
