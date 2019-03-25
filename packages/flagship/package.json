@@ -13,6 +13,7 @@
     "flagship": "flagship.js"
   },
   "dependencies": {
+    "@types/yargs": "^12.0.10",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "jsc-android": "236355.x.x",
