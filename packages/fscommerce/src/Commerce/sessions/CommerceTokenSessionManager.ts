@@ -45,7 +45,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
         try {
           this.token = JSON.parse(tokenString);
         } catch (e) {
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(() =>
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch(e =>
             console.warn('cannot delete token', e)
           );
           throw new Error('invalid stored token');

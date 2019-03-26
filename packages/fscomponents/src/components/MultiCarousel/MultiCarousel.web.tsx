@@ -43,6 +43,7 @@ const S = StyleSheet.create({
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderColor: 'black',
+    borderBottomColor: 'transparent',
     transform: [
       {
         rotate: '-45deg'
@@ -55,6 +56,7 @@ const S = StyleSheet.create({
     borderTopWidth: 2,
     borderRightWidth: 2,
     borderColor: 'black',
+    borderLeftColor: 'transparent',
     transform: [
       {
         rotate: '45deg'
@@ -242,6 +244,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           onTouchStart={this.handleTouchStart}
           onTouchEnd={this.handleTouchEnd}
           onTouchMove={this.handleTouchMove}
+          style={{ flexBasis: 'auto' }}
         >
           <View
             style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
@@ -280,14 +283,24 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
         {this.state.currentIndex !== 0 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToPrev} onPress={this.goToPrev}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={'Show previous'}
+              style={S.goToPrev}
+              onPress={this.goToPrev}
+            >
               <View style={S.buttonPrevIcon} />
             </TouchableOpacity>
           )}
 
         {this.state.currentIndex !== pageNum - 1 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToNext} onPress={this.goToNext}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={'Show next'}
+              style={S.goToNext}
+              onPress={this.goToNext}
+            >
               <View style={S.buttonNextIcon} />
             </TouchableOpacity>
           )}

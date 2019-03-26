@@ -390,7 +390,7 @@ export default class PSSignInForm extends Component<
     });
   }
 
-  getBiometricIcon = async (authType: string | boolean | undefined) => {
+  getBiometricIcon = async (authType: string | boolean | TouchId.TouchIDError) => {
     return this.props.getCredentials()
       .then(({ email, password }) => {
         if (!email || !password) {

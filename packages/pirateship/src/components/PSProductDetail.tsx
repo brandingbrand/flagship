@@ -48,7 +48,8 @@ const icons = {
   return: require('../../assets/images/pdp-return-icon.png'),
   verified: require('../../assets/images/verified-purchaser.png'),
   checkmark: require('../../assets/images/white-checkmark.png'),
-  back: require('../../assets/images/arrow.png')
+  back: require('../../assets/images/arrow.png'),
+  share: require('../../assets/images/share.png')
 };
 
 const styles = StyleSheet.create({
@@ -397,9 +398,9 @@ class PSProductDetailComponent extends Component<
     }
   }
 
-  changeQty = (count: number) => {
+  changeQty = (countToAdd: number) => {
     this.setState(prevState => {
-      return { quantity: count };
+      return { quantity: countToAdd };
     });
   }
 
@@ -476,16 +477,18 @@ class PSProductDetailComponent extends Component<
     });
   }
 
-  renderShareButton = (): JSX.Element => {
+  renderShareButton = (): React.ReactNode => {
     const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
     const { id, title } = commerceData;
-
     const content = {
       title: `I've shared ${title} with you`,
       message: `Check out ${title} at http://www.example.com/product/${id}`
     };
+    const renderShareIcon = () => <Image source={icons.share} />;
 
-    return <ShareButton content={content} />;
+    return (
+      <ShareButton content={content} renderShareIcon={renderShareIcon} />
+    );
   }
 
   renderSwatches = (options: CommerceTypes.Option[]): React.ReactNode => {

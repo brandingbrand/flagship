@@ -7,12 +7,17 @@ import DevMenu from '../components/DevMenu';
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);
-    this.startApp();
+    if (!appConfig.serverSide) {
+      this.startApp();
+    }
   }
 
   registerScreens(): void {
     if (this.shouldShowDevMenu()) {
       this.appConfig.screens.devMenu = DevMenu as any;
+      if (this.appConfig.devMenuPath) {
+        this.appConfig.screens.devMenu.path = this.appConfig.devMenuPath;
+      }
     }
 
     AppRegistry.registerComponent('Flagship', () => App);
