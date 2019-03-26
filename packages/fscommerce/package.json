@@ -18,7 +18,7 @@
     "lodash-es": "^4.17.10",
     "qs": "^6.5.1",
     "react": "16.6.3",
-    "react-native": "0.57.8",
+    "react-native": "0.59.2",
     "react-native-cookies": "^3.3.0",
     "react-native-sensitive-info": "^5.1.0"
   },
