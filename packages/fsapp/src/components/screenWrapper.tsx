@@ -11,7 +11,8 @@ import EnvSwitcher from '../lib/env-switcher';
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1
+    flex: 1,
+    flexBasis: 'auto'
   },
   devNoteContainer: {
     position: 'absolute',
