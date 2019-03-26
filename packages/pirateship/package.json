@@ -41,7 +41,7 @@
     "jsc-android": "236355.x.x",
     "lodash-es": "^4.17.10",
     "react": "16.6.3",
-    "react-native": "0.57.8",
+    "react-native": "0.59.2",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^0.20.0",
     "react-native-htmlview": "^0.13.0",
