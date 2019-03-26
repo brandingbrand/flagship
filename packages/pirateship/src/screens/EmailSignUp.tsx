@@ -23,7 +23,6 @@ import PSButton from '../components/PSButton';
 import PSHalfModal from '../components/PSHalfModal';
 import { EMAIL_REGEX } from '../lib/constants';
 import translate, { translationKeys } from '../lib/translations';
-
 export interface EmailSignUpState {
   descriptionText?: string;
   modalVisible: boolean;
@@ -47,7 +46,10 @@ const FIELD_OPTIONS = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: palette.surface
+    backgroundColor: palette.surface,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingTop: 100
   },
   cmsImage: {
     marginBottom: 14

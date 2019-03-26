@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import {
   StyleProp,
@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PSRowHeader extends Component<PSRowHeaderProps> {
-  render(): JSX.Element {
-    return (
-      <View style={[styles.view, this.props.style]}>
-        <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
-      </View>
-    );
-  }
-}
+const PSRowHeader: FunctionComponent<PSRowHeaderProps> = (props): JSX.Element => {
+  return (
+    <View style={[styles.view, props.style]}>
+      <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
+    </View>
+  );
+};
+
+export default PSRowHeader;

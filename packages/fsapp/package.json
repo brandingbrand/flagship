@@ -22,7 +22,7 @@
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^0.22.0",
     "react-native-navigation": "1.1.493",
-    "react-native-restart": "^0.0.8",
+    "react-native-restart": "^0.0.9",
     "react-native-sensitive-info": "^5.1.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
