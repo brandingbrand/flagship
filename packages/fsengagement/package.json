@@ -15,7 +15,7 @@
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-device-info": "^0.21.5",
-    "react-native-fcm": "16.0.0",
+    "react-native-fcm": "^16.2.3",
     "react-native-navigation": "1.1.493",
     "react-native-video": "^3.2.1",
     "uuid-js": "0.7.5"
