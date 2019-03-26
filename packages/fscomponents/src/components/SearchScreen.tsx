@@ -65,8 +65,6 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
       history: [],
       inputValue: ''
     };
-
-    this.loadHistoryToState();
   }
 
   loadHistoryToState = () => {
@@ -84,6 +82,8 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
       this.searchBar.focusInput();
     }
+
+    this.loadHistoryToState();
   }
 
   getSearchBarRef = (ref: any) => {
