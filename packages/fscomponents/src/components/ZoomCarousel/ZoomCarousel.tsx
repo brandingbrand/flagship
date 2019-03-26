@@ -588,6 +588,15 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.multiCarousel.goTo(i);
   }
 
+  itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
+    if (newItem.src &&
+      ((newItem.src.uri ?
+      newItem.src.uri !== oldItem.src.uri :
+      newItem.src !== oldItem.src))) {
+      changed();
+    }
+  }
+
   renderImage = (item: ImageData, index: number) => {
     const gapSize = this.props.gapSize || defaultGapSize;
 
@@ -652,6 +661,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               }
               itemsPerPage={1}
               items={this.props.images}
+              itemUpdated={this.itemUpdated}
               renderItem={this.renderImage}
               showArrow={this.props.showArrow}
               dotStyle={this.props.dotStyle}
