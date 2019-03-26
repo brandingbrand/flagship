@@ -15,7 +15,7 @@
     "@brandingbrand/fsengage": "^3.0.0",
     "@brandingbrand/fsfoundation": "^3.0.0",
     "@brandingbrand/fsnetwork": "^3.0.0",
-    "path-to-regexp": "^3.0.0",
+    "path-to-regexp": "^2.2.1",
     "qs": "^6.5.2",
     "react": "16.6.3",
     "react-native": "0.57.8",
