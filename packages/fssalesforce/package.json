@@ -20,7 +20,7 @@
     "qs": "^6.5.2"
   },
   "devDependencies": {
-    "dtsgenerator": "^1.0.0"
+    "dtsgenerator": "^2.0.6"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
