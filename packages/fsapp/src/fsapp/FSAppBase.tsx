@@ -11,19 +11,22 @@ export abstract class FSAppBase {
   constructor(appConfig: AppConfigType) {
     this.appConfig = appConfig;
     this.api = new FSNetwork(appConfig.remote || {});
-    this.store = configureStore(appConfig.initialState, appConfig.reducers);
+    if (!appConfig.serverSide) {
+      this.store = configureStore(appConfig.initialState, appConfig.reducers);
+    }
     this.registerScreens();
   }
 
-  getApp(): any {
+  getApp(appConfig?: AppConfigType): any {
     // @ts-ignore: Is set in react-native-web
     if (AppRegistry.getApplication) {
+      const config = appConfig || this.appConfig;
       // @ts-ignore: Is set in react-native-web
       return AppRegistry.getApplication('Flagship', {
         initialProps: {
-          appConfig: this.appConfig,
+          appConfig: config,
           api: this.api,
-          store: this.store
+          store: this.store || configureStore(config.initialState, config.reducers)
         }
       });
     }
