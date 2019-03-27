@@ -174,14 +174,14 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   getPageNum = () => {
     return Math.ceil(
       this.props.items.length /
-        (this.props.itemsPerPage || this.defaultItemsPerPage)
+        Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
     );
   }
 
   getPageWidth = () => {
     return (
       this.state.itemWidth *
-      (this.props.itemsPerPage || this.defaultItemsPerPage)
+      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
     );
   }
 
@@ -252,7 +252,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   render(): React.ReactNode {
     const snapToInterval =
       this.state.itemWidth *
-      (this.props.itemsPerPage || this.defaultItemsPerPage);
+      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
 
     const pageNum = this.getPageNum();
 
