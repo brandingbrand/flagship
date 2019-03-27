@@ -67,6 +67,8 @@ export interface AppConfigType {
   devMenuScreens?: Screen[];
   popToRootOnTabPressAndroid?: boolean;
   serverSide?: boolean;
+  devMenuPath?: string;
+  location?: Location; // Use to provide a server-side location to router in DrawerRouter.web.tsx
 }
 
 export interface NavButton {
@@ -81,4 +83,11 @@ export interface NavigatorButtons {
 export interface NavigatorEvent {
   id: string;
   type: string;
+}
+
+export interface Location<T = any> {
+  pathname: string;
+  search: string;
+  hash: string;
+  state: T;
 }
