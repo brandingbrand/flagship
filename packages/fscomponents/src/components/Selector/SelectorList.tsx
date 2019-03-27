@@ -90,8 +90,13 @@ export class SelectorList extends Component<SelectorListProps> {
         data={itemsWithSelected}
         renderItem={this.renderItem}
         getItemLayout={this.getItemLayout}
+        keyExtractor={this.keyExtractor}
       />
     );
+  }
+
+  private keyExtractor = (item: SelectorItem): string => {
+    return item.value;
   }
 
   private getItemLayout = (data: SelectorItem[] | null, index: number) => ({

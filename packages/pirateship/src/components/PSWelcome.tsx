@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   Image,
   ImageURISource,
@@ -43,36 +43,37 @@ export interface PSWelcomeProps {
   onSignOutPress: () => void;
 }
 
-export default class PSWelcome extends Component<PSWelcomeProps> {
-  render(): JSX.Element {
-    const message =
-      this.props.isLoggedIn && this.props.userName
-        ? `Hi, ${this.props.userName}!`
-        : 'Welcome!';
+const PSWelcome: FunctionComponent<PSWelcomeProps> = (props): JSX.Element => {
 
-    return (
-      <View style={[styles.container, this.props.style]}>
-        <View style={[styles.profileInfo]}>
-          {this.props.logo && (
-            <Image source={this.props.logo} style={styles.profilePic} />
-          )}
-          <Text style={GlobalStyle.h1}>{message}</Text>
-        </View>
+  const message =
+    props.isLoggedIn && props.userName
+      ? `Hi, ${props.userName}!`
+      : 'Welcome!';
 
-        {this.props.isLoggedIn ? (
-          <PSButton
-            link
-            title={translate.string(translationKeys.account.actions.signOut.actionBtn)}
-            onPress={this.props.onSignOutPress}
-          />
-        ) : (
-          <PSButton
-            link
-            title={translate.string(translationKeys.account.actions.signIn.actionBtn)}
-            onPress={this.props.onSignInPress}
-          />
+  return (
+    <View style={[styles.container, props.style]}>
+      <View style={[styles.profileInfo]}>
+        {props.logo && (
+          <Image source={props.logo} style={styles.profilePic} />
         )}
+        <Text style={GlobalStyle.h1}>{message}</Text>
       </View>
-    );
-  }
-}
+
+      {props.isLoggedIn ? (
+        <PSButton
+          link
+          title={translate.string(translationKeys.account.actions.signOut.actionBtn)}
+          onPress={props.onSignOutPress}
+        />
+      ) : (
+        <PSButton
+          link
+          title={translate.string(translationKeys.account.actions.signIn.actionBtn)}
+          onPress={props.onSignInPress}
+        />
+      )}
+    </View>
+  );
+};
+
+export default PSWelcome;

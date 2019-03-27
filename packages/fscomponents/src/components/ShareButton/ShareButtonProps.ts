@@ -10,6 +10,6 @@ import {
 export interface ShareButtonProps {
   content: ShareContent;
   options?: ShareOptions;
-  renderShareButton?: () => React.ReactNode;
+  renderShareIcon?: () => React.ReactElement;
   style?: StyleProp<ImageStyle>;
 }

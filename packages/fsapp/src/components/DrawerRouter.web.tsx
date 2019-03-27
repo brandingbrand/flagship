@@ -249,7 +249,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     return (
       <Provider store={store}>
         <Router {...routerProps}>
-          <Switch>
+          <Switch location={appConfig.location}>
             {this.screensRoutes}
           </Switch>
         </Router>
