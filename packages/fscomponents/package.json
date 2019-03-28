@@ -21,7 +21,6 @@
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "memoize-one": "^4.0.2",
-    "moment": "^2.22.2",
     "photoswipe": "^4.1.2",
     "qs": "^6.7.0",
     "react": "16.8.3",
