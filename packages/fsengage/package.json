@@ -23,7 +23,7 @@
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
-    "sinon": "^6.0.0"
+    "sinon": "^7.3.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
