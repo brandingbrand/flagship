@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarTabLanding } from '../styles/Navigation';
+import { backButton } from '../lib/navStyles';
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { navBarSampleScreen } from '../styles/Navigation';
 import { ImageWithOverlay, ImageWithOverlayProps } from '@brandingbrand/fscomponents';
 
 const styles = StyleSheet.create({
@@ -22,10 +23,13 @@ const styles = StyleSheet.create({
 
 const overlay = <Text style={styles.overlay}>Text Overlay</Text>;
 
-export interface ImageWithOverlaySampleScreenProps extends ScreenProps, ImageWithOverlayProps {}
+export interface ImageWithOverlaySampleScreenProps extends ScreenProps, ImageWithOverlayProps {
+  sampleScreen?: boolean;
+}
 
 class ImageWithOverlaySample extends Component<ImageWithOverlaySampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static navigatorStyle: NavigatorStyle = navBarSampleScreen;
+  static leftButtons: NavButton[] = [backButton];
 
   render(): JSX.Element {
 

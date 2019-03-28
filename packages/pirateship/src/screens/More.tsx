@@ -13,13 +13,11 @@ import {
 import { Grid } from '@brandingbrand/fscomponents';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import PSRowHeader from '../components/PSRowHeader';
-import PSRow from '../components/PSRow';
-
+import { backButton } from '../lib/navStyles';
 import { handleDeeplink } from '../lib/deeplinkHandler';
-import { GridItem, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { GridItem, NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { border, palette } from '../styles/variables';
-import { navBarTabLanding } from '../styles/Navigation';
+import { navBarDefault, navBarSampleScreen } from '../styles/Navigation';
 
 import { env } from '@brandingbrand/fsapp';
 const { desktopHost } = env;
@@ -59,18 +57,6 @@ export interface ListSection {
   items: ListItem[];
 }
 
-const LIST_SECTIONS: ListSection[] = [
-  {
-    title: 'Section 1',
-    items: [
-      {
-        title: 'Item 1',
-        path: '/'
-      }
-    ]
-  }
-];
-
 const styles = StyleSheet.create({
   grid: {
     marginBottom: 20
@@ -99,13 +85,16 @@ export interface MoreState {
   gridItemWidth?: number;
 }
 
-export default class More extends Component<ScreenProps, MoreState> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+export interface MoreProps extends ScreenProps {
+  sampleScreen?: boolean;
+}
+
+export default class More extends Component<MoreProps, MoreState> {
+  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static leftButtons: NavButton[] = [backButton];
 
   constructor(props: ScreenProps) {
     super(props);
-    props.navigator.setTitle({ title: translate.string(translationKeys.screens.more.title) });
-
     // The grid items should be equal height and width. The width is dependent on the width
     // of the user's screen, so we'll derive the height from the screen width.
     this.state = {
@@ -149,36 +138,14 @@ export default class More extends Component<ScreenProps, MoreState> {
     );
   }
 
-  renderListItem = (
-    item: ListItem,
-    isFinalItem: boolean,
-    key: string
-  ): JSX.Element => {
-    return (
-      <PSRow
-        style={!isFinalItem && styles.listItemBorder}
-        title={item.title}
-        onPress={this.goToPassthrough(item.path)}
-        showImage={true}
-        key={key}
-      />
-    );
-  }
-
-  renderListSection = (section: ListSection, index: number): JSX.Element[] => {
-    const maxIndex = section.items.length - 1;
-    const key = `section-${index}`;
-
-    return [
-      <PSRowHeader title={section.title} key={key} />,
-      ...section.items.map((item, i) =>
-        this.renderListItem(item, i >= maxIndex, `${key}-${i}`)
-      )
-    ];
-  }
-
   render(): JSX.Element {
-    const { navigator } = this.props;
+    const { navigator, sampleScreen } = this.props;
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    } else {
+      navigator.setTitle({ title: translate.string(translationKeys.screens.more.title) });
+    }
 
     return (
       <PSScreenWrapper
@@ -193,7 +160,6 @@ export default class More extends Component<ScreenProps, MoreState> {
           showColumnSeparators={true}
           showRowSeparators={true}
         />
-        {LIST_SECTIONS.map((section, i) => this.renderListSection(section, i))}
       </PSScreenWrapper>
     );
   }

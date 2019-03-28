@@ -1,3 +1,4 @@
+
 import { FSApp, FSAppTypes } from '@brandingbrand/fsapp';
 
 import screens from './screens';
@@ -47,7 +48,12 @@ const appConfig: FSAppTypes.AppConfigType = {
   tabsStyle: tabBarDefault,
   appStyle: tabBarDefault,
   popToRootOnTabPressAndroid: true,
-  devMenuScreens: [{ screen: 'Development' }]
+  devMenuScreens: [
+    {
+      screen: 'ComponentSampleMenu',
+      title: 'Component Samples'
+    }
+  ]
 };
 
 const app: FSApp = new FSApp(appConfig);

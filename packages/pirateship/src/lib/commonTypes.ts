@@ -17,3 +17,16 @@ export interface GridItem {
   image: ImageURISource;
   path: string;
 }
+
+export interface IsSampleScreen {
+  sampleScreen: boolean;
+}
+
+/*
+SampleMenuRowItem allows for passing required props to example component screens
+*/
+export interface SampleMenuRowItem {
+  title: string;
+  screen: string;
+  passProps: IsSampleScreen;
+}

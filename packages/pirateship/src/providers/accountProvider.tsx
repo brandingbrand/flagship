@@ -33,7 +33,9 @@ export interface AccountActionProps {
   getCredentials: () => Promise<{ email: string; password: string }>;
 }
 
-export interface AccountProps extends AccountStateProps, AccountActionProps {}
+export interface AccountProps extends AccountStateProps, AccountActionProps {
+  sampleScreen?: boolean;
+}
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(

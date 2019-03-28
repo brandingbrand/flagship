@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { ScreenProps } from '../lib/commonTypes';
+import { backButton } from '../lib/navStyles';
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { navBarDefault, navBarSampleScreen } from '../styles/Navigation';
 import GlobalStyles from '../styles/Global';
 import { padding, palette } from '../styles/variables';
 
@@ -20,8 +22,21 @@ const links = [{
   title: 'More'
 }];
 
-export default class LeftDrawerMenu extends Component<ScreenProps> {
+export interface LeftDrawerMenuProps extends ScreenProps {
+  sampleScreen?: boolean;
+}
+
+export default class LeftDrawerMenu extends Component<LeftDrawerMenuProps> {
+  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static leftButtons: NavButton[] = [backButton];
+
   render(): JSX.Element {
+    const { navigator, sampleScreen } = this.props;
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    }
+
     return (
       <View>
         {links.map(this.renderLink)}

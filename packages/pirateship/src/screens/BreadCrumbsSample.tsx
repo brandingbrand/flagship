@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarTabLanding } from '../styles/Navigation';
+import { backButton } from '../lib/navStyles';
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { navBarSampleScreen } from '../styles/Navigation';
 import { Breadcrumbs, BreadcrumbsProps } from '@brandingbrand/fscomponents';
 
 type Screen = import ('react-native-navigation').Screen;
@@ -10,7 +11,8 @@ type Screen = import ('react-native-navigation').Screen;
 export interface BreadCrumbsSampleScreenProps extends ScreenProps, BreadcrumbsProps {}
 
 class BreadCrumbsSample extends Component<BreadCrumbsSampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static navigatorStyle: NavigatorStyle = navBarSampleScreen;
+  static leftButtons: NavButton[] = [backButton];
 
   render(): JSX.Element {
 
@@ -19,7 +21,7 @@ class BreadCrumbsSample extends Component<BreadCrumbsSampleScreenProps> {
     const screenCrumbs = screenTitles.map(crumb => {
       return {
         title: crumb,
-        onPress: this.goTo({ title: crumb, screen: crumb, navigatorStyle: navBarTabLanding })
+        onPress: this.goTo({ title: crumb, screen: crumb, navigatorStyle: navBarSampleScreen })
       };
     });
 

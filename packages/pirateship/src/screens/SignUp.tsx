@@ -20,7 +20,7 @@ import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
 import translate, { translationKeys } from '../lib/translations';
 
 import GlobalStyle from '../styles/Global';
-import { navBarHide } from '../styles/Navigation';
+import { navBarHide, navBarSampleScreen } from '../styles/Navigation';
 import { border, fontSize, padding, palette } from '../styles/variables';
 
 const cancelIcon = require('../../assets/images/x.png');
@@ -99,6 +99,7 @@ export interface SignUpProps extends ScreenProps, AccountProps {
   dismissible: boolean;
   onDismiss?: () => void;
   onSignUpSuccess: () => void;
+  sampleScreen?: boolean;
 }
 
 interface SignUpState {
@@ -129,7 +130,11 @@ class SignUp extends Component<SignUpProps, SignUpState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
+    const { navigator, sampleScreen } = this.props;
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    }
 
     return (
       <PSScreenWrapper

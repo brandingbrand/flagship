@@ -23,7 +23,9 @@ export interface CartActionProps {
   updateItemQuantity: (item: CommerceTypes.CartItem, quantity: number) => void;
 }
 
-export interface CartProps extends CartStateProps, CartActionProps {}
+export interface CartProps extends CartStateProps, CartActionProps {
+  sampleScreen?: boolean;
+}
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(

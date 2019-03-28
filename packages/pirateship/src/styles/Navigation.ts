@@ -53,6 +53,18 @@ export const navBarTabLanding = {
   navBarTitleTextCentered: true
 };
 
+export const navBarSampleScreen = {
+  ...navBarLight,
+  navBarHidden: false,
+  largeTitle: false,
+  navBarNoBorder: true,
+  navBarTitleTextCentered: true,
+  backButtonNoTitle: true,
+  navigationOptions: {
+    headerBackTitle: null
+  }
+};
+
 export const navBarProductDetail = {
   ...navBarLight,
   navBarTransparent: false,

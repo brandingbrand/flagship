@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarTabLanding } from '../styles/Navigation';
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { navBarSampleScreen } from '../styles/Navigation';
 import { CartCount, CartCountProps, TextPositions } from '@brandingbrand/fscomponents';
+import { backButton } from '../lib/navStyles';
 
 type Screen = import ('react-native-navigation').Screen;
 
 const cartIcon = require('../../assets/images/cart-tab-icon.png');
 
-// const positions = ['topLeft', 'topRight', 'center', 'bottomLeft', 'bottomRight'];
-
-export interface CartCountSampleScreenProps extends ScreenProps, CartCountProps {}
+export interface CartCountSampleScreenProps extends ScreenProps, CartCountProps {
+  sampleScreen?: boolean;
+}
 
 const styles = StyleSheet.create({
   row: {
@@ -21,17 +22,14 @@ const styles = StyleSheet.create({
 });
 
 class CartCountSample extends Component<CartCountSampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static navigatorStyle: NavigatorStyle = navBarSampleScreen;
+  static leftButtons: NavButton[] = [backButton];
 
   render(): JSX.Element {
-
-    const { navigator } = this.props;
-
-
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
+        navigator={this.props.navigator}
       >
         <View style={styles.row}>
           <CartCount

@@ -142,6 +142,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
           navigator={navigator}
           onNav={this.props.onNav}
           onSignInSuccess={this.onSignInSuccess}
+          sampleScreen={this.props.sampleScreen}
         />
       );
     } else {

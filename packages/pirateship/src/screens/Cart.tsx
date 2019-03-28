@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarFullBleed } from '../styles/Navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { backButton } from '../lib/navStyles';
+import { navBarFullBleed, navBarSampleScreen } from '../styles/Navigation';
 
 import PSButton from '../components/PSButton';
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -212,6 +214,7 @@ export interface CartScreenProps
 
 class Cart extends Component<CartScreenProps> {
   static navigatorStyle: NavigatorStyle = navBarFullBleed;
+  static leftButtons: NavButton[] = [backButton];
 
   componentDidMount(): void {
     if (!this.props.recentlyViewed.items.length) {
@@ -220,9 +223,13 @@ class Cart extends Component<CartScreenProps> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
+    const { navigator, sampleScreen } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    }
 
     if (isLoading) {
       cart = (

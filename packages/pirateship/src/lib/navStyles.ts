@@ -10,6 +10,17 @@ export const backButton: NavButton = {
   }
 };
 
+export const backButtonNoTitle: NavButton = {
+  button: {
+    icon: require('../../assets/images/arrow.png'),
+    id: 'goBack',
+    title: ''
+  },
+  action: ({ navigator }) => {
+    navigator.pop();
+  }
+};
+
 export const dismissButton: NavButton = {
   button: {
     icon: require('../../assets/images/close.png'),

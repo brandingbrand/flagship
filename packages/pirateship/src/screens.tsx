@@ -9,7 +9,7 @@ import ProductIndex from './screens/ProductIndex';
 import Category from './screens/Category';
 import Account from './screens/Account';
 import More from './screens/More';
-import Development from './screens/Development';
+import ComponentSampleMenu from './screens/ComponentSampleMenu';
 import DesktopPassthrough from './screens/DesktopPassthrough';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
@@ -31,6 +31,18 @@ import AccordionSample from './screens/AccordionSample';
 import ActionBarSample from './screens/ActionBarSample';
 import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
 import CartCountSample from './screens/CartCountSample';
+import ContactInfoSample from './screens/ContactInfoSample';
+import AccountSampleMenu from './screens/AccountSampleMenu';
+import UISampleMenu from './screens/UISampleMenu';
+import CMSSampleMenu from './screens/CMSSampleMenu';
+import CartSampleMenu from './screens/CartSampleMenu';
+import ImagesSampleMenu from './screens/ImagesSampleMenu';
+import CMSBannerSample from './screens/CMSBannerSample';
+import AddressFormSample from './screens/AddressFormSample';
+import FormsSampleMenu from './screens/FormsSampleMenu';
+import LocationSampleMenu from './screens/LocationSampleMenu';
+import LocationItemSample from './screens/LocationItemSample';
+import ProductSampleMenu from './screens/ProductSampleMenu';
 
 export default {
   Shop,
@@ -43,7 +55,7 @@ export default {
   Category,
   Account,
   More,
-  Development,
+  ComponentSampleMenu,
   DesktopPassthrough,
   SignIn,
   SignUp,
@@ -62,5 +74,17 @@ export default {
   AccordionSample,
   ActionBarSample,
   ImageWithOverlaySample,
-  CartCountSample
+  CartCountSample,
+  ContactInfoSample,
+  AddressFormSample,
+  CMSBannerSample,
+  AccountSampleMenu,
+  CartSampleMenu,
+  ImagesSampleMenu,
+  FormsSampleMenu,
+  UISampleMenu,
+  CMSSampleMenu,
+  LocationSampleMenu,
+  LocationItemSample,
+  ProductSampleMenu
 };

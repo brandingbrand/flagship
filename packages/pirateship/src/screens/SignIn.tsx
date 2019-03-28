@@ -5,7 +5,7 @@ import { Loading } from '@brandingbrand/fscomponents';
 import PSSignInForm from '../components/PSSignInForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
-import { navBarHide } from '../styles/Navigation';
+import { navBarHide, navBarSampleScreen } from '../styles/Navigation';
 import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import { fontSize, padding, palette } from '../styles/variables';
@@ -91,7 +91,7 @@ export interface SignInScreenProps extends ScreenProps, AccountProps {
   dismissButtonStyle?: DismissButtonStyle;
   /// A callback to invoke if the user requested to dismiss the sign in request
   onDismiss?: () => void;
-
+  sampleScreen?: boolean;
   onSignInSuccess: () => void;
 }
 
@@ -114,9 +114,15 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
     const {
       saveCredentials,
       getCredentials,
-      navigator
+      navigator,
+      sampleScreen
     } = this.props;
     /// default to close
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    }
+
     const dismissButtonStyle = this.props.dismissButtonStyle || DismissButtonStyle.Close;
 
     return (

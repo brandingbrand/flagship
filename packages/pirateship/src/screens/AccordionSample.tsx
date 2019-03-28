@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
-import { navBarTabLanding } from '../styles/Navigation';
+import { backButton } from '../lib/navStyles';
+import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { navBarSampleScreen } from '../styles/Navigation';
 import { Accordion, AccordionProps } from '@brandingbrand/fscomponents';
 
 type Screen = import ('react-native-navigation').Screen;
@@ -17,7 +18,8 @@ const styles = StyleSheet.create({
 });
 
 class AccordionSample extends Component<AccordionSampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static navigatorStyle: NavigatorStyle = navBarSampleScreen;
+  static leftButtons: NavButton[] = [backButton];
 
   render(): JSX.Element {
     const { navigator } = this.props;

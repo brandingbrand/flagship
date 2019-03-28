@@ -1,5 +1,5 @@
 import { backButton } from '../lib/navStyles';
-import { navBarHide } from '../styles/Navigation';
+import { navBarHide, navBarSampleScreen } from '../styles/Navigation';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
 export interface ForgotPasswordScreenProps extends ScreenProps {
   onDismiss: () => void;
   onSignUpSuccess: () => void;
+  sampleScreen?: boolean;
 }
 
 export interface ForgotPasswordState {
@@ -167,7 +168,12 @@ export default class ForgotPassword extends Component<
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
+    const { navigator, sampleScreen } = this.props;
+
+    if (sampleScreen) {
+      navigator.setStyle(navBarSampleScreen);
+    }
+
     const { resetSent } = this.state;
     let body;
 
