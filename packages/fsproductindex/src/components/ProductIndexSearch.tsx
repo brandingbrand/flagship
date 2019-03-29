@@ -24,7 +24,7 @@ export type ProductIndexSearchProps = UnwrappedProductIndexSearchProps &
   WithProductIndexProviderProps;
 
 // patch fetch products so sort and filter uses this instead of fetchProductIndex
-class ProductIndexSearch extends Component<
+export class ProductIndexSearch extends Component<
   UnwrappedProductIndexSearchProps & WithProductIndexProps
 > {
   constructor(props: UnwrappedProductIndexSearchProps & WithProductIndexProps) {
