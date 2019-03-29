@@ -17,6 +17,7 @@ export const style = StyleSheet.create({
   },
   buttonView: {
     flex: 1,
+    flexBasis: 'auto',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
@@ -26,10 +27,12 @@ export const style = StyleSheet.create({
   },
   full: {
     flex: 1,
+    flexBasis: 'auto',
     width: '100%'
   },
   buttonInner: {
     flex: 1,
+    flexBasis: 'auto',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
