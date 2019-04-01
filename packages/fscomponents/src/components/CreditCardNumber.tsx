@@ -87,6 +87,16 @@ export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCar
     return null;
   }
 
+  constructor(props: CreditCardNumberProps) {
+    super(props);
+
+    this.state = {
+      cardType: 'VISA',
+      cardImage: icons.VISA,
+      options: {mask: ''}
+    };
+  }
+
   render(): React.ReactNode {
     const {
       cardImageStyle,
