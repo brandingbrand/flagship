@@ -147,7 +147,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'phone-pad',
-        error: 'Please enter a valid card number',
+        error: this.handleNumberError,
         template: getFieldTemplates(labelPosition).creditCard,
         config: {
           cardImageStyle: {
@@ -156,7 +156,8 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           },
           cardImageWidth: 26,
           creditCardTypeImages: this.props.supportedCards,
-          defaultCardImage: this.props.defaultCardImage
+          defaultCardImage: this.props.defaultCardImage,
+          onBlur: this.handleNumberError
         }
       },
       cvv: {
@@ -224,10 +225,20 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           value={this.props.value}
           onChange={this.props.onChange}
           labelPosition={this.props.labelPosition}
+          validateOnBlur={true}
         />
       </View>
     );
   }
+
+  handleNumberError = (value: any, path: any, context: any) => {
+    const isValid = this.validateNumber(value);
+    if (!isValid) {
+      return 'invalid card number entered';
+    }
+    return '';
+  }
+
   validate = () => {
     if (this.formRef) {
       const validation = this.formRef.validate();
@@ -238,6 +249,30 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
       }
     }
     return true;
+  }
+
+  validateNumber = (val: any) => {
+    if (this.formRef) {
+      const validation = this.formRef.getComponent('number').validate();
+      if (validation.isValid()) {
+        return this.validateCCNumber(val); // this validation was held till submit before
+      }
+      return false;
+    }
+    return true;
+  }
+
+  private validateCCNumber = (value: any) => {
+    const validationResult = creditCard.validate({
+      cardType: creditCard.determineCardType(value.number),
+      number: value.number
+    });
+    let valid = true;
+    if (!validationResult.validCardNumber) {
+      this.formRef.getComponent('number').setState({ hasError: true });
+      valid = false;
+    }
+    return valid;
   }
 
   private validateCreditCard = (value: any) => {
