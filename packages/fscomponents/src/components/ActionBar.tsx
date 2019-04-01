@@ -3,7 +3,7 @@
  * of configurable width (props.separatorWidth) between each child.
  */
 
-import React, {ReactNode} from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 
 import {
   StyleProp,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ActionBar = (props: ActionBarProps): JSX.Element => {
+export const ActionBar: FunctionComponent<ActionBarProps> = (props): JSX.Element => {
   const numChildren = React.Children.count(props.children);
   const separatorStyle = { width: props.separatorWidth || DEFAULT_SEPARATOR_WIDTH };
 
@@ -41,7 +41,7 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
 
         if (React.isValidElement(child)) {
           // If child is a React Element, add default style prop of flex:1
-          child = child as React.ReactElement<any>;
+          child = child as React.ReactElement;
 
           returnElem = React.cloneElement(child, {
             style: [
@@ -63,4 +63,3 @@ export const ActionBar = (props: ActionBarProps): JSX.Element => {
     </View>
   );
 };
-
