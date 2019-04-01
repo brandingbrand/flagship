@@ -9,7 +9,8 @@ module.exports = {
         [ "@babel/preset-env", {
           "targets": {
             "node": "current"
-          }
+          },
+          "corejs": "^3.0.0",
         }],
         "module:metro-react-native-babel-preset"
       ]

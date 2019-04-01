@@ -97,5 +97,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "core-js": "^3.0.0"
+  }
 }
