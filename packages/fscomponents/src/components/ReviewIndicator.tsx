@@ -127,7 +127,6 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
     return (
       <View
         style={[S.container, style]}
-        accessible={true}
         accessibilityLabel={label}
       >
         {newArray(itemData.full).map(v => (
