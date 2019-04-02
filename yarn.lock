@@ -2932,7 +2932,12 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.9.tgz#a67287861c928ebf4159a908d1fb1a2a34d4097a"
   integrity sha512-p8zp5xqkly3g4cCmo2mKOHI9+Z/kObmDj0BmjbDDJQlgDTiEGTbm17MEwTAusV6XceCy+bNw9q/ZHXHyKo3zkg==
 
-"@types/yargs@^12.0.1", "@types/yargs@^12.0.2", "@types/yargs@^12.0.9":
+"@types/yargs@^12.0.10":
+  version "12.0.11"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.11.tgz#a090d88e1f40a910e6443c95493c1c035c76ebdc"
+  integrity sha512-IsU1TD+8cQCyG76ZqxP0cVFnofvfzT8p/wO8ENT4jbN/KKN3grsHFgHNl/U+08s33ayX4LwI85cEhYXCOlOkMw==
+
+"@types/yargs@^12.0.2", "@types/yargs@^12.0.9":
   version "12.0.10"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.10.tgz#17a8ec65cd8e88f51b418ceb271af18d3137df67"
   integrity sha512-WsVzTPshvCSbHThUduGGxbmnwcpkgSctHGHTqzWyFg4lYAuV5qXlyFPOsP3OWqCINfmg/8VXP+zJaa4OxEsBQQ==
@@ -12672,20 +12677,15 @@ react-native-cookies@^3.3.0:
   dependencies:
     invariant "^2.1.0"
 
-react-native-device-info@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.20.0.tgz#9a2e1a3b3e671dd1af2766f3f4918a745ebb0d08"
-  integrity sha512-cx0wCOhQyg/a13HU+HR6Rlfiych2cadlw//8LSUsus6seKivuo2bp4LjfE5MMi8Pzzl7Ig17K3Jejw4opYfTQA==
-
 react-native-device-info@^0.21.5:
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
   integrity sha512-Bvl7TyVMDbBH3wzvZx0xj3deMhWVRDHdOdjP1MjGVxVVH+bSlCi6oYDScaX2yz5rfi2OvevWWCg8jUqFKeepjA==
 
-react-native-device-info@^0.22.0:
-  version "0.22.6"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.22.6.tgz#32a674b0484d31214fdcfbbb0e677621e83ba69d"
-  integrity sha512-/w87PmHPvT5MY3HwzdVEWyFg/ib91lY6TlYJGNnNPaXNXY60ShB8HI+GXKyq4KAtbUc/WhRM1RQ8/WKJOal+UQ==
+react-native-device-info@^0.29.1:
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.29.1.tgz#5ae5e3204c6b41f78475ab1fabc0752904ef51ad"
+  integrity sha512-sov6bcTe5/x/V7kQs+cukpQGQ7P571CMAIvaB/MtGNFnOpeLYxmZYMOA/PlB1ICQVynSiRLhjAEOAZMiZFsoPg==
 
 react-native-fcm@16.0.0:
   version "16.0.0"
