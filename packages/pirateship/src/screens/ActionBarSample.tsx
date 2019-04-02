@@ -5,6 +5,7 @@ import PSScreenWrapper from '../components/PSScreenWrapper';
 import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
 import { ActionBar, ActionBarProps, Button } from '@brandingbrand/fscomponents';
+import { palette } from '../styles/variables';
 
 type Screen = import ('react-native-navigation').Screen;
 
@@ -15,6 +16,9 @@ const styles = StyleSheet.create({
   buttons: {
     width: 250,
     margin: 5
+  },
+  title: {
+    color: palette.onPrimary
   }
 });
 
@@ -22,12 +26,13 @@ const triggerButton = () => {
   Alert.alert('Button Pressed');
 };
 
-const renderButton = (): JSX.Element => {
+const renderButton = (title: string): JSX.Element => {
   return (
     <Button
       onPress={triggerButton}
-      title='Button Title'
+      title={title}
       style={styles.buttons}
+      titleStyle={styles.title}
     />
   );
 };
@@ -51,8 +56,8 @@ class ActionBarSample extends Component<ActionBarSampleScreenProps> {
           <ActionBar
             separatorWidth={10}
           >
-            {renderButton()}
-            {renderButton()}
+            {renderButton('watch now')}
+            {renderButton('browse favorites')}
           </ActionBar>
         </View>
       </PSScreenWrapper>
