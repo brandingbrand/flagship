@@ -27,7 +27,7 @@ export type ProductItemFavoriteButtonProps = Pick<
 >;
 
 export const ProductItemFavoriteButton:
-FunctionComponent<ProductItemFavoriteButtonProps> = (props): React.ReactElement<any> | null => {
+FunctionComponent<ProductItemFavoriteButtonProps> = (props): React.ReactElement | null => {
 
   const { renderFavButton, onFavButtonPress, favButtonImage } = props;
 

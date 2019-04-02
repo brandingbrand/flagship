@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 export type ProductItemTitleProps = Pick<ProductItemProps, 'title' | 'titleStyle' | 'renderTitle'>;
 
 export const ProductItemTitle: FunctionComponent<ProductItemTitleProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
   const { title, titleStyle, renderTitle } = props;
 
   if (renderTitle) {

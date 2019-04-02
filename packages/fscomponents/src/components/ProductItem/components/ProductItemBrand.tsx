@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProductItemBrand: FunctionComponent<ProductItemBrandProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
 
   const { brand, brandStyle, renderBrand } = props;
 

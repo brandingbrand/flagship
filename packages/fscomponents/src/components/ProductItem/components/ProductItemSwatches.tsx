@@ -15,7 +15,7 @@ export type ProductItemSwatchesProps = Pick<
 >;
 
 export const ProductItemSwatches: FunctionComponent<ProductItemSwatchesProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
 
   const {
     swatchItems,

@@ -29,7 +29,7 @@ export type ProductItemPriceProps = Pick<
 >;
 
 export const ProductItemPrice: FunctionComponent<ProductItemPriceProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
   const {
     price,
     originalPrice,

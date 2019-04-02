@@ -21,7 +21,7 @@ const style = StyleSheet.create({
 });
 
 export const ProductItemButton: FunctionComponent<ProductItemButtonProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
 
   const {
     buttonText,

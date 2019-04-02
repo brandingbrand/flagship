@@ -22,7 +22,7 @@ export type ProductItemPromosProps = Pick<
 >;
 
 export const ProductItemPromos: FunctionComponent<ProductItemPromosProps> =
-(props): React.ReactElement<any> | null => {
+(props): React.ReactElement | null => {
 
   const {
     promotions,

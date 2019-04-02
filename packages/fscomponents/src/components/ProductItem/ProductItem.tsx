@@ -75,22 +75,22 @@ export interface ProductItemProps extends CommerceTypes.Product {
   buttonTextStyle?: StyleProp<TextStyle>;
   buttonProps?: Partial<ButtonProps>;
   onButtonPress?: () => void;
-  renderButton?: () => React.ReactElement<any>;
+  renderButton?: () => React.ReactElement;
 
   // fav button
   onFavButtonPress?: () => void;
   favButtonImage?: ImageURISource;
-  renderFavButton?: () => React.ReactElement<any>;
+  renderFavButton?: () => React.ReactElement;
 
   // custom render
-  renderPrice?: () => React.ReactElement<any>;
-  renderPromos?: () => React.ReactElement<any>;
-  renderTitle?: () => React.ReactElement<any>;
+  renderPrice?: () => React.ReactElement;
+  renderPromos?: () => React.ReactElement;
+  renderTitle?: () => React.ReactElement;
   renderVariantText?: () => React.ReactNode;
-  renderBrand?: () => React.ReactElement<any>;
+  renderBrand?: () => React.ReactElement;
   renderImage?: () => React.ReactNode;
-  renderReviews?: () => React.ReactElement<any>;
-  renderSwatches?: () => React.ReactElement<any>;
+  renderReviews?: () => React.ReactElement;
+  renderSwatches?: () => React.ReactElement;
 
   // hide components
   hidePrice?: boolean;
