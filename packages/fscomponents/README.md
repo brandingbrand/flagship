@@ -65,6 +65,7 @@ The labelPosition templates are implemented as templates. Templates in t-comb-fo
 
 These labelPosition templates are passed into the templates field in the options object between the
  default templates (t-comb form) and the `templates` prop templates to ensure that
+
  1. If we have not configured a custom template, the default t-comb form templates will be used
  2. If a user inputs a field template, that field template will overwrite ours.
 
