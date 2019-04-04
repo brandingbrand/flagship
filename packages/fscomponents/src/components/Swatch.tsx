@@ -62,13 +62,15 @@ export interface SwatchProps extends SwatchStyle {
 export class Swatch extends PureComponent<SwatchProps> {
 
   _renderTouchable(style: StyleProp<ViewStyle>, child: JSX.Element): JSX.Element {
-    const { disabled, onSelect } = this.props;
+    const { disabled, name, onSelect, value } = this.props;
 
     return (
       <TouchableOpacity
         style={style}
         onPress={onSelect.bind(this, this.props)}
         disabled={disabled}
+        accessibilityRole='button'
+        accessibilityLabel={name || value}
       >
         {child}
       </TouchableOpacity>

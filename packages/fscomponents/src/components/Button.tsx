@@ -131,6 +131,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <TouchableHighlight
       accessibilityLabel={accessibilityLabel || title}
+      accessibilityRole='button'
       onPress={onPress}
       onLongPress={onLongPress}
       underlayColor={
