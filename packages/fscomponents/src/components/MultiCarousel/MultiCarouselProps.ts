@@ -18,8 +18,12 @@ export interface MultiCarouselProps<ItemT> {
   itemStyle?: any;
   itemUpdated?: (oldItem: ItemT, newItem: ItemT, index: number, changed: () => void) => void;
   onSlideChange?: (data: SlideChangeEvent) => void;
+  nextArrowContainerStyle?: any;
+  nextArrowStyle?: any;
   pageIndicatorStyle?: any;
   peekSize?: number;
+  prevArrowContainerStyle?: any;
+  prevArrowStyle?: any;
   renderItem: (data: any, i: number) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
   showArrow?: boolean;
