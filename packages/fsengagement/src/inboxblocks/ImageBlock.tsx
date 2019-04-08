@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Dimensions,
   Image,
@@ -19,50 +19,48 @@ export interface ImageBlockProps {
   containerStyle?: any;
 }
 
-export default class ImageBlock extends Component<ImageBlockProps, any> {
-  constructor(props: ImageBlockProps) {
-    super(props);
-    this.state = {
-      ratioImageStyle: {}
-    };
-  }
+export interface ImageBlockState {
+  width?: number;
+  height?: number;
+}
+
+export default class ImageBlock extends PureComponent<ImageBlockProps, ImageBlockState> {
+  readonly state: ImageBlockState = {};
+
   componentDidMount(): void {
-    this.setState({
-      ratioImageStyle: this.findImageRatio()
-    });
+    this.setState(this.findImageRatio());
   }
   _onLayout = (event: LayoutChangeEvent) => {
     const { ratio, useRatio } = this.props;
     if (useRatio && ratio) {
-      this.setState({
-        ratioImageStyle: this.findImageRatio()
-      });
+      this.setState(this.findImageRatio());
+
     }
   }
-  findImageRatio = () => {
+  findImageRatio = (): ImageBlockState => {
     const { containerStyle, ratio, useRatio } = this.props;
     if (!useRatio) {
       return {};
     }
     const win = Dimensions.get('window');
-    const ratioImageStyle: StyleProp<ImageStyle> = {};
-    ratioImageStyle.width = win.width;
+    const result: ImageBlockState = { height: undefined, width: undefined };
+    result.width = win.width;
     if (containerStyle.paddingLeft) {
-      ratioImageStyle.width = ratioImageStyle.width - containerStyle.paddingLeft;
+      result.width = result.width - containerStyle.paddingLeft;
     }
     if (containerStyle.marginLeft) {
-      ratioImageStyle.width = ratioImageStyle.width - containerStyle.marginLeft;
+      result.width = result.width - containerStyle.marginLeft;
     }
     if (containerStyle.paddingRight) {
-      ratioImageStyle.width = ratioImageStyle.width - containerStyle.paddingRight;
+      result.width = result.width - containerStyle.paddingRight;
     }
     if (containerStyle.marginRight) {
-      ratioImageStyle.width = ratioImageStyle.width - containerStyle.marginRight;
+      result.width = result.width - containerStyle.marginRight;
     }
     if (ratio) {
-      ratioImageStyle.height = ratioImageStyle.width / parseFloat(ratio);
+      result.height = result.width / parseFloat(ratio);
     }
-    return ratioImageStyle;
+    return result;
   }
   render(): JSX.Element {
     const {
@@ -72,12 +70,18 @@ export default class ImageBlock extends Component<ImageBlockProps, any> {
       resizeMethod = 'resize',
       source
     } = this.props;
-
+    const imageRatioStyle: StyleProp<ImageStyle> = {};
+    if (this.state.height) {
+      imageRatioStyle.height = this.state.height;
+    }
+    if (this.state.width) {
+      imageRatioStyle.width = this.state.width;
+    }
     return (
       <View onLayout={this._onLayout} style={containerStyle}>
         <Image
           source={source}
-          style={[{ height: 200 }, imageStyle, this.state.ratioImageStyle]}
+          style={[{ height: 200 }, imageStyle, imageRatioStyle]}
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
         />

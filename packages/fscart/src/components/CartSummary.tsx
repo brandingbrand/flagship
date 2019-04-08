@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -20,55 +20,55 @@ export type CartSummaryProps = Pick<
   'shipping' | 'subtotal' | 'tax' | 'total'
 >;
 
-export default class CartSummary extends PureComponent<CartSummaryProps> {
-  render(): JSX.Element {
-    const {
-      shipping,
-      subtotal,
-      tax,
-      total
-     } = this.props;
+const CartSummary: FunctionComponent<CartSummaryProps> = (props): JSX.Element => {
+  const {
+    shipping,
+    subtotal,
+    tax,
+    total
+    } = props;
 
-    return (
-      <View style={style.container}>
-        <View style={style.line}>
-          <Text>{FSI18n.string(componentTranslationKeys.subtotal.text)}</Text>
-          <Text>
-            {subtotal !== undefined ?
-              FSI18n.currency(subtotal) :
-              FSI18n.string(componentTranslationKeys.subtotal.defaultValue)
-            }
-          </Text>
-        </View>
-        <View style={style.line}>
-        <Text>{FSI18n.string(componentTranslationKeys.tax.text)}</Text>
-          <Text>
-            {tax !== undefined ?
-              FSI18n.currency(tax) :
-              FSI18n.string(componentTranslationKeys.tax.defaultValue)
-            }
-          </Text>
-        </View>
-        <View style={style.line}>
-          <Text>{FSI18n.string(componentTranslationKeys.shipping.text)}</Text>
-          <Text>
-            {shipping !== undefined ?
-              FSI18n.currency(shipping) :
-              FSI18n.string(componentTranslationKeys.shipping.defaultValue)
-            }
-            {shipping}
-          </Text>
-        </View>
-        <View style={style.line}>
-          <Text>{FSI18n.string(componentTranslationKeys.total.text)}</Text>
-          <Text>
-            {total !== undefined ?
-              FSI18n.currency(total) :
-              FSI18n.string(componentTranslationKeys.total.defaultValue)
-            }
-          </Text>
-        </View>
+  return (
+    <View style={style.container}>
+      <View style={style.line}>
+        <Text>{FSI18n.string(componentTranslationKeys.subtotal.text)}</Text>
+        <Text>
+          {subtotal !== undefined ?
+            FSI18n.currency(subtotal) :
+            FSI18n.string(componentTranslationKeys.subtotal.defaultValue)
+          }
+        </Text>
       </View>
-    );
-  }
-}
+      <View style={style.line}>
+      <Text>{FSI18n.string(componentTranslationKeys.tax.text)}</Text>
+        <Text>
+          {tax !== undefined ?
+            FSI18n.currency(tax) :
+            FSI18n.string(componentTranslationKeys.tax.defaultValue)
+          }
+        </Text>
+      </View>
+      <View style={style.line}>
+        <Text>{FSI18n.string(componentTranslationKeys.shipping.text)}</Text>
+        <Text>
+          {shipping !== undefined ?
+            FSI18n.currency(shipping) :
+            FSI18n.string(componentTranslationKeys.shipping.defaultValue)
+          }
+          {shipping}
+        </Text>
+      </View>
+      <View style={style.line}>
+        <Text>{FSI18n.string(componentTranslationKeys.total.text)}</Text>
+        <Text>
+          {total !== undefined ?
+            FSI18n.currency(total) :
+            FSI18n.string(componentTranslationKeys.total.defaultValue)
+          }
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+export default memo(CartSummary);
