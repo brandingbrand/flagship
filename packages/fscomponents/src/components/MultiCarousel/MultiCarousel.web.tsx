@@ -254,6 +254,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   _saveScrollViewRef = (ref: any) => this.scrollView = ref;
 
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): React.ReactNode {
     const snapToInterval =
       this.state.itemWidth *
@@ -292,21 +293,23 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           <View
             style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
           />
-          {this.props.items.map((item, i) => {
-            return (
-              <View
-                key={i}
-                style={[
-                  {
-                    width: this.state.itemWidth
-                  },
-                  this.props.itemStyle
-                ]}
-              >
-                {this.props.renderItem(item, i)}
-              </View>
-            );
-          })}
+          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width))
+            && this.props.items.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  style={[
+                    {
+                      width: this.state.itemWidth
+                    },
+                    this.props.itemStyle
+                  ]}
+                >
+                  {this.props.renderItem(item, i)}
+                </View>
+              );
+            })
+          }
         </ScrollViewCopy>
 
         {this.props.renderPageIndicator ? (
