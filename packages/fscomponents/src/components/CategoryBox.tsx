@@ -42,6 +42,7 @@ export class CategoryBox extends PureComponent<CategoryBoxProps> {
         style={[S.boxOuter, style]}
         underlayColor={underlayColor || '#eee'}
         onPress={this.handlePress}
+        accessibilityRole='imagebutton'
       >
         <View style={S.boxInner}>
           {showImage && image && <Image source={image} style={imageStyle} />}
