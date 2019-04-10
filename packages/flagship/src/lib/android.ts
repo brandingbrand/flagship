@@ -8,6 +8,92 @@ import * as FlagshipTypes from '../types';
 const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
 const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
 
+const DEFAULT_ANDROID_CONFIG = {
+  build: {
+    versionName: (version: string) => version,
+    versionShortCode: versionLib.normalize,
+    versionCode: '"\${project.VERSION_CODE_SHORT}".toInteger()'
+  },
+  manifest: {
+    activityAttributes: {
+      'android:label': '@string/app_name',
+      'android:launchMode': 'singleTask',
+      'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
+      'android:screenOrientation': 'fullSensor',
+      'android:windowSoftInputMode': 'adjustResize'
+    },
+    applicationAttributes: {
+      'android:allowBackup': 'false',
+      'android:label': '@string/app_name',
+      'android:icon': '@mipmap/ic_launcher',
+      'android:theme': '@style/AppTheme'
+    },
+    urlSchemeHost: 'app'
+  }
+};
+
+/**
+ * generates android config merging defaults with overrides
+ * @param {FlagshipTypes.AndroidConfig | undefined} config - android config override
+ * @returns {FlagshipTypes.AndroidConfig} android config
+ */
+export function androidConfigWithDefault(
+  config: FlagshipTypes.AndroidConfig | undefined
+): FlagshipTypes.AndroidConfig {
+  return {
+    build: {
+      ...DEFAULT_ANDROID_CONFIG.build,
+      ...config && config.build
+    },
+    manifest: {
+      ...DEFAULT_ANDROID_CONFIG.manifest,
+      ...config && config.manifest,
+      activityAttributes: {
+        ...DEFAULT_ANDROID_CONFIG.manifest.activityAttributes,
+        ...config && config.manifest && config.manifest.activityAttributes
+      },
+      applicationAttributes: {
+        ...DEFAULT_ANDROID_CONFIG.manifest.applicationAttributes,
+        ...config && config.manifest && config.manifest.applicationAttributes
+      }
+    }
+  };
+}
+
+/**
+ * add additional dependencies to the app/build.gradle
+ * @param {FlagshipTypes.AndroidConfig} config - android config
+ */
+export function additionalDependencies(config: FlagshipTypes.AndroidConfig): void {
+  if (!config.build || !config.build.additionalDependencies) {
+    return;
+  }
+  helpers.logInfo('add additional android dependencies');
+  const additionalDependencies: string[] = config.build.additionalDependencies || [];
+  fs.update(
+    path.android.gradlePath(),
+    '// __ADDITIONAL_DEPENDENCIES__',
+    additionalDependencies.join('\n    ')
+  );
+}
+
+/**
+ * add additional dependencies to the AndroidManifest
+ * @param {FlagshipTypes.AndroidConfig} config - android config
+ */
+export function additionalPermissions(config: FlagshipTypes.AndroidConfig): void {
+  if (!config.manifest || !config.manifest.additionalPermissions) {
+    return;
+  }
+  helpers.logInfo('add additional permissions to manifest');
+  const additionalPermissions: string[] = config.manifest.additionalPermissions || [];
+  fs.update(
+    path.android.manifestPath(),
+    '<!-- __ADDITIONAL_PERMISSIONS__ -->',
+    additionalPermissions.join('\n    ')
+  );
+}
+
 /**
  * Updates app bundle id.
  *
@@ -108,23 +194,135 @@ export function launchScreen(configuration: FlagshipTypes.Config): void {
 }
 
 /**
+ * update android manifest .MainActivity activity attributes
+ * @param {FlagshipTypes.AndroidConfig} config - android config
+ */
+export function mainActivityAttributes(config: FlagshipTypes.AndroidConfig): void {
+  if (!config.manifest || !config.manifest.activityAttributes) {
+    return;
+  }
+  helpers.logInfo('updating manifest activity attributes');
+  const newAttributes: string[] = [];
+  const attributes = config.manifest.activityAttributes || {};
+  Object.keys(attributes).forEach((key: string) => {
+    if (attributes[key]) {
+      newAttributes.push(`${key}=\"${attributes[key]}\"`);
+    }
+  });
+  fs.update(
+    path.android.manifestPath(),
+    '__ACTIIVITY_ATTRIBUTES__="TEMPLATE"',
+    newAttributes.join('\n            ')
+  );
+}
+
+/**
+ * update android manifest .MainApplication application attributes
+ * @param {FlagshipTypes.AndroidConfig} config - android config
+ */
+export function mainApplicationAttributes(config: FlagshipTypes.AndroidConfig): void {
+  if (!config.manifest || !config.manifest.applicationAttributes) {
+    return;
+  }
+  helpers.logInfo('updating manifest application attributes');
+  const newAttributes: string[] = [];
+  const attributes = config.manifest.applicationAttributes || {};
+  Object.keys(attributes).forEach((key: string) => {
+    if (attributes[key]) {
+      newAttributes.push(`${key}=\"${attributes[key]}\"`);
+    }
+  });
+  fs.update(
+    path.android.manifestPath(),
+    '__APP_ATTRIBUTES__="TEMPLATE"',
+    newAttributes.join('\n        ')
+  );
+}
+
+/**
+ * update android manifest with additional application elements
+ * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ */
+export function mainApplicationElements(config: FlagshipTypes.AndroidConfig): void {
+  if (!config.manifest || !config.manifest.additionalElements) {
+    return;
+  }
+  helpers.logInfo('updating manifest application elements');
+  const additionalElements: string[] = config.manifest.additionalElements || [];
+  fs.update(
+    path.android.manifestPath(),
+    '<!-- __ADDITIONAL_APP_ELEMENTS -->',
+    additionalElements.join('\n        ')
+  );
+}
+
+/**
  * Sets the app version number.
  *
  * @param {string} newVersion The version number to set.
+ * @param {FlagshipoTypes.AndroidConfig} config - android configuration
  */
-export function version(newVersion: string): void {
+export function version(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
   helpers.logInfo(`setting Android version number to ${newVersion}`);
 
+  versionName(newVersion, config);
+  versionShortCode(newVersion, config);
+  versionCode(newVersion, config);
+}
+
+/**
+ * update version name in gradle.properties
+ *
+ * @param {string} newVersion - package json version
+ * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ */
+function versionName(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+  const newVersionName = config.build && config.build.versionName &&
+    (typeof config.build.versionName === 'function' ?
+      config.build.versionName(newVersion) :
+      config.build.versionName) ||
+    newVersion;
   fs.update(
     path.android.gradlePropertiesPath(),
     /VERSION_NAME=[\d\.]+/,
-    `VERSION_NAME=${newVersion}`
+    `VERSION_NAME=${newVersionName}`
   );
-
+}
+/**
+ * update version short code in gradle.properties
+ *
+ * @param {string} newVersion - package json version
+ * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ */
+function versionShortCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+  const newVersionShortCode = config.build && config.build.versionShortCode &&
+    (typeof config.build.versionShortCode === 'function' ?
+      config.build.versionShortCode(newVersion) :
+      config.build.versionShortCode) ||
+    versionLib.normalize(newVersion);
   fs.update(
     path.android.gradlePropertiesPath(),
     /VERSION_CODE_SHORT=\d+/,
-    `VERSION_CODE_SHORT=${versionLib.normalize(newVersion)}`
+    `VERSION_CODE_SHORT=${newVersionShortCode}`
+  );
+}
+
+/**
+ * update version code in app/build.gradle
+ *
+ * @param {string} newVersion - package json version
+ * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ */
+function versionCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+  const newVersionCode = config.build && config.build.versionCode &&
+    (typeof config.build.versionCode === 'function' ?
+      config.build.versionCode(newVersion) :
+      config.build.versionCode) ||
+    '"\${project.VERSION_CODE_SHORT}".toInteger()';
+  fs.update(
+    path.android.gradlePath(),
+    /^(\s*versionCode ).*$/m,
+    `$1${newVersionCode}`
   );
 }
 
@@ -139,6 +337,19 @@ export function urlScheme(configuration: FlagshipTypes.Config): void {
   helpers.logInfo(`setting Android URL scheme to ${scheme}`);
 
   fs.update(path.android.manifestPath(), /default-bb-rn-url-scheme/g, scheme);
+}
+
+/**
+ * Sets the default app URL scheme host.
+ *
+ * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ */
+export function urlSchemeHost(config: FlagshipTypes.AndroidConfig): void {
+  if (config.manifest) {
+    const host = config.manifest.urlSchemeHost || '';
+    helpers.logInfo(`setting Android URL scheme host path to ${host}`);
+    fs.update(path.android.manifestPath(), '__URL_HOST_PATH__', host);
+  }
 }
 
 /**

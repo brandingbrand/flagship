@@ -101,6 +101,7 @@ export interface Config {
   webTitle?: string;
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
+  android?: AndroidConfig;
   ios: IOSConfig;
   adobeAnalytics?: {
     ios: {
@@ -110,6 +111,26 @@ export interface Config {
       configPath: string;
     };
   };
+}
+
+export interface AndroidBuildConfig {
+  additionalDependencies?: string[];
+  versionName?: string | ((packageVersion: string) => string);
+  versionShortCode?: string | ((packageVersion: string) => string);
+  versionCode?: string | ((packageVersion: string) => string);
+}
+
+export interface AndroidManifestConfig {
+  activityAttributes?: { [key: string]: string };
+  additionalElements?: string[];
+  additionalPermissions?: string[];
+  applicationAttributes?: { [key: string]: string };
+  urlSchemeHost?: string;
+}
+
+export interface AndroidConfig {
+  build?: AndroidBuildConfig;
+  manifest?: AndroidManifestConfig;
 }
 
 export interface IOSConfig {
