@@ -104,6 +104,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.brandingbrand.reactnative.and.flagship"
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
         versionCode "${project.VERSION_CODE_SHORT}".toInteger()
