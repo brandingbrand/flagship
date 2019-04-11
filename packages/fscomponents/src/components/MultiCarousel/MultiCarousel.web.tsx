@@ -97,6 +97,11 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         toValue: 1
       }).start();
     };
+    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
+      this.setState({
+        itemWidth: this.getItemWidth(this.state.containerWidth)
+      });
+    }
     if (this.props.items.length <= this.state.currentIndex) {
       if (this.props.items.length) {
         this.setState({
