@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  AccessibilityRole,
   StyleProp,
   StyleSheet,
   Text,
@@ -18,6 +19,8 @@ export interface SelectableRowProps {
   markerIconStyle?: StyleProp<ViewStyle>;
   renderCheckMark?: () => React.ReactNode;
   renderUncheckMark?: () => React.ReactNode;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
 }
 
 const S = StyleSheet.create({
@@ -76,6 +79,8 @@ export class SelectableRow extends Component<SelectableRowProps> {
       <TouchableOpacity
         style={[S.row, this.props.style]}
         onPress={this.props.onPress}
+        accessibilityLabel={this.props.accessibilityLabel || this.props.title}
+        accessibilityRole={this.props.accessibilityRole || 'button'}
       >
         <Text style={[S.rowText, this.props.textStyle]}>
           {this.props.title}
