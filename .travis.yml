@@ -82,6 +82,8 @@ jobs:
     - yarn ship:build-ios || travis_terminate 1
   - stage: deploy
     if: branch = master AND head_branch IS blank
+    git:
+      depth: false
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
     script:
     - yarn prepare
