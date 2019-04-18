@@ -6,6 +6,7 @@ import {
   View
 } from 'react-native';
 import { Modal } from './Modal';
+import { AccessibilityComponentType, AccessibilityTraits } from '../types/Store';
 
 const styles = StyleSheet.create({
   content: {
@@ -23,6 +24,9 @@ const styles = StyleSheet.create({
 export interface ModalHalfScreenProps {
   visible?: boolean;
   height?: number;
+  backgroundAccessibilityTraits?: AccessibilityTraits;
+  backgroundAccessibilityComponentType?: AccessibilityComponentType;
+  backgroundAccessibilityLabel?: string;
   onRequestClose: () => void;
 }
 
@@ -81,7 +85,12 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
 
   renderBackground = () => {
     return (
-      <TouchableWithoutFeedback onPress={this.props.onRequestClose}>
+      <TouchableWithoutFeedback
+        onPress={this.props.onRequestClose}
+        accessibilityTraits={this.props.backgroundAccessibilityTraits || 'button'}
+        accessibilityComponentType={this.props.backgroundAccessibilityComponentType || 'button'}
+        accessibilityLabel={this.props.backgroundAccessibilityLabel || 'Close the modal!'}
+      >
         <View
           style={{
             flex: 1,
