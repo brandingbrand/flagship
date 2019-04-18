@@ -27,3 +27,28 @@ export type ClearButtonMode =
   'while-editing' |
   'unless-editing' |
   'always';
+
+export type AccessibilityTraits =
+  'none' |
+  'button' |
+  'link' |
+  'header' |
+  'search' |
+  'image' |
+  'selected' |
+  'plays' |
+  'key' |
+  'text' |
+  'summary' |
+  'disabled' |
+  'frequentUpdates' |
+  'startsMedia' |
+  'adjustable' |
+  'allowsDirectInteraction' |
+  'pageTurn';
+
+export type AccessibilityComponentType =
+  'none' |
+  'button' |
+  'radiobutton_checked' |
+  'radiobutton_unchecked';
