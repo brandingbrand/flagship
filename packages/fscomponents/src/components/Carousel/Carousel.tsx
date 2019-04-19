@@ -14,11 +14,14 @@ export class Carousel extends Component<CarouselProps> {
       height,
       style,
       children,
+      showsButtons,
       showsPagination,
       nativeOptions,
+      nextButton,
       loop,
       currentPageIndicatorColor,
-      pageIndicatorColor
+      pageIndicatorColor,
+      prevButton
     } = this.props;
 
     const loopCopy = typeof loop === 'undefined' ? false : loop;
@@ -34,6 +37,9 @@ export class Carousel extends Component<CarouselProps> {
         bounces={true}
         loop={loopCopy}
         {...nativeOptions}
+        showsButtons={showsButtons}
+        nextButton={nextButton}
+        prevButton={prevButton}
       >
         {children}
       </Swiper>
