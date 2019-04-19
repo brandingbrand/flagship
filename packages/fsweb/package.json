@@ -15,7 +15,7 @@
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
     "babel-plugin-react-native-web": "^0.8.4",
-    "cache-loader": "^1.2.2",
+    "cache-loader": "^3.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
