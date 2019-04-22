@@ -52,7 +52,6 @@
     "@types/credit-card-type": "^7.0.0",
     "@types/i18n-js": "^3.0.0",
     "@types/jest": "^23.0.0",
-    "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.1",
     "@types/memoize-one": "^4.1.1",
     "@types/pluralize": "^0.0.29",

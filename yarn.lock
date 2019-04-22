@@ -1032,10 +1032,77 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@brandingbrand/fsbazaarvoice@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbazaarvoice/-/fsbazaarvoice-3.0.0.tgz#598d9362bcead4f411aee5ab7b6d5f17be527875"
+  integrity sha512-RUPc/27Y/aZTUShTxGjZ9WtkWRaWAfUfUlZ1S8QZqEiOMcugyXMVhgmJL0Idd8ELjZADML0X4I9EZ7UQ1etn0Q==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
+
+"@brandingbrand/fsbrandcmsproductcatalog@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbrandcmsproductcatalog/-/fsbrandcmsproductcatalog-3.0.0.tgz#9cef17775ae8831083e97b74cd163e77d5f8f582"
+  integrity sha512-DwovHe+WH5gZGEmi81x6yfIimyuUTy1UtyWTyO7XZ97KzsTKyG92WmQ4xgJBOWZmQBF7OZP5wAmc4F7L171ZhQ==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsengage" "^3.0.0"
+
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
   integrity sha512-S4Wx+NAX1y+qSxI9Pjbn9rQWEw2lHTujh4dSAU8Ya4tPbTp1ATiJk0iWQQb0m4sGVX39tn43c3i78i0rbK5O3g==
+
+"@brandingbrand/fspowerreviews@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fspowerreviews/-/fspowerreviews-3.0.0.tgz#9ecda81366f519b58e9f1c5e94011703eda8ddf5"
+  integrity sha512-UoBPXsmlP1QxDQvFGL6EEfFoYS4srg+KH4an5F8nW4mwN2q9Z3mdxEiIhpjeCIzi0JOvWwwsIxNU5iJN2ZPBIw==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
+
+"@brandingbrand/fssalesforce@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fssalesforce/-/fssalesforce-3.0.0.tgz#58e8e5b2ac6e31b8ffbe3f1ad8eb97516041b6cf"
+  integrity sha512-jsaNWuw8D05omdFXuBgg2IZISlhoqd4nKqnRB4s80+lw1MRwDqmt6RtOU4wOqxQz3qLSf5XwOppwfKJks1A4KA==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsfoundation" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
+    decimal.js "^10.0.1"
+    jwt-decode "^2.2.0"
+    qs "^6.5.2"
+
+"@brandingbrand/fsshopify@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsshopify/-/fsshopify-3.0.0.tgz#019ed59f8ec8a86d59308ce95a3d6ef9ce43c165"
+  integrity sha512-bBrTa6LxYTk66KqahjKoPM8ZAn0KE15uPRWSB+vjNuKjChxyd+q1KsKY4hclAKv0qZxA9/7WeUVL13wsnhjLVg==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsfoundation" "^3.0.0"
+    "@brandingbrand/fsi18n" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
+    decimal.js "^10.0.1"
+    react "16.6.3"
+    react-native "0.57.8"
+    react-native-navigation "1.1.493"
+    react-native-payments "^0.7.0"
+
+"@brandingbrand/fsturnto@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsturnto/-/fsturnto-3.0.0.tgz#7ef7788a47ad2b794d94181c7ed9b1fcc2db5bd9"
+  integrity sha512-2p3WmvGZNH83V3yooICAJLkPlXjkaQVGW19RhzDbyAQnIMQC6WO5dd/GqQ/skimgTWsHyu6eNNhibj4Cd5YChw==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
+
+"@brandingbrand/fsups@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsups/-/fsups-3.0.0.tgz#ef1b43651969d5b325a6c76113b6d40996f4819e"
+  integrity sha512-oSM/PtLCQy0legfWjp3HeZEF46nV0D7k1SoLt1YuRKeOH+Tekrhk0VPGbVuo4v9lPCCiGfyX/SacBXWpc7YiIw==
+  dependencies:
+    "@brandingbrand/fscommerce" "^3.0.0"
+    "@brandingbrand/fsnetwork" "^3.0.0"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -2743,11 +2810,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/caseless@*":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
-  integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
-
 "@types/credit-card-type@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/credit-card-type/-/credit-card-type-7.0.0.tgz#d484dae9c4c27fb7da73efb9880d936a680ab9c2"
@@ -2762,13 +2824,6 @@
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.5.tgz#8f620f9c9a67150aa0a32b4e8a407da43fca61d4"
   integrity sha512-YSDqoBEWYGdNk53xSkkb6REaUaVSlIjxIAGjj/nbLzlZOit7kUU+nA2zC2qQkIVO4MQ+3zl4Sz7aw+kbpHHHUQ==
-
-"@types/form-data@*":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
-  integrity sha512-JAMFhOaHIciYVh8fb5/83nmuO/AHwmto+Hq7a9y8FzLDcC1KCU344XDOMEmahnrTFlHjgh4L0WJFczNIX2GxnQ==
-  dependencies:
-    "@types/node" "*"
 
 "@types/fs-extra@^5.0.3":
   version "5.0.5"
@@ -2817,11 +2872,6 @@
   version "23.3.14"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
   integrity sha512-Q5hTcfdudEL2yOmluA1zaSyPbzWPmJ3XfSWeP3RyoYvS9hnje1ZyagrZOuQ6+1nQC1Gw+7gap3pLNL3xL6UBug==
-
-"@types/jwt-decode@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@types/jwt-decode/-/jwt-decode-2.2.1.tgz#afdf5c527fcfccbd4009b5fd02d1e18241f2d2f2"
-  integrity sha512-aWw2YTtAdT7CskFyxEX2K21/zSDStuf/ikI3yBqmwpwJF0pS+/IX5DWv+1UFffZIbruP6cnT9/LAJV1gFwAT1A==
 
 "@types/lodash-es@^4.17.1":
   version "4.17.3"
@@ -2972,16 +3022,6 @@
   dependencies:
     redux "^3.6.0"
 
-"@types/request@^2.47.1":
-  version "2.48.1"
-  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.1.tgz#e402d691aa6670fbbff1957b15f1270230ab42fa"
-  integrity sha512-ZgEZ1TiD+KGA9LiAAPPJL68Id2UWfeSO62ijSXZjFJArVV+2pKcsVHmrcu+1oiE3q6eDGiFiSolRc4JHoerBBg==
-  dependencies:
-    "@types/caseless" "*"
-    "@types/form-data" "*"
-    "@types/node" "*"
-    "@types/tough-cookie" "*"
-
 "@types/shelljs@^0.8.0":
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.4.tgz#b903e41ad5e5195b7d5e34d3cd33c94bdbd07895"
@@ -3014,11 +3054,6 @@
   dependencies:
     "@types/react" "*"
     "@types/webpack-env" "*"
-
-"@types/tough-cookie@*":
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
-  integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.3"
@@ -5936,14 +5971,6 @@ credit-card@^3.0.1:
     lodash.merge "4.6.x"
     reach "1.x.x"
 
-cross-fetch@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.2.tgz#b7136491967031949c7f86b15903aef4fa3f1768"
-  integrity sha512-a4Z0EJ5Nck6QtMy9ZqloLfpvu2uMV3sBfMCR+CgSBCZc6z5KR4bfEiD3dkepH8iZgJMXQpTqf8FjMmvu/GMFkg==
-  dependencies:
-    node-fetch "2.3.0"
-    whatwg-fetch "3.0.0"
-
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -6575,19 +6602,6 @@ dotenv@^6.0.0, dotenv@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
-
-dtsgenerator@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/dtsgenerator/-/dtsgenerator-2.0.6.tgz#776ca06757774686ce66a0ca6613e1457a7ce3e5"
-  integrity sha512-vLTiJpLfV6zrngD9CoVc8nrn/Veg/92acerp17iTDyqTkLLAjj4B2LmwhJPbIwq7nbTEFE3f2bm4kehuXvCPoQ==
-  dependencies:
-    commander "^2.19.0"
-    cross-fetch "^3.0.1"
-    debug "^4.1.1"
-    glob "^7.1.3"
-    js-yaml "^3.12.1"
-    mkdirp "^0.5.1"
-    tslib "^1.9.3"
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -7761,11 +7775,6 @@ gitconfiglocal@^1.0.0:
   integrity sha1-QdBF84UaXqiPA/JMocYXgRRGS5s=
   dependencies:
     ini "^1.3.2"
-
-github@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/github/-/github-14.0.0.tgz#b707ed88c33cd05e155c785d289aa6229c59a850"
-  integrity sha512-34/VqwhYGeYN0VHBSH49TmRWMF7emy32qjK6POiW47T/QI2u/cpuKsmrWt7a218ew/73dF4dQSJE68/HXdNfPw==
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -9620,7 +9629,7 @@ js-tokens@^3.0.2:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   integrity sha1-mGbfOVECEw449/mWvOtlRDIJwls=
 
-js-yaml@^3.11.0, js-yaml@^3.12.0, js-yaml@^3.12.1, js-yaml@^3.13.0, js-yaml@^3.9.0, js-yaml@~3.13.0:
+js-yaml@^3.11.0, js-yaml@^3.12.0, js-yaml@^3.13.0, js-yaml@^3.9.0, js-yaml@~3.13.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   integrity sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==
@@ -10249,10 +10258,10 @@ lolex@^2.3.2:
   resolved "https://registry.yarnpkg.com/lolex/-/lolex-2.7.5.tgz#113001d56bfc7e02d56e36291cc5c413d1aa0733"
   integrity sha512-l9x0+1offnKKIzYVjyXU2SiwhXDLekRzKyhnbyldPHvC7BvLPVpdNUNR2KeMAiCN2D/kLNttZgQD5WjSxuBx3Q==
 
-lolex@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/lolex/-/lolex-3.1.0.tgz#1a7feb2fefd75b3e3a7f79f0e110d9476e294434"
-  integrity sha512-zFo5MgCJ0rZ7gQg69S4pqBsLURbFw11X68C18OcJjJQbqaXm2NoTrGl1IMM3TIz0/BnN1tIs2tzmmqvCsOMMjw==
+lolex@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lolex/-/lolex-4.0.1.tgz#4a99c2251579d693c6a083446dae0e5c3844d3fa"
+  integrity sha512-UHuOBZ5jjsKuzbB/gRNNW8Vg8f00Emgskdq2kvZxgBJCS0aqquAuXai/SkWORlKeZEiNQWZjFZOqIUcH9LqKCw==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
@@ -11209,11 +11218,6 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@2.3.0, node-fetch@^2.2.0, node-fetch@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
-  integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
-
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -11221,6 +11225,11 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.2.0, node-fetch@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
+  integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
 
 node-gyp@^3.8.0:
   version "3.8.0"
@@ -12824,6 +12833,13 @@ react-native-masked-text@^1.7.1:
     moment "2.19.3"
     tinymask "^1.0.2"
 
+react-native-navigation@1.1.493:
+  version "1.1.493"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.493.tgz#01d57dd9822ac603cd04d4529abacf193bbbcdac"
+  integrity sha512-CbzeU4ET+/lSMCqrgHXbetv8xhvrUJ15qFr8LkfXfmXpcaCAhOyfJlqpKmVkhHUrPwlWVXAC+ndD0miPTEKF5Q==
+  dependencies:
+    lodash "4.x.x"
+
 "react-native-navigation@https://github.com/brandingbrand/react-native-navigation#v1":
   version "1.2.0"
   resolved "https://github.com/brandingbrand/react-native-navigation#cd92e1c854a7ec53808ac59da2d09228f2c62a3b"
@@ -13568,7 +13584,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.86.0, request@^2.87.0, request@^2.88.0:
+request@^2.86.0, request@^2.87.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -14081,15 +14097,15 @@ simple-plist@^0.2.1:
     plist "2.0.1"
 
 sinon@^7.3.0:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-7.3.1.tgz#e8276522104e6c08d1cb52a907270b0e316655c4"
-  integrity sha512-eQKMaeWovtOtYe2xThEvaHmmxf870Di+bim10c3ZPrL5bZhLGtu8cz+rOBTFz0CwBV4Q/7dYwZiqZbGVLZ+vjQ==
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-7.3.2.tgz#82dba3a6d85f6d2181e1eca2c10d8657c2161f28"
+  integrity sha512-thErC1z64BeyGiPvF8aoSg0LEnptSaWE7YhdWWbWXgelOyThent7uKOnnEh9zBxDbKixtr5dEko+ws1sZMuFMA==
   dependencies:
     "@sinonjs/commons" "^1.4.0"
     "@sinonjs/formatio" "^3.2.1"
     "@sinonjs/samsam" "^3.3.1"
     diff "^3.5.0"
-    lolex "^3.1.0"
+    lolex "^4.0.1"
     nise "^1.4.10"
     supports-color "^5.5.0"
 
@@ -15047,7 +15063,7 @@ tslib@1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
   integrity sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==
 
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
+tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
@@ -15846,7 +15862,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@3.0.0, whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
