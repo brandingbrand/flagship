@@ -11,6 +11,9 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+const componentTranslationKeys = translationKeys.flagship.step;
 
 const styles = StyleSheet.create({
   completedIcon: {
@@ -49,10 +52,16 @@ export interface StepProps {
 export class Step extends Component<StepProps> {
   render(): JSX.Element {
     if (this.props.completed) {
+      const stepCompletedLabel =
+        FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
+      const accessibilityLabel = `${this.props.title}, ${stepCompletedLabel}`;
+
       return (
         <TouchableOpacity
           onPress={this.props.onPress}
           style={[styles.container, this.props.style]}
+          accessibilityRole='button'
+          accessibilityLabel={accessibilityLabel}
         >
           {this.renderTitle()}
           {this.renderDoneIcon()}
