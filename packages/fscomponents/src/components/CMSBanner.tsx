@@ -23,6 +23,8 @@ export interface CMSBannerProps {
   onPress?: (instance: any) => void;
   style?: StyleProp<ViewStyle>;
   cmsData?: any;
+  accessible?: boolean;
+  getAccessibilityLabel?: (instance: any) => string;
 }
 
 export interface CMSBannerState {
@@ -68,10 +70,20 @@ export abstract class CMSBanner<P extends CMSBannerProps>
       imageHeight = this.state.containerWidth;
     }
 
+    let accessibilityLabel = null;
+    if (typeof this.props.getAccessibilityLabel === 'function') {
+      accessibilityLabel = this.props.getAccessibilityLabel(instance);
+    } else {
+      accessibilityLabel = instance.Title;
+    }
+
+    const accessible = !!instance.Link || !!this.props.accessible;
+
     const ImageJsx = (
       <Image
         source={{ uri: image.path }}
-        accessibilityLabel={instance.Title}
+        accessible={accessible}
+        accessibilityLabel={accessibilityLabel}
         resizeMode='contain'
         style={{
           width: imageWidth,
