@@ -29,8 +29,16 @@ function getPathWithPassProps(
 ): string {
   if (screen && screen.path) {
     if (screen.path.indexOf(':') > -1) {
-      const extraQS = getExtraQS(screen.paramKeys, passProps);
-      return screen.toPath(passProps) + extraQS;
+      let convertProps = passProps;
+      if (screen.urlConvert) {
+        convertProps = screen.urlConvert(convertProps);
+      }
+      const extraQS = getExtraQS(screen.paramKeys, convertProps);
+      return screen.toPath(convertProps, {
+        encode: (str: string): string => {
+          return str;
+        }
+      }) + extraQS;
     } else {
       return screen.path + '?' + qs.stringify(passProps);
     }
