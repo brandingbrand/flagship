@@ -16,7 +16,6 @@
   ],
   "exclude": [
     "../**/__*__/*",
-    "../packages/fscodestyle/**/*",
-    "../packages/fstestproject/**/*"
+    "../packages/fscodestyle/**/*"
   ]
 }

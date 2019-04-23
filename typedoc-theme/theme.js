@@ -6,8 +6,7 @@ const { DefaultTheme } = require('typedoc');
  */
 const invalidPackages = [
   'fsweb',
-  'fscodestyle',
-  'fstestproject'
+  'fscodestyle'
 ];
 
 class CustomTheme extends DefaultTheme {

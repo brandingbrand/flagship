@@ -1032,62 +1032,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@brandingbrand/fsbazaarvoice@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbazaarvoice/-/fsbazaarvoice-3.0.0.tgz#598d9362bcead4f411aee5ab7b6d5f17be527875"
-  integrity sha512-RUPc/27Y/aZTUShTxGjZ9WtkWRaWAfUfUlZ1S8QZqEiOMcugyXMVhgmJL0Idd8ELjZADML0X4I9EZ7UQ1etn0Q==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsnetwork" "^3.0.0"
-
-"@brandingbrand/fsbrandcmsproductcatalog@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbrandcmsproductcatalog/-/fsbrandcmsproductcatalog-3.0.0.tgz#9cef17775ae8831083e97b74cd163e77d5f8f582"
-  integrity sha512-DwovHe+WH5gZGEmi81x6yfIimyuUTy1UtyWTyO7XZ97KzsTKyG92WmQ4xgJBOWZmQBF7OZP5wAmc4F7L171ZhQ==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsengage" "^3.0.0"
-
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
   integrity sha512-S4Wx+NAX1y+qSxI9Pjbn9rQWEw2lHTujh4dSAU8Ya4tPbTp1ATiJk0iWQQb0m4sGVX39tn43c3i78i0rbK5O3g==
-
-"@brandingbrand/fspowerreviews@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fspowerreviews/-/fspowerreviews-3.0.0.tgz#9ecda81366f519b58e9f1c5e94011703eda8ddf5"
-  integrity sha512-UoBPXsmlP1QxDQvFGL6EEfFoYS4srg+KH4an5F8nW4mwN2q9Z3mdxEiIhpjeCIzi0JOvWwwsIxNU5iJN2ZPBIw==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsnetwork" "^3.0.0"
-
-"@brandingbrand/fssalesforce@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fssalesforce/-/fssalesforce-3.0.0.tgz#58e8e5b2ac6e31b8ffbe3f1ad8eb97516041b6cf"
-  integrity sha512-jsaNWuw8D05omdFXuBgg2IZISlhoqd4nKqnRB4s80+lw1MRwDqmt6RtOU4wOqxQz3qLSf5XwOppwfKJks1A4KA==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsfoundation" "^3.0.0"
-    "@brandingbrand/fsnetwork" "^3.0.0"
-    decimal.js "^10.0.1"
-    jwt-decode "^2.2.0"
-    qs "^6.5.2"
-
-"@brandingbrand/fsturnto@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsturnto/-/fsturnto-3.0.0.tgz#7ef7788a47ad2b794d94181c7ed9b1fcc2db5bd9"
-  integrity sha512-2p3WmvGZNH83V3yooICAJLkPlXjkaQVGW19RhzDbyAQnIMQC6WO5dd/GqQ/skimgTWsHyu6eNNhibj4Cd5YChw==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsnetwork" "^3.0.0"
-
-"@brandingbrand/fsups@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsups/-/fsups-3.0.0.tgz#ef1b43651969d5b325a6c76113b6d40996f4819e"
-  integrity sha512-oSM/PtLCQy0legfWjp3HeZEF46nV0D7k1SoLt1YuRKeOH+Tekrhk0VPGbVuo4v9lPCCiGfyX/SacBXWpc7YiIw==
-  dependencies:
-    "@brandingbrand/fscommerce" "^3.0.0"
-    "@brandingbrand/fsnetwork" "^3.0.0"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -9753,11 +9701,6 @@ just-extend@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/just-extend/-/just-extend-4.0.2.tgz#f3f47f7dfca0f989c55410a7ebc8854b07108afc"
   integrity sha512-FrLwOgm+iXrPV+5zDU6Jqu4gCRXbWEQg2O3SKONsWE4w7AXFRkryS53bpWdaL9cNol+AmR3AEYz6kn+o0fCPnw==
-
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
-  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
 keycode@^2.2.0:
   version "2.2.0"

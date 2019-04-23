@@ -18,7 +18,6 @@
     "@brandingbrand/f(.*)": "<rootDir>/packages/f$1/src/index.ts"
   },
   "modulePathIgnorePatterns": [
-    "<rootDir>/packages/fstestproject/node_modules",
     "<rootDir>/packages/pirateship/node_modules"
   ],
   "transform": {

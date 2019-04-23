@@ -35,7 +35,6 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-packages/fstestproject/node_modules
 packages/pirateship/node_modules
 
 # Typescript v1 declaration files
