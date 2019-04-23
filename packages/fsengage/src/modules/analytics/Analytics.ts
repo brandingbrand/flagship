@@ -2,7 +2,7 @@
 import { Component } from 'react';
 import { Platform } from 'react-native';
 
-import AnalyticsProvider from './providers/AnalyticsProvider';
+import { AnalyticsProvider } from './AnalyticsProvider';
 type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
 
 // Commerce Interfaces

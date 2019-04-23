@@ -1,4 +1,4 @@
-import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
+import AnalyticsProviderConfiguration from './AnalyticsProviderConfiguration';
 import Decimal from 'decimal.js';
 type Dictionary = import ('@brandingbrand/fsfoundation').Dictionary;
 
@@ -138,7 +138,7 @@ export interface App extends Dictionary {
 
 // Class
 
-export default abstract class AnalyticsProvider {
+export abstract class AnalyticsProvider {
   protected userAgent: string;
   protected osType: string;
   protected osVersion: string;

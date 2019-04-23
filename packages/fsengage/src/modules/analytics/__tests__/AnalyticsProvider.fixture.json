@@ -9,67 +9,53 @@
     "appInstallerId": "0.0.1"
   },
 
-  "configuration": {
-    "trackerId": "UA-12345-Y",
-    "clientId": "35009a79-1a05-49d7-b876-2b884d0f825b",
-    "trackerName": "Flagship",
-    "cookieDomain": "brandingbrand.com"
-  },
-
   "lifecycle": {
     "active": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "active"
+        "eventAction": "lifecycle",
+        "lifecycle": "active"
       }
     },
 
     "background": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "background"
+        "eventAction": "lifecycle",
+        "lifecycle": "background"
       }
     },
 
     "create": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "create"
+        "eventAction": "lifecycle",
+        "lifecycle": "create"
       }
     },
 
     "close": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "close"
+        "eventAction": "lifecycle",
+        "lifecycle": "close"
       }
     },
 
     "inactive": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "inactive"
+        "eventAction": "lifecycle",
+        "lifecycle": "inactive"
       }
     },
 
     "start": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "start"
+        "eventAction": "lifecycle",
+        "lifecycle": "start"
       }
     },
 
     "suspend": {
       "response": {
-        "category": "lifecycle",
-        "action": "com.brandingbrand.flagship",
-        "label": "suspend"
+        "eventAction": "lifecycle",
+        "lifecycle": "suspend"
       }
     }
   },
@@ -86,14 +72,14 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "contact",
-          "label": "412.123.4567"
+          "eventCategory": "Component",
+          "eventAction": "contact",
+          "number": "412.123.4567"
         },
         "custom": {
-          "category": "CallButton",
-          "action": "contact",
-          "label": "412.123.4567"
+          "eventCategory": "CallButton",
+          "eventAction": "contact",
+          "number": "412.123.4567"
         }
       }
     },
@@ -108,14 +94,14 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "contact",
-          "label": "tech@bestbuy.com"
+          "eventCategory": "Component",
+          "eventAction": "contact",
+          "to": "tech@bestbuy.com"
         },
         "custom": {
-          "category": "EmailForm",
-          "action": "contact",
-          "label": "tech@bestbuy.com"
+          "eventCategory": "EmailForm",
+          "eventAction": "contact",
+          "to": "tech@bestbuy.com"
         }
       }
     }
@@ -133,14 +119,14 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "click",
-          "label": "NavigationBar"
+          "eventCategory": "Component",
+          "eventAction": "click",
+          "identifier": "NavigationBar"
         },
         "custom": {
-          "category": "CartButton",
-          "action": "click",
-          "label": "NavigationBar"
+          "eventCategory": "CartButton",
+          "eventAction": "click",
+          "identifier": "NavigationBar"
         }
       }
     },
@@ -185,14 +171,16 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "location",
-          "label": "Flagship Shadyside"
+          "eventCategory": "Component",
+          "eventAction": "location",
+          "identifier": "Flagship Shadyside",
+          "Address": "Shadyside Pittsburgh, PA"
         },
         "custom": {
-          "category": "DirectionsButton",
-          "action": "location",
-          "label": "Flagship Shadyside"
+          "eventCategory": "DirectionsButton",
+          "eventAction": "location",
+          "identifier": "Flagship Shadyside",
+          "Address": "Shadyside Pittsburgh, PA"
         }
       }
     }
@@ -211,16 +199,16 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "search",
-          "label": "15213",
-          "value": 46
+          "eventCategory": "Component",
+          "eventAction": "search",
+          "term": "15213",
+          "count": 46
         },
         "custom": {
-          "category": "SeachBar",
-          "action": "search",
-          "label": "15213",
-          "value": 46
+          "eventCategory": "SeachBar",
+          "eventAction": "search",
+          "term": "15213",
+          "count": 46
         }
       }
     }
@@ -240,16 +228,18 @@
       },
       "response": {
         "default": {
-          "category": "Component",
-          "action": "impression",
-          "label": "ABCD1234",
-          "value": 6
+          "eventCategory": "Component",
+          "eventAction": "impression",
+          "identifier": "ABCD1234",
+          "index": 6,
+          "name": "Accesories"
         },
         "custom": {
-          "category": "CategoryItem",
-          "action": "impression",
-          "label": "ABCD1234",
-          "value": 6
+          "eventCategory": "CategoryItem",
+          "eventAction": "impression",
+          "identifier": "ABCD1234",
+          "index": 6,
+          "name": "Accesories"
         }
       }
     },
