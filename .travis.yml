@@ -80,6 +80,18 @@ jobs:
     script:
     - yarn prepare
     - yarn ship:build-ios || travis_terminate 1
+  - stage: docs
+    if: branch = docs AND head_branch IS blank
+    before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+    script:
+    - yarn prepare
+    deploy:
+      provider: pages
+      skip-cleanup: true
+      github-token: "$GITHUB_TOKEN"
+      local-dir: docs/
+      on:
+        branch: docs
   - stage: deploy
     if: branch = master AND head_branch IS blank
     git:
@@ -87,12 +99,4 @@ jobs:
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
     script:
     - yarn prepare
-    - yarn docs
     after_success: yarn run release --canary --yes --exact --registry "https://registry.npmjs.org/"
-    deploy:
-      provider: pages
-      skip-cleanup: true
-      github-token: "$GITHUB_TOKEN"
-      local-dir: docs/
-      on:
-        branch: master
