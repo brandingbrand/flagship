@@ -1,38 +1,10 @@
 import {
   Analytics as FSAnalytics,
-  GoogleAnalyticsProvider
+  AnalyticsProvider
 } from '@brandingbrand/fsengage';
-
-import { env as projectEnv } from '@brandingbrand/fsapp';
-
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
-import { Platform } from 'react-native';
-
-import DeviceInfo from 'react-native-device-info';
-const { version } = projectEnv;
-
-const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgent(),
-  osType: Platform.OS,
-  osVersion: (Platform.Version && Platform.Version.toString()) || '',
-  appName: DeviceInfo.getApplicationName(),
-  appId: DeviceInfo.getBundleId(),
-  appVersion: version
-};
-
-const googleAnalyticsConfiguration = {
-  trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueID()
-};
-
-const providers = [
-  new GoogleAnalyticsProvider(
-    commonConfiguration,
-    googleAnalyticsConfiguration
-  )
-];
-
+const providers: AnalyticsProvider.AnalyticsProvider[] = [];
 const Analytics = new FSAnalytics(providers);
 export default Analytics;
 

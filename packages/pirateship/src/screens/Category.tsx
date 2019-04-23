@@ -79,42 +79,23 @@ export default class Category extends Component<PropType, StateType> {
     });
   }
 
-  onNavigate = (data: CommerceTypes.Category) => {
-    let categoryPromise: Promise<CommerceTypes.Category>;
+  onNavigate = (category: CommerceTypes.Category) => {
+    const screen = Array.isArray(category.categories) && category.categories.length > 0 ?
+      'Category' : 'ProductIndex';
 
-    if (dataSourceConfig.type === 'commercecloud') {
-      // When using Commerce Cloud, a subcategory object has no indication whether it has child
-      // categories or not, so we make an additional request to fetch that category's full response
-      // to see if we should display it as a category or product index.
-      categoryPromise = dataSource.fetchCategory(data.id)
-        .then((category: CommerceTypes.Category) => {
-          return category;
-        });
-    } else {
-      categoryPromise = Promise.resolve(data);
+    const passProps: any = {
+      categoryId: category.id,
+      title: category.title || ''
+    };
+
+    if (screen === 'Category') {
+      passProps.format = dataSourceConfig.categoryFormat;
     }
 
-    categoryPromise.then(category => {
-      const screen = Array.isArray(category.categories) && category.categories.length > 0 ?
-        'Category' : 'ProductIndex';
-
-      const passProps: any = {
-        categoryId: category.id,
-        title: category.title || ''
-      };
-
-      if (screen === 'Category') {
-        passProps.format = dataSourceConfig.categoryFormat;
-      }
-
-      this.props.navigator.push({
-        screen,
-        title: category.title || '',
-        passProps
-      });
-    })
-    .catch(err => {
-      console.warn(err);
+    this.props.navigator.push({
+      screen,
+      title: category.title || '',
+      passProps
     });
   }
 

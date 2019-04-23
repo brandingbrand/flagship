@@ -347,7 +347,7 @@ class PSProductDetailComponent extends Component<
       if (
         variant &&
         variant.id &&
-        ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
+        dataSourceConfig.type === 'mock'
       ) {
         this.props.navigator.push({
           screen: 'ProductDetail',

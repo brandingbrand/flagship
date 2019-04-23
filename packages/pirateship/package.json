@@ -23,7 +23,6 @@
     "@babel/runtime": "7.0.0",
     "@brandingbrand/flagship": "^3.0.0",
     "@brandingbrand/fsapp": "^3.0.0",
-    "@brandingbrand/fsbazaarvoice": "^3.0.0",
     "@brandingbrand/fscategory": "^3.0.0",
     "@brandingbrand/fscommerce": "^3.0.0",
     "@brandingbrand/fscomponents": "^3.0.0",
@@ -33,8 +32,6 @@
     "@brandingbrand/fsnetwork": "^3.0.0",
     "@brandingbrand/fsproductdetail": "^3.0.0",
     "@brandingbrand/fsproductindex": "^3.0.0",
-    "@brandingbrand/fssalesforce": "^3.0.0",
-    "@brandingbrand/fsshopify": "^3.0.0",
     "@brandingbrand/fsweb": "^3.0.0",
     "@brandingbrand/react-native-leanplum": "^2.0.3",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
@@ -82,10 +79,7 @@
       "**/fsapp",
       "**/fsapp/react-native*",
       "**/fsapp/react-native*/**",
-      "jsc-android",
-      "**/fsshopify",
-      "**/fsshopify/react-native*",
-      "**/fsshopify/react-native*/**"
+      "jsc-android"
     ]
   }
 }
