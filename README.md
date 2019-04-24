@@ -85,10 +85,9 @@ networking, analytics, commerce integrations, components, and more across each o
 code.
 
 Foundation packages provide a normalization over their integrations. For example,
-[`fscommerce`](packages/fscommerce) provides a single interface to query both
-[Demandware](https://www.demandware.com) and [Shopify](https://www.shopify.com). The higher-level
-[`fsproductindex`](packages/fsproductindex) module doesn't need to know what the data source is to
-display a grid of products.
+[`fscommerce`](packages/fscommerce) provides a single interface to build ecommerce integrations
+against. The higher-level [`fsproductindex`](packages/fsproductindex) module doesn't need to know
+what the data source is to display a grid of products.
 
 These foundation packages are built on top of one another. For example,
 [`fscomponents`](packages/fscomponents) has props that inherit from
@@ -189,22 +188,6 @@ you ran `flagship init`. See [Environments](#environments).
 * [fscommerce](packages/fscommerce): product catalog, search, order and user account management, and
   reviews
 
-#### Reviews Packages
-
-* [fsbazaarvoice](packages/fsbazaarvoice): Bazaarvoice reviews provider
-* [fspowerreviews](packages/fspowerreviews): PowerReviews reviews provider
-* [fsturnto](packages/fsturnto): TurnTo reviews provider
-
-#### Product Catalog Pacakges
-
-* [fsbrandcmsproductcatalog](packages/fsbrandcmsproductcatalog): BrandCMS product catalog provider
-* [fssalesforce](packages/fssalesforce): Salesforce Commerce Cloud product catalog provider
-* [fsshopify](packages/fsshopify): Shopify product catalog provider
-
-#### Address Validation Packages
-
-* [fsups](packages/fsups): UPS address validation provider
-
 ### User Interface Packages
 
 * [fscomponents](packages/fscomponents): reusable, cross-platform frontend components
@@ -218,10 +201,7 @@ you ran `flagship init`. See [Environments](#environments).
 ### Utility Packages
 
 * [fscodestyle](packages/fscodestyle): a coding style used throughout Flagship
-* [fscontinuousdeployment](packages/fscontinuousdeployment): tools for continous deployment with
-  Travis and CodePush
 
 ### Example Projects
 
-* [fstestproject](packages/fstestproject): a test project built using Flagship
 * [pirateship](packages/pirateship): an example app built using Flagship
