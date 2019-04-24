@@ -36,6 +36,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
     step: StepTranslations<KeyType>;
+    selector: SelectorTranslations<KeyType>;
   };
 }
 
@@ -278,4 +279,8 @@ export interface StepTranslations<KeyType> {
   announcements: {
     stepCompleted: KeyType;
   };
+}
+
+export interface SelectorTranslations<KeyType> {
+  close: KeyType;
 }
