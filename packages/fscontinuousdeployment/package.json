@@ -1,6 +1,7 @@
 {
   "name": "@brandingbrand/fscontinuousdeployment",
-  "version": "2.0.0",
+  "sideEffects": false,
+  "version": "3.0.0",
   "description": "Continuous deployment scripts",
   "bin": {
     "codepush": "dist/codepush.js",

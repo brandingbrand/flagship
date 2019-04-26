@@ -11,7 +11,8 @@ import EnvSwitcher from '../lib/env-switcher';
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1
+    flex: 1,
+    flexBasis: 'auto'
   },
   devNoteContainer: {
     position: 'absolute',
@@ -205,7 +206,12 @@ export default function wrapScreen(
         appConfig.version || appConfig.packageJson && appConfig.packageJson.version || '';
 
       return (
-        <TouchableOpacity style={styles.devNoteContainer} onPress={this.openDevMenu}>
+        <TouchableOpacity
+          accessible={true}
+          accessibilityLabel={'development menu'}
+          style={styles.devNoteContainer}
+          onPress={this.openDevMenu}
+        >
           <Text style={styles.devNote}>
             {`${versionlabel}`}
             {appConfig.codePushVersionLabel || ''}

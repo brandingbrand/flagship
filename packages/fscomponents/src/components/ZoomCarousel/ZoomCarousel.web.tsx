@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { ZoomCarouselProps } from './types';
+import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 
@@ -228,6 +228,15 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   extractMultiCarousel = (ref: any) => {
     this.multiCarousel = ref;
+  }
+
+  itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
+    if (newItem.src &&
+      ((newItem.src.uri ?
+      newItem.src.uri !== oldItem.src.uri :
+      newItem.src !== oldItem.src))) {
+      changed();
+    }
   }
 
   renderImage = (item: any) => {

@@ -16,6 +16,7 @@ export interface MultiCarouselProps<ItemT> {
   items: ItemT[];
   itemsPerPage?: number;
   itemStyle?: any;
+  itemUpdated?: (oldItem: ItemT, newItem: ItemT, index: number, changed: () => void) => void;
   onSlideChange?: (data: SlideChangeEvent) => void;
   pageIndicatorStyle?: any;
   peekSize?: number;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -42,36 +42,34 @@ export interface PSRecentlyViewedCarouselProps {
   navigator: Navigator;
 }
 
-export default class PSRecentlyViewedCarousel extends Component<PSRecentlyViewedCarouselProps> {
-  constructor(props: PSRecentlyViewedCarouselProps) {
-    super(props);
-  }
+const PSRecentlyViewedCarousel: FunctionComponent<PSRecentlyViewedCarouselProps> =
+(props): JSX.Element => {
 
-  render(): JSX.Element {
-    return (
-      <View style={[styles.container, this.props.containerStyle]}>
-        <Text style={[styles.recentTitle, this.props.titleStyle]}>
-          {translate.string(translationKeys.screens.productDetail.recentlyViewed)}
-        </Text>
-        <PSProductCarousel
-          style={[styles.recentProductsCarousel, this.props.carouselStyle]}
-          items={this.props.items.map(prod => ({
-            ...prod,
-            image: (prod.images || []).find(img => !!img.uri),
-            onPress: this.handlePromotedProductPress(prod.id),
-            key: prod.id
-          }))}
-        />
-      </View>
-    );
-  }
-
-  handlePromotedProductPress = (productId: string) => () => {
-    this.props.navigator.push({
+  const handlePromotedProductPress = (productId: string) => () => {
+    props.navigator.push({
       screen: 'ProductDetail',
       passProps: {
         productId
       }
     });
-  }
-}
+  };
+
+  return (
+    <View style={[styles.container, props.containerStyle]}>
+      <Text style={[styles.recentTitle, props.titleStyle]}>
+        {translate.string(translationKeys.screens.productDetail.recentlyViewed)}
+      </Text>
+      <PSProductCarousel
+        style={[styles.recentProductsCarousel, props.carouselStyle]}
+        items={props.items.map(prod => ({
+          ...prod,
+          image: (prod.images || []).find(img => !!img.uri),
+          onPress: handlePromotedProductPress(prod.id),
+          key: prod.id
+        }))}
+      />
+    </View>
+  );
+};
+
+export default memo(PSRecentlyViewedCarousel);

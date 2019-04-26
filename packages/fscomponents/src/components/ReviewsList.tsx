@@ -34,7 +34,11 @@ export class ReviewsList extends Component<ReviewsListProps> {
     } = this.props;
 
     return (
-      <ScrollView>
+      <ScrollView
+        style={{
+          flexBasis: 'auto'
+        }}
+      >
         {reviews.map((review, key) => {
           return (
             <ReviewItem
