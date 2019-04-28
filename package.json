@@ -48,7 +48,7 @@
     "@storybook/addon-knobs": "5.0.11",
     "@storybook/addon-viewport": "5.0.11",
     "@storybook/addons": "5.0.11",
-    "@storybook/react": "4.1.18",
+    "@storybook/react": "5.0.11",
     "@types/credit-card-type": "^7.0.0",
     "@types/i18n-js": "^3.0.0",
     "@types/jest": "^23.0.0",
