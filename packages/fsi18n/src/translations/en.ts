@@ -236,6 +236,10 @@ export const keys: FSTranslationKeys = {
     },
     selector: {
       close: 'Close'
+    },
+    multiCarousel: {
+      prevBtn: 'Show previous',
+      nextBtn: 'Show next'
     }
   }
 };
