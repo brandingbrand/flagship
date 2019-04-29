@@ -228,6 +228,14 @@ export const keys: FSTranslationKeys = {
       summary: {
         total: 'Total'
       }
+    },
+    step: {
+      announcements: {
+        stepCompleted: 'Step Completed.'
+      }
+    },
+    selector: {
+      close: 'Close'
     }
   }
 };

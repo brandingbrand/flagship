@@ -97,6 +97,11 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         toValue: 1
       }).start();
     };
+    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
+      this.setState({
+        itemWidth: this.getItemWidth(this.state.containerWidth)
+      });
+    }
     if (this.props.items.length <= this.state.currentIndex) {
       if (this.props.items.length) {
         this.setState({
@@ -324,10 +329,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             <TouchableOpacity
               accessibilityRole='button'
               accessibilityLabel={'Show previous'}
-              style={S.goToPrev}
+              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
               onPress={this.goToPrev}
             >
-              <View style={S.buttonPrevIcon} />
+              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
             </TouchableOpacity>
           )}
 
@@ -336,10 +341,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             <TouchableOpacity
               accessibilityRole='button'
               accessibilityLabel={'Show next'}
-              style={S.goToNext}
+              style={[S.goToNext, this.props.nextArrowContainerStyle]}
               onPress={this.goToNext}
             >
-              <View style={S.buttonNextIcon} />
+              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
             </TouchableOpacity>
           )}
 
