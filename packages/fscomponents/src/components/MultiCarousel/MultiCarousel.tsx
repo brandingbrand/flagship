@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { MultiCarouselProps } from './MultiCarouselProps';
 import { PageIndicator } from '../PageIndicator';
 
@@ -332,7 +334,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           !!this.props.showArrow && (
             <TouchableOpacity
               accessibilityRole='button'
-              accessibilityLabel={'Show previous'}
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
               style={[S.goToPrev, this.props.prevArrowContainerStyle]}
               onPress={this.goToPrev}
             >
@@ -344,7 +346,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           !!this.props.showArrow && (
             <TouchableOpacity
               accessibilityRole='button'
-              accessibilityLabel={'Show next'}
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
               style={[S.goToNext, this.props.nextArrowContainerStyle]}
               onPress={this.goToNext}
             >
