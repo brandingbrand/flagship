@@ -7,10 +7,11 @@ import {
   View
 } from 'react-native';
 import { findDOMNode } from 'react-dom';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { MultiCarouselProps } from './MultiCarouselProps';
 import { animatedScrollTo } from '../../lib/helpers';
 import { PageIndicator } from '../PageIndicator';
-
 
 const ScrollViewCopy: any = ScrollView;
 
@@ -329,26 +330,30 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
         {this.state.currentIndex !== 0 &&
           !!this.props.showArrow && (
-            <TouchableOpacity
-              accessibilityRole='button'
-              accessibilityLabel={'Show previous'}
-              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
-              onPress={this.goToPrev}
-            >
-              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
-            </TouchableOpacity>
+            <div onBlur={this.props.prevArrowOnBlur}>
+              <TouchableOpacity
+                accessibilityRole='button'
+                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+                style={[S.goToPrev, this.props.prevArrowContainerStyle]}
+                onPress={this.goToPrev}
+              >
+                <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
+              </TouchableOpacity>
+            </div>
           )}
 
         {this.state.currentIndex !== pageNum - 1 &&
           !!this.props.showArrow && (
-            <TouchableOpacity
-              accessibilityRole='button'
-              accessibilityLabel={'Show next'}
-              style={[S.goToNext, this.props.nextArrowContainerStyle]}
-              onPress={this.goToNext}
-            >
-              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
-            </TouchableOpacity>
+            <div onBlur={this.props.nextArrowOnBlur}>
+              <TouchableOpacity
+                accessibilityRole='button'
+                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+                style={[S.goToNext, this.props.nextArrowContainerStyle]}
+                onPress={this.goToNext}
+              >
+                <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
+              </TouchableOpacity>
+            </div>
           )}
 
         <style>
