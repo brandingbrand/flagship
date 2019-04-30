@@ -37,6 +37,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     checkout: CheckoutTranslations<KeyType>;
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
+    multiCarousel: MultiCarouselTranslations<KeyType>;
   };
 }
 
@@ -283,4 +284,9 @@ export interface StepTranslations<KeyType> {
 
 export interface SelectorTranslations<KeyType> {
   close: KeyType;
+}
+
+export interface MultiCarouselTranslations<KeyType> {
+  prevBtn: KeyType;
+  nextBtn: KeyType;
 }
