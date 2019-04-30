@@ -39,7 +39,7 @@
     "@brandingbrand/react-native-leanplum": "^2.0.3",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "credit-card-type": "^7.0.0",
-    "jsc-android": "236355.x.x",
+    "jsc-android": "^241213.1.0",
     "lodash-es": "^4.17.10",
     "react": "16.6.3",
     "react-native": "0.57.8",
