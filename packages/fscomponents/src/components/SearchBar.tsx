@@ -34,6 +34,9 @@ export interface SearchBarProps {
   onCancel?: () => void;
   renderCancelButton?: () => React.ReactNode;
 
+  // accessibility
+  accessibilityLabel?: string;
+
   // visibility
   showSearchIcon?: boolean;
   showLocator?: boolean;
@@ -134,6 +137,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
 
   renderInput = () => {
     const {
+      accessibilityLabel,
       placeholder,
       clearButtonMode,
       searchIcon,
@@ -167,7 +171,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           returnKeyType='search'
-          accessibilityLabel={placeholder}
+          accessibilityLabel={accessibilityLabel || 'search bar'}
           underlineColorAndroid='transparent'
           {...inputProps}
         />
@@ -191,7 +195,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     const icon = <Image source={cancelIcon} style={styles.rightIcon} resizeMode='contain' />;
 
     return (
-      <TouchableOpacity onPress={this.handleClear}>
+      <TouchableOpacity onPress={this.handleClear} accessibilityRole='button'>
         {icon}
       </TouchableOpacity>
     );
@@ -202,6 +206,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       showRightBtnIcon,
       rightBtnIcon,
       onRightBtnPress,
+      onSubmit,
       rightBtnIconStyle,
       rightBtnStyle
     } = this.props;
@@ -212,12 +217,16 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
 
     const icon = <Image source={rightBtnIcon} style={rightBtnIconStyle} resizeMode='contain' />;
 
-    if (!onRightBtnPress) {
+    if (!onRightBtnPress && !onSubmit) {
       return icon;
     }
 
     return (
-      <TouchableOpacity style={rightBtnStyle} onPress={onRightBtnPress}>
+      <TouchableOpacity
+        style={rightBtnStyle}
+        onPress={onRightBtnPress || this.handleSubmit}
+        accessibilityRole='button'
+      >
         {icon}
       </TouchableOpacity>
     );
@@ -336,6 +345,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           style={touchableStyle}
           onPress={this.handleCancel}
           accessibilityLabel='Cancel search'
+          accessibilityRole='button'
         >
           {cancelImage ? (
             <Image
@@ -365,6 +375,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
         style={S.locateButton}
         onPress={this.handleLocate}
         accessibilityLabel='Locate me'
+        accessibilityRole='button'
       >
         <Image source={locateIcon} style={[S.locateIcon, locateIconStyle]} resizeMode='contain' />
       </TouchableOpacity>
