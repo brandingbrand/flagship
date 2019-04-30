@@ -97,6 +97,11 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         toValue: 1
       }).start();
     };
+    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
+      this.setState({
+        itemWidth: this.getItemWidth(this.state.containerWidth)
+      });
+    }
     if (this.props.items.length <= this.state.currentIndex) {
       if (this.props.items.length) {
         this.setState({
@@ -249,6 +254,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   _saveScrollViewRef = (ref: any) => this.scrollView = ref;
 
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): React.ReactNode {
     const snapToInterval =
       this.state.itemWidth *
@@ -287,21 +293,23 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           <View
             style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
           />
-          {this.props.items.map((item, i) => {
-            return (
-              <View
-                key={i}
-                style={[
-                  {
-                    width: this.state.itemWidth
-                  },
-                  this.props.itemStyle
-                ]}
-              >
-                {this.props.renderItem(item, i)}
-              </View>
-            );
-          })}
+          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width))
+            && this.props.items.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  style={[
+                    {
+                      width: this.state.itemWidth
+                    },
+                    this.props.itemStyle
+                  ]}
+                >
+                  {this.props.renderItem(item, i)}
+                </View>
+              );
+            })
+          }
         </ScrollViewCopy>
 
         {this.props.renderPageIndicator ? (
@@ -324,10 +332,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             <TouchableOpacity
               accessibilityRole='button'
               accessibilityLabel={'Show previous'}
-              style={S.goToPrev}
+              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
               onPress={this.goToPrev}
             >
-              <View style={S.buttonPrevIcon} />
+              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
             </TouchableOpacity>
           )}
 
@@ -336,10 +344,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             <TouchableOpacity
               accessibilityRole='button'
               accessibilityLabel={'Show next'}
-              style={S.goToNext}
+              style={[S.goToNext, this.props.nextArrowContainerStyle]}
               onPress={this.goToNext}
             >
-              <View style={S.buttonNextIcon} />
+              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
             </TouchableOpacity>
           )}
 

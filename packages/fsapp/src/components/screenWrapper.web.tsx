@@ -119,13 +119,19 @@ export default function wrapScreen(
 
     renderPage = () => {
       const { location, match } = this.props;
-      let passProps = {};
+      let passProps = {
+        ...match.params
+      };
 
       if (location && location.search) {
         passProps = {
           ...qs.parse(location.search, { ignoreQueryPrefix: true }),
-          ...match.params
+          ...passProps
         };
+      }
+
+      if (PageComponent.matchConvert) {
+        passProps = PageComponent.matchConvert(passProps);
       }
 
       return (
