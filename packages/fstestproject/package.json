@@ -35,7 +35,7 @@
     "@brandingbrand/fssalesforce": "^3.0.0",
     "@brandingbrand/fsturnto": "^3.0.0",
     "@brandingbrand/fsups": "^3.0.0",
-    "jsc-android": "236355.x.x",
+    "jsc-android": "^241213.1.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-i18n": "^2.0.15"
