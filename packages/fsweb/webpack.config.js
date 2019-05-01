@@ -172,7 +172,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify(env.defaultEnvName)
+        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -250,7 +250,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: JSON.stringify('uat')
+        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
       })
     ]);
   }

@@ -107,7 +107,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
-        versionCode "${rootProject.ext.minSdkVersion}${project.VERSION_CODE_SHORT}".toInteger()
+        versionCode "${project.VERSION_CODE_SHORT}".toInteger()
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

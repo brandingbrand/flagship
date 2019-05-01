@@ -9,6 +9,7 @@ import {
 
 import {
   Loading,
+  RecommendationDisplayTypes,
   ReviewsList,
   ReviewsSummary
 } from '@brandingbrand/fscomponents';
@@ -171,6 +172,7 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
           reviews={reviews}
           recommendedImage={icons.checkmark}
           verifiedImage={icons.verified}
+          reviewItemProps={{ showRecommendations: RecommendationDisplayTypes.Always }}
           reviewStyle={{
             style: {
               padding: 0,

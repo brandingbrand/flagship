@@ -195,7 +195,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     const icon = <Image source={cancelIcon} style={styles.rightIcon} resizeMode='contain' />;
 
     return (
-      <TouchableOpacity onPress={this.handleClear}>
+      <TouchableOpacity onPress={this.handleClear} accessibilityRole='button'>
         {icon}
       </TouchableOpacity>
     );
@@ -222,7 +222,11 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     }
 
     return (
-      <TouchableOpacity style={rightBtnStyle} onPress={onRightBtnPress || this.handleSubmit}>
+      <TouchableOpacity
+        style={rightBtnStyle}
+        onPress={onRightBtnPress || this.handleSubmit}
+        accessibilityRole='button'
+      >
         {icon}
       </TouchableOpacity>
     );
@@ -341,6 +345,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           style={touchableStyle}
           onPress={this.handleCancel}
           accessibilityLabel='Cancel search'
+          accessibilityRole='button'
         >
           {cancelImage ? (
             <Image
@@ -370,6 +375,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
         style={S.locateButton}
         onPress={this.handleLocate}
         accessibilityLabel='Locate me'
+        accessibilityRole='button'
       >
         <Image source={locateIcon} style={[S.locateIcon, locateIconStyle]} resizeMode='contain' />
       </TouchableOpacity>
