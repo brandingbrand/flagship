@@ -8,8 +8,8 @@
   "scripts": {
     "add-keys-android": "node node_modules/@brandingbrand/flagship/dist/add-keys-android.js",
     "add-keys-ios": "node node_modules/@brandingbrand/flagship/dist/add-keys-ios-internal.js",
-    "compile-android": "(test -d 'android' || yarn init android) && react-native run-android --no-packager",
-    "compile-ios": "(test -d 'ios' || yarn init ios) && react-native run-ios --simulator 'iPhone X' --no-packager",
+    "compile-android": "(test -d 'android' || yarn init:android) && react-native run-android --no-packager",
+    "compile-ios": "(test -d 'ios' || yarn init:ios) && react-native run-ios --simulator 'iPhone X' --no-packager",
     "compile-web": "(test -d 'web' || flagship init web) && cd ./web/ && yarn start",
     "build-ios": "./scripts/buildiOS.sh",
     "init": "flagship clean && flagship init native",

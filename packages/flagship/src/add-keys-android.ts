@@ -19,7 +19,7 @@ const buildConfig =
   {};
 
 const gradlePropertiesPath =
-  getOption('gradlePropertiesPath') || `../android/gradle.properties`;
+  getOption('gradlePropertiesPath') || `../../../../android/gradle.properties`;
 
 if (buildConfig && buildConfig.storeFile) {
   // add hockey keystore setting to {project}/android/gradle.properties
