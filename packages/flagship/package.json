@@ -13,7 +13,7 @@
     "flagship": "flagship.js"
   },
   "dependencies": {
-    "fs-extra": "^7.0.0",
+    "fs-extra": "^8.0.0",
     "glob": "^7.1.2",
     "jsc-android": "236355.x.x",
     "react": "16.6.3",
