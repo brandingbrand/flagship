@@ -45,6 +45,10 @@ export interface WithCommerceDataProps<Data> {
    * Loaded commerce data.
    */
   commerceData?: Readonly<Data>;
+  /*
+   * Whether commerce data is currently being loaded
+   */
+  isLoading?: boolean;
 }
 
 /**
@@ -145,6 +149,7 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           <WrappedComponent
             {...props}
             commerceData={this.state && this.state.commerceData}
+            isLoading={this.state && this.state.isLoading}
             commerceLoadData={this.loadData}
             commerceProviderLoadMore={this.loadMore}
           />
@@ -156,6 +161,9 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
        * and pass them into the optional onDataError callback to be further processed.
        */
       private handleLoadingError = (error: Error) => {
+        this.setState({
+          isLoading: false
+        });
         // TODO: better error handling
         if (this.props.onDataError) {
           this.props.onDataError(error);
@@ -170,7 +178,10 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
        * @param data - New data to repalce state with
        */
       private setData = (data?: Data) => {
-        this.setState({ commerceData: data }, () => {
+        this.setState({
+          commerceData: data,
+          isLoading: false
+        }, () => {
           if (this.props.onDataLoaded && data) {
             this.props.onDataLoaded(data);
           }
@@ -188,6 +199,9 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           return this.setData(data);
         }
 
+        this.setState({
+          isLoading: true
+        });
         fetchData(this.props.commerceDataSource, this.props)
           .then(this.setData)
           .catch(this.handleLoadingError);
@@ -203,6 +217,9 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           productQuery
         });
 
+        this.setState({
+          isLoading: true
+        });
         request.then(data => {
           const { commerceData } = this.state;
 
