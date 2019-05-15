@@ -8,13 +8,16 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { MultiCarouselProps } from './MultiCarouselProps';
 import { PageIndicator } from '../PageIndicator';
 
 export interface MultiCarouselState {
-  currentIndex: number;
   containerWidth: number;
+  currentIndex: number;
   itemWidth: number;
+  opacity: Animated.Value;
 }
 
 const S = StyleSheet.create({
@@ -65,8 +68,6 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   initialScrollX: number = 0;
   defaultPeekSize: number = 0;
   defaultItemsPerPage: number = 2;
-  initialized: boolean = false;
-  opcacity: Animated.Value = new Animated.Value(0);
 
   private scrollView: RefObject<FlatList<ItemT>>;
 
@@ -84,8 +85,48 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.state = {
       currentIndex: 0,
       containerWidth: 0,
-      itemWidth: 0
+      itemWidth: 0,
+      opacity: new Animated.Value(this.props.itemUpdated ? 0 : 1)
     };
+  }
+
+  componentDidUpdate(
+    prevProps: MultiCarouselProps<ItemT>,
+    prevState: MultiCarouselState,
+    snapshot: any
+  ): void {
+    const animateItemChange = () => {
+      this.state.opacity.setValue(0);
+      Animated.timing(this.state.opacity, {
+        toValue: 1,
+        useNativeDriver: true
+      }).start();
+    };
+    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
+      this.setState({
+        itemWidth: this.getItemWidth(this.state.containerWidth)
+      });
+    }
+    if (this.props.items.length <= this.state.currentIndex) {
+      if (this.props.items.length) {
+        this.setState({
+          currentIndex: this.props.items.length - 1
+        });
+      } else if (this.state.currentIndex !== 0) {
+        this.setState({
+          currentIndex: 0
+        });
+      }
+    } else if (prevProps.renderItem !== this.props.renderItem) {
+      animateItemChange();
+    } else if (this.props.itemUpdated) {
+      this.props.itemUpdated(
+        prevProps.items[this.state.currentIndex],
+        this.props.items[this.state.currentIndex],
+        this.state.currentIndex,
+        animateItemChange
+      );
+    }
   }
 
   handleContainerSizeChange = (e: any) => {
@@ -95,13 +136,6 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       containerWidth,
       itemWidth: this.getItemWidth(containerWidth)
     });
-    if (!this.initialized) {
-      this.initialized = true;
-      Animated.timing(this.opcacity, {
-        toValue: 1,
-        useNativeDriver: true
-      }).start();
-    }
   }
 
   goToNext = (options?: any) => {
@@ -199,12 +233,13 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   getPageNum = () => {
     return Math.ceil(
-      this.props.items.length / (this.props.itemsPerPage || this.defaultItemsPerPage)
+      this.props.items.length /
+        Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
     );
   }
 
   getPageWidth = () => {
-    return this.state.itemWidth * (this.props.itemsPerPage || this.defaultItemsPerPage);
+    return this.state.itemWidth * Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
   }
 
   getItemWidth = (containerWidth: number) => {
@@ -251,7 +286,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   render(): React.ReactNode {
     const snapToInterval =
-      this.state.itemWidth * (this.props.itemsPerPage || this.defaultItemsPerPage);
+      this.state.itemWidth *
+      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
 
     const pageNum = this.getPageNum();
 
@@ -260,7 +296,12 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     }
 
     return (
-      <Animated.View style={[this.props.style, { opacity: this.opcacity, overflow: 'hidden' }]}>
+      <Animated.View
+        style={[
+          this.props.style,
+          { opacity: this.state.opacity, overflow: 'hidden' }
+        ]}
+      >
         <FlatList
           onLayout={this.handleContainerSizeChange}
           horizontal={true}
@@ -291,15 +332,25 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
         {this.state.currentIndex !== 0 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToPrev} onPress={this.goToPrev}>
-              <View style={S.buttonPrevIcon} />
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
+              onPress={this.goToPrev}
+            >
+              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
             </TouchableOpacity>
           )}
 
         {this.state.currentIndex !== pageNum - 1 &&
           !!this.props.showArrow && (
-            <TouchableOpacity style={S.goToNext} onPress={this.goToNext}>
-              <View style={S.buttonNextIcon} />
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+              style={[S.goToNext, this.props.nextArrowContainerStyle]}
+              onPress={this.goToNext}
+            >
+              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
             </TouchableOpacity>
           )}
       </Animated.View>

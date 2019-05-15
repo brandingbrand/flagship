@@ -202,6 +202,12 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     );
   }
 
+  handleBackToTop = () => {
+    if (this.listview.current) {
+      this.listview.current.scrollToOffset({ offset: 0 });
+    }
+  }
+
   private handleScroll = (event?: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (event) {
       const scrollY = event.nativeEvent.contentOffset.y;
@@ -275,13 +281,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     );
   }
 
-  private handleBackToTop = () => {
-    if (this.listview.current) {
-      this.listview.current.scrollToOffset({ offset: 0 });
-    }
-  }
-
-  private renderRow = (info: ListRenderItemInfo<ItemT[]>): ReactElement<any> | null => {
+  private renderRow = (info: ListRenderItemInfo<ItemT[]>): ReactElement | null => {
     const {
       columns = DEFAULT_COLUMNS,
       columnSeparatorStyle,
