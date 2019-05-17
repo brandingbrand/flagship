@@ -1,10 +1,10 @@
-import * as path from '../path';
-import * as fs from '../fs';
-import { Config } from '../../types';
+import * as path from '../../path';
+import * as fs from '../../fs';
+import { Config } from '../../../types';
 import {
   logError,
   logInfo
-} from '../../helpers';
+} from '../../../helpers';
 
 const kRepository = `maven { url 'https://zendesk.artifactoryonline.com/zendesk/repo' }`;
 
@@ -13,7 +13,7 @@ const kRepository = `maven { url 'https://zendesk.artifactoryonline.com/zendesk/
  *
  * @param {object} configuration The project configuration.
  */
-export function android(configuration: Config): void {
+export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-zendesk-chat');
 
   const gradlePath = path.android.gradlePath();

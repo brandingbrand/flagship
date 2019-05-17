@@ -1,15 +1,15 @@
 /* tslint:disable:max-line-length ter-max-len */
-import * as path from '../path';
-import * as fs from '../fs';
-import { logInfo } from '../../helpers';
-import { Config } from '../../types';
+import * as path from '../../path';
+import * as fs from '../../fs';
+import { logInfo } from '../../../helpers';
+import { Config } from '../../../types';
 
 /**
  * Patches Android for the module.
  *
  * @param {object} configuration The project configuration.
  */
-exports.android = function installAndroid(configuration: Config): void {
+export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-fcm');
 
   const globalGradle = path.resolve('android', 'build.gradle');
@@ -72,4 +72,4 @@ import android.content.Intent;`);
         setIntent(intent);
     }
     public static Activity getActivity(){`);
-};
+}

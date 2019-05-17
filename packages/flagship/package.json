@@ -16,7 +16,6 @@
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "jsc-android": "236355.x.x",
-    "node-suspect": "^0.1.1",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-svg": "^9.3.6",

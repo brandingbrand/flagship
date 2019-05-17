@@ -1,11 +1,31 @@
-import * as path from '../path';
-import * as fs from '../fs';
-import * as nativeConstants from '../native-constants';
-import { Config } from '../../types';
+// tslint:disable: ter-max-len
+
+import * as path from '../../path';
+import * as fs from '../../fs';
+import * as nativeConstants from '../../native-constants';
+import { Config } from '../../../types';
 import {
   logError,
   logInfo
-} from '../../helpers';
+} from '../../../helpers';
+
+export function preLink(configuration: Config): void {
+  // Stick the Code Push deployment key into strings.xml so it's picked up by react-native-code-
+  // push when init is run
+  const deploymentKey = configuration.codepush && configuration.codepush.android.deploymentKey;
+
+  if (!deploymentKey) {
+    logError('codepush.android.deploymentKey needs to be set in the project env');
+
+    return process.exit(1);
+  }
+
+  fs.update(
+    path.android.stringsPath(),
+    '</resources>',
+    '    <string name="reactNativeCodePush_androidDeploymentKey">' + deploymentKey + '</string>\n</resources>'
+  );
+}
 
 /**
  * Patches Android for the module.
@@ -13,7 +33,7 @@ import {
  * @param {object} configuration The project configuration.
  */
 // tslint:disable:cyclomatic-complexity
-export function android(configuration: Config): void {
+export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
 
   if (!(configuration.codepush
@@ -92,50 +112,4 @@ export function android(configuration: Config): void {
       return CodePush.getJSBundleFile();
     }`
   );
-}
-
-/**
- * Patches iOS for the module.
- *
- * @param {object} configuration The project configuration.
- */
-export function ios(configuration: Config): void {
-  logInfo('patching iOS for react-native-codepush');
-
-  if (!(configuration.codepush
-        && configuration.codepush.appCenterToken)
-  ) {
-    logError('codepush.appCenterToken must be specified in project config');
-  }
-
-  const appCenterConfigPath = path.resolve(
-    path.ios.nativeProjectPath(configuration),
-    'AppCenter-Config.plist'
-  );
-
-  if (!configuration.codepush || !configuration.codepush.ios) {
-    logError('codepush.ios needs to be set in the project env');
-
-    return process.exit(1);
-  } else if (!configuration.codepush.ios.appKey) {
-    logError('codepush.ios.appKey needs to be set in the project env');
-
-    return process.exit(1);
-  } else if (!configuration.codepush.ios.deploymentKey) {
-    logError('codepush.ios.deploymentKey needs to be set in the project env');
-
-    return process.exit(1);
-  }
-
-  // Inject the app key
-  fs.update(appCenterConfigPath, 'CODEPUSH_APP_KEY', configuration.codepush.ios.appKey);
-
-  // Include the readonly Branding Brand app center token ONLY in development
-  // builds
-  if (!configuration.disableDevFeature &&
-    configuration.codepush &&
-    configuration.codepush.appCenterToken
-  ) {
-    nativeConstants.addIOS(configuration, 'AppCenterToken', configuration.codepush.appCenterToken);
-  }
 }

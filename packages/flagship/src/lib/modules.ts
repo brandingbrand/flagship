@@ -3,12 +3,12 @@ import * as path from './path';
 import { Config,
   NPMPackageConfig
 } from '../types';
-const kModulesDirectory = path.resolve(__dirname, 'modules');
+import { logInfo } from '../helpers';
 const kModuleFileExtension = '.js';
 
 export interface Module {
-  ios: (config: Config) => void;
-  android: (config: Config) => void;
+  preLink?: (config: Config) => void;
+  postLink?: (config: Config) => void;
 }
 
 export interface ModuleList {
@@ -17,33 +17,40 @@ export interface ModuleList {
 
 // Loads all the .js files from the `modules` directory and creates a dictionary of filename to
 // the exported object from that file
-const noModules: ModuleList = {};
-const kSupportedModules: ModuleList = fs.readdirSync(kModulesDirectory)
-  .filter((filename: string) => kModuleFileExtension === path.extname(filename))
-  .reduce((map: ModuleList, filename: string) => {
-    const name = path.basename(filename, kModuleFileExtension);
-    const src = path.resolve(kModulesDirectory, filename);
+const androidModules = fetchModules(path.resolve(__dirname, 'modules', 'android'));
+const iosModules = fetchModules(path.resolve(__dirname, 'modules', 'ios'));
 
-    map[name] = require(src);
+function fetchModules(directory: string): ModuleList {
+  const initialModules: ModuleList = {};
 
-    return map;
-  }, noModules);
+  return fs.readdirSync(directory)
+    .filter((filename: string) => kModuleFileExtension === path.extname(filename))
+    .reduce((map: ModuleList, filename: string) => {
+      const name = path.basename(filename, kModuleFileExtension);
+      const src = path.resolve(directory, filename);
+
+      map[name] = require(src);
+
+      return map;
+    }, initialModules);
+}
 
 /**
  * Looks through an array of dependencies and returns an array of module modifications which
  * must be executed.
  *
  * @param {string[]} dependencies An array of dependencies to filter.
+ * @param {ModuleList} modules The set of modules to check for dependency matches.
  * @returns {string[]} An array of module modification scripts which must be executed for the
  * given set of dependencies.
  */
-function getUsedModules(dependencies: string[]): Module[] {
+function getUsedModules(dependencies: string[], modules: ModuleList): Module[] {
   // Remove the private scope from the package name before checking for a module patcher
   // e.g. `@brandingbrand/react-native-zendesk-chat` becomes `react-native-zendesk-chat`
   return dependencies
     .map(dependency => {
       const [scopeOrModule, module] = dependency.split('/');
-      return kSupportedModules[module || scopeOrModule];
+      return modules[module || scopeOrModule];
     })
     .filter(Boolean);
 }
@@ -53,13 +60,20 @@ function getUsedModules(dependencies: string[]): Module[] {
  *
  * @param {object} packageJSON The project package.json
  * @param {object} configuration The project configuration.
+ * @param {string} stage The build stage (preLink or postLink) for which module functions will run.
  */
-export function android(packageJSON: NPMPackageConfig, configuration: Config): void {
-  getUsedModules(Object.keys(packageJSON.dependencies || {}))
-    .forEach(modifier => {
-      return modifier.android &&
-        'function' === typeof modifier.android &&
-        modifier.android(configuration);
+export function android(
+  packageJSON: NPMPackageConfig,
+  configuration: Config,
+  stage: keyof Module
+): void {
+  logInfo(`Running module scripts for android for init stage ${stage}`);
+
+  getUsedModules(Object.keys(packageJSON.dependencies || {}), androidModules)
+    .forEach(exported => {
+      const stageFn = exported[stage];
+
+      return stageFn && typeof stageFn === 'function' && stageFn(configuration);
     });
 }
 
@@ -68,12 +82,19 @@ export function android(packageJSON: NPMPackageConfig, configuration: Config): v
  *
  * @param {object} packageJSON The project package.json
  * @param {object} configuration The project configuration.
+ * @param {string} stage The build stage (preLink or postLink) for which module functions will run.
  */
-export function ios(packageJSON: NPMPackageConfig, configuration: Config): void {
-  getUsedModules(Object.keys(packageJSON.dependencies || {}))
-    .forEach(modifier => {
-      return modifier.ios &&
-        'function' === typeof modifier.ios &&
-        modifier.ios(configuration);
+export function ios(
+  packageJSON: NPMPackageConfig,
+  configuration: Config,
+  stage: keyof Module
+): void {
+  logInfo(`Running module scripts for ios for init stage ${stage}`);
+
+  getUsedModules(Object.keys(packageJSON.dependencies || {}), iosModules)
+    .forEach(exported => {
+      const stageFn = exported[stage];
+
+      return stageFn && typeof stageFn === 'function' && stageFn(configuration);
     });
 }
