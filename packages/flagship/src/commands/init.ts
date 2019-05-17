@@ -72,13 +72,14 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link.link(configuration)
+  link.link()
     .then(() => {
       if (doAndroid) {
-        modules.android(projectPackageJSON, configuration);
+        modules.android(projectPackageJSON, configuration, 'postLink');
       }
 
       if (doIOS) {
+        modules.ios(projectPackageJSON, configuration, 'postLink');
         cocoapods.install();
       }
     })
@@ -150,6 +151,8 @@ function initAndroid(
     android.addDevMenuFlag(configuration);
   }
 
+  modules.android(packageJSON, configuration, 'preLink');
+
   helpers.logInfo('finished Android initialization');
 }
 
@@ -203,7 +206,7 @@ function initIOS(
     ios.addDevMenuFlag(configuration);
   }
 
-  modules.ios(packageJSON, configuration);
+  modules.ios(packageJSON, configuration, 'preLink');
 
   helpers.logInfo('finished iOS initialization');
 }
