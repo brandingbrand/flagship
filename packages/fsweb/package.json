@@ -14,7 +14,7 @@
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
-    "babel-plugin-react-native-web": "^0.8.4",
+    "babel-plugin-react-native-web": "^0.11.3",
     "cache-loader": "^1.2.2",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^1.0.0",
