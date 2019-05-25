@@ -15,7 +15,7 @@
     "@brandingbrand/fscomponents": "^3.0.0",
     "@brandingbrand/fsi18n": "^3.0.0",
     "lodash-es": "^4.17.10",
-    "pluralize": "^7.0.0",
+    "pluralize": "^8.0.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "redux": "^4.0.0"
