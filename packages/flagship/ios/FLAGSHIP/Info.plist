@@ -39,11 +39,10 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
+			<!-- {NSExceptionDomains-localhost-start} -->
+			<key>localhost</key><dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>
+			<!-- {NSExceptionDomains-localhost-end} -->
+			<!-- {NSExceptionDomains} -->
 		</dict>
 	</dict>
 	<key>UILaunchStoryboardName</key>
