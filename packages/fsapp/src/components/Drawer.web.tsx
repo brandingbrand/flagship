@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
+import ReactDOM from 'react-dom';
 
 export interface PropType {
   component: typeof React.Component;
@@ -12,6 +13,10 @@ export interface PropType {
   width: string;
   duration: string;
   backgroundColor?: string;
+}
+
+export interface DrawerState {
+  drawerVisible: boolean;
 }
 
 const DEFAULT_BACKGROUND_COLOR = 'white';
@@ -40,7 +45,46 @@ const S = StyleSheetCreate({
   }
 });
 
-export default class Drawer extends Component<PropType> {
+export default class Drawer extends Component<PropType, DrawerState> {
+  drawView?: any;
+
+  constructor(props: PropType) {
+    super(props);
+    this.state = {
+      drawerVisible: props.isOpen
+    };
+  }
+
+  componentDidUpdate = (prevProps: PropType, prevState: DrawerState): void => {
+    if (this.props.isOpen && !this.state.drawerVisible) {
+      this.setState({
+        drawerVisible: true
+      });
+    }
+  }
+
+  componentWillUnmount = (): void => {
+    if (this.drawView) {
+      this.drawView.removeEventListener('transitionend', this.animationListener);
+    }
+  }
+
+  animationListener = (e: any): void => {
+    if (!this.props.isOpen) {
+      this.setState({
+        drawerVisible: false
+      });
+    }
+  }
+
+  animationRef = (ref: any): void => {
+    if (this.drawView) {
+      this.drawView.removeEventListener('transitionend', this.animationListener);
+    }
+    this.drawView = ReactDOM.findDOMNode(ref);
+    this.drawView.addEventListener('transitionend', this.animationListener);
+  }
+
   render(): JSX.Element {
     const width = this.props.width;
     const DrawerComponent = this.props.component;
@@ -65,8 +109,14 @@ export default class Drawer extends Component<PropType> {
     }
 
     return (
-      <View style={[S.container, propCss, orientationStyle, !this.props.isOpen && closedCss]}>
-        <DrawerComponent {...this.props} />
+      <View
+        style={[S.container, propCss, orientationStyle, !this.props.isOpen && closedCss]}
+        ref={this.animationRef}
+      >
+        <DrawerComponent
+          drawerVisible={this.state.drawerVisible}
+          {...this.props}
+        />
       </View>
     );
   }
