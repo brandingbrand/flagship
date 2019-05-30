@@ -24,7 +24,7 @@
     "react-native-payments": "^0.7.0"
   },
   "devDependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.19.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
