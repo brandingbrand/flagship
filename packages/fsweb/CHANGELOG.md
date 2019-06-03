@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* update svgs to version 4.1.0 ([a1e0345](https://github.com/brandingbrand/flagship/commit/a1e0345))
+
+
+### Features
+
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 

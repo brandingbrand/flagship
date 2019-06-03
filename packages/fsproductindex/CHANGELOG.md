@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Expose fsproductindex functionality ([ca42877](https://github.com/brandingbrand/flagship/commit/ca42877))
+* **fsproductindex:** Update commerce data even if no products ([b1fbccc](https://github.com/brandingbrand/flagship/commit/b1fbccc))
+* update pluralize to version 8.0.0 ([24d0f02](https://github.com/brandingbrand/flagship/commit/24d0f02))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 
