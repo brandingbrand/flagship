@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **fsapp:** devMenu path override and web screen wrapper update ([c9c8f78](https://github.com/brandingbrand/flagship/commit/c9c8f78))
+* **fsapp:** Expose getApplication functionality for SSR ([ec4013e](https://github.com/brandingbrand/flagship/commit/ec4013e))
+* **fsapp:** On web dev menu, go back before refreshing ([aa9f849](https://github.com/brandingbrand/flagship/commit/aa9f849))
+* update react-native-device-info to version 0.29.1 ([94a6629](https://github.com/brandingbrand/flagship/commit/94a6629))
+* **fsapp:** Updates to server-side handling of fsapp ([e6b5506](https://github.com/brandingbrand/flagship/commit/e6b5506))
+* **fscomponents:** Fixes for IE11 ([6a3f2d0](https://github.com/brandingbrand/flagship/commit/6a3f2d0))
+
+
+### Features
+
+* **fsapp:** add ability to pass location into the web router ([b8e5733](https://github.com/brandingbrand/flagship/commit/b8e5733))
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* **fsapp:** Add functions to convert path props to component props ([23d5d9b](https://github.com/brandingbrand/flagship/commit/23d5d9b))
+* **fsapp:** Track whether the drawer is visible ([32cf36e](https://github.com/brandingbrand/flagship/commit/32cf36e))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 
