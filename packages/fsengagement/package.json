@@ -1,14 +1,13 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "3.0.0",
+  "version": "3.1.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsnetwork": "^3.0.0",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "@brandingbrand/fsnetwork": "^3.1.0",
     "@types/prop-types": "15.5.3",
     "@types/react-native-video": "^2.0.8",
     "lodash-es": "^4.17.10",
@@ -17,6 +16,7 @@
     "react-native": "0.57.8",
     "react-native-device-info": "^0.21.5",
     "react-native-fcm": "16.0.0",
+    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-video": "^3.2.1",
     "uuid-js": "0.7.5"
   }
