@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **flagship:** pass leanplum push url to expected launchOptions value ([5b1909c](https://github.com/brandingbrand/flagship/commit/5b1909c))
+* **flagship:** put placeholders back for using exception domains ([acaf8d1](https://github.com/brandingbrand/flagship/commit/acaf8d1))
+* **flagship:** remove minSdkVersion from Android versionCode ([0ca3913](https://github.com/brandingbrand/flagship/commit/0ca3913))
+* **flagship:** restore minsdkversion gradle prop ([d10b0eb](https://github.com/brandingbrand/flagship/commit/d10b0eb))
+* **fsapp:** devMenu path override and web screen wrapper update ([c9c8f78](https://github.com/brandingbrand/flagship/commit/c9c8f78))
+* **fsapp:** Expose getApplication functionality for SSR ([ec4013e](https://github.com/brandingbrand/flagship/commit/ec4013e))
+* **fsapp:** On web dev menu, go back before refreshing ([aa9f849](https://github.com/brandingbrand/flagship/commit/aa9f849))
+* **fsapp:** Updates to server-side handling of fsapp ([e6b5506](https://github.com/brandingbrand/flagship/commit/e6b5506))
+* **fscategory:** remove duplicate commerce loadData on component mount ([722c4ba](https://github.com/brandingbrand/flagship/commit/722c4ba)), closes [/github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx#L134](https://github.com//github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx/issues/L134)
+* **fscomponents:** accessibilitylabel spelling fix ([91265a2](https://github.com/brandingbrand/flagship/commit/91265a2))
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** add accessibility to searchbar ([69d808f](https://github.com/brandingbrand/flagship/commit/69d808f))
+* **fscomponents:** Add classes to swatch scroller for css ([aa7d1f6](https://github.com/brandingbrand/flagship/commit/aa7d1f6))
+* **fscomponents:** add key to SelectorList items ([48b4161](https://github.com/brandingbrand/flagship/commit/48b4161))
+* **fscomponents:** add opt prop and color change for reviewIndicator ([e49f7c8](https://github.com/brandingbrand/flagship/commit/e49f7c8))
+* **fscomponents:** fix linting of readme ([d14dd8c](https://github.com/brandingbrand/flagship/commit/d14dd8c))
+* **fscomponents:** Fixes for IE11 ([6a3f2d0](https://github.com/brandingbrand/flagship/commit/6a3f2d0))
+* **fscomponents:** Fixes for IE11 buttons ([1b4067a](https://github.com/brandingbrand/flagship/commit/1b4067a))
+* **fscomponents:** hide web carousel if item width is 0 ([047d28b](https://github.com/brandingbrand/flagship/commit/047d28b))
+* **fscomponents:** Move loadHistoryToState to componentDidMount ([2708bbd](https://github.com/brandingbrand/flagship/commit/2708bbd))
+* **fscomponents:** Move Multicarousel opacity and initialized into state ([5628e2f](https://github.com/brandingbrand/flagship/commit/5628e2f))
+* **fscomponents:** remove accessible prop to stop focus ([d861de6](https://github.com/brandingbrand/flagship/commit/d861de6))
+* **fscomponents:** revert buggy button refactor ([23430f8](https://github.com/brandingbrand/flagship/commit/23430f8)), closes [#415](https://github.com/brandingbrand/flagship/issues/415) [#587](https://github.com/brandingbrand/flagship/issues/587)
+* **fscomponents:** Round number of items for Multicarousel page width ([3a5ef38](https://github.com/brandingbrand/flagship/commit/3a5ef38))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* add a11yLabel/Role to Selector ([4f58087](https://github.com/brandingbrand/flagship/commit/4f58087))
+* Bump storybook version ([319ee3f](https://github.com/brandingbrand/flagship/commit/319ee3f))
+* update pluralize to version 8.0.0 ([24d0f02](https://github.com/brandingbrand/flagship/commit/24d0f02))
+* **fscomponents:** update item width with new prop ([e13849c](https://github.com/brandingbrand/flagship/commit/e13849c))
+* **fscomponents:** Use onSubmit function for SearchBar button ([da4e807](https://github.com/brandingbrand/flagship/commit/da4e807))
+* **fsproductindex:** Expose fsproductindex functionality ([ca42877](https://github.com/brandingbrand/flagship/commit/ca42877))
+* **fsproductindex:** Update commerce data even if no products ([b1fbccc](https://github.com/brandingbrand/flagship/commit/b1fbccc))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+* update react-native-device-info to version 0.29.1 ([94a6629](https://github.com/brandingbrand/flagship/commit/94a6629))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* update svgs to version 4.1.0 ([a1e0345](https://github.com/brandingbrand/flagship/commit/a1e0345))
+
+
+### Features
+
+* change storybook version to 4.1.16 ([3ca71f0](https://github.com/brandingbrand/flagship/commit/3ca71f0))
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* **fscomponents:** add completed state accessibility label in Step ([2434842](https://github.com/brandingbrand/flagship/commit/2434842))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **flagship:** refactor module scripts and remove node-suspect ([c5bf0f8](https://github.com/brandingbrand/flagship/commit/c5bf0f8))
+* **fsapp:** add ability to pass location into the web router ([b8e5733](https://github.com/brandingbrand/flagship/commit/b8e5733))
+* **fsapp:** Add functions to convert path props to component props ([23d5d9b](https://github.com/brandingbrand/flagship/commit/23d5d9b))
+* **fsapp:** Track whether the drawer is visible ([32cf36e](https://github.com/brandingbrand/flagship/commit/32cf36e))
+* **fscommerce:** Add isLoading prop to commerce provider ([f304fc4](https://github.com/brandingbrand/flagship/commit/f304fc4))
+* **fscomponents:** add a11yRole/Label to CategoryLine/SelectableRow ([7b9118b](https://github.com/brandingbrand/flagship/commit/7b9118b))
+* **fscomponents:** add ability to pass arrow styles for multicarousel ([200deb4](https://github.com/brandingbrand/flagship/commit/200deb4))
+* **fscomponents:** add accessibility for modalhalfscreen background ([86be4ad](https://github.com/brandingbrand/flagship/commit/86be4ad))
+* **fscomponents:** add accessibility labels to button and swatches ([edfcbf1](https://github.com/brandingbrand/flagship/commit/edfcbf1))
+* **fscomponents:** add accessibility role to categorybox and searchbar ([18ab22f](https://github.com/brandingbrand/flagship/commit/18ab22f))
+* **fscomponents:** add button properties for carousel ([74836b6](https://github.com/brandingbrand/flagship/commit/74836b6))
+* **fscomponents:** add function to generate dynamic label from cms ([f7b6c3f](https://github.com/brandingbrand/flagship/commit/f7b6c3f))
+* **fscomponents:** add onblur and translations to multi carousel arrows ([6afdf0b](https://github.com/brandingbrand/flagship/commit/6afdf0b))
+* **fscomponents:** Custom styling for swatch show more/less ([f0227bc](https://github.com/brandingbrand/flagship/commit/f0227bc))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([9ebd0bb](https://github.com/brandingbrand/flagship/commit/9ebd0bb))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 

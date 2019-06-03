@@ -180,6 +180,9 @@ function withProductIndexData<
           !Array.isArray(commerceData.products) ||
           commerceData.products.length === 0
         ) {
+          this.setState({
+            commerceData
+          });
           return;
         }
 
