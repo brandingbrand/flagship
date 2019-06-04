@@ -1,6 +1,6 @@
 import FCM, { FCMEvent } from 'react-native-fcm';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import * as DeviceInfo from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import {
   EngagementMessage,
   EngagementProfile,
