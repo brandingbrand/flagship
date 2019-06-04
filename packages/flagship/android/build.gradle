@@ -10,7 +10,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath("com.android.tools.build:gradle:3.4.0")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -38,12 +38,12 @@ allprojects {
 }
 
 ext {
-    buildToolsVersion = "27.0.3"
-    minSdkVersion = 21
-    compileSdkVersion = 27
-    targetSdkVersion = 27
-    supportLibVersion = "27.1.1"
-    googlePlayServicesVersion = "15.0.1" // Needed for react-native-camera & react-native-maps
+    buildToolsVersion = "28.0.3"
+    minSdkVersion = 16
+    compileSdkVersion = 28
+    targetSdkVersion = 28
+    supportLibVersion = "28.0.0"
+    googlePlayServicesVersion = "16.1.0" // Needed for react-native-camera & react-native-maps
 }
 
 // Force subprojects to use the same SDK and build tools
@@ -56,9 +56,4 @@ subprojects {
             }
         }
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
-    distributionUrl = distributionUrl.replace("bin", "all")
 }
