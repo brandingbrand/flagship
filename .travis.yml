@@ -26,26 +26,54 @@ jobs:
   - script:
     - yarn prepare
     - yarn build:storybook || travis_terminate 1
-  - language: android
+  - language: generic
+    sudo: true
+    dist: trusty
+    os: linux
     if: type = pull_request
-    android:
-      components:
-      - build-tools-26.0.2
-      - build-tools-25.0.3
-      - build-tools-23.0.1
-      - android-26
-      - android-23
-      - extra-android-m2repository
-      - extra-google-google_play_services
-      - extra-google-m2repository
-      - addon-google_apis-google-26
-      - addon-google_apis-google-23
+    # android emulator setup based on https://github.com/brianegan/flutter_architecture_samples
+    # from comment in https://github.com/googlemaps/android-maps-utils/issues/371#issuecomment-498921876
     before_install:
-    - nvm install 10
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - node --version
-    - yarn --version
+    - ANDROID_SDK_TOOLS=4333796 # android-28
+    - ANDROID_PLATFORM_SDK=28
+    - ANDROID_BUILD_TOOLS=28.0.3
+    - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
+    # Install the Android SDK Dependency.
+    - export ANDROID_HOME=/opt/android-sdk-linux
+    - cd /opt
+    - wget -q https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_SDK_TOOLS.zip -O android-sdk-tools.zip
+    - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+    - rm android-sdk-tools.zip
+    - cd -
+    - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+    # Silence warning.
+    - mkdir -p ~/.android
+    - touch ~/.android/repositories.cfg
+    # Accept licenses before installing components, no need to echo y for each component
+    - yes | sdkmanager --licenses
+    # Platform and build tools (including flutter requirements)
+    - sdkmanager "emulator" "tools" "platform-tools" "platforms;android-${ANDROID_PLATFORM_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
+    - sdkmanager --list | head -15
+
+    # Download a pinned version of the emulator since upgrades can cause issues
+    - ${ANDROID_HOME}/emulator/emulator -version
+    - emulator_version=5264690 #29.0.9.0 (build_id 5537588) ==> 28.0.23.0 (build_id 5264690)
+    - curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-linux-$emulator_version.zip"
+    - rm -rf "${ANDROID_HOME}/emulator"
+    - unzip -q emulator.zip -d "${ANDROID_HOME}"
+    - rm -f emulator.zip
+    - ${ANDROID_HOME}/emulator/emulator -version
+
+    # install older platform and build tools (for emulator)
+    - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
+    # Create and start emulator.
+    - EMULATOR_API_LEVEL=22
+    - ANDROID_ABI="default;armeabi-v7a"
+    - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
+    - sdkmanager --list | head -15
+    - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
+    - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+    - ./scripts/android-wait-for-emulator.sh
     script:
     - yarn prepare
     - yarn ship:init
