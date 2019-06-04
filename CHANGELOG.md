@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([5be5f85](https://github.com/brandingbrand/flagship/commit/5be5f85))
+* update fs-extra to version 8.0.0 ([db734b9](https://github.com/brandingbrand/flagship/commit/db734b9))
+* update replace-in-file to version 4.1.0 ([293629a](https://github.com/brandingbrand/flagship/commit/293629a))
+
+
+
+
+
 # [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
 
 

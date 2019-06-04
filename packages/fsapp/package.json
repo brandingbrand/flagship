@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsapp",
   "sideEffects": false,
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Flagship app base",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,9 +12,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^3.1.0",
-    "@brandingbrand/fsfoundation": "^3.1.0",
-    "@brandingbrand/fsnetwork": "^3.1.0",
+    "@brandingbrand/fsengage": "^3.1.1",
+    "@brandingbrand/fsfoundation": "^3.1.1",
+    "@brandingbrand/fsnetwork": "^3.1.1",
     "path-to-regexp": "^2.2.1",
     "qs": "^6.7.0",
     "react": "16.6.3",
