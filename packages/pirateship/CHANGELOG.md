@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+
+
+### Features
+
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 

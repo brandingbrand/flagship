@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* add a11yLabel/Role to Selector ([4f58087](https://github.com/brandingbrand/flagship/commit/4f58087))
+
+
+### Features
+
+* **fscomponents:** add completed state accessibility label in Step ([2434842](https://github.com/brandingbrand/flagship/commit/2434842))
+* **fscomponents:** add onblur and translations to multi carousel arrows ([6afdf0b](https://github.com/brandingbrand/flagship/commit/6afdf0b))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 
