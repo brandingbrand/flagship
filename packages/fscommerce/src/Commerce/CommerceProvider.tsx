@@ -252,6 +252,10 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           const { commerceData } = this.state;
 
           if (data && commerceData) {
+            if ((commerceData as any).minPage === undefined) {
+              (commerceData as any).minPage = (commerceData as any).page;
+            }
+            (data as any).minPage = (commerceData as any).minPage;
             // TODO: Since the data isn't guarneteed to be Pagable we have to cast to any to check.
             // Figure out a way to not include this function for non-pagable Data types
             if ((data as any).page > (commerceData as any).page) {
@@ -259,7 +263,14 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
                 ...(commerceData as any).products,
                 ...(data as any).products
               ];
-
+              this.setData(data);
+            } else if ((data as any).page < (commerceData as any).minPage) {
+              (data as any).products = [
+                ...(data as any).products,
+                ...(commerceData as any).products
+              ];
+              (data as any).minPage = (data as any).page;
+              (data as any).page = (commerceData as any).page;
               this.setData(data);
             }
           }
