@@ -30,6 +30,10 @@ export interface AccordionProps {
    */
   arrowIconStyle?: StyleProp<ImageStyle>;
   /**
+   * Range of rotation for open/closed arrows
+   */
+  arrowRange?: string[];
+  /**
    * Icon to use when open if icon format is 'image'
    */
   openIconImage?: ImageURISource;
@@ -336,6 +340,38 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
   }
 
   /**
+   * Renders the accordion disclosure icon as an arrow.
+   *
+   * @returns {React.ReactNode} The accordion disclosure icon.
+   */
+  private renderArrowIcon(): React.ReactNode {
+    const {
+      arrowIconImage
+    } = this.props;
+    const computedArrowStyle = {
+      transform: [
+        {
+          rotate: this.state.arrowTranslateAnimation.interpolate({
+            inputRange: [-90, 90],
+            outputRange: this.props.arrowRange || ['-90deg', '90deg']
+          })
+        }
+      ]
+    };
+
+    return (
+      <Animated.Image
+        source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
+        style={[
+          AccordionStyles.arrowImage,
+          this.props.arrowIconStyle,
+          computedArrowStyle
+        ]}
+      />
+    );
+  }
+
+  /**
    * Renders the accordion disclosure icon.
    *
    * @returns {React.ReactNode} The accordion disclosure icon.
@@ -343,7 +379,6 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
   private renderIcon(): React.ReactNode {
 
     const {
-      arrowIconImage,
       closedIconImage,
       closedIconStyle,
       iconFormat,
@@ -352,27 +387,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     } = this.props;
 
     if (iconFormat === 'arrow') {
-      const computedArrowStyle = {
-        transform: [
-          {
-            rotate: this.state.arrowTranslateAnimation.interpolate({
-              inputRange: [-90, 90],
-              outputRange: ['-90deg', '90deg']
-            })
-          }
-        ]
-      };
-
-      return (
-        <Animated.Image
-          source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
-          style={[
-            AccordionStyles.arrowImage,
-            this.props.arrowIconStyle,
-            computedArrowStyle
-          ]}
-        />
-      );
+      return this.renderArrowIcon();
     }
 
     if (iconFormat === 'image'
