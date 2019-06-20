@@ -120,6 +120,7 @@ export class SelectorList extends Component<SelectorListProps> {
           item.disabled && this.props.disabledItemStyle
         ]}
         onPress={this.props.onSelectChange(item.value)}
+        accessibilityLabel={`select item ${item.label}`}
       >
         <Text
           style={[
