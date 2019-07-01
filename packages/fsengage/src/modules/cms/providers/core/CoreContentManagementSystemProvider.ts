@@ -116,6 +116,17 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
       });
   }
 
+  async contentForGroup(group: string): Promise<any | null> {
+    return this.pullContent()
+      .then((content: any): any | null => {
+        const groupContent = content &&
+          content.data &&
+          content.data[group];
+
+        return groupContent;
+      }).catch(logAndRethrowError);
+  }
+
 
   private currentInstances(content: any): any[] {
     let instances = content && content.instances || {};
