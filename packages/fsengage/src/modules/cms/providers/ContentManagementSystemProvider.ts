@@ -23,5 +23,9 @@ export default abstract class ContentManagementSystemProvider {
     group: string, slot: string, identifier?: string, context?: ContentManagementSystemContext
   ): Promise<{}>;
 
+  abstract contentForGroup(
+    group: string
+  ): Promise<{}>;
+
   abstract identifiersForSlot(group: string, slot: string): Promise<string[] | null>;
 }
