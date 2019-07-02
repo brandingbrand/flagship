@@ -48,7 +48,6 @@
     "react-native-i18n": "^2.0.15",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-payments": "^0.7.1",
-    "react-native-push-notification": "^3.1.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.1.0",
     "react-native-svg": "^9.3.6",
@@ -67,7 +66,6 @@
       "@brandingbrand/fsproductdetail",
       "react-native-sensitive-info",
       "react-native-safe-area",
-      "react-native-push-notification",
       "react-native-svg",
       "react-native-payments"
     ],

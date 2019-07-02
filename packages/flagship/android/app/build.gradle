@@ -168,10 +168,10 @@ configurations.all {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-base:15.+'
-    implementation 'com.google.android.gms:play-services-gcm:15.+'
-    implementation 'com.google.android.gms:play-services-maps:15.+'
-    implementation 'com.google.android.gms:play-services-wallet:15.+'
+    implementation 'com.google.android.gms:play-services-base:16.+'
+    implementation 'com.google.android.gms:play-services-gcm:16.+'
+    implementation 'com.google.android.gms:play-services-maps:16.+'
+    implementation 'com.google.android.gms:play-services-wallet:16.+'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
 
