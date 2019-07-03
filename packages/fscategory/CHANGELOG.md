@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
+
+**Note:** Version bump only for package @brandingbrand/fscategory
+
+
+
+
+
 ## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
 
 **Note:** Version bump only for package @brandingbrand/fscategory
