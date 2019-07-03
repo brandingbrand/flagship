@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "react": "16.8.3",
-    "react-native": "0.59.9"
+    "react-native": "0.59.10"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

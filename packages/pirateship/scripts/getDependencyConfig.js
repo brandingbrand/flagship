@@ -32,11 +32,8 @@ function getDependencyConfig(ctx, availablePlatforms, dependency) {
     let folder = _path().default.join(ctx.root, 'node_modules', dependency);
 
     if (!fs.existsSync(folder)) {
-      console.log('no exist');
       folder = folder.replace('packages/pirateship/', '');
     }
-
-    console.log('folder', folder);
 
     const config = (0, _getPackageConfiguration.default)(folder);
     const platformConfigs = {

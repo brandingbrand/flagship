@@ -17,7 +17,7 @@
     "lodash-es": "^4.17.10",
     "pluralize": "^8.0.0",
     "react": "16.8.3",
-    "react-native": "0.59.9",
+    "react-native": "0.59.10",
     "redux": "^4.0.0"
   },
   "publishConfig": {

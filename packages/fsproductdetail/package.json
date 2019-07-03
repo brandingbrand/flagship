@@ -14,7 +14,7 @@
     "@brandingbrand/fscommerce": "^3.1.1",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",
-    "react-native": "0.59.9",
+    "react-native": "0.59.10",
     "redux": "^4.0.0"
   },
   "publishConfig": {

@@ -151,6 +151,12 @@ android {
             }
         }
     }
+
+    // for jsc-android: https://github.com/react-native-community/jsc-android-buildscripts
+    packagingOptions {
+        pickFirst '**/libjsc.so'
+        pickFirst '**/libc++_shared.so'
+    }
 }
 
 repositories {
@@ -161,13 +167,14 @@ configurations.all {
     resolutionStrategy {
         eachDependency { DependencyResolveDetails details ->
             if (details.requested.name == 'android-jsc') {
-                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r236355'
+                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r241213'
             }
         }
     }
 }
 
 dependencies {
+    implementation "org.webkit:android-jsc:r241213"
     implementation 'com.google.android.gms:play-services-base:16.+'
     implementation 'com.google.android.gms:play-services-gcm:16.+'
     implementation 'com.google.android.gms:play-services-maps:16.+'
