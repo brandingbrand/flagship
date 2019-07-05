@@ -22,7 +22,7 @@
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^0.29.1",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
-    "react-native-restart": "^0.0.8",
+    "react-native-restart": "^0.0.11",
     "react-native-sensitive-info": "^5.1.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
