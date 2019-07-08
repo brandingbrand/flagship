@@ -1,7 +1,15 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
+<<<<<<< HEAD
   "version": "3.2.1",
+=======
+<<<<<<< HEAD
+  "version": "3.2.0",
+=======
+  "version": "4.0.0-alpha.0",
+>>>>>>> chore(release): publish v4.0.0-alpha.0
+>>>>>>> chore(release): publish v4.0.0-alpha.0
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,11 +19,27 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@brandingbrand/fscommerce": "^3.2.1",
     "@brandingbrand/fsengage": "^3.2.1",
     "@brandingbrand/fsfoundation": "^3.2.1",
     "@brandingbrand/fsi18n": "^3.2.1",
     "@brandingbrand/fsnetwork": "^3.2.1",
+=======
+<<<<<<< HEAD
+    "@brandingbrand/fscommerce": "^3.2.0",
+    "@brandingbrand/fsengage": "^3.2.0",
+    "@brandingbrand/fsfoundation": "^3.2.0",
+    "@brandingbrand/fsi18n": "^3.2.0",
+    "@brandingbrand/fsnetwork": "^3.2.0",
+=======
+    "@brandingbrand/fscommerce": "^4.0.0-alpha.0",
+    "@brandingbrand/fsengage": "^4.0.0-alpha.0",
+    "@brandingbrand/fsfoundation": "^4.0.0-alpha.0",
+    "@brandingbrand/fsi18n": "^4.0.0-alpha.0",
+    "@brandingbrand/fsnetwork": "^4.0.0-alpha.0",
+>>>>>>> chore(release): publish v4.0.0-alpha.0
+>>>>>>> chore(release): publish v4.0.0-alpha.0
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
