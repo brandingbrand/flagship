@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.1.0...v4.0.0-alpha.0) (2019-07-08)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([0279c9e](https://github.com/brandingbrand/flagship/commit/0279c9e))
+* update fs-extra to version 8.0.0 ([31b6e7a](https://github.com/brandingbrand/flagship/commit/31b6e7a))
+* update replace-in-file to version 4.1.0 ([015abde](https://github.com/brandingbrand/flagship/commit/015abde))
+
+
+### Features
+
+* implement react native 0.59 ([8405836](https://github.com/brandingbrand/flagship/commit/8405836))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 ## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
 
 
