@@ -2,11 +2,7 @@
   "name": "@brandingbrand/fstestproject",
   "sideEffects": false,
   "private": true,
-<<<<<<< HEAD
   "version": "3.2.0",
-=======
-  "version": "3.1.1",
->>>>>>> feat: implement react native 0.59
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
