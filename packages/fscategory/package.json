@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscategory",
   "sideEffects": false,
-  "version": "3.2.1",
+  "version": "4.0.0-alpha.0",
   "description": "components for category navigation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,10 +11,10 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^3.2.1",
-    "@brandingbrand/fscomponents": "^3.2.1",
-    "react": "16.6.3",
-    "react-native": "0.57.8"
+    "@brandingbrand/fscommerce": "^4.0.0-alpha.0",
+    "@brandingbrand/fscomponents": "^4.0.0-alpha.0",
+    "react": "16.8.3",
+    "react-native": "0.59.10"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
