@@ -1,13 +1,13 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "3.1.1",
+  "version": "3.2.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsnetwork": "^3.1.1",
+    "@brandingbrand/fsnetwork": "^3.2.0",
     "@types/prop-types": "15.5.3",
     "@types/react-native-video": "^2.0.8",
     "lodash-es": "^4.17.10",
