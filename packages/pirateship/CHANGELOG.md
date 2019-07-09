@@ -3,25 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v4.0.0-alpha.0...v4.0.0-alpha.1) (2019-07-09)
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
-
-
-
-
-
-# [4.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.1.0...v4.0.0-alpha.0) (2019-07-08)
-
-
-### Features
-
-* implement react native 0.59 ([8405836](https://github.com/brandingbrand/flagship/commit/8405836))
-
-
-### BREAKING CHANGES
-
-* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
 
 
 
