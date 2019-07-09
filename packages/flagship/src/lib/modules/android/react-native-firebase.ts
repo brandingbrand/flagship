@@ -70,11 +70,6 @@ export function postLink(configuration: Config): void {
     `$1\n        google()`
   );
 
-  gradleBuild = gradleBuild.replace(
-    /(com\.android\.tools\.build:gradle:)[\d\.]+/,
-    '$13.1.3'
-  );
-
   fs.writeFileSync(path.resolve('android', 'build.gradle'), gradleBuild);
   logInfo('updated ./android/build.gradle');
 
