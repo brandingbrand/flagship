@@ -43,7 +43,7 @@ ext {
     compileSdkVersion = 28
     targetSdkVersion = 28
     supportLibVersion = "28.0.0"
-    googlePlayServicesVersion = "16.1.0" // Needed for react-native-camera & react-native-maps
+    googlePlayServicesVersion = "16.+" // Needed for react-native-camera & react-native-maps
 }
 
 // Force subprojects to use the same SDK and build tools

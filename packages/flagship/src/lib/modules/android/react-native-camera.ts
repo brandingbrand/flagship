@@ -31,15 +31,5 @@ export function postLink(configuration: Config): void {
   fs.writeFileSync(path.android.gradlePropertiesPath(), gradleProps);
   logInfo('disabled aapt2 in gradle.properties');
 
-  // Add dependencies to /android/build.gradle and update gradle version to 3.1.3
-  let gradleBuild = fs.readFileSync(path.resolve('android', 'build.gradle'), { encoding: 'utf8' });
-  gradleBuild = gradleBuild.replace(
-    /(com\.android\.tools\.build:gradle:)[\d\.]+/,
-    '$13.1.3'
-  );
-
-  fs.writeFileSync(path.resolve('android', 'build.gradle'), gradleBuild);
-  logInfo('updated ./android/build.gradle');
-
   logInfo('finished updating Android for react-native-camera');
 }
