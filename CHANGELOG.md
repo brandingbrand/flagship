@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v4.0.0-alpha.1...v4.0.0-alpha.2) (2019-07-10)
+
+
+### Bug Fixes
+
+* Include children when querying SFCC for category info ([5045b8b](https://github.com/brandingbrand/flagship/commit/5045b8b))
+
+
+
+
+
 # [4.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v4.0.0-alpha.0...v4.0.0-alpha.1) (2019-07-09)
 
 **Note:** Version bump only for package bb-flagship
