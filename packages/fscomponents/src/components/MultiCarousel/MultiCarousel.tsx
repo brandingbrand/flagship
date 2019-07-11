@@ -1,6 +1,7 @@
 import React, { Component, RefObject } from 'react';
 import {
   Animated,
+  Easing,
   FlatList,
   ListRenderItemInfo,
   Platform,
@@ -88,6 +89,16 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       itemWidth: 0,
       opacity: new Animated.Value(this.props.itemUpdated ? 0 : 1)
     };
+  }
+
+  componentDidMount(): void {
+    if (this.props.itemUpdated) {
+      Animated.timing(this.state.opacity, {
+        toValue: 1,
+        easing: Easing.in(Easing.cubic),
+        useNativeDriver: true
+      }).start();
+    }
   }
 
   componentDidUpdate(
