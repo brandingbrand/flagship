@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.1](https://github.com/brandingbrand/flagship/compare/v3.2.0...v3.2.1) (2019-07-11)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([98bde12](https://github.com/brandingbrand/flagship/commit/98bde12))
+
+
+
+
+
 # [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
