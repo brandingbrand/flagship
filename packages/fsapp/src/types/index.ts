@@ -26,6 +26,7 @@ export interface TabStyle {
   tabBarSelectedLabelColor?: string;
   forceTitlesDisplay?: boolean;
   tabBarHideShadow?: boolean;
+  initialTabIndex?: number;
 }
 
 export interface AppStyle extends TabStyle {
