@@ -42,7 +42,7 @@
     "@brandingbrand/greenkeeper-lockfile": "^0.0.1",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "@commitlint/config-lerna-scopes": "^7.1.2",
+    "@commitlint/config-lerna-scopes": "^8.1.0",
     "@commitlint/travis-cli": "^7.1.2",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-knobs": "4.1.18",
