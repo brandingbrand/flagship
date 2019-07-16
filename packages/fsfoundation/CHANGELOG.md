@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.2.1](https://github.com/brandingbrand/flagship/compare/v3.2.0...v3.2.1) (2019-07-11)
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsfoundation
+
+
+
+
+
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
 
 **Note:** Version bump only for package @brandingbrand/fsfoundation
 
