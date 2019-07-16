@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
-  "version": "4.0.0-alpha.2",
+  "version": "4.0.0-alpha.3",
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,11 +11,11 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^4.0.0-alpha.2",
-    "@brandingbrand/fsengage": "^4.0.0-alpha.2",
-    "@brandingbrand/fsfoundation": "^4.0.0-alpha.2",
-    "@brandingbrand/fsi18n": "^4.0.0-alpha.2",
-    "@brandingbrand/fsnetwork": "^4.0.0-alpha.2",
+    "@brandingbrand/fscommerce": "^4.0.0-alpha.3",
+    "@brandingbrand/fsengage": "^4.0.0-alpha.3",
+    "@brandingbrand/fsfoundation": "^4.0.0-alpha.3",
+    "@brandingbrand/fsi18n": "^4.0.0-alpha.3",
+    "@brandingbrand/fsnetwork": "^4.0.0-alpha.3",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
