@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([0279c9e](https://github.com/brandingbrand/flagship/commit/0279c9e))
+
+
+
+
+
 # [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
 
 **Note:** Version bump only for package @brandingbrand/fsnetwork
