@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([b4fad17](https://github.com/brandingbrand/flagship/commit/b4fad17))
+* add initialTabIndex prop to tabStyle ([84f768f](https://github.com/brandingbrand/flagship/commit/84f768f))
+* Include children when querying SFCC for category info ([3dc9aed](https://github.com/brandingbrand/flagship/commit/3dc9aed))
+
+
+### Features
+
+* implement react native 0.59 ([ab18642](https://github.com/brandingbrand/flagship/commit/ab18642))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
 
 
