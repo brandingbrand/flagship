@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+
+### Bug Fixes
+
+* Include children when querying SFCC for category info ([f1c2131](https://github.com/brandingbrand/flagship/commit/f1c2131))
+* update axios to version 0.19.0 ([0279c9e](https://github.com/brandingbrand/flagship/commit/0279c9e))
+* update fs-extra to version 8.0.0 ([31b6e7a](https://github.com/brandingbrand/flagship/commit/31b6e7a))
+* update replace-in-file to version 4.1.0 ([015abde](https://github.com/brandingbrand/flagship/commit/015abde))
+
+
+### Features
+
+* **fsengage:** allow fetching content for group ([4fbbbf4](https://github.com/brandingbrand/flagship/commit/4fbbbf4))
+* **fsengage:** update CMS/CMS provider files ([fbfbac3](https://github.com/brandingbrand/flagship/commit/fbfbac3))
+* implement react native 0.59 ([3f10554](https://github.com/brandingbrand/flagship/commit/3f10554))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
 
 
