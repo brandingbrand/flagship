@@ -3,7 +3,8 @@ import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
   StyleProp,
-  TextStyle
+  TextStyle,
+  ViewStyle
 } from 'react-native';
 import { Navigator } from 'react-native-navigation';
 
@@ -74,6 +75,9 @@ export interface JSON {
   empty?: Empty;
   storyGradient?: StoryGradient;
   html?: HTML;
+  pageNumberStyle?: StyleProp<TextStyle>;
+  navBarTitleStyle?: StyleProp<TextStyle>;
+  pageCounterStyle?: StyleProp<ViewStyle>;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
