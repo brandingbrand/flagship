@@ -20,7 +20,7 @@
     "build-web-demo": "./scripts/buildWebDemo.sh"
   },
   "dependencies": {
-    "@babel/runtime": "7.4.5",
+    "@babel/runtime": "7.5.5",
     "@brandingbrand/flagship": "^4.0.0",
     "@brandingbrand/fsapp": "^4.0.0",
     "@brandingbrand/fsbazaarvoice": "^4.0.0",
