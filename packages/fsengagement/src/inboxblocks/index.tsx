@@ -2,6 +2,7 @@
 import TextBlock from './TextBlock';
 import CTABlock from './CTABlock';
 import ImageBlock from './ImageBlock';
+import VideoBlock from './VideoBlock';
 import Card from './Card';
 import Story from './Story';
 
@@ -11,18 +12,22 @@ import ShareBlock from './ShareBlock';
 import FeaturedTopCard from './FeaturedTopCard';
 import EventCard from './EventCard';
 import SimpleCard from './SimpleCard';
-
+import FullScreenImageCard from './FullScreenImageCard';
+import RecipeBlock from './RecipeBlock';
 
 export default {
   Text: TextBlock,
   Image: ImageBlock,
   CTA: CTABlock,
+  Video: VideoBlock,
   TwinCTA: TwinCTABlock,
   Event: EventBlock,
   Card,
   FeaturedTopCard,
+  FullScreenImageCard,
   EventCard,
   SimpleCard,
   Share: ShareBlock,
-  story: Story
+  story: Story,
+  RecipeList: RecipeBlock
 };
