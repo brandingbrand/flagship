@@ -5,7 +5,7 @@ import { ComponentList, InboxBlock, InjectedProps } from './types';
 import layoutComponents from './inboxblocks';
 
 export interface EngagementSettings extends EngagementServiceConfig {
-  components: ComponentList;
+  components?: ComponentList;
 }
 
 export interface EngagementUtilities {
