@@ -10,6 +10,7 @@
     "@brandingbrand/fsnetwork": "^4.0.0",
     "@types/prop-types": "15.5.3",
     "@types/react-native-video": "^2.0.8",
+    "@types/react-native-snap-carousel": "^3.7.3",
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
@@ -17,6 +18,7 @@
     "react-native-device-info": "^0.21.5",
     "react-native-fcm": "16.0.0",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "react-native-snap-carousel": "^3.8.0",
     "react-native-video": "^3.2.1",
     "uuid-js": "0.7.5"
   }
