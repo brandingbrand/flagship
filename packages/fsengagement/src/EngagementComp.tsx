@@ -1,6 +1,7 @@
 // tslint:disable:jsx-use-translation-function
 import React, { Component, ComponentClass, Fragment } from 'react';
 import {
+  ActivityIndicator,
   Animated,
   DeviceEventEmitter,
   Dimensions,
@@ -8,6 +9,7 @@ import {
   Image,
   Linking,
   ListRenderItem,
+  Platform,
   RefreshControl,
   StyleSheet,
   Text,
@@ -24,8 +26,9 @@ import {
   EmitterProps,
   JSON,
   ScreenProps
- } from './types';
+} from './types';
 import EngagementWebView from './WebView';
+import Carousel from 'react-native-snap-carousel';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
@@ -40,9 +43,30 @@ const styles = StyleSheet.create({
     left: 8,
     padding: 12
   },
+  growAndCenter: {
+    flexGrow: 1,
+    justifyContent: 'center'
+  },
   backIcon: {
     width: 14,
     height: 25
+  },
+  pageCounter: {
+    position: 'absolute',
+    top: 70,
+    left: 20
+  },
+  pageNum: {
+    color: '#ffffff',
+    fontWeight: '500'
+  },
+  navBarTitle: {
+    color: '#000000',
+    fontSize: 14,
+    textAlign: 'center',
+    position: 'absolute',
+    top: 60,
+    width: '100%'
   },
   emptyMessage: {
     textAlign: 'center',
@@ -77,11 +101,18 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
   backButton?: boolean;
   noScrollView?: boolean;
+  navBarTitle?: string;
+  renderType?: string;
   refreshControl?: () => void;
   isLoading: boolean;
+  autoplay?: boolean;
+  autoplayDelay?: number;
+  autoplayInterval?: number;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
+  pageNum: number;
+  showCarousel: boolean;
 }
 
 export default function(
@@ -97,8 +128,17 @@ export default function(
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
-        scrollY: new Animated.Value(0)
+        scrollY: new Animated.Value(0),
+        pageNum: 1,
+        showCarousel: false
       };
+    }
+    componentDidMount(): void {
+      if (!(this.props.json && this.props.json.private_type === 'story')) {
+        setTimeout(() => {
+          this.setState({ showCarousel: true });
+        }, 700);
+      }
     }
 
     getChildContext = () => ({
@@ -191,7 +231,7 @@ export default function(
       this.props.navigator.pop();
     }
 
-    renderBlockItem: ListRenderItem<BlockItem> = ({item}) => {
+    renderBlockItem: ListRenderItem<BlockItem> = ({ item }) => {
       return this.renderBlock(item);
     }
 
@@ -206,7 +246,6 @@ export default function(
         name,
         ...restProps
       };
-
       if (!layoutComponents[private_type]) {
         return null;
       }
@@ -277,10 +316,55 @@ export default function(
       );
     }
 
+
+    onSnapToItem = (index: number): void => {
+      const pageNum = index + 1;
+      this.setState({
+        pageNum
+      });
+    }
+    // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
-      const { json: { storyGradient } } = this.props;
+      const { json, json: { storyGradient } } = this.props;
       const empty: any = this.props.json.empty || {};
-      if (this.props.noScrollView) {
+
+      if (this.props.renderType && this.props.renderType === 'carousel') {
+        const autoplay = this.props.autoplay || false;
+        const autoplayDelay = this.props.autoplayDelay || 1000;
+        const autoplayInterval = this.props.autoplayInterval || 3000;
+        return (
+          <Fragment>
+            {empty && !(json.private_blocks && json.private_blocks.length) &&
+              <Text style={[styles.emptyMessage, empty.textStyle]}>
+                {empty.message || 'No content found.'}</Text>}
+
+            {this.state.showCarousel && <Carousel
+              data={json.private_blocks || []}
+              layout={'default'}
+              autoplay={autoplay}
+              autoplayDelay={autoplayDelay}
+              autoplayInterval={autoplayInterval}
+              sliderWidth={Dimensions.get('screen').width}
+              itemWidth={Dimensions.get('screen').width}
+              renderItem={this.renderBlockItem}
+              inactiveSlideOpacity={1}
+              inactiveSlideScale={1}
+              onSnapToItem={this.onSnapToItem}
+              useScrollView={Platform.OS === 'ios' ? true : false}
+            />}
+            {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
+            {(json.private_blocks && json.private_blocks.length) &&
+              <View style={[styles.pageCounter, json.pageCounterStyle]}>
+                <Text
+                  style={[styles.pageNum, json.pageNumberStyle]}
+                >
+                  {this.state.pageNum} / {json.private_blocks.length}
+                </Text>
+              </View>
+            }
+          </Fragment>
+        );
+      } else if (this.props.noScrollView) {
         return (
           <Fragment>
             {this.renderBlocks()}
@@ -310,11 +394,11 @@ export default function(
     }
 
     render(): JSX.Element {
-      const { json } = this.props;
+      const { backButton, json, navBarTitle } = this.props;
       return (
         <View style={styles.container}>
           {this.renderScrollView()}
-          {this.props.backButton &&
+          {backButton &&
             <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
               <Image
                 resizeMode='contain'
@@ -322,6 +406,12 @@ export default function(
                 style={[styles.backIcon, json.backArrow]}
               />
             </TouchableOpacity>}
+          {navBarTitle &&
+            <Text
+              style={[styles.navBarTitle, json.navBarTitleStyle]}
+            >
+              {navBarTitle}
+            </Text>}
         </View>
       );
     }
