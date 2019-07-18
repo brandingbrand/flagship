@@ -14,7 +14,7 @@
     "@brandingbrand/fscommerce": "^4.0.0",
     "@brandingbrand/fscomponents": "^4.0.0",
     "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react-native": "0.60.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
