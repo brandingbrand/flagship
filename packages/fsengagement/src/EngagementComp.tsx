@@ -11,10 +11,12 @@ import {
   ListRenderItem,
   Platform,
   RefreshControl,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
 import PropTypes from 'prop-types';
@@ -108,6 +110,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplay?: boolean;
   autoplayDelay?: number;
   autoplayInterval?: number;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -394,9 +397,9 @@ export default function(
     }
 
     render(): JSX.Element {
-      const { backButton, json, navBarTitle } = this.props;
+      const { backButton, containerStyle, json, navBarTitle } = this.props;
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, containerStyle]}>
           {this.renderScrollView()}
           {backButton &&
             <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
