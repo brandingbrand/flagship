@@ -78,6 +78,8 @@ export interface JSON {
   pageNumberStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
+  id?: string;
+  key?: string;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
