@@ -63,6 +63,13 @@ export default class ShareBlock extends Component<ShareBlockProps> {
     });
   }
 
+  shouldComponentUpdate(nextProps: ShareBlockProps): boolean {
+    return nextProps.imageSrc !== this.props.imageSrc ||
+      nextProps.imageStyle !== this.props.imageStyle ||
+      nextProps.underlayColor !== this.props.underlayColor ||
+      nextProps.containerStyle !== this.props.containerStyle;
+  }
+
   render(): JSX.Element {
     const {
       imageSrc,

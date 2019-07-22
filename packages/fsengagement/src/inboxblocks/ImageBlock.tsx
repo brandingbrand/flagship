@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
@@ -24,12 +24,25 @@ export interface ImageBlockState {
   height?: number;
 }
 
-export default class ImageBlock extends PureComponent<ImageBlockProps, ImageBlockState> {
+export default class ImageBlock extends Component<ImageBlockProps, ImageBlockState> {
   readonly state: ImageBlockState = {};
 
   componentDidMount(): void {
     this.setState(this.findImageRatio());
   }
+
+  shouldComponentUpdate(nextProps: ImageBlockProps, nextState: ImageBlockState): boolean {
+    return this.props.containerStyle !== nextProps.containerStyle ||
+      this.props.imageStyle !== nextProps.imageStyle ||
+      this.props.ratio !== nextProps.ratio ||
+      this.props.resizeMethod !== nextProps.resizeMethod ||
+      this.props.resizeMode !== nextProps.resizeMode ||
+      this.props.source !== nextProps.source ||
+      this.props.useRatio !== nextProps.useRatio ||
+      this.state.height !== nextState.height ||
+      this.state.width !== nextState.width;
+  }
+
   _onLayout = (event: LayoutChangeEvent) => {
     const { ratio, useRatio } = this.props;
     if (useRatio && ratio) {

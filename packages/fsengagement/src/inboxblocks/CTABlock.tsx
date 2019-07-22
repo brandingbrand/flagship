@@ -105,6 +105,14 @@ export default class CTABlock extends Component<CTABlockProps> {
     this.takeAction(this.props.action, this.props.actions);
   }
 
+  shouldComponentUpdate(nextProps: CTABlockProps): boolean {
+    return nextProps.buttonStyle !== this.props.buttonStyle ||
+      nextProps.textStyle !== this.props.textStyle ||
+      nextProps.containerStyle !== this.props.containerStyle ||
+      nextProps.text !== this.props.text ||
+      nextProps.icon !== this.props.icon;
+  }
+
   render(): JSX.Element {
     const {
       buttonStyle,
