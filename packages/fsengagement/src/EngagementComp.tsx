@@ -260,7 +260,7 @@ export default function(
           ...props,
           storyGradient: props.story ? json.storyGradient : null,
           api,
-          key: Math.floor(Math.random() * 1000000)
+          key: this.dataKeyExtractor(item)
         },
         private_blocks && private_blocks.map(this.renderBlock)
       );
@@ -379,6 +379,7 @@ export default function(
       return (
         <FlatList
           data={this.props.json.private_blocks || []}
+          keyExtractor={this.dataKeyExtractor}
           renderItem={this.renderBlockItem}
           ListEmptyComponent={(
             <Text style={[styles.emptyMessage, empty.textStyle]}>
@@ -417,6 +418,10 @@ export default function(
             </Text>}
         </View>
       );
+    }
+
+    dataKeyExtractor = (item: BlockItem): string => {
+      return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
     }
   };
 }
