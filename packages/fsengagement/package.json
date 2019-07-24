@@ -1,16 +1,16 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "4.0.0",
+  "version": "4.1.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsnetwork": "^4.0.0",
+    "@brandingbrand/fsnetwork": "^4.1.0",
     "@types/prop-types": "15.5.3",
-    "@types/react-native-video": "^2.0.8",
     "@types/react-native-snap-carousel": "^3.7.3",
+    "@types/react-native-video": "^2.0.8",
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
