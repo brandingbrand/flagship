@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+
+
+
 # [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
 
 
