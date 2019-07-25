@@ -239,17 +239,19 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     }
   }
 
-  renderImage = (item: any) => {
+  renderImage = (item: any, i: number) => {
     return (
-      <View>
-        <Image
-          source={item.src}
-          resizeMode='contain'
-          style={{
-            width: this.state.imageWidth,
-            height: this.state.imageHeight
-          }}
-        />
+      <View style={this.props.containerStyle}>
+        {this.props.renderImageWeb &&
+          this.props.renderImageWeb(item, i) ||
+          <Image
+            source={item.src}
+            resizeMode='contain'
+            style={{
+              width: this.state.imageWidth,
+              height: this.state.imageHeight
+            }}
+          />}
       </View>
     );
   }
@@ -258,9 +260,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     const { peekSize = 0, gapSize = 0 } = this.props;
 
     return (
-      <View onLayout={this.handleLayoutChange}>
-        <View>
-          <div id={`zoom-carousel-${this.id}`}>
+      <View style={this.props.containerStyle} onLayout={this.handleLayoutChange}>
+        <View style={this.props.containerStyle}>
+          <div id={`zoom-carousel-${this.id}`} style={{height: '100%'}}>
             <MultiCarousel
               ref={this.extractMultiCarousel}
               onSlideChange={this.handleSlideChange}
@@ -275,17 +277,19 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               zoomButtonStyle={this.props.zoomButtonStyle}
               renderPageIndicator={this.props.renderPageIndicator}
               centerMode={this.props.centerMode}
+              style={this.props.containerStyle}
             />
 
-            <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
-              {this.props.renderZoomButton ? (
-                this.props.renderZoomButton(this.openZoom)
-              ) : (
-                <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
-                  <Image style={S.searchIcon} source={searchIcon} />
-                </TouchableOpacity>
-              )}
-            </View>
+            {!this.props.hideZoomButton &&
+              <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
+                {this.props.renderZoomButton ? (
+                  this.props.renderZoomButton(this.openZoom)
+                ) : (
+                  <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                    <Image style={S.searchIcon} source={searchIcon} />
+                  </TouchableOpacity>
+                )}
+              </View>}
 
             <PhotoSwipe
               isOpen={this.state.isZooming}
