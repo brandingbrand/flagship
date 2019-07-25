@@ -1,4 +1,4 @@
-import { ImageProperties, ImageURISource } from 'react-native';
+import { ImageProperties, ImageURISource, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageData {
   src: ImageURISource;
@@ -9,6 +9,8 @@ export interface ZoomCarouselProps {
   images: ImageData[];
   gapSize?: number;
   centerMode?: boolean;
+  hideZoomButton?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
   peekSize?: number;
   showArrow?: boolean;
   pageIndicatorZoomStyle?: any;
@@ -25,6 +27,7 @@ export interface ZoomCarouselProps {
     imageHeight: number,
     openZoom: () => void
   ) => React.ReactNode;
+  renderImageWeb?: (data: any, i: number) => React.ReactNode;
   renderCloseButton?: (closeZoom: () => void) => React.ReactNode;
   renderPageIndicator?: (
     currentIndex: number,
