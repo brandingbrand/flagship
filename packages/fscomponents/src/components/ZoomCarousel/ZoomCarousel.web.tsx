@@ -278,6 +278,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               renderPageIndicator={this.props.renderPageIndicator}
               centerMode={this.props.centerMode}
               style={this.props.containerStyle}
+              nextArrowOnBlur={this.props.nextArrowOnBlur}
             />
 
             {!this.props.hideZoomButton &&
