@@ -38,6 +38,7 @@ export interface ZoomCarouselProps {
     currentIndex: number,
     goTo: (index: number, options: any) => void
   ) => React.ReactNode;
+  nextArrowOnBlur?: () => void;
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
