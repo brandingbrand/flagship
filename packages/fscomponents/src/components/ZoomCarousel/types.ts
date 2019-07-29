@@ -1,4 +1,4 @@
-import { ImageProperties, ImageURISource, StyleProp, ViewStyle } from 'react-native';
+import { ImageProperties, ImageURISource } from 'react-native';
 
 export interface ImageData {
   src: ImageURISource;
