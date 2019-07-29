@@ -100,6 +100,9 @@ const S = StyleSheet.create({
       }
     ]
   },
+  fullHeight: {
+    height: '100%'
+  },
   thumbnailImg: {
     width: '100%',
     height: '100%'
@@ -241,7 +244,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   renderImage = (item: any, i: number) => {
     return (
-      <View style={this.props.containerStyle}>
+      <View style={this.props.fillContainer ? S.fullHeight : null}>
         {this.props.renderImageWeb &&
           this.props.renderImageWeb(item, i) ||
           <Image
@@ -260,9 +263,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     const { peekSize = 0, gapSize = 0 } = this.props;
 
     return (
-      <View style={this.props.containerStyle} onLayout={this.handleLayoutChange}>
-        <View style={this.props.containerStyle}>
-          <div id={`zoom-carousel-${this.id}`} style={{height: '100%'}}>
+      <View
+        style={this.props.fillContainer ? S.fullHeight : null}
+        onLayout={this.handleLayoutChange}
+      >
+        <View
+          style={this.props.fillContainer ? S.fullHeight : null}
+        >
+          <div
+            id={`zoom-carousel-${this.id}`}
+            style={this.props.fillContainer ? {height: '100%'} : undefined}
+          >
             <MultiCarousel
               ref={this.extractMultiCarousel}
               onSlideChange={this.handleSlideChange}
@@ -277,7 +288,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               zoomButtonStyle={this.props.zoomButtonStyle}
               renderPageIndicator={this.props.renderPageIndicator}
               centerMode={this.props.centerMode}
-              style={this.props.containerStyle}
+              style={this.props.fillContainer ? S.fullHeight : null}
               nextArrowOnBlur={this.props.nextArrowOnBlur}
             />
 
