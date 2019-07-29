@@ -50,6 +50,9 @@ const S = StyleSheet.create({
   activeImageStyle: {
     zIndex: 100
   },
+  fullHeight: {
+    height: '100%'
+  },
   goToZoomButtons: {
     position: 'absolute',
     flexDirection: 'row',
@@ -625,10 +628,13 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
             this.originalImgs[index] = image;
           }}
-          style={{
-            width: this.imageWidth,
-            height: this.imageHeight
-          }}
+          style={[
+            {
+              width: this.imageWidth,
+              height: this.imageHeight
+            },
+            this.props.fillContainer ? S.fullHeight : null
+          ]}
           source={item.src}
           resizeMode='contain'
         />
@@ -646,31 +652,44 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.multiCarousel = ref;
   }
 
-  render(): JSX.Element {
+  renderCarousel = () => {
     const peekSize = this.props.peekSize || 0;
     const gapSize = this.props.gapSize || defaultGapSize;
     return (
-      <View>
-        <View>
-          <View {...this.panResponder.panHandlers}>
-            <MultiCarousel
-              ref={this.extractMultiCarousel}
-              onSlideChange={this.handleSlideChange}
-              peekSize={
-                peekSize + (this.props.centerMode ? gapSize / 2 : 0)
-              }
-              itemsPerPage={1}
-              items={this.props.images}
-              itemUpdated={this.itemUpdated}
-              renderItem={this.renderImage}
-              showArrow={this.props.showArrow}
-              dotStyle={this.props.dotStyle}
-              dotActiveStyle={this.props.dotActiveStyle}
-              pageIndicatorStyle={this.props.pageIndicatorStyle}
-              zoomButtonStyle={this.props.zoomButtonStyle}
-              renderPageIndicator={this.props.renderPageIndicator}
-              centerMode={this.props.centerMode}
-            />
+      <MultiCarousel
+        ref={this.extractMultiCarousel}
+        onSlideChange={this.handleSlideChange}
+        peekSize={
+          peekSize + (this.props.centerMode ? gapSize / 2 : 0)
+        }
+        itemsPerPage={1}
+        items={this.props.images}
+        itemUpdated={this.itemUpdated}
+        renderItem={this.renderImage}
+        showArrow={this.props.showArrow}
+        dotStyle={this.props.dotStyle}
+        dotActiveStyle={this.props.dotActiveStyle}
+        pageIndicatorStyle={this.props.pageIndicatorStyle}
+        zoomButtonStyle={this.props.zoomButtonStyle}
+        renderPageIndicator={this.props.renderPageIndicator}
+        centerMode={this.props.centerMode}
+        style={this.props.fillContainer ? S.fullHeight : null}
+        nextArrowOnBlur={this.props.nextArrowOnBlur}
+      />
+    );
+  }
+
+  render(): JSX.Element {
+    return (
+      <View style={this.props.fillContainer ? S.fullHeight : null}>
+        <View style={this.props.fillContainer ? S.fullHeight : null}>
+          <View
+            style={this.props.fillContainer ? S.fullHeight : null}
+            {...this.panResponder.panHandlers}
+          >
+
+          {this.renderCarousel()}
+
           </View>
 
           {this.renderModal()}
