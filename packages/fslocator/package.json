@@ -23,7 +23,7 @@
     "react-native-geocoder": "^0.5.0",
     "react-native-maps": "https://github.com/brandingbrand/react-native-maps.git#0.21.0-gradle2",
     "react-native-open-settings": "^1.0.1",
-    "react-native-permissions": "^1.1.1"
+    "react-native-permissions": "~1.1.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
