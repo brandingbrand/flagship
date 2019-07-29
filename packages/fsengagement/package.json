@@ -19,7 +19,7 @@
     "react-native-fcm": "16.0.0",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-snap-carousel": "^3.8.0",
-    "react-native-video": "^3.2.1",
+    "react-native-video": "^4.0.0",
     "uuid-js": "0.7.5"
   }
 }
