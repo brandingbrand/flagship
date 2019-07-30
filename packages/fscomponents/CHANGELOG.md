@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v3.3.0) (2019-07-30)
+
+
+### Features
+
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([184c3ff](https://github.com/brandingbrand/flagship/commit/184c3ff))
+* **fscomponents:** add some option props to zoomCarousel ([4fe7070](https://github.com/brandingbrand/flagship/commit/4fe7070))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([1cb68b8](https://github.com/brandingbrand/flagship/commit/1cb68b8))
+
+
+
+
+
 ## [3.2.1](https://github.com/brandingbrand/flagship/compare/v3.2.0...v3.2.1) (2019-07-11)
 
 
