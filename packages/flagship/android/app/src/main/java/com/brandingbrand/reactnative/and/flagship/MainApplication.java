@@ -13,6 +13,7 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.soloader.SoLoader;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -28,7 +29,8 @@ public class MainApplication extends NavigationApplication {
                 new EnvSwitcherPackage(),
                 new ReactNativeRestartPackage(),
                 new CookieManagerPackage(),
-                new RNDeviceInfo()
+                new RNDeviceInfo(),
+                new AsyncStoragePackage()
         );
     }
 

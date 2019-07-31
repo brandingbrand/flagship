@@ -196,6 +196,7 @@ dependencies {
     implementation(project(':react-native-device-info')){
         exclude group: 'com.google.android.gms', module: 'play-services-gcm'
     }
+    implementation project(':@react-native-community_async-storage')
 }
 
 // Run this once to be able to run the application with BUCK

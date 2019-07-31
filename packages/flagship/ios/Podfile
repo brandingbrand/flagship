@@ -33,6 +33,7 @@ target 'FLAGSHIP' do
 
   # Add new pods below this line
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   # When you have pods that also depend on React (like any custom module),
   # React can end up getting included multiple times. Remove React as a

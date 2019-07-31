@@ -83,7 +83,10 @@
       "jsc-android",
       "**/fsshopify",
       "**/fsshopify/react-native*",
-      "**/fsshopify/react-native*/**"
+      "**/fsshopify/react-native*/**",
+      "**/fsengage",
+      "**/fsengage/@react-native-community",
+      "**/fsengage/@react-native-community/async-storage"
     ]
   }
 }
