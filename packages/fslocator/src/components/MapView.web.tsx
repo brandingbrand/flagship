@@ -86,16 +86,16 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     );
   }
 
-  componentWillReceiveProps(nextProps: PropType): void {
+  componentDidUpdate(prevProps: PropType): void {
     if (
-      nextProps.locations !== this.props.locations ||
-      nextProps.isCollapsed !== this.props.isCollapsed ||
-      nextProps.center !== this.props.center
+      this.props.locations !== prevProps.locations ||
+      this.props.isCollapsed !== prevProps.isCollapsed ||
+      this.props.center !== prevProps.center
     ) {
       this.moveToLocation(
-        nextProps.locations,
-        nextProps.isCollapsed,
-        nextProps.center
+        this.props.locations,
+        this.props.isCollapsed,
+        this.props.center
       );
     }
   }

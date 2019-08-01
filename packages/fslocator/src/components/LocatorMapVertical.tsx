@@ -48,7 +48,7 @@ export default class Locator extends Component<
     });
   }
 
-  componentWillUpdate(): void {
+  componentDidUpdate(): void {
     if (Platform.OS !== 'web') {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
