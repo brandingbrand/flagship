@@ -37,11 +37,17 @@ export function displayName(configuration: FlagshipTypes.Config): void {
   }
 
   helpers.logInfo(`updating Android app display name`);
-
   fs.update(
     path.android.stringsPath(),
     /<string name="app_name">[^<]+<\/string>/,
-    `<string name="app_name">${configuration.displayName}</string>`
+    `<string name="app_name">${
+    configuration.displayName
+      .replace(/&/g, '&amp;')
+      .replace(/'/g, '&apos;')
+      .replace(/"/g, '&quot;')
+      .replace(/>/g, '&gt;')
+      .replace(/</g, '&lt;')
+    }</string>`
   );
 }
 
