@@ -3,6 +3,214 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+
+### Features
+
+* implement react native 0.59 ([ab18642](https://github.com/brandingbrand/flagship/commit/ab18642))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+
+
+### Features
+
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
+## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [3.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0-alpha.0) (2019-02-08)
+
+
+### Bug Fixes
+
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+
+
+### Features
+
+* upgrade react native to 0.57.8 ([77177b3](https://github.com/brandingbrand/flagship/commit/77177b3))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+
+
+
+
+
 <a name="2.0.0"></a>
 # 2.0.0 (2018-10-16)
 

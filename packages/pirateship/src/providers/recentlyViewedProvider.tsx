@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
     },
     addToRecentlyViewed: async product => {
       try {
-        const existingItemsJson = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS);
+        const existingItemsJson = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS) || '[]';
         let existingItems = JSON.parse(existingItemsJson);
 
         if (!Array.isArray(existingItems)) {
@@ -74,7 +74,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
         }
       } catch (e) {
         const items = [] as CommerceTypes.Product[];
-        await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, '');
+        await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, '[]');
         dispatch({ type: UPDATE_RECENTLY_VIEWED, items });
         console.warn('Failed to add to recently viewed items', e);
       }

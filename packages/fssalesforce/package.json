@@ -1,6 +1,7 @@
 {
   "name": "@brandingbrand/fssalesforce",
-  "version": "2.0.0",
+  "sideEffects": false,
+  "version": "4.1.0",
   "description": "Salesforce Commerce Cloud Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,15 +12,16 @@
     "gen-types": "node scripts/generateTypes.js"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "2.0.0",
-    "@brandingbrand/fsfoundation": "2.0.0",
-    "@brandingbrand/fsnetwork": "2.0.0",
+    "@brandingbrand/fscommerce": "^4.1.0",
+    "@brandingbrand/fsfoundation": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^4.1.0",
     "decimal.js": "^10.0.1",
+    "dtsgenerator": "^2.0.7",
     "jwt-decode": "^2.2.0",
-    "qs": "^6.5.2"
+    "qs": "^6.7.0"
   },
   "devDependencies": {
-    "dtsgenerator": "^1.0.0"
+    "dtsgenerator": "^2.0.7"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

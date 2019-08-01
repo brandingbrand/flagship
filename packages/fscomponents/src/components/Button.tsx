@@ -83,6 +83,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     return (
       <TouchableHighlight
         accessibilityLabel={accessibilityLabel || title}
+        accessibilityRole='button'
         onPress={onPress}
         onLongPress={onLongPress}
         underlayColor={

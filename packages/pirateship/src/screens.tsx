@@ -17,7 +17,6 @@ import TrackOrderLanding from './screens/TrackOrderLanding';
 import OrderHistoryList from './screens/OrderHistoryList';
 import OrderHistoryDetail from './screens/OrderHistoryDetail';
 import SavedPayments from './screens/SavedPayments';
-import PushOptIn from './screens/PushOptIn';
 import EditPersonal from './screens/EditPersonal';
 import AddressBook from './screens/AddressBook';
 import EditAddress from './screens/EditAddress';
@@ -26,6 +25,11 @@ import ChangePassword from './screens/ChangePassword';
 import EmailSignUp from './screens/EmailSignUp';
 import LeftDrawerMenu from './screens/LeftDrawerMenu';
 import Search from './screens/Search';
+import BreadCrumbsSample from './screens/BreadCrumbsSample';
+import AccordionSample from './screens/AccordionSample';
+import ActionBarSample from './screens/ActionBarSample';
+import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
+import CartCountSample from './screens/CartCountSample';
 
 export default {
   Shop,
@@ -45,12 +49,16 @@ export default {
   TrackOrderLanding,
   OrderHistoryList,
   OrderHistoryDetail,
-  PushOptIn,
   EditPersonal,
   AddressBook,
   EditAddress,
   ForgotPassword,
   EmailSignUp,
   ChangePassword,
-  Search
+  Search,
+  BreadCrumbsSample,
+  AccordionSample,
+  ActionBarSample,
+  ImageWithOverlaySample,
+  CartCountSample
 };

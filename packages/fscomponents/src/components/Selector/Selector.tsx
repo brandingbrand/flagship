@@ -10,6 +10,9 @@ import {
 import styles from '../../styles/Selector';
 import { Modal } from '../Modal';
 import { SelectorList } from './SelectorList';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+const componentTranslationKeys = translationKeys.flagship.selector;
 
 export interface SelectorItem {
   disabled?: boolean;
@@ -95,6 +98,7 @@ export class Selector extends PureComponent<
       <TouchableOpacity
         style={[styles.selector, selectButtonStyle]}
         onPress={this.openModal}
+        accessibilityRole='button'
       >
         {!selectorLabel && placeholder ? (
           <Text style={[styles.placeholderStyle, placeholderStyle]}>
@@ -126,6 +130,8 @@ export class Selector extends PureComponent<
         <TouchableOpacity
           style={styles.closeButtonContainer}
           onPress={this.closeModal}
+          accessibilityRole='button'
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.close)}
         >
           <Text style={styles.closeButton}>×</Text>
         </TouchableOpacity>
