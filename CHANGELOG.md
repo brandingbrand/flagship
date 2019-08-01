@@ -3,6 +3,535 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([90062f4](https://github.com/brandingbrand/flagship/commit/90062f4))
+* inbox block re-render improvement ([04a80e4](https://github.com/brandingbrand/flagship/commit/04a80e4))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fsengagement:** add new carousel option and full screen background ([8c5ad3d](https://github.com/brandingbrand/flagship/commit/8c5ad3d))
+* **fsengagement:** allow EngagementComp to accept style ([f368ccd](https://github.com/brandingbrand/flagship/commit/f368ccd))
+* **fsengagement:** update yarn.lock ([1222c6d](https://github.com/brandingbrand/flagship/commit/1222c6d))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([90062f4](https://github.com/brandingbrand/flagship/commit/90062f4))
+* inbox block re-render improvement ([04a80e4](https://github.com/brandingbrand/flagship/commit/04a80e4))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fsengagement:** add new carousel option and full screen background ([8c5ad3d](https://github.com/brandingbrand/flagship/commit/8c5ad3d))
+* **fsengagement:** allow EngagementComp to accept style ([f368ccd](https://github.com/brandingbrand/flagship/commit/f368ccd))
+* **fsengagement:** update yarn.lock ([1222c6d](https://github.com/brandingbrand/flagship/commit/1222c6d))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([b4fad17](https://github.com/brandingbrand/flagship/commit/b4fad17))
+* add initialTabIndex prop to tabStyle ([84f768f](https://github.com/brandingbrand/flagship/commit/84f768f))
+* Include children when querying SFCC for category info ([3dc9aed](https://github.com/brandingbrand/flagship/commit/3dc9aed))
+
+
+### Features
+
+* implement react native 0.59 ([ab18642](https://github.com/brandingbrand/flagship/commit/ab18642))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([98bde12](https://github.com/brandingbrand/flagship/commit/98bde12))
+
+
+
+
+
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([0279c9e](https://github.com/brandingbrand/flagship/commit/0279c9e))
+* update fs-extra to version 8.0.0 ([31b6e7a](https://github.com/brandingbrand/flagship/commit/31b6e7a))
+* update replace-in-file to version 4.1.0 ([015abde](https://github.com/brandingbrand/flagship/commit/015abde))
+
+
+### Features
+
+* **fsengage:** allow fetching content for group ([4fbbbf4](https://github.com/brandingbrand/flagship/commit/4fbbbf4))
+* **fsengage:** update CMS/CMS provider files ([fbfbac3](https://github.com/brandingbrand/flagship/commit/fbfbac3))
+
+
+
+
+
+## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([5be5f85](https://github.com/brandingbrand/flagship/commit/5be5f85))
+* update fs-extra to version 8.0.0 ([db734b9](https://github.com/brandingbrand/flagship/commit/db734b9))
+* update replace-in-file to version 4.1.0 ([293629a](https://github.com/brandingbrand/flagship/commit/293629a))
+
+
+
+
+
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **flagship:** pass leanplum push url to expected launchOptions value ([5b1909c](https://github.com/brandingbrand/flagship/commit/5b1909c))
+* **flagship:** put placeholders back for using exception domains ([acaf8d1](https://github.com/brandingbrand/flagship/commit/acaf8d1))
+* **flagship:** remove minSdkVersion from Android versionCode ([0ca3913](https://github.com/brandingbrand/flagship/commit/0ca3913))
+* **flagship:** restore minsdkversion gradle prop ([d10b0eb](https://github.com/brandingbrand/flagship/commit/d10b0eb))
+* **fsapp:** devMenu path override and web screen wrapper update ([c9c8f78](https://github.com/brandingbrand/flagship/commit/c9c8f78))
+* **fsapp:** Expose getApplication functionality for SSR ([ec4013e](https://github.com/brandingbrand/flagship/commit/ec4013e))
+* **fsapp:** On web dev menu, go back before refreshing ([aa9f849](https://github.com/brandingbrand/flagship/commit/aa9f849))
+* **fsapp:** Updates to server-side handling of fsapp ([e6b5506](https://github.com/brandingbrand/flagship/commit/e6b5506))
+* **fscategory:** remove duplicate commerce loadData on component mount ([722c4ba](https://github.com/brandingbrand/flagship/commit/722c4ba)), closes [/github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx#L134](https://github.com//github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx/issues/L134)
+* **fscomponents:** accessibilitylabel spelling fix ([91265a2](https://github.com/brandingbrand/flagship/commit/91265a2))
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** add accessibility to searchbar ([69d808f](https://github.com/brandingbrand/flagship/commit/69d808f))
+* **fscomponents:** Add classes to swatch scroller for css ([aa7d1f6](https://github.com/brandingbrand/flagship/commit/aa7d1f6))
+* **fscomponents:** add key to SelectorList items ([48b4161](https://github.com/brandingbrand/flagship/commit/48b4161))
+* **fscomponents:** add opt prop and color change for reviewIndicator ([e49f7c8](https://github.com/brandingbrand/flagship/commit/e49f7c8))
+* **fscomponents:** fix linting of readme ([d14dd8c](https://github.com/brandingbrand/flagship/commit/d14dd8c))
+* **fscomponents:** Fixes for IE11 ([6a3f2d0](https://github.com/brandingbrand/flagship/commit/6a3f2d0))
+* **fscomponents:** Fixes for IE11 buttons ([1b4067a](https://github.com/brandingbrand/flagship/commit/1b4067a))
+* **fscomponents:** hide web carousel if item width is 0 ([047d28b](https://github.com/brandingbrand/flagship/commit/047d28b))
+* **fscomponents:** Move loadHistoryToState to componentDidMount ([2708bbd](https://github.com/brandingbrand/flagship/commit/2708bbd))
+* **fscomponents:** Move Multicarousel opacity and initialized into state ([5628e2f](https://github.com/brandingbrand/flagship/commit/5628e2f))
+* **fscomponents:** remove accessible prop to stop focus ([d861de6](https://github.com/brandingbrand/flagship/commit/d861de6))
+* **fscomponents:** revert buggy button refactor ([23430f8](https://github.com/brandingbrand/flagship/commit/23430f8)), closes [#415](https://github.com/brandingbrand/flagship/issues/415) [#587](https://github.com/brandingbrand/flagship/issues/587)
+* **fscomponents:** Round number of items for Multicarousel page width ([3a5ef38](https://github.com/brandingbrand/flagship/commit/3a5ef38))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* add a11yLabel/Role to Selector ([4f58087](https://github.com/brandingbrand/flagship/commit/4f58087))
+* Bump storybook version ([319ee3f](https://github.com/brandingbrand/flagship/commit/319ee3f))
+* update pluralize to version 8.0.0 ([24d0f02](https://github.com/brandingbrand/flagship/commit/24d0f02))
+* **fscomponents:** update item width with new prop ([e13849c](https://github.com/brandingbrand/flagship/commit/e13849c))
+* **fscomponents:** Use onSubmit function for SearchBar button ([da4e807](https://github.com/brandingbrand/flagship/commit/da4e807))
+* **fsproductindex:** Expose fsproductindex functionality ([ca42877](https://github.com/brandingbrand/flagship/commit/ca42877))
+* **fsproductindex:** Update commerce data even if no products ([b1fbccc](https://github.com/brandingbrand/flagship/commit/b1fbccc))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+* update react-native-device-info to version 0.29.1 ([94a6629](https://github.com/brandingbrand/flagship/commit/94a6629))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* update svgs to version 4.1.0 ([a1e0345](https://github.com/brandingbrand/flagship/commit/a1e0345))
+
+
+### Features
+
+* change storybook version to 4.1.16 ([3ca71f0](https://github.com/brandingbrand/flagship/commit/3ca71f0))
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* **fscomponents:** add completed state accessibility label in Step ([2434842](https://github.com/brandingbrand/flagship/commit/2434842))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **flagship:** refactor module scripts and remove node-suspect ([c5bf0f8](https://github.com/brandingbrand/flagship/commit/c5bf0f8))
+* **fsapp:** add ability to pass location into the web router ([b8e5733](https://github.com/brandingbrand/flagship/commit/b8e5733))
+* **fsapp:** Add functions to convert path props to component props ([23d5d9b](https://github.com/brandingbrand/flagship/commit/23d5d9b))
+* **fsapp:** Track whether the drawer is visible ([32cf36e](https://github.com/brandingbrand/flagship/commit/32cf36e))
+* **fscommerce:** Add isLoading prop to commerce provider ([f304fc4](https://github.com/brandingbrand/flagship/commit/f304fc4))
+* **fscomponents:** add a11yRole/Label to CategoryLine/SelectableRow ([7b9118b](https://github.com/brandingbrand/flagship/commit/7b9118b))
+* **fscomponents:** add ability to pass arrow styles for multicarousel ([200deb4](https://github.com/brandingbrand/flagship/commit/200deb4))
+* **fscomponents:** add accessibility for modalhalfscreen background ([86be4ad](https://github.com/brandingbrand/flagship/commit/86be4ad))
+* **fscomponents:** add accessibility labels to button and swatches ([edfcbf1](https://github.com/brandingbrand/flagship/commit/edfcbf1))
+* **fscomponents:** add accessibility role to categorybox and searchbar ([18ab22f](https://github.com/brandingbrand/flagship/commit/18ab22f))
+* **fscomponents:** add button properties for carousel ([74836b6](https://github.com/brandingbrand/flagship/commit/74836b6))
+* **fscomponents:** add function to generate dynamic label from cms ([f7b6c3f](https://github.com/brandingbrand/flagship/commit/f7b6c3f))
+* **fscomponents:** add onblur and translations to multi carousel arrows ([6afdf0b](https://github.com/brandingbrand/flagship/commit/6afdf0b))
+* **fscomponents:** Custom styling for swatch show more/less ([f0227bc](https://github.com/brandingbrand/flagship/commit/f0227bc))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([9ebd0bb](https://github.com/brandingbrand/flagship/commit/9ebd0bb))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* Make scrollToTop function public ([ced8b2f](https://github.com/brandingbrand/flagship/commit/ced8b2f))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** pin android.support libs to 27 ([27a60cd](https://github.com/brandingbrand/flagship/commit/27a60cd))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+* **fsbazaarvoice:** guard against unset includes in bv response ([1fba1b2](https://github.com/brandingbrand/flagship/commit/1fba1b2))
+* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** default show arrow on cms banner carousel story ([aa134e8](https://github.com/brandingbrand/flagship/commit/aa134e8))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix review summary percent recommend ([7bf0e9d](https://github.com/brandingbrand/flagship/commit/7bf0e9d))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fscomponents:** make clear what is image and what is overlay ([165585d](https://github.com/brandingbrand/flagship/commit/165585d))
+* **fscomponents:** remove outdated stylesheet on cmsfeedback component ([bab62c6](https://github.com/brandingbrand/flagship/commit/bab62c6))
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** change registry settings ([d0ff4c1](https://github.com/brandingbrand/flagship/commit/d0ff4c1))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
+* **fsi18n:** Fix invalid translation string interpolation ([d49ca24](https://github.com/brandingbrand/flagship/commit/d49ca24))
+* **fslocator:** update react-native-maps to use BB repo ([a14a6cb](https://github.com/brandingbrand/flagship/commit/a14a6cb))
+* **fslocator:** update yarn.lock with new maps dependency ([49cbd8b](https://github.com/brandingbrand/flagship/commit/49cbd8b))
+* update react-native-restart to version 0.0.8 ([db3ff02](https://github.com/brandingbrand/flagship/commit/db3ff02))
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+* **pirateship:** ignore yoga in template podspec ([36ff2d5](https://github.com/brandingbrand/flagship/commit/36ff2d5))
+* **pirateship:** re-adds greenkeeper lockfile ([c6972cb](https://github.com/brandingbrand/flagship/commit/c6972cb))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fscomponents:**  add arrow knob to multicarousel storybook ([0b9cef9](https://github.com/brandingbrand/flagship/commit/0b9cef9))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** increase customizability of search bar ([9fd5357](https://github.com/brandingbrand/flagship/commit/9fd5357))
+* **fscomponents:** specify if searchbar input should clear after submit ([7a48cd3](https://github.com/brandingbrand/flagship/commit/7a48cd3))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* **fsengagement:** fix yarn.lock ([fa7d71b](https://github.com/brandingbrand/flagship/commit/fa7d71b))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
+* **fsfoundation:** Add type alias for getting function argument types ([be36449](https://github.com/brandingbrand/flagship/commit/be36449))
+* **fslocator:** add custom error handling ([fcf91a6](https://github.com/brandingbrand/flagship/commit/fcf91a6))
+* **fslocator:** add default region prop ([e2bbd7f](https://github.com/brandingbrand/flagship/commit/e2bbd7f))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* Make scrollToTop function public ([ced8b2f](https://github.com/brandingbrand/flagship/commit/ced8b2f))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** pin android.support libs to 27 ([27a60cd](https://github.com/brandingbrand/flagship/commit/27a60cd))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+* **fsbazaarvoice:** guard against unset includes in bv response ([1fba1b2](https://github.com/brandingbrand/flagship/commit/1fba1b2))
+* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** default show arrow on cms banner carousel story ([aa134e8](https://github.com/brandingbrand/flagship/commit/aa134e8))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix review summary percent recommend ([7bf0e9d](https://github.com/brandingbrand/flagship/commit/7bf0e9d))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fscomponents:** make clear what is image and what is overlay ([165585d](https://github.com/brandingbrand/flagship/commit/165585d))
+* **fscomponents:** remove outdated stylesheet on cmsfeedback component ([bab62c6](https://github.com/brandingbrand/flagship/commit/bab62c6))
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** change registry settings ([d0ff4c1](https://github.com/brandingbrand/flagship/commit/d0ff4c1))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
+* **fsi18n:** Fix invalid translation string interpolation ([d49ca24](https://github.com/brandingbrand/flagship/commit/d49ca24))
+* **fslocator:** update react-native-maps to use BB repo ([a14a6cb](https://github.com/brandingbrand/flagship/commit/a14a6cb))
+* **fslocator:** update yarn.lock with new maps dependency ([49cbd8b](https://github.com/brandingbrand/flagship/commit/49cbd8b))
+* update react-native-restart to version 0.0.8 ([db3ff02](https://github.com/brandingbrand/flagship/commit/db3ff02))
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+* **pirateship:** ignore yoga in template podspec ([36ff2d5](https://github.com/brandingbrand/flagship/commit/36ff2d5))
+* **pirateship:** re-adds greenkeeper lockfile ([c6972cb](https://github.com/brandingbrand/flagship/commit/c6972cb))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fscomponents:**  add arrow knob to multicarousel storybook ([0b9cef9](https://github.com/brandingbrand/flagship/commit/0b9cef9))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** increase customizability of search bar ([9fd5357](https://github.com/brandingbrand/flagship/commit/9fd5357))
+* **fscomponents:** specify if searchbar input should clear after submit ([7a48cd3](https://github.com/brandingbrand/flagship/commit/7a48cd3))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* **fsengagement:** fix yarn.lock ([fa7d71b](https://github.com/brandingbrand/flagship/commit/fa7d71b))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
+* **fsfoundation:** Add type alias for getting function argument types ([be36449](https://github.com/brandingbrand/flagship/commit/be36449))
+* **fslocator:** add custom error handling ([fcf91a6](https://github.com/brandingbrand/flagship/commit/fcf91a6))
+* **fslocator:** add default region prop ([e2bbd7f](https://github.com/brandingbrand/flagship/commit/e2bbd7f))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* Make scrollToTop function public ([ced8b2f](https://github.com/brandingbrand/flagship/commit/ced8b2f))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** pin android.support libs to 27 ([27a60cd](https://github.com/brandingbrand/flagship/commit/27a60cd))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+* **fsbazaarvoice:** guard against unset includes in bv response ([1fba1b2](https://github.com/brandingbrand/flagship/commit/1fba1b2))
+* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** default show arrow on cms banner carousel story ([aa134e8](https://github.com/brandingbrand/flagship/commit/aa134e8))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix review summary percent recommend ([7bf0e9d](https://github.com/brandingbrand/flagship/commit/7bf0e9d))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fscomponents:** make clear what is image and what is overlay ([165585d](https://github.com/brandingbrand/flagship/commit/165585d))
+* **fscomponents:** remove outdated stylesheet on cmsfeedback component ([bab62c6](https://github.com/brandingbrand/flagship/commit/bab62c6))
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** change registry settings ([d0ff4c1](https://github.com/brandingbrand/flagship/commit/d0ff4c1))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
+* **fsi18n:** Fix invalid translation string interpolation ([d49ca24](https://github.com/brandingbrand/flagship/commit/d49ca24))
+* **fslocator:** update react-native-maps to use BB repo ([a14a6cb](https://github.com/brandingbrand/flagship/commit/a14a6cb))
+* **fslocator:** update yarn.lock with new maps dependency ([49cbd8b](https://github.com/brandingbrand/flagship/commit/49cbd8b))
+* update react-native-restart to version 0.0.8 ([db3ff02](https://github.com/brandingbrand/flagship/commit/db3ff02))
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+* **pirateship:** ignore yoga in template podspec ([36ff2d5](https://github.com/brandingbrand/flagship/commit/36ff2d5))
+* **pirateship:** re-adds greenkeeper lockfile ([c6972cb](https://github.com/brandingbrand/flagship/commit/c6972cb))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fscomponents:**  add arrow knob to multicarousel storybook ([0b9cef9](https://github.com/brandingbrand/flagship/commit/0b9cef9))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** increase customizability of search bar ([9fd5357](https://github.com/brandingbrand/flagship/commit/9fd5357))
+* **fscomponents:** specify if searchbar input should clear after submit ([7a48cd3](https://github.com/brandingbrand/flagship/commit/7a48cd3))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* **fsengagement:** fix yarn.lock ([fa7d71b](https://github.com/brandingbrand/flagship/commit/fa7d71b))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
+* **fsfoundation:** Add type alias for getting function argument types ([be36449](https://github.com/brandingbrand/flagship/commit/be36449))
+* **fslocator:** add custom error handling ([fcf91a6](https://github.com/brandingbrand/flagship/commit/fcf91a6))
+* **fslocator:** add default region prop ([e2bbd7f](https://github.com/brandingbrand/flagship/commit/e2bbd7f))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
+# [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* Make scrollToTop function public ([ced8b2f](https://github.com/brandingbrand/flagship/commit/ced8b2f))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** pin android.support libs to 27 ([27a60cd](https://github.com/brandingbrand/flagship/commit/27a60cd))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+* **fsbazaarvoice:** guard against unset includes in bv response ([1fba1b2](https://github.com/brandingbrand/flagship/commit/1fba1b2))
+* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** default show arrow on cms banner carousel story ([aa134e8](https://github.com/brandingbrand/flagship/commit/aa134e8))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix review summary percent recommend ([7bf0e9d](https://github.com/brandingbrand/flagship/commit/7bf0e9d))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fscomponents:** make clear what is image and what is overlay ([165585d](https://github.com/brandingbrand/flagship/commit/165585d))
+* **fscomponents:** remove outdated stylesheet on cmsfeedback component ([bab62c6](https://github.com/brandingbrand/flagship/commit/bab62c6))
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** change registry settings ([d0ff4c1](https://github.com/brandingbrand/flagship/commit/d0ff4c1))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
+* **fsi18n:** Fix invalid translation string interpolation ([d49ca24](https://github.com/brandingbrand/flagship/commit/d49ca24))
+* **fslocator:** update react-native-maps to use BB repo ([a14a6cb](https://github.com/brandingbrand/flagship/commit/a14a6cb))
+* **fslocator:** update yarn.lock with new maps dependency ([49cbd8b](https://github.com/brandingbrand/flagship/commit/49cbd8b))
+* update react-native-restart to version 0.0.8 ([db3ff02](https://github.com/brandingbrand/flagship/commit/db3ff02))
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+* **pirateship:** ignore yoga in template podspec ([36ff2d5](https://github.com/brandingbrand/flagship/commit/36ff2d5))
+* **pirateship:** re-adds greenkeeper lockfile ([c6972cb](https://github.com/brandingbrand/flagship/commit/c6972cb))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fscomponents:**  add arrow knob to multicarousel storybook ([0b9cef9](https://github.com/brandingbrand/flagship/commit/0b9cef9))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** increase customizability of search bar ([9fd5357](https://github.com/brandingbrand/flagship/commit/9fd5357))
+* **fscomponents:** specify if searchbar input should clear after submit ([7a48cd3](https://github.com/brandingbrand/flagship/commit/7a48cd3))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* **fsengagement:** fix yarn.lock ([fa7d71b](https://github.com/brandingbrand/flagship/commit/fa7d71b))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* upgrade react native to 0.57.8 ([ab40ab1](https://github.com/brandingbrand/flagship/commit/ab40ab1))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
+* **fsfoundation:** Add type alias for getting function argument types ([be36449](https://github.com/brandingbrand/flagship/commit/be36449))
+* **fslocator:** add custom error handling ([fcf91a6](https://github.com/brandingbrand/flagship/commit/fcf91a6))
+* **fslocator:** add default region prop ([e2bbd7f](https://github.com/brandingbrand/flagship/commit/e2bbd7f))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
+## [3.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v3.0.0-alpha.0...v3.0.1-alpha.0) (2019-02-11)
+
+
+### Bug Fixes
+
+* **flagship:** update iphoneos deployment target to 10.3 ([d592fe8](https://github.com/brandingbrand/flagship/commit/d592fe8))
+* **fsengage:** fix leanplum typings for storybook ([0fb4ff1](https://github.com/brandingbrand/flagship/commit/0fb4ff1))
+
+
+
+
+
+# [3.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0-alpha.0) (2019-02-08)
+
+
+### Bug Fixes
+
+* Do not exit init process if missing app center token ([24c093e](https://github.com/brandingbrand/flagship/commit/24c093e))
+* **pirateship:** add missing rn payments dependency ([a00a2f5](https://github.com/brandingbrand/flagship/commit/a00a2f5))
+* Make scrollToTop function public ([497c601](https://github.com/brandingbrand/flagship/commit/497c601))
+* **fscheckout:** Recalculate slider position when itemWidth changes ([07158ce](https://github.com/brandingbrand/flagship/commit/07158ce))
+* Require project to provide app center token ([e349966](https://github.com/brandingbrand/flagship/commit/e349966))
+* **flagship:** Fix possible memory leak and refactor Android code ([f1b4023](https://github.com/brandingbrand/flagship/commit/f1b4023))
+* **flagship:** restore android init to prior version ([d249b92](https://github.com/brandingbrand/flagship/commit/d249b92)), closes [#280](https://github.com/brandingbrand/flagship/issues/280)
+* **flagship:** run pod install after react-native link ([2e4a13c](https://github.com/brandingbrand/flagship/commit/2e4a13c))
+* **flagship:** runs jscenter() last in build.gradle/repos ([1c7560c](https://github.com/brandingbrand/flagship/commit/1c7560c))
+* **fsbazaarvoice:** guard against unset includes in bv response ([1fba1b2](https://github.com/brandingbrand/flagship/commit/1fba1b2))
+* **fscomponents:** Allow partial reviewIndicatorProps to be passed ([2c356ca](https://github.com/brandingbrand/flagship/commit/2c356ca))
+* **fscomponents:** defend Selector against unsafe access ([e1f3654](https://github.com/brandingbrand/flagship/commit/e1f3654))
+* **fscomponents:** fix android searchbar cancel ([3c9f282](https://github.com/brandingbrand/flagship/commit/3c9f282))
+* **fscomponents:** Fix setting ReviewIndicator color ([108a0d1](https://github.com/brandingbrand/flagship/commit/108a0d1))
+* **fsengage:** Fix product serialization for Adobe Analytics ([9e4371b](https://github.com/brandingbrand/flagship/commit/9e4371b))
+* **fsengagement:** add flag to enable forced resync ([89c62d3](https://github.com/brandingbrand/flagship/commit/89c62d3))
+* **fsengagement:** change registry settings ([d0ff4c1](https://github.com/brandingbrand/flagship/commit/d0ff4c1))
+* **fsengagement:** RELATED-1306 fix crashing on events tab ([9f6e97e](https://github.com/brandingbrand/flagship/commit/9f6e97e))
+* **fsi18n:** Fix invalid translation string interpolation ([d49ca24](https://github.com/brandingbrand/flagship/commit/d49ca24))
+* **fslocator:** update react-native-maps to use BB repo ([a14a6cb](https://github.com/brandingbrand/flagship/commit/a14a6cb))
+* **fslocator:** update yarn.lock with new maps dependency ([49cbd8b](https://github.com/brandingbrand/flagship/commit/49cbd8b))
+
+
+### Features
+
+* **flagship:** Add support for react-native-adobe-analytics library ([c9218f7](https://github.com/brandingbrand/flagship/commit/c9218f7))
+* **flagship:** additional pod sources ([fe4c42e](https://github.com/brandingbrand/flagship/commit/fe4c42e))
+* **fscheckout:** Add ability to make the StepTracker interactive ([689e113](https://github.com/brandingbrand/flagship/commit/689e113))
+* **fscomponents:** Allow turning off validate on blur ([4088712](https://github.com/brandingbrand/flagship/commit/4088712))
+* **fscomponents:** specify if searchbar input should clear after submit ([8aaddba](https://github.com/brandingbrand/flagship/commit/8aaddba))
+* **fscomponents:** update how fieldsoptions are extended in addressform ([4ca8e46](https://github.com/brandingbrand/flagship/commit/4ca8e46))
+* **fsengage:** Allow arbitrary data in event interfaces ([30ab842](https://github.com/brandingbrand/flagship/commit/30ab842))
+* **fsengage:** Implement an adapter for Adobe Analytics ([715d0ff](https://github.com/brandingbrand/flagship/commit/715d0ff))
+* **fsengagement:** add fsengagement package ([59c6be8](https://github.com/brandingbrand/flagship/commit/59c6be8))
+* upgrade react native to 0.57.8 ([77177b3](https://github.com/brandingbrand/flagship/commit/77177b3))
+* **fsengagement:** fix yarn.lock ([fa7d71b](https://github.com/brandingbrand/flagship/commit/fa7d71b))
+* **fsengagement:** rebuild ([c025a77](https://github.com/brandingbrand/flagship/commit/c025a77))
+* **fsengagement:** remove prelink react-native-fcm ([bd76a08](https://github.com/brandingbrand/flagship/commit/bd76a08))
+* **fsfoundation:** Add type alias for getting function argument types ([be36449](https://github.com/brandingbrand/flagship/commit/be36449))
+* **fslocator:** add custom error handling ([e2e9dcb](https://github.com/brandingbrand/flagship/commit/e2e9dcb))
+* **fslocator:** add default region prop ([0541d60](https://github.com/brandingbrand/flagship/commit/0541d60))
+
+
+### BREAKING CHANGES
+
+* This upgrades RN to 0.57.8, React to 16.6.3, and other dependencies as necessary. Updates were made to the iOS and Android native templates according to RN's instructions.
+* **fscomponents:** This changes how fieldsOptions in AddressForm is extended via props from assignment to merge. With the previous configuration, users would need to override the entire configuration for each field in order to simply add or modify one option. This change may lead to side effects in apps that already pass custom fieldsOptions to AddressForm.
+
+
+
+
+
 <a name="2.0.0"></a>
 # 2.0.0 (2018-10-16)
 

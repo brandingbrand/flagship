@@ -67,7 +67,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         leftDrawerComponent,
         appConfig,
         api,
-        this.toggleDrawer.bind(this)
+        this.toggleDrawer
       );
     }
 
@@ -78,7 +78,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         rightDrawerComponent,
         appConfig,
         api,
-        this.toggleDrawer.bind(this)
+        this.toggleDrawer
       );
     }
 
@@ -153,12 +153,14 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         overflowX: 'hidden'
       },
       appDrawerDefault: {
-        flex: 1
+        flex: 1,
+        flexBasis: 'auto'
       },
       container: {
         transitionDuration: drawerDuration,
         width: '100%',
-        flex: 1
+        flex: 1,
+        flexBasis: 'auto'
       },
       containerDrawerLeftOpen: {
         marginLeft: drawerWidth
@@ -225,7 +227,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       webRouterProps
     } = appConfig;
 
-    let Router;
+    let Router: typeof React.Component;
 
     switch (webRouterType) {
       case 'hash':
@@ -247,7 +249,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     return (
       <Provider store={store}>
         <Router {...routerProps}>
-          <Switch>
+          <Switch location={appConfig.location}>
             {this.screensRoutes}
           </Switch>
         </Router>

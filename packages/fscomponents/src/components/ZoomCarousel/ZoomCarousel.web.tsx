@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { ZoomCarouselProps } from './types';
+import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 
@@ -99,6 +99,9 @@ const S = StyleSheet.create({
         rotate: '45deg'
       }
     ]
+  },
+  fullHeight: {
+    height: '100%'
   },
   thumbnailImg: {
     width: '100%',
@@ -230,17 +233,28 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.multiCarousel = ref;
   }
 
-  renderImage = (item: any) => {
+  itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
+    if (newItem.src &&
+      ((newItem.src.uri ?
+      newItem.src.uri !== oldItem.src.uri :
+      newItem.src !== oldItem.src))) {
+      changed();
+    }
+  }
+
+  renderImage = (item: any, i: number) => {
     return (
-      <View>
-        <Image
-          source={item.src}
-          resizeMode='contain'
-          style={{
-            width: this.state.imageWidth,
-            height: this.state.imageHeight
-          }}
-        />
+      <View style={this.props.fillContainer ? S.fullHeight : null}>
+        {this.props.renderImageWeb &&
+          this.props.renderImageWeb(item, i) ||
+          <Image
+            source={item.src}
+            resizeMode='contain'
+            style={{
+              width: this.state.imageWidth,
+              height: this.state.imageHeight
+            }}
+          />}
       </View>
     );
   }
@@ -249,9 +263,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     const { peekSize = 0, gapSize = 0 } = this.props;
 
     return (
-      <View onLayout={this.handleLayoutChange}>
-        <View>
-          <div id={`zoom-carousel-${this.id}`}>
+      <View
+        style={this.props.fillContainer ? S.fullHeight : null}
+        onLayout={this.handleLayoutChange}
+      >
+        <View
+          style={this.props.fillContainer ? S.fullHeight : null}
+        >
+          <div
+            id={`zoom-carousel-${this.id}`}
+            style={this.props.fillContainer ? {height: '100%'} : undefined}
+          >
             <MultiCarousel
               ref={this.extractMultiCarousel}
               onSlideChange={this.handleSlideChange}
@@ -266,17 +288,20 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               zoomButtonStyle={this.props.zoomButtonStyle}
               renderPageIndicator={this.props.renderPageIndicator}
               centerMode={this.props.centerMode}
+              style={this.props.fillContainer ? S.fullHeight : null}
+              nextArrowOnBlur={this.props.nextArrowOnBlur}
             />
 
-            <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
-              {this.props.renderZoomButton ? (
-                this.props.renderZoomButton(this.openZoom)
-              ) : (
-                <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
-                  <Image style={S.searchIcon} source={searchIcon} />
-                </TouchableOpacity>
-              )}
-            </View>
+            {!this.props.hideZoomButton &&
+              <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
+                {this.props.renderZoomButton ? (
+                  this.props.renderZoomButton(this.openZoom)
+                ) : (
+                  <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                    <Image style={S.searchIcon} source={searchIcon} />
+                  </TouchableOpacity>
+                )}
+              </View>}
 
             <PhotoSwipe
               isOpen={this.state.isZooming}

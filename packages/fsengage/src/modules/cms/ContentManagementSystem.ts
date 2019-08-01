@@ -28,6 +28,10 @@ export default class ContentManagementSystem {
     });
   }
 
+  async contentForGroup(group: string): Promise<{}> {
+    return this.provider.contentForGroup(group);
+  }
+
   async identifiersForSlot(group: string, slot: string): Promise<string[] | null> {
     if (__DEV__) {
       this.log(group, slot);

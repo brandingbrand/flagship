@@ -13,25 +13,22 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.soloader.SoLoader;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.psykar.cookiemanager.CookieManagerPackage;
 import com.reactnativenavigation.NavigationApplication;
+import com.psykar.cookiemanager.CookieManagerPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 
 import java.util.Arrays;
 import java.util.List;
-
-import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 
 public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages(Application application, boolean debug) {
         return Arrays.asList(
                 new MainReactPackage(),
-                new RNSensitiveInfoPackage(),
-                new RNDeviceInfo(),
-                new CookieManagerPackage(),
                 new NativeConstantsPackage(),
                 new EnvSwitcherPackage(),
-                new ReactNativeRestartPackage()
+                new ReactNativeRestartPackage(),
+                new CookieManagerPackage(),
+                new RNDeviceInfo()
         );
     }
 
@@ -51,7 +48,6 @@ public class MainApplication extends NavigationApplication {
         return "index";
     }
 
-    @Override
     protected UIImplementationProvider getUIImplementationProvider() {
         return new UIImplementationProvider() {
             @Override

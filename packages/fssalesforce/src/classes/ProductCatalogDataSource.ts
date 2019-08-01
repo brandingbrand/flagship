@@ -23,7 +23,8 @@ export class DemandwareProductCatalogAndSearchDataSource extends DemandwareBase
     id?: string,
     query?: FSCommerceTypes.CategoryQuery
   ): Promise<FSCommerceTypes.Category> {
-    let _qs = qs.stringify(query);
+    const updatedQuery = { ...query, levels: 2 };
+    let _qs = qs.stringify(updatedQuery);
     _qs = _qs ? '?' + _qs : '';
 
     const response = await this.client.get<SFCC.Category>(
