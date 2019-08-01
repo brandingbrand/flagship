@@ -14,7 +14,10 @@ export class FSApp extends FSAppBase {
 
   registerScreens(): void {
     if (this.shouldShowDevMenu()) {
-      this.appConfig.screens.devMenu = DevMenu as any;
+      this.appConfig.screens = {
+        devMenu: DevMenu as any,
+        ...this.appConfig.screens
+      };
       if (this.appConfig.devMenuPath) {
         this.appConfig.screens.devMenu.path = this.appConfig.devMenuPath;
       }
