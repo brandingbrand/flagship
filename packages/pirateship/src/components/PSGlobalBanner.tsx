@@ -53,7 +53,7 @@ export default class PSGlobalBanner extends Component<
     isLoading: true
   };
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     if (this.props.override) {
       this.setState({
         slotData: this.props.override,

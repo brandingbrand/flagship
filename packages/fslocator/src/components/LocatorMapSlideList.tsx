@@ -52,12 +52,12 @@ export default class LocatorMapSlideList extends Component<
     };
   }
 
-  componentWillReceiveProps(nextProps: LocatorPropType): void {
-    if (nextProps.locations !== this.props.locations) {
+  componentDidUpdate(prevProps: LocatorPropType): void {
+    if (prevProps.locations !== this.props.locations) {
       return this.moveToMiddle();
     }
 
-    if (!nextProps.selectedLocation && this.props.selectedLocation) {
+    if (!this.props.selectedLocation && prevProps.selectedLocation) {
       return this.moveToTop();
     }
   }
@@ -112,7 +112,7 @@ export default class LocatorMapSlideList extends Component<
     }).start();
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => false,
       onMoveShouldSetPanResponder: (evt, gestureState) => {
