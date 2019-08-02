@@ -20,7 +20,7 @@
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-cookies": "^3.3.0",
-    "react-native-sensitive-info": "^5.1.0"
+    "react-native-sensitive-info": "~5.4.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
