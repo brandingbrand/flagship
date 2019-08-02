@@ -5,10 +5,14 @@ module.exports = {
   enabledCapabilitiesIOS: [],
   buildConfig: {
     ios: {
-      exportTeamId: '',
-      deployScheme: '',
-      appCertDir: '',
-      provisioningProfileName: ''
+      appleCert: '../certs/apple.cer',
+      distCert: '../certs/dist.cer',
+      distP12: '../certs/dist.p12',
+      profilesDir: '../profiles/'
+    },
+    android: {
+      storeFile: 'hockeyapp.keystore',
+      keyAlias: 'hockeyapp'
     }
   },
   entitlementsFileIOS: './uat.entitlements',
