@@ -1,12 +1,10 @@
+// tslint:disable ter-max-len
 const exec = require('child_process').execSync;
-const path = require('path');
+import { project } from './lib/path';
 
 const keychainName = process.env.KEY_CHAIN || 'login.keychain';
 const keychain = `~/Library/Keychains/${keychainName}`;
 console.log(`keychain is ${keychain}`);
-
-const certsDir = path.join(__dirname, '..', 'certs');
-const profilesDir = path.join(__dirname, '..', 'profiles');
 
 const DISTRIBUTION_CERT_PASS = process.env.DISTRIBUTION_CERT_PASS;
 
@@ -16,30 +14,51 @@ if (!DISTRIBUTION_CERT_PASS) {
   process.exit(1);
 }
 
+let projectEnv = null;
+
+try {
+  projectEnv = require(project.resolve('env', 'env.js'));
+} catch (e) {
+  console.error('env/env.js not found, did you init your project?');
+
+  process.exit(1);
+}
+
+const buildConfig = projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.ios;
+
+if (!(buildConfig
+      && buildConfig.appleCert
+      && buildConfig.distCert
+      && buildConfig.distP12
+      && buildConfig.profilesDir
+)) {
+  console.error('buildConfig.ios does not exist in the active environment. Please see '
+   + 'https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps for more information.');
+
+  process.exit(1);
+}
+
 // add certificates and provisioning profiles to computer
 exec(
-  `security import ${certsDir}/apple.cer -k ${keychain} -T /usr/bin/codesign || true`
+  `security import ${project.resolve('env', buildConfig.appleCert)} -k ${keychain} -T /usr/bin/codesign || true`
 );
 
 // add keys for internal build
 // - import distribution certificate
 exec(
-  `security import ${certsDir}/dist.cer -k ${keychain} -T /usr/bin/codesign || true`
+  `security import ${project.resolve('env', buildConfig.distCert)} -k ${keychain} -T /usr/bin/codesign || true`
 );
 
 // - import private key
 exec(
-  `security import ${certsDir}/dist.p12 -k ${keychain} -P '${DISTRIBUTION_CERT_PASS}' \
+  `security import ${project.resolve('env', buildConfig.distP12)} -k ${keychain} -P '${DISTRIBUTION_CERT_PASS}' \
 -T /usr/bin/codesign || true`
 );
 
-// - import bb .mobileproviosn
 exec(`mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles/`);
 
 exec(
-  `cp ${profilesDir}/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
+  `cp ${project.resolve('env', buildConfig.profilesDir)}/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
 );
 
 process.exit();
-
-export {};
