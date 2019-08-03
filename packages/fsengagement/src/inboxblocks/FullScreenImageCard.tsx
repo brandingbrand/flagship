@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 const styles = StyleSheet.create({
   bottom: {
@@ -65,18 +66,23 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    this.props.navigator.push({
-      screen: 'EngagementComp',
-      navigatorStyle: {
-        navBarHidden: true
-      },
-      passProps: {
-        json,
-        backButton: true,
-        name: this.props.name,
-        id: this.props.id
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'EngagementComp',
+        options: {
+          topBar: {
+            visible: false,
+            drawBehind: true
+          }
+        },
+        passProps: {
+          json,
+          backButton: true,
+          name: this.props.name,
+          id: this.props.id
+        }
       }
-    });
+    }).catch(err => console.log('EngagementComp PUSH error:', err));
   }
 
   onCardPress = (): void => {

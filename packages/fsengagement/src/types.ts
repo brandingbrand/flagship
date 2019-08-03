@@ -6,10 +6,9 @@ import {
   TextStyle,
   ViewStyle
 } from 'react-native';
-import { Navigator } from 'react-native-navigation';
 
 export interface ScreenProps {
-  navigator: Navigator;
+  componentId: string;
 }
 
 export interface Action {
@@ -43,7 +42,7 @@ export interface CardProps {
   api?: any;
   plainCard?: boolean;
   storyGradient?: StoryGradient;
-  navigator: Navigator;
+  componentId: string;
   name?: string;
   id?: string;
 }
