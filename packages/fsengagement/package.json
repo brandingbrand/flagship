@@ -18,7 +18,7 @@
     "react-native": "0.59.10",
     "react-native-device-info": "^0.21.5",
     "react-native-fcm": "16.0.0",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "react-native-navigation": "2.26.3",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-video": "^4.0.0",
     "uuid-js": "0.7.5"
