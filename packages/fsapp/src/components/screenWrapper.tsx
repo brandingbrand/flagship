@@ -1,11 +1,15 @@
 import React, { Component, ComponentClass, ComponentType } from 'react';
 import { AsyncStorage, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-
-import { Navigator, NavigatorStyle } from 'react-native-navigation';
+import {
+  BottomTabSelectedEvent,
+  EventSubscription,
+  Navigation,
+  NavigationButtonPressedEvent,
+  Options } from 'react-native-navigation';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
-import { AppConfigType, DrawerConfig, NavButton, NavigatorButtons, NavigatorEvent } from '../types';
+import { AppConfigType, DrawerConfig } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
 
@@ -37,7 +41,7 @@ export interface GenericScreenDispatchProp {
 }
 
 export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
-  navigator: Navigator & { screenInstanceID: string };
+  componentId: string;
   appConfig: AppConfigType;
   api: FSNetwork;
   testID: string;
@@ -54,27 +58,22 @@ export default function wrapScreen(
   WrappedComponent: ComponentType<GenericScreenProp>;
 } {
   class GenericScreen extends Component<GenericScreenProp> {
-    static navigatorStyle: NavigatorStyle = PageComponent.navigatorStyle;
-    static navigatorButtons: NavigatorButtons = {
-      rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
-      leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
-    };
+    static options: Options = PageComponent.options;
 
-    extraNavigatorEventHandler: any;
+    navigationEventListener: EventSubscription | null;
+    bottomTabEventListener: EventSubscription | null;
     showDevMenu: boolean;
 
     constructor(props: GenericScreenProp) {
       super(props);
 
-      this.extraNavigatorEventHandler = null;
+      this.navigationEventListener = null;
+      this.bottomTabEventListener = null;
       this.showDevMenu =
         (NativeConstants &&
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-
-      // @ts-ignore wrong type in @types/react-native-navigation
-      props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
 
       // DEV feature
       if (this.showDevMenu) {
@@ -83,11 +82,11 @@ export default function wrapScreen(
     }
 
     storeLastScreen = (props: GenericScreenProp) => {
-      ['push', 'switchToTab', 'showModal'].forEach(action => {
-        const nav: any = props.navigator;
+      ['push', 'showModal'].forEach(action => {
+        const nav: any = Navigation;
         const originalFunc = nav[action];
         nav[action] = (...args: any[]) => {
-          originalFunc.apply(props.navigator, args);
+          originalFunc.apply(Navigation, args);
           if (args && args[0] && args[0].screen === 'devMenu') {
             return;
           }
@@ -98,32 +97,29 @@ export default function wrapScreen(
       });
     }
 
-    onNavigatorEvent = (event: NavigatorEvent) => {
-      if (event.type === 'NavBarButtonPress') {
-        this.handleNavButtonPress(event);
-      }
-
+    bottomTabSelected = (event: BottomTabSelectedEvent) => {
       if (
-        event.id === 'bottomTabReselected' &&
+        event.selectedTabIndex === event.unselectedTabIndex &&
         Platform.OS === 'android' &&
         appConfig.popToRootOnTabPressAndroid
       ) {
-        this.props.navigator.popToRoot();
-      }
-
-      if (this.extraNavigatorEventHandler) {
-        this.extraNavigatorEventHandler(event);
+        Navigation.popToRoot(this.props.componentId)
+        .catch(err => console.warn('bottomTabSelected POPTOROOT error: ', err));
       }
     }
 
-    handleNavButtonPress = (event: NavigatorEvent) => {
+    navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
+      this.handleNavButtonPress(event);
+    }
+
+    handleNavButtonPress = (event: NavigationButtonPressedEvent) => {
       const navButtons = [
         ...(PageComponent.rightButtons || []),
         ...(PageComponent.leftButtons || [])
       ];
 
       navButtons.forEach(btn => {
-        if (event.id === btn.button.id) {
+        if (event.buttonId === btn.button.id) {
           btn.action(this.props);
         }
       });
@@ -131,6 +127,10 @@ export default function wrapScreen(
 
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
+
+      this.navigationEventListener = Navigation.events().bindComponent(this);
+      this.bottomTabEventListener =
+        Navigation.events().registerBottomTabSelectedListener(this.bottomTabSelected);
 
       if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
         appConfig.analytics.screenview(component, {
@@ -141,6 +141,15 @@ export default function wrapScreen(
       // DEV feature
       if (this.showDevMenu) {
         this.handlekeepLastPage().catch(e => console.log('cannot handle keep Last Page', e));
+      }
+    }
+
+    componentWillUnmount(): void {
+      if (this.navigationEventListener) {
+        this.navigationEventListener.remove();
+      }
+      if (this.bottomTabEventListener) {
+        this.bottomTabEventListener.remove();
       }
     }
 
@@ -175,16 +184,31 @@ export default function wrapScreen(
         return;
       }
 
-      const nav: any = this.props.navigator;
+      const nav: any = Navigation;
       nav[parsed.action].apply(nav, parsed.args);
     }
 
     openDevMenu = () => {
-      this.props.navigator.showModal({
-        screen: 'devMenu',
-        title: 'FLAGSHIP Dev Menu',
-        passProps: { hideDevMenu: this.props.hideDevMenu }
-      });
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'devMenu',
+              passProps: {
+                hideDevMenu: this.props.hideDevMenu
+              },
+              options: {
+                topBar: {
+                  title: {
+                    text: 'FLAGSHIP Dev Menu'
+                  }
+                }
+              }
+            }
+          }]
+        }
+      })
+      .catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
     }
 
     render(): JSX.Element {
@@ -221,20 +245,12 @@ export default function wrapScreen(
       );
     }
 
-    setExtraNavigatorEventHandler = (handler: (event: NavigatorEvent) => void) => {
-      if (typeof handler !== 'function') {
-        throw new Error('onNav requires a function as parameter');
-      }
-      this.extraNavigatorEventHandler = handler;
-    }
-
     renderPage = () => {
       return (
         <PageComponent
           {...this.props}
           appConfig={appConfig}
           api={api}
-          onNav={this.setExtraNavigatorEventHandler}
         />
       );
     }
