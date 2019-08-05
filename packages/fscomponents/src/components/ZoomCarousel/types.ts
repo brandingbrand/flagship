@@ -1,4 +1,4 @@
-import { ImageProperties, ImageURISource } from 'react-native';
+import { ImageProperties, ImageURISource, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageData {
   src: ImageURISource;
@@ -42,4 +42,5 @@ export interface ZoomCarouselProps {
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 }
