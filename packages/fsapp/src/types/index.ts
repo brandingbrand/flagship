@@ -15,6 +15,46 @@ export interface DrawerConfig {
   to?: 'open' | 'closed';
 }
 
+export interface Drawer {
+  left?: {
+    screen: string;
+    passProps?: any;
+    disableOpenGesture?: boolean;
+    fixedWidth?: number;
+  };
+  right?: {
+    screen: string;
+    passProps?: any;
+    disableOpenGesture?: boolean;
+    fixedWidth?: number;
+  };
+  style?: {
+    drawerShadow?: boolean;
+    contentOverlayColor?: string;
+    leftDrawerWidth?: number;
+    rightDrawerWidth?: number;
+    shouldStretchDrawer?: boolean;
+  };
+  type?: string;
+  animationType?: string;
+  disableOpenGesture?: boolean;
+}
+
+export interface Screen {
+  screen: string;
+  title?: string;
+  passProps?: any;
+}
+
+export interface WebNavigator {
+  push: (route: any) => any;
+  pop: () => any;
+  popToRoot: () => any;
+  showModal: (route: any) => any;
+  toggleDrawer: (config: DrawerConfig) => void;
+  switchToTab: (route: any) => any;
+}
+
 export interface TabStyle {
   tabBarHidden?: boolean;
   tabBarButtonColor?: string;
