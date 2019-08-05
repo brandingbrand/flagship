@@ -693,17 +693,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           </View>
 
           {this.renderModal()}
-          {!this.props.hideZoomButton &&
-            <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
-              {this.props.renderZoomButton ? (
-                this.props.renderZoomButton(this.openZoom)
-              ) : (
-                <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
-                  <Image style={S.searchIcon} source={searchIcon} />
-                </TouchableOpacity>
-              )}
-            </View>
-          }
+
+          <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
+            {this.props.renderZoomButton ? (
+              this.props.renderZoomButton(this.openZoom)
+            ) : (
+              <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                <Image style={S.searchIcon} source={searchIcon} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
 
         {this.props.showThumbnails &&
