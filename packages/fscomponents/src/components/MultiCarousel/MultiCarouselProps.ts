@@ -32,4 +32,5 @@ export interface MultiCarouselProps<ItemT> {
   style?: any;
   zoomButtonStyle?: any;
   keyExtractor?: (item: ItemT, index: number) => string;
+  hideZoomButton?: boolean;
 }
