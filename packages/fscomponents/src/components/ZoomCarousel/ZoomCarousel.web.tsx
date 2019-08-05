@@ -15,7 +15,6 @@ import {
   View
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
-import { Modal } from '../Modal';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 
@@ -260,44 +259,6 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
-  renderModal = () => {
-    if (this.props.renderModalContent) {
-      return(
-        <Modal visible={this.state.isZooming} transparent={true}>
-          {this.props.renderModalContent(this.closeZoom)}
-        </Modal>
-      );
-    } else {
-      return(
-        <PhotoSwipe
-          isOpen={this.state.isZooming}
-          items={this.props.images
-            .map(img => img.zoomSrc || img.src)
-            .map((img, i) => ({
-              src: img.uri || img,
-              w: this.state.screenWidth,
-              h: this.state.imageSizes[i]
-                ? this.state.screenWidth *
-                  this.state.imageSizes[i].height /
-                  this.state.imageSizes[i].width
-                : this.state.imageHeight
-            }))}
-          options={{
-            loop: false,
-            fullscreenEl: false,
-            shareEl: false,
-            captionEl: false,
-            history: false,
-            closeOnScroll: false,
-            index: this.state.currentIndex
-          }}
-          afterChange={this.handleZoomCarouselChange}
-          onClose={this.closeZoom}
-        />
-      );
-    }
-  }
-
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
 
@@ -341,7 +302,32 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                   </TouchableOpacity>
                 )}
               </View>}
-            {this.renderModal()}
+
+            <PhotoSwipe
+              isOpen={this.state.isZooming}
+              items={this.props.images
+                .map(img => img.zoomSrc || img.src)
+                .map((img, i) => ({
+                  src: img.uri || img,
+                  w: this.state.screenWidth,
+                  h: this.state.imageSizes[i]
+                    ? this.state.screenWidth *
+                      this.state.imageSizes[i].height /
+                      this.state.imageSizes[i].width
+                    : this.state.imageHeight
+                }))}
+              options={{
+                loop: false,
+                fullscreenEl: false,
+                shareEl: false,
+                captionEl: false,
+                history: false,
+                closeOnScroll: false,
+                index: this.state.currentIndex
+              }}
+              afterChange={this.handleZoomCarouselChange}
+              onClose={this.closeZoom}
+            />
           </div>
         </View>
 

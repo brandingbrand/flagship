@@ -537,9 +537,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         transparent={true}
         onRequestClose={this.closeZoom}
       >
-        {this.props.renderModalContent && this.props.renderModalContent(this.closeZoom)}
-        {!this.props.renderModalContent && <View>
-        `<ZoomImages
+        <ZoomImages
           gapSizeScaled={this.gapSizeScaled}
           zoomContainerWidth={this.zoomContainerWidth}
           images={this.props.images}
@@ -580,8 +578,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               dotActiveStyle={this.props.dotActiveStyle}
             />
           )}
-        </Animated.View>`
-        </View>}
+        </Animated.View>
       </Modal>
     );
   }
