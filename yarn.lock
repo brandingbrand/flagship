@@ -1060,10 +1060,76 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@brandingbrand/fscommerce@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fscommerce/-/fscommerce-5.0.0.tgz#e618e8c29a58c0b2dc168d37dec950c4864927b1"
+  integrity sha512-l51mqz9oNX+KxIoUgF/3W8hmoVzYlRsDmw4cydfDBGzWVb/Dyp2VibqpWs2ZGbTz1T3sjpXvgSOv8Vynqxw/CQ==
+  dependencies:
+    "@brandingbrand/fsengage" "^5.0.0"
+    "@brandingbrand/fsfoundation" "^5.0.0"
+    "@brandingbrand/fsnetwork" "^5.0.0"
+    decimal.js "^10.0.1"
+    lodash-es "^4.17.10"
+    qs "^6.7.0"
+    react "16.8.3"
+    react-native "0.59.10"
+    react-native-cookies "^3.3.0"
+    react-native-sensitive-info "~5.4.0"
+
+"@brandingbrand/fsengage@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsengage/-/fsengage-5.0.0.tgz#0587d757be3e2c920294c6315a85ea50c2251fff"
+  integrity sha512-HzTGrGV5yX3HdC1RJC0EHTxfoLDEShWADxEwbSz6jQZF3NiRu+UPXVPUi+LQdetRH69aV1A9TseYx4kB+fyTMA==
+  dependencies:
+    "@brandingbrand/fsfoundation" "^5.0.0"
+    "@brandingbrand/fsnetwork" "^5.0.0"
+    "@brandingbrand/react-native-adobe-marketing-cloud" "^0.1.1"
+    "@brandingbrand/react-native-google-analytics" "^2.1.0"
+    "@brandingbrand/react-native-leanplum" "^1.0.1"
+    decimal.js "^10.0.0"
+    react "16.8.3"
+    react-native "0.59.10"
+    react-native-permissions "~1.1.1"
+    url-parse "^1.4.3"
+
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
   integrity sha512-S4Wx+NAX1y+qSxI9Pjbn9rQWEw2lHTujh4dSAU8Ya4tPbTp1ATiJk0iWQQb0m4sGVX39tn43c3i78i0rbK5O3g==
+
+"@brandingbrand/fsfoundation@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-5.0.0.tgz#bcde44d736b3047704947883e6866562753ccf3b"
+  integrity sha512-Dqkedn6n7SBNkoGYGWQqfOdo6e74xsGiiDcZegz7GTJfwoOd20iANJBhyTWwMJukR8mPOiwEUfXwsG340eYJqA==
+
+"@brandingbrand/fsi18n@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsi18n/-/fsi18n-5.0.0.tgz#c1a63d5de985651b5592ec0c879156fda148c92e"
+  integrity sha512-+GRzxt2QxoJvmEyAFTbAE1BKEf9ZPpe6yxhA+s81yB1LFSfyYx6FZkKWtfjZBx3/6HuDkd8AXY7lBN1VsB6EHQ==
+  dependencies:
+    "@brandingbrand/fscommerce" "^5.0.0"
+    decimal.js "^10.0.1"
+    i18n-js "^3.0.8"
+    lodash-es "^4.17.10"
+    react-native-i18n "^2.0.15"
+
+"@brandingbrand/fsmockdatasources@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsmockdatasources/-/fsmockdatasources-4.1.0.tgz#0f8cdf48e009ea8304094b2a7950a208c4aef463"
+  integrity sha512-ngsyJmm3zH4ddfLdb6UeucKJZFyyRvk0YT6ILuRQuCaoPqSXbKHiBXFAdSDcHnckQGz8rWepEkhLdARkepnhCQ==
+  dependencies:
+    "@brandingbrand/fscommerce" "^4.1.0"
+    "@brandingbrand/fsfoundation" "^4.1.0"
+    decimal.js "^10.0.1"
+    faker "^4.1.0"
+
+"@brandingbrand/fsnetwork@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsnetwork/-/fsnetwork-5.0.0.tgz#2a6989383b4cde35d635dc1c2a8728ce2289ce1d"
+  integrity sha512-mf9dANBzT0BSlOZE5QzQE9xYeCmBGLqlfAzbLbnkNtpHnNMk9ZDPLBF2Kkd+H2ou6Um7Cc06DWjwgLDTQNPxFg==
+  dependencies:
+    "@brandingbrand/fsfoundation" "^5.0.0"
+    axios "^0.19.0"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -2864,11 +2930,6 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/faker@^4.1.2":
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.5.tgz#8f620f9c9a67150aa0a32b4e8a407da43fca61d4"
-  integrity sha512-YSDqoBEWYGdNk53xSkkb6REaUaVSlIjxIAGjj/nbLzlZOit7kUU+nA2zC2qQkIVO4MQ+3zl4Sz7aw+kbpHHHUQ==
-
 "@types/fs-extra@^5.0.3":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.1.0.tgz#2a325ef97901504a3828718c390d34b8426a10a1"
@@ -2979,11 +3040,6 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
   integrity sha512-CFzn9idOEpHrgdw8JsoTkaDDyRWk1jrzIV8djzcgpq0y9tG4B4lFT+Nxh52DVpDXV+n4+NPNv7M1Dj5uMp6XFg==
 
-"@types/prop-types@15.5.3":
-  version "15.5.3"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
-  integrity sha512-sfjHrNF4zWRv3fJUGyZW46wVxhYJ/GeWIPdKxbnLIhY3bWR0Ncl2kIhZI7rpjY9KtUQAkDP8jWEmaGQGFFvruA==
-
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
@@ -3020,34 +3076,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-permissions/-/react-native-permissions-1.1.1.tgz#297f39ed19234045e1dc1cd0abd85b86bdf9c606"
   integrity sha512-+xLVH6kefg9hpJKxQhRcaYHckhbQCxDrU6HEaTzf3gMbn4I4aunjxkqeSMAofrHFNOnOS/phnsTbifoDATjk3w==
 
-"@types/react-native-snap-carousel@^3.7.3":
-  version "3.7.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native-snap-carousel/-/react-native-snap-carousel-3.7.4.tgz#1e1ad5b5314715d538f6785b4f3a6590a036a6bd"
-  integrity sha512-Egwj264i8lQtp4O8+TXse2yagW5im8oPzPcfWzIEYspKspPE0NikqWFtpVrecgbd/uwhwEjLXLY5kEXOvpiJjA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
 "@types/react-native-touch-id@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-touch-id/-/react-native-touch-id-4.0.1.tgz#f4c784281d3c53f3473078f292c30edc3dd7d525"
   integrity sha512-qHbSMjWCmcPp1b3wZ+uGK08pwKANmWMboxFYHS9vbXK2qZfXz1INemoHuuD7lo/rma7iJJoJFDtXdzVerfyXNQ==
-
-"@types/react-native-video@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
-  integrity sha512-Dutf20ph/mxMNgt7TLSyN0v49SiG7YZH3WwU+SxoE8IGBbn/MhBqyfzU+09cbmZ1OG0nQg9rEJXNIowwQOVXLw==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
-"@types/react-native@*":
-  version "0.60.3"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.3.tgz#38bd4d871edd0369f595513872bb00bd4f7e7145"
-  integrity sha512-VjXawSlRG6l620tXB2dzYIwwXfzOZrl4kYHuX09EF0W9QFw/vwH7n7mp+0aFrwlr8ZOkWX/SZFPp6osyRpTGtg==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/react" "*"
 
 "@types/react-native@^0.57.30":
   version "0.57.65"
@@ -7321,7 +7353,7 @@ fbjs-scripts@^1.0.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.4, fbjs@^0.8.9:
+fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -9903,11 +9935,6 @@ keygrip@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
   integrity sha512-/PpesirAIfaklxUzp4Yb7xBper9MwP6hNRA6BGGUFCgbJ+BM5CKBtsoxinNXkLHAr+GXS1/lSlF2rP7cv5Fl+g==
-
-keymirror@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
-  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
 
 killable@^1.0.0:
   version "1.0.1"
@@ -12777,14 +12804,6 @@ reach@1.x.x:
   resolved "https://registry.yarnpkg.com/reach/-/reach-1.0.1.tgz#4dba62888d78a09b48b74123ef5336c42624f2ad"
   integrity sha512-TyINp42lj7idWA7/twiZhpokruUPpj6YS1HJ0hDt8L+9upXtK0knjlC2bZigQyg2/okcHJl35Ngxw6ydougFjg==
 
-react-addons-shallow-compare@15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.2.tgz#198a00b91fc37623db64a28fd17b596ba362702f"
-  integrity sha1-GYoAuR/DdiPbZKKP0XtZa6NicC8=
-  dependencies:
-    fbjs "^0.8.4"
-    object-assign "^4.1.0"
-
 react-art@^16.4.0:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.8.6.tgz#66707f8bb20a27147bce47402e38eefc9fd863fd"
@@ -12940,20 +12959,10 @@ react-native-cookies@^3.3.0:
   dependencies:
     invariant "^2.1.0"
 
-react-native-device-info@^0.21.5:
-  version "0.21.5"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
-  integrity sha512-Bvl7TyVMDbBH3wzvZx0xj3deMhWVRDHdOdjP1MjGVxVVH+bSlCi6oYDScaX2yz5rfi2OvevWWCg8jUqFKeepjA==
-
 react-native-device-info@^0.29.1:
   version "0.29.1"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.29.1.tgz#5ae5e3204c6b41f78475ab1fabc0752904ef51ad"
   integrity sha512-sov6bcTe5/x/V7kQs+cukpQGQ7P571CMAIvaB/MtGNFnOpeLYxmZYMOA/PlB1ICQVynSiRLhjAEOAZMiZFsoPg==
-
-react-native-fcm@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-16.0.0.tgz#22ff9de21a2fe5cb30f8d50b1a3b4bf3bccd6434"
-  integrity sha512-Byxu/AIQf17avWsDgo/23sSEJJBekbkf8FBg0mynByfTPnf+rOqqC36JWgIF2LnDwZJCxKhDM19PgFlBxwaMVg==
 
 react-native-geocoder@^0.5.0:
   version "0.5.0"
@@ -13032,14 +13041,6 @@ react-native-sensitive-info@~5.4.0:
   resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.4.2.tgz#d2454991707927f27b5cdedfe21a07f30a5afd22"
   integrity sha512-C8eROsdK4/hPokgGXkAJ+FfDyF9ml48GyJHNT4pdVCbpA54Y3Ow6CTBKq6OE4djaBQsJ6Xim1iPNea25ark1fg==
 
-react-native-snap-carousel@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.0.tgz#9372222d61d37d0a8a3bec423d135d0caa1b7595"
-  integrity sha512-YtDZLv2Di77HfnH4yf+NyyYyISPNjrnjXDQLrzOkG9kkSlho/BROgHLQKGRLg3C2YSUMArFOePrb9CH3yeV5FA==
-  dependencies:
-    prop-types "^15.6.1"
-    react-addons-shallow-compare "15.6.2"
-
 react-native-svg@^9.3.6:
   version "9.5.3"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.5.3.tgz#2389f3ffd700c6441166496a1aeade31ead89c59"
@@ -13056,15 +13057,6 @@ react-native-touch-id@~4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.3.0.tgz#c25abd1d03d1ce5075f73ca87b18b47e7d60fa71"
   integrity sha512-c9VB8Q5+d1H/bXz3gKmlPeWgEIcIeSiLK6jIhx0gUHPD9Geaquhq7NwOFGVt3WkGyvyqfKQTjZTWmuWY1g7hLg==
-
-react-native-video@^4.0.0:
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-4.4.4.tgz#e33da29990556a9b2d575d6b2e88190fc04d9b50"
-  integrity sha512-GzC9dqvEV3kPQDgfM41bxuhXK0pf6NF+/PSY0nCqzikaapUtOs/69gPHEoG0D6ykI5ru0TxKdc1ZYM6MfZfgRw==
-  dependencies:
-    keymirror "^0.1.1"
-    prop-types "^15.5.10"
-    shaka-player "^2.4.4"
 
 react-native-web-image-loader@^0.0.6:
   version "0.0.6"
@@ -14159,11 +14151,6 @@ sha.js@^2.4.0, sha.js@^2.4.8:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
-
-shaka-player@^2.4.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.4.tgz#0491ec3bfddf91453f09ac1d731e5eb21e39f684"
-  integrity sha512-r7s2xauV4id0jUzAEtE2+E+0keOfrdkk2mZhiDLs9CrhA9IR0hqrOZLLzthNP4/yF5oBmNcAZU0/qWPwlawHEA==
 
 shallow-clone@^0.1.2:
   version "0.1.2"
@@ -15622,11 +15609,6 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
-
-uuid-js@0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
-  integrity sha1-bIhtAqU9LUDc8l2RoXC0p7JblNA=
 
 uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2:
   version "3.3.2"
