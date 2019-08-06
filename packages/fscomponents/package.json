@@ -15,7 +15,7 @@
     "@brandingbrand/fsengage": "^4.1.0",
     "@brandingbrand/fsfoundation": "^4.1.0",
     "@brandingbrand/fsi18n": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^5.0.0",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
