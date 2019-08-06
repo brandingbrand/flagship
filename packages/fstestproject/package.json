@@ -21,7 +21,7 @@
     "@brandingbrand/fsbazaarvoice": "^4.1.0",
     "@brandingbrand/fsbrandcmsproductcatalog": "^4.1.0",
     "@brandingbrand/fscart": "^4.1.0",
-    "@brandingbrand/fscategory": "^4.1.0",
+    "@brandingbrand/fscategory": "^5.0.0",
     "@brandingbrand/fscheckout": "^4.1.0",
     "@brandingbrand/fscodestyle": "^4.1.0",
     "@brandingbrand/fscommerce": "^4.1.0",
