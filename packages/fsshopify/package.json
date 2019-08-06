@@ -20,7 +20,7 @@
     "decimal.js": "^10.0.1",
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "react-native-navigation": "2.26.3",
     "react-native-payments": "^0.7.0"
   },
   "devDependencies": {
