@@ -17,7 +17,7 @@ export default class Home extends Component<any> {
     );
   }
 
-  goTo = (screen: string) => 
+  goTo = (screen: string) =>
     () => Navigation.push(this.props.componentId, { component: { name: screen } })
-      .catch(err => console.warn(`${screen} PUSH error: `, err));
+      .catch(err => console.warn(`${screen} PUSH error: `, err))
 }

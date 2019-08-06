@@ -32,7 +32,8 @@ export default class MockCommerceDataSource extends Component<any, any> {
         return (...args: any[]) => {
           const ret = target[prop](...args);
           if (ret instanceof Promise) {
-            ret.catch((e: Error) => showDataNavPush(this.props.componentId, { message: e.message }));
+            ret.catch((e: Error) =>
+              showDataNavPush(this.props.componentId, { message: e.message }));
           }
           return ret;
         };

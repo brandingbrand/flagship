@@ -1,10 +1,10 @@
 import { Navigation } from 'react-native-navigation';
 
 export const goToNavPush = (
-  scope: string, 
-  componentId: string, 
-  screen: string, 
-  title: string, 
+  scope: string,
+  componentId: string,
+  screen: string,
+  title: string,
   backButtonTitle: string
 ): void => {
   Navigation.push(componentId, {
@@ -22,15 +22,15 @@ export const goToNavPush = (
       }
     }
   }).catch(err => console.warn(`${scope}.${screen} PUSH error: `, err));
-}
+};
 
 export const showDataNavPush = (componentId: string, data: any): void => {
   Navigation.push(componentId, {
     component: {
       name: 'fscommerce.DataView',
-        passProps: {
-          json: JSON.stringify(data, null, '  ')
-        }
+      passProps: {
+        json: JSON.stringify(data, null, '  ')
       }
+    }
   }).catch(err => console.warn('fscommerce.DataView PUSH error: ', err));
-}
+};
