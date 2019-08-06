@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Bug Fixes
+
+* add key based off block item ([c732aa8](https://github.com/brandingbrand/flagship/commit/c732aa8))
+* inbox block re-render improvement ([9245eb3](https://github.com/brandingbrand/flagship/commit/9245eb3))
+* **fsengagement:** update react-native-video ([ae01256](https://github.com/brandingbrand/flagship/commit/ae01256))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fsengagement:** add new carousel option and full screen background ([42bbf54](https://github.com/brandingbrand/flagship/commit/42bbf54))
+* **fsengagement:** allow EngagementComp to accept style ([2671b64](https://github.com/brandingbrand/flagship/commit/2671b64))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
 
 
