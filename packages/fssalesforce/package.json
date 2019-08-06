@@ -14,7 +14,7 @@
   "dependencies": {
     "@brandingbrand/fscommerce": "^4.1.0",
     "@brandingbrand/fsfoundation": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^5.0.0",
     "decimal.js": "^10.0.1",
     "dtsgenerator": "^2.0.7",
     "jwt-decode": "^2.2.0",
