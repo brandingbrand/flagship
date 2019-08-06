@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/fscomponents": "^4.1.0",
+    "@brandingbrand/fscomponents": "^5.0.0",
     "@brandingbrand/fsengage": "^4.1.0",
     "@brandingbrand/fsfoundation": "^4.1.0",
     "@brandingbrand/fsi18n": "^4.1.0",
