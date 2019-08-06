@@ -21,6 +21,8 @@ export interface VideoBlockProps {
   repeat?: boolean;
   resizeMode?: string;
   style?: any;
+  muted?: boolean;
+  fullscreen?: boolean;
   containerStyle?: StyleProp<TextStyle>;
 }
 
@@ -95,7 +97,9 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
     const {
       resizeMode = 'cover',
       autoPlay = false,
-      repeat = false
+      repeat = false,
+      muted = false,
+      fullscreen = false
     } = this.props;
 
     return (
@@ -103,6 +107,8 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
         <VideoPlayer
           resizeMode={resizeMode}
           repeat={repeat}
+          muted={muted}
+          fullscreen={fullscreen}
           onLoad={this.checkAutoPlay(autoPlay)}
           source={{ uri: src }}
           paused={this.state.videoPaused}

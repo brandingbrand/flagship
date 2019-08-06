@@ -1,4 +1,5 @@
 import FCM, { FCMEvent } from 'react-native-fcm';
+import { AsyncStorage } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import {
@@ -138,6 +139,11 @@ export class EngagementService {
       return Promise.resolve(this.profileId);
     }
 
+    const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
+    if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
+      return Promise.resolve(savedProfileId);
+    }
+
     return this.networkClient.post(`/App/${this.appId}/getProfile`, {
       locale: DeviceInfo.getDeviceLocale(),
       country: DeviceInfo.getDeviceCountry(),
@@ -156,6 +162,8 @@ export class EngagementService {
       .then((data: any) => {
         this.profileId = data.id;
         this.profileData = data;
+
+        AsyncStorage.setItem('ENGAGEMENT_PROFILE_ID', data.id).catch();
 
         return data.id;
       })
@@ -187,7 +195,7 @@ export class EngagementService {
    */
   async getMessages(): Promise<EngagementMessage[]> {
     // check we have a user profile
-    if (!this.profileId || !this.profileData) {
+    if (!this.profileId) {
       throw new Error('Profile not loaded.');
     }
 
