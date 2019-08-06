@@ -15,7 +15,7 @@
     "@brandingbrand/fsengage": "^4.1.0",
     "@brandingbrand/fsfoundation": "^4.1.0",
     "@brandingbrand/fsi18n": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^5.0.0",
     "google-map-react": "^1.0.4",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",
