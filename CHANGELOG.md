@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([c732aa8](https://github.com/brandingbrand/flagship/commit/c732aa8))
+* inbox block re-render improvement ([9245eb3](https://github.com/brandingbrand/flagship/commit/9245eb3))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+* **fsapp:** Put dev menu as first screen ([09a275a](https://github.com/brandingbrand/flagship/commit/09a275a))
+* **fsengagement:** update react-native-video ([ae01256](https://github.com/brandingbrand/flagship/commit/ae01256))
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([e7412f9](https://github.com/brandingbrand/flagship/commit/e7412f9))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([c9dbfe4](https://github.com/brandingbrand/flagship/commit/c9dbfe4))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([e0aaf30](https://github.com/brandingbrand/flagship/commit/e0aaf30))
+* **fscomponents:** add renderModalContent prop ([4105c44](https://github.com/brandingbrand/flagship/commit/4105c44))
+* **fscomponents:** add some option props to zoomCarousel ([b7455e4](https://github.com/brandingbrand/flagship/commit/b7455e4))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18ce3a6](https://github.com/brandingbrand/flagship/commit/18ce3a6))
+* **fsengagement:** add new carousel option and full screen background ([f447c8e](https://github.com/brandingbrand/flagship/commit/f447c8e))
+* **fsengagement:** add new carousel option and full screen background ([42bbf54](https://github.com/brandingbrand/flagship/commit/42bbf54))
+* **fsengagement:** allow EngagementComp to accept style ([2671b64](https://github.com/brandingbrand/flagship/commit/2671b64))
+* **fsengagement:** update yarn.lock ([dc973bd](https://github.com/brandingbrand/flagship/commit/dc973bd))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
 
 
