@@ -531,59 +531,68 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       ]
     };
 
-    return (
-      <Modal
-        visible={this.state.isZooming}
-        transparent={true}
-        onRequestClose={this.closeZoom}
-      >
-        {this.props.renderModalContent && this.props.renderModalContent(this.closeZoom)}
-        {!this.props.renderModalContent && <View>
-        <ZoomImages
-          gapSizeScaled={this.gapSizeScaled}
-          zoomContainerWidth={this.zoomContainerWidth}
-          images={this.props.images}
-          style={{ opacity: this.state.isZoomVisible ? 1 : 0 }}
-          opacityStyle={opacityStyle}
-          sizeStyle={sizeStyle}
-          handleItemMoveOutX={this.handleItemMoveOutX}
-          handleItemMoveOutY={this.handleItemMoveOutY}
-          handleMoveRelease={this.handleMoveRelease}
-          handleZoomRelease={this.handleZoomRelease}
-          closeZoom={this.closeZoom}
-          goToZoomNext={this.goToZoomNext}
-          goToZoomPrev={this.goToZoomPrev}
-          currentZoomIndex={this.state.currentZoomIndex}
-          showArrow={this.props.showArrow}
-          isOpeningZoom={this.state.isOpeningZoom}
-          renderCloseButton={this.props.renderCloseButton}
-          closeButtonStyle={this.props.closeButtonStyle}
-        />
-
-        <Animated.View
-          style={[
-            S.pageIndicatorZoom,
-            opacityStyle,
-            this.props.pageIndicatorZoomStyle
-          ]}
+    if (this.props.renderModalContent) {
+      return (
+        <Modal
+          visible={this.state.isZooming}
+          transparent={true}
+          onRequestClose={this.closeZoom}
         >
-          {this.props.renderPageIndicator ? (
-            this.props.renderPageIndicator(
-              this.state.currentIndex,
-              this.props.images.length
-            )
-          ) : (
-            <PageIndicator
-              currentIndex={this.state.currentIndex}
-              itemsCount={this.props.images.length}
-              dotStyle={this.props.dotStyle}
-              dotActiveStyle={this.props.dotActiveStyle}
-            />
-          )}
-        </Animated.View>
-        </View>}
-      </Modal>
-    );
+          {this.props.renderModalContent(this.closeZoom)}
+        </Modal>
+      );
+    } else {
+      return (
+        <Modal
+          visible={this.state.isZooming}
+          transparent={true}
+          onRequestClose={this.closeZoom}
+        >
+          <ZoomImages
+            gapSizeScaled={this.gapSizeScaled}
+            zoomContainerWidth={this.zoomContainerWidth}
+            images={this.props.images}
+            style={{ opacity: this.state.isZoomVisible ? 1 : 0 }}
+            opacityStyle={opacityStyle}
+            sizeStyle={sizeStyle}
+            handleItemMoveOutX={this.handleItemMoveOutX}
+            handleItemMoveOutY={this.handleItemMoveOutY}
+            handleMoveRelease={this.handleMoveRelease}
+            handleZoomRelease={this.handleZoomRelease}
+            closeZoom={this.closeZoom}
+            goToZoomNext={this.goToZoomNext}
+            goToZoomPrev={this.goToZoomPrev}
+            currentZoomIndex={this.state.currentZoomIndex}
+            showArrow={this.props.showArrow}
+            isOpeningZoom={this.state.isOpeningZoom}
+            renderCloseButton={this.props.renderCloseButton}
+            closeButtonStyle={this.props.closeButtonStyle}
+          />
+
+          <Animated.View
+            style={[
+              S.pageIndicatorZoom,
+              opacityStyle,
+              this.props.pageIndicatorZoomStyle
+            ]}
+          >
+            {this.props.renderPageIndicator ? (
+              this.props.renderPageIndicator(
+                this.state.currentIndex,
+                this.props.images.length
+              )
+            ) : (
+              <PageIndicator
+                currentIndex={this.state.currentIndex}
+                itemsCount={this.props.images.length}
+                dotStyle={this.props.dotStyle}
+                dotActiveStyle={this.props.dotActiveStyle}
+              />
+            )}
+          </Animated.View>
+        </Modal>
+      );
+    }
   }
 
   handleThumbPress = (i: number) => {
