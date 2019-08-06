@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@brandingbrand/fscommerce": "^4.1.0",
-    "@brandingbrand/fsengage": "^4.1.0"
+    "@brandingbrand/fsengage": "^5.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
