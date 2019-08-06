@@ -30,7 +30,7 @@
     "@brandingbrand/fsengage": "^4.1.0",
     "@brandingbrand/fsi18n": "^4.1.0",
     "@brandingbrand/fsmockdatasources": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^5.0.0",
     "@brandingbrand/fsproductdetail": "^4.1.0",
     "@brandingbrand/fsproductindex": "^4.1.0",
     "@brandingbrand/fssalesforce": "^4.1.0",
