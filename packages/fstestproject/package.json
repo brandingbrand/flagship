@@ -16,7 +16,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/flagship": "^4.1.0",
+    "@brandingbrand/flagship": "^5.0.0",
     "@brandingbrand/fsapp": "^4.1.0",
     "@brandingbrand/fsbazaarvoice": "^4.1.0",
     "@brandingbrand/fsbrandcmsproductcatalog": "^4.1.0",
