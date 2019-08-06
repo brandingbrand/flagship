@@ -141,6 +141,7 @@ export class EngagementService {
 
     const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
     if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
+      this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
     }
 
