@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.4.5",
-    "@brandingbrand/flagship": "^4.1.0",
+    "@brandingbrand/flagship": "^5.0.0",
     "@brandingbrand/fsapp": "^4.1.0",
     "@brandingbrand/fsbazaarvoice": "^4.1.0",
     "@brandingbrand/fscategory": "^4.1.0",
