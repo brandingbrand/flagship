@@ -11,7 +11,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^4.1.0",
+    "@brandingbrand/fscommerce": "^5.0.0",
     "@brandingbrand/fsengage": "^4.1.0"
   },
   "publishConfig": {
