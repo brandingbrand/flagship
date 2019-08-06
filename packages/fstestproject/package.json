@@ -31,7 +31,7 @@
     "@brandingbrand/fsnetwork": "^4.1.0",
     "@brandingbrand/fspowerreviews": "^4.1.0",
     "@brandingbrand/fsproductdetail": "^4.1.0",
-    "@brandingbrand/fsproductindex": "^4.1.0",
+    "@brandingbrand/fsproductindex": "^5.0.0",
     "@brandingbrand/fssalesforce": "^4.1.0",
     "@brandingbrand/fsturnto": "^4.1.0",
     "@brandingbrand/fsups": "^4.1.0",
