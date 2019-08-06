@@ -13,7 +13,7 @@
   "dependencies": {
     "@brandingbrand/fsengage": "^4.1.0",
     "@brandingbrand/fsfoundation": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fsnetwork": "^5.0.0",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.7.0",
