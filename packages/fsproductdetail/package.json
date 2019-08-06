@@ -11,7 +11,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^4.1.0",
+    "@brandingbrand/fscommerce": "^5.0.0",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",
     "react-native": "0.59.10",
