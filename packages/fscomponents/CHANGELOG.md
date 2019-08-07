@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/brandingbrand/flagship/compare/v3.4.0...v3.5.0) (2019-08-07)
+
+
+### Features
+
+* **fscomponents:** add renderModalContent prop ([66cb26f](https://github.com/brandingbrand/flagship/commit/66cb26f))
+* **fscomponents:** fix app bug by removing view wrapper ([bc06b29](https://github.com/brandingbrand/flagship/commit/bc06b29))
+* **fscomponents:** remove backtick ([8f15798](https://github.com/brandingbrand/flagship/commit/8f15798))
+
+
+
+
+
 # [3.4.0](https://github.com/brandingbrand/flagship/compare/v3.3.0...v3.4.0) (2019-08-07)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
