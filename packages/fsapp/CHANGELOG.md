@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/brandingbrand/flagship/compare/v3.3.0...v3.4.0) (2019-08-07)
+
+
+### Bug Fixes
+
+* **fsapp:** Put dev menu as first screen ([cedb24a](https://github.com/brandingbrand/flagship/commit/cedb24a))
+
+
+
+
+
 # [3.3.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v3.3.0) (2019-07-30)
 
 

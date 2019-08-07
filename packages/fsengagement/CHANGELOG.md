@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/brandingbrand/flagship/compare/v3.3.0...v3.4.0) (2019-08-07)
+
+
+### Features
+
+* **fsengagement:** add new blocks to index ([3a59a4d](https://github.com/brandingbrand/flagship/commit/3a59a4d))
+* **fsengagement:** add recipe and video block to v3 ([49d97f5](https://github.com/brandingbrand/flagship/commit/49d97f5))
+* **fsengagement:** store engagement profileId ([ab643c3](https://github.com/brandingbrand/flagship/commit/ab643c3))
+* **fsengagement:** store engagement profileId ([3896f91](https://github.com/brandingbrand/flagship/commit/3896f91))
+
+
+
+
+
 # [3.3.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v3.3.0) (2019-07-30)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
