@@ -1,5 +1,5 @@
 import React, { Component, ComponentClass } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Provider } from 'react-redux';
 import screenWrapper, { GenericScreenProp } from '../components/screenWrapper';
 import {
@@ -19,6 +19,7 @@ const StyleSheetCreate: any = StyleSheet.create;
 const DEFAULT_DRAWER_WIDTH = '60%';
 const DEFAULT_DRAWER_DURATION = '0.3s';
 const DEFAULT_DRAWER_OVERLAY_OPACITY = 0.5;
+const closeIcon = require('../../assets/images/close.png');
 
 export interface AppStateTypes {
   leftDrawerOpen: boolean;
@@ -29,6 +30,7 @@ export interface PropType {
   appConfig: AppConfigType;
   api: any;
   store: any;
+  withCloseIcon?: boolean;
 }
 
 export default class DrawerRouter extends Component<PropType, AppStateTypes> {
@@ -143,9 +145,12 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
 
   generateAppStyles = (appConfig: AppConfigType) => {
     const { drawer = {} as any } = appConfig;
+    const { withCloseIcon } = this.props;
     const drawerWidth = '90%' || drawer.webWidth || DEFAULT_DRAWER_WIDTH;
     const drawerDuration = drawer.webDuration || DEFAULT_DRAWER_DURATION;
-    const drawerOverlayOpacity = drawer.webOverlayOpacity || DEFAULT_DRAWER_OVERLAY_OPACITY;
+    const drawerOverlayOpacity = !!withCloseIcon
+      ? 1
+      : drawer.webOverlayOpacity || DEFAULT_DRAWER_OVERLAY_OPACITY;
     const drawerLeftBackgroundColor = drawer.webLeftBackgroundColor;
     const drawerRightBackgroundColor = drawer.webRightBackgroundColor;
     const appStyle = StyleSheetCreate({
@@ -180,6 +185,15 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         opacity: drawerOverlayOpacity,
         transitionProperty: 'opacity',
         transitionDuration: drawerDuration
+      },
+      closeContainer: {
+        width: 40,
+        height: 40,
+        top: 0,
+        position: 'fixed',
+        right: 0,
+        backgroundColor: 'white',
+        padding: 10
       }
     });
 
@@ -266,6 +280,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       appStyle
     } = this.drawerConfig;
 
+    // tslint:disable-next-line:cyclomatic-complexity
     return (props: any) => {
       return (
         <View
@@ -305,15 +320,31 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
           >
             {React.createElement(component, props)}
           </View>
-          <TouchableWithoutFeedback onPress={this.closeDrawers}>
-            <View
+          {!!props.withCloseIcon
+            ?
+            (<View
               style={[
                 appStyle.containerOverlay,
                 (this.state.leftDrawerOpen || this.state.rightDrawerOpen) &&
-                  appStyle.containerOverlayActive
+                appStyle.containerOverlayActive
               ]}
-            />
-          </TouchableWithoutFeedback>
+            >
+              <TouchableWithoutFeedback onPress={this.closeDrawers}>
+                <View style={appStyle.closeContainer}>
+                  <Image source={closeIcon}/>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>)
+            : (<TouchableWithoutFeedback onPress={this.closeDrawers}>
+              <View
+                style={[
+                  appStyle.containerOverlay,
+                  (this.state.leftDrawerOpen || this.state.rightDrawerOpen) &&
+                  appStyle.containerOverlayActive
+                ]}
+              />
+            </TouchableWithoutFeedback>)
+          }
         </View>
       );
     };
