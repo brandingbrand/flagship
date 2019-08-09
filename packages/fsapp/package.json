@@ -17,7 +17,7 @@
     "@brandingbrand/fsnetwork": "^5.0.0",
     "path-to-regexp": "^2.2.1",
     "qs": "^6.7.0",
-    "react": "16.8.3",
+    "react": "16.9.0",
     "react-native": "0.59.10",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^0.29.1",
