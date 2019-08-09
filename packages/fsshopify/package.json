@@ -18,7 +18,7 @@
     "@brandingbrand/fsi18n": "^5.0.0",
     "@brandingbrand/fsnetwork": "^5.0.0",
     "decimal.js": "^10.0.1",
-    "react": "16.8.3",
+    "react": "16.9.0",
     "react-native": "0.59.10",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-payments": "^0.7.0"
