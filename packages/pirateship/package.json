@@ -40,7 +40,7 @@
     "credit-card-type": "^7.0.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
-    "react": "16.8.3",
+    "react": "16.9.0",
     "react-native": "0.59.10",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^0.29.1",
