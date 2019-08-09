@@ -36,7 +36,7 @@
     "@brandingbrand/fsturnto": "^5.0.0",
     "@brandingbrand/fsups": "^5.0.0",
     "jsc-android": "241213.x.x",
-    "react": "16.8.3",
+    "react": "16.9.0",
     "react-native": "0.59.10",
     "react-native-i18n": "^2.0.15"
   },
