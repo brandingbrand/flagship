@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+
+### Features
+
+* **fsengagement:** store engagement profileId ([ef598fd](https://github.com/brandingbrand/flagship/commit/ef598fd))
+* **fsengagement:** store engagement profileId ([ac21688](https://github.com/brandingbrand/flagship/commit/ac21688))
+
+
+
+
+
 # [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
 
 
