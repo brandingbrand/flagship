@@ -1,13 +1,13 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "5.0.0",
+  "version": "5.1.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsnetwork": "^5.0.0",
+    "@brandingbrand/fsnetwork": "^5.1.0",
     "@types/prop-types": "15.5.3",
     "@types/react-native-snap-carousel": "^3.7.3",
     "@types/react-native-video": "^2.0.8",
