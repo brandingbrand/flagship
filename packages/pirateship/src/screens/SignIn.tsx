@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { Navigation, Options } from 'react-native-navigation';
 import { Loading } from '@brandingbrand/fscomponents';
 import PSSignInForm from '../components/PSSignInForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import { fontSize, padding, palette } from '../styles/variables';
 import PSButton from '../components/PSButton';
@@ -100,8 +100,13 @@ export interface SignInScreenState {
 }
 
 class SignIn extends Component<SignInScreenProps, SignInScreenState> {
-  static navigatorStyle: NavigatorStyle = navBarHide;
-  static leftButtons: NavButton[] = [backButton];
+  static options: Options = {
+    ...navBarHide,
+    topBar: {
+      ...navBarHide.topBar,
+      leftButtons: [backButton.button]
+    }
+  }
   state: SignInScreenState = {
     isLoading: false
   };
@@ -113,8 +118,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
 
     const {
       saveCredentials,
-      getCredentials,
-      navigator
+      getCredentials
     } = this.props;
     /// default to close
     const dismissButtonStyle = this.props.dismissButtonStyle || DismissButtonStyle.Close;
@@ -127,7 +131,6 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
-        navigator={navigator}
       >
         <View style={styles.dismissButtonContainer}>
           {this.props.dismissible && (
@@ -173,7 +176,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
 
   // tslint:disable cyclomatic-complexity
   signIn = async (email: string, password: string) => {
-    const { navigator, signIn } = this.props;
+    const { componentId, signIn } = this.props;
     let { onSignInSuccess } = this.props;
     if (!onSignInSuccess) {
       onSignInSuccess = () => console.warn('No onSignInSuccess handler for Sign In');
@@ -185,18 +188,27 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
       return true;
     } catch (e) {
       if (e.message === 'FORCE_PASSWORD_CHANGE') {
-        navigator.push({
-          title: translate.string(translationKeys.screens.changePassword.title),
-          screen: 'ChangePassword',
-          passProps: {
-            email,
-            currentPassword: password,
-            onChangeSuccess: () => {
-              navigator.pop();
-              onSignInSuccess();
+        Navigation.push(componentId, {
+          component: {
+            name: 'ChangePassword',
+            options: {
+              topBar: {
+                title: {
+                  text: translate.string(translationKeys.screens.changePassword.title)
+                }
+              }
+            },
+            passProps: {
+              email,
+              currentPassword: password,
+              onChangeSuccess: () => {
+                Navigation.pop(componentId)
+                .catch(e => console.warn('ChangePassword POP error: ', e));
+                onSignInSuccess();
+              }
             }
           }
-        });
+        }).catch(e => console.warn('ChangePassword PUSH error: ', e));
         return true;
       } else {
         const response = (e || {}).response;
@@ -213,34 +225,50 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
   }
 
   forgotPassword = () => {
-    const { navigator } = this.props;
-
-    navigator.push({
-      title: 'Forgot Password',
-      screen: 'ForgotPassword',
-      passProps: {
-        onDismiss: () => {
-          navigator.pop();
+    const { componentId } = this.props;
+    Navigation.push(componentId, {
+      component: {
+        name: 'ForgotPassword',
+        options: {
+          topBar: {
+            title: {
+              text: 'Forgot Password'
+            }
+          }
         },
-        onSignUpSuccess: this.signUpSuccess
+        passProps: {
+          onDismiss: () => {
+            Navigation.pop(componentId)
+            .catch(e => console.warn('ForgotPassword POP error: ', e));
+          },
+          onSignUpSuccess: this.signUpSuccess
+        }
       }
-    });
+    }).catch(e => console.warn('ForgotPassword PUSH error: ', e));
   }
 
   signUp = () => {
-    const { navigator } = this.props;
-
-    navigator.push({
-      title: 'Sign Up',
-      screen: 'SignUp',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          navigator.pop();
+    const { componentId } = this.props;
+    Navigation.push(componentId, {
+      component: {
+        name: 'SignUp',
+        options: {
+          topBar: {
+            title: {
+              text: 'Sign Up'
+            }
+          }
         },
-        onSignUpSuccess: this.signUpSuccess
+        passProps: {
+          dismissible: true,
+          onDismiss: () => {
+            Navigation.pop(componentId)
+            .catch(e => console.warn('SignUp POP error: ', e));
+          },
+          onSignUpSuccess: this.signUpSuccess
+        }
       }
-    });
+    }).catch(e => console.warn('SignUp PUSH error: ', e));
   }
 
   onDismiss = () => {
@@ -253,8 +281,9 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
   }
 
   signUpSuccess = () => {
-    const { navigator, onSignInSuccess } = this.props;
-    navigator.pop();
+    const { componentId, onSignInSuccess } = this.props;
+    Navigation.pop(componentId)
+    .catch(e => console.warn('SignIn POP error: ', e));
 
     if (onSignInSuccess) {
       this.setState({ isLoading: true });

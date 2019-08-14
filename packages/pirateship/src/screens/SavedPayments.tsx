@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 import { border, palette } from '../styles/variables';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import { dataSource } from '../lib/datasource';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -67,14 +68,21 @@ const defaultMessage = 'Loading your payments...';
 interface SavedPaymentsScreenProps extends ScreenProps, AccountProps {}
 
 class SavedPayments extends Component<SavedPaymentsScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = {
+    ...navBarDefault,
+    topBar: {
+      ...navBarDefault.topBar, 
+      title: {
+        color: palette.onPrimary,
+        alignment: 'center',
+        text: translate.string(translationKeys.screens.editSavedPayments.title)
+      }
+    }
+  }
   state: any;
 
   constructor(props: SavedPaymentsScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.editSavedPayments.title)
-    });
 
     this.state = {
       payments: [],
@@ -101,7 +109,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
       })
       .catch(e => {
         this.setState({ loading: false, msg: defaultMessage });
-        handleAccountRequestError(e, this.props.navigator, this.props.signOut);
+        handleAccountRequestError(e, this.props.componentId, this.props.signOut);
       });
   }
 
@@ -160,7 +168,8 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
   }
 
   onComplete = (updated: boolean) => {
-    this.props.navigator.dismissModal();
+    Navigation.dismissModal(this.props.componentId)
+    .catch(e => console.warn('DISMISSMODAL error: ', e));
     if (updated) {
       this.fetchData();
     }
@@ -196,7 +205,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
               })
               // TODO: Add types for error response
               .catch((e: any) => {
-                return handleAccountRequestError(e, this.props.navigator, this.props.signOut);
+                return handleAccountRequestError(e, this.props.componentId, this.props.signOut);
               });
           }
         }],

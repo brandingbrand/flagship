@@ -3,9 +3,9 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { padding, palette } from '../styles/variables';
 import GlobalStyles from '../styles/Global';
 
-export interface HeaderProps {
-  navigator: import ('react-native-navigation').Navigator;
-}
+// export interface HeaderProps {
+//   navigator: import ('react-native-navigation').Navigator;
+// }
 
 const title = 'PIRATESHIP';
 const menuIcon = require('../../assets/images/menu-icon.png');
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Header extends Component<HeaderProps> {
+class Header extends Component {
   render(): JSX.Element {
     return (
       <View style={styles.container}>

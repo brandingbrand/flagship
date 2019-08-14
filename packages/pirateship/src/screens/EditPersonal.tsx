@@ -1,9 +1,10 @@
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import React, { Component } from 'react';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import { border, padding } from '../styles/variables';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -24,8 +25,13 @@ const styles = StyleSheet.create({
 interface EditPersonalScreenProps extends ScreenProps, AccountProps {}
 
 class EditPersonal extends Component<EditPersonalScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
-  static leftButtons: NavButton[] = [backButton];
+  static options: Options = {
+    ...navBarDefault,
+    topBar: {
+      ...navBarDefault.topBar,
+      leftButtons: [backButton.button]
+    }
+  }
   form: any;
   formFields: any;
   formFieldOptions: any;
@@ -33,8 +39,12 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
 
   constructor(props: EditPersonalScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.editPersonal.title)
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.editPersonal.title)
+        }
+      }
     });
 
     // TODO: Update to match proper commerce types
@@ -64,7 +74,6 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
@@ -74,7 +83,6 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
-        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
@@ -114,7 +122,8 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   cancel = () => {
-    return this.props.navigator.pop();
+    return Navigation.pop(this.props.componentId)
+    .catch(e => console.warn('POP error: ', e));
   }
 
   save = () => {
@@ -124,7 +133,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
         .updateAccount(values)
         .then(this.cancel)
         // TODO: add types for errors
-        .catch((e: any) => handleAccountRequestError(e, this.props.navigator, this.props.signOut));
+        .catch((e: any) => handleAccountRequestError(e, this.props.componentId, this.props.signOut));
     }
   }
 
