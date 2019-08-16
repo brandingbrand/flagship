@@ -13,6 +13,7 @@
     "compile-web": "(test -d 'web' || flagship init web) && cd ./web/ && yarn start",
     "build-ios": "./scripts/buildiOS.sh",
     "init": "node scripts/fixRNLink.js && flagship clean && flagship init native",
+    "init:web": "node scripts/fixRNLink.js && flagship clean && flagship init web",
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
