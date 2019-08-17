@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import { ScreenProps } from '../lib/commonTypes';
 import GlobalStyles from '../styles/Global';
 import { padding, palette } from '../styles/variables';
@@ -51,10 +52,17 @@ export default class LeftDrawerMenu extends Component<ScreenProps> {
 
   goTo = (screen: string) => {
     return () => {
-      this.props.navigator.push({ screen });
-      this.props.navigator.toggleDrawer({
-        side: 'left',
-        to: 'closed'
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: screen
+        }
+      }).catch(e => console.warn(`${screen} PUSH error: `, e));
+      Navigation.mergeOptions(this.props.componentId, {
+        sideMenu: {
+          left: {
+            visible: false
+          }
+        }
       });
     };
   }

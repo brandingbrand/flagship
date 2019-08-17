@@ -1,6 +1,7 @@
 import { ScreenProps } from '../lib/commonTypes';
 import { Component, default as React } from 'react';
 import { ScrollView, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
 import PSButton from '../components/PSButton';
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -31,7 +32,13 @@ class EditAddress extends Component<EditAddressScreenProps> {
         address: props.address.id
       });
     }
-    props.navigator.setTitle({ title });
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {
+          text: title
+        }
+      }
+    });
 
     if (this.props.edit) {
       this.state = {
@@ -65,8 +72,6 @@ class EditAddress extends Component<EditAddressScreenProps> {
       actionTranslations = translationKeys.address.actions.edit;
     }
 
-    const { navigator } = this.props;
-
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
@@ -76,7 +81,6 @@ class EditAddress extends Component<EditAddressScreenProps> {
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
-        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
@@ -138,8 +142,9 @@ class EditAddress extends Component<EditAddressScreenProps> {
     };
   }
 
-  cancel = () => {
-    return this.props.navigator.dismissModal();
+  cancel = async () => {
+    return Navigation.dismissModal(this.props.componentId)
+    .catch(e => console.warn('DISMISSMODAL error: ', e));
   }
 
   save = () => {
@@ -155,12 +160,13 @@ class EditAddress extends Component<EditAddressScreenProps> {
       update.then(result => {
         if (this.props.onComplete) {
           this.props.onComplete(this.address);
-          this.props.navigator.dismissModal();
+          Navigation.dismissModal(this.props.componentId)
+          .catch(e => console.warn('DISMISSMODAL error: ', e));
         }
       })
       .catch(e => {
         alert(e.response.data.error.message);
-        handleAccountRequestError(e, this.props.navigator, this.props.signOut);
+        handleAccountRequestError(e, this.props.componentId, this.props.signOut);
       });
     }
   }

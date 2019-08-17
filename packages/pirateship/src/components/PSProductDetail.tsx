@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import { cloneDeep, find, findIndex } from 'lodash-es';
 import {
   Loading,
@@ -38,8 +39,6 @@ import {
   CommerceTypes,
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
-
-type Navigator = import ('react-native-navigation').Navigator;
 
 const icons = {
   zoom: require('../../assets/images/icon-zoom.png'),
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
 // TODO: RecentlyViewed and Cart providers should be updated to properly pass types through
 export interface UnwrappedPSProductDetailProps extends RecentlyViewedProps {
   id: string;
-  navigator: Navigator;
+  componentId: string;
   onAddToCart?: (data: any) => any; // TODO: Update this with real types
   onOpenHTMLView?: (html: string, title?: string) => void;
   reviewDataSource: ReviewDataSource;
@@ -349,12 +348,14 @@ class PSProductDetailComponent extends Component<
         variant.id &&
         ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
       ) {
-        this.props.navigator.push({
-          screen: 'ProductDetail',
-          passProps: {
-            productId: variant.id
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'ProductDetail',
+            passProps: {
+              productId: variant.id
+            }
           }
-        });
+        }).catch(e => console.warn('ProductDetail PUSH error: ', e));
       } else {
         // Update State
         this.setState(prevState => {
@@ -412,12 +413,14 @@ class PSProductDetailComponent extends Component<
   }
 
   goToProduct = (product: any) => () => {
-    this.props.navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId: product.productId
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId: product.productId
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
   openModal = (title: string, content: any, html: boolean = false) => () => {
@@ -455,26 +458,33 @@ class PSProductDetailComponent extends Component<
     this.setState({ miniModalVisible: false });
   }
 
-  openSignInModal = (navigator: Navigator) => () => {
-    navigator.showModal({
-      screen: 'SignIn',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          navigator.dismissModal();
-        },
-        onSignInSuccess: () => {
-          navigator.popToRoot({ animated: false });
-          navigator.push({
-            screen: 'ProductDetail',
-            passProps: {
-              productId: this.props.id
-            }
-          });
-          navigator.dismissModal();
+  openSignInModal = () => () => {
+    Navigation.showModal({
+      component: {
+        name: 'SignIn',
+        passProps: {
+          dismissible: true,
+          onDismiss: () => {
+            Navigation.dismissModal(this.props.componentId)
+              .catch(e => console.warn('DISMISSMODAL error: ', e));
+          },
+          onSignInSuccess: () => {
+            Navigation.popToRoot(this.props.componentId)
+              .catch(e => console.warn('POPTOROOT error: ', e));
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: 'ProductDetail',
+                passProps: {
+                  productId: this.props.id
+                }
+              }
+            }).catch(e => console.warn('ProductDetail PUSH error: ', e));
+            Navigation.dismissModal(this.props.componentId)
+              .catch(e => console.warn('DISMISSMODAL error: ', e));
+          }
         }
       }
-    });
+    }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
   renderShareButton = (): React.ReactNode => {
@@ -686,13 +696,21 @@ class PSProductDetailComponent extends Component<
   }
 
   openWebView = (url: string, title: string) => () => {
-    this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title,
-      passProps: {
-        url
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        },
+        passProps: {
+          url
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 
   _renderZoomButton = (openZoom: () => void): JSX.Element => {
@@ -742,11 +760,19 @@ class PSProductDetailComponent extends Component<
   }
 
   navigateToScreen = (screen: string, title: string, props: any) => {
-    this.props.navigator.push({
-      screen,
-      title,
-      passProps: props
-    });
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: screen,
+        passProps: props,
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        }
+      }
+    }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }
 }
 
