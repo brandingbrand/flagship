@@ -12,7 +12,7 @@ import StorageManager from './StorageManager';
 import TouchableRow from './TouchableRow';
 // @ts-ignore no type definition file
 import RNRestart from 'react-native-restart';
-import { Screen } from 'react-native-navigation';
+import { LayoutComponent, Navigation } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
 
@@ -156,9 +156,12 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     );
   }
 
-  renderCustomDevScreen = (item: Screen, i: number) => {
+  renderCustomDevScreen = (item: LayoutComponent, i: number) => {
+    const name = item.name;
+    const title = item.options && item.options.topBar &&
+      item.options.topBar.title && item.options.topBar.title.text;
     return (
-      <TouchableRow key={i} text={item.title || item.screen} onPress={this.pushToScreen(item)} />
+      <TouchableRow key={i} text={title || name} onPress={this.pushToScreen(item)} />
     );
   }
 
@@ -229,7 +232,8 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
   handleHideDevMenu = () => {
     this.props.hideDevMenu();
-    this.props.navigator.dismissModal();
+    Navigation.dismissModal(this.props.componentId)
+      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
   }
 
   restart = () => {
@@ -237,7 +241,8 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
   }
 
   dismissModal = () => {
-    this.props.navigator.dismissModal();
+    Navigation.dismissModal(this.props.componentId)
+      .catch(err => console.log('DevMenu DISMISSMODAL error: ', err));
   }
 
   updateSelectedEnv = (env: string) => () => {
@@ -253,8 +258,9 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     });
   }
 
-  pushToScreen = (item: Screen) => () => {
-    this.props.navigator.push(item);
+  pushToScreen = (item: LayoutComponent) => () => {
+    Navigation.push(this.props.componentId, { component: item })
+      .catch(err => console.log('DevMenu PUSH error: ', err));
   }
 
   showDevView = (devView: string) => () => {
