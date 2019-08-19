@@ -165,27 +165,32 @@ export class FilterListDrilldown extends PureComponent<
   FilterListDrilldownProps,
   FilterListDrilldownState
 > {
-
-  static getDerivedStateFromProps(
-    nextProps: FilterListDrilldownProps,
-    prevState: FilterListDrilldownState
-  ): Partial<FilterListDrilldownState> {
-    const secondLevelItem = prevState.secondLevelItem
-      ? nextProps.items.find(item => item.id === prevState.secondLevelItem.id)
-      : null;
-
-    return {
-      selectedItems: nextProps.selectedItems || {},
-      secondLevelItem
-    };
-  }
-
   constructor(props: FilterListDrilldownProps) {
     super(props);
     this.state = {
       selectedItems: props.selectedItems || {},
       secondLevelItem: null
     };
+  }
+
+  componentDidUpdate(
+    prevProps: FilterListDrilldownProps
+  ): void {
+    const stateChanges: Partial<FilterListDrilldownState> = {};
+
+    if (this.props.items !== prevProps.items && this.state.secondLevelItem) {
+      stateChanges.secondLevelItem = this.props.items.find(item => (
+        item.id === this.state.secondLevelItem.id
+      ));
+    }
+
+    if (this.props.selectedItems !== prevProps.selectedItems) {
+      stateChanges.selectedItems = this.props.selectedItems;
+    }
+
+    if (Object.keys(stateChanges).length) {
+      this.setState(stateChanges as FilterListDrilldownState);
+    }
   }
 
   handleSelect = (id: string, value: string) => () => {
