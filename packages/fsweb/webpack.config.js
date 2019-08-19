@@ -18,7 +18,7 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -77,10 +77,7 @@ const globalConfig = {
                 }
               },
               {
-                loader: require.resolve("ts-loader"),
-                options: {
-                  configFile: 'tsconfig/tsconfig.storybook.json'
-                }
+                loader: require.resolve("ts-loader")
               }
             ]
           },
@@ -89,7 +86,9 @@ const globalConfig = {
             include: [
               /node_modules\/react-native-/,
               /node_modules\/tcomb-form-native/,
-              /packages\/fs/
+              /packages\/fs/,
+              /node_modules\/@brandingbrand\/fs/,
+              /node_modules\/@brandingbrand\/react-native-/
             ],
             exclude: /node_modules\/react-native-web\//,
             use: [

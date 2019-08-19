@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+
+### Bug Fixes
+
+* **fsweb:** Update the webpack config file ([fae0ebf](https://github.com/brandingbrand/flagship/commit/fae0ebf))
+
+
+
+
+
 # [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
