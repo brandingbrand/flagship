@@ -16,6 +16,7 @@
     "@brandingbrand/fsfoundation": "^5.1.1",
     "@brandingbrand/fsi18n": "^5.1.1",
     "@brandingbrand/fsnetwork": "^5.1.1",
+    "@react-native-community/async-storage": "^1.6.1",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",

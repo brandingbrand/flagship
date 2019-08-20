@@ -1,5 +1,5 @@
 import FCM, { FCMEvent } from 'react-native-fcm';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import {

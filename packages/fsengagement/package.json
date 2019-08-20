@@ -8,6 +8,7 @@
   "main": "dist/index",
   "dependencies": {
     "@brandingbrand/fsnetwork": "^5.1.1",
+    "@react-native-community/async-storage": "^1.6.1",
     "@types/prop-types": "15.5.3",
     "@types/react-native-snap-carousel": "^3.7.3",
     "@types/react-native-video": "^2.0.8",
