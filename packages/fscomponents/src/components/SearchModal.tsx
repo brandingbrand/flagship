@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
   ScrollView,
   StyleProp,
   Text,
@@ -10,6 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Modal } from './Modal';
 import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
