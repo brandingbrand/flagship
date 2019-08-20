@@ -5,7 +5,7 @@ import {
 import { CombinedStore } from '../reducers';
 import { connect } from 'react-redux';
 import { RecentlyViewedStore } from '../reducers/recentlyViewedReducer';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { find } from 'lodash-es';
 
