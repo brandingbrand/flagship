@@ -146,6 +146,7 @@ function initAndroid(
 
   // Android specific configuration
   android.googleMaps(configuration);
+  android.exceptionDomains(configuration); // Add Network Security exception domains for Android
 
   if (!configuration.disableDevFeature) {
     android.addDevMenuFlag(configuration);

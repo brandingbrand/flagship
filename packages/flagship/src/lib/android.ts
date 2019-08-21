@@ -191,3 +191,55 @@ export function setEnvSwitcherInitialEnv(configuration: FlagshipTypes.Config, en
     `"${env}"; // [EnvSwitcher initialEnvName]`
   );
 }
+
+/**
+ * Adds exception domains for Network Security Config from the project configuration.
+ *
+ * @param {object} configuration The project configuration.
+ */
+export function exceptionDomains(configuration: FlagshipTypes.Config): void {
+  const { exceptionDomains = [] } = configuration;
+
+  if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
+    // Users should not add exception domains. They introduce a security vulnerability.
+    helpers.logWarn(
+      `adding Android exception domains
+      \tYou should not enable exception domains in a production app.`
+    );
+  }
+
+  // Localhost must be added as an exception domain during development
+  if (!configuration.disableDevFeature) {
+    const localhostIndex = exceptionDomains.findIndex(domain => {
+      if (typeof domain === 'string') {
+        return domain === 'localhost';
+      } else {
+        return domain.domain === 'localhost';
+      }
+    });
+
+    if (localhostIndex === -1) {
+      exceptionDomains.push('localhost');
+    }
+  }
+
+  if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
+    const domainElements = exceptionDomains
+      .map(domain => {
+        const host = typeof domain === 'string' ? domain : domain.domain;
+        return `<domain includeSubdomains="true">${host}</domain>`;
+      })
+      .join('\n\t\t');
+
+    const xml = `<domain-config cleartextTrafficPermitted="true">
+      ${domainElements}
+    </domain-config>
+    <debug-overrides>`;
+
+    fs.update(
+      path.resolve(path.android.resourcesPath(), 'xml', 'network_security_config.xml'),
+      '<debug-overrides>',
+      xml
+    );
+  }
+}
