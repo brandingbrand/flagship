@@ -48,7 +48,7 @@
     "react-native-device-info": "^0.29.1",
     "react-native-htmlview": "^0.13.0",
     "react-native-i18n": "^2.0.15",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "react-native-navigation": "2.26.3",
     "react-native-payments": "^0.7.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "~5.4.0",

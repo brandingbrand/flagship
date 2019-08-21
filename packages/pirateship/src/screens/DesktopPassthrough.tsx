@@ -1,5 +1,6 @@
 import React, { Component, RefObject } from 'react';
 import { Linking, Platform, StyleSheet, View, WebView } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 import url from 'url';
 
 import { Loading } from '@brandingbrand/fscomponents';
@@ -9,7 +10,7 @@ import { handleDeeplink } from '../lib/deeplinkHandler';
 
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 
 const appEnv = require('../../env/env');
 const { apiHost } = appEnv;
@@ -56,8 +57,9 @@ const styles = StyleSheet.create({
 });
 
 export default class DesktopPassthrough extends Component<DesktopPassthroughProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
+
   isFirstPageview: boolean = true;
   previousUrl?: string;
   path?: string;
@@ -84,8 +86,8 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
   webviewOnError = (error: any): void => {
     console.log(error);
-
-    this.props.navigator.popToRoot();
+    Navigation.popToRoot(this.props.componentId)
+    .catch(e => console.warn('POPTOROOT error: ', e));
   }
 
   // tslint:disable-next-line:cyclomatic-complexity
@@ -119,7 +121,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
         // passthrough screen if not.
         handleDeeplink(
           urlParts.protocol + '//' + this.host + urlParts.path,
-          this.props.navigator
+          this.props.componentId
         );
 
         // Since we're pushing a new screen we return false so the webview doesn't navigate
@@ -171,14 +173,17 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
   handleMessage = (e: any) => {
     if (e.nativeEvent.data && e.nativeEvent.data.indexOf('title:') === 0) {
-      this.props.navigator.setTitle({
-        title: e.nativeEvent.data.replace('title:', '')
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          title: {
+            text: e.nativeEvent.data.replace('title:', '')
+          }
+        }
       });
     }
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     if (this.path && this.path.split('.').pop() === 'pdf') {
       const pdfUrl =
         Platform.OS === 'android'
@@ -187,7 +192,6 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
       return (
         <PSScreenWrapper
           scroll={false}
-          navigator={navigator}
         >
           <View style={styles.flex1}>
             <WebView source={{ uri: pdfUrl }} />
@@ -203,7 +207,6 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
           scroll={false}
           hideGlobalBanner={!!this.props.html}
           hideWebHeader={!!this.props.html}
-          navigator={navigator}
         >
           <View style={styles.flex1}>
             <WebView
