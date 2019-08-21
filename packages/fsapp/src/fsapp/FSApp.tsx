@@ -30,19 +30,26 @@ export class FSApp extends FSAppBase {
 
       return {
         key,
-        screen: screenWrapper(component, this.appConfig, this.api)
+        Screen: screenWrapper(component, this.appConfig, this.api)
       };
     });
 
     if (this.shouldShowDevMenu()) {
       enhancedScreens.unshift({
         key: 'devMenu',
-        screen: screenWrapper(DevMenu, this.appConfig, this.api)
+        Screen: screenWrapper(DevMenu, this.appConfig, this.api)
       });
     }
 
-    enhancedScreens.forEach(({ key, screen }) => {
-      Navigation.registerComponent(`${key}`, () => screen as any, this.store, Provider);
+    enhancedScreens.forEach(({ key, Screen }) => {
+      Navigation.registerComponent(key, () => props => {
+        return (
+          <Provider store={this.store}>
+            <Screen {...props}/>
+          </Provider>
+        );
+      }
+      , () => Screen);
     });
   }
 
@@ -51,22 +58,36 @@ export class FSApp extends FSAppBase {
   }
 
   startApp(): void {
-    if (this.appConfig.appType === 'singleScreen' && this.appConfig.screen) {
-      Navigation.startSingleScreenApp({
-        screen: this.appConfig.screen,
-        drawer: this.appConfig.drawer,
-        animationType: 'fade'
-      });
-    } else if (this.appConfig.tabs && this.appConfig.tabs.length) {
-      Navigation.startTabBasedApp({
-        tabs: this.appConfig.tabs,
-        tabsStyle: this.appConfig.tabsStyle,
-        appStyle: this.appConfig.appStyle,
-        drawer: this.appConfig.drawer,
-        animationType: 'fade'
-      });
-    } else {
-      throw new Error('invalide settings for screens and appType in appConfig');
-    }
+    Navigation.events().registerAppLaunchedListener(() => {
+      const {
+        appType,
+        bottomTabsId,
+        bottomTabsOptions,
+        defaultOptions,
+        screen,
+        tabs
+      } = this.appConfig;
+
+      if (defaultOptions) {
+        Navigation.setDefaultOptions(defaultOptions);
+      }
+
+      if (appType === 'singleScreen' && screen) {
+        Navigation.setRoot({ root: { component: screen }})
+        .catch(err => console.warn('FSApp setRoot error: ', err));
+      } else if (tabs && tabs.length) {
+        Navigation.setRoot({
+          root: {
+            bottomTabs: {
+              id: bottomTabsId || 'bottomTabsId',
+              children: tabs.map(tab => ({ component: tab })),
+              options: bottomTabsOptions
+            }
+          }
+        }).catch(err => console.warn('FSApp setRoot error: ', err));
+      } else {
+        throw new Error('invalide settings for screens and appType in appConfig');
+      }
+    });
   }
 }
