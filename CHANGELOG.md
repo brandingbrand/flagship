@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([236993f](https://github.com/brandingbrand/flagship/commit/236993f))
+* **fsweb:** Prevent double transpiling of typeof ([bb3bd74](https://github.com/brandingbrand/flagship/commit/bb3bd74))
+* **fsweb:** Prevent double transpiling of typeof ([30ec79d](https://github.com/brandingbrand/flagship/commit/30ec79d))
+* **fsweb:** Prevent double transpiling of typeof ([427445d](https://github.com/brandingbrand/flagship/commit/427445d))
+* **fsweb:** Update the webpack config file ([933bc10](https://github.com/brandingbrand/flagship/commit/933bc10))
+* **fsweb:** Update the webpack config file ([5e6bfb8](https://github.com/brandingbrand/flagship/commit/5e6bfb8))
+* Fix application of refinements ([82c9813](https://github.com/brandingbrand/flagship/commit/82c9813))
+* update axios from 0.18 to 0.18.1 for security fix ([1e80a01](https://github.com/brandingbrand/flagship/commit/1e80a01))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([45a054a](https://github.com/brandingbrand/flagship/commit/45a054a))
+* **fscomponents:** add some option props to zoomCarousel ([a195337](https://github.com/brandingbrand/flagship/commit/a195337))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18743f8](https://github.com/brandingbrand/flagship/commit/18743f8))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([c7129f5](https://github.com/brandingbrand/flagship/commit/c7129f5))
+* **fscomponents:** fix app bug by removing view wrapper ([fbf66a8](https://github.com/brandingbrand/flagship/commit/fbf66a8))
+* **fscomponents:** remove backtick ([23b9baa](https://github.com/brandingbrand/flagship/commit/23b9baa))
+* **fsengagement:** store engagement profileId ([a3e8a7d](https://github.com/brandingbrand/flagship/commit/a3e8a7d))
+* **fsengagement:** store engagement profileId ([e4f0c93](https://github.com/brandingbrand/flagship/commit/e4f0c93))
+* pin axios to 0.18.0 ([b1d5c75](https://github.com/brandingbrand/flagship/commit/b1d5c75))
+
+
+
+
+
 ## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
 
 
