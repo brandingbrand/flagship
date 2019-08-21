@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 
 import { Loading } from '@brandingbrand/fscomponents';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import PSTotals from '../components/PSTotals';
@@ -138,9 +139,8 @@ const styles = StyleSheet.create({
 });
 
 export default class OrderHistoryDetail extends Component<ScreenProps, OrderHistoryDetailState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
-
   constructor(props: ScreenProps) {
     super(props);
 
@@ -160,7 +160,6 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const { isLoading, errors } = this.state;
     let body;
 
@@ -179,7 +178,6 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
       <PSScreenWrapper
         style={styles.container}
         scroll={!isLoading}
-        navigator={navigator}
       >
         {body}
       </PSScreenWrapper>
@@ -279,20 +277,24 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
     );
   }
 
-  signIn = () => {
-    return this.props.navigator.showModal({
-      screen: 'SignIn',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          this.props.navigator.dismissModal();
-        },
-        onSignInSuccess: async () => {
-          this.props.navigator.dismissModal();
-          await this.fetchOrder();
+  signIn = async () => {
+    return Navigation.showModal({
+      component: {
+        name: 'SignIn',
+        passProps: {
+          dismissible: true,
+          onDismiss: () => {
+            Navigation.dismissModal(this.props.componentId)
+            .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+          },
+          onSignInSuccess: async () => {
+            Navigation.dismissModal(this.props.componentId)
+            .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+            await this.fetchOrder();
+          }
         }
       }
-    });
+    }).catch(e => console.warn('SignIn PUSH error: ', e));
   }
 
   goToTrackingInfo = (link: string) => {
@@ -309,12 +311,20 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   goToContactUs = () => {
-    this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title: translate.string(translationKeys.screens.contactUs.title),
-      passProps: {
-        url: `${env.desktopHost}/contactus`
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.contactUs.title)
+            }
+          }
+        },
+        passProps: {
+          url: `${env.desktopHost}/contactus`
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 }

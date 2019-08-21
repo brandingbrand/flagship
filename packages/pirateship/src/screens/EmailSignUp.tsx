@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as tcomb from 'tcomb-form-native';
 import { CMSBannerStacked, Form } from '@brandingbrand/fscomponents';
 
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 });
 
 export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   form?: Form;
   state: EmailSignUpState = {
@@ -92,8 +93,12 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
 
   constructor(props: ScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.emailSignUp.title)
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.emailSignUp.title)
+        }
+      }
     });
   }
 
@@ -183,13 +188,10 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
-
     return (
       <PSScreenWrapper
         style={styles.container}
         hideGlobalBanner={true}
-        navigator={navigator}
       >
         <CMSBannerStacked
           cmsProviderManagementConfig={CMSProvider}
