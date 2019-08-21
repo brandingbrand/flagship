@@ -38,6 +38,7 @@
     "@brandingbrand/fsshopify": "^5.1.1",
     "@brandingbrand/fsweb": "^5.1.1",
     "@brandingbrand/react-native-leanplum": "^2.0.3",
+    "@react-native-community/async-storage": "^1.6.1",
     "credit-card-type": "^7.0.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
@@ -84,7 +85,8 @@
       "jsc-android",
       "**/fsshopify",
       "**/fsshopify/react-native*",
-      "**/fsshopify/react-native*/**"
+      "**/fsshopify/react-native*/**",
+      "@react-native-community/async-storage"
     ]
   }
 }
