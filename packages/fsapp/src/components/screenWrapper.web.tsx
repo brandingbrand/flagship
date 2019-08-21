@@ -5,7 +5,7 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
 import pushRoute from '../lib/push-route';
-import { AppConfigType, DrawerConfig } from '../types';
+import { AppConfigType, DrawerConfig, WebNavigator } from '../types';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -26,17 +26,12 @@ const styles = StyleSheet.create({
   }
 });
 
-type Navigator = import ('react-native-navigation').Navigator;
-const NOT_IMPLMENTED = (prop: keyof Navigator) => {
-  return (...args: any[]): any => console.log(`${prop} is not implemented`);
-};
-
 export interface GenericScreenStateProp {
   devMenuHidden: boolean;
 }
 
 export interface GenericScreenDispatchProp {
-  navigator: Navigator;
+  navigator: WebNavigator;
   hideDevMenu: () => void;
 }
 
@@ -157,32 +152,13 @@ export default function wrapScreen(
   ): GenericScreenDispatchProp {
     const { history } = ownProps;
 
-    const navigator: Navigator = {
+    const navigator: WebNavigator = {
       push: route => pushRoute(route, history, appConfig),
       showModal: route => pushRoute(route, history, appConfig),
       pop: () => history.goBack(),
       toggleDrawer: config => toggleDrawerFn && toggleDrawerFn(config),
       switchToTab: route => pushRoute(route, history, appConfig),
-      popToRoot: () => pushRoute(appConfig.screen, history, appConfig),
-      setTitle: NOT_IMPLMENTED('setTitle'),
-      setSubTitle: NOT_IMPLMENTED('setSubTitle'),
-      resetTo: NOT_IMPLMENTED('resetTo'),
-      dismissModal: NOT_IMPLMENTED('dismissModal'),
-      dismissAllModals: NOT_IMPLMENTED('dismissAllModals'),
-      showLightBox: NOT_IMPLMENTED('showLightBox'),
-      dismissLightBox: NOT_IMPLMENTED('dismissLightBox'),
-      showInAppNotification: NOT_IMPLMENTED('showInAppNotification'),
-      handleDeepLink: NOT_IMPLMENTED('handleDeepLink'),
-      setButtons: NOT_IMPLMENTED('setButtons'),
-      setDrawerEnabled: NOT_IMPLMENTED('setDrawerEnabled'),
-      toggleTabs: NOT_IMPLMENTED('toggleTabs'),
-      setTabBadge: NOT_IMPLMENTED('setTabBadge'),
-      setTabButton: NOT_IMPLMENTED('setTabButton'),
-      toggleNavBar: NOT_IMPLMENTED('toggleNavBar'),
-      setOnNavigatorEvent: NOT_IMPLMENTED('setOnNavigatorEvent'),
-      addOnNavigatorEvent: NOT_IMPLMENTED('addOnNavigatorEvent'),
-      screenIsCurrentlyVisible: NOT_IMPLMENTED('screenIsCurrentlyVisible'),
-      setStyle: NOT_IMPLMENTED('setStyle')
+      popToRoot: () => pushRoute(appConfig.screenWeb, history, appConfig)
     };
 
     return {
