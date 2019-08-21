@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* update axios from 0.18 to 0.18.1 for security fix ([1e80a01](https://github.com/brandingbrand/flagship/commit/1e80a01))
+
+
+### Features
+
+* pin axios to 0.18.0 ([b1d5c75](https://github.com/brandingbrand/flagship/commit/b1d5c75))
+
+
+
+
+
 ## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
 
 **Note:** Version bump only for package @brandingbrand/fsnetwork
