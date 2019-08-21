@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Platform
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 import { demandware } from '../../lib/datasource';
 import { Category } from '@brandingbrand/fscategory';
@@ -18,14 +19,7 @@ export default class CategoryListDemandware extends Component<any> {
     if (Platform.OS === 'web') {
       this.props.history.push('/' + screen);
     } else {
-      this.props.navigator.push({
-        screen: 'fscategory.' + screen,
-        title: category.title,
-        backButtonTitle,
-        passProps: {
-          categoryId: category.id
-        }
-      });
+      goToNavPush('fscategory', this.props.componentId, screen, category.title, backButtonTitle);
     }
   }
 
