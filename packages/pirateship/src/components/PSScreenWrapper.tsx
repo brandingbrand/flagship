@@ -44,7 +44,6 @@ export interface PSScreenWrapperProps {
 
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
   // tslint:disable-next-line:whitespace
-  navigator: import('react-native-navigation').Navigator;
   hideWebHeader?: boolean;
 }
 
@@ -127,7 +126,6 @@ export default class PSScreenWrapper extends PureComponent<
       children,
       hideGlobalBanner,
       hideWebHeader = false,
-      navigator,
       needInSafeArea,
       overrideGlobalBanner,
       scroll,
@@ -161,9 +159,7 @@ export default class PSScreenWrapper extends PureComponent<
             />
           )}
           {!hideWebHeader && (
-            <Header
-              navigator={navigator}
-            />
+            <Header/>
           )}
           {contents}
         </KeyboardAvoidingView>

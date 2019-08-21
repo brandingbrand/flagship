@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 
 import { Grid } from '@brandingbrand/fscomponents';
 
@@ -17,7 +18,7 @@ import PSRowHeader from '../components/PSRowHeader';
 import PSRow from '../components/PSRow';
 
 import { handleDeeplink } from '../lib/deeplinkHandler';
-import { GridItem, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { GridItem, ScreenProps } from '../lib/commonTypes';
 import { border, palette } from '../styles/variables';
 import { navBarTabLanding } from '../styles/Navigation';
 
@@ -100,11 +101,17 @@ export interface MoreState {
 }
 
 export default class More extends Component<ScreenProps, MoreState> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static options: Options = navBarTabLanding;
 
   constructor(props: ScreenProps) {
     super(props);
-    props.navigator.setTitle({ title: translate.string(translationKeys.screens.more.title) });
+    Navigation.mergeOptions(props.componentId, {
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.more.title)
+        }
+      }
+    });
 
     // The grid items should be equal height and width. The width is dependent on the width
     // of the user's screen, so we'll derive the height from the screen width.
@@ -128,7 +135,7 @@ export default class More extends Component<ScreenProps, MoreState> {
   }
 
   goToPassthrough = (path: string) => () => {
-    handleDeeplink(desktopHost + path, this.props.navigator);
+    handleDeeplink(desktopHost + path, this.props.componentId);
   }
 
   renderGridItem = ({ item }: ListRenderItemInfo<GridItem>): JSX.Element => {
@@ -178,11 +185,9 @@ export default class More extends Component<ScreenProps, MoreState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
 
     return (
       <PSScreenWrapper
-        navigator={navigator}
         hideGlobalBanner={true}
       >
         <Grid
