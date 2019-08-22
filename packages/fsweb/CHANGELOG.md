@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fsweb:** Prevent double transpiling of typeof ([30ec79d](https://github.com/brandingbrand/flagship/commit/30ec79d))
+* **fsweb:** Update the webpack config file ([5e6bfb8](https://github.com/brandingbrand/flagship/commit/5e6bfb8))
+
+
+
+
+
 ## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
 
 
