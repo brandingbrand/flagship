@@ -47,7 +47,8 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs'
+      'react-native-svg': 'svgs',
+      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
     },
     modules: [
       path.resolve('./node_modules'),
