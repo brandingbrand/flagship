@@ -34,6 +34,7 @@ export interface ImageProp {
 export interface FullScreenCardProps extends CardProps {
   actions?: Action;
   contents: any;
+  storyType?: string;
   source: ImageProp;
 }
 
@@ -81,7 +82,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
 
   onCardPress = (): void => {
     const { handleAction } = this.context;
-    const { actions, story, storyGradient } = this.props;
+    const { actions, story, storyGradient, storyType } = this.props;
 
     // if there is a story attached and either
     //    1) no actions object (Related)
@@ -91,7 +92,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     ) {
       this.handleStoryAction({
         ...story,
-        storyGradient
+        storyGradient,
+        storyType
       });
     } else if (actions && actions.type) {
       handleAction(actions);

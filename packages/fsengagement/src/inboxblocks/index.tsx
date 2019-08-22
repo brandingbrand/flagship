@@ -2,6 +2,7 @@
 import TextBlock from './TextBlock';
 import CTABlock from './CTABlock';
 import ImageBlock from './ImageBlock';
+import ImageCarouselBlock from './ImageCarouselBlock';
 import VideoBlock from './VideoBlock';
 import Card from './Card';
 import Story from './Story';
@@ -18,6 +19,7 @@ import RecipeBlock from './RecipeBlock';
 export default {
   Text: TextBlock,
   Image: ImageBlock,
+  ImageCarousel: ImageCarouselBlock,
   CTA: CTABlock,
   Video: VideoBlock,
   TwinCTA: TwinCTABlock,

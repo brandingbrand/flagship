@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
     top: 70,
     left: 20
   },
+  editorial: {
+    marginTop: 0,
+    backgroundColor: 'transparent'
+  },
   pageNum: {
     color: '#ffffff',
     fontWeight: '500'
@@ -110,6 +114,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplay?: boolean;
   autoplayDelay?: number;
   autoplayInterval?: number;
+  storyType?: string;
   containerStyle?: StyleProp<ViewStyle>;
 }
 export interface EngagementState {
@@ -279,7 +284,7 @@ export default function(
     }
 
     renderStoryGradient(): JSX.Element {
-      const { json: { storyGradient } } = this.props;
+      const { json: { storyGradient, storyType } } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
       const {
@@ -291,6 +296,29 @@ export default function(
         outputRange: [0, 1],
         extrapolate: 'clamp'
       });
+      if (storyType && storyType === 'editorial') {
+        return (
+          <View style={styles.editorial}>
+            <FlatList
+              data={this.props.json.private_blocks || []}
+              keyExtractor={this.dataKeyExtractor}
+              renderItem={this.renderBlockItem}
+              ListEmptyComponent={(
+                <Text style={[styles.emptyMessage, empty.textStyle]}>
+                  {empty.message || 'No content found.'}</Text>
+              )}
+              refreshControl={
+                this.props.refreshControl && <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.refreshControl}
+                />
+              }
+            >
+              {this.renderBlocks()}
+            </FlatList>
+          </View>
+        );
+      }
       return (
         <Fragment>
           <FlatList
@@ -330,7 +358,6 @@ export default function(
     renderScrollView(): JSX.Element {
       const { json, json: { storyGradient } } = this.props;
       const empty: any = this.props.json.empty || {};
-
       if (this.props.renderType && this.props.renderType === 'carousel') {
         const autoplay = this.props.autoplay || false;
         const autoplayDelay = this.props.autoplayDelay || 1000;
@@ -356,7 +383,7 @@ export default function(
               useScrollView={Platform.OS === 'ios' ? true : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json.private_blocks && json.private_blocks.length) &&
+            {(json.private_blocks && json.private_blocks.length > 0) &&
               <View style={[styles.pageCounter, json.pageCounterStyle]}>
                 <Text
                   style={[styles.pageNum, json.pageNumberStyle]}
