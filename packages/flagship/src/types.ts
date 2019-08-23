@@ -41,10 +41,10 @@ export interface Config {
     };
   };
 
-  exceptionDomains: {
+  exceptionDomains: (string | {
     domain: string;
     value: string;
-  }[];
+  })[];
 
   buildConfig: {
     android: {
