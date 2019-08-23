@@ -13,9 +13,9 @@ import {
 
 import {
   Action,
+  BlockItem,
   EmitterProps,
   Icon,
-  JSON,
   ScreenProps
 } from '../types';
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface CTABlockProps extends ScreenProps, EmitterProps {
+export interface ShopIngredientsBlockProps extends ScreenProps, EmitterProps {
   action: string;
   text: string;
   icon: Icon;
@@ -51,7 +51,7 @@ export interface CTABlockProps extends ScreenProps, EmitterProps {
   actions: Action;
 }
 
-export default class CTABlock extends Component<CTABlockProps> {
+export default class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps> {
   static contextTypes: any = {
     story: PropTypes.object,
     cardActions: PropTypes.object,
@@ -61,53 +61,34 @@ export default class CTABlock extends Component<CTABlockProps> {
     id: PropTypes.string
   };
 
-  handleActionWithStory = (action: string, actions: Action, story: JSON) => {
-    const { handleAction, handleStoryAction } = this.context;
-    if (story.html) {
-      return handleAction({
-        type: 'blog-url',
-        value: story.html.link
-      });
-    } else if (action === 'story' || (story && actions &&
-      (actions.type === null || actions.type === 'story'))) {
-      // go to story card
-      return handleStoryAction(story);
-    } else if (story && actions && actions.type !== 'story') {
-      return this.handleActionNoStory(actions);
-    }
-    return null;
-  }
+  takeAction = (action: string, actions: Action): void => {
+    const { handleAction, story } = this.context;
+    const { private_blocks } = story;
+    const PRIVATE_TYPE = 'private_type';
+    const recipeList = (private_blocks || []).find((block: BlockItem) => {
+      return block[PRIVATE_TYPE] === 'RecipeList';
+    });
+    const productIDs = recipeList.items.reduce((ret: string, attr: any) => {
+      const amp = ret ? '&' : '';
+      if (attr.productId) {
+        ret += `${amp}id=${attr.productId}`;
+      }
+      return ret;
+    }, '');
 
-  handleActionNoStory = (actions: Action) => {
-    const { handleAction, cardActions } = this.context;
-    if (actions && actions.type) {
-      return handleAction({
-        ...actions,
-        name: this.props.name,
-        id: this.props.id
-      });
-    }
-    // tappable card with no story - CTAs use actions of container card
     return handleAction({
-      ...cardActions,
+      type: 'deep-link',
+      value: actions.value + productIDs,
       name: this.props.name,
       id: this.props.id
     });
-  }
-
-  takeAction = (action: string, actions: Action): void => {
-    const { story } = this.context;
-    if (action === 'story' || story) {
-      return this.handleActionWithStory(action, actions, story);
-    }
-    return this.handleActionNoStory(actions);
   }
 
   onButtonPress = () => {
     this.takeAction(this.props.action, this.props.actions);
   }
 
-  shouldComponentUpdate(nextProps: CTABlockProps): boolean {
+  shouldComponentUpdate(nextProps: ShopIngredientsBlockProps): boolean {
     return nextProps.buttonStyle !== this.props.buttonStyle ||
       nextProps.textStyle !== this.props.textStyle ||
       nextProps.containerStyle !== this.props.containerStyle ||
