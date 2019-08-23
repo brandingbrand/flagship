@@ -12,6 +12,7 @@ import ShareBlock from './ShareBlock';
 import FeaturedTopCard from './FeaturedTopCard';
 import EventCard from './EventCard';
 import SimpleCard from './SimpleCard';
+import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
 
@@ -28,6 +29,7 @@ export default {
   EventCard,
   SimpleCard,
   Share: ShareBlock,
+  ShopIngredients: ShopIngredientsBlock,
   story: Story,
   RecipeList: RecipeBlock
 };
