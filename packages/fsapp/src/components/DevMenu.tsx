@@ -3,7 +3,8 @@
 // in this file since it should only be used in development
 
 import React, { Component } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { GenericScreenProp } from './screenWrapper';
 import CodePushDevMenu from './CodePushDevMenu';
 import NativeConstants from '../lib/native-constants';

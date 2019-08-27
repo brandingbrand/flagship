@@ -3,6 +3,132 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+
+### Bug Fixes
+
+* **fsweb:** add webpack alias for async storage ([c36a971](https://github.com/brandingbrand/flagship/commit/c36a971))
+
+
+### Features
+
+* Add network security config for Android ([7aa9899](https://github.com/brandingbrand/flagship/commit/7aa9899))
+* **fsengagement:** add shoppable ingredients cta ([6974028](https://github.com/brandingbrand/flagship/commit/6974028))
+
+
+
+
+
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([236993f](https://github.com/brandingbrand/flagship/commit/236993f))
+* **fsweb:** Prevent double transpiling of typeof ([bb3bd74](https://github.com/brandingbrand/flagship/commit/bb3bd74))
+* **fsweb:** Prevent double transpiling of typeof ([30ec79d](https://github.com/brandingbrand/flagship/commit/30ec79d))
+* **fsweb:** Prevent double transpiling of typeof ([427445d](https://github.com/brandingbrand/flagship/commit/427445d))
+* **fsweb:** Update the webpack config file ([933bc10](https://github.com/brandingbrand/flagship/commit/933bc10))
+* **fsweb:** Update the webpack config file ([5e6bfb8](https://github.com/brandingbrand/flagship/commit/5e6bfb8))
+* Fix application of refinements ([82c9813](https://github.com/brandingbrand/flagship/commit/82c9813))
+* update axios from 0.18 to 0.18.1 for security fix ([1e80a01](https://github.com/brandingbrand/flagship/commit/1e80a01))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([45a054a](https://github.com/brandingbrand/flagship/commit/45a054a))
+* **fscomponents:** add some option props to zoomCarousel ([a195337](https://github.com/brandingbrand/flagship/commit/a195337))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18743f8](https://github.com/brandingbrand/flagship/commit/18743f8))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([c7129f5](https://github.com/brandingbrand/flagship/commit/c7129f5))
+* **fscomponents:** fix app bug by removing view wrapper ([fbf66a8](https://github.com/brandingbrand/flagship/commit/fbf66a8))
+* **fscomponents:** remove backtick ([23b9baa](https://github.com/brandingbrand/flagship/commit/23b9baa))
+* **fsengagement:** store engagement profileId ([a3e8a7d](https://github.com/brandingbrand/flagship/commit/a3e8a7d))
+* **fsengagement:** store engagement profileId ([e4f0c93](https://github.com/brandingbrand/flagship/commit/e4f0c93))
+* pin axios to 0.18.0 ([b1d5c75](https://github.com/brandingbrand/flagship/commit/b1d5c75))
+
+
+
+
+
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+
+### Bug Fixes
+
+* **fsweb:** Prevent double transpiling of typeof ([427445d](https://github.com/brandingbrand/flagship/commit/427445d))
+* **fsweb:** Update the webpack config file ([fae0ebf](https://github.com/brandingbrand/flagship/commit/fae0ebf))
+
+
+
+
+
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([4150bc7](https://github.com/brandingbrand/flagship/commit/4150bc7))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([6d87b3e](https://github.com/brandingbrand/flagship/commit/6d87b3e))
+* **fscomponents:** add some option props to zoomCarousel ([7178d1c](https://github.com/brandingbrand/flagship/commit/7178d1c))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([88fe244](https://github.com/brandingbrand/flagship/commit/88fe244))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([44eb31c](https://github.com/brandingbrand/flagship/commit/44eb31c))
+* **fscomponents:** fix app bug by removing view wrapper ([61277d6](https://github.com/brandingbrand/flagship/commit/61277d6))
+* **fscomponents:** remove backtick ([affeae3](https://github.com/brandingbrand/flagship/commit/affeae3))
+* **fsengagement:** store engagement profileId ([ef598fd](https://github.com/brandingbrand/flagship/commit/ef598fd))
+* **fsengagement:** store engagement profileId ([ac21688](https://github.com/brandingbrand/flagship/commit/ac21688))
+
+
+
+
+
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([c732aa8](https://github.com/brandingbrand/flagship/commit/c732aa8))
+* inbox block re-render improvement ([9245eb3](https://github.com/brandingbrand/flagship/commit/9245eb3))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+* **fsapp:** Put dev menu as first screen ([09a275a](https://github.com/brandingbrand/flagship/commit/09a275a))
+* **fsengagement:** update react-native-video ([ae01256](https://github.com/brandingbrand/flagship/commit/ae01256))
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([e7412f9](https://github.com/brandingbrand/flagship/commit/e7412f9))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([c9dbfe4](https://github.com/brandingbrand/flagship/commit/c9dbfe4))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([e0aaf30](https://github.com/brandingbrand/flagship/commit/e0aaf30))
+* **fscomponents:** add renderModalContent prop ([4105c44](https://github.com/brandingbrand/flagship/commit/4105c44))
+* **fscomponents:** add some option props to zoomCarousel ([b7455e4](https://github.com/brandingbrand/flagship/commit/b7455e4))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18ce3a6](https://github.com/brandingbrand/flagship/commit/18ce3a6))
+* **fsengagement:** add new carousel option and full screen background ([f447c8e](https://github.com/brandingbrand/flagship/commit/f447c8e))
+* **fsengagement:** add new carousel option and full screen background ([42bbf54](https://github.com/brandingbrand/flagship/commit/42bbf54))
+* **fsengagement:** allow EngagementComp to accept style ([2671b64](https://github.com/brandingbrand/flagship/commit/2671b64))
+* **fsengagement:** update yarn.lock ([dc973bd](https://github.com/brandingbrand/flagship/commit/dc973bd))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
 
 

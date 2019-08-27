@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
 
 

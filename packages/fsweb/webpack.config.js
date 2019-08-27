@@ -18,7 +18,7 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -47,7 +47,8 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs'
+      'react-native-svg': 'svgs',
+      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -77,10 +78,7 @@ const globalConfig = {
                 }
               },
               {
-                loader: require.resolve("ts-loader"),
-                options: {
-                  configFile: 'tsconfig/tsconfig.storybook.json'
-                }
+                loader: require.resolve("ts-loader")
               }
             ]
           },
@@ -89,7 +87,9 @@ const globalConfig = {
             include: [
               /node_modules\/react-native-/,
               /node_modules\/tcomb-form-native/,
-              /packages\/fs/
+              /packages\/fs/,
+              /node_modules\/@brandingbrand\/fs/,
+              /node_modules\/@brandingbrand\/react-native-/
             ],
             exclude: /node_modules\/react-native-web\//,
             use: [

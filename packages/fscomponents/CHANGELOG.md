@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([236993f](https://github.com/brandingbrand/flagship/commit/236993f))
+* Fix application of refinements ([82c9813](https://github.com/brandingbrand/flagship/commit/82c9813))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([45a054a](https://github.com/brandingbrand/flagship/commit/45a054a))
+* **fscomponents:** add some option props to zoomCarousel ([a195337](https://github.com/brandingbrand/flagship/commit/a195337))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18743f8](https://github.com/brandingbrand/flagship/commit/18743f8))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([c7129f5](https://github.com/brandingbrand/flagship/commit/c7129f5))
+* **fscomponents:** fix app bug by removing view wrapper ([fbf66a8](https://github.com/brandingbrand/flagship/commit/fbf66a8))
+* **fscomponents:** remove backtick ([23b9baa](https://github.com/brandingbrand/flagship/commit/23b9baa))
+
+
+
+
+
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([4150bc7](https://github.com/brandingbrand/flagship/commit/4150bc7))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([6d87b3e](https://github.com/brandingbrand/flagship/commit/6d87b3e))
+* **fscomponents:** add some option props to zoomCarousel ([7178d1c](https://github.com/brandingbrand/flagship/commit/7178d1c))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([88fe244](https://github.com/brandingbrand/flagship/commit/88fe244))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([44eb31c](https://github.com/brandingbrand/flagship/commit/44eb31c))
+* **fscomponents:** fix app bug by removing view wrapper ([61277d6](https://github.com/brandingbrand/flagship/commit/61277d6))
+* **fscomponents:** remove backtick ([affeae3](https://github.com/brandingbrand/flagship/commit/affeae3))
+
+
+
+
+
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([c9dbfe4](https://github.com/brandingbrand/flagship/commit/c9dbfe4))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([e0aaf30](https://github.com/brandingbrand/flagship/commit/e0aaf30))
+* **fscomponents:** add renderModalContent prop ([4105c44](https://github.com/brandingbrand/flagship/commit/4105c44))
+* **fscomponents:** add some option props to zoomCarousel ([b7455e4](https://github.com/brandingbrand/flagship/commit/b7455e4))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18ce3a6](https://github.com/brandingbrand/flagship/commit/18ce3a6))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
 # [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
 
 

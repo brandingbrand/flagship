@@ -124,7 +124,8 @@ export default function(
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
     static childContextTypes: any = {
-      handleAction: PropTypes.func
+      handleAction: PropTypes.func,
+      story: PropTypes.object
     };
 
     state: any = {};
@@ -145,7 +146,8 @@ export default function(
     }
 
     getChildContext = () => ({
-      handleAction: this.handleAction
+      handleAction: this.handleAction,
+      story: this.props.backButton ? this.props.json : null
     })
 
     // tslint:disable-next-line:cyclomatic-complexity
