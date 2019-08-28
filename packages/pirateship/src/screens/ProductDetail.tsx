@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-
-import { Platform } from 'react-native';
 import { Navigation, Options } from 'react-native-navigation';
 import { dataSource, reviewDataSource } from '../lib/datasource';
 import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
-import { navBarDefault, navBarProductDetail } from '../styles/Navigation';
+import { navBarProductDetail } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { PSProductDetail } from '../components/PSProductDetail';
 import PSRecentlyViewedCarousel from '../components/PSRecentlyViewedCarousel';
@@ -14,11 +12,6 @@ import withAccount, { AccountProps } from '../providers/accountProvider';
 import withRecentlyViewed, {
   RecentlyViewedProps
 } from '../providers/recentlyViewedProvider';
-
-// Seeing an Android issue in which if the user clicks on one of the PDP tabs and then goes
-// back, the back buttons are invisible. Until we can investigate deeper we'll just make
-// the PDP have a dark header. -BW
-const NAVIGATION_STYLE: Options = Platform.OS === 'android' ? navBarDefault : navBarProductDetail;
 
 export interface ProductDetailProps
   extends ScreenProps,
@@ -29,7 +22,7 @@ export interface ProductDetailProps
 }
 
 class ProductDetail extends Component<ProductDetailProps> {
-  static options: Options = NAVIGATION_STYLE;
+  static options: Options = navBarProductDetail;
   static leftButtons: NavButton[] = [backButton];
   onOpenHTMLView = (html: string, title?: string) => {
     Navigation.push(this.props.componentId, {

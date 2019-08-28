@@ -1,5 +1,6 @@
 import { color, palette } from './variables';
 import { Options, OptionsTopBarTitle } from 'react-native-navigation';
+import { Platform } from 'react-native';
 
 export const navBarDark: Options = {
   statusBar: {
@@ -19,7 +20,7 @@ export const navBarDark: Options = {
 
 export const navBarLight: Options = {
   statusBar: {
-    style: 'dark'
+    style: Platform.OS === 'android' ? 'light' : 'dark'
   },
   topBar: {
     background: {
@@ -38,7 +39,8 @@ export const navBarFullBleed: Options = {
     style: 'light'
   },
   topBar: {
-    visible: false
+    visible: false,
+    drawBehind: true
   },
   bottomTabs: {
     visible: true
@@ -47,10 +49,11 @@ export const navBarFullBleed: Options = {
 
 export const navBarHide: Options = {
   statusBar: {
-    style: 'dark'
+    style: Platform.OS === 'android' ? 'light' : 'dark'
   },
   topBar: {
-    visible: false
+    visible: false,
+    drawBehind: true
   },
   bottomTabs: {
     visible: true
@@ -85,7 +88,7 @@ export const navBarNoTabs: Options = {
 
 export const navBarTabLanding: Options = {
   statusBar: {
-    style: 'dark'
+    style: Platform.OS === 'android' ? 'light' : 'dark'
   },
   topBar: {
     visible: true,
@@ -107,7 +110,7 @@ export const navBarTabLanding: Options = {
 
 export const navBarProductDetail: Options = {
   statusBar: {
-    style: 'dark'
+    style: Platform.OS === 'android' ? 'light' : 'dark'
   },
   topBar: {
     background: {

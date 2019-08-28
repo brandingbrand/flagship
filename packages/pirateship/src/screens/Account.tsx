@@ -158,6 +158,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
       return (
         <SignIn
           onSignInSuccess={this.onSignInSuccess}
+          componentId={this.props.componentId}
         />
       );
     } else {

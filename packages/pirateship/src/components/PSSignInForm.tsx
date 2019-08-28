@@ -65,6 +65,7 @@ export interface PSSignInProps {
   signInButtonText?: string;
   onNav?: (handler: (event: any) => void) => void;
   runBioAuthImmediately?: boolean;
+  parentComponentId: string;
 }
 
 export interface PSSignInState {
@@ -103,7 +104,8 @@ export default class PSSignInForm extends Component<
     };
 
     if (!this.props.runBioAuthImmediately) {
-      this.navigationEventListener = Navigation.events().bindComponent(this);
+      const { parentComponentId } = this.props;
+      this.navigationEventListener = Navigation.events().bindComponent(this, parentComponentId);
     }
     this.fieldStyles = this.getFormFieldStyles();
     this.fields = this.getFormFields();
