@@ -20,6 +20,7 @@ const appConfig: FSAppTypes.AppConfigType = {
   env: projectEnv,
   tabs: [
     {
+      id: 'SHOP_TAB',
       name: 'Shop',
       options: {
         topBar: {
@@ -34,6 +35,7 @@ const appConfig: FSAppTypes.AppConfigType = {
       }
     },
     {
+      id: 'CART_TAB',
       name: 'Cart',
       options: {
         topBar: {
@@ -48,6 +50,7 @@ const appConfig: FSAppTypes.AppConfigType = {
       }
     },
     {
+      id: 'ACCOUNT_TAB',
       name: 'Account',
       options: {
         topBar: {
@@ -62,6 +65,7 @@ const appConfig: FSAppTypes.AppConfigType = {
       }
     },
     {
+      id: 'MORE_TAB',
       name: 'More',
       options: {
         topBar: {

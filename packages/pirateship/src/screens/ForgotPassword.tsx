@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 });
 
 export interface ForgotPasswordScreenProps extends ScreenProps {
-  onDismiss: () => void;
+  onDismiss: (forgotPasswordComponentId: string) => () => void;
   onSignUpSuccess: () => void;
 }
 
@@ -193,7 +193,7 @@ export default class ForgotPassword extends Component<
         <View style={styles.dismissButtonContainer}>
           <TouchableOpacity
             style={styles.dismissButton}
-            onPress={this.props.onDismiss}
+            onPress={this.props.onDismiss(this.props.componentId)}
           >
             <Image source={arrowIcon} />
           </TouchableOpacity>
@@ -220,7 +220,7 @@ export default class ForgotPassword extends Component<
           <PSButton
             titleStyle={styles.signUpText}
             title={translate.string(forgotPasswordTranslations.completedBtn)}
-            onPress={this.props.onDismiss}
+            onPress={this.props.onDismiss(this.props.componentId)}
             style={styles.button}
           />
         </View>

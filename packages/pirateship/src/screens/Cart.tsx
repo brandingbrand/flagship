@@ -389,19 +389,23 @@ class Cart extends Component<CartScreenProps> {
 
   signIn = async () => {
     return Navigation.showModal({
-      component: {
-        name: 'SignIn',
-        passProps: {
-          dismissible: true,
-          onDismiss: () => {
-            Navigation.dismissModal(this.props.componentId)
-            .catch(e => console.warn('DISMISSMODAL error: ', e));
-          },
-          onSignInSuccess: () => {
-            Navigation.dismissModal(this.props.componentId)
-            .catch(e => console.warn('DISMISSMODAL error: ', e));
+      stack: {
+        children: [{
+          component: {
+            name: 'SignIn',
+            passProps: {
+              dismissible: true,
+              onDismiss: (componentId: string) => () => {
+                Navigation.dismissModal(componentId)
+                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              },
+              onSignInSuccess: (componentId: string) => () => {
+                Navigation.dismissModal(componentId)
+                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              }
+            }
           }
-        }
+        }]
       }
     }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
   }
@@ -439,20 +443,24 @@ class Cart extends Component<CartScreenProps> {
     return items && items.findIndex(product => product.id === productId) > -1;
   }
 
-  goToProduct = (item: CommerceTypes.CartItem) => {
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        currentTabIndex: 0
-      }
-    });
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'ProductDetail',
-        passProps: {
-          productId: item.productId
+  goToProduct = async (item: CommerceTypes.CartItem) => {
+    try {
+      await Navigation.push('SHOP_TAB', {
+        component: {
+          name: 'ProductDetail',
+          passProps: {
+            productId: item.productId
+          }
         }
-      }
-    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
+      });
+      Navigation.mergeOptions(this.props.componentId, {
+        bottomTabs: {
+          currentTabId: 'SHOP_TAB'
+        }
+      });
+    } catch (e) {
+      console.warn('ProductDetail PUSH error: ', e);
+    }
   }
 
   renderPromo = (): JSX.Element => {
