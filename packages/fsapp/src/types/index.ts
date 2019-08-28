@@ -94,7 +94,7 @@ export interface AppConfigType {
   webBasename?: string;
   env?: Dictionary;
   remote?: FSNetworkRequestConfig;
-  tabs?: LayoutComponent[];
+  tabs?: Tab[];
   drawer?: Drawer;
   variables?: Dictionary;
   initialState?: any;
@@ -113,6 +113,10 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+}
+
+export interface Tab extends LayoutComponent {
+  id: string;
 }
 
 export interface NavButton {
