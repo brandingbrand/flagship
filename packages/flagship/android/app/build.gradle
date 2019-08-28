@@ -112,6 +112,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
         versionCode "${project.VERSION_CODE_SHORT}".toInteger()
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
     }
     signingConfigs {
         release {
@@ -187,9 +188,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(':react-native-cookies')
-    implementation(project(':react-native-navigation')){
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
+    implementation project(':react-native-navigation')
     implementation project(':react-native-sensitive-info')
     implementation project(':react-native-restart')
 
