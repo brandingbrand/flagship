@@ -1,9 +1,7 @@
 import React, { Component, ComponentClass, ComponentType } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  BottomTabSelectedEvent,
   EventSubscription,
   Navigation,
   NavigationButtonPressedEvent,
@@ -49,8 +47,6 @@ export interface GenericScreenProp extends GenericScreenStateProp, GenericScreen
   testID: string;
 }
 
-let lastScreenLoaded = false;
-
 export default function wrapScreen(
   PageComponent: any,
   appConfig: AppConfigType,
@@ -85,38 +81,6 @@ export default function wrapScreen(
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-
-      // DEV feature
-      if (this.showDevMenu) {
-        this.storeLastScreen(props);
-      }
-    }
-
-    storeLastScreen = (props: GenericScreenProp) => {
-      ['push', 'showModal'].forEach(action => {
-        const nav: any = Navigation;
-        const originalFunc = nav[action];
-        nav[action] = (...args: any[]) => {
-          originalFunc.apply(Navigation, args);
-          if (args && args[0] && args[0].screen === 'devMenu') {
-            return;
-          }
-          AsyncStorage.setItem('lastScreen', JSON.stringify({ action, args })).catch(e =>
-            console.log('Cannot get lastScreen from AsyncStorage', e)
-          );
-        };
-      });
-    }
-
-    bottomTabSelected = (event: BottomTabSelectedEvent) => {
-      if (
-        event.selectedTabIndex === event.unselectedTabIndex &&
-        Platform.OS === 'android' &&
-        appConfig.popToRootOnTabPressAndroid
-      ) {
-        Navigation.popToRoot(this.props.componentId)
-        .catch(err => console.warn('bottomTabSelected POPTOROOT error: ', err));
-      }
     }
 
     navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
@@ -136,18 +100,11 @@ export default function wrapScreen(
       const component = PageComponent.WrappedComponent || PageComponent;
 
       this.navigationEventListener = Navigation.events().bindComponent(this);
-      this.bottomTabEventListener =
-        Navigation.events().registerBottomTabSelectedListener(this.bottomTabSelected);
 
       if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
         appConfig.analytics.screenview(component, {
           url: component.name
         });
-      }
-
-      // DEV feature
-      if (this.showDevMenu) {
-        this.handlekeepLastPage().catch(e => console.log('cannot handle keep Last Page', e));
       }
     }
 
@@ -155,44 +112,6 @@ export default function wrapScreen(
       if (this.navigationEventListener) {
         this.navigationEventListener.remove();
       }
-      if (this.bottomTabEventListener) {
-        this.bottomTabEventListener.remove();
-      }
-    }
-
-    handlekeepLastPage = async () => {
-      if (lastScreenLoaded) {
-        return;
-      }
-      lastScreenLoaded = true;
-
-      const [devKeepPage, lastScreen] = await Promise.all([
-        AsyncStorage.getItem('devKeepPage'),
-        AsyncStorage.getItem('lastScreen')
-      ]);
-
-      if (!devKeepPage || !lastScreen) {
-        return;
-      }
-
-      let parsed = null;
-
-      try {
-        parsed = JSON.parse(lastScreen);
-      } catch (e) {
-        return;
-      }
-
-      if (!parsed) {
-        return;
-      }
-
-      if (!appConfig.screens[parsed.args && parsed.args[0].screen]) {
-        return;
-      }
-
-      const nav: any = Navigation;
-      nav[parsed.action].apply(nav, parsed.args);
     }
 
     openDevMenu = () => {
