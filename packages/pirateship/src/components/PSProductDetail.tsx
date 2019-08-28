@@ -303,6 +303,21 @@ class PSProductDetailComponent extends Component<
     this.needsImpression = true;
   }
 
+  componentDidUpdate(prevProps: PSProductDetailComponentInternalProps): void {
+    const { commerceData, componentId } = this.props;
+    const oldTitle = prevProps.commerceData && prevProps.commerceData.title;
+
+    if (commerceData && commerceData.title && commerceData.title !== oldTitle) {
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          title: {
+            text: commerceData.title
+          }
+        }
+      });
+    }
+  }
+
   trackImpression = (): void => {
     if (this.needsImpression) {
       const { commerceData } = this.props;
