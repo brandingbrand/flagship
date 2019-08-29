@@ -9,7 +9,8 @@ import {
 import { Provider } from 'react-redux';
 import screenWrapper from '../components/screenWrapper';
 import { AppConfigType, Tab } from '../types';
-import { AsyncStorage, NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 const { CodePush } = NativeModules;
 import NativeConstants from '../lib/native-constants';
 import { FSAppBase } from './FSAppBase';
