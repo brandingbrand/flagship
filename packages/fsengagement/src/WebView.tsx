@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, WebView } from 'react-native';
-
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import WebView from 'react-native-webview';
 import {
   Action,
   ScreenProps

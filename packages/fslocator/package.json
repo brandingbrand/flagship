@@ -16,6 +16,7 @@
     "@brandingbrand/fsfoundation": "^5.3.0",
     "@brandingbrand/fsi18n": "^5.3.0",
     "@brandingbrand/fsnetwork": "^5.3.0",
+    "@react-native-community/geolocation": "^2.0.2",
     "google-map-react": "^1.0.4",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",

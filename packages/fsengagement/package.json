@@ -21,6 +21,7 @@
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-video": "^4.0.0",
+    "react-native-webview": "^6.9.0",
     "uuid-js": "0.7.5"
   }
 }

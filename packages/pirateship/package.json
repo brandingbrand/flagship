@@ -54,6 +54,7 @@
     "react-native-sensitive-info": "~5.4.0",
     "react-native-svg": "^9.3.6",
     "react-native-touch-id": "~4.3.0",
+    "react-native-webview": "^6.9.0",
     "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
   },
