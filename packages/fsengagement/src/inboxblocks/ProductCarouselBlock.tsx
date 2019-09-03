@@ -1,11 +1,12 @@
 // tslint:disable
 import React, { Component } from 'react';
+import FSNetwork from '@brandingbrand/fsnetwork';
 import {
+  ActivityIndicator,
   Dimensions,
   ImageStyle,
   ImageURISource,
   StyleProp,
-  Text,
   TextStyle,
   View,
   ViewStyle
@@ -19,9 +20,9 @@ const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
 import { wp } from '../carousel/SliderEntry.style';
-import RenderItem from '../carousel/RenderItem';
+import RenderProduct from '../carousel/RenderProduct';
 
-export interface ImageCarouselBlockProps {
+export interface ProductCarouselBlockProps {
   source: ImageURISource;
   resizeMode?: any;
   resizeMethod?: any;
@@ -29,6 +30,8 @@ export interface ImageCarouselBlockProps {
   options: any;
   ratio?: string;
   useRatio?: boolean;
+  imageFormat?: string;
+  baseUrl: string;
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
@@ -36,32 +39,71 @@ export interface ImageCarouselBlockProps {
   pageNumberStyle?: StyleProp<TextStyle>;
 }
 
-export interface ImageCarouselBlockState {
-  width?: number;
-  height?: number;
+export interface ProductCarouselBlockState {
+  products: any[];
   sliderActiveSlide: number;
+  loading: boolean;
 }
 
-export default class ImageCarouselBlock
-  extends Component<ImageCarouselBlockProps, ImageCarouselBlockState> {
-  // readonly state: ImageCarouselBlockState = {};
+export default class ProductCarouselBlock
+  extends Component<ProductCarouselBlockProps, ProductCarouselBlockState> {
+
+  private network: FSNetwork;
   _slider1Ref: any | null = null;
-  constructor(props: ImageCarouselBlockProps) {
+  constructor(props: ProductCarouselBlockProps) {
     super(props);
     this.state = {
-      sliderActiveSlide: SLIDER_1_FIRST_ITEM
+      sliderActiveSlide: SLIDER_1_FIRST_ITEM,
+      products: [],
+      loading: true
     };
+    this.network = new FSNetwork({
+      baseURL: props.baseUrl
+    });
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
+    const { items } = this.props;
+    const products = await this.fetchProducts(items);
+    this.setState({
+      products: products.filter((item: any) => !item.error),
+      loading: false
+    });
+   }
 
+  async fetchProduct(id: string): Promise<any> {
+    let imageFormat = this.props.imageFormat || 'Regular_Mobile';
+    return this.network.get(id)
+      .then((r: any) => r.data)
+      .then((item: any) => {
+        return {
+          name: item.name,
+          price: item.price,
+          url: item.url,
+          image: (item.galleryImageList.galleryImage || []).find((img: any) => {
+            return img.format === imageFormat;
+          })
+        };
+      })
+      .catch(async (e: any) => {
+        return Promise.resolve({
+          error: e
+        });
+      });
   }
+
+  async fetchProducts(items: any[]): Promise<any> {
+    const promises = items.map(async item => {
+      return this.fetchProduct(item.productId);
+    });
+    return await Promise.all(promises);
+  }
+
   _renderItem(data: any): JSX.Element {
-    return <RenderItem
+    return <RenderProduct
               data={data.item}
               horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
               itemWidth={renderItemWidth}
-              even={false}
            />;
   }
 
@@ -88,14 +130,13 @@ export default class ImageCarouselBlock
   }
   createCarousel(): JSX.Element {
     const {
-      items,
       options
     } = this.props;
     renderItemOptions = options;
     renderItemWidth = this.calculateItemWidth();
     return (
       <Carousel
-        data={items}
+        data={this.state.products}
         renderItem={this._renderItem}
         hasParallaxImages={false}
         sliderWidth={this.calculateSliderWidth()}
@@ -113,25 +154,17 @@ export default class ImageCarouselBlock
   }
   render(): JSX.Element {
     const {
-      containerStyle,
-      items,
-      pageCounter,
-      pageCounterStyle,
-      pageNumberStyle
+      containerStyle
     } = this.props;
 
     const carousel = this.createCarousel();
 
     return (
       <View style={containerStyle}>
-        {carousel}
-        {pageCounter && <View style={[styles.pageCounter, pageCounterStyle]}>
-          <Text
-            style={[styles.pageNum, pageNumberStyle]}
-          >
-            {this.state.sliderActiveSlide} / {items.length}
-          </Text>
+        {this.state.loading && <View style={styles.loadingInner}>
+          <ActivityIndicator color='rgba(0,0,0,0.5)' />
         </View>}
+        {carousel}
       </View>
     );
   }

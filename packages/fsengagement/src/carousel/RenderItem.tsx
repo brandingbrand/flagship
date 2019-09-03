@@ -1,15 +1,20 @@
 /* tslint:disable */
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Share, Text, TouchableOpacity, View } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
-import styles, { itemWidth } from './SliderEntry.style';
+import styles from './SliderEntry.style';
 
 export interface RenderItemProps {
   data?: any;
   parallax?: any;
   parallaxProps?: any;
   even?: boolean;
+  horizPadding: number,
+  itemWidth: number
 }
+
+const { height: viewportHeight } = Dimensions.get('window');
+
 export default class RenderItem extends Component<RenderItemProps> {
   get image(): any {
     const { data: { source }, parallax, parallaxProps, even } = this.props;
@@ -32,18 +37,45 @@ export default class RenderItem extends Component<RenderItemProps> {
       );
   }
   onImagePress = (): void => {
-    return;
+    Share.share({
+      message: 'BAM: we\'re helping your business with awesome React Native apps',
+      url: 'http://bam.tech',
+      title: 'Wow, did you see that?'
+    }, {
+        // Android only:
+        dialogTitle: 'Share BAM goodness',
+        // iOS only:
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToTwitter'
+        ]
+      });
   }
   render() {
-    const { data: { ratio, title, subtitle }, even } = this.props;
-    let heightStyle: any = {};
+    const {
+      data: {
+        ratio,
+        title,
+        subtitle
+      },
+      even,
+      itemWidth,
+      horizPadding = 0
+    } = this.props;
+
+    let itemStyle: any = {};
     if (ratio && itemWidth) {
-      heightStyle = {
-        height: itemWidth / parseFloat(ratio)
+      itemStyle = {
+        width: itemWidth,
+        height: itemWidth / parseFloat(ratio),
+        paddingHorizontal: horizPadding
+      };
+    } else {
+      itemStyle = {
+        width: itemWidth,
+        height: viewportHeight * .36,
+        paddingHorizontal: horizPadding
       };
     }
-    console.log('image width: '+ itemWidth)
-    console.log('image height: ' + heightStyle.height)
     const uppercaseTitle = title ? (
       <Text
         style={[styles.title, even ? styles.titleEven : {}]}
@@ -56,7 +88,7 @@ export default class RenderItem extends Component<RenderItemProps> {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={[styles.slideInnerContainer, heightStyle]}
+        style={itemStyle}
         onPress={this.onImagePress}
       >
         {/* <View style={styles.shadow} /> */}
@@ -67,7 +99,7 @@ export default class RenderItem extends Component<RenderItemProps> {
         {title && <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
           {uppercaseTitle}
           <Text
-            style={[styles.subtitle, even ? styles.subtitleEven : {}]}
+            style={styles.subtitle}
             numberOfLines={2}
           >
             {subtitle}

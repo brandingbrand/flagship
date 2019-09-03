@@ -81,6 +81,7 @@ export interface JSON {
   id?: string;
   key?: string;
   storyType?: string;
+  tabbedItems?: BlockItem[];
 }
 
 export interface BlockItem extends ScreenProps, JSON {

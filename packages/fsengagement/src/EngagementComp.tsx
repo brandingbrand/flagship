@@ -19,6 +19,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
+import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import {
@@ -115,6 +116,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplayDelay?: number;
   autoplayInterval?: number;
   storyType?: string;
+  tabbedItems?: BlockItem[];
   containerStyle?: StyleProp<ViewStyle>;
 }
 export interface EngagementState {
@@ -284,7 +286,7 @@ export default function(
     }
 
     renderStoryGradient(): JSX.Element {
-      const { json: { storyGradient, storyType } } = this.props;
+      const { json: { storyGradient, tabbedItems } } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
       const {
@@ -296,27 +298,12 @@ export default function(
         outputRange: [0, 1],
         extrapolate: 'clamp'
       });
-      if (storyType && storyType === 'editorial') {
+      if (tabbedItems && tabbedItems.length) {
         return (
-          <View style={styles.editorial}>
-            <FlatList
-              data={this.props.json.private_blocks || []}
-              keyExtractor={this.dataKeyExtractor}
-              renderItem={this.renderBlockItem}
-              ListEmptyComponent={(
-                <Text style={[styles.emptyMessage, empty.textStyle]}>
-                  {empty.message || 'No content found.'}</Text>
-              )}
-              refreshControl={
-                this.props.refreshControl && <RefreshControl
-                  refreshing={this.props.isLoading}
-                  onRefresh={this.props.refreshControl}
-                />
-              }
-            >
-              {this.renderBlocks()}
-            </FlatList>
-          </View>
+          <TabbedStory
+            items={tabbedItems}
+            navigator={this.props.navigator}
+          />
         );
       }
       return (
@@ -356,7 +343,7 @@ export default function(
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
-      const { json, json: { storyGradient } } = this.props;
+      const { json, json: { storyGradient, tabbedItems } } = this.props;
       const empty: any = this.props.json.empty || {};
       if (this.props.renderType && this.props.renderType === 'carousel') {
         const autoplay = this.props.autoplay || false;
@@ -402,6 +389,13 @@ export default function(
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
+      } else if (tabbedItems && tabbedItems.length) {
+        return (
+          <TabbedStory
+            items={tabbedItems}
+            navigator={this.props.navigator}
+          />
+        );
       }
       return (
         <FlatList

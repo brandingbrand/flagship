@@ -49,6 +49,15 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
+  constructor(props: FullScreenCardProps) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  onNavigatorEvent = (event: any) => {
+    console.log('121232123213213123213')
+    console.log(event);
+  }
 
   getChildContext = () => ({
     story: this.props.story,
@@ -69,11 +78,12 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     this.props.navigator.push({
       screen: 'EngagementComp',
       navigatorStyle: {
-        navBarHidden: true
+        navBarHidden: true,
+        tabBarHidden: true
       },
       passProps: {
         json,
-        backButton: true,
+        backButton: !(json.tabbedItems && json.tabbedItems.length),
         name: this.props.name,
         id: this.props.id
       }
