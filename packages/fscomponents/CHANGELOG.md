@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://github.com/brandingbrand/flagship/compare/v5.3.0...v6.0.0) (2019-09-04)
+
+
+### Bug Fixes
+
+* **fscomponents:** fix price/originalPrice comparison ([0f9447f](https://github.com/brandingbrand/flagship/commit/0f9447f))
+
+
+### BREAKING CHANGES
+
+* **fscomponents:** Under the default render behavior, originalPrice will no longer be displayed unless
+it is actually different from price.
+
+
+
+
+
 # [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
