@@ -6,7 +6,8 @@ import {
   Navigation,
   NavigationButtonPressedEvent,
   Options,
-  OptionsTopBar} from 'react-native-navigation';
+  OptionsTopBar
+} from 'react-native-navigation';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import { AppConfigType, DrawerConfig, NavButton } from '../types';
@@ -55,17 +56,22 @@ export default function wrapScreen(
 ): ComponentClass<GenericScreenProp> & {
   WrappedComponent: ComponentType<GenericScreenProp>;
 } {
+  // Note: in RNN v2, PageComponent.options type is a function `(passProps: Props) => Options`
+  // the transformation code below for backward-compatibility purpose will only work
+  // if the incoming value is not a function
   const pageOptions: Options = PageComponent.options;
   const pageTopBar: OptionsTopBar = PageComponent.options && PageComponent.options.topBar;
   class GenericScreen extends Component<GenericScreenProp> {
-    static options: Options = {
-      ...pageOptions,
-      topBar: {
-        ...pageTopBar,
-        rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
-        leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
-      }
-    };
+    static options: Options =
+      typeof PageComponent.options === 'function' ?
+        PageComponent.options : {
+          ...pageOptions,
+          topBar: {
+            ...pageTopBar,
+            rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
+            leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
+          }
+        };
 
     navigationEventListener: EventSubscription | null;
     bottomTabEventListener: EventSubscription | null;
@@ -134,7 +140,7 @@ export default function wrapScreen(
           }]
         }
       })
-      .catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
+        .catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
     }
 
     render(): JSX.Element {
