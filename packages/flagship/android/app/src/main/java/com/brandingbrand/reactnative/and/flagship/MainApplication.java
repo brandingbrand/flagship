@@ -40,6 +40,7 @@ public class MainApplication extends NavigationApplication {
             protected String getJSMainModuleName() {
                 return "index";
             }
+            // [CODEPUSH FUNCTIONS INJECT]
         };
         return new ReactGateway(this, isDebug(), host);
     }
@@ -97,6 +98,4 @@ public class MainApplication extends NavigationApplication {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
     }
-
-    // [CODEPUSH FUNCTIONS INJECT]
 }
