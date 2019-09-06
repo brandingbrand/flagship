@@ -37,6 +37,8 @@
   * [`flagship env`](#env)
 * [Packages](#packages)
 
+**:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
+
 ## About
 
 <img alt="Flagship accelerates development"
