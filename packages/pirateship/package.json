@@ -39,7 +39,7 @@
     "@brandingbrand/fsweb": "^6.0.0",
     "@brandingbrand/react-native-leanplum": "^2.0.3",
     "@react-native-community/async-storage": "^1.6.1",
-    "credit-card-type": "^7.0.0",
+    "credit-card-type": "^8.3.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",
