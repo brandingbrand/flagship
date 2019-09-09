@@ -127,7 +127,7 @@ const getLatestDependency = async (pkg: string): Promise<{[key: string]: string}
 const getPackageJson = async (config: Config) => {
   const packageJsonStr = await fsExtra.readFile('./package.json', 'UTF-8');
   const packageJson = JSON.parse(packageJsonStr);
-  packageJson.name = config.appName;
+  packageJson.name = config.name;
   delete packageJson.author;
   delete packageJson.repository;
 

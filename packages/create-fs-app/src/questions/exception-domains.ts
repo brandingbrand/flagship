@@ -7,7 +7,7 @@ export interface ExceptionDomainsAnswers {
     exceptionDomains: boolean;
   };
   config?: {
-    exceptionDomains: string[];
+    exceptionDomains?: string[];
   };
 }
 
