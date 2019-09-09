@@ -12,7 +12,7 @@ export interface NamesAnswers {
 
 const questions: DistinctQuestion[] = [{
   type: 'input',
-  name: 'config.appName',
+  name: 'config.name',
   message: 'What is your project name? (eg. pirateship)',
   suffix: 'The internal name of your app; for example, this will be used to name the Xcode project files.',
   filter: name => name.trim(),
