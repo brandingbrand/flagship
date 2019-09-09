@@ -1,0 +1,29 @@
+{
+  "name": "@brandingbrand/create-fs-app",
+  "sideEffects": false,
+  "version": "5.3.0",
+  "license": "MIT",
+  "scripts": {
+    "watch": "tsc --watch",
+    "prepare": "tsc"
+  },
+  "bin": {
+    "create-fs-app": "./index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "fs-extra": "^8.0.0",
+    "inquirer": "^6.5.0",
+    "node-fetch": "^2.6.0",
+    "tar": "^4.4.10"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.0.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/node-fetch": "^2.5.0",
+    "@types/tar": "^4.0.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
