@@ -7,8 +7,8 @@ export interface ZendeskChatAnswers {
   options: {
     zendeskChat: boolean;
   };
-  config: {
-    zendeskChat: {
+  config?: {
+    zendeskChat?: {
       accountKey: string;
     };
   };

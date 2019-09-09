@@ -41,7 +41,7 @@ export interface CodePushAnswers {
     codepush: boolean;
   };
   config?: {
-    codepush: {
+    codepush?: {
       appCenterToken: string;
       android: CodePushConfig;
       ios: CodePushConfig;

@@ -7,8 +7,8 @@ export interface AssociatedDomainsAnswers {
   options: {
     associatedDomains: boolean;
   };
-  config: {
-    associatedDomains: string[];
+  config?: {
+    associatedDomains?: string[];
   };
 }
 
