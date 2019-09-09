@@ -5,7 +5,7 @@ import { required } from '../lib/formatters';
 
 export interface NamesAnswers {
   config: {
-    appName: string;
+    name: string;
     displayName: string;
   };
 }
