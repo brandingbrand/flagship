@@ -22,13 +22,6 @@ export const baseConfig = {
     android: 'assets/appIcon/android',
     ios: 'assets/appIcon/ios'
   },
-  launchScreen: {
-    android: 'assets/launchScreen/android',
-    ios: {
-      images: 'assets/launchScreen/ios/LaunchImages.xcassets',
-      xib: 'assets/launchScreen/ios/LaunchScreen.xib'
-    }
-  },
   usageDescriptionIOS: {
     NSAppleMusicUsageDescription: '',
     NSBluetoothPeripheralUsageDescription: '',
