@@ -110,6 +110,12 @@ const formatConfig = (config: Config) => {
   return config;
 };
 
+const replaceConfig = async (config: Config) => {
+  const formattedConfig = formatConfig(config);
+  await fsExtra.writeJson('./env/common.json', formattedConfig, { spaces: 2 });
+  await fsExtra.remove('./env/common.js');
+};
+
 const getLatestDependency = async (pkg: string): Promise<{[key: string]: string}> => {
   // Finds the latest release version of a given packages
   const res = await fetch(`https://registry.npmjs.com/${pkg}`);
@@ -177,10 +183,8 @@ const main = async () => {
   // merge user configs into the base
   const config: Config = { ...baseConfig, ...answers.config };
 
-  const formattedConfig = formatConfig(config);
-
   // write common config
-  await fsExtra.writeJson('./env/common.json', formattedConfig, { spaces: 2 });
+  await replaceConfig(config);
 
   // Update package.json with new config (ie. name)
   const packageJson = await getPackageJson(config);
