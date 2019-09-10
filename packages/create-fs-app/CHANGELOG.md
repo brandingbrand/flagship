@@ -1,0 +1,21 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [6.1.0](https://github.com/brandingbrand/flagship/compare/v6.0.0...v6.1.0) (2019-09-10)
+
+
+### Bug Fixes
+
+* Add check that script is running on node 10 or above ([c03cd6f](https://github.com/brandingbrand/flagship/commit/c03cd6f))
+* Add more stubbed configs ([0cde81d](https://github.com/brandingbrand/flagship/commit/0cde81d))
+* Fix app name config key ([85f167e](https://github.com/brandingbrand/flagship/commit/85f167e))
+* Fix types and name variable for package.json ([118c63b](https://github.com/brandingbrand/flagship/commit/118c63b))
+* Remove launch screen base config option ([5bc7af6](https://github.com/brandingbrand/flagship/commit/5bc7af6))
+* Remove template config when writing a new one ([bf6e514](https://github.com/brandingbrand/flagship/commit/bf6e514))
+
+
+### Features
+
+* Add create-fs-app functionality ([9dddddb](https://github.com/brandingbrand/flagship/commit/9dddddb))
