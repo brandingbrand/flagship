@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscommerce",
   "sideEffects": false,
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "Commerce Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,9 +11,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^6.1.2",
-    "@brandingbrand/fsfoundation": "^6.1.2",
-    "@brandingbrand/fsnetwork": "^6.1.2",
+    "@brandingbrand/fsengage": "^6.1.3",
+    "@brandingbrand/fsfoundation": "^6.1.3",
+    "@brandingbrand/fsnetwork": "^6.1.3",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.7.0",
@@ -24,5 +24,6 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }
