@@ -83,7 +83,7 @@
     "react-art": "^16.4.0",
     "react-native-web": "^0.11.1",
     "rimraf": "^2.6.2",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^24.1.0",
     "ts-loader": "^4.3.0",
     "typedoc": "^0.12.0",
     "typedoc-plugin-monorepo": "^0.1.0",
