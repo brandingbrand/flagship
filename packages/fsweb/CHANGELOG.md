@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/brandingbrand/flagship/compare/v6.1.0...v6.1.1) (2019-09-12)
+
+
+### Bug Fixes
+
+* **fsweb:** Lock webpack version to 4.39.3 ([995ebd1](https://github.com/brandingbrand/flagship/commit/995ebd1))
+
+
+
+
+
 # [6.1.0](https://github.com/brandingbrand/flagship/compare/v6.0.0...v6.1.0) (2019-09-10)
 
 **Note:** Version bump only for package @brandingbrand/fsweb
