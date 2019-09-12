@@ -131,6 +131,14 @@ const getPackageJson = async (config: Config) => {
   delete packageJson.author;
   delete packageJson.repository;
 
+  // Alter the compile command to include the bundle id for android
+  // The project id and application id need to be the same
+  // for RN to launch the main activity correctly
+  if (config.bundleIds && config.bundleIds.android) {
+    const compileCmd = `react-native run-android --no-packager --appId ${config.bundleIds.android}`;
+    packageJson.scripts['compile-android'] = compileCmd;
+  }
+
   // Add packages based on config options
   // ie. if the user configures code-push, react-native-code-push
   // should be added to package.json so they don't have to
