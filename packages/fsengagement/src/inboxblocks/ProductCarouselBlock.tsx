@@ -19,6 +19,8 @@ const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
+let renderItemTitleStyle: StyleProp<TextStyle> = {};
+let renderItemPriceStyle: StyleProp<TextStyle> = {};
 import { wp } from '../carousel/SliderEntry.style';
 import RenderProduct from '../carousel/RenderProduct';
 
@@ -37,6 +39,8 @@ export interface ProductCarouselBlockProps {
   containerStyle?: any;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
+  priceStyle?: StyleProp<TextStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 export interface ProductCarouselBlockState {
@@ -104,6 +108,8 @@ export default class ProductCarouselBlock
               data={data.item}
               horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
               itemWidth={renderItemWidth}
+              titleStyle={renderItemTitleStyle}
+              priceStyle={renderItemPriceStyle}
            />;
   }
 
@@ -130,8 +136,12 @@ export default class ProductCarouselBlock
   }
   createCarousel(): JSX.Element {
     const {
-      options
+      options,
+      titleStyle,
+      priceStyle
     } = this.props;
+    renderItemTitleStyle = titleStyle;
+    renderItemPriceStyle = priceStyle;
     renderItemOptions = options;
     renderItemWidth = this.calculateItemWidth();
     return (

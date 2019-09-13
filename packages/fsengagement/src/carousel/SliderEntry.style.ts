@@ -12,18 +12,6 @@ export function wp(percentage: any): any {
 const entryBorderRadius = 0;
 
 export default StyleSheet.create({
-  // shadow: {
-  //   position: 'absolute',
-  //   top: 0,
-  //   left: itemHorizontalMargin,
-  //   right: itemHorizontalMargin,
-  //   bottom: 18,
-  //   shadowColor: colors.black,
-  //   shadowOpacity: 0.25,
-  //   shadowOffset: { width: 0, height: 10 },
-  //   shadowRadius: 10,
-  //   borderRadius: entryBorderRadius
-  // },
   imageContainerNoCard: {
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue

@@ -104,7 +104,7 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
               item={items[this.state.activeIndex]}
               activeIndex={this.state.activeIndex}
             />
-          </TouchableOpacity>
+           </TouchableOpacity>
         </View>
         <View style={styles.progressBar}>
           {(items || []).map((item: any, index: number) => {
@@ -115,7 +115,7 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
                   styles.progressItem, (this.state.activeIndex === index) && styles.activeProgress
                 ]}
               />
-            )
+            );
           })}
         </View>
         <TouchableOpacity onPress={this.onClose} style={styles.backButton}>

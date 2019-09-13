@@ -107,8 +107,8 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       <View>
         <VideoPlayer
           resizeMode={resizeMode}
-          ref={(ref) => {
-            this.player = ref
+          ref={ref => {
+            this.player = ref;
           }}
           repeat={repeat}
           muted={muted}

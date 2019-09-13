@@ -1,15 +1,19 @@
 /* tslint:disable */
 import React, { Component } from 'react';
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions, Image, Text, StyleProp, TextStyle, TouchableOpacity, View
+} from 'react-native';
 import styles from './SliderEntry.style';
 
 export interface RenderProductProps {
   data?: any;
-  horizPadding?: number,
-  spaceBetweenHorizontal?: number,
-  spaceBetweenVertical?: number,
-  itemWidth: number,
-  even?: boolean,
+  horizPadding?: number;
+  spaceBetweenHorizontal?: number;
+  spaceBetweenVertical?: number;
+  itemWidth: number;
+  even?: boolean;
+  priceStyle?: StyleProp<TextStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 const { height: viewportHeight } = Dimensions.get('window');
@@ -68,13 +72,13 @@ export default class RenderProduct extends Component<RenderProductProps> {
         </View>
         {name && <View style={styles.textContainer}>
           <Text
-            style={styles.title}
+            style={[styles.title, this.props.titleStyle]}
             numberOfLines={2}
           >
             {name}
           </Text>
           <Text
-            style={styles.subtitle}
+            style={[styles.subtitle, this.props.priceStyle]}
           >
             {price.formattedValue}
           </Text>

@@ -51,12 +51,6 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   };
   constructor(props: FullScreenCardProps) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
-  }
-
-  onNavigatorEvent = (event: any) => {
-    console.log('121232123213213123213')
-    console.log(event);
   }
 
   getChildContext = () => ({

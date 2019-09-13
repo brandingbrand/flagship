@@ -99,15 +99,14 @@ export default class GridWallBlock
   }
 
   _renderItem(item: any, index: number): JSX.Element {
-    console.log('grid renderItemWidth: ' + renderItemWidth)
     return (
         <RenderProduct
-              data={item}
-              key={index}
-              spaceBetweenHorizontal={renderItemOptions.spaceBetweenHorizontal}
-              spaceBetweenVertical={renderItemOptions.spaceBetweenVertical}
-              itemWidth={renderItemWidth}
-              even={(index + 1) % 2 === 0}
+            data={item}
+            key={index}
+            spaceBetweenHorizontal={renderItemOptions.spaceBetweenHorizontal}
+            spaceBetweenVertical={renderItemOptions.spaceBetweenVertical}
+            itemWidth={renderItemWidth}
+            even={(index + 1) % 2 === 0}
     />);
   }
 
@@ -119,11 +118,9 @@ export default class GridWallBlock
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
     const pl = containerStyle.paddingLeft || 0;
-    console.log('horiz margin padding: ' + (ml + mr + pr + pl))
     return ml + mr + pr + pl;
   }
   calculateSliderWidth() {
-    console.log('calculateSliderWidth: ' + (sliderWidth - this.horizontalMarginPadding()))
     return sliderWidth - this.horizontalMarginPadding();
   }
   calculateItemWidth() {
@@ -131,10 +128,6 @@ export default class GridWallBlock
       options
     } = this.props;
     const slideWidth = wp(50);
-    console.log('slideWidth: ' + slideWidth)
-    console.log('options.spaceBetweenHorizontal: ' + options.spaceBetweenHorizontal)
-    console.log('calculateItemWidth: ' +
-      (slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding() / 2)))
     return slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding()/2);
   }
   createGrid(): JSX.Element {

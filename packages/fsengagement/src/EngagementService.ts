@@ -237,6 +237,52 @@ export class EngagementService {
       });
   }
 
+
+  async getInboxMessages(attributes?: Attribute[]): Promise<EngagementMessage[]> {
+    // check we have a user profile
+    if (!this.profileId) {
+      throw new Error('Profile not loaded.');
+    }
+
+    // cache
+    if (this.messages.length) {
+      if (+new Date() - this.messageCache < this.cacheTTL) {
+
+        return Promise.resolve(this.messages);
+      }
+    }
+
+    return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
+      JSON.stringify(attributes))
+      .then((r: any) => r.data)
+      .then((list: any) => list.map((data: any) => ({
+        id: data.id,
+        published: new Date(data.published),
+        message: JSON.parse(data.message),
+        title: data.title,
+        inbox: data.inbox,
+        attributes: data.attributes
+      })))
+      .then((messages: EngagementMessage[]) => {
+        this.messages = messages;
+        this.messageCache = +new Date();
+        return messages;
+      })
+      .catch(async (e: any) => {
+        console.log('Unable to fetch inbox messages', e);
+
+        let ret: EngagementMessage[] = [];
+
+        // respond with stale cache if we have it
+        if (this.messages.length) {
+          ret = this.messages;
+        }
+
+        return Promise.resolve(ret);
+      });
+  }
+
+
   async onNotification(notif: EngagmentNotification): Promise<void> {
     console.log('onNotification', notif);
 

@@ -1,6 +1,6 @@
 /* tslint:disable */
 import React, { Component } from 'react';
-import { Dimensions, Image, Share, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntry.style';
 
@@ -35,20 +35,6 @@ export default class RenderItem extends Component<RenderItemProps> {
           style={styles.image}
         />
       );
-  }
-  onImagePress = (): void => {
-    Share.share({
-      message: 'BAM: we\'re helping your business with awesome React Native apps',
-      url: 'http://bam.tech',
-      title: 'Wow, did you see that?'
-    }, {
-        // Android only:
-        dialogTitle: 'Share BAM goodness',
-        // iOS only:
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.PostToTwitter'
-        ]
-      });
   }
   render() {
     const {
@@ -89,12 +75,9 @@ export default class RenderItem extends Component<RenderItemProps> {
       <TouchableOpacity
         activeOpacity={1}
         style={itemStyle}
-        onPress={this.onImagePress}
       >
-        {/* <View style={styles.shadow} /> */}
         <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
           {this.image}
-          {/* <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} /> */}
         </View>
         {title && <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
           {uppercaseTitle}

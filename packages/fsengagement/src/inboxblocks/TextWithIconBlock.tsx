@@ -73,9 +73,9 @@ export default class TextWithIconBlock extends Component<TextWithIconProps> {
               imageStyle={imageDimensions}
             />
           </View>
-          <View style={{
-            flex: 1
-          }}>
+          <View
+            style={{ flex: 1 }}
+          >
             <TextBlock
               {...contents.Title}
             />
