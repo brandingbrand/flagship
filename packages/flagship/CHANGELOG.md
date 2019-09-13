@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+
+### Features
+
+* Add network security config for Android ([7aa9899](https://github.com/brandingbrand/flagship/commit/7aa9899))
+
+
+
+
+
 # [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
 
 **Note:** Version bump only for package @brandingbrand/flagship

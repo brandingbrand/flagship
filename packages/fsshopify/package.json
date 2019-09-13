@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsshopify",
   "sideEffects": false,
-  "version": "5.2.0",
+  "version": "5.3.0",
   "description": "Shopify Commerce Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,14 +13,14 @@
     "test": "jest /fsshopify/ --colors --config ../../jest.json"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^5.2.0",
-    "@brandingbrand/fsfoundation": "^5.2.0",
-    "@brandingbrand/fsi18n": "^5.2.0",
-    "@brandingbrand/fsnetwork": "^5.2.0",
+    "@brandingbrand/fscommerce": "^5.3.0",
+    "@brandingbrand/fsfoundation": "^5.3.0",
+    "@brandingbrand/fsi18n": "^5.3.0",
+    "@brandingbrand/fsnetwork": "^5.3.0",
     "decimal.js": "^10.0.1",
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
+    "react-native-navigation": "2.26.3",
     "react-native-payments": "^0.7.0"
   },
   "devDependencies": {

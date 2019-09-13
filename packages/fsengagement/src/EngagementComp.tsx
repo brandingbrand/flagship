@@ -116,7 +116,8 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplayDelay?: number;
   autoplayInterval?: number;
   storyType?: string;
-  tabbedItems?: BlockItem[];
+  tabbedItems?: any[];
+  lastUpdate?: number;
   containerStyle?: StyleProp<ViewStyle>;
 }
 export interface EngagementState {
@@ -131,7 +132,8 @@ export default function(
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
     static childContextTypes: any = {
-      handleAction: PropTypes.func
+      handleAction: PropTypes.func,
+      story: PropTypes.object
     };
 
     state: any = {};
@@ -152,7 +154,8 @@ export default function(
     }
 
     getChildContext = () => ({
-      handleAction: this.handleAction
+      handleAction: this.handleAction,
+      story: this.props.backButton ? this.props.json : null
     })
 
     // tslint:disable-next-line:cyclomatic-complexity
@@ -173,36 +176,51 @@ export default function(
       });
       switch (actions.type) {
         case 'blog-url':
-          this.props.navigator.push({
-            screen: 'EngagementWebView',
-            navigatorStyle: {
-              navBarHidden: true
-            },
-            passProps: {
-              actions,
-              isBlog: true,
-              backButton: true
+          Navigation.push(this.props.componentId, {
+            component: {
+              name: 'EngagementWebView',
+              options: {
+                topBar: {
+                  visible: false,
+                  drawBehind: true
+                }
+              },
+              passProps: {
+                actions,
+                isBlog: true,
+                backButton: true
+              }
             }
-          });
+          }).catch(err => console.log('EngagementWebView PUSH error:', err));
           break;
         case 'web-url':
-          this.props.navigator.showModal({
-            screen: 'EngagementWebView',
-            passProps: { actions },
-            navigatorStyle: {
-              navBarBackgroundColor: '#f5f2ee',
-              navBarButtonColor: '#866d4b',
-              statusBarTextColorScheme: 'dark'
-            },
-            navigatorButtons: {
-              rightButtons: [
-                {
-                  icon: require('../assets/images/closeBronze.png'),
-                  id: 'close'
+          Navigation.showModal({
+            component: {
+              name: 'EngagementWebView',
+              options: {
+                topBar: {
+                  background: {
+                    color: '#f5f2ee'
+                  },
+                  rightButtons: [
+                    {
+                      id: 'close',
+                      icon: require('../assets/images/closeBronze.png')
+                    }
+                  ],
+                  leftButtonColor: '#866d4b',
+                  rightButtonColor: '#866d4b',
+                  backButton: {
+                    color: 'red'
+                  }
+                },
+                statusBar: {
+                  style: 'dark'
                 }
-              ]
+              },
+              passProps: { actions }
             }
-          });
+          }).catch(err => console.log('EngagementWebView SHOWMODAL error:', err));
           break;
         case 'deep-link':
           Linking.canOpenURL(actions.value).then(supported => {
@@ -238,7 +256,8 @@ export default function(
     }
 
     onBackPress = (): void => {
-      this.props.navigator.pop();
+      Navigation.pop(this.props.componentId)
+      .catch(err => console.log('onBackPress POP error:', err));
     }
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item }) => {
@@ -259,7 +278,7 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
-      props.navigator = this.props.navigator;
+      props.componentId = this.props.componentId;
 
       return React.createElement(
         layoutComponents[private_type],
@@ -302,7 +321,7 @@ export default function(
         return (
           <TabbedStory
             items={tabbedItems}
-            navigator={this.props.navigator}
+            componentId={this.props.componentId}
           />
         );
       }
@@ -393,7 +412,7 @@ export default function(
         return (
           <TabbedStory
             items={tabbedItems}
-            navigator={this.props.navigator}
+            componentId={this.props.componentId}
           />
         );
       }

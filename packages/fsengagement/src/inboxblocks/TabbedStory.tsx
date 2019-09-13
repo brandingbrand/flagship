@@ -7,9 +7,7 @@ import {
   View
 } from 'react-native';
 import TabbedStoryItem from './TabbedStoryItem';
-import {
-  ScreenProps
-} from '../types';
+import { Navigation } from 'react-native-navigation';
 
 const closeX = require('../../assets/images/dark.png');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -62,8 +60,9 @@ const FIRST_ITEM = 0;
 export interface ImageProp {
   uri: string;
 }
-export interface TabbedStoryProps extends ScreenProps {
+export interface TabbedStoryProps {
   items: any[];
+  componentId: string;
 }
 export interface TabbedStoryState {
   activeIndex: number;
@@ -77,7 +76,8 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
   }
   onCardPress = () => {
     if (this.state.activeIndex >= (this.props.items.length - 1)) {
-      this.props.navigator.pop();
+      Navigation.pop(this.props.componentId)
+        .catch(err => console.log('onBackPress POP error:', err));
     } else {
       this.setState({
         activeIndex: this.state.activeIndex + 1
@@ -85,7 +85,8 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
     }
   }
   onClose = () => {
-    this.props.navigator.pop();
+    Navigation.pop(this.props.componentId)
+      .catch(err => console.log('onBackPress POP error:', err));
   }
 
   render(): JSX.Element {

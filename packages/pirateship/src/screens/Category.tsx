@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Dimensions, View } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 import { Category as FSCategory } from '@brandingbrand/fscategory';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { dataSource, dataSourceConfig } from '../lib/datasource';
 import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { NavArrow } from '@brandingbrand/fscomponents';
 import { palette } from '../styles/variables';
@@ -58,7 +59,7 @@ export interface StateType {
 }
 
 export default class Category extends Component<PropType, StateType> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   static rightButtons: NavButton[] = [searchButton];
   state: StateType = {
@@ -107,11 +108,19 @@ export default class Category extends Component<PropType, StateType> {
         passProps.format = dataSourceConfig.categoryFormat;
       }
 
-      this.props.navigator.push({
-        screen,
-        title: category.title || '',
-        passProps
-      });
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: screen,
+          options: {
+            topBar: {
+              title: {
+                text: category.title || ''
+              }
+            }
+          },
+          passProps
+        }
+      }).catch(e => console.warn(`${screen} PUSH error: `, e));
     })
     .catch(err => {
       console.warn(err);
@@ -119,7 +128,7 @@ export default class Category extends Component<PropType, StateType> {
   }
 
   render(): JSX.Element {
-    const { categoryId, format, navigator } = this.props;
+    const { categoryId, format } = this.props;
     const categoryFormat = format && format === 'list' ? 'list' : 'grid';
     const margin = categoryFormat === 'grid' ? 15 : 0;
     const itemProps: any =
@@ -143,9 +152,7 @@ export default class Category extends Component<PropType, StateType> {
     }
 
     return (
-      <PSScreenWrapper
-        navigator={navigator}
-      >
+      <PSScreenWrapper>
         <View style={{ margin }}>
           <FSCategory
             format={categoryFormat}
@@ -167,7 +174,13 @@ export default class Category extends Component<PropType, StateType> {
   updateTitle = (data: any) => {
     if (data && typeof data === 'object') {
       const { title = '' } = data;
-      this.props.navigator.setTitle({ title });
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          title: {
+            text: title
+          }
+        }
+      });
     }
   }
 }

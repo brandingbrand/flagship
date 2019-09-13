@@ -2,6 +2,7 @@
 import {
   ScrollView
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 import { shopify } from '../../lib/datasource';
@@ -37,20 +38,11 @@ export default class Shopify extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   fetchCart = () => {
     shopify
       .fetchCart()
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -62,7 +54,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .addToCart('Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMTE2ODE3NjE5NQ==')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -73,7 +65,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .fetchProduct('Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzkwMDc1NjQ2MTE=')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -84,7 +76,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .search('skin')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -97,7 +89,7 @@ export default class Shopify extends Component<any, any> {
         categoryId: 'Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIzNTM4NTY2Nw=='
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -108,7 +100,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .fetchCategory('Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIzNTM4NTY2Nw==')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -119,7 +111,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .fetchCategory()
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -138,7 +130,7 @@ export default class Shopify extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -157,7 +149,7 @@ export default class Shopify extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -167,7 +159,7 @@ export default class Shopify extends Component<any, any> {
     shopify
       .applyPromo('SAVEMORE')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -186,7 +178,7 @@ export default class Shopify extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);

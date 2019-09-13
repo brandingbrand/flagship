@@ -63,8 +63,6 @@ export default StyleSheet.create({
   },
   subtitle: {
     marginTop: 6,
-    fontFamily: 'Arial',
-    fontWeight: 'bold',
     color: colors.black,
     fontSize: 12
   }

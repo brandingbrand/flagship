@@ -5,7 +5,6 @@ import { CheckoutResponse } from './util/ShopifyResponseTypes';
 import DataSourceBase from './util/DataSourceBase';
 import * as Types from './customTypes';
 import * as Mixins from './mixins';
-import { Navigator } from 'react-native-navigation';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -50,7 +49,6 @@ export default class ShopifyDataSource extends DataSourceBase
 
   async startWalletCheckout(
     checkoutId: string,
-    navigator: Navigator,
     onSuccess: (order: FSCommerceTypes.Order) => void,
     test: boolean = false
   ): Promise<void> {

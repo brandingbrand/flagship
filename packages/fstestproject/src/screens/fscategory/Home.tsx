@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 
 export default class Home extends Component<any> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
-    this.props.navigator.push({ screen: 'fscategory.' + screen, title, backButtonTitle });
+    goToNavPush('fscategory', this.props.componentId, screen, title, backButtonTitle);
   }
 
   render(): JSX.Element {

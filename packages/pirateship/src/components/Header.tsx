@@ -1,5 +1,4 @@
-type HeaderProps = import ('./Header.web').HeaderProps;
-const Header = (props: HeaderProps) => {
+const Header = () => {
   return null;
 };
 export default Header;
