@@ -2,6 +2,8 @@ import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
+import moment from 'moment';
+
 import {
   EngagementMessage,
   EngagementProfile,
@@ -252,20 +254,27 @@ export class EngagementService {
       }
     }
 
+    const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
     return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
       JSON.stringify(attributes))
       .then((r: any) => r.data)
-      .then((list: any) => list.map((data: any) => ({
-        id: data.id,
-        published: new Date(data.published),
-        message: JSON.parse(data.message),
-        title: data.title,
-        inbox: data.inbox,
-        attributes: data.attributes
-      })))
+      .then((list: any) => list.map((data: any) => {
+        return {
+          id: data.id,
+          published: new Date(data.published),
+          isNew: lastEngagementFetch ?
+            moment.utc(data.published).valueOf() > parseInt(lastEngagementFetch, 10) : false,
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes
+        };
+      }))
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', moment.utc(new Date()).valueOf().toString())
+          .catch();
         return messages;
       })
       .catch(async (e: any) => {
