@@ -19,6 +19,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
+import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import {
@@ -57,6 +58,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 70,
     left: 20
+  },
+  editorial: {
+    marginTop: 0,
+    backgroundColor: 'transparent'
   },
   pageNum: {
     color: '#ffffff',
@@ -110,6 +115,9 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplay?: boolean;
   autoplayDelay?: number;
   autoplayInterval?: number;
+  storyType?: string;
+  tabbedItems?: any[];
+  lastUpdate?: number;
   containerStyle?: StyleProp<ViewStyle>;
 }
 export interface EngagementState {
@@ -285,11 +293,12 @@ export default function(
     }
 
     renderBlocks(): JSX.Element {
-      const { json, json: { empty } } = this.props;
+      const { json } = this.props;
+      const empty: any = json && json.empty || {};
       return (
         <Fragment>
-          {(json.private_blocks || []).map(this.renderBlock)}
-          {empty && !(json.private_blocks && json.private_blocks.length) &&
+          {(json && json.private_blocks || []).map(this.renderBlock)}
+          {empty && !(json && json.private_blocks && json.private_blocks.length) &&
             <Text style={[styles.emptyMessage, empty.textStyle]}>
               {empty.message || 'No content found.'}</Text>}
         </Fragment>
@@ -297,7 +306,7 @@ export default function(
     }
 
     renderStoryGradient(): JSX.Element {
-      const { json: { storyGradient } } = this.props;
+      const { json: { storyGradient, tabbedItems } } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
       const {
@@ -309,6 +318,14 @@ export default function(
         outputRange: [0, 1],
         extrapolate: 'clamp'
       });
+      if (tabbedItems && tabbedItems.length) {
+        return (
+          <TabbedStory
+            items={tabbedItems}
+            componentId={this.props.componentId}
+          />
+        );
+      }
       return (
         <Fragment>
           <FlatList
@@ -346,8 +363,10 @@ export default function(
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
-      const { json, json: { storyGradient } } = this.props;
-      const empty: any = this.props.json.empty || {};
+      const { json } = this.props;
+      const storyGradient = json && json.storyGradient;
+      const tabbedItems = json && json.tabbedItems;
+      const empty: any = json && json.empty || {};
 
       if (this.props.renderType && this.props.renderType === 'carousel') {
         const autoplay = this.props.autoplay || false;
@@ -355,12 +374,12 @@ export default function(
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
           <Fragment>
-            {empty && !(json.private_blocks && json.private_blocks.length) &&
-              <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>}
+            {empty && !(json && json.private_blocks && json.private_blocks.length) &&
+              <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                {empty && empty.message || 'No content found.'}</Text>}
 
             {this.state.showCarousel && <Carousel
-              data={json.private_blocks || []}
+              data={json && json.private_blocks || []}
               layout={'default'}
               autoplay={autoplay}
               autoplayDelay={autoplayDelay}
@@ -374,7 +393,7 @@ export default function(
               useScrollView={Platform.OS === 'ios' ? true : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json.private_blocks && json.private_blocks.length) &&
+            {(json && json.private_blocks && json.private_blocks.length > 0) &&
               <View style={[styles.pageCounter, json.pageCounterStyle]}>
                 <Text
                   style={[styles.pageNum, json.pageNumberStyle]}
@@ -393,15 +412,22 @@ export default function(
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
+      } else if (tabbedItems && tabbedItems.length) {
+        return (
+          <TabbedStory
+            items={tabbedItems}
+            componentId={this.props.componentId}
+          />
+        );
       }
       return (
         <FlatList
-          data={this.props.json.private_blocks || []}
+          data={this.props.json && this.props.json.private_blocks || []}
           keyExtractor={this.dataKeyExtractor}
           renderItem={this.renderBlockItem}
           ListEmptyComponent={(
-            <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>
+            <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+              {empty && empty.message || 'No content found.'}</Text>
           )}
           refreshControl={
             this.props.refreshControl && <RefreshControl

@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 export default class VideoBlock extends Component<VideoBlockProps, StateType> {
+  player: any | null = null;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -106,6 +107,9 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       <View>
         <VideoPlayer
           resizeMode={resizeMode}
+          ref={ref => {
+            this.player = ref;
+          }}
           repeat={repeat}
           muted={muted}
           fullscreen={fullscreen}
@@ -128,9 +132,11 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
   }
 
   toggleVideo = () => {
-    this.setState({
-      videoPaused: !this.state.videoPaused
-    });
+    this.player.presentFullscreenPlayer();
+    // this.setState({
+    //   videoPaused: !this.state.videoPaused
+    // });
+
   }
 
   render(): JSX.Element {

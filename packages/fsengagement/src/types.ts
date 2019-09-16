@@ -79,6 +79,8 @@ export interface JSON {
   pageCounterStyle?: StyleProp<ViewStyle>;
   id?: string;
   key?: string;
+  storyType?: string;
+  tabbedItems?: any[];
 }
 
 export interface BlockItem extends ScreenProps, JSON {
