@@ -6,6 +6,7 @@ import * as nativeConstants from './native-constants';
 import * as FlagshipTypes from '../types';
 
 const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
+const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
 
 /**
  * Updates app bundle id.
@@ -208,18 +209,18 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
     );
   }
 
-  // Localhost must be added as an exception domain during development
+  // Localhost (for running on device) and 10.0.2.2 (for running on an emulator) must be
+  // added as exception domains during development so that the app can access the js bundle
   if (!configuration.disableDevFeature) {
-    const localhostIndex = exceptionDomains.findIndex(domain => {
-      if (typeof domain === 'string') {
-        return domain === 'localhost';
-      } else {
-        return domain.domain === 'localhost';
-      }
-    });
+    const hasLocalhost = hasExceptionDomain(exceptionDomains, 'localhost');
+    const hasProxyLocalhost = hasExceptionDomain(exceptionDomains, EMULATOR_LOCALHOST_PROXY);
 
-    if (localhostIndex === -1) {
+    if (!hasLocalhost) {
       exceptionDomains.push('localhost');
+    }
+
+    if (!hasProxyLocalhost) {
+      exceptionDomains.push(EMULATOR_LOCALHOST_PROXY);
     }
   }
 
@@ -242,4 +243,19 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
       xml
     );
   }
+}
+
+function hasExceptionDomain(
+  domains: FlagshipTypes.Config['exceptionDomains'],
+  target: string
+): boolean {
+  const domainIndex = domains.findIndex(domain => {
+    if (typeof domain === 'string') {
+      return domain === target;
+    } else {
+      return domain.domain === target;
+    }
+  });
+
+  return domainIndex !== -1;
 }
