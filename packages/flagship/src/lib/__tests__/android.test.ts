@@ -33,6 +33,14 @@ function getManifest(): string {
     .toString();
 }
 
+function getNetworkSecurityConfig(): string {
+  return fs
+    .readFileSync(
+      nodePath.join(tempRootDir, 'android/app/src/main/res/xml/network_security_config.xml')
+    )
+    .toString();
+}
+
 function getGradleProperties(): string {
   return fs.readFileSync(nodePath.join(tempRootDir, `android/gradle.properties`)).toString();
 }
@@ -166,5 +174,21 @@ test(`set env switcher initial env`, () => {
 
   expect(EnvSwitcherFile).toMatch(
     `String initialEnvName = "stage2stage"; // [EnvSwitcher initialEnvName]`
+  );
+});
+
+test('android exception domains', () => {
+  android.exceptionDomains({
+    name: appName,
+    bundleIds: {
+      android: `test.bundle.id`
+    },
+    exceptionDomains: ['brandingbrand.com']
+  });
+
+  expect(getNetworkSecurityConfig()).toMatch('<domain includeSubdomains="true">localhost</domain>');
+  expect(getNetworkSecurityConfig()).toMatch('<domain includeSubdomains="true">10.0.2.2</domain>');
+  expect(getNetworkSecurityConfig()).toMatch(
+    '<domain includeSubdomains="true">brandingbrand.com</domain>'
   );
 });
