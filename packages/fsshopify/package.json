@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsshopify",
   "sideEffects": false,
-  "version": "6.0.0",
+  "version": "6.1.4",
   "description": "Shopify Commerce Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,10 +13,10 @@
     "test": "jest /fsshopify/ --colors --config ../../jest.json"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^6.0.0",
-    "@brandingbrand/fsfoundation": "^6.0.0",
-    "@brandingbrand/fsi18n": "^6.0.0",
-    "@brandingbrand/fsnetwork": "^6.0.0",
+    "@brandingbrand/fscommerce": "^6.1.4",
+    "@brandingbrand/fsfoundation": "^6.1.4",
+    "@brandingbrand/fsi18n": "^6.1.4",
+    "@brandingbrand/fsnetwork": "^6.1.4",
     "decimal.js": "^10.0.1",
     "react": "16.8.3",
     "react-native": "0.59.10",
@@ -28,5 +28,6 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }
