@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 export default class VideoBlock extends Component<VideoBlockProps, StateType> {
+  player: any | null = null;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -98,18 +99,21 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       resizeMode = 'cover',
       autoPlay = false,
       repeat = false,
-      muted = false,
-      fullscreen = false
+      muted = false
     } = this.props;
 
     return (
       <View>
         <VideoPlayer
           resizeMode={resizeMode}
+          ref={ref => {
+            this.player = ref;
+          }}
           repeat={repeat}
           muted={muted}
-          fullscreen={fullscreen}
           onLoad={this.checkAutoPlay(autoPlay)}
+          onFullscreenPlayerDidPresent={this.fullScreenPlayerDidPresent}
+          onFullscreenPlayerWillDismiss={this.onFullscreenPlayerWillDismiss}
           source={{ uri: src }}
           paused={this.state.videoPaused}
           style={{ width, height }}
@@ -126,11 +130,28 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       </View>
     );
   }
-
+  onFullscreenPlayerWillDismiss = () => {
+    if (this.props.fullscreen) {
+      this.setState({
+        videoPaused: true
+      });
+    }
+  }
+  fullScreenPlayerDidPresent = () => {
+    if (this.props.fullscreen) {
+      this.setState({
+        videoPaused: false
+      });
+    }
+  }
   toggleVideo = () => {
-    this.setState({
-      videoPaused: !this.state.videoPaused
-    });
+    if (this.props.fullscreen) {
+      this.player.presentFullscreenPlayer();
+    } else {
+      this.setState({
+        videoPaused: !this.state.videoPaused
+      });
+    }
   }
 
   render(): JSX.Element {
