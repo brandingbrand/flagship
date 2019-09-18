@@ -8,6 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const history = require('connect-history-api-fallback');
 const convert = require('koa-connect');
+const escapedSep = '\\' + path.sep;
 
 const globalConfig = {
   optimization: {
@@ -85,13 +86,13 @@ const globalConfig = {
           {
             test: /\.m?jsx?$/,
             include: [
-              /node_modules\/react-native-/,
-              /node_modules\/tcomb-form-native/,
-              /packages\/fs/,
-              /node_modules\/@brandingbrand\/fs/,
-              /node_modules\/@brandingbrand\/react-native-/
+              new RegExp('node_modules' + escapedSep + 'react-native-'),
+              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
+              new RegExp('packages' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')
             ],
-            exclude: /node_modules\/react-native-web\//,
+            exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
               'cache-loader',
               {
