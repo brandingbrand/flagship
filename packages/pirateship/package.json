@@ -15,7 +15,9 @@
     "init": "node scripts/fixRNLink.js && flagship clean && flagship init native",
     "init:web": "node scripts/fixRNLink.js && flagship clean && flagship init web",
     "prepare": "tsc",
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node scripts/startWithFreePort.js",
+    "start-ios": "node scripts/startWithFreePort.js ios --simulator=\"iPhone X\"",
+    "start-android": "node scripts/startWithFreePort.js android",
     "tsc:watch": "tsc -w --preserveWatchOutput",
     "lint": "fscodestyle",
     "build-web-demo": "./scripts/buildWebDemo.sh"
@@ -40,6 +42,7 @@
     "@brandingbrand/react-native-leanplum": "^2.0.3",
     "@react-native-community/async-storage": "^1.6.1",
     "credit-card-type": "^7.0.0",
+    "find-free-port": "^2.0.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
     "react": "16.8.3",
