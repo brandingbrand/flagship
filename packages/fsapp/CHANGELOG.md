@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Features
+
+* **fsapp:** Track whether the drawer is visible ([#814](https://github.com/brandingbrand/flagship/issues/814)) ([e2f22d4](https://github.com/brandingbrand/flagship/commit/e2f22d4))
+
+
+
+
+
 ## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
