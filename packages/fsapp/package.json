@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsapp",
   "sideEffects": false,
-  "version": "6.1.4",
+  "version": "6.2.0",
   "description": "Flagship app base",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,9 +12,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^6.1.4",
-    "@brandingbrand/fsfoundation": "^6.1.4",
-    "@brandingbrand/fsnetwork": "^6.1.4",
+    "@brandingbrand/fsengage": "^6.2.0",
+    "@brandingbrand/fsfoundation": "^6.2.0",
+    "@brandingbrand/fsnetwork": "^6.2.0",
     "@react-native-community/async-storage": "^1.6.1",
     "path-to-regexp": "^2.2.1",
     "qs": "^6.7.0",
