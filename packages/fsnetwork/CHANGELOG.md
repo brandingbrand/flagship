@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+
+### Features
+
+* **fsnetwork:** Add option for interceptor ([#808](https://github.com/brandingbrand/flagship/issues/808)) ([4c12c24](https://github.com/brandingbrand/flagship/commit/4c12c24))
+
+
+
+
+
 # [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
 
 **Note:** Version bump only for package @brandingbrand/fsnetwork
