@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
   Modal,
   Platform,
   ScrollView,
@@ -13,6 +12,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 const styles = StyleSheet.create({
   closeBtn: {

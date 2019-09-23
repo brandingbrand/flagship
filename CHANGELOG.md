@@ -3,6 +3,435 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+
+### Features
+
+* **fsnetwork:** Add option for interceptor ([#808](https://github.com/brandingbrand/flagship/issues/808)) ([4c12c24](https://github.com/brandingbrand/flagship/commit/4c12c24))
+
+
+
+
+
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* **fsweb:** tag type of css bundle ([05d3a44](https://github.com/brandingbrand/flagship/commit/05d3a44))
+* **pirateship:** Fixes for blacklist and linking Windows slashes ([cec5535](https://github.com/brandingbrand/flagship/commit/cec5535))
+* bump leanplum sdk version ([#823](https://github.com/brandingbrand/flagship/issues/823)) ([2b378c9](https://github.com/brandingbrand/flagship/commit/2b378c9))
+
+
+### Features
+
+* **fsapp:** Track whether the drawer is visible ([#814](https://github.com/brandingbrand/flagship/issues/814)) ([e2f22d4](https://github.com/brandingbrand/flagship/commit/e2f22d4))
+
+
+
+
+
+## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
+
+
+### Bug Fixes
+
+* fix network security config for android emulators ([#817](https://github.com/brandingbrand/flagship/issues/817)) ([1b78195](https://github.com/brandingbrand/flagship/commit/1b78195))
+
+
+
+
+
+## [6.1.3](https://github.com/brandingbrand/flagship/compare/v6.1.2...v6.1.3) (2019-09-12)
+
+**Note:** Version bump only for package flagship_deploy
+
+
+
+
+
+## [6.1.2](https://github.com/brandingbrand/flagship/compare/v6.1.1...v6.1.2) (2019-09-12)
+
+**Note:** Version bump only for package flagship_deploy
+
+
+
+
+
+## [6.1.1](https://github.com/brandingbrand/flagship/compare/v6.1.0...v6.1.1) (2019-09-12)
+
+
+### Bug Fixes
+
+* **create-fs-app:** fix run cmd for android with certain bundleIds ([99a3822](https://github.com/brandingbrand/flagship/commit/99a3822))
+* **fsweb:** Lock webpack version to 4.39.3 ([995ebd1](https://github.com/brandingbrand/flagship/commit/995ebd1))
+
+
+
+
+
+# [6.1.0](https://github.com/brandingbrand/flagship/compare/v6.0.0...v6.1.0) (2019-09-10)
+
+
+### Bug Fixes
+
+* Add check that script is running on node 10 or above ([c03cd6f](https://github.com/brandingbrand/flagship/commit/c03cd6f))
+* Add more stubbed configs ([0cde81d](https://github.com/brandingbrand/flagship/commit/0cde81d))
+* Fix app name config key ([85f167e](https://github.com/brandingbrand/flagship/commit/85f167e))
+* Fix types and name variable for package.json ([118c63b](https://github.com/brandingbrand/flagship/commit/118c63b))
+* Remove launch screen base config option ([5bc7af6](https://github.com/brandingbrand/flagship/commit/5bc7af6))
+* Remove template config when writing a new one ([bf6e514](https://github.com/brandingbrand/flagship/commit/bf6e514))
+
+
+### Features
+
+* Add create-fs-app functionality ([9dddddb](https://github.com/brandingbrand/flagship/commit/9dddddb))
+
+
+
+
+
+# [6.0.0](https://github.com/brandingbrand/flagship/compare/v5.3.0...v6.0.0) (2019-09-04)
+
+
+### Bug Fixes
+
+* **fscomponents:** fix price/originalPrice comparison ([0f9447f](https://github.com/brandingbrand/flagship/commit/0f9447f))
+
+
+### Features
+
+* **fsengagement:** add fullscreen video option ([6a3a3a7](https://github.com/brandingbrand/flagship/commit/6a3a3a7))
+
+
+### BREAKING CHANGES
+
+* **fscomponents:** Under the default render behavior, originalPrice will no longer be displayed unless
+it is actually different from price.
+
+
+
+
+
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+
+### Bug Fixes
+
+* **fsweb:** add webpack alias for async storage ([c36a971](https://github.com/brandingbrand/flagship/commit/c36a971))
+
+
+### Features
+
+* Add network security config for Android ([7aa9899](https://github.com/brandingbrand/flagship/commit/7aa9899))
+* **fsengagement:** add shoppable ingredients cta ([6974028](https://github.com/brandingbrand/flagship/commit/6974028))
+
+
+
+
+
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([236993f](https://github.com/brandingbrand/flagship/commit/236993f))
+* **fsweb:** Prevent double transpiling of typeof ([bb3bd74](https://github.com/brandingbrand/flagship/commit/bb3bd74))
+* **fsweb:** Prevent double transpiling of typeof ([30ec79d](https://github.com/brandingbrand/flagship/commit/30ec79d))
+* **fsweb:** Prevent double transpiling of typeof ([427445d](https://github.com/brandingbrand/flagship/commit/427445d))
+* **fsweb:** Update the webpack config file ([933bc10](https://github.com/brandingbrand/flagship/commit/933bc10))
+* **fsweb:** Update the webpack config file ([5e6bfb8](https://github.com/brandingbrand/flagship/commit/5e6bfb8))
+* Fix application of refinements ([82c9813](https://github.com/brandingbrand/flagship/commit/82c9813))
+* update axios from 0.18 to 0.18.1 for security fix ([1e80a01](https://github.com/brandingbrand/flagship/commit/1e80a01))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([45a054a](https://github.com/brandingbrand/flagship/commit/45a054a))
+* **fscomponents:** add some option props to zoomCarousel ([a195337](https://github.com/brandingbrand/flagship/commit/a195337))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18743f8](https://github.com/brandingbrand/flagship/commit/18743f8))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([c7129f5](https://github.com/brandingbrand/flagship/commit/c7129f5))
+* **fscomponents:** fix app bug by removing view wrapper ([fbf66a8](https://github.com/brandingbrand/flagship/commit/fbf66a8))
+* **fscomponents:** remove backtick ([23b9baa](https://github.com/brandingbrand/flagship/commit/23b9baa))
+* **fsengagement:** store engagement profileId ([a3e8a7d](https://github.com/brandingbrand/flagship/commit/a3e8a7d))
+* **fsengagement:** store engagement profileId ([e4f0c93](https://github.com/brandingbrand/flagship/commit/e4f0c93))
+* pin axios to 0.18.0 ([b1d5c75](https://github.com/brandingbrand/flagship/commit/b1d5c75))
+
+
+
+
+
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+
+### Bug Fixes
+
+* **fsweb:** Prevent double transpiling of typeof ([427445d](https://github.com/brandingbrand/flagship/commit/427445d))
+* **fsweb:** Update the webpack config file ([fae0ebf](https://github.com/brandingbrand/flagship/commit/fae0ebf))
+
+
+
+
+
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** restore missing type for zoomcarousel ([4150bc7](https://github.com/brandingbrand/flagship/commit/4150bc7))
+
+
+### Features
+
+* **fscomponents:** add some option props to zoomCarousel ([6d87b3e](https://github.com/brandingbrand/flagship/commit/6d87b3e))
+* **fscomponents:** add some option props to zoomCarousel ([7178d1c](https://github.com/brandingbrand/flagship/commit/7178d1c))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([88fe244](https://github.com/brandingbrand/flagship/commit/88fe244))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([44eb31c](https://github.com/brandingbrand/flagship/commit/44eb31c))
+* **fscomponents:** fix app bug by removing view wrapper ([61277d6](https://github.com/brandingbrand/flagship/commit/61277d6))
+* **fscomponents:** remove backtick ([affeae3](https://github.com/brandingbrand/flagship/commit/affeae3))
+* **fsengagement:** store engagement profileId ([ef598fd](https://github.com/brandingbrand/flagship/commit/ef598fd))
+* **fsengagement:** store engagement profileId ([ac21688](https://github.com/brandingbrand/flagship/commit/ac21688))
+
+
+
+
+
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([c732aa8](https://github.com/brandingbrand/flagship/commit/c732aa8))
+* inbox block re-render improvement ([9245eb3](https://github.com/brandingbrand/flagship/commit/9245eb3))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+* **fsapp:** Put dev menu as first screen ([09a275a](https://github.com/brandingbrand/flagship/commit/09a275a))
+* **fsengagement:** update react-native-video ([ae01256](https://github.com/brandingbrand/flagship/commit/ae01256))
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([e7412f9](https://github.com/brandingbrand/flagship/commit/e7412f9))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([c9dbfe4](https://github.com/brandingbrand/flagship/commit/c9dbfe4))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([e0aaf30](https://github.com/brandingbrand/flagship/commit/e0aaf30))
+* **fscomponents:** add renderModalContent prop ([4105c44](https://github.com/brandingbrand/flagship/commit/4105c44))
+* **fscomponents:** add some option props to zoomCarousel ([b7455e4](https://github.com/brandingbrand/flagship/commit/b7455e4))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([18ce3a6](https://github.com/brandingbrand/flagship/commit/18ce3a6))
+* **fsengagement:** add new carousel option and full screen background ([f447c8e](https://github.com/brandingbrand/flagship/commit/f447c8e))
+* **fsengagement:** add new carousel option and full screen background ([42bbf54](https://github.com/brandingbrand/flagship/commit/42bbf54))
+* **fsengagement:** allow EngagementComp to accept style ([2671b64](https://github.com/brandingbrand/flagship/commit/2671b64))
+* **fsengagement:** update yarn.lock ([dc973bd](https://github.com/brandingbrand/flagship/commit/dc973bd))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([90062f4](https://github.com/brandingbrand/flagship/commit/90062f4))
+* inbox block re-render improvement ([04a80e4](https://github.com/brandingbrand/flagship/commit/04a80e4))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fsengagement:** add new carousel option and full screen background ([8c5ad3d](https://github.com/brandingbrand/flagship/commit/8c5ad3d))
+* **fsengagement:** allow EngagementComp to accept style ([f368ccd](https://github.com/brandingbrand/flagship/commit/f368ccd))
+* **fsengagement:** update yarn.lock ([1222c6d](https://github.com/brandingbrand/flagship/commit/1222c6d))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Bug Fixes
+
+* add initialTabIndex prop to tabStyle ([1b6bb4d](https://github.com/brandingbrand/flagship/commit/1b6bb4d))
+* add key based off block item ([90062f4](https://github.com/brandingbrand/flagship/commit/90062f4))
+* inbox block re-render improvement ([04a80e4](https://github.com/brandingbrand/flagship/commit/04a80e4))
+* Include children when querying SFCC for category info ([a527b09](https://github.com/brandingbrand/flagship/commit/a527b09))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+* **fsengagement:** add new carousel option and full screen background ([8c5ad3d](https://github.com/brandingbrand/flagship/commit/8c5ad3d))
+* **fsengagement:** allow EngagementComp to accept style ([f368ccd](https://github.com/brandingbrand/flagship/commit/f368ccd))
+* **fsengagement:** update yarn.lock ([1222c6d](https://github.com/brandingbrand/flagship/commit/1222c6d))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([b4fad17](https://github.com/brandingbrand/flagship/commit/b4fad17))
+* add initialTabIndex prop to tabStyle ([84f768f](https://github.com/brandingbrand/flagship/commit/84f768f))
+* Include children when querying SFCC for category info ([3dc9aed](https://github.com/brandingbrand/flagship/commit/3dc9aed))
+
+
+### Features
+
+* implement react native 0.59 ([ab18642](https://github.com/brandingbrand/flagship/commit/ab18642))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** ease in carousel when there is itemUpdated ([98bde12](https://github.com/brandingbrand/flagship/commit/98bde12))
+
+
+
+
+
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([0279c9e](https://github.com/brandingbrand/flagship/commit/0279c9e))
+* update fs-extra to version 8.0.0 ([31b6e7a](https://github.com/brandingbrand/flagship/commit/31b6e7a))
+* update replace-in-file to version 4.1.0 ([015abde](https://github.com/brandingbrand/flagship/commit/015abde))
+
+
+### Features
+
+* **fsengage:** allow fetching content for group ([4fbbbf4](https://github.com/brandingbrand/flagship/commit/4fbbbf4))
+* **fsengage:** update CMS/CMS provider files ([fbfbac3](https://github.com/brandingbrand/flagship/commit/fbfbac3))
+
+
+
+
+
+## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
+
+
+### Bug Fixes
+
+* update axios to version 0.19.0 ([5be5f85](https://github.com/brandingbrand/flagship/commit/5be5f85))
+* update fs-extra to version 8.0.0 ([db734b9](https://github.com/brandingbrand/flagship/commit/db734b9))
+* update replace-in-file to version 4.1.0 ([293629a](https://github.com/brandingbrand/flagship/commit/293629a))
+
+
+
+
+
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **flagship:** pass leanplum push url to expected launchOptions value ([5b1909c](https://github.com/brandingbrand/flagship/commit/5b1909c))
+* **flagship:** put placeholders back for using exception domains ([acaf8d1](https://github.com/brandingbrand/flagship/commit/acaf8d1))
+* **flagship:** remove minSdkVersion from Android versionCode ([0ca3913](https://github.com/brandingbrand/flagship/commit/0ca3913))
+* **flagship:** restore minsdkversion gradle prop ([d10b0eb](https://github.com/brandingbrand/flagship/commit/d10b0eb))
+* **fsapp:** devMenu path override and web screen wrapper update ([c9c8f78](https://github.com/brandingbrand/flagship/commit/c9c8f78))
+* **fsapp:** Expose getApplication functionality for SSR ([ec4013e](https://github.com/brandingbrand/flagship/commit/ec4013e))
+* **fsapp:** On web dev menu, go back before refreshing ([aa9f849](https://github.com/brandingbrand/flagship/commit/aa9f849))
+* **fsapp:** Updates to server-side handling of fsapp ([e6b5506](https://github.com/brandingbrand/flagship/commit/e6b5506))
+* **fscategory:** remove duplicate commerce loadData on component mount ([722c4ba](https://github.com/brandingbrand/flagship/commit/722c4ba)), closes [/github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx#L134](https://github.com//github.com/brandingbrand/flagship/blob/master/packages/fscommerce/src/Commerce/CommerceProvider.tsx/issues/L134)
+* **fscomponents:** accessibilitylabel spelling fix ([91265a2](https://github.com/brandingbrand/flagship/commit/91265a2))
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** add accessibility to searchbar ([69d808f](https://github.com/brandingbrand/flagship/commit/69d808f))
+* **fscomponents:** Add classes to swatch scroller for css ([aa7d1f6](https://github.com/brandingbrand/flagship/commit/aa7d1f6))
+* **fscomponents:** add key to SelectorList items ([48b4161](https://github.com/brandingbrand/flagship/commit/48b4161))
+* **fscomponents:** add opt prop and color change for reviewIndicator ([e49f7c8](https://github.com/brandingbrand/flagship/commit/e49f7c8))
+* **fscomponents:** fix linting of readme ([d14dd8c](https://github.com/brandingbrand/flagship/commit/d14dd8c))
+* **fscomponents:** Fixes for IE11 ([6a3f2d0](https://github.com/brandingbrand/flagship/commit/6a3f2d0))
+* **fscomponents:** Fixes for IE11 buttons ([1b4067a](https://github.com/brandingbrand/flagship/commit/1b4067a))
+* **fscomponents:** hide web carousel if item width is 0 ([047d28b](https://github.com/brandingbrand/flagship/commit/047d28b))
+* **fscomponents:** Move loadHistoryToState to componentDidMount ([2708bbd](https://github.com/brandingbrand/flagship/commit/2708bbd))
+* **fscomponents:** Move Multicarousel opacity and initialized into state ([5628e2f](https://github.com/brandingbrand/flagship/commit/5628e2f))
+* **fscomponents:** remove accessible prop to stop focus ([d861de6](https://github.com/brandingbrand/flagship/commit/d861de6))
+* **fscomponents:** revert buggy button refactor ([23430f8](https://github.com/brandingbrand/flagship/commit/23430f8)), closes [#415](https://github.com/brandingbrand/flagship/issues/415) [#587](https://github.com/brandingbrand/flagship/issues/587)
+* **fscomponents:** Round number of items for Multicarousel page width ([3a5ef38](https://github.com/brandingbrand/flagship/commit/3a5ef38))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* add a11yLabel/Role to Selector ([4f58087](https://github.com/brandingbrand/flagship/commit/4f58087))
+* Bump storybook version ([319ee3f](https://github.com/brandingbrand/flagship/commit/319ee3f))
+* update pluralize to version 8.0.0 ([24d0f02](https://github.com/brandingbrand/flagship/commit/24d0f02))
+* **fscomponents:** update item width with new prop ([e13849c](https://github.com/brandingbrand/flagship/commit/e13849c))
+* **fscomponents:** Use onSubmit function for SearchBar button ([da4e807](https://github.com/brandingbrand/flagship/commit/da4e807))
+* **fsproductindex:** Expose fsproductindex functionality ([ca42877](https://github.com/brandingbrand/flagship/commit/ca42877))
+* **fsproductindex:** Update commerce data even if no products ([b1fbccc](https://github.com/brandingbrand/flagship/commit/b1fbccc))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+* update react-native-device-info to version 0.29.1 ([94a6629](https://github.com/brandingbrand/flagship/commit/94a6629))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* update svgs to version 4.1.0 ([a1e0345](https://github.com/brandingbrand/flagship/commit/a1e0345))
+
+
+### Features
+
+* change storybook version to 4.1.16 ([3ca71f0](https://github.com/brandingbrand/flagship/commit/3ca71f0))
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* **fscomponents:** add completed state accessibility label in Step ([2434842](https://github.com/brandingbrand/flagship/commit/2434842))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **flagship:** refactor module scripts and remove node-suspect ([c5bf0f8](https://github.com/brandingbrand/flagship/commit/c5bf0f8))
+* **fsapp:** add ability to pass location into the web router ([b8e5733](https://github.com/brandingbrand/flagship/commit/b8e5733))
+* **fsapp:** Add functions to convert path props to component props ([23d5d9b](https://github.com/brandingbrand/flagship/commit/23d5d9b))
+* **fsapp:** Track whether the drawer is visible ([32cf36e](https://github.com/brandingbrand/flagship/commit/32cf36e))
+* **fscommerce:** Add isLoading prop to commerce provider ([f304fc4](https://github.com/brandingbrand/flagship/commit/f304fc4))
+* **fscomponents:** add a11yRole/Label to CategoryLine/SelectableRow ([7b9118b](https://github.com/brandingbrand/flagship/commit/7b9118b))
+* **fscomponents:** add ability to pass arrow styles for multicarousel ([200deb4](https://github.com/brandingbrand/flagship/commit/200deb4))
+* **fscomponents:** add accessibility for modalhalfscreen background ([86be4ad](https://github.com/brandingbrand/flagship/commit/86be4ad))
+* **fscomponents:** add accessibility labels to button and swatches ([edfcbf1](https://github.com/brandingbrand/flagship/commit/edfcbf1))
+* **fscomponents:** add accessibility role to categorybox and searchbar ([18ab22f](https://github.com/brandingbrand/flagship/commit/18ab22f))
+* **fscomponents:** add button properties for carousel ([74836b6](https://github.com/brandingbrand/flagship/commit/74836b6))
+* **fscomponents:** add function to generate dynamic label from cms ([f7b6c3f](https://github.com/brandingbrand/flagship/commit/f7b6c3f))
+* **fscomponents:** add onblur and translations to multi carousel arrows ([6afdf0b](https://github.com/brandingbrand/flagship/commit/6afdf0b))
+* **fscomponents:** Custom styling for swatch show more/less ([f0227bc](https://github.com/brandingbrand/flagship/commit/f0227bc))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([9ebd0bb](https://github.com/brandingbrand/flagship/commit/9ebd0bb))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 

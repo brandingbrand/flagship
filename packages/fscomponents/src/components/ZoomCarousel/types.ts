@@ -9,6 +9,8 @@ export interface ZoomCarouselProps {
   images: ImageData[];
   gapSize?: number;
   centerMode?: boolean;
+  hideZoomButton?: boolean;
+  fillContainer?: boolean;
   peekSize?: number;
   showArrow?: boolean;
   pageIndicatorZoomStyle?: any;
@@ -25,7 +27,9 @@ export interface ZoomCarouselProps {
     imageHeight: number,
     openZoom: () => void
   ) => React.ReactNode;
+  renderImageWeb?: (data: any, i: number) => React.ReactNode;
   renderCloseButton?: (closeZoom: () => void) => React.ReactNode;
+  renderModalContent?: (closeModal: () => void) => React.ReactNode;
   renderPageIndicator?: (
     currentIndex: number,
     itemsCount: number
@@ -35,6 +39,7 @@ export interface ZoomCarouselProps {
     currentIndex: number,
     goTo: (index: number, options: any) => void
   ) => React.ReactNode;
+  nextArrowOnBlur?: () => void;
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;

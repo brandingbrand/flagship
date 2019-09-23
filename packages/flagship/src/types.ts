@@ -41,20 +41,26 @@ export interface Config {
     };
   };
 
-  exceptionDomains: {
+  exceptionDomains: (string | {
     domain: string;
     value: string;
-  }[];
+  })[];
 
   buildConfig: {
     android: {
       exportMethod?: string;
       exportTeamId?: string;
+      storeFile?: string;
+      keyAlias?: string;
     };
     ios: {
       exportMethod?: string;
       exportTeamId?: string;
       provisioningProfileName: string;
+      appleCert?: string;
+      distCert?: string;
+      distP12?: string;
+      profilesDir?: string;
     };
   };
 

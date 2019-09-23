@@ -72,6 +72,8 @@ export default class CTABlock extends Component<CTABlockProps> {
       (actions.type === null || actions.type === 'story'))) {
       // go to story card
       return handleStoryAction(story);
+    } else if (story && actions && actions.type !== 'story') {
+      return this.handleActionNoStory(actions);
     }
     return null;
   }
@@ -103,6 +105,14 @@ export default class CTABlock extends Component<CTABlockProps> {
 
   onButtonPress = () => {
     this.takeAction(this.props.action, this.props.actions);
+  }
+
+  shouldComponentUpdate(nextProps: CTABlockProps): boolean {
+    return nextProps.buttonStyle !== this.props.buttonStyle ||
+      nextProps.textStyle !== this.props.textStyle ||
+      nextProps.containerStyle !== this.props.containerStyle ||
+      nextProps.text !== this.props.text ||
+      nextProps.icon !== this.props.icon;
   }
 
   render(): JSX.Element {

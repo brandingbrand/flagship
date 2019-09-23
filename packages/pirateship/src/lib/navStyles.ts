@@ -3,7 +3,8 @@ import { NavButton } from '../lib/commonTypes';
 export const backButton: NavButton = {
   button: {
     icon: require('../../assets/images/arrow.png'),
-    id: 'goBack'
+    id: 'goBack',
+    testID: 'back'
   },
   action: ({ navigator }) => {
     navigator.pop();

@@ -7,10 +7,11 @@ import {
   View
 } from 'react-native';
 import { findDOMNode } from 'react-dom';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { MultiCarouselProps } from './MultiCarouselProps';
 import { animatedScrollTo } from '../../lib/helpers';
 import { PageIndicator } from '../PageIndicator';
-
 
 const ScrollViewCopy: any = ScrollView;
 
@@ -97,6 +98,11 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         toValue: 1
       }).start();
     };
+    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
+      this.setState({
+        itemWidth: this.getItemWidth(this.state.containerWidth)
+      });
+    }
     if (this.props.items.length <= this.state.currentIndex) {
       if (this.props.items.length) {
         this.setState({
@@ -249,6 +255,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   _saveScrollViewRef = (ref: any) => this.scrollView = ref;
 
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): React.ReactNode {
     const snapToInterval =
       this.state.itemWidth *
@@ -287,21 +294,23 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           <View
             style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
           />
-          {this.props.items.map((item, i) => {
-            return (
-              <View
-                key={i}
-                style={[
-                  {
-                    width: this.state.itemWidth
-                  },
-                  this.props.itemStyle
-                ]}
-              >
-                {this.props.renderItem(item, i)}
-              </View>
-            );
-          })}
+          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width))
+            && this.props.items.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  style={[
+                    {
+                      width: this.state.itemWidth
+                    },
+                    this.props.itemStyle
+                  ]}
+                >
+                  {this.props.renderItem(item, i)}
+                </View>
+              );
+            })
+          }
         </ScrollViewCopy>
 
         {this.props.renderPageIndicator ? (
@@ -321,26 +330,30 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
         {this.state.currentIndex !== 0 &&
           !!this.props.showArrow && (
-            <TouchableOpacity
-              accessibilityRole='button'
-              accessibilityLabel={'Show previous'}
-              style={S.goToPrev}
-              onPress={this.goToPrev}
-            >
-              <View style={S.buttonPrevIcon} />
-            </TouchableOpacity>
+            <div onBlur={this.props.prevArrowOnBlur}>
+              <TouchableOpacity
+                accessibilityRole='button'
+                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+                style={[S.goToPrev, this.props.prevArrowContainerStyle]}
+                onPress={this.goToPrev}
+              >
+                <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
+              </TouchableOpacity>
+            </div>
           )}
 
         {this.state.currentIndex !== pageNum - 1 &&
           !!this.props.showArrow && (
-            <TouchableOpacity
-              accessibilityRole='button'
-              accessibilityLabel={'Show next'}
-              style={S.goToNext}
-              onPress={this.goToNext}
-            >
-              <View style={S.buttonNextIcon} />
-            </TouchableOpacity>
+            <div onBlur={this.props.nextArrowOnBlur}>
+              <TouchableOpacity
+                accessibilityRole='button'
+                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+                style={[S.goToNext, this.props.nextArrowContainerStyle]}
+                onPress={this.goToNext}
+              >
+                <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
+              </TouchableOpacity>
+            </div>
           )}
 
         <style>

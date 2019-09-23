@@ -15,10 +15,6 @@
     <img alt="Travis Status"
       src="https://travis-ci.org/brandingbrand/flagship.svg?branch=master">
   </a>
-  <a href="https://coveralls.io/github/brandingbrand/flagship?branch=master">
-    <img alt="Coverage Status"
-      src="https://coveralls.io/repos/github/brandingbrand/flagship/badge.svg?branch=master">
-  </a>
   <a href="https://greenkeeper.io/">
     <img alt="Greenkeeper"
       src="https://badges.greenkeeper.io/brandingbrand/flagship.svg?ts=1523929763709">
@@ -40,6 +36,8 @@
   * [`flagship clean`](#clean)
   * [`flagship env`](#env)
 * [Packages](#packages)
+
+**:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
 
 ## About
 

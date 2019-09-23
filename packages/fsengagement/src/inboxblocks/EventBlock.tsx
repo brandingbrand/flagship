@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -64,7 +64,15 @@ const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 const whyIcon = require('../../assets/images/whyIcon.png');
 
-export default class EventBlock extends PureComponent<EventBlockProps> {
+export default class EventBlock extends Component<EventBlockProps> {
+
+  shouldComponentUpdate(nextProps: EventBlockProps): boolean {
+    return nextProps.textStyle !== this.props.textStyle ||
+      nextProps.titleStyle !== this.props.titleStyle ||
+      nextProps.containerStyle !== this.props.containerStyle ||
+      nextProps.eventInfo !== this.props.eventInfo;
+  }
+
   render(): JSX.Element {
     const {
       textStyle,

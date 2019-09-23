@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
+  AccessibilityRole,
   Image,
   ImageStyle,
   ImageURISource,
@@ -26,6 +27,8 @@ export interface CategoryLineProps extends CommerceTypes.Category {
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
 }
 
 export class CategoryLine extends PureComponent<CategoryLineProps> {
@@ -38,6 +41,8 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
     const {
       renderAccessory,
       showAccessory,
+      accessibilityLabel,
+      accessibilityRole,
       accessorySrc,
       accessoryStyle,
       href,
@@ -56,6 +61,8 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
         underlayColor={underlayColor || '#eee'}
         onPress={this.handlePress}
         href={href}
+        accessibilityLabel={accessibilityLabel || title}
+        accessibilityRole={accessibilityRole || 'link'}
       >
         <View style={S.rowInner}>
           {showImage && image && <Image source={image} style={imageStyle} />}

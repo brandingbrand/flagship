@@ -6,6 +6,7 @@ import * as nativeConstants from './native-constants';
 import * as FlagshipTypes from '../types';
 
 const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
+const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
 
 const DEFAULT_ANDROID_CONFIG = {
   build: {
@@ -25,7 +26,8 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:allowBackup': 'false',
       'android:label': '@string/app_name',
       'android:icon': '@mipmap/ic_launcher',
-      'android:theme': '@style/AppTheme'
+      'android:theme': '@style/AppTheme',
+      'android:networkSecurityConfig': '@xml/network_security_config'
     },
     urlSchemeHost: 'app'
   }
@@ -401,4 +403,71 @@ export function setEnvSwitcherInitialEnv(configuration: FlagshipTypes.Config, en
     /"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
     `"${env}"; // [EnvSwitcher initialEnvName]`
   );
+}
+
+/**
+ * Adds exception domains for Network Security Config from the project configuration.
+ *
+ * @param {object} configuration The project configuration.
+ */
+export function exceptionDomains(configuration: FlagshipTypes.Config): void {
+  const { exceptionDomains = [] } = configuration;
+
+  if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
+    // Users should not add exception domains. They introduce a security vulnerability.
+    helpers.logWarn(
+      `adding Android exception domains
+      \tYou should not enable exception domains in a production app.`
+    );
+  }
+
+  // Localhost (for running on device) and 10.0.2.2 (for running on an emulator) must be
+  // added as exception domains during development so that the app can access the js bundle
+  if (!configuration.disableDevFeature) {
+    const hasLocalhost = hasExceptionDomain(exceptionDomains, 'localhost');
+    const hasProxyLocalhost = hasExceptionDomain(exceptionDomains, EMULATOR_LOCALHOST_PROXY);
+
+    if (!hasLocalhost) {
+      exceptionDomains.push('localhost');
+    }
+
+    if (!hasProxyLocalhost) {
+      exceptionDomains.push(EMULATOR_LOCALHOST_PROXY);
+    }
+  }
+
+  if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
+    const domainElements = exceptionDomains
+      .map(domain => {
+        const host = typeof domain === 'string' ? domain : domain.domain;
+        return `<domain includeSubdomains="true">${host}</domain>`;
+      })
+      .join('\n\t\t');
+
+    const xml = `<domain-config cleartextTrafficPermitted="true">
+      ${domainElements}
+    </domain-config>
+    <debug-overrides>`;
+
+    fs.update(
+      path.resolve(path.android.resourcesPath(), 'xml', 'network_security_config.xml'),
+      '<debug-overrides>',
+      xml
+    );
+  }
+}
+
+function hasExceptionDomain(
+  domains: FlagshipTypes.Config['exceptionDomains'],
+  target: string
+): boolean {
+  const domainIndex = domains.findIndex(domain => {
+    if (typeof domain === 'string') {
+      return domain === target;
+    } else {
+      return domain.domain === target;
+    }
+  });
+
+  return domainIndex !== -1;
 }
