@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/create-fs-app",
   "sideEffects": false,
-  "version": "6.1.0",
+  "version": "6.2.0",
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch",
@@ -26,7 +26,5 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "engines": {
-    "node": ">=10"
-  }
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }
