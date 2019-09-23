@@ -23,7 +23,12 @@ export type FSNetworkError = AxiosError;
  *
  * @see https://github.com/axios/axios#request-config
  */
-export type FSNetworkRequestConfig = AxiosRequestConfig;
+export interface FSNetworkRequestConfig extends AxiosRequestConfig {
+  // Function that is called to intercept any responses
+  responseIntercept?: (response: AxiosResponse) => AxiosResponse;
+  // Function that is called to intercept any response errors
+  responseError?: (error: any) => any;
+}
 
 /**
  * A promise of a response from the network.
@@ -54,6 +59,7 @@ export type FSNetworkRequestData =
  */
 export default class FSNetwork {
   private instance: AxiosInstance;
+  private interceptor?: number;
 
   /**
    * Creates a new instance of FSNetwork.
@@ -61,8 +67,34 @@ export default class FSNetwork {
    * @param {FSNetworkRequestConfig} config Default configuration to apply to every request.
    */
   constructor(config?: FSNetworkRequestConfig) {
-    this.instance = axios.create(config);
-    // TODO: intercept the request or response for logging
+    if (config) {
+      const {
+        responseIntercept,
+        responseError,
+        ...axiosConfig
+      } = config;
+      this.instance = axios.create(axiosConfig);
+      this.setInterceptor(config);
+    } else {
+      this.instance = axios.create();
+    }
+  }
+
+  removeInterceptor(): void {
+    if (this.interceptor !== undefined) {
+      this.instance.interceptors.response.eject(this.interceptor);
+      this.interceptor = undefined;
+    }
+  }
+
+  setInterceptor(config?: FSNetworkRequestConfig): void {
+    this.removeInterceptor();
+    if (config && (config.responseIntercept || config.responseError)) {
+      this.interceptor = this.instance.interceptors.response.use(
+        config.responseIntercept,
+        config.responseError
+      );
+    }
   }
 
   /**
