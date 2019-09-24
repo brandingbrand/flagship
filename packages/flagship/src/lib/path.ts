@@ -169,14 +169,14 @@ function getManifestPath(): string {
  * @returns {string} The path to the native project.
  */
 function getNativeProjectPathAndriod(configuration: Config): string {
+  const pkgId = configuration.bundleIds && configuration.bundleIds.android ?
+    configuration.bundleIds.android :
+    `com.brandingbrand.reactnative.and.${configuration.name}`;
+
   return resolvePathFromProject(
     getMainPath(),
     'java',
-    'com',
-    'brandingbrand',
-    'reactnative',
-    'and',
-    configuration.name.toLowerCase()
+    ...pkgId.toLowerCase().split('.')
   );
 }
 

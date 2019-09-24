@@ -35,6 +35,54 @@ export function source(oldName: string, newName: string, ...pathComponents: stri
 }
 
 /**
+ * Updates the directory structure to match a new namespace
+ *
+ * @param {string} oldPkg The old package name to replace.
+ * @param {string} newPkg The new package name to use.
+ * @param {...string} pathComponents Path components to the directory in which to
+ * replace the project name.
+ */
+export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: string[]): void {
+  const directory = path.project.resolve(...pathComponents);
+  const oldPathPart = oldPkg.replace(/\./g, '/');
+  const newPathPart = newPkg.replace(/\./g, '/');
+
+  try {
+    const results = getMatchingFiles(directory, oldPathPart);
+
+    // Rename matching paths
+    results.forEach(oldPath => {
+      const newPath = oldPath.replace(oldPathPart, newPathPart).toLowerCase();
+      fs.moveSync(oldPath, newPath);
+    });
+
+    // since we only moved the bottom-most directory, traverse through the old
+    // package directories to delete any empty package folders
+    oldPkg
+      .split('.')
+      .reduce<string[]>((parts, part, index, arr) => {
+        const pattern = [...arr.slice(0, index), part].join('/');
+        parts.push(...getMatchingFiles(directory, pattern));
+        return parts;
+      }, [])
+      .reverse()
+      .forEach(dir => {
+        const contents = fs.pathExistsSync(dir) && fs.readdirSync(dir);
+        if (Array.isArray(contents) && contents.length === 0) {
+          fs.removeSync(dir);
+        }
+      });
+
+  } catch (err) {
+    logError('renaming project files', err);
+    process.exit(1);
+  }
+
+  logInfo(`renamed project files in ${directory}`);
+}
+
+
+/**
  * Replaces the project name within boilerplate file names.
  *
  * @param {string} oldName The old project name to replace.
@@ -46,21 +94,7 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
   const directory = path.project.resolve(...pathComponents);
 
   try {
-    const globOptions = {
-      nosort: true,
-      dot: true
-    };
-
-    // Find files/directories to be renamed
-    const results = [
-      ...sync(directory + '/**/*' + oldName + '*', globOptions),
-      ...sync(directory + '/**/*' + oldName.toLocaleLowerCase() + '*', globOptions)
-    ];
-
-    // Sort the results so highest depth paths are replaced first
-    results.sort((a, b) => {
-      return b.length - a.length;
-    });
+    const results = getMatchingFiles(directory, oldName);
 
     // Rename each path
     results.forEach(oldPath => {
@@ -79,5 +113,28 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
     process.exit(1);
   }
 
-  logInfo(`renaming project files in ${directory}`);
+  logInfo(`renamed project files in ${directory}`);
+}
+
+function getMatchingFiles(directory: string, oldName: string): string[] {
+  const globOptions = {
+    nosort: true,
+    dot: true
+  };
+
+  // Find files/directories to be renamed
+  const results = [
+    ...sync(directory + '/**/*' + oldName + '*', globOptions),
+    ...sync(directory + '/**/*' + oldName.toLocaleLowerCase() + '*', globOptions)
+  ];
+
+  // Remove duplicate paths from the results array
+  const uniqueResults = Array.from(new Set(results));
+
+  // Sort the results so highest depth paths are replaced first
+  uniqueResults.sort((a, b) => {
+    return b.length - a.length;
+  });
+
+  return uniqueResults;
 }
