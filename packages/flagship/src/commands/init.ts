@@ -72,13 +72,14 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link.link(configuration)
+  link.link()
     .then(() => {
       if (doAndroid) {
-        modules.android(projectPackageJSON, configuration);
+        modules.android(projectPackageJSON, configuration, 'postLink');
       }
 
       if (doIOS) {
+        modules.ios(projectPackageJSON, configuration, 'postLink');
         cocoapods.install();
       }
     })
@@ -126,6 +127,7 @@ function initAndroid(
   // Clone the boilerplate into the project
   fs.clone('android');
 
+  const androidConfig = android.androidConfigWithDefault(configuration.android);
   // Rename the boilerplate project with the app name
   rename.source('FLAGSHIP', configuration.name, 'android');
   rename.files('FLAGSHIP', configuration.name, 'android');
@@ -133,22 +135,30 @@ function initAndroid(
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
 
   android.urlScheme(configuration); // Add deep link schemes
+  android.urlSchemeHost(androidConfig);
   deeplinking.addDeeplinkHosts(configuration.associatedDomains);
 
   android.displayName(configuration); // Update the app display name
   android.bundleId(configuration); // Update the app bundle id
   android.icon(configuration); // Update app icon
   android.launchScreen(configuration); // Update app launch screen
-  android.version(version); // Sync app version
+  android.version(version, androidConfig); // Sync app version
   android.sentryProperties(configuration);
   android.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  android.additionalDependencies(androidConfig);
+  android.mainApplicationAttributes(androidConfig);
+  android.mainActivityAttributes(androidConfig);
+  android.mainApplicationElements(androidConfig);
 
   // Android specific configuration
   android.googleMaps(configuration);
+  android.exceptionDomains(configuration); // Add Network Security exception domains for Android
 
   if (!configuration.disableDevFeature) {
     android.addDevMenuFlag(configuration);
   }
+
+  modules.android(packageJSON, configuration, 'preLink');
 
   helpers.logInfo('finished Android initialization');
 }
@@ -203,7 +213,7 @@ function initIOS(
     ios.addDevMenuFlag(configuration);
   }
 
-  modules.ios(packageJSON, configuration);
+  modules.ios(packageJSON, configuration, 'preLink');
 
   helpers.logInfo('finished iOS initialization');
 }

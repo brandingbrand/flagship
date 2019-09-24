@@ -8,6 +8,7 @@ import { ReviewItem, ReviewItemProps } from './ReviewItem';
 export interface ReviewsListProps {
   reviews: import ('@brandingbrand/fscommerce').ReviewTypes.Review[];
   reviewStyle?: import ('@brandingbrand/fsfoundation').Dictionary<StyleProp<TextStyle | ViewStyle>>;
+  reviewItemProps?: Partial<ReviewItemProps>;
 
   // chidlren
   reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
@@ -30,7 +31,8 @@ export class ReviewsList extends Component<ReviewsListProps> {
       reviewIndicatorProps,
       moreTextProps,
       recommendedImage,
-      verifiedImage
+      verifiedImage,
+      reviewItemProps
     } = this.props;
 
     return (
@@ -51,6 +53,7 @@ export class ReviewsList extends Component<ReviewsListProps> {
               moreTextProps={moreTextProps}
               onHelpful={onHelpful}
               onNotHelpful={onNotHelpful}
+              {...reviewItemProps}
             />
           );
         })}

@@ -12,6 +12,7 @@ import * as env from './lib/env';
 const projectPackageJSON = require(path.project.resolve('package.json'));
 const environmentIdentifier = process.env.APP_ENV || 'uat';
 const configuration = env.configuration(environmentIdentifier, projectPackageJSON);
+const androidConfig = android.androidConfigWithDefault(configuration.android);
 
-android.version(projectPackageJSON.version);
+android.version(projectPackageJSON.version, androidConfig);
 ios.version(configuration, projectPackageJSON.version);

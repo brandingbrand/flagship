@@ -3,6 +3,230 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* **pirateship:** Fixes for blacklist and linking Windows slashes ([cec5535](https://github.com/brandingbrand/flagship/commit/cec5535))
+
+
+
+
+
+## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [6.1.3](https://github.com/brandingbrand/flagship/compare/v6.1.2...v6.1.3) (2019-09-12)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [6.1.2](https://github.com/brandingbrand/flagship/compare/v6.1.1...v6.1.2) (2019-09-12)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [6.1.1](https://github.com/brandingbrand/flagship/compare/v6.1.0...v6.1.1) (2019-09-12)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [6.1.0](https://github.com/brandingbrand/flagship/compare/v6.0.0...v6.1.0) (2019-09-10)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [6.0.0](https://github.com/brandingbrand/flagship/compare/v5.3.0...v6.0.0) (2019-09-04)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [5.2.0](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.2.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **fsweb:** Update the webpack config file ([5e6bfb8](https://github.com/brandingbrand/flagship/commit/5e6bfb8))
+
+
+
+
+
+## [5.1.1](https://github.com/brandingbrand/flagship/compare/v5.1.0...v5.1.1) (2019-08-19)
+
+
+### Bug Fixes
+
+* **fsweb:** Update the webpack config file ([fae0ebf](https://github.com/brandingbrand/flagship/commit/fae0ebf))
+
+
+
+
+
+# [5.1.0](https://github.com/brandingbrand/flagship/compare/v5.0.0...v5.1.0) (2019-08-14)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [5.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v5.0.0) (2019-08-06)
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([e7412f9](https://github.com/brandingbrand/flagship/commit/e7412f9))
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.1.0](https://github.com/brandingbrand/flagship/compare/v3.2.1...v4.1.0) (2019-07-24)
+
+
+### Features
+
+* implement react native 0.59 ([0592aa2](https://github.com/brandingbrand/flagship/commit/0592aa2))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0](https://github.com/brandingbrand/flagship/compare/v3.2.0...v4.0.0) (2019-07-16)
+
+
+### Features
+
+* implement react native 0.59 ([ab18642](https://github.com/brandingbrand/flagship/commit/ab18642))
+
+
+### BREAKING CHANGES
+
+* This implements react native 0.59. Upgrading to this version will require dependency updates to be described in future documentation.
+
+
+
+
+
+# [4.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v3.1.1...v4.0.0-alpha.3) (2019-07-16)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [3.2.0](https://github.com/brandingbrand/flagship/compare/v3.1.1...v3.2.0) (2019-07-03)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [3.1.1](https://github.com/brandingbrand/flagship/compare/v3.1.0...v3.1.1) (2019-06-04)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [3.1.0](https://github.com/brandingbrand/flagship/compare/v3.0.0...v3.1.0) (2019-06-03)
+
+
+### Bug Fixes
+
+* **fscomponents:** actionbar sample styles cleaned up ([b0ab28f](https://github.com/brandingbrand/flagship/commit/b0ab28f))
+* **fscomponents:** stepper as stateless functional component ([1944cda](https://github.com/brandingbrand/flagship/commit/1944cda))
+* update react-native-device-info to version 0.29.1 ([48345a6](https://github.com/brandingbrand/flagship/commit/48345a6))
+* **pirateship:** changes require to import for rndev-info ([5d1c325](https://github.com/brandingbrand/flagship/commit/5d1c325))
+* **pirateship:** fix accordion sample titles ([ab30850](https://github.com/brandingbrand/flagship/commit/ab30850))
+
+
+### Features
+
+* point react-native-navigation to the brandingbrand fork ([6ce7cef](https://github.com/brandingbrand/flagship/commit/6ce7cef))
+* upgrade storybook to 4.2.0 and rn-web to 0.11.1 to fix storybook ([dce1570](https://github.com/brandingbrand/flagship/commit/dce1570))
+* **fscomponents:** make review recommendations configurable ([4a701a0](https://github.com/brandingbrand/flagship/commit/4a701a0))
+* **fsweb:** get pirateship working again on web ([c970423](https://github.com/brandingbrand/flagship/commit/c970423))
+
+
+
+
+
 # [3.0.0](https://github.com/brandingbrand/flagship/compare/v2.0.0...v3.0.0) (2019-02-22)
 
 
