@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/brandingbrand/flagship/compare/v3.5.0...v3.5.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* pin axios to 0.18.x ([149bf19](https://github.com/brandingbrand/flagship/commit/149bf19))
+* update yarn lock ([22522d0](https://github.com/brandingbrand/flagship/commit/22522d0))
+
+
+
+
+
 # [3.5.0](https://github.com/brandingbrand/flagship/compare/v3.4.0...v3.5.0) (2019-08-07)
 
 
