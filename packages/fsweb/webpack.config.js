@@ -18,7 +18,7 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -47,7 +47,8 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs'
+      'react-native-svg': 'svgs',
+      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -77,10 +78,7 @@ const globalConfig = {
                 }
               },
               {
-                loader: require.resolve("ts-loader"),
-                options: {
-                  configFile: 'tsconfig/tsconfig.storybook.json'
-                }
+                loader: require.resolve("ts-loader")
               }
             ]
           },
@@ -89,7 +87,9 @@ const globalConfig = {
             include: [
               /node_modules\/react-native-/,
               /node_modules\/tcomb-form-native/,
-              /packages\/fs/
+              /packages\/fs/,
+              /node_modules\/@brandingbrand\/fs/,
+              /node_modules\/@brandingbrand\/react-native-/
             ],
             exclude: /node_modules\/react-native-web\//,
             use: [
@@ -173,7 +173,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify(env.defaultEnvName)
+        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -250,7 +250,8 @@ module.exports = function(env, options) {
         filename: 'static/css/bundle.css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: true
+        __DEV__: true,
+        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
       })
     ]);
   }

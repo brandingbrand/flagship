@@ -17,7 +17,6 @@ import TrackOrderLanding from './screens/TrackOrderLanding';
 import OrderHistoryList from './screens/OrderHistoryList';
 import OrderHistoryDetail from './screens/OrderHistoryDetail';
 import SavedPayments from './screens/SavedPayments';
-import PushOptIn from './screens/PushOptIn';
 import EditPersonal from './screens/EditPersonal';
 import AddressBook from './screens/AddressBook';
 import EditAddress from './screens/EditAddress';
@@ -50,7 +49,6 @@ export default {
   TrackOrderLanding,
   OrderHistoryList,
   OrderHistoryDetail,
-  PushOptIn,
   EditPersonal,
   AddressBook,
   EditAddress,

@@ -35,7 +35,7 @@ export class FSApp extends FSAppBase {
     });
 
     if (this.shouldShowDevMenu()) {
-      enhancedScreens.push({
+      enhancedScreens.unshift({
         key: 'devMenu',
         screen: screenWrapper(DevMenu, this.appConfig, this.api)
       });

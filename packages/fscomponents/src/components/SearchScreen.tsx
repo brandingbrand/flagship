@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import {
-  AsyncStorage,
   ScrollView,
   StyleProp,
   Text,
@@ -10,6 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -65,8 +65,6 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
       history: [],
       inputValue: ''
     };
-
-    this.loadHistoryToState();
   }
 
   loadHistoryToState = () => {
@@ -84,6 +82,8 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
       this.searchBar.focusInput();
     }
+
+    this.loadHistoryToState();
   }
 
   getSearchBarRef = (ref: any) => {

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 // TODO: Unify these web/native options and clean up these types ...a lot
@@ -12,4 +13,7 @@ export interface CarouselProps {
   style?: StyleProp<ViewStyle>;
   webOptions?: any;
   webPaddingBottom?: number;
+  showsButtons?: boolean;
+  nextButton?: ReactNode;
+  prevButton?: ReactNode;
 }
