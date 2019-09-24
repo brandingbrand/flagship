@@ -2,6 +2,7 @@ import {
   copySync,
   ensureDirSync,
   ensureSymlinkSync,
+  moveSync,
   pathExistsSync,
   readdirSync,
   readFileSync,
@@ -18,7 +19,8 @@ export {
   ensureDirSync,
   renameSync,
   pathExistsSync,
-  ensureSymlinkSync
+  ensureSymlinkSync,
+  moveSync
 };
 
 import * as helpers from '../helpers';

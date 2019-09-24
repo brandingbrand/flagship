@@ -1,4 +1,4 @@
-package com.brandingbrand.reactnative.and.flagship;
+package CONFIG_BUNDLE_ID;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
