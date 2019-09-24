@@ -3,9 +3,10 @@ const path = require("path");
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const history = require('connect-history-api-fallback');
 const convert = require('koa-connect');
 
@@ -158,7 +159,11 @@ const globalConfig = {
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new CopyPlugin([
+      {from: './build', to: '.'}
+    ])
+  ]
 };
 
 module.exports = function(env, options) {
@@ -166,7 +171,7 @@ module.exports = function(env, options) {
   if (options && options.mode === 'production') {
     !options.json && console.log('Webpacking for Production');
     globalConfig.mode = 'production';
-    globalConfig.output.filename = 'static/js/bundle.[contenthash:8].js';
+    globalConfig.output.filename = 'static/js/bundle.[hash:8].js';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
         filename: 'static/css/[name].[hash:8].css'
@@ -184,41 +189,6 @@ module.exports = function(env, options) {
           compress: true
         }
       }),
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json'
-      }),
-      // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the Webpack build.
-      new SWPrecacheWebpackPlugin({
-        // By default, a cache-busting query parameter is appended to requests
-        // used to populate the caches, to ensure the responses are fresh.
-        // If a URL is already hashed by Webpack, then there is no concern
-        // about it being stale, and the cache-busting can be skipped.
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
-        // 4Mb cache limit per file
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-        filename: 'service-worker.js',
-        logger(message) {
-          if (message.indexOf('Total precache size is') === 0) {
-            // This message occurs for every build and is a bit too noisy.
-            return;
-          }
-          if (message.indexOf('Skipping static resource') === 0) {
-            // This message obscures real errors so we ignore it.
-            // https://github.com/facebookincubator/create-react-app/issues/2612
-            return;
-          }
-          console.log(message);
-        },
-        minify: true,
-        // For unknown URLs, fallback to the index page
-        navigateFallback: '/index.html',
-        // Ignores URLs starting from /__ (useful for Firebase):
-        // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
-        navigateFallbackWhitelist: [/^(?!\/__).*/],
-        // Don't precache sourcemaps (they're large) and build asset manifest:
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
-      }),
       new HtmlWebpackPlugin({
         inject: true,
         template: path.resolve(__dirname, 'public', 'index.html'),
@@ -234,6 +204,30 @@ module.exports = function(env, options) {
           minifyCSS: true,
           minifyURLs: true
         }
+      }),
+      new ManifestPlugin({
+        fileName: 'asset-manifest.json'
+      }),
+      // Generate a service worker script that will precache, and keep up to date,
+      // the HTML & assets that are part of the Webpack build.
+      new GenerateSW({
+        // 4Mb cache limit per file
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // For unknown URLs, fallback to root page
+        navigateFallback: '/index.html',
+        // Ignores URLs starting from /__ (useful for Firebase):
+        // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
+        navigateFallbackWhitelist: [/^(?!\/__).*/],
+        // Don't precache sourcemaps (they're large), typings, and build asset manifest:
+        exclude: [/\.d\.ts$/, /\.map$/, /asset-manifest\.json$/],
+        globPatterns: [
+          '/static/**/*.{js,css,html}',
+          '/index.html',
+          '/favicon.ico',
+          '/manifest.json',
+          '/web-icon.png',
+          '/web-icon@512.png'
+        ]
       }),
     ]);
   } else {
