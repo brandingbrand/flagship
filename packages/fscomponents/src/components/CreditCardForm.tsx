@@ -11,7 +11,6 @@ import {
 
 // @ts-ignore TODO: Update credit-card to support typing
 import * as creditCard from 'credit-card';
-import moment from 'moment';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import {
@@ -276,29 +275,39 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
   }
 
   private validateCreditCard = (value: any) => {
-    const expirationDate = moment(value.expirationDate, 'MM/YY');
+    let valid = true;
+
+    const expirationDateParts = (value.expirationDate || '').split('/');
+    const expirationMonth = parseInt(expirationDateParts[0], 10);
+    const expirationYear = parseInt('20' + expirationDateParts[1], 10);
 
     const validationResult = creditCard.validate({
       cardType: creditCard.determineCardType(value.number),
       number: value.number,
       cvv: value.cvv,
-      expiryMonth: expirationDate.month() + 1, // moment months are 0-11, creditCard expects 1-12
-      expiryYear: expirationDate.year()
+      expiryMonth: expirationMonth,
+      expiryYear: expirationYear
     });
-    let valid = true;
+
     if (!validationResult.validCardNumber) {
       this.formRef.getComponent('number').setState({ hasError: true });
       valid = false;
     }
-    if (!validationResult.validExpiryMonth || !validationResult.validExpiryYear ||
-        creditCard.isExpired(expirationDate.month() + 1, expirationDate.year())) {
+
+    if (
+      !validationResult.validExpiryMonth
+      || !validationResult.validExpiryYear
+      || creditCard.isExpired(expirationMonth, expirationYear)
+    ) {
       this.formRef.getComponent('expirationDate').setState({ hasError: true });
       valid = false;
     }
+
     if (!validationResult.validCvv) {
       this.formRef.getComponent('cvv').setState({ hasError: true });
       valid = false;
     }
+
     return valid;
   }
 }
