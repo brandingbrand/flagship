@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {
   Dimensions,
-  Image,
   StyleSheet,
   TouchableOpacity,
   View
@@ -9,7 +8,7 @@ import {
 import TabbedStoryItem from './TabbedStoryItem';
 import { Navigation } from 'react-native-navigation';
 
-const closeX = require('../../assets/images/dark.png');
+// const closeX = require('../../assets/images/dark.png');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -36,18 +35,21 @@ const styles = StyleSheet.create({
   },
   flexGrow: {
     width: viewportWidth,
-    height: viewportHeight
+    height: viewportHeight,
+    marginTop: -100,
+    backgroundColor: '#fff'
   },
   progressBar: {
     position: 'absolute',
     flexDirection: 'row',
-    top: 70,
+    top: -34,
     flex: 1,
-    marginHorizontal: 53
+    marginLeft: 65,
+    marginRight: 33
   },
   progressItem: {
     flex: 1,
-    marginHorizontal: 2,
+    marginHorizontal: 3,
     backgroundColor: 'rgba(79, 79, 79, .3)',
     height: 2
   },
@@ -56,33 +58,33 @@ const styles = StyleSheet.create({
   }
 });
 
-const FIRST_ITEM = 0;
+
 export interface ImageProp {
   uri: string;
 }
 export interface TabbedStoryProps {
   items: any[];
   componentId: string;
-}
-export interface TabbedStoryState {
+  onCardPress: () => void;
   activeIndex: number;
 }
-export default class TabbedStory extends Component<TabbedStoryProps, TabbedStoryState> {
+
+export default class TabbedStory extends Component<TabbedStoryProps> {
   constructor(props: TabbedStoryProps) {
     super(props);
-    this.state = {
-      activeIndex: FIRST_ITEM
-    };
   }
   onCardPress = () => {
-    if (this.state.activeIndex >= (this.props.items.length - 1)) {
-      Navigation.pop(this.props.componentId)
-        .catch(err => console.log('onBackPress POP error:', err));
-    } else {
-      this.setState({
-        activeIndex: this.state.activeIndex + 1
-      });
+    if (this.props.onCardPress) {
+      this.props.onCardPress();
     }
+    // if (this.state.activeIndex >= (this.props.items.length - 1)) {
+    //   Navigation.pop(this.props.componentId)
+    //     .catch(err => console.log('onBackPress POP error:', err));
+    // } else {
+    //   this.setState({
+    //     activeIndex: this.state.activeIndex + 1
+    //   });
+    // }
   }
   onClose = () => {
     Navigation.pop(this.props.componentId)
@@ -102,12 +104,12 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
              activeOpacity={1}
            >
             <TabbedStoryItem
-              item={items[this.state.activeIndex]}
-              activeIndex={this.state.activeIndex}
+              item={items[this.props.activeIndex]}
+              activeIndex={this.props.activeIndex}
             />
            </TouchableOpacity>
         </View>
-        <View style={styles.progressBar}>
+        {/* <View style={styles.progressBar}>
           {(items || []).map((item: any, index: number) => {
             return (
               <View
@@ -118,14 +120,7 @@ export default class TabbedStory extends Component<TabbedStoryProps, TabbedStory
               />
             );
           })}
-        </View>
-        <TouchableOpacity onPress={this.onClose} style={styles.backButton}>
-          <Image
-            resizeMode='contain'
-            source={closeX}
-            style={styles.close}
-          />
-        </TouchableOpacity>
+        </View> */}
       </Fragment>
       // <TouchableOpacity
       //   style={containerStyle}

@@ -81,10 +81,19 @@ export interface JSON {
   key?: string;
   storyType?: string;
   tabbedItems?: any[];
+  AnimatedPageCounter?: any;
+  AnimatedNavTitle?: any;
+  cardTranslateY?: any;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
   story?: JSON;
+  contents?: any;
+  wrapper?: boolean;
+  fadeIn?: boolean;
+  forceBackground?: boolean;
+  fullScreenCard?: boolean;
+  animateIndex?: number;
 }
 
 export interface InjectedProps {

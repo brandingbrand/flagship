@@ -14,6 +14,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle
@@ -22,6 +23,7 @@ import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
+import * as Animatable from 'react-native-animatable';
 import {
   Action,
   BlockItem,
@@ -37,7 +39,7 @@ Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
-
+const INBOX_WRAPPER = 'InboxWrapper';
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
@@ -46,13 +48,33 @@ const styles = StyleSheet.create({
     left: 8,
     padding: 12
   },
+  animatedClose: {
+    position: 'absolute',
+    zIndex: 10,
+    top: 44,
+    left: 19,
+    padding: 0
+  },
+  animatedList: {
+    marginBottom: 100,
+    marginTop: -100,
+    backgroundColor: 'rgba(255, 255, 255, 0)'
+  },
   growAndCenter: {
     flexGrow: 1,
     justifyContent: 'center'
   },
+  fullScreen: {
+    width: Dimensions.get('screen').width + 45,
+    height: Dimensions.get('screen').height + 60
+  },
   backIcon: {
     width: 14,
     height: 25
+  },
+  backIconCloseX: {
+    width: 44,
+    height: 44
   },
   pageCounter: {
     position: 'absolute',
@@ -83,6 +105,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1
   },
+  animatedContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    flex: 1
+  },
   growStretch: {
     alignSelf: 'stretch',
     flexGrow: 1
@@ -98,11 +124,30 @@ const styles = StyleSheet.create({
   headerImage: {
     width: win.width,
     height: win.width * imageAspectRatio
+  },
+  progressBar: {
+    position: 'absolute',
+    flexDirection: 'row',
+    top: 67,
+    flex: 1,
+    marginLeft: 65,
+    marginRight: 33
+  },
+  progressItem: {
+    flex: 1,
+    marginHorizontal: 3,
+    backgroundColor: 'rgba(79, 79, 79, .3)',
+    height: 2
+  },
+  activeProgress: {
+    backgroundColor: 'rgba(79, 79, 79, .8)'
   }
 });
 
 const gradientImage = require('../assets/images/gradient.png');
 const backArrow = require('../assets/images/backArrow.png');
+const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
+const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
 
 export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
@@ -119,11 +164,17 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   tabbedItems?: any[];
   lastUpdate?: number;
   containerStyle?: StyleProp<ViewStyle>;
+  animate?: boolean;
+  onBack?: () => void;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
   pageNum: number;
   showCarousel: boolean;
+  showDarkX: boolean;
+  slideBackground: boolean;
+  activeProgressBarIndex: number;
+  isClosingAnimation: boolean;
 }
 
 export default function(
@@ -137,20 +188,56 @@ export default function(
     };
 
     state: any = {};
+    AnimatedStory: any;
+    AnimatedCloseIcon: any;
+    flatListRef: any;
+    AnimatedPageCounter: any;
+    AnimatedNavTitle: any;
+    pageCounterStyle: StyleProp<ViewStyle>;
+    pageNumberStyle: StyleProp<TextStyle>;
+    cardMove: any;
+    scrollPosition: number = 0;
+
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
         scrollY: new Animated.Value(0),
         pageNum: 1,
-        showCarousel: false
+        showCarousel: false,
+        showDarkX: false,
+        slideBackground: false,
+        isClosingAnimation: false,
+        activeProgressBarIndex: 0
       };
     }
+    handleCloseIconRef = (ref: any) => this.AnimatedCloseIcon = ref;
+    handleAnimatedRef = (ref: any) => this.AnimatedStory = ref;
+    handlePageCounterRef = (ref: any) => this.AnimatedPageCounter = ref;
+    handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
+
     componentDidMount(): void {
+      if (this.props.animate) {
+        if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
+          this.setState({ showDarkX: true });
+        }
+        this.AnimatedStory.transition(
+          { translateY: 700},
+          { translateY: 100 },
+          700, 'ease-out-cubic');
+        this.AnimatedCloseIcon.transition(
+          { opacity: 0 },
+          { opacity: 1 },
+          400, 'linear');
+
+      }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
           this.setState({ showCarousel: true });
-        }, 700);
+        }, 500);
       }
+    }
+    scrollToTop = () => {
+      this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     }
 
     getChildContext = () => ({
@@ -255,12 +342,55 @@ export default function(
       return;
     }
 
-    onBackPress = (): void => {
-      Navigation.pop(this.props.componentId)
-      .catch(err => console.log('onBackPress POP error:', err));
+    onAnimatedClose = (): void => {
+      if (this.state.isClosingAnimation) { return; }
+      this.setState({
+        isClosingAnimation: true
+      });
+      const { json } = this.props;
+      const tabbedItems = json && json.tabbedItems;
+      const timeout = this.scrollPosition < 1400 ?
+        this.scrollPosition / 7 : 200;
+      const outYPositon = tabbedItems && tabbedItems.length ? 1020 : 700;
+      if (this.scrollPosition > 0) {
+        this.scrollToTop();
+      }
+      setTimeout(() => {
+        this.AnimatedCloseIcon.transition(
+          { opacity: 1 },
+          { opacity: 0 },
+          400, 'linear');
+      }, 200);
+
+      setTimeout(() => {
+        this.AnimatedStory.transition(
+          { translateY: 100 },
+          { translateY: outYPositon },
+          timeout + 550, 'ease-out');
+        if (this.props.onBack) {
+          this.props.onBack();
+        }
+      }, timeout);
+      setTimeout(() => {
+        Navigation.dismissOverlay(this.props.componentId)
+          .catch(err => console.log('onBackPress dismissOverlay error:', err));
+      }, 800);
+
     }
 
-    renderBlockItem: ListRenderItem<BlockItem> = ({ item }) => {
+    onBackPress = (): void => {
+      Navigation.pop(this.props.componentId)
+        .catch(err => console.log('onBackPress POP error:', err));
+    }
+
+    renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
+      if (this.props.animate) {
+        item.wrapper = true;
+        item.animateIndex = index;
+      }
+      if (this.props.renderType && this.props.renderType === 'carousel') {
+        item.fullScreenCard = true;
+      }
       return this.renderBlock(item);
     }
 
@@ -280,6 +410,28 @@ export default function(
       }
       props.componentId = this.props.componentId;
 
+      if (item.fullScreenCard) {
+        delete item.fullScreenCard;
+        props.AnimatedPageCounter = this.AnimatedPageCounter;
+        props.AnimatedNavTitle = this.AnimatedNavTitle;
+        props.cardTranslateY = this.state.scrollY;
+      }
+      if (item.animateIndex) {
+        props.animateIndex = item.animateIndex;
+      }
+      if (item.wrapper) {
+        delete item.wrapper;
+        return React.createElement(
+          layoutComponents[INBOX_WRAPPER],
+          {
+            key: this.dataKeyExtractor(item),
+            animateIndex: item.animateIndex,
+            slideBackground: item.animateIndex && item.animateIndex <= 2 ?
+              this.state.slideBackground : false
+          },
+          this.renderBlock(item)
+        );
+      }
       return React.createElement(
         layoutComponents[private_type],
         {
@@ -318,10 +470,13 @@ export default function(
         outputRange: [0, 1],
         extrapolate: 'clamp'
       });
+
       if (tabbedItems && tabbedItems.length) {
         return (
           <TabbedStory
             items={tabbedItems}
+            activeIndex={this.state.activeProgressBarIndex}
+            onCardPress={this.onTabbedCardPress}
             componentId={this.props.componentId}
           />
         );
@@ -335,7 +490,8 @@ export default function(
               <Text style={[styles.emptyMessage, empty.textStyle]}>
                 {empty.message || 'No content found.'}</Text>
             )}
-            style={styles.growStretch}
+            style={[styles.growStretch,
+              this.props.animate && { backgroundColor: 'rgba(255, 255, 255, 0)' }]}
             scrollEventThrottle={16}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { y: scrollY } } }]
@@ -353,14 +509,28 @@ export default function(
         </Fragment>
       );
     }
+    onScrollFlatList = (event: any) => {
+      this.scrollPosition = event.nativeEvent.contentOffset.y;
+      if (this.scrollPosition < -40) {
+        this.onAnimatedClose();
+      }
+      if (!this.state.showDarkX && event.nativeEvent.contentOffset.y >= 378) {
+        this.setState({ showDarkX: true });
+      } else if (this.state.showDarkX && event.nativeEvent.contentOffset.y < 378) {
+        this.setState({ showDarkX: false });
+      }
+      if (!this.state.slideBackground && event.nativeEvent.contentOffset.y >= 100) {
+        this.setState({ slideBackground: true });
+      }
 
-
+    }
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
       this.setState({
         pageNum
       });
     }
+
     // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
       const { json } = this.props;
@@ -382,6 +552,8 @@ export default function(
               data={json && json.private_blocks || []}
               layout={'default'}
               autoplay={autoplay}
+              scrollEnabled={true}
+              swipeThreshold={100}
               autoplayDelay={autoplayDelay}
               autoplayInterval={autoplayInterval}
               sliderWidth={Dimensions.get('screen').width}
@@ -393,15 +565,7 @@ export default function(
               useScrollView={Platform.OS === 'ios' ? true : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json && json.private_blocks && json.private_blocks.length > 0) &&
-              <View style={[styles.pageCounter, json.pageCounterStyle]}>
-                <Text
-                  style={[styles.pageNum, json.pageNumberStyle]}
-                >
-                  {this.state.pageNum} / {json.private_blocks.length}
-                </Text>
-              </View>
-            }
+
           </Fragment>
         );
       } else if (this.props.noScrollView) {
@@ -416,8 +580,27 @@ export default function(
         return (
           <TabbedStory
             items={tabbedItems}
+            onCardPress={this.onTabbedCardPress}
+            activeIndex={this.state.activeProgressBarIndex}
             componentId={this.props.componentId}
           />
+        );
+      } else if (this.props.animate) {
+        return (
+          <FlatList
+            data={this.props.json && this.props.json.private_blocks || []}
+            keyExtractor={this.dataKeyExtractor}
+            renderItem={this.renderBlockItem}
+            ref={ref => { this.flatListRef = ref; }}
+            style={[styles.growStretch, styles.animatedList]}
+            onScroll={this.onScrollFlatList}
+            ListEmptyComponent={(
+              <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                {empty && empty.message || 'No content found.'}</Text>
+            )}
+          >
+            {this.renderBlocks()}
+          </FlatList>
         );
       }
       return (
@@ -425,6 +608,7 @@ export default function(
           data={this.props.json && this.props.json.private_blocks || []}
           keyExtractor={this.dataKeyExtractor}
           renderItem={this.renderBlockItem}
+          style={[styles.growStretch]}
           ListEmptyComponent={(
             <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
               {empty && empty.message || 'No content found.'}</Text>
@@ -438,11 +622,64 @@ export default function(
         >
           {this.renderBlocks()}
         </FlatList>
+
       );
     }
 
-    render(): JSX.Element {
-      const { backButton, containerStyle, json, navBarTitle } = this.props;
+    onTabbedCardPress = () => {
+      const { json } = this.props;
+      if (json.tabbedItems &&
+          (this.state.activeProgressBarIndex >= (json.tabbedItems.length - 1))) {
+        this.onAnimatedClose();
+      } else {
+        this.setState({
+          activeProgressBarIndex: this.state.activeProgressBarIndex + 1
+        });
+      }
+    }
+
+    renderContent(): JSX.Element {
+      const { animate, backButton, containerStyle, json } = this.props;
+      if (animate) {
+        return (
+          <Fragment>
+            <Animatable.View
+              ref={this.handleAnimatedRef}
+              useNativeDriver
+              style={[styles.animatedContainer]}
+            >
+              {this.renderScrollView()}
+            </Animatable.View>
+            {(json && json.tabbedItems && json.tabbedItems.length) &&
+              <View style={styles.progressBar}>
+                {(json.tabbedItems || []).map((item: any, index: number) => {
+                  return (
+                    <View
+                      key={item.key}
+                      style={[
+                        styles.progressItem,
+                        (this.state.activeProgressBarIndex === index) && styles.activeProgress
+                      ]}
+                    />
+                  );
+                })}
+              </View>}
+            {backButton &&
+              <TouchableOpacity
+                onPress={this.onAnimatedClose}
+                style={styles.animatedClose}
+                activeOpacity={1}
+              >
+                <Animatable.Image
+                  resizeMode='contain'
+                  ref={this.handleCloseIconRef}
+                  source={this.state.showDarkX ? iconCloseXDark : iconCloseXLight}
+                  style={[styles.backIconCloseX]}
+                />
+              </TouchableOpacity>}
+          </Fragment>
+        );
+      }
       return (
         <View style={[styles.container, containerStyle]}>
           {this.renderScrollView()}
@@ -454,13 +691,42 @@ export default function(
                 style={[styles.backIcon, json.backArrow]}
               />
             </TouchableOpacity>}
-          {navBarTitle &&
-            <Text
+        </View>
+      );
+    }
+    // tslint:disable-next-line:cyclomatic-complexity
+    render(): JSX.Element {
+      const { json, navBarTitle } = this.props;
+      this.pageCounterStyle =
+        json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
+      this.pageNumberStyle =
+        json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
+      return (
+        <Fragment>
+          {this.renderContent()}
+          {(this.props.renderType && this.props.renderType === 'carousel' &&
+            json && json.private_blocks && json.private_blocks.length > 0) &&
+            <Animatable.View
+              ref={this.handlePageCounterRef}
+              useNativeDriver
+              style={[styles.pageCounter, this.pageCounterStyle]}
+            >
+              <Text
+                style={[styles.pageNum, this.pageNumberStyle]}
+              >
+                {this.state.pageNum} / {json.private_blocks.length}
+              </Text>
+            </Animatable.View>
+          }
+            <Animatable.Text
               style={[styles.navBarTitle, json.navBarTitleStyle]}
+              ref={this.handleNavTitleRef}
+              useNativeDriver
             >
               {navBarTitle}
-            </Text>}
-        </View>
+            </Animatable.Text>
+
+        </Fragment>
       );
     }
 

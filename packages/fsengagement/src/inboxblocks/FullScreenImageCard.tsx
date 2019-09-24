@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   DeviceEventEmitter,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import * as Animatable from 'react-native-animatable';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const NEW = 'NEW';
 const styles = StyleSheet.create({
@@ -55,6 +56,8 @@ export interface FullScreenCardProps extends CardProps {
   storyType?: string;
   source: ImageProp;
   isNew?: boolean;
+  AnimatedPageCounter?: any;
+  AnimatedNavTitle?: any;
 }
 
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
@@ -68,9 +71,18 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
+  state: any = {};
+  AnimatedImage: any;
+  AnimatedText: any;
   constructor(props: FullScreenCardProps) {
     super(props);
+    this.state = {
+      swipedUp: false
+    };
   }
+
+  handleImageRef = (ref: any) => this.AnimatedImage = ref;
+  handleTextRef = (ref: any) => this.AnimatedText = ref;
 
   getChildContext = () => ({
     story: this.props.story,
@@ -80,6 +92,23 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: this.props.name
   })
 
+  onBack = () => {
+    this.AnimatedImage.transitionTo({
+      scale: 1,
+      opacity: 1
+    }, 600, 'ease-out');
+    this.props.AnimatedPageCounter.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+    this.props.AnimatedNavTitle.transitionTo(
+      { opacity: 1, translateY: 0 },
+      400, 'linear');
+
+    this.AnimatedText.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+  }
+
   handleStoryAction = (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
@@ -88,10 +117,15 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    Navigation.push(this.props.componentId, {
+
+    Navigation.showOverlay({
       component: {
         name: 'EngagementComp',
         options: {
+          overlay: {
+            interceptTouchOutside: true,
+            handleKeyboardEvents: true
+          },
           topBar: {
             visible: false,
             drawBehind: true
@@ -102,17 +136,39 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
         },
         passProps: {
           json,
-          backButton: !(json.tabbedItems && json.tabbedItems.length),
+          backButton: true,
           name: this.props.name,
-          id: this.props.id
+          id: this.props.id,
+          animate: true,
+          onBack: this.onBack
         }
       }
-    }).catch(err => console.log('EngagementComp PUSH error:', err));
+    }).catch(err => console.log('EngagementWebView SHOWMODAL error:', err));
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   onCardPress = (): void => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient, storyType } = this.props;
+
+    if (!(story && story.tabbedItems && story.tabbedItems.length)) {
+      this.AnimatedImage.transitionTo({
+        scale: 1.2,
+        opacity: 0.75
+      }, 700, 'ease-out');
+    }
+
+    this.AnimatedText.transitionTo({
+      opacity: 0
+    }, 320, 'linear');
+
+    this.props.AnimatedPageCounter.transitionTo(
+      { opacity: 0 },
+      400, 'linear');
+
+    this.props.AnimatedNavTitle.transitionTo(
+      { opacity: 0, translateY: -10 },
+      400, 'linear');
 
     // if there is a story attached and either
     //    1) no actions object (Related)
@@ -130,6 +186,10 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     }
   }
 
+  onSwipeUp = (gestureState: any): void => {
+    this.onCardPress();
+  }
+
   render(): JSX.Element {
     const {
       containerStyle,
@@ -137,32 +197,49 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     } = this.props;
 
     return (
-      <TouchableOpacity
-        style={containerStyle}
-        onPress={this.onCardPress}
-        activeOpacity={1}
+      <GestureRecognizer
+        onSwipeUp={this.onSwipeUp}
       >
-        <ImageBackground source={contents.Image.source} style={styles.fullScreen}>
-          <View style={styles.bottom}>
-            {this.props.isNew &&
-              <View
-                style={styles.newContainer}
-              >
-                <Text
-                  style={styles.newText}
+        <TouchableOpacity
+          style={containerStyle}
+          onPress={this.onCardPress}
+          activeOpacity={1}
+        >
+          <View
+            accessibilityIgnoresInvertColors={true}
+            style={[styles.fullScreen, { backgroundColor: '#000' }]}
+          >
+            <Animatable.Image
+              source={contents.Image.source}
+              ref={this.handleImageRef}
+              useNativeDriver
+              style={[StyleSheet.absoluteFill, styles.fullScreen]}
+            />
+            <Animatable.View
+              style={styles.bottom}
+              ref={this.handleTextRef}
+              useNativeDriver
+            >
+              {this.props.isNew &&
+                <View
+                  style={styles.newContainer}
                 >
-                  {NEW}
-                </Text>
-              </View>}
-            <TextBlock
-              {...contents.Eyebrow}
-            />
-            <TextBlock
-              {...contents.Headline}
-            />
+                  <Text
+                    style={styles.newText}
+                  >
+                    {NEW}
+                  </Text>
+                </View>}
+              <TextBlock
+                {...contents.Eyebrow}
+              />
+              <TextBlock
+                {...contents.Headline}
+              />
+            </Animatable.View>
           </View>
-        </ImageBackground>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </GestureRecognizer>
     );
   }
 }
