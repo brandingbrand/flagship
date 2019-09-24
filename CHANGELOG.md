@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+
+### Features
+
+* **fsnetwork:** Add option for interceptor ([#808](https://github.com/brandingbrand/flagship/issues/808)) ([4c12c24](https://github.com/brandingbrand/flagship/commit/4c12c24))
+
+
+
+
+
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* **fsweb:** tag type of css bundle ([05d3a44](https://github.com/brandingbrand/flagship/commit/05d3a44))
+* **pirateship:** Fixes for blacklist and linking Windows slashes ([cec5535](https://github.com/brandingbrand/flagship/commit/cec5535))
+* bump leanplum sdk version ([#823](https://github.com/brandingbrand/flagship/issues/823)) ([2b378c9](https://github.com/brandingbrand/flagship/commit/2b378c9))
+
+
+### Features
+
+* **fsapp:** Track whether the drawer is visible ([#814](https://github.com/brandingbrand/flagship/issues/814)) ([e2f22d4](https://github.com/brandingbrand/flagship/commit/e2f22d4))
+
+
+
+
+
+## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
+
+
+### Bug Fixes
+
+* fix network security config for android emulators ([#817](https://github.com/brandingbrand/flagship/issues/817)) ([1b78195](https://github.com/brandingbrand/flagship/commit/1b78195))
+
+
+
+
+
 ## [6.1.3](https://github.com/brandingbrand/flagship/compare/v6.1.2...v6.1.3) (2019-09-12)
 
 **Note:** Version bump only for package flagship_deploy

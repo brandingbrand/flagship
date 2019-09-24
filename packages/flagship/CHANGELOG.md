@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* bump leanplum sdk version ([#823](https://github.com/brandingbrand/flagship/issues/823)) ([2b378c9](https://github.com/brandingbrand/flagship/commit/2b378c9))
+
+
+
+
+
+## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
+
+
+### Bug Fixes
+
+* fix network security config for android emulators ([#817](https://github.com/brandingbrand/flagship/issues/817)) ([1b78195](https://github.com/brandingbrand/flagship/commit/1b78195))
+
+
+
+
+
 ## [6.1.3](https://github.com/brandingbrand/flagship/compare/v6.1.2...v6.1.3) (2019-09-12)
 
 **Note:** Version bump only for package @brandingbrand/flagship
