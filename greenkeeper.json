@@ -31,5 +31,8 @@
         "packages/pirateship/package.json"
       ]
     }
-  }
+  },
+  "ignore": [
+    "react-native"
+  ]
 }
