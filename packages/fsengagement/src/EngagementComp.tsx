@@ -25,7 +25,6 @@ import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-// import Swipe from './Swipe';
 import {
   Action,
   BlockItem,
@@ -572,7 +571,7 @@ export default function(
               inactiveSlideOpacity={1}
               inactiveSlideScale={1}
               onSnapToItem={this.onSnapToItem}
-              useScrollView={Platform.OS === 'ios' ? false : false}
+              useScrollView={Platform.OS === 'ios' ? true : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
 
