@@ -42,14 +42,12 @@ export default class MapViewNative extends Component<PropType> {
     );
   }
 
-  componentWillReceiveProps(nextProps: PropType): void {
-    if (this.shouldComponentUpdate(nextProps)) {
-      this.moveToLocation(
-        nextProps.locations,
-        nextProps.isCollapsed,
-        nextProps.center
-      );
-    }
+  componentDidUpdate(prevProps: PropType): void {
+    this.moveToLocation(
+      this.props.locations,
+      this.props.isCollapsed,
+      this.props.center
+    );
   }
 
   shouldComponentUpdate(nextProps: PropType): boolean {
