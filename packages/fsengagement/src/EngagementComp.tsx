@@ -20,10 +20,12 @@ import {
   ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
+
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
+// import Swipe from './Swipe';
 import {
   Action,
   BlockItem,
@@ -175,6 +177,7 @@ export interface EngagementState {
   slideBackground: boolean;
   activeProgressBarIndex: number;
   isClosingAnimation: boolean;
+  scrollEnabled: boolean;
 }
 
 export default function(
@@ -207,7 +210,8 @@ export default function(
         showDarkX: false,
         slideBackground: false,
         isClosingAnimation: false,
-        activeProgressBarIndex: 0
+        activeProgressBarIndex: 0,
+        scrollEnabled: true
       };
     }
     handleCloseIconRef = (ref: any) => this.AnimatedCloseIcon = ref;
@@ -378,6 +382,12 @@ export default function(
 
     }
 
+    setScrollEnabled = (enabled: boolean): void => {
+      this.setState({
+        scrollEnabled: enabled
+      });
+    }
+
     onBackPress = (): void => {
       Navigation.pop(this.props.componentId)
         .catch(err => console.log('onBackPress POP error:', err));
@@ -414,7 +424,7 @@ export default function(
         delete item.fullScreenCard;
         props.AnimatedPageCounter = this.AnimatedPageCounter;
         props.AnimatedNavTitle = this.AnimatedNavTitle;
-        props.cardTranslateY = this.state.scrollY;
+        props.setScrollEnabled = this.setScrollEnabled;
       }
       if (item.animateIndex) {
         props.animateIndex = item.animateIndex;
@@ -552,8 +562,8 @@ export default function(
               data={json && json.private_blocks || []}
               layout={'default'}
               autoplay={autoplay}
-              scrollEnabled={true}
-              swipeThreshold={100}
+              scrollEnabled={this.state.scrollEnabled}
+              swipeThreshold={50}
               autoplayDelay={autoplayDelay}
               autoplayInterval={autoplayInterval}
               sliderWidth={Dimensions.get('screen').width}
@@ -562,7 +572,7 @@ export default function(
               inactiveSlideOpacity={1}
               inactiveSlideScale={1}
               onSnapToItem={this.onSnapToItem}
-              useScrollView={Platform.OS === 'ios' ? true : false}
+              useScrollView={Platform.OS === 'ios' ? false : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
 

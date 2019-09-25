@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
-import GestureRecognizer from 'react-native-swipe-gestures';
-
+import GestureHandler from '../GestureHandler';
 const NEW = 'NEW';
 const styles = StyleSheet.create({
   bottom: {
@@ -58,6 +57,7 @@ export interface FullScreenCardProps extends CardProps {
   isNew?: boolean;
   AnimatedPageCounter?: any;
   AnimatedNavTitle?: any;
+  setScrollEnabled: (enabled: boolean) => void;
 }
 
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
@@ -93,6 +93,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   })
 
   onBack = () => {
+    this.props.setScrollEnabled(true);
     this.AnimatedImage.transitionTo({
       scale: 1,
       opacity: 1
@@ -186,7 +187,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     }
   }
 
-  onSwipeUp = (gestureState: any): void => {
+  onSwipeUp = (): void => {
     this.onCardPress();
   }
 
@@ -197,8 +198,9 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     } = this.props;
 
     return (
-      <GestureRecognizer
-        onSwipeUp={this.onSwipeUp}
+      <GestureHandler
+        onSwipe={this.onSwipeUp}
+        setScrollEnabled={this.props.setScrollEnabled}
       >
         <TouchableOpacity
           style={containerStyle}
@@ -239,7 +241,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
             </Animatable.View>
           </View>
         </TouchableOpacity>
-      </GestureRecognizer>
+      </GestureHandler>
     );
   }
 }

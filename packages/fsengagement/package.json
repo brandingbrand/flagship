@@ -22,7 +22,6 @@
     "react-native-fcm": "16.0.0",
     "react-native-navigation": "2.26.3",
     "react-native-snap-carousel": "^3.8.0",
-    "react-native-swipe-gestures": "^1.0.3",
     "react-native-video": "^4.0.0",
     "uuid-js": "0.7.5"
   }

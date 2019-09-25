@@ -83,7 +83,7 @@ export interface JSON {
   tabbedItems?: any[];
   AnimatedPageCounter?: any;
   AnimatedNavTitle?: any;
-  cardTranslateY?: any;
+  setScrollEnabled?: (enabled: boolean) => void;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
