@@ -8,6 +8,16 @@ import { ReviewDimension } from './ReviewDimension';
  */
 export interface Review extends ReviewMetadata {
   /**
+   * Is the review insentivised or syndicated
+   */
+  isSyndicated?: boolean;
+
+  /**
+   * If the review is syndicated there will be an object with details attached
+   */
+  syndicationSource?: SyndicationSource;
+
+  /**
    * Contexts for the review
    */
   context?: ReviewContext[];
@@ -79,4 +89,15 @@ export interface ReviewBadge {
    * Content type of the badge
    */
   contentType: string;
+}
+
+/**
+ * Object with details about syndication
+ * Keys are capitalized here to match the data coming back from bazaarvoice
+ */
+export interface SyndicationSource {
+  ClientId?: string;
+  ContentLink?: string;
+  LogoImageUrl?: string;
+  Name?: string;
 }
