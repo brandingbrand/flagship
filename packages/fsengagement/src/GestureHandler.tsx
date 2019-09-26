@@ -39,9 +39,9 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
   }
 
   _onPanResponderMove = (event: any, gestureState: GestureState): void => {
-    // if we swipe up 10 pixels before we swipe to the side 10 pixels, we assume were attempting
+    // if we make an initial gesture UP, we assume were attempting
     // a swipe up motion so freeze the carousel
-    if (!this.state.stateSet && gestureState.dy <= -10) {
+    if (!this.state.stateSet && gestureState.dy <= -7 && Math.abs(gestureState.dx) < 7) {
       this.props.setScrollEnabled(false);
       this.setState({
         stateSet: true
@@ -50,16 +50,16 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
   }
 
   _onPanResponderRelease = (event: any, gestureState: GestureState): void => {
-    // if we have swiped up 100 pixels or more, swipe the story up into view
+    // if we have swiped up 50 pixels or more, swipe the story up into view
     // if not, cancel the swipe and re-enable the carousel
-    if (gestureState.dy <= -100) {
+    if (gestureState.dy <= -50) {
       this.props.onSwipe();
     } else {
       this.props.setScrollEnabled(true);
-      this.setState({
-        stateSet: false
-      });
     }
+    this.setState({
+      stateSet: false
+    });
   }
 
   render(): JSX.Element {

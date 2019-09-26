@@ -378,7 +378,6 @@ export default function(
         Navigation.dismissOverlay(this.props.componentId)
           .catch(err => console.log('onBackPress dismissOverlay error:', err));
       }, 800);
-
     }
 
     setScrollEnabled = (enabled: boolean): void => {
