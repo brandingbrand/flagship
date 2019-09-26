@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Dimensions,
   StyleProp,
@@ -62,6 +63,10 @@ const styles = StyleSheet.create({
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 export default class VideoBlock extends Component<VideoBlockProps, StateType> {
+  static contextTypes: any = {
+    isCard: PropTypes.bool
+  };
+
   player: any | null = null;
   constructor(props: any) {
     super(props);
@@ -102,6 +107,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       muted = false,
       fullscreen = false
     } = this.props;
+    const { isCard } = this.context;
 
     return (
       <View>
@@ -118,7 +124,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
           paused={this.state.videoPaused}
           style={{ width, height }}
         />
-        <TouchableOpacity
+        {!isCard && <TouchableOpacity
           onPress={this.toggleVideo}
           style={[styles.VideoButton, { width, height }]}
         >
@@ -126,7 +132,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
             <View style={styles.VideoButtonWrapper}>
               <View style={styles.VideoButtonInner} />
             </View>}
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     );
   }
