@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/brandingbrand/flagship/compare/v3.5.1...v3.6.0) (2019-09-26)
+
+
+### Features
+
+* update bv components w/ syndicated indicator ([7d7573c](https://github.com/brandingbrand/flagship/commit/7d7573c))
+
+
+
+
+
 ## [3.5.1](https://github.com/brandingbrand/flagship/compare/v3.5.0...v3.5.1) (2019-09-24)
 
 **Note:** Version bump only for package @brandingbrand/fsbazaarvoice
