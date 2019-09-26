@@ -25,6 +25,7 @@
     "testproject:compile-ios": "lerna run --stream --scope @brandingbrand/fstestproject compile-ios",
     "testproject:compile-android": "lerna run --stream --scope @brandingbrand/fstestproject compile-android",
     "ship:init": "lerna run --stream --scope @brandingbrand/pirateship init",
+    "ship:init-web": "lerna run --stream --scope @brandingbrand/pirateship init:web",
     "ship:run-ios": "run-p ship:run-bundler tsc:watch ship:compile-ios",
     "ship:run-android": "run-p ship:run-bundler tsc:watch ship:compile-android",
     "ship:run-bundler": "lerna run --stream --scope @brandingbrand/pirateship start",

@@ -115,10 +115,10 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     }
   }
 
-  componentWillReceiveProps(nextProps: AccountScreenProps): void {
-    if (this.props.account.isLoggedIn && !nextProps.account.isLoggedIn) {
+  componentDidUpdate(prevProps: AccountScreenProps): void {
+    if (prevProps.account.isLoggedIn && !this.props.account.isLoggedIn) {
       Navigation.mergeOptions(this.props.componentId, navBarHide);
-    } else if (!this.props.account.isLoggedIn && nextProps.account.isLoggedIn) {
+    } else if (!prevProps.account.isLoggedIn && this.props.account.isLoggedIn) {
       Navigation.mergeOptions(this.props.componentId, accountNavStyle);
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
