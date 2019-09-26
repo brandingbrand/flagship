@@ -66,7 +66,6 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
   static contextTypes: any = {
     isCard: PropTypes.bool
   };
-
   player: any | null = null;
   constructor(props: any) {
     super(props);

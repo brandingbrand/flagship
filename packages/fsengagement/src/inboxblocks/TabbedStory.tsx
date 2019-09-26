@@ -8,7 +8,6 @@ import {
 import TabbedStoryItem from './TabbedStoryItem';
 import { Navigation } from 'react-native-navigation';
 
-// const closeX = require('../../assets/images/dark.png');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
   }
 });
 
-
 export interface ImageProp {
   uri: string;
 }
@@ -77,14 +75,6 @@ export default class TabbedStory extends Component<TabbedStoryProps> {
     if (this.props.onCardPress) {
       this.props.onCardPress();
     }
-    // if (this.state.activeIndex >= (this.props.items.length - 1)) {
-    //   Navigation.pop(this.props.componentId)
-    //     .catch(err => console.log('onBackPress POP error:', err));
-    // } else {
-    //   this.setState({
-    //     activeIndex: this.state.activeIndex + 1
-    //   });
-    // }
   }
   onClose = () => {
     Navigation.pop(this.props.componentId)
@@ -109,35 +99,7 @@ export default class TabbedStory extends Component<TabbedStoryProps> {
             />
            </TouchableOpacity>
         </View>
-        {/* <View style={styles.progressBar}>
-          {(items || []).map((item: any, index: number) => {
-            return (
-              <View
-                key={item.key}
-                style={[
-                  styles.progressItem, (this.state.activeIndex === index) && styles.activeProgress
-                ]}
-              />
-            );
-          })}
-        </View> */}
       </Fragment>
-      // <TouchableOpacity
-      //   style={containerStyle}
-      //   onPress={this.onCardPress}
-      //   activeOpacity={1}
-      // >
-      //   <ImageBackground source={contents.Image.source} style={styles.fullScreen}>
-      //     <View style={styles.bottom}>
-      //       <TextBlock
-      //         {...contents.Eyebrow}
-      //       />
-      //       <TextBlock
-      //         {...contents.Headline}
-      //       />
-      //     </View>
-      //   </ImageBackground>
-      // </TouchableOpacity>
     );
   }
 }

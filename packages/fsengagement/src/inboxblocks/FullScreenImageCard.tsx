@@ -10,6 +10,7 @@ import {
 import { Navigation } from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
 import GestureHandler from '../GestureHandler';
+
 const NEW = 'NEW';
 const styles = StyleSheet.create({
   bottom: {
@@ -172,7 +173,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
       400, 'linear');
 
     // if there is a story attached and either
-    //    1) no actions object (Related)
+    //    1) no actions object
     //    2) actions.type is null or 'story' (new default tappable cards)
     if (story &&
       (!actions || (actions && (actions.type === null || actions.type === 'story')))

@@ -20,7 +20,6 @@ import {
   ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
-
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
@@ -573,7 +572,6 @@ export default function(
               useScrollView={Platform.OS === 'ios' ? true : false}
             />}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-
           </Fragment>
         );
       } else if (this.props.noScrollView) {
