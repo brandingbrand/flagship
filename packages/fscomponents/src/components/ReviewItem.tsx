@@ -31,6 +31,8 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedImage?: ImageURISource;
   verifiedImage?: ImageURISource;
   showRecommendations?: RecommendationDisplayTypes;
+  indicateSyndicated?: boolean;
+  renderSyndicatedIndicator?: () => JSX.Element;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -57,7 +59,22 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   onNotHelpful?: (props: ReviewItemProps) => void;
 }
 
-export class ReviewItem extends Component<ReviewItemProps> {
+export interface ReviewItemState {
+  syndicatedImageHeight?: number;
+  syndicatedImageWidth?: number;
+}
+
+export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
+
+  constructor(props: ReviewItemProps) {
+    super(props);
+
+    this.state = {
+      syndicatedImageHeight: 0,
+      syndicatedImageWidth: 0
+    };
+  }
+
   onHelpful = () => {
     const { onHelpful } = this.props;
     if (onHelpful) {
@@ -69,6 +86,50 @@ export class ReviewItem extends Component<ReviewItemProps> {
     const { onNotHelpful } = this.props;
     if (onNotHelpful) {
       onNotHelpful(this.props);
+    }
+  }
+
+  getImageSizeSuccess = (w: number, h: number) => {
+    this.setState({
+      syndicatedImageHeight: h,
+      syndicatedImageWidth: w
+    });
+  }
+
+  renderSyndicatedIndicator = (): JSX.Element | undefined => {
+    if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
+
+      Image.getSize(
+        this.props.syndicationSource.LogoImageUrl,
+        this.getImageSizeSuccess,
+        () => null
+      );
+
+      return this.props.renderSyndicatedIndicator ? this.props.renderSyndicatedIndicator() : (
+        <View
+          style={[
+            S.row, { flexDirection: 'row', paddingBottom: 6 },
+            this.props.rowStyle
+          ]}
+        >
+          <Image
+            style={{
+              height: this.state.syndicatedImageHeight,
+              width: this.state.syndicatedImageWidth,
+              marginRight: 6
+            }}
+            source={{uri: this.props.syndicationSource.LogoImageUrl}}
+            accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
+          />
+          <Text style={[S.syndicatedLabel, {lineHeight: this.state.syndicatedImageHeight}]}>
+            {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
+              site: this.props.syndicationSource.Name
+            })}
+          </Text>
+        </View>
+      );
+    } else {
+      return;
     }
   }
 
@@ -147,7 +208,10 @@ export class ReviewItem extends Component<ReviewItemProps> {
       rowStyle,
       onHelpful,
       onNotHelpful,
-      moreTextStyle
+      moreTextStyle,
+      isSyndicated,
+      indicateSyndicated,
+      syndicationSource
     } = this.props;
 
     return (
@@ -199,6 +263,10 @@ export class ReviewItem extends Component<ReviewItemProps> {
           </Text>
         </View>
         )}
+        {indicateSyndicated &&
+          isSyndicated &&
+          syndicationSource &&
+          this.renderSyndicatedIndicator()}
         {onHelpful && onNotHelpful && (
         <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
           <Button

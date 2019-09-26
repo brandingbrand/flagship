@@ -154,6 +154,7 @@ export interface ReviewsTranslations<KeyType> {
   recommendCount: KeyType;
   recommended: KeyType;
   notRecommended: KeyType;
+  syndicatedLabel: KeyType;
 }
 
 export interface SearchTranslations<KeyType> {
