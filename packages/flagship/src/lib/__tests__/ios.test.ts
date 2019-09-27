@@ -63,7 +63,9 @@ test(`enable entitlements`, () => {
     .toString();
 
   expect(entitlementsFileSource).toEqual(entitlementsFile);
-  expect(pbxprojFile).toMatch(`CODE_SIGN_ENTITLEMENTS = ${appName + nodePath.sep + appName}.entitlements`);
+  expect(pbxprojFile).toMatch(
+    `CODE_SIGN_ENTITLEMENTS = ${appName + nodePath.sep + appName}.entitlements`
+  );
 });
 
 test(`update display name`, () => {
