@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/brandingbrand/flagship/compare/v6.3.0...v7.0.0) (2019-09-27)
+
+
+### Bug Fixes
+
+* **fsweb:** Fix slashes for running web on Windows ([189309e](https://github.com/brandingbrand/flagship/commit/189309e))
+* **fsweb:** Lock web dependency versions ([810e7c4](https://github.com/brandingbrand/flagship/commit/810e7c4))
+* **fsweb:** Match routers path-to-regexp ([5fcaf33](https://github.com/brandingbrand/flagship/commit/5fcaf33))
+
+
+### Features
+
+* **fsweb:** Enable Progressive Web App ([4a0eebb](https://github.com/brandingbrand/flagship/commit/4a0eebb)), closes [#620](https://github.com/brandingbrand/flagship/issues/620)
+
+
+
+
+
 # [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
 
 **Note:** Version bump only for package @brandingbrand/fsweb

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/brandingbrand/flagship/compare/v6.3.0...v7.0.0) (2019-09-27)
+
+
+### Bug Fixes
+
+* **flagship:** Make android namespace match package name ([e53e362](https://github.com/brandingbrand/flagship/commit/e53e362))
+* **flagship:** Remove deprecated lifecycle functions ([0c56274](https://github.com/brandingbrand/flagship/commit/0c56274))
+* **fscomponents:** flatten validation for cc number to onblur ([175aabe](https://github.com/brandingbrand/flagship/commit/175aabe))
+* **fsweb:** Fix slashes for running web on Windows ([189309e](https://github.com/brandingbrand/flagship/commit/189309e))
+* **fsweb:** Lock web dependency versions ([810e7c4](https://github.com/brandingbrand/flagship/commit/810e7c4))
+* **fsweb:** Match routers path-to-regexp ([5fcaf33](https://github.com/brandingbrand/flagship/commit/5fcaf33))
+* **pirateship:** Use componentDidUpdate in PSProductDetail ([ab061e3](https://github.com/brandingbrand/flagship/commit/ab061e3))
+
+
+### Features
+
+* android init config ([d5ef942](https://github.com/brandingbrand/flagship/commit/d5ef942))
+* **fsweb:** Enable Progressive Web App ([4a0eebb](https://github.com/brandingbrand/flagship/commit/4a0eebb)), closes [#620](https://github.com/brandingbrand/flagship/issues/620)
+* update bv components w/ syndicated indicator ([9239ada](https://github.com/brandingbrand/flagship/commit/9239ada))
+
+
+### BREAKING CHANGES
+
+* **flagship:** If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+
+
+
+
 # [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
 
 

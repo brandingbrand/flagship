@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/brandingbrand/flagship/compare/v6.3.0...v7.0.0) (2019-09-27)
+
+
+### Bug Fixes
+
+* **flagship:** Make android namespace match package name ([e53e362](https://github.com/brandingbrand/flagship/commit/e53e362))
+
+
+### Features
+
+* android init config ([d5ef942](https://github.com/brandingbrand/flagship/commit/d5ef942))
+
+
+### BREAKING CHANGES
+
+* **flagship:** If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+
+
+
+
 # [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
 
 **Note:** Version bump only for package @brandingbrand/flagship
