@@ -31,6 +31,8 @@ export interface HandlerArgs {
   env: string;
 }
 
+const TEMPLATE_ANDROID_PACKAGE = 'com.brandingbrand.reactnative.and.flagship';
+
 export const command = 'init [platform]';
 
 export const describe = 'initialize FLAGSHIP for [platform]';
@@ -128,8 +130,16 @@ function initAndroid(
   fs.clone('android');
 
   const androidConfig = android.androidConfigWithDefault(configuration.android);
+
+  // The id should be defined, but set it to a default if it's not for compatibility reasons
+  const pkgId = configuration.bundleIds && configuration.bundleIds.android ?
+    configuration.bundleIds.android.toLowerCase() :
+    `com.brandingbrand.reactnative.and.${configuration.name.toLowerCase()}`;
+
   // Rename the boilerplate project with the app name
   rename.source('FLAGSHIP', configuration.name, 'android');
+  rename.source('CONFIG_BUNDLE_ID', pkgId, 'android');
+  rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
   rename.files('FLAGSHIP', configuration.name, 'android');
 
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
