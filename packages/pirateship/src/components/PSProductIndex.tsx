@@ -23,9 +23,9 @@ import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
-type Navigator = import ('react-native-navigation').Navigator;
+type Navigator = import('react-native-navigation').Navigator;
 
-const window = Dimensions.get('window');
+const windowDimensions = Dimensions.get('window');
 
 const PIPStyle = StyleSheet.create({
   flex1: {
@@ -147,8 +147,8 @@ const PIPStyle = StyleSheet.create({
   },
   hidden: {
     position: 'absolute',
-    top: window.height,
-    bottom: -window.height
+    top: windowDimensions.height,
+    bottom: -windowDimensions.height
   },
   markerIconStyle: {
     borderColor: palette.secondary
@@ -167,6 +167,8 @@ export interface ProductIndexProps {
 export interface ProductIndexState {
   isLoading: boolean;
   isMultiColumn: boolean;
+  startToScroll: boolean;
+  disableGoToDetail: boolean;
 }
 
 const renderProductIndex = (indexProps: any) => {
@@ -187,14 +189,42 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   selectedSortingOption?: string;
   categoryId: string = ''; // used for selecting sub category from refine
   fullCategoryId: string = '';
+  timer: any;
 
   constructor(props: ProductIndexProps) {
     super(props);
 
     this.state = {
       isLoading: false,
-      isMultiColumn: false
+      isMultiColumn: false,
+      startToScroll: false,
+      disableGoToDetail: false
     };
+  }
+
+  componentDidMount(): void {
+    if (window.addEventListener) {
+      window.addEventListener('scroll', this.handleScrollForWeb);
+    }
+  }
+
+  componentWillUnmount(): void {
+    if (window.removeEventListener) {
+      window.removeEventListener('scroll', this.handleScrollForWeb);
+    }
+  }
+
+
+  handleScrollForWeb = (event: any) => {
+    const { startToScroll } = this.state;
+    if (!startToScroll) {
+      this.setState({ startToScroll: true, disableGoToDetail: true });
+    }
+
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.setState({ startToScroll: false, disableGoToDetail: false });
+    }, 150);
   }
 
   onDataLoaded = (data: any) => {
@@ -215,12 +245,14 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
 
   onPress = (item: CommerceTypes.Product) => () => {
     const { navigator } = this.props;
-    navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId: item.id
-      }
-    });
+    const { disableGoToDetail } = this.state;
+    return !disableGoToDetail &&
+      navigator.push({
+        screen: 'ProductDetail',
+        passProps: {
+          productId: item.id
+        }
+      });
   }
 
   onGroupPress = (item: CommerceTypes.Product) => () => {
@@ -370,7 +402,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
       if (item.values && item.values.length) {
         return (
           <View>
-            {renderFilterItem({item, index}, true)}
+            {renderFilterItem({ item, index }, true)}
             <View style={PIPStyle.filterBy}>
               <Text style={PIPStyle.filterByText}>
                 {translate.string(translationKeys.flagship.productIndex.filterBy)}
@@ -380,7 +412,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
         );
       }
     } else {
-      return renderFilterItem({item, index}, true);
+      return renderFilterItem({ item, index }, true);
     }
   }
 
@@ -396,8 +428,8 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
     // don't apply refinement if there is only one, and it's !Base
     const refinements =
       this.selectedRefinements &&
-      Object.keys(this.selectedRefinements).length === 1 &&
-      this.selectedRefinements['!Base']
+        Object.keys(this.selectedRefinements).length === 1 &&
+        this.selectedRefinements['!Base']
         ? {}
         : this.selectedRefinements;
 
