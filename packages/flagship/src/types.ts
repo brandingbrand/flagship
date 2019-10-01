@@ -71,6 +71,10 @@ export interface Config {
     string: string;
   }[];
 
+  UIBackgroundModes?: {
+    string: string;
+  }[];
+
   bundleIds: {
     android: string;
     ios: string;
