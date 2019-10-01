@@ -23,6 +23,9 @@ export interface Attribute {
   key: string;
   value: string;
 }
+export interface AttributePayload {
+  attributes: string;
+}
 
 export class EngagementService {
   appId: string;
@@ -75,6 +78,7 @@ export class EngagementService {
   }
 
   async setProfileAttributes(attributes: Attribute[]): Promise<boolean> {
+
     return this.networkClient
       .post(`/Profiles/${this.profileId}/setAttributes`, JSON.stringify(attributes))
       .then((response: any) => {
@@ -240,7 +244,7 @@ export class EngagementService {
   }
 
 
-  async getInboxMessages(attributes?: Attribute[]): Promise<EngagementMessage[]> {
+  async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
     // check we have a user profile
     if (!this.profileId) {
       throw new Error('Profile not loaded.');
