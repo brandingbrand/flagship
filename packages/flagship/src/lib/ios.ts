@@ -60,7 +60,7 @@ export function targetedDevice(configuration: Config): void {
   if (configuration.targetedDevices) {
     helpers.logInfo(`selecting targeted devices: ${configuration.targetedDevices}`);
 
-    const devices: {[key: string]: any} = {
+    const devices: { [key: string]: any } = {
       iPhone: 1,
       iPad: 2,
       Universal: `"1,2"`
@@ -259,11 +259,40 @@ export function usageDescription(configuration: Config): void {
         infoPlist,
         '<key>UIRequiredDeviceCapabilities</key>',
         `<key>${usage.key}</key><string>${
-          usage.string
+        usage.string
         }</string><key>UIRequiredDeviceCapabilities</key>`
       );
     }
   });
+}
+
+/**
+ * Adds usage description from the project configuration.
+ *
+ * @param {object} configuration The project configuration.
+ */
+export function backgroundModes(configuration: Config): void {
+  if (!configuration.UIBackgroundModes) {
+    return;
+  }
+
+  helpers.logInfo(
+    `updating iOS background modes: [${configuration.UIBackgroundModes.map(u => u.string)}]`
+  );
+
+  const infoPlist = path.ios.infoPlistPath(configuration);
+
+  fs.update(
+    infoPlist,
+    '<key>UIRequiredDeviceCapabilities</key>',
+    `<key>UIBackgroundModes</key>
+      <array>
+      ${configuration.UIBackgroundModes.forEach(mode => {
+        return `<string>${mode.string}</string>`;
+      })}
+      </array>
+    <key>UIRequiredDeviceCapabilities</key>`
+  );
 }
 
 /**

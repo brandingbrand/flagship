@@ -211,6 +211,7 @@ function initIOS(
   ios.targetedDevice(configuration); // Set targeted device
   ios.entitlements(configuration); // Add app entitlements
   ios.usageDescription(configuration); // Add usage descriptions
+  ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
