@@ -270,24 +270,37 @@ class PSProductDetailComponent extends Component<
     this.needsImpression = true;
   }
 
-  componentDidUpdate(): void {
-    const { commerceData } = this.props;
-    if (commerceData && this.state.id !== commerceData.id) {
-      if (!commerceData.variants || commerceData.variants.length === 0) {
-        return this.setState({
-          id: commerceData.id,
-          variantId: commerceData.id
-        });
+  componentDidUpdate(prevProps: PSProductDetailComponentInternalProps): void {
+    const { commerceData, componentId } = this.props;
+    if (commerceData) {
+      if (this.state.id !== commerceData.id) {
+        if (!commerceData.variants || commerceData.variants.length === 0) {
+          return this.setState({
+            id: commerceData.id,
+            variantId: commerceData.id
+          });
+        }
+
+        const variant = find(commerceData.variants, { id: commerceData.id })
+          || commerceData.variants[0];
+
+        if (variant) {
+          this.setState({
+            id: commerceData.id,
+            variantId: variant.id,
+            optionValues: cloneDeep(variant.optionValues)
+          });
+        }
       }
 
-      const variant = find(commerceData.variants, { id: commerceData.id })
-        || commerceData.variants[0];
-
-      if (variant) {
-        this.setState({
-          id: commerceData.id,
-          variantId: variant.id,
-          optionValues: cloneDeep(variant.optionValues)
+      if (commerceData.title &&
+        commerceData.title !== (prevProps.commerceData && prevProps.commerceData.title)) {
+        Navigation.mergeOptions(componentId, {
+          topBar: {
+            title: {
+              text: commerceData.title
+            }
+          }
         });
       }
     }
