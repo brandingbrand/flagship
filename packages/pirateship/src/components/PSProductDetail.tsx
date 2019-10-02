@@ -252,39 +252,6 @@ class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
   > {
-  static getDerivedStateFromProps(
-    nextProps: PSProductDetailComponentInternalProps,
-    state: PSProductDetailState
-  ):
-    Partial<PSProductDetailState> | null {
-    if (nextProps.commerceData && state.id !== nextProps.commerceData.id) {
-      const { commerceData } = nextProps;
-      const nextState: Partial<PSProductDetailState> = { id: commerceData.id };
-
-      if (!commerceData.variants || commerceData.variants.length === 0) {
-        return {
-          ...nextState,
-          variantId: commerceData.id
-        };
-      }
-
-      const variant = find(commerceData.variants, { id: commerceData.id })
-        || commerceData.variants[0];
-
-      if (variant) {
-        return {
-          ...nextState,
-          variantId: variant.id,
-          optionValues: cloneDeep(variant.optionValues)
-        };
-      }
-
-      return nextState;
-    }
-
-    return null;
-  }
-
   miniModalTimer: any = null;
   needsImpression: boolean = true;
 
@@ -303,18 +270,26 @@ class PSProductDetailComponent extends Component<
     this.needsImpression = true;
   }
 
-  componentDidUpdate(prevProps: PSProductDetailComponentInternalProps): void {
-    const { commerceData, componentId } = this.props;
-    const oldTitle = prevProps.commerceData && prevProps.commerceData.title;
+  componentDidUpdate(): void {
+    const { commerceData } = this.props;
+    if (commerceData && this.state.id !== commerceData.id) {
+      if (!commerceData.variants || commerceData.variants.length === 0) {
+        return this.setState({
+          id: commerceData.id,
+          variantId: commerceData.id
+        });
+      }
 
-    if (commerceData && commerceData.title && commerceData.title !== oldTitle) {
-      Navigation.mergeOptions(componentId, {
-        topBar: {
-          title: {
-            text: commerceData.title
-          }
-        }
-      });
+      const variant = find(commerceData.variants, { id: commerceData.id })
+        || commerceData.variants[0];
+
+      if (variant) {
+        this.setState({
+          id: commerceData.id,
+          variantId: variant.id,
+          optionValues: cloneDeep(variant.optionValues)
+        });
+      }
     }
   }
 

@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.1.0](https://github.com/brandingbrand/flagship/compare/v7.0.0...v7.1.0) (2019-10-02)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.0.0](https://github.com/brandingbrand/flagship/compare/v6.3.0...v7.0.0) (2019-09-27)
+
+
+### Bug Fixes
+
+* **fsweb:** Fix slashes for running web on Windows ([189309e](https://github.com/brandingbrand/flagship/commit/189309e))
+* **fsweb:** Lock web dependency versions ([810e7c4](https://github.com/brandingbrand/flagship/commit/810e7c4))
+* **fsweb:** Match routers path-to-regexp ([5fcaf33](https://github.com/brandingbrand/flagship/commit/5fcaf33))
+
+
+### Features
+
+* **fsweb:** Enable Progressive Web App ([4a0eebb](https://github.com/brandingbrand/flagship/commit/4a0eebb)), closes [#620](https://github.com/brandingbrand/flagship/issues/620)
+
+
+
+
+
+# [6.3.0](https://github.com/brandingbrand/flagship/compare/v6.2.0...v6.3.0) (2019-09-23)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [6.2.0](https://github.com/brandingbrand/flagship/compare/v6.1.4...v6.2.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* **fsweb:** tag type of css bundle ([05d3a44](https://github.com/brandingbrand/flagship/commit/05d3a44))
+
+
+
+
+
+## [6.1.4](https://github.com/brandingbrand/flagship/compare/v6.1.3...v6.1.4) (2019-09-17)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [6.1.3](https://github.com/brandingbrand/flagship/compare/v6.1.2...v6.1.3) (2019-09-12)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [6.1.2](https://github.com/brandingbrand/flagship/compare/v6.1.1...v6.1.2) (2019-09-12)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [6.1.1](https://github.com/brandingbrand/flagship/compare/v6.1.0...v6.1.1) (2019-09-12)
+
+
+### Bug Fixes
+
+* **fsweb:** Lock webpack version to 4.39.3 ([995ebd1](https://github.com/brandingbrand/flagship/commit/995ebd1))
+
+
+
+
+
+# [6.1.0](https://github.com/brandingbrand/flagship/compare/v6.0.0...v6.1.0) (2019-09-10)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [6.0.0](https://github.com/brandingbrand/flagship/compare/v5.3.0...v6.0.0) (2019-09-04)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
 # [5.3.0](https://github.com/brandingbrand/flagship/compare/v5.2.0...v5.3.0) (2019-08-23)
 
 

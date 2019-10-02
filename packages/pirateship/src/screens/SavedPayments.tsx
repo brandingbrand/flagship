@@ -87,7 +87,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
     };
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.fetchData();
   }
 

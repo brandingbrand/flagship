@@ -66,7 +66,7 @@ export default class PSHeroCarousel extends Component<PSHeroCarouselProps> {
     slotData: []
   };
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     fetchCMS(this.props.cmsGroup, this.props.cmsSlot, this.props.cmsIdentifier)
       .then(slotData => this.setState({ slotData }))
       .catch(e => console.error('error fetching cms slot ', e));
