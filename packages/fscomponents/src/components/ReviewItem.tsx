@@ -108,7 +108,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
       return this.props.renderSyndicatedIndicator ? this.props.renderSyndicatedIndicator() : (
         <View
           style={[
-            S.row, { flexDirection: 'row', paddingBottom: 6 },
+            S.row, { flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 20 },
             this.props.rowStyle
           ]}
         >
@@ -121,7 +121,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
             source={{uri: this.props.syndicationSource.LogoImageUrl}}
             accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
           />
-          <Text style={[S.syndicatedLabel, {lineHeight: this.state.syndicatedImageHeight}]}>
+          <Text style={[S.syndicatedLabel]}>
             {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
               site: this.props.syndicationSource.Name
             })}
