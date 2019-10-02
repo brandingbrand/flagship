@@ -1,4 +1,4 @@
-package com.brandingbrand.reactnative.and.flagship;
+package CONFIG_BUNDLE_ID;
 
 import com.reactnativenavigation.NavigationActivity;
 import android.os.Bundle;
