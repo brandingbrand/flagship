@@ -23,7 +23,8 @@ export default class Card extends Component<ActionsCard> {
     handleStoryAction: PropTypes.func,
     cardActions: PropTypes.object,
     id: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
+    isCard: PropTypes.bool
   };
   static contextTypes: any = {
     handleAction: PropTypes.func
@@ -34,7 +35,8 @@ export default class Card extends Component<ActionsCard> {
     handleStoryAction: this.handleStoryAction,
     cardActions: this.props.actions,
     id: this.props.id,
-    name: this.props.name
+    name: this.props.name,
+    isCard: true
   })
 
   handleStoryAction = (json: JSON) => {

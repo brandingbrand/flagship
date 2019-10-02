@@ -18,6 +18,7 @@ import SimpleCard from './SimpleCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
+import InboxWrapper from './InboxWrapper';
 
 export default {
   Text: TextBlock,
@@ -29,6 +30,7 @@ export default {
   Video: VideoBlock,
   TwinCTA: TwinCTABlock,
   TextWithIcon: TextWithIconBlock,
+  InboxWrapper,
   Event: EventBlock,
   Card,
   FeaturedTopCard,
