@@ -103,12 +103,12 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     }
   }
 
-  componentWillReceiveProps(nextProps: AccountScreenProps): void {
-    if (this.props.account.isLoggedIn && !nextProps.account.isLoggedIn) {
-      this.props.navigator.setStyle(navBarHide);
-    } else if (!this.props.account.isLoggedIn && nextProps.account.isLoggedIn) {
-      this.props.navigator.setStyle(accountNavStyle);
-      this.props.navigator.setButtons({ rightButtons: [signOutButton.button] });
+  componentDidUpdate(prevProps: AccountScreenProps): void {
+    if (prevProps.account.isLoggedIn && !this.props.account.isLoggedIn) {
+      prevProps.navigator.setStyle(navBarHide);
+    } else if (!prevProps.account.isLoggedIn && this.props.account.isLoggedIn) {
+      prevProps.navigator.setStyle(accountNavStyle);
+      prevProps.navigator.setButtons({ rightButtons: [signOutButton.button] });
     }
   }
 
@@ -120,7 +120,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     }
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     Dimensions.addEventListener('change', this.handleDimensionChange);
   }
 

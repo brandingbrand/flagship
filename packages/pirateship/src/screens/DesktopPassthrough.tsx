@@ -72,7 +72,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
     this.desktopWebView = React.createRef<WebView>();
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.isFirstPageview = true;
 
     if (this.props.url) {
