@@ -287,7 +287,7 @@ export function backgroundModes(configuration: Config): void {
     '<key>UIRequiredDeviceCapabilities</key>',
     `<key>UIBackgroundModes</key>
       <array>
-      ${configuration.UIBackgroundModes.forEach(mode => {
+      ${configuration.UIBackgroundModes.map(mode => {
         return `<string>${mode.string}</string>`;
       })}
       </array>
