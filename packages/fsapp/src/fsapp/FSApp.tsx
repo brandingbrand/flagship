@@ -47,7 +47,9 @@ export class FSApp extends FSAppBase {
   }
 
   shouldShowDevMenu(): boolean {
-    return NativeConstants && NativeConstants.ShowDevMenu && NativeConstants.ShowDevMenu === 'true';
+    return NativeConstants
+      && NativeConstants.DisableDevFeature
+      && NativeConstants.DisableDevFeature === '0';
   }
 
   startApp(): void {

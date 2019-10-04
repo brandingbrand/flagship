@@ -329,7 +329,10 @@ export function sentryProperties(configuration: Config): void {
  * @param {object} configuration The project configuration.
  */
 export function addDevMenuFlag(configuration: Config): void {
-  nativeConstants.addIOS(configuration, 'ShowDevMenu', 'true');
+  const { disableDevFeature: devFeatureStatusFromConf } = configuration;
+  const disableDevFeature = devFeatureStatusFromConf ? '1' : '0';
+
+  nativeConstants.addIOS(configuration, 'DisableDevFeature', disableDevFeature);
 }
 
 /**
