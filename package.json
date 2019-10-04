@@ -38,6 +38,7 @@
     "docs": "run-s build:docs build:storybook"
   },
   "devDependencies": {
+    "core-js": "^3.2.1",
     "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.0.0",
     "@brandingbrand/greenkeeper-lockfile": "^0.0.1",
