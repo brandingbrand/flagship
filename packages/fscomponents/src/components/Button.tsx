@@ -25,6 +25,8 @@ const DEFAULT_TINT_PERC = 15;
 
 export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop'> {
   title: string;
+  dynamicTitleStates?: string[];
+  selectedTitleState?: number;
   accessibilityLabel?: string;
   style?: StyleProp<ViewStyle>;
   onPress: () => void;
@@ -54,12 +56,21 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
 
 export interface ButtonState {
   palette: any;
+  title: string;
 }
 
 export class Button extends PureComponent<ButtonProps, ButtonState> {
   state: ButtonState = {
-    palette: this.props.palette || palette
+    palette: this.props.palette || palette,
+    title: this.titleState
   };
+
+  componentDidUpdate({ selectedTitleState: prevSelectedTitleState }: ButtonProps): void {
+    const { selectedTitleState } = this.props;
+    if (selectedTitleState !== prevSelectedTitleState) {
+      this.setState({ title: this.titleState });
+    }
+  }
 
   render(): any {
     const {
@@ -115,7 +126,6 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       loading,
       icon,
       iconStyle,
-      title,
       titleStyle,
       viewStyle,
       size = 'medium',
@@ -124,7 +134,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       link
     } = this.props;
 
-    const { palette } = this.state;
+    const { palette, title } = this.state;
     const onColor = 'on' + color.charAt(0).toUpperCase() + color.slice(1);
 
     if (loading) {
@@ -146,5 +156,27 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
         </View>
       );
     }
+  }
+
+  get titleState(): string {
+    const {
+      title,
+      selectedTitleState,
+      dynamicTitleStates
+     } = this.props;
+
+    if (
+      (!selectedTitleState && selectedTitleState !== 0) ||
+      !dynamicTitleStates ||
+      (
+        selectedTitleState &&
+        dynamicTitleStates &&
+        selectedTitleState >= dynamicTitleStates.length
+      )
+      ) {
+      return title;
+    }
+
+    return dynamicTitleStates[selectedTitleState];
   }
 }
