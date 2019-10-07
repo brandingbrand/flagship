@@ -7,13 +7,15 @@ import qs from 'qs';
 import pushRoute from '../lib/push-route';
 import { AppConfigType, DrawerConfig } from '../types';
 
-const styles = StyleSheet.create({
+const StyleSheetCreate: any = StyleSheet.create;
+
+const styles = StyleSheetCreate({
   screenContainer: {
     flex: 1,
     flexBasis: 'auto'
   },
   devNoteContainer: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
     right: 0
   },
