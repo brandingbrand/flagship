@@ -59,6 +59,7 @@ export interface ModalHalfScreenProps {
 export interface ModalHalfScreenState {
   visible: boolean;
   contentOffset: Animated.Value;
+  height: number;
   statusBarHeight: number;
 }
 
@@ -68,17 +69,49 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     this.state = {
       visible: false,
       contentOffset: new Animated.Value(0),
+      height: 0,
       statusBarHeight: 0
     };
-
-    NativeModules.StatusBarManager.getHeight((response: any) => {
-      this.setState({ statusBarHeight: response.height });
-    });
   }
 
   componentDidMount(): void {
     if (this.props.visible) {
       this.showContent();
+    }
+
+    try {
+      this.setState({
+        height: (
+          this.props.height ||
+          (Dimensions.get('window').height / 2)
+        )
+      });
+
+      Dimensions.addEventListener('change', (event: any) => {
+        const { height } = event.window;
+
+        if (height !== this.state.height) {
+          this.setState({ height: event.window.height });
+        }
+      });
+
+      NativeModules.StatusBarManager.getHeight((response: any) => {
+        if (response.height !== this.state.statusBarHeight) {
+          this.setState({ statusBarHeight: response.height });
+        }
+      });
+    } catch (exception) {
+      console.warn(exception);
+    }
+  }
+
+  componentWillReceiveProps(nextProps: ModalHalfScreenProps) {
+    if (
+      nextProps.height &&
+      nextProps.height !== this.props.height &&
+      nextProps.height !== this.state.height
+    ) {
+      this.setState({ height: nextProps.height });
     }
   }
 
@@ -162,11 +195,8 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     );
   }
 
-  private getHeight(): number {
-    return this.props.height || (Dimensions.get('window').height / 2);
-  }
-
-  private getAnimationConfig(height: number = this.getHeight()): ModalHalfScreenAnimationConfig {
+  private getAnimationConfig(): ModalHalfScreenAnimationConfig {
+    const { height } = this.state;
     let outputRange: number[] = [0, 0 - height];
     let props = {};
 
