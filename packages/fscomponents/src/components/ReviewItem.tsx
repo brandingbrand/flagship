@@ -18,6 +18,7 @@ import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import SyndicationIndicator from './SyndicationIndicator';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export enum RecommendationDisplayTypes {
@@ -97,46 +98,17 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
   }
 
   renderSyndicatedIndicator = (): JSX.Element | undefined => {
-    if (
-      !this.props.renderSyndicatedIndicator &&
-      this.props.syndicationSource &&
-      this.props.syndicationSource.LogoImageUrl
-    ) {
-
-      Image.getSize(
-        this.props.syndicationSource.LogoImageUrl,
-        this.getImageSizeSuccess,
-        () => null
-      );
-
-      return (
-        <View
-          style={[
-            S.row, { flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 20 },
-            this.props.rowStyle
-          ]}
-        >
-          <Image
-            style={{
-              height: this.state.syndicatedImageHeight,
-              width: this.state.syndicatedImageWidth,
-              marginRight: 6
-            }}
-            source={{uri: this.props.syndicationSource.LogoImageUrl}}
-            accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
+    if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
+      if (this.props.renderSyndicatedIndicator) {
+        return this.props.renderSyndicatedIndicator(this.props.syndicationSource);
+      } else {
+        return (
+          <SyndicationIndicator
+            syndicationSource={this.props.syndicationSource}
+            rowStyle={this.props.rowStyle}
           />
-          <Text style={[S.syndicatedLabel]}>
-            {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
-              site: this.props.syndicationSource.Name
-            })}
-          </Text>
-        </View>
-      );
-    } else if (
-      this.props.renderSyndicatedIndicator &&
-      this.props.syndicationSource &&
-      this.props.syndicationSource.LogoImageUrl) {
-      return this.props.renderSyndicatedIndicator(this.props.syndicationSource);
+        );
+      }
     } else {
       return;
     }
