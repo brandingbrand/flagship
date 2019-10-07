@@ -97,7 +97,11 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
   }
 
   renderSyndicatedIndicator = (): JSX.Element | undefined => {
-    if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
+    if (
+      !this.props.renderSyndicatedIndicator &&
+      this.props.syndicationSource &&
+      this.props.syndicationSource.LogoImageUrl
+    ) {
 
       Image.getSize(
         this.props.syndicationSource.LogoImageUrl,
@@ -105,31 +109,34 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
         () => null
       );
 
-      return this.props.renderSyndicatedIndicator ?
-        this.props.renderSyndicatedIndicator(this.props.syndicationSource) :
-        (
-          <View
-            style={[
-              S.row, { flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 20 },
-              this.props.rowStyle
-            ]}
-          >
-            <Image
-              style={{
-                height: this.state.syndicatedImageHeight,
-                width: this.state.syndicatedImageWidth,
-                marginRight: 6
-              }}
-              source={{uri: this.props.syndicationSource.LogoImageUrl}}
-              accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
-            />
-            <Text style={[S.syndicatedLabel]}>
-              {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
-                site: this.props.syndicationSource.Name
-              })}
-            </Text>
-          </View>
-        );
+      return (
+        <View
+          style={[
+            S.row, { flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 20 },
+            this.props.rowStyle
+          ]}
+        >
+          <Image
+            style={{
+              height: this.state.syndicatedImageHeight,
+              width: this.state.syndicatedImageWidth,
+              marginRight: 6
+            }}
+            source={{uri: this.props.syndicationSource.LogoImageUrl}}
+            accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
+          />
+          <Text style={[S.syndicatedLabel]}>
+            {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
+              site: this.props.syndicationSource.Name
+            })}
+          </Text>
+        </View>
+      );
+    } else if (
+      this.props.renderSyndicatedIndicator &&
+      this.props.syndicationSource &&
+      this.props.syndicationSource.LogoImageUrl) {
+      return this.props.renderSyndicatedIndicator(this.props.syndicationSource);
     } else {
       return;
     }
