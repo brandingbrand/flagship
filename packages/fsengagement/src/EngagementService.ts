@@ -2,6 +2,7 @@ import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
+import moment from 'moment';
 import {
   EngagementMessage,
   EngagementProfile,
@@ -20,6 +21,9 @@ export interface EngagementServiceConfig {
 export interface Attribute {
   key: string;
   value: string;
+}
+export interface AttributePayload {
+  attributes: string;
 }
 
 export class EngagementService {
@@ -221,6 +225,57 @@ export class EngagementService {
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
+        return messages;
+      })
+      .catch(async (e: any) => {
+        console.log('Unable to fetch inbox messages', e);
+
+        let ret: EngagementMessage[] = [];
+
+        // respond with stale cache if we have it
+        if (this.messages.length) {
+          ret = this.messages;
+        }
+
+        return Promise.resolve(ret);
+      });
+  }
+
+  async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
+    // check we have a user profile
+    if (!this.profileId) {
+      throw new Error('Profile not loaded.');
+    }
+
+    // cache
+    if (this.messages.length) {
+      if (+new Date() - this.messageCache < this.cacheTTL) {
+
+        return Promise.resolve(this.messages);
+      }
+    }
+
+    const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
+    return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
+      JSON.stringify(attributes))
+      .then((r: any) => r.data)
+      .then((list: any) => list.map((data: any) => {
+        return {
+          id: data.id,
+          published: new Date(data.published),
+          isNew: lastEngagementFetch ?
+            moment.utc(data.published).valueOf() > parseInt(lastEngagementFetch, 10) : false,
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes
+        };
+      }))
+      .then((messages: EngagementMessage[]) => {
+        this.messages = messages;
+        this.messageCache = +new Date();
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', moment.utc(new Date()).valueOf().toString())
+          .catch();
         return messages;
       })
       .catch(async (e: any) => {

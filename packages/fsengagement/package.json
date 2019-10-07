@@ -13,6 +13,7 @@
     "@types/react-native-snap-carousel": "^3.7.3",
     "@types/react-native-video": "^2.0.8",
     "lodash-es": "^4.17.10",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
     "react-native": "0.59.10",
