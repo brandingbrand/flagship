@@ -90,13 +90,6 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     }
   }
 
-  getImageSizeSuccess = (w: number, h: number) => {
-    this.setState({
-      syndicatedImageHeight: h,
-      syndicatedImageWidth: w
-    });
-  }
-
   renderSyndicatedIndicator = (): JSX.Element | undefined => {
     if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
       if (this.props.renderSyndicatedIndicator) {
