@@ -162,6 +162,10 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       containerStyle
     } = this.props;
 
+    if (!source) {
+      return <View />;
+    }
+
     let height = style.height || 200;
     const width = DEFAULT_WIDTH;
 

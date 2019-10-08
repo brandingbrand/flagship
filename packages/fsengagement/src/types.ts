@@ -84,6 +84,7 @@ export interface JSON {
   AnimatedPageCounter?: any;
   AnimatedNavTitle?: any;
   setScrollEnabled?: (enabled: boolean) => void;
+  onBack?: () => void;
 }
 
 export interface BlockItem extends ScreenProps, JSON {

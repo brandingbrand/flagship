@@ -263,6 +263,7 @@ export class EngagementService {
       JSON.stringify(attributes))
       .then((r: any) => r.data)
       .then((list: any) => list.map((data: any) => {
+        console.log(data.published);
         return {
           id: data.id,
           published: new Date(data.published),

@@ -425,6 +425,7 @@ export default function(
       }
       if (item.animateIndex) {
         props.animateIndex = item.animateIndex;
+        props.onBack = this.onAnimatedClose;
       }
       if (item.wrapper) {
         delete item.wrapper;
@@ -707,6 +708,7 @@ export default function(
         json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
       this.pageNumberStyle =
         json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
+      const navBarTitleStyle = json && json.navBarTitleStyle || {};
       return (
         <Fragment>
           {this.renderContent()}
@@ -725,7 +727,7 @@ export default function(
             </Animatable.View>
           }
             <Animatable.Text
-              style={[styles.navBarTitle, json.navBarTitleStyle]}
+              style={[styles.navBarTitle, navBarTitleStyle]}
               ref={this.handleNavTitleRef}
               useNativeDriver
             >
