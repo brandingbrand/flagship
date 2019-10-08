@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/brandingbrand/flagship/compare/v7.2.0...v7.3.0) (2019-10-08)
+
+
+### Bug Fixes
+
+* Development version number should be fixed to the bottom of viewport for web ([c978511](https://github.com/brandingbrand/flagship/commit/c978511))
+
+
+### Features
+
+* add appcenter support to fastlane scripts ([00ede00](https://github.com/brandingbrand/flagship/commit/00ede00))
+* add position property for half modal component ([9fb3e76](https://github.com/brandingbrand/flagship/commit/9fb3e76))
+
+
+
+
+
 # [7.2.0](https://github.com/brandingbrand/flagship/compare/v7.1.1...v7.2.0) (2019-10-07)
 
 
