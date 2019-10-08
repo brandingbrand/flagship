@@ -26,7 +26,7 @@ export function bundleId(configuration: Config): void {
   );
   fs.update(
     path.ios.fastfilePath(),
-    /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/,
+    /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/g,
     `"${bundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`
   );
 }
