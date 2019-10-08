@@ -105,7 +105,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }
   }
 
-  componentWillReceiveProps(nextProps: ModalHalfScreenProps) {
+  componentWillReceiveProps(nextProps: ModalHalfScreenProps): void {
     if (
       nextProps.height &&
       nextProps.height !== this.props.height &&
