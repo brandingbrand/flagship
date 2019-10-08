@@ -16,10 +16,20 @@ export interface Config {
   disableDevFeature?: boolean;
   googleMapApiKey: string;
 
+  // TODO - unify with appCenter config
   codepush?: {
     appCenterToken: string;
     android: CodepushConfig;
     ios: CodepushConfig;
+  };
+
+  appCenter?: {
+    apiToken: string;
+    organization: string;
+    distribute?: {
+      appNameIOS?: string;
+      appNameAndroid?: string;
+    };
   };
 
   pushIcons?: {
@@ -68,6 +78,10 @@ export interface Config {
   entitlementsFileIOS?: string;
   usageDescriptionIOS?: {
     key: string;
+    string: string;
+  }[];
+
+  UIBackgroundModes?: {
     string: string;
   }[];
 
