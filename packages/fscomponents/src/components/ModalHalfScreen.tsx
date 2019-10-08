@@ -69,7 +69,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     this.state = {
       visible: false,
       contentOffset: new Animated.Value(0),
-      height: 0,
+      height: props.height || 0,
       statusBarHeight: 0
     };
   }
