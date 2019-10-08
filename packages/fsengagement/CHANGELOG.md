@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.4.0](https://github.com/brandingbrand/flagship/compare/v7.3.0...v7.4.0) (2019-10-08)
+
+
+### Features
+
+* **fsengagement:** expose new inbox route that sets attributes ([21fe454](https://github.com/brandingbrand/flagship/commit/21fe454))
+* **fsengagement:** remove moment library ([e15bfb1](https://github.com/brandingbrand/flagship/commit/e15bfb1))
+
+
+
+
+
 # [7.3.0](https://github.com/brandingbrand/flagship/compare/v7.2.0...v7.3.0) (2019-10-08)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
