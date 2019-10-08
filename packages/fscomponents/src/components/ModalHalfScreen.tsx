@@ -102,17 +102,14 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     Dimensions.removeEventListener('change', this.dimensionsListener);
   }
 
-  componentWillReceiveProps(nextProps: ModalHalfScreenProps): void {
+  componentDidUpdate(prevProps: ModalHalfScreenProps, prevState: ModalHalfScreenState): void {
     if (
-      nextProps.height &&
-      nextProps.height !== this.props.height &&
-      nextProps.height !== this.state.height
+      this.props.height &&
+      this.props.height !== prevProps.height &&
+      this.props.height !== prevState.height
     ) {
-      this.setState({ height: nextProps.height });
+      this.setState({ height: this.props.height });
     }
-  }
-
-  componentDidUpdate(prevProps: ModalHalfScreenProps): void {
     if (prevProps.visible && !this.props.visible) {
       this.hideContent();
     } else if (!prevProps.visible && this.props.visible) {
