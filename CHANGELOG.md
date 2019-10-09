@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
+
+
+### Bug Fixes
+
+* **flagship:** add support for new pods ([d2a0c28](https://github.com/brandingbrand/flagship/commit/d2a0c28))
+
+
+
+
+
 # [7.4.0](https://github.com/brandingbrand/flagship/compare/v7.3.0...v7.4.0) (2019-10-08)
 
 
