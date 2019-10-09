@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
+
+
+### Bug Fixes
+
+* **flagship:** add support for new pods ([d2a0c28](https://github.com/brandingbrand/flagship/commit/d2a0c28))
+
+
+
+
+
+# [7.4.0](https://github.com/brandingbrand/flagship/compare/v7.3.0...v7.4.0) (2019-10-08)
+
+
+### Bug Fixes
+
+* **flagship:** update string replace to work in new fastfile ([#864](https://github.com/brandingbrand/flagship/issues/864)) ([ae6b368](https://github.com/brandingbrand/flagship/commit/ae6b368))
+
+
+
+
+
+# [7.3.0](https://github.com/brandingbrand/flagship/compare/v7.2.0...v7.3.0) (2019-10-08)
+
+
+### Features
+
+* add appcenter support to fastlane scripts ([00ede00](https://github.com/brandingbrand/flagship/commit/00ede00))
+
+
+
+
+
+# [7.2.0](https://github.com/brandingbrand/flagship/compare/v7.1.1...v7.2.0) (2019-10-07)
+
+
+### Bug Fixes
+
+* **flagship:** ios background modes returning undefine ([70d93ce](https://github.com/brandingbrand/flagship/commit/70d93ce))
+
+
+### Features
+
+* **flagship:** support background modes ([1088366](https://github.com/brandingbrand/flagship/commit/1088366))
+
+
+
+
+
+## [7.1.1](https://github.com/brandingbrand/flagship/compare/v7.1.0...v7.1.1) (2019-10-04)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
 # [7.1.0](https://github.com/brandingbrand/flagship/compare/v7.0.0...v7.1.0) (2019-10-02)
 
 **Note:** Version bump only for package @brandingbrand/flagship

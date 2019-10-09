@@ -2,8 +2,6 @@ import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
-import moment from 'moment';
-
 import {
   EngagementMessage,
   EngagementProfile,
@@ -243,7 +241,6 @@ export class EngagementService {
       });
   }
 
-
   async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
     // check we have a user profile
     if (!this.profileId) {
@@ -267,7 +264,7 @@ export class EngagementService {
           id: data.id,
           published: new Date(data.published),
           isNew: lastEngagementFetch ?
-            moment.utc(data.published).valueOf() > parseInt(lastEngagementFetch, 10) : false,
+            Date.parse(data.published) > parseInt(lastEngagementFetch, 10) : false,
           message: JSON.parse(data.message),
           title: data.title,
           inbox: data.inbox,
@@ -277,7 +274,7 @@ export class EngagementService {
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
-        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', moment.utc(new Date()).valueOf().toString())
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString())
           .catch();
         return messages;
       })
@@ -294,7 +291,6 @@ export class EngagementService {
         return Promise.resolve(ret);
       });
   }
-
 
   async onNotification(notif: EngagmentNotification): Promise<void> {
     console.log('onNotification', notif);
