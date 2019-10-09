@@ -34,11 +34,14 @@ export function install(): void {
 /**
  * Adds a pod to a given Podfile.
  *
- * @param {string} path The path to the Podfile to update with the given pod.
  * @param {string[]} pods An array of pods to add to the Podfile.
+ * @param {string} podfilePath The path to the Podfile to update with the given pod.
  */
-export function add(path: string, pods: string[]): void {
-  const podfileContents = fs.readFileSync(path, { encoding: 'utf8' });
+export function add(pods: string[], podfilePath: string = path.ios.podfilePath()): void {
+  if (!pods.length) {
+    return;
+  }
+  const podfileContents = fs.readFileSync(podfilePath, { encoding: 'utf8' });
 
   // Filter out any pods that are already declared in the podfile
   // TODO: This should support a version check
@@ -46,7 +49,7 @@ export function add(path: string, pods: string[]): void {
   pods = pods.map(pod => `\t${pod}`);
 
   fs.writeFileSync(
-    path,
+    podfilePath,
     podfileContents.replace(
       '# Add new pods below this line',
       `${pods.join('\n')}\n# Add new pods below this line`
@@ -61,7 +64,7 @@ export function add(path: string, pods: string[]): void {
  * @param {string[]} sources - list of sources to add
  */
 export function sources(sources: string[]): void {
-  if (sources && sources.length > 0) {
+  if (sources.length > 0) {
     helpers.logInfo('adding additional pod sources: ' + sources.join(', '));
     let podfileContents = fs.readFileSync(path.ios.podfilePath(), 'utf8');
     podfileContents = podfileContents.replace('# ADDITIONAL_POD_SOURCES',

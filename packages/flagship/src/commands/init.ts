@@ -216,7 +216,12 @@ function initIOS(
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
     if (configuration.ios.pods) {
-      cocoapods.sources(configuration.ios.pods.sources);
+      if (configuration.ios.pods.sources) {
+        cocoapods.sources(configuration.ios.pods.sources);
+      }
+      if (configuration.ios.pods.newPods) {
+        cocoapods.add(configuration.ios.pods.newPods);
+      }
     }
   }
 
