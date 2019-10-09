@@ -36,6 +36,7 @@ const PIPStyle = StyleSheet.create({
     marginHorizontal: 15
   },
   productItem: {
+    flex: 1,
     paddingTop: 15,
     paddingBottom: Platform.OS === 'android' ? 15 : 0,
     borderBottomColor: border.color,

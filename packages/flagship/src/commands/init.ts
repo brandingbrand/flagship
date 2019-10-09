@@ -211,11 +211,17 @@ function initIOS(
   ios.targetedDevice(configuration); // Set targeted device
   ios.entitlements(configuration); // Add app entitlements
   ios.usageDescription(configuration); // Add usage descriptions
+  ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
     if (configuration.ios.pods) {
-      cocoapods.sources(configuration.ios.pods.sources);
+      if (configuration.ios.pods.sources) {
+        cocoapods.sources(configuration.ios.pods.sources);
+      }
+      if (configuration.ios.pods.newPods) {
+        cocoapods.add(configuration.ios.pods.newPods);
+      }
     }
   }
 
