@@ -93,7 +93,7 @@ memo((props): JSX.Element => {
           <Star
             text='★'
             style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, { color: props.emptyColor || S.emptyStar }]}
+              starHalfRightStyle, S.emptyStar, { color: props.emptyColor }]}
           />
         </View>
       </View>
@@ -146,7 +146,7 @@ memo((props): JSX.Element => {
         <Star
           text='★'
           renderStar={renderEmptyStar}
-          style={[customStarStyle, { color: props.emptyColor || S.emptyStar }]}
+          style={[customStarStyle, S.emptyStar, { color: props.emptyColor }]}
           key={v}
         />
       ))}
