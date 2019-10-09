@@ -25,7 +25,7 @@ export function preLink(config: Config): void {
   const adobeSdk = `pod 'AdobeMobileSDK', '~> 4.14.1'`;
 
   if (podfile.indexOf(adobeSdk) === -1) {
-    pods.add(path.ios.podfilePath(), [adobeSdk]);
+    pods.add([adobeSdk]);
     logInfo('updated Podfile with Adobe Mobile SDK');
   }
 

@@ -1,4 +1,3 @@
-import * as path from '../../path';
 import * as pods from '../../cocoapods';
 import { Config } from '../../../types';
 
@@ -8,5 +7,5 @@ import { Config } from '../../../types';
  * @param {object} configuration The project configuration.
  */
 export function preLink(configuration: Config): void {
-  pods.add(path.ios.podfilePath(), [`pod "Leanplum-iOS-SDK", '2.6.1'`]);
+  pods.add([`pod "Leanplum-iOS-SDK", '2.6.1'`]);
 }
