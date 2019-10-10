@@ -253,6 +253,14 @@ function initWeb(
     path.project.resolve('web')
   );
 
+  // create config for web version
+  fs.writeFileSync(
+    path.project.resolve('web', 'config.web.json'),
+    JSON.stringify({
+      defaultEnvName: environmentIdentifier
+    })
+  );
+
   web.homepage(configuration.webPath || '/');
   web.title(configuration.webTitle);
   web.headerScripts(configuration.webScriptInjectHeader);
