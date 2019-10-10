@@ -128,6 +128,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   handleContainerSizeChange = (e: any) => {
     const containerWidth = e.nativeEvent.layout.width;
 
+    if (containerWidth === this.state.containerWidth) {
+      return;
+    }
+
     this.setState({
       containerWidth,
       itemWidth: this.getItemWidth(containerWidth)

@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import {
   Animated,
+  Dimensions,
+  NativeModules,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -21,6 +23,25 @@ const styles = StyleSheet.create({
   }
 });
 
+interface ModalHalfScreenAnimationConfig {
+  contentOffsetY: {
+    inputRange: number[];
+    outputRange: number[];
+  };
+
+  heightFromProps: {
+    height: number;
+    top?: number;
+    bottom?: number;
+  } | {};
+}
+
+export enum ModalHalfScreenPosition {
+  Top = 'top',
+  Center = 'center',
+  Bottom = 'bottom'
+}
+
 export interface ModalHalfScreenProps {
   visible?: boolean;
   height?: number;
@@ -28,11 +49,18 @@ export interface ModalHalfScreenProps {
   backgroundAccessibilityComponentType?: AccessibilityComponentType;
   backgroundAccessibilityLabel?: string;
   onRequestClose: () => void;
+  position?: (
+    ModalHalfScreenPosition.Top |
+    ModalHalfScreenPosition.Center |
+    ModalHalfScreenPosition.Bottom
+  );
 }
 
 export interface ModalHalfScreenState {
   visible: boolean;
   contentOffset: Animated.Value;
+  height: number;
+  statusBarHeight: number;
 }
 
 export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHalfScreenState> {
@@ -40,13 +68,50 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     super(props);
     this.state = {
       visible: false,
-      contentOffset: new Animated.Value(0)
+      contentOffset: new Animated.Value(0),
+      height: props.height || 0,
+      statusBarHeight: 0
     };
   }
 
   componentDidMount(): void {
     if (this.props.visible) {
       this.showContent();
+    }
+
+    try {
+      this.setState({
+        height: (
+          this.props.height ||
+          (Dimensions.get('window').height / 2)
+        )
+      });
+
+      Dimensions.addEventListener('change', (event: any) => {
+        const { height } = event.window;
+
+        if (height !== this.state.height) {
+          this.setState({ height: event.window.height });
+        }
+      });
+
+      NativeModules.StatusBarManager.getHeight((response: any) => {
+        if (response.height !== this.state.statusBarHeight) {
+          this.setState({ statusBarHeight: response.height });
+        }
+      });
+    } catch (exception) {
+      console.warn(exception);
+    }
+  }
+
+  componentWillReceiveProps(nextProps: ModalHalfScreenProps): void {
+    if (
+      nextProps.height &&
+      nextProps.height !== this.props.height &&
+      nextProps.height !== this.state.height
+    ) {
+      this.setState({ height: nextProps.height });
     }
   }
 
@@ -102,21 +167,14 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
   }
 
   render(): JSX.Element {
-    const contentOffsetY = this.state.contentOffset.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, this.props.height ? 0 - this.props.height : -400]
-    });
-    const heightFromProps = this.props.height ? {
-      height: this.props.height,
-      bottom: 0 - this.props.height
-    } : {};
+    const config: ModalHalfScreenAnimationConfig = this.getAnimationConfig();
     const stylesForAnimation = [
       styles.animatedContent,
-      heightFromProps,
+      config.heightFromProps,
       {
         transform: [
           {
-            translateY: contentOffsetY
+            translateY: this.state.contentOffset.interpolate(config.contentOffsetY)
           }
         ]
       }
@@ -136,4 +194,38 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       </Modal>
     );
   }
+
+  private getAnimationConfig(): ModalHalfScreenAnimationConfig {
+    const { height } = this.state;
+    let outputRange: number[] = [0, 0 - height];
+    let props = {};
+
+    switch (this.props.position) {
+      case ModalHalfScreenPosition.Top:
+        outputRange = [0 - height, 0];
+        props = { top: this.state.statusBarHeight };
+        break;
+      case ModalHalfScreenPosition.Center:
+        outputRange = [0 - height, 0];
+        props = { top: height / 2 };
+        break;
+      case ModalHalfScreenPosition.Bottom:
+      default:
+        outputRange = [0, 0 - height];
+        props = { bottom: 0 - height };
+        break;
+    }
+
+    return {
+      contentOffsetY: {
+        inputRange: [0, 1],
+        outputRange
+      },
+      heightFromProps: height ? {
+        height,
+        ...props
+      } : {}
+    };
+  }
+
 }

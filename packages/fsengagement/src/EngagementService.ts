@@ -245,7 +245,6 @@ export class EngagementService {
       });
   }
 
-
   async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
     // check we have a user profile
     if (!this.profileId) {
@@ -297,7 +296,6 @@ export class EngagementService {
         return Promise.resolve(ret);
       });
   }
-
 
   async onNotification(notif: EngagmentNotification): Promise<void> {
     console.log('onNotification', notif);
