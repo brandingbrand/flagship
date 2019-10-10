@@ -82,12 +82,13 @@ export default class CTABlock extends Component<CTABlockProps> {
 
   handleActionNoStory = (actions: Action) => {
     const { handleAction, cardActions } = this.context;
+    if (actions && !actions.value) {
+      return;
+    }
     if (actions && actions.type) {
-      setTimeout(() => {
-        if (this.props.animateIndex && this.props.onBack) {
-          this.props.onBack();
-        }
-      });
+      if (this.props.animateIndex && this.props.onBack && !~actions.value.indexOf('applyPromo')) {
+        this.props.onBack();
+      }
 
       return handleAction({
         ...actions,

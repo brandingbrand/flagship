@@ -7,6 +7,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  ImageBackground,
   Linking,
   ListRenderItem,
   Platform,
@@ -67,6 +68,12 @@ const styles = StyleSheet.create({
   fullScreen: {
     width: Dimensions.get('screen').width + 45,
     height: Dimensions.get('screen').height + 60
+  },
+  fullScreenDeeplink: {
+    width: Dimensions.get('screen').width + 45,
+    height: Dimensions.get('screen').height + 60,
+    backgroundColor: '#000',
+    overflow: 'hidden'
   },
   backIcon: {
     width: 14,
@@ -141,6 +148,19 @@ const styles = StyleSheet.create({
   },
   activeProgress: {
     backgroundColor: 'rgba(79, 79, 79, .8)'
+  },
+  imageStyle: {
+    transform: [{ scale: 1.06 }],
+    opacity: 0.8,
+    marginTop: 20
+  },
+  deeplinkStory: {
+    marginTop: -(Dimensions.get('screen').height + 60)
+  },
+  storyFooter: {
+    marginBottom: -35,
+    height: 40,
+    backgroundColor: '#fff'
   }
 });
 
@@ -391,7 +411,7 @@ export default function(
     }
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
-      if (this.props.animate) {
+      if (this.props.animate || (this.props.json && this.props.json.fullScreenCardImage)) {
         item.wrapper = true;
         item.animateIndex = index;
       }
@@ -539,12 +559,19 @@ export default function(
       });
     }
 
+    renderFlatlistFooterPadding = (): JSX.Element => {
+      return (
+        <View style={styles.storyFooter} />
+      );
+    }
+
     // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
       const { json } = this.props;
       const storyGradient = json && json.storyGradient;
       const tabbedItems = json && json.tabbedItems;
       const empty: any = json && json.empty || {};
+      const fullScreenCardImage = json && json.fullScreenCardImage;
 
       if (this.props.renderType && this.props.renderType === 'carousel') {
         const autoplay = this.props.autoplay || false;
@@ -609,6 +636,36 @@ export default function(
             {this.renderBlocks()}
           </FlatList>
         );
+      } else if (fullScreenCardImage) {
+        return (
+          <Fragment>
+            <ImageBackground
+              source={fullScreenCardImage}
+              imageStyle={styles.imageStyle}
+              style={styles.fullScreenDeeplink}
+            />
+            <FlatList
+              data={this.props.json && this.props.json.private_blocks || []}
+              keyExtractor={this.dataKeyExtractor}
+              renderItem={this.renderBlockItem}
+              style={[styles.growStretch, styles.deeplinkStory]}
+              ListFooterComponent={this.renderFlatlistFooterPadding}
+              ListEmptyComponent={(
+                <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                  {empty && empty.message || 'No content found.'}</Text>
+              )}
+              refreshControl={
+                this.props.refreshControl && <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.refreshControl}
+                />
+              }
+            >
+              {this.renderBlocks()}
+            </FlatList>
+          </Fragment>
+        );
+
       }
       return (
         <FlatList
@@ -629,7 +686,6 @@ export default function(
         >
           {this.renderBlocks()}
         </FlatList>
-
       );
     }
 

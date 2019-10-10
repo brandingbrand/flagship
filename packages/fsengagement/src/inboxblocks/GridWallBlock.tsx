@@ -18,6 +18,7 @@ const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
+let onBackPress: () => void;
 import { wp } from '../carousel/SliderEntry.style';
 import RenderProduct from '../carousel/RenderProduct';
 
@@ -31,11 +32,14 @@ export interface GridWallBlockProps {
   useRatio?: boolean;
   imageFormat?: string;
   baseUrl: string;
+  deepLinkUrl?: string;
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
+  animateIndex?: number;
+  onBack?: () => void;
 }
 
 export interface GridWallBlockState {
@@ -79,6 +83,8 @@ export default class GridWallBlock
           name: item.name,
           price: item.price,
           url: item.url,
+          productId: id,
+          deepLinkUrl: this.props.deepLinkUrl,
           image: (item.galleryImageList.galleryImage || []).find((img: any) => {
             return img.format === imageFormat;
           })
@@ -103,6 +109,7 @@ export default class GridWallBlock
         <RenderProduct
             data={item}
             key={index}
+            onBackPress={onBackPress}
             spaceBetweenHorizontal={renderItemOptions.spaceBetweenHorizontal}
             spaceBetweenVertical={renderItemOptions.spaceBetweenVertical}
             itemWidth={renderItemWidth}
@@ -152,7 +159,9 @@ export default class GridWallBlock
     const {
       containerStyle
     } = this.props;
-
+    if (this.props.onBack) {
+      onBackPress = this.props.onBack;
+    }
     const grid = this.createGrid();
     if (this.state.loading) {
       return (
