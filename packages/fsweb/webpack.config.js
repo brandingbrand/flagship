@@ -11,6 +11,14 @@ const history = require('connect-history-api-fallback');
 const convert = require('koa-connect');
 const escapedSep = '\\' + path.sep;
 
+let webConfig;
+
+try {
+  webConfig = require('./config.web.json')
+} catch (exception) {
+  console.warn('Cannot find web config');
+}
+
 const globalConfig = {
   optimization: {
     concatenateModules: false
@@ -168,6 +176,12 @@ const globalConfig = {
 };
 
 module.exports = function(env, options) {
+  const defaultEnv = JSON.stringify(
+    (env && env.defaultEnvName) ||
+    (webConfig && webConfig.defaultEnvName) ||
+    'prod'
+  );
+
   // add our environment specific config to the webpack config based on mode
   if (options && options.mode === 'production') {
     !options.json && console.log('Webpacking for Production');
@@ -179,7 +193,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -246,7 +260,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       })
     ]);
   }
