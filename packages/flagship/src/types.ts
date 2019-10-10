@@ -152,7 +152,8 @@ export interface IOSConfig {
 }
 
 export interface PodsConfig {
-  sources: string[];
+  sources?: string[];
+  newPods?: string[];
 }
 
 export interface NPMPackageConfig {
