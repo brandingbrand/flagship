@@ -45,7 +45,7 @@
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-cookies": "^3.3.0",
-    "react-native-device-info": "^0.29.1",
+    "react-native-device-info": "^3.1.4",
     "react-native-htmlview": "^0.13.0",
     "react-native-i18n": "^2.0.15",
     "react-native-navigation": "2.26.3",
