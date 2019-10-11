@@ -1,7 +1,7 @@
 /* tslint:disable */
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, Text, StyleProp, TextStyle, TouchableOpacity, View
+  Dimensions, Image, Linking, Text, StyleProp, TextStyle, TouchableOpacity, View
 } from 'react-native';
 import styles from './SliderEntry.style';
 
@@ -14,6 +14,7 @@ export interface RenderProductProps {
   even?: boolean;
   priceStyle?: StyleProp<TextStyle>;
   titleStyle?: StyleProp<TextStyle>;
+  onBackPress?: () => void;
 }
 
 const { height: viewportHeight } = Dimensions.get('window');
@@ -28,8 +29,23 @@ export default class RenderProduct extends Component<RenderProductProps> {
       />
     );
   }
-  onImagePress = (): void => {
-
+  onProductPress = (): void => {
+    const { data } = this.props;
+    if (!data.deepLinkUrl) {
+      return;
+    }
+    const deeplink = data.deepLinkUrl + data.productId;
+    Linking.canOpenURL(deeplink).then(supported => {
+      if (!supported) {
+        alert('An error occurred: can\'t handle url ' + deeplink);
+        return false;
+      } else {
+        if (this.props.onBackPress) {
+          this.props.onBackPress();
+        }
+        return Linking.openURL(deeplink);
+      }
+    }).catch(err => alert('An error occurred: ' + err));
   }
   render() {
     const {
@@ -65,7 +81,7 @@ export default class RenderProduct extends Component<RenderProductProps> {
       <TouchableOpacity
         activeOpacity={1}
         style={itemStyle}
-        onPress={this.onImagePress}
+        onPress={this.onProductPress}
       >
         <View style={styles.imageContainerNoCard}>
           {this.image}

@@ -49,6 +49,8 @@ export interface CTABlockProps extends ScreenProps, EmitterProps {
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   actions: Action;
+  animateIndex?: number;
+  onBack?: () => void;
 }
 
 export default class CTABlock extends Component<CTABlockProps> {
@@ -80,7 +82,14 @@ export default class CTABlock extends Component<CTABlockProps> {
 
   handleActionNoStory = (actions: Action) => {
     const { handleAction, cardActions } = this.context;
+    if (actions && !actions.value) {
+      return;
+    }
     if (actions && actions.type) {
+      if (this.props.animateIndex && this.props.onBack && !~actions.value.indexOf('applyPromo')) {
+        this.props.onBack();
+      }
+
       return handleAction({
         ...actions,
         name: this.props.name,

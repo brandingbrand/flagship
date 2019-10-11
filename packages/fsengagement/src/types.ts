@@ -2,6 +2,7 @@ import { ComponentClass } from 'react';
 import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
+  ImageURISource,
   StyleProp,
   TextStyle,
   ViewStyle
@@ -84,6 +85,8 @@ export interface JSON {
   AnimatedPageCounter?: any;
   AnimatedNavTitle?: any;
   setScrollEnabled?: (enabled: boolean) => void;
+  onBack?: () => void;
+  fullScreenCardImage?: ImageURISource;
 }
 
 export interface BlockItem extends ScreenProps, JSON {

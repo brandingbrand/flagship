@@ -64,6 +64,7 @@ export default StyleSheet.create({
   subtitle: {
     marginTop: 6,
     color: colors.black,
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: 'Arial-BoldMT'
   }
 });

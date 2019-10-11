@@ -21,6 +21,7 @@ let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
 let renderItemTitleStyle: StyleProp<TextStyle> = {};
 let renderItemPriceStyle: StyleProp<TextStyle> = {};
+let onBackPress: () => void;
 import { wp } from '../carousel/SliderEntry.style';
 import RenderProduct from '../carousel/RenderProduct';
 
@@ -34,6 +35,7 @@ export interface ProductCarouselBlockProps {
   useRatio?: boolean;
   imageFormat?: string;
   baseUrl: string;
+  deepLinkUrl?: string;
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
@@ -41,6 +43,8 @@ export interface ProductCarouselBlockProps {
   pageNumberStyle?: StyleProp<TextStyle>;
   priceStyle?: StyleProp<TextStyle>;
   titleStyle?: StyleProp<TextStyle>;
+  animateIndex?: number;
+  onBack?: () => void;
 }
 
 export interface ProductCarouselBlockState {
@@ -84,6 +88,8 @@ export default class ProductCarouselBlock
           name: item.name,
           price: item.price,
           url: item.url,
+          productId: id,
+          deepLinkUrl: this.props.deepLinkUrl,
           image: (item.galleryImageList.galleryImage || []).find((img: any) => {
             return img.format === imageFormat;
           })
@@ -108,6 +114,7 @@ export default class ProductCarouselBlock
               data={data.item}
               horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
               itemWidth={renderItemWidth}
+              onBackPress={onBackPress}
               titleStyle={renderItemTitleStyle}
               priceStyle={renderItemPriceStyle}
            />;
@@ -166,7 +173,9 @@ export default class ProductCarouselBlock
     const {
       containerStyle
     } = this.props;
-
+    if (this.props.onBack) {
+      onBackPress = this.props.onBack;
+    }
     const carousel = this.createCarousel();
 
     return (

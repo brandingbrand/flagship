@@ -153,31 +153,32 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     const { handleAction } = this.context;
     const { actions, story, storyGradient, storyType } = this.props;
 
-    if (!(story && story.tabbedItems && story.tabbedItems.length)) {
-      this.AnimatedImage.transitionTo({
-        scale: 1.2,
-        opacity: 0.75
-      }, 700, 'ease-out');
-    }
-
-    this.AnimatedText.transitionTo({
-      opacity: 0
-    }, 320, 'linear');
-
-    this.props.AnimatedPageCounter.transitionTo(
-      { opacity: 0 },
-      400, 'linear');
-
-    this.props.AnimatedNavTitle.transitionTo(
-      { opacity: 0, translateY: -10 },
-      400, 'linear');
-
     // if there is a story attached and either
     //    1) no actions object
     //    2) actions.type is null or 'story' (new default tappable cards)
     if (story &&
       (!actions || (actions && (actions.type === null || actions.type === 'story')))
     ) {
+
+      if (!(story && story.tabbedItems && story.tabbedItems.length)) {
+        this.AnimatedImage.transitionTo({
+          scale: 1.2,
+          opacity: 0.75
+        }, 700, 'ease-out');
+      }
+
+      this.AnimatedText.transitionTo({
+        opacity: 0
+      }, 320, 'linear');
+
+      this.props.AnimatedPageCounter.transitionTo(
+        { opacity: 0 },
+        400, 'linear');
+
+      this.props.AnimatedNavTitle.transitionTo(
+        { opacity: 0, translateY: -10 },
+        400, 'linear');
+
       this.handleStoryAction({
         ...story,
         storyGradient,
