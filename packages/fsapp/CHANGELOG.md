@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
+
+
+### Features
+
+* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
+
+
+### BREAKING CHANGES
+
+* Tabs must now have ids defined in their configuration
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
