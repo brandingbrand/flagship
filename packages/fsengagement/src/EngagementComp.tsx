@@ -278,11 +278,6 @@ export default function(
         type: actions.type,
         value: actions.value
       });
-      api.logEvent('clickInboxCta', {
-        messageId: actions.id,
-        ctaType: actions.type,
-        ctaValue: actions.value
-      });
       switch (actions.type) {
         case 'blog-url':
           Navigation.push(this.props.componentId, {
@@ -332,12 +327,16 @@ export default function(
           }).catch(err => console.log('EngagementWebView SHOWMODAL error:', err));
           break;
         case 'deep-link':
-          Linking.canOpenURL(actions.value).then(supported => {
+          const separator = ~actions.value.indexOf('?') ? '&' : '?';
+          const componentId = this.props.componentId;
+          const query = separator + 'engagementDeeplink=true&componentId=' + componentId;
+          const url = actions.value + query;
+          Linking.canOpenURL(url).then(supported => {
             if (!supported) {
-              alert('An error occurred: can\'t handle url ' + actions.value);
+              alert('An error occurred: can\'t handle url ' + url);
               return false;
             } else {
-              return Linking.openURL(actions.value);
+              return Linking.openURL(url);
             }
           }).catch(err => alert('An error occurred: ' + err));
           break;
@@ -394,8 +393,8 @@ export default function(
         }
       }, timeout);
       setTimeout(() => {
-        Navigation.dismissOverlay(this.props.componentId)
-          .catch(err => console.log('onBackPress dismissOverlay error:', err));
+        Navigation.dismissModal(this.props.componentId)
+          .catch(err => console.log('onBackPress dismissModal error:', err));
       }, 800);
     }
 

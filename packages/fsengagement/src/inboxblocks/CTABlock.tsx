@@ -86,10 +86,6 @@ export default class CTABlock extends Component<CTABlockProps> {
       return;
     }
     if (actions && actions.type) {
-      if (this.props.animateIndex && this.props.onBack && !~actions.value.indexOf('applyPromo')) {
-        this.props.onBack();
-      }
-
       return handleAction({
         ...actions,
         name: this.props.name,

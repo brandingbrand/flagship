@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalPresentationStyle } from 'react-native-navigation';
 import * as Animatable from 'react-native-animatable';
 import GestureHandler from '../GestureHandler';
 
@@ -116,36 +116,36 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
-
-    Navigation.showOverlay({
-      component: {
-        name: 'EngagementComp',
-        options: {
-          overlay: {
-            interceptTouchOutside: true,
-            handleKeyboardEvents: true
-          },
-          topBar: {
-            visible: false,
-            drawBehind: true
-          },
-          bottomTabs: {
-            visible: false
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'EngagementComp',
+            options: {
+              layout: {
+                backgroundColor: 'transparent'
+              },
+              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+              topBar: {
+                visible: false,
+                drawBehind: true
+              },
+              bottomTabs: {
+                visible: false
+              }
+            },
+            passProps: {
+              json,
+              backButton: true,
+              name: this.props.name,
+              id: this.props.id,
+              animate: true,
+              onBack: this.onBack
+            }
           }
-        },
-        passProps: {
-          json,
-          backButton: true,
-          name: this.props.name,
-          id: this.props.id,
-          animate: true,
-          onBack: this.onBack
-        }
+        }]
       }
-    }).catch(err => console.log('EngagementWebView SHOWMODAL error:', err));
+    }).catch(err => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
   }
 
   // tslint:disable-next-line:cyclomatic-complexity
