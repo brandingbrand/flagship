@@ -112,7 +112,6 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
             onLoad={this.loaded(true)}
             source={{ uri: item.source.src }}
             style={{
-              aspectRatio: 1,
               width: '100%',
               height: '100%'
             }}
