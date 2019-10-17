@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
+
+
+
+
+
 ## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
