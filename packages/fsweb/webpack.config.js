@@ -7,8 +7,6 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
 const escapedSep = '\\' + path.sep;
 
 let webConfig;
@@ -247,12 +245,10 @@ module.exports = function(env, options) {
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
-    globalConfig.serve = {
-      content: "./dev-server",
-      add: (app, middleware, options) => {
-        app.use(convert(history()));
-      }
-    }
+    globalConfig.devServer = {
+      contentBase: path.join(__dirname, 'dev-server'),
+      port: 8080
+    };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
