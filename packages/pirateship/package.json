@@ -14,6 +14,8 @@
     "build-ios": "./scripts/buildiOS.sh",
     "init": "node scripts/fixRNLink.js && flagship clean && flagship init native",
     "init:web": "node scripts/fixRNLink.js && flagship clean && flagship init web",
+    "init:android-jetify": "jetify",
+    "init:android-jetify-reverse": "jetify -r",
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",

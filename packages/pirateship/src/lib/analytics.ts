@@ -13,17 +13,17 @@ import DeviceInfo from 'react-native-device-info';
 const { version } = projectEnv;
 
 const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgent(),
+  userAgent: DeviceInfo.getUserAgentSync(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
-  appName: DeviceInfo.getApplicationName(),
-  appId: DeviceInfo.getBundleId(),
+  appName: DeviceInfo.getApplicationNameSync(),
+  appId: DeviceInfo.getBundleIdSync(),
   appVersion: version
 };
 
 const googleAnalyticsConfiguration = {
   trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueID()
+  clientId: DeviceInfo.getUniqueIdSync()
 };
 
 const providers = [
