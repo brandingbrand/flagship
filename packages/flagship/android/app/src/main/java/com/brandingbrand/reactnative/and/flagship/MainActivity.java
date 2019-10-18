@@ -2,7 +2,7 @@ package CONFIG_BUNDLE_ID;
 
 import com.reactnativenavigation.NavigationActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public class MainActivity extends NavigationActivity {
     @Override

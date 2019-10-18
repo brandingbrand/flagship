@@ -50,7 +50,7 @@
     "react-native-device-info": "^3.1.4",
     "react-native-htmlview": "^0.13.0",
     "react-native-i18n": "^2.0.15",
-    "react-native-navigation": "2.26.3",
+    "react-native-navigation": "3.2.0-snapshot.524",
     "react-native-payments": "^0.7.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.5.0",
