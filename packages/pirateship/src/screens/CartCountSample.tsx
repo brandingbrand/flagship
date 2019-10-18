@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { LayoutComponent, Navigation, Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
 import { CartCount, CartCountProps, TextPositions } from '@brandingbrand/fscomponents';
-
-type Screen = import ('react-native-navigation').Screen;
 
 const cartIcon = require('../../assets/images/cart-tab-icon.png');
 
@@ -21,17 +20,13 @@ const styles = StyleSheet.create({
 });
 
 class CartCountSample extends Component<CartCountSampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static options: Options = navBarTabLanding;
 
   render(): JSX.Element {
-
-    const { navigator } = this.props;
-
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
       >
         <View style={styles.row}>
           <CartCount
@@ -58,8 +53,10 @@ class CartCountSample extends Component<CartCountSampleScreenProps> {
     );
   }
 
-  goTo = (screen: Screen) => () => {
-    this.props.navigator.push(screen);
+  goTo = (screen: LayoutComponent) => () => {
+    Navigation.push(this.props.componentId, {
+      component: screen
+    }).catch(e => console.warn('PUSH error: ', e));
   }
 }
 

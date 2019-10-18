@@ -20,34 +20,70 @@ const appConfig: FSAppTypes.AppConfigType = {
   env: projectEnv,
   tabs: [
     {
-      screen: 'Shop',
-      label: 'Shop',
-      title: 'Shop',
-      icon: require('../assets/images/shop-tab-icon.png')
+      id: 'SHOP_TAB',
+      name: 'Shop',
+      options: {
+        topBar: {
+          title: {
+            text: 'Shop'
+          }
+        },
+        bottomTab: {
+          text: 'Shop',
+          icon: require('../assets/images/shop-tab-icon.png')
+        }
+      }
     },
     {
-      screen: 'Cart',
-      label: 'Cart',
-      title: 'Cart',
-      icon: require('../assets/images/cart-tab-icon.png')
+      id: 'CART_TAB',
+      name: 'Cart',
+      options: {
+        topBar: {
+          title: {
+            text: 'Cart'
+          }
+        },
+        bottomTab: {
+          text: 'Cart',
+          icon: require('../assets/images/cart-tab-icon.png')
+        }
+      }
     },
     {
-      screen: 'Account',
-      label: 'Account',
-      title: 'Account',
-      icon: require('../assets/images/account-tab-icon.png')
+      id: 'ACCOUNT_TAB',
+      name: 'Account',
+      options: {
+        topBar: {
+          title: {
+            text: 'Account'
+          }
+        },
+        bottomTab: {
+          text: 'Account',
+          icon: require('../assets/images/account-tab-icon.png')
+        }
+      }
     },
     {
-      screen: 'More',
-      label: 'More',
-      title: 'More',
-      icon: require('../assets/images/more-tab-icon.png')
+      id: 'MORE_TAB',
+      name: 'More',
+      options: {
+        topBar: {
+          title: {
+            text: 'More'
+          }
+        },
+        bottomTab: {
+          text: 'More',
+          icon: require('../assets/images/more-tab-icon.png')
+        }
+      }
     }
   ],
-  tabsStyle: tabBarDefault,
-  appStyle: tabBarDefault,
+  defaultOptions: tabBarDefault,
   popToRootOnTabPressAndroid: true,
-  devMenuScreens: [{ screen: 'Development' }]
+  devMenuScreens: [{ name: 'Development' }],
+  bottomTabsId: 'bottomTabs'
 };
 
 const app: FSApp = new FSApp(appConfig);

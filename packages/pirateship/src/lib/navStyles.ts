@@ -1,4 +1,5 @@
 import { NavButton } from '../lib/commonTypes';
+import { Navigation } from 'react-native-navigation';
 
 export const backButton: NavButton = {
   button: {
@@ -6,8 +7,9 @@ export const backButton: NavButton = {
     id: 'goBack',
     testID: 'back'
   },
-  action: ({ navigator }) => {
-    navigator.pop();
+  action: ({ componentId }) => {
+    Navigation.pop(componentId)
+    .catch(e => console.warn('backButton POP error: ', e));
   }
 };
 
@@ -16,8 +18,9 @@ export const dismissButton: NavButton = {
     icon: require('../../assets/images/close.png'),
     id: 'dismissModal'
   },
-  action: ({ navigator }) => {
-    navigator.dismissModal();
+  action: ({ componentId }) => {
+    Navigation.dismissModal(componentId)
+    .catch(e => console.warn('dismissButton DISMISSMODAL error: ', e));
   }
 };
 
@@ -26,20 +29,30 @@ export const searchButton: NavButton = {
     icon: require('../../assets/images/search.png'),
     id: 'search'
   },
-  action: ({ navigator }) => {
-    navigator.push({
-      screen: 'Search',
-      animated: false,
-      passProps: {
-        onCancel: () => {
-          navigator.pop({ animated: false });
+  action: ({ componentId }) => {
+    Navigation.push(componentId, {
+      component: {
+        name: 'Search',
+        passProps: {
+          onCancel: () => {
+            Navigation.pop(componentId, {
+              animations: {
+                pop: {
+                  enabled: false
+                }
+              }
+            }).catch(e => console.warn('Search POP error: ', e));
+          }
         }
       }
-    });
+    }).catch(e => console.warn('Search PUSH error: ', e));
   }
 };
 
 export const signOutButton: NavButton = {
-  button: { id: 'signOut', title: 'Sign Out' },
+  button: {
+    id: 'signOut',
+    text: 'Sign Out'
+  },
   action: () => null
 };
