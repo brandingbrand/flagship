@@ -1,5 +1,6 @@
 import React, { Component, RefObject } from 'react';
-import { Linking, Platform, StyleSheet, View, WebView } from 'react-native';
+import { Linking, Platform, StyleSheet, View } from 'react-native';
+import WebView from 'react-native-webview';
 import url from 'url';
 
 import { Loading } from '@brandingbrand/fscomponents';
@@ -19,7 +20,7 @@ const { apiHost } = appEnv;
 // tslint:disable
 export const patchPostMessageFunction = function() {
   const originalPostMessage = window.postMessage;
-  const patchedPostMessage = function(message: any, targetOrigin: string, transfer: any[]) {
+  const patchedPostMessage = function(message: any, targetOrigin: string, transfer?: any[]) {
     originalPostMessage(message, targetOrigin, transfer);
   };
 
@@ -197,7 +198,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
     } else {
       const source = this.path ?
         { uri: apiHost + this.path + this.hash } :
-        { html: this.props.html };
+        { html: this.props.html || '' };
       return (
         <PSScreenWrapper
           scroll={false}

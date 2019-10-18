@@ -89,3 +89,6 @@ test("don't rename source code under Pods folder", () => {
 
   expect(content).toBe(kTestContents);
 });
+
+// Force to be treated as a module
+export {};

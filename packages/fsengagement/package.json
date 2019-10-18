@@ -14,13 +14,14 @@
     "@types/react-native-video": "^2.0.8",
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react": "16.8.6",
+    "react-native": "^0.60.5",
     "react-native-device-info": "^0.21.5",
     "react-native-fcm": "16.0.0",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-video": "^4.0.0",
+    "react-native-webview": "7.0.6",
     "uuid-js": "0.7.5"
   },
   "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"

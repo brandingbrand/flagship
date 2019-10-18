@@ -5,9 +5,9 @@ import {
   StyleSheet,
   TextStyle,
   TouchableOpacity,
-  View,
-  WebView
+  View
 } from 'react-native';
+import WebView from 'react-native-webview';
 import VideoPlayer from 'react-native-video';
 import * as _ from 'lodash-es';
 

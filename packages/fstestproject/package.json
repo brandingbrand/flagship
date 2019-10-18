@@ -36,9 +36,8 @@
     "@brandingbrand/fsturnto": "^7.4.1",
     "@brandingbrand/fsups": "^7.4.1",
     "jsc-android": "241213.x.x",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
-    "react-native-i18n": "^2.0.15"
+    "react": "16.8.6",
+    "react-native": "^0.60.5"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -72,17 +72,12 @@ jest.mock('@brandingbrand/fsnetwork', () => {
 import ShopifyDataSource from '../ShopifyDataSource';
 import Decimal from 'decimal.js';
 
-let dataSource: ShopifyDataSource;
-
 describe('ShopifyDataSource', () => {
-
-  test('constructor', () => {
-    dataSource = new ShopifyDataSource({
-      domain: 'https://flagshipdemo.myshopify.com/api/graphql',
-      storefrontAccessToken: '76f12786038b796aef137d56950644e7',
-      googlePayPublicKey: '',
-      storeCurrencyCode: 'USD'
-    });
+  const dataSource = new ShopifyDataSource({
+    domain: 'https://flagshipdemo.myshopify.com/api/graphql',
+    storefrontAccessToken: '76f12786038b796aef137d56950644e7',
+    googlePayPublicKey: '',
+    storeCurrencyCode: 'USD'
   });
 
   test('fetchProduct', async () => {
@@ -109,3 +104,6 @@ describe('ShopifyDataSource', () => {
   });
 
 });
+
+// Force to be treated as a module
+export {};
