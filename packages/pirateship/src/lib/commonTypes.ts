@@ -1,14 +1,13 @@
 import { ImageURISource } from 'react-native';
-export type PushedScreen<P> = import ('react-native-navigation').PushedScreen<P>;
-export type NavigatorStyle = import ('react-native-navigation').NavigatorStyle;
+import { OptionsTopBarButton } from 'react-native-navigation';
 
 export interface ScreenProps {
-  navigator: import ('react-native-navigation').Navigator;
+  componentId: string;
   onNav: (handler: (event: any) => void) => void;
 }
 
 export interface NavButton {
-  button: import ('react-native-navigation').NavigatorButton;
+  button: OptionsTopBarButton;
   action: (params: any) => void;
 }
 

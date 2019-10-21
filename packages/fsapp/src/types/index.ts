@@ -1,7 +1,7 @@
 import { Analytics } from '@brandingbrand/fsengage';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 import { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
-import { Drawer, NavigatorButton, Screen, TabScreen } from 'react-native-navigation';
+import { LayoutComponent, Options, OptionsTopBarButton } from 'react-native-navigation';
 import { ImageRequireSource } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
 
@@ -13,6 +13,46 @@ export interface DrawerType {
 export interface DrawerConfig {
   side: 'left' | 'right';
   to?: 'open' | 'closed';
+}
+
+export interface Drawer {
+  left?: {
+    screen: string;
+    passProps?: any;
+    disableOpenGesture?: boolean;
+    fixedWidth?: number;
+  };
+  right?: {
+    screen: string;
+    passProps?: any;
+    disableOpenGesture?: boolean;
+    fixedWidth?: number;
+  };
+  style?: {
+    drawerShadow?: boolean;
+    contentOverlayColor?: string;
+    leftDrawerWidth?: number;
+    rightDrawerWidth?: number;
+    shouldStretchDrawer?: boolean;
+  };
+  type?: string;
+  animationType?: string;
+  disableOpenGesture?: boolean;
+}
+
+export interface Screen {
+  screen: string;
+  title?: string;
+  passProps?: any;
+}
+
+export interface WebNavigator {
+  push: (route: any) => any;
+  pop: () => any;
+  popToRoot: () => any;
+  showModal: (route: any) => any;
+  toggleDrawer: (config: DrawerConfig) => void;
+  switchToTab: (route: any) => any;
 }
 
 export interface TabStyle {
@@ -48,32 +88,39 @@ export interface AppConfigType {
     [key: string]: RoutableComponentClass;
   };
   appType?: 'singleScreen';
-  screen?: Screen;
   packageJson?: Dictionary; // TODO: deprecated, insecure - should be removed after the transition
   version?: string; // TODO: mark version & basename as required after the transition
   codePushVersionLabel?: string;
   webBasename?: string;
   env?: Dictionary;
   remote?: FSNetworkRequestConfig;
-  tabs?: TabScreen[];
+  tabs?: Tab[];
   drawer?: Drawer;
-  tabsStyle?: TabStyle;
-  appStyle?: AppStyle;
   variables?: Dictionary;
   initialState?: any;
   reducers?: any;
   webRouterType?: string;
   webRouterProps?: Dictionary;
   analytics?: Analytics;
-  devMenuScreens?: Screen[];
+  devMenuScreens?: LayoutComponent[];
+  devMenuScreensWeb?: Screen[];
   popToRootOnTabPressAndroid?: boolean;
   serverSide?: boolean;
   devMenuPath?: string;
   location?: Location; // Use to provide a server-side location to router in DrawerRouter.web.tsx
+  screen?: LayoutComponent;
+  screenWeb?: Screen;
+  defaultOptions?: Options;
+  bottomTabsId?: string;
+  bottomTabsOptions?: Options;
+}
+
+export interface Tab extends LayoutComponent {
+  id: string;
 }
 
 export interface NavButton {
-  button: NavigatorButton;
+  button: OptionsTopBarButton;
   action: (params: any) => void;
 }
 

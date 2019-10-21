@@ -117,7 +117,7 @@ export default class CodePushDevMenu extends Component<
     this.state = {
       view: '',
       config: this.props.appConfig.env && this.props.appConfig.env.codepush[Platform.OS],
-      version: DeviceInfo.getVersion()
+      version: ''
     };
 
     this.client
@@ -136,6 +136,12 @@ export default class CodePushDevMenu extends Component<
         this.setState({ currentVersion: version });
       });
     }
+  }
+
+  async componentDidMount(): Promise<void> {
+    this.setState({
+      version: await DeviceInfo.getVersion()
+    });
   }
 
   render(): JSX.Element {

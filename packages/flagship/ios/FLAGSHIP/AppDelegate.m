@@ -14,12 +14,12 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
+#import <ReactNativeNavigation/ReactNativeNavigation.h>
 
 #ifdef DEBUG
 #import <React/RCTBundleURLProvider.h>
 #endif
 
-#import "RCCManager.h"
 #import "CodePush.h"
 
 @implementation AppDelegate
@@ -68,9 +68,9 @@ NSURL *jsCodeLocation;
 
   launchOptions = copyOfLaunchOptions;
 
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
+  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
-   return YES;
+  return YES;
 }
 
 // Required to register for notifications

@@ -42,6 +42,7 @@ target 'FLAGSHIP' do
 
   # Add new pods below this line
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'ReactNativeNavigation', :podspec => '../node_modules/react-native-navigation/ReactNativeNavigation.podspec'
 
   # When you have pods that also depend on React (like any custom module),
   # React can end up getting included multiple times. Remove React as a

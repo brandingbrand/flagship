@@ -101,6 +101,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       repeat = false,
       muted = false
     } = this.props;
+    const { isCard } = this.context;
 
     return (
       <View>
@@ -118,7 +119,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
           paused={this.state.videoPaused}
           style={{ width, height }}
         />
-        <TouchableOpacity
+        {!isCard && <TouchableOpacity
           onPress={this.toggleVideo}
           style={[styles.VideoButton, { width, height }]}
         >
@@ -126,7 +127,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
             <View style={styles.VideoButtonWrapper}>
               <View style={styles.VideoButtonInner} />
             </View>}
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     );
   }
@@ -160,6 +161,10 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       style = {},
       containerStyle
     } = this.props;
+
+    if (!source) {
+      return <View />;
+    }
 
     let height = style.height || 200;
     const width = DEFAULT_WIDTH;

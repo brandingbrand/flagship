@@ -112,6 +112,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
         versionCode "${project.VERSION_CODE_SHORT}".toInteger()
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
     }
     signingConfigs {
         release {
@@ -179,17 +180,15 @@ dependencies {
     implementation 'com.google.android.gms:play-services-gcm:16.+'
     implementation 'com.google.android.gms:play-services-maps:16.+'
     implementation 'com.google.android.gms:play-services-wallet:16.+'
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(':react-native-cookies')
-    implementation(project(':react-native-navigation')){
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
+    implementation project(':react-native-navigation')
     implementation project(':react-native-sensitive-info')
     implementation project(':react-native-restart')
 

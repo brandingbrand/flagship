@@ -5,6 +5,7 @@ import * as t from 'tcomb-form-native';
 import { merge } from 'lodash-es';
 import TouchId from 'react-native-touch-id';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { EventSubscription, Navigation } from 'react-native-navigation';
 import { EMAIL_REGEX } from '../lib/constants';
 import { textboxWithRightIcon } from '../lib/formTemplate';
 import formFieldStyles from '../styles/FormField';
@@ -64,6 +65,7 @@ export interface PSSignInProps {
   signInButtonText?: string;
   onNav?: (handler: (event: any) => void) => void;
   runBioAuthImmediately?: boolean;
+  parentComponentId: string;
 }
 
 export interface PSSignInState {
@@ -84,6 +86,7 @@ export default class PSSignInForm extends Component<
   private fieldStyles: { [key: string]: any };
   private fields: { [key: string]: any };
   private form: any;
+  private navigationEventListener: EventSubscription | null = null;
 
   constructor(props: PSSignInProps) {
     super(props);
@@ -100,10 +103,10 @@ export default class PSSignInForm extends Component<
       }
     };
 
-    if (!this.props.runBioAuthImmediately && typeof props.onNav === 'function') {
-      props.onNav(this.onNavigatorEvent);
+    if (!this.props.runBioAuthImmediately) {
+      const { parentComponentId } = this.props;
+      this.navigationEventListener = Navigation.events().bindComponent(this, parentComponentId);
     }
-
     this.fieldStyles = this.getFormFieldStyles();
     this.fields = this.getFormFields();
     this.fieldOptions = this.getFormFieldOptions(this.fieldStyles);
@@ -118,14 +121,14 @@ export default class PSSignInForm extends Component<
     }
   }
 
-  onNavigatorEvent = (event: any): void => {
-    if (event.id === 'didAppear') {
-      this.triggerSavedLogin();
-
-      if (typeof this.props.onNav === 'function') {
-        this.props.onNav(noop);
-      }
+  componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
     }
+  }
+
+  componentDidAppear(): void {
+    this.triggerSavedLogin();
   }
 
   triggerSavedLogin = (): void => {

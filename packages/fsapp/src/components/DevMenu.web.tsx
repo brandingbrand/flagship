@@ -3,9 +3,9 @@
 // in this file since it should only be used in development
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GenericScreenProp } from './screenWrapper';
+import { GenericScreenProp } from './screenWrapper.web';
 import TouchableRow from './TouchableRow';
-import { Screen } from 'react-native-navigation';
+import { Screen } from '../types';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
 import EnvSwitcher from '../lib/env-switcher';
@@ -106,13 +106,13 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
   }
 
   renderDevMenu = () => {
-    const { devMenuScreens = [] } = this.props.appConfig;
+    const { devMenuScreensWeb = [] } = this.props.appConfig;
 
     return (
       <View style={styles.devViewcontainer}>
         <TouchableRow text={`View App Config`} onPress={this.showDevView('app-config')} />
         <TouchableRow text={`Env Switcher`} onPress={this.showDevView('envSwitcher')} />
-        {devMenuScreens.map(this.renderCustomDevScreen)}
+        {devMenuScreensWeb.map(this.renderCustomDevScreen)}
       </View>
     );
   }

@@ -5,6 +5,8 @@ import {
   ScrollView,
   Text
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
+
 import Row from '../../components/Row';
 import {
   cmsProductCatalog
@@ -41,15 +43,6 @@ export default class BrandCMS extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   fetchProduct = () => {
     alert('not implemented');
   }
@@ -62,7 +55,7 @@ export default class BrandCMS extends Component<any, any> {
     this.client
       .fetchCategory(id)
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);

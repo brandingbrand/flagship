@@ -1,71 +1,143 @@
 import { color, palette } from './variables';
+import { Options, OptionsTopBarTitle } from 'react-native-navigation';
+import { Platform } from 'react-native';
 
-export const navBarDark = {
-  statusBarTextColorScheme: 'light',
-  navBarBackgroundColor: palette.primary,
-  navBarButtonColor: palette.onPrimary,
-  navBarTextColor: palette.onPrimary
+export const navBarDark: Options = {
+  statusBar: {
+    style: 'light'
+  },
+  topBar: {
+    background: {
+      color: palette.primary
+    },
+    leftButtonColor: palette.onPrimary,
+    rightButtonColor: palette.onPrimary,
+    title: {
+      color: palette.onPrimary
+    }
+  }
 };
 
-export const navBarLight = {
-  statusBarTextColorScheme: 'dark',
-  navBarBackgroundColor: palette.onPrimary,
-  navBarButtonColor: palette.primary,
-  navBarTextColor: palette.primary
+export const navBarLight: Options = {
+  statusBar: {
+    style: Platform.OS === 'android' ? 'light' : 'dark'
+  },
+  topBar: {
+    background: {
+      color: palette.onPrimary
+    },
+    leftButtonColor: palette.primary,
+    rightButtonColor: palette.primary,
+    title: {
+      color: palette.primary
+    }
+  }
 };
 
-export const navBarFullBleed = {
+export const navBarFullBleed: Options = {
+  statusBar: {
+    style: 'light'
+  },
+  topBar: {
+    visible: false,
+    drawBehind: true
+  },
+  bottomTabs: {
+    visible: true
+  }
+};
+
+export const navBarHide: Options = {
+  statusBar: {
+    style: Platform.OS === 'android' ? 'light' : 'dark'
+  },
+  topBar: {
+    visible: false,
+    drawBehind: true
+  },
+  bottomTabs: {
+    visible: true
+  }
+};
+
+export const titleDefault: OptionsTopBarTitle = {
+  color: palette.onPrimary,
+  alignment: 'center'
+};
+
+export const navBarDefault: Options = {
   ...navBarDark,
-  navBarHidden: true,
-  tabBarHidden: false
+  topBar: {
+    ...navBarDark.topBar,
+    largeTitle: {
+      visible: false
+    },
+    title: {
+      color: palette.onPrimary,
+      alignment: 'center'
+    }
+  }
 };
 
-export const navBarHide = {
-  ...navBarDark,
-  statusBarTextColorScheme: 'dark',
-  navBarHidden: true,
-  tabBarHidden: false
-};
-
-export const navBarNone = {
-  ...navBarDark,
-  statusBarTextColorScheme: 'dark',
-  navBarHidden: true,
-  tabBarHidden: false
-};
-
-export const navBarDefault = {
-  ...navBarDark,
-  largeTitle: false,
-  navBarTitleTextCentered: true
-};
-
-export const navBarNoTabs = {
+export const navBarNoTabs: Options = {
   ...navBarDefault,
-  tabBarHidden: true
+  bottomTabs: {
+    visible: false
+  }
 };
 
-export const navBarTabLanding = {
-  ...navBarLight,
-  navBarHidden: false,
-  largeTitle: true,
-  navBarNoBorder: true,
-  navBarTitleTextCentered: true
+export const navBarTabLanding: Options = {
+  statusBar: {
+    style: Platform.OS === 'android' ? 'light' : 'dark'
+  },
+  topBar: {
+    visible: true,
+    title: {
+      color: palette.primary,
+      alignment: 'center'
+    },
+    largeTitle: {
+      visible: true
+    },
+    noBorder: true,
+    background: {
+      color: palette.onPrimary
+    },
+    leftButtonColor: palette.primary,
+    rightButtonColor: palette.primary
+  }
 };
 
-export const navBarProductDetail = {
-  ...navBarLight,
-  navBarTransparent: false,
-  drawUnderNavBar: false,
-  navBarNoBorder: true
+export const navBarProductDetail: Options = {
+  statusBar: {
+    style: Platform.OS === 'android' ? 'light' : 'dark'
+  },
+  topBar: {
+    background: {
+      translucent: false,
+      color: palette.onPrimary
+    },
+    drawBehind: false,
+    noBorder: true,
+    leftButtonColor: palette.primary,
+    rightButtonColor: palette.primary,
+    title: {
+      color: palette.primary
+    }
+  }
 };
 
-export const tabBarDefault = {
-  bottomTabBadgeBackgroundColor: palette.secondary,
-  forceTitlesDisplay: true,
-  tabBarBackgroundColor: palette.background,
-  tabBarButtonColor: color.gray,
-  tabBarHideShadow: false,
-  tabBarSelectedButtonColor: palette.onBackground,
-  tabBarTranslucent: false
+
+export const tabBarDefault: Options = {
+  bottomTab: {
+    badgeColor: palette.secondary,
+    iconColor: color.gray,
+    selectedIconColor: palette.onBackground
+  },
+  bottomTabs: {
+    backgroundColor: palette.background,
+    hideShadow: false,
+    titleDisplayMode: 'alwaysShow',
+    translucent: false
+  }
 };
