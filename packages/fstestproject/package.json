@@ -38,7 +38,6 @@
     "jsc-android": "241213.x.x",
     "react": "16.8.6",
     "react-native": "^0.60.5",
-    "react-native-i18n": "^2.0.15",
     "react-native-navigation": "3.2.0-snapshot.524"
   },
   "publishConfig": {

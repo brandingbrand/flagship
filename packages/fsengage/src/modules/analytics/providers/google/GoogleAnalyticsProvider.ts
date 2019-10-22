@@ -30,8 +30,8 @@ import AnalyticsProvider, {
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
 
 export interface GoogleAnalyticsProviderConfiguration {
-  trackerId: string;
-  clientId?: string;
+  trackerId: string | Promise<string>;
+  clientId?: string | Promise<string>;
   trackerName?: string;
   cookieDomain?: string;
 }
@@ -58,19 +58,23 @@ interface GoogleAnalyticsScreenViewProperties {
 }
 
 export default class GoogleAnalyticsProvider extends AnalyticsProvider {
-  client: GAClient;
+  client?: GAClient;
+  configuration: GoogleAnalyticsProviderConfiguration;
 
   constructor(commonConfiguration: AnalyticsProviderConfiguration,
               configuration: GoogleAnalyticsProviderConfiguration) {
     super(commonConfiguration);
+    this.configuration = configuration;
+  }
 
+  async asyncInit(): Promise<void> {
     // TODO | BD: Check and filter optional fields.
 
     const network = new FSNetwork();
 
     this.client = new GAClient(
-      configuration.trackerId,
-      configuration.clientId || null,
+      await this.configuration.trackerId,
+      (await this.configuration.clientId) || null,
       null,
       this.userAgent,
       // @ts-ignore TODO update react-native-google-analytics to not need the private instance
@@ -151,103 +155,127 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
 
   addProduct(properties: Product): void {
     this._addProduct(properties);
-    this.client.set(new GAActions.Add());
+    if (this.client) {
+      this.client.set(new GAActions.Add());
+    }
   }
 
   checkout(properties: Checkout, action: CheckoutAction): void {
     properties.products.forEach(product => this._addProduct(product));
 
-    this.client.set(new GAActions.Checkout(
-      action.step,
-      action.option
-    ));
+    if (this.client) {
+      this.client.set(new GAActions.Checkout(
+        action.step,
+        action.option
+      ));
+    }
   }
 
   checkoutOption(properties: Generics, action: CheckoutAction): void {
-    this.client.set(new GAActions.CheckoutOption(action.step, action.option));
+    if (this.client) {
+      this.client.set(new GAActions.CheckoutOption(action.step, action.option));
+    }
   }
 
   clickProduct(properties: Product, action?: ProductAction): void {
     this._addProduct(properties);
-    this.client.set(new GAActions.Click(action && action.list));
+    if (this.client) {
+      this.client.set(new GAActions.Click(action && action.list));
+    }
   }
 
   clickPromotion(properties: Promotion): void {
-    this.client.add(new GAHits.Promo(
-      properties.identifier,
-      properties.name,
-      properties.creative,
-      properties.slot
-    ));
+    if (this.client) {
+      this.client.add(new GAHits.Promo(
+        properties.identifier,
+        properties.name,
+        properties.creative,
+        properties.slot
+      ));
 
-    this.client.set(new GAActions.PromoClick());
+      this.client.set(new GAActions.PromoClick());
+    }
   }
 
   impressionProduct(properties: ImpressionProduct): void {
-    this.client.add(new GAHits.Impression(
-      properties.identifier,
-      properties.name,
-      properties.list,
-      properties.brand,
-      properties.category,
-      properties.variant,
-      properties.index,
-      properties.price
-    ));
+    if (this.client) {
+      this.client.add(new GAHits.Impression(
+        properties.identifier,
+        properties.name,
+        properties.list,
+        properties.brand,
+        properties.category,
+        properties.variant,
+        properties.index,
+        properties.price
+      ));
+    }
   }
 
   impressionPromotion(properties: Promotion): void {
-    this.client.add(new GAHits.Promo(
-      properties.identifier,
-      properties.name,
-      properties.creative,
-      properties.slot
-    ));
+    if (this.client) {
+      this.client.add(new GAHits.Promo(
+        properties.identifier,
+        properties.name,
+        properties.creative,
+        properties.slot
+      ));
+    }
   }
 
   detailProduct(properties: Product, action?: ProductAction): void {
     this._addProduct(properties);
-    this.client.set(new GAActions.Detail(action && action.list));
+    if (this.client) {
+      this.client.set(new GAActions.Detail(action && action.list));
+    }
   }
 
   purchase(properties: Transaction, action: TransactionAction): void {
     properties.products.forEach(product => this._addProduct(product));
 
-    this.client.set(new GAActions.Purchase(
-      action.identifier,
-      action.affiliation,
-      action.revenue,
-      action.tax,
-      action.shippingCost,
-      action.coupons && action.coupons[0] // GA only supports one coupon
-    ));
+    if (this.client) {
+      this.client.set(new GAActions.Purchase(
+        action.identifier,
+        action.affiliation,
+        action.revenue,
+        action.tax,
+        action.shippingCost,
+        action.coupons && action.coupons[0] // GA only supports one coupon
+      ));
+    }
   }
 
   refundAll(properties: Generics, action: TransactionAction): void {
-    this.client.set(new GAActions.Refund(action.identifier));
+    if (this.client) {
+      this.client.set(new GAActions.Refund(action.identifier));
+    }
   }
 
   refundPartial(properties: TransactionRefund, action: TransactionAction): void {
-    properties.products.forEach(product => {
-      this.client.add(new GAHits.Product(
-        product.identifier,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        product.quantity,
-        null
-      ));
-    });
+    if (this.client) {
+      properties.products.forEach(product => {
+        this.client.add(new GAHits.Product(
+          product.identifier,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          product.quantity,
+          null
+        ));
+      });
 
-    this.client.set(new GAActions.Refund(action.identifier));
+      this.client.set(new GAActions.Refund(action.identifier));
+    }
   }
 
   removeProduct(properties: Product): void {
     this._addProduct(properties);
-    this.client.set(new GAActions.Remove());
+    if (this.client) {
+      this.client.set(new GAActions.Remove());
+    }
   }
 
   // App Lifecycle Functions
@@ -263,43 +291,51 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   // Trigger Functions
 
   private _addProduct(properties: any): void {
-    this.client.add(new GAHits.Product(
-      properties.identifier,
-      properties.name,
-      properties.brand,
-      properties.category,
-      properties.variant,
-      properties.coupons && properties.coupons[0], // GA only supports one coupon
-      properties.price,
-      properties.quantity,
-      properties.index
-    ));
+    if (this.client) {
+      this.client.add(new GAHits.Product(
+        properties.identifier,
+        properties.name,
+        properties.brand,
+        properties.category,
+        properties.variant,
+        properties.coupons && properties.coupons[0], // GA only supports one coupon
+        properties.price,
+        properties.quantity,
+        properties.index
+      ));
+    }
   }
 
   private _sendEvent(properties: GoogleAnalyticsEventProperties): void {
-    this.client.send(new GAHits.Event(
-      properties.category,
-      properties.action,
-      properties.label,
-      properties.value
-    ));
+    if (this.client) {
+      this.client.send(new GAHits.Event(
+        properties.category,
+        properties.action,
+        properties.label,
+        properties.value
+      ));
+    }
   }
 
   private _sendPageView(properties: GoogleAnalyticsPageViewProperties): void {
-    this.client.send(new GAHits.PageView(
-      properties.hostname,
-      properties.page,
-      properties.title
-    ));
+    if (this.client) {
+      this.client.send(new GAHits.PageView(
+        properties.hostname,
+        properties.page,
+        properties.title
+      ));
+    }
   }
 
   private _sendScreenView(properties: GoogleAnalyticsScreenViewProperties): void {
-    this.client.send(new GAHits.ScreenView(
-      properties.appName,
-      properties.screenName,
-      properties.appVersion,
-      properties.appId,
-      properties.appInstallerId
-    ));
+    if (this.client) {
+      this.client.send(new GAHits.ScreenView(
+        properties.appName,
+        properties.screenName,
+        properties.appVersion,
+        properties.appId,
+        properties.appInstallerId
+      ));
+    }
   }
 }

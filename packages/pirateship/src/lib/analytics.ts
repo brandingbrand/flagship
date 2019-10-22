@@ -10,20 +10,20 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
-const { version } = projectEnv;
+const version = require('../../env/env').version;
 
 const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgentSync(),
+  userAgent: DeviceInfo.getUserAgent(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
-  appName: DeviceInfo.getApplicationNameSync(),
-  appId: DeviceInfo.getBundleIdSync(),
+  appName: DeviceInfo.getApplicationName(),
+  appId: DeviceInfo.getBundleId(),
   appVersion: version
 };
 
 const googleAnalyticsConfiguration = {
   trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueIdSync()
+  clientId: DeviceInfo.getUniqueId()
 };
 
 const providers = [
