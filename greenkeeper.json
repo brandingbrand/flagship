@@ -33,6 +33,10 @@
     }
   },
   "ignore": [
-    "react-native"
+    "react-native",
+    "react",
+    "metro-react-native-babel-preset",
+    "@babel/core",
+    "@babel/runtime"
   ]
 }
