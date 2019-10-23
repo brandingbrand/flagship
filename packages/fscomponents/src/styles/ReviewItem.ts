@@ -31,6 +31,13 @@ export const style = StyleSheet.create({
     color: '#555',
     fontSize: 14
   },
+  syndicatedLabel: {
+    color: '#767676',
+    fontSize: 13,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
   recommended: {
     color: '#000',
     fontSize: 15

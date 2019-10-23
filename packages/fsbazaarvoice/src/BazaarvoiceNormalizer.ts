@@ -10,6 +10,8 @@ export function review(bvReview: any): ReviewTypes.Review {
     rating: bvReview.Rating,
     user: user(bvReview),
     isRecommended: bvReview.IsRecommended,
+    isSyndicated: bvReview.IsSyndicated,
+    syndicationSource: bvReview.SyndicationSource,
     badges: bvReview.Badges,
     created: bvReview.SubmissionTime,
     context: Object.keys(bvReview.ContextDataValues).map(key => {

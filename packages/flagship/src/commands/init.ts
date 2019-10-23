@@ -31,6 +31,8 @@ export interface HandlerArgs {
   env: string;
 }
 
+const TEMPLATE_ANDROID_PACKAGE = 'com.brandingbrand.reactnative.and.flagship';
+
 export const command = 'init [platform]';
 
 export const describe = 'initialize FLAGSHIP for [platform]';
@@ -128,8 +130,16 @@ function initAndroid(
   fs.clone('android');
 
   const androidConfig = android.androidConfigWithDefault(configuration.android);
+
+  // The id should be defined, but set it to a default if it's not for compatibility reasons
+  const pkgId = configuration.bundleIds && configuration.bundleIds.android ?
+    configuration.bundleIds.android.toLowerCase() :
+    `com.brandingbrand.reactnative.and.${configuration.name.toLowerCase()}`;
+
   // Rename the boilerplate project with the app name
   rename.source('FLAGSHIP', configuration.name, 'android');
+  rename.source('CONFIG_BUNDLE_ID', pkgId, 'android');
+  rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
   rename.files('FLAGSHIP', configuration.name, 'android');
 
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
@@ -201,11 +211,17 @@ function initIOS(
   ios.targetedDevice(configuration); // Set targeted device
   ios.entitlements(configuration); // Add app entitlements
   ios.usageDescription(configuration); // Add usage descriptions
+  ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
     if (configuration.ios.pods) {
-      cocoapods.sources(configuration.ios.pods.sources);
+      if (configuration.ios.pods.sources) {
+        cocoapods.sources(configuration.ios.pods.sources);
+      }
+      if (configuration.ios.pods.newPods) {
+        cocoapods.add(configuration.ios.pods.newPods);
+      }
     }
   }
 
@@ -235,6 +251,14 @@ function initWeb(
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
     path.project.resolve('web')
+  );
+
+  // create config for web version
+  fs.writeFileSync(
+    path.project.resolve('web', 'config.web.json'),
+    JSON.stringify({
+      defaultEnvName: environmentIdentifier
+    })
   );
 
   web.homepage(configuration.webPath || '/');
