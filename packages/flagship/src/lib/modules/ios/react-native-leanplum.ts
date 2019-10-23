@@ -7,5 +7,5 @@ import { Config } from '../../../types';
  * @param {object} configuration The project configuration.
  */
 export function preLink(configuration: Config): void {
-  pods.add([`pod "Leanplum-iOS-SDK", '2.6.1'`]);
+  pods.add([`pod "Leanplum-iOS-SDK", '2.6.2'`]);
 }
