@@ -80,6 +80,13 @@ export interface Cart<T extends CartItem = CartItem> {
    * shipments, each having its own tracking information.
    */
   shipments?: Shipment[];
+
+  /**
+   * The total amount of cart items.
+   *
+   * @example. '3'
+   */
+  itemCount?: number;
 }
 
 /**
