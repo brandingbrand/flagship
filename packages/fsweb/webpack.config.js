@@ -247,6 +247,7 @@ module.exports = function(env, options) {
     (!options || !options.json) && console.log('Webpacking for Development');
     globalConfig.devServer = {
       contentBase: path.join(__dirname, 'dev-server'),
+      historyApiFallback: true,
       port: 8080
     };
     globalConfig.mode = 'development';
