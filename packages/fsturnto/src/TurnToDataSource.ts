@@ -40,7 +40,9 @@ export class TurnToDataSource extends AbstractReviewDataSource implements Review
     });
   }
 
-  async fetchReviewSummary(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewSummary[]> {
+  async fetchReviewSummary(
+    query: ReviewTypes.ReviewQuery
+  ): Promise<ReviewTypes.ReviewSummary[]> {
     const ids = Array.isArray(query.ids) ? query.ids.join(',') : query.ids;
 
     return this.client.get('/products/ugc_summary', {
@@ -48,17 +50,5 @@ export class TurnToDataSource extends AbstractReviewDataSource implements Review
         sku: ids
       }
     }).then(({ data }) => data.map(TurnToNormalizer.reviewSummary));
-  }
-
-  async fetchReviewStatistics(
-    query: ReviewTypes.ReviewQuery
-  ): Promise<ReviewTypes.ReviewStatistics[]> {
-    const ids = Array.isArray(query.ids) ? query.ids.join(',') : query.ids;
-
-    return this.client.get('/products/ugc_summary', {
-      params: {
-        sku: ids
-      }
-    }).then(({ data }) => data.map(TurnToNormalizer.reviewStatistics));
   }
 }

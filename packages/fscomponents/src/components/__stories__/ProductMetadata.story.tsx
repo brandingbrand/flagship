@@ -11,7 +11,7 @@ import Decimal from 'decimal.js';
 
 const defaultReview: ReviewTypes.ReviewDetails = {
   id: '1',
-  statistics: {
+  summary: {
     id: '1',
     averageRating: 4.5,
     reviewCount: 20

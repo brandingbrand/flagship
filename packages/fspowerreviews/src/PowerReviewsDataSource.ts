@@ -41,13 +41,4 @@ export class PowerReviewsDataSource extends AbstractReviewDataSource implements 
     return this.client.get('/product/' + ids + '/snippet')
       .then(({ data }) => data.results.map(PowerReviewsNormalizer.reviewSummary));
   }
-
-  async fetchReviewStatistics(
-    query: ReviewTypes.ReviewQuery
-  ): Promise<ReviewTypes.ReviewStatistics[]> {
-    const id = Array.isArray(query.ids) ? query.ids[0] : query.ids;
-
-    return this.client.get('/product/' + id + '/reviews')
-      .then(({ data }) => data.results.map(PowerReviewsNormalizer.reviewStatistics));
-  }
 }

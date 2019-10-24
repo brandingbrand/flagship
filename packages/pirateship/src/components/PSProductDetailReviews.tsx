@@ -143,14 +143,14 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
       return <Loading style={{ marginTop: 80 }} />;
     }
 
-    const { reviews, statistics } = reviewsData[0];
+    const { reviews, summary } = reviewsData[0];
 
     return (
       <View style={styles.reviews}>
-        {statistics && (
+        {summary && (
           <ReviewsSummary
-            value={statistics.averageRating}
-            count={statistics.reviewCount}
+            value={summary.averageRating}
+            count={summary.reviewCount}
             style={{
               padding: 0,
               paddingTop: 10,

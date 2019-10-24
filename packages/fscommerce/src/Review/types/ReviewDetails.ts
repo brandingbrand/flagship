@@ -1,5 +1,4 @@
 import { Review } from './Review';
-import { ReviewStatistics } from './ReviewStatistics';
 import { ReviewSummary } from './ReviewSummary';
 
 /**
@@ -15,11 +14,6 @@ export interface ReviewDetails {
    * Reviews
    */
   reviews: Review[];
-
-  /**
-   * Statistics for the group of reviews
-   */
-  statistics?: ReviewStatistics;
 
   /**
    * Summary of the group of reviews

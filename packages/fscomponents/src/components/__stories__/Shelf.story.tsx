@@ -42,7 +42,7 @@ const testProduct: CommerceTypes.Product = {
   images: [{ uri: require('./assets/images/greyBox.png') }],
   review: {
     id: '101',
-    statistics: {
+    summary: {
       id: '101',
       averageRating: 4.5,
       reviewCount: 20

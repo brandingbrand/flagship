@@ -21,10 +21,6 @@ export default class PowerReviews extends Component<any, any> {
       <ScrollView style={{ flex: 1 }}>
         <Row text='Fetch Review Detail' onPress={this.fetchReviewDetails} />
         <Row text='Fetch Review Summaries' onPress={this.fetchReviewSummary} />
-        <Row
-          text='Fetch Review Statistics'
-          onPress={this.fetchReviewStatistics}
-        />
       </ScrollView>
     );
   }
@@ -54,19 +50,6 @@ export default class PowerReviews extends Component<any, any> {
   fetchReviewSummary = () => {
     this.client
       .fetchReviewSummary({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        this.showData(data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
-  }
-
-  fetchReviewStatistics = () => {
-    this.client
-      .fetchReviewStatistics({
         ids: kExampleProductId
       })
       .then((data: any) => {

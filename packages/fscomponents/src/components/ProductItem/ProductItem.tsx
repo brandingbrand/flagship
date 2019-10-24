@@ -174,14 +174,9 @@ export class ProductItem extends Component<ProductItemProps> {
       reviewValue // deprecated
     } = this.props;
 
-    if (review) {
-      if (review.summary) {
-        reviewValue = review.summary.averageRating;
-        reviewCount = review.summary.reviewCount;
-      } else if (review.statistics) {
-        reviewValue = review.statistics.averageRating;
-        reviewCount = review.statistics.reviewCount;
-      }
+    if (review && review.summary) {
+      reviewValue = review.summary.averageRating;
+      reviewCount = review.summary.reviewCount;
     }
 
     return (

@@ -577,14 +577,14 @@ class PSProductDetailComponent extends Component<
                 </Text>}
               </View>
               {review &&
-                review.statistics && (
+                review.summary && (
                   <View>
                     <TouchableOpacity
                       style={[styles.row, { alignItems: 'flex-end' }]}
                       onPress={this.openReviews}
                     >
                       <ReviewIndicator
-                        value={review.statistics.averageRating}
+                        value={review.summary.averageRating}
                         itemSize={18}
                       />
                       <Text
@@ -595,10 +595,10 @@ class PSProductDetailComponent extends Component<
                           color: variables.palette.secondary
                         }}
                       >
-                        {review.statistics.averageRating.toFixed(1)}
+                        {review.summary.averageRating.toFixed(1)}
                       </Text>
                       <Text style={{ paddingLeft: 8, fontSize: 12 }}>
-                        ({review.statistics.reviewCount})
+                        ({review.summary.reviewCount})
                       </Text>
                     </TouchableOpacity>
                   </View>

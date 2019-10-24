@@ -14,7 +14,6 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
 
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
     const summaries = await this.fetchReviewSummary(query);
-    const statistics = await this.fetchReviewStatistics(query);
 
     return ids.map(id => {
       const allReviews = Reviews[id] || [];
@@ -23,7 +22,6 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
       return {
         id,
         reviews,
-        statistics: statistics.find(stats => stats.id === id),
         summaries: summaries.find(summary => summary.id === id),
         page,
         limit,
@@ -32,14 +30,9 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
     });
   }
 
-  async fetchReviewSummary(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewSummary[]> {
-    const stats = await this.fetchReviewStatistics(query);
-    return stats.map(({ id, averageRating, reviewCount }) => ({ id, averageRating, reviewCount }));
-  }
-
-  async fetchReviewStatistics(
+  async fetchReviewSummary(
     query: ReviewTypes.ReviewQuery
-  ): Promise<ReviewTypes.ReviewStatistics[]> {
+  ): Promise<ReviewTypes.ReviewSummary[]> {
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
     const summaries = ids
       .filter(id => Reviews[id] && Reviews[id].length)
@@ -67,7 +60,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
         });
 
 
-        const stats: ReviewTypes.ReviewStatistics = {
+        const summary: ReviewTypes.ReviewSummary = {
           id,
           recommendedRatio: recommendations / count,
           averageRating: ratings / count,
@@ -78,7 +71,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
           }))
         };
 
-        return stats;
+        return summary;
       });
 
     return summaries;

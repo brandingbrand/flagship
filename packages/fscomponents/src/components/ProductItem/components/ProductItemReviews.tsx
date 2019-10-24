@@ -45,9 +45,9 @@ export class ProductItemReviews extends Component<ProductItemReviewsProps> {
       reviewValue, // deprecated
       reviewCount  // deprecated
     } = this.props;
-    const stats = review && review.statistics || {} as any;
-    const avgRating = stats.averageRating || reviewValue;
-    const count = stats.reviewCount || reviewCount;
+    const summary = review && review.summary || {} as any;
+    const avgRating = summary.averageRating || reviewValue;
+    const count = summary.reviewCount || reviewCount;
 
     if (renderReviews) {
       return renderReviews();
