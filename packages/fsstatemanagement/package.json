@@ -1,0 +1,21 @@
+{
+  "name": "@brandingbrand/fsstatemanagement",
+  "sideEffects": false,
+  "version": "7.4.1",
+  "description": "Redux types for Flagship",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc",
+    "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@brandingbrand/fsfoundation": "^7.4.1",
+    "redux": "^4.0.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "gitHead": "79ff4fb90c8ee71efa63163de3366c0228da6fb3"
+}
