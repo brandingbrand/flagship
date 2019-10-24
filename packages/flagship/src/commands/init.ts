@@ -211,11 +211,17 @@ function initIOS(
   ios.targetedDevice(configuration); // Set targeted device
   ios.entitlements(configuration); // Add app entitlements
   ios.usageDescription(configuration); // Add usage descriptions
+  ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
     if (configuration.ios.pods) {
-      cocoapods.sources(configuration.ios.pods.sources);
+      if (configuration.ios.pods.sources) {
+        cocoapods.sources(configuration.ios.pods.sources);
+      }
+      if (configuration.ios.pods.newPods) {
+        cocoapods.add(configuration.ios.pods.newPods);
+      }
     }
   }
 
@@ -245,6 +251,14 @@ function initWeb(
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
     path.project.resolve('web')
+  );
+
+  // create config for web version
+  fs.writeFileSync(
+    path.project.resolve('web', 'config.web.json'),
+    JSON.stringify({
+      defaultEnvName: environmentIdentifier
+    })
   );
 
   web.homepage(configuration.webPath || '/');
