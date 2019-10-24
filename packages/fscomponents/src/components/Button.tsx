@@ -169,8 +169,6 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       (!selectedTitleState && selectedTitleState !== 0) ||
       !dynamicTitleStates ||
       (
-        selectedTitleState &&
-        dynamicTitleStates &&
         selectedTitleState >= dynamicTitleStates.length
       )
       ) {
