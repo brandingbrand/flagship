@@ -143,7 +143,7 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
           <Star
             text='★'
             renderStar={renderEmptyStar}
-            style={[customStarStyle, { color: this.props.emptyColor }, S.emptyStar]}
+            style={[customStarStyle, S.emptyStar, { color: this.props.emptyColor }]}
             key={v}
           />
         ))}
