@@ -18,6 +18,7 @@
     "@brandingbrand/fsnetwork": "^7.4.1",
     "google-map-react": "^1.0.4",
     "lodash-es": "^4.17.10",
+    "prop-types": "^15.6.2",
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-geocoder": "^0.5.0",
