@@ -44,18 +44,18 @@
     "credit-card-type": "^7.0.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react": "16.8.6",
+    "react-native": "^0.60.5",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^3.1.4",
     "react-native-htmlview": "^0.13.0",
-    "react-native-i18n": "^2.0.15",
-    "react-native-navigation": "2.26.3",
+    "react-native-navigation": "3.2.0-snapshot.524",
     "react-native-payments": "^0.7.1",
     "react-native-safe-area": "^0.5.0",
-    "react-native-sensitive-info": "~5.4.0",
+    "react-native-sensitive-info": "^5.5.0",
     "react-native-svg": "^9.3.6",
     "react-native-touch-id": "~4.3.0",
+    "react-native-webview": "7.0.6",
     "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
   },
@@ -72,6 +72,10 @@
       "react-native-safe-area",
       "react-native-svg",
       "react-native-payments"
+    ],
+    "forceLink": [
+      "@react-native-community/async-storage",
+      "react-native-svg"
     ],
     "webTitle": "PirateShip"
   },

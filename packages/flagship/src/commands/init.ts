@@ -74,12 +74,11 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link.link()
+  link.link(projectPackageJSON.flagship && projectPackageJSON.flagship.forceLink)
     .then(() => {
       if (doAndroid) {
         modules.android(projectPackageJSON, configuration, 'postLink');
       }
-
       if (doIOS) {
         modules.ios(projectPackageJSON, configuration, 'postLink');
         cocoapods.install();
@@ -251,6 +250,14 @@ function initWeb(
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
     path.project.resolve('web')
+  );
+
+  // create config for web version
+  fs.writeFileSync(
+    path.project.resolve('web', 'config.web.json'),
+    JSON.stringify({
+      defaultEnvName: environmentIdentifier
+    })
   );
 
   web.homepage(configuration.webPath || '/');

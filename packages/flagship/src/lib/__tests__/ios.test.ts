@@ -279,3 +279,6 @@ test(`copy sentry properties`, () => {
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
 });
+
+// Force to be treated as a module
+export {};

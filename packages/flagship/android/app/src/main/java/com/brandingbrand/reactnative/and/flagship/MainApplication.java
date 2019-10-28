@@ -60,39 +60,6 @@ public class MainApplication extends NavigationApplication {
         return "index";
     }
 
-
-    // Related issue: https://github.com/facebook/react-native/issues/17178#issuecomment-394662148
-    // This is fixed in RN 0.60 and should be removed when upgrading
-    protected UIImplementationProvider getUIImplementationProvider() {
-      return new UIImplementationProvider() {
-          @Override
-          public UIImplementation createUIImplementation(
-                  ReactApplicationContext reactContext,
-                  UIManagerModule.ViewManagerResolver viewManagerResolver,
-                  EventDispatcher eventDispatcher,
-                  int minTimeLeftInFrameForNonBatchedOperationMs) {
-              return new ThreadSafeUIImplementation(
-                      reactContext,
-                      viewManagerResolver,
-                      eventDispatcher,
-                      minTimeLeftInFrameForNonBatchedOperationMs);
-          }
-
-          @Override
-          public UIImplementation createUIImplementation(
-                  ReactApplicationContext reactContext,
-                  List<ViewManager> viewManagerList,
-                  EventDispatcher eventDispatcher,
-                  int minTimeLeftInFrameForNonBatchedOperationMs) {
-              return new ThreadSafeUIImplementation(
-                      reactContext,
-                      viewManagerList,
-                      eventDispatcher,
-                      minTimeLeftInFrameForNonBatchedOperationMs);
-          }
-      };
-  }
-
     @Override
     public void onCreate() {
         super.onCreate();

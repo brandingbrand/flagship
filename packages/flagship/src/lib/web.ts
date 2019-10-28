@@ -54,6 +54,7 @@ export function install(): void {
 export function link(packageJSON: NPMPackageConfig): void {
   logInfo('linking web node_modules to parent node_modules');
 
+  const parentNodeModules = path.project.resolve('..', '..', 'node_modules');
   const mainNodeModules = path.project.resolve('node_modules');
   const webNodeModules = path.project.resolve('web', 'node_modules');
 
@@ -64,6 +65,7 @@ export function link(packageJSON: NPMPackageConfig): void {
 
     const destinationDependencyPath = path.resolve(webNodeModules, dependencyPath);
     const sourceDependencyPath = path.resolve(mainNodeModules, dependencyPath);
+    const parentSourceDependencyPath = path.resolve(parentNodeModules, dependencyPath);
 
     // Ensure we have the dependency installed in the main node_modules
     if (fs.pathExistsSync(sourceDependencyPath)) {
@@ -77,6 +79,17 @@ export function link(packageJSON: NPMPackageConfig): void {
 
       // Link the dependency to the main node_modules
       fs.ensureSymlinkSync(sourceDependencyPath, destinationDependencyPath);
+    } else if (fs.pathExistsSync(parentSourceDependencyPath)) {
+      // Check if this dependency already exists
+      if (fs.pathExistsSync(dependencyPath)) {
+        // Remove it so we can replace it with the dependency from the main package
+        fs.removeSync(dependencyPath);
+
+        logWarn(`dependency ${dependency} existed in web node_modules and was removed`);
+      }
+
+      // Link the dependency to the main node_modules
+      fs.ensureSymlinkSync(parentSourceDependencyPath, destinationDependencyPath);
     } else {
       // The source dependency did not exist
       logWarn(`could not locate dependency ${dependency} in node_modules`);

@@ -17,10 +17,10 @@
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.7.0",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react": "16.8.6",
+    "react-native": "^0.60.5",
     "react-native-cookies": "^3.3.0",
-    "react-native-sensitive-info": "~5.4.0"
+    "react-native-sensitive-info": "^5.5.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
