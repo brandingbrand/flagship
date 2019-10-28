@@ -3,66 +3,45 @@ import { formatHours } from '../helpers';
 const hours = [
   {
     dayOfWeek: 1,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1408
+    close: '9 PM'
   },
   {
     dayOfWeek: 2,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1409
+    close: '9 PM'
   },
   {
     dayOfWeek: 3,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1410
+    close: '9 PM'
   },
   {
     dayOfWeek: 4,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1411
+    close: '9 PM'
   },
   {
     dayOfWeek: 6,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1412
+    close: '9 PM'
   },
   {
     dayOfWeek: 0,
-    date: null,
     open: '6:30 AM',
-    close: '7 PM',
-    serviceId: 316,
-    id: 1413
+    close: '7 PM'
   },
   {
     dayOfWeek: 5,
-    date: null,
     open: '6:30 AM',
-    close: '9 PM',
-    serviceId: 316,
-    id: 1415
+    close: '9 PM'
   }
 ];
 
 describe('formatHours', () => {
-  const currentDate = new Date('Tue Jul 25 2017 11:46:32 GMT-0400 (EDT)');
-  const beforeOpenDate = new Date('Tue Jul 25 2017 1:46:32 GMT-0400 (EDT)');
-  const afterCloesdDate = new Date('Tue Jul 25 2017 22:46:32 GMT-0400 (EDT)');
+  const currentDate = new Date('Tue Jul 25 2017 11:46:32');
+  const beforeOpenDate = new Date('Tue Jul 25 2017 1:46:32');
+  const afterCloseDate = new Date('Tue Jul 25 2017 22:46:32');
 
   test('default format', () => {
     expect(formatHours(hours, currentDate)).toBe('Open 6:30 AM to 9 PM');
@@ -83,7 +62,7 @@ describe('formatHours', () => {
   });
 
   test('format 3 after closed', () => {
-    expect(formatHours(hours, afterCloesdDate, '3')).toBe(
+    expect(formatHours(hours, afterCloseDate, '3')).toBe(
       'Closed | Closes 9 PM'
     );
   });
