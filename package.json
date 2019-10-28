@@ -67,7 +67,7 @@
     "@types/react-native-permissions": "^1.1.1",
     "@types/react-native-touch-id": "^4.0.0",
     "@types/react-redux": "^6.0.0",
-    "@types/react-router-dom": "^4.2.6",
+    "@types/react-router-dom": "^4.3.5",
     "@types/redux-logger": "^3.0.6",
     "@types/storybook__addon-actions": "^3.0.3",
     "@types/storybook__addon-knobs": "^3.3.1",
