@@ -52,7 +52,7 @@
     "react-native-payments": "^0.7.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "~5.4.0",
-    "react-native-svg": "^9.3.6",
+    "react-native-svg": "^9.13.3",
     "react-native-touch-id": "~4.3.0",
     "react-redux": "^5.0.7",
     "tcomb-form-native": "^0.6.12"
