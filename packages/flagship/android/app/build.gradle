@@ -154,6 +154,7 @@ android {
 
     // for jsc-android: https://github.com/react-native-community/jsc-android-buildscripts
     packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
         pickFirst '**/libjsc.so'
         pickFirst '**/libc++_shared.so'
     }
