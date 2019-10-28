@@ -57,14 +57,21 @@ interface GoogleAnalyticsScreenViewProperties {
   screenName: string;
 }
 
+interface QueuedFunction {
+  func: any;
+  params: IArguments;
+}
+
 export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   client?: GAClient;
   configuration: GoogleAnalyticsProviderConfiguration;
+  queue: QueuedFunction[];
 
   constructor(commonConfiguration: AnalyticsProviderConfiguration,
               configuration: GoogleAnalyticsProviderConfiguration) {
     super(commonConfiguration);
     this.configuration = configuration;
+    this.queue = [];
   }
 
   async asyncInit(): Promise<void> {
@@ -80,6 +87,15 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       // @ts-ignore TODO update react-native-google-analytics to not need the private instance
       network.instance
     );
+
+    while (this.queue.length) {
+      const queued: QueuedFunction | undefined = this.queue.pop();
+      if (queued) {
+        queued.func.apply(this, queued.params);
+      } else {
+        break;
+      }
+    }
   }
 
   // Commerce Functions
@@ -157,6 +173,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     this._addProduct(properties);
     if (this.client) {
       this.client.set(new GAActions.Add());
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.addProduct,
+        params: arguments
+      });
     }
   }
 
@@ -168,12 +190,24 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         action.step,
         action.option
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.checkout,
+        params: arguments
+      });
     }
   }
 
   checkoutOption(properties: Generics, action: CheckoutAction): void {
     if (this.client) {
       this.client.set(new GAActions.CheckoutOption(action.step, action.option));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.checkoutOption,
+        params: arguments
+      });
     }
   }
 
@@ -181,6 +215,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     this._addProduct(properties);
     if (this.client) {
       this.client.set(new GAActions.Click(action && action.list));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.clickProduct,
+        params: arguments
+      });
     }
   }
 
@@ -194,6 +234,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
 
       this.client.set(new GAActions.PromoClick());
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.clickPromotion,
+        params: arguments
+      });
     }
   }
 
@@ -209,6 +255,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.index,
         properties.price
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.impressionProduct,
+        params: arguments
+      });
     }
   }
 
@@ -220,6 +272,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.creative,
         properties.slot
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.impressionPromotion,
+        params: arguments
+      });
     }
   }
 
@@ -227,6 +285,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     this._addProduct(properties);
     if (this.client) {
       this.client.set(new GAActions.Detail(action && action.list));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.detailProduct,
+        params: arguments
+      });
     }
   }
 
@@ -242,12 +306,24 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         action.shippingCost,
         action.coupons && action.coupons[0] // GA only supports one coupon
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.purchase,
+        params: arguments
+      });
     }
   }
 
   refundAll(properties: Generics, action: TransactionAction): void {
     if (this.client) {
       this.client.set(new GAActions.Refund(action.identifier));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.refundAll,
+        params: arguments
+      });
     }
   }
 
@@ -268,6 +344,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       });
 
       this.client.set(new GAActions.Refund(action.identifier));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.refundPartial,
+        params: arguments
+      });
     }
   }
 
@@ -275,6 +357,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     this._addProduct(properties);
     if (this.client) {
       this.client.set(new GAActions.Remove());
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.removeProduct,
+        params: arguments
+      });
     }
   }
 
@@ -303,6 +391,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.quantity,
         properties.index
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this._addProduct,
+        params: arguments
+      });
     }
   }
 
@@ -314,6 +408,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.label,
         properties.value
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this._sendEvent,
+        params: arguments
+      });
     }
   }
 
@@ -324,6 +424,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.page,
         properties.title
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this._sendPageView,
+        params: arguments
+      });
     }
   }
 
@@ -336,6 +442,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         properties.appId,
         properties.appInstallerId
       ));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this._sendScreenView,
+        params: arguments
+      });
     }
   }
 }
