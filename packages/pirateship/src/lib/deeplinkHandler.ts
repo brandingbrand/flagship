@@ -1,7 +1,7 @@
 import { parse as urlPaser } from 'url';
-import { Navigation } from 'react-native-navigation';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
-export type Matcher = (url: string, componentId: string) => boolean;
+export type Matcher = (url: string, navigator: NavWrapper) => boolean;
 
 const matchers: Matcher[] = [
   matchHome
@@ -9,13 +9,13 @@ const matchers: Matcher[] = [
 
 export function handleDeeplink(
   url: string,
-  componentId: string,
+  navigator: NavWrapper,
   noPassthrough?: boolean
 ): boolean {
   let match: boolean;
 
   for (const matcher of matchers) {
-    match = matcher(url, componentId);
+    match = matcher(url, navigator);
     if (match) {
       return true;
     }
@@ -24,7 +24,7 @@ export function handleDeeplink(
   if (noPassthrough) {
     return false;
   } else {
-    Navigation.push(componentId, {
+    navigator.push({
       component: {
         name: 'DesktopPassthrough',
         passProps: {
@@ -36,10 +36,10 @@ export function handleDeeplink(
   return true;
 }
 
-function matchHome(url: string, componentId: string): boolean {
+function matchHome(url: string, navigator: NavWrapper): boolean {
   const { pathname } = urlPaser(url);
   if (pathname === null || pathname === '/') {
-    Navigation.popToRoot(componentId)
+    navigator.popToRoot()
     .catch(e => console.warn('POPTOROOT error: ', e));
     return true;
   }

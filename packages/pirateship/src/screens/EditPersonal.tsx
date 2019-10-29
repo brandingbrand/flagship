@@ -4,7 +4,7 @@ import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import { border, padding } from '../styles/variables';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -34,7 +34,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
 
   constructor(props: EditPersonalScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.editPersonal.title)
@@ -72,6 +72,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={false}
         style={AccountStyle.container}
@@ -117,7 +118,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   cancel = async () => {
-    return Navigation.pop(this.props.componentId)
+    return this.props.navigator.pop()
     .catch(e => console.warn('POP error: ', e));
   }
 
@@ -129,7 +130,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
         .then(this.cancel)
         // TODO: add types for errors
         .catch((e: any) => handleAccountRequestError(
-          e, this.props.componentId, this.props.signOut));
+          e, this.props.navigator, this.props.signOut));
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSProductDetailReviews from '../components/PSProductDetailReviews';
@@ -18,7 +18,7 @@ export default class ProductDetailReviews extends Component<ProductDetailReviews
   static leftButtons: NavButton[] = [backButton];
   constructor(props: ProductDetailReviewsProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.productDetail.reviewsTitle)
@@ -31,6 +31,7 @@ export default class ProductDetailReviews extends Component<ProductDetailReviews
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         hideGlobalBanner={true}
       >
         <PSProductDetailReviews

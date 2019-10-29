@@ -133,6 +133,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
         scrollViewProps={{

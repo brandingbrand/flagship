@@ -1,17 +1,17 @@
-import { Navigation } from 'react-native-navigation';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
-export const openSignInModal = (componentId: string) => () => {
-  Navigation.showModal({
+export const openSignInModal = (navigator: NavWrapper) => () => {
+  navigator.showModal({
     component: {
       name: 'SignIn',
       passProps: {
         dismissible: true,
         onDismiss: () => {
-          Navigation.dismissModal(componentId)
+          navigator.dismissModal()
           .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
         },
         onSignInSuccess: () => {
-          Navigation.dismissModal(componentId)
+          navigator.dismissModal()
           .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
         }
       }
@@ -21,13 +21,13 @@ export const openSignInModal = (componentId: string) => () => {
 
 export const handleAccountRequestError = (
   error: any,
-  componentId: string,
+  navigator: NavWrapper,
   signOutFn: () => Promise<any>
 ): void => {
   if (error.response && error.response.status && error.response.status === 401) {
     signOutFn()
       .then(() => {
-        Navigation.setStackRoot(componentId, {
+        navigator.setStackRoot({
           component: {
             name: 'Account',
             options: {
@@ -43,7 +43,7 @@ export const handleAccountRequestError = (
       .catch(e => {
         console.warn('Error signing user out', e);
 
-        Navigation.setStackRoot(componentId, {
+        navigator.setStackRoot({
           component: {
             name: 'Account',
             options: {

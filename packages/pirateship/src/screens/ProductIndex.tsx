@@ -19,7 +19,9 @@ export default class ProductIndex extends Component<ProductIndexProps> {
   render(): JSX.Element {
 
     return (
-      <PSScreenWrapper>
+      <PSScreenWrapper
+        navigator={this.props.navigator}
+      >
         <PSProductIndex {...this.props} />
       </PSScreenWrapper>
     );

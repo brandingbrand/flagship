@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import { cloneDeep, find, findIndex } from 'lodash-es';
 import {
   Loading,
@@ -39,6 +38,7 @@ import {
   CommerceTypes,
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 const icons = {
   zoom: require('../../assets/images/icon-zoom.png'),
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
 // TODO: RecentlyViewed and Cart providers should be updated to properly pass types through
 export interface UnwrappedPSProductDetailProps extends RecentlyViewedProps {
   id: string;
-  componentId: string;
+  navigator: NavWrapper;
   onAddToCart?: (data: any) => any; // TODO: Update this with real types
   onOpenHTMLView?: (html: string, title?: string) => void;
   reviewDataSource: ReviewDataSource;
@@ -271,7 +271,7 @@ class PSProductDetailComponent extends Component<
   }
 
   componentDidUpdate(prevProps: PSProductDetailComponentInternalProps): void {
-    const { commerceData, componentId } = this.props;
+    const { commerceData } = this.props;
     if (commerceData) {
       if (this.state.id !== commerceData.id) {
         if (!commerceData.variants || commerceData.variants.length === 0) {
@@ -295,7 +295,7 @@ class PSProductDetailComponent extends Component<
 
       if (commerceData.title &&
         commerceData.title !== (prevProps.commerceData && prevProps.commerceData.title)) {
-        Navigation.mergeOptions(componentId, {
+        this.props.navigator.mergeOptions({
           topBar: {
             title: {
               text: commerceData.title
@@ -351,7 +351,7 @@ class PSProductDetailComponent extends Component<
         variant.id &&
         ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
       ) {
-        Navigation.push(this.props.componentId, {
+        this.props.navigator.push({
           component: {
             name: 'ProductDetail',
             passProps: {
@@ -416,7 +416,7 @@ class PSProductDetailComponent extends Component<
   }
 
   goToProduct = (product: any) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
@@ -462,19 +462,19 @@ class PSProductDetailComponent extends Component<
   }
 
   openSignInModal = () => () => {
-    Navigation.showModal({
+    this.props.navigator.showModal({
       component: {
         name: 'SignIn',
         passProps: {
           dismissible: true,
           onDismiss: () => {
-            Navigation.dismissModal(this.props.componentId)
+            this.props.navigator.dismissModal()
               .catch(e => console.warn('DISMISSMODAL error: ', e));
           },
           onSignInSuccess: () => {
-            Navigation.popToRoot(this.props.componentId)
+            this.props.navigator.popToRoot()
               .catch(e => console.warn('POPTOROOT error: ', e));
-            Navigation.push(this.props.componentId, {
+            this.props.navigator.push({
               component: {
                 name: 'ProductDetail',
                 passProps: {
@@ -482,7 +482,7 @@ class PSProductDetailComponent extends Component<
                 }
               }
             }).catch(e => console.warn('ProductDetail PUSH error: ', e));
-            Navigation.dismissModal(this.props.componentId)
+            this.props.navigator.dismissModal()
               .catch(e => console.warn('DISMISSMODAL error: ', e));
           }
         }
@@ -699,7 +699,7 @@ class PSProductDetailComponent extends Component<
   }
 
   openWebView = (url: string, title: string) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'DesktopPassthrough',
         options: {
@@ -763,7 +763,7 @@ class PSProductDetailComponent extends Component<
   }
 
   navigateToScreen = (screen: string, title: string, props: any) => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: screen,
         passProps: props,

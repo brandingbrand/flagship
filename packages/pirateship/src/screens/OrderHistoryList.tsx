@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Loading } from '@brandingbrand/fscomponents';
@@ -97,7 +97,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   static leftButtons: NavButton[] = [backButton];
   constructor(props: PropType) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    this.props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.viewOrders.title)
@@ -144,7 +144,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
     } catch (error) {
       if (error && error.response && error.response.status === 401) {
         // user's session has expired. sign them out.
-        handleAccountRequestError(error, this.props.componentId, this.props.signOut);
+        handleAccountRequestError(error, this.props.navigator, this.props.signOut);
       } else {
         this.setState({
           errors: [
@@ -180,6 +180,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         style={styles.container}
         scroll={isLoggedIn}
       >
@@ -263,7 +264,7 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   trackOrder = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'TrackOrderLanding',
         options: {
@@ -315,18 +316,18 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   signIn = async () => {
-    return Navigation.showModal({
+    return this.props.navigator.showModal({
       component: {
         name: 'SignIn',
         passProps: {
           dismissible: true,
           onDismiss: () => {
-            Navigation.dismissModal(this.props.componentId)
-            .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+            this.props.navigator.dismissModal()
+            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
           },
           onSignInSuccess: async () => {
-            Navigation.dismissModal(this.props.componentId)
-            .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+            this.props.navigator.dismissModal()
+            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
             await this.fetchOrders();
           }
         }

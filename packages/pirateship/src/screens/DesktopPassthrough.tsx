@@ -1,7 +1,7 @@
 import React, { Component, RefObject } from 'react';
 import { Linking, Platform, StyleSheet, View } from 'react-native';
 import WebView from 'react-native-webview';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import url from 'url';
 
 import { Loading } from '@brandingbrand/fscomponents';
@@ -87,7 +87,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
   webviewOnError = (error: any): void => {
     console.log(error);
-    Navigation.popToRoot(this.props.componentId)
+    this.props.navigator.popToRoot()
     .catch(e => console.warn('POPTOROOT error: ', e));
   }
 
@@ -122,7 +122,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
         // passthrough screen if not.
         handleDeeplink(
           urlParts.protocol + '//' + this.host + urlParts.path,
-          this.props.componentId
+          this.props.navigator
         );
 
         // Since we're pushing a new screen we return false so the webview doesn't navigate
@@ -174,7 +174,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
   handleMessage = (e: any) => {
     if (e.nativeEvent.data && e.nativeEvent.data.indexOf('title:') === 0) {
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions({
         topBar: {
           title: {
             text: e.nativeEvent.data.replace('title:', '')
@@ -192,6 +192,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
           : apiHost + this.path;
       return (
         <PSScreenWrapper
+          navigator={this.props.navigator}
           scroll={false}
         >
           <View style={styles.flex1}>
@@ -208,6 +209,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
           scroll={false}
           hideGlobalBanner={!!this.props.html}
           hideWebHeader={!!this.props.html}
+          navigator={this.props.navigator}
         >
           <View style={styles.flex1}>
             <WebView

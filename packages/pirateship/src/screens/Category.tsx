@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import { Category as FSCategory } from '@brandingbrand/fscategory';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -108,7 +108,7 @@ export default class Category extends Component<PropType, StateType> {
         passProps.format = dataSourceConfig.categoryFormat;
       }
 
-      Navigation.push(this.props.componentId, {
+      this.props.navigator.push({
         component: {
           name: screen,
           options: {
@@ -152,7 +152,9 @@ export default class Category extends Component<PropType, StateType> {
     }
 
     return (
-      <PSScreenWrapper>
+      <PSScreenWrapper
+        navigator={this.props.navigator}
+      >
         <View style={{ margin }}>
           <FSCategory
             format={categoryFormat}
@@ -174,7 +176,7 @@ export default class Category extends Component<PropType, StateType> {
   updateTitle = (data: any) => {
     if (data && typeof data === 'object') {
       const { title = '' } = data;
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions({
         topBar: {
           title: {
             text: title

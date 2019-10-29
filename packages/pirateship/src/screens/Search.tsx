@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import {
   SearchScreen as SearchSuggestionScreen
@@ -123,6 +123,7 @@ class Search extends Component<SearchProps, SearchState> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         scroll={false}
         hideGlobalBanner={true}
         needInSafeArea={true}
@@ -162,7 +163,7 @@ class Search extends Component<SearchProps, SearchState> {
 
     return (
       <PSProductIndex
-        componentId={this.props.componentId}
+        navigator={this.props.navigator}
         productQuery={this.getQueryFromPropsAndInput()}
         keyword={this.getKeywordFromPropsOrInput()}
         renderNoResult={this.renderNoResult}
@@ -230,15 +231,15 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   handlePromotedProductPress = (href: string) => () => {
-    handleDeeplink(href, this.props.componentId);
+    handleDeeplink(href, this.props.navigator);
   }
 
   contactUs = () => {
-    handleDeeplink('http://www.example.com', this.props.componentId);
+    handleDeeplink('http://www.example.com', this.props.navigator);
   }
 
   shopByCategory = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'Category',
         options: {
@@ -256,7 +257,7 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   onPress = (item: CommerceTypes.Product) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
@@ -277,7 +278,7 @@ class Search extends Component<SearchProps, SearchState> {
     if (item.query) {
       return this.handleInputSubmit(item.query);
     } else {
-      Navigation.push(this.props.componentId, {
+      this.props.navigator.push({
         component: {
           name: 'ProductIndex',
           options: {

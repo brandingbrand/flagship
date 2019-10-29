@@ -86,7 +86,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   }
 
   generateRoutes = (appConfig: AppConfigType, api: FSNetwork) => {
-    const { screens, screenWeb } = appConfig;
+    const { screens, screen } = appConfig;
 
     // per-inject parsed path to screen object,
     // so it can be filled with passProps efficiently
@@ -102,7 +102,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       }
     });
 
-    if (!screenWeb || !screenWeb.screen) {
+    if (!screen || !screen.name) {
       throw new Error('screen is required in appConfig for web');
     }
 
@@ -113,7 +113,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         path={'/'}
         render={this._renderDrawerWrapper(
           screenWrapper(
-            screens[screenWeb.screen],
+            screens[screen.name],
             appConfig,
             api,
             this.toggleDrawer

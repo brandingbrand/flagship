@@ -7,7 +7,7 @@ import Row from '../components/PSRow';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import { LayoutComponent, Navigation, Options } from 'react-native-navigation';
+import { LayoutComponent, Options } from 'react-native-navigation';
 
 const screens: LayoutComponent[] = [
   { options: { topBar: { title: { text: 'Product Index' }}}, name: 'ProductIndex' },
@@ -37,6 +37,7 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <Row
           title='Sign Out without clearing saved credentials'
@@ -58,7 +59,7 @@ class Development extends Component<DevelopmentScreenProps, DevelopmentScreenSta
   }
 
   goTo = (screen: LayoutComponent) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: screen
     }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }

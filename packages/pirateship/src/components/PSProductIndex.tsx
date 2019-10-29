@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import React, { Component } from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
@@ -23,6 +23,7 @@ import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 import { NavButton } from '../lib/commonTypes';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 const window = Dimensions.get('window');
 
@@ -156,9 +157,9 @@ const PIPStyle = StyleSheet.create({
 });
 
 export interface ProductIndexProps {
-  componentId: string;
   categoryId?: string;
   keyword?: string;
+  navigator: NavWrapper;
   renderNoResult?: any;
   productQuery?: CommerceTypes.ProductQuery;
   title?: string;
@@ -211,7 +212,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
         newTitle += ' (' + data.total + ')';
       }
 
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions({
         topBar: {
           title: {
             text: newTitle
@@ -222,8 +223,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   }
 
   onPress = (item: CommerceTypes.Product) => () => {
-    const { componentId } = this.props;
-    Navigation.push(componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
@@ -234,8 +234,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   }
 
   onGroupPress = (item: CommerceTypes.Product) => () => {
-    const { componentId } = this.props;
-    Navigation.push(componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductIndex',
         options: {

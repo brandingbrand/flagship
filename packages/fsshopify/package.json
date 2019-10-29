@@ -13,6 +13,7 @@
     "test": "jest /fsshopify/ --colors --config ../../jest.json"
   },
   "dependencies": {
+    "@brandingbrand/fsapp": "^8.2.0-rnn2.0",
     "@brandingbrand/fscommerce": "^8.2.0-rnn2.0",
     "@brandingbrand/fsfoundation": "^8.2.0-rnn2.0",
     "@brandingbrand/fsi18n": "^8.2.0-rnn2.0",

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { LayoutComponent, Navigation, Options } from 'react-native-navigation';
+import { LayoutComponent, Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
@@ -27,6 +27,7 @@ class CartCountSample extends Component<CartCountSampleScreenProps> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <View style={styles.row}>
           <CartCount
@@ -54,7 +55,7 @@ class CartCountSample extends Component<CartCountSampleScreenProps> {
   }
 
   goTo = (screen: LayoutComponent) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: screen
     }).catch(e => console.warn('PUSH error: ', e));
   }

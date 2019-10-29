@@ -7,11 +7,11 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import PSProductCarousel from './PSProductCarousel';
 import { border, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,14 +38,14 @@ export interface PSRecentlyViewedCarouselProps {
   titleStyle?: StyleProp<TextStyle>;
   carouselStyle?: StyleProp<ViewStyle>;
   items: CommerceTypes.Product[];
-  componentId: string;
+  navigator: NavWrapper;
 }
 
 const PSRecentlyViewedCarousel: FunctionComponent<PSRecentlyViewedCarouselProps> =
 (props): JSX.Element => {
 
   const handlePromotedProductPress = (productId: string) => () => {
-    Navigation.push(props.componentId, {
+    props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {

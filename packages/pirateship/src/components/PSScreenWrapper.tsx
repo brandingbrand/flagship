@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-
+import { FSAppTypes } from '@brandingbrand/fsapp';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -35,6 +35,8 @@ export interface PSScreenWrapperProps {
 
   hideGlobalBanner?: boolean;
   overrideGlobalBanner?: PSGlobalBannerSlotItem;
+
+  navigator: FSAppTypes.NavWrapper;
 
   needInSafeArea?: boolean;
 
@@ -159,7 +161,9 @@ export default class PSScreenWrapper extends PureComponent<
             />
           )}
           {!hideWebHeader && (
-            <Header/>
+            <Header
+              navigator={this.props.navigator}
+            />
           )}
           {contents}
         </KeyboardAvoidingView>

@@ -1,5 +1,5 @@
 import { NavButton } from '../lib/commonTypes';
-import { Navigation } from 'react-native-navigation';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 export const backButton: NavButton = {
   button: {
@@ -7,9 +7,9 @@ export const backButton: NavButton = {
     id: 'goBack',
     testID: 'back'
   },
-  action: ({ componentId }) => {
-    Navigation.pop(componentId)
-    .catch(e => console.warn('backButton POP error: ', e));
+  action: (navigator: NavWrapper) => {
+    navigator.pop()
+    .catch((e: any) => console.warn('backButton POP error: ', e));
   }
 };
 
@@ -18,9 +18,9 @@ export const dismissButton: NavButton = {
     icon: require('../../assets/images/close.png'),
     id: 'dismissModal'
   },
-  action: ({ componentId }) => {
-    Navigation.dismissModal(componentId)
-    .catch(e => console.warn('dismissButton DISMISSMODAL error: ', e));
+  action: (navigator: NavWrapper) => {
+    navigator.dismissModal()
+    .catch((e: any) => console.warn('dismissButton DISMISSMODAL error: ', e));
   }
 };
 
@@ -29,23 +29,23 @@ export const searchButton: NavButton = {
     icon: require('../../assets/images/search.png'),
     id: 'search'
   },
-  action: ({ componentId }) => {
-    Navigation.push(componentId, {
+  action: (navigator: NavWrapper) => {
+    navigator.push({
       component: {
         name: 'Search',
         passProps: {
           onCancel: () => {
-            Navigation.pop(componentId, {
+            navigator.pop({
               animations: {
                 pop: {
                   enabled: false
                 }
               }
-            }).catch(e => console.warn('Search POP error: ', e));
+            }).catch((e: any) => console.warn('Search POP error: ', e));
           }
         }
       }
-    }).catch(e => console.warn('Search PUSH error: ', e));
+    }).catch((e: any) => console.warn('Search PUSH error: ', e));
   }
 };
 

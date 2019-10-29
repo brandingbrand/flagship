@@ -16,6 +16,7 @@ import RNRestart from 'react-native-restart';
 import { LayoutComponent, Navigation } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
+import NavWrapper from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -73,13 +74,17 @@ const styles = StyleSheet.create({
   }
 });
 
+export interface DevMenuProp extends GenericScreenProp {
+  navigator: NavWrapper;
+}
+
 export interface DevMenuState {
   devView: string;
   devKeepPage: boolean;
   selectedEnv: string;
 }
 
-export default class DevMenu extends Component<GenericScreenProp, DevMenuState> {
+export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   state: DevMenuState = {
     devView: 'menu',
     selectedEnv: '',

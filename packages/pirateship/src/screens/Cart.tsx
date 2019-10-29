@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
 import { ScreenProps } from '../lib/commonTypes';
@@ -221,7 +221,6 @@ class Cart extends Component<CartScreenProps> {
   }
 
   render(): JSX.Element {
-    const { componentId } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
 
@@ -239,7 +238,7 @@ class Cart extends Component<CartScreenProps> {
     } else if (cartData && cartData.items) {
       const cartCount = this.props.cart.cartCount;
       const badge = !!cartCount && cartCount.toString() || undefined;
-      Navigation.mergeOptions(componentId, {
+      this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
           badgeColor: palette.primary
@@ -255,6 +254,7 @@ class Cart extends Component<CartScreenProps> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={!isLoading}
         style={CartStyle.container}
@@ -307,7 +307,7 @@ class Cart extends Component<CartScreenProps> {
     const quantity = (cartData.items &&
       cartData.items.reduce((total, item) => total + item.quantity, 0));
     const badge = !!quantity && quantity.toString() || undefined;
-    Navigation.mergeOptions(this.props.componentId, {
+    this.props.navigator.mergeOptions({
       bottomTab: {
         badge,
         badgeColor: palette.secondary
@@ -345,7 +345,7 @@ class Cart extends Component<CartScreenProps> {
       recentProducts = (
         <PSRecentlyViewedCarousel
           items={this.props.recentlyViewed.items}
-          componentId={this.props.componentId}
+          navigator={this.props.navigator}
         />
       );
     }
@@ -377,7 +377,7 @@ class Cart extends Component<CartScreenProps> {
   }
 
   handlePromotedProductPress = (productId: string) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
@@ -388,19 +388,19 @@ class Cart extends Component<CartScreenProps> {
   }
 
   signIn = async () => {
-    return Navigation.showModal({
+    return this.props.navigator.showModal({
       stack: {
         children: [{
           component: {
             name: 'SignIn',
             passProps: {
               dismissible: true,
-              onDismiss: (componentId: string) => () => {
-                Navigation.dismissModal(componentId)
+              onDismiss: () => () => {
+                this.props.navigator.dismissModal()
                 .catch(e => console.warn('DISMISSMODAL error: ', e));
               },
-              onSignInSuccess: (componentId: string) => () => {
-                Navigation.dismissModal(componentId)
+              onSignInSuccess: () => () => {
+                this.props.navigator.dismissModal()
                 .catch(e => console.warn('DISMISSMODAL error: ', e));
               }
             }
@@ -412,13 +412,13 @@ class Cart extends Component<CartScreenProps> {
 
   continueShopping = () => {
     if (Platform.OS !== 'web') {
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions({
         bottomTabs: {
           currentTabIndex: 0
         }
       });
     } else {
-      Navigation.push(this.props.componentId, {
+      this.props.navigator.push({
         component: {
           name: 'Shop'
         }
@@ -445,15 +445,15 @@ class Cart extends Component<CartScreenProps> {
 
   goToProduct = async (item: CommerceTypes.CartItem) => {
     try {
-      await Navigation.push('SHOP_TAB', {
+      await this.props.navigator.push({
         component: {
           name: 'ProductDetail',
           passProps: {
             productId: item.productId
           }
         }
-      });
-      Navigation.mergeOptions(this.props.componentId, {
+      }, 'SHOP_TAB');
+      this.props.navigator.mergeOptions({
         bottomTabs: {
           currentTabId: 'SHOP_TAB'
         }

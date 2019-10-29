@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import { border, palette } from '../styles/variables';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
@@ -67,7 +67,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
 
   constructor(props: AddressBookScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    this.props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.editAddresses.title)
@@ -95,7 +95,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
       })
       .catch(e => {
         this.setState({ loading: false, msg: defaultMessage });
-        handleAccountRequestError(e, this.props.componentId, this.props.signOut);
+        handleAccountRequestError(e, this.props.navigator, this.props.signOut);
       });
   }
 
@@ -188,13 +188,13 @@ class AddressBook extends Component<AddressBookScreenProps> {
             throw new Error(translate.string(translationKeys.address.actions.setAsDefault.error));
           }
         })
-        .catch(e => handleAccountRequestError(e, this.props.componentId, this.props.signOut));
+        .catch(e => handleAccountRequestError(e, this.props.navigator, this.props.signOut));
     };
   }
 
   editAddress = (addr: CommerceTypes.CustomerAddress) => {
     return async () => {
-      return Navigation.showModal({
+      return this.props.navigator.showModal({
         component: {
           name: 'EditAddress',
           options: {
@@ -252,7 +252,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
                   }
                 })
                 .catch(e => handleAccountRequestError(
-                  e, this.props.componentId, this.props.signOut));
+                  e, this.props.navigator, this.props.signOut));
             }
           }
         ],
@@ -261,7 +261,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
   }
 
   addNewAddress = async () => {
-    return Navigation.showModal({
+    return this.props.navigator.showModal({
       component: {
         name: 'EditAddress',
         options: {
