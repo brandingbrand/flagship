@@ -4312,7 +4312,7 @@ babel-plugin-react-docgen@^2.0.0:
     react-docgen "^3.0.0"
     recast "^0.14.7"
 
-babel-plugin-react-native-web@^0.8.4:
+babel-plugin-react-native-web@^0.8.11:
   version "0.8.11"
   resolved "https://registry.yarnpkg.com/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.8.11.tgz#37f7adf0cc201ee1a337c3274ff037b1a2c4bed6"
   integrity sha512-rMfyBM4ejUZ+7EEWuFOnusUsZGvNSKZyQOQxadcUm5AZYEtmc8bCNpH/Q8nQlh1rJNfEirzqspYv1NOfrP4L/g==
