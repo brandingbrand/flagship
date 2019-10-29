@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* Add itemCount to cart interface in fscommerce ([#877](https://github.com/brandingbrand/flagship/issues/877)) ([53b02c3](https://github.com/brandingbrand/flagship/commit/53b02c3))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce
