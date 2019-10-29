@@ -22,15 +22,15 @@ export function homepage(homepage: string): void {
 }
 
 /**
- * Performs an npm install for web packages.
+ * Performs a yarn install for web packages.
  */
 export function install(): void {
-  logInfo(`running npm install for Web`);
+  logInfo(`running yarn for Web`);
 
   const webPath = path.project.resolve('web');
 
   try {
-    exec(`cd ${webPath} && npm install`, {
+    exec(`cd ${webPath} && yarn`, {
       stdio: [0, 1, 2]
     });
 
@@ -39,7 +39,7 @@ export function install(): void {
     fs.removeSync(path.project.resolve('web', 'node_modules', 'react'));
 
   } catch (err) {
-    logError(`npm install for Web`, err);
+    logError(`yarn for Web`, err);
 
     process.exit(1);
   }
