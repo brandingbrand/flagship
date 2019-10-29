@@ -13053,7 +13053,7 @@ react-native-safe-area@^0.5.0:
   dependencies:
     "@types/react" "^16.8.8"
 
-react-native-sensitive-info@~5.4.0:
+react-native-sensitive-info@~5.4.2:
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.4.2.tgz#d2454991707927f27b5cdedfe21a07f30a5afd22"
   integrity sha512-C8eROsdK4/hPokgGXkAJ+FfDyF9ml48GyJHNT4pdVCbpA54Y3Ow6CTBKq6OE4djaBQsJ6Xim1iPNea25ark1fg==
