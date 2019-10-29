@@ -140,7 +140,6 @@ function initAndroid(
   rename.source('FLAGSHIP', configuration.name, 'android');
   rename.source('CONFIG_BUNDLE_ID', pkgId, 'android');
   rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
-  rename.files('FLAGSHIP', configuration.name, 'android');
 
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
 
