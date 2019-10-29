@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* get default env from initial script ([af5d5ad](https://github.com/brandingbrand/flagship/commit/af5d5ad))
+* Modify the podspec version to ve 2.6.2 ([#878](https://github.com/brandingbrand/flagship/issues/878)) ([c72f3c0](https://github.com/brandingbrand/flagship/commit/c72f3c0))
+* **flagship:** Fix renaming edge case for android ([#898](https://github.com/brandingbrand/flagship/issues/898)) ([211209a](https://github.com/brandingbrand/flagship/commit/211209a))
+* **fsweb:** Use yarn.lock for fsweb ([#906](https://github.com/brandingbrand/flagship/issues/906)) ([2405dda](https://github.com/brandingbrand/flagship/commit/2405dda))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 
