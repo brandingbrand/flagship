@@ -200,13 +200,13 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     // The following code assumes that only one drawer can be open at a time.
     if (side === 'left') {
       this.setState({
-        leftDrawerOpen: to ? to === 'open' : !this.state.leftDrawerOpen,
+        leftDrawerOpen: to === 'toggle' ? !this.state.leftDrawerOpen : (to === 'open'),
         rightDrawerOpen: false
       });
     } else {
       this.setState({
         leftDrawerOpen: false,
-        rightDrawerOpen: to ? to === 'open' : !this.state.rightDrawerOpen
+        rightDrawerOpen: to === 'toggle' ? !this.state.rightDrawerOpen : (to === 'open')
       });
     }
   }

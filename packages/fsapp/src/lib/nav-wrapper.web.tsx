@@ -79,7 +79,19 @@ export default class NavigationWrapper {
     this.updateModals(this.props.modals);
   }
   mergeOptions(options: NavOptions, alternateId?: string): void {
-    // Not applicible to web
+    if (options.sideMenu && this.props.toggleDrawerFn) {
+      if (options.sideMenu.left && options.sideMenu.left.visible !== undefined) {
+        this.props.toggleDrawerFn({
+          side: 'left',
+          to: options.sideMenu.left.visible ? 'open' : 'closed'
+        });
+      } else if (options.sideMenu.right && options.sideMenu.right.visible !== undefined) {
+        this.props.toggleDrawerFn({
+          side: 'right',
+          to: options.sideMenu.right.visible ? 'open' : 'closed'
+        });
+      }
+    }
     return;
   }
   bindNavigation(bindee: React.Component, alternateId?: string): EventSubscription | null {

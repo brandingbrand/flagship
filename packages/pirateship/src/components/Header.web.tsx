@@ -42,7 +42,13 @@ class Header extends Component<HeaderProps> {
   }
 
   toggleLeftDrawer = () => {
-    // return this.props.navigator.toggleDrawer({ side: 'left' });
+    return this.props.navigator.mergeOptions({
+      sideMenu: {
+        left: {
+          visible: true
+        }
+      }
+    });
   }
 
   goTo = (name: string) => {

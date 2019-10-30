@@ -19,7 +19,7 @@ export interface DrawerType {
 
 export interface DrawerConfig {
   side: 'left' | 'right';
-  to?: 'open' | 'closed';
+  to?: 'open' | 'closed' | 'toggle';
 }
 
 export interface Drawer {

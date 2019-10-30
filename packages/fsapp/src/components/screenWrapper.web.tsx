@@ -41,6 +41,7 @@ export interface GenericNavProp {
   appConfig: AppConfigType;
   history: any;
   modals: NavModal[];
+  toggleDrawerFn?: (config: DrawerConfig) => void;
 }
 
 export interface GenericScreenProp extends GenericScreenStateProp,
@@ -82,6 +83,7 @@ export default function wrapScreen(
       this.navigator = new NavWrapper({
         appConfig,
         modals: [],
+        toggleDrawerFn,
         ...props
       }, this.updateModals);
     }
