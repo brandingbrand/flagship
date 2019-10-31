@@ -113,7 +113,7 @@ export default class More extends Component<ScreenProps, MoreState> {
     };
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     Dimensions.addEventListener('change', this.handleDimensionChange);
   }
 

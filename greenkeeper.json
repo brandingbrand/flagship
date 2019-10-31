@@ -31,5 +31,12 @@
         "packages/pirateship/package.json"
       ]
     }
-  }
+  },
+  "ignore": [
+    "react-native",
+    "react",
+    "metro-react-native-babel-preset",
+    "@babel/core",
+    "@babel/runtime"
+  ]
 }
