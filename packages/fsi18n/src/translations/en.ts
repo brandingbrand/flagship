@@ -82,7 +82,9 @@ export const keys: FSTranslationKeys = {
       done: 'Done',
       all: 'All',
       reset: 'RESET',
-      apply: 'APPLY'
+      apply: 'APPLY',
+      hintToggle: 'Toggles Filter',
+      hintBack: 'Go back one filter level'
     },
     feedback: {
       actions: {
@@ -271,8 +273,6 @@ export const keys: FSTranslationKeys = {
       filterBy: 'Filter By',
       noResults: 'Sorry, no items matched your search.',
       resetFilters: 'RESET FILTER',
-      applyFilters: 'APPLY FILTER',
-      clearAllFilters: 'Clear All Filters',
       loadMore: 'Load More'
     },
     checkout: {

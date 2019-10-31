@@ -26,7 +26,8 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:allowBackup': 'false',
       'android:label': '@string/app_name',
       'android:icon': '@mipmap/ic_launcher',
-      'android:theme': '@style/AppTheme'
+      'android:theme': '@style/AppTheme',
+      'android:networkSecurityConfig': '@xml/network_security_config'
     },
     urlSchemeHost: 'app'
   }
