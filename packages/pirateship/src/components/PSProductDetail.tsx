@@ -243,11 +243,18 @@ export interface PSProductDetailState {
   modalTitle?: string;
   miniModalVisible: boolean;
   miniModalContent?: JSX.Element;
+  dynamicBtnTitles: string[];
+  selectedBtnTitle: number;
 }
 
 export type PSProductDetailComponentInternalProps = UnwrappedPSProductDetailProps &
   WithProductDetailProps &
   CartProps;
+
+enum AddToCartBtnStates {
+  addToCart,
+  addedToCart
+}
 
 class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
@@ -263,7 +270,9 @@ class PSProductDetailComponent extends Component<
       modalVisible: false,
       miniModalVisible: false,
       quantity: 1,
-      optionValues: []
+      optionValues: [],
+      selectedBtnTitle: AddToCartBtnStates.addToCart,
+      dynamicBtnTitles: ['Add to cart', 'Added to cart']
     };
   }
 
@@ -377,6 +386,16 @@ class PSProductDetailComponent extends Component<
 
     // Optimistically show success and only show errors if necessary
     this.openMiniModal('Added to Cart', 2000);
+
+    this.setState({
+      selectedBtnTitle: AddToCartBtnStates.addedToCart
+    });
+
+    setTimeout(() => {
+      this.setState({
+        selectedBtnTitle: AddToCartBtnStates.addToCart
+      });
+    }, 2000);
 
     if (!quantity || !variantId) {
       // TODO: This error message can be more appropriate
@@ -736,9 +755,13 @@ class PSProductDetailComponent extends Component<
   }
 
   _renderAddToCartButton = (): JSX.Element => {
+    const { selectedBtnTitle, dynamicBtnTitles } = this.state;
+
     return (
       <PSButton
         title={translate.string(translationKeys.item.actions.addToCart.actionBtn)}
+        selectedTitleState={selectedBtnTitle}
+        dynamicTitleStates={dynamicBtnTitles}
         onPress={this.addToCart}
         titleStyle={{
           fontWeight: '600',

@@ -62,7 +62,7 @@
     "@types/pluralize": "^0.0.29",
     "@types/qs": "^6.5.1",
     "@types/react": "^16.6.3",
-    "@types/react-dom": "^16.0.11",
+    "@types/react-dom": "^16.9.3",
     "@types/react-native": "^0.57.30",
     "@types/react-native-i18n": "^2.0.0",
     "@types/react-native-permissions": "^1.1.1",

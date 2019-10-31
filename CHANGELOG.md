@@ -75,6 +75,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* exclude kotlin intermediate build files  ([f2912e1](https://github.com/brandingbrand/flagship/commit/f2912e1))
+* **fsweb:** Lock babel runtime in package.json ([#905](https://github.com/brandingbrand/flagship/issues/905)) ([92aa97e](https://github.com/brandingbrand/flagship/commit/92aa97e))
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* Add 'Marquis' feature to Button with title dynamically reflecting CTA state ([9c49aa7](https://github.com/brandingbrand/flagship/commit/9c49aa7))
+* Add itemCount to cart interface in fscommerce ([#877](https://github.com/brandingbrand/flagship/issues/877)) ([53b02c3](https://github.com/brandingbrand/flagship/commit/53b02c3))
+* get default env from initial script ([af5d5ad](https://github.com/brandingbrand/flagship/commit/af5d5ad))
+* Modify the podspec version to ve 2.6.2 ([#878](https://github.com/brandingbrand/flagship/issues/878)) ([c72f3c0](https://github.com/brandingbrand/flagship/commit/c72f3c0))
+* remove unnecessary checks ([9789ff3](https://github.com/brandingbrand/flagship/commit/9789ff3))
+* **flagship:** Fix renaming edge case for android ([#898](https://github.com/brandingbrand/flagship/issues/898)) ([211209a](https://github.com/brandingbrand/flagship/commit/211209a))
+* **fsweb:** Use yarn.lock for fsweb ([#906](https://github.com/brandingbrand/flagship/issues/906)) ([2405dda](https://github.com/brandingbrand/flagship/commit/2405dda))
+* **pirateship:** Remove duplicate "name" in config ([#867](https://github.com/brandingbrand/flagship/issues/867)) ([a4644c3](https://github.com/brandingbrand/flagship/commit/a4644c3))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 

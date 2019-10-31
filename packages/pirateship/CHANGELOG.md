@@ -47,6 +47,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* Add 'Marquis' feature to Button with title dynamically reflecting CTA state ([9c49aa7](https://github.com/brandingbrand/flagship/commit/9c49aa7))
+* **pirateship:** Remove duplicate "name" in config ([#867](https://github.com/brandingbrand/flagship/issues/867)) ([a4644c3](https://github.com/brandingbrand/flagship/commit/a4644c3))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
