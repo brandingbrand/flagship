@@ -1,10 +1,10 @@
 import { EventSubscription, Navigation } from 'react-native-navigation';
 import { GenericNavProp } from '../components/screenWrapper';
-import { NavLayout, NavOptions } from '../types';
+import { NavLayout, NavModal, NavOptions } from '../types';
 
-export default class NavigationWrapper {
+export default class NavWrapper {
   componentId: string;
-  constructor(props: GenericNavProp) {
+  constructor(props: GenericNavProp, updateModals?: (modals: NavModal[]) => void) {
     this.componentId = props.componentId;
   }
   async push(layout: NavLayout, alternateId?: string): Promise<any> {

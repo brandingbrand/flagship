@@ -122,6 +122,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
       <PSScreenWrapper
         navigator={this.props.navigator}
         hideGlobalBanner={true}
+        hideWebHeader={this.props.isWebModal}
         needInSafeArea={true}
         style={styles.screenContainer}
         scrollViewProps={{

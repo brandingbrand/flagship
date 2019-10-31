@@ -1,5 +1,10 @@
 import { Component } from 'react';
 import { GenericNavProp } from './screenWrapper';
+import NavWrapper from '../lib/nav-wrapper';
 
-export default class Navigator extends Component<GenericNavProp> {
+export interface NavigatorProp extends GenericNavProp {
+  navigator: NavWrapper;
+}
+
+export default class Navigator extends Component<NavigatorProp> {
 }

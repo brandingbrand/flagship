@@ -42,6 +42,7 @@ export interface GenericNavProp {
   history: any;
   modals: NavModal[];
   toggleDrawerFn?: (config: DrawerConfig) => void;
+  updateModals: (modals: NavModal[]) => void;
 }
 
 export interface GenericScreenProp extends GenericScreenStateProp,
@@ -84,8 +85,9 @@ export default function wrapScreen(
         appConfig,
         modals: [],
         toggleDrawerFn,
+        updateModals: this.updateModals,
         ...props
-      }, this.updateModals);
+      });
     }
     updateModals = (navModals: NavModal[]): void => {
       this.setState({ navModals });
@@ -103,6 +105,13 @@ export default function wrapScreen(
 
         appConfig.analytics.screenview(component, { url });
       }
+    }
+
+    onDismiss = (index: number): void => {
+      this.state.navModals.splice(index, 1);
+      this.setState({
+        navModals: this.state.navModals
+      });
     }
 
     openDevMenu = () => {
@@ -131,6 +140,8 @@ export default function wrapScreen(
           <Navigator
             appConfig={appConfig}
             modals={this.state.navModals}
+            navigator={this.navigator}
+            onDismiss={this.onDismiss}
             {...this.props}
           />
         </View>

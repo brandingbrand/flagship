@@ -9,7 +9,7 @@ import {
   Options,
   OptionsTopBarButton
 } from 'react-native-navigation';
-import { ImageRequireSource, ViewStyle } from 'react-native';
+import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
 
 export interface DrawerType {
@@ -138,11 +138,13 @@ export interface Location<T = any> {
 }
 
 export interface NavModalOptions {
+  modalProps?: ModalProps;
   style?: ViewStyle;
+  backdropStyle?: ViewStyle;
 }
 
 export interface NavOptions extends Options {
-  modalContainer?: NavModalOptions;
+  modal?: NavModalOptions;
   title?: string;
 }
 

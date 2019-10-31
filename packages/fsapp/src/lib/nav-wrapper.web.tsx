@@ -5,17 +5,14 @@ import pushRoute from './push-route';
 import {
   NavLayout,
   NavLayoutStackChildren,
-  NavModal,
   NavOptions
 } from '../types';
 
 
-export default class NavigationWrapper {
+export default class NavWrapper {
   props: GenericNavProp;
-  updateModals: (modals: NavModal[]) => void;
-  constructor(props: GenericNavProp, updateModals: (modals: NavModal[]) => void) {
+  constructor(props: GenericNavProp) {
     this.props = props;
-    this.updateModals = updateModals;
   }
 
   async push(layout: NavLayout, alternateId?: string): Promise<any> {
@@ -59,24 +56,22 @@ export default class NavigationWrapper {
   }
 
   async showModal(layout: NavLayout): Promise<any> {
-    return this.push(layout);
-    // TODO: show modal stack
-    // if (layout.stack && layout.stack.children) {
-    //   // tslint:disable-next-line: prefer-for-of
-    //   for (let loop = 0; loop < layout.stack.children.length; loop++) {
-    //     await this.showModal(layout.stack.children[loop]);
-    //   }
-    // }
-    // await this.showStackedModal(layout);
-    // this.updateModals(this.props.modals);
+    if (layout.stack && layout.stack.children) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let loop = 0; loop < layout.stack.children.length; loop++) {
+        await this.showModal(layout.stack.children[loop]);
+      }
+    }
+    await this.showStackedModal(layout);
+    this.props.updateModals(this.props.modals);
   }
   async dismissModal(options?: NavOptions, alternateId?: string): Promise<any> {
     this.props.modals.pop();
-    this.updateModals(this.props.modals);
+    this.props.updateModals(this.props.modals);
   }
   async dismissAllModals(options?: NavOptions): Promise<any> {
     this.props.modals = [];
-    this.updateModals(this.props.modals);
+    this.props.updateModals(this.props.modals);
   }
   mergeOptions(options: NavOptions, alternateId?: string): void {
     if (options.sideMenu && this.props.toggleDrawerFn) {
