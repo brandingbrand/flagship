@@ -29,7 +29,6 @@ module.exports = {
     }
   },
   apiHost: 'https://api.example.com',
-  name: 'PirateShip',
   publicVersionNumber: '1.0.0',
   require: [],
   appIds: {

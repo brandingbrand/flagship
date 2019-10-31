@@ -1,5 +1,6 @@
 import React, { Component, ComponentClass, ComponentType } from 'react';
-import { AsyncStorage, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 
 import { Navigator, NavigatorStyle } from 'react-native-navigation';

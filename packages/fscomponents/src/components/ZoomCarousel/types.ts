@@ -29,6 +29,7 @@ export interface ZoomCarouselProps {
   ) => React.ReactNode;
   renderImageWeb?: (data: any, i: number) => React.ReactNode;
   renderCloseButton?: (closeZoom: () => void) => React.ReactNode;
+  renderModalContent?: (closeModal: () => void) => React.ReactNode;
   renderPageIndicator?: (
     currentIndex: number,
     itemsCount: number

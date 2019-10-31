@@ -1,4 +1,5 @@
 import FCM, { FCMEvent } from 'react-native-fcm';
+import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import {
@@ -19,6 +20,9 @@ export interface EngagementServiceConfig {
 export interface Attribute {
   key: string;
   value: string;
+}
+export interface AttributePayload {
+  attributes: string;
 }
 
 export class EngagementService {
@@ -138,6 +142,12 @@ export class EngagementService {
       return Promise.resolve(this.profileId);
     }
 
+    const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
+    if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
+      this.profileId = savedProfileId;
+      return Promise.resolve(savedProfileId);
+    }
+
     return this.networkClient.post(`/App/${this.appId}/getProfile`, {
       locale: DeviceInfo.getDeviceLocale(),
       country: DeviceInfo.getDeviceCountry(),
@@ -156,6 +166,8 @@ export class EngagementService {
       .then((data: any) => {
         this.profileId = data.id;
         this.profileData = data;
+
+        AsyncStorage.setItem('ENGAGEMENT_PROFILE_ID', data.id).catch();
 
         return data.id;
       })
@@ -187,7 +199,7 @@ export class EngagementService {
    */
   async getMessages(): Promise<EngagementMessage[]> {
     // check we have a user profile
-    if (!this.profileId || !this.profileData) {
+    if (!this.profileId) {
       throw new Error('Profile not loaded.');
     }
 
@@ -212,6 +224,57 @@ export class EngagementService {
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
+        return messages;
+      })
+      .catch(async (e: any) => {
+        console.log('Unable to fetch inbox messages', e);
+
+        let ret: EngagementMessage[] = [];
+
+        // respond with stale cache if we have it
+        if (this.messages.length) {
+          ret = this.messages;
+        }
+
+        return Promise.resolve(ret);
+      });
+  }
+
+  async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
+    // check we have a user profile
+    if (!this.profileId) {
+      throw new Error('Profile not loaded.');
+    }
+
+    // cache
+    if (this.messages.length) {
+      if (+new Date() - this.messageCache < this.cacheTTL) {
+
+        return Promise.resolve(this.messages);
+      }
+    }
+
+    const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
+    return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
+      JSON.stringify(attributes))
+      .then((r: any) => r.data)
+      .then((list: any) => list.map((data: any) => {
+        return {
+          id: data.id,
+          published: new Date(data.published),
+          isNew: lastEngagementFetch ?
+            Date.parse(data.published) > parseInt(lastEngagementFetch, 10) : false,
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes
+        };
+      }))
+      .then((messages: EngagementMessage[]) => {
+        this.messages = messages;
+        this.messageCache = +new Date();
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString())
+          .catch();
         return messages;
       })
       .catch(async (e: any) => {

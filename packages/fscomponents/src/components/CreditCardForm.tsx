@@ -11,7 +11,6 @@ import {
 
 // @ts-ignore TODO: Update credit-card to support typing
 import * as creditCard from 'credit-card';
-import moment from 'moment';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import {
@@ -147,7 +146,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'phone-pad',
-        error: 'Please enter a valid card number',
+        error: this.handleNumberError,
         template: getFieldTemplates(labelPosition).creditCard,
         config: {
           cardImageStyle: {
@@ -156,7 +155,8 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           },
           cardImageWidth: 26,
           creditCardTypeImages: this.props.supportedCards,
-          defaultCardImage: this.props.defaultCardImage
+          defaultCardImage: this.props.defaultCardImage,
+          onBlur: this.handleNumberError
         }
       },
       cvv: {
@@ -224,10 +224,20 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
           value={this.props.value}
           onChange={this.props.onChange}
           labelPosition={this.props.labelPosition}
+          validateOnBlur={true}
         />
       </View>
     );
   }
+
+  handleNumberError = (value: any, path: any, context: any) => {
+    const isValid = this.validateNumber(value);
+    if (!isValid) {
+      return 'invalid card number entered';
+    }
+    return '';
+  }
+
   validate = () => {
     if (this.formRef) {
       const validation = this.formRef.validate();
@@ -240,30 +250,64 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  private validateCreditCard = (value: any) => {
-    const expirationDate = moment(value.expirationDate, 'MM/YY');
+  validateNumber = (val: any) => {
+    if (this.formRef) {
+      const validation = this.formRef.getComponent('number').validate();
+      if (validation.isValid()) {
+        return this.validateCCNumber(val); // this validation was held till submit before
+      }
+      return false;
+    }
+    return true;
+  }
 
+  private validateCCNumber = (value: any) => {
     const validationResult = creditCard.validate({
       cardType: creditCard.determineCardType(value.number),
-      number: value.number,
-      cvv: value.cvv,
-      expiryMonth: expirationDate.month() + 1, // moment months are 0-11, creditCard expects 1-12
-      expiryYear: expirationDate.year()
+      number: value.number
     });
     let valid = true;
     if (!validationResult.validCardNumber) {
       this.formRef.getComponent('number').setState({ hasError: true });
       valid = false;
     }
-    if (!validationResult.validExpiryMonth || !validationResult.validExpiryYear ||
-        creditCard.isExpired(expirationDate.month() + 1, expirationDate.year())) {
+    return valid;
+  }
+
+  private validateCreditCard = (value: any) => {
+    let valid = true;
+
+    const expirationDateParts = (value.expirationDate || '').split('/');
+    const expirationMonth = parseInt(expirationDateParts[0], 10);
+    const expirationYear = parseInt('20' + expirationDateParts[1], 10);
+
+    const validationResult = creditCard.validate({
+      cardType: creditCard.determineCardType(value.number),
+      number: value.number,
+      cvv: value.cvv,
+      expiryMonth: expirationMonth,
+      expiryYear: expirationYear
+    });
+
+    if (!validationResult.validCardNumber) {
+      this.formRef.getComponent('number').setState({ hasError: true });
+      valid = false;
+    }
+
+    if (
+      !validationResult.validExpiryMonth
+      || !validationResult.validExpiryYear
+      || creditCard.isExpired(expirationMonth, expirationYear)
+    ) {
       this.formRef.getComponent('expirationDate').setState({ hasError: true });
       valid = false;
     }
+
     if (!validationResult.validCvv) {
       this.formRef.getComponent('cvv').setState({ hasError: true });
       valid = false;
     }
+
     return valid;
   }
 }

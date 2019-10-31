@@ -3,11 +3,19 @@ const path = require("path");
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
+const CopyPlugin = require('copy-webpack-plugin');
+const escapedSep = '\\' + path.sep;
+
+let webConfig;
+
+try {
+  webConfig = require('./config.web.json')
+} catch (exception) {
+  console.warn('Cannot find web config');
+}
 
 const globalConfig = {
   optimization: {
@@ -18,7 +26,7 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -47,7 +55,8 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs'
+      'react-native-svg': 'svgs',
+      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -77,21 +86,20 @@ const globalConfig = {
                 }
               },
               {
-                loader: require.resolve("ts-loader"),
-                options: {
-                  configFile: 'tsconfig/tsconfig.storybook.json'
-                }
+                loader: require.resolve("ts-loader")
               }
             ]
           },
           {
             test: /\.m?jsx?$/,
             include: [
-              /node_modules\/react-native-/,
-              /node_modules\/tcomb-form-native/,
-              /packages\/fs/
+              new RegExp('node_modules' + escapedSep + 'react-native-'),
+              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
+              new RegExp('packages' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')
             ],
-            exclude: /node_modules\/react-native-web\//,
+            exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
               'cache-loader',
               {
@@ -158,22 +166,32 @@ const globalConfig = {
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new CopyPlugin([
+      {from: './build', to: '.'}
+    ])
+  ]
 };
 
 module.exports = function(env, options) {
+  const defaultEnv = JSON.stringify(
+    (env && env.defaultEnvName) ||
+    (webConfig && webConfig.defaultEnvName) ||
+    'prod'
+  );
+
   // add our environment specific config to the webpack config based on mode
   if (options && options.mode === 'production') {
     !options.json && console.log('Webpacking for Production');
     globalConfig.mode = 'production';
-    globalConfig.output.filename = 'static/js/bundle.[contenthash:8].js';
+    globalConfig.output.filename = 'static/js/bundle.[hash:8].js';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
         filename: 'static/css/[name].[hash:8].css'
       }),
       new webpack.DefinePlugin({
         __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -183,41 +201,6 @@ module.exports = function(env, options) {
           mangle: true,
           compress: true
         }
-      }),
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json'
-      }),
-      // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the Webpack build.
-      new SWPrecacheWebpackPlugin({
-        // By default, a cache-busting query parameter is appended to requests
-        // used to populate the caches, to ensure the responses are fresh.
-        // If a URL is already hashed by Webpack, then there is no concern
-        // about it being stale, and the cache-busting can be skipped.
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
-        // 4Mb cache limit per file
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-        filename: 'service-worker.js',
-        logger(message) {
-          if (message.indexOf('Total precache size is') === 0) {
-            // This message occurs for every build and is a bit too noisy.
-            return;
-          }
-          if (message.indexOf('Skipping static resource') === 0) {
-            // This message obscures real errors so we ignore it.
-            // https://github.com/facebookincubator/create-react-app/issues/2612
-            return;
-          }
-          console.log(message);
-        },
-        minify: true,
-        // For unknown URLs, fallback to the index page
-        navigateFallback: '/index.html',
-        // Ignores URLs starting from /__ (useful for Firebase):
-        // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
-        navigateFallbackWhitelist: [/^(?!\/__).*/],
-        // Don't precache sourcemaps (they're large) and build asset manifest:
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
       }),
       new HtmlWebpackPlugin({
         inject: true,
@@ -235,15 +218,38 @@ module.exports = function(env, options) {
           minifyURLs: true
         }
       }),
+      new ManifestPlugin({
+        fileName: 'asset-manifest.json'
+      }),
+      // Generate a service worker script that will precache, and keep up to date,
+      // the HTML & assets that are part of the Webpack build.
+      new GenerateSW({
+        // 4Mb cache limit per file
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // For unknown URLs, fallback to root page
+        navigateFallback: '/index.html',
+        // Ignores URLs starting from /__ (useful for Firebase):
+        // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
+        navigateFallbackWhitelist: [/^(?!\/__).*/],
+        // Don't precache sourcemaps (they're large), typings, and build asset manifest:
+        exclude: [/\.d\.ts$/, /\.map$/, /asset-manifest\.json$/],
+        globPatterns: [
+          '/static/**/*.{js,css,html}',
+          '/index.html',
+          '/favicon.ico',
+          '/manifest.json',
+          '/web-icon.png',
+          '/web-icon@512.png'
+        ]
+      }),
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
-    globalConfig.serve = {
-      content: "./dev-server",
-      add: (app, middleware, options) => {
-        app.use(convert(history()));
-      }
-    }
+    globalConfig.devServer = {
+      contentBase: path.join(__dirname, 'dev-server'),
+      historyApiFallback: true,
+      port: 8080
+    };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
@@ -251,7 +257,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       })
     ]);
   }
