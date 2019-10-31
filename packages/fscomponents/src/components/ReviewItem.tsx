@@ -18,6 +18,7 @@ import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import SyndicationIndicator from './SyndicationIndicator';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export enum RecommendationDisplayTypes {
@@ -31,6 +32,8 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   recommendedImage?: ImageURISource;
   verifiedImage?: ImageURISource;
   showRecommendations?: RecommendationDisplayTypes;
+  indicateSyndicated?: boolean;
+  renderSyndicatedIndicator?: (syndicationSource: ReviewTypes.SyndicationSource) => JSX.Element;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -57,7 +60,22 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   onNotHelpful?: (props: ReviewItemProps) => void;
 }
 
-export class ReviewItem extends Component<ReviewItemProps> {
+export interface ReviewItemState {
+  syndicatedImageHeight?: number;
+  syndicatedImageWidth?: number;
+}
+
+export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
+
+  constructor(props: ReviewItemProps) {
+    super(props);
+
+    this.state = {
+      syndicatedImageHeight: 0,
+      syndicatedImageWidth: 0
+    };
+  }
+
   onHelpful = () => {
     const { onHelpful } = this.props;
     if (onHelpful) {
@@ -69,6 +87,23 @@ export class ReviewItem extends Component<ReviewItemProps> {
     const { onNotHelpful } = this.props;
     if (onNotHelpful) {
       onNotHelpful(this.props);
+    }
+  }
+
+  renderSyndicatedIndicator = (): JSX.Element | undefined => {
+    if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
+      if (this.props.renderSyndicatedIndicator) {
+        return this.props.renderSyndicatedIndicator(this.props.syndicationSource);
+      } else {
+        return (
+          <SyndicationIndicator
+            syndicationSource={this.props.syndicationSource}
+            rowStyle={this.props.rowStyle}
+          />
+        );
+      }
+    } else {
+      return;
     }
   }
 
@@ -147,7 +182,10 @@ export class ReviewItem extends Component<ReviewItemProps> {
       rowStyle,
       onHelpful,
       onNotHelpful,
-      moreTextStyle
+      moreTextStyle,
+      isSyndicated,
+      indicateSyndicated,
+      syndicationSource
     } = this.props;
 
     return (
@@ -199,6 +237,10 @@ export class ReviewItem extends Component<ReviewItemProps> {
           </Text>
         </View>
         )}
+        {indicateSyndicated &&
+          isSyndicated &&
+          syndicationSource &&
+          this.renderSyndicatedIndicator()}
         {onHelpful && onNotHelpful && (
         <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
           <Button

@@ -107,7 +107,7 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.brandingbrand.reactnative.and.flagship"
+        applicationId "CONFIG_BUNDLE_ID"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
@@ -154,6 +154,7 @@ android {
 
     // for jsc-android: https://github.com/react-native-community/jsc-android-buildscripts
     packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
         pickFirst '**/libjsc.so'
         pickFirst '**/libc++_shared.so'
     }

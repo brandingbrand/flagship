@@ -7,8 +7,15 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
+const escapedSep = '\\' + path.sep;
+
+let webConfig;
+
+try {
+  webConfig = require('./config.web.json')
+} catch (exception) {
+  console.warn('Cannot find web config');
+}
 
 const globalConfig = {
   optimization: {
@@ -86,13 +93,13 @@ const globalConfig = {
           {
             test: /\.m?jsx?$/,
             include: [
-              /node_modules\/react-native-/,
-              /node_modules\/tcomb-form-native/,
-              /packages\/fs/,
-              /node_modules\/@brandingbrand\/fs/,
-              /node_modules\/@brandingbrand\/react-native-/
+              new RegExp('node_modules' + escapedSep + 'react-native-'),
+              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
+              new RegExp('packages' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')
             ],
-            exclude: /node_modules\/react-native-web\//,
+            exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
               'cache-loader',
               {
@@ -167,6 +174,12 @@ const globalConfig = {
 };
 
 module.exports = function(env, options) {
+  const defaultEnv = JSON.stringify(
+    (env && env.defaultEnvName) ||
+    (webConfig && webConfig.defaultEnvName) ||
+    'prod'
+  );
+
   // add our environment specific config to the webpack config based on mode
   if (options && options.mode === 'production') {
     !options.json && console.log('Webpacking for Production');
@@ -178,7 +191,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       }),
       new UglifyJsPlugin({
         test: /.m?[jt]sx?/,
@@ -232,12 +245,11 @@ module.exports = function(env, options) {
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
-    globalConfig.serve = {
-      content: "./dev-server",
-      add: (app, middleware, options) => {
-        app.use(convert(history()));
-      }
-    }
+    globalConfig.devServer = {
+      contentBase: path.join(__dirname, 'dev-server'),
+      historyApiFallback: true,
+      port: 8080
+    };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
@@ -245,7 +257,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       })
     ]);
   }

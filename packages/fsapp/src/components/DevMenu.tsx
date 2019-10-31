@@ -121,7 +121,7 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     );
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     AsyncStorage.getItem('devKeepPage')
       .then(devKeepPage => {
         this.setState({
