@@ -38,15 +38,7 @@ export function review(bvReview: any): ReviewTypes.Review {
   };
 }
 
-export function reviewSummary(bvProductStatistics: any): ReviewTypes.ReviewSummary {
-  return {
-    id: bvProductStatistics.ProductId,
-    averageRating: bvProductStatistics.ReviewStatistics.AverageOverallRating,
-    reviewCount: bvProductStatistics.ReviewStatistics.TotalReviewCount
-  };
-}
-
-export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
+export function reviewSummary(bvProduct: any): ReviewTypes.ReviewSummary {
   const bvStats = bvProduct.ReviewStatistics;
   return {
     id: bvProduct.Id,

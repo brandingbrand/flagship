@@ -25,14 +25,6 @@ function reviewSummary(ttSummary: any): ReviewTypes.ReviewSummary {
   return {
     id: ttSummary.sku,
     averageRating: ttSummary.averageRating,
-    reviewCount: ttSummary.reviews
-  };
-}
-
-function reviewStatistics(ttSummary: any): ReviewTypes.ReviewStatistics {
-  return {
-    id: ttSummary.sku,
-    averageRating: ttSummary.averageRating,
     reviewCount: ttSummary.reviews,
     ratingDistribution: Object.keys(ttSummary.ratingBreakdown).map(key => {
       return {
@@ -54,6 +46,5 @@ function reviewStatistics(ttSummary: any): ReviewTypes.ReviewStatistics {
 
 export default {
   review,
-  reviewSummary,
-  reviewStatistics
+  reviewSummary
 };

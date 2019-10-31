@@ -116,8 +116,8 @@ export class ProductMetadata extends Component<ProductMetadataProps> {
       reviewIndicatorProps
     } = this.props;
 
-    const stats = review && review.statistics || {} as any;
-    const { averageRating, reviewCount } = stats;
+    const summary = review && review.summary || {} as any;
+    const { averageRating, reviewCount } = summary;
 
     return (
       <View style={styles.reviewsContainer}>

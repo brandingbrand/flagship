@@ -34,7 +34,7 @@ const testProduct: CommerceTypes.Product = {
   images: [{ uri: 'https://placehold.it/345x200?text=%20' }],
   review: {
     id: '101',
-    statistics: {
+    summary: {
       id: '101',
       averageRating: 3.5,
       reviewCount: 20

@@ -6,5 +6,4 @@ export * from './types/ReviewDistribution';
 export * from './types/ReviewMetadata';
 export * from './types/ReviewQuery';
 export * from './types/ReviewQuestion';
-export * from './types/ReviewStatistics';
 export * from './types/ReviewSummary';

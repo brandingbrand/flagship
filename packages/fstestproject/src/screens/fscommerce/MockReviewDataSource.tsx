@@ -22,10 +22,6 @@ export default class MockReviewDataSource extends Component<any, any> {
         <Row text='Fetch Review Detail' onPress={this.fetchReviewDetails} />
         <Row text='Fetch Review Summaries' onPress={this.fetchReviewSummary} />
         <Row
-          text='Fetch Review Statistics'
-          onPress={this.fetchReviewStatistics}
-        />
-        <Row
           text='Fetch Q&amp;A'
           onPress={this.fetchQuestions}
         />
@@ -49,11 +45,6 @@ export default class MockReviewDataSource extends Component<any, any> {
 
   fetchReviewSummary = async () => {
     const data = await this.client.fetchReviewSummary({ ids: kExampleReviewId });
-    this.showData(data);
-  }
-
-  fetchReviewStatistics = async () => {
-    const data = await this.client.fetchReviewStatistics({ ids: kExampleReviewId });
     this.showData(data);
   }
 

@@ -1,3 +1,7 @@
+import { ReviewDistribution } from './ReviewDistribution';
+import { ReviewContextDistribution } from './ReviewContext';
+import { ReviewDimensionAverage } from './ReviewDimension';
+
 /**
  * Summary of a group of reviews
  */
@@ -18,4 +22,26 @@ export interface ReviewSummary {
    * Count of reviews
    */
   reviewCount: number;
+
+  /**
+   * Ratio of users who recommend this product
+   *
+   * @example 90
+   */
+  recommendedRatio?: number;
+
+  /**
+   * Distribution of review ratings
+   */
+  ratingDistribution?: ReviewDistribution[];
+
+  /**
+   * Distribution of review contexts
+   */
+  contextDistributions?: ReviewContextDistribution[];
+
+  /**
+   * Averages of review dimensions
+   */
+  dimensionAverages?: ReviewDimensionAverage[];
 }

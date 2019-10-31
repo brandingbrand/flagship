@@ -2,7 +2,6 @@ import {
   ReviewDetails,
   ReviewQuery,
   ReviewQuestion,
-  ReviewStatistics,
   ReviewSummary
 } from './ReviewTypes';
 
@@ -15,7 +14,6 @@ export interface ReviewDataSource {
   fetchQuestions?(query: ReviewQuery): Promise<ReviewQuestion[]>;
   fetchReviewDetails(query: ReviewQuery): Promise<ReviewDetails[]>;
   fetchReviewSummary(query: ReviewQuery): Promise<ReviewSummary[]>;
-  fetchReviewStatistics(query: ReviewQuery): Promise<ReviewStatistics[]>;
   mergeReviewDetails(...detailsArray: ReviewDetails[][]): ReviewDetails[];
   productIdMapper<T = Product>(
     products: T[],
@@ -26,7 +24,6 @@ export interface ReviewDataSource {
 export abstract class AbstractReviewDataSource implements ReviewDataSource {
   abstract fetchReviewDetails(query: ReviewQuery): Promise<ReviewDetails[]>;
   abstract fetchReviewSummary(query: ReviewQuery): Promise<ReviewSummary[]>;
-  abstract fetchReviewStatistics(query: ReviewQuery): Promise<ReviewStatistics[]>;
 
   mergeReviewDetails(...detailsArray: ReviewDetails[][]): ReviewDetails[] {
     return detailsArray.reduce((merged, details) => {

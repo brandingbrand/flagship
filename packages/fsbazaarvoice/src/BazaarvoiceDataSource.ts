@@ -46,8 +46,8 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     return [{
       id,
       reviews: data.Results.map(BazaarvoiceNormalizer.review),
-      statistics: data.Includes && data.Includes.Products && data.Includes.Products[id] ?
-        BazaarvoiceNormalizer.reviewStatistics(data.Includes.Products[id])
+      summary: data.Includes && data.Includes.Products && data.Includes.Products[id] ?
+        BazaarvoiceNormalizer.reviewSummary(data.Includes.Products[id])
         : undefined,
       page: (data.Offset / data.Limit) + 1,
       limit: data.Limit,
@@ -66,21 +66,6 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     return data.Results.map(
       (data: any) => BazaarvoiceNormalizer.reviewSummary(data.ProductStatistics)
     );
-  }
-
-  async fetchReviewStatistics(
-    query: ReviewTypes.ReviewQuery
-  ): Promise<ReviewTypes.ReviewStatistics[]> {
-    const filter = Array.isArray(query.ids) ? query.ids.map(id => 'id:' + id) : 'id:' + query.ids;
-
-    const { data } = await this.client.get('/data/products.json', {
-      params: {
-        Filter: filter,
-        Stats: 'Reviews'
-      }
-    });
-
-    return data.Results.map(BazaarvoiceNormalizer.reviewStatistics);
   }
 
   async fetchQuestions(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewQuestion[]> {
