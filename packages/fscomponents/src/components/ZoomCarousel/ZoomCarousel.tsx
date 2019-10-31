@@ -704,19 +704,6 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
           </View>
 
-  render(): JSX.Element {
-    return (
-      <View style={this.props.fillContainer ? S.fullHeight : null}>
-        <View style={this.props.fillContainer ? S.fullHeight : null}>
-          <View
-            style={this.props.fillContainer ? S.fullHeight : null}
-            {...this.panResponder.panHandlers}
-          >
-
-          {this.renderCarousel()}
-
-          </View>
-
           {this.renderModal()}
           {!this.props.hideZoomButton &&
             <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
