@@ -1,4 +1,4 @@
-package com.brandingbrand.reactnative.and.flagship;
+package CONFIG_BUNDLE_ID;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

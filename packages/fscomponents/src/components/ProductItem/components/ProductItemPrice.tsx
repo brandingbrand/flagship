@@ -47,7 +47,7 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
       return null;
     }
 
-    if (originalPrice && originalPrice !== price) {
+    if (originalPrice && !originalPrice.value.equals(price.value)) {
       return (
         <View style={[style.priceContainer]}>
           <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>

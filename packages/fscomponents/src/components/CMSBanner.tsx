@@ -31,7 +31,7 @@ export interface CMSBannerState {
   containerWidth: number;
 }
 
-export abstract class CMSBanner<P extends CMSBannerProps>
+export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
   extends Component<P, CMSBannerState> {
 
   state: CMSBannerState = {

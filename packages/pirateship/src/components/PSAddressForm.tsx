@@ -135,9 +135,9 @@ export default class PSAddressForm extends Component<
     this.fieldOptions = this.getFormFieldOptions();
   }
 
-  componentWillReceiveProps(nextProps: PSAddressFormProps): void {
-    const values = this.props.values || {} as any;
-    const newValues = nextProps.values || {} as any;
+  componentDidUpdate(prevProps: PSAddressFormProps): void {
+    const values = prevProps.values || {} as any;
+    const newValues = this.props.values || {} as any;
     const countryCode = (values && values.countryCode) || 'US';
 
     const wasPOState = values.stateCode && POStateCode.indexOf(values.stateCode) > -1;

@@ -243,49 +243,23 @@ export interface PSProductDetailState {
   modalTitle?: string;
   miniModalVisible: boolean;
   miniModalContent?: JSX.Element;
+  dynamicBtnTitles: string[];
+  selectedBtnTitle: number;
 }
 
 export type PSProductDetailComponentInternalProps = UnwrappedPSProductDetailProps &
   WithProductDetailProps &
   CartProps;
 
+enum AddToCartBtnStates {
+  addToCart,
+  addedToCart
+}
+
 class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
   > {
-  static getDerivedStateFromProps(
-    nextProps: PSProductDetailComponentInternalProps,
-    state: PSProductDetailState
-  ):
-    Partial<PSProductDetailState> | null {
-    if (nextProps.commerceData && state.id !== nextProps.commerceData.id) {
-      const { commerceData } = nextProps;
-      const nextState: Partial<PSProductDetailState> = { id: commerceData.id };
-
-      if (!commerceData.variants || commerceData.variants.length === 0) {
-        return {
-          ...nextState,
-          variantId: commerceData.id
-        };
-      }
-
-      const variant = find(commerceData.variants, { id: commerceData.id })
-        || commerceData.variants[0];
-
-      if (variant) {
-        return {
-          ...nextState,
-          variantId: variant.id,
-          optionValues: cloneDeep(variant.optionValues)
-        };
-      }
-
-      return nextState;
-    }
-
-    return null;
-  }
-
   miniModalTimer: any = null;
   needsImpression: boolean = true;
 
@@ -296,12 +270,37 @@ class PSProductDetailComponent extends Component<
       modalVisible: false,
       miniModalVisible: false,
       quantity: 1,
-      optionValues: []
+      optionValues: [],
+      selectedBtnTitle: AddToCartBtnStates.addToCart,
+      dynamicBtnTitles: ['Add to cart', 'Added to cart']
     };
   }
 
   componentDidMount(): void {
     this.needsImpression = true;
+  }
+
+  componentDidUpdate(): void {
+    const { commerceData } = this.props;
+    if (commerceData && this.state.id !== commerceData.id) {
+      if (!commerceData.variants || commerceData.variants.length === 0) {
+        return this.setState({
+          id: commerceData.id,
+          variantId: commerceData.id
+        });
+      }
+
+      const variant = find(commerceData.variants, { id: commerceData.id })
+        || commerceData.variants[0];
+
+      if (variant) {
+        this.setState({
+          id: commerceData.id,
+          variantId: variant.id,
+          optionValues: cloneDeep(variant.optionValues)
+        });
+      }
+    }
   }
 
   trackImpression = (): void => {
@@ -372,6 +371,16 @@ class PSProductDetailComponent extends Component<
 
     // Optimistically show success and only show errors if necessary
     this.openMiniModal('Added to Cart', 2000);
+
+    this.setState({
+      selectedBtnTitle: AddToCartBtnStates.addedToCart
+    });
+
+    setTimeout(() => {
+      this.setState({
+        selectedBtnTitle: AddToCartBtnStates.addToCart
+      });
+    }, 2000);
 
     if (!quantity || !variantId) {
       // TODO: This error message can be more appropriate
@@ -714,9 +723,13 @@ class PSProductDetailComponent extends Component<
   }
 
   _renderAddToCartButton = (): JSX.Element => {
+    const { selectedBtnTitle, dynamicBtnTitles } = this.state;
+
     return (
       <PSButton
         title={translate.string(translationKeys.item.actions.addToCart.actionBtn)}
+        selectedTitleState={selectedBtnTitle}
+        dynamicTitleStates={dynamicBtnTitles}
         onPress={this.addToCart}
         titleStyle={{
           fontWeight: '600',

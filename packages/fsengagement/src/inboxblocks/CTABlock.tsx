@@ -72,6 +72,8 @@ export default class CTABlock extends Component<CTABlockProps> {
       (actions.type === null || actions.type === 'story'))) {
       // go to story card
       return handleStoryAction(story);
+    } else if (story && actions && actions.type !== 'story') {
+      return this.handleActionNoStory(actions);
     }
     return null;
   }

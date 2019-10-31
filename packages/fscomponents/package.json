@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
-  "version": "4.1.0",
+  "version": "7.4.3",
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,23 +11,23 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^4.1.0",
-    "@brandingbrand/fsengage": "^4.1.0",
-    "@brandingbrand/fsfoundation": "^4.1.0",
-    "@brandingbrand/fsi18n": "^4.1.0",
-    "@brandingbrand/fsnetwork": "^4.1.0",
+    "@brandingbrand/fscommerce": "^7.4.3",
+    "@brandingbrand/fsengage": "^7.4.3",
+    "@brandingbrand/fsfoundation": "^7.4.3",
+    "@brandingbrand/fsi18n": "^7.4.3",
+    "@brandingbrand/fsnetwork": "^7.4.3",
+    "@react-native-community/async-storage": "^1.6.1",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "memoize-one": "^4.0.2",
-    "moment": "^2.22.2",
     "photoswipe": "^4.1.2",
     "qs": "^6.7.0",
     "react": "16.8.3",
     "react-dom": "^16.3.2",
     "react-id-swiper": "^1.6.6",
     "react-native": "0.59.10",
-    "react-native-masked-text": "^1.7.1",
+    "react-native-masked-text": "^1.13.0",
     "react-native-svg": "^9.3.6",
     "react-native-swiper": "^1.5.13",
     "react-native-web-modal": "^1.0.1",
@@ -36,5 +36,6 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }

@@ -77,7 +77,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
     };
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.fetchData();
   }
 
@@ -178,7 +178,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
         .editSavedAddress({ ...addr, preferred: true })
         .then(r => {
           if (r) {
-            this.componentWillMount();
+            this.componentDidMount();
           } else {
             throw new Error(translate.string(translationKeys.address.actions.setAsDefault.error));
           }
