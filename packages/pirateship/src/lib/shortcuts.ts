@@ -1,4 +1,5 @@
 import { NavWrapper } from '@brandingbrand/fsapp';
+import { ScreenProps } from './commonTypes';
 
 export const openSignInModal = (navigator: NavWrapper) => () => {
   navigator.showModal({
@@ -6,12 +7,12 @@ export const openSignInModal = (navigator: NavWrapper) => () => {
       name: 'SignIn',
       passProps: {
         dismissible: true,
-        onDismiss: () => {
-          navigator.dismissModal()
+        onDismiss: (screenProps: ScreenProps) => {
+          screenProps.navigator.dismissModal()
           .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
         },
-        onSignInSuccess: () => {
-          navigator.dismissModal()
+        onSignInSuccess: (screenProps: ScreenProps) => {
+          screenProps.navigator.dismissModal()
           .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
         }
       }

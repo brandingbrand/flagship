@@ -384,7 +384,7 @@ class Cart extends Component<CartScreenProps> {
           productId
         }
       }
-    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
+    }).catch((e: any) => console.warn('ProductDetail PUSH error: ', e));
   }
 
   signIn = async () => {
@@ -395,19 +395,19 @@ class Cart extends Component<CartScreenProps> {
             name: 'SignIn',
             passProps: {
               dismissible: true,
-              onDismiss: () => () => {
-                this.props.navigator.dismissModal()
-                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              onDismiss: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
               },
-              onSignInSuccess: () => () => {
-                this.props.navigator.dismissModal()
-                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              onSignInSuccess: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
               }
             }
           }
         }]
       }
-    }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
+    }).catch((e: any) => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
   continueShopping = () => {
@@ -422,7 +422,7 @@ class Cart extends Component<CartScreenProps> {
         component: {
           name: 'Shop'
         }
-      }).catch(e => console.warn('Shop PUSH error: ', e));
+      }).catch((e: any) => console.warn('Shop PUSH error: ', e));
     }
   }
 

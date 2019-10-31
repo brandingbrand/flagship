@@ -90,9 +90,9 @@ export interface SignInScreenProps extends ScreenProps, AccountProps {
   /// What style of dismiss button to display
   dismissButtonStyle?: DismissButtonStyle;
   /// A callback to invoke if the user requested to dismiss the sign in request
-  onDismiss?: () => () => void;
+  onDismiss?: (screenProps: ScreenProps) => () => void;
 
-  onSignInSuccess: () => () => void;
+  onSignInSuccess: (screenProps: ScreenProps) => () => void;
 }
 
 export interface SignInScreenState {
@@ -184,7 +184,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
 
     try {
       await signIn(email, password);
-      onSignInSuccess()();
+      onSignInSuccess(this.props)();
       return true;
     } catch (e) {
       if (e.message === 'FORCE_PASSWORD_CHANGE') {
@@ -203,12 +203,12 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
               currentPassword: password,
               onChangeSuccess: () => {
                 this.props.navigator.pop()
-                .catch(e => console.warn('ChangePassword POP error: ', e));
-                onSignInSuccess()();
+                .catch((e: any) => console.warn('ChangePassword POP error: ', e));
+                onSignInSuccess(this.props)();
               }
             }
           }
-        }).catch(e => console.warn('ChangePassword PUSH error: ', e));
+        }).catch((e: any) => console.warn('ChangePassword PUSH error: ', e));
         return true;
       } else {
         const response = (e || {}).response;
@@ -272,7 +272,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
   onDismiss = () => {
     const { onDismiss } = this.props;
     if (onDismiss) {
-      onDismiss()();
+      onDismiss(this.props)();
     } else {
       console.warn('No onDismiss handler for Sign In');
     }
@@ -289,7 +289,7 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
       // pop/dismiss too quickly will crash android
       setTimeout(() => {
         this.setState({ isLoading: false });
-        onSignInSuccess()();
+        onSignInSuccess(this.props)();
       }, 1000);
     } else {
       console.warn('No onSignInSuccess handler for Sign In');

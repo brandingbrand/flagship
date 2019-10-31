@@ -39,6 +39,7 @@ import {
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
 import { NavWrapper } from '@brandingbrand/fsapp';
+import { ScreenProps } from '../lib/commonTypes';
 
 const icons = {
   zoom: require('../../assets/images/icon-zoom.png'),
@@ -467,14 +468,14 @@ class PSProductDetailComponent extends Component<
         name: 'SignIn',
         passProps: {
           dismissible: true,
-          onDismiss: () => {
+          onDismiss: (screenProps: ScreenProps) => {
             this.props.navigator.dismissModal()
               .catch(e => console.warn('DISMISSMODAL error: ', e));
           },
-          onSignInSuccess: () => {
-            this.props.navigator.popToRoot()
+          onSignInSuccess: (screenProps: ScreenProps) => {
+            screenProps.navigator.popToRoot()
               .catch(e => console.warn('POPTOROOT error: ', e));
-            this.props.navigator.push({
+            screenProps.navigator.push({
               component: {
                 name: 'ProductDetail',
                 passProps: {
@@ -482,7 +483,7 @@ class PSProductDetailComponent extends Component<
                 }
               }
             }).catch(e => console.warn('ProductDetail PUSH error: ', e));
-            this.props.navigator.dismissModal()
+            screenProps.navigator.dismissModal()
               .catch(e => console.warn('DISMISSMODAL error: ', e));
           }
         }
