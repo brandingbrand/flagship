@@ -5,6 +5,7 @@ import {
   ReviewTypes
 } from '@brandingbrand/fscommerce';
 import * as BazaarvoiceNormalizer from './BazaarvoiceNormalizer';
+import * as BazaarvoiceDenormalizer from './BazaarvoiceDenormalizer';
 import { BazaarvoiceReviewRequest } from './BazaarvoiceReviewRequest';
 
 export interface BazaarvoiceConfig {
@@ -94,5 +95,16 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     });
 
     return BazaarvoiceNormalizer.questions(data);
+  }
+
+  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+    const params = {
+      ...BazaarvoiceDenormalizer.writeReviewParams(command),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('AdditionalField', command.additionalFields),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('Rating', command.additionalRatings)
+    };
+    const { data } = await this.client.post('data/submitreview.json', undefined, { params });
+
+    return BazaarvoiceNormalizer.writeReview(data);
   }
 }
