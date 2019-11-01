@@ -19,8 +19,8 @@
     "@brandingbrand/fsi18n": "^8.2.0-rnn2.0",
     "@brandingbrand/fsnetwork": "^8.2.0-rnn2.0",
     "decimal.js": "^10.0.1",
-    "react": "16.8.6",
-    "react-native": "^0.60.5",
+    "react": "16.10.2",
+    "react-native": "^0.61.3",
     "react-native-navigation": "3.2.0-snapshot.524",
     "react-native-payments": "^0.7.0"
   },

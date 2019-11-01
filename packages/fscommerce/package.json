@@ -17,8 +17,8 @@
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.7.0",
-    "react": "16.8.6",
-    "react-native": "^0.60.5",
+    "react": "16.10.2",
+    "react-native": "^0.61.3",
     "react-native-cookies": "^3.3.0",
     "react-native-sensitive-info": "^5.5.0"
   },

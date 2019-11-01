@@ -16,8 +16,8 @@
     "@brandingbrand/fsi18n": "^8.2.0-rnn2.0",
     "lodash-es": "^4.17.10",
     "pluralize": "^8.0.0",
-    "react": "16.8.6",
-    "react-native": "^0.60.5",
+    "react": "16.10.2",
+    "react-native": "^0.61.3",
     "redux": "^4.0.0"
   },
   "publishConfig": {

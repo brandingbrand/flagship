@@ -13,7 +13,7 @@ import StorageManager from './StorageManager';
 import TouchableRow from './TouchableRow';
 // @ts-ignore no type definition file
 import RNRestart from 'react-native-restart';
-import { LayoutComponent, Navigation } from 'react-native-navigation';
+import { LayoutComponent } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
 import NavWrapper from '../lib/nav-wrapper';
@@ -238,7 +238,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
 
   handleHideDevMenu = () => {
     this.props.hideDevMenu();
-    Navigation.dismissModal(this.props.componentId)
+    this.props.navigator.dismissModal()
       .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
   }
 
@@ -247,7 +247,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   dismissModal = () => {
-    Navigation.dismissModal(this.props.componentId)
+    this.props.navigator.dismissModal()
       .catch(err => console.log('DevMenu DISMISSMODAL error: ', err));
   }
 
@@ -265,7 +265,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   pushToScreen = (item: LayoutComponent) => () => {
-    Navigation.push(this.props.componentId, { component: item })
+    this.props.navigator.push({ component: item })
       .catch(err => console.log('DevMenu PUSH error: ', err));
   }
 
