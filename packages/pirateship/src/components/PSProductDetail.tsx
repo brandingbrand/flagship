@@ -218,6 +218,11 @@ const styles = StyleSheet.create({
   },
   quantityView: {
     marginTop: 15
+  },
+  modalContainer: {
+    width: '50%',
+    margin: 'auto',
+    backgroundColor: 'white'
   }
 });
 
@@ -484,6 +489,19 @@ class PSProductDetailComponent extends Component<
         }
       }
     });
+  }
+
+  renderCustomModal = (closeModal: () => void): React.ReactNode => {
+    const testText = 'Hello World';
+    const closeText = 'Close';
+    return (
+      <View style={styles.modalContainer}>
+        <Text>{testText}</Text>
+        <TouchableOpacity onPress={closeModal}>
+          <Text>{closeText}</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   renderShareButton = (): React.ReactNode => {
