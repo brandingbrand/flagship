@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
   }
 });
 
+interface LocalizationData {
+  value: string;
+  language: string;
+}
+
 export interface CTABlockProps extends ScreenProps, EmitterProps {
   action: string;
   text: string;
@@ -51,6 +56,7 @@ export interface CTABlockProps extends ScreenProps, EmitterProps {
   actions: Action;
   animateIndex?: number;
   onBack?: () => void;
+  localization?: LocalizationData[];
 }
 
 export default class CTABlock extends Component<CTABlockProps> {
@@ -60,7 +66,8 @@ export default class CTABlock extends Component<CTABlockProps> {
     handleAction: PropTypes.func,
     handleStoryAction: PropTypes.func,
     name: PropTypes.string,
-    id: PropTypes.string
+    id: PropTypes.string,
+    language: PropTypes.string
   };
 
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
@@ -125,10 +132,18 @@ export default class CTABlock extends Component<CTABlockProps> {
       buttonStyle,
       textStyle,
       containerStyle,
-      text,
-      icon
+      icon,
+      localization
     } = this.props;
 
+    let { text } = this.props;
+    const { language } = this.context;
+    const filterLocalization = localization && localization.find(item => {
+      return item.language === language;
+    }) || null;
+    if (filterLocalization) {
+      text = filterLocalization.value;
+    }
     return (
       <View style={[styles.buttonContainer, containerStyle]}>
         <TouchableOpacity
