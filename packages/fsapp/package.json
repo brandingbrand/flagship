@@ -26,7 +26,7 @@
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
     "react-native-restart": "^0.0.8",
     "react-native-sensitive-info": "~5.4.0",
-    "react-redux": "^5.0.7",
+    "react-redux": "^7.1.2",
     "react-router-dom": "^4.3.1",
     "redux": "4.0.1",
     "redux-immutable-state-invariant": "^2.1.0",
