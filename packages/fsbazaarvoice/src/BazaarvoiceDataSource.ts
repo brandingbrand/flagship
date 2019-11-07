@@ -16,10 +16,11 @@ export interface BazaarvoiceConfig {
 
 export class BazaarvoiceDataSource extends AbstractReviewDataSource implements ReviewDataSource {
   private client: FSNetwork;
+  private config: BazaarvoiceConfig;
 
   constructor(config: BazaarvoiceConfig) {
     super();
-
+    this.config = config;
     this.client = new FSNetwork({
       baseURL: config.endpoint,
       params: {
@@ -32,6 +33,8 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
   async fetchReviewDetails(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewDetails[]> {
     const id = Array.isArray(query.ids) ? query.ids[0] : query.ids;
     const params: BazaarvoiceReviewRequest = {
+      PassKey: this.config.passkey,
+      ApiVersion: this.config.apiversion || '5.4',
       Filter: `ProductId:${id}`,
       Include: 'Products',
       Stats: 'Reviews',
@@ -59,6 +62,8 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
   async fetchReviewSummary(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewSummary[]> {
     const { data } = await this.client.get('/data/statistics.json', {
       params: {
+        PassKey: this.config.passkey,
+        ApiVersion: this.config.apiversion || '5.4',
         Filter: `ProductId:${query.ids}`,
         Stats: 'Reviews'
       }
@@ -76,6 +81,8 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
 
     const { data } = await this.client.get('/data/products.json', {
       params: {
+        PassKey: this.config.passkey,
+        ApiVersion: this.config.apiversion || '5.4',
         Filter: filter,
         Stats: 'Reviews'
       }
@@ -89,6 +96,8 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
 
     const { data } = await this.client.get('/data/questions.json', {
       params: {
+        PassKey: this.config.passkey,
+        ApiVersion: this.config.apiversion || '5.4',
         Filter: `ProductId:${id}`,
         Include: 'Answers'
       }
