@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
 ## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
 
 **Note:** Version bump only for package @brandingbrand/fsproductdetail
