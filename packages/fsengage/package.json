@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsengage",
   "sideEffects": false,
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Analytics, CMS, and Settings module for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsfoundation": "^7.5.0",
-    "@brandingbrand/fsnetwork": "^7.5.0",
+    "@brandingbrand/fsfoundation": "^7.5.1",
+    "@brandingbrand/fsnetwork": "^7.5.1",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
     "@brandingbrand/react-native-google-analytics": "^2.1.0",
     "@brandingbrand/react-native-leanplum": "^1.0.1",
