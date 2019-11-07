@@ -331,6 +331,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
           data={this.props.items}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          contentContainerStyle={this.props.contentContainerStyle}
         />
 
         {this.props.renderPageIndicator ? (
