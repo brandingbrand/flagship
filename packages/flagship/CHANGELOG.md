@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Bug Fixes
+
+* **flagship:** add targeted device to both Debug and Release config ([70f9aaa](https://github.com/brandingbrand/flagship/commit/70f9aaa))
+* **flagship:** fix fastlane build lane ([e6d64bf](https://github.com/brandingbrand/flagship/commit/e6d64bf))
+
+
+
+
+
 ## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
 
 
