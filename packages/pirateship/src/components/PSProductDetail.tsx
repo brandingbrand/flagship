@@ -586,6 +586,7 @@ class PSProductDetailComponent extends Component<
             dotActiveStyle={styles.zoomCarouselDotActiveStyle}
             renderZoomButton={this._renderZoomButton}
             zoomButtonStyle={styles.zoomCarouselZoomButtonStyle}
+            renderModalContent={this.props.id === '25752986' ? this.renderCustomModal : undefined}
           />
         </View>
         <View style={styles.edgePadding}>
