@@ -1,8 +1,8 @@
-import { FSAppTypes } from '@brandingbrand/fsapp';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 // tslint:disable-next-line: no-empty-interface
 export interface HeaderProps {
-  navigator: FSAppTypes.NavWrapper;
+  navigator: NavWrapper;
 }
 
 const Header = (props: HeaderProps) => {

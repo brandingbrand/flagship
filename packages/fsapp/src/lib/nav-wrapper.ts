@@ -1,6 +1,9 @@
 import { EventSubscription, Navigation } from 'react-native-navigation';
-import { GenericNavProp } from '../components/screenWrapper';
 import { NavLayout, NavModal, NavOptions } from '../types';
+
+export interface GenericNavProp {
+  componentId: string;
+}
 
 export default class NavWrapper {
   componentId: string;

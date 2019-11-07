@@ -1,7 +1,7 @@
 import React, { Component, ComponentClass } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Provider } from 'react-redux';
-import screenWrapper, { GenericScreenProp } from '../components/screenWrapper';
+import screenWrapper, { GenericScreenProp } from '../components/screenWrapper.web';
 import {
   BrowserRouter,
   HashRouter,

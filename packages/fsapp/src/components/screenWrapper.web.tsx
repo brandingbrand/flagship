@@ -5,7 +5,7 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
 import Navigator from './Navigator.web';
-import NavWrapper from '../lib/nav-wrapper.web';
+import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper.web';
 import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 const StyleSheetCreate: any = StyleSheet.create;
@@ -35,14 +35,6 @@ export interface GenericScreenStateProp {
 
 export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
-}
-
-export interface GenericNavProp {
-  appConfig: AppConfigType;
-  history: any;
-  modals: NavModal[];
-  toggleDrawerFn?: (config: DrawerConfig) => void;
-  updateModals: (modals: NavModal[]) => void;
 }
 
 export interface GenericScreenProp extends GenericScreenStateProp,

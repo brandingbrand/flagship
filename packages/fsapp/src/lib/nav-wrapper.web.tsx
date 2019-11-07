@@ -1,13 +1,22 @@
 import React from 'react';
 import { EventSubscription } from 'react-native';
-import { GenericNavProp } from '../components/screenWrapper.web';
 import pushRoute from './push-route';
 import {
+  AppConfigType,
+  DrawerConfig,
   NavLayout,
   NavLayoutStackChildren,
+  NavModal,
   NavOptions
 } from '../types';
 
+export interface GenericNavProp {
+  appConfig: AppConfigType;
+  history: any;
+  modals: NavModal[];
+  toggleDrawerFn?: (config: DrawerConfig) => void;
+  updateModals: (modals: NavModal[]) => void;
+}
 
 export default class NavWrapper {
   props: GenericNavProp;

@@ -168,5 +168,3 @@ export interface NavLayout extends Layout {
 export interface NavModal {
   layout: NavLayout;
 }
-
-export { default as NavWrapper } from '../lib/nav-wrapper';

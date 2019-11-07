@@ -13,7 +13,7 @@ import { setGlobalData } from '../actions/globalDataAction';
 import { AppConfigType, DrawerConfig, NavButton } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
-import NavWrapper from '../lib/nav-wrapper';
+import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -40,10 +40,6 @@ export interface GenericScreenStateProp {
 
 export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
-}
-
-export interface GenericNavProp {
-  componentId: string;
 }
 
 export interface GenericScreenProp extends GenericScreenStateProp,

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { NavLayoutComponent, NavModal } from '../types';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { GenericNavProp } from './screenWrapper.web';
-import NavWrapper from '../lib/nav-wrapper.web';
+import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper.web';
 // @ts-ignore TODO: Update react-native-web-modal to support typing
 import Modal from 'react-native-web-modal';
 
