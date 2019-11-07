@@ -39,8 +39,10 @@
     "@brandingbrand/fssalesforce": "^8.2.0-rnn2.0",
     "@brandingbrand/fsshopify": "^8.2.0-rnn2.0",
     "@brandingbrand/fsweb": "^8.2.0-rnn2.0",
-    "@brandingbrand/react-native-leanplum": "^2.0.3",
+    "@brandingbrand/react-native-leanplum": "^5.0.0",
     "@react-native-community/async-storage": "^1.6.2",
+    "@react-native-community/cli-platform-android": "^3.0.0-alpha.1",
+    "@react-native-community/cli-platform-ios": "^3.0.0-alpha.1",
     "@react-native-community/push-notification-ios": "1.0.2",
     "credit-card-type": "^8.3.0",
     "jsc-android": "241213.x.x",
@@ -75,8 +77,6 @@
       "react-native-payments"
     ],
     "forceLink": [
-      "@react-native-community/async-storage",
-      "react-native-svg"
     ],
     "webTitle": "PirateShip"
   },
@@ -94,6 +94,8 @@
       "**/fsshopify/react-native*",
       "**/fsshopify/react-native*/**",
       "@react-native-community/async-storage",
+      "@react-native-community/cli-platform-android",
+      "@react-native-community/cli-platform-ios",
       "@react-native-community/push-notification-ios"
     ]
   }

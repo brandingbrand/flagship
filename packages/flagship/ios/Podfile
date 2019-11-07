@@ -1,18 +1,13 @@
 # You Podfile should look similar to this file. React Native currently does not support use_frameworks!
 source 'https://github.com/CocoaPods/Specs.git'
-# add more sources using environment key ios.pods.sources
-# ADDITIONAL_POD_SOURCES
 
 platform :ios, '10.3'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
-# Change 'FLAGSHIP' to match the target in your Xcode project.
 target 'FLAGSHIP' do
-
-  # Your 'node_modules' directory is probably in the root of your project,
-  # but if not, adjust the `:path` accordingly
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -21,7 +16,6 @@ target 'FLAGSHIP' do
   pod 'React-Core', :path => '../node_modules/react-native/'
   pod 'React-CoreModules', :path => '../node_modules/react-native/React/CoreModules'
   pod 'React-Core/DevSupport', :path => '../node_modules/react-native/'
-
   pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
   pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
   pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
@@ -32,34 +26,18 @@ target 'FLAGSHIP' do
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
   pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
   pod 'React-Core/RCTWebSocket', :path => '../node_modules/react-native/'
-  pod 'React-ART', :path => '../node_modules/react-native/Libraries/ART'
 
   pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
   pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
   pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
-
-  # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'ReactCommon/jscallinvoker', :path => "../node_modules/react-native/ReactCommon"
   pod 'ReactCommon/turbomodule/core', :path => "../node_modules/react-native/ReactCommon"
   pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
-  # Third party deps podspec link
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  # Add new pods below this line
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-  pod 'ReactNativeNavigation', :podspec => '../node_modules/react-native-navigation/ReactNativeNavigation.podspec'
-  pod 'RNCAsyncStorage', :podspec => '../node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'
-  pod 'react-native-cookies', :path => '../node_modules/react-native-cookies/ios/react-native-cookies.podspec'
-  pod 'react-native-sensitive-info', :path => '../node_modules/react-native-sensitive-info/react-native-sensitive-info.podspec'
-  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios/RNCPushNotificationIOS.podspec'
-  pod 'RCTRestart', :path => '../node_modules/react-native-restart/ios/RCTRestart.podspec'
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview/react-native-webview.podspec'
-  pod 'react-native-safe-area', :path => '../node_modules/react-native-safe-area/react-native-safe-area.podspec'
-  pod 'react-native-leanplum', :path => '../node_modules/@brandingbrand/react-native-leanplum/react-native-leanplum.podspec'
-  pod 'ReactNativePayments', :path => '../node_modules/react-native-payments/ReactNativePayments.podspec'
-  pod 'TouchID', :path => '../node_modules/react-native-touch-id/TouchID.podspec'
+  use_native_modules!
 end

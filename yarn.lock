@@ -1084,10 +1084,10 @@
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-1.0.1.tgz#a39a457c64c1ab2c457dd4710018b3a62c3d7620"
   integrity sha512-BN7RQgm0EsA6EzSsnLM1du3NbRnsfdnZ6K2+3KYGqcM9lHV18gpRVlPiGBwRI9/4RP39TdbBb/yrhxYkzOoWsg==
 
-"@brandingbrand/react-native-leanplum@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-2.0.3.tgz#5e9b79404e50b0f6b200e854202c1939b904e3a6"
-  integrity sha512-pqt5rgEy1gBCtQ1x2ZoB+zYYS1dTkNFywsFOaQGmRsByKJK1EXbJw85G+XLN8r4Tn0UhHZUOX4BRbcV6Yu4LvA==
+"@brandingbrand/react-native-leanplum@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-leanplum/-/react-native-leanplum-5.0.0.tgz#39fcbf496593d6924cbe41046c824f587e86659f"
+  integrity sha512-qLSj107iesGcgY4xIpi6c+n/hwbT+GgBRwlitHYF3gdWK+fpGrDv0rN7eUfJ1ABOuE0du+DFhBufL26dV75GtA==
   dependencies:
     "@brandingbrand/fsfoundation" "^0.1.0"
 
