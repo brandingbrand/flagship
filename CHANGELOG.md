@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Bug Fixes
+
+* **flagship:** add targeted device to both Debug and Release config ([70f9aaa](https://github.com/brandingbrand/flagship/commit/70f9aaa))
+* update react-native-htmlview to version 0.14.0 ([64165aa](https://github.com/brandingbrand/flagship/commit/64165aa))
+* **flagship:** fix fastlane build lane ([e6d64bf](https://github.com/brandingbrand/flagship/commit/e6d64bf))
+* **flagship:** update string replace to work in new fastfile ([f5ae87b](https://github.com/brandingbrand/flagship/commit/f5ae87b))
+* **fsapp:** Put dev menu as first screen ([0e4bcc0](https://github.com/brandingbrand/flagship/commit/0e4bcc0))
+* **fsengagement:** update react-native-video ([1d7a036](https://github.com/brandingbrand/flagship/commit/1d7a036))
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([5afe084](https://github.com/brandingbrand/flagship/commit/5afe084))
+
+
+### Features
+
+* Write review submission typings ([8e4d0ac](https://github.com/brandingbrand/flagship/commit/8e4d0ac))
+* Write Reviews Baazarvoice implementation ([7a33c38](https://github.com/brandingbrand/flagship/commit/7a33c38))
+* **fscomponents:** add condition to render custom test modal content ([f596e60](https://github.com/brandingbrand/flagship/commit/f596e60))
+* **fscomponents:** add custom modal content logic and test view ([7baf939](https://github.com/brandingbrand/flagship/commit/7baf939))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([d342370](https://github.com/brandingbrand/flagship/commit/d342370))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([f49960a](https://github.com/brandingbrand/flagship/commit/f49960a))
+* **fscomponents:** add some option props to zoomCarousel ([722cd92](https://github.com/brandingbrand/flagship/commit/722cd92))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([fddce73](https://github.com/brandingbrand/flagship/commit/fddce73))
+* **fscomponents:** support more styling options for MultiCarousel ([cf964f9](https://github.com/brandingbrand/flagship/commit/cf964f9))
+* **fsengagement:** add new carousel option and full screen background ([01beb32](https://github.com/brandingbrand/flagship/commit/01beb32))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+
+
+
+
+
 ## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
 
 
