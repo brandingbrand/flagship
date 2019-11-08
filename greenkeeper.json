@@ -37,6 +37,8 @@
     "react",
     "metro-react-native-babel-preset",
     "@babel/core",
-    "@babel/runtime"
+    "@babel/runtime",
+    "@types/react",
+    "@types/react-native"
   ]
 }
