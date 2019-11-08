@@ -26,7 +26,6 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },

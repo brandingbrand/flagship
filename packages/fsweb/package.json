@@ -10,14 +10,14 @@
     "start": "webpack-dev-server -d --config ./webpack.config.js --mode development --inline --hot"
   },
   "dependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/polyfill": "^7.0.0",
+    "@babel/core": "^7.7.2",
     "@babel/runtime": "~7.5.5",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
-    "babel-plugin-react-native-web": "^0.8.4",
+    "babel-plugin-react-native-web": "^0.11.7",
     "cache-loader": "^1.2.2",
     "copy-webpack-plugin": "^5.0.0",
+    "core-js": "^3.0.0",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "^1.1.11",
