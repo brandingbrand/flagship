@@ -50,4 +50,10 @@ export class PowerReviewsDataSource extends AbstractReviewDataSource implements 
     return this.client.get('/product/' + id + '/reviews')
       .then(({ data }) => data.results.map(PowerReviewsNormalizer.reviewStatistics));
   }
+
+  async writeReview(
+    command: ReviewTypes.WriteReviewCommand
+  ): Promise<ReviewTypes.WriteReviewSubmission> {
+    throw new Error('Not implemented');
+  }
 }
