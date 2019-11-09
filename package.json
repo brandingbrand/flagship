@@ -47,7 +47,7 @@
     "@commitlint/travis-cli": "^7.1.2",
     "@react-native-community/cli": "^1.11.2",
     "@storybook/addon-actions": "5.2.6",
-    "@storybook/addon-knobs": "4.1.18",
+    "@storybook/addon-knobs": "5.2.6",
     "@storybook/addon-viewport": "4.1.18",
     "@storybook/addons": "4.1.18",
     "@storybook/react": "4.1.18",
