@@ -45,7 +45,7 @@
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-cookies": "^3.3.0",
-    "react-native-device-info": "^0.29.1",
+    "react-native-device-info": "^5.3.0",
     "react-native-htmlview": "^0.14.0",
     "react-native-i18n": "^2.0.15",
     "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
