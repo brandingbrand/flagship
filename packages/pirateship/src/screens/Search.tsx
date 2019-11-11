@@ -180,7 +180,10 @@ class Search extends Component<SearchProps, SearchState> {
           {translate.string(translationKeys.search.noResults.text, { keyword })}
         </Text>
         {translationKeys.search.noResults.suggestions.map(suggestion => (
-          <Text style={NoSearchResultsStyle.listItem}>
+          <Text
+            style={NoSearchResultsStyle.listItem}
+            key={suggestion}
+          >
             &bull; {translate.string(suggestion)}
           </Text>
         ))}

@@ -19,13 +19,13 @@
     "@brandingbrand/fsi18n": "^8.2.0-rnn2.0",
     "@brandingbrand/fsnetwork": "^8.2.0-rnn2.0",
     "decimal.js": "^10.0.1",
-    "react": "16.10.2",
-    "react-native": "^0.61.3",
-    "react-native-navigation": "3.2.0-snapshot.524",
+    "react": "^16.11.0",
+    "react-native": "^0.61.0",
+    "react-native-navigation": "~3.5.0",
     "react-native-payments": "^0.7.0"
   },
   "devDependencies": {
-    "axios": "~0.18.1"
+    "axios": "~0.19.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

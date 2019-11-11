@@ -16,15 +16,15 @@
     "fs-extra": "^8.0.0",
     "glob": "^7.1.2",
     "jsc-android": "241213.x.x",
-    "react": "16.10.2",
-    "react-native": "^0.61.3",
+    "react": "^16.11.0",
+    "react-native": "^0.61.0",
     "replace-in-file": "^4.1.0",
-    "yargs": "^12.0.1"
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "@brandingbrand/fsengage": "^8.2.0-rnn2.0",
-    "@types/yargs": "^12.0.1",
-    "true-case-path": "^1.0.3"
+    "@types/yargs": "^13.0.0",
+    "true-case-path": "^2.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -615,9 +615,11 @@ class PSProductDetailComponent extends Component<
                     {translate.currency(originalPrice)}
                   </Text>
                 )}
-                {price && <Text style={styles.price}>
-                  {translate.currency(price)}
-                </Text>}
+                {price && (
+                  <Text style={styles.price}>
+                    {translate.currency(price)}
+                  </Text>
+                )}
               </View>
               {review &&
                 review.statistics && (
@@ -807,4 +809,4 @@ export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailPro
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
     DataSource.fetchProduct(props.id)
   // TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent as any) as any);
+)(withCart(PSProductDetailComponent as any));

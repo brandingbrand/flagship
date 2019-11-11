@@ -46,10 +46,12 @@ memo((props): JSX.Element => {
           {FSI18n.currency(price)}
         </Text>
       )}
-      {totalPrice && <Text style={detailTextStyle}>
-        {FSI18n.string(componentTranslationKeys.totalPrice)}:
-        {FSI18n.currency(totalPrice)}
-      </Text>}
+      {totalPrice && (
+        <Text style={detailTextStyle}>
+          {FSI18n.string(componentTranslationKeys.totalPrice)}:
+          {FSI18n.currency(totalPrice)}
+        </Text>
+      )}
     </View>
   );
 });

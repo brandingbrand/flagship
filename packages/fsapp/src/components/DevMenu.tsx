@@ -260,7 +260,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
 
   switchToSelectedEnv = () => {
     EnvSwitcher.setEnv(this.state.selectedEnv).then(() => {
-      RNRestart.Restart();
+      this.restart();
     });
   }
 

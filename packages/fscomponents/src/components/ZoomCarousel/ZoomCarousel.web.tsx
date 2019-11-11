@@ -246,15 +246,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     return (
       <View style={this.props.fillContainer ? S.fullHeight : null}>
         {this.props.renderImageWeb &&
-          this.props.renderImageWeb(item, i) ||
-          <Image
-            source={item.src}
-            resizeMode='contain'
-            style={{
-              width: this.state.imageWidth,
-              height: this.state.imageHeight
-            }}
-          />}
+          this.props.renderImageWeb(item, i) || (
+            <Image
+              source={item.src}
+              resizeMode='contain'
+              style={{
+                width: this.state.imageWidth,
+                height: this.state.imageHeight
+              }}
+            />
+          )}
       </View>
     );
   }
@@ -292,7 +293,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               nextArrowOnBlur={this.props.nextArrowOnBlur}
             />
 
-            {!this.props.hideZoomButton &&
+            {!this.props.hideZoomButton && (
               <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
                 {this.props.renderZoomButton ? (
                   this.props.renderZoomButton(this.openZoom)
@@ -301,7 +302,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                     <Image style={S.searchIcon} source={searchIcon} />
                   </TouchableOpacity>
                 )}
-              </View>}
+              </View>
+            )}
 
             <PhotoSwipe
               isOpen={this.state.isZooming}

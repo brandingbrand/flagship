@@ -156,13 +156,13 @@ export class EngagementService {
         RNLocalize.getLocales()[0].languageTag,
       country: RNLocalize.getCountry(),
       timezone: RNLocalize.getTimeZone(),
-      deviceIdentifier: await DeviceInfo.getUniqueId(),
+      deviceIdentifier: DeviceInfo.getUniqueId(),
       deviceInfo: JSON.stringify({
-        model: await DeviceInfo.getModel(),
-        appName: await DeviceInfo.getBundleId(),
-        appVersion: await DeviceInfo.getReadableVersion(),
-        osName: await DeviceInfo.getSystemName(),
-        osVersion: await DeviceInfo.getSystemVersion()
+        model: DeviceInfo.getModel(),
+        appName: DeviceInfo.getBundleId(),
+        appVersion: DeviceInfo.getReadableVersion(),
+        osName: DeviceInfo.getSystemName(),
+        osVersion: DeviceInfo.getSystemVersion()
       })
     };
     return this.networkClient.post(`/App/${this.appId}/getProfile`, profileInfo)
@@ -182,7 +182,7 @@ export class EngagementService {
   }
 
   async setPushToken(pushToken: string): Promise<any> {
-    const uniqueId = await DeviceInfo.getUniqueId();
+    const uniqueId = DeviceInfo.getUniqueId();
     const device = this.profileData && this.profileData.devices &&
       this.profileData.devices[uniqueId];
     if (device) {

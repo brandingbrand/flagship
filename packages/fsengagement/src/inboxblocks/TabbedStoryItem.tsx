@@ -116,9 +116,11 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
               height: '100%'
             }}
           />
-          {!this.state.loaded && <View style={styles.loadingInner}>
-            <ActivityIndicator color='rgba(0,0,0,0.5)' />
-          </View>}
+          {!this.state.loaded && (
+            <View style={styles.loadingInner}>
+              <ActivityIndicator color='rgba(0,0,0,0.5)' />
+            </View>
+          )}
         </View>
       );
     }

@@ -56,11 +56,13 @@ export default class GooglePayShippingOptionsModal extends
           {this.props.orderDetails.shippingOptions &&
           this.props.orderDetails.shippingOptions.map(option => {
             const { id, label, amount } = option;
-            return <Picker.Item
-              key={id}
-              label={label + ' ' + FSI18n.currency(amount.value, amount.currency)}
-              value={id}
-            />;
+            return (
+              <Picker.Item
+                key={id}
+                label={label + ' ' + FSI18n.currency(amount.value, amount.currency)}
+                value={id}
+              />
+            );
           })}
         </Picker>
 

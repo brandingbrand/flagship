@@ -2,6 +2,8 @@ import { color, palette } from './variables';
 import { Options, OptionsTopBarTitle } from 'react-native-navigation';
 import { Platform } from 'react-native';
 
+const defaultTabImage = require('../../assets/images/shop-tab-icon.png');
+
 export const navBarDark: Options = {
   statusBar: {
     style: 'light'
@@ -132,7 +134,8 @@ export const tabBarDefault: Options = {
   bottomTab: {
     badgeColor: palette.secondary,
     iconColor: color.gray,
-    selectedIconColor: palette.onBackground
+    selectedIconColor: palette.onBackground,
+    icon: defaultTabImage
   },
   bottomTabs: {
     backgroundColor: palette.background,

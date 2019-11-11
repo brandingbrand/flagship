@@ -24,6 +24,8 @@ import withRecentlyViewed, {
 import Analytics from '../lib/analytics';
 import translate, { translationKeys } from '../lib/translations';
 
+const cartTabIcon = require('../../assets/images/cart-tab-icon.png');
+
 const CartStyle = StyleSheet.create({
   loading: {
     backgroundColor: palette.background,
@@ -241,7 +243,8 @@ class Cart extends Component<CartScreenProps> {
       this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
-          badgeColor: palette.primary
+          badgeColor: palette.primary,
+          icon: cartTabIcon
         }
       });
 
@@ -310,7 +313,8 @@ class Cart extends Component<CartScreenProps> {
     this.props.navigator.mergeOptions({
       bottomTab: {
         badge,
-        badgeColor: palette.secondary
+        badgeColor: palette.secondary,
+        icon: cartTabIcon
       }
     });
   }

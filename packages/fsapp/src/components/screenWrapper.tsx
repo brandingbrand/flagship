@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass, ComponentType } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -54,9 +54,7 @@ export default function wrapScreen(
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): ComponentClass<GenericScreenProp> & {
-  WrappedComponent: ComponentType<GenericScreenProp>;
-} {
+): any {
   // Note: in RNN v2, PageComponent.options type is a function `(passProps: Props) => Options`
   // the transformation code below for backward-compatibility purpose will only work
   // if the incoming value is not a function

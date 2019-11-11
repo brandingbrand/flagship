@@ -477,9 +477,10 @@ export default function(
       return (
         <Fragment>
           {(json && json.private_blocks || []).map(this.renderBlock)}
-          {empty && !(json && json.private_blocks && json.private_blocks.length) &&
+          {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>}
+              {empty.message || 'No content found.'}</Text>
+          )}
         </Fragment>
       );
     }
@@ -578,26 +579,29 @@ export default function(
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
           <Fragment>
-            {empty && !(json && json.private_blocks && json.private_blocks.length) &&
+            {empty && !(json && json.private_blocks && json.private_blocks.length) && (
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
-                {empty && empty.message || 'No content found.'}</Text>}
+                {empty && empty.message || 'No content found.'}</Text>
+            )}
 
-            {this.state.showCarousel && <Carousel
-              data={json && json.private_blocks || []}
-              layout={'default'}
-              autoplay={autoplay}
-              scrollEnabled={this.state.scrollEnabled}
-              swipeThreshold={50}
-              autoplayDelay={autoplayDelay}
-              autoplayInterval={autoplayInterval}
-              sliderWidth={Dimensions.get('screen').width}
-              itemWidth={Dimensions.get('screen').width}
-              renderItem={this.renderBlockItem}
-              inactiveSlideOpacity={1}
-              inactiveSlideScale={1}
-              onSnapToItem={this.onSnapToItem}
-              useScrollView={Platform.OS === 'ios' ? true : false}
-            />}
+            {this.state.showCarousel && (
+              <Carousel
+                data={json && json.private_blocks || []}
+                layout={'default'}
+                autoplay={autoplay}
+                scrollEnabled={this.state.scrollEnabled}
+                swipeThreshold={50}
+                autoplayDelay={autoplayDelay}
+                autoplayInterval={autoplayInterval}
+                sliderWidth={Dimensions.get('screen').width}
+                itemWidth={Dimensions.get('screen').width}
+                renderItem={this.renderBlockItem}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
+                onSnapToItem={this.onSnapToItem}
+                useScrollView={Platform.OS === 'ios' ? true : false}
+              />
+            )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
           </Fragment>
         );
@@ -654,11 +658,12 @@ export default function(
                   {empty && empty.message || 'No content found.'}</Text>
               )}
               refreshControl={
-                this.props.refreshControl && <RefreshControl
-                  refreshing={this.props.isLoading}
-                  onRefresh={this.props.refreshControl}
-                />
-              }
+                this.props.refreshControl && (
+                  <RefreshControl
+                    refreshing={this.props.isLoading}
+                    onRefresh={this.props.refreshControl}
+                  />
+                )}
             >
               {this.renderBlocks()}
             </FlatList>
@@ -677,11 +682,12 @@ export default function(
               {empty && empty.message || 'No content found.'}</Text>
           )}
           refreshControl={
-            this.props.refreshControl && <RefreshControl
-              refreshing={this.props.isLoading}
-              onRefresh={this.props.refreshControl}
-            />
-          }
+            this.props.refreshControl && (
+              <RefreshControl
+                refreshing={this.props.isLoading}
+                onRefresh={this.props.refreshControl}
+              />
+            )}
         >
           {this.renderBlocks()}
         </FlatList>
@@ -712,7 +718,7 @@ export default function(
             >
               {this.renderScrollView()}
             </Animatable.View>
-            {(json && json.tabbedItems && json.tabbedItems.length) &&
+            {(json && json.tabbedItems && json.tabbedItems.length) && (
               <View style={styles.progressBar}>
                 {(json.tabbedItems || []).map((item: any, index: number) => {
                   return (
@@ -725,8 +731,9 @@ export default function(
                     />
                   );
                 })}
-              </View>}
-            {backButton &&
+              </View>
+            )}
+            {backButton && (
               <TouchableOpacity
                 onPress={this.onAnimatedClose}
                 style={styles.animatedClose}
@@ -738,21 +745,23 @@ export default function(
                   source={this.state.showDarkX ? iconCloseXDark : iconCloseXLight}
                   style={[styles.backIconCloseX]}
                 />
-              </TouchableOpacity>}
+              </TouchableOpacity>
+            )}
           </Fragment>
         );
       }
       return (
         <View style={[styles.container, containerStyle]}>
           {this.renderScrollView()}
-          {backButton &&
+          {backButton && (
             <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
               <Image
                 resizeMode='contain'
                 source={backArrow}
                 style={[styles.backIcon, json.backArrow]}
               />
-            </TouchableOpacity>}
+            </TouchableOpacity>
+          )}
         </View>
       );
     }
@@ -768,7 +777,7 @@ export default function(
         <Fragment>
           {this.renderContent()}
           {(this.props.renderType && this.props.renderType === 'carousel' &&
-            json && json.private_blocks && json.private_blocks.length > 0) &&
+            json && json.private_blocks && json.private_blocks.length > 0) && (
             <Animatable.View
               ref={this.handlePageCounterRef}
               useNativeDriver
@@ -780,15 +789,14 @@ export default function(
                 {this.state.pageNum} / {json.private_blocks.length}
               </Text>
             </Animatable.View>
-          }
-            <Animatable.Text
-              style={[styles.navBarTitle, navBarTitleStyle]}
-              ref={this.handleNavTitleRef}
-              useNativeDriver
-            >
-              {navBarTitle}
-            </Animatable.Text>
-
+          )}
+          <Animatable.Text
+            style={[styles.navBarTitle, navBarTitleStyle]}
+            ref={this.handleNavTitleRef}
+            useNativeDriver
+          >
+            {navBarTitle}
+          </Animatable.Text>
         </Fragment>
       );
     }

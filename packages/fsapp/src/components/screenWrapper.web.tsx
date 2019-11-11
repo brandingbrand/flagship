@@ -54,9 +54,7 @@ export default function wrapScreen(
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): React.ComponentClass<GenericScreenProp, GenericScreenState> & {
-  WrappedComponent: React.ComponentType<GenericScreenProp>;
-} {
+): any {
   if (!PageComponent) {
     throw new Error('no PageComponent passed to wrapScreen.web');
   }

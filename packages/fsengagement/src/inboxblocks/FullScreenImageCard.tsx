@@ -224,7 +224,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
               ref={this.handleTextRef}
               useNativeDriver
             >
-              {this.props.isNew &&
+              {this.props.isNew && (
                 <View
                   style={styles.newContainer}
                 >
@@ -233,7 +233,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
                   >
                     {NEW}
                   </Text>
-                </View>}
+                </View>
+              )}
               <TextBlock
                 {...contents.Eyebrow}
               />
