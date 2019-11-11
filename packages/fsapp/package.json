@@ -16,7 +16,7 @@
     "@brandingbrand/fsfoundation": "^7.5.4",
     "@brandingbrand/fsnetwork": "^7.5.4",
     "@react-native-community/async-storage": "^1.6.1",
-    "path-to-regexp": "^2.2.1",
+    "path-to-regexp": "^3.2.0",
     "qs": "^6.7.0",
     "react": "16.8.3",
     "react-dom": "^16.7.0",
