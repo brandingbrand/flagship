@@ -1,16 +1,19 @@
 export interface Article {
-  author: string;
-  image: string;
-  description: string;
-  title: string;
-  publishedAt: string;
-  url: string;
-  id: string;
-  isArticle: boolean;
-  excerpt: string;
+  author?: string;
+  image?: string;
+  description?: string;
+  title?: string;
+  publishedAt?: string;
+  url?: string;
+  id?: string;
+  isArticle?: boolean;
+  excerpt?: string;
 }
 
-export function blogPosts(blogData: any): Article {
+export function blogPosts(blogData: any): Article | null {
+  if (!(blogData && blogData.node)) {
+    return null;
+  }
   return {
     author: blogData.node.authorV2.name,
     image: blogData.node.image.originalSrc,

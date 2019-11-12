@@ -5,8 +5,8 @@ import DataSourceBase from '../util/DataSourceBase';
 import * as Normalizers from './../normalizers';
 
 export interface AddressResponse {
-  defaultAddress: string;
-  addresses: ShopifyAddress[];
+  defaultAddress?: string;
+  addresses?: ShopifyAddress[];
 }
 
 export interface NormalizedAddressResponse {
@@ -118,14 +118,16 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      customerAccessToken
-    });
-    const addresses = response.customer.addresses.edges.map((address: any) => {
-      return address.node;
-    });
+        customerAccessToken
+      });
+    const customer = response && response.customer;
+    const addresses = customer && customer.addresses &&
+      (customer.addresses.edges || []).map((address: any) => {
+        return address.node;
+      });
 
     return {
-      defaultAddress: response.customer.defaultAddress.id,
+      defaultAddress: customer && customer.defaultAddress && customer.defaultAddress.id,
       addresses
     };
   }
@@ -148,9 +150,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
       }
     }
   }`, {
-    customerAccessToken,
-    addressId
-  });
+        customerAccessToken,
+        addressId
+      });
 
     return response;
   }
@@ -170,9 +172,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      customerAccessToken,
-      address
-    });
+        customerAccessToken,
+        address
+      });
 
     return response;
   }
@@ -193,10 +195,10 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      customerAccessToken,
-      id: addressId,
-      address
-    });
+        customerAccessToken,
+        id: addressId,
+        address
+      });
 
     return response;
   }
@@ -214,9 +216,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         deletedCustomerAddressId
       }
     }`, {
-      customerAccessToken,
-      id: addressId
-    });
+        customerAccessToken,
+        id: addressId
+      });
 
     return response;
   }
@@ -243,9 +245,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      customerAccessToken,
-      customer
-    });
+        customerAccessToken,
+        customer
+      });
 
     return response;
   }
@@ -293,8 +295,8 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      input: customer
-    });
+        input: customer
+      });
 
     return response;
   }
@@ -315,8 +317,8 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      input: token
-    });
+        input: token
+      });
 
     return response;
   }
@@ -350,10 +352,13 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-      handle,
-      numberOfPost
-    });
-      const data = response.blogByHandle.articles.edges.map((elem: any) => {
+          handle,
+          numberOfPost
+        });
+
+      const blogByHandle = response && response.blogByHandle;
+      const articles = blogByHandle && blogByHandle.articles;
+      const data = (articles.edges || []).map((elem: any) => {
         return Normalizers.blogPosts(elem);
       });
       return data;
