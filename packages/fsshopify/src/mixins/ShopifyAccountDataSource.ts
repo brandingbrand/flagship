@@ -118,8 +118,8 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        customerAccessToken
-      });
+      customerAccessToken
+    });
     const customer = response && response.customer;
     const addresses = customer && customer.addresses &&
       (customer.addresses.edges || []).map((address: any) => {
@@ -150,9 +150,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
       }
     }
   }`, {
-        customerAccessToken,
-        addressId
-      });
+    customerAccessToken,
+    addressId
+  });
 
     return response;
   }
@@ -172,9 +172,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        customerAccessToken,
-        address
-      });
+      customerAccessToken,
+      address
+    });
 
     return response;
   }
@@ -195,10 +195,10 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        customerAccessToken,
-        id: addressId,
-        address
-      });
+      customerAccessToken,
+      id: addressId,
+      address
+    });
 
     return response;
   }
@@ -216,9 +216,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         deletedCustomerAddressId
       }
     }`, {
-        customerAccessToken,
-        id: addressId
-      });
+      customerAccessToken,
+      id: addressId
+    });
 
     return response;
   }
@@ -245,9 +245,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        customerAccessToken,
-        customer
-      });
+      customerAccessToken,
+      customer
+    });
 
     return response;
   }
@@ -295,8 +295,8 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        input: customer
-      });
+      input: customer
+    });
 
     return response;
   }
@@ -317,8 +317,8 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-        input: token
-      });
+      input: token
+    });
 
     return response;
   }
@@ -352,9 +352,9 @@ export class ShopifyAccountDataSource extends DataSourceBase {
         }
       }
     }`, {
-          handle,
-          numberOfPost
-        });
+      handle,
+      numberOfPost
+    });
 
       const blogByHandle = response && response.blogByHandle;
       const articles = blogByHandle && blogByHandle.articles;

@@ -14,9 +14,13 @@ export function blogPosts(blogData: any): Article | null {
   if (!(blogData && blogData.node)) {
     return null;
   }
+
+  const author = blogData.node.authorV2 && blogData.node.authorV2.name;
+  const image = blogData.node.image && blogData.node.image.originalSrc;
+
   return {
-    author: blogData.node.authorV2.name,
-    image: blogData.node.image.originalSrc,
+    author,
+    image,
     description: blogData.node.contentHtml,
     excerpt: blogData.node.excerpt,
     title: blogData.node.title,
