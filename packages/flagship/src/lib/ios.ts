@@ -172,7 +172,7 @@ export function launchScreen(configuration: Config): void {
   const sourceLaunchScreen = configuration.launchScreen.ios.xib;
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
-    'LaunchScreen.xib'
+    'LaunchScreen.storyboard'
   );
 
   try {

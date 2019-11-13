@@ -3,10 +3,10 @@ import {
   applyMiddleware,
   compose,
   createStore,
+  DeepPartial,
   ReducersMapObject,
   Store
 } from 'redux';
-import { DeepPartial } from '@brandingbrand/fsfoundation';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import setupReducers from '../reducers';

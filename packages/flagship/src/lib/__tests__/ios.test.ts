@@ -120,7 +120,7 @@ test(`update launch screen`, () => {
     .toString();
 
   const xib = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchScreen.xib`))
+    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchScreen.storyboard`))
     .toString();
 
   expect(launchScreenImagesSource).toEqual(launchScreenImages);
@@ -279,3 +279,6 @@ test(`copy sentry properties`, () => {
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
 });
+
+// Force to be treated as a module
+export {};

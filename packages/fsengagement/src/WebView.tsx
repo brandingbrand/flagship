@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, WebView } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import WebView from 'react-native-webview';
+import { Navigation, NavigationButtonPressedEvent } from 'react-native-navigation';
 
 import {
   Action,
@@ -35,19 +37,19 @@ export interface WebViewProps extends ScreenProps {
 export default class EngagementWebView extends PureComponent<WebViewProps> {
   constructor(props: WebViewProps) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    Navigation.events().registerNavigationButtonPressedListener(this.onNavigationButtonPressed);
   }
 
-  onNavigatorEvent = (event: any) => {
-    if (event.type === 'NavBarButtonPress') {
-      if (event.id === 'close') {
-        this.props.navigator.dismissModal();
-      }
+  onNavigationButtonPressed = (event: NavigationButtonPressedEvent) => {
+    if (event.buttonId === 'close') {
+      Navigation.dismissModal(this.props.componentId)
+      .catch(err => console.log('WebView DISMISSMODAL error:', err));
     }
   }
 
   onBackPress = (): void => {
-    this.props.navigator.pop();
+    Navigation.pop(this.props.componentId)
+    .catch(err => console.log('WebView POP error:', err));
   }
 
   injectBlogJS(): string {
@@ -64,14 +66,15 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
           source={{ uri: value }}
           injectedJavaScript={this.injectBlogJS()}
         />
-        {this.props.backButton &&
+        {this.props.backButton && (
           <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
             <Image
               resizeMode='contain'
               source={backArrow}
               style={styles.backIcon}
             />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+        )}
       </View>
     );
   }

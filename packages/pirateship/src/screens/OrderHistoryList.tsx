@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Loading } from '@brandingbrand/fscomponents';
@@ -7,13 +8,14 @@ import { Loading } from '@brandingbrand/fscomponents';
 import { dataSource } from '../lib/datasource';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import PSRequireSignIn from '../components/PSRequireSignIn';
 import { border, fontSize, padding, palette } from '../styles/variables';
 import PSButton from '../components/PSButton';
 import { handleAccountRequestError } from '../lib/shortcuts';
 import translate, { translationKeys } from '../lib/translations';
+
 const orderHistoryTranslations = translationKeys.account.orderHistory;
 
 interface PropType extends ScreenProps, AccountProps {
@@ -91,13 +93,17 @@ const styles = StyleSheet.create({
 });
 
 class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
-
   constructor(props: PropType) {
     super(props);
-    props.navigator.setTitle({ title: translate.string(translationKeys.screens.viewOrders.title) });
-
+    this.props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.viewOrders.title)
+        }
+      }
+    });
     const { orders } = this.props;
     if (Array.isArray(orders)) {
       this.state = {
@@ -151,7 +157,6 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const { isLoggedIn } = this.props.account;
     const { isLoading, orders, errors } = this.state;
     let body;
@@ -175,9 +180,9 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         style={styles.container}
         scroll={isLoggedIn}
-        navigator={navigator}
       >
         {body}
       </PSScreenWrapper>
@@ -259,10 +264,18 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
   }
 
   trackOrder = () => {
-    return this.props.navigator.push({
-      screen: 'TrackOrderLanding',
-      title: translate.string(translationKeys.screens.trackOrder.title)
-    });
+    this.props.navigator.push({
+      component: {
+        name: 'TrackOrderLanding',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.trackOrder.title)
+            }
+          }
+        }
+      }
+    }).catch(e => console.warn('TrackOrderLanding PUSH error: ', e));
   }
 
   renderErrors = () => {
@@ -302,20 +315,24 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
     };
   }
 
-  signIn = () => {
+  signIn = async () => {
     return this.props.navigator.showModal({
-      screen: 'SignIn',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          this.props.navigator.dismissModal();
-        },
-        onSignInSuccess: async () => {
-          this.props.navigator.dismissModal();
-          await this.fetchOrders();
+      component: {
+        name: 'SignIn',
+        passProps: {
+          dismissible: true,
+          onDismiss: () => {
+            this.props.navigator.dismissModal()
+            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
+          },
+          onSignInSuccess: async () => {
+            this.props.navigator.dismissModal()
+            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
+            await this.fetchOrders();
+          }
         }
       }
-    });
+    }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
   }
 }
 
