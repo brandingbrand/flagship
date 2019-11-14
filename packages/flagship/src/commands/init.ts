@@ -97,6 +97,7 @@ export function handler(argv: HandlerArgs): void {
  *
  * @param {string} environmentIdentifier The environment identifier for which to initialize.
  * @param {object} packageJSON The project's package.json.
+ * @param {boolean} onlyDefault Set if you want only the default environment added to the project
  * @returns {object} The project configuration.
  */
 function initEnvironment(
