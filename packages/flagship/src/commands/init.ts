@@ -29,6 +29,7 @@ export interface BuilderArgs {
 export interface HandlerArgs {
   platform: string;
   env: string;
+  onlyDefault: boolean;
 }
 
 const TEMPLATE_ANDROID_PACKAGE = 'com.brandingbrand.reactnative.and.flagship';
@@ -59,7 +60,7 @@ export function handler(argv: HandlerArgs): void {
   helpers.logInfo(`Flagship ${platform} init`);
 
   const projectPackageJSON = require(path.project.resolve('package.json'));
-  const configuration = initEnvironment(argv.env, projectPackageJSON);
+  const configuration = initEnvironment(argv.env, projectPackageJSON, argv.onlyDefault);
 
   if (doAndroid) {
     initAndroid(projectPackageJSON, configuration, projectPackageJSON.version, argv.env);
@@ -100,12 +101,13 @@ export function handler(argv: HandlerArgs): void {
  */
 function initEnvironment(
   environmentIdentifier: string,
-  packageJSON: NPMPackageConfig
+  packageJSON: NPMPackageConfig,
+  onlyDefault?: boolean
 ): Config {
   const configuration = env.configuration(environmentIdentifier, packageJSON);
 
   env.write(configuration); // Replace env.js with the current environment
-  env.createEnvIndex();
+  env.createEnvIndex(onlyDefault ? environmentIdentifier : undefined);
 
   return configuration;
 }
