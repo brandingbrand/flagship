@@ -111,13 +111,21 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
 
 /**
  * Create a index file for project envs
+ *
+ * @param {string} singleEnv Set if you want only a single environment added to the file
  */
-export function createEnvIndex(): void {
-  helpers.logInfo('Creating index file for project envs');
+export function createEnvIndex(singleEnv?: string): void {
+  let envMatch = /env.[\w]+.js/;
+  if (singleEnv) {
+    envMatch = new RegExp('env\.' + singleEnv + '\.js');
+    helpers.logInfo('Creating index file for default env');
+  } else {
+    helpers.logInfo('Creating index file for project envs');
+  }
 
   const envs = fs
     .readdirSync(project.resolve('env'))
-    .filter((f: string) => f.match(/env.[\w]+.js/));
+    .filter((f: string) => f.match(envMatch));
 
   const envIndexFile = `module.exports = {\n${envs
     .map((env: string) => {
