@@ -18,7 +18,7 @@ export interface GenericNavProp {
   updateModals: (modals: NavModal[]) => void;
 }
 
-export default class NavWrapper {
+export default class Navigator {
   props: GenericNavProp;
   constructor(props: GenericNavProp) {
     this.props = props;

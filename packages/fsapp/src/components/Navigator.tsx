@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
 
 export interface NavigatorProp extends GenericNavProp {
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
-export default class Navigator extends Component<NavigatorProp> {
+export default class NavRender extends Component<NavigatorProp> {
 }

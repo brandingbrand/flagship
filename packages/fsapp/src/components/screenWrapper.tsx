@@ -13,7 +13,7 @@ import { setGlobalData } from '../actions/globalDataAction';
 import { AppConfigType, DrawerConfig, NavButton } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
-import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -72,7 +72,7 @@ export default function wrapScreen(
           }
         };
 
-    navigator: NavWrapper;
+    navigator: Navigator;
     navigationEventListener: EventSubscription | null;
     bottomTabEventListener: EventSubscription | null;
     showDevMenu: boolean;
@@ -87,7 +87,7 @@ export default function wrapScreen(
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-      this.navigator = new NavWrapper(props);
+      this.navigator = new Navigator(props);
     }
 
     navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {

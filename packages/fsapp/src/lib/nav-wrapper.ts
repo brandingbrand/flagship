@@ -5,7 +5,7 @@ export interface GenericNavProp {
   componentId: string;
 }
 
-export default class NavWrapper {
+export default class Navigator {
   componentId: string;
   constructor(props: GenericNavProp, updateModals?: (modals: NavModal[]) => void) {
     this.componentId = props.componentId;

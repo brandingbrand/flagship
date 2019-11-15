@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -36,7 +36,7 @@ export interface PSScreenWrapperProps {
   hideGlobalBanner?: boolean;
   overrideGlobalBanner?: PSGlobalBannerSlotItem;
 
-  navigator: NavWrapper;
+  navigator: Navigator;
 
   needInSafeArea?: boolean;
 

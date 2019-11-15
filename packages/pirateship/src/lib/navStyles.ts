@@ -1,5 +1,5 @@
 import { NavButton } from '../lib/commonTypes';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 export const backButton: NavButton = {
   button: {
@@ -7,7 +7,7 @@ export const backButton: NavButton = {
     id: 'goBack',
     testID: 'back'
   },
-  action: (navigator: NavWrapper) => {
+  action: (navigator: Navigator) => {
     navigator.pop()
     .catch((e: any) => console.warn('backButton POP error: ', e));
   }
@@ -18,7 +18,7 @@ export const dismissButton: NavButton = {
     icon: require('../../assets/images/close.png'),
     id: 'dismissModal'
   },
-  action: (navigator: NavWrapper) => {
+  action: (navigator: Navigator) => {
     navigator.dismissModal()
     .catch((e: any) => console.warn('dismissButton DISMISSMODAL error: ', e));
   }
@@ -29,7 +29,7 @@ export const searchButton: NavButton = {
     icon: require('../../assets/images/search.png'),
     id: 'search'
   },
-  action: (navigator: NavWrapper) => {
+  action: (navigator: Navigator) => {
     navigator.push({
       component: {
         name: 'Search',

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
-import Navigator from './Navigator.web';
-import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper.web';
+import NavRender from './Navigator.web';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
 import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 const StyleSheetCreate: any = StyleSheet.create;
@@ -60,7 +60,7 @@ export default function wrapScreen(
   }
 
   class GenericScreen extends Component<GenericScreenProp, GenericScreenState> {
-    navigator: NavWrapper;
+    navigator: Navigator;
     showDevMenu: boolean;
 
     constructor(props: GenericScreenProp) {
@@ -71,7 +71,7 @@ export default function wrapScreen(
       this.state = {
         navModals: []
       };
-      this.navigator = new NavWrapper({
+      this.navigator = new Navigator({
         appConfig,
         modals: [],
         toggleDrawerFn,
@@ -127,7 +127,7 @@ export default function wrapScreen(
         <View style={styles.screenContainer}>
           {this.renderPage()}
           {this.renderVersion()}
-          <Navigator
+          <NavRender
             appConfig={appConfig}
             modals={this.state.navModals}
             navigator={this.navigator}

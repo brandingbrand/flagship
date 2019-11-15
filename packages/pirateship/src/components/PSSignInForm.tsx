@@ -13,7 +13,7 @@ import translate, { translationKeys } from '../lib/translations';
 import * as variables from '../styles/variables';
 
 import PSButton from './PSButton';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const touchIdIcon = require('../../assets/images/touchId.png');
 const faceIdIcon = require('../../assets/images/faceId.png');
@@ -66,7 +66,7 @@ export interface PSSignInProps {
   signInButtonText?: string;
   onNav?: (handler: (event: any) => void) => void;
   runBioAuthImmediately?: boolean;
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
 export interface PSSignInState {

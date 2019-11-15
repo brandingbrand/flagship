@@ -38,7 +38,7 @@ import {
   CommerceTypes,
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 import { ScreenProps } from '../lib/commonTypes';
 
 const icons = {
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 // TODO: RecentlyViewed and Cart providers should be updated to properly pass types through
 export interface UnwrappedPSProductDetailProps extends RecentlyViewedProps {
   id: string;
-  navigator: NavWrapper;
+  navigator: Navigator;
   onAddToCart?: (data: any) => any; // TODO: Update this with real types
   onOpenHTMLView?: (html: string, title?: string) => void;
   reviewDataSource: ReviewDataSource;

@@ -1,8 +1,8 @@
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 // tslint:disable-next-line: no-empty-interface
 export interface HeaderProps {
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
 const Header = (props: HeaderProps) => {
