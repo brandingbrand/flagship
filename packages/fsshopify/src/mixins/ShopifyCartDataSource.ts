@@ -19,7 +19,7 @@ import {
 } from '../util/react-native-payments';
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -194,7 +194,7 @@ export class ShopifyCartDataSource extends DataSourceBase
     checkoutId: string,
     onSuccess: (order: FSCommerceTypes.Order) => void,
     test: boolean = false,
-    navigator: NavWrapper
+    navigator: Navigator
   ): Promise<void> {
     const checkout = await this.api.getCheckout(checkoutId);
     if (!checkout) {

@@ -5,7 +5,7 @@ import { CheckoutResponse } from './util/ShopifyResponseTypes';
 import DataSourceBase from './util/DataSourceBase';
 import * as Types from './customTypes';
 import * as Mixins from './mixins';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -52,7 +52,7 @@ export default class ShopifyDataSource extends DataSourceBase
     checkoutId: string,
     onSuccess: (order: FSCommerceTypes.Order) => void,
     test: boolean = false,
-    navigator: NavWrapper
+    navigator: Navigator
   ): Promise<void> {
     return Promise.reject(kErrorMessageNotImplemented);
   }

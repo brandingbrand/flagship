@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { NavLayoutComponent, NavModal } from '../types';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper.web';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
 // @ts-ignore TODO: Update react-native-web-modal to support typing
 import Modal from 'react-native-web-modal';
 
 export interface NavigatorProp extends GenericNavProp {
-  navigator: NavWrapper;
+  navigator: Navigator;
   onDismiss: (index: number) => void;
 }
 
@@ -26,7 +26,7 @@ const navStyle = StyleSheet.create({
   }
 });
 
-export default class Navigator extends Component<NavigatorProp> {
+export default class NavRender extends Component<NavigatorProp> {
   renderComponent(component: NavLayoutComponent): JSX.Element | null {
     const Screen = this.props.appConfig.screens[component.name];
     if (Screen) {

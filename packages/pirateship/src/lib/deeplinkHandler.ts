@@ -1,7 +1,7 @@
 import { parse as urlPaser } from 'url';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
-export type Matcher = (url: string, navigator: NavWrapper) => boolean;
+export type Matcher = (url: string, navigator: Navigator) => boolean;
 
 const matchers: Matcher[] = [
   matchHome
@@ -9,7 +9,7 @@ const matchers: Matcher[] = [
 
 export function handleDeeplink(
   url: string,
-  navigator: NavWrapper,
+  navigator: Navigator,
   noPassthrough?: boolean
 ): boolean {
   let match: boolean;
@@ -36,7 +36,7 @@ export function handleDeeplink(
   return true;
 }
 
-function matchHome(url: string, navigator: NavWrapper): boolean {
+function matchHome(url: string, navigator: Navigator): boolean {
   const { pathname } = urlPaser(url);
   if (pathname === null || pathname === '/') {
     navigator.popToRoot()
