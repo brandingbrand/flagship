@@ -78,7 +78,8 @@ export interface Config {
   entitlementsFileIOS?: string;
   usageDescriptionIOS?: {
     key: string;
-    string: string;
+    string?: string;
+    array?: string[];
   }[];
 
   UIBackgroundModes?: {
