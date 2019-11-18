@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+
+### Features
+
+* **fsshopify:**  add safe undefined handler ([273653b](https://github.com/brandingbrand/flagship/commit/273653b))
+* **fsshopify:**  add safe undefined handler ([ab39b48](https://github.com/brandingbrand/flagship/commit/ab39b48))
+* **fsshopify:** account data source implementation ([580d95e](https://github.com/brandingbrand/flagship/commit/580d95e))
+
+
+
+
+
 ## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
 
 **Note:** Version bump only for package @brandingbrand/fsshopify
