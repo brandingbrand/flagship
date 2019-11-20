@@ -24,7 +24,7 @@ export interface Config {
   };
 
   appCenter?: {
-    apiToken: string;
+    apiToken?: string; // deprecated; will be removed in a future release
     organization: string;
     distribute?: {
       appNameIOS?: string;
