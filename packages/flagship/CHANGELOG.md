@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+
+### Features
+
+* **flagship:** deprecate appcenter.apiconfig configuration option ([55c4b61](https://github.com/brandingbrand/flagship/commit/55c4b61))
+
+
+
+
+
 # [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
 
 
