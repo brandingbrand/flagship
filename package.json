@@ -33,7 +33,8 @@
     "ship:compile-android": "lerna run --stream --scope @brandingbrand/pirateship compile-android",
     "ship:compile-web": "lerna run --stream --scope @brandingbrand/pirateship compile-web",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
-    "docs": "run-s build:docs build:storybook"
+    "docs": "run-s build:docs build:storybook",
+    "tsc": "echo 'Cannot run tsc from top level of monorepo; run \"yarn prepare\" instead' && exit 1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
