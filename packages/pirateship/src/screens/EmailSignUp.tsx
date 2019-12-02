@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as tcomb from 'tcomb-form-native';
@@ -93,7 +93,7 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
 
   constructor(props: ScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.emailSignUp.title)
@@ -192,6 +192,7 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
       <PSScreenWrapper
         style={styles.container}
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <CMSBannerStacked
           cmsProviderManagementConfig={CMSProvider}

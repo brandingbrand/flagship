@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {
   EventSubscription,
-  Navigation,
   NavigationButtonPressedEvent,
   Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -96,7 +95,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
 
   constructor(props: AccountScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.account.title)
@@ -111,16 +110,16 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     };
 
     if (!props.account.isLoggedIn) {
-      Navigation.mergeOptions(props.componentId, navBarHide);
+      this.props.navigator.mergeOptions(navBarHide);
     }
   }
 
   componentDidUpdate(prevProps: AccountScreenProps): void {
     if (prevProps.account.isLoggedIn && !this.props.account.isLoggedIn) {
-      Navigation.mergeOptions(this.props.componentId, navBarHide);
+      this.props.navigator.mergeOptions(navBarHide);
     } else if (!prevProps.account.isLoggedIn && this.props.account.isLoggedIn) {
-      Navigation.mergeOptions(this.props.componentId, accountNavStyle);
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions(accountNavStyle);
+      this.props.navigator.mergeOptions({
         topBar: {
           rightButtons: [signOutButton.button]
         }
@@ -158,16 +157,17 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
       return (
         <SignIn
           onSignInSuccess={this.onSignInSuccess}
-          componentId={this.props.componentId}
+          navigator={this.props.navigator}
         />
       );
     } else {
-      this.navigationEventListener = Navigation.events().bindComponent(this);
+      this.navigationEventListener = this.props.navigator.bindNavigation(this);
     }
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <Grid
           style={styles.grid}
@@ -206,7 +206,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
   goTo = (item: GridItem) => {
     const { title, path } = item;
     return () => {
-      Navigation.push(this.props.componentId, {
+      this.props.navigator.push({
         component: {
           name: path,
           options: {
@@ -217,12 +217,12 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
             }
           }
         }
-      }).catch(e => console.warn(`${path} PUSH error: `, e));
+      }).catch((e: any) => console.warn(`${path} PUSH error: `, e));
     };
   }
 
   onSignInSuccess = () => {
-    Navigation.mergeOptions(this.props.componentId, {
+    this.props.navigator.mergeOptions({
       ...accountNavStyle,
       topBar: {
         ...accountNavStyle.topBar,

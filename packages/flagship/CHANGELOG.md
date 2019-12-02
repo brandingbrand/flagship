@@ -50,6 +50,75 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Bug Fixes
+
+* **flagship:** add targeted device to both Debug and Release config ([70f9aaa](https://github.com/brandingbrand/flagship/commit/70f9aaa))
+* **flagship:** fix fastlane build lane ([e6d64bf](https://github.com/brandingbrand/flagship/commit/e6d64bf))
+
+
+
+
+
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* exclude kotlin intermediate build files  ([f2912e1](https://github.com/brandingbrand/flagship/commit/f2912e1))
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* get default env from initial script ([af5d5ad](https://github.com/brandingbrand/flagship/commit/af5d5ad))
+* Modify the podspec version to ve 2.6.2 ([#878](https://github.com/brandingbrand/flagship/issues/878)) ([c72f3c0](https://github.com/brandingbrand/flagship/commit/c72f3c0))
+* **flagship:** Fix renaming edge case for android ([#898](https://github.com/brandingbrand/flagship/issues/898)) ([211209a](https://github.com/brandingbrand/flagship/commit/211209a))
+* **fsweb:** Use yarn.lock for fsweb ([#906](https://github.com/brandingbrand/flagship/issues/906)) ([2405dda](https://github.com/brandingbrand/flagship/commit/2405dda))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 

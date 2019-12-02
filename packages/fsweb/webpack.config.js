@@ -7,8 +7,6 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
 const escapedSep = '\\' + path.sep;
 
 let webConfig;
@@ -28,7 +26,6 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -121,13 +118,7 @@ const globalConfig = {
                   loader: require.resolve('css-loader'),
                   options: {
                     importLoaders: 1,
-                    minimize: true,
-                    sourceMap: true,
-                    minimize: {
-                      discardComments: {
-                        removeAll: true
-                      }
-                    }
+                    sourceMap: true
                   }
                 },
                 {
@@ -146,6 +137,13 @@ const globalConfig = {
                           'not ie < 9' // React doesn't support IE8 anyway
                         ],
                         flexbox: 'no-2009'
+                      }),
+                      require('cssnano')({
+                        preset: ['default', {
+                          discardComments: {
+                            removeAll: true,
+                          },
+                        }]
                       })
                     ]
                   }
@@ -247,12 +245,11 @@ module.exports = function(env, options) {
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
-    globalConfig.serve = {
-      content: "./dev-server",
-      add: (app, middleware, options) => {
-        app.use(convert(history()));
-      }
-    }
+    globalConfig.devServer = {
+      contentBase: path.join(__dirname, 'dev-server'),
+      historyApiFallback: true,
+      port: 8080
+    };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({

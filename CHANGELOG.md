@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Bug Fixes
+
+* **flagship:** add targeted device to both Debug and Release config ([70f9aaa](https://github.com/brandingbrand/flagship/commit/70f9aaa))
+* update react-native-htmlview to version 0.14.0 ([64165aa](https://github.com/brandingbrand/flagship/commit/64165aa))
+* **flagship:** fix fastlane build lane ([e6d64bf](https://github.com/brandingbrand/flagship/commit/e6d64bf))
+* **flagship:** update string replace to work in new fastfile ([f5ae87b](https://github.com/brandingbrand/flagship/commit/f5ae87b))
+* **fsapp:** Put dev menu as first screen ([0e4bcc0](https://github.com/brandingbrand/flagship/commit/0e4bcc0))
+* **fsengagement:** update react-native-video ([1d7a036](https://github.com/brandingbrand/flagship/commit/1d7a036))
+
+
+### chore
+
+* remove add-keys scripts in favor of more generic versions ([5afe084](https://github.com/brandingbrand/flagship/commit/5afe084))
+
+
+### Features
+
+* Write review submission typings ([8e4d0ac](https://github.com/brandingbrand/flagship/commit/8e4d0ac))
+* Write Reviews Baazarvoice implementation ([7a33c38](https://github.com/brandingbrand/flagship/commit/7a33c38))
+* **fscomponents:** add condition to render custom test modal content ([f596e60](https://github.com/brandingbrand/flagship/commit/f596e60))
+* **fscomponents:** add custom modal content logic and test view ([7baf939](https://github.com/brandingbrand/flagship/commit/7baf939))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([d342370](https://github.com/brandingbrand/flagship/commit/d342370))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([f49960a](https://github.com/brandingbrand/flagship/commit/f49960a))
+* **fscomponents:** add some option props to zoomCarousel ([722cd92](https://github.com/brandingbrand/flagship/commit/722cd92))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([fddce73](https://github.com/brandingbrand/flagship/commit/fddce73))
+* **fscomponents:** support more styling options for MultiCarousel ([cf964f9](https://github.com/brandingbrand/flagship/commit/cf964f9))
+* **fsengagement:** add new carousel option and full screen background ([01beb32](https://github.com/brandingbrand/flagship/commit/01beb32))
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+
+
+
+
+
 # [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
 
 
@@ -70,6 +144,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * Tabs must now have ids defined in their configuration
 * splash screens will need to be converted to storyboards
+
+
+
+
+
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* exclude kotlin intermediate build files  ([f2912e1](https://github.com/brandingbrand/flagship/commit/f2912e1))
+* **fsweb:** Lock babel runtime in package.json ([#905](https://github.com/brandingbrand/flagship/issues/905)) ([92aa97e](https://github.com/brandingbrand/flagship/commit/92aa97e))
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* Add 'Marquis' feature to Button with title dynamically reflecting CTA state ([9c49aa7](https://github.com/brandingbrand/flagship/commit/9c49aa7))
+* Add itemCount to cart interface in fscommerce ([#877](https://github.com/brandingbrand/flagship/issues/877)) ([53b02c3](https://github.com/brandingbrand/flagship/commit/53b02c3))
+* get default env from initial script ([af5d5ad](https://github.com/brandingbrand/flagship/commit/af5d5ad))
+* Modify the podspec version to ve 2.6.2 ([#878](https://github.com/brandingbrand/flagship/issues/878)) ([c72f3c0](https://github.com/brandingbrand/flagship/commit/c72f3c0))
+* remove unnecessary checks ([9789ff3](https://github.com/brandingbrand/flagship/commit/9789ff3))
+* **flagship:** Fix renaming edge case for android ([#898](https://github.com/brandingbrand/flagship/issues/898)) ([211209a](https://github.com/brandingbrand/flagship/commit/211209a))
+* **fsweb:** Use yarn.lock for fsweb ([#906](https://github.com/brandingbrand/flagship/issues/906)) ([2405dda](https://github.com/brandingbrand/flagship/commit/2405dda))
+* **pirateship:** Remove duplicate "name" in config ([#867](https://github.com/brandingbrand/flagship/issues/867)) ([a4644c3](https://github.com/brandingbrand/flagship/commit/a4644c3))
 
 
 

@@ -1,7 +1,7 @@
 /* tslint:disable:jsx-use-translation-function */
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { LayoutComponent, Navigation, Options } from 'react-native-navigation';
+import { LayoutComponent, Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
@@ -43,6 +43,7 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <View style={styles.section}>
           <Accordion
@@ -72,7 +73,7 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
   }
 
   goTo = (component: LayoutComponent) => () => {
-    Navigation.push(this.props.componentId, { component })
+    this.props.navigator.push({ component })
     .catch(e => console.warn(`${component.name} PUSH error: `, e));
   }
 }

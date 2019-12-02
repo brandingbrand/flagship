@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import WebView from 'react-native-webview';
-import VideoPlayer from 'react-native-video';
+import VideoPlayer, { VideoProperties } from 'react-native-video';
 import * as _ from 'lodash-es';
 
 export interface VideoSource {
@@ -18,10 +18,10 @@ export interface VideoSource {
 export interface VideoBlockProps {
   source: VideoSource;
   autoPlay?: boolean;
-  repeat?: boolean;
-  resizeMode?: string;
+  repeat?: VideoProperties['repeat'];
+  resizeMode?: VideoProperties['resizeMode'];
   style?: any;
-  muted?: boolean;
+  muted?: VideoProperties['muted'];
   fullscreen?: boolean;
   containerStyle?: StyleProp<TextStyle>;
 }
@@ -119,15 +119,18 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
           paused={this.state.videoPaused}
           style={{ width, height }}
         />
-        {!isCard && <TouchableOpacity
-          onPress={this.toggleVideo}
-          style={[styles.VideoButton, { width, height }]}
-        >
-          {this.state.videoPaused &&
-            <View style={styles.VideoButtonWrapper}>
-              <View style={styles.VideoButtonInner} />
-            </View>}
-        </TouchableOpacity>}
+        {!isCard && (
+          <TouchableOpacity
+            onPress={this.toggleVideo}
+            style={[styles.VideoButton, { width, height }]}
+          >
+            {this.state.videoPaused && (
+              <View style={styles.VideoButtonWrapper}>
+                <View style={styles.VideoButtonInner} />
+              </View>
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     );
   }

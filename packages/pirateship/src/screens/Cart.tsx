@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
 import { ScreenProps } from '../lib/commonTypes';
@@ -23,6 +23,8 @@ import withRecentlyViewed, {
 } from '../providers/recentlyViewedProvider';
 import Analytics from '../lib/analytics';
 import translate, { translationKeys } from '../lib/translations';
+
+const cartTabIcon = require('../../assets/images/cart-tab-icon.png');
 
 const CartStyle = StyleSheet.create({
   loading: {
@@ -221,7 +223,6 @@ class Cart extends Component<CartScreenProps> {
   }
 
   render(): JSX.Element {
-    const { componentId } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
 
@@ -239,10 +240,11 @@ class Cart extends Component<CartScreenProps> {
     } else if (cartData && cartData.items) {
       const cartCount = this.props.cart.cartCount;
       const badge = !!cartCount && cartCount.toString() || undefined;
-      Navigation.mergeOptions(componentId, {
+      this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
-          badgeColor: palette.primary
+          badgeColor: palette.primary,
+          icon: cartTabIcon
         }
       });
 
@@ -255,6 +257,7 @@ class Cart extends Component<CartScreenProps> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={!isLoading}
         style={CartStyle.container}
@@ -307,10 +310,11 @@ class Cart extends Component<CartScreenProps> {
     const quantity = (cartData.items &&
       cartData.items.reduce((total, item) => total + item.quantity, 0));
     const badge = !!quantity && quantity.toString() || undefined;
-    Navigation.mergeOptions(this.props.componentId, {
+    this.props.navigator.mergeOptions({
       bottomTab: {
         badge,
-        badgeColor: palette.secondary
+        badgeColor: palette.secondary,
+        icon: cartTabIcon
       }
     });
   }
@@ -345,7 +349,7 @@ class Cart extends Component<CartScreenProps> {
       recentProducts = (
         <PSRecentlyViewedCarousel
           items={this.props.recentlyViewed.items}
-          componentId={this.props.componentId}
+          navigator={this.props.navigator}
         />
       );
     }
@@ -377,52 +381,52 @@ class Cart extends Component<CartScreenProps> {
   }
 
   handlePromotedProductPress = (productId: string) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
           productId
         }
       }
-    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
+    }).catch((e: any) => console.warn('ProductDetail PUSH error: ', e));
   }
 
   signIn = async () => {
-    return Navigation.showModal({
+    return this.props.navigator.showModal({
       stack: {
         children: [{
           component: {
             name: 'SignIn',
             passProps: {
               dismissible: true,
-              onDismiss: (componentId: string) => () => {
-                Navigation.dismissModal(componentId)
-                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              onDismiss: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
               },
-              onSignInSuccess: (componentId: string) => () => {
-                Navigation.dismissModal(componentId)
-                .catch(e => console.warn('DISMISSMODAL error: ', e));
+              onSignInSuccess: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
               }
             }
           }
         }]
       }
-    }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
+    }).catch((e: any) => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
   continueShopping = () => {
     if (Platform.OS !== 'web') {
-      Navigation.mergeOptions(this.props.componentId, {
+      this.props.navigator.mergeOptions({
         bottomTabs: {
           currentTabIndex: 0
         }
       });
     } else {
-      Navigation.push(this.props.componentId, {
+      this.props.navigator.push({
         component: {
           name: 'Shop'
         }
-      }).catch(e => console.warn('Shop PUSH error: ', e));
+      }).catch((e: any) => console.warn('Shop PUSH error: ', e));
     }
   }
 
@@ -445,15 +449,15 @@ class Cart extends Component<CartScreenProps> {
 
   goToProduct = async (item: CommerceTypes.CartItem) => {
     try {
-      await Navigation.push('SHOP_TAB', {
+      await this.props.navigator.push({
         component: {
           name: 'ProductDetail',
           passProps: {
             productId: item.productId
           }
         }
-      });
-      Navigation.mergeOptions(this.props.componentId, {
+      }, 'SHOP_TAB');
+      this.props.navigator.mergeOptions({
         bottomTabs: {
           currentTabId: 'SHOP_TAB'
         }

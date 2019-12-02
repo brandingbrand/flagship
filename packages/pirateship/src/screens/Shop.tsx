@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import { SearchBar } from '@brandingbrand/fscomponents';
 import { env as projectEnv } from '@brandingbrand/fsapp';
@@ -139,7 +139,7 @@ export class UnwrappedShop extends Component<ShopProps> {
       Linking.getInitialURL()
         .then(url => {
           if (url) {
-            handleDeeplink(url, props.componentId);
+            handleDeeplink(url, props.navigator);
           }
         })
         .catch(err => {
@@ -147,7 +147,7 @@ export class UnwrappedShop extends Component<ShopProps> {
         });
 
       Linking.addEventListener('url', event => {
-        handleDeeplink(event.url, props.componentId);
+        handleDeeplink(event.url, props.navigator);
       });
     }
 
@@ -156,7 +156,7 @@ export class UnwrappedShop extends Component<ShopProps> {
     if (Platform.OS !== 'ios') {
       // Not sure we still need this in rnn v2
       Keyboard.addListener('keyboardDidShow', () => {
-        Navigation.mergeOptions(props.componentId, {
+        this.props.navigator.mergeOptions({
           bottomTabs: {
             visible: false,
             animate: false
@@ -165,7 +165,7 @@ export class UnwrappedShop extends Component<ShopProps> {
       });
 
       Keyboard.addListener('keyboardDidHide', () => {
-        Navigation.mergeOptions(props.componentId, {
+        this.props.navigator.mergeOptions({
           bottomTabs: {
             visible: true,
             animate: false
@@ -180,7 +180,7 @@ export class UnwrappedShop extends Component<ShopProps> {
     const screen =
       dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
 
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: screen,
         options: {
@@ -199,9 +199,10 @@ export class UnwrappedShop extends Component<ShopProps> {
   }
 
   render(): JSX.Element {
-    const { account, componentId, topCategory } = this.props;
+    const { account, topCategory } = this.props;
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={ShopStyle.wrapper}
         scrollViewProps={{ style: ShopStyle.scrollView }}
@@ -216,7 +217,7 @@ export class UnwrappedShop extends Component<ShopProps> {
             }
             isLoggedIn={account && account.isLoggedIn}
             style={ShopStyle.welcome}
-            onSignInPress={openSignInModal(componentId)}
+            onSignInPress={openSignInModal(this.props.navigator)}
             onSignOutPress={this.handleSignOut}
           />
           <PSHeroCarousel
@@ -285,7 +286,7 @@ export class UnwrappedShop extends Component<ShopProps> {
 
   handleHeroCarouselPress = (item: PSHeroCarouselItem) => {
     if (item.Link) {
-      handleDeeplink(item.Link, this.props.componentId);
+      handleDeeplink(item.Link, this.props.navigator);
     }
   }
 
@@ -294,7 +295,7 @@ export class UnwrappedShop extends Component<ShopProps> {
   }
 
   goToAllCategories = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'Category',
         options: {
@@ -313,12 +314,12 @@ export class UnwrappedShop extends Component<ShopProps> {
   }
 
   showSearchScreen = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'Search',
         passProps: {
           onCancel: () => {
-            Navigation.pop(this.props.componentId, {
+            this.props.navigator.pop({
               animations: {
                 pop: {
                   enabled: false
@@ -339,7 +340,7 @@ export class UnwrappedShop extends Component<ShopProps> {
   }
 
   private handlePromotedProductPress = (productId: string) => () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {

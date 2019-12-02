@@ -61,4 +61,4 @@ export default {
   ActionBarSample,
   ImageWithOverlaySample,
   CartCountSample
-};
+} as any;

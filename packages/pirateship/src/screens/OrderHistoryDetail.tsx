@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import { Loading } from '@brandingbrand/fscomponents';
 import { backButton } from '../lib/navStyles';
@@ -176,6 +176,7 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         style={styles.container}
         scroll={!isLoading}
       >
@@ -278,17 +279,17 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   signIn = async () => {
-    return Navigation.showModal({
+    return this.props.navigator.showModal({
       component: {
         name: 'SignIn',
         passProps: {
           dismissible: true,
           onDismiss: () => {
-            Navigation.dismissModal(this.props.componentId)
+            this.props.navigator.dismissModal()
             .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
           },
           onSignInSuccess: async () => {
-            Navigation.dismissModal(this.props.componentId)
+            this.props.navigator.dismissModal()
             .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
             await this.fetchOrder();
           }
@@ -311,7 +312,7 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
   }
 
   goToContactUs = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'DesktopPassthrough',
         options: {

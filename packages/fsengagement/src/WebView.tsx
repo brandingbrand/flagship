@@ -66,14 +66,15 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
           source={{ uri: value }}
           injectedJavaScript={this.injectBlogJS()}
         />
-        {this.props.backButton &&
+        {this.props.backButton && (
           <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
             <Image
               resizeMode='contain'
               source={backArrow}
               style={styles.backIcon}
             />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+        )}
       </View>
     );
   }

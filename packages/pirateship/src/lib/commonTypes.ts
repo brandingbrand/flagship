@@ -1,9 +1,11 @@
 import { ImageURISource } from 'react-native';
 import { OptionsTopBarButton } from 'react-native-navigation';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
-  componentId: string;
+  isWebModal?: boolean;
   onNav: (handler: (event: any) => void) => void;
+  navigator: NavWrapper;
 }
 
 export interface NavButton {

@@ -1,40 +1,34 @@
 package CONFIG_BUNDLE_ID;
 
 import android.app.Application;
-
+import android.content.Context;
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.shell.MainReactPackage;
-import com.facebook.react.uimanager.UIImplementation;
-import com.facebook.react.uimanager.UIImplementationProvider;
-import com.facebook.react.uimanager.UIManagerModule;
-import com.facebook.react.uimanager.ViewManager;
-import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.soloader.SoLoader;
+import java.lang.reflect.InvocationTargetException;
+
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
-import com.psykar.cookiemanager.CookieManagerPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages(Application application, boolean debug) {
-        return Arrays.asList(
-                new MainReactPackage(),
-                new NativeConstantsPackage(),
-                new EnvSwitcherPackage(),
-                new ReactNativeRestartPackage(),
-                new CookieManagerPackage(),
-                new RNDeviceInfo()
-        );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      // Packages that cannot be autolinked yet can be added manually here, for example:
+      packages.add(new NativeConstantsPackage());
+      packages.add(new EnvSwitcherPackage());
+      packages.add(new ReactNativeRestartPackage());
+      return packages;
     }
 
+    @Override
     protected ReactGateway createReactGateway() {
         ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
             protected String getJSMainModuleName() {
@@ -60,9 +54,63 @@ public class MainApplication extends NavigationApplication {
         return "index";
     }
 
+    private final ReactNativeHost mReactNativeHost =
+        new ReactNativeHost(this) {
+            @Override
+            public boolean getUseDeveloperSupport() {
+                return BuildConfig.DEBUG;
+            }
+
+            @Override
+            protected List<ReactPackage> getPackages() {
+                @SuppressWarnings("UnnecessaryLocalVariable")
+                List<ReactPackage> packages = new PackageList(this).getPackages();
+                // Packages that cannot be autolinked yet can be added manually here, for example:
+                // packages.add(new MyReactNativePackage());
+                return packages;
+            }
+
+            @Override
+            protected String getJSMainModuleName() {
+                return "index";
+            }
+        };
+
+    @Override
+    public ReactNativeHost getReactNativeHost() {
+        return mReactNativeHost;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
+        initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+    }
+
+    /**
+     * Loads Flipper in React Native templates.
+     *
+     * @param context
+     */
+    private static void initializeFlipper(Context context) {
+        if (BuildConfig.DEBUG) {
+            try {
+                /*
+                We use reflection here to pick up the class that initializes Flipper,
+                since Flipper library is not available in release mode
+                */
+                Class<?> aClass = Class.forName("com.facebook.flipper.ReactNativeFlipper");
+                aClass.getMethod("initializeFlipper", Context.class).invoke(null, context);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

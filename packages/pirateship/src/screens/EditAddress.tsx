@@ -1,7 +1,6 @@
 import { ScreenProps } from '../lib/commonTypes';
 import { Component, default as React } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
 import PSButton from '../components/PSButton';
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -32,7 +31,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
         address: props.address.id
       });
     }
-    Navigation.mergeOptions(props.componentId, {
+    this.props.navigator.mergeOptions({
       topBar: {
         title: {
           text: title
@@ -75,6 +74,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={false}
         style={AccountStyle.container}
@@ -143,7 +143,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
   }
 
   cancel = async () => {
-    return Navigation.dismissModal(this.props.componentId)
+    return this.props.navigator.dismissModal()
     .catch(e => console.warn('DISMISSMODAL error: ', e));
   }
 
@@ -160,13 +160,13 @@ class EditAddress extends Component<EditAddressScreenProps> {
       update.then(result => {
         if (this.props.onComplete) {
           this.props.onComplete(this.address);
-          Navigation.dismissModal(this.props.componentId)
+          this.props.navigator.dismissModal()
           .catch(e => console.warn('DISMISSMODAL error: ', e));
         }
       })
       .catch(e => {
         alert(e.response.data.error.message);
-        handleAccountRequestError(e, this.props.componentId, this.props.signOut);
+        handleAccountRequestError(e, this.props.navigator, this.props.signOut);
       });
     }
   }

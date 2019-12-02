@@ -1,8 +1,15 @@
 import { Analytics } from '@brandingbrand/fsengage';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 import { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
-import { LayoutComponent, Options, OptionsTopBarButton } from 'react-native-navigation';
-import { ImageRequireSource } from 'react-native';
+import {
+  Layout,
+  LayoutComponent,
+  LayoutStack,
+  LayoutStackChildren,
+  Options,
+  OptionsTopBarButton
+} from 'react-native-navigation';
+import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
 
 export interface DrawerType {
@@ -12,7 +19,7 @@ export interface DrawerType {
 
 export interface DrawerConfig {
   side: 'left' | 'right';
-  to?: 'open' | 'closed';
+  to?: 'open' | 'closed' | 'toggle';
 }
 
 export interface Drawer {
@@ -44,15 +51,6 @@ export interface Screen {
   screen: string;
   title?: string;
   passProps?: any;
-}
-
-export interface WebNavigator {
-  push: (route: any) => any;
-  pop: () => any;
-  popToRoot: () => any;
-  showModal: (route: any) => any;
-  toggleDrawer: (config: DrawerConfig) => void;
-  switchToTab: (route: any) => any;
 }
 
 export interface TabStyle {
@@ -102,13 +100,12 @@ export interface AppConfigType {
   webRouterType?: string;
   webRouterProps?: Dictionary;
   analytics?: Analytics;
-  devMenuScreens?: LayoutComponent[];
-  devMenuScreensWeb?: Screen[];
+  devMenuScreens?: NavLayoutComponent[];
   popToRootOnTabPressAndroid?: boolean;
   serverSide?: boolean;
   devMenuPath?: string;
   location?: Location; // Use to provide a server-side location to router in DrawerRouter.web.tsx
-  screen?: LayoutComponent;
+  screen?: NavLayoutComponent;
   screenWeb?: Screen;
   defaultOptions?: Options;
   bottomTabsId?: string;
@@ -138,4 +135,36 @@ export interface Location<T = any> {
   search: string;
   hash: string;
   state: T;
+}
+
+export interface NavModalOptions {
+  modalProps?: ModalProps;
+  style?: ViewStyle;
+  backdropStyle?: ViewStyle;
+}
+
+export interface NavOptions extends Options {
+  modal?: NavModalOptions;
+  title?: string;
+}
+
+export interface NavLayoutComponent extends LayoutComponent {
+  options?: NavOptions;
+}
+
+export interface NavLayoutStackChildren extends LayoutStackChildren {
+  component?: NavLayoutComponent;
+}
+
+export interface NavLayoutStack extends LayoutStack {
+  children?: NavLayoutStackChildren[];
+}
+
+export interface NavLayout extends Layout {
+  stack?: NavLayoutStack;
+  component?: NavLayoutComponent;
+}
+
+export interface NavModal {
+  layout: NavLayout;
 }

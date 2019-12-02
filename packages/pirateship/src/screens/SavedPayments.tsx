@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import { border, palette } from '../styles/variables';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
@@ -73,7 +73,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
 
   constructor(props: SavedPaymentsScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    this.props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.editSavedPayments.title)
@@ -105,7 +105,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
       })
       .catch(e => {
         this.setState({ loading: false, msg: defaultMessage });
-        handleAccountRequestError(e, this.props.componentId, this.props.signOut);
+        handleAccountRequestError(e, this.props.navigator, this.props.signOut);
       });
   }
 
@@ -164,7 +164,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
   }
 
   onComplete = (updated: boolean) => {
-    Navigation.dismissModal(this.props.componentId)
+    this.props.navigator.dismissModal()
     .catch(e => console.warn('DISMISSMODAL error: ', e));
     if (updated) {
       this.fetchData();
@@ -201,7 +201,7 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
               })
               // TODO: Add types for error response
               .catch((e: any) => {
-                return handleAccountRequestError(e, this.props.componentId, this.props.signOut);
+                return handleAccountRequestError(e, this.props.navigator, this.props.signOut);
               });
           }
         }],

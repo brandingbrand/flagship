@@ -23,7 +23,7 @@
     "build-web-demo": "./scripts/buildWebDemo.sh"
   },
   "dependencies": {
-    "@babel/runtime": "7.4.5",
+    "@babel/runtime": "~7.5.5",
     "@brandingbrand/flagship": "^8.2.0-rnn2.0",
     "@brandingbrand/fsapp": "^8.2.0-rnn2.0",
     "@brandingbrand/fsbazaarvoice": "^8.2.0-rnn2.0",
@@ -39,24 +39,27 @@
     "@brandingbrand/fssalesforce": "^8.2.0-rnn2.0",
     "@brandingbrand/fsshopify": "^8.2.0-rnn2.0",
     "@brandingbrand/fsweb": "^8.2.0-rnn2.0",
-    "@brandingbrand/react-native-leanplum": "^2.0.3",
-    "@react-native-community/async-storage": "^1.6.1",
-    "credit-card-type": "^7.0.0",
+    "@brandingbrand/react-native-leanplum": "^5.0.0",
+    "@react-native-community/async-storage": "^1.6.2",
+    "@react-native-community/cli-platform-android": "^3.0.0-alpha.1",
+    "@react-native-community/cli-platform-ios": "^3.0.0-alpha.1",
+    "@react-native-community/push-notification-ios": "^1.0.0",
+    "credit-card-type": "^8.3.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
-    "react": "16.8.6",
-    "react-native": "^0.60.5",
+    "react": "^16.11.0",
+    "react-native": "^0.61.0",
     "react-native-cookies": "^3.3.0",
-    "react-native-device-info": "^3.1.4",
-    "react-native-htmlview": "^0.13.0",
-    "react-native-navigation": "3.2.0-snapshot.524",
+    "react-native-device-info": "^5.0.0",
+    "react-native-htmlview": "^0.15.0",
+    "react-native-navigation": "~3.5.0",
     "react-native-payments": "^0.7.1",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.5.0",
-    "react-native-svg": "^9.3.6",
-    "react-native-touch-id": "~4.3.0",
-    "react-native-webview": "7.0.6",
-    "react-redux": "^5.0.7",
+    "react-native-svg": "^9.13.3",
+    "react-native-touch-id": "~4.4.0",
+    "react-native-webview": "^7.0.0",
+    "react-redux": "^7.0.0",
     "tcomb-form-native": "^0.6.12"
   },
   "flagship": {
@@ -74,8 +77,7 @@
       "react-native-payments"
     ],
     "forceLink": [
-      "@react-native-community/async-storage",
-      "react-native-svg"
+      "react-native-restart"
     ],
     "webTitle": "PirateShip"
   },
@@ -92,7 +94,10 @@
       "**/fsshopify",
       "**/fsshopify/react-native*",
       "**/fsshopify/react-native*/**",
-      "@react-native-community/async-storage"
+      "@react-native-community/async-storage",
+      "@react-native-community/cli-platform-android",
+      "@react-native-community/cli-platform-ios",
+      "@react-native-community/push-notification-ios"
     ]
   }
 }

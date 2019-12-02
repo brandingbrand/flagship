@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
-import pushRoute from '../lib/push-route';
-import { AppConfigType, DrawerConfig, WebNavigator } from '../types';
+import Navigator from './Navigator.web';
+import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper.web';
+import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 const StyleSheetCreate: any = StyleSheet.create;
 
@@ -33,17 +34,19 @@ export interface GenericScreenStateProp {
 }
 
 export interface GenericScreenDispatchProp {
-  navigator: WebNavigator;
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
-  appConfig: AppConfigType;
+export interface GenericScreenProp extends GenericScreenStateProp,
+  GenericScreenDispatchProp, GenericNavProp {
   api: FSNetwork;
   href: string;
   match: any;
   location: any;
-  history: any;
+}
+
+export interface GenericScreenState {
+  navModals: NavModal[];
 }
 
 export default function wrapScreen(
@@ -51,14 +54,13 @@ export default function wrapScreen(
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): React.ComponentClass<GenericScreenProp> & {
-  WrappedComponent: React.ComponentType<GenericScreenProp>;
-} {
+): any {
   if (!PageComponent) {
     throw new Error('no PageComponent passed to wrapScreen.web');
   }
 
-  class GenericScreen extends Component<GenericScreenProp> {
+  class GenericScreen extends Component<GenericScreenProp, GenericScreenState> {
+    navigator: NavWrapper;
     showDevMenu: boolean;
 
     constructor(props: GenericScreenProp) {
@@ -66,8 +68,21 @@ export default function wrapScreen(
       this.showDevMenu =
         __DEV__ ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-
+      this.state = {
+        navModals: []
+      };
+      this.navigator = new NavWrapper({
+        appConfig,
+        modals: [],
+        toggleDrawerFn,
+        updateModals: this.updateModals,
+        ...props
+      });
     }
+    updateModals = (navModals: NavModal[]): void => {
+      this.setState({ navModals });
+    }
+
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
 
@@ -82,11 +97,29 @@ export default function wrapScreen(
       }
     }
 
-    openDevMenu = () => {
-      this.props.navigator.push({
-        screen: 'devMenu',
-        title: 'FLAGSHIP Dev Menu'
+    onDismiss = (index: number): void => {
+      this.state.navModals.splice(index, 1);
+      this.setState({
+        navModals: this.state.navModals
       });
+    }
+
+    openDevMenu = () => {
+      this.navigator.push({
+        component: {
+          name: 'devMenu',
+          passProps: {
+            hideDevMenu: this.props.hideDevMenu
+          },
+          options: {
+            topBar: {
+              title: {
+                text: 'FLAGSHIP Dev Menu'
+              }
+            }
+          }
+        }
+      }).catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
     }
 
     render(): JSX.Element {
@@ -94,6 +127,13 @@ export default function wrapScreen(
         <View style={styles.screenContainer}>
           {this.renderPage()}
           {this.renderVersion()}
+          <Navigator
+            appConfig={appConfig}
+            modals={this.state.navModals}
+            navigator={this.navigator}
+            onDismiss={this.onDismiss}
+            {...this.props}
+          />
         </View>
       );
     }
@@ -137,6 +177,7 @@ export default function wrapScreen(
           {...passProps}
           appConfig={appConfig}
           api={api}
+          navigator={this.navigator}
         />
       );
     }
@@ -152,19 +193,7 @@ export default function wrapScreen(
     dispatch: any,
     ownProps: GenericScreenProp
   ): GenericScreenDispatchProp {
-    const { history } = ownProps;
-
-    const navigator: WebNavigator = {
-      push: route => pushRoute(route, history, appConfig),
-      showModal: route => pushRoute(route, history, appConfig),
-      pop: () => history.goBack(),
-      toggleDrawer: config => toggleDrawerFn && toggleDrawerFn(config),
-      switchToTab: route => pushRoute(route, history, appConfig),
-      popToRoot: () => pushRoute(appConfig.screenWeb, history, appConfig)
-    };
-
     return {
-      navigator,
       hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true }))
     };
   }

@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 
 import { Grid } from '@brandingbrand/fscomponents';
 
@@ -105,7 +105,7 @@ export default class More extends Component<ScreenProps, MoreState> {
 
   constructor(props: ScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    this.props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.more.title)
@@ -135,7 +135,7 @@ export default class More extends Component<ScreenProps, MoreState> {
   }
 
   goToPassthrough = (path: string) => () => {
-    handleDeeplink(desktopHost + path, this.props.componentId);
+    handleDeeplink(desktopHost + path, this.props.navigator);
   }
 
   renderGridItem = ({ item }: ListRenderItemInfo<GridItem>): JSX.Element => {
@@ -189,6 +189,7 @@ export default class More extends Component<ScreenProps, MoreState> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <Grid
           style={styles.grid}

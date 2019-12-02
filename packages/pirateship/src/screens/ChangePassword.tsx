@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import ContactInfoForm from '../components/ContactInfoForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
@@ -92,7 +92,7 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
 
   constructor(props: ChangePasswordScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.changePassword.title)
@@ -127,6 +127,7 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
       >

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 import { dataSource, reviewDataSource } from '../lib/datasource';
 import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
@@ -25,7 +25,7 @@ class ProductDetail extends Component<ProductDetailProps> {
   static options: Options = navBarProductDetail;
   static leftButtons: NavButton[] = [backButton];
   onOpenHTMLView = (html: string, title?: string) => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'DesktopPassthrough',
         options: {
@@ -43,10 +43,11 @@ class ProductDetail extends Component<ProductDetailProps> {
   }
 
   render(): JSX.Element {
-    const { componentId, productId } = this.props;
+    const { productId } = this.props;
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         hideGlobalBanner={true}
       >
@@ -55,7 +56,7 @@ class ProductDetail extends Component<ProductDetailProps> {
           commerceDataSource={dataSource}
           reviewDataSource={reviewDataSource}
           commerceToReviewMap={'id'}
-          componentId={componentId}
+          navigator={this.props.navigator}
           onOpenHTMLView={this.onOpenHTMLView}
           addToRecentlyViewed={this.props.addToRecentlyViewed}
           recentlyViewed={this.props.recentlyViewed}
@@ -71,8 +72,8 @@ class ProductDetail extends Component<ProductDetailProps> {
   }
 
   goBack = () => {
-    Navigation.pop(this.props.componentId)
-    .catch(e => console.warn('POP error: ', e));
+    this.props.navigator.pop()
+      .catch(e => console.warn('POP error: ', e));
   }
 
   renderRecentlyViewed = () => {
@@ -86,7 +87,7 @@ class ProductDetail extends Component<ProductDetailProps> {
     return (
       <PSRecentlyViewedCarousel
         items={recentItems}
-        componentId={this.props.componentId}
+        navigator={this.props.navigator}
       />
     );
   }

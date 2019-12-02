@@ -1,7 +1,7 @@
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 });
 
 export interface ForgotPasswordScreenProps extends ScreenProps {
-  onDismiss: (forgotPasswordComponentId: string) => () => void;
+  onDismiss: () => () => void;
   onSignUpSuccess: () => void;
 }
 
@@ -119,7 +119,7 @@ export default class ForgotPassword extends Component<
 
   constructor(props: ForgotPasswordScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.forgotPassword.title)
@@ -184,6 +184,7 @@ export default class ForgotPassword extends Component<
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
         scrollViewProps={{
@@ -193,7 +194,7 @@ export default class ForgotPassword extends Component<
         <View style={styles.dismissButtonContainer}>
           <TouchableOpacity
             style={styles.dismissButton}
-            onPress={this.props.onDismiss(this.props.componentId)}
+            onPress={this.props.onDismiss()}
           >
             <Image source={arrowIcon} />
           </TouchableOpacity>
@@ -220,7 +221,7 @@ export default class ForgotPassword extends Component<
           <PSButton
             titleStyle={styles.signUpText}
             title={translate.string(forgotPasswordTranslations.completedBtn)}
-            onPress={this.props.onDismiss(this.props.componentId)}
+            onPress={this.props.onDismiss()}
             style={styles.button}
           />
         </View>
@@ -334,18 +335,18 @@ export default class ForgotPassword extends Component<
   }
 
   signUp = () => {
-    const { componentId, onSignUpSuccess } = this.props;
-    Navigation.push(componentId, {
+    const { onSignUpSuccess } = this.props;
+    this.props.navigator.push({
       component: {
         name: 'SignUp',
         passProps: {
           dismissible: true,
           onDismiss: () => {
-            Navigation.pop(componentId)
+            this.props.navigator.pop()
             .catch(e => console.warn('SignUp POP error: ', e));
           },
           onSignUpSuccess: () => {
-            Navigation.pop(componentId)
+            this.props.navigator.pop()
             .catch(e => console.warn('SignUp POP error: ', e));
             if (onSignUpSuccess) {
               onSignUpSuccess();

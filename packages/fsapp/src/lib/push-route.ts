@@ -1,24 +1,24 @@
 import qs from 'qs';
-import { AppConfigType } from '../types';
+import { AppConfigType, NavLayout } from '../types';
 
 export default function push(
-  route: any,
+  layout: NavLayout,
   history: any,
   appConfig: AppConfigType
 ): any {
-  const href = (route.passProps && route.passProps.href) || '';
-
-  if (route.screen) {
-    const path = getPathWithPassProps(
-      route.screen,
-      appConfig.screens[route.screen],
-      route.passProps
-    );
-    return history.push(path);
-  } else if (href) {
-    return history.push(href);
+  if (layout.component) {
+    if (appConfig.screens[layout.component.name]) {
+      const path = getPathWithPassProps(
+        String(layout.component.name),
+        appConfig.screens[layout.component.name],
+        layout.component.passProps
+      );
+      history.push(path);
+    } else {
+      console.error('Unknown screen: ' + layout.component.name);
+    }
   } else {
-    console.error('ERROR: `screen` or `passProps: { href }` is required.');
+    console.error('No component to push');
   }
 }
 

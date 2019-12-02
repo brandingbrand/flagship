@@ -138,9 +138,9 @@ export default class CodePushDevMenu extends Component<
     }
   }
 
-  async componentDidMount(): Promise<void> {
+  componentDidMount(): void {
     this.setState({
-      version: await DeviceInfo.getVersion()
+      version: DeviceInfo.getVersion()
     });
   }
 
@@ -179,11 +179,13 @@ export default class CodePushDevMenu extends Component<
       <View>
         <Text style={styles.pageTitle}>Select A Lane</Text>
 
-        {this.state.swimLanes && this.state.swimLanes.length ? <FlatList
-          style={styles.container}
-          data={this.state.swimLanes}
-          renderItem={this.renderSwimLaneItem}
-        /> : <Text>No lanes setup for app</Text>}
+        {this.state.swimLanes && this.state.swimLanes.length ? (
+          <FlatList
+            style={styles.container}
+            data={this.state.swimLanes}
+            renderItem={this.renderSwimLaneItem}
+          />
+        ) : <Text>No lanes setup for app</Text>}
 
         <Text style={styles.pageTitle}>Current Release</Text>
         <Text style={styles.currentRelease}>
@@ -268,12 +270,14 @@ export default class CodePushDevMenu extends Component<
           <Text style={styles.pageTitle}>{this.state.swimLane.name}</Text>
         </TouchableOpacity>
 
-        {this.state.releases && this.state.releases.length ? <FlatList
-          style={styles.container}
-          data={this.state.releases}
-          keyExtractor={this.swimLaneKeyExtractor}
-          renderItem={this.renderReleaseItem}
-        /> : <Text>No release in this lane</Text>}
+        {this.state.releases && this.state.releases.length ? (
+          <FlatList
+            style={styles.container}
+            data={this.state.releases}
+            keyExtractor={this.swimLaneKeyExtractor}
+            renderItem={this.renderReleaseItem}
+          />
+        ) : <Text>No release in this lane</Text>}
       </View>
     );
   }
@@ -351,15 +355,19 @@ export default class CodePushDevMenu extends Component<
           <Text style={styles.column}>{this.state.release.is_mandatory ? 'Yes' : 'No'}</Text>
         </View>
 
-        {this.state.release.original_label ? <View style={styles.rowContainer}>
-          <Text style={styles.column}>Original Label</Text>
-          <Text style={styles.column}>{this.state.release.original_label}</Text>
-        </View> : null}
+        {this.state.release.original_label ? (
+          <View style={styles.rowContainer}>
+            <Text style={styles.column}>Original Label</Text>
+            <Text style={styles.column}>{this.state.release.original_label}</Text>
+          </View>
+        ) : null}
 
-        {this.state.release.original_deployment ? <View style={styles.rowContainer}>
-          <Text style={styles.column}>Original SwimLane</Text>
-          <Text style={styles.column}>{this.state.release.original_deployment}</Text>
-        </View> : null}
+        {this.state.release.original_deployment ? (
+          <View style={styles.rowContainer}>
+            <Text style={styles.column}>Original SwimLane</Text>
+            <Text style={styles.column}>{this.state.release.original_deployment}</Text>
+          </View>
+        ) : null}
 
 
         <View style={{ marginTop: 50 }}>

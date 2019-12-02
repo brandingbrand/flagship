@@ -19,7 +19,7 @@ import {
 } from '../util/react-native-payments';
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { Navigation } from 'react-native-navigation';
+import { NavWrapper } from '@brandingbrand/fsapp';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -193,7 +193,8 @@ export class ShopifyCartDataSource extends DataSourceBase
   async startWalletCheckout(
     checkoutId: string,
     onSuccess: (order: FSCommerceTypes.Order) => void,
-    test: boolean = false
+    test: boolean = false,
+    navigator: NavWrapper
   ): Promise<void> {
     const checkout = await this.api.getCheckout(checkoutId);
     if (!checkout) {
@@ -381,7 +382,7 @@ export class ShopifyCartDataSource extends DataSourceBase
       }
 
       // need to show modal here to present the user with shipping options
-      Navigation.showModal({
+      navigator.showModal({
         component: {
           name: this.config.googlePayScreenName,
           options: {

@@ -33,6 +33,7 @@ class ImageWithOverlaySample extends Component<ImageWithOverlaySampleScreenProps
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
       >
         <View style={styles.section}>
         <ImageWithOverlay

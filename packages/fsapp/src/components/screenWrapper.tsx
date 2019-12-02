@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass, ComponentType } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -13,6 +13,7 @@ import { setGlobalData } from '../actions/globalDataAction';
 import { AppConfigType, DrawerConfig, NavButton } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
+import NavWrapper, { GenericNavProp } from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -41,8 +42,8 @@ export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
-  componentId: string;
+export interface GenericScreenProp extends GenericScreenStateProp,
+  GenericScreenDispatchProp, GenericNavProp {
   appConfig: AppConfigType;
   api: FSNetwork;
   testID: string;
@@ -53,9 +54,7 @@ export default function wrapScreen(
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): ComponentClass<GenericScreenProp> & {
-  WrappedComponent: ComponentType<GenericScreenProp>;
-} {
+): any {
   // Note: in RNN v2, PageComponent.options type is a function `(passProps: Props) => Options`
   // the transformation code below for backward-compatibility purpose will only work
   // if the incoming value is not a function
@@ -73,6 +72,7 @@ export default function wrapScreen(
           }
         };
 
+    navigator: NavWrapper;
     navigationEventListener: EventSubscription | null;
     bottomTabEventListener: EventSubscription | null;
     showDevMenu: boolean;
@@ -87,6 +87,7 @@ export default function wrapScreen(
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
+      this.navigator = new NavWrapper(props);
     }
 
     navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
@@ -97,7 +98,7 @@ export default function wrapScreen(
 
       navButtons.forEach(btn => {
         if (event.buttonId === btn.button.id) {
-          btn.action(this.props);
+          btn.action(this.navigator);
         }
       });
     }
@@ -183,6 +184,7 @@ export default function wrapScreen(
           {...this.props}
           appConfig={appConfig}
           api={api}
+          navigator={this.navigator}
         />
       );
     }

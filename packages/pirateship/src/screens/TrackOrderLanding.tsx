@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
-import { Navigation, Options } from 'react-native-navigation';
+import { Options } from 'react-native-navigation';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
@@ -71,7 +71,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
 
   constructor(props: ScreenProps) {
     super(props);
-    Navigation.mergeOptions(props.componentId, {
+    props.navigator.mergeOptions({
       topBar: {
         title: {
           text: translate.string(translationKeys.screens.trackOrder.title)
@@ -120,6 +120,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
   render(): JSX.Element {
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         style={styles.container}
         hideGlobalBanner={true}
         needInSafeArea={true}
@@ -250,7 +251,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
   }
 
   goToOrderTrackerInfo = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'DesktopPassthrough',
         options: {
@@ -268,7 +269,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
   }
 
   goToContactUs = () => {
-    Navigation.push(this.props.componentId, {
+    this.props.navigator.push({
       component: {
         name: 'DesktopPassthrough',
         options: {
