@@ -4,7 +4,7 @@ import {
 
 export function review(bvReview: any): ReviewTypes.Review {
   return {
-    id: bvReview.ProductId,
+    id: bvReview.Id,
     title: bvReview.Title,
     text: bvReview.ReviewText,
     rating: bvReview.Rating,
