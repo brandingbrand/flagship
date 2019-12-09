@@ -15,6 +15,7 @@ import SimpleCard from './SimpleCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
+import ImageGrid from './ImageGrid';
 
 export default {
   Text: TextBlock,
@@ -26,6 +27,7 @@ export default {
   Card,
   FeaturedTopCard,
   FullScreenImageCard,
+  ImageGrid,
   EventCard,
   SimpleCard,
   Share: ShareBlock,
