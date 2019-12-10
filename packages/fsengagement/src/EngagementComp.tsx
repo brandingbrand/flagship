@@ -30,9 +30,12 @@ import {
   ScreenProps
 } from './types';
 import EngagementWebView from './WebView';
+import EngagementProductModal from './EngagementProductModal';
 import Carousel from 'react-native-snap-carousel';
+import * as Animatable from 'react-native-animatable';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
+Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
 
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
@@ -45,6 +48,13 @@ const styles = StyleSheet.create({
     left: 8,
     padding: 12
   },
+  closeModalButton: {
+    position: 'absolute',
+    zIndex: 10,
+    bottom: -60,
+    left: (win.width / 2) - 35,
+    padding: 0
+  },
   growAndCenter: {
     flexGrow: 1,
     justifyContent: 'center'
@@ -52,6 +62,10 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 14,
     height: 25
+  },
+  appleCloseIcon: {
+    width: 60,
+    height: 60
   },
   pageCounter: {
     position: 'absolute',
@@ -61,6 +75,10 @@ const styles = StyleSheet.create({
   pageNum: {
     color: '#ffffff',
     fontWeight: '500'
+  },
+  animatedContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    flex: 1
   },
   navBarTitle: {
     color: '#000000',
@@ -98,6 +116,7 @@ const styles = StyleSheet.create({
 
 const gradientImage = require('../assets/images/gradient.png');
 const backArrow = require('../assets/images/backArrow.png');
+const appleCloseIcon = require('../assets/images/apple-close-icn.png');
 
 export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
@@ -111,11 +130,16 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplayDelay?: number;
   autoplayInterval?: number;
   containerStyle?: StyleProp<ViewStyle>;
+  animateScroll?: boolean;
+  onBack?: () => void;
+  AnimatedImage?: any;
+  welcomeHeader?: boolean;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
   pageNum: number;
   showCarousel: boolean;
+  isClosingAnimation: boolean;
 }
 
 export default function(
@@ -129,19 +153,60 @@ export default function(
     };
 
     state: any = {};
+    AnimatedStory: any;
+    AnimatedAppleClose: any;
+    AnimatedWelcome: any;
+    scrollPosition: number = 0;
+    flatListRef: any;
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
         scrollY: new Animated.Value(0),
         pageNum: 1,
-        showCarousel: false
+        isLoading: true,
+        showCarousel: false,
+        isClosingAnimation: false
       };
     }
+
+    handleAnimatedRef = (ref: any) => this.AnimatedStory = ref;
+    handleWelcomeRef = (ref: any) => this.AnimatedWelcome = ref;
+    handleAppleCloseRef = (ref: any) => this.AnimatedAppleClose = ref;
     componentDidMount(): void {
+      if (this.props.animateScroll) {
+        if (this.AnimatedStory) {
+          this.AnimatedStory.transition(
+            { translateY: 700 },
+            { translateY: 0 },
+            700, 'ease-out-cubic');
+        }
+        if (this.AnimatedAppleClose) {
+          setTimeout(() => {
+            this.AnimatedAppleClose.transition(
+              { translateY: 0 },
+              { translateY: -85 },
+              800, 'ease-in-out-back');
+          }, 300);
+        }
+      }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
           this.setState({ showCarousel: true });
         }, 700);
+      }
+    }
+    componentDidUpdate(prevProps: EngagementScreenProps): void {
+      const PRIVATE_BLOCKS = 'private_blocks';
+      const prevBlocks = prevProps.json && prevProps.json[PRIVATE_BLOCKS] || [];
+      const blocks = this.props.json && this.props.json[PRIVATE_BLOCKS] || [];
+
+      if (!prevBlocks.length && blocks.length) {
+        if (this.props.welcomeHeader && this.AnimatedWelcome) {
+          this.AnimatedWelcome.transition(
+            { translateY: -100 },
+            { translateY: 0 },
+            600, 'ease-out-cubic');
+        }
       }
     }
 
@@ -236,8 +301,78 @@ export default function(
       this.props.navigator.pop();
     }
 
-    renderBlockItem: ListRenderItem<BlockItem> = ({ item }) => {
+    renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
+      item.index = index;
       return this.renderBlock(item);
+    }
+    // tslint:disable-next-line:cyclomatic-complexity
+    renderFlatlistHeader = () => {
+      if (!(this.props.animateScroll || this.props.welcomeHeader)) {
+        return <View />;
+      }
+      console.log('renderFlatlistHeader')
+      const welcomeOpacity = this.state.scrollY.interpolate({
+        inputRange: [0, 70],
+        outputRange: [1, 0],
+        extrapolate: 'clamp'
+      });
+      const welcomeFont = this.state.scrollY.interpolate({
+        inputRange: [-70, 70],
+        outputRange: [1.2, 0.8],
+        extrapolate: 'clamp'
+      });
+      const welcomeY = this.state.scrollY.interpolate({
+        inputRange: [0, 70],
+        outputRange: [0, 50],
+        extrapolate: 'clamp'
+      });
+      const welcomeX = this.state.scrollY.interpolate({
+        inputRange: [-70, 70],
+        outputRange: [30, -30],
+        extrapolate: 'clamp'
+      });
+
+      if (this.props.welcomeHeader) {
+        return (
+          <Animatable.View
+            ref={this.handleWelcomeRef}
+            useNativeDriver
+            style={{
+              transform: [
+                { translateY: -100 }
+              ]
+            }}
+          >
+            <Animated.View
+              style={{
+                opacity: welcomeOpacity,
+                transform: [
+                  { translateY: welcomeY },
+                  { translateX: welcomeX },
+                  { scale: welcomeFont }
+                ]
+              }}
+            >
+              <Text
+                style={[{
+                  fontFamily: 'HelveticaNeue-Bold',
+                  fontWeight: 'bold',
+                  color: '#000',
+                  fontSize: 26,
+                  marginBottom: 0,
+                  marginTop: 70,
+                  paddingHorizontal: 25
+                }]}>
+                HELLO, BRANDER
+              </Text>
+            </Animated.View>
+          </Animatable.View>);
+      }
+      return <View style={{
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        height: 450
+      }}
+      />
     }
 
     renderBlock = (item: BlockItem): React.ReactElement | null => {
@@ -255,7 +390,6 @@ export default function(
         return null;
       }
       props.navigator = this.props.navigator;
-
       return React.createElement(
         layoutComponents[private_type],
         {
@@ -266,6 +400,47 @@ export default function(
         },
         private_blocks && private_blocks.map(this.renderBlock)
       );
+    }
+    scrollToTop = () => {
+      this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+    }
+    onAnimatedClose = (): void => {
+      if (this.state.isClosingAnimation) { return; }
+      this.setState({
+        isClosingAnimation: true
+      });
+    //  const { json } = this.props;
+      // const timeout = 0;
+      const timeout = this.scrollPosition < 1400 ?
+        this.scrollPosition / 7 : 200;
+      const outYPositon = 700;
+      if (this.scrollPosition > 0) {
+        this.scrollToTop();
+      }
+
+      if (this.AnimatedAppleClose) {
+        this.AnimatedAppleClose.transition(
+          { translateY: -85 },
+          { translateY: 0 },
+          500, 'ease-in-out-back');
+      }
+
+      setTimeout(() => {
+        if (this.AnimatedStory) {
+          this.AnimatedStory.transitionTo(
+            { translateY: outYPositon },
+            timeout + 550, 'ease-out');
+        }
+
+        if (this.props.onBack) {
+          this.props.onBack();
+        }
+      }, timeout);
+      setTimeout(() => {
+        this.props.navigator.dismissModal();
+        // Navigation.dismissModal(this.props.componentId)
+        //   .catch(err => console.log('onBackPress dismissModal error:', err));
+      }, 550);
     }
 
     renderBlocks(): JSX.Element {
@@ -321,7 +496,25 @@ export default function(
       );
     }
 
+    onScrollFlatList = (event: any) => {
+      this.scrollPosition = event.nativeEvent.contentOffset.y;
+    // console.log(this.props.AnimatedImage)
+      // if (this.props.AnimatedImage && event.nativeEvent.contentOffset.y < 0) {
 
+      // }
+      if (this.scrollPosition < -40) {
+        this.onAnimatedClose();
+      }
+      // if (!this.state.showDarkX && event.nativeEvent.contentOffset.y >= 378) {
+      //   this.setState({ showDarkX: true });
+      // } else if (this.state.showDarkX && event.nativeEvent.contentOffset.y < 378) {
+      //   this.setState({ showDarkX: false });
+      // }
+      // if (!this.state.slideBackground && event.nativeEvent.contentOffset.y >= 100) {
+      //   this.setState({ slideBackground: true });
+      // }
+
+    }
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
       this.setState({
@@ -377,30 +570,91 @@ export default function(
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
+      } else if (this.props.welcomeHeader) {
+        return (
+          <Fragment>
+            <Animated.FlatList
+              data={this.props.json.private_blocks || []}
+              keyExtractor={this.dataKeyExtractor}
+              renderItem={this.renderBlockItem}
+              scrollEventThrottle={16}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+                { useNativeDriver: true }
+              )}
+              ListHeaderComponent={this.renderFlatlistHeader}
+              ListEmptyComponent={(
+                <Text style={[styles.emptyMessage, empty.textStyle]}>
+                  {empty.message || 'No content found.'}</Text>
+              )}
+              refreshControl={
+                this.props.refreshControl && <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.refreshControl}
+                />
+              }
+            >
+              {this.renderBlocks()}
+            </Animated.FlatList>
+          </Fragment>
+        );
       }
       return (
-        <FlatList
-          data={this.props.json.private_blocks || []}
-          keyExtractor={this.dataKeyExtractor}
-          renderItem={this.renderBlockItem}
-          ListEmptyComponent={(
-            <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>
-          )}
-          refreshControl={
-            this.props.refreshControl && <RefreshControl
-              refreshing={this.props.isLoading}
-              onRefresh={this.props.refreshControl}
-            />
-          }
-        >
-          {this.renderBlocks()}
-        </FlatList>
+        <Fragment>
+          <FlatList
+            data={this.props.json.private_blocks || []}
+            keyExtractor={this.dataKeyExtractor}
+            renderItem={this.renderBlockItem}
+            ref={ref => { this.flatListRef = ref; }}
+            onScroll={this.onScrollFlatList}
+            ListHeaderComponent={this.renderFlatlistHeader}
+            ListEmptyComponent={(
+              <Text style={[styles.emptyMessage, empty.textStyle]}>
+                {empty.message || 'No content found.'}</Text>
+            )}
+            refreshControl={
+              this.props.refreshControl && <RefreshControl
+                refreshing={this.props.isLoading}
+                onRefresh={this.props.refreshControl}
+              />
+            }
+          >
+            {this.renderBlocks()}
+          </FlatList>
+        </Fragment>
+
       );
     }
 
     render(): JSX.Element {
-      const { backButton, containerStyle, json, navBarTitle } = this.props;
+      const { animateScroll, backButton, containerStyle, json, navBarTitle } = this.props;
+      if (animateScroll) {
+        return (
+          <Fragment>
+            <Animatable.View
+              ref={this.handleAnimatedRef}
+              useNativeDriver
+              style={[styles.animatedContainer]}
+            >
+              {this.renderScrollView()}
+            </Animatable.View>
+            {backButton &&
+              <Animatable.View
+                ref={this.handleAppleCloseRef}
+                useNativeDriver
+                style={styles.closeModalButton}
+              >
+                <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
+                  <Image
+                    resizeMode='contain'
+                    source={appleCloseIcon}
+                    style={styles.appleCloseIcon}
+                  />
+                </TouchableOpacity>
+              </Animatable.View>}
+          </Fragment>
+        )
+      }
       return (
         <View style={[styles.container, containerStyle]}>
           {this.renderScrollView()}

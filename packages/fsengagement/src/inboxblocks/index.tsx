@@ -11,7 +11,9 @@ import EventBlock from './EventBlock';
 import ShareBlock from './ShareBlock';
 import FeaturedTopCard from './FeaturedTopCard';
 import EventCard from './EventCard';
+import ImageCarouselBlock from './ImageCarouselBlock';
 import SimpleCard from './SimpleCard';
+import RoundedImageCard from './RoundedImageCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
@@ -24,7 +26,9 @@ export default {
   TwinCTA: TwinCTABlock,
   Event: EventBlock,
   Card,
+  ImageCarousel: ImageCarouselBlock,
   FeaturedTopCard,
+  RoundedImageCard,
   FullScreenImageCard,
   EventCard,
   SimpleCard,

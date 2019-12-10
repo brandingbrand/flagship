@@ -84,6 +84,7 @@ export interface JSON {
 
 export interface BlockItem extends ScreenProps, JSON {
   story?: JSON;
+  index?: number;
 }
 
 export interface InjectedProps {
