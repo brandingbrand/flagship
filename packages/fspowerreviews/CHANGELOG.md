@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.4.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.2.0-rnn2.0...v8.4.0-rnn2.0) (2019-12-13)
+
+
+* Merge develop into rnn2 (#952) ([2e40829](https://github.com/brandingbrand/flagship/commit/2e40829)), closes [#952](https://github.com/brandingbrand/flagship/issues/952) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905) [#889](https://github.com/brandingbrand/flagship/issues/889) [#925](https://github.com/brandingbrand/flagship/issues/925) [#926](https://github.com/brandingbrand/flagship/issues/926) [#924](https://github.com/brandingbrand/flagship/issues/924) [#932](https://github.com/brandingbrand/flagship/issues/932) [#936](https://github.com/brandingbrand/flagship/issues/936) [#922](https://github.com/brandingbrand/flagship/issues/922) [#929](https://github.com/brandingbrand/flagship/issues/929) [#930](https://github.com/brandingbrand/flagship/issues/930) [#944](https://github.com/brandingbrand/flagship/issues/944)
+
+
+### BREAKING CHANGES
+
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+
+* chore: pin react-native-sensitive-info to 5.4.x
+
+* feat(fscomponents): support more styling options for MultiCarousel
+
+* feat(fscomponents): add hideZoomButton props to ZoomCarousel
+
+* fix: Add 'Marquis' feature to Button with title dynamically reflecting CTA state
+
+* chore(fscomponents): add missing typedef to modalhalfscreen component
+
+* fix(flagship): update string replace to work in new fastfile
+
+* fix: get default env from initial script
+
+* build: upgrade deprecated webpack dev server
+
+* fix(flagship): fix fastlane build lane
+
+Added missing xcargs flags that tells xcode to make an unprovisioned build when "fastlane build" is executed.
+
+* chore: tell greenkeeper to ignore more dependencies
+react, metro-react-babel-preset, and babel should only be updated as part of coordinated React Native upgrades.
+
+
+
+
+
 # [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 **Note:** Version bump only for package @brandingbrand/fspowerreviews
