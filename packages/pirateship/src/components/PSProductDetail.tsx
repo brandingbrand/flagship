@@ -217,6 +217,11 @@ const styles = StyleSheet.create({
   },
   quantityView: {
     marginTop: 15
+  },
+  modalContainer: {
+    width: '50%',
+    margin: 'auto',
+    backgroundColor: 'white'
   }
 });
 
@@ -242,11 +247,18 @@ export interface PSProductDetailState {
   modalTitle?: string;
   miniModalVisible: boolean;
   miniModalContent?: JSX.Element;
+  dynamicBtnTitles: string[];
+  selectedBtnTitle: number;
 }
 
 export type PSProductDetailComponentInternalProps = UnwrappedPSProductDetailProps &
   WithProductDetailProps &
   CartProps;
+
+enum AddToCartBtnStates {
+  addToCart,
+  addedToCart
+}
 
 class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
@@ -262,7 +274,9 @@ class PSProductDetailComponent extends Component<
       modalVisible: false,
       miniModalVisible: false,
       quantity: 1,
-      optionValues: []
+      optionValues: [],
+      selectedBtnTitle: AddToCartBtnStates.addToCart,
+      dynamicBtnTitles: ['Add to cart', 'Added to cart']
     };
   }
 
@@ -377,6 +391,16 @@ class PSProductDetailComponent extends Component<
     // Optimistically show success and only show errors if necessary
     this.openMiniModal('Added to Cart', 2000);
 
+    this.setState({
+      selectedBtnTitle: AddToCartBtnStates.addedToCart
+    });
+
+    setTimeout(() => {
+      this.setState({
+        selectedBtnTitle: AddToCartBtnStates.addToCart
+      });
+    }, 2000);
+
     if (!quantity || !variantId) {
       // TODO: This error message can be more appropriate
       this.openMiniModal(
@@ -490,6 +514,19 @@ class PSProductDetailComponent extends Component<
     }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
+  renderCustomModal = (closeModal: () => void): React.ReactNode => {
+    const testText = 'Hello World';
+    const closeText = 'Close';
+    return (
+      <View style={styles.modalContainer}>
+        <Text>{testText}</Text>
+        <TouchableOpacity onPress={closeModal}>
+          <Text>{closeText}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   renderShareButton = (): React.ReactNode => {
     const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
     const { id, title } = commerceData;
@@ -572,6 +609,7 @@ class PSProductDetailComponent extends Component<
             dotActiveStyle={styles.zoomCarouselDotActiveStyle}
             renderZoomButton={this._renderZoomButton}
             zoomButtonStyle={styles.zoomCarouselZoomButtonStyle}
+            renderModalContent={this.props.id === '25752986' ? this.renderCustomModal : undefined}
           />
         </View>
         <View style={styles.edgePadding}>
@@ -735,9 +773,13 @@ class PSProductDetailComponent extends Component<
   }
 
   _renderAddToCartButton = (): JSX.Element => {
+    const { selectedBtnTitle, dynamicBtnTitles } = this.state;
+
     return (
       <PSButton
         title={translate.string(translationKeys.item.actions.addToCart.actionBtn)}
+        selectedTitleState={selectedBtnTitle}
+        dynamicTitleStates={dynamicBtnTitles}
         onPress={this.addToCart}
         titleStyle={{
           fontWeight: '600',
