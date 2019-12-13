@@ -3,7 +3,7 @@ import { Form } from '@brandingbrand/fscomponents';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { merge } from 'lodash-es';
-import TouchId from 'react-native-touch-id';
+import TouchId, { AuthenticationError, IsSupportedError } from 'react-native-touch-id';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { EventSubscription, Navigation } from 'react-native-navigation';
 import { EMAIL_REGEX } from '../lib/constants';
@@ -393,7 +393,9 @@ export default class PSSignInForm extends Component<
     });
   }
 
-  getBiometricIcon = async (authType: string | boolean | TouchId.TouchIDError) => {
+  getBiometricIcon = async (
+      authType: string | boolean | AuthenticationError | IsSupportedError
+  ) => {
     return this.props.getCredentials()
       .then(({ email, password }) => {
         if (!email || !password) {

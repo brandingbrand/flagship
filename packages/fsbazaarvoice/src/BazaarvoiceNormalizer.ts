@@ -4,7 +4,7 @@ import {
 
 export function review(bvReview: any): ReviewTypes.Review {
   return {
-    id: bvReview.ProductId,
+    id: bvReview.Id,
     title: bvReview.Title,
     text: bvReview.ReviewText,
     rating: bvReview.Rating,
@@ -122,5 +122,34 @@ function user(bvReview: any): ReviewTypes.ReviewUser {
   return {
     location: bvReview.UserLocation ? bvReview.UserLocation : undefined,
     name: bvReview.UserNickname
+  };
+}
+
+export function writeReview(bvWriteReview: any): ReviewTypes.WriteReviewSubmission {
+  const { Review, HasErrors } = bvWriteReview;
+
+  if (!Review && !HasErrors) {
+    throw new Error('Incorect write review response type.');
+  }
+
+  return {
+    review: Review && {
+      rating: Review.Rating,
+      title: Review.Title,
+      isRecommended: Review.isRecommended,
+      created: Review.SubmissionTime,
+      text: Review.ReviewText
+    },
+    hasErrors: !!bvWriteReview.HasErrors,
+    submissionId: bvWriteReview.SubmissionId || '',
+    hoursToPost: bvWriteReview.TypicalHoursToPost,
+    errors: bvWriteReview.Errors && bvWriteReview.Errors.length > 0
+      ? bvWriteReview.Errors.map((error: any) => {
+        return {
+          message: error.Message || 0,
+          code: error.Code
+        };
+      })
+      : []
   };
 }
