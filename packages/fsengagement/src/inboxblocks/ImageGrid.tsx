@@ -81,7 +81,7 @@ export default class ImageGrid
     if (ratio && itemWidth) {
       itemStyle = {
         width: even ? itemWidth - 1 : itemWidth,
-        height: (itemWidth / parseFloat(ratio)) + 30,
+        height: (itemWidth / parseFloat(ratio)) + (text && 30 || 0),
         paddingHorizontal: 0,
         marginLeft: even ? spaceBetweenHorizontal : 0,
         marginBottom: spaceBetweenVertical
@@ -106,7 +106,8 @@ export default class ImageGrid
             resizeMode={'cover'}
           />
         </View>
-        <Text style={[{ height: 30, marginTop: 7 }, this.props.textStyle]}>{text.value}</Text>
+        {text &&
+          <Text style={[{ height: 30, marginTop: 7 }, this.props.textStyle]}>{text.value}</Text>}
       </TouchableOpacity>
     );
   }
