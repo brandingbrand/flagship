@@ -120,8 +120,6 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
       }
     }
     if (item[PRIVATE_TYPE] === 'Image') {
-      console.log('item', item);
-
       return (
         <View>
           <ImageBackground source={item.source} style={styles.fullScreen}>
@@ -156,7 +154,7 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
           {item.textOverlay && item.textOverlay.enabled && <View
               style={[textContainerStyle, StyleSheet.absoluteFillObject]}
           >
-            {!!item.textOverlay && <TextBlock
+            {!!item.textOverlay.Title.text && <TextBlock
               {...item.textOverlay.Title}
             />}
             {!!item.textOverlay.Subtitle.text && <TextBlock
