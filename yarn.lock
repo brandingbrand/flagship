@@ -11780,10 +11780,6 @@ react-native-snap-carousel@^3.8.0:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
-react-native-static-safe-area-insets@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/react-native-static-safe-area-insets/-/react-native-static-safe-area-insets-1.3.4.tgz#bf6a21b88cf5c2b319e2391a32b0b031ce8b6c47"
-
 react-native-svg@^9.13.3:
   version "9.13.3"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.13.3.tgz#6414b337d55af169ac2487ab70f3108404434446"
