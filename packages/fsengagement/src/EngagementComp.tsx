@@ -39,7 +39,7 @@ Navigation.registerComponent('EngagementProductModal', () => EngagementProductMo
 
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
-
+const WHITE_INBOX_WRAPPER = 'WhiteInboxWrapper';
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
@@ -66,6 +66,15 @@ const styles = StyleSheet.create({
   appleCloseIcon: {
     width: 60,
     height: 60
+  },
+  headerName: {
+    fontFamily: 'HelveticaNeue-Bold',
+    fontWeight: 'bold',
+    color: '#000',
+    fontSize: 26,
+    marginBottom: 0,
+    marginTop: 70,
+    paddingHorizontal: 25
   },
   pageCounter: {
     position: 'absolute',
@@ -134,6 +143,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   onBack?: () => void;
   AnimatedImage?: any;
   welcomeHeader?: boolean;
+  headerName?: string;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -303,14 +313,49 @@ export default function(
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
+      if (this.props.animateScroll) {
+        return this.renderBlockWrapper(item);
+      }
       return this.renderBlock(item);
+    }
+    renderHeaderName = () => {
+      const name = this.props.headerName || '';
+      const comma = name ? ', ' : '';
+      return (
+        <Text style={styles.headerName}>
+          HELLO{comma}{name.toUpperCase()}
+        </Text>
+      );
+    }
+    renderFlatlistFooter = () => {
+      if (this.props.welcomeHeader) {
+        return (
+          <View
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0)',
+              height: 20
+            }}
+          />
+        );
+      }
+      if (!(this.props.animateScroll)) {
+        return <View />;
+      }
+      return (
+        <View
+          style={{
+            backgroundColor: '#fff',
+            height: 100
+          }}
+        />
+      );
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
       if (!(this.props.animateScroll || this.props.welcomeHeader)) {
         return <View />;
       }
-      console.log('renderFlatlistHeader')
+
       const welcomeOpacity = this.state.scrollY.interpolate({
         inputRange: [0, 70],
         outputRange: [1, 0],
@@ -353,28 +398,43 @@ export default function(
                 ]
               }}
             >
-              <Text
-                style={[{
-                  fontFamily: 'HelveticaNeue-Bold',
-                  fontWeight: 'bold',
-                  color: '#000',
-                  fontSize: 26,
-                  marginBottom: 0,
-                  marginTop: 70,
-                  paddingHorizontal: 25
-                }]}>
-                HELLO, BRANDER
-              </Text>
+              {this.renderHeaderName()}
             </Animated.View>
           </Animatable.View>);
       }
-      return <View style={{
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        height: 450
-      }}
-      />
+      return (
+        <View
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+            height: 450
+          }}
+        />
+      );
     }
+    renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
+      const {
+        private_blocks,
+        private_type,
+        ...restProps } = item;
+      const { id, name } = this.props;
+      const props = {
+        id,
+        name,
+        ...restProps
+      };
+      if (!layoutComponents[private_type]) {
+        return null;
+      }
 
+      props.navigator = this.props.navigator;
+      return React.createElement(
+        layoutComponents[WHITE_INBOX_WRAPPER],
+        {
+          key: this.dataKeyExtractor(item)
+        },
+        this.renderBlock(item)
+      );
+    }
     renderBlock = (item: BlockItem): React.ReactElement | null => {
       const {
         private_blocks,
@@ -389,6 +449,7 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
+
       props.navigator = this.props.navigator;
       return React.createElement(
         layoutComponents[private_type],
@@ -409,8 +470,6 @@ export default function(
       this.setState({
         isClosingAnimation: true
       });
-    //  const { json } = this.props;
-      // const timeout = 0;
       const timeout = this.scrollPosition < 1400 ?
         this.scrollPosition / 7 : 200;
       const outYPositon = 700;
@@ -438,8 +497,6 @@ export default function(
       }, timeout);
       setTimeout(() => {
         this.props.navigator.dismissModal();
-        // Navigation.dismissModal(this.props.componentId)
-        //   .catch(err => console.log('onBackPress dismissModal error:', err));
       }, 550);
     }
 
@@ -498,22 +555,9 @@ export default function(
 
     onScrollFlatList = (event: any) => {
       this.scrollPosition = event.nativeEvent.contentOffset.y;
-    // console.log(this.props.AnimatedImage)
-      // if (this.props.AnimatedImage && event.nativeEvent.contentOffset.y < 0) {
-
-      // }
       if (this.scrollPosition < -40) {
         this.onAnimatedClose();
       }
-      // if (!this.state.showDarkX && event.nativeEvent.contentOffset.y >= 378) {
-      //   this.setState({ showDarkX: true });
-      // } else if (this.state.showDarkX && event.nativeEvent.contentOffset.y < 378) {
-      //   this.setState({ showDarkX: false });
-      // }
-      // if (!this.state.slideBackground && event.nativeEvent.contentOffset.y >= 100) {
-      //   this.setState({ slideBackground: true });
-      // }
-
     }
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
@@ -583,6 +627,7 @@ export default function(
                 { useNativeDriver: true }
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
+              ListFooterComponent={this.renderFlatlistFooter}
               ListEmptyComponent={(
                 <Text style={[styles.emptyMessage, empty.textStyle]}>
                   {empty.message || 'No content found.'}</Text>
@@ -605,9 +650,10 @@ export default function(
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
             renderItem={this.renderBlockItem}
-            ref={ref => { this.flatListRef = ref; }}
+            ref={(ref: any) => { this.flatListRef = ref; }}
             onScroll={this.onScrollFlatList}
             ListHeaderComponent={this.renderFlatlistHeader}
+            ListFooterComponent={this.renderFlatlistFooter}
             ListEmptyComponent={(
               <Text style={[styles.emptyMessage, empty.textStyle]}>
                 {empty.message || 'No content found.'}</Text>
@@ -653,7 +699,7 @@ export default function(
                 </TouchableOpacity>
               </Animatable.View>}
           </Fragment>
-        )
+        );
       }
       return (
         <View style={[styles.container, containerStyle]}>

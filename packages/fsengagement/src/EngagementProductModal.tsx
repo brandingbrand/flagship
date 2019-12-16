@@ -1,7 +1,7 @@
 /* tslint:disable */
 import React, { PureComponent } from 'react';
 import {
-  Dimensions, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View
+  Dimensions, Image, ImageStyle, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
@@ -9,38 +9,6 @@ import {
   ScreenProps
 } from './types';
 
-// const ENTRIES2 = [
-//   {
-//     title: 'Favourites landscapes 1',
-//     subtitle: 'Lorem ipsum dolor sit amet',
-//     illustration: 'https://i.imgur.com/SsJmZ9jl.jpg'
-//   },
-//   {
-//     title: 'Favourites landscapes 2',
-//     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-//     illustration: 'https://i.imgur.com/5tj6S7Ol.jpg'
-//   },
-//   {
-//     title: 'Favourites landscapes 3',
-//     subtitle: 'Lorem ipsum dolor sit amet et nuncat',
-//     illustration: 'https://i.imgur.com/pmSqIFZl.jpg'
-//   },
-//   {
-//     title: 'Favourites landscapes 4',
-//     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-//     illustration: 'https://i.imgur.com/cA8zoGel.jpg'
-//   },
-//   {
-//     title: 'Favourites landscapes 5',
-//     subtitle: 'Lorem ipsum dolor sit amet',
-//     illustration: 'https://i.imgur.com/pewusMzl.jpg'
-//   },
-//   {
-//     title: 'Favourites landscapes 6',
-//     subtitle: 'Lorem ipsum dolor sit amet et nuncat',
-//     illustration: 'https://i.imgur.com/l49aYS3l.jpg'
-//   }
-// ];
 const simpleCloseIcn = require('../assets/images/simple-close-icn.png');
 const stars = require('../assets/images/stars.png');
 const share = require('../assets/images/share-icn.png');
@@ -79,8 +47,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
     flexDirection: 'row'
   },
+  categoryHeader: {
+    fontSize: 16,
+    color: '#000',
+    fontFamily: 'Optima-Bold'
+  },
   secondaryButtonContainer: {
-    marginTop: 10,
+    marginTop: 20,
     flexDirection: 'row',
     paddingBottom: 20,
     marginBottom: 20,
@@ -94,6 +67,10 @@ const styles = StyleSheet.create({
   stars: {
     width: 100,
     height: 22
+  },
+  starsSmall: {
+    width: 50,
+    height: 11
   },
   share: {
     width: 30,
@@ -112,8 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
     backgroundColor: 'white',
-    // borderTopLeftRadius: entryBorderRadius,
-    // borderTopRightRadius: entryBorderRadius,
     borderRadius: entryBorderRadius
   },
   modalBackground: {
@@ -134,17 +109,19 @@ const styles = StyleSheet.create({
     marginBottom: 3
   },
   title: {
+    paddingHorizontal: 25,
+    fontSize: 17,
+    lineHeight: 18,
     color: '#000',
-    fontSize: 15,
-    fontFamily: 'Helvetica',
-    fontWeight: '500'
+    fontFamily: 'Optima-Bold',
+    textAlign: 'center'
   },
   price: {
     marginTop: 6,
     color: '#000',
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: 'Helvetica',
-    fontWeight: '600'
+    fontWeight: '400'
   },
   topContentContainer: {
     justifyContent: 'center',
@@ -172,6 +149,82 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 14,
     height: 25
+  },
+  buyButton: {
+    flex: 1,
+    backgroundColor: '#000',
+    borderRadius: 20,
+    height: 40
+  },
+  alignStart: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  alignEnd: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center'
+  },
+  alignCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 'bold'
+  },
+  wishlistButton: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    height: 40,
+    borderWidth: 2,
+    borderColor: '#000'
+  },
+  wishlistText: {
+    color: '#000',
+    fontSize: 13,
+    fontWeight: 'bold'
+  },
+  regularText: {
+    fontSize: 13,
+    fontWeight: 'normal',
+    color: '#000'
+  },
+  seeAll: {
+    fontSize: 14,
+    color: '#666',
+    fontFamily: 'Helvetica'
+  },
+  prodCatBorder: {
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    paddingHorizontal: 20,
+    marginTop: 20
+  },
+  reviewContainer: {
+    padding: 10,
+    backgroundColor: '#f1f1f1'
+  },
+  reviewTitle: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#000',
+    marginBottom: 4
+  },
+  reviewText: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#000'
+  },
+  reviewDate: {
+    flex: 1,
+    marginLeft: 5,
+    fontSize: 11,
+    color: '#999'
   }
 });
 const imageWidth = 150;
@@ -194,22 +247,13 @@ export default class EngagementProductModal extends
     this.state = {
       scrollEnabled: true
     }
-  //  this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
   }
 
-  // onNavigatorEvent = (event: any) => {
-  //   if (event.type === 'NavBarButtonPress') {
-  //     if (event.id === 'close') {
-  //       this.props.navigator.dismissModal();
-  //     }
-  //   }
-  // }
+
   scrollPosition: number = 0;
   zoomedIn: boolean = false;
   AnimatedModal: any;
-  //AnimatedProduct: any;
   AnimatedContent: any;
-  //handleProductContainerRef = (ref: any) => this.AnimatedProduct = ref;
   componentDidMount(): void {
     if (this.AnimatedModal) {
       this.AnimatedModal.transition(
@@ -220,8 +264,8 @@ export default class EngagementProductModal extends
     if (this.AnimatedContent) {
       setTimeout(() => {
         this.AnimatedContent.transition(
-          { translateX: viewportWidth },
-          { translateX: 0 },
+          { translateY: viewportHeight },
+          { translateY: 0 },
           600, 'ease-in-out-quart');
       }, 0);
     }
@@ -236,17 +280,13 @@ export default class EngagementProductModal extends
   }
   onScrollCarouselItem = (event: any) => {
     this.scrollPosition = event.nativeEvent.contentOffset.y;
-    console.log(this.scrollPosition)
-    // console.log(this.props.AnimatedImage)
-    // if (this.props.AnimatedImage && event.nativeEvent.contentOffset.y < 0) {
 
-    // }
     if (this.scrollPosition > 15 && !this.zoomedIn) {
       if (this.AnimatedContent) {
         this.zoomedIn = true;
         this.setState({ scrollEnabled: false });
         this.AnimatedContent.transitionTo(
-          { translateY: -20, scale: 1.08 },
+          { translateY: -30, scale: 1.08 },
           400, 'ease-out');
       }
     } else if (this.scrollPosition <= 15 && this.zoomedIn) {
@@ -258,21 +298,10 @@ export default class EngagementProductModal extends
           400, 'ease-out');
       }
     }
-    // if (!this.state.showDarkX && event.nativeEvent.contentOffset.y >= 378) {
-    //   this.setState({ showDarkX: true });
-    // } else if (this.state.showDarkX && event.nativeEvent.contentOffset.y < 378) {
-    //   this.setState({ showDarkX: false });
-    // }
-    // if (!this.state.slideBackground && event.nativeEvent.contentOffset.y >= 100) {
-    //   this.setState({ slideBackground: true });
-    // }
-
   }
   _renderItem = (data: any) => {
     const { item } = data;
-
-    console.log(item)
-    const imageStyle: any = {
+    const imageStyle: ImageStyle = {
       width: imageWidth,
       height: imageWidth / parseFloat(item.image.ratio),
       marginBottom: 10
@@ -322,11 +351,7 @@ export default class EngagementProductModal extends
               {item.price}
             </Text>
             <View style={styles.starContainer}>
-              <View style={{
-                flex: 1,
-                alignItems: 'flex-start',
-                justifyContent: 'center'
-              }}>
+              <View style={styles.alignStart}>
                 <Image
                   source={stars}
                   style={styles.stars}
@@ -335,11 +360,7 @@ export default class EngagementProductModal extends
                   {item.reviewCount} Ratings
                 </Text>
               </View>
-              <View style={{
-                flex: 1,
-                alignItems: 'flex-end',
-                justifyContent: 'center'
-              }}>
+              <View style={styles.alignEnd}>
                 <Image
                   source={share}
                   style={styles.share}
@@ -350,23 +371,10 @@ export default class EngagementProductModal extends
               <TouchableOpacity
                 activeOpacity={.6}
                 onPress={this.onBuyPress}
-                style={{
-                  flex: 1,
-                  backgroundColor: '#000',
-                  borderRadius: 20,
-                  height: 40
-                }}
+                style={styles.buyButton}
               >
-                <View style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <Text style={{
-                    color: '#fff',
-                    fontSize: 13,
-                    fontWeight: 'bold'
-                  }}>
+                <View style={styles.alignCenter}>
+                  <Text style={styles.buttonText}>
                     BUY | {item.price}
                   </Text>
 
@@ -374,43 +382,19 @@ export default class EngagementProductModal extends
               </TouchableOpacity>
             </View>
             <View style={styles.secondaryButtonContainer}>
-              <View style={{
-                flex: 1,
-                alignItems: 'flex-start',
-                justifyContent: 'center'
-              }}>
+              <View style={styles.alignStart}>
                 <Text style={{ fontSize: 12, color: '#777' }}>
                   Available to ship now
                 </Text>
               </View>
-              <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'flex-end',
-                justifyContent: 'center'
-              }}>
+              <View style={[styles.alignEnd, { flexDirection: 'row' }]}>
                 <TouchableOpacity
                   activeOpacity={.6}
                   onPress={this.onBuyPress}
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#FFF',
-                    borderRadius: 20,
-                    height: 40,
-                    borderWidth: 2,
-                    borderColor: '#000'
-                  }}
+                  style={styles.wishlistButton}
                 >
-                  <View style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <Text style={{
-                      color: '#000',
-                      fontSize: 13,
-                      fontWeight: 'bold'
-                    }}>
+                  <View style={styles.alignCenter}>
+                    <Text style={styles.wishlistText}>
                       ADD TO WISHLIST
                     </Text>
 
@@ -418,40 +402,61 @@ export default class EngagementProductModal extends
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={{
-
-            }}>
-              <Text style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: '#000',
-                marginBottom: 10
-              }}>
+            <View style={{ paddingBottom: 30 }}>
+              <Text style={[styles.categoryHeader, { marginBottom: 10 }]}>
                 Product Description
+              </Text>
+              <Text style={styles.regularText}>
+                {item.productInfo}
+              </Text>
+                <View style={styles.prodCatBorder} />
+                <Text
+                  style={[styles.categoryHeader, {
+                    marginBottom: 10,
+                    marginTop: 20,
+                  }]}
+                >
+                  Product Features
+              </Text>
+                <Text style={styles.regularText}>
+                  {item.features}
                 </Text>
-              <Text style={{
-                fontSize: 13,
-                fontWeight: 'normal',
-                color: '#000'
-              }}>
-                {item.productInfo}
-              </Text>
-              <Text style={{
-                marginTop: 20,
-                fontSize: 13,
-                fontWeight: 'normal',
-                color: '#000'
-              }}>
-                {item.productInfo}
-              </Text>
-              <Text style={{
-                marginTop: 20,
-                fontSize: 13,
-                fontWeight: 'normal',
-                color: '#000'
-              }}>
-                {item.productInfo}
-              </Text>
+                <View style={[styles.prodCatBorder, { paddingHorizontal: 30 }]} />
+                <View style={{
+                  flexDirection: 'row',
+                  marginVertical: 10,
+                  marginTop: 20,
+                }}>
+                  <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <Text style={styles.categoryHeader}>
+                      Customer Reviews
+                    </Text>
+                  </View>
+                  <View style={styles.alignEnd}>
+                    <Text style={styles.seeAll}>
+                      See All
+                    </Text>
+                  </View>
+                </View>
+
+              {item.review && <View style={styles.reviewContainer}>
+                  <Text style={styles.reviewTitle}>
+                    Awesome Product!
+                  </Text>
+                  <Text style={styles.reviewText}>
+                    {item.review}
+                  </Text>
+                  <View style={{ marginTop: 5, flexDirection: 'row', alignItems: 'center' }}>
+                  <Image
+                    source={stars}
+                    style={styles.starsSmall}
+                  />
+                  <Text style={styles.reviewDate}>
+                    Dec 5, 2019
+                  </Text>
+                </View>
+              </View>}
+
             </View>
           </View>
               </ScrollView>
@@ -462,8 +467,8 @@ export default class EngagementProductModal extends
   closeModal = () => {
     if (this.AnimatedContent) {
       this.AnimatedContent.transition(
-        { translateX: 0 },
-        { translateX: viewportWidth },
+        { translateY: 0 },
+        { translateY: viewportHeight },
         600, 'ease-in-out-quart');
     }
     setTimeout(() => {
@@ -505,7 +510,7 @@ export default class EngagementProductModal extends
           style={{
             marginTop: 50,
             transform: [
-              { translateX: viewportWidth }
+              { translateY: viewportHeight }
             ]
           }}>
           <Carousel

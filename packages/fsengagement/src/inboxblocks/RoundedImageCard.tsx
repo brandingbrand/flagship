@@ -5,22 +5,25 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 const CARD_HEIGHT = 400;
 const styles = StyleSheet.create({
-  top: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    marginTop: 25,
-    marginHorizontal: 20
-  },
   bottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 25,
-    marginHorizontal: 20
+    flex: 1
+  },
+  textOverlayContainer: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    left: 0,
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15
   },
   fullScreen: {
     width: '100%',
@@ -41,12 +44,18 @@ const { width: viewportWidth } = Dimensions.get('window');
 export interface ImageProp {
   uri: string;
 }
+export interface TextOverlay {
+  verticalAlignment: string;
+  verticalDistanceFromEdge: number;
+  horizontalDistanceFromEdge: number;
+}
 export interface RoundedImageCardProps extends CardProps {
   actions?: Action;
   contents: any;
   source: ImageProp;
   index?: number;
   cardsLoaded?: boolean;
+  textOverlay?: TextOverlay;
 }
 
 export default class RoundedImageCardCard extends Component<RoundedImageCardProps> {
@@ -64,6 +73,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
   myComponent: any;
   viewComponent: any;
   AnimatedContent: any;
+  isLoaded: boolean = false;
 
   handleImageRef = (ref: any) => this.AnimatedImage = ref;
   handleViewRef = (ref: any) => this.myComponent = ref;
@@ -78,15 +88,17 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
 
   componentDidMount(): void {
     if (typeof this.props.index === 'number' && this.props.index <= 1) {
-      const timeout = 400 + (this.props.index * 200);
+      const timeout = 500 + (this.props.index * 200);
       setTimeout(() => {
         this.myComponent.transition({
           translateX: this.props.index ? -viewportWidth : viewportWidth
         }, {
           translateX: 0
         }, 600, 'ease-in-out-quart');
+        this.isLoaded = true;
       }, timeout);
-
+    } else {
+      this.isLoaded = true;
     }
   }
 
@@ -134,19 +146,6 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
         navBarTranslucent: true
       }
     });
-     // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
-    // this.props.navigator.push({
-    //   screen: 'EngagementComp',
-    //   navigatorStyle: {
-    //     navBarHidden: true
-    //   },
-    //   passProps: {
-    //     json,
-    //     backButton: true,
-    //     name: this.props.name,
-    //     id: this.props.id
-    //   }
-    // });
   }
   handlePressIn = (): void => {
     // this.myComponent.transitionTo({
@@ -196,9 +195,25 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
 
   render(): JSX.Element {
     const {
-      contents
+      contents, textOverlay
     } = this.props;
 
+    const verticalMap: any = {
+      top: 'flex-start',
+      center: 'center',
+      bottom: 'flex-end'
+    };
+    let textContainerStyle: ViewStyle = {};
+    if (textOverlay) {
+      textContainerStyle = {
+        justifyContent: verticalMap[textOverlay.verticalAlignment],
+        marginBottom: textOverlay.verticalAlignment === 'bottom' ?
+          textOverlay.verticalDistanceFromEdge : 0,
+        marginTop: textOverlay.verticalAlignment === 'top' ?
+          textOverlay.verticalDistanceFromEdge : 0,
+        marginHorizontal: textOverlay.horizontalDistanceFromEdge
+      };
+    }
     return (
       <Animatable.View
         ref={this.handleViewRef}
@@ -207,15 +222,13 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
           marginTop: 20,
           paddingHorizontal: 20,
           backgroundColor: '#fff'
-        }, (typeof this.props.index === 'number' && this.props.index <= 1) ? {
+        }, (!this.isLoaded && typeof this.props.index === 'number' && this.props.index <= 1) ? {
           transform: [
             { translateX: this.props.index ? -viewportWidth : viewportWidth }
           ]
         } : {}]}
       >
-        <View ref={view => { this.viewComponent = view; }} style={{
-
-        }}>
+        <View ref={view => { this.viewComponent = view; }}>
         <TouchableOpacity
           style={{
             shadowColor: '#000',
@@ -238,25 +251,25 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
             useNativeDriver
             style={[StyleSheet.absoluteFill, styles.fullScreen]}
           />
-          <View style={{
-            flexDirection: 'column',
-            height: CARD_HEIGHT
-          }}>
+          <View
+            style={{
+              flexDirection: 'column',
+              height: CARD_HEIGHT
+            }}
+          >
             <Animatable.View
               ref={this.handleContentRef}
               useNativeDriver
-              style={styles.bottom}
+              style={[styles.bottom, textContainerStyle]}
             >
               <TextBlock
-                {...contents.Eyebrow}
+                {...contents.Title}
               />
               <TextBlock
-                {...contents.Headline}
+                {...contents.Subtitle}
               />
             </Animatable.View>
           </View>
-
-
         </TouchableOpacity>
         </View>
       </Animatable.View>

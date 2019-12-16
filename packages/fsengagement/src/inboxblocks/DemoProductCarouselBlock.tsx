@@ -5,7 +5,6 @@ import {
   ImageStyle,
   ImageURISource,
   StyleProp,
-  Text,
   TextStyle,
   View,
   ViewStyle
@@ -18,14 +17,15 @@ const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
+let itemsArr: any = [];
 import { wp } from '../carousel/SliderEntry.style';
-import RenderItem from '../carousel/RenderItem';
+import RenderDemoProduct from '../carousel/RenderDemoProduct';
 
 import {
   CardProps
 } from '../types';
 let navigator: any;
-export interface ImageCarouselBlockProps extends CardProps {
+export interface DemoProductCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
   resizeMethod?: any;
@@ -40,17 +40,17 @@ export interface ImageCarouselBlockProps extends CardProps {
   pageNumberStyle?: StyleProp<TextStyle>;
 }
 
-export interface ImageCarouselBlockState {
+export interface DemoProductCarouselBlockState {
   width?: number;
   height?: number;
   sliderActiveSlide: number;
 }
 // extends CardProps
-export default class ImageCarouselBlock
-  extends Component<ImageCarouselBlockProps, ImageCarouselBlockState> {
+export default class DemoProductCarouselBlock
+  extends Component<DemoProductCarouselBlockProps, DemoProductCarouselBlockState> {
   // readonly state: ImageCarouselBlockState = {};
   _slider1Ref: any | null = null;
-  constructor(props: ImageCarouselBlockProps) {
+  constructor(props: DemoProductCarouselBlockProps) {
     super(props);
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM
@@ -61,12 +61,15 @@ export default class ImageCarouselBlock
     navigator = this.props.navigator;
   }
   _renderItem(data: any): JSX.Element {
-    return <RenderItem
+    return <RenderDemoProduct
       data={data.item}
       index={data.index}
       navigator={navigator}
       horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
       itemWidth={renderItemWidth}
+      onPressOpenModal={true}
+      isDemoProduct={true}
+      products={itemsArr}
       even={false}
     />;
   }
@@ -120,24 +123,14 @@ export default class ImageCarouselBlock
   render(): JSX.Element {
     const {
       containerStyle,
-      items,
-      pageCounter,
-      pageCounterStyle,
-      pageNumberStyle
+      items
     } = this.props;
-
+    itemsArr = [...items];
     const carousel = this.createCarousel();
 
     return (
       <View style={containerStyle}>
         {carousel}
-        {pageCounter && <View style={[styles.pageCounter, pageCounterStyle]}>
-          <Text
-            style={[styles.pageNum, pageNumberStyle]}
-          >
-            {this.state.sliderActiveSlide} / {items.length}
-          </Text>
-        </View>}
       </View>
     );
   }
