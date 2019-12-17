@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require("path");
 const autoprefixer = require('autoprefixer');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserJsPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -185,22 +185,30 @@ module.exports = function(env, options) {
     !options.json && console.log('Webpacking for Production');
     globalConfig.mode = 'production';
     globalConfig.output.filename = 'static/js/bundle.[hash:8].js';
+    globalConfig.optimization = {
+      minimize: true,
+      minimizer: [
+        new TerserJsPlugin({
+          test: /.m?[jt]sx?/,
+          parallel: 4,
+          terserOptions: {
+            mangle: true,
+            compress: true,
+            output: {
+              beautify: false,
+              comments: false
+            }
+          }
+        })
+      ]
+    };
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
         filename: 'static/css/[name].[hash:8].css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: env.enableDev ? true : false,
+        __DEV__: env && env.enableDev ? true : false,
         __DEFAULT_ENV__: defaultEnv
-      }),
-      new UglifyJsPlugin({
-        test: /.m?[jt]sx?/,
-        parallel: 4,
-        extractComments: () => false,
-        uglifyOptions: {
-          mangle: true,
-          compress: true
-        }
       }),
       new HtmlWebpackPlugin({
         inject: true,
