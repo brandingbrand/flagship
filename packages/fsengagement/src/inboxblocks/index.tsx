@@ -17,6 +17,7 @@ import RoundedImageCard from './RoundedImageCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
+import ImageGrid from './ImageGrid';
 import WhiteInboxWrapper from './WhiteInboxWrapper';
 import DemoProductCarouselBlock from './DemoProductCarouselBlock';
 
@@ -35,6 +36,7 @@ export default {
   FeaturedTopCard,
   RoundedImageCard,
   FullScreenImageCard,
+  ImageGrid,
   EventCard,
   SimpleCard,
   Share: ShareBlock,
