@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.5.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.4.0-rnn2.0...v8.5.0-rnn2.0) (2019-12-18)
+
+
+### Features
+
+* **fsengagement:** add language localization ([#913](https://github.com/brandingbrand/flagship/issues/913)) ([e0e71aa](https://github.com/brandingbrand/flagship/commit/e0e71aa))
+
+
+
+
+
 # [8.4.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.2.0-rnn2.0...v8.4.0-rnn2.0) (2019-12-13)
 
 
