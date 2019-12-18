@@ -70,7 +70,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: PropTypes.string
   };
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
+    language: PropTypes.string
   };
   state: any = {};
   AnimatedImage: any;
@@ -137,6 +138,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
             passProps: {
               json,
               backButton: true,
+              language: this.context && this.context.language,
               name: this.props.name,
               id: this.props.id,
               animate: true,
