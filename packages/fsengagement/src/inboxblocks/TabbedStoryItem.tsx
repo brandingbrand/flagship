@@ -90,7 +90,7 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
   loaded = (loaded: boolean) => () => {
     this.setState({ loaded });
   }
-
+// tslint:disable-next-line: cyclomatic-complexity
   render(): JSX.Element {
     const {
       item
@@ -112,12 +112,15 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
         flex: 1,
         justifyContent: verticalMap[item.textOverlay.options.verticalAlignment],
         alignItems: horizontalMap[item.textOverlay.options.horizontalAlignment],
-        marginBottom: item.textOverlay.options && item.textOverlay.options.verticalAlignment === 'bottom' ?
+        marginBottom: item.textOverlay.options &&
+          item.textOverlay.options.verticalAlignment === 'bottom' ?
           item.textOverlay.options.verticalDistanceFromEdge : 0,
-        marginTop: item.textOverlay.options && item.textOverlay.options.verticalAlignment !== 'bottom' ?
+        marginTop: item.textOverlay.options &&
+          item.textOverlay.options.verticalAlignment !== 'bottom' ?
           item.textOverlay.options.verticalDistanceFromEdge : 0,
-        marginHorizontal: item.textOverlay.options && item.textOverlay.options.horizontalDistanceFromEdge
-      }
+        marginHorizontal: item.textOverlay.options &&
+          item.textOverlay.options.horizontalDistanceFromEdge
+      };
     }
     if (item[PRIVATE_TYPE] === 'Image') {
       return (
