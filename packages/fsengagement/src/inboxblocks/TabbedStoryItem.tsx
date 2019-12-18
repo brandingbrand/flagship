@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
+import TextBlock from './TextBlock';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -89,16 +90,53 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
   loaded = (loaded: boolean) => () => {
     this.setState({ loaded });
   }
-
+// tslint:disable-next-line: cyclomatic-complexity
   render(): JSX.Element {
     const {
       item
     } = this.props;
 
+    const horizontalMap: any = {
+      left: 'flex-start',
+      center: 'center',
+      right: 'flex-end'
+    };
+    const verticalMap: any = {
+      top: 'flex-start',
+      center: 'center',
+      bottom: 'flex-end'
+    };
+    let textContainerStyle = {};
+    if (item && item.textOverlay) {
+      textContainerStyle = {
+        flex: 1,
+        justifyContent: verticalMap[item.textOverlay.options.verticalAlignment],
+        alignItems: horizontalMap[item.textOverlay.options.horizontalAlignment],
+        marginBottom: item.textOverlay.options &&
+          item.textOverlay.options.verticalAlignment === 'bottom' ?
+          item.textOverlay.options.verticalDistanceFromEdge : 0,
+        marginTop: item.textOverlay.options &&
+          item.textOverlay.options.verticalAlignment !== 'bottom' ?
+          item.textOverlay.options.verticalDistanceFromEdge : 0,
+        marginHorizontal: item.textOverlay.options &&
+          item.textOverlay.options.horizontalDistanceFromEdge
+      };
+    }
     if (item[PRIVATE_TYPE] === 'Image') {
       return (
         <View>
-          <ImageBackground source={item.source} style={styles.fullScreen} />
+          <ImageBackground source={item.source} style={styles.fullScreen}>
+            {item.textOverlay && item.textOverlay.enabled && <View
+              style={textContainerStyle}
+            >
+              {!!item.textOverlay && <TextBlock
+                {...item.textOverlay.Title}
+              />}
+              {!!item.textOverlay.Subtitle.text && <TextBlock
+                {...item.textOverlay.Subtitle}
+              />}
+            </View>}
+          </ImageBackground>
         </View>
       );
     } else if (item[PRIVATE_TYPE] === 'Video') {
@@ -116,6 +154,16 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
               height: '100%'
             }}
           />
+          {item.textOverlay && item.textOverlay.enabled && <View
+              style={[textContainerStyle, StyleSheet.absoluteFillObject]}
+          >
+            {!!item.textOverlay.Title.text && <TextBlock
+              {...item.textOverlay.Title}
+            />}
+            {!!item.textOverlay.Subtitle.text && <TextBlock
+              {...item.textOverlay.Subtitle}
+            />}
+          </View>}
           {!this.state.loaded && <View style={styles.loadingInner}>
             <ActivityIndicator color='rgba(0,0,0,0.5)' />
           </View>}
