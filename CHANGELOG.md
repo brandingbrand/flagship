@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Bug Fixes
+
+* **fsbazaarvoice:** fix review id normalizer ([#936](https://github.com/brandingbrand/flagship/issues/936)) ([8f3df56](https://github.com/brandingbrand/flagship/commit/8f3df567a04d10794d351c9edc19834c7b0f810c))
+
+
+### Features
+
+* update webpack dependencies ([8d86721](https://github.com/brandingbrand/flagship/commit/8d86721c832a575ca8c2a8baf3edfbfb7ccf83ce))
+* **fsengagement:** add animated card list for demo ([#954](https://github.com/brandingbrand/flagship/issues/954)) ([b58032a](https://github.com/brandingbrand/flagship/commit/b58032a39ce5ef30f855dfc3eaf1e9c68a9c90bc))
+* **fsengagement:** add image grid component ([#947](https://github.com/brandingbrand/flagship/issues/947)) ([19c7489](https://github.com/brandingbrand/flagship/commit/19c74893ace426659d09a45b0dd7f5a6f2d3e1d6))
+
+
+
+
+
 ## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
 
 **Note:** Version bump only for package bb-flagship
