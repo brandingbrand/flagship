@@ -71,13 +71,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => {
   };
 };
 const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
-  const stories = combinedStore.inbox.value || [];
-  // always put logo story on top
-  const logoStory = stories.filter((message: DiscoveryMessage) =>
-    message.id === '20b108cb-58e7-42aa-807e-a6588cfe6354');
-  const restStories = stories.filter((message: DiscoveryMessage) =>
-    message.id !== '20b108cb-58e7-42aa-807e-a6588cfe6354');
-  const orderedStories = [...logoStory, ...restStories].map((message: DiscoveryMessage) => {
+  const transformedStories = (combinedStore.inbox.value || []).map((message: DiscoveryMessage) => {
     return {
       name: message.title,
       id: message.id,
@@ -85,7 +79,7 @@ const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
     };
   });
   return {
-    stories: orderedStories,
+    stories: transformedStories,
     isLoading: combinedStore.inbox.loading
   };
 };
