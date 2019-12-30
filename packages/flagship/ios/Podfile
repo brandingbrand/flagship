@@ -1,5 +1,6 @@
 # You Podfile should look similar to this file. React Native currently does not support use_frameworks!
-source 'https://github.com/CocoaPods/Specs.git'
+# This requires CocoaPods 1.7.2+
+source 'https://cdn.cocoapods.org/'
 
 platform :ios, '10.3'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
