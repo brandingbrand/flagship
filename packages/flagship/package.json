@@ -19,7 +19,7 @@
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-svg": "^9.3.6",
-    "replace-in-file": "^4.1.0",
+    "replace-in-file": "^5.0.2",
     "yargs": "^15.0.1"
   },
   "rnpm": {
