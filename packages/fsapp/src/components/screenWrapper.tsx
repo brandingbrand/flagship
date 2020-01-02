@@ -89,7 +89,7 @@ export default function wrapScreen(
         (appConfig.env && appConfig.env.isFLAGSHIP);
       this.navigator = new Navigator({
         componentId: props.componentId,
-        tabs: props.appConfig.tabs || []
+        tabs: (props.appConfig || appConfig).tabs || []
       });
     }
 
