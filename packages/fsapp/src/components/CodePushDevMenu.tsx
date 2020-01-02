@@ -140,7 +140,7 @@ export default class CodePushDevMenu extends Component<
 
   async componentDidMount(): Promise<void> {
     this.setState({
-      version: await DeviceInfo.getVersion()
+      version: DeviceInfo.getVersion()
     });
   }
 
