@@ -87,7 +87,10 @@ export default function wrapScreen(
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-      this.navigator = new Navigator(props);
+      this.navigator = new Navigator({
+        componentId: props.componentId,
+        tabs: props.appConfig.tabs || []
+      });
     }
 
     navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {

@@ -169,7 +169,12 @@ export function launchScreen(configuration: Config): void {
     'LaunchImages.xcassets'
   );
 
-  const sourceLaunchScreen = configuration.launchScreen.ios.xib;
+  const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
+  if (!sourceLaunchScreen) {
+    helpers.logError('xib support has been removed. Please include a storyboard file.' +
+      ' Using the default Flagship storyboard.');
+    return;
+  }
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
     'LaunchScreen.storyboard'

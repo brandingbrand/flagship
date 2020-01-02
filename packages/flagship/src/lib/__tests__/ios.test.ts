@@ -103,7 +103,7 @@ test(`update launch screen`, () => {
     launchScreen: {
       ios: {
         images: nodePath.join(tempRootDir, `assets/launchScreen/ios/images`),
-        xib: nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.xib`)
+        storyboard: nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`)
       }
     }
   });
@@ -116,7 +116,7 @@ test(`update launch screen`, () => {
     .toString();
 
   const xibSource = fs
-    .readFileSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.xib`))
+    .readFileSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`))
     .toString();
 
   const xib = fs

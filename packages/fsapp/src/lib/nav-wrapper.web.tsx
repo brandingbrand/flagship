@@ -104,4 +104,49 @@ export default class Navigator {
     console.warn('binding to navigation events is not supported in web');
     return null;
   }
+  handleDeepLink(options: any): void {
+    console.error('handleDeepLink is no longer part of react-native-navigation');
+  }
+  resetTo(options: {
+    screen: string;
+    title: string;
+    animated: boolean;
+  }): void {
+    console.warn('resetTo has been deprecated. ' +
+      'Please use setStackRoot');
+
+    this.setStackRoot({
+      component: {
+        name: options.screen,
+        options: {
+          topBar: {
+            title: {
+              text: options.title
+            }
+          }
+        }
+      }
+    }).catch((e: any) => {
+      console.error(e);
+    });
+  }
+  setStyle(options: { navBarTitleTextCentered: boolean }): void {
+    console.warn('setStyle has been deprecated.' +
+      'Please use mergeOptions({ topBar: { alignment: \'center\' } }) instead');
+  }
+  setTabBadge(options: {
+    tabIndex: number;
+    badge: string | number | null;
+    badgeColor?: any;
+  }): void {
+    console.warn('setTabBadge has been deprecated.');
+  }
+  setTitle(options: { title: string}): void {
+    console.warn('setTitle has been deprecated.' +
+      'Please use mergeOptions({ topBar: { title: \'title\ } }) instead');
+  }
+  switchToTab(options: { tabIndex: number}): void {
+    console.warn('switchToTab has been deprecated.' +
+      'Please use mergeOptions({ bottomTabs: { currentTabIndex: 0 } }) instead');
+  }
 }

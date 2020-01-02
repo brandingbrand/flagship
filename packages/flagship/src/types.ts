@@ -99,7 +99,8 @@ export interface Config {
     android: string;
     ios: {
       images: string;
-      xib: string;
+      xib?: string;
+      storyboard?: string;
     };
   };
 
