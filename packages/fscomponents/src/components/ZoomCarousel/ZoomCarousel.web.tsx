@@ -17,6 +17,7 @@ import {
 import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
+import { Modal } from '../Modal';
 
 const searchIcon = require('../../../assets/images/search.png');
 
@@ -259,6 +260,44 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
+  renderPhotoSwipe = () => (
+    <PhotoSwipe
+      isOpen={this.state.isZooming}
+      items={this.props.images
+        .map(img => img.zoomSrc || img.src)
+        .map((img, i) => ({
+          src: img.uri || img,
+          w: this.state.screenWidth,
+          h: this.state.imageSizes[i]
+            ? this.state.screenWidth *
+              this.state.imageSizes[i].height /
+              this.state.imageSizes[i].width
+            : this.state.imageHeight
+        }))}
+      options={{
+        loop: false,
+        fullscreenEl: false,
+        shareEl: false,
+        captionEl: false,
+        history: false,
+        closeOnScroll: false,
+        index: this.state.currentIndex
+      }}
+      afterChange={this.handleZoomCarouselChange}
+      onClose={this.closeZoom}
+    />
+  )
+
+  renderCustomModal = () => (
+    this.props.renderModalContent ?
+      (
+        <Modal visible={this.state.isZooming} transparent={true}>
+          {this.props.renderModalContent(this.closeZoom)}
+        </Modal>
+      ) :
+    this.renderPhotoSwipe()
+  )
+
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
 
@@ -302,32 +341,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                   </TouchableOpacity>
                 )}
               </View>}
-
-            <PhotoSwipe
-              isOpen={this.state.isZooming}
-              items={this.props.images
-                .map(img => img.zoomSrc || img.src)
-                .map((img, i) => ({
-                  src: img.uri || img,
-                  w: this.state.screenWidth,
-                  h: this.state.imageSizes[i]
-                    ? this.state.screenWidth *
-                      this.state.imageSizes[i].height /
-                      this.state.imageSizes[i].width
-                    : this.state.imageHeight
-                }))}
-              options={{
-                loop: false,
-                fullscreenEl: false,
-                shareEl: false,
-                captionEl: false,
-                history: false,
-                closeOnScroll: false,
-                index: this.state.currentIndex
-              }}
-              afterChange={this.handleZoomCarouselChange}
-              onClose={this.closeZoom}
-            />
+              {this.renderCustomModal()}
           </div>
         </View>
 
