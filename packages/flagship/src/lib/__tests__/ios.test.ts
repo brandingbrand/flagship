@@ -103,7 +103,7 @@ test(`update launch screen`, () => {
     launchScreen: {
       ios: {
         images: nodePath.join(tempRootDir, `assets/launchScreen/ios/images`),
-        xib: nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.xib`)
+        storyboard: nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`)
       }
     }
   });
@@ -116,11 +116,11 @@ test(`update launch screen`, () => {
     .toString();
 
   const xibSource = fs
-    .readFileSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.xib`))
+    .readFileSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`))
     .toString();
 
   const xib = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchScreen.xib`))
+    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchScreen.storyboard`))
     .toString();
 
   expect(launchScreenImagesSource).toEqual(launchScreenImages);
@@ -279,3 +279,6 @@ test(`copy sentry properties`, () => {
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
 });
+
+// Force to be treated as a module
+export {};

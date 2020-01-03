@@ -1,10 +1,7 @@
 const webpack = require('webpack');
 const path = require("path");
 
-module.exports = (baseConfig, env, config) => {
-  // Add babel-polyfill as the first entry, this allows for async/await
-  config.entry.unshift('babel-polyfill');
-
+module.exports = ({ config, env }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
     use: [
@@ -51,7 +48,7 @@ module.exports = (baseConfig, env, config) => {
   // Disable __DEV__ mode (this is traditionally set by react-native)
   config.plugins.push(new webpack.DefinePlugin({
     __DEV__: false
-  }))
+  }));
 
   return config;
 };

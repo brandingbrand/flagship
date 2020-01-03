@@ -5,6 +5,7 @@ import {
   Text,
   TouchableHighlight
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 const S = StyleSheet.create({
   row: {
@@ -20,7 +21,7 @@ const S = StyleSheet.create({
 
 export default class Home extends Component<any> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
-    this.props.navigator.push({ screen: 'fscart.' + screen, title, backButtonTitle });
+    goToNavPush('fscart', this.props.componentId, screen, title, backButtonTitle);
   }
 
   render(): JSX.Element {

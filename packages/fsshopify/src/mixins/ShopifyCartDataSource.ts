@@ -19,7 +19,7 @@ import {
 } from '../util/react-native-payments';
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { Navigator } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -192,9 +192,9 @@ export class ShopifyCartDataSource extends DataSourceBase
   // tslint:disable-next-line:cyclomatic-complexity
   async startWalletCheckout(
     checkoutId: string,
-    navigator: Navigator,
     onSuccess: (order: FSCommerceTypes.Order) => void,
-    test: boolean = false
+    test: boolean = false,
+    navigator: Navigator
   ): Promise<void> {
     const checkout = await this.api.getCheckout(checkoutId);
     if (!checkout) {
@@ -383,18 +383,26 @@ export class ShopifyCartDataSource extends DataSourceBase
 
       // need to show modal here to present the user with shipping options
       navigator.showModal({
-        screen: this.config.googlePayScreenName,
-        title: 'Google Pay',
-        passProps: {
-          datasource: this,
-          checkoutId,
-          onSuccess,
-          test,
-          payment,
-          ShopifySupportedMethods,
-          orderDetails
+        component: {
+          name: this.config.googlePayScreenName,
+          options: {
+            topBar: {
+              title: {
+                text: 'Google Pay'
+              }
+            }
+          },
+          passProps: {
+            datasource: this,
+            checkoutId,
+            onSuccess,
+            test,
+            payment,
+            ShopifySupportedMethods,
+            orderDetails
+          }
         }
-      });
+      }).catch(err => console.warn('Google Pay SHOWMODAL error: ', err));
 
       // the modal continues the process and calls onSuccess
     } else {

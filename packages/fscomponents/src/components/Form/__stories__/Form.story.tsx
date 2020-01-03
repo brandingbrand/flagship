@@ -6,8 +6,8 @@ import {
   color,
   object,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 // @ts-ignore: TODO fix types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form, FormLabelPosition } from '../Form';
