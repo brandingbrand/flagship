@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* fix codepush integration with RNN v2 ([591ce6c](https://github.com/brandingbrand/flagship/commit/591ce6c))
+* **flagship:** Fix overwriting launch screen file ([b29d851](https://github.com/brandingbrand/flagship/commit/b29d851))
+* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
+* **fsengagement:** RNN2 - fix deeplinking animations from story ([#871](https://github.com/brandingbrand/flagship/issues/871)) ([f8edd22](https://github.com/brandingbrand/flagship/commit/f8edd22))
+
+
+### Features
+
+* **fsengagement:** add gridwall and product carousel ([#816](https://github.com/brandingbrand/flagship/issues/816)) ([f009afc](https://github.com/brandingbrand/flagship/commit/f009afc))
+* setup native side of android for react-native-navigation 2 ([3298744](https://github.com/brandingbrand/flagship/commit/3298744))
+* **fsengagement:** add gesture handler for full screen cards ([c7d78f4](https://github.com/brandingbrand/flagship/commit/c7d78f4))
+* **fsengagement:** add gestures and animations ([a8ef3d6](https://github.com/brandingbrand/flagship/commit/a8ef3d6))
+* **fsengagement:** add gridwall and product carousel ([f684e7a](https://github.com/brandingbrand/flagship/commit/f684e7a))
+* **fsengagement:** add new zones ([2f92df0](https://github.com/brandingbrand/flagship/commit/2f92df0))
+* **fsengagement:** add support for video on title card ([829b58a](https://github.com/brandingbrand/flagship/commit/829b58a))
+* **fsengagement:** adjust gesture handler ([24cfcea](https://github.com/brandingbrand/flagship/commit/24cfcea))
+* **fsengagement:** cache last update + add isNew flag to each message ([34b5984](https://github.com/brandingbrand/flagship/commit/34b5984))
+* setup native side of ios for react-native-navigation 2 ([9515589](https://github.com/brandingbrand/flagship/commit/9515589))
+* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
+* update pirateship to use react-native-navigation 2 ([b1a1747](https://github.com/brandingbrand/flagship/commit/b1a1747))
+* **fsengagement:** fix typo ([ccf453b](https://github.com/brandingbrand/flagship/commit/ccf453b))
+* **fsengagement:** fix yarn.lock ([33fc504](https://github.com/brandingbrand/flagship/commit/33fc504))
+* **fsengagement:** move panhandler to constructor ([f4a5832](https://github.com/brandingbrand/flagship/commit/f4a5832))
+
+
+### BREAKING CHANGES
+
+* Tabs must now have ids defined in their configuration
+* splash screens will need to be converted to storyboards
+
+
+
+
+
 # [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
 
 
@@ -123,78 +195,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
 
 For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
-
-
-
-
-
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
-
-
-### Bug Fixes
-
-* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
-
-
-
-
-
-## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
-
-
-
-
-
-## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
-
-
-
-
-
-## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* fix codepush integration with RNN v2 ([591ce6c](https://github.com/brandingbrand/flagship/commit/591ce6c))
-* **flagship:** Fix overwriting launch screen file ([b29d851](https://github.com/brandingbrand/flagship/commit/b29d851))
-* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
-* **fsengagement:** RNN2 - fix deeplinking animations from story ([#871](https://github.com/brandingbrand/flagship/issues/871)) ([f8edd22](https://github.com/brandingbrand/flagship/commit/f8edd22))
-
-
-### Features
-
-* **fsengagement:** add gridwall and product carousel ([#816](https://github.com/brandingbrand/flagship/issues/816)) ([f009afc](https://github.com/brandingbrand/flagship/commit/f009afc))
-* setup native side of android for react-native-navigation 2 ([3298744](https://github.com/brandingbrand/flagship/commit/3298744))
-* **fsengagement:** add gesture handler for full screen cards ([c7d78f4](https://github.com/brandingbrand/flagship/commit/c7d78f4))
-* **fsengagement:** add gestures and animations ([a8ef3d6](https://github.com/brandingbrand/flagship/commit/a8ef3d6))
-* **fsengagement:** add gridwall and product carousel ([f684e7a](https://github.com/brandingbrand/flagship/commit/f684e7a))
-* **fsengagement:** add new zones ([2f92df0](https://github.com/brandingbrand/flagship/commit/2f92df0))
-* **fsengagement:** add support for video on title card ([829b58a](https://github.com/brandingbrand/flagship/commit/829b58a))
-* **fsengagement:** adjust gesture handler ([24cfcea](https://github.com/brandingbrand/flagship/commit/24cfcea))
-* **fsengagement:** cache last update + add isNew flag to each message ([34b5984](https://github.com/brandingbrand/flagship/commit/34b5984))
-* setup native side of ios for react-native-navigation 2 ([9515589](https://github.com/brandingbrand/flagship/commit/9515589))
-* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
-* update pirateship to use react-native-navigation 2 ([b1a1747](https://github.com/brandingbrand/flagship/commit/b1a1747))
-* **fsengagement:** fix typo ([ccf453b](https://github.com/brandingbrand/flagship/commit/ccf453b))
-* **fsengagement:** fix yarn.lock ([33fc504](https://github.com/brandingbrand/flagship/commit/33fc504))
-* **fsengagement:** move panhandler to constructor ([f4a5832](https://github.com/brandingbrand/flagship/commit/f4a5832))
-
-
-### BREAKING CHANGES
-
-* Tabs must now have ids defined in their configuration
-* splash screens will need to be converted to storyboards
 
 
 

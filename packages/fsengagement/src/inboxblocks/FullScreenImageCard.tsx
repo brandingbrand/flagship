@@ -46,7 +46,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: PropTypes.string
   };
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
+    language: PropTypes.string
   };
 
   getChildContext = () => ({
@@ -76,6 +77,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
         passProps: {
           json,
           backButton: true,
+          language: this.context && this.context.language,
           name: this.props.name,
           id: this.props.id
         }

@@ -141,6 +141,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<ViewStyle>;
   animateScroll?: boolean;
   onBack?: () => void;
+  language?: string;
   AnimatedImage?: any;
   welcomeHeader?: boolean;
   headerName?: string;
@@ -159,7 +160,8 @@ export default function(
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
     static childContextTypes: any = {
       handleAction: PropTypes.func,
-      story: PropTypes.object
+      story: PropTypes.object,
+      language: PropTypes.string
     };
 
     state: any = {};
@@ -222,7 +224,8 @@ export default function(
 
     getChildContext = () => ({
       handleAction: this.handleAction,
-      story: this.props.backButton ? this.props.json : null
+      story: this.props.backButton ? this.props.json : null,
+      language: this.props.language
     })
 
     // tslint:disable-next-line:cyclomatic-complexity

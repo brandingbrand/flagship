@@ -343,7 +343,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 )}
               </View>
             )}
-              {this.renderCustomModal()}
+            {this.renderCustomModal()}
           </div>
         </View>
 
