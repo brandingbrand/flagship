@@ -74,7 +74,7 @@
     "@types/url-parse": "^1.4.1",
     "babel-jest": "^24.8.0",
     "coveralls": "^3.0.2",
-    "husky": "^3.1.0",
+    "husky": "^4.0.2",
     "jest": "^24.9.0",
     "lerna": "^3.18.5",
     "markdownlint-cli": "^0.21.0",
