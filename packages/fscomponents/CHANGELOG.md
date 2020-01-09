@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Features
+
+* **fscomponents:** add custom modal content logic and test view ([7baf939](https://github.com/brandingbrand/flagship/commit/7baf939))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([d342370](https://github.com/brandingbrand/flagship/commit/d342370))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([f49960a](https://github.com/brandingbrand/flagship/commit/f49960a))
+* **fscomponents:** add some option props to zoomCarousel ([722cd92](https://github.com/brandingbrand/flagship/commit/722cd92))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([fddce73](https://github.com/brandingbrand/flagship/commit/fddce73))
+* **fscomponents:** support more styling options for MultiCarousel ([cf964f9](https://github.com/brandingbrand/flagship/commit/cf964f9))
+
+
+
+
+
 ## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

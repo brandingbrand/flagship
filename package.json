@@ -4,13 +4,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "rimraf packages/*/dist",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
     "reset:modules": "rimraf node_modules yarn.lock packages/*/node_modules",
     "reset": "yarn reset:modules & yarn clean",
     "lint:ts": "fscodestyle",
     "lint:md": "markdownlint --ignore \"{**/@(node_modules|Pods)/**/*.md,**/CHANGELOG.md}\" \"**/*.md\"",
     "lint": "run-p lint:ts lint:md",
-    "precommit": "npm-run-all prepare -p lint test",
     "prepare": "lerna run prepare",
     "prepare:fscodestyle": "lerna run --stream --scope @brandingbrand/fscodestyle prepare",
     "test": "jest --colors --config jest.json",
@@ -35,16 +33,17 @@
     "ship:compile-android": "lerna run --stream --scope @brandingbrand/pirateship compile-android",
     "ship:compile-web": "lerna run --stream --scope @brandingbrand/pirateship compile-web",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
-    "docs": "run-s build:docs build:storybook"
+    "docs": "run-s build:docs build:storybook",
+    "tsc": "echo 'Cannot run tsc from top level of monorepo; run \"yarn prepare\" instead' && exit 1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.0.0",
     "@brandingbrand/greenkeeper-lockfile": "^0.0.1",
-    "@commitlint/cli": "^7.1.2",
-    "@commitlint/config-conventional": "^7.1.2",
-    "@commitlint/config-lerna-scopes": "^7.1.2",
-    "@commitlint/travis-cli": "^7.1.2",
+    "@commitlint/cli": "^8.3.1",
+    "@commitlint/config-conventional": "^8.3.1",
+    "@commitlint/config-lerna-scopes": "^8.3.1",
+    "@commitlint/travis-cli": "^8.3.1",
     "@react-native-community/cli": "^1.11.2",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-knobs": "4.1.18",
@@ -53,7 +52,7 @@
     "@storybook/react": "4.1.18",
     "@types/credit-card-type": "^7.0.0",
     "@types/i18n-js": "^3.0.0",
-    "@types/jest": "^23.0.0",
+    "@types/jest": "^24.0.22",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.1",
     "@types/memoize-one": "^4.1.1",
@@ -75,10 +74,10 @@
     "@types/url-parse": "^1.4.1",
     "babel-jest": "^24.8.0",
     "coveralls": "^3.0.2",
-    "husky": "^0.14.3",
-    "jest": "^24.8.0",
-    "lerna": "^3.4.0",
-    "markdownlint-cli": "^0.16.0",
+    "husky": "^4.0.2",
+    "jest": "^24.9.0",
+    "lerna": "^3.18.5",
+    "markdownlint-cli": "^0.21.0",
     "metro-react-native-babel-preset": "^0.54.1",
     "npm-run-all": "^4.1.3",
     "react-art": "^16.4.0",
@@ -86,7 +85,7 @@
     "rimraf": "^2.6.2",
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.3.0",
-    "typedoc": "^0.12.0",
+    "typedoc": "^0.15.1",
     "typedoc-plugin-monorepo": "^0.1.0",
     "typescript": "~3.0.0"
   },
@@ -96,7 +95,19 @@
       "devDependencyUpdate": "chore: update ${dependency} to version ${version}"
     }
   },
+  "resolutions": {
+    "handlebars": "^4.5.3",
+    "https-proxy-agent": "^2.2.3",
+    "terser-webpack-plugin": "^1.4.2",
+    "marked": "^0.7.0"
+  },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+      "pre-commit": "npm-run-all prepare -p lint test"
+    }
+  }
 }

@@ -34,6 +34,7 @@ jobs:
     # android emulator setup based on https://github.com/brianegan/flutter_architecture_samples
     # from comment in https://github.com/googlemaps/android-maps-utils/issues/371#issuecomment-498921876
     before_install:
+    - nvm install 10
     - ANDROID_SDK_TOOLS=4333796 # android-28
     - ANDROID_PLATFORM_SDK=28
     - ANDROID_BUILD_TOOLS=28.0.3
