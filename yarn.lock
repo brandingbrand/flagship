@@ -951,86 +951,9 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@brandingbrand/fscommerce@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fscommerce/-/fscommerce-7.9.0.tgz#22ba17b277394098ef2392b2496fd95ba74edf6a"
-  integrity sha512-BIRJOmLvczZ4TZ+RP2TkCibDn+iyQkkE+hzseKdyRs58FiXqooBQHvBYBHMQL+ZEq0z+nXsJSdy0wgrghPRnRA==
-  dependencies:
-    "@brandingbrand/fsengage" "^7.9.0"
-    "@brandingbrand/fsfoundation" "^7.9.0"
-    "@brandingbrand/fsnetwork" "^7.9.0"
-    decimal.js "^10.0.1"
-    lodash-es "^4.17.10"
-    qs "^6.7.0"
-    react "16.8.3"
-    react-native "0.59.10"
-    react-native-cookies "^3.3.0"
-    react-native-sensitive-info "~5.4.0"
-
-"@brandingbrand/fsengage@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsengage/-/fsengage-7.9.0.tgz#1d9a03588816ae751a685ef596e3225518c37ed1"
-  integrity sha512-nZ4hLC+lsM9WimFzJxGYLx+gRagAMnzqa9Tiu/iIBbG4jlRMzI8FvkLH6FHt28OdYqPlfn/3sHA2smvOcG/3XA==
-  dependencies:
-    "@brandingbrand/fsfoundation" "^7.9.0"
-    "@brandingbrand/fsnetwork" "^7.9.0"
-    "@brandingbrand/react-native-adobe-marketing-cloud" "^0.1.1"
-    "@brandingbrand/react-native-google-analytics" "^2.1.0"
-    "@brandingbrand/react-native-leanplum" "^1.0.1"
-    decimal.js "^10.0.0"
-    react "16.8.3"
-    react-native "0.59.10"
-    react-native-permissions "~1.1.1"
-    url-parse "^1.4.3"
-
-"@brandingbrand/fsengagement@^7.8.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsengagement/-/fsengagement-7.9.0.tgz#0baf2d2dddbf1192e9fcf55931b503a7ab4579d5"
-  integrity sha512-jXdCt8Q1RQD1vsbUO0+Ag2rHXv/2bfxTs1JoPussJ4sVYSZTZsx5G9BN91+Fr9Fl+GHJGb1hJgG9CsLbPES0rg==
-  dependencies:
-    "@brandingbrand/fsnetwork" "^7.9.0"
-    "@react-native-community/async-storage" "^1.6.1"
-    "@types/prop-types" "15.5.3"
-    "@types/react-native-snap-carousel" "^3.7.3"
-    "@types/react-native-video" "^2.0.8"
-    lodash-es "^4.17.10"
-    prop-types "^15.6.2"
-    react "16.8.3"
-    react-native "0.59.10"
-    react-native-animatable "^1.3.2"
-    react-native-device-info "^0.21.5"
-    react-native-fcm "16.0.0"
-    react-native-navigation "https://github.com/brandingbrand/react-native-navigation#v1"
-    react-native-snap-carousel "^3.8.0"
-    react-native-video "^4.0.0"
-    uuid-js "0.7.5"
-
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
-
-"@brandingbrand/fsfoundation@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-7.9.0.tgz#a8f9a5dd63d92c28982c30497f60645e77ac490f"
-  integrity sha512-vTI0MDqSgF9q6+Y+HUNlrwzRdqVha8KOzVm/I+nqOI1h6DpihVBHSdnDBQHswnxQ5djSwTWUrgb479XOUo7SEw==
-
-"@brandingbrand/fsmockdatasources@^7.8.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsmockdatasources/-/fsmockdatasources-7.9.0.tgz#eb9927aa6ecaac35f4d5d6946ee9f98aaf67f1f3"
-  integrity sha512-CBnZRlWS2e720vwbMv/559p2CsdVujLL3j9xXDKTMc0TzRyKKnYMlYJroy7VYbQhnJmC+kzI68JDtGkydgLAQQ==
-  dependencies:
-    "@brandingbrand/fscommerce" "^7.9.0"
-    "@brandingbrand/fsfoundation" "^7.9.0"
-    decimal.js "^10.0.1"
-    faker "^4.1.0"
-
-"@brandingbrand/fsnetwork@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsnetwork/-/fsnetwork-7.9.0.tgz#3075c0af811b84c394e070344df519c99f451fb5"
-  integrity sha512-q43ETGLadwGiZeL1PauCTYUuc0ZNVOXkO3qqJjonX2UwXHNyasx+Lmk7xljwk3UXfmJER8Z3bh8tmRi78vZLpw==
-  dependencies:
-    "@brandingbrand/fsfoundation" "^7.9.0"
-    axios "~0.18.1"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -2760,6 +2683,18 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
 
+"@types/faker@^4.1.2":
+  version "4.1.8"
+  resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.8.tgz#95240361f1379addae0a005ced7c5c77b0b1e1d8"
+  integrity sha512-9ARxZRyXXCMMf8KjYhnD+GHE789HGwIqa1dolCRl/C6ExwvBIUmnIktLeY71TPmFOQiU3DQwrbQEX0pkyqX1tQ==
+
+"@types/fs-extra@^8.0.0":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.0.1.tgz#a2378d6e7e8afea1564e44aafa2e207dadf77686"
+  integrity sha512-J00cVDALmi/hJOYsunyT52Hva5TnJeKP5yd1r+mH/ZU0mbYZflR0Z5kw5kITtKTRYMhm1JMClOFYdHnQszEvqw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/glob@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -2775,6 +2710,14 @@
 "@types/i18n-js@*", "@types/i18n-js@^3.0.0":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.1.tgz#e027d35513b2703e5d48b82771e7fcb3b664e2fb"
+
+"@types/inquirer@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-6.5.0.tgz#b83b0bf30b88b8be7246d40e51d32fe9d10e09be"
+  integrity sha512-rjaYQ9b9y/VFGOpqBEXRavc3jh0a+e6evAbI31tMda8VlPaSy0AZJfXsvmIe3wklc7W6C3zCSfleuMXR7NOyXw==
+  dependencies:
+    "@types/through" "*"
+    rxjs "^6.4.0"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
@@ -2826,6 +2769,20 @@
 "@types/minimatch@*", "@types/minimatch@3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
+
+"@types/minipass@*":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/minipass/-/minipass-2.2.0.tgz#51ad404e8eb1fa961f75ec61205796807b6f9651"
+  integrity sha512-wuzZksN4w4kyfoOv/dlpov4NOunwutLA/q7uc00xU02ZyUY+aoM5PWIXEKBMnm0NHd4a+N71BMjq+x7+2Af1fg==
+  dependencies:
+    "@types/node" "*"
+
+"@types/node-fetch@^2.5.0":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.4.tgz#5245b6d8841fc3a6208b82291119bc11c4e0ce44"
+  integrity sha512-Oz6id++2qAOFuOlE1j0ouk1dzl3mmI1+qINPNBhi9nt/gVOz0G+13Ao6qjhdF0Ys+eOkhu6JnFmt38bR3H0POQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/node@*":
   version "12.6.9"
@@ -2990,6 +2947,21 @@
   dependencies:
     "@types/react" "*"
     "@types/webpack-env" "*"
+
+"@types/tar@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/tar/-/tar-4.0.3.tgz#e2cce0b8ff4f285293243f5971bd7199176ac489"
+  integrity sha512-Z7AVMMlkI8NTWF0qGhC4QIX0zkV/+y0J8x7b/RsHrN0310+YNjoJd8UrApCiGBCWtKjxS9QhNqLi2UJNToh5hA==
+  dependencies:
+    "@types/minipass" "*"
+    "@types/node" "*"
+
+"@types/through@*":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/through/-/through-0.0.29.tgz#72943aac922e179339c651fa34a4428a4d722f93"
+  integrity sha512-9a7C5VHh+1BKblaYiq+7Tfc+EOmjMdZaD1MYtkQjSoxgB69tBjW98ry6SKsi4zEIWztLOMRuL87A3bdT/Fc/4w==
+  dependencies:
+    "@types/node" "*"
 
 "@types/tough-cookie@*":
   version "2.3.5"
@@ -7431,10 +7403,10 @@ handle-thing@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.0.tgz#0e039695ff50c93fc288557d696f3c1dc6776754"
 
-handlebars@^4.1.2, handlebars@^4.4.0, handlebars@^4.5.1:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
-  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
+handlebars@^4.1.2, handlebars@^4.4.0, handlebars@^4.5.1, handlebars@^4.5.3:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.6.0.tgz#33af6c3eda930d7a924f5d8f1c6d8edc3180512e"
+  integrity sha512-i1ZUP7Qp2JdkMaFon2a+b0m5geE8Z4ZTLaGkgrObkEd+OkUKyRbRWw4KxuFCoHfdETSY1yf9/574eVoNSiK7pw==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -7837,6 +7809,11 @@ ignore@^4.0.3:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
+ignore@~5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
+  integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
+
 image-size@^0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
@@ -8000,6 +7977,25 @@ inquirer@^3.0.6:
 inquirer@^6.2.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.0.tgz#2303317efc9a4ea7ec2e2df6f86569b734accf42"
+  dependencies:
+    ansi-escapes "^3.2.0"
+    chalk "^2.4.2"
+    cli-cursor "^2.1.0"
+    cli-width "^2.0.0"
+    external-editor "^3.0.3"
+    figures "^2.0.0"
+    lodash "^4.17.12"
+    mute-stream "0.0.7"
+    run-async "^2.2.0"
+    rxjs "^6.4.0"
+    string-width "^2.1.0"
+    strip-ansi "^5.1.0"
+    through "^2.3.6"
+
+inquirer@^6.5.0:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
+  integrity sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==
   dependencies:
     ansi-escapes "^3.2.0"
     chalk "^2.4.2"
@@ -9595,15 +9591,16 @@ markdown-it@10.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdownlint-cli@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.20.0.tgz#838c61bf43a3bce4dcde1a32acd80e31116bba9a"
-  integrity sha512-5VCGS+9w/mVMVDHrKOciq+ZXYdFEypyuCvCdNjHdji8itqcryWMr7V2NdpxQ/KeJmMNoRYsdc2R+88lSc+2gpA==
+markdownlint-cli@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.21.0.tgz#d792b157e9de63ce1d6b6e13d7cf83d5e552d5e8"
+  integrity sha512-gvnczz3W3Wgex851/cIQ/2y8GNhY+EVK8Ael8kRd8hoSQ0ps9xjhtwPwMyJPoiYbAoPxG6vSBFISiysaAbCEZg==
   dependencies:
     commander "~2.9.0"
     deep-extend "~0.5.1"
     get-stdin "~5.0.1"
     glob "~7.1.2"
+    ignore "~5.1.4"
     js-yaml "~3.13.1"
     jsonc-parser "~2.2.0"
     lodash.differencewith "~4.5.0"
@@ -9625,12 +9622,7 @@ markdownlint@~0.18.0:
   dependencies:
     markdown-it "10.0.0"
 
-marked@^0.3.19:
-  version "0.3.19"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
-  integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
-
-marked@^0.7.0:
+marked@^0.3.19, marked@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
 
@@ -10410,7 +10402,7 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@2.6.0, node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0:
+node-fetch@2.6.0, node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
 
@@ -11832,13 +11824,6 @@ react-native-masked-text@^1.13.0:
   dependencies:
     date-and-time "0.9.0"
     tinymask "1.0.2"
-
-"react-native-navigation@git+https://github.com/brandingbrand/react-native-navigation.git#v1":
-  version "1.1.486"
-  uid af36480b4d137501f881dded8260b0540c9cf405
-  resolved "git+https://github.com/brandingbrand/react-native-navigation.git#af36480b4d137501f881dded8260b0540c9cf405"
-  dependencies:
-    lodash "4.x.x"
 
 "react-native-navigation@https://github.com/brandingbrand/react-native-navigation#v1":
   version "1.1.486"
