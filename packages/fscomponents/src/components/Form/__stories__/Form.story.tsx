@@ -10,9 +10,10 @@ import {
 } from '@storybook/addon-knobs';
 // @ts-ignore: TODO fix types for tcomb-form-native
 import * as t from 'tcomb-form-native';
-import { Form, FormLabelPosition } from '../Form';
+import { Form } from '../Form';
 import { Button } from '../../Button';
 import { emailRegex } from '../../../lib/email';
+import { FormLabelPosition } from '../Templates/fieldTemplates';
 
 const EmailType = t.refinement(t.String, (str: string) => {
   return emailRegex.test((str || '').trim());
