@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscategory",
   "sideEffects": false,
-  "version": "7.8.0",
+  "version": "7.10.0",
   "description": "components for category navigation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^7.8.0",
-    "@brandingbrand/fscomponents": "^7.8.0",
+    "@brandingbrand/fscommerce": "^7.10.0",
+    "@brandingbrand/fscomponents": "^7.10.0",
     "react": "16.8.3",
     "react-native": "0.59.10"
   },

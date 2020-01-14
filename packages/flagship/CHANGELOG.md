@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* android fastline syntax error due to a trailing comma (e52d97f)
+
+
+### Features
+
+* **flagship:** add Android App Bundle (.aab) Support ([#950](https://github.com/brandingbrand/flagship/issues/950)) (7d9fc73)
+
+
+
+
+
 # [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
 
 **Note:** Version bump only for package @brandingbrand/flagship
