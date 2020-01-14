@@ -259,6 +259,11 @@ export const keys: FSTranslationKeys = {
       confirmPassword: 'Confirm Password',
       submit: 'Submit',
       passwordDoNotMatch: 'Passwords don\'t match'
+    },
+    loginForm: {
+      email: 'Email',
+      password: 'Password',
+      submit: 'Submit'
     }
   }
 };
