@@ -457,6 +457,17 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
   }
 }
 
+export function addSllCertificates({
+  pinnedCerts
+}: FlagshipTypes.Config): void {
+  if (pinnedCerts && pinnedCerts.length) {
+    pinnedCerts.forEach(pinnedCert => fs.copySync(
+      path.project.resolve(pinnedCert.path),
+      path.resolve(path.android.assetsPath(), path.basename(pinnedCert.path))
+    ));
+  }
+}
+
 function hasExceptionDomain(
   domains: FlagshipTypes.Config['exceptionDomains'],
   target: string

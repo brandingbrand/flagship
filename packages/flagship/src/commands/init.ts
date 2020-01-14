@@ -162,6 +162,7 @@ function initAndroid(
   // Android specific configuration
   android.googleMaps(configuration);
   android.exceptionDomains(configuration); // Add Network Security exception domains for Android
+  android.addSllCertificates(configuration); // Add SSL certificates to android folder
 
   if (!configuration.disableDevFeature) {
     android.addDevMenuFlag(configuration);
@@ -213,6 +214,7 @@ function initIOS(
   ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  ios.addSllCertificates(configuration);
   if (configuration.ios) {
     if (configuration.ios.pods) {
       if (configuration.ios.pods.sources) {

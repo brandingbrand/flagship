@@ -5,7 +5,6 @@
 	};
 	objectVersion = 48;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -37,6 +36,7 @@
 		F979949420640E35006BFFBD /* NativeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F979949320640E35006BFFBD /* NativeConstants.m */; };
 		F9F84A2A1FBBA294006783F0 /* LaunchImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */; };
 		FFDDDD7AE56542C2B774504B /* libRNCookieManagerIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5C1DF9EF464621B2D9942D /* libRNCookieManagerIOS.a */; };
+		1BA7211DD1F64C0CA4E0506E /* libRNSslPinning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2228824746354A57807CEAEB /* libRNSslPinning.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -385,6 +385,8 @@
 		F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "FLAGSHIP/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		F979949320640E35006BFFBD /* NativeConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeConstants.m; path = FLAGSHIP/NativeConstants.m; sourceTree = "<group>"; };
 		F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = FLAGSHIP/LaunchImages.xcassets; sourceTree = "<group>"; };
+		70DDE125CF18417ABBB0C386 /* RNSslPinning.xcodeproj */ = {isa = PBXFileReference; name = "RNSslPinning.xcodeproj"; path = "../../../node_modules/react-native-ssl-pinning/ios/RNSslPinning.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2228824746354A57807CEAEB /* libRNSslPinning.a */ = {isa = PBXFileReference; name = "libRNSslPinning.a"; path = "libRNSslPinning.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,6 +414,7 @@
 				D55C468E38DA4AA793049CDD /* libReactNativeNavigation.a in Frameworks */,
 				91F188DDDC6D4ACBBA33C1DE /* libRNSensitiveInfo.a in Frameworks */,
 				0B6A71297FA84926BBBD1149 /* libRCTRestart.a in Frameworks */,
+				1BA7211DD1F64C0CA4E0506E /* libRNSslPinning.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +601,7 @@
 				6A2E45546A34498CB72809CA /* ReactNativeNavigation.xcodeproj */,
 				B318F05B83C644A4AEF5DA84 /* RNCookieManagerIOS.xcodeproj */,
 				A9E57FB8290B46769A2A2635 /* RNSensitiveInfo.xcodeproj */,
+				70DDE125CF18417ABBB0C386 /* RNSslPinning.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1253,6 +1257,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../../../node_modules/react-native-ssl-pinning/ios/RNSslPinning/**",
 				);
 				INFOPLIST_FILE = FLAGSHIP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -1264,6 +1269,10 @@
 				);
 				PRODUCT_NAME = FLAGSHIP;
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FLAGSHIP\"",
+				);
 			};
 			name = Debug;
 		};
@@ -1281,6 +1290,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../../../node_modules/react-native-ssl-pinning/ios/RNSslPinning/**",
 				);
 				INFOPLIST_FILE = FLAGSHIP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -1292,6 +1302,10 @@
 				);
 				PRODUCT_NAME = FLAGSHIP;
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FLAGSHIP\"",
+				);
 			};
 			name = Release;
 		};
