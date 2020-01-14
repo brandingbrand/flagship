@@ -241,6 +241,11 @@ export const keys: FSTranslationKeys = {
     multiCarousel: {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
+    },
+    loginForm: {
+      email: 'Email',
+      password: 'Password',
+      submit: 'Submit'
     }
   }
 };
