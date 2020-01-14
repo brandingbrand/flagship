@@ -14,7 +14,6 @@ import ShopifyAPIError from '../util/ShopifyAPIError';
 import {
   PaymentDetailsInit,
   PaymentMethodData,
-  PaymentOptions,
   PaymentRequest
 } from '../util/react-native-payments';
 import { Platform } from 'react-native';
@@ -220,7 +219,7 @@ export class ShopifyCartDataSource extends DataSourceBase
               publicKey: this.googlePayKey
             }
           }
-        }
+        } as any // environment is not part of PaymentMethodData.data
       });
     }
 
@@ -415,7 +414,9 @@ export class ShopifyCartDataSource extends DataSourceBase
         .checkoutCompleteWithTokenizedPayment(checkoutId, payment);
       const resolvedOrder = await this.orderResolver(submitResponse);
       // dismiss apple pay dialog
-      paymentResponse.complete(resolvedOrder ? 'success' : 'fail');
+      paymentResponse.complete(resolvedOrder ? 'success' : 'fail').catch(e => {
+        console.error(e);
+      });
       onSuccess(resolvedOrder);
       return;
     }

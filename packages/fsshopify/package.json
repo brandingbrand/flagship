@@ -18,11 +18,11 @@
     "@brandingbrand/fsfoundation": "^8.3.0-rnn2.0",
     "@brandingbrand/fsi18n": "^8.3.0-rnn2.0",
     "@brandingbrand/fsnetwork": "^8.3.0-rnn2.0",
+    "@brandingbrand/react-native-payments": "^0.10.0",
     "decimal.js": "^10.0.1",
     "react": "^16.11.0",
     "react-native": "^0.61.0",
-    "react-native-navigation": "~3.5.0",
-    "react-native-payments": "^0.7.0"
+    "react-native-navigation": "~3.5.0"
   },
   "devDependencies": {
     "axios": "~0.19.0"

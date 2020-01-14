@@ -1061,6 +1061,15 @@
   dependencies:
     "@brandingbrand/fsfoundation" "^0.1.0"
 
+"@brandingbrand/react-native-payments@^0.10.0":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-payments/-/react-native-payments-0.10.1.tgz#73ddd11b8231e6fb320f1deefb166bb3b0abfb96"
+  integrity sha512-T6ULhmEYN6RyMHWV9stYA0YFAjD/dplE1X9SRo5nt6U+zDxFBRZH+I4AfjDgDeseaPxSi9cPpJpFZ//9famV1Q==
+  dependencies:
+    es6-error "^4.0.2"
+    uuid "^3.1.0"
+    validator "^7.0.0"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -13087,15 +13096,6 @@ react-native-open-settings@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-open-settings/-/react-native-open-settings-1.0.1.tgz#1c0ae3d25fd3fd6de94b6d538333d47245cc5a0c"
   integrity sha1-HArj0l/T/W3pS21TgzPUckXMWgw=
 
-react-native-payments@^0.7.0, react-native-payments@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-payments/-/react-native-payments-0.7.1.tgz#aaa28a6aac7639acbf4b239629f40111bfa5f73c"
-  integrity sha512-NXal4tTP8ov5nmdHhyME2BHnl2LUuGi2QoVFJgDemW+RnNEe+f6NTCOPIW8ipTT9qT6TuUNHxbYFCk49Z0p1pw==
-  dependencies:
-    es6-error "^4.0.2"
-    uuid "^3.1.0"
-    validator "^7.0.0"
-
 react-native-permissions@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
@@ -13134,10 +13134,10 @@ react-native-svg@^9.13.3, react-native-svg@^9.3.6:
     css-select "^2.0.2"
     css-tree "^1.0.0-alpha.37"
 
-react-native-swiper@^1.5.13:
-  version "1.5.14"
-  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.14.tgz#1c6f949ca377186300f972bb0f30d24062c899aa"
-  integrity sha512-Kn0fxKooN7Shwu1qJYHB+Y8ssXXnvrIwReHXU5jCdyYNfz2QbBv0Cv3sa2Mqzr+XgzORCFFIokc8uCCUITDrVA==
+react-native-swiper@1.6.0-rc.3:
+  version "1.6.0-rc.3"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0-rc.3.tgz#ece82906d908c6a78a0b75fa41982ffc2cd2fb20"
+  integrity sha512-aZk6M7WsFdxlfHfS6OKb7gsaS3q7Z4Oqm8iTyJO7duE28EUK9kzfA2Cp5S6FdZkGXoWCXoUFGlzaO0lnhW/jtw==
   dependencies:
     prop-types "^15.5.10"
 

@@ -46,6 +46,11 @@ export default class Navigator {
   handleDeepLink(options: any): void {
     console.error('handleDeepLink is no longer part of react-native-navigation');
   }
+  setOnNavigatorEvent(): void {
+    console.error('setOnNavigatorEvent is no longer part of react-native-navigation. ' +
+      'Please use navigator.bindNavigation(this) to bind events, then reference ' +
+      'https://wix.github.io/react-native-navigation/#/docs/events');
+  }
   resetTo(options: {
     screen: string;
     title: string;

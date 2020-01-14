@@ -5,7 +5,7 @@ import {
 import {
   PaymentAddress,
   PaymentShippingOption
-} from 'react-native-payments';
+} from '@brandingbrand/react-native-payments';
 import ShopifyAPIError from '../util/ShopifyAPIError';
 import * as ShopifyTypes from '../customTypes';
 
@@ -32,7 +32,8 @@ export function getShippingMethods(
           value: shippingRate.price
         },
         selected: !!(checkout.shippingLine
-          && checkout.shippingLine.handle === shippingRate.handle)
+          && checkout.shippingLine.handle === shippingRate.handle),
+        detail: '' // required by react-native-payments
       };
     });
 }
