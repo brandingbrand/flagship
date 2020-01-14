@@ -17,8 +17,10 @@
     "@brandingbrand/fsi18n": "^8.0.0",
     "@brandingbrand/fsnetwork": "^8.0.0",
     "@react-native-community/async-storage": "^1.6.1",
+    "@types/yup": "^0.26.27",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
+    "formik": "^2.1.1",
     "lodash-es": "^4.17.10",
     "memoize-one": "^4.0.2",
     "photoswipe": "^4.1.2",
@@ -32,7 +34,8 @@
     "react-native-swiper": "^1.5.13",
     "react-native-web-modal": "^1.0.1",
     "sweetalert": "^2.1.0",
-    "tcomb-form-native": "^0.6.12"
+    "tcomb-form-native": "^0.6.12",
+    "yup": "^0.28.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
