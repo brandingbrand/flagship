@@ -38,6 +38,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
+    loginForm: LoginFormTranslations<KeyType>;
   };
 }
 
@@ -290,4 +291,10 @@ export interface SelectorTranslations<KeyType> {
 export interface MultiCarouselTranslations<KeyType> {
   prevBtn: KeyType;
   nextBtn: KeyType;
+}
+
+export interface LoginFormTranslations<KeyType> {
+  email: KeyType;
+  password: KeyType;
+  submit: KeyType;
 }
