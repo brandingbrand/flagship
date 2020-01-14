@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Features
+
+* **pirateship:** add enagement to pirateship demo ([#959](https://github.com/brandingbrand/flagship/issues/959)) ([7e1705e](https://github.com/brandingbrand/flagship/commit/7e1705e72bae2e02f8048440aaee1396cd31b9d2))
+
+
+
+
+
 # [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
