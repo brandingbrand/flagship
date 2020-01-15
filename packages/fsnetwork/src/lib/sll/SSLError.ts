@@ -15,7 +15,7 @@ export class SSLError implements AxiosError {
     data: ReactNativeSSLPinning.Response,
     config: AxiosRequestConfig
   ) {
-    this.code = status && status.toString() || '';
+    this.code = data.status && data.status.toString() || '';
     this.config = config;
     this.response = new SSLResponse(data, config);
     this.message = data.bodyString && JSON.parse(data.bodyString).message || '';

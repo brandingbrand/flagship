@@ -56,6 +56,6 @@ export class SSLPinningInstance {
   }
 
   patch = <T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T> => {
-    throw new Error('Method PATCH not allowed not allowed for SSL Pinning request');
+    throw new Error('Method PATCH not allowed for SSL Pinning request');
   }
 }
