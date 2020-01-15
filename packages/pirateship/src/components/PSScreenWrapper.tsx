@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-
+import { Navigator } from '@brandingbrand/fsapp';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -36,6 +36,8 @@ export interface PSScreenWrapperProps {
   hideGlobalBanner?: boolean;
   overrideGlobalBanner?: PSGlobalBannerSlotItem;
 
+  navigator: Navigator;
+
   needInSafeArea?: boolean;
 
   // Whether or not the wrapper should scroll it's children. Defaults to true
@@ -44,7 +46,6 @@ export interface PSScreenWrapperProps {
 
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
   // tslint:disable-next-line:whitespace
-  navigator: import('react-native-navigation').Navigator;
   hideWebHeader?: boolean;
 }
 
@@ -127,7 +128,6 @@ export default class PSScreenWrapper extends PureComponent<
       children,
       hideGlobalBanner,
       hideWebHeader = false,
-      navigator,
       needInSafeArea,
       overrideGlobalBanner,
       scroll,
@@ -162,7 +162,7 @@ export default class PSScreenWrapper extends PureComponent<
           )}
           {!hideWebHeader && (
             <Header
-              navigator={navigator}
+              navigator={this.props.navigator}
             />
           )}
           {contents}

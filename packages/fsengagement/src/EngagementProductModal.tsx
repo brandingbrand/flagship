@@ -482,7 +482,11 @@ export default class EngagementProductModal extends
 
     setTimeout(() => {
       this.props.navigator.dismissModal({
-        animationType: 'none'
+        animations: {
+          dismissModal: {
+            enabled: false
+          }
+        }
       });
     }, 650);
   }
