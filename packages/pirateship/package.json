@@ -58,10 +58,10 @@
     "react-native-navigation": "~3.5.0",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.5.0",
-    "react-native-svg": "^9.13.3",
+    "react-native-svg": "^10.0.0",
     "react-native-touch-id": "~4.4.0",
-    "react-native-video": "^4.0.0",
-    "react-native-webview": "^7.0.0",
+    "react-native-video": "^5.0.0",
+    "react-native-webview": "^8.0.0",
     "react-redux": "^7.0.0",
     "tcomb-form-native": "^0.6.12"
   },
@@ -100,7 +100,8 @@
       "@react-native-community/async-storage",
       "@react-native-community/cli-platform-android",
       "@react-native-community/cli-platform-ios",
-      "@react-native-community/push-notification-ios"
+      "@react-native-community/push-notification-ios",
+      "@brandingbrand/react-native-payments"
     ]
   }
 }
