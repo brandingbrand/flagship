@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Modal } from './Modal';
+import { HighlightResult, HighlightResultAccumulator } from './SearchScreen';
 import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -216,7 +217,7 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
@@ -267,7 +268,7 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {
@@ -291,29 +292,25 @@ function highlightStr(name: string, query: string): any {
     ];
   }
 
-  // TODO: Fix reduce usage here requiring @ts-ignore
   const textSplits = name.split(queryRegx).reduce(
-    (acc, item) => {
+    (acc: HighlightResultAccumulator, item, index) => {
       if (item) {
-        // @ts-ignore
         acc.result.push({
           str: item,
           isHighlight: false
         });
       }
 
-      if (matches[acc.matchIndex]) {
-        // @ts-ignore
+      if (matches[index]) {
         acc.result.push({
-          str: matches[acc.matchIndex],
+          str: matches[index],
           isHighlight: true
         });
       }
 
-      acc.matchIndex += 1;
       return acc;
     },
-    { result: [], matchIndex: 0 }
+    { result: [] }
   );
 
   return textSplits.result;

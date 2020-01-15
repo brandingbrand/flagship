@@ -706,7 +706,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           </View>
 
           {this.renderModal()}
-          {!this.props.hideZoomButton &&
+          {!this.props.hideZoomButton && (
             <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
               {this.props.renderZoomButton ? (
                 this.props.renderZoomButton(this.openZoom)
@@ -716,7 +716,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 </TouchableOpacity>
               )}
             </View>
-          }
+          )}
         </View>
 
         {this.props.showThumbnails &&
