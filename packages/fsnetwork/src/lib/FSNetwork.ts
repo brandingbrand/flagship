@@ -105,6 +105,7 @@ export class FSNetwork {
 
   /**
    * Performs a HEAD request.
+   * Not available with SSL
    *
    * @param {string} uri A URI or path to request.
    * @param {FSNetworkRequestConfig} config Configuration for the request.
@@ -150,6 +151,7 @@ export class FSNetwork {
 
   /**
    * Performs a PATCH request.
+   * Not available with SSL
    *
    * @template T The response data type.
    * @param {string} uri A URI or path to request.

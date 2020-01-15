@@ -21,6 +21,7 @@ export interface PinnedCertificate {
  * @see https://github.com/axios/axios#request-config
  */
 export interface FSNetworkRequestConfig extends AxiosRequestConfig {
+  // Property that defines array of pinned certificate for FSNetwork
   pinnedCertificates?: PinnedCertificate[];
   // Function that is called to intercept any responses
   responseIntercept?: (response: AxiosResponse) => AxiosResponse;
