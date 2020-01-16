@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import {
   Image,
   ImageStyle,
@@ -21,42 +21,47 @@ export interface CategoryBoxProps extends CommerceTypes.Category {
   underlayColor?: string;
 }
 
-export const CategoryBox = React.memo((props: CategoryBoxProps): JSX.Element => {
-  const {
-    image,
-    showImage,
-    imageStyle,
-    style,
-    title,
-    titleStyle,
-    underlayColor
-  } = props;
-
-  // Called when a user taps on the item.
-  const handlePress = () => {
-    const { onPress } = props;
-    if (onPress) {
-      return onPress(props);
-    }
+export class CategoryBox extends PureComponent<CategoryBoxProps> {
+  static defaultProps: Partial<CategoryBoxProps> = {
+    showImage: true
   };
 
-  return (
-    <TouchableHighlight
-      style={[S.boxOuter, style]}
-      underlayColor={underlayColor || '#eee'}
-      onPress={handlePress}
-      accessibilityRole='imagebutton'
-    >
-      <View style={S.boxInner}>
-        {showImage && image && <Image source={image} style={imageStyle} />}
-        <Text style={[S.boxText, titleStyle]}>
-          {title}
-        </Text>
-      </View>
-    </TouchableHighlight>
-  );
-}) as any;
+  render(): JSX.Element {
+    const {
+      image,
+      showImage,
+      imageStyle,
+      style,
+      title,
+      titleStyle,
+      underlayColor
+    } = this.props;
 
-CategoryBox.defaultProps = {
-  showImage: true
-};
+    return (
+      <TouchableHighlight
+        style={[S.boxOuter, style]}
+        underlayColor={underlayColor || '#eee'}
+        onPress={this.handlePress}
+        accessibilityRole='imagebutton'
+      >
+        <View style={S.boxInner}>
+          {showImage && image && <Image source={image} style={imageStyle} />}
+          <Text style={[S.boxText, titleStyle]}>
+            {title}
+          </Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+
+  /**
+   * Called when a user taps on the item.
+   */
+  private handlePress = () => {
+    const { onPress } = this.props;
+
+    if (onPress) {
+      return onPress(this.props);
+    }
+  }
+}
