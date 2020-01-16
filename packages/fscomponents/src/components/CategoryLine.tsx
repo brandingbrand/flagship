@@ -31,7 +31,7 @@ export interface CategoryLineProps extends CommerceTypes.Category {
   accessibilityRole?: AccessibilityRole;
 }
 
-export class CategoryLine extends PureComponent<CategoryLineProps> {
+class CategoryLine extends PureComponent<CategoryLineProps> {
   static defaultProps: Partial<CategoryLineProps> = {
     showAccessory: true,
     showImage: true
@@ -89,3 +89,5 @@ export class CategoryLine extends PureComponent<CategoryLineProps> {
     }
   }
 }
+
+export default React.memo(CategoryLine);
