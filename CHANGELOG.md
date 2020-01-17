@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+
+### Features
+
+* **flagship:** update podfile to use cocoapods cdn ([c3259d7](https://github.com/brandingbrand/flagship/commit/c3259d78f5c4a58b255ee64282467e1fb599cdf6))
+
+
+### BREAKING CHANGES
+
+* **flagship:** This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+
+
+
+
+
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** ModalHalfScreen listener height update ([#957](https://github.com/brandingbrand/flagship/issues/957)) ([abbcf03](https://github.com/brandingbrand/flagship/commit/abbcf033192b1438f3c6abd6b99f7b3776e91979))
+* android fastline syntax error due to a trailing comma ([e52d97f](https://github.com/brandingbrand/flagship/commit/e52d97f7d90b9cf462649cf7788e79b14f6b0081))
+
+
+### Features
+
+* **flagship:** add Android App Bundle (.aab) Support ([#950](https://github.com/brandingbrand/flagship/issues/950)) ([7d9fc73](https://github.com/brandingbrand/flagship/commit/7d9fc73f6be76061803efce23bdfb10952ca91a9))
+* **pirateship:** add enagement to pirateship demo ([#959](https://github.com/brandingbrand/flagship/issues/959)) ([7e1705e](https://github.com/brandingbrand/flagship/commit/7e1705e72bae2e02f8048440aaee1396cd31b9d2))
+
+
+
+
+
 # [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
 
 
