@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   AccessibilityRole,
   StyleProp,
@@ -54,41 +54,40 @@ const S = StyleSheet.create({
   }
 });
 
-export class SelectableRow extends Component<SelectableRowProps> {
-  renderCheckMark = () => {
-    if (this.props.renderCheckMark) {
-      return this.props.renderCheckMark();
+export const SelectableRow: FunctionComponent<SelectableRowProps> =
+memo((props): JSX.Element => {
+  const renderCheckMark = () => {
+    if (props.renderCheckMark) {
+      return props.renderCheckMark();
     }
 
     return (
       <View style={S.marker}>
-        <View style={[S.markerIcon, this.props.markerIconStyle]} />
+        <View style={[S.markerIcon, props.markerIconStyle]} />
       </View>
     );
-  }
+  };
 
-  renderUncheckMark = () => {
-    if (this.props.renderUncheckMark) {
-      return this.props.renderUncheckMark();
+  const renderUncheckMark = () => {
+    if (props.renderUncheckMark) {
+      return props.renderUncheckMark();
     }
     return null;
-  }
+  };
 
-  render(): JSX.Element {
-    return (
-      <TouchableOpacity
-        style={[S.row, this.props.style]}
-        onPress={this.props.onPress}
-        accessibilityLabel={this.props.accessibilityLabel || this.props.title}
-        accessibilityRole={this.props.accessibilityRole || 'button'}
-      >
-        <Text style={[S.rowText, this.props.textStyle]}>
-          {this.props.title}
-        </Text>
-        {this.props.selected
-          ? this.renderCheckMark()
-          : this.renderUncheckMark()}
-      </TouchableOpacity>
-    );
-  }
-}
+  return (
+    <TouchableOpacity
+      style={[S.row, props.style]}
+      onPress={props.onPress}
+      accessibilityLabel={props.accessibilityLabel || props.title}
+      accessibilityRole={props.accessibilityRole || 'button'}
+    >
+      <Text style={[S.rowText, props.textStyle]}>
+        {props.title}
+      </Text>
+      {props.selected
+        ? renderCheckMark()
+        : renderUncheckMark()}
+    </TouchableOpacity>
+  );
+});
