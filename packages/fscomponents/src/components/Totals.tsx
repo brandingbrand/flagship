@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
 import { Total, TotalProps } from './Total';
@@ -8,21 +8,19 @@ export interface TotalsProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export class Totals extends Component<TotalsProps> {
-  render(): JSX.Element {
-    const { style, totals } = this.props;
+export const Totals = (props: TotalsProps): JSX.Element => {
+  const { style, totals } = props;
 
-    return (
-      <View style={style}>
-        {totals.map((total: TotalProps, index: number) => {
-          return (
-            <Total
-              key={typeof total.keyName === 'string' ? total.keyName : index}
-              {...total}
-            />
-          );
-        })}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={style}>
+      {totals.map((total: TotalProps, index: number) => {
+        return (
+          <Total
+            key={typeof total.keyName === 'string' ? total.keyName : index}
+            {...total}
+          />
+        );
+      })}
+    </View>
+  );
+};
