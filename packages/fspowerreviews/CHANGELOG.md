@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.0.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.5.0-rnn2.0...v9.0.0-rnn2.0) (2020-01-17)
+
+**Note:** Version bump only for package @brandingbrand/fspowerreviews
+
+
+
+
+
 # [8.5.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.4.0-rnn2.0...v8.5.0-rnn2.0) (2019-12-18)
 
 **Note:** Version bump only for package @brandingbrand/fspowerreviews
