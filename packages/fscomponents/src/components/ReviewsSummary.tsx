@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleProp,
   Text,
@@ -28,56 +28,54 @@ export interface ReviewsSummaryProps {
   reviewIndicatorTitleTextStyle?: StyleProp<TextStyle>;
 }
 
-export class ReviewsSummary extends Component<ReviewsSummaryProps> {
-  render(): JSX.Element {
-    const {
-      value,
-      count,
-      style,
-      base= 5,
-      recommend,
-      reviewIndicatorProps = {},
-      countStyle,
-      averageStyle,
-      recommendStyle,
-      rowStyle,
-      hideReviewIndicatorSubtitle,
-      reviewIndicatorSubtitle,
-      reviewIndicatorRowStyle,
-      reviewIndicatorTitleText,
-      reviewIndicatorTitleTextStyle
-    } = this.props;
+export const ReviewsSummary = (props: ReviewsSummaryProps): JSX.Element => {
+  const {
+    value,
+    count,
+    style,
+    base = 5,
+    recommend,
+    reviewIndicatorProps = {},
+    countStyle,
+    averageStyle,
+    recommendStyle,
+    rowStyle,
+    hideReviewIndicatorSubtitle,
+    reviewIndicatorSubtitle,
+    reviewIndicatorRowStyle,
+    reviewIndicatorTitleText,
+    reviewIndicatorTitleTextStyle
+  } = props;
 
-    const numberFormatting = { maximumFractionDigits: 1 };
-    const reviewIndicatorCopy = reviewIndicatorSubtitle ? reviewIndicatorSubtitle :
-                    'based on ' + count + ' reviews';
+  const numberFormatting = { maximumFractionDigits: 1 };
+  const reviewIndicatorCopy = reviewIndicatorSubtitle ? reviewIndicatorSubtitle :
+                  'based on ' + count + ' reviews';
 
-    return (
-      <View style={[S.container, style]}>
-        <View style={[S.row, rowStyle, reviewIndicatorRowStyle]}>
-          {reviewIndicatorTitleText && (
-            <Text style={reviewIndicatorTitleTextStyle}>{reviewIndicatorTitleText}</Text>
-          )}
-          <ReviewIndicator value={value} {...reviewIndicatorProps} />
-          <Text style={[S.averageStyle, averageStyle]}>
-            {FSI18n.number(value, numberFormatting)} / {FSI18n.number(base, numberFormatting)}
-          </Text>
-        </View>
-        {!hideReviewIndicatorSubtitle && (
-          <View style={[S.row, rowStyle]}>
-            <Text style={[S.countStyle, countStyle]}>{reviewIndicatorCopy}</Text>
-          </View>
+  return (
+    <View style={[S.container, style]}>
+      <View style={[S.row, rowStyle, reviewIndicatorRowStyle]}>
+        {reviewIndicatorTitleText && (
+          <Text style={reviewIndicatorTitleTextStyle}>{reviewIndicatorTitleText}</Text>
         )}
-        {recommend && (
-        <View style={[S.row, rowStyle]}>
-          <Text style={[S.recommendStyle, recommendStyle]}>
-            {FSI18n.string(translationKeys.flagship.reviews.recommendCount, {
-              recommendPercent: recommend
-            })}
-          </Text>
-        </View>
-        )}
+        <ReviewIndicator value={value} {...reviewIndicatorProps} />
+        <Text style={[S.averageStyle, averageStyle]}>
+          {FSI18n.number(value, numberFormatting)} / {FSI18n.number(base, numberFormatting)}
+        </Text>
       </View>
-    );
-  }
-}
+      {!hideReviewIndicatorSubtitle && (
+        <View style={[S.row, rowStyle]}>
+          <Text style={[S.countStyle, countStyle]}>{reviewIndicatorCopy}</Text>
+        </View>
+      )}
+      {recommend && (
+      <View style={[S.row, rowStyle]}>
+        <Text style={[S.recommendStyle, recommendStyle]}>
+          {FSI18n.string(translationKeys.flagship.reviews.recommendCount, {
+            recommendPercent: recommend
+          })}
+        </Text>
+      </View>
+      )}
+    </View>
+  );
+};
