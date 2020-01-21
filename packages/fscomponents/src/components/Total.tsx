@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
 import {
   StyleProp,
@@ -40,11 +40,14 @@ export interface TotalProps {
   style?: StyleProp<ViewStyle>; // Optional styling for the entire total row
 }
 
-export class Total extends PureComponent<TotalProps> {
-  renderData(
+function isCurrency(data: JSX.Element | CurrencyValue): data is CurrencyValue {
+  return !!((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
+}
+
+export const Total = React.memo((props: TotalProps): JSX.Element => {
+  const renderData = (
     data: string | CurrencyValue | JSX.Element,
-    style?: StyleProp<ViewStyle>
-  ): JSX.Element {
+    style?: StyleProp<ViewStyle>): JSX.Element => {
     if (typeof data === 'string') {
       return (
         <Text style={style}>{data}</Text>
@@ -55,30 +58,23 @@ export class Total extends PureComponent<TotalProps> {
         <Text style={style}>{FSI18n.currency(data)}</Text>
       );
     }
-
     return data;
-  }
+  };
 
-  render(): JSX.Element {
-    return (
-      <View style={[styles.row, this.props.style]}>
-        <View style={styles.leftColumn}>
-          {this.renderData(
-            this.props.keyName,
-            [this.props.keyStyle]
-          )}
-        </View>
-        <View style={styles.rightColumn}>
-          {this.renderData(
-            this.props.value,
-            [styles.rightColumnText as StyleProp<TextStyle>, this.props.valueStyle]
-          )}
-        </View>
+  return (
+    <View style={[styles.row, props.style]}>
+      <View style={styles.leftColumn}>
+        {renderData(
+          props.keyName,
+          [props.keyStyle]
+        )}
       </View>
-    );
-  }
-}
-
-function isCurrency(data: JSX.Element | CurrencyValue): data is CurrencyValue {
-  return !!((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
-}
+      <View style={styles.rightColumn}>
+        {renderData(
+          props.value,
+          [styles.rightColumnText as StyleProp<TextStyle>, props.valueStyle]
+        )}
+      </View>
+    </View>
+  );
+});
