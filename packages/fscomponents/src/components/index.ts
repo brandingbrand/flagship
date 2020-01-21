@@ -39,6 +39,7 @@ export * from './PayPalCheckoutButton';
 export * from './ProductItem';
 export * from './ProductMetadata';
 export * from './PromoForm';
+export * from './PromoFormFK';
 export * from './RefineActionBar';
 export * from './RegistrationForm';
 export * from './ReviewIndicator';
