@@ -41,6 +41,7 @@ export * from './ProductMetadata';
 export * from './PromoForm';
 export * from './RefineActionBar';
 export * from './RegistrationForm';
+export * from './RegistrationFormFK';
 export * from './ReviewIndicator';
 export * from './ReviewItem';
 export * from './ReviewsList';
