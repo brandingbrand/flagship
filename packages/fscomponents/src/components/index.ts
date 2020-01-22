@@ -2,6 +2,7 @@ export * from './Accordion';
 export * from './ActionBar';
 export * from './AddToCart';
 export * from './AddressForm';
+export * from './AddressFormFK';
 export * from './Alert';
 export * from './ApplePayButton';
 export * from './Breadcrumbs';
