@@ -85,7 +85,10 @@ export class ApplePayButton extends ApplePayButtonBase {
     const className = 'apple-pay-button-' + this.buttonStyle;
 
     return (
-      <TouchableOpacity onPress={this.props.applePayOnPress}>
+      <TouchableOpacity
+        onPress={this.props.applePayOnPress}
+        accessibilityLabel={'Pay with Apple Pay'}
+      >
         <div className={`apple-pay-button ${className}`}/>
       </TouchableOpacity>
     );
