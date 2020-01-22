@@ -29,7 +29,11 @@ export class ApplePayButton extends ApplePayButtonBase {
   render(): JSX.Element {
     return (
       <View style={this.props.style}>
-        <TouchableOpacity onPress={this.props.applePayOnPress} style={[styles.touchable]}>
+        <TouchableOpacity
+          onPress={this.props.applePayOnPress}
+          style={[styles.touchable]}
+          accessibilityLabel={'Pay with Apple Pay'}
+        >
           <Image source={PLACEHOLDER_APPLE_PAY_IMAGE} />
         </TouchableOpacity>
       </View>
