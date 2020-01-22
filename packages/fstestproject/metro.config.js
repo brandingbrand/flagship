@@ -14,7 +14,7 @@ function generateBlacklist() {
 
   fs.readdirSync(packageModules).forEach(moduleDir => {
     if (moduleDir === 'react-native') {
-      // match all packages except pirateship
+      // match all packages except fstestproject
       duplicateModules.push(new RegExp('packages' + escapedSep + '(?:(?!fstestproject).*)' + escapedSep + 'node_modules' + escapedSep + moduleDir + escapedSep + '.*'));
       duplicateModules.push(new RegExp(rootModules.replace(new RegExp(escapedSep, 'g'), escapedSep) + escapedSep + moduleDir + escapedSep + '.*'));
     } else if (moduleDir !== '.bin' && fs.existsSync(path.resolve(rootModules, moduleDir))) {
