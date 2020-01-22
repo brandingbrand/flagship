@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface PageIndicatorProps {
@@ -27,33 +27,30 @@ const S = StyleSheet.create({
   }
 });
 
-export class PageIndicator extends PureComponent<PageIndicatorProps> {
-  render(): JSX.Element {
-    const {
-      currentIndex,
-      itemsCount,
-      style,
-      dotStyle,
-      dotActiveStyle
-    } = this.props;
-
-    return (
-      <View style={[S.indicatorContainer, style]}>
-        {newArray(itemsCount).map(i => (
-          <View
-            key={i}
-            style={[
-              S.indicator,
-              dotStyle,
-              i === currentIndex && S.indicatorSelected,
-              i === currentIndex && dotActiveStyle
-            ]}
-          />
-        ))}
-      </View>
-    );
-  }
-}
+export const PageIndicator: FunctionComponent<PageIndicatorProps> = memo((props): JSX.Element => {
+  const {
+    currentIndex,
+    itemsCount,
+    style,
+    dotStyle,
+    dotActiveStyle
+  } = props;
+  return (
+    <View style={[S.indicatorContainer, style]}>
+      {newArray(itemsCount).map(i => (
+        <View
+          key={i}
+          style={[
+            S.indicator,
+            dotStyle,
+            i === currentIndex && S.indicatorSelected,
+            i === currentIndex && dotActiveStyle
+          ]}
+        />
+      ))}
+    </View>
+  );
+});
 
 function newArray(num: number): number[] {
   const arr = [];
