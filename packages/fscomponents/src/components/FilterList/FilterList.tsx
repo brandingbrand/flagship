@@ -13,6 +13,9 @@ import {
 import { Accordion } from '../Accordion';
 import { SelectableRow } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.productIndex;
+
 
 const defaultSingleFilterIds = [`cgid`];
 
@@ -208,6 +211,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
           <TouchableOpacity
             style={[S.applyButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.resetFilters)}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || 'RESET'}
@@ -216,6 +221,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
           <TouchableOpacity
             style={[S.applyButton, this.props.applyButtonStyle]}
             onPress={this.handleApply}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.applyFilters)}
           >
             <Text style={this.props.applyButtonTextStyle}>
               {this.props.applyText || 'APPLY'}
