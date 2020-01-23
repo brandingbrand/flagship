@@ -84,11 +84,15 @@ export const CartCount: FunctionComponent<CartCountProps> = memo((props): JSX.El
   return (
     <View
       style={[styles.container, props.style]}
+      accessibilityLabel={
+        FSI18n.number(props.count) + ' ' + FSI18n.string(componentTranslationKeys)
+      }
     >
       <Image
         resizeMode='contain'
         style={[styles.image, props.cartImageStyle]}
         source={props.cartImage || DEFAULT_CART_IMAGE}
+        accessibilityRole={'image'}
         accessibilityLabel={
           FSI18n.number(props.count) + ' ' + FSI18n.string(componentTranslationKeys)
         }
