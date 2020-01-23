@@ -23,6 +23,7 @@ export type TranslationKey = string | {
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
+    alertDefaults: AlertDefaultsTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
@@ -41,6 +42,11 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     multiCarousel: MultiCarouselTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
   };
+}
+
+export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
+  ok: KeyType;
+  cancel: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
