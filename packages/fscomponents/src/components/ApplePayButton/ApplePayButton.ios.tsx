@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 
 import { ApplePayButtonBase } from './ApplePayButtonBase';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslation = translationKeys.flagship.applePayButton.text;
 
 // TODO - Replace image with call to Apple's PKPaymentButton
 const PLACEHOLDER_APPLE_PAY_IMAGE = require('../../../assets/images/applePayWhite.png');
@@ -32,7 +34,8 @@ export class ApplePayButton extends ApplePayButtonBase {
         <TouchableOpacity
           onPress={this.props.applePayOnPress}
           style={[styles.touchable]}
-          accessibilityLabel={'Pay with Apple Pay'}
+          accessibilityRole={'button'}
+          accessibilityLabel={FSI18n.string(componentTranslation)}
         >
           <Image source={PLACEHOLDER_APPLE_PAY_IMAGE} />
         </TouchableOpacity>
