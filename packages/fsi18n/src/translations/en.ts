@@ -16,6 +16,7 @@ export const keys: FSTranslationKeys = {
   flagship: {
     cart: {
       isEmpty: 'Empty Cart',
+      itemsInCart: 'Items In Your Cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'

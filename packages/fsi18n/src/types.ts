@@ -1,4 +1,4 @@
-export type NumberLike = number | string | import ('decimal.js').Decimal;
+export type NumberLike = number | string | import('decimal.js').Decimal;
 
 export interface I18n {
   currentLocale: () => string;
@@ -55,6 +55,7 @@ export interface EmailErrors<KeyType = TranslationKey> {
 
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
+  itemsInCart: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
