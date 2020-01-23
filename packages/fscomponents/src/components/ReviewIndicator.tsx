@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { StyleProp, Text, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
@@ -29,9 +29,10 @@ const Star = ({ renderStar, style, text }: any) => {
 
   return <Text style={[S.star, style]}>{text}</Text>;
 };
+export const ReviewIndicator: FunctionComponent<ReviewIndicatorProps> =
+memo((props): JSX.Element => {
 
-export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
-  getItemData = (value: number, base: number = 5): NormalizedValue => {
+  const getItemData = (value: number, base: number = 5): NormalizedValue => {
     if (value >= base) {
       return {
         full: base,
@@ -61,10 +62,10 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
       empty,
       hasHalf
     };
-  }
+  };
 
-  renderHalf = (): JSX.Element => {
-    const { itemSize, itemColor } = this.props;
+  const renderHalf = (): JSX.Element => {
+    const { itemSize, itemColor } = props;
     const customStarStyle: any = {};
     const containerStarStyle: any = {};
     const starHalfRightStyle: any = {};
@@ -90,67 +91,66 @@ export class ReviewIndicator extends PureComponent<ReviewIndicatorProps> {
           <Star
             text='★'
             style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, { color: this.props.emptyColor || S.emptyStar }]}
+              starHalfRightStyle, { color: props.emptyColor || S.emptyStar }]}
           />
         </View>
       </View>
     );
+  };
+
+  const {
+    value,
+    base,
+    itemSize,
+    itemColor,
+    style,
+    renderFullStar,
+    renderHalfStar,
+    renderEmptyStar
+  } = props;
+
+  const itemData = getItemData(value, base);
+  const customStarStyle: any = {};
+
+  if (itemSize) {
+    customStarStyle.fontSize = itemSize;
+    customStarStyle.width = itemSize;
+    customStarStyle.height = itemSize * 1.2;
   }
 
-  render(): JSX.Element {
-    const {
-      value,
-      base,
-      itemSize,
-      itemColor,
-      style,
-      renderFullStar,
-      renderHalfStar,
-      renderEmptyStar
-    } = this.props;
-
-    const itemData = this.getItemData(value, base);
-    const customStarStyle: any = {};
-
-    if (itemSize) {
-      customStarStyle.fontSize = itemSize;
-      customStarStyle.width = itemSize;
-      customStarStyle.height = itemSize * 1.2;
-    }
-
-    if (itemColor) {
-      customStarStyle.color = itemColor;
-    }
-    const label = this.props.accessibilityLabel ? this.props.accessibilityLabel :
-      `${this.props.value} out of 5 stars`;
-
-    return (
-      <View
-        style={[S.container, style]}
-        accessibilityLabel={label}
-      >
-        {newArray(itemData.full).map(v => (
-          <Star
-            text='★'
-            renderStar={renderFullStar}
-            style={customStarStyle}
-            key={v}
-          />
-        ))}
-        {itemData.hasHalf &&
-          (renderHalfStar ? renderHalfStar() : this.renderHalf())}
-        {newArray(itemData.empty).map(v => (
-          <Star
-            text='★'
-            renderStar={renderEmptyStar}
-            style={[customStarStyle, { color: this.props.emptyColor || S.emptyStar }]}
-            key={v}
-          />
-        ))}
-      </View>
-    );
+  if (itemColor) {
+    customStarStyle.color = itemColor;
   }
-}
+
+  const label = props.accessibilityLabel ? props.accessibilityLabel :
+    `${props.value} out of 5 stars`;
+
+  return (
+    <View
+      style={[S.container, style]}
+      accessibilityLabel={label}
+    >
+      {newArray(itemData.full).map(v => (
+        <Star
+          text='★'
+          renderStar={renderFullStar}
+          style={customStarStyle}
+          key={v}
+        />
+      ))}
+      {itemData.hasHalf &&
+        (renderHalfStar ? renderHalfStar() : renderHalf())}
+      {newArray(itemData.empty).map(v => (
+        <Star
+          text='★'
+          renderStar={renderEmptyStar}
+          style={[customStarStyle, { color: props.emptyColor || S.emptyStar }]}
+          key={v}
+        />
+      ))}
+    </View>
+  );
+});
 
 function newArray(num: number): number[] {
   const arr = [];
