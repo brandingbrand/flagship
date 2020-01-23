@@ -244,6 +244,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
           style={this.props.titleTouchStyle || Accordion.defaultProps.titleTouchStyle}
           underlayColor={this.props.titleUnderlayColor || Accordion.defaultProps.titleUnderlayColor}
           onPress={this.toggleAccordion}
+          accessibilityRole={'button'}
         >
           <View
             style={[
