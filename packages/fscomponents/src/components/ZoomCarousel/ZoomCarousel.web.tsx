@@ -18,7 +18,10 @@ import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 import { Modal } from '../Modal';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
+const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
+const zoomTranslationKey = FSI18n.string(componentTranslationKeys.fullscreen.actionBtn);
 const searchIcon = require('../../../assets/images/search.png');
 
 let ZOOM_CAROUSEL_ID = 0;
@@ -336,7 +339,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 {this.props.renderZoomButton ? (
                   this.props.renderZoomButton(this.openZoom)
                 ) : (
-                  <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                  <TouchableOpacity
+                    style={S.zoomButton}
+                    onPress={this.openZoom}
+                    accessibilityRole={'button'}
+                    accessibilityLabel={zoomTranslationKey}
+                  >
                     <Image style={S.searchIcon} source={searchIcon} />
                   </TouchableOpacity>
                 )}
@@ -365,6 +373,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                     this.state.currentIndex === i && S.thumbnailSelected
                   ]}
                   onPress={this.handleThumbPress(i)}
+                  accessibilityRole={'button'}
+                  accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
                 >
                   <Image
                     resizeMode='cover'
