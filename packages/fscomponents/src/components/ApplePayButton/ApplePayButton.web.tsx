@@ -2,6 +2,8 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { ApplePayButtonBase } from './ApplePayButtonBase';
 import { ApplePayButtonProps } from './ApplePayButtonProps';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslation = translationKeys.flagship.applePayButton.text;
 
 const css = `
   @supports (-webkit-appearance: -apple-pay-button) {
@@ -87,7 +89,8 @@ export class ApplePayButton extends ApplePayButtonBase {
     return (
       <TouchableOpacity
         onPress={this.props.applePayOnPress}
-        accessibilityLabel={'Pay with Apple Pay'}
+        accessibilityRole={'button'}
+        accessibilityLabel={FSI18n.string(componentTranslation)}
       >
         <div className={`apple-pay-button ${className}`}/>
       </TouchableOpacity>
