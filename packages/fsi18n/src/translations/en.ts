@@ -241,6 +241,9 @@ export const keys: FSTranslationKeys = {
     multiCarousel: {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
+    },
+    shareButton: {
+      text: 'Click To Share'
     }
   }
 };
