@@ -275,6 +275,9 @@ export const keys: FSTranslationKeys = {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
     },
+    shareButton: {
+      text: 'Click To Share'
+    },
     loginForm: {
       email: 'Email',
       password: 'Password',
