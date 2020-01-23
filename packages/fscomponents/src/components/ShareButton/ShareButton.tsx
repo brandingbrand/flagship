@@ -19,7 +19,11 @@ export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
 
 
   return (
-    <TouchableOpacity onPress={onSharePress}>
+    <TouchableOpacity
+      onPress={onSharePress}
+      accessibilityRole={'button'}
+      accessibilityLabel={'Click To Share'}
+    >
       {renderShareIcon()}
     </TouchableOpacity>
   );
