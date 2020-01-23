@@ -52,6 +52,11 @@ export const keys: FSTranslationKeys = {
         }
       }
     },
+    filterListDefaults: {
+      clearAll: 'Clear All',
+      done: 'Done',
+      all: 'All'
+    },
     feedback: {
       actions: {
         submit: {

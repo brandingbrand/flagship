@@ -25,6 +25,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
   flagship: {
     alertDefaults: AlertDefaultsTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
+    filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
     sort: SortTranslations<KeyType>;
@@ -61,6 +62,12 @@ export interface EmailErrors<KeyType = TranslationKey> {
   missing: KeyType;
   mismatch: KeyType;
   invalid: KeyType;
+}
+
+export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
+  clearAll: KeyType;
+  done: KeyType;
+  all: KeyType;
 }
 
 export interface CartTranslations<KeyType> {

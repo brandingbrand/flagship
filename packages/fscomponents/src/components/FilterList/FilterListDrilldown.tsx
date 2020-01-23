@@ -165,7 +165,7 @@ export interface FilterListDrilldownState {
 export class FilterListDrilldown extends PureComponent<
   FilterListDrilldownProps,
   FilterListDrilldownState
-> {
+  > {
   constructor(props: FilterListDrilldownProps) {
     super(props);
     this.state = {
@@ -303,12 +303,12 @@ export class FilterListDrilldown extends PureComponent<
             style={[
               S.selectedValueStyle,
               (this.props.ignoreActiveStyleIds || []).indexOf(item.id) === -1 &&
-                this.props.selectedValueStyle
+              this.props.selectedValueStyle
             ]}
             numberOfLines={1}
             ellipsizeMode='tail'
           >
-            {selectedValueTitles.join(', ') || 'All'}
+            {selectedValueTitles.join(', ') || FSI18n.string(componentTranslationKeys.all)}
           </Text>
         </View>
         <View style={[S.arrow, S.arrowNext]} />
@@ -380,7 +380,7 @@ export class FilterListDrilldown extends PureComponent<
             accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAllFilters)}
           >
             <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || 'Clear All'}
+              {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
             </Text>
           </TouchableOpacity>
         ) : null}
@@ -391,7 +391,7 @@ export class FilterListDrilldown extends PureComponent<
           accessibilityLabel={FSI18n.string(componentTranslationKeys.applyFilters)}
         >
           <Text style={this.props.applyButtonTextStyle}>
-            {this.props.applyText || 'Done'}
+            {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
           </Text>
         </TouchableOpacity>
         <Text style={S.filterTitle}>
