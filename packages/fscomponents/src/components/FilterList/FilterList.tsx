@@ -210,6 +210,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
           <TouchableOpacity
             style={[S.applyButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.reset)}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || FSI18n.string(componentTranslationKeys.reset)}
@@ -218,6 +220,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
           <TouchableOpacity
             style={[S.applyButton, this.props.applyButtonStyle]}
             onPress={this.handleApply}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
           >
             <Text style={this.props.applyButtonTextStyle}>
               {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
