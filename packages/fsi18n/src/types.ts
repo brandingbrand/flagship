@@ -1,4 +1,4 @@
-export type NumberLike = number | string | import ('decimal.js').Decimal;
+export type NumberLike = number | string | import('decimal.js').Decimal;
 
 export interface I18n {
   currentLocale: () => string;
@@ -23,6 +23,7 @@ export type TranslationKey = string | {
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
+    alertDefaults: AlertDefaultsTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
@@ -39,6 +40,11 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
   };
+}
+
+export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
+  ok: KeyType;
+  cancel: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
