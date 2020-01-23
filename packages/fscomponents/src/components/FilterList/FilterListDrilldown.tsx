@@ -14,6 +14,7 @@ import { SelectableRow } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.productIndex;
 
 const defaultSingleFilterIds = [`cgid`];
 
@@ -279,6 +280,9 @@ export class FilterListDrilldown extends PureComponent<
       <TouchableOpacity
         style={[S.firstLevelItemContainer, this.props.itemStyle]}
         onPress={this.drilldown(item)}
+        accessibilityRole={'button'}
+        accessibilityHint={'Toggles Filter'}
+        accessibilityLabel={item.title}
       >
         <View style={S.firstLevelItem}>
           <Text
@@ -347,6 +351,9 @@ export class FilterListDrilldown extends PureComponent<
         <TouchableOpacity
           style={S.secondLevelHeader}
           onPress={this.backToFirstLevel}
+          accessibilityRole={'button'}
+          accessibilityHint={'Go back one filter level'}
+          accessibilityLabel={item.title}
         >
           <View style={S.arrowContainer}>
             <View style={[S.arrow, S.arrowBack]} />
@@ -369,6 +376,8 @@ export class FilterListDrilldown extends PureComponent<
           <TouchableOpacity
             style={[S.resetButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAllFilters)}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || 'Clear All'}
@@ -378,6 +387,8 @@ export class FilterListDrilldown extends PureComponent<
         <TouchableOpacity
           style={[S.applyButton, this.props.applyButtonStyle]}
           onPress={this.handleApply}
+          accessibilityRole={'button'}
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.applyFilters)}
         >
           <Text style={this.props.applyButtonTextStyle}>
             {this.props.applyText || 'Done'}
