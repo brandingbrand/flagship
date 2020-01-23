@@ -1,4 +1,6 @@
 import { Alert as NativeAlert } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.alertDefaults;
 
 export interface AlertOptions {
   title: string;
@@ -17,7 +19,7 @@ export const Alert = {
     } else {
       const buttons: any = [
         {
-          text: options.confirmButtonText || 'OK',
+          text: options.confirmButtonText || FSI18n.string(componentTranslationKeys.ok),
           onPress: () => {
             if (options.onConfirm) {
               options.onConfirm();
@@ -28,7 +30,7 @@ export const Alert = {
 
       if (options.showCancelButton) {
         buttons.unshift({
-          text: options.cancelButtonText || 'Cancel',
+          text: options.cancelButtonText || FSI18n.string(componentTranslationKeys.cancel),
           style: 'cancel',
           onPress: () => {
             if (options.onCancel) {

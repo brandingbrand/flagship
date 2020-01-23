@@ -14,6 +14,10 @@ export const emailErrors: EmailErrors = {
 
 export const keys: FSTranslationKeys = {
   flagship: {
+    alertDefaults: {
+      ok: 'OK',
+      cancel: 'Cancel'
+    },
     cart: {
       isEmpty: 'Empty Cart',
       actions: {
