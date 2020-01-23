@@ -35,6 +35,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     storeLocator: StoreLocatorTranslations<KeyType>;
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
+    applePayButton: ApplePayButtonTranslations<KeyType>;
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
@@ -281,6 +282,10 @@ export interface CheckoutTranslations<KeyType> {
   summary: {
     total: KeyType;
   };
+}
+
+export interface ApplePayButtonTranslations<KeyType> {
+  text: KeyType;
 }
 
 export interface StepTranslations<KeyType> {
