@@ -284,6 +284,8 @@ export interface ProductIndexTranslations<KeyType> {
   filterBy: KeyType;
   noResults: KeyType;
   resetFilters: KeyType;
+  applyFilters: KeyType;
+  clearAllFilters: KeyType;
   loadMore: KeyType;
 }
 
