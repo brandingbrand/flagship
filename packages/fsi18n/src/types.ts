@@ -213,6 +213,9 @@ export interface ZoomCarouselTranslations<KeyType> {
     prev: {
       actionBtn: KeyType;
     };
+    focus: {
+      actionBtn: KeyType;
+    };
   };
 }
 
