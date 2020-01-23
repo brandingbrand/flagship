@@ -44,6 +44,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     promoForm: PromoFormTranslations<KeyType>;
     registrationForm: RegistrationFormTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
+    shareButton: ShareButtonTranslations<KeyType>;
   };
 }
 
@@ -355,4 +356,8 @@ export interface LoginFormTranslations<KeyType> {
   email: KeyType;
   password: KeyType;
   submit: KeyType;
+}
+
+export interface ShareButtonTranslations<KeyType> {
+  text: KeyType;
 }

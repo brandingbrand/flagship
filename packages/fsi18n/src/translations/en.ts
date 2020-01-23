@@ -294,6 +294,9 @@ export const keys: FSTranslationKeys = {
       email: 'Email',
       password: 'Password',
       submit: 'Submit'
+    },
+    shareButton: {
+      text: 'Click To Share'
     }
   }
 };
