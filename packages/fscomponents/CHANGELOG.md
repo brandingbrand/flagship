@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Bug Fixes
+
+* **fscomponents:** FLAGSHIP-64 - Make Shelf a function component (80c8110)
+* **fscomponents:** replace Arial with sans-serif ([#1030](https://github.com/brandingbrand/flagship/issues/1030)) (6caa10d)
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm (d172d25)
+
+
+
+
+
 # [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
