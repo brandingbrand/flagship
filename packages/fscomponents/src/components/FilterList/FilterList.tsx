@@ -163,19 +163,19 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     const accordionTitle = this.props.renderFilterTitle ? (
       this.props.renderFilterTitle(item, selectedValues)
     ) : (
-      <View style={[S.accordionheader, this.props.itemStyle]}>
-        <Text style={[S.titleStyle, this.props.itemTextStyle]}>
-          {item.title}
-        </Text>
-        <Text
-          style={S.selectedValueStyle}
-          numberOfLines={1}
-          ellipsizeMode='tail'
-        >
-          {selectedValueTitle.join(', ')}
-        </Text>
-      </View>
-    );
+        <View style={[S.accordionheader, this.props.itemStyle]}>
+          <Text style={[S.titleStyle, this.props.itemTextStyle]}>
+            {item.title}
+          </Text>
+          <Text
+            style={S.selectedValueStyle}
+            numberOfLines={1}
+            ellipsizeMode='tail'
+          >
+            {selectedValueTitle.join(', ')}
+          </Text>
+        </View>
+      );
 
     return (
       <Accordion
@@ -215,7 +215,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
             accessibilityLabel={FSI18n.string(componentTranslationKeys.resetFilters)}
           >
             <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || 'RESET'}
+              {this.props.resetText || FSI18n.string(componentTranslationKeys.reset)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -225,7 +225,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
             accessibilityLabel={FSI18n.string(componentTranslationKeys.applyFilters)}
           >
             <Text style={this.props.applyButtonTextStyle}>
-              {this.props.applyText || 'APPLY'}
+              {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
             </Text>
           </TouchableOpacity>
         </View>

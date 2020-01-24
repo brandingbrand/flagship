@@ -55,7 +55,9 @@ export const keys: FSTranslationKeys = {
     filterListDefaults: {
       clearAll: 'Clear All',
       done: 'Done',
-      all: 'All'
+      all: 'All',
+      reset: 'RESET',
+      apply: 'APPLY'
     },
     feedback: {
       actions: {
