@@ -17,7 +17,7 @@ export const style = StyleSheet.create({
     width: 18,
     color: '#333132',
     textAlign: 'center',
-    fontFamily: 'Arial',
+    fontFamily: 'sans-serif',
     // includeFontPadding is not a valid property for web/ios
     ...Platform.select({
       android: {
