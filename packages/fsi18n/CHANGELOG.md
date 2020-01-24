@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm (d172d25)
+
+
+
+
+
 # [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n
