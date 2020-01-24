@@ -323,6 +323,7 @@ export interface StepTranslations<KeyType> {
 
 export interface SelectorTranslations<KeyType> {
   close: KeyType;
+  select: KeyType;
 }
 
 export interface MultiCarouselTranslations<KeyType> {
