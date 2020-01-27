@@ -69,11 +69,6 @@ export interface PromoFormFKProps {
   placeholder?: string;
 
   /**
-   * Initial form field values
-   */
-  value?: string;
-
-  /**
    * Called on form submission
    */
   onSubmit: (value: string) => void;
