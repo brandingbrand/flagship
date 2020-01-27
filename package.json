@@ -52,7 +52,7 @@
     "@storybook/react": "4.1.18",
     "@types/credit-card-type": "^7.0.0",
     "@types/i18n-js": "^3.0.0",
-    "@types/jest": "^24.0.22",
+    "@types/jest": "^25.1.0",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash-es": "^4.17.1",
     "@types/memoize-one": "^5.1.2",
