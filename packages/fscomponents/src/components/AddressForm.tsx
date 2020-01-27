@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
@@ -34,7 +34,7 @@ const S = StyleSheet.create({
 });
 
 
-export const AddressForm = (props: AddressFormProps): JSX.Element => {
+export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Element => {
   let form: any;
 
   const fieldsStyleConfig = {
