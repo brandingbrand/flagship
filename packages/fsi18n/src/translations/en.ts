@@ -230,6 +230,9 @@ export const keys: FSTranslationKeys = {
         total: 'Total'
       }
     },
+    applePayButton: {
+      text: 'Pay With Apple Pay'
+    },
     step: {
       announcements: {
         stepCompleted: 'Step Completed.'
