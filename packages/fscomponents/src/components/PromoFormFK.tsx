@@ -64,6 +64,11 @@ export interface PromoFormFKProps {
   formPositionInline?: boolean;
 
   /**
+   * Initial form field values
+   */
+  value?: string;
+
+  /**
    * Label Text Element Position
    */
   placeholder?: string;
@@ -91,7 +96,7 @@ export class PromoFormFK extends Component<PromoFormFKProps> {
       validateOnChange: true,
       validateOnBlur: true,
       initialValues: {
-        promoCode: ''
+        promoCode: this.props.value || ''
       },
       validationSchema: promoFormFKSchema,
       onSubmit: this.handleValidated
@@ -119,6 +124,7 @@ export class PromoFormFK extends Component<PromoFormFKProps> {
             <TextField
               name='promoCode'
               placeholder={placeholder}
+              value={f.values.promoCode}
               style={[S.textInput, fieldStyle]}
               {...fieldsOptions && fieldsOptions.promoCode}
             />
@@ -133,6 +139,7 @@ export class PromoFormFK extends Component<PromoFormFKProps> {
           labelStyle={labelStyle}
           label={label}
           placeholder={placeholder}
+          value={f.values.promoCode}
           style={[S.textInput, fieldStyle]}
           {...fieldsOptions && fieldsOptions.promoCode}
         />

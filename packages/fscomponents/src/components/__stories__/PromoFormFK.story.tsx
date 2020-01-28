@@ -21,11 +21,7 @@ const defaultLabelStyle = {
   fontSize: 15
 };
 
-const defaultValue = {
-  promoCode: {
-    value: 'VISA25'
-  }
-};
+const defaultValue = 'VISA25';
 
 const label = 'PROMO CODE';
 
@@ -37,7 +33,7 @@ const renderPromoFormFK = (formPositionInline: boolean = false): (() => JSX.Elem
         labelStyle={formPositionInline ? undefined : object('labelStyle', defaultLabelStyle)}
         containerStyle={object('containerStyle', defaultStyle)}
         placeholder={formPositionInline ? text('placeholder', label) : text('placeholder', '')}
-        fieldsOptions={object('fieldsOptions', defaultValue)}
+        value={text('value', defaultValue)}
         submitButtonStyle={object('submitButtonStyle', defaultButtonStyle)}
         onSubmit={action('EmailForm onSubmit')}
         formPositionInline={formPositionInline}
