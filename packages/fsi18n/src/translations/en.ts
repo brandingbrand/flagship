@@ -232,6 +232,18 @@ export const keys: FSTranslationKeys = {
       },
       summary: {
         total: 'Total'
+      },
+      creditCardForm: {
+        name: 'Name',
+        nameError: 'Please Enter Your Name',
+        numberLabel: 'Card Number',
+        numberPlaceholder: 'Credit Card Number',
+        numberError: 'invalid card number entered',
+        cscPlaceholder: 'CSC',
+        cscError: 'Invalid CSC',
+        expirationLabel: 'Exp. Date',
+        expirationPlaceholder: 'Exp. Date (MM/YY)',
+        expirationError: 'Invalid MM/YY'
       }
     },
     applePayButton: {

@@ -283,6 +283,18 @@ export interface CheckoutTranslations<KeyType> {
   summary: {
     total: KeyType;
   };
+  creditCardForm: {
+    name: KeyType;
+    nameError: KeyType;
+    numberLabel: KeyType;
+    numberPlaceholder: KeyType;
+    numberError: KeyType;
+    cscPlaceholder: KeyType;
+    cscError: KeyType;
+    expirationLabel: KeyType;
+    expirationPlaceholder: KeyType;
+    expirationError: KeyType;
+  };
 }
 
 export interface ApplePayButtonTranslations<KeyType> {
