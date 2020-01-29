@@ -181,6 +181,9 @@ export const keys: FSTranslationKeys = {
         },
         next: {
           actionBtn: 'Next (arrow right)'
+        },
+        focus: {
+          actionBtn: 'Focus item in carousel'
         }
       }
     },
