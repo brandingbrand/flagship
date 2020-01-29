@@ -64,7 +64,7 @@ export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
     }
   };
 
-  const handleSubmit = () => (f: FormikProps<FormValues>) => {
+  const handleBoton = (f: FormikProps<FormValues>) => () => {
     f.handleSubmit();
   };
 
@@ -91,7 +91,7 @@ export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
                 props.submitButtonStyle,
                 labelPosition === 0 && { marginLeft: 10, marginTop: -12 }
               ]}
-              onPress={handleSubmit}
+              onPress={handleBoton(f)}
             >
               <Text style={props.submitTextStyle}>
                 {props.submitText || 'Submit'}
