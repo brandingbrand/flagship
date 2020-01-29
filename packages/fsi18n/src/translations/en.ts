@@ -262,7 +262,8 @@ export const keys: FSTranslationKeys = {
       }
     },
     selector: {
-      close: 'Close'
+      close: 'Close',
+      select: 'Select'
     },
     multiCarousel: {
       prevBtn: 'Show previous',
