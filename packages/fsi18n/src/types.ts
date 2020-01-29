@@ -38,6 +38,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
+    promoForm: PromoFormTranslations<KeyType>;
   };
 }
 
@@ -290,4 +291,11 @@ export interface SelectorTranslations<KeyType> {
 export interface MultiCarouselTranslations<KeyType> {
   prevBtn: KeyType;
   nextBtn: KeyType;
+}
+
+export interface PromoFormTranslations<KeyType> {
+  label: KeyType;
+  placeholder: KeyType;
+  errorMessage: KeyType;
+  button: KeyType;
 }
