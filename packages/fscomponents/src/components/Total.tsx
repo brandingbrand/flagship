@@ -44,7 +44,7 @@ function isCurrency(data: JSX.Element | CurrencyValue): data is CurrencyValue {
   return !!((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
 }
 
-export const Total = React.memo((props: TotalProps): JSX.Element => {
+const TotalInner = (props: TotalProps): JSX.Element => {
   const renderData = (
     data: string | CurrencyValue | JSX.Element,
     style?: StyleProp<ViewStyle>): JSX.Element => {
@@ -77,4 +77,6 @@ export const Total = React.memo((props: TotalProps): JSX.Element => {
       </View>
     </View>
   );
-});
+};
+
+export const Total = React.memo(TotalInner);
