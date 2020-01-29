@@ -20,7 +20,7 @@ export interface ImageWithOverlayProps {
     | 'topRight';
 }
 
-export const ImageWithOverlay = React.memo((props: ImageWithOverlayProps): JSX.Element => {
+const ImageWithOverlayInner = (props: ImageWithOverlayProps): JSX.Element => {
   const {
     overlay,
     style,
@@ -38,4 +38,6 @@ export const ImageWithOverlay = React.memo((props: ImageWithOverlayProps): JSX.E
         </View>}
     </View>
   );
-});
+};
+
+export const ImageWithOverlay = React.memo(ImageWithOverlayInner);
