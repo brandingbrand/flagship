@@ -68,6 +68,8 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
   all: KeyType;
   reset: KeyType;
   apply: KeyType;
+  hintToggle: KeyType;
+  hintBack: KeyType;
 }
 
 export interface CartTranslations<KeyType> {

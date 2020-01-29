@@ -280,6 +280,9 @@ export class FilterListDrilldown extends PureComponent<
       <TouchableOpacity
         style={[S.firstLevelItemContainer, this.props.itemStyle]}
         onPress={this.drilldown(item)}
+        accessibilityRole={'button'}
+        accessibilityHint={FSI18n.string(componentTranslationKeys.hintToggle)}
+        accessibilityLabel={item.title}
       >
         <View style={S.firstLevelItem}>
           <Text
@@ -348,6 +351,9 @@ export class FilterListDrilldown extends PureComponent<
         <TouchableOpacity
           style={S.secondLevelHeader}
           onPress={this.backToFirstLevel}
+          accessibilityRole={'button'}
+          accessibilityHint={FSI18n.string(componentTranslationKeys.hintBack)}
+          accessibilityLabel={item.title}
         >
           <View style={S.arrowContainer}>
             <View style={[S.arrow, S.arrowBack]} />
@@ -370,6 +376,8 @@ export class FilterListDrilldown extends PureComponent<
           <TouchableOpacity
             style={[S.resetButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
@@ -379,6 +387,8 @@ export class FilterListDrilldown extends PureComponent<
         <TouchableOpacity
           style={[S.applyButton, this.props.applyButtonStyle]}
           onPress={this.handleApply}
+          accessibilityRole={'button'}
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
         >
           <Text style={this.props.applyButtonTextStyle}>
             {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
