@@ -3,6 +3,150 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Bug Fixes
+
+* **fscomponents:** FLAGSHIP-64 - Make Shelf a function component ([80c8110](https://github.com/brandingbrand/flagship/commit/80c8110c96af9e84f62e9b1e7e635e959ab354de))
+* **fscomponents:** replace Arial with sans-serif ([#1030](https://github.com/brandingbrand/flagship/issues/1030)) ([6caa10d](https://github.com/brandingbrand/flagship/commit/6caa10d3055ef6a3efd13711b733b13babf15a5c))
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm ([d172d25](https://github.com/brandingbrand/flagship/commit/d172d25307d8a0f96f1681786899b0574c2a7c28))
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** ModalHalfScreen listener height update ([#957](https://github.com/brandingbrand/flagship/issues/957)) ([abbcf03](https://github.com/brandingbrand/flagship/commit/abbcf033192b1438f3c6abd6b99f7b3776e91979))
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+
+### Features
+
+* **fscomponents:** add custom modal content logic and test view ([7baf939](https://github.com/brandingbrand/flagship/commit/7baf939))
+* **fscomponents:** add hideZoomButton props to ZoomCarousel ([d342370](https://github.com/brandingbrand/flagship/commit/d342370))
+* **fscomponents:** add nextArrowOnBlur prop to pass through ([f49960a](https://github.com/brandingbrand/flagship/commit/f49960a))
+* **fscomponents:** add some option props to zoomCarousel ([722cd92](https://github.com/brandingbrand/flagship/commit/722cd92))
+* **fscomponents:** extend changes to non web-specific zoomcarousel ([fddce73](https://github.com/brandingbrand/flagship/commit/fddce73))
+* **fscomponents:** support more styling options for MultiCarousel ([cf964f9](https://github.com/brandingbrand/flagship/commit/cf964f9))
+
+
+
+
+
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* Add 'Marquis' feature to Button with title dynamically reflecting CTA state ([9c49aa7](https://github.com/brandingbrand/flagship/commit/9c49aa7))
+* remove unnecessary checks ([9789ff3](https://github.com/brandingbrand/flagship/commit/9789ff3))
+
+
+
+
+
 ## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

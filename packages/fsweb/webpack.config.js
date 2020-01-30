@@ -1,15 +1,21 @@
 const webpack = require('webpack');
 const path = require("path");
 const autoprefixer = require('autoprefixer');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserJsPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const history = require('connect-history-api-fallback');
-const convert = require('koa-connect');
 const escapedSep = '\\' + path.sep;
+
+let webConfig;
+
+try {
+  webConfig = require('./config.web.json')
+} catch (exception) {
+  console.warn('Cannot find web config');
+}
 
 const globalConfig = {
   optimization: {
@@ -168,27 +174,41 @@ const globalConfig = {
 };
 
 module.exports = function(env, options) {
+  const defaultEnv = JSON.stringify(
+    (env && env.defaultEnvName) ||
+    (webConfig && webConfig.defaultEnvName) ||
+    'prod'
+  );
+
   // add our environment specific config to the webpack config based on mode
   if (options && options.mode === 'production') {
     !options.json && console.log('Webpacking for Production');
     globalConfig.mode = 'production';
     globalConfig.output.filename = 'static/js/bundle.[hash:8].js';
+    globalConfig.optimization = {
+      minimize: true,
+      minimizer: [
+        new TerserJsPlugin({
+          test: /.m?[jt]sx?/,
+          parallel: 4,
+          terserOptions: {
+            mangle: true,
+            compress: true,
+            output: {
+              beautify: false,
+              comments: false
+            }
+          }
+        })
+      ]
+    };
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
         filename: 'static/css/[name].[hash:8].css'
       }),
       new webpack.DefinePlugin({
-        __DEV__: env.enableDev ? true : false,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
-      }),
-      new UglifyJsPlugin({
-        test: /.m?[jt]sx?/,
-        parallel: 4,
-        extractComments: () => false,
-        uglifyOptions: {
-          mangle: true,
-          compress: true
-        }
+        __DEV__: env && env.enableDev ? true : false,
+        __DEFAULT_ENV__: defaultEnv
       }),
       new HtmlWebpackPlugin({
         inject: true,
@@ -233,12 +253,11 @@ module.exports = function(env, options) {
     ]);
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
-    globalConfig.serve = {
-      content: "./dev-server",
-      add: (app, middleware, options) => {
-        app.use(convert(history()));
-      }
-    }
+    globalConfig.devServer = {
+      contentBase: path.join(__dirname, 'dev-server'),
+      historyApiFallback: true,
+      port: 8080
+    };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
@@ -246,7 +265,7 @@ module.exports = function(env, options) {
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod')
+        __DEFAULT_ENV__: defaultEnv
       })
     ]);
   }
