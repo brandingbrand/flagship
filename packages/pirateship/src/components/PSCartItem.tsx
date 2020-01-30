@@ -306,11 +306,11 @@ const PSCartItem: FunctionComponent<PSCartItemProps> = (props): JSX.Element => {
             </Text>
           )}
         </TouchableOpacity>
-        {item.totalPrice &&
+        {item.totalPrice && (
           <Text style={styles.itemTotal}>
             {translate.currency(item.totalPrice)}
           </Text>
-        }
+        )}
       </View>
     );
   };
@@ -325,13 +325,14 @@ const PSCartItem: FunctionComponent<PSCartItemProps> = (props): JSX.Element => {
         <Text style={[styles.itemTextHeader, itemTextHeaderStyle]}>
           {item.title}
         </Text>
-        {props.isLoggedIn &&
-        (<TouchableOpacity
-          style={[styles.itemHeaderFavorite, addToFavoritesStyle]}
-          onPress={addToFavorites}
-        >
-          <Image source={favoriteBadge} />
-        </TouchableOpacity>)}
+        {props.isLoggedIn && (
+          <TouchableOpacity
+            style={[styles.itemHeaderFavorite, addToFavoritesStyle]}
+            onPress={addToFavorites}
+          >
+            <Image source={favoriteBadge} />
+          </TouchableOpacity>
+        )}
       </View>
       <CartItem
         renderDetails={renderDetails}
