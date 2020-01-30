@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const blacklist = require('metro-config/src/defaults/blacklist');
+const escapedSep = '\\' + path.sep;
 
 /**
  * Blacklist any duplicate packages within the individual
@@ -14,10 +15,10 @@ function generateBlacklist() {
   fs.readdirSync(packageModules).forEach(moduleDir => {
     if (moduleDir === 'react-native') {
       // match all packages except fstestproject
-      duplicateModules.push(new RegExp('packages/(?:(?!fstestproject).*)/node_modules/' + moduleDir + '/.*'));
-      duplicateModules.push(new RegExp(rootModules + '/' + moduleDir + '/.*'));
+      duplicateModules.push(new RegExp('packages' + escapedSep + '(?:(?!fstestproject).*)' + escapedSep + 'node_modules' + escapedSep + moduleDir + escapedSep + '.*'));
+      duplicateModules.push(new RegExp(rootModules.replace(new RegExp(escapedSep, 'g'), escapedSep) + escapedSep + moduleDir + escapedSep + '.*'));
     } else if (moduleDir !== '.bin' && fs.existsSync(path.resolve(rootModules, moduleDir))) {
-      duplicateModules.push(new RegExp('packages/.*/node_modules/' + moduleDir + '/.*'));
+      duplicateModules.push(new RegExp('packages' + escapedSep + '.*' + escapedSep + 'node_modules' + escapedSep + moduleDir + escapedSep + '.*'));
     }
   });
 
