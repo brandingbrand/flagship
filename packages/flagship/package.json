@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/flagship",
   "sideEffects": false,
-  "version": "7.4.1",
+  "version": "8.1.0",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -18,8 +18,8 @@
     "jsc-android": "241213.x.x",
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "replace-in-file": "^4.1.0",
-    "yargs": "^12.0.1"
+    "replace-in-file": "^5.0.2",
+    "yargs": "^15.0.1"
   },
   "rnpm": {
     "android": {
@@ -30,8 +30,8 @@
     }
   },
   "devDependencies": {
-    "@brandingbrand/fsengage": "^7.4.1",
-    "@types/yargs": "^12.0.1",
+    "@brandingbrand/fsengage": "^8.1.0",
+    "@types/yargs": "^15.0.0",
     "true-case-path": "^1.0.3"
   },
   "publishConfig": {
