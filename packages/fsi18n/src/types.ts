@@ -23,7 +23,9 @@ export type TranslationKey = string | {
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
+    alertDefaults: AlertDefaultsTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
+    filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
     sort: SortTranslations<KeyType>;
@@ -35,11 +37,18 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     storeLocator: StoreLocatorTranslations<KeyType>;
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
+    applePayButton: ApplePayButtonTranslations<KeyType>;
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
     shareButton: ShareButtonTranslations<KeyType>;
+    loginForm: LoginFormTranslations<KeyType>;
   };
+}
+
+export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
+  ok: KeyType;
+  cancel: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
@@ -52,6 +61,16 @@ export interface EmailErrors<KeyType = TranslationKey> {
   missing: KeyType;
   mismatch: KeyType;
   invalid: KeyType;
+}
+
+export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
+  clearAll: KeyType;
+  done: KeyType;
+  all: KeyType;
+  reset: KeyType;
+  apply: KeyType;
+  hintToggle: KeyType;
+  hintBack: KeyType;
 }
 
 export interface CartTranslations<KeyType> {
@@ -214,6 +233,9 @@ export interface ZoomCarouselTranslations<KeyType> {
     prev: {
       actionBtn: KeyType;
     };
+    focus: {
+      actionBtn: KeyType;
+    };
   };
 }
 
@@ -276,6 +298,22 @@ export interface CheckoutTranslations<KeyType> {
   summary: {
     total: KeyType;
   };
+  creditCardForm: {
+    name: KeyType;
+    nameError: KeyType;
+    numberLabel: KeyType;
+    numberPlaceholder: KeyType;
+    numberError: KeyType;
+    cscPlaceholder: KeyType;
+    cscError: KeyType;
+    expirationLabel: KeyType;
+    expirationPlaceholder: KeyType;
+    expirationError: KeyType;
+  };
+}
+
+export interface ApplePayButtonTranslations<KeyType> {
+  text: KeyType;
 }
 
 export interface StepTranslations<KeyType> {
@@ -286,6 +324,7 @@ export interface StepTranslations<KeyType> {
 
 export interface SelectorTranslations<KeyType> {
   close: KeyType;
+  select: KeyType;
 }
 
 export interface MultiCarouselTranslations<KeyType> {
@@ -295,4 +334,9 @@ export interface MultiCarouselTranslations<KeyType> {
 
 export interface ShareButtonTranslations<KeyType> {
   text: KeyType;
+}
+export interface LoginFormTranslations<KeyType> {
+  email: KeyType;
+  password: KeyType;
+  submit: KeyType;
 }
