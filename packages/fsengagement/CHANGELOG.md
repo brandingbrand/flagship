@@ -3,6 +3,158 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Features
+
+* **fsengagement:** add animated card list for demo ([#954](https://github.com/brandingbrand/flagship/issues/954)) ([b58032a](https://github.com/brandingbrand/flagship/commit/b58032a39ce5ef30f855dfc3eaf1e9c68a9c90bc))
+* **fsengagement:** add image grid component ([#947](https://github.com/brandingbrand/flagship/issues/947)) ([19c7489](https://github.com/brandingbrand/flagship/commit/19c74893ace426659d09a45b0dd7f5a6f2d3e1d6))
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.4.0](https://github.com/brandingbrand/flagship/compare/v7.3.0...v7.4.0) (2019-10-08)
+
+
+### Features
+
+* **fsengagement:** expose new inbox route that sets attributes ([21fe454](https://github.com/brandingbrand/flagship/commit/21fe454))
+* **fsengagement:** remove moment library ([e15bfb1](https://github.com/brandingbrand/flagship/commit/e15bfb1))
+
+
+
+
+
+# [7.3.0](https://github.com/brandingbrand/flagship/compare/v7.2.0...v7.3.0) (2019-10-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
 # [7.2.0](https://github.com/brandingbrand/flagship/compare/v7.1.1...v7.2.0) (2019-10-07)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement

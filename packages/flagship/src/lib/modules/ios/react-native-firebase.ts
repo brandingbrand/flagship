@@ -48,7 +48,7 @@ export function preLink(configuration: Config): void {
   const firebasePod = `pod 'Firebase/Core', '5.12.0'`;
 
   if (podfile.indexOf(firebasePod) === -1) {
-    pods.add(path.ios.podfilePath(), [firebasePod]);
+    pods.add([firebasePod]);
     logInfo('updated Podfile with Firebase pod');
   }
 
@@ -57,7 +57,7 @@ export function preLink(configuration: Config): void {
   const googleMeasurementPod = `pod 'GoogleAppMeasurement', '5.3.0'`;
 
   if (podfile.indexOf(googleMeasurementPod) === -1) {
-    pods.add(path.ios.podfilePath(), [googleMeasurementPod]);
+    pods.add([googleMeasurementPod]);
     logInfo('updated Podfile with GoogleAppMeasurement pod');
   }
 

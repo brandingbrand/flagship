@@ -29,6 +29,7 @@ export interface BuilderArgs {
 export interface HandlerArgs {
   platform: string;
   env: string;
+  onlyDefault: boolean;
 }
 
 const TEMPLATE_ANDROID_PACKAGE = 'com.brandingbrand.reactnative.and.flagship';
@@ -59,7 +60,7 @@ export function handler(argv: HandlerArgs): void {
   helpers.logInfo(`Flagship ${platform} init`);
 
   const projectPackageJSON = require(path.project.resolve('package.json'));
-  const configuration = initEnvironment(argv.env, projectPackageJSON);
+  const configuration = initEnvironment(argv.env, projectPackageJSON, argv.onlyDefault);
 
   if (doAndroid) {
     initAndroid(projectPackageJSON, configuration, projectPackageJSON.version, argv.env);
@@ -96,16 +97,18 @@ export function handler(argv: HandlerArgs): void {
  *
  * @param {string} environmentIdentifier The environment identifier for which to initialize.
  * @param {object} packageJSON The project's package.json.
+ * @param {boolean} onlyDefault Set if you want only the default environment added to the project
  * @returns {object} The project configuration.
  */
 function initEnvironment(
   environmentIdentifier: string,
-  packageJSON: NPMPackageConfig
+  packageJSON: NPMPackageConfig,
+  onlyDefault?: boolean
 ): Config {
   const configuration = env.configuration(environmentIdentifier, packageJSON);
 
   env.write(configuration); // Replace env.js with the current environment
-  env.createEnvIndex();
+  env.createEnvIndex(onlyDefault ? environmentIdentifier : undefined);
 
   return configuration;
 }
@@ -140,7 +143,6 @@ function initAndroid(
   rename.source('FLAGSHIP', configuration.name, 'android');
   rename.source('CONFIG_BUNDLE_ID', pkgId, 'android');
   rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
-  rename.files('FLAGSHIP', configuration.name, 'android');
 
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
 
@@ -216,7 +218,12 @@ function initIOS(
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
   if (configuration.ios) {
     if (configuration.ios.pods) {
-      cocoapods.sources(configuration.ios.pods.sources);
+      if (configuration.ios.pods.sources) {
+        cocoapods.sources(configuration.ios.pods.sources);
+      }
+      if (configuration.ios.pods.newPods) {
+        cocoapods.add(configuration.ios.pods.newPods);
+      }
     }
   }
 
@@ -246,6 +253,14 @@ function initWeb(
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
     path.project.resolve('web')
+  );
+
+  // create config for web version
+  fs.writeFileSync(
+    path.project.resolve('web', 'config.web.json'),
+    JSON.stringify({
+      defaultEnvName: environmentIdentifier
+    })
   );
 
   web.homepage(configuration.webPath || '/');

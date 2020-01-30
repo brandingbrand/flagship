@@ -3,6 +3,160 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Features
+
+* update webpack dependencies ([8d86721](https://github.com/brandingbrand/flagship/commit/8d86721c832a575ca8c2a8baf3edfbfb7ccf83ce))
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [7.5.3](https://github.com/brandingbrand/flagship/compare/v7.5.2...v7.5.3) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [7.5.2](https://github.com/brandingbrand/flagship/compare/v7.5.1...v7.5.2) (2019-11-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [7.5.1](https://github.com/brandingbrand/flagship/compare/v7.5.0...v7.5.1) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.5.0](https://github.com/brandingbrand/flagship/compare/v7.4.3...v7.5.0) (2019-11-07)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [7.4.3](https://github.com/brandingbrand/flagship/compare/v7.4.2...v7.4.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* **fsweb:** Lock babel runtime in package.json ([#905](https://github.com/brandingbrand/flagship/issues/905)) ([92aa97e](https://github.com/brandingbrand/flagship/commit/92aa97e))
+
+
+
+
+
+## [7.4.2](https://github.com/brandingbrand/flagship/compare/v7.4.1...v7.4.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* get default env from initial script ([af5d5ad](https://github.com/brandingbrand/flagship/commit/af5d5ad))
+* **fsweb:** Use yarn.lock for fsweb ([#906](https://github.com/brandingbrand/flagship/issues/906)) ([2405dda](https://github.com/brandingbrand/flagship/commit/2405dda))
+
+
+
+
+
+## [7.4.1](https://github.com/brandingbrand/flagship/compare/v7.4.0...v7.4.1) (2019-10-09)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.4.0](https://github.com/brandingbrand/flagship/compare/v7.3.0...v7.4.0) (2019-10-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [7.3.0](https://github.com/brandingbrand/flagship/compare/v7.2.0...v7.3.0) (2019-10-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
 # [7.2.0](https://github.com/brandingbrand/flagship/compare/v7.1.1...v7.2.0) (2019-10-07)
 
 **Note:** Version bump only for package @brandingbrand/fsweb

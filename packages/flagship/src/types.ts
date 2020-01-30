@@ -24,7 +24,7 @@ export interface Config {
   };
 
   appCenter?: {
-    apiToken: string;
+    apiToken?: string; // deprecated; will be removed in a future release
     organization: string;
     distribute?: {
       appNameIOS?: string;
@@ -78,7 +78,8 @@ export interface Config {
   entitlementsFileIOS?: string;
   usageDescriptionIOS?: {
     key: string;
-    string: string;
+    string?: string;
+    array?: string[];
   }[];
 
   UIBackgroundModes?: {
@@ -152,7 +153,8 @@ export interface IOSConfig {
 }
 
 export interface PodsConfig {
-  sources: string[];
+  sources?: string[];
+  newPods?: string[];
 }
 
 export interface NPMPackageConfig {

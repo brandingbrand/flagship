@@ -17,7 +17,11 @@ import {
 import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
+import { Modal } from '../Modal';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
+const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
+const zoomTranslationKey = FSI18n.string(componentTranslationKeys.fullscreen.actionBtn);
 const searchIcon = require('../../../assets/images/search.png');
 
 let ZOOM_CAROUSEL_ID = 0;
@@ -259,6 +263,44 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
+  renderPhotoSwipe = () => (
+    <PhotoSwipe
+      isOpen={this.state.isZooming}
+      items={this.props.images
+        .map(img => img.zoomSrc || img.src)
+        .map((img, i) => ({
+          src: img.uri || img,
+          w: this.state.screenWidth,
+          h: this.state.imageSizes[i]
+            ? this.state.screenWidth *
+              this.state.imageSizes[i].height /
+              this.state.imageSizes[i].width
+            : this.state.imageHeight
+        }))}
+      options={{
+        loop: false,
+        fullscreenEl: false,
+        shareEl: false,
+        captionEl: false,
+        history: false,
+        closeOnScroll: false,
+        index: this.state.currentIndex
+      }}
+      afterChange={this.handleZoomCarouselChange}
+      onClose={this.closeZoom}
+    />
+  )
+
+  renderCustomModal = () => (
+    this.props.renderModalContent ?
+      (
+        <Modal visible={this.state.isZooming} transparent={true}>
+          {this.props.renderModalContent(this.closeZoom)}
+        </Modal>
+      ) :
+    this.renderPhotoSwipe()
+  )
+
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
 
@@ -297,37 +339,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 {this.props.renderZoomButton ? (
                   this.props.renderZoomButton(this.openZoom)
                 ) : (
-                  <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                  <TouchableOpacity
+                    style={S.zoomButton}
+                    onPress={this.openZoom}
+                    accessibilityRole={'button'}
+                    accessibilityLabel={zoomTranslationKey}
+                  >
                     <Image style={S.searchIcon} source={searchIcon} />
                   </TouchableOpacity>
                 )}
               </View>}
-
-            <PhotoSwipe
-              isOpen={this.state.isZooming}
-              items={this.props.images
-                .map(img => img.zoomSrc || img.src)
-                .map((img, i) => ({
-                  src: img.uri || img,
-                  w: this.state.screenWidth,
-                  h: this.state.imageSizes[i]
-                    ? this.state.screenWidth *
-                      this.state.imageSizes[i].height /
-                      this.state.imageSizes[i].width
-                    : this.state.imageHeight
-                }))}
-              options={{
-                loop: false,
-                fullscreenEl: false,
-                shareEl: false,
-                captionEl: false,
-                history: false,
-                closeOnScroll: false,
-                index: this.state.currentIndex
-              }}
-              afterChange={this.handleZoomCarouselChange}
-              onClose={this.closeZoom}
-            />
+              {this.renderCustomModal()}
           </div>
         </View>
 
@@ -351,6 +373,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                     this.state.currentIndex === i && S.thumbnailSelected
                   ]}
                   onPress={this.handleThumbPress(i)}
+                  accessibilityRole={'button'}
+                  accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
                 >
                   <Image
                     resizeMode='cover'
