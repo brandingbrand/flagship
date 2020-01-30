@@ -241,6 +241,12 @@ export const keys: FSTranslationKeys = {
     multiCarousel: {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
+    },
+    promoForm: {
+      label: 'Promo code',
+      placeholder: 'Enter Promo Code',
+      errorMessage: 'Invalid promo code',
+      button: 'Submit'
     }
   }
 };
