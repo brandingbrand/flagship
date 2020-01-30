@@ -44,7 +44,7 @@ const formSchema = yup.object().shape({
     .string()
     .required()
     .label('Confirm Password')
-    .test('password-match', 'Password must match ya fool', function(value: string): boolean {
+    .test('password-match', 'Password must match', function(value: string): boolean {
       // tslint:disable-next-line:no-invalid-this
       return this.parent.currentPassword === value;
     }),
