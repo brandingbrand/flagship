@@ -20,6 +20,7 @@ export const keys: FSTranslationKeys = {
     },
     cart: {
       isEmpty: 'Empty Cart',
+      itemsInCart: 'Items In Your Cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'

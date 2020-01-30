@@ -74,6 +74,7 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
 
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
+  itemsInCart: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
