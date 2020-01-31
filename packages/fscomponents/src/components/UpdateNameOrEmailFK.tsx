@@ -15,7 +15,7 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.updateNameOrEmail;
 
 
-export interface SingleLineFormPropsFK {
+export interface UpdateNameOrEmailPropsFK {
   onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
@@ -39,7 +39,7 @@ export interface FormValues {
   password: string;
 }
 
-export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
+export const UpdateNameOrEmailFK: React.FC<UpdateNameOrEmailPropsFK> = props => {
   const initialValues: FormValues = {
     firstName: '',
     lastName: '',
@@ -51,23 +51,23 @@ export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
     firstName: yup
       .string()
       .label('First Name')
-      .required()
-      .min(2, FSI18n.string(componentTranslationKeys.form.firstName.error)),
+      .required(FSI18n.string(componentTranslationKeys.form.firstName.error))
+      .min(2),
     lastName: yup
       .string()
       .label('Last Name')
-      .required()
-      .min(2, FSI18n.string(componentTranslationKeys.form.lastName.error)),
-    emailAdres: yup
+      .required(FSI18n.string(componentTranslationKeys.form.lastName.error))
+      .min(2),
+    emailAddress: yup
       .string()
       .label('Email')
-      .email(FSI18n.string(componentTranslationKeys.form.emailAddress.error.missing))
-      .required(),
+      .email()
+      .required(FSI18n.string(componentTranslationKeys.form.emailAddress.error.missing)),
     password: yup
       .string()
       .label('Password')
       .required()
-      .min(6, FSI18n.string(componentTranslationKeys.form.password.error.tooShort))
+      .min(6)
   });
 
   const handleSubmit = (value: FormValues) => {
