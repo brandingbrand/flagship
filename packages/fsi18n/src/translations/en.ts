@@ -262,6 +262,10 @@ export const keys: FSTranslationKeys = {
     applePayButton: {
       text: 'Pay With Apple Pay'
     },
+    payPalButton: {
+      defaultTitle: 'Checkout',
+      defaultTagLine: 'The safer, easier way to pay'
+    },
     step: {
       announcements: {
         stepCompleted: 'Step Completed.'
