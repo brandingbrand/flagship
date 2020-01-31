@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 import { Button, ButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
 type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palette'>;
 
@@ -57,8 +59,8 @@ export class PayPalCheckoutButton extends Component<PayPalCheckoutButtonProps> {
   static defaultProps: DefaultProps = {
     shape: 'rect',
     theme: 'gold',
-    title: 'Checkout',
-    tagLine: 'The safer, easier way to pay'
+    title: FSI18n.string(componentTranslationKeys.defaultTitle),
+    tagLine: FSI18n.string(componentTranslationKeys.defaultTagLine)
   };
 
   render(): JSX.Element {
