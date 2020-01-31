@@ -35,6 +35,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     zoomCarousel: ZoomCarouselTranslations<KeyType>;
     registration: RegistrationTranslations<KeyType>;
     storeLocator: StoreLocatorTranslations<KeyType>;
+    moreText: MoreTextTranslations<KeyType>;
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
     applePayButton: ApplePayButtonTranslations<KeyType>;
@@ -280,6 +281,11 @@ export interface StoreLocatorTranslations<KeyType> {
       actionBtn: KeyType;
     };
   };
+}
+
+export interface MoreTextTranslations<KeyType> {
+  readMore: KeyType;
+  readLess: KeyType;
 }
 
 export interface ProductIndexTranslations<KeyType> {
