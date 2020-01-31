@@ -231,6 +231,10 @@ export const keys: FSTranslationKeys = {
         }
       }
     },
+    moreText: {
+      readMore: 'Read More',
+      readLess: 'Read Less'
+    },
     productIndex: {
       cancel: 'Cancel',
       filterBy: 'Filter By',
