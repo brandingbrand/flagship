@@ -33,7 +33,7 @@ export interface SingleLineFormPropsFK {
   fieldsStyleConfig?: any;
 }
 
-const bootonStyle = StyleSheet.create({
+const buttonStyle = StyleSheet.create({
   submitButtonStyle: {
     width: 100,
     backgroundColor: '#EEE',
@@ -64,7 +64,7 @@ export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
     }
   };
 
-  const handleBoton = (f: FormikProps<FormValues>) => () => {
+  const handleButton = (f: FormikProps<FormValues>) => () => {
     f.handleSubmit();
   };
 
@@ -87,11 +87,11 @@ export const SingleLineFormFK: React.FC<SingleLineFormPropsFK> = props => {
             />
             <TouchableOpacity
               style={[
-                bootonStyle.submitButtonStyle,
+                buttonStyle.submitButtonStyle,
                 props.submitButtonStyle,
                 labelPosition === 0 && { marginLeft: 10, marginTop: -12 }
               ]}
-              onPress={handleBoton(f)}
+              onPress={handleButton(f)}
             >
               <Text style={props.submitTextStyle}>
                 {props.submitText || 'Submit'}
