@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import * as t from 'tcomb-form-native';
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
 import { Omit } from '@brandingbrand/fsfoundation';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.promoForm;
+
 
 export interface PromoFormValue {
   promoCode: string;
@@ -29,11 +32,11 @@ export class PromoForm extends Component<PromoFormProps> {
       ...props.fieldsOptions,
       promoCode: {
         auto: 'none',
-        placeholder: 'Enter Promo Code',
+        placeholder: FSI18n.string(componentTranslationKeys.enterPromo),
         returnKeyType: 'go',
         autoCorrect: false,
         autoCapitalize: 'none',
-        error: 'Please enter a valid promo code',
+        error: FSI18n.string(componentTranslationKeys.error),
         ...props.fieldsOptions.promoCode
       }
     };
