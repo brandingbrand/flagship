@@ -14,8 +14,13 @@ export const emailErrors: EmailErrors = {
 
 export const keys: FSTranslationKeys = {
   flagship: {
+    alertDefaults: {
+      ok: 'OK',
+      cancel: 'Cancel'
+    },
     cart: {
       isEmpty: 'Empty Cart',
+      itemsInCart: 'Items In Your Cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'
@@ -46,6 +51,15 @@ export const keys: FSTranslationKeys = {
           text: 'Estimated Total'
         }
       }
+    },
+    filterListDefaults: {
+      clearAll: 'Clear All',
+      done: 'Done',
+      all: 'All',
+      reset: 'RESET',
+      apply: 'APPLY',
+      hintToggle: 'Toggles Filter',
+      hintBack: 'Go back one filter level'
     },
     feedback: {
       actions: {
@@ -170,6 +184,9 @@ export const keys: FSTranslationKeys = {
         },
         next: {
           actionBtn: 'Next (arrow right)'
+        },
+        focus: {
+          actionBtn: 'Focus item in carousel'
         }
       }
     },
@@ -214,6 +231,10 @@ export const keys: FSTranslationKeys = {
         }
       }
     },
+    moreText: {
+      readMore: 'Read More',
+      readLess: 'Read Less'
+    },
     productIndex: {
       cancel: 'Cancel',
       filterBy: 'Filter By',
@@ -228,7 +249,26 @@ export const keys: FSTranslationKeys = {
       },
       summary: {
         total: 'Total'
+      },
+      creditCardForm: {
+        name: 'Name',
+        nameError: 'Please Enter Your Name',
+        numberLabel: 'Card Number',
+        numberPlaceholder: 'Credit Card Number',
+        numberError: 'invalid card number entered',
+        cscPlaceholder: 'CSC',
+        cscError: 'Invalid CSC',
+        expirationLabel: 'Exp. Date',
+        expirationPlaceholder: 'Exp. Date (MM/YY)',
+        expirationError: 'Invalid MM/YY'
       }
+    },
+    applePayButton: {
+      text: 'Pay With Apple Pay'
+    },
+    payPalButton: {
+      defaultTitle: 'Checkout',
+      defaultTagLine: 'The safer, easier way to pay'
     },
     step: {
       announcements: {
@@ -236,11 +276,20 @@ export const keys: FSTranslationKeys = {
       }
     },
     selector: {
-      close: 'Close'
+      close: 'Close',
+      select: 'Select'
     },
     multiCarousel: {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
+    },
+    shareButton: {
+      text: 'Click To Share'
+    },
+    loginForm: {
+      email: 'Email',
+      password: 'Password',
+      submit: 'Submit'
     }
   }
 };

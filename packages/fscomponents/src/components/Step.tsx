@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   Image,
   ImageStyle,
@@ -49,52 +49,51 @@ export interface StepProps {
  * Individual step of the step indicator
  *  is a touchable element if step is completed
  */
-export class Step extends Component<StepProps> {
-  render(): JSX.Element {
-    if (this.props.completed) {
-      const stepCompletedLabel =
-        FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
-      const accessibilityLabel = `${this.props.title}, ${stepCompletedLabel}`;
+export const Step: FunctionComponent<StepProps> = memo((props): JSX.Element => {
 
-      return (
-        <TouchableOpacity
-          onPress={this.props.onPress}
-          style={[styles.container, this.props.style]}
-          accessibilityRole='button'
-          accessibilityLabel={accessibilityLabel}
-        >
-          {this.renderTitle()}
-          {this.renderDoneIcon()}
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <View style={[styles.container, this.props.style]}>
-          {this.renderTitle()}
-          {this.renderDoneIcon()}
-        </View>
-      );
-    }
-  }
-
-  private renderDoneIcon = () => {
-    if (!this.props.completed || !this.props.completedIcon) {
+  const renderDoneIcon = () => {
+    if (!props.completed || !props.completedIcon) {
       return null;
     }
 
     return (
       <Image
-        style={[styles.completedIcon, this.props.completedIconStyle]}
-        source={this.props.completedIcon}
+        style={[styles.completedIcon, props.completedIconStyle]}
+        source={props.completedIcon}
       />
     );
-  }
+  };
 
-  private renderTitle = () => {
+  const renderTitle = () => {
     return (
-      <Text style={[styles.titleText, this.props.titleStyle]}>
-        {this.props.title}
+      <Text style={[styles.titleText, props.titleStyle]}>
+        {props.title}
       </Text>
     );
+  };
+
+  if (props.completed) {
+    const stepCompletedLabel =
+      FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
+    const accessibilityLabel = `${props.title}, ${stepCompletedLabel}`;
+
+    return (
+      <TouchableOpacity
+        onPress={props.onPress}
+        style={[styles.container, props.style]}
+        accessibilityRole='button'
+        accessibilityLabel={accessibilityLabel}
+      >
+        {renderTitle()}
+        {renderDoneIcon()}
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <View style={[styles.container, props.style]}>
+        {renderTitle()}
+        {renderDoneIcon()}
+      </View>
+    );
   }
-}
+});
