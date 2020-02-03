@@ -31,6 +31,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     sort: SortTranslations<KeyType>;
     reviews: ReviewsTranslations<KeyType>;
     search: SearchTranslations<KeyType>;
+    promoForm: PromoFormTranslations<KeyType>;
     updateNameOrEmail: UpdateNameOrEmailTranslations<KeyType>;
     zoomCarousel: ZoomCarouselTranslations<KeyType>;
     registration: RegistrationTranslations<KeyType>;
@@ -240,6 +241,11 @@ export interface ZoomCarouselTranslations<KeyType> {
       actionBtn: KeyType;
     };
   };
+}
+
+export interface PromoFormTranslations<KeyType> {
+  enterPromo: KeyType;
+  error: KeyType;
 }
 
 export interface RegistrationTranslations<KeyType> {
