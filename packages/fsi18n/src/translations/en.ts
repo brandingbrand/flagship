@@ -18,6 +18,27 @@ export const keys: FSTranslationKeys = {
       ok: 'OK',
       cancel: 'Cancel'
     },
+    addressForm: {
+      firstName: 'First Name',
+      firstNameError: 'Please enter the first name',
+      lastName: 'Last Name',
+      lastNameError: 'Please enter the last name',
+      address1: 'Address Line 1',
+      address1Error: 'Please enter the address',
+      address2: 'Address Line 2',
+      city: 'City',
+      cityError: 'Please enter the city',
+      postal: 'Zip Code',
+      postalError: 'Please enter a valid zip code',
+      state: 'State',
+      stateError: 'Please enter the state',
+      phone: 'Phone',
+      phoneError: 'Please enter a valid phone number',
+      email: 'Email',
+      emailError: 'Please enter a valid email address',
+      poBox: 'Check if this is P.O Box',
+      submit: 'Submit'
+    },
     cart: {
       isEmpty: 'Empty Cart',
       itemsInCart: 'Items In Your Cart',

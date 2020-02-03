@@ -5,6 +5,8 @@ import * as t from 'tcomb-form-native';
 import { cloneDeep, merge, pickBy } from 'lodash-es';
 import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.addressForm;
 
 export interface AddressFormProps {
   fieldsStyleConfig?: any;
@@ -93,68 +95,68 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
 
   const fieldsOptions = merge({}, {
     firstName: {
-      placeholder: 'First name',
+      placeholder: FSI18n.string(componentTranslationKeys.firstName),
       returnKeyType: 'next',
       autoCorrect: false,
       onSubmitEditing: () => focusField('lastName'),
-      error: 'Please enter the first name'
+      error: FSI18n.string(componentTranslationKeys.firstNameError)
     },
     lastName: {
-      placeholder: 'Last Name',
+      placeholder: FSI18n.string(componentTranslationKeys.lastName),
       returnKeyType: 'next',
       autoCorrect: false,
       onSubmitEditing: () => focusField('address1'),
-      error: 'Please enter the last name'
+      error: FSI18n.string(componentTranslationKeys.lastNameError)
     },
     address1: {
-      placeholder: 'Address Line 1',
+      placeholder: FSI18n.string(componentTranslationKeys.address1),
       returnKeyType: 'next',
       onSubmitEditing: () => focusField('address2'),
-      error: 'Please enter the address'
+      error: FSI18n.string(componentTranslationKeys.address1Error)
     },
     address2: {
-      placeholder: 'Address Line 2',
+      placeholder: FSI18n.string(componentTranslationKeys.address2),
       returnKeyType: 'next',
       onSubmitEditing: () => focusField('city')
     },
     city: {
-      placeholder: 'City',
+      placeholder: FSI18n.string(componentTranslationKeys.city),
       returnKeyType: 'next',
       onSubmitEditing: () => focusField('postalCode'),
-      error: 'Please enter the city'
+      error: FSI18n.string(componentTranslationKeys.cityError)
     },
     postalCode: {
-      placeholder: 'Zip Code',
+      placeholder: FSI18n.string(componentTranslationKeys.postal),
       keyboardType: 'number-pad',
       autoCorrect: false,
       returnKeyType: 'next',
       onSubmitEditing: () => focusField('stateCode'),
-      error: 'Please enter a valid zip code'
+      error: FSI18n.string(componentTranslationKeys.postalError)
     },
     stateCode: {
-      placeholder: 'State',
+      placeholder: FSI18n.string(componentTranslationKeys.state),
       onSubmitEditing: () => focusField('phone'),
-      error: 'Please enter the state'
+      error: FSI18n.string(componentTranslationKeys.stateError)
     },
     phone: {
-      placeholder: 'Phone',
+      placeholder: FSI18n.string(componentTranslationKeys.phone),
       keyboardType: 'number-pad',
       autoCorrect: false,
       autoCapitalize: 'none',
       returnKeyType: 'next',
       onSubmitEditing: () => focusField('email'),
-      error: 'Please enter a valid phone number'
+      error: FSI18n.string(componentTranslationKeys.phoneError)
     },
     email: {
-      placeholder: 'Email',
+      placeholder: FSI18n.string(componentTranslationKeys.email),
       returnKeyType: 'next',
       autoCorrect: false,
       autoCapitalize: 'none',
       keyboardType: 'email-address',
-      error: 'Please enter a valid email address'
+      error: FSI18n.string(componentTranslationKeys.emailError)
     },
     isPoBox: {
-      label: 'Check if this is P.O Box',
+      label: FSI18n.string(componentTranslationKeys.poBox),
       stylesheet: checkboxStyleConfig
     }
   }, props.fieldsOptions);
@@ -187,7 +189,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         onPress={handleSubmit}
       >
         <Text style={props.submitTextStyle}>
-          {props.submitText || 'Submit'}
+          {props.submitText || FSI18n.string(componentTranslationKeys.submit)}
         </Text>
       </TouchableOpacity>
     </View>
