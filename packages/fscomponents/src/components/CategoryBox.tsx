@@ -48,7 +48,7 @@ const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
       accessibilityRole='imagebutton'
     >
       <View style={S.boxInner}>
-        {showImage && image && <Image source={image} style={imageStyle} />}
+        {showImage !== false && image && <Image source={image} style={imageStyle} />}
         <Text style={[S.boxText, titleStyle]}>
           {title}
         </Text>
@@ -57,8 +57,4 @@ const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
   );
 };
 
-export const CategoryBox = React.memo(CategoryBoxInner) as any;
-
-CategoryBox.defaultProps = {
-  showImage: true
-};
+export const CategoryBox = React.memo(CategoryBoxInner);
