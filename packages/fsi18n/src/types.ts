@@ -24,6 +24,7 @@ export type TranslationKey = string | {
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
     alertDefaults: AlertDefaultsTranslations<KeyType>;
+    addressForm: AddressFormTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
     filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
@@ -52,6 +53,28 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
 export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
   ok: KeyType;
   cancel: KeyType;
+}
+
+export interface AddressFormTranslations<KeyType = TranslationKey> {
+  firstName: KeyType;
+  firstNameError: KeyType;
+  lastName: KeyType;
+  lastNameError: KeyType;
+  address1: KeyType;
+  address1Error: KeyType;
+  address2: KeyType;
+  city: KeyType;
+  cityError: KeyType;
+  postal: KeyType;
+  postalError: KeyType;
+  state: KeyType;
+  stateError: KeyType;
+  phone: KeyType;
+  phoneError: KeyType;
+  email: KeyType;
+  emailError: KeyType;
+  poBox: KeyType;
+  submit: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
