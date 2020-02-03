@@ -20,6 +20,7 @@ export const keys: FSTranslationKeys = {
     },
     cart: {
       isEmpty: 'Empty Cart',
+      itemsInCart: 'Items In Your Cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'
@@ -230,6 +231,10 @@ export const keys: FSTranslationKeys = {
         }
       }
     },
+    moreText: {
+      readMore: 'Read More',
+      readLess: 'Read Less'
+    },
     productIndex: {
       cancel: 'Cancel',
       filterBy: 'Filter By',
@@ -261,6 +266,10 @@ export const keys: FSTranslationKeys = {
     applePayButton: {
       text: 'Pay With Apple Pay'
     },
+    payPalButton: {
+      defaultTitle: 'Checkout',
+      defaultTagLine: 'The safer, easier way to pay'
+    },
     step: {
       announcements: {
         stepCompleted: 'Step Completed.'
@@ -273,6 +282,9 @@ export const keys: FSTranslationKeys = {
     multiCarousel: {
       prevBtn: 'Show previous',
       nextBtn: 'Show next'
+    },
+    shareButton: {
+      text: 'Click To Share'
     },
     loginForm: {
       email: 'Email',
