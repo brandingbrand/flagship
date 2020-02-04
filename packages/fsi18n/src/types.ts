@@ -35,12 +35,15 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     zoomCarousel: ZoomCarouselTranslations<KeyType>;
     registration: RegistrationTranslations<KeyType>;
     storeLocator: StoreLocatorTranslations<KeyType>;
+    moreText: MoreTextTranslations<KeyType>;
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
     applePayButton: ApplePayButtonTranslations<KeyType>;
+    payPalButton: PayPalButtonTranslations<KeyType>;
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
+    shareButton: ShareButtonTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
   };
 }
@@ -74,6 +77,7 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
 
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
+  itemsInCart: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
@@ -281,6 +285,11 @@ export interface StoreLocatorTranslations<KeyType> {
   };
 }
 
+export interface MoreTextTranslations<KeyType> {
+  readMore: KeyType;
+  readLess: KeyType;
+}
+
 export interface ProductIndexTranslations<KeyType> {
   cancel: KeyType;
   filterBy: KeyType;
@@ -315,6 +324,11 @@ export interface ApplePayButtonTranslations<KeyType> {
   text: KeyType;
 }
 
+export interface PayPalButtonTranslations<KeyType> {
+  defaultTitle: KeyType;
+  defaultTagLine: KeyType;
+}
+
 export interface StepTranslations<KeyType> {
   announcements: {
     stepCompleted: KeyType;
@@ -331,6 +345,9 @@ export interface MultiCarouselTranslations<KeyType> {
   nextBtn: KeyType;
 }
 
+export interface ShareButtonTranslations<KeyType> {
+  text: KeyType;
+}
 export interface LoginFormTranslations<KeyType> {
   email: KeyType;
   password: KeyType;
