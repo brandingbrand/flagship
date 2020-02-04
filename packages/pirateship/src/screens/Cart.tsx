@@ -237,7 +237,7 @@ class Cart extends Component<CartScreenProps> {
       );
     } else if (cartData && cartData.items) {
       this.props.navigator.setTabBadge({
-        tabIndex: 1,
+        tabIndex: 2,
         badge: this.props.cart.cartCount || null,
         badgeColor: palette.primary
       });
@@ -303,7 +303,7 @@ class Cart extends Component<CartScreenProps> {
     });
 
     this.props.navigator.setTabBadge({
-      tabIndex: 1,
+      tabIndex: 2,
       badge:
         (cartData.items &&
           cartData.items.reduce((total, item) => total + item.quantity, 0)) ||
