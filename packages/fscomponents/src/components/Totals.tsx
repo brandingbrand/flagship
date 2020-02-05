@@ -8,7 +8,7 @@ export interface TotalsProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export const Totals = (props: TotalsProps): JSX.Element => {
+export const Totals: React.FunctionComponent<TotalsProps> = props => {
   const { style, totals } = props;
 
   return (
