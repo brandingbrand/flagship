@@ -28,7 +28,7 @@ export interface ReviewsSummaryProps {
   reviewIndicatorTitleTextStyle?: StyleProp<TextStyle>;
 }
 
-export const ReviewsSummary = (props: ReviewsSummaryProps): JSX.Element => {
+export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = props => {
   const {
     value,
     count,
