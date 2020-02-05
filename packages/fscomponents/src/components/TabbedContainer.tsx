@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TabbedContainer = (props: TabbedContainerProps): JSX.Element => {
+export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = props => {
   const [selectedIndex, setSelectedIndex] = useState<number>(props.initialIndex || 0);
 
   const selectTab = (index: number) => () => {
