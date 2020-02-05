@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
@@ -7,7 +8,7 @@ import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { border, color, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { CUSTOMER_SERVICE_PHONE_NUMBER } from '../lib/constants';
@@ -62,7 +63,7 @@ export interface TrackOrderLandingState {
 }
 
 export default class TrackOrderLanding extends Component<ScreenProps, TrackOrderLandingState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   form: any;
   formFields: any;
@@ -70,7 +71,13 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
 
   constructor(props: ScreenProps) {
     super(props);
-    props.navigator.setTitle({ title: translate.string(translationKeys.screens.trackOrder.title) });
+    props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.trackOrder.title)
+        }
+      }
+    });
 
     this.formFields = t.struct({
       orderId: t.String,
@@ -111,10 +118,9 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
 
 
   render(): JSX.Element {
-    const { navigator } = this.props;
-
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         style={styles.container}
         hideGlobalBanner={true}
         needInSafeArea={true}
@@ -124,7 +130,6 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 56 // offset tab bar
         }}
-        navigator={navigator}
       >
         <View>
           <Text style={styles.text}>
@@ -247,22 +252,38 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
 
   goToOrderTrackerInfo = () => {
     this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title: translate.string(translationKeys.screens.trackOrder.title),
-      passProps: {
-        url: `${env.desktopHost}/Customercare/OrderTrackerInfo.html`
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.trackOrder.title)
+            }
+          }
+        },
+        passProps: {
+          url: `${env.desktopHost}/Customercare/OrderTrackerInfo.html`
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 
   goToContactUs = () => {
     this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title: translate.string(translationKeys.screens.contactUs.title),
-      passProps: {
-        url: `${env.desktopHost}/contactus`
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.contactUs.title)
+            }
+          }
+        },
+        passProps: {
+          url: `${env.desktopHost}/contactus`
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 
   callCustomerService = async () => {

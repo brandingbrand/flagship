@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 import { demandware } from '../../lib/datasource';
@@ -55,15 +56,6 @@ export default class Demandware extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   destroyBasket = () => {
     demandware.destroyCart().then(cart => {
       alert('cart destroyed');
@@ -74,7 +66,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .fetchProduct(kExampleProductId)
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -86,7 +78,7 @@ export default class Demandware extends Component<any, any> {
       .search(kExampleSearchTerm)
       .then((data: any) => {
         data.products = data.products.slice(0, 3); // text view couldn't show too much
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -99,7 +91,7 @@ export default class Demandware extends Component<any, any> {
         categoryId: kExampleCategoryId
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -113,7 +105,7 @@ export default class Demandware extends Component<any, any> {
         sortBy: 'price-high-to-low'
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -127,7 +119,7 @@ export default class Demandware extends Component<any, any> {
         refinements: kExamplePipRefinement
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -142,7 +134,7 @@ export default class Demandware extends Component<any, any> {
         limit: 10
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -153,7 +145,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .fetchCategory('root', { })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -166,7 +158,7 @@ export default class Demandware extends Component<any, any> {
       .then((data: any) => {
         // Only return the first recommendation so the text-view can actually display it
         data = [data[0]];
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -177,7 +169,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .fetchCart()
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -188,7 +180,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .searchSuggestion('bann')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -199,7 +191,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .addToCart(kExampleProductId)
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -218,7 +210,7 @@ export default class Demandware extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -237,7 +229,7 @@ export default class Demandware extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -248,7 +240,7 @@ export default class Demandware extends Component<any, any> {
     demandware
       .applyPromo('SAVEMORE')
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);
@@ -267,7 +259,7 @@ export default class Demandware extends Component<any, any> {
         }
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         showError(err);

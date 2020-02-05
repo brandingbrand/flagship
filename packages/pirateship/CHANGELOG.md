@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Features
+
+* update pirateship to use react-native-navigation 2 ([b1a1747](https://github.com/brandingbrand/flagship/commit/b1a1747))
+
+
+
+
+
 # [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
