@@ -379,6 +379,10 @@ export interface ShareButtonTranslations<KeyType> {
 }
 export interface LoginFormTranslations<KeyType> {
   email: KeyType;
+  emailReq: KeyType;
+  emailNotValid: KeyType;
+  emailError: KeyType;
   password: KeyType;
+  passwordError: KeyType;
   submit: KeyType;
 }
