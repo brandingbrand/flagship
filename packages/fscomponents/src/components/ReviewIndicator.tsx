@@ -2,6 +2,8 @@ import React, { FunctionComponent, memo } from 'react';
 import { StyleProp, Text, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export interface ReviewIndicatorProps {
   value: number;
@@ -123,7 +125,7 @@ memo((props): JSX.Element => {
   }
 
   const label = props.accessibilityLabel ? props.accessibilityLabel :
-    `${props.value} out of 5 stars`;
+    props.value + FSI18n.string(componentTranslationKeys.indicatorDefault);
 
   return (
     <View
