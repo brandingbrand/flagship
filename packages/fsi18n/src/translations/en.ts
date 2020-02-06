@@ -137,6 +137,7 @@ export const keys: FSTranslationKeys = {
       }
     },
     reviews: {
+      indicatorDefault: 'out of 5 stars',
       verified: 'Verified Purchase',
       helpful: 'Helpful',
       notHelpful: 'Not Helpful',
