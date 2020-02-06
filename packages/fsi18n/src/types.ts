@@ -192,6 +192,7 @@ export interface SortTranslations<KeyType> {
 }
 
 export interface ReviewsTranslations<KeyType> {
+  indicatorDefault: KeyType;
   verified: KeyType;
   helpful: KeyType;
   notHelpful: KeyType;
