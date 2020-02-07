@@ -314,7 +314,11 @@ export const keys: FSTranslationKeys = {
     },
     loginForm: {
       email: 'Email',
+      emailReq: 'Email is required',
+      emailNotValid: ' is not an valid email',
+      emailError: 'Please enter a valid email',
       password: 'Password',
+      passwordError: 'Please enter your password',
       submit: 'Submit'
     }
   }
