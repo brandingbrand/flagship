@@ -247,6 +247,15 @@ export const keys: FSTranslationKeys = {
       placeholder: 'Enter Promo Code',
       errorMessage: 'Invalid promo code',
       button: 'Submit'
+    },
+    registrationForm: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email Address',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      submit: 'Submit',
+      passwordDoNotMatch: 'Passwords don\'t match'
     }
   }
 };
