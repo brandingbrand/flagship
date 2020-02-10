@@ -5,6 +5,8 @@ import { emailRegex } from '../lib/email';
 import * as t from 'tcomb-form-native';
 import { SingleLineForm } from './SingleLineForm';
 import { FormLabelPosition } from './Form';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.emailForm;
 
 export interface EmailFormValue {
   email: string;
@@ -40,12 +42,12 @@ export class EmailForm extends Component<EmailFormProps> {
 
     this.fieldsOptions = {
       email: {
-        placeholder: 'Email',
+        placeholder: FSI18n.string(componentTranslationKeys.placeholder),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
-        error: 'Required Field'
+        error: FSI18n.string(componentTranslationKeys.error)
       },
       ...props.fieldsOptions
     };

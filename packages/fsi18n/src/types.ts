@@ -47,6 +47,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     multiCarousel: MultiCarouselTranslations<KeyType>;
     shareButton: ShareButtonTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
+    emailForm: EmailFormTranslations<KeyType>;
   };
 }
 
@@ -393,4 +394,9 @@ export interface LoginFormTranslations<KeyType> {
   password: KeyType;
   passwordError: KeyType;
   submit: KeyType;
+}
+
+export interface EmailFormTranslations<KeyType> {
+  placeholder: KeyType;
+  error: KeyType;
 }
