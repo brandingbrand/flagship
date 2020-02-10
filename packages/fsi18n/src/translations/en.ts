@@ -42,6 +42,7 @@ export const keys: FSTranslationKeys = {
     cart: {
       isEmpty: 'Empty Cart',
       itemsInCart: 'Items In Your Cart',
+      error: 'Quantity and VariantID must be defined to add to cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'

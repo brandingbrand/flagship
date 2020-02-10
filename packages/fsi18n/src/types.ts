@@ -100,6 +100,7 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
   itemsInCart: KeyType;
+  error: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
