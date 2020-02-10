@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* adds translations for hints ([2cb6a46](https://github.com/brandingbrand/flagship/commit/2cb6a46d3b41a7e39ed412c39b8451439bfaed2b))
+* **fscomponents:** Move story files to all live in the same folder ([#1042](https://github.com/brandingbrand/flagship/issues/1042)) ([040933d](https://github.com/brandingbrand/flagship/commit/040933ddaf351d36c7eb30f6385476b9c7e1d992))
+
+
+### Features
+
+* **fscomponents:** FLAGSHIP-102 accessibility for Filter ([9e6cf77](https://github.com/brandingbrand/flagship/commit/9e6cf77af95229e9f3174df3e715a24e6eb742c2))
+* **fscomponents:** FLAGSHIP-104 accessibility for Zoom carousel ([0c84ebc](https://github.com/brandingbrand/flagship/commit/0c84ebc7c405372bb4471dc7cfae1adea68032d0))
+
+
+
+
+
 # [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
 
 
