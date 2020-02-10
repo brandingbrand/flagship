@@ -320,6 +320,10 @@ export const keys: FSTranslationKeys = {
       password: 'Password',
       passwordError: 'Please enter your password',
       submit: 'Submit'
+    },
+    emailForm: {
+      placeholder: 'Email',
+      error: 'Required Field'
     }
   }
 };
