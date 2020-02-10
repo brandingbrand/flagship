@@ -10,8 +10,8 @@ const sslResponseMockData = {
     'Content-Type': 'Application/json'
   },
   status: 200,
-  json: () => new Promise<{[p: string]: any}>(res => res({ testPromise: true })),
-  text: () => new Promise<string>(res => res('testText'))
+  json: async () => ({ testPromise: true }),
+  text: async () => 'testText'
 };
 
 const sslErrorMockData = {
@@ -21,8 +21,8 @@ const sslErrorMockData = {
     'Content-Type': 'Application/json'
   },
   status: 401,
-  json: () => new Promise<{[p: string]: any}>(res => res({ testPromise: true })),
-  text: () => new Promise<string>(res => res('testText'))
+  json: async () => ({ testPromise: true }),
+  text: async () => 'testText'
 };
 
 describe('FSNetwork', () => {
@@ -53,7 +53,7 @@ describe('FSNetwork', () => {
       }]
     });
 
-    expect(() => network.head('/').catch()).toThrowError(
+    return expect(() => network.head('/').catch()).toThrowError(
       'Method HEAD not allowed for SSL Pinning request'
     );
   });
@@ -67,7 +67,7 @@ describe('FSNetwork', () => {
       }]
     });
 
-    expect(() => network.patch('/').catch()).toThrowError(
+    return expect(() => network.patch('/').catch()).toThrowError(
       'Method PATCH not allowed for SSL Pinning request'
     );
   });
@@ -80,29 +80,35 @@ describe('FSNetwork', () => {
       }]
     );
 
-    expect(network).toBeInstanceOf(SSLPinningInstance);
+    return expect(network).toBeInstanceOf(SSLPinningInstance);
   });
 
   test('create SSLResponse instance', async () => {
     const response = new SSLResponse(sslResponseMockData, {});
 
-    expect(response).toBeInstanceOf(SSLResponse);
+    return expect(response).toBeInstanceOf(SSLResponse);
   });
 
   // SSL Response
-  test('SSL Response should have all required properties', async () => {
+  test('SSL Response should have data', async () => {
     const response = new SSLResponse(sslResponseMockData, {});
-    expect(response)
-      .toHaveProperty('data');
 
-    expect(response)
+    return expect(response)
+      .toHaveProperty('data');
+  });
+
+  test('SSL Response should have status', async () => {
+    const response = new SSLResponse(sslResponseMockData, {});
+
+    return expect(response)
       .toHaveProperty('status');
   });
+
 
   test('SSL Response should have status 200', async () => {
     const response = new SSLResponse(sslResponseMockData, {});
 
-    expect(response.status).toBe(200);
+    return expect(response.status).toBe(200);
   });
 
   test('SSL Response should should have valid data', async () => {
@@ -110,7 +116,7 @@ describe('FSNetwork', () => {
 
     const jsonResponse = JSON.parse(sslResponseMockData.bodyString);
 
-    expect(response.data)
+    return expect(response.data)
       .toMatchObject(jsonResponse);
   });
 
@@ -118,22 +124,27 @@ describe('FSNetwork', () => {
   test('create SSLError instance', async () => {
     const error = new SSLError(sslErrorMockData, {});
 
-    expect(error).toBeInstanceOf(SSLError);
+    return expect(error).toBeInstanceOf(SSLError);
   });
 
-  test('SSL Error should have all required properties', async () => {
+  test('SSL Error should have message', async () => {
     const error = new SSLError(sslErrorMockData, {});
-    expect(error)
-      .toHaveProperty('message');
 
-    expect(error)
+    return expect(error)
+      .toHaveProperty('message');
+  });
+
+  test('SSL Error should have code', async () => {
+    const error = new SSLError(sslErrorMockData, {});
+
+    return expect(error)
       .toHaveProperty('code');
   });
 
   test('SSL Error should have status 401', async () => {
     const error = new SSLError(sslErrorMockData, {});
 
-    expect(error.code).toBe('401');
+    return expect(error.code).toBe('401');
   });
 
   test('SSL Response should should have valid data', async () => {
@@ -141,7 +152,7 @@ describe('FSNetwork', () => {
 
     const jsonResponse = JSON.parse(sslErrorMockData.bodyString);
 
-    expect(error.message)
+    return expect(error.message)
       .toBe(jsonResponse.message);
   });
 });
