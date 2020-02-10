@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* adds translations for hints (2cb6a46)
+
+
+### Features
+
+* **fscomponents:** FLAGSHIP-102 accessibility for Filter (9e6cf77)
+* **fscomponents:** FLAGSHIP-104 accessibility for Zoom carousel (0c84ebc)
+
+
+
+
+
 # [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
 
 
