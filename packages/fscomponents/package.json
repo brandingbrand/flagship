@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
-  "version": "8.1.0",
+  "version": "8.2.0",
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,11 +11,11 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^8.1.0",
-    "@brandingbrand/fsengage": "^8.1.0",
-    "@brandingbrand/fsfoundation": "^8.1.0",
-    "@brandingbrand/fsi18n": "^8.1.0",
-    "@brandingbrand/fsnetwork": "^8.1.0",
+    "@brandingbrand/fscommerce": "^8.2.0",
+    "@brandingbrand/fsengage": "^8.2.0",
+    "@brandingbrand/fsfoundation": "^8.2.0",
+    "@brandingbrand/fsi18n": "^8.2.0",
+    "@brandingbrand/fsnetwork": "^8.2.0",
     "@react-native-community/async-storage": "^1.6.1",
     "@types/yup": "^0.26.27",
     "credit-card": "^3.0.1",
