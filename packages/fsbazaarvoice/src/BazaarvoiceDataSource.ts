@@ -39,7 +39,7 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
       Include: 'Products',
       Stats: 'Reviews',
       Limit: query.limit || 10,
-      ...(query.sort ? {Sort: query.sort} : {})
+      Sort: query.sort
     };
 
     if (query.page) {
