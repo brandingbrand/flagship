@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@brandingbrand/fscommerce": "^8.2.0",
-    "@brandingbrand/fsnetwork": "^8.2.0"
+    "@brandingbrand/fsnetwork": "^8.2.0",
+    "qs": "^6.9.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
