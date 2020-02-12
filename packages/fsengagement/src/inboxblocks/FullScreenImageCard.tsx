@@ -46,7 +46,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: PropTypes.string
   };
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
+    language: PropTypes.string
   };
 
   getChildContext = () => ({
@@ -57,7 +58,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: this.props.name
   })
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
@@ -65,21 +66,26 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    this.props.navigator.push({
-      screen: 'EngagementComp',
-      navigatorStyle: {
-        navBarHidden: true
-      },
-      passProps: {
-        json,
-        backButton: true,
-        name: this.props.name,
-        id: this.props.id
+    return this.props.navigator.push({
+      component: {
+        name: 'EngagementComp',
+        options: {
+          topBar: {
+            visible: false
+          }
+        },
+        passProps: {
+          json,
+          backButton: true,
+          language: this.context && this.context.language,
+          name: this.props.name,
+          id: this.props.id
+        }
       }
     });
   }
 
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient } = this.props;
 
@@ -89,7 +95,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     if (story &&
       (!actions || (actions && (actions.type === null || actions.type === 'story')))
     ) {
-      this.handleStoryAction({
+      return this.handleStoryAction({
         ...story,
         storyGradient
       });

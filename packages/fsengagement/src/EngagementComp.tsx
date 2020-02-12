@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import { EngagementService } from './EngagementService';
 import PropTypes from 'prop-types';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
 import {
   Action,
   BlockItem,
@@ -141,6 +141,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<ViewStyle>;
   animateScroll?: boolean;
   onBack?: () => void;
+  language?: string;
   AnimatedImage?: any;
   welcomeHeader?: boolean;
   headerName?: string;
@@ -159,7 +160,8 @@ export default function(
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
     static childContextTypes: any = {
       handleAction: PropTypes.func,
-      story: PropTypes.object
+      story: PropTypes.object,
+      language: PropTypes.string
     };
 
     state: any = {};
@@ -222,11 +224,12 @@ export default function(
 
     getChildContext = () => ({
       handleAction: this.handleAction,
-      story: this.props.backButton ? this.props.json : null
+      story: this.props.backButton ? this.props.json : null,
+      language: this.props.language
     })
 
     // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = (actions: Action) => {
+    handleAction = async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -243,34 +246,40 @@ export default function(
       });
       switch (actions.type) {
         case 'blog-url':
-          this.props.navigator.push({
-            screen: 'EngagementWebView',
-            navigatorStyle: {
-              navBarHidden: true
-            },
-            passProps: {
-              actions,
-              isBlog: true,
-              backButton: true
+          await this.props.navigator.push({
+            component: {
+              name: 'EngagementWebView',
+              options: {
+                topBar: {
+                  visible: false
+                }
+              },
+              passProps: {
+                actions,
+                isBlog: true,
+                backButton: true
+              }
             }
           });
           break;
         case 'web-url':
-          this.props.navigator.showModal({
-            screen: 'EngagementWebView',
-            passProps: { actions },
-            navigatorStyle: {
-              navBarBackgroundColor: '#f5f2ee',
-              navBarButtonColor: '#866d4b',
-              statusBarTextColorScheme: 'dark'
-            },
-            navigatorButtons: {
-              rightButtons: [
-                {
-                  icon: require('../assets/images/closeBronze.png'),
-                  id: 'close'
+          await this.props.navigator.showModal({
+            component: {
+              name: 'EngagementWebView',
+              passProps: { actions },
+              options: {
+                statusBar: {
+                  style: 'dark' as 'dark'
+                },
+                topBar: {
+                  background: '#f5f2ee' as OptionsTopBarBackground,
+                  rightButtons: [{
+                    color: '#866d4b',
+                    icon: require('../assets/images/closeBronze.png'),
+                    id: 'close'
+                  }]
                 }
-              ]
+              }
             }
           });
           break;
@@ -307,8 +316,8 @@ export default function(
       return;
     }
 
-    onBackPress = (): void => {
-      this.props.navigator.pop();
+    onBackPress = async (): Promise<void> => {
+      return this.props.navigator.pop();
     }
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
@@ -400,7 +409,8 @@ export default function(
             >
               {this.renderHeaderName()}
             </Animated.View>
-          </Animatable.View>);
+          </Animatable.View>
+        );
       }
       return (
         <View
@@ -495,8 +505,8 @@ export default function(
           this.props.onBack();
         }
       }, timeout);
-      setTimeout(() => {
-        this.props.navigator.dismissModal();
+      setTimeout(async () => {
+        return this.props.navigator.dismissModal();
       }, 550);
     }
 
@@ -505,9 +515,10 @@ export default function(
       return (
         <Fragment>
           {(json.private_blocks || []).map(this.renderBlock)}
-          {empty && !(json.private_blocks && json.private_blocks.length) &&
+          {empty && !(json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>}
+              {empty.message || 'No content found.'}</Text>
+          )}
         </Fragment>
       );
     }
@@ -576,26 +587,29 @@ export default function(
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
           <Fragment>
-            {empty && !(json.private_blocks && json.private_blocks.length) &&
+            {empty && !(json.private_blocks && json.private_blocks.length) && (
               <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>}
+                {empty.message || 'No content found.'}</Text>
+            )}
 
-            {this.state.showCarousel && <Carousel
-              data={json.private_blocks || []}
-              layout={'default'}
-              autoplay={autoplay}
-              autoplayDelay={autoplayDelay}
-              autoplayInterval={autoplayInterval}
-              sliderWidth={Dimensions.get('screen').width}
-              itemWidth={Dimensions.get('screen').width}
-              renderItem={this.renderBlockItem}
-              inactiveSlideOpacity={1}
-              inactiveSlideScale={1}
-              onSnapToItem={this.onSnapToItem}
-              useScrollView={Platform.OS === 'ios' ? true : false}
-            />}
+            {this.state.showCarousel && (
+              <Carousel
+                data={json.private_blocks || []}
+                layout={'default'}
+                autoplay={autoplay}
+                autoplayDelay={autoplayDelay}
+                autoplayInterval={autoplayInterval}
+                sliderWidth={Dimensions.get('screen').width}
+                itemWidth={Dimensions.get('screen').width}
+                renderItem={this.renderBlockItem}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
+                onSnapToItem={this.onSnapToItem}
+                useScrollView={Platform.OS === 'ios' ? true : false}
+              />
+            )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json.private_blocks && json.private_blocks.length) &&
+            {(json.private_blocks && json.private_blocks.length) && (
               <View style={[styles.pageCounter, json.pageCounterStyle]}>
                 <Text
                   style={[styles.pageNum, json.pageNumberStyle]}
@@ -603,7 +617,7 @@ export default function(
                   {this.state.pageNum} / {json.private_blocks.length}
                 </Text>
               </View>
-            }
+            )}
           </Fragment>
         );
       } else if (this.props.noScrollView) {
@@ -633,11 +647,12 @@ export default function(
                   {empty.message || 'No content found.'}</Text>
               )}
               refreshControl={
-                this.props.refreshControl && <RefreshControl
+                this.props.refreshControl && (
+                <RefreshControl
                   refreshing={this.props.isLoading}
                   onRefresh={this.props.refreshControl}
                 />
-              }
+              )}
             >
               {this.renderBlocks()}
             </Animated.FlatList>
@@ -659,11 +674,12 @@ export default function(
                 {empty.message || 'No content found.'}</Text>
             )}
             refreshControl={
-              this.props.refreshControl && <RefreshControl
+              this.props.refreshControl && (
+              <RefreshControl
                 refreshing={this.props.isLoading}
                 onRefresh={this.props.refreshControl}
               />
-            }
+            )}
           >
             {this.renderBlocks()}
           </FlatList>
@@ -684,7 +700,7 @@ export default function(
             >
               {this.renderScrollView()}
             </Animatable.View>
-            {backButton &&
+            {backButton && (
               <Animatable.View
                 ref={this.handleAppleCloseRef}
                 useNativeDriver
@@ -697,27 +713,30 @@ export default function(
                     style={styles.appleCloseIcon}
                   />
                 </TouchableOpacity>
-              </Animatable.View>}
+              </Animatable.View>
+            )}
           </Fragment>
         );
       }
       return (
         <View style={[styles.container, containerStyle]}>
           {this.renderScrollView()}
-          {backButton &&
+          {backButton && (
             <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
               <Image
                 resizeMode='contain'
                 source={backArrow}
                 style={[styles.backIcon, json.backArrow]}
               />
-            </TouchableOpacity>}
-          {navBarTitle &&
+            </TouchableOpacity>
+          )}
+          {navBarTitle && (
             <Text
               style={[styles.navBarTitle, json.navBarTitleStyle]}
             >
               {navBarTitle}
-            </Text>}
+            </Text>
+          )}
         </View>
       );
     }

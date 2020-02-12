@@ -6,8 +6,8 @@ import { ProductItem } from '../ProductItem';
 import Decimal from 'decimal.js';
 import {
   boolean
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,
