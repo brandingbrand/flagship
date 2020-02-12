@@ -13171,10 +13171,10 @@ react-native-masked-text@^1.13.0:
     date-and-time "0.9.0"
     tinymask "1.0.2"
 
-react-native-navigation@~3.5.0:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-3.5.1.tgz#9b95e1c66045d25ab3bb0f74d591891364b0bba4"
-  integrity sha512-wB2xSruBgwCJ5EsmYbQ9Gv/V13Yl+jopvw63d4AhYEHycyUHpNKj7AcDIMjiiCtbAF7DkOckiDPGk3957n5btw==
+react-native-navigation@^4.0.0:
+  version "4.8.4"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-4.8.4.tgz#a9e4c272054d831c66bb406c5f164c108ba8e942"
+  integrity sha512-aORJK7B2Jih29wmszRwV3zwuIwrXWtQjdVm0bVMMzk0iPKJMMrCvW+GZIAxxHhJfKEdy7GNCdyRv0g43/Frj2A==
   dependencies:
     hoist-non-react-statics "3.x.x"
     lodash "4.17.x"

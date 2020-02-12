@@ -6,6 +6,7 @@ import {
   LayoutComponent,
   LayoutStack,
   LayoutStackChildren,
+  ModalOptions,
   Options,
   OptionsTopBarButton
 } from 'react-native-navigation';
@@ -119,7 +120,7 @@ export interface Location<T = any> {
   state: T;
 }
 
-export interface NavModalOptions {
+export interface NavModalOptions extends ModalOptions {
   modalProps?: ModalProps;
   style?: ViewStyle;
   backdropStyle?: ViewStyle;

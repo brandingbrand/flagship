@@ -2,9 +2,9 @@ import React from 'react';
 import {
   BottomTabSelectedEvent,
   ComponentDidAppearEvent,
-  LayoutBottomTabsChildren,
   LayoutComponent,
   LayoutStackChildren,
+  LayoutTabsChildren,
   Navigation,
   Options
 } from 'react-native-navigation';
@@ -196,7 +196,7 @@ export class FSApp extends FSAppBase {
     return options;
   }
 
-  protected async prepareTab(tab: Tab, index: number): Promise<LayoutBottomTabsChildren> {
+  protected async prepareTab(tab: Tab, index: number): Promise<LayoutTabsChildren> {
     let { id } = tab;
     if (!id) {
       id = this.defaultIdFromName(tab.name);
