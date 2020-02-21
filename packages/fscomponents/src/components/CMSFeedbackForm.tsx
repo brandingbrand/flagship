@@ -77,12 +77,8 @@ export interface CMSFeedbackFormState {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // padding: 10
-  },
+  container: {},
   header: {
-    // flexDirection: 'row',
-    // alignItems: 'center',
     marginBottom: 10
   },
   headerLeftCol: {
@@ -90,13 +86,10 @@ const styles = StyleSheet.create({
   },
   headerRightCol: {
     flex: 1
-    // flexDirection: 'row',
-    // justifyContent: 'flex-end'
   },
   title: {
     fontSize: 18,
     marginBottom: 8
-    // fontWeight: 'bold'
   },
   statusContainer: {
     marginTop: 10,
@@ -154,7 +147,6 @@ export class CMSFeedbackForm extends Component<CMSFeedbackFormProps, CMSFeedback
     network.post(REQUEST_URL, stringify(requestData), REQUEST_CONFIG)
       .then(() => {
         this.showSuccess();
-        // this.formik.current.resetForm();
       })
       .catch(error => {
         console.error(error);
