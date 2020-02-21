@@ -24,6 +24,7 @@ export type TranslationKey = string | {
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
     alertDefaults: AlertDefaultsTranslations<KeyType>;
+    addressForm: AddressFormTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
     filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
@@ -31,6 +32,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     sort: SortTranslations<KeyType>;
     reviews: ReviewsTranslations<KeyType>;
     search: SearchTranslations<KeyType>;
+    promoForm: PromoFormTranslations<KeyType>;
     updateNameOrEmail: UpdateNameOrEmailTranslations<KeyType>;
     zoomCarousel: ZoomCarouselTranslations<KeyType>;
     registration: RegistrationTranslations<KeyType>;
@@ -51,6 +53,28 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
 export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
   ok: KeyType;
   cancel: KeyType;
+}
+
+export interface AddressFormTranslations<KeyType = TranslationKey> {
+  firstName: KeyType;
+  firstNameError: KeyType;
+  lastName: KeyType;
+  lastNameError: KeyType;
+  address1: KeyType;
+  address1Error: KeyType;
+  address2: KeyType;
+  city: KeyType;
+  cityError: KeyType;
+  postal: KeyType;
+  postalError: KeyType;
+  state: KeyType;
+  stateError: KeyType;
+  phone: KeyType;
+  phoneError: KeyType;
+  email: KeyType;
+  emailError: KeyType;
+  poBox: KeyType;
+  submit: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
@@ -170,6 +194,7 @@ export interface SortTranslations<KeyType> {
 }
 
 export interface ReviewsTranslations<KeyType> {
+  indicatorDefault: KeyType;
   verified: KeyType;
   helpful: KeyType;
   notHelpful: KeyType;
@@ -240,6 +265,11 @@ export interface ZoomCarouselTranslations<KeyType> {
       actionBtn: KeyType;
     };
   };
+}
+
+export interface PromoFormTranslations<KeyType> {
+  enterPromo: KeyType;
+  error: KeyType;
 }
 
 export interface RegistrationTranslations<KeyType> {
@@ -350,6 +380,10 @@ export interface ShareButtonTranslations<KeyType> {
 }
 export interface LoginFormTranslations<KeyType> {
   email: KeyType;
+  emailReq: KeyType;
+  emailNotValid: KeyType;
+  emailError: KeyType;
   password: KeyType;
+  passwordError: KeyType;
   submit: KeyType;
 }
