@@ -11,10 +11,10 @@ describe('FSNetwork', () => {
 
   test('default base URL', async () => {
     const network = new FSNetwork({
-      baseURL: 'https://github.com'
+      baseURL: 'https://www.brandingbrand.com'
     });
 
-    return network.get('/brandingbrand').then(response => {
+    return network.get('/careers').then(response => {
       expect(response.status).toBe(200);
     });
   });
