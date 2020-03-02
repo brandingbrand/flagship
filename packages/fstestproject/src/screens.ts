@@ -5,7 +5,7 @@ import fscheckoutScreens from './screens/fscheckout';
 import fsproductdetailScreens from './screens/fsproductdetail';
 import fscategoryScreens from './screens/fscategory';
 import fscartScreens from './screens/fscart';
-
+import fscomponentsTestScreens from './screens/fscomponents_test';
 
 export interface Screens {
   [key: string]: any;
@@ -26,5 +26,6 @@ export default {
   ...scope(fscategoryScreens, 'fscategory'),
   ...scope(fscartScreens, 'fscart'),
   ...scope(fscheckoutScreens, 'fscheckout'),
-  ...scope(fsproductdetailScreens, 'fsproductdetail')
+  ...scope(fsproductdetailScreens, 'fsproductdetail'),
+  ...scope(fscomponentsTestScreens, 'fscomponentsTest')
 };
