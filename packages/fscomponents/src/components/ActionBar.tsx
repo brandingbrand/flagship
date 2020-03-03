@@ -3,7 +3,7 @@
  * of configurable width (props.separatorWidth) between each child.
  */
 
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, PropsWithChildren } from 'react';
 
 import {
   StyleProp,
@@ -12,10 +12,9 @@ import {
   ViewStyle
 } from 'react-native';
 
-export interface ActionBarProps {
+export interface ActionBarProps extends PropsWithChildren<{}> {
   style?: StyleProp<ViewStyle>;
   separatorWidth?: number;
-  children: ReactNode[];
 }
 
 const DEFAULT_SEPARATOR_WIDTH = 15;
