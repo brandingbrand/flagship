@@ -32,11 +32,11 @@ export class PromoForm extends Component<PromoFormProps> {
       ...props.fieldsOptions,
       promoCode: {
         auto: 'none',
-        placeholder: FSI18n.string(componentTranslationKeys.enterPromo),
+        placeholder: FSI18n.string(componentTranslationKeys.placeholder),
         returnKeyType: 'go',
         autoCorrect: false,
         autoCapitalize: 'none',
-        error: FSI18n.string(componentTranslationKeys.error),
+        error: FSI18n.string(componentTranslationKeys.errorMessage),
         ...props.fieldsOptions.promoCode
       }
     };

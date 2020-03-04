@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 3,
     fontSize: 12,
-    color: 'red' 
+    color: 'red'
   }
 });
 
@@ -83,7 +83,7 @@ const FSTextInput = (props: FSTextInputProps): JSX.Element => {
           ref={textProps.setRef}
           {...textProps}
         />
-        {icon !== undefined && (<Image source={icon} {...iconProps}/>)}
+        {icon !== undefined && (<Image source={icon} {...iconProps} />)}
       </View>
       <ErrorMessage name={name}>
         {(msg: any) => <Text style={[styles.error, textProps.errorStyle]}>{msg}</Text>}

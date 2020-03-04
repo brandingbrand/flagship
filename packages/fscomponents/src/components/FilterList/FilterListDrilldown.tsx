@@ -14,7 +14,7 @@ import { SelectableRow } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-const componentTranslationKeys = translationKeys.flagship.productIndex;
+const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
@@ -377,7 +377,7 @@ export class FilterListDrilldown extends PureComponent<
             style={[S.resetButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
             accessibilityRole={'button'}
-            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAllFilters)}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
@@ -388,7 +388,7 @@ export class FilterListDrilldown extends PureComponent<
           style={[S.applyButton, this.props.applyButtonStyle]}
           onPress={this.handleApply}
           accessibilityRole={'button'}
-          accessibilityLabel={FSI18n.string(componentTranslationKeys.applyFilters)}
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
         >
           <Text style={this.props.applyButtonTextStyle}>
             {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}

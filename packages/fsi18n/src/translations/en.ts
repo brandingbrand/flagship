@@ -210,10 +210,6 @@ export const keys: FSTranslationKeys = {
         }
       }
     },
-    promoForm: {
-      enterPromo: 'Enter Promo Code',
-      error: 'Please enter a valid promo code'
-    },
     registration: {
       actions: {
         submit: {
