@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.11.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v7.11.0) (2020-03-09)
+
+
+### Features
+
+* **fsbazaarvoice:** Add recommended ratio to normalized data ([#1077](https://github.com/brandingbrand/flagship/issues/1077)) ([0919102](https://github.com/brandingbrand/flagship/commit/0919102993bb2c32c59e335dc2d806972a29a8cb))
+
+
+
+
+
 
 
 **Note:** Version bump only for package @brandingbrand/fsbazaarvoice
