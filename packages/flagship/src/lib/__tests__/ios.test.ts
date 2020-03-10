@@ -248,6 +248,26 @@ test(`update version number`, () => {
   expect(infoPlist).toMatch(`<key>CFBundleVersion</key>\n\t<string>01003002</string>`);
 });
 
+test('provide custom bundle version number', () => {
+  const version = '1.3.2';
+  ios.version(
+    {
+      name: appName,
+      ios: {
+        buildVersion: '1.3.3'
+      }
+    },
+    version
+  );
+
+  const infoPlist = fs
+    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .toString();
+
+  expect(infoPlist).toMatch(`<key>CFBundleShortVersionString</key>\n\t<string>${version}</string>`);
+  expect(infoPlist).toMatch(`<key>CFBundleVersion</key>\n\t<string>1.3.3</string>`);
+});
+
 test(`set env switcher initial env`, () => {
   ios.setEnvSwitcherInitialEnv(
     {
