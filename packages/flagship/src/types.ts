@@ -117,7 +117,7 @@ export interface Config {
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
   android?: AndroidConfig;
-  ios: IOSConfig;
+  ios?: IOSConfig;
   adobeAnalytics?: {
     ios: {
       configPath: string;
@@ -149,7 +149,8 @@ export interface AndroidConfig {
 }
 
 export interface IOSConfig {
-  pods: PodsConfig;
+  pods?: PodsConfig;
+  buildVersion?: string;
 }
 
 export interface PodsConfig {
