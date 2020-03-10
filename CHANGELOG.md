@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.0.0-rnn2.0...v9.1.0-rnn2.0) (2020-03-10)
+
+
+### Bug Fixes
+
+* **fsi18n:** Add set locale to fscomponents ([12ccbab](https://github.com/brandingbrand/flagship/commit/12ccbab))
+
+
+
+
+
 # [9.0.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.5.0-rnn2.0...v9.0.0-rnn2.0) (2020-01-17)
 
 **Note:** Version bump only for package bb-flagship
