@@ -58,6 +58,7 @@ export * from './StatelessStepper';
 export * from './Step';
 export * from './StepIndicator';
 export * from './Stepper';
+export * from './StoreHours';
 export * from './Swatch';
 export * from './Swatches';
 export * from './TabbedContainer';

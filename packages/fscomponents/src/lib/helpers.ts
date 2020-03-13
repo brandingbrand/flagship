@@ -32,7 +32,7 @@ export function formatHours(
   }
 }
 
-function checkIfOpen(currentDate: Date, open: string, close: string) {
+export function checkIfOpen(currentDate: Date, open: string, close: string) {
   const _open = normalizedHourString(open);
   const _close = normalizedHourString(close);
   const _current = currentDate.getHours() * 100 + currentDate.getMinutes();
