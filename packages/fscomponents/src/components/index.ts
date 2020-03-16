@@ -21,6 +21,7 @@ export * from './CreditCardForm';
 export * from './CreditCardNumber';
 export * from './DigitalWalletProvider';
 export * from './EmailForm';
+export * from './EmailFormFK';
 export * from './FadeInImage';
 export * from './FilterList';
 export * from './Form';

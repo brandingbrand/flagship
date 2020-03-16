@@ -1,6 +1,8 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Image, Share, TouchableOpacity } from 'react-native';
 import { ShareButtonProps } from './ShareButtonProps';
+import { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslation = translationKeys.flagship.shareButton.text;
 
 const shareImage = require('../../../assets/images/share.png');
 
@@ -19,7 +21,11 @@ export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
 
 
   return (
-    <TouchableOpacity onPress={onSharePress}>
+    <TouchableOpacity
+      onPress={onSharePress}
+      accessibilityRole={'button'}
+      accessibilityLabel={componentTranslation}
+    >
       {renderShareIcon()}
     </TouchableOpacity>
   );

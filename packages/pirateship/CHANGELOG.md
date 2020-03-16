@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* **pirateship:** Update tab index for cart count ([#1039](https://github.com/brandingbrand/flagship/issues/1039)) ([3bd5e0b](https://github.com/brandingbrand/flagship/commit/3bd5e0bcf7a345ce7d37f01d8ce964435b8cda1f))
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
 # [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
 
 **Note:** Version bump only for package @brandingbrand/pirateship

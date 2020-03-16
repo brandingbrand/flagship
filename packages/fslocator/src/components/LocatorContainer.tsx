@@ -65,11 +65,12 @@ export interface PropType {
   renderSearchBar?: (data: SearchBarData) => JSX.Element;
   filterResult?: (data: Location[]) => Location[];
   defaultRegion?: Region;
-  searchEndpoint: string;
+  searchEndpoint?: string;
   searchRadius?: number;
   resultLimit?: number;
   handleAddressNotFound?: () => void;
   handleLocationNotFound?: () => void;
+  customizedSearch?: (searchValue: string) => Promise<any>;
 }
 
 export interface StateType {
@@ -115,6 +116,32 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     const { analytics, googleMapsAPIKey } = this.props;
     if (analytics) {
       analytics.search.generic('SeachBar', { term: searchValue });
+    }
+
+    if (this.props.customizedSearch) {
+      return this.props.customizedSearch(searchValue)
+        .then(res => {
+          this.resetShowSearchAreaButton();
+          const _data = this.props.filterResult
+            ? this.props.filterResult(res)
+            : res;
+
+          this.setState({
+            locations: _data.locations,
+            isLoading: false,
+            locationsNotFound: !_data.locations || !_data.locations.length,
+            selectedLocation: undefined,
+            shouldShowSearchAreaButton: false
+          });
+
+          if (this.props.analytics) {
+            this.props.analytics.search.generic('SeachBar', {
+              term: searchValue,
+              count: _data.locations.length
+            });
+          }
+        })
+        .catch(e => console.log(e));
     }
 
     const state = find(states, (state, abbr) => {

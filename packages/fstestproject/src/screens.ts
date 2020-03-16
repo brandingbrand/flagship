@@ -6,7 +6,6 @@ import fsproductdetailScreens from './screens/fsproductdetail';
 import fscategoryScreens from './screens/fscategory';
 import fscartScreens from './screens/fscart';
 
-
 export interface Screens {
   [key: string]: any;
 }

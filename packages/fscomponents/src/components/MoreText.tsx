@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 
 import { style as S } from '../styles/MoreText';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.moreText;
+
 
 export interface MoreTextProps {
   numberOfCharacters: number;
@@ -36,8 +39,8 @@ export interface MoreTextState {
 
 export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
   private readonly kButtonTouchabilityOpacity: number = 0.5;
-  private readonly kTextMore: string = 'Read more';
-  private readonly kTextLess: string = 'Read less';
+  private readonly kTextMore: string = FSI18n.string(componentTranslationKeys.readMore);
+  private readonly kTextLess: string = FSI18n.string(componentTranslationKeys.readLess);
 
   constructor(props: MoreTextProps) {
     super(props);

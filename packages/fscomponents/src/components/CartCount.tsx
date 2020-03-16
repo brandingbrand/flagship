@@ -11,6 +11,8 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.cart.itemsInCart;
 
 const DEFAULT_CART_IMAGE = require('../../assets/images/cart.png');
 
@@ -78,18 +80,22 @@ const styles = StyleSheet.create({
 export const CartCount: FunctionComponent<CartCountProps> = memo((props): JSX.Element => {
 
   const textPosition = props.textPosition || 'center';
-
+  const accessibilityString = FSI18n.number(props.count)
+  + ' ' + FSI18n.string(componentTranslationKeys);
   return (
-    <View style={[styles.container, props.style]}>
+    <View
+      style={[styles.container, props.style]}
+      accessibilityLabel={accessibilityString}
+    >
       <Image
         resizeMode='contain'
         style={[styles.image, props.cartImageStyle]}
         source={props.cartImage || DEFAULT_CART_IMAGE}
+        accessibilityRole={'image'}
+        accessibilityLabel={accessibilityString}
       />
       {props.count && (
-        <Text
-          style={[styles.text, styles[textPosition], props.textStyle]}
-        >
+        <Text style={[styles.text, styles[textPosition], props.textStyle]}>
           {props.count}
         </Text>
       )}

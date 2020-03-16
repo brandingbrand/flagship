@@ -13,6 +13,9 @@ import {
 import { Accordion } from '../Accordion';
 import { SelectableRow } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
+
 
 const defaultSingleFilterIds = [`cgid`];
 
@@ -160,19 +163,19 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     const accordionTitle = this.props.renderFilterTitle ? (
       this.props.renderFilterTitle(item, selectedValues)
     ) : (
-      <View style={[S.accordionheader, this.props.itemStyle]}>
-        <Text style={[S.titleStyle, this.props.itemTextStyle]}>
-          {item.title}
-        </Text>
-        <Text
-          style={S.selectedValueStyle}
-          numberOfLines={1}
-          ellipsizeMode='tail'
-        >
-          {selectedValueTitle.join(', ')}
-        </Text>
-      </View>
-    );
+        <View style={[S.accordionheader, this.props.itemStyle]}>
+          <Text style={[S.titleStyle, this.props.itemTextStyle]}>
+            {item.title}
+          </Text>
+          <Text
+            style={S.selectedValueStyle}
+            numberOfLines={1}
+            ellipsizeMode='tail'
+          >
+            {selectedValueTitle.join(', ')}
+          </Text>
+        </View>
+      );
 
     return (
       <Accordion
@@ -208,17 +211,21 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
           <TouchableOpacity
             style={[S.applyButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.reset)}
           >
             <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || 'RESET'}
+              {this.props.resetText || FSI18n.string(componentTranslationKeys.reset)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[S.applyButton, this.props.applyButtonStyle]}
             onPress={this.handleApply}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
           >
             <Text style={this.props.applyButtonTextStyle}>
-              {this.props.applyText || 'APPLY'}
+              {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
             </Text>
           </TouchableOpacity>
         </View>
