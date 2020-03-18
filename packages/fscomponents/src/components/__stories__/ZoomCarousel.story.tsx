@@ -31,4 +31,25 @@ storiesOf('ZoomCarousel', module)
       images={images}
       showArrow={true}
     />
+  )).add('fill container', () => (
+    <ZoomCarousel
+      peekSize={20}
+      gapSize={10}
+      centerMode={true}
+      showThumbnails={true}
+      images={images}
+      showArrow={true}
+      fillContainer={true}
+    />
+  )).add('custom fill container', () => (
+    <ZoomCarousel
+      peekSize={20}
+      gapSize={10}
+      centerMode={true}
+      showThumbnails={true}
+      images={images}
+      showArrow={true}
+      fillContainer={true}
+      fillContainerStyle={{height: '75%'}}
+    />
   ));

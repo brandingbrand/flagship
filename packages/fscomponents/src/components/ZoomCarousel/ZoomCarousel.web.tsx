@@ -107,6 +107,9 @@ const S = StyleSheet.create({
   fullHeight: {
     height: '100%'
   },
+  fullHeightWithThumbnails: {
+    height: '85%'
+  },
   thumbnailImg: {
     width: '100%',
     height: '100%'
@@ -303,18 +306,23 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
+    const height =
+      this.props.fillContainer ?
+      (this.props.showThumbnails ? S.fullHeightWithThumbnails : S.fullHeight)
+       : null;
 
+    // line 316 and 324 needs to be at 100% height
     return (
       <View
-        style={this.props.fillContainer ? S.fullHeight : null}
+        style={S.fullHeight}
         onLayout={this.handleLayoutChange}
       >
         <View
-          style={this.props.fillContainer ? S.fullHeight : null}
+          style={height}
         >
           <div
             id={`zoom-carousel-${this.id}`}
-            style={this.props.fillContainer ? {height: '100%'} : undefined}
+            style={this.props.fillContainer ? S.fullHeight : undefined}
           >
             <MultiCarousel
               ref={this.extractMultiCarousel}
@@ -330,8 +338,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               zoomButtonStyle={this.props.zoomButtonStyle}
               renderPageIndicator={this.props.renderPageIndicator}
               centerMode={this.props.centerMode}
-              style={this.props.fillContainer ? S.fullHeight : null}
+              style={height}
               nextArrowOnBlur={this.props.nextArrowOnBlur}
+              hidePageIndicator={this.props.hidePageIndicator}
             />
 
             {!this.props.hideZoomButton &&

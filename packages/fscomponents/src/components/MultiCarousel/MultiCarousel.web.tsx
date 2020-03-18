@@ -322,7 +322,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             this.state.currentIndex,
             this.props.items.length
           )
-        ) : (
+        ) : !this.props.hidePageIndicator && (
           <PageIndicator
             style={this.props.pageIndicatorStyle}
             currentIndex={this.state.currentIndex}
