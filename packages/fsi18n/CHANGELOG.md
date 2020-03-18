@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n
 
@@ -28,6 +28,98 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* adds translations for hints ([2cb6a46](https://github.com/brandingbrand/flagship/commit/2cb6a46d3b41a7e39ed412c39b8451439bfaed2b))
+
+
+### Features
+
+* **fscomponents:** FLAGSHIP-102 accessibility for Filter ([9e6cf77](https://github.com/brandingbrand/flagship/commit/9e6cf77af95229e9f3174df3e715a24e6eb742c2))
+* **fscomponents:** FLAGSHIP-104 accessibility for Zoom carousel ([0c84ebc](https://github.com/brandingbrand/flagship/commit/0c84ebc7c405372bb4471dc7cfae1adea68032d0))
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm ([d172d25](https://github.com/brandingbrand/flagship/commit/d172d25307d8a0f96f1681786899b0574c2a7c28))
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n
 

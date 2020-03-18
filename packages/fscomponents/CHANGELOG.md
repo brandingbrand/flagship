@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
 
@@ -28,6 +28,108 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* adds translations for hints ([2cb6a46](https://github.com/brandingbrand/flagship/commit/2cb6a46d3b41a7e39ed412c39b8451439bfaed2b))
+* **fscomponents:** Move story files to all live in the same folder ([#1042](https://github.com/brandingbrand/flagship/issues/1042)) ([040933d](https://github.com/brandingbrand/flagship/commit/040933ddaf351d36c7eb30f6385476b9c7e1d992))
+
+
+### Features
+
+* **fscomponents:** FLAGSHIP-102 accessibility for Filter ([9e6cf77](https://github.com/brandingbrand/flagship/commit/9e6cf77af95229e9f3174df3e715a24e6eb742c2))
+* **fscomponents:** FLAGSHIP-104 accessibility for Zoom carousel ([0c84ebc](https://github.com/brandingbrand/flagship/commit/0c84ebc7c405372bb4471dc7cfae1adea68032d0))
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Bug Fixes
+
+* **fscomponents:** FLAGSHIP-64 - Make Shelf a function component ([80c8110](https://github.com/brandingbrand/flagship/commit/80c8110c96af9e84f62e9b1e7e635e959ab354de))
+* **fscomponents:** replace Arial with sans-serif ([#1030](https://github.com/brandingbrand/flagship/issues/1030)) ([6caa10d](https://github.com/brandingbrand/flagship/commit/6caa10d3055ef6a3efd13711b733b13babf15a5c))
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm ([d172d25](https://github.com/brandingbrand/flagship/commit/d172d25307d8a0f96f1681786899b0574c2a7c28))
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** ModalHalfScreen listener height update ([#957](https://github.com/brandingbrand/flagship/issues/957)) ([abbcf03](https://github.com/brandingbrand/flagship/commit/abbcf033192b1438f3c6abd6b99f7b3776e91979))
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
 

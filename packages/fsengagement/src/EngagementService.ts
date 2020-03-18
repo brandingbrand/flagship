@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
-
 import {
   EngagementMessage,
   EngagementProfile,
@@ -78,7 +77,6 @@ export class EngagementService {
   }
 
   async setProfileAttributes(attributes: Attribute[]): Promise<boolean> {
-
     return this.networkClient
       .post(`/Profiles/${this.profileId}/setAttributes`, JSON.stringify(attributes))
       .then((response: any) => {
@@ -150,13 +148,14 @@ export class EngagementService {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
     }
-    const profileInfo: any = {
-      accountId,
+
+    return this.networkClient.post(`/App/${this.appId}/getProfile`, {
       locale: RNLocalize.getLocales() && RNLocalize.getLocales().length &&
         RNLocalize.getLocales()[0].languageTag,
       country: RNLocalize.getCountry(),
       timezone: RNLocalize.getTimeZone(),
       deviceIdentifier: DeviceInfo.getUniqueId(),
+      accountId,
       deviceInfo: JSON.stringify({
         model: DeviceInfo.getModel(),
         appName: DeviceInfo.getBundleId(),
@@ -164,8 +163,7 @@ export class EngagementService {
         osName: DeviceInfo.getSystemName(),
         osVersion: DeviceInfo.getSystemVersion()
       })
-    };
-    return this.networkClient.post(`/App/${this.appId}/getProfile`, profileInfo)
+    })
       .then((r: any) => r.data)
       .then((data: any) => {
         this.profileId = data.id;

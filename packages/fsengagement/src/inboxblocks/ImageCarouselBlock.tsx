@@ -21,7 +21,11 @@ let renderItemWidth: number = 0;
 import { wp } from '../carousel/SliderEntry.style';
 import RenderItem from '../carousel/RenderItem';
 
-export interface ImageCarouselBlockProps {
+import {
+  CardProps
+} from '../types';
+let navigator: any;
+export interface ImageCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
   resizeMethod?: any;
@@ -41,7 +45,7 @@ export interface ImageCarouselBlockState {
   height?: number;
   sliderActiveSlide: number;
 }
-
+// extends CardProps
 export default class ImageCarouselBlock
   extends Component<ImageCarouselBlockProps, ImageCarouselBlockState> {
   // readonly state: ImageCarouselBlockState = {};
@@ -54,15 +58,17 @@ export default class ImageCarouselBlock
   }
 
   componentDidMount(): void {
-
+    navigator = this.props.navigator;
   }
   _renderItem(data: any): JSX.Element {
     return <RenderItem
-              data={data.item}
-              horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
-              itemWidth={renderItemWidth}
-              even={false}
-           />;
+      data={data.item}
+      index={data.index}
+      navigator={navigator}
+      horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
+      itemWidth={renderItemWidth}
+      even={false}
+    />;
   }
 
   horizontalMarginPadding() {

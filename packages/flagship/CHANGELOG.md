@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 **Note:** Version bump only for package @brandingbrand/flagship
 
@@ -45,6 +45,108 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 * splash screens will need to be converted to storyboards
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+
+### Features
+
+* **flagship:** update podfile to use cocoapods cdn ([c3259d7](https://github.com/brandingbrand/flagship/commit/c3259d78f5c4a58b255ee64282467e1fb599cdf6))
+
+
+### BREAKING CHANGES
+
+* **flagship:** This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* android fastline syntax error due to a trailing comma ([e52d97f](https://github.com/brandingbrand/flagship/commit/e52d97f7d90b9cf462649cf7788e79b14f6b0081))
+
+
+### Features
+
+* **flagship:** add Android App Bundle (.aab) Support ([#950](https://github.com/brandingbrand/flagship/issues/950)) ([7d9fc73](https://github.com/brandingbrand/flagship/commit/7d9fc73f6be76061803efce23bdfb10952ca91a9))
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+
+### Features
+
+* **flagship:** deprecate appcenter.apiconfig configuration option ([55c4b61](https://github.com/brandingbrand/flagship/commit/55c4b61))
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+
+### Features
+
+* **flagship:** Add option to only include the default env ([#925](https://github.com/brandingbrand/flagship/issues/925)) ([f29ecfa](https://github.com/brandingbrand/flagship/commit/f29ecfa))
 
 
 

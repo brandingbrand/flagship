@@ -14,12 +14,11 @@ import ShopifyAPIError from '../util/ShopifyAPIError';
 import {
   PaymentDetailsInit,
   PaymentMethodData,
-  PaymentOptions,
   PaymentRequest
 } from '../util/react-native-payments';
 import { Platform } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -194,7 +193,7 @@ export class ShopifyCartDataSource extends DataSourceBase
     checkoutId: string,
     onSuccess: (order: FSCommerceTypes.Order) => void,
     test: boolean = false,
-    navigator: NavWrapper
+    navigator: Navigator
   ): Promise<void> {
     const checkout = await this.api.getCheckout(checkoutId);
     if (!checkout) {
@@ -220,7 +219,7 @@ export class ShopifyCartDataSource extends DataSourceBase
               publicKey: this.googlePayKey
             }
           }
-        }
+        } as any // environment is not part of PaymentMethodData.data
       });
     }
 
@@ -415,7 +414,9 @@ export class ShopifyCartDataSource extends DataSourceBase
         .checkoutCompleteWithTokenizedPayment(checkoutId, payment);
       const resolvedOrder = await this.orderResolver(submitResponse);
       // dismiss apple pay dialog
-      paymentResponse.complete(resolvedOrder ? 'success' : 'fail');
+      paymentResponse.complete(resolvedOrder ? 'success' : 'fail').catch(e => {
+        console.error(e);
+      });
       onSuccess(resolvedOrder);
       return;
     }

@@ -6,11 +6,15 @@ import styles from './SliderEntry.style';
 
 export interface RenderItemProps {
   data?: any;
+  index?: number;
   parallax?: any;
   parallaxProps?: any;
   even?: boolean;
-  horizPadding: number,
-  itemWidth: number
+  navigator: any;
+  onPressOpenModal?: boolean;
+  isDemoProduct?: boolean;
+  horizPadding: number;
+  itemWidth: number;
 }
 
 const { height: viewportHeight } = Dimensions.get('window');
@@ -36,12 +40,15 @@ export default class RenderItem extends Component<RenderItemProps> {
         />
       );
   }
+  onPress = () => {
+    return false;
+  }
   render() {
     const {
       data: {
         ratio,
-        title,
-        subtitle
+      title,
+      subtitle
       },
       even,
       itemWidth,
@@ -75,6 +82,7 @@ export default class RenderItem extends Component<RenderItemProps> {
       <TouchableOpacity
         activeOpacity={1}
         style={itemStyle}
+        onPress={this.onPress}
       >
         <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
           {this.image}

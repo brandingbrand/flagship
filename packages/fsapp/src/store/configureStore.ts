@@ -3,7 +3,7 @@ import {
   applyMiddleware,
   compose,
   createStore,
-  DeepPartial,
+  PreloadedState,
   ReducersMapObject,
   Store
 } from 'redux';
@@ -24,7 +24,8 @@ const composeEnhancers =
   (typeof anyWindow !== 'undefined' && anyWindow['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']) || compose;
 
 export default function configureStore<S, A extends Action, Ext, StateExt>(
-  initialState: DeepPartial<S> = {},
+  // tslint:disable-next-line: no-object-literal-type-assertion
+  initialState: PreloadedState<S> = {} as PreloadedState<S>,
   reducers: ReducersMapObject<S, A>
 ): Store<S & StateExt, A> & Ext {
   return createStore<S, A, Ext, StateExt>(

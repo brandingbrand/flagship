@@ -1,7 +1,7 @@
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 import { ScreenProps } from './commonTypes';
 
-export const openSignInModal = (navigator: NavWrapper) => () => {
+export const openSignInModal = (navigator: Navigator) => () => {
   navigator.showModal({
     component: {
       name: 'SignIn',
@@ -22,7 +22,7 @@ export const openSignInModal = (navigator: NavWrapper) => () => {
 
 export const handleAccountRequestError = (
   error: any,
-  navigator: NavWrapper,
+  navigator: Navigator,
   signOutFn: () => Promise<any>
 ): void => {
   if (error.response && error.response.status && error.response.status === 401) {

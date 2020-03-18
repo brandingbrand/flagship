@@ -83,10 +83,6 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
       resizeMethod = 'resize',
       source
     } = this.props;
-
-    if (!source) {
-      return <View />;
-    }
     const imageRatioStyle: StyleProp<ImageStyle> = {};
     if (this.state.height) {
       imageRatioStyle.height = this.state.height;

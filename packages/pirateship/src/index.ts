@@ -20,6 +20,20 @@ const appConfig: FSAppTypes.AppConfigType = {
   env: projectEnv,
   tabs: [
     {
+      id: 'HOME_TAB',
+      name: 'Home',
+      options: {
+        topBar: {
+          title: {
+            text: 'Inbox'
+          }
+        },
+        bottomTab: {
+          text: 'Inbox',
+          icon: require('../assets/images/shop-inbox-icn.png')
+        }
+      }
+    },     {
       id: 'SHOP_TAB',
       name: 'Shop',
       options: {

@@ -9,7 +9,7 @@ import TouchableRow from './TouchableRow';
 import projectEnvs from '../../project_env_index';
 import EnvSwitcher from '../lib/env-switcher';
 import { LayoutComponent } from 'react-native-navigation';
-import NavWrapper from '../lib/nav-wrapper.web';
+import Navigator from '../lib/nav-wrapper.web';
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 });
 
 export interface DevMenuProp extends GenericScreenProp {
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
 export interface DevMenuState {

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 
 ### Bug Fixes
@@ -52,6 +52,90 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **fsengagement:** fix merge conflicts ([7ca2f03](https://github.com/brandingbrand/flagship/commit/7ca2f03))
 * **fsengagement:** fix typo ([ccf453b](https://github.com/brandingbrand/flagship/commit/ccf453b))
 * **fsengagement:** move panhandler to constructor ([f4a5832](https://github.com/brandingbrand/flagship/commit/f4a5832))
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Features
+
+* **fsengagement:** add animated card list for demo ([#954](https://github.com/brandingbrand/flagship/issues/954)) ([b58032a](https://github.com/brandingbrand/flagship/commit/b58032a39ce5ef30f855dfc3eaf1e9c68a9c90bc))
+* **fsengagement:** add image grid component ([#947](https://github.com/brandingbrand/flagship/issues/947)) ([19c7489](https://github.com/brandingbrand/flagship/commit/19c74893ace426659d09a45b0dd7f5a6f2d3e1d6))
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
 
 
 

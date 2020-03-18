@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import WebView from 'react-native-webview';
-import { Navigation, NavigationButtonPressedEvent } from 'react-native-navigation';
 
 import {
   Action,
   ScreenProps
 } from './types';
+import WebView from 'react-native-webview';
 
 const styles = StyleSheet.create({
   growStretch: {
@@ -35,21 +34,29 @@ export interface WebViewProps extends ScreenProps {
 }
 
 export default class EngagementWebView extends PureComponent<WebViewProps> {
+  navigationEventListener: any;
   constructor(props: WebViewProps) {
     super(props);
-    Navigation.events().registerNavigationButtonPressedListener(this.onNavigationButtonPressed);
   }
 
-  onNavigationButtonPressed = (event: NavigationButtonPressedEvent) => {
-    if (event.buttonId === 'close') {
-      Navigation.dismissModal(this.props.componentId)
-      .catch(err => console.log('WebView DISMISSMODAL error:', err));
+  componentDidMount(): void {
+    this.navigationEventListener = this.props.navigator.bindNavigation(this);
+  }
+
+  componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
     }
   }
 
-  onBackPress = (): void => {
-    Navigation.pop(this.props.componentId)
-    .catch(err => console.log('WebView POP error:', err));
+  async navigationButtonPressed({ buttonId }: any): Promise<any> {
+    if (buttonId === 'close') {
+      return this.props.navigator.dismissModal();
+    }
+  }
+
+  onBackPress = async (): Promise<void> => {
+    return this.props.navigator.pop();
   }
 
   injectBlogJS(): string {

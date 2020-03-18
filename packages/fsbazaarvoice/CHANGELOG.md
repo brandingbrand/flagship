@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
 
 **Note:** Version bump only for package @brandingbrand/fsbazaarvoice
 
@@ -28,6 +28,92 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+
+### Features
+
+* **fsbazaarvoice:** Expand review data source ([7d84d58](https://github.com/brandingbrand/flagship/commit/7d84d586393f360239bb20f8a49f03c5f4e841a4))
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Bug Fixes
+
+* **fsbazaarvoice:** fix review id normalizer ([#936](https://github.com/brandingbrand/flagship/issues/936)) ([8f3df56](https://github.com/brandingbrand/flagship/commit/8f3df567a04d10794d351c9edc19834c7b0f810c))
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+**Note:** Version bump only for package @brandingbrand/fsbazaarvoice
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
 
 **Note:** Version bump only for package @brandingbrand/fsbazaarvoice
 

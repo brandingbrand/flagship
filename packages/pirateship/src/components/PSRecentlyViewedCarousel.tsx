@@ -11,7 +11,7 @@ import PSProductCarousel from './PSProductCarousel';
 import { border, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +38,7 @@ export interface PSRecentlyViewedCarouselProps {
   titleStyle?: StyleProp<TextStyle>;
   carouselStyle?: StyleProp<ViewStyle>;
   items: CommerceTypes.Product[];
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
 const PSRecentlyViewedCarousel: FunctionComponent<PSRecentlyViewedCarouselProps> =

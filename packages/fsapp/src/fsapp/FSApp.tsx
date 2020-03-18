@@ -2,9 +2,11 @@ import React from 'react';
 import {
   BottomTabSelectedEvent,
   ComponentDidAppearEvent,
-  LayoutBottomTabsChildren,
   LayoutComponent,
-  Navigation
+  LayoutStackChildren,
+  LayoutTabsChildren,
+  Navigation,
+  Options
 } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import screenWrapper from '../components/screenWrapper';
@@ -78,7 +80,8 @@ export class FSApp extends FSAppBase {
     if (appType !== 'singleScreen' && Platform.OS === 'android' && popToRootOnTabPressAndroid) {
       Navigation.events().registerBottomTabSelectedListener((event: BottomTabSelectedEvent) => {
         if (event.selectedTabIndex === event.unselectedTabIndex && tabs) {
-          const tabId = tabs[event.selectedTabIndex].id;
+          const tabId = tabs[event.selectedTabIndex].id ||
+            this.defaultIdFromName(tabs[event.selectedTabIndex].name);
           Navigation.popToRoot(tabId).catch(e => console.warn(e));
         }
       });
@@ -151,10 +154,57 @@ export class FSApp extends FSAppBase {
     });
   }
 
-  protected async prepareTab(tab: Tab, index: number): Promise<LayoutBottomTabsChildren> {
-    const { id, options, ...tabComponent } = tab;
-    const children = [{
-      component: tabComponent
+  protected defaultIdFromName(name: string | number): string {
+    return name.toString().toUpperCase + '_TAB';
+  }
+
+  protected deprecatedOptions(tab: Tab): Options | undefined {
+    let { options } = tab;
+    if (tab.label) {
+      console.warn('Label for tab ' + tab.name +
+        ' has been deprecated. Please switch to topBar.title.text');
+      options = options || {};
+      options.topBar = options.topBar || {};
+      options.topBar.title = options.topBar.title || {};
+      options.topBar.title.text = tab.label;
+    }
+
+    if (tab.icon) {
+      console.warn('Icon for tab ' + tab.name +
+        ' has been deprecated. Please switch to bottomTab.icon');
+      options = options || {};
+      if (options.bottomTab) {
+        options.bottomTab.icon = tab.icon;
+      } else {
+        options.bottomTab = {
+          icon: tab.icon
+        };
+      }
+      options.bottomTab.icon = tab.icon;
+      if (tab.label) {
+        options.bottomTab.text = tab.label;
+        console.warn('Label for tab ' + tab.name +
+        ' has been deprecated. Please switch to bottomTab.text');
+      }
+      if (tab.selectedIcon) {
+        options.bottomTab.selectedIcon = tab.selectedIcon;
+        console.warn('Selected Icon for tab ' + tab.name +
+        ' has been deprecated. Please switch to bottomTab.selectedIcon');
+      }
+    }
+
+    return options;
+  }
+
+  protected async prepareTab(tab: Tab, index: number): Promise<LayoutTabsChildren> {
+    let { id } = tab;
+    if (!id) {
+      id = this.defaultIdFromName(tab.name);
+      console.warn('Please specify an id for the ' + tab.name + 'tab. Defaulting to ' + id);
+    }
+
+    const children: LayoutStackChildren[] = [{
+      component: tab
     }];
 
     // Push saved screen onto the first tab stack
@@ -169,7 +219,7 @@ export class FSApp extends FSAppBase {
       stack: {
         id,
         children,
-        options
+        options: this.deprecatedOptions(tab)
       }
     };
   }

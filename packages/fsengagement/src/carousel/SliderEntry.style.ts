@@ -49,8 +49,33 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     height: 65
   },
+  productContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 0,
+    paddingHorizontal: 10
+  },
+  price: {
+    marginTop: 2,
+    color: '#000',
+    fontSize: 15,
+    fontFamily: 'Arial-BoldMT'
+  },
+  stars: {
+    width: 100,
+    height: 22
+  },
   textContainerEven: {
     backgroundColor: colors.black
+  },
+  prodTitle: {
+    color: colors.black,
+    fontSize: 15,
+    marginBottom: 2,
+    textAlign: 'center',
+    fontFamily: 'Helvetica',
+    fontWeight: '400'
   },
   title: {
     color: colors.black,

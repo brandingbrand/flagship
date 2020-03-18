@@ -18,7 +18,7 @@ export interface GenericNavProp {
   updateModals: (modals: NavModal[]) => void;
 }
 
-export default class NavWrapper {
+export default class Navigator {
   props: GenericNavProp;
   constructor(props: GenericNavProp) {
     this.props = props;
@@ -103,5 +103,58 @@ export default class NavWrapper {
     // but is technically something TODO
     console.warn('binding to navigation events is not supported in web');
     return null;
+  }
+  handleDeepLink(options: any): void {
+    console.error('handleDeepLink is no longer part of react-native-navigation');
+  }
+  setOnNavigatorEvent(): void {
+    console.error('setOnNavigatorEvent is no longer part of react-native-navigation. ' +
+      'Please use navigator.bindNavigation(this) to bind events, then reference ' +
+      'https://wix.github.io/react-native-navigation/#/docs/events');
+  }
+  resetTo(options: {
+    screen: string;
+    title: string;
+    animated: boolean;
+  }): void {
+    console.warn('resetTo has been deprecated. ' +
+      'Please use setStackRoot');
+
+    this.setStackRoot({
+      component: {
+        name: options.screen,
+        options: {
+          topBar: {
+            title: {
+              text: options.title
+            }
+          }
+        }
+      }
+    }).catch((e: any) => {
+      console.error(e);
+    });
+  }
+  setStyle(options: { navBarTitleTextCentered: boolean }): void {
+    console.warn('setStyle has been deprecated. ' +
+      'Please use mergeOptions({\n  topBar: {\n    alignment: \'center\'\n  }\n}) instead');
+  }
+  setTabBadge(options: {
+    tabIndex: number;
+    badge: string | number | null;
+    badgeColor?: any;
+  }): void {
+    console.warn('setTabBadge has been deprecated. ' +
+      'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +
+      'badgeColor: \'rgb(255, 255, 255)\',\n    ' +
+      'icon: iconImageSource\n  }\n}, componentIdOfTab) instead');
+  }
+  setTitle(options: { title: string}): void {
+    console.warn('setTitle has been deprecated. ' +
+      'Please use mergeOptions({\n  topBar: {\n    title: \'title\\n  }\n}) instead');
+  }
+  switchToTab(options: { tabIndex: number}): void {
+    console.warn('switchToTab has been deprecated. ' +
+      'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead');
   }
 }

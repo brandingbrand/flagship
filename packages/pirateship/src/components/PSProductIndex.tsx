@@ -23,7 +23,7 @@ import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 import { NavButton } from '../lib/commonTypes';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const window = Dimensions.get('window');
 
@@ -159,7 +159,7 @@ const PIPStyle = StyleSheet.create({
 export interface ProductIndexProps {
   categoryId?: string;
   keyword?: string;
-  navigator: NavWrapper;
+  navigator: Navigator;
   renderNoResult?: any;
   productQuery?: CommerceTypes.ProductQuery;
   title?: string;

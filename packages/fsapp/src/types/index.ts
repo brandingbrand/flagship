@@ -6,6 +6,7 @@ import {
   LayoutComponent,
   LayoutStack,
   LayoutStackChildren,
+  ModalOptions,
   Options,
   OptionsTopBarButton
 } from 'react-native-navigation';
@@ -53,28 +54,6 @@ export interface Screen {
   passProps?: any;
 }
 
-export interface TabStyle {
-  tabBarHidden?: boolean;
-  tabBarButtonColor?: string;
-  tabBarSelectedButtonColor?: string;
-  tabBarBackgroundColor?: string;
-  tabBarTranslucent?: boolean;
-  tabBarTextFontFamily?: string;
-  tabBarLabelColor?: string;
-  tabBarSelectedLabelColor?: string;
-  forceTitlesDisplay?: boolean;
-  tabBarHideShadow?: boolean;
-  initialTabIndex?: number;
-}
-
-export interface AppStyle extends TabStyle {
-  orientation?: 'auto' | 'landscape' | 'portrait';
-  bottomTabBadgeTextColor?: string;
-  bottomTabBadgeBackgroundColor?: string;
-  backButtonImage?: ImageRequireSource;
-  hideBackButtonTitle?: boolean;
-}
-
 export interface RoutableComponentClass extends React.ComponentClass<any> {
   path?: string;
   toPath?: PathFunction;
@@ -113,7 +92,11 @@ export interface AppConfigType {
 }
 
 export interface Tab extends LayoutComponent {
-  id: string;
+  id?: string;
+  label?: string;
+  title?: string;
+  icon?: ImageRequireSource;
+  selectedIcon?: ImageRequireSource;
 }
 
 export interface NavButton {
@@ -137,7 +120,7 @@ export interface Location<T = any> {
   state: T;
 }
 
-export interface NavModalOptions {
+export interface NavModalOptions extends ModalOptions {
   modalProps?: ModalProps;
   style?: ViewStyle;
   backdropStyle?: ViewStyle;

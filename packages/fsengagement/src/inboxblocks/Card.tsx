@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 
 import {
   Action,
@@ -23,8 +22,7 @@ export default class Card extends Component<ActionsCard> {
     handleStoryAction: PropTypes.func,
     cardActions: PropTypes.object,
     id: PropTypes.string,
-    name: PropTypes.string,
-    isCard: PropTypes.bool
+    name: PropTypes.string
   };
   static contextTypes: any = {
     handleAction: PropTypes.func
@@ -35,11 +33,10 @@ export default class Card extends Component<ActionsCard> {
     handleStoryAction: this.handleStoryAction,
     cardActions: this.props.actions,
     id: this.props.id,
-    name: this.props.name,
-    isCard: true
+    name: this.props.name
   })
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
@@ -47,13 +44,12 @@ export default class Card extends Component<ActionsCard> {
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    Navigation.push(this.props.componentId, {
+    return this.props.navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
           topBar: {
-            visible: false,
-            drawBehind: true
+            visible: false
           }
         },
         passProps: {
@@ -63,10 +59,10 @@ export default class Card extends Component<ActionsCard> {
           id: this.props.id
         }
       }
-    }).catch(err => console.log('EngagementComp PUSH error:', err));
+    });
   }
 
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient } = this.props;
 
@@ -82,7 +78,7 @@ export default class Card extends Component<ActionsCard> {
           value: story.html.link
         });
       } else {
-        this.handleStoryAction({
+        return this.handleStoryAction({
           ...story,
           storyGradient
         });

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { NavWrapper } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp';
 import { padding, palette } from '../styles/variables';
 import GlobalStyles from '../styles/Global';
 
 export interface HeaderProps {
-  navigator: NavWrapper;
+  navigator: Navigator;
 }
 
 const title = 'PIRATESHIP';

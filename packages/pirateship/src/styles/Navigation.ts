@@ -1,5 +1,5 @@
 import { color, palette } from './variables';
-import { Options, OptionsTopBarTitle } from 'react-native-navigation';
+import { Options, OptionsStatusBar, OptionsTopBarTitle } from 'react-native-navigation';
 import { Platform } from 'react-native';
 
 const defaultTabImage = require('../../assets/images/shop-tab-icon.png');
@@ -65,6 +65,23 @@ export const navBarHide: Options = {
 export const titleDefault: OptionsTopBarTitle = {
   color: palette.onPrimary,
   alignment: 'center'
+};
+
+export const navBarShopScreen: Options = {
+  // blur is in the documentation, but not the type
+  // tslint:disable-next-line: no-object-literal-type-assertion
+  statusBar: {
+    style: 'dark',
+    blur: true
+  } as OptionsStatusBar,
+  topBar: {
+    background: {
+      translucent: false
+    },
+    drawBehind: false,
+    noBorder: true,
+    visible: false
+  }
 };
 
 export const navBarDefault: Options = {

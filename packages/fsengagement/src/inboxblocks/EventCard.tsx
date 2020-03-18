@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import PropTypes from 'prop-types';
 
 import {
@@ -67,7 +66,7 @@ export default class EventCard extends Component<ComponentProps> {
     handleStoryAction: this.handleStoryAction
   })
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
@@ -75,13 +74,12 @@ export default class EventCard extends Component<ComponentProps> {
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    Navigation.push(this.props.componentId, {
+    return this.props.navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
           topBar: {
-            visible: false,
-            drawBehind: true
+            visible: false
           }
         },
         passProps: {
@@ -91,13 +89,13 @@ export default class EventCard extends Component<ComponentProps> {
           id: this.props.id
         }
       }
-    }).catch(err => console.log('EngagementComp PUSH error:', err));
+    });
   }
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = this.props;
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    this.handleStoryAction(actionPayload);
+    return this.handleStoryAction(actionPayload);
   }
 
   render(): JSX.Element {

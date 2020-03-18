@@ -3,6 +3,218 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* fix codepush integration with RNN v2 ([591ce6c](https://github.com/brandingbrand/flagship/commit/591ce6c))
+* **flagship:** Fix overwriting launch screen file ([b29d851](https://github.com/brandingbrand/flagship/commit/b29d851))
+* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
+* **fsengagement:** RNN2 - fix deeplinking animations from story ([#871](https://github.com/brandingbrand/flagship/issues/871)) ([f8edd22](https://github.com/brandingbrand/flagship/commit/f8edd22))
+
+
+### Features
+
+* **fsengagement:** add gridwall and product carousel ([#816](https://github.com/brandingbrand/flagship/issues/816)) ([f009afc](https://github.com/brandingbrand/flagship/commit/f009afc))
+* setup native side of android for react-native-navigation 2 ([3298744](https://github.com/brandingbrand/flagship/commit/3298744))
+* **fsengagement:** add gesture handler for full screen cards ([c7d78f4](https://github.com/brandingbrand/flagship/commit/c7d78f4))
+* **fsengagement:** add gestures and animations ([a8ef3d6](https://github.com/brandingbrand/flagship/commit/a8ef3d6))
+* **fsengagement:** add gridwall and product carousel ([f684e7a](https://github.com/brandingbrand/flagship/commit/f684e7a))
+* **fsengagement:** add new zones ([2f92df0](https://github.com/brandingbrand/flagship/commit/2f92df0))
+* **fsengagement:** add support for video on title card ([829b58a](https://github.com/brandingbrand/flagship/commit/829b58a))
+* **fsengagement:** adjust gesture handler ([24cfcea](https://github.com/brandingbrand/flagship/commit/24cfcea))
+* **fsengagement:** cache last update + add isNew flag to each message ([34b5984](https://github.com/brandingbrand/flagship/commit/34b5984))
+* setup native side of ios for react-native-navigation 2 ([9515589](https://github.com/brandingbrand/flagship/commit/9515589))
+* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
+* update pirateship to use react-native-navigation 2 ([b1a1747](https://github.com/brandingbrand/flagship/commit/b1a1747))
+* **fsengagement:** fix typo ([ccf453b](https://github.com/brandingbrand/flagship/commit/ccf453b))
+* **fsengagement:** fix yarn.lock ([33fc504](https://github.com/brandingbrand/flagship/commit/33fc504))
+* **fsengagement:** move panhandler to constructor ([f4a5832](https://github.com/brandingbrand/flagship/commit/f4a5832))
+
+
+### BREAKING CHANGES
+
+* Tabs must now have ids defined in their configuration
+* splash screens will need to be converted to storyboards
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+
+### Features
+
+* **fsbazaarvoice:** Expand review data source ([7d84d58](https://github.com/brandingbrand/flagship/commit/7d84d586393f360239bb20f8a49f03c5f4e841a4))
+
+
+
+
+
+# [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
+
+
+### Bug Fixes
+
+* **fscomponents:** Move story files to all live in the same folder ([#1042](https://github.com/brandingbrand/flagship/issues/1042)) ([040933d](https://github.com/brandingbrand/flagship/commit/040933ddaf351d36c7eb30f6385476b9c7e1d992))
+* **pirateship:** Update tab index for cart count ([#1039](https://github.com/brandingbrand/flagship/issues/1039)) ([3bd5e0b](https://github.com/brandingbrand/flagship/commit/3bd5e0bcf7a345ce7d37f01d8ce964435b8cda1f))
+
+
+### Features
+
+* **fscomponents:** FLAGSHIP-102 accessibility for Filter ([9e6cf77](https://github.com/brandingbrand/flagship/commit/9e6cf77af95229e9f3174df3e715a24e6eb742c2))
+* **fscomponents:** FLAGSHIP-104 accessibility for Zoom carousel ([0c84ebc](https://github.com/brandingbrand/flagship/commit/0c84ebc7c405372bb4471dc7cfae1adea68032d0))
+* **fslocator:** add customized search functionality ([e5088c1](https://github.com/brandingbrand/flagship/commit/e5088c1695e348e537f99f0f311d5b4a4bd68a18))
+
+
+
+
+
+# [8.1.0](https://github.com/brandingbrand/flagship/compare/v8.0.0...v8.1.0) (2020-01-24)
+
+
+### Bug Fixes
+
+* **fscomponents:** FLAGSHIP-64 - Make Shelf a function component ([80c8110](https://github.com/brandingbrand/flagship/commit/80c8110c96af9e84f62e9b1e7e635e959ab354de))
+* **fscomponents:** replace Arial with sans-serif ([#1030](https://github.com/brandingbrand/flagship/issues/1030)) ([6caa10d](https://github.com/brandingbrand/flagship/commit/6caa10d3055ef6a3efd13711b733b13babf15a5c))
+
+
+### Features
+
+* **fscomponents:** Add formik, yup to fscomponents and LoginForm ([d172d25](https://github.com/brandingbrand/flagship/commit/d172d25307d8a0f96f1681786899b0574c2a7c28))
+
+
+
+
+
+# [8.0.0](https://github.com/brandingbrand/flagship/compare/v7.10.0...v8.0.0) (2020-01-15)
+
+
+### Features
+
+* **flagship:** update podfile to use cocoapods cdn ([c3259d7](https://github.com/brandingbrand/flagship/commit/c3259d78f5c4a58b255ee64282467e1fb599cdf6))
+
+
+### BREAKING CHANGES
+
+* **flagship:** This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+
+
+
+
+
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [7.10.0](https://github.com/brandingbrand/flagship/compare/v7.8.0...v7.10.0) (2020-01-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** ModalHalfScreen listener height update ([#957](https://github.com/brandingbrand/flagship/issues/957)) ([abbcf03](https://github.com/brandingbrand/flagship/commit/abbcf033192b1438f3c6abd6b99f7b3776e91979))
+* android fastline syntax error due to a trailing comma ([e52d97f](https://github.com/brandingbrand/flagship/commit/e52d97f7d90b9cf462649cf7788e79b14f6b0081))
+
+
+### Features
+
+* **flagship:** add Android App Bundle (.aab) Support ([#950](https://github.com/brandingbrand/flagship/issues/950)) ([7d9fc73](https://github.com/brandingbrand/flagship/commit/7d9fc73f6be76061803efce23bdfb10952ca91a9))
+* **pirateship:** add enagement to pirateship demo ([#959](https://github.com/brandingbrand/flagship/issues/959)) ([7e1705e](https://github.com/brandingbrand/flagship/commit/7e1705e72bae2e02f8048440aaee1396cd31b9d2))
+
+
+
+
+
+# [7.8.0](https://github.com/brandingbrand/flagship/compare/v7.7.1...v7.8.0) (2019-12-18)
+
+
+### Bug Fixes
+
+* **fsbazaarvoice:** fix review id normalizer ([#936](https://github.com/brandingbrand/flagship/issues/936)) ([8f3df56](https://github.com/brandingbrand/flagship/commit/8f3df567a04d10794d351c9edc19834c7b0f810c))
+
+
+### Features
+
+* update webpack dependencies ([8d86721](https://github.com/brandingbrand/flagship/commit/8d86721c832a575ca8c2a8baf3edfbfb7ccf83ce))
+* **fsengagement:** add animated card list for demo ([#954](https://github.com/brandingbrand/flagship/issues/954)) ([b58032a](https://github.com/brandingbrand/flagship/commit/b58032a39ce5ef30f855dfc3eaf1e9c68a9c90bc))
+* **fsengagement:** add image grid component ([#947](https://github.com/brandingbrand/flagship/issues/947)) ([19c7489](https://github.com/brandingbrand/flagship/commit/19c74893ace426659d09a45b0dd7f5a6f2d3e1d6))
+
+
+
+
+
+## [7.7.1](https://github.com/brandingbrand/flagship/compare/v7.7.0...v7.7.1) (2019-11-20)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [7.7.0](https://github.com/brandingbrand/flagship/compare/v7.6.0...v7.7.0) (2019-11-20)
+
+
+### Features
+
+* **flagship:** deprecate appcenter.apiconfig configuration option ([55c4b61](https://github.com/brandingbrand/flagship/commit/55c4b61))
+
+
+
+
+
+# [7.6.0](https://github.com/brandingbrand/flagship/compare/v7.5.4...v7.6.0) (2019-11-14)
+
+
+### Features
+
+* **flagship:** Add option to only include the default env ([#925](https://github.com/brandingbrand/flagship/issues/925)) ([f29ecfa](https://github.com/brandingbrand/flagship/commit/f29ecfa))
+* **fsshopify:**  add safe undefined handler ([273653b](https://github.com/brandingbrand/flagship/commit/273653b))
+* **fsshopify:**  add safe undefined handler ([ab39b48](https://github.com/brandingbrand/flagship/commit/ab39b48))
+* **fsshopify:** account data source implementation ([580d95e](https://github.com/brandingbrand/flagship/commit/580d95e))
+
+
+
+
+
 ## [7.5.4](https://github.com/brandingbrand/flagship/compare/v7.5.3...v7.5.4) (2019-11-08)
 
 **Note:** Version bump only for package bb-flagship
@@ -72,78 +284,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
 
 For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
-
-
-
-
-
-# [8.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.2.0-rnn2.0) (2019-10-17)
-
-
-### Bug Fixes
-
-* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
-
-
-
-
-
-## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
-
-
-
-
-
-## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
-
-
-
-
-
-## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
-
-
-### Bug Fixes
-
-* fix codepush integration with RNN v2 ([591ce6c](https://github.com/brandingbrand/flagship/commit/591ce6c))
-* **flagship:** Fix overwriting launch screen file ([b29d851](https://github.com/brandingbrand/flagship/commit/b29d851))
-* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
-* **fsengagement:** RNN2 - fix deeplinking animations from story ([#871](https://github.com/brandingbrand/flagship/issues/871)) ([f8edd22](https://github.com/brandingbrand/flagship/commit/f8edd22))
-
-
-### Features
-
-* **fsengagement:** add gridwall and product carousel ([#816](https://github.com/brandingbrand/flagship/issues/816)) ([f009afc](https://github.com/brandingbrand/flagship/commit/f009afc))
-* setup native side of android for react-native-navigation 2 ([3298744](https://github.com/brandingbrand/flagship/commit/3298744))
-* **fsengagement:** add gesture handler for full screen cards ([c7d78f4](https://github.com/brandingbrand/flagship/commit/c7d78f4))
-* **fsengagement:** add gestures and animations ([a8ef3d6](https://github.com/brandingbrand/flagship/commit/a8ef3d6))
-* **fsengagement:** add gridwall and product carousel ([f684e7a](https://github.com/brandingbrand/flagship/commit/f684e7a))
-* **fsengagement:** add new zones ([2f92df0](https://github.com/brandingbrand/flagship/commit/2f92df0))
-* **fsengagement:** add support for video on title card ([829b58a](https://github.com/brandingbrand/flagship/commit/829b58a))
-* **fsengagement:** adjust gesture handler ([24cfcea](https://github.com/brandingbrand/flagship/commit/24cfcea))
-* **fsengagement:** cache last update + add isNew flag to each message ([34b5984](https://github.com/brandingbrand/flagship/commit/34b5984))
-* setup native side of ios for react-native-navigation 2 ([9515589](https://github.com/brandingbrand/flagship/commit/9515589))
-* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
-* update pirateship to use react-native-navigation 2 ([b1a1747](https://github.com/brandingbrand/flagship/commit/b1a1747))
-* **fsengagement:** fix typo ([ccf453b](https://github.com/brandingbrand/flagship/commit/ccf453b))
-* **fsengagement:** fix yarn.lock ([33fc504](https://github.com/brandingbrand/flagship/commit/33fc504))
-* **fsengagement:** move panhandler to constructor ([f4a5832](https://github.com/brandingbrand/flagship/commit/f4a5832))
-
-
-### BREAKING CHANGES
-
-* Tabs must now have ids defined in their configuration
-* splash screens will need to be converted to storyboards
 
 
 
