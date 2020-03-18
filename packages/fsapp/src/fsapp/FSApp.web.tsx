@@ -33,8 +33,19 @@ export class FSApp extends FSAppBase {
   startApp(): void {
     const startFn = requestAnimationFrame || ((cb: any) => cb());
     const startCallback = () => {
+      let rootTag: HTMLElement | null = null;
+      if (this.appConfig.root) {
+        if (typeof this.appConfig.root === 'string') {
+          rootTag = document.querySelector(this.appConfig.root);
+        } else {
+          rootTag = this.appConfig.root;
+        }
+      }
+      if (rootTag === null) {
+        rootTag = document.getElementById('root');
+      }
       AppRegistry.runApplication('Flagship', {
-        rootTag: document.getElementById('root'),
+        rootTag,
         initialProps: {
           appConfig: this.appConfig,
           api: this.api,
