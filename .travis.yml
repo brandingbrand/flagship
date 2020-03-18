@@ -78,6 +78,9 @@ jobs:
     script:
     - yarn prepare
     - yarn ship:init
+    # ship:android-jetify-reverse android X patch, RN <0.60
+    # use android X patch `ship:android-jetify` instead in RN >=0.60
+    - yarn ship:android-jetify-reverse || travis_terminate 1
     - yarn ship:compile-android || travis_terminate 1
   - language: objective-c
     if: type = pull_request
