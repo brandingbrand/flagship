@@ -285,7 +285,7 @@ export class ShopifyCartDataSource extends DataSourceBase
     // iOS Only: update shipping address on shopify when its selected
     // provide new shipping options to they paymentRequest
     // @TODO: needs testing
-    paymentRequest.addEventListener('shippingaddresschange', async e => {
+    paymentRequest.addEventListener('shippingaddresschange', async (e: any) => {
       if (test) {
         console.log('shippingaddresschange', e);
       }
@@ -300,7 +300,10 @@ export class ShopifyCartDataSource extends DataSourceBase
 
           if (updatedCheckout && updatedCheckout.availableShippingRates) {
             orderDetails.shippingOptions = Normalizers.getShippingMethods(updatedCheckout);
-            e.updateWith(orderDetails);
+
+            if (e && e.updateWith) {
+              e.updateWith(orderDetails);
+            }
           }
         }
       }
@@ -308,7 +311,7 @@ export class ShopifyCartDataSource extends DataSourceBase
 
     // iOS Only: update shipping method on shopify when its selected
     // @TODO: needs testing
-    paymentRequest.addEventListener('shippingoptionchange', async e => {
+    paymentRequest.addEventListener('shippingoptionchange', async (e: any) => {
       if (test) {
         console.log('shippingoptionchange', e);
       }
@@ -322,7 +325,10 @@ export class ShopifyCartDataSource extends DataSourceBase
           orderDetails.shippingOptions = Normalizers.getShippingMethods(updatedCheckout);
           orderDetails.total.amount.value = updatedCheckout.paymentDue;
           payment.amount = updatedCheckout.paymentDue;
-          e.updateWith(orderDetails);
+
+          if (e && e.updateWith) {
+            e.updateWith(orderDetails);
+          }
         }
       }
     });

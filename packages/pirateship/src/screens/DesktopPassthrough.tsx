@@ -79,8 +79,8 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
     if (this.props.url) {
       const urlParts = url.parse(this.props.url);
-      this.path = urlParts.path;
-      this.host = urlParts.host;
+      this.path = urlParts.path || undefined;
+      this.host = urlParts.host || undefined;
       this.hash = urlParts.hash || '';
     }
   }
@@ -121,7 +121,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
         // Navigate back to an app screen if we know how to handle the URL or push a new
         // passthrough screen if not.
         handleDeeplink(
-          urlParts.protocol + '//' + this.host + urlParts.path,
+          urlParts.protocol + '//' + (this.host || '') + (urlParts.path || ''),
           this.props.navigator
         );
 
