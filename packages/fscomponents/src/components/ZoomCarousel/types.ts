@@ -44,4 +44,18 @@ export interface ZoomCarouselProps {
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
   contentContainerStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Boolean to turn on and off the page indicator (dots)
+   *
+   * @example true
+   */
+  hidePageIndicator?: boolean;
+
+  /**
+   * The styling used if fill container is set to true (that makes all carousel elememts expand)
+   *
+   * @example {{height: '50%'}}
+   */
+  fillContainerStyle?: StyleProp<ViewStyle>;
 }
