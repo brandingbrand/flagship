@@ -29,6 +29,7 @@ export interface MultiCarouselProps<ItemT> {
   prevArrowOnBlur?: () => void;
   renderItem: (data: any, i: number) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
+  hidePageIndicator?: boolean;
   showArrow?: boolean;
   style?: any;
   zoomButtonStyle?: any;
