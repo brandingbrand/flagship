@@ -306,8 +306,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
-    const height =
-      this.props.fillContainer ?
+    const height = this.props.fillContainer ? this.props.fillContainerStyle ||
       (this.props.showThumbnails ? S.fullHeightWithThumbnails : S.fullHeight)
        : null;
 
@@ -322,7 +321,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         >
           <div
             id={`zoom-carousel-${this.id}`}
-            style={this.props.fillContainer ? S.fullHeight : undefined}
+            style={this.props.fillContainer ? {height: '100%'} : undefined}
           >
             <MultiCarousel
               ref={this.extractMultiCarousel}
