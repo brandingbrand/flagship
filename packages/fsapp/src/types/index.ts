@@ -84,6 +84,7 @@ export interface AppConfigType {
   serverSide?: boolean;
   devMenuPath?: string;
   location?: Location; // Use to provide a server-side location to router in DrawerRouter.web.tsx
+  root?: HTMLElement | string;
   screen?: NavLayoutComponent;
   screenWeb?: Screen;
   defaultOptions?: Options;
