@@ -35,6 +35,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [8.4.0](https://github.com/brandingbrand/flagship/compare/v8.3.0...v8.4.0) (2020-03-09)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
 # [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
 
 **Note:** Version bump only for package @brandingbrand/fsproductdetail
