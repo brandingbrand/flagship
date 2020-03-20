@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   animatedClose: {
     position: 'absolute',
     zIndex: 10,
-    top: 44,
+    top: Platform.OS === 'ios' ? 44 : 64,
     left: 19,
     padding: 0
   },
@@ -168,6 +168,9 @@ const gradientImage = require('../assets/images/gradient.png');
 const backArrow = require('../assets/images/backArrow.png');
 const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
 const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
+
+// Offset for swipe up, android is always >=0
+const topOffset = Platform.OS === 'ios' ? -40 : 1;
 
 export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
@@ -541,7 +544,7 @@ export default function(
     }
     onScrollFlatList = (event: any) => {
       this.scrollPosition = event.nativeEvent.contentOffset.y;
-      if (this.scrollPosition < -40) {
+      if (this.scrollPosition < topOffset) {
         this.onAnimatedClose();
       }
       if (!this.state.showDarkX && event.nativeEvent.contentOffset.y >= 378) {
