@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0-rnn2.0...v9.2.0-rnn2.0) (2020-03-20)
+
+
+### Bug Fixes
+
+* **fsengagement:** Small usability issues on Android ([afa78ba](https://github.com/brandingbrand/flagship/commit/afa78ba))
+
+
+
+
+
 # [9.1.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.0.0-rnn2.0...v9.1.0-rnn2.0) (2020-03-10)
 
 
