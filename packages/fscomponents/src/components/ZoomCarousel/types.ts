@@ -43,6 +43,12 @@ export interface ZoomCarouselProps {
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
+
+  /**
+   * The styling of the container that holds the image carousel and thumbnails
+   *
+   * @example {{flex: 1}}
+   */
   contentContainerStyle?: StyleProp<ViewStyle>;
 
   /**
@@ -53,9 +59,32 @@ export interface ZoomCarouselProps {
   hidePageIndicator?: boolean;
 
   /**
-   * The styling used if fill container is set to true (that makes all carousel elememts expand)
+   * The styling of the container that holds just the image carousel
    *
-   * @example {{height: '50%'}}
+   * @example {{minHeight: 400px}}
    */
-  fillContainerStyle?: StyleProp<ViewStyle>;
+  imageContainerStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Dicates whether the default image counter displays
+   *
+   * @example true
+   */
+  showImageCounter?: boolean;
+
+  /**
+   * Custom styling for the imageCounter. Use absolute positioning to set the location
+   *
+   * @example {{position: 'absolute'}}
+   */
+  imageCounterStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * custom image counter rendering. This function is called last inside the carousel container
+   *
+   * @example const renderImageCounter = (currentIndex: number) => (<View>1/2</View>)
+   */
+  renderImageCounter?: (
+    currentIndex: number
+  ) => React.ReactNode;
 }
