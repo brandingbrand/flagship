@@ -43,6 +43,12 @@ export interface ZoomCarouselProps {
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
+
+  /**
+   * The styling of the container that holds the image carousel and thumbnails
+   *
+   * @example {{flex: 1}}
+   */
   contentContainerStyle?: StyleProp<ViewStyle>;
 
   /**
@@ -51,13 +57,6 @@ export interface ZoomCarouselProps {
    * @example true
    */
   hidePageIndicator?: boolean;
-
-  /**
-   * The styling of the container that holds the image carousel and thumbnails
-   *
-   * @example {{flex: 1}}
-   */
-  carouselContainerStyle?: StyleProp<ViewStyle>;
 
   /**
    * The styling of the container that holds just the image carousel
