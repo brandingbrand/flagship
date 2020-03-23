@@ -190,6 +190,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   animate?: boolean;
   onBack?: () => void;
   language?: string;
+  cardPosition?: number;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -210,7 +211,8 @@ export default function(
     static childContextTypes: any = {
       handleAction: PropTypes.func,
       story: PropTypes.object,
-      language: PropTypes.string
+      language: PropTypes.string,
+      cardPosition: PropTypes.number
     };
 
     state: any = {};
@@ -270,7 +272,8 @@ export default function(
     getChildContext = () => ({
       handleAction: this.handleAction,
       story: this.props.backButton ? this.props.json : null,
-      language: this.props.language
+      language: this.props.language,
+      cardPosition: this.props.cardPosition || 0
     })
 
     // tslint:disable-next-line:cyclomatic-complexity
@@ -282,7 +285,8 @@ export default function(
         title: actions.name,
         id: actions.id,
         type: actions.type,
-        value: actions.value
+        value: actions.value,
+        position: actions.position
       });
       switch (actions.type) {
         case 'blog-url':
@@ -422,6 +426,7 @@ export default function(
       }
       if (this.props.renderType && this.props.renderType === 'carousel') {
         item.fullScreenCard = true;
+        item.position = index + 1;
       }
       return this.renderBlock(item);
     }
@@ -559,9 +564,19 @@ export default function(
     }
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
+      if (this.props.json && this.props.json.private_blocks &&
+          this.props.json.private_blocks.length && this.props.json.private_blocks[index]) {
+        DeviceEventEmitter.emit('swipeCard', {
+          title: this.props.json.private_blocks[index].name,
+          id: this.props.json.private_blocks[index].id,
+          position: pageNum
+        });
+      }
       this.setState({
         pageNum
       });
+
+
     }
 
     renderFlatlistFooterPadding = (): JSX.Element => {
