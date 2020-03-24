@@ -150,8 +150,11 @@ export class Selector extends PureComponent<
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={[styles.modalHeader, this.props.modalHeaderStyle]}>
-              <Text style={[styles.title, this.props.modalHeaderTextStyle]}>
-                {this.props.title || 'Select'}
+              <Text
+                style={[styles.title, this.props.modalHeaderTextStyle]}
+                accessibilityRole='header'
+              >
+                {this.props.title || FSI18n.string(componentTranslationKeys.select)}
               </Text>
               {this.renderCloseButton()}
             </View>

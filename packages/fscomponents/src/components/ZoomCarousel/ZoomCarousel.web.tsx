@@ -11,13 +11,18 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
+import { Modal } from '../Modal';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
+const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
+const zoomTranslationKey = FSI18n.string(componentTranslationKeys.fullscreen.actionBtn);
 const searchIcon = require('../../../assets/images/search.png');
 
 let ZOOM_CAROUSEL_ID = 0;
@@ -47,6 +52,10 @@ export interface ZoomCarouselStateType {
 }
 
 const S = StyleSheet.create({
+  carouselContainer: {
+    flex: 1,
+    flexBasis: 'auto'
+  },
   searchIcon: {
     width: 25,
     height: 25
@@ -118,6 +127,11 @@ const S = StyleSheet.create({
   thumbnailSelected: {
     borderWidth: 3,
     borderColor: 'red'
+  },
+  imageCounter: {
+    position: 'absolute',
+    right: 0,
+    top: 0
   }
 });
 
@@ -259,16 +273,97 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
-  render(): JSX.Element {
-    const { peekSize = 0, gapSize = 0 } = this.props;
+  renderImageCounter = () => {
+    const total: number = this.props.images && this.props.images.length || 0;
+    const currentIndex = this.state.currentIndex + 1;
 
     return (
+      <View style={this.props.imageCounterStyle || S.imageCounter}>
+        <Text>
+          {`${currentIndex}/${total}`}
+        </Text>
+      </View>
+    );
+  }
+
+  renderPhotoSwipe = () => (
+    <PhotoSwipe
+      isOpen={this.state.isZooming}
+      items={this.props.images
+        .map(img => img.zoomSrc || img.src)
+        .map((img, i) => ({
+          src: img.uri || img,
+          w: this.state.screenWidth,
+          h: this.state.imageSizes[i]
+            ? this.state.screenWidth *
+              this.state.imageSizes[i].height /
+              this.state.imageSizes[i].width
+            : this.state.imageHeight
+        }))}
+      options={{
+        loop: false,
+        fullscreenEl: false,
+        shareEl: false,
+        captionEl: false,
+        history: false,
+        closeOnScroll: false,
+        index: this.state.currentIndex
+      }}
+      afterChange={this.handleZoomCarouselChange}
+      onClose={this.closeZoom}
+    />
+  )
+
+  renderCustomModal = () => (
+    this.props.renderModalContent ?
+      (
+        <Modal visible={this.state.isZooming} transparent={true}>
+          {this.props.renderModalContent(this.closeZoom)}
+        </Modal>
+      ) :
+    this.renderPhotoSwipe()
+  )
+
+  renderThumbnails = () => (
+    <ScrollView
+      horizontal={true}
+      contentContainerStyle={[
+        S.thumbnailContainer,
+        this.props.thumbnailContainerStyle
+      ]}
+    >
+    {this.props.images.map((img, i) => (
+      <TouchableOpacity
+        key={i}
+        style={[
+          S.thumbnail,
+          this.props.thumbnailStyle,
+          this.state.currentIndex === i && S.thumbnailSelected
+        ]}
+        onPress={this.handleThumbPress(i)}
+        accessibilityRole={'button'}
+        accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
+      >
+        <Image
+          resizeMode='cover'
+          source={img.src}
+          style={S.thumbnailImg}
+        />
+      </TouchableOpacity>
+    ))}
+    </ScrollView>
+  )
+
+  // tslint:disable-next-line:cyclomatic-complexity
+  render(): JSX.Element {
+    const { peekSize = 0, gapSize = 0 } = this.props;
+    return (
       <View
-        style={this.props.fillContainer ? S.fullHeight : null}
+        style={this.props.contentContainerStyle || S.carouselContainer}
         onLayout={this.handleLayoutChange}
       >
         <View
-          style={this.props.fillContainer ? S.fullHeight : null}
+          style={this.props.imageContainerStyle || S.carouselContainer}
         >
           <div
             id={`zoom-carousel-${this.id}`}
@@ -290,6 +385,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               centerMode={this.props.centerMode}
               style={this.props.fillContainer ? S.fullHeight : null}
               nextArrowOnBlur={this.props.nextArrowOnBlur}
+              hidePageIndicator={this.props.hidePageIndicator}
             />
 
             {!this.props.hideZoomButton &&
@@ -297,37 +393,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 {this.props.renderZoomButton ? (
                   this.props.renderZoomButton(this.openZoom)
                 ) : (
-                  <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
+                  <TouchableOpacity
+                    style={S.zoomButton}
+                    onPress={this.openZoom}
+                    accessibilityRole={'button'}
+                    accessibilityLabel={zoomTranslationKey}
+                  >
                     <Image style={S.searchIcon} source={searchIcon} />
                   </TouchableOpacity>
                 )}
               </View>}
-
-            <PhotoSwipe
-              isOpen={this.state.isZooming}
-              items={this.props.images
-                .map(img => img.zoomSrc || img.src)
-                .map((img, i) => ({
-                  src: img.uri || img,
-                  w: this.state.screenWidth,
-                  h: this.state.imageSizes[i]
-                    ? this.state.screenWidth *
-                      this.state.imageSizes[i].height /
-                      this.state.imageSizes[i].width
-                    : this.state.imageHeight
-                }))}
-              options={{
-                loop: false,
-                fullscreenEl: false,
-                shareEl: false,
-                captionEl: false,
-                history: false,
-                closeOnScroll: false,
-                index: this.state.currentIndex
-              }}
-              afterChange={this.handleZoomCarouselChange}
-              onClose={this.closeZoom}
-            />
+              {this.renderCustomModal()}
           </div>
         </View>
 
@@ -335,32 +411,13 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           (this.props.renderThumbnails ? (
             this.props.renderThumbnails(this.state.currentIndex, this.goTo)
           ) : (
-            <ScrollView
-              horizontal={true}
-              contentContainerStyle={[
-                S.thumbnailContainer,
-                this.props.thumbnailContainerStyle
-              ]}
-            >
-              {this.props.images.map((img, i) => (
-                <TouchableOpacity
-                  key={i}
-                  style={[
-                    S.thumbnail,
-                    this.props.thumbnailStyle,
-                    this.state.currentIndex === i && S.thumbnailSelected
-                  ]}
-                  onPress={this.handleThumbPress(i)}
-                >
-                  <Image
-                    resizeMode='cover'
-                    source={img.src}
-                    style={S.thumbnailImg}
-                  />
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            this.renderThumbnails()
           ))}
+          {this.props.showImageCounter &&
+          (this.props.renderImageCounter ?
+            this.props.renderImageCounter(this.state.currentIndex) :
+            (this.renderImageCounter())
+          )}
       </View>
     );
   }

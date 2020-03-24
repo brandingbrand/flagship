@@ -128,6 +128,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   handleContainerSizeChange = (e: any) => {
     const containerWidth = e.nativeEvent.layout.width;
 
+    if (containerWidth === this.state.containerWidth) {
+      return;
+    }
+
     this.setState({
       containerWidth,
       itemWidth: this.getItemWidth(containerWidth)
@@ -318,7 +322,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             this.state.currentIndex,
             this.props.items.length
           )
-        ) : (
+        ) : !this.props.hidePageIndicator && (
           <PageIndicator
             style={this.props.pageIndicatorStyle}
             currentIndex={this.state.currentIndex}

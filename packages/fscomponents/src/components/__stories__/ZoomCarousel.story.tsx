@@ -23,6 +23,24 @@ const images = [
 
 storiesOf('ZoomCarousel', module)
   .add('basic usage', () => (
+      <ZoomCarousel
+        peekSize={20}
+        gapSize={10}
+        centerMode={true}
+        images={images}
+        showArrow={true}
+      />
+  )).add('with thumbnails', () => (
+      <ZoomCarousel
+        peekSize={20}
+        gapSize={10}
+        centerMode={true}
+        showThumbnails={true}
+        images={images}
+        showArrow={true}
+        fillContainer={true}
+      />
+  )).add('with image counter', () => (
     <ZoomCarousel
       peekSize={20}
       gapSize={10}
@@ -30,5 +48,7 @@ storiesOf('ZoomCarousel', module)
       showThumbnails={true}
       images={images}
       showArrow={true}
+      fillContainer={true}
+      showImageCounter={true}
     />
-  ));
+));
