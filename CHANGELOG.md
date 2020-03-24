@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.4.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.3.0-rnn2.0...v9.4.0-rnn2.0) (2020-03-24)
+
+
+### Bug Fixes
+
+* **fsengagement:** Gesture Responder issues on Android  ([#1100](https://github.com/brandingbrand/flagship/issues/1100)) ([df67a44](https://github.com/brandingbrand/flagship/commit/df67a44))
+
+
+
+
+
 # [9.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.2.0-rnn2.0...v9.3.0-rnn2.0) (2020-03-24)
 
 
