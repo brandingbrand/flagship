@@ -19,6 +19,7 @@ export interface Action {
   body?: string;
   name?: string;
   id?: string;
+  position?: number;
 }
 
 export interface EmitterProps {
@@ -80,6 +81,7 @@ export interface JSON {
   pageCounterStyle?: StyleProp<ViewStyle>;
   id?: string;
   key?: string;
+  name?: string;
   storyType?: string;
   tabbedItems?: any[];
   AnimatedPageCounter?: any;
@@ -97,6 +99,7 @@ export interface BlockItem extends ScreenProps, JSON {
   forceBackground?: boolean;
   fullScreenCard?: boolean;
   animateIndex?: number;
+  position?: number;
 }
 
 export interface InjectedProps {

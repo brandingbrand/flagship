@@ -58,6 +58,7 @@ export interface FullScreenCardProps extends CardProps {
   isNew?: boolean;
   AnimatedPageCounter?: any;
   AnimatedNavTitle?: any;
+  position?: number;
   setScrollEnabled: (enabled: boolean) => void;
 }
 
@@ -115,7 +116,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   handleStoryAction = (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
-      id: this.props.id
+      id: this.props.id,
+      position: this.props.position
     });
     Navigation.showModal({
       stack: {
@@ -142,7 +144,8 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
               name: this.props.name,
               id: this.props.id,
               animate: true,
-              onBack: this.onBack
+              onBack: this.onBack,
+              cardPosition: this.props.position
             }
           }
         }]
