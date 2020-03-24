@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.2.0-rnn2.0...v9.3.0-rnn2.0) (2020-03-24)
+
+
+### Features
+
+* **fsengagement:** add more event emitters and position data ([#1095](https://github.com/brandingbrand/flagship/issues/1095)) ([266890a](https://github.com/brandingbrand/flagship/commit/266890a))
+
+
+
+
+
 # [9.2.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0-rnn2.0...v9.2.0-rnn2.0) (2020-03-20)
 
 
