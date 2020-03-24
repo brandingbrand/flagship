@@ -56,10 +56,10 @@ test(`pod install on linux`, () => {
 });
 
 test(`add pod to podfile`, () => {
-  cocoapods.add(nodePath.join(tempRootDir, `ios/Podfile`), [
+  cocoapods.add([
     'PODTEST1',
     'PODTEST2'
-  ]);
+  ], nodePath.join(tempRootDir, `ios/Podfile`));
 
   const Podfile = fs
     .readFileSync(nodePath.join(tempRootDir, `ios/Podfile`))

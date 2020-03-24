@@ -34,6 +34,15 @@ export const navBarNone = {
   tabBarHidden: false
 };
 
+export const navBarShopScreen = {
+  statusBarTextColorScheme: 'dark',
+  navBarHidden: true,
+  navBarTransparent: false,
+  drawUnderNavBar: false,
+  navBarNoBorder: true,
+  statusBarBlur: true
+};
+
 export const navBarDefault = {
   ...navBarDark,
   largeTitle: false,

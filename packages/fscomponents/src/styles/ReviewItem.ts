@@ -33,7 +33,10 @@ export const style = StyleSheet.create({
   },
   syndicatedLabel: {
     color: '#767676',
-    fontSize: 13
+    fontSize: 13,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
   recommended: {
     color: '#000',

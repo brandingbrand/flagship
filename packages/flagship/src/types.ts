@@ -16,10 +16,20 @@ export interface Config {
   disableDevFeature?: boolean;
   googleMapApiKey: string;
 
+  // TODO - unify with appCenter config
   codepush?: {
     appCenterToken: string;
     android: CodepushConfig;
     ios: CodepushConfig;
+  };
+
+  appCenter?: {
+    apiToken?: string; // deprecated; will be removed in a future release
+    organization: string;
+    distribute?: {
+      appNameIOS?: string;
+      appNameAndroid?: string;
+    };
   };
 
   pushIcons?: {
@@ -68,6 +78,11 @@ export interface Config {
   entitlementsFileIOS?: string;
   usageDescriptionIOS?: {
     key: string;
+    string?: string;
+    array?: string[];
+  }[];
+
+  UIBackgroundModes?: {
     string: string;
   }[];
 
@@ -138,7 +153,8 @@ export interface IOSConfig {
 }
 
 export interface PodsConfig {
-  sources: string[];
+  sources?: string[];
+  newPods?: string[];
 }
 
 export interface NPMPackageConfig {

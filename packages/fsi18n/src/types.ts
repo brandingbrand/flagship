@@ -1,4 +1,4 @@
-export type NumberLike = number | string | import ('decimal.js').Decimal;
+export type NumberLike = number | string | import('decimal.js').Decimal;
 
 export interface I18n {
   currentLocale: () => string;
@@ -23,22 +23,58 @@ export type TranslationKey = string | {
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {
+    alertDefaults: AlertDefaultsTranslations<KeyType>;
+    addressForm: AddressFormTranslations<KeyType>;
     cart: CartTranslations<KeyType>;
+    filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
     sort: SortTranslations<KeyType>;
     reviews: ReviewsTranslations<KeyType>;
     search: SearchTranslations<KeyType>;
+    promoForm: PromoFormTranslations<KeyType>;
     updateNameOrEmail: UpdateNameOrEmailTranslations<KeyType>;
     zoomCarousel: ZoomCarouselTranslations<KeyType>;
     registration: RegistrationTranslations<KeyType>;
     storeLocator: StoreLocatorTranslations<KeyType>;
+    moreText: MoreTextTranslations<KeyType>;
     productIndex: ProductIndexTranslations<KeyType>;
     checkout: CheckoutTranslations<KeyType>;
+    applePayButton: ApplePayButtonTranslations<KeyType>;
+    payPalButton: PayPalButtonTranslations<KeyType>;
     step: StepTranslations<KeyType>;
     selector: SelectorTranslations<KeyType>;
     multiCarousel: MultiCarouselTranslations<KeyType>;
+    shareButton: ShareButtonTranslations<KeyType>;
+    loginForm: LoginFormTranslations<KeyType>;
   };
+}
+
+export interface AlertDefaultsTranslations<KeyType = TranslationKey> {
+  ok: KeyType;
+  cancel: KeyType;
+}
+
+export interface AddressFormTranslations<KeyType = TranslationKey> {
+  firstName: KeyType;
+  firstNameError: KeyType;
+  lastName: KeyType;
+  lastNameError: KeyType;
+  address1: KeyType;
+  address1Error: KeyType;
+  address2: KeyType;
+  city: KeyType;
+  cityError: KeyType;
+  postal: KeyType;
+  postalError: KeyType;
+  state: KeyType;
+  stateError: KeyType;
+  phone: KeyType;
+  phoneError: KeyType;
+  email: KeyType;
+  emailError: KeyType;
+  poBox: KeyType;
+  submit: KeyType;
 }
 
 export interface PasswordFormErrors<KeyType = TranslationKey> {
@@ -53,8 +89,19 @@ export interface EmailErrors<KeyType = TranslationKey> {
   invalid: KeyType;
 }
 
+export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
+  clearAll: KeyType;
+  done: KeyType;
+  all: KeyType;
+  reset: KeyType;
+  apply: KeyType;
+  hintToggle: KeyType;
+  hintBack: KeyType;
+}
+
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
+  itemsInCart: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
@@ -147,6 +194,7 @@ export interface SortTranslations<KeyType> {
 }
 
 export interface ReviewsTranslations<KeyType> {
+  indicatorDefault: KeyType;
   verified: KeyType;
   helpful: KeyType;
   notHelpful: KeyType;
@@ -213,7 +261,15 @@ export interface ZoomCarouselTranslations<KeyType> {
     prev: {
       actionBtn: KeyType;
     };
+    focus: {
+      actionBtn: KeyType;
+    };
   };
+}
+
+export interface PromoFormTranslations<KeyType> {
+  enterPromo: KeyType;
+  error: KeyType;
 }
 
 export interface RegistrationTranslations<KeyType> {
@@ -259,6 +315,11 @@ export interface StoreLocatorTranslations<KeyType> {
   };
 }
 
+export interface MoreTextTranslations<KeyType> {
+  readMore: KeyType;
+  readLess: KeyType;
+}
+
 export interface ProductIndexTranslations<KeyType> {
   cancel: KeyType;
   filterBy: KeyType;
@@ -275,6 +336,27 @@ export interface CheckoutTranslations<KeyType> {
   summary: {
     total: KeyType;
   };
+  creditCardForm: {
+    name: KeyType;
+    nameError: KeyType;
+    numberLabel: KeyType;
+    numberPlaceholder: KeyType;
+    numberError: KeyType;
+    cscPlaceholder: KeyType;
+    cscError: KeyType;
+    expirationLabel: KeyType;
+    expirationPlaceholder: KeyType;
+    expirationError: KeyType;
+  };
+}
+
+export interface ApplePayButtonTranslations<KeyType> {
+  text: KeyType;
+}
+
+export interface PayPalButtonTranslations<KeyType> {
+  defaultTitle: KeyType;
+  defaultTagLine: KeyType;
 }
 
 export interface StepTranslations<KeyType> {
@@ -285,9 +367,23 @@ export interface StepTranslations<KeyType> {
 
 export interface SelectorTranslations<KeyType> {
   close: KeyType;
+  select: KeyType;
 }
 
 export interface MultiCarouselTranslations<KeyType> {
   prevBtn: KeyType;
   nextBtn: KeyType;
+}
+
+export interface ShareButtonTranslations<KeyType> {
+  text: KeyType;
+}
+export interface LoginFormTranslations<KeyType> {
+  email: KeyType;
+  emailReq: KeyType;
+  emailNotValid: KeyType;
+  emailError: KeyType;
+  password: KeyType;
+  passwordError: KeyType;
+  submit: KeyType;
 }

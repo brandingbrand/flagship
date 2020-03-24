@@ -56,44 +56,30 @@ export interface CreditCardNumberProps extends Omit<TextInputMaskProps, 'type'> 
     image: ImageURISource;
   }[];
   defaultCardImage: ImageURISource;
+  value?: string;
 }
 
 export interface CreditCardNumberState {
   cardType: CreditCardType;
   cardImage: ImageURISource;
   options: TextInputMaskCustomOptionProp;
+  value?: string;
 }
 
 export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCardNumberState> {
-  static getDerivedStateFromProps(
-    nextProps: CreditCardNumberProps,
-    prevState?: CreditCardNumberState
-  ): Partial<CreditCardNumberState> | null {
-    const cardType = determineCardType(nextProps.value, { allowPartial: true }) as CreditCardType;
-
-    if (!prevState || cardType !== prevState.cardType) {
-      // We don't have a previous state or the card type has changed
-      const cardImage = nextProps.creditCardTypeImages.find(val => val.type === cardType);
-
-      return {
-        cardType,
-        cardImage: cardImage && cardImage.image || nextProps.defaultCardImage,
-        options: {
-          mask: cardType === 'AMERICANEXPRESS' ? kMaskPatternAMEX : kMaskPatternDefault
-        }
-      };
-    }
-
-    return null;
-  }
 
   constructor(props: CreditCardNumberProps) {
     super(props);
 
+    const cardType = determineCardType(props.value, { allowPartial: true }) as CreditCardType;
+
     this.state = {
-      cardType: 'VISA',
+      cardType,
       cardImage: icons.VISA,
-      options: {mask: ''}
+      options: {
+        mask: cardType === 'AMERICANEXPRESS' ? kMaskPatternAMEX : kMaskPatternDefault
+      },
+      value: ''
     };
   }
 
@@ -106,7 +92,7 @@ export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCar
       ...textInputProps
     } = this.props;
 
-    const { cardType } = this.state;
+    const { cardType, value } = this.state;
 
     return (
       <View style={styles.container}>
@@ -119,8 +105,25 @@ export class CreditCardNumber extends Component<CreditCardNumberProps, CreditCar
           type='custom'
           options={this.state.options}
           style={[textInputProps.style, { paddingLeft: this.props.cardImageWidth + 10}]}
+          onChangeText={this.onChangeText}
+          value={value}
         />
       </View>
     );
   }
+
+  onChangeText = (text: string) => {
+    const cardType = determineCardType(text, { allowPartial: true }) as CreditCardType;
+    const cardImage = this.props.creditCardTypeImages.find(val => val.type === cardType);
+
+    this.setState({
+      cardType,
+      cardImage: cardImage && cardImage.image || this.props.defaultCardImage,
+      options: {
+        mask: cardType === 'AMERICANEXPRESS' ? kMaskPatternAMEX : kMaskPatternDefault
+      },
+      value: text
+    });
+  }
+
 }

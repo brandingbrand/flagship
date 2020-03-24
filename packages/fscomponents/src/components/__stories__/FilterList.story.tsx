@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-import { FilterList } from '../FilterList';
+import { FilterList } from '../FilterList/FilterList';
 
 const items = Array(10)
   .fill(true)
