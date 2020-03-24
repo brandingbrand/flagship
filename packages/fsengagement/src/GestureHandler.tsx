@@ -33,6 +33,7 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
     return (
       <View
         {...this.panResponder.panHandlers}
+        collapsable={false}
       >
         {this.props.children}
       </View>
