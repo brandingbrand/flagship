@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.6.1](https://github.com/brandingbrand/flagship/compare/v8.6.0...v8.6.1) (2020-03-23)
+
+
+### Bug Fixes
+
+* **fscomponents:** add accessibilityRole to selector title ([#1096](https://github.com/brandingbrand/flagship/issues/1096)) ([0110c2e](https://github.com/brandingbrand/flagship/commit/0110c2e560563f553b050b2f3bfc1a7e3f841275))
+
+
+
+
+
+# [8.6.0](https://github.com/brandingbrand/flagship/compare/v8.5.0...v8.6.0) (2020-03-23)
+
+
+### Features
+
+* **fscomponents:** Add image counter, new style options to ZoomCarousel ([#1093](https://github.com/brandingbrand/flagship/issues/1093)) ([bb02ec7](https://github.com/brandingbrand/flagship/commit/bb02ec70c00c0ad239090d4e9165cb33e7109d45))
+
+
+
+
+
+# [8.5.0](https://github.com/brandingbrand/flagship/compare/v8.4.0...v8.5.0) (2020-03-19)
+
+
+### Features
+
+* **fscomponents:** Add styling and prop options to ZoomCarousel ([#1087](https://github.com/brandingbrand/flagship/issues/1087)) ([43c4bc5](https://github.com/brandingbrand/flagship/commit/43c4bc564ff45858859e7344bb239af901c2c328))
+
+
+
+
+
 # [8.4.0](https://github.com/brandingbrand/flagship/compare/v8.3.0...v8.4.0) (2020-03-09)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
