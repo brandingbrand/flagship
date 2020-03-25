@@ -154,6 +154,7 @@ export class Selector extends PureComponent<
             <View style={[styles.modalHeader, this.props.modalHeaderStyle]}>
               <Text
                 style={[styles.title, this.props.modalHeaderTextStyle]}
+                accessibilityRole='header'
                 accessibilityLabel={this.props.titleAccessibilityLabel || title}
               >
                 {title}
