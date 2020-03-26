@@ -2,8 +2,8 @@ import React, { FunctionComponent, memo } from 'react';
 import { Clipboard, Image, Share, TouchableOpacity } from 'react-native';
 import { Alert } from '../Alert';
 import { ShareButtonProps } from './ShareButtonProps';
-import { translationKeys } from '@brandingbrand/fsi18n';
-const componentTranslation = translationKeys.flagship.shareButton.text;
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.shareButton;
 
 const shareImage = require('../../../assets/images/share.png');
 
@@ -20,12 +20,12 @@ export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
           const { url } = props.content;
           // @ts-ignore Web returns false on failure, native returns void
           if (Clipboard.setString(url) !== false) {
-            Alert.alert('URL copied to clipboard: ' + url);
+            Alert.alert(FSI18n.string(componentTranslationKeys.copied) + ': ' + url);
           } else {
-            Alert.alert('Unable to copy the URL to the clipboard');
+            Alert.alert(FSI18n.string(componentTranslationKeys.notCopied));
           }
         } else {
-          Alert.alert('Message sharing is not supported by your browser.');
+          Alert.alert(FSI18n.string(componentTranslationKeys.notSupported));
         }
       }
     });
@@ -52,7 +52,7 @@ export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
     <TouchableOpacity
       onPress={onSharePress}
       accessibilityRole={'button'}
-      accessibilityLabel={componentTranslation}
+      accessibilityLabel={FSI18n.string(componentTranslationKeys.text)}
     >
       {renderShareIcon()}
     </TouchableOpacity>
