@@ -377,6 +377,9 @@ export interface MultiCarouselTranslations<KeyType> {
 
 export interface ShareButtonTranslations<KeyType> {
   text: KeyType;
+  copied: KeyType;
+  notCopied: KeyType;
+  notSupported: KeyType;
 }
 export interface LoginFormTranslations<KeyType> {
   email: KeyType;
