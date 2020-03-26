@@ -310,7 +310,10 @@ export const keys: FSTranslationKeys = {
       nextBtn: 'Show next'
     },
     shareButton: {
-      text: 'Click To Share'
+      text: 'Click To Share',
+      copied: 'URL copied to clipboard',
+      notCopied: 'Unable to copy the URL to the clipboard',
+      notSupported: 'Message sharing is not supported by your browser.'
     },
     loginForm: {
       email: 'Email',
