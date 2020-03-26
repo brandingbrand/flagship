@@ -43,6 +43,7 @@ export interface SelectorProps {
   disabledItemStyle?: StyleProp<ViewStyle>;
   selectedItemStyle?: StyleProp<ViewStyle>;
   selectedItemTextStyle?: StyleProp<TextStyle>;
+  titleAccessibilityLabel?: string;
 }
 
 export interface SelectorStateType {
@@ -140,6 +141,7 @@ export class Selector extends PureComponent<
   }
 
   renderModal = () => {
+    const title = this.props.title || FSI18n.string(componentTranslationKeys.select);
     return (
       <Modal
         animationType='fade'
@@ -153,8 +155,9 @@ export class Selector extends PureComponent<
               <Text
                 style={[styles.title, this.props.modalHeaderTextStyle]}
                 accessibilityRole='header'
+                accessibilityLabel={this.props.titleAccessibilityLabel || title}
               >
-                {this.props.title || FSI18n.string(componentTranslationKeys.select)}
+                {title}
               </Text>
               {this.renderCloseButton()}
             </View>
