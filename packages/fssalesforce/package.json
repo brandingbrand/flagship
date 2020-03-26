@@ -18,7 +18,7 @@
     "decimal.js": "^10.0.1",
     "dtsgenerator": "^2.0.7",
     "jwt-decode": "^2.2.0",
-    "qs": "^6.7.0"
+    "qs": "^6.9.1"
   },
   "devDependencies": {
     "dtsgenerator": "^2.0.7"
