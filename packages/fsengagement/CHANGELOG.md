@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.5.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.4.0-rnn2.0...v9.5.0-rnn2.0) (2020-03-27)
+
+
+### Bug Fixes
+
+* add debounce to EngagementComp handleAction ([#1105](https://github.com/brandingbrand/flagship/issues/1105)) ([814d1e7](https://github.com/brandingbrand/flagship/commit/814d1e7))
+
+
+
+
+
 # [9.4.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.3.0-rnn2.0...v9.4.0-rnn2.0) (2020-03-24)
 
 
