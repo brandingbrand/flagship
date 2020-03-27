@@ -36,6 +36,7 @@ import EngagementWebView from './WebView';
 import EngagementProductModal from './EngagementProductModal';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
+import { debounce } from 'lodash-es';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
@@ -336,8 +337,8 @@ export default function(
       cardPosition: this.props.cardPosition || 0
     })
 
-    // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = async (actions: Action) => {
+    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
+    handleAction = debounce(async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -421,7 +422,7 @@ export default function(
           break;
       }
       return;
-    }
+    }, 300);
 
     onBackPress = async (): Promise<void> => {
       return this.props.navigator.pop();
