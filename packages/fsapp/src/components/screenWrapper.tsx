@@ -68,10 +68,9 @@ export default function wrapScreen(
       super(props);
 
       this.extraNavigatorEventHandler = null;
-      this.showDevMenu =
-        (NativeConstants &&
-          NativeConstants.ShowDevMenu &&
-          NativeConstants.ShowDevMenu === 'true') ||
+      this.showDevMenu = (NativeConstants &&
+        NativeConstants.DisableDevFeature &&
+        NativeConstants.DisableDevFeature === '0') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
 
       // @ts-ignore wrong type in @types/react-native-navigation

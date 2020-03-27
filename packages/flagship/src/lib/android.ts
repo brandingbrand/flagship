@@ -383,7 +383,10 @@ export function sentryProperties(configuration: FlagshipTypes.Config): void {
  * @param {object} configuration The project configuration.
  */
 export function addDevMenuFlag(configuration: FlagshipTypes.Config): void {
-  nativeConstants.addAndroid(configuration, 'ShowDevMenu', 'true');
+  const { disableDevFeature: devFeatureStatusFromConf } = configuration;
+  const disableDevFeature = devFeatureStatusFromConf ? '1' : '0';
+
+  nativeConstants.addAndroid(configuration, 'DisableDevFeature', disableDevFeature);
 }
 
 /**
