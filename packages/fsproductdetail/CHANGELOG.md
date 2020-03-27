@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fsproductdetail
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 **Note:** Version bump only for package @brandingbrand/fsproductdetail

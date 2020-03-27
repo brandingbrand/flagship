@@ -46,8 +46,10 @@ function getGradleProperties(): string {
 }
 
 test(`update bundle id`, () => {
+  // @ts-ignore only include needed values
   android.bundleId({
     name: appName,
+    // @ts-ignore only include needed values
     bundleIds: {
       android: `test.bundle.id`
     }
@@ -57,6 +59,7 @@ test(`update bundle id`, () => {
 });
 
 test(`update display name`, () => {
+  // @ts-ignore only include needed values
   android.displayName({
     name: appName,
     displayName: `Mock App`
@@ -66,6 +69,7 @@ test(`update display name`, () => {
 });
 
 test(`update google map api key`, () => {
+  // @ts-ignore only include needed values
   android.googleMaps({
     name: appName,
     googleMapApiKey: `1231231231abc`
@@ -75,8 +79,10 @@ test(`update google map api key`, () => {
 });
 
 test(`update icon`, () => {
+  // @ts-ignore only include needed values
   android.icon({
     name: appName,
+    // @ts-ignore only include needed values
     appIconDir: {
       android: nodePath.join(tempRootDir, `assets/appIcons/android`)
     }
@@ -93,8 +99,10 @@ test(`update icon`, () => {
 });
 
 test(`update launch screen`, () => {
+  // @ts-ignore only include needed values
   android.launchScreen({
     name: appName,
+    // @ts-ignore only include needed values
     launchScreen: {
       android: nodePath.join(tempRootDir, `assets/launchScreen/android`)
     }
@@ -172,6 +180,7 @@ test('add application elements', () => {
 });
 
 test(`set url scheme without specifying urlScheme`, () => {
+  // @ts-ignore only include needed values
   android.urlScheme({
     name: appName
   });
@@ -181,6 +190,7 @@ test(`set url scheme without specifying urlScheme`, () => {
 });
 
 test(`set url scheme by specifying urlScheme`, () => {
+  // @ts-ignore only include needed values
   android.urlScheme({
     name: appName,
     urlScheme: 'mockapp-app-url'
@@ -226,6 +236,7 @@ test(`update version number with function`, () => {
 });
 
 test(`copy sentry properties`, () => {
+  // @ts-ignore only include needed values
   android.sentryProperties({
     name: appName,
     sentry: {
@@ -244,6 +255,7 @@ test(`copy sentry properties`, () => {
 });
 
 test(`set env switcher initial env`, () => {
+  // @ts-ignore only include needed values
   android.setEnvSwitcherInitialEnv(
     {
       name: appName
@@ -280,3 +292,6 @@ test('android exception domains', () => {
     '<domain includeSubdomains="true">brandingbrand.com</domain>'
   );
 });
+
+// Force to be treated as a module
+export {};

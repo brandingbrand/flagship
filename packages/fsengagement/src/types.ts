@@ -6,7 +6,7 @@ import {
   TextStyle,
   ViewStyle
 } from 'react-native';
-import { Navigator } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
   navigator: Navigator;
