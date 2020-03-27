@@ -33,6 +33,7 @@ import EngagementWebView from './WebView';
 import EngagementProductModal from './EngagementProductModal';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
+import { debounce } from 'lodash-es';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
@@ -225,8 +226,8 @@ export default function(
       story: this.props.backButton ? this.props.json : null
     })
 
-    // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = (actions: Action) => {
+    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
+    handleAction = debounce((actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -305,7 +306,7 @@ export default function(
           break;
       }
       return;
-    }
+    }, 300);
 
     onBackPress = (): void => {
       this.props.navigator.pop();
