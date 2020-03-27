@@ -40,5 +40,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc",
+  "devDependencies": {
+    "@types/yup": "^0.26.27"
+  }
 }

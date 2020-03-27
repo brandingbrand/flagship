@@ -10,6 +10,7 @@ export * from './CMSBanner';
 export * from './CMSBannerCarousel';
 export * from './CMSBannerStacked';
 export * from './CMSFeedback';
+export * from './CMSFeedbackForm';
 export * from './CMSProvider';
 export * from './Carousel';
 export * from './CartCount';
