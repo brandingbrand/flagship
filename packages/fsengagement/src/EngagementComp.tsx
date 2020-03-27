@@ -35,6 +35,7 @@ import {
 } from './types';
 import EngagementWebView from './WebView';
 import Carousel from 'react-native-snap-carousel';
+import { debounce } from 'lodash-es';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
@@ -276,8 +277,8 @@ export default function(
       cardPosition: this.props.cardPosition || 0
     })
 
-    // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = (actions: Action) => {
+    // tslint:disable-next-line: cyclomatic-complexity member-ordering typedef
+    handleAction = debounce((actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -371,7 +372,7 @@ export default function(
           break;
       }
       return;
-    }
+    }, 300);
 
     onAnimatedClose = (): void => {
       if (this.state.isClosingAnimation) { return; }
