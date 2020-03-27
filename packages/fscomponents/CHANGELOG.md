@@ -35,6 +35,52 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
+
+
+### Features
+
+* **fscomponents:** Add knobs to zoom carousel ([#1099](https://github.com/brandingbrand/flagship/issues/1099)) ([c7b8b07](https://github.com/brandingbrand/flagship/commit/c7b8b07cbdfec68b4328530eb29471488a33b791))
+* **fscomponents:** custom a11yLabel for selector title ([#1097](https://github.com/brandingbrand/flagship/issues/1097)) ([147da0c](https://github.com/brandingbrand/flagship/commit/147da0c08c0d727e1b33cb55508a34aa84bc8108))
+* **fscomponents:** ShareButton web support ([#1102](https://github.com/brandingbrand/flagship/issues/1102)) ([4a369a4](https://github.com/brandingbrand/flagship/commit/4a369a4633ce00f9493ede3d3f3387679efcb223))
+
+
+
+
+
+## [8.6.1](https://github.com/brandingbrand/flagship/compare/v8.6.0...v8.6.1) (2020-03-23)
+
+
+### Bug Fixes
+
+* **fscomponents:** add accessibilityRole to selector title ([#1096](https://github.com/brandingbrand/flagship/issues/1096)) ([0110c2e](https://github.com/brandingbrand/flagship/commit/0110c2e560563f553b050b2f3bfc1a7e3f841275))
+
+
+
+
+
+# [8.6.0](https://github.com/brandingbrand/flagship/compare/v8.5.0...v8.6.0) (2020-03-23)
+
+
+### Features
+
+* **fscomponents:** Add image counter, new style options to ZoomCarousel ([#1093](https://github.com/brandingbrand/flagship/issues/1093)) ([bb02ec7](https://github.com/brandingbrand/flagship/commit/bb02ec70c00c0ad239090d4e9165cb33e7109d45))
+
+
+
+
+
+# [8.5.0](https://github.com/brandingbrand/flagship/compare/v8.4.0...v8.5.0) (2020-03-19)
+
+
+### Features
+
+* **fscomponents:** Add styling and prop options to ZoomCarousel ([#1087](https://github.com/brandingbrand/flagship/issues/1087)) ([43c4bc5](https://github.com/brandingbrand/flagship/commit/43c4bc564ff45858859e7344bb239af901c2c328))
+
+
+
+
+
 # [8.4.0](https://github.com/brandingbrand/flagship/compare/v8.3.0...v8.4.0) (2020-03-09)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

@@ -35,6 +35,41 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
+
+
+### Features
+
+* **fscomponents:** ShareButton web support ([#1102](https://github.com/brandingbrand/flagship/issues/1102)) ([4a369a4](https://github.com/brandingbrand/flagship/commit/4a369a4633ce00f9493ede3d3f3387679efcb223))
+
+
+
+
+
+## [8.6.1](https://github.com/brandingbrand/flagship/compare/v8.6.0...v8.6.1) (2020-03-23)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [8.6.0](https://github.com/brandingbrand/flagship/compare/v8.5.0...v8.6.0) (2020-03-23)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [8.5.0](https://github.com/brandingbrand/flagship/compare/v8.4.0...v8.5.0) (2020-03-19)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
 # [8.4.0](https://github.com/brandingbrand/flagship/compare/v8.3.0...v8.4.0) (2020-03-09)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n

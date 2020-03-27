@@ -11,6 +11,7 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -51,6 +52,10 @@ export interface ZoomCarouselStateType {
 }
 
 const S = StyleSheet.create({
+  carouselContainer: {
+    flex: 1,
+    flexBasis: 'auto'
+  },
   searchIcon: {
     width: 25,
     height: 25
@@ -122,6 +127,11 @@ const S = StyleSheet.create({
   thumbnailSelected: {
     borderWidth: 3,
     borderColor: 'red'
+  },
+  imageCounter: {
+    position: 'absolute',
+    right: 0,
+    top: 0
   }
 });
 
@@ -264,6 +274,19 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
+  renderImageCounter = () => {
+    const total: number = this.props.images && this.props.images.length || 0;
+    const currentIndex = this.state.currentIndex + 1;
+
+    return (
+      <View style={this.props.imageCounterStyle || S.imageCounter}>
+        <Text>
+          {`${currentIndex}/${total}`}
+        </Text>
+      </View>
+    );
+  }
+
   renderPhotoSwipe = () => (
     <PhotoSwipe
       isOpen={this.state.isZooming}
@@ -302,16 +325,46 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.renderPhotoSwipe()
   )
 
+  renderThumbnails = () => (
+    <ScrollView
+      horizontal={true}
+      contentContainerStyle={[
+        S.thumbnailContainer,
+        this.props.thumbnailContainerStyle
+      ]}
+    >
+    {this.props.images.map((img, i) => (
+      <TouchableOpacity
+        key={i}
+        style={[
+          S.thumbnail,
+          this.props.thumbnailStyle,
+          this.state.currentIndex === i && S.thumbnailSelected
+        ]}
+        onPress={this.handleThumbPress(i)}
+        accessibilityRole={'button'}
+        accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
+      >
+        <Image
+          resizeMode='cover'
+          source={img.src}
+          style={S.thumbnailImg}
+        />
+      </TouchableOpacity>
+    ))}
+    </ScrollView>
+  )
+
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
-
     return (
       <View
-        style={this.props.fillContainer ? S.fullHeight : null}
+        style={this.props.contentContainerStyle || S.carouselContainer}
         onLayout={this.handleLayoutChange}
       >
         <View
-          style={this.props.fillContainer ? S.fullHeight : null}
+          style={this.props.imageContainerStyle || S.carouselContainer}
         >
           <div
             id={`zoom-carousel-${this.id}`}
@@ -333,6 +386,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               centerMode={this.props.centerMode}
               style={this.props.fillContainer ? S.fullHeight : null}
               nextArrowOnBlur={this.props.nextArrowOnBlur}
+              hidePageIndicator={this.props.hidePageIndicator}
             />
 
             {!this.props.hideZoomButton && (
@@ -359,34 +413,13 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           (this.props.renderThumbnails ? (
             this.props.renderThumbnails(this.state.currentIndex, this.goTo)
           ) : (
-            <ScrollView
-              horizontal={true}
-              contentContainerStyle={[
-                S.thumbnailContainer,
-                this.props.thumbnailContainerStyle
-              ]}
-            >
-              {this.props.images.map((img, i) => (
-                <TouchableOpacity
-                  key={i}
-                  style={[
-                    S.thumbnail,
-                    this.props.thumbnailStyle,
-                    this.state.currentIndex === i && S.thumbnailSelected
-                  ]}
-                  onPress={this.handleThumbPress(i)}
-                  accessibilityRole={'button'}
-                  accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
-                >
-                  <Image
-                    resizeMode='cover'
-                    source={img.src}
-                    style={S.thumbnailImg}
-                  />
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            this.renderThumbnails()
           ))}
+          {this.props.showImageCounter &&
+          (this.props.renderImageCounter ?
+            this.props.renderImageCounter(this.state.currentIndex) :
+            (this.renderImageCounter())
+          )}
       </View>
     );
   }
