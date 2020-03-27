@@ -300,7 +300,10 @@ export class ShopifyCartDataSource extends DataSourceBase
 
           if (updatedCheckout && updatedCheckout.availableShippingRates) {
             orderDetails.shippingOptions = Normalizers.getShippingMethods(updatedCheckout);
-            e.updateWith(orderDetails);
+
+            if (e && e.updateWith) {
+              e.updateWith(orderDetails);
+            }
           }
         }
       }
@@ -322,7 +325,10 @@ export class ShopifyCartDataSource extends DataSourceBase
           orderDetails.shippingOptions = Normalizers.getShippingMethods(updatedCheckout);
           orderDetails.total.amount.value = updatedCheckout.paymentDue;
           payment.amount = updatedCheckout.paymentDue;
-          e.updateWith(orderDetails);
+
+          if (e && e.updateWith) {
+            e.updateWith(orderDetails);
+          }
         }
       }
     });
