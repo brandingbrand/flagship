@@ -39,7 +39,7 @@
 
 **:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
 
-## About
+## About Flagship
 
 <img alt="Flagship accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"

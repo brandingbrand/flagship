@@ -5,7 +5,6 @@ const path = require('../path');
 
 const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
 const tempRootDir = nodePath.join(__dirname, `__fs_test`);
-const appName = `MOCKAPP`;
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -45,3 +44,6 @@ test(`keyword doesn't exist`, () => {
   expect(fs.doesKeywordExist(nodePath.join(tempRootDir, `ios/Podfile`), `target 'TESTAPP' do`))
     .toBeFalsy();
 });
+
+// Force to be treated as a module
+export {};

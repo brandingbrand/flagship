@@ -3,14 +3,13 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 import { GeoLocation } from '@brandingbrand/fsfoundation';
 import React, { Component } from 'react';
 import {
-  Geolocation,
-  GeoOptions,
   ImageURISource,
   Platform,
   StyleProp,
   TextStyle,
   ViewStyle
 } from 'react-native';
+import { default as Geolocation, GeolocationOptions } from '@react-native-community/geolocation';
 import getCoordsByAddress from '../lib/getCoordsByAddress';
 import getLocationPermission from '../lib/getLocationPermission';
 import { callPhone, startDirections } from '../lib/helpers';
@@ -19,6 +18,12 @@ import { COLLAPSE_LAT_PADDING } from './MapView';
 import states from '../lib/states';
 import { find } from 'lodash-es';
 import { LocationItemProps, SearchBarProps } from '@brandingbrand/fscomponents';
+
+// Distance filter is currently missing from @react-native-community/geolocation
+// https://github.com/react-native-community/react-native-geolocation/issues/11
+interface GeoOptions extends GeolocationOptions {
+  distanceFilter?: number;
+}
 
 const DEFAULT_RADIUS = 10;
 
@@ -56,7 +61,7 @@ export interface PropType {
   noResultsText?: string;
   noResultsTextStyle?: StyleProp<TextStyle>;
   locateMeIcon?: ImageURISource;
-  geoOptions?: GeoOptions;
+  geoOptions?: GeolocationOptions;
   mapMarkerIcon?: ImageURISource;
   analytics?: Analytics;
   showLocateMe?: boolean;
@@ -344,7 +349,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     const granted = await getLocationPermission();
 
     if (granted) {
-      (navigator.geolocation as Geolocation).getCurrentPosition(
+      Geolocation.getCurrentPosition(
         pos => {
           if (pos.coords && pos.coords.latitude) {
             this.setState({ currentLocation: pos.coords });
@@ -370,13 +375,14 @@ export default class LocatorContainer extends Component<PropType, StateType> {
             this.handleLocationNotFound();
           }
         },
-        {
+        // tslint:disable-next-line: no-object-literal-type-assertion
+        ({
           enableHighAccuracy: true,
           timeout: 10000,
           maximumAge: 10000,
           distanceFilter: 100,
           ...this.props.geoOptions
-        }
+        }) as GeoOptions
       );
     }
   }

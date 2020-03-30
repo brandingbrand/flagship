@@ -136,26 +136,61 @@ export interface App extends Dictionary {
   lifecycle: string;
 }
 
+async function resolvePromise<T>(value?: T | Promise<T>): Promise<T | undefined> {
+  if (value === undefined) {
+    return undefined;
+  }
+  // @ts-ignore Check is needed to determine if it is a promise or not
+  if ((value as Promise<T>).then) {
+    // tslint:disable-next-line: no-return-await
+    return await (value as Promise<T>);
+  }
+  return value;
+}
+
+const resolvePromises = async (
+  configuration: AnalyticsProviderConfiguration
+): Promise<AnalyticsProviderConfiguration> => {
+  const newConfig: any = {};
+  for (const key in configuration) {
+    if (configuration.hasOwnProperty(key)) {
+      newConfig[key] = await resolvePromise(configuration[
+        key as keyof AnalyticsProviderConfiguration
+      ]);
+    }
+  }
+  return newConfig;
+};
+
 // Class
 
 export default abstract class AnalyticsProvider {
-  protected userAgent: string;
-  protected osType: string;
-  protected osVersion: string;
-  protected appName: string;
-  protected appId: string;
-  protected appVersion: string;
+  protected userAgent: string = '';
+  protected osType: string = '';
+  protected osVersion: string = '';
+  protected appName: string = '';
+  protected appId: string = '';
+  protected appVersion: string = '';
   protected appInstallerId?: string;
 
-  constructor(configuration: AnalyticsProviderConfiguration) {
-    this.userAgent = String(configuration.userAgent);
-    this.osType = String(configuration.osType);
-    this.osVersion = String(configuration.osVersion);
-    this.appName = String(configuration.appName);
-    this.appId = String(configuration.appId);
-    this.appVersion = String(configuration.appVersion);
-    this.appInstallerId = String(configuration.appInstallerId);
+  constructor(initialConfig: AnalyticsProviderConfiguration) {
+    resolvePromises(initialConfig).then((configuration: AnalyticsProviderConfiguration) => {
+      this.userAgent = String(configuration.userAgent);
+      this.osType = String(configuration.osType);
+      this.osVersion = String(configuration.osVersion);
+      this.appName = String(configuration.appName);
+      this.appId = String(configuration.appId);
+      this.appVersion = String(configuration.appVersion);
+      this.appInstallerId = configuration.appInstallerId && String(configuration.appInstallerId);
+      this.asyncInit().catch(e => {
+        console.warn('error initializing analytics provider', e);
+      });
+    }).catch(e => {
+      console.warn('error initializing analytics promises', e);
+    });
   }
+
+  abstract async asyncInit(): Promise<void>;
 
   // Commerce Functions
 

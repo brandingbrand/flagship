@@ -2,6 +2,7 @@ import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
+import * as RNLocalize from 'react-native-localize';
 import {
   EngagementMessage,
   EngagementProfile,
@@ -149,10 +150,11 @@ export class EngagementService {
     }
 
     return this.networkClient.post(`/App/${this.appId}/getProfile`, {
-      locale: DeviceInfo.getDeviceLocale(),
-      country: DeviceInfo.getDeviceCountry(),
-      timezone: DeviceInfo.getTimezone(),
-      deviceIdentifier: DeviceInfo.getUniqueID(),
+      locale: RNLocalize.getLocales() && RNLocalize.getLocales().length &&
+        RNLocalize.getLocales()[0].languageTag,
+      country: RNLocalize.getCountry(),
+      timezone: RNLocalize.getTimeZone(),
+      deviceIdentifier: DeviceInfo.getUniqueId(),
       accountId,
       deviceInfo: JSON.stringify({
         model: DeviceInfo.getModel(),
@@ -177,9 +179,10 @@ export class EngagementService {
       });
   }
 
-  setPushToken(pushToken: string): void {
+  async setPushToken(pushToken: string): Promise<any> {
+    const uniqueId = DeviceInfo.getUniqueId();
     const device = this.profileData && this.profileData.devices &&
-      this.profileData.devices[DeviceInfo.getUniqueID()];
+      this.profileData.devices[uniqueId];
     if (device) {
       if (!device.pushToken || device.pushToken !== pushToken) {
         this.networkClient

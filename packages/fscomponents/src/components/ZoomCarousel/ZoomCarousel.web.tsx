@@ -260,15 +260,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     return (
       <View style={this.props.fillContainer ? S.fullHeight : null}>
         {this.props.renderImageWeb &&
-          this.props.renderImageWeb(item, i) ||
-          <Image
-            source={item.src}
-            resizeMode='contain'
-            style={{
-              width: this.state.imageWidth,
-              height: this.state.imageHeight
-            }}
-          />}
+          this.props.renderImageWeb(item, i) || (
+            <Image
+              source={item.src}
+              resizeMode='contain'
+              style={{
+                width: this.state.imageWidth,
+                height: this.state.imageHeight
+              }}
+            />
+          )}
       </View>
     );
   }
@@ -388,7 +389,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               hidePageIndicator={this.props.hidePageIndicator}
             />
 
-            {!this.props.hideZoomButton &&
+            {!this.props.hideZoomButton && (
               <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
                 {this.props.renderZoomButton ? (
                   this.props.renderZoomButton(this.openZoom)
@@ -402,8 +403,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                     <Image style={S.searchIcon} source={searchIcon} />
                   </TouchableOpacity>
                 )}
-              </View>}
-              {this.renderCustomModal()}
+              </View>
+            )}
+            {this.renderCustomModal()}
           </div>
         </View>
 

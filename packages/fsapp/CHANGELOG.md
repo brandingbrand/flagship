@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** refactor animated story modal and fix deeplinking ([#873](https://github.com/brandingbrand/flagship/issues/873)) ([0f08d41](https://github.com/brandingbrand/flagship/commit/0f08d41))
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* bump react-native-device-info ([#872](https://github.com/brandingbrand/flagship/issues/872)) ([3118b10](https://github.com/brandingbrand/flagship/commit/3118b10))
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* **fsapp:** RNN v2 allow passing static styling as a function ([2af339b](https://github.com/brandingbrand/flagship/commit/2af339b))
+
+
+### Features
+
+* update fsapp to use react-native-navigation 2 ([4a2740f](https://github.com/brandingbrand/flagship/commit/4a2740f))
+
+
+### BREAKING CHANGES
+
+* Tabs must now have ids defined in their configuration
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

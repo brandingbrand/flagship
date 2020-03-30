@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
   number
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { MoreText } from '../MoreText';
 
 const lorem = 'here are many variations of passages of Lorem Ipsum available, but the majority \

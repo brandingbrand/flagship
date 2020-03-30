@@ -41,3 +41,6 @@ test(`add native constants to ios`, () => {
 
   expect(NativeConstantsFile).toMatch(`, @"TEST_KEY": @"TEST_VALUE"`);
 });
+
+// Force to be treated as a module
+export {};

@@ -38,7 +38,7 @@ export default class Card extends Component<ComponentProps> {
     handleStoryAction: this.handleStoryAction
   })
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
@@ -46,25 +46,29 @@ export default class Card extends Component<ComponentProps> {
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    this.props.navigator.push({
-      screen: 'EngagementComp',
-      navigatorStyle: {
-        navBarHidden: true
-      },
-      passProps: {
-        json,
-        backButton: true,
-        name: this.props.name,
-        id: this.props.id
+    return this.props.navigator.push({
+      component: {
+        name: 'EngagementComp',
+        options: {
+          topBar: {
+            visible: false
+          }
+        },
+        passProps: {
+          json,
+          backButton: true,
+          name: this.props.name,
+          id: this.props.id
+        }
       }
     });
   }
 
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = this.props;
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    this.handleStoryAction(actionPayload);
+    return this.handleStoryAction(actionPayload);
   }
 
   render(): JSX.Element {

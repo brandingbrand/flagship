@@ -26,7 +26,6 @@ const globalConfig = {
   devtool: 'none',
   entry: {
     main: [
-      '@babel/polyfill',
       '../src/index.web.ts'
     ]
   },
@@ -119,13 +118,7 @@ const globalConfig = {
                   loader: require.resolve('css-loader'),
                   options: {
                     importLoaders: 1,
-                    minimize: true,
-                    sourceMap: true,
-                    minimize: {
-                      discardComments: {
-                        removeAll: true
-                      }
-                    }
+                    sourceMap: true
                   }
                 },
                 {
@@ -144,6 +137,13 @@ const globalConfig = {
                           'not ie < 9' // React doesn't support IE8 anyway
                         ],
                         flexbox: 'no-2009'
+                      }),
+                      require('cssnano')({
+                        preset: ['default', {
+                          discardComments: {
+                            removeAll: true,
+                          },
+                        }]
                       })
                     ]
                   }

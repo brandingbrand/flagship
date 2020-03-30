@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
 import {
   object
-  // tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { Grid } from '../Grid';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ProductItem } from '../ProductItem';

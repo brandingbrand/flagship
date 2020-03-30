@@ -39,6 +39,7 @@ import {
   JSON
 } from '../types';
 import TextBlock from './TextBlock';
+import { OptionsModalPresentationStyle } from 'react-native-navigation';
 const { width: viewportWidth } = Dimensions.get('window');
 
 export interface ImageProp {
@@ -118,7 +119,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     }, 600, 'ease-out');
   }
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
@@ -126,24 +127,38 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    this.props.navigator.showModal({
-      screen: 'EngagementComp',
-      animationType: 'none',
-      passProps: {
-        json,
-        animateScroll: true,
-        backButton: true,
-        name: this.props.name,
-        id: this.props.id,
-        onBack: this.onBack,
-        AnimatedImage: null
-      },
-      navigatorStyle: {
-        navBarHidden: true,
-        screenBackgroundColor: 'transparent',
-        modalPresentationStyle: 'overCurrentContext',
-        tabBarHidden: true,
-        navBarTranslucent: true
+    return this.props.navigator.showModal({
+      component: {
+        name: 'EngagementComp',
+        options: {
+          animations: {
+            showModal: {
+              enabled: false
+            }
+          },
+          bottomTabs: {
+            visible: false
+          },
+          layout: {
+            backgroundColor: 'transparent'
+          },
+          modalPresentationStyle: 'overCurrentContext' as OptionsModalPresentationStyle,
+          topBar: {
+            background: {
+              color: 'transparent'
+            },
+            visible: false
+          }
+        },
+        passProps: {
+          json,
+          animateScroll: true,
+          backButton: true,
+          name: this.props.name,
+          id: this.props.id,
+          onBack: this.onBack,
+          AnimatedImage: null
+        }
       }
     });
   }
@@ -157,7 +172,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     //   scale: 1
     // }, 200, 'ease-out');
   }
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient } = this.props;
 
@@ -184,7 +199,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
         }, 500, 'ease-out');
       });
 
-      this.handleStoryAction({
+      return this.handleStoryAction({
         ...story,
         storyGradient
       });

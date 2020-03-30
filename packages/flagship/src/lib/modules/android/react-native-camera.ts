@@ -10,15 +10,10 @@ export function postLink(configuration: Config): void {
   // command due to Gradle 3 changes
   let gradleAppBuild = fs.readFileSync(path.android.gradlePath(), { encoding: 'utf8' });
 
-  gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
-  gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');
-
-  // Exclude com.android.support:support-v4 version conflict
   gradleAppBuild = gradleAppBuild.replace(
-    /implementation project\(':react-native-camera'\)$/gmi,
-    `implementation (project(':react-native-camera')) {
-      exclude group: "com.android.support"
-    }`
+    /(missingDimensionStrategy)/,
+    `missingDimensionStrategy 'react-native-camera', 'general'
+    $1`
   );
 
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);

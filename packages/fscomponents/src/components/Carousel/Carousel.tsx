@@ -33,7 +33,7 @@ export class Carousel extends Component<CarouselProps> {
         activeDotColor={currentPageIndicatorColor}
         dotColor={pageIndicatorColor}
         height={height}
-        style={style}
+        containerStyle={style}
         bounces={true}
         loop={loopCopy}
         {...nativeOptions}
