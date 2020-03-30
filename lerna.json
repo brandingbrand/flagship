@@ -11,7 +11,7 @@
       "conventionalCommits": true,
       "message": "chore(release): publish %s",
       "allowBranch": "master",
-      "npmClient": "npm",
+      "npmClient": "yarn",
       "forcePublish": "*"
     }
   }
