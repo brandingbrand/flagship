@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+
+### Bug Fixes
+
+* fix codepush integration with RNN v2 ([591ce6c](https://github.com/brandingbrand/flagship/commit/591ce6c))
+* **flagship:** Fix overwriting launch screen file ([b29d851](https://github.com/brandingbrand/flagship/commit/b29d851))
+
+
+### Features
+
+* setup native side of android for react-native-navigation 2 ([3298744](https://github.com/brandingbrand/flagship/commit/3298744))
+* setup native side of ios for react-native-navigation 2 ([9515589](https://github.com/brandingbrand/flagship/commit/9515589))
+
+
+### BREAKING CHANGES
+
+* splash screens will need to be converted to storyboards
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 **Note:** Version bump only for package @brandingbrand/flagship

@@ -26,10 +26,11 @@ export const TextField: React.FC<FormFieldProps> = (
           onChangeText={handleChange(fieldName)}
           onBlur={setTouched}
         />
-      {meta.touched && meta.error ?
-      <Text style={[S.errorMessageText, errStyle]}>
-        {meta.error}
-      </Text> : null}
+      {meta.touched && meta.error ? (
+        <Text style={[S.errorMessageText, errStyle]}>
+          {meta.error}
+        </Text>
+      ) : null}
     </View>
   );
 };

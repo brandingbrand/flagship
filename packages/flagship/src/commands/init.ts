@@ -75,12 +75,11 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link.link()
+  link.link(projectPackageJSON.flagship && projectPackageJSON.flagship.forceLink)
     .then(() => {
       if (doAndroid) {
         modules.android(projectPackageJSON, configuration, 'postLink');
       }
-
       if (doIOS) {
         modules.ios(projectPackageJSON, configuration, 'postLink');
         cocoapods.install();

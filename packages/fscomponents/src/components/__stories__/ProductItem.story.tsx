@@ -6,8 +6,8 @@ import {
   object,
   select,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { SwatchItemType } from '../Swatches';
 import { ProductItem } from '../ProductItem';

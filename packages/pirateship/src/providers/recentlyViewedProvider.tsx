@@ -84,6 +84,6 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
 
 export default function withRecentlyViewed(
   WrappedComponent: React.ComponentClass<any>
-): React.ComponentClass<any> {
+): any {
   return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 }
