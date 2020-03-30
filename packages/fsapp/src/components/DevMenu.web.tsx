@@ -3,12 +3,13 @@
 // in this file since it should only be used in development
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GenericScreenProp } from './screenWrapper';
+import { GenericScreenProp } from './screenWrapper.web';
 import TouchableRow from './TouchableRow';
-import { Screen } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
 import EnvSwitcher from '../lib/env-switcher';
+import { LayoutComponent } from 'react-native-navigation';
+import Navigator from '../lib/nav-wrapper.web';
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -66,12 +67,16 @@ const styles = StyleSheet.create({
   }
 });
 
+export interface DevMenuProp extends GenericScreenProp {
+  navigator: Navigator;
+}
+
 export interface DevMenuState {
   devView: string;
   selectedEnv: string;
 }
 
-export default class DevMenu extends Component<GenericScreenProp, DevMenuState> {
+export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   state: DevMenuState = {
     devView: 'menu',
     selectedEnv: 'prod'
@@ -117,9 +122,9 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     );
   }
 
-  renderCustomDevScreen = (item: Screen, i: number) => {
+  renderCustomDevScreen = (item: LayoutComponent, i: number) => {
     return (
-      <TouchableRow key={i} text={item.title || item.screen} onPress={this.pushToScreen(item)} />
+      <TouchableRow key={i} text={item.name} onPress={this.pushToScreen(item)} />
     );
   }
 
@@ -200,14 +205,18 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
   }
 
   dismissModal = () => {
-    this.props.navigator.pop();
+    this.props.navigator.pop().catch((e: any) => { console.error(e); });
   }
 
   showDevView = (devView: string) => () => {
     this.setState({ devView });
   }
 
-  pushToScreen = (item: Screen) => () => {
-    this.props.navigator.push(item);
+  pushToScreen = (component: LayoutComponent) => () => {
+    this.props.navigator.push({
+      component
+    }).catch((e: any) => {
+      console.error('pushToScreen error', e);
+    });
   }
 }

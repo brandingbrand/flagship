@@ -49,6 +49,10 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // TODO: Enable 'trackAllAppScreens'
   }
 
+  async asyncInit(): Promise<void> {
+    // Do nothing
+  }
+
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {

@@ -66,6 +66,10 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     this.normalizers = config.eventNormalizers || {};
   }
 
+  async asyncInit(): Promise<void> {
+    // Do nothing
+  }
+
   clickGeneric(properties: Events.ClickGeneric): void {
     if (this.disabledEvents.clickGeneric) {
       return;

@@ -4,8 +4,8 @@ import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit
 import {
   number,
   object
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { StepIndicator } from '../StepIndicator';
 
 const styles = StyleSheet.create({

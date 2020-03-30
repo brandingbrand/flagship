@@ -2,7 +2,7 @@ import { AppRegistry } from 'react-native';
 import { AppConfigType } from '../types';
 import { FSAppBase } from './FSAppBase';
 import App from '../components/DrawerRouter.web';
-import DevMenu from '../components/DevMenu';
+import DevMenu from '../components/DevMenu.web';
 
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {

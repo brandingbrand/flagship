@@ -17,8 +17,7 @@ describe('Analytics', () => {
     const providers = [new GoogleAnalyticsProvider(commonConfiguration, configuration)];
 
     analytics = new Analytics(providers);
-
-    return done();
+    setTimeout(done, 0);
   });
 
   afterEach(done => {
