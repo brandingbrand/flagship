@@ -60,7 +60,7 @@ const globalConfig = {
     modules: [
       path.resolve('./node_modules'),
       path.resolve('../node_modules'),
-      path.resolve('../../../node_modules')
+      path.resolve('../../../packages/../node_modules')
     ]
   },
   module: {

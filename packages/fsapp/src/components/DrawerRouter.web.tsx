@@ -9,7 +9,7 @@ import {
   StaticRouter,
   Switch
 } from 'react-router-dom';
-import { compile, Key, pathToRegexp } from 'path-to-regexp';
+import pathToRegexp, { Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
@@ -97,7 +97,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         const keys: Key[] = [];
 
         pathToRegexp(path, keys);
-        screens[key].toPath = compile(path);
+        screens[key].toPath = pathToRegexp.compile(path);
         screens[key].paramKeys = keys;
       }
     });
