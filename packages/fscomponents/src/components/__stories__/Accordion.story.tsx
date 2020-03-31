@@ -5,15 +5,21 @@
 import React from 'react';
 import {
   Image,
+  ImageURISource,
   Text,
   View
 } from 'react-native';
+import {
+  select,
+  text
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { Accordion } from '../Accordion';
 
 const title = <Text>Menu Item</Text>;
 
-const icons = {
+const icons: Record<string, ImageURISource> = {
   closed: require('../../../assets/images/alert.png'),
   open: require('../../../assets/images/checkmarkValidation.png')
 };
@@ -48,11 +54,11 @@ storiesOf('Accordion', module)
       content={imageContent}
     />
   ))
-  .add('w/ arrow disclosure icon', () => (
+  .add('w/ arrow or plusminus disclosure icon', () => (
     <Accordion
       title={title}
       content={content}
-      iconFormat={'arrow'}
+      iconFormat={select('Format', ['arrow', 'plusminus'], 'arrow')}
     />
   ))
   .add('w/ custom disclosure icon', () => (
@@ -60,7 +66,19 @@ storiesOf('Accordion', module)
       title={title}
       content={content}
       iconFormat={'image'}
-      openIconImage={icons.open}
-      closedIconImage={icons.closed}
+      openIconImage={icons[select('Open Icon', Object.keys(icons), 'open')]}
+      closedIconImage={icons[select('Closed Icon', Object.keys(icons), 'closed')]}
     />
+  ))
+  .add('nested as a child with a string title', () => (
+    <Accordion
+      title={text('Parent title', 'Parent')}
+      state={'open'}
+    >
+      <Accordion
+        title={title}
+        content={content}
+        paddingHorizontal={0}
+      />
+    </Accordion>
   ));
