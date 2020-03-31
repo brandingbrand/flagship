@@ -1,7 +1,6 @@
-import React, { Component, RefObject } from 'react';
+import React, { Component } from 'react';
 import {
   Animated,
-  findNodeHandle,
   Image,
   ImageStyle,
   ImageURISource,
@@ -11,7 +10,6 @@ import {
   Text,
   TextStyle,
   TouchableHighlight,
-  UIManager,
   View,
   ViewStyle
 } from 'react-native';
@@ -51,6 +49,7 @@ export interface AccordionProps {
   closedIconStyle?: StyleProp<ImageStyle>;
   /**
    * Content of the accordion
+   * @deprecated Make the contents a child instead
    */
   content?: JSX.Element;
   /**
@@ -75,7 +74,8 @@ export interface AccordionProps {
    */
   openTitleStyle?: StyleProp<ViewStyle>;
   /**
-   * Left, right, and bottom padding
+   * Bottom padding
+   * @deprecated Put the padding on the accordion contents instead
    */
   padding?: number;
   /**
@@ -97,15 +97,11 @@ export interface AccordionProps {
   /**
    * Content of the accordion title
    */
-  title: JSX.Element;
+  title: JSX.Element | string;
   /**
    *  Styles for the accordion title container
    */
   titleContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Height of the accordion title container
-   */
-  titleHeight?: number;
   /**
    * Styles for the accordion title
    */
@@ -127,9 +123,8 @@ export interface AccordionProps {
 export interface AccordionState {
   arrowTranslateAnimation: Animated.Value;
   contentHeightAnimation: Animated.Value;
+  contentHeight: number;
   isOpen: boolean;
-  isMeasuring: boolean;
-  hasMeasured: boolean;
 }
 
 const ACCORDION_PADDING_DEFAULT = 15;
@@ -144,6 +139,12 @@ const AccordionStyles = StyleSheet.create({
   },
   content: {
     overflow: 'hidden'
+  },
+  contentLayout: {
+    // Need to do this so that heights are still calculated inside overflow: hidden
+    left: 0,
+    right: 0,
+    position: 'absolute'
   },
   titleContainer: {
     flex: 1,
@@ -174,11 +175,11 @@ const AccordionStyles = StyleSheet.create({
  * via the state property. The default is closed.
  *
  * Because of how padding and flexed items are handled, the dimensions of the
- * accordion can be customized via two props: titleHeight and padding. The titleHeight
- * prop controls the height of the title, and the padding prop controls the size of
+ * accordion can be customized via two props: padding and paddingHorizontal. The padding
+ * prop controls the height of the contents, and the paddingHorizontal prop controls the size of
  * the left and right padding for the title as well as the padding around the contents.
  * This is because on iOS padding does not affect the height of a flexed container; the
- * height of said container is determined solely based on the hight of its children. (On
+ * height of said container is determined solely based on the height of its children. (On
  * web the height is the padding + height of the children.)
  */
 export class Accordion extends Component<AccordionProps, AccordionState> {
@@ -191,49 +192,32 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     }
   };
 
-  private contentView: RefObject<View>;
-
   constructor(props: AccordionProps) {
     super(props);
-
-    this.contentView = React.createRef<View>();
 
     this.state = {
       arrowTranslateAnimation: new Animated.Value(props.state === 'open' ? -90 : 90),
       contentHeightAnimation: new Animated.Value(0),
-      isOpen: (props.state === 'open'),
-      isMeasuring: false,
-      hasMeasured: false
+      contentHeight: 0,
+      isOpen: (props.state === 'open')
     };
   }
 
   // tslint:disable-next-line:cyclomatic-complexity
   render(): JSX.Element {
-    let computedContentStyle;
+    let computedContentStyle = {};
+    let layoutStyle;
 
-    if (this.shouldEnableAnimation()) {
-      // If we're animating, we need to determine the height of the accordion contents
-      // so we know to what height the animation should stop. When the the contents are
-      // laid out, this.contentOnLayout will be called, after which we can use
-      // state.contentHeightAnimation. This value will be 0 if the accordion defaults
-      // to closed, the height if the accordion defaults to open, or the current height
-      // of the animation if actively animating.
-      if (this.state.isMeasuring) {
-        computedContentStyle = { position: 'absolute', opacity: 0 };
-      } else if (this.state.hasMeasured) {
-        computedContentStyle = {
-          height: this.state.contentHeightAnimation
-        };
-      } else if (this.state.isOpen) {
-        computedContentStyle = {};
-      } else {
-        // Default to height: 'auto' until we determine the height of the contents.
-        // Because RN doesn't have this option for height we simply pass an empty
-        // object as the style.
-        computedContentStyle = { height: 0 };
-      }
-    } else {
-      computedContentStyle = this.state.isOpen ? {} : { height: 0 };
+    if (this.shouldEnableAnimation() &&
+      // If the content height hasn't been calculated yet
+      // and the accordion starts open just let it autosize
+      (this.state.contentHeight || this.props.state !== 'open')) {
+      computedContentStyle = {
+        height: this.state.contentHeightAnimation
+      };
+      layoutStyle = AccordionStyles.contentLayout;
+    } else if (!this.state.isOpen) {
+      computedContentStyle = { height: 0 };
     }
 
     return (
@@ -264,23 +248,28 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
                 this.state.isOpen && this.props.openTitleStyle
               ]}
             >
-              {this.props.title}
+              {typeof this.props.title === 'string' ? (
+                <Text>{this.props.title}</Text>
+              ) : this.props.title}
             </View>
             {this.renderIcon()}
           </View>
         </TouchableHighlight>
         <Animated.View
-          ref={this.contentView}
           style={[
             AccordionStyles.content,
-            {paddingHorizontal: this.props.paddingHorizontal},
-            this.props.contentStyle,
             computedContentStyle
           ]}
-          onLayout={this.contentOnLayout}
         >
-          <View>
-            {this.props.content}
+          <View
+            onLayout={this.contentOnLayout}
+            style={[
+              {paddingHorizontal: this.props.paddingHorizontal},
+              this.props.contentStyle,
+              layoutStyle
+            ]}
+          >
+            {this.props.content || this.props.children}
             {this.state.isOpen && this.props.renderContent && this.props.renderContent()}
           </View>
         </Animated.View>
@@ -300,6 +289,8 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
         bounciness: 0,
         toValue: height
       }).start();
+    } else {
+      this.state.contentHeightAnimation.setValue(height);
     }
 
     // TODO - make the rotation customizable
@@ -317,16 +308,15 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
    * @param {LayoutChangeEvent} event The layout event.
    */
   private contentOnLayout = (event: LayoutChangeEvent) => {
-    if (
-      !this.state.hasMeasured &&
-      !this.state.isMeasuring &&
-      this.state.isOpen
-    ) {
-      const padding = this.props.padding || 0;
-      this.state.contentHeightAnimation.setValue(
-        event.nativeEvent.layout.height + padding
-      );
-      this.setState({ hasMeasured: true });
+    const padding = this.props.padding || 0;
+    const height = event.nativeEvent.layout.height + padding;
+    if (height !== this.state.contentHeight) {
+      this.setState({
+        contentHeight: height
+      });
+    }
+    if (this.state.isOpen) {
+      this.state.contentHeightAnimation.setValue(height);
     }
   }
 
@@ -432,23 +422,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     if (isCurrentlyOpen) {
       this.animateContent(0, false);
     } else {
-      this.setState({ isMeasuring: true }, () => {
-        requestAnimationFrame(() => {
-          const node = findNodeHandle(this.contentView.current);
-
-          if (node) {
-            UIManager.measure(node, (x: number, y: number, width: number, height: number) => {
-              this.setState({
-                isMeasuring: false,
-                hasMeasured: true
-              });
-              const padding = this.props.padding || 0;
-
-              this.animateContent(height + padding, true);
-            });
-          }
-        });
-      });
+      this.animateContent(this.state.contentHeight, true);
     }
   }
 }
