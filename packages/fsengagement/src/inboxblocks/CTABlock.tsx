@@ -54,6 +54,8 @@ export interface CTABlockProps extends ScreenProps, EmitterProps {
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   actions: Action;
+  animateIndex?: number;
+  onBack?: () => void;
   localization?: LocalizationData[];
 }
 
@@ -65,15 +67,17 @@ export default class CTABlock extends Component<CTABlockProps> {
     handleStoryAction: PropTypes.func,
     name: PropTypes.string,
     id: PropTypes.string,
-    language: PropTypes.string
+    language: PropTypes.string,
+    cardPosition: PropTypes.number
   };
 
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
-    const { handleAction, handleStoryAction } = this.context;
+    const { handleAction, handleStoryAction, cardPosition } = this.context;
     if (story.html) {
       return handleAction({
         type: 'blog-url',
-        value: story.html.link
+        value: story.html.link,
+        position: cardPosition
       });
     } else if (action === 'story' || (story && actions &&
       (actions.type === null || actions.type === 'story'))) {
@@ -86,19 +90,24 @@ export default class CTABlock extends Component<CTABlockProps> {
   }
 
   handleActionNoStory = (actions: Action) => {
-    const { handleAction, cardActions } = this.context;
+    const { handleAction, cardActions, cardPosition } = this.context;
+    if (actions && !actions.value) {
+      return;
+    }
     if (actions && actions.type) {
       return handleAction({
         ...actions,
         name: this.props.name,
-        id: this.props.id
+        id: this.props.id,
+        position: cardPosition
       });
     }
     // tappable card with no story - CTAs use actions of container card
     return handleAction({
       ...cardActions,
       name: this.props.name,
-      id: this.props.id
+      id: this.props.id,
+      position: cardPosition
     });
   }
 

@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   DeviceEventEmitter,
-  ImageBackground,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View
 } from 'react-native';
+import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import * as Animatable from 'react-native-animatable';
+import GestureHandler from '../GestureHandler';
 
+const NEW = 'NEW';
 const styles = StyleSheet.create({
   bottom: {
     flex: 1,
@@ -18,6 +22,21 @@ const styles = StyleSheet.create({
   fullScreen: {
     width: '100%',
     height: '100%'
+  },
+  newContainer: {
+    backgroundColor: '#c41230',
+    padding: 2,
+    paddingTop: 5,
+    width: 40,
+    marginBottom: 13,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  newText: {
+    fontFamily: 'Interstate-Bold',
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#fff'
   }
 });
 
@@ -34,7 +53,13 @@ export interface ImageProp {
 export interface FullScreenCardProps extends CardProps {
   actions?: Action;
   contents: any;
+  storyType?: string;
   source: ImageProp;
+  isNew?: boolean;
+  AnimatedPageCounter?: any;
+  AnimatedNavTitle?: any;
+  position?: number;
+  setScrollEnabled: (enabled: boolean) => void;
 }
 
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
@@ -49,6 +74,18 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     handleAction: PropTypes.func,
     language: PropTypes.string
   };
+  state: any = {};
+  AnimatedImage: any;
+  AnimatedText: any;
+  constructor(props: FullScreenCardProps) {
+    super(props);
+    this.state = {
+      swipedUp: false
+    };
+  }
+
+  handleImageRef = (ref: any) => this.AnimatedImage = ref;
+  handleTextRef = (ref: any) => this.AnimatedText = ref;
 
   getChildContext = () => ({
     story: this.props.story,
@@ -58,50 +95,107 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     name: this.props.name
   })
 
+  onBack = () => {
+    this.props.setScrollEnabled(true);
+    this.AnimatedImage.transitionTo({
+      scale: 1,
+      opacity: 1
+    }, 600, 'ease-out');
+    this.props.AnimatedPageCounter.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+    this.props.AnimatedNavTitle.transitionTo(
+      { opacity: 1, translateY: 0 },
+      400, 'linear');
+
+    this.AnimatedText.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+  }
+
   handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
-      id: this.props.id
+      id: this.props.id,
+      position: this.props.position
     });
-    this.props.api.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
-    return this.props.navigator.push({
-      component: {
-        name: 'EngagementComp',
-        options: {
-          topBar: {
-            visible: false
+    return this.props.navigator.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'EngagementComp',
+            options: {
+              layout: {
+                backgroundColor: 'transparent'
+              },
+              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+              topBar: {
+                visible: false,
+                drawBehind: true
+              },
+              bottomTabs: {
+                visible: false
+              }
+            },
+            passProps: {
+              json,
+              backButton: true,
+              language: this.context && this.context.language,
+              name: this.props.name,
+              id: this.props.id,
+              animate: true,
+              onBack: this.onBack,
+              cardPosition: this.props.position
+            }
           }
-        },
-        passProps: {
-          json,
-          backButton: true,
-          language: this.context && this.context.language,
-          name: this.props.name,
-          id: this.props.id
-        }
+        }]
       }
-    });
+    }).catch(err => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
-    const { actions, story, storyGradient } = this.props;
+    const { actions, story, storyGradient, storyType } = this.props;
 
     // if there is a story attached and either
-    //    1) no actions object (Related)
+    //    1) no actions object
     //    2) actions.type is null or 'story' (new default tappable cards)
     if (story &&
       (!actions || (actions && (actions.type === null || actions.type === 'story')))
     ) {
+
+      if (!(story && story.tabbedItems && story.tabbedItems.length)) {
+        this.AnimatedImage.transitionTo({
+          scale: 1.2,
+          opacity: 0.75
+        }, 700, 'ease-out');
+      }
+
+      this.AnimatedText.transitionTo({
+        opacity: 0
+      }, 320, 'linear');
+
+      this.props.AnimatedPageCounter.transitionTo(
+        { opacity: 0 },
+        400, 'linear');
+
+      this.props.AnimatedNavTitle.transitionTo(
+        { opacity: 0, translateY: -10 },
+        400, 'linear');
+
       return this.handleStoryAction({
         ...story,
-        storyGradient
+        storyGradient,
+        storyType
       });
     } else if (actions && actions.type) {
-      handleAction(actions);
+      return handleAction(actions);
     }
+  }
+
+  onSwipeUp = async (): Promise<void> => {
+    return this.onCardPress();
   }
 
   render(): JSX.Element {
@@ -111,22 +205,52 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     } = this.props;
 
     return (
-      <TouchableOpacity
-        style={containerStyle}
-        onPress={this.onCardPress}
-        activeOpacity={1}
+      <GestureHandler
+        onSwipe={this.onSwipeUp}
+        setScrollEnabled={this.props.setScrollEnabled}
       >
-        <ImageBackground source={contents.Image.source} style={styles.fullScreen}>
-          <View style={styles.bottom}>
-            <TextBlock
-              {...contents.Eyebrow}
+        <TouchableOpacity
+          style={containerStyle}
+          onPress={this.onCardPress}
+          activeOpacity={1}
+        >
+          <View
+            accessibilityIgnoresInvertColors={true}
+            style={[styles.fullScreen, { backgroundColor: '#000' }]}
+          >
+            <Animatable.Image
+              source={contents.Image.source}
+              ref={this.handleImageRef}
+              useNativeDriver
+              style={[StyleSheet.absoluteFill, styles.fullScreen]}
             />
-            <TextBlock
-              {...contents.Headline}
-            />
+            <Animatable.View
+              style={styles.bottom}
+              ref={this.handleTextRef}
+              useNativeDriver
+            >
+              {this.props.isNew &&
+                (
+                <View
+                  style={styles.newContainer}
+                >
+                  <Text
+                    style={styles.newText}
+                  >
+                    {NEW}
+                  </Text>
+                </View>
+                )}
+              <TextBlock
+                {...contents.Eyebrow}
+              />
+              <TextBlock
+                {...contents.Headline}
+              />
+            </Animatable.View>
           </View>
-        </ImageBackground>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </GestureHandler>
     );
   }
 }

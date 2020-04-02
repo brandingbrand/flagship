@@ -7,6 +7,7 @@ import {
   TextStyle,
   View
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 const styles = StyleSheet.create({
   default: {
@@ -22,12 +23,23 @@ export interface TextBlockProps {
   text: string;
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<TextStyle>;
+  animateIndex?: number;
   localization?: LocalizationData[];
 }
 export default class TextBlock extends Component<TextBlockProps> {
   static contextTypes: any = {
     language: PropTypes.string
   };
+  fadeInView: any;
+  handleFadeInRef = (ref: any) => this.fadeInView = ref;
+  componentDidMount(): void {
+    if (this.props.animateIndex && this.props.animateIndex <= 3) {
+      this.fadeInView.transition(
+        { opacity: 0 },
+        { opacity: 1 },
+        400, 'ease-out');
+    }
+  }
 
   shouldComponentUpdate(nextProps: TextBlockProps): boolean {
     return nextProps.textStyle !== this.props.textStyle ||
@@ -48,6 +60,21 @@ export default class TextBlock extends Component<TextBlockProps> {
     }) || null;
     if (filterLocalization) {
       text = filterLocalization.value;
+    }
+    if (this.props.animateIndex && this.props.animateIndex <= 3) {
+      return (
+        <View style={containerStyle}>
+          <Animatable.Text
+            style={[styles.default, textStyle]}
+            ref={this.handleFadeInRef}
+            useNativeDriver
+            delay={250}
+          >
+            {text}
+          </Animatable.Text>
+        </View>
+
+      );
     }
     return (
       <View style={containerStyle}>
