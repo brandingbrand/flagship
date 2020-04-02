@@ -7,6 +7,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  ImageBackground,
   Linking,
   ListRenderItem,
   Platform,
@@ -14,11 +15,13 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle
 } from 'react-native';
 import { EngagementService } from './EngagementService';
+import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
 import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
 import {
@@ -40,6 +43,7 @@ Navigation.registerComponent('EngagementProductModal', () => EngagementProductMo
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
 const WHITE_INBOX_WRAPPER = 'WhiteInboxWrapper';
+const INBOX_WRAPPER = 'InboxWrapper';
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
@@ -47,6 +51,47 @@ const styles = StyleSheet.create({
     top: 50,
     left: 8,
     padding: 12
+  },
+  animatedClose: {
+    position: 'absolute',
+    zIndex: 10,
+    top: Platform.OS === 'ios' ? 44 : 64,
+    left: 19,
+    padding: 0
+  },
+  animatedList: {
+    marginBottom: 100,
+    marginTop: -100,
+    backgroundColor: 'rgba(255, 255, 255, 0)'
+  },
+  fullScreen: {
+    width: Dimensions.get('screen').width + 45,
+    height: Dimensions.get('screen').height + 60
+  },
+  backIconCloseX: {
+    width: 44,
+    height: 44
+  },
+  animatedContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    flex: 1
+  },
+  progressBar: {
+    position: 'absolute',
+    flexDirection: 'row',
+    top: 67,
+    flex: 1,
+    marginLeft: 65,
+    marginRight: 33
+  },
+  progressItem: {
+    flex: 1,
+    marginHorizontal: 3,
+    backgroundColor: 'rgba(79, 79, 79, .3)',
+    height: 2
+  },
+  activeProgress: {
+    backgroundColor: 'rgba(79, 79, 79, .8)'
   },
   closeModalButton: {
     position: 'absolute',
@@ -59,6 +104,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center'
   },
+  editorial: {
+    marginTop: 0,
+    backgroundColor: 'transparent'
+  },
   backIcon: {
     width: 14,
     height: 25
@@ -66,6 +115,12 @@ const styles = StyleSheet.create({
   appleCloseIcon: {
     width: 60,
     height: 60
+  },
+  fullScreenDeeplink: {
+    width: Dimensions.get('screen').width + 45,
+    height: Dimensions.get('screen').height + 60,
+    backgroundColor: '#000',
+    overflow: 'hidden'
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
@@ -84,10 +139,6 @@ const styles = StyleSheet.create({
   pageNum: {
     color: '#ffffff',
     fontWeight: '500'
-  },
-  animatedContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0)',
-    flex: 1
   },
   navBarTitle: {
     color: '#000000',
@@ -120,12 +171,29 @@ const styles = StyleSheet.create({
   headerImage: {
     width: win.width,
     height: win.width * imageAspectRatio
+  },
+  imageStyle: {
+    transform: [{ scale: 1.06 }],
+    opacity: 0.8,
+    marginTop: 20
+  },
+  deeplinkStory: {
+    marginTop: -(Dimensions.get('screen').height + 60)
+  },
+  storyFooter: {
+    marginBottom: -35,
+    height: 40,
+    backgroundColor: '#fff'
   }
 });
 
 const gradientImage = require('../assets/images/gradient.png');
 const backArrow = require('../assets/images/backArrow.png');
 const appleCloseIcon = require('../assets/images/apple-close-icn.png');
+const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
+const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
+
+const topOffset = Platform.OS === 'ios' ? -40 : 1;
 
 export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
@@ -138,6 +206,9 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplay?: boolean;
   autoplayDelay?: number;
   autoplayInterval?: number;
+  storyType?: string;
+  tabbedItems?: any[];
+  lastUpdate?: number;
   containerStyle?: StyleProp<ViewStyle>;
   animateScroll?: boolean;
   onBack?: () => void;
@@ -145,12 +216,18 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   AnimatedImage?: any;
   welcomeHeader?: boolean;
   headerName?: string;
+  animate?: boolean;
+  cardPosition?: number;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
   pageNum: number;
   showCarousel: boolean;
   isClosingAnimation: boolean;
+  showDarkX: boolean;
+  slideBackground: boolean;
+  activeProgressBarIndex: number;
+  scrollEnabled: boolean;
 }
 
 export default function(
@@ -161,15 +238,22 @@ export default function(
     static childContextTypes: any = {
       handleAction: PropTypes.func,
       story: PropTypes.object,
-      language: PropTypes.string
+      language: PropTypes.string,
+      cardPosition: PropTypes.number
     };
 
     state: any = {};
     AnimatedStory: any;
+    AnimatedCloseIcon: any;
+    flatListRef: any;
+    AnimatedPageCounter: any;
+    AnimatedNavTitle: any;
+    pageCounterStyle: StyleProp<ViewStyle>;
+    pageNumberStyle: StyleProp<TextStyle>;
+    cardMove: any;
+    scrollPosition: number = 0;
     AnimatedAppleClose: any;
     AnimatedWelcome: any;
-    scrollPosition: number = 0;
-    flatListRef: any;
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
@@ -177,14 +261,34 @@ export default function(
         pageNum: 1,
         isLoading: true,
         showCarousel: false,
-        isClosingAnimation: false
+        showDarkX: false,
+        slideBackground: false,
+        isClosingAnimation: false,
+        activeProgressBarIndex: 0,
+        scrollEnabled: true
       };
     }
 
+    handleCloseIconRef = (ref: any) => this.AnimatedCloseIcon = ref;
     handleAnimatedRef = (ref: any) => this.AnimatedStory = ref;
+    handlePageCounterRef = (ref: any) => this.AnimatedPageCounter = ref;
+    handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
     handleWelcomeRef = (ref: any) => this.AnimatedWelcome = ref;
     handleAppleCloseRef = (ref: any) => this.AnimatedAppleClose = ref;
     componentDidMount(): void {
+      if (this.props.animate) {
+        if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
+          this.setState({ showDarkX: true });
+        }
+        this.AnimatedStory.transition(
+          { translateY: 700 },
+          { translateY: 100 },
+          700, 'ease-out-cubic');
+        this.AnimatedCloseIcon.transition(
+          { opacity: 0 },
+          { opacity: 1 },
+          400, 'linear');
+      }
       if (this.props.animateScroll) {
         if (this.AnimatedStory) {
           this.AnimatedStory.transition(
@@ -204,8 +308,11 @@ export default function(
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
           this.setState({ showCarousel: true });
-        }, 700);
+        }, 500);
       }
+    }
+    scrollToTop = () => {
+      this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     }
     componentDidUpdate(prevProps: EngagementScreenProps): void {
       const PRIVATE_BLOCKS = 'private_blocks';
@@ -225,7 +332,8 @@ export default function(
     getChildContext = () => ({
       handleAction: this.handleAction,
       story: this.props.backButton ? this.props.json : null,
-      language: this.props.language
+      language: this.props.language,
+      cardPosition: this.props.cardPosition || 0
     })
 
     // tslint:disable-next-line:cyclomatic-complexity
@@ -237,12 +345,8 @@ export default function(
         title: actions.name,
         id: actions.id,
         type: actions.type,
-        value: actions.value
-      });
-      api.logEvent('clickInboxCta', {
-        messageId: actions.id,
-        ctaType: actions.type,
-        ctaValue: actions.value
+        value: actions.value,
+        position: actions.position
       });
       switch (actions.type) {
         case 'blog-url':
@@ -284,12 +388,15 @@ export default function(
           });
           break;
         case 'deep-link':
+          const separator = ~actions.value.indexOf('?') ? '&' : '?';
+          const query = separator + 'engagementDeeplink=true';
+          const url = actions.value + query;
           Linking.canOpenURL(actions.value).then(supported => {
             if (!supported) {
-              alert('An error occurred: can\'t handle url ' + actions.value);
+              alert('An error occurred: can\'t handle url ' + url);
               return false;
             } else {
-              return Linking.openURL(actions.value);
+              return Linking.openURL(url);
             }
           }).catch(err => alert('An error occurred: ' + err));
           break;
@@ -322,6 +429,14 @@ export default function(
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
+      if (this.props.animate || (this.props.json && this.props.json.fullScreenCardImage)) {
+        item.wrapper = true;
+        item.animateIndex = index;
+      }
+      if (this.props.renderType && this.props.renderType === 'carousel') {
+        item.fullScreenCard = true;
+        item.position = index + 1;
+      }
       if (this.props.animateScroll) {
         return this.renderBlockWrapper(item);
       }
@@ -459,8 +574,30 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
-
       props.navigator = this.props.navigator;
+      if (item.fullScreenCard) {
+        delete item.fullScreenCard;
+        props.AnimatedPageCounter = this.AnimatedPageCounter;
+        props.AnimatedNavTitle = this.AnimatedNavTitle;
+        props.setScrollEnabled = this.setScrollEnabled;
+      }
+      if (item.animateIndex) {
+        props.animateIndex = item.animateIndex;
+        props.onBack = this.onAnimatedClose;
+      }
+      if (item.wrapper) {
+        delete item.wrapper;
+        return React.createElement(
+          layoutComponents[INBOX_WRAPPER],
+          {
+            key: this.dataKeyExtractor(item),
+            animateIndex: item.animateIndex,
+            slideBackground: item.animateIndex && item.animateIndex <= 2 ?
+              this.state.slideBackground : false
+          },
+          this.renderBlock(item)
+        );
+      }
       return React.createElement(
         layoutComponents[private_type],
         {
@@ -472,20 +609,27 @@ export default function(
         private_blocks && private_blocks.map(this.renderBlock)
       );
     }
-    scrollToTop = () => {
-      this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
-    }
     onAnimatedClose = (): void => {
       if (this.state.isClosingAnimation) { return; }
       this.setState({
         isClosingAnimation: true
       });
+      const { json } = this.props;
+      const tabbedItems = json && json.tabbedItems;
       const timeout = this.scrollPosition < 1400 ?
         this.scrollPosition / 7 : 200;
-      const outYPositon = 700;
+      const outYPositon = tabbedItems && tabbedItems.length ? 1020 : 700;
       if (this.scrollPosition > 0) {
         this.scrollToTop();
       }
+      setTimeout(() => {
+        if (this.AnimatedCloseIcon) {
+          this.AnimatedCloseIcon.transition(
+            { opacity: 1 },
+            { opacity: 0 },
+            400, 'linear');
+        }
+      }, 200);
 
       if (this.AnimatedAppleClose) {
         this.AnimatedAppleClose.transition(
@@ -496,11 +640,17 @@ export default function(
 
       setTimeout(() => {
         if (this.AnimatedStory) {
-          this.AnimatedStory.transitionTo(
-            { translateY: outYPositon },
-            timeout + 550, 'ease-out');
+          if (this.props.renderType && this.props.renderType === 'carousel') {
+            this.AnimatedStory.transition(
+              { translateY: 100 },
+              { translateY: outYPositon },
+              timeout + 550, 'ease-out');
+          } else {
+            this.AnimatedStory.transitionTo(
+              { translateY: outYPositon },
+              timeout + 550, 'ease-out');
+          }
         }
-
         if (this.props.onBack) {
           this.props.onBack();
         }
@@ -509,22 +659,27 @@ export default function(
         return this.props.navigator.dismissModal();
       }, 550);
     }
-
+    setScrollEnabled = (enabled: boolean): void => {
+      this.setState({
+        scrollEnabled: enabled
+      });
+    }
     renderBlocks(): JSX.Element {
-      const { json, json: { empty } } = this.props;
+      const { json } = this.props;
+      const empty: any = json && json.empty || {};
       return (
         <Fragment>
-          {(json.private_blocks || []).map(this.renderBlock)}
-          {empty && !(json.private_blocks && json.private_blocks.length) && (
+          {(json && json.private_blocks || []).map(this.renderBlock)}
+          {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
               {empty.message || 'No content found.'}</Text>
           )}
         </Fragment>
       );
     }
-
+    // tslint:disable-next-line:cyclomatic-complexity
     renderStoryGradient(): JSX.Element {
-      const { json: { storyGradient } } = this.props;
+      const { json: { storyGradient, tabbedItems } } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
       const {
@@ -536,6 +691,32 @@ export default function(
         outputRange: [0, 1],
         extrapolate: 'clamp'
       });
+      if (tabbedItems && tabbedItems.length) {
+        return (
+          <TabbedStory
+            items={tabbedItems}
+            activeIndex={this.state.activeProgressBarIndex}
+            onCardPress={this.onTabbedCardPress}
+          />
+        );
+      } else if (this.props.animate) {
+        return (
+          <FlatList
+            data={this.props.json && this.props.json.private_blocks || []}
+            keyExtractor={this.dataKeyExtractor}
+            renderItem={this.renderBlockItem}
+            ref={ref => { this.flatListRef = ref; }}
+            style={[styles.growStretch, styles.animatedList]}
+            onScroll={this.onScrollFlatList}
+            ListEmptyComponent={(
+              <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                {empty && empty.message || 'No content found.'}</Text>
+            )}
+          >
+            {this.renderBlocks()}
+          </FlatList>
+        );
+      }
       return (
         <Fragment>
           <FlatList
@@ -563,23 +744,141 @@ export default function(
         </Fragment>
       );
     }
+    onTabbedCardPress = () => {
+      const { json } = this.props;
+      if (json.tabbedItems &&
+        (this.state.activeProgressBarIndex >= (json.tabbedItems.length - 1))) {
+        this.onAnimatedClose();
+      } else {
+        this.setState({
+          activeProgressBarIndex: this.state.activeProgressBarIndex + 1
+        });
+      }
+    }
+    // tslint:disable-next-line:cyclomatic-complexity
+    renderContent(): JSX.Element {
+      const { animate, animateScroll, backButton, containerStyle, json } = this.props;
+      if (animateScroll) {
+        return (
+          <Fragment>
+            <Animatable.View
+              ref={this.handleAnimatedRef}
+              useNativeDriver
+              style={[styles.animatedContainer]}
+            >
+              {this.renderScrollView()}
+            </Animatable.View>
+            {backButton && (
+              <Animatable.View
+                ref={this.handleAppleCloseRef}
+                useNativeDriver
+                style={styles.closeModalButton}
+              >
+                <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
+                  <Image
+                    resizeMode='contain'
+                    source={appleCloseIcon}
+                    style={styles.appleCloseIcon}
+                  />
+                </TouchableOpacity>
+              </Animatable.View>
+            )}
+          </Fragment>
+        );
+      }
+      if (animate) {
+        return (
+          <Fragment>
+            <Animatable.View
+              ref={this.handleAnimatedRef}
+              useNativeDriver
+              style={[styles.animatedContainer]}
+            >
+              {this.renderScrollView()}
+            </Animatable.View>
+            {(json && json.tabbedItems && json.tabbedItems.length) &&
+              (
+              <View style={styles.progressBar}>
+                {(json.tabbedItems || []).map((item: any, index: number) => {
+                  return (
+                    <View
+                      key={item.key}
+                      style={[
+                        styles.progressItem,
+                        (this.state.activeProgressBarIndex === index) && styles.activeProgress
+                      ]}
+                    />
+                  );
+                })}
+              </View>
+              )}
+            {backButton &&
+              (
+              <TouchableOpacity
+                onPress={this.onAnimatedClose}
+                style={styles.animatedClose}
+                activeOpacity={1}
+              >
+                <Animatable.Image
+                  resizeMode='contain'
+                  ref={this.handleCloseIconRef}
+                  source={this.state.showDarkX ? iconCloseXDark : iconCloseXLight}
+                  style={[styles.backIconCloseX]}
+                />
+              </TouchableOpacity>
+              )}
+          </Fragment>
+        );
+      }
+      return (
+        <View style={[styles.container, containerStyle]}>
+          {this.renderScrollView()}
+          {backButton &&
+            (
+            <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
+              <Image
+                resizeMode='contain'
+                source={backArrow}
+                style={[styles.backIcon, json.backArrow]}
+              />
+            </TouchableOpacity>
+            )}
+        </View>
+      );
+    }
 
     onScrollFlatList = (event: any) => {
       this.scrollPosition = event.nativeEvent.contentOffset.y;
-      if (this.scrollPosition < -40) {
+      if (this.scrollPosition < topOffset) {
         this.onAnimatedClose();
       }
     }
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
+      if (this.props.json && this.props.json.private_blocks &&
+        this.props.json.private_blocks.length && this.props.json.private_blocks[index]) {
+        DeviceEventEmitter.emit('swipeCard', {
+          title: this.props.json.private_blocks[index].name,
+          id: this.props.json.private_blocks[index].id,
+          position: pageNum
+        });
+      }
       this.setState({
         pageNum
       });
     }
+    renderFlatlistFooterPadding = (): JSX.Element => {
+      return (
+        <View style={styles.storyFooter} />
+      );
+    }
     // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
-      const { json, json: { storyGradient } } = this.props;
-      const empty: any = this.props.json.empty || {};
+      const { json } = this.props;
+      const storyGradient = json && json.storyGradient;
+      const tabbedItems = json && json.tabbedItems;
+      const empty: any = json && json.empty || {};
+      const fullScreenCardImage = json && json.fullScreenCardImage;
 
       if (this.props.renderType && this.props.renderType === 'carousel') {
         const autoplay = this.props.autoplay || false;
@@ -587,14 +886,14 @@ export default function(
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
           <Fragment>
-            {empty && !(json.private_blocks && json.private_blocks.length) && (
-              <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>
+            {empty && !(json && json.private_blocks && json.private_blocks.length) && (
+              <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                {empty && empty.message || 'No content found.'}</Text>
             )}
 
             {this.state.showCarousel && (
               <Carousel
-                data={json.private_blocks || []}
+                data={json && json.private_blocks || []}
                 layout={'default'}
                 autoplay={autoplay}
                 autoplayDelay={autoplayDelay}
@@ -609,7 +908,7 @@ export default function(
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json.private_blocks && json.private_blocks.length) && (
+            {(json && json.private_blocks && json.private_blocks.length > 0) && (
               <View style={[styles.pageCounter, json.pageCounterStyle]}>
                 <Text
                   style={[styles.pageNum, json.pageNumberStyle]}
@@ -620,6 +919,38 @@ export default function(
             )}
           </Fragment>
         );
+      } else if (fullScreenCardImage) {
+        return (
+          <Fragment>
+            <ImageBackground
+              source={fullScreenCardImage}
+              imageStyle={styles.imageStyle}
+              style={styles.fullScreenDeeplink}
+            />
+            <FlatList
+              data={this.props.json && this.props.json.private_blocks || []}
+              keyExtractor={this.dataKeyExtractor}
+              renderItem={this.renderBlockItem}
+              style={[styles.growStretch, styles.deeplinkStory]}
+              ListFooterComponent={this.renderFlatlistFooterPadding}
+              ListEmptyComponent={(
+                <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                  {empty && empty.message || 'No content found.'}</Text>
+              )}
+              refreshControl={
+                this.props.refreshControl && (
+                  <RefreshControl
+                    refreshing={this.props.isLoading}
+                    onRefresh={this.props.refreshControl}
+                  />
+                )
+              }
+            >
+              {this.renderBlocks()}
+            </FlatList>
+          </Fragment>
+        );
+
       } else if (this.props.noScrollView) {
         return (
           <Fragment>
@@ -628,11 +959,19 @@ export default function(
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
+      } else if (tabbedItems && tabbedItems.length) {
+        return (
+          <TabbedStory
+            items={tabbedItems}
+            activeIndex={this.state.activeProgressBarIndex}
+            onCardPress={this.onTabbedCardPress}
+          />
+        );
       } else if (this.props.welcomeHeader) {
         return (
           <Fragment>
             <Animated.FlatList
-              data={this.props.json.private_blocks || []}
+              data={this.props.json && this.props.json.private_blocks || []}
               keyExtractor={this.dataKeyExtractor}
               renderItem={this.renderBlockItem}
               scrollEventThrottle={16}
@@ -643,8 +982,8 @@ export default function(
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
               ListEmptyComponent={(
-                <Text style={[styles.emptyMessage, empty.textStyle]}>
-                  {empty.message || 'No content found.'}</Text>
+                <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
+                  {empty && empty.message || 'No content found.'}</Text>
               )}
               refreshControl={
                 this.props.refreshControl && (
@@ -688,56 +1027,44 @@ export default function(
       );
     }
 
+    // tslint:disable-next-line:cyclomatic-complexity
     render(): JSX.Element {
-      const { animateScroll, backButton, containerStyle, json, navBarTitle } = this.props;
-      if (animateScroll) {
-        return (
-          <Fragment>
-            <Animatable.View
-              ref={this.handleAnimatedRef}
-              useNativeDriver
-              style={[styles.animatedContainer]}
-            >
-              {this.renderScrollView()}
-            </Animatable.View>
-            {backButton && (
-              <Animatable.View
-                ref={this.handleAppleCloseRef}
-                useNativeDriver
-                style={styles.closeModalButton}
-              >
-                <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
-                  <Image
-                    resizeMode='contain'
-                    source={appleCloseIcon}
-                    style={styles.appleCloseIcon}
-                  />
-                </TouchableOpacity>
-              </Animatable.View>
-            )}
-          </Fragment>
-        );
-      }
+      const { json, navBarTitle } = this.props;
+      this.pageCounterStyle =
+        json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
+      this.pageNumberStyle =
+        json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
+      const navBarTitleStyle = json && json.navBarTitleStyle || {};
+
       return (
-        <View style={[styles.container, containerStyle]}>
-          {this.renderScrollView()}
-          {backButton && (
-            <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
-              <Image
-                resizeMode='contain'
-                source={backArrow}
-                style={[styles.backIcon, json.backArrow]}
-              />
-            </TouchableOpacity>
-          )}
+        <Fragment>
+          {this.renderContent()}
+          {(this.props.renderType && this.props.renderType === 'carousel' &&
+            json && json.private_blocks && json.private_blocks.length > 0) &&
+            (
+              <Animatable.View
+                ref={this.handlePageCounterRef}
+                useNativeDriver
+                style={[styles.pageCounter, this.pageCounterStyle]}
+              >
+                <Text
+                  style={[styles.pageNum, this.pageNumberStyle]}
+                >
+                  {this.state.pageNum} / {json.private_blocks.length}
+                </Text>
+              </Animatable.View>
+            )
+          }
           {navBarTitle && (
-            <Text
-              style={[styles.navBarTitle, json.navBarTitleStyle]}
+            <Animatable.Text
+              style={[styles.navBarTitle, navBarTitleStyle]}
+              ref={this.handleNavTitleRef}
+              useNativeDriver
             >
               {navBarTitle}
-            </Text>
+            </Animatable.Text>
           )}
-        </View>
+        </Fragment>
       );
     }
 
