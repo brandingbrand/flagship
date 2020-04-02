@@ -148,14 +148,13 @@ export class EngagementService {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
     }
-
-    return this.networkClient.post(`/App/${this.appId}/getProfile`, {
+    const profileInfo: any = {
+      accountId,
       locale: RNLocalize.getLocales() && RNLocalize.getLocales().length &&
         RNLocalize.getLocales()[0].languageTag,
       country: RNLocalize.getCountry(),
       timezone: RNLocalize.getTimeZone(),
       deviceIdentifier: DeviceInfo.getUniqueId(),
-      accountId,
       deviceInfo: JSON.stringify({
         model: DeviceInfo.getModel(),
         appName: DeviceInfo.getBundleId(),
@@ -163,7 +162,8 @@ export class EngagementService {
         osName: DeviceInfo.getSystemName(),
         osVersion: DeviceInfo.getSystemVersion()
       })
-    })
+    };
+    return this.networkClient.post(`/App/${this.appId}/getProfile`, profileInfo)
       .then((r: any) => r.data)
       .then((data: any) => {
         this.profileId = data.id;
