@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 });
 
 export interface TouchableRowProps {
-  text: string;
+  text?: string | number;
   onPress: (event?: any) => void;
 }
 

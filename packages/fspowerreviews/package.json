@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fspowerreviews",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "9.0.1",
   "description": "Power Reviews Data Source",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^7.4.3",
-    "@brandingbrand/fsnetwork": "^7.4.3"
+    "@brandingbrand/fscommerce": "^9.0.1",
+    "@brandingbrand/fsnetwork": "^9.0.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

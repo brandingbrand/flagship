@@ -39,7 +39,7 @@
 
 **:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
 
-## About
+## About Flagship
 
 <img alt="Flagship accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
@@ -74,7 +74,7 @@ Flagship core manages the boilerplate Android, iOS, and web code, similar in con
 [`flagship` package](packages/flagship).
 
 <img alt="Flagship foundation architecture diagram"
-  src="https://user-images.githubusercontent.com/556070/38953173-e0818af2-431b-11e8-9114-bb362e6a2a6b.png"
+  src="https://user-images.githubusercontent.com/2915629/68430966-26b39880-017f-11ea-880c-10a6466c8d3b.png"
   align="right">
 
 Modules are built using a shared stack of foundation packages which provide a unified interface for
