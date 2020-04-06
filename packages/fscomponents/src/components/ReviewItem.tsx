@@ -18,7 +18,7 @@ import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import SyndicationIndicator from './SyndicationIndicator';
+import { SyndicationIndicator } from './SyndicationIndicator';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export enum RecommendationDisplayTypes {
