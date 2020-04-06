@@ -19,6 +19,15 @@ const searchIcon = require('../../assets/images/search.png');
 const SEARCH_MODAL_HISTORY_KEY = 'SEARCH_MODAL_HISTORY_KEY';
 const MAX_HISTORY_ITEM_NUM = 5;
 
+export interface HighlightResult {
+  str: string;
+  isHighlight: boolean;
+}
+
+export interface HighlightResultAccumulator {
+  result: HighlightResult[];
+}
+
 export interface SearchScreenResult {
   title: string;
   query: string;
@@ -303,29 +312,25 @@ function highlightStr(name: string, query: string): any {
     ];
   }
 
-  // TODO: Fix reduce usage here requiring @ts-ignore
   const textSplits = name.split(queryRegx).reduce(
-    (acc, item) => {
+    (acc: HighlightResultAccumulator, item, index) => {
       if (item) {
-        // @ts-ignore
         acc.result.push({
           str: item,
           isHighlight: false
         });
       }
 
-      if (matches[acc.matchIndex]) {
-        // @ts-ignore
+      if (matches[index]) {
         acc.result.push({
-          str: matches[acc.matchIndex],
+          str: matches[index],
           isHighlight: true
         });
       }
 
-      acc.matchIndex += 1;
       return acc;
     },
-    { result: [], matchIndex: 0 }
+    { result: [] }
   );
 
   return textSplits.result;

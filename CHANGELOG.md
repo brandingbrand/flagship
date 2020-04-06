@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [9.0.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v9.0.0) (2020-03-30)
+
+### BREAKING CHANGES
+
+Flagship 9 introduces support for React Native 0.61 and React Navigation v4. For a comprehensive list of changes and for instructions on upgrading your project to this version, please refer to the following article in the wiki: https://github.com/brandingbrand/flagship/wiki/Flagship-9
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 
