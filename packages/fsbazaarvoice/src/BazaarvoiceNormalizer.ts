@@ -4,12 +4,14 @@ import {
 
 export function review(bvReview: any): ReviewTypes.Review {
   return {
-    id: bvReview.ProductId,
+    id: bvReview.Id,
     title: bvReview.Title,
     text: bvReview.ReviewText,
     rating: bvReview.Rating,
     user: user(bvReview),
     isRecommended: bvReview.IsRecommended,
+    isSyndicated: bvReview.IsSyndicated,
+    syndicationSource: bvReview.SyndicationSource,
     badges: bvReview.Badges,
     created: bvReview.SubmissionTime,
     context: Object.keys(bvReview.ContextDataValues).map(key => {
@@ -46,10 +48,19 @@ export function reviewSummary(bvProductStatistics: any): ReviewTypes.ReviewSumma
 
 export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
   const bvStats = bvProduct.ReviewStatistics;
+
+  const recommendedCount = bvStats.RecommendedCount;
+  const nonRecommendedCount = bvStats.NotRecommendedCount;
+  const recommendedTotal = recommendedCount + nonRecommendedCount;
+
+  const recommendedRatio = recommendedTotal !== 0 ?
+  (recommendedCount / (recommendedTotal)) : 0;
+
   return {
     id: bvProduct.Id,
     averageRating: bvStats.AverageOverallRating,
     reviewCount: bvStats.TotalReviewCount,
+    recommendedRatio,
     ratingDistribution: bvStats.RatingDistribution.map((distribution: any) => {
       return {
         value: distribution.RatingValue,
@@ -120,5 +131,34 @@ function user(bvReview: any): ReviewTypes.ReviewUser {
   return {
     location: bvReview.UserLocation ? bvReview.UserLocation : undefined,
     name: bvReview.UserNickname
+  };
+}
+
+export function writeReview(bvWriteReview: any): ReviewTypes.WriteReviewSubmission {
+  const { Review, HasErrors } = bvWriteReview;
+
+  if (!Review && !HasErrors) {
+    throw new Error('Incorect write review response type.');
+  }
+
+  return {
+    review: Review && {
+      rating: Review.Rating,
+      title: Review.Title,
+      isRecommended: Review.isRecommended,
+      created: Review.SubmissionTime,
+      text: Review.ReviewText
+    },
+    hasErrors: !!bvWriteReview.HasErrors,
+    submissionId: bvWriteReview.SubmissionId || '',
+    hoursToPost: bvWriteReview.TypicalHoursToPost,
+    errors: bvWriteReview.Errors && bvWriteReview.Errors.length > 0
+      ? bvWriteReview.Errors.map((error: any) => {
+        return {
+          message: error.Message || 0,
+          code: error.Code
+        };
+      })
+      : []
   };
 }

@@ -5,7 +5,8 @@ let i18n: i18nHelper;
 beforeEach(() => {
   i18n = new i18nHelper({
     currentLocale: () => 'en-US',
-    translate: () => 'test'
+    translate: () => 'test',
+    translations: {}
   });
 });
 
@@ -111,6 +112,7 @@ describe('fsi18n', () => {
 
     tests.forEach(({input, result}) => {
       test(`should convert "${input}" to a number`, () => {
+        // @ts-ignore Testing protected function
         const num = i18n.convertToNumber(input);
         expect(typeof num).toBe('number');
         expect(num).toBe(result);

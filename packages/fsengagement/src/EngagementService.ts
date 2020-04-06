@@ -2,6 +2,7 @@ import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
+import * as RNLocalize from 'react-native-localize';
 import {
   EngagementMessage,
   EngagementProfile,
@@ -20,6 +21,9 @@ export interface EngagementServiceConfig {
 export interface Attribute {
   key: string;
   value: string;
+}
+export interface AttributePayload {
+  attributes: string;
 }
 
 export class EngagementService {
@@ -144,13 +148,13 @@ export class EngagementService {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
     }
-
-    return this.networkClient.post(`/App/${this.appId}/getProfile`, {
-      locale: DeviceInfo.getDeviceLocale(),
-      country: DeviceInfo.getDeviceCountry(),
-      timezone: DeviceInfo.getTimezone(),
-      deviceIdentifier: DeviceInfo.getUniqueID(),
+    const profileInfo: any = {
       accountId,
+      locale: RNLocalize.getLocales() && RNLocalize.getLocales().length &&
+        RNLocalize.getLocales()[0].languageTag,
+      country: RNLocalize.getCountry(),
+      timezone: RNLocalize.getTimeZone(),
+      deviceIdentifier: DeviceInfo.getUniqueId(),
       deviceInfo: JSON.stringify({
         model: DeviceInfo.getModel(),
         appName: DeviceInfo.getBundleId(),
@@ -158,7 +162,8 @@ export class EngagementService {
         osName: DeviceInfo.getSystemName(),
         osVersion: DeviceInfo.getSystemVersion()
       })
-    })
+    };
+    return this.networkClient.post(`/App/${this.appId}/getProfile`, profileInfo)
       .then((r: any) => r.data)
       .then((data: any) => {
         this.profileId = data.id;
@@ -174,9 +179,10 @@ export class EngagementService {
       });
   }
 
-  setPushToken(pushToken: string): void {
+  async setPushToken(pushToken: string): Promise<any> {
+    const uniqueId = DeviceInfo.getUniqueId();
     const device = this.profileData && this.profileData.devices &&
-      this.profileData.devices[DeviceInfo.getUniqueID()];
+      this.profileData.devices[uniqueId];
     if (device) {
       if (!device.pushToken || device.pushToken !== pushToken) {
         this.networkClient
@@ -221,6 +227,57 @@ export class EngagementService {
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
+        return messages;
+      })
+      .catch(async (e: any) => {
+        console.log('Unable to fetch inbox messages', e);
+
+        let ret: EngagementMessage[] = [];
+
+        // respond with stale cache if we have it
+        if (this.messages.length) {
+          ret = this.messages;
+        }
+
+        return Promise.resolve(ret);
+      });
+  }
+
+  async getInboxMessages(attributes?: AttributePayload): Promise<EngagementMessage[]> {
+    // check we have a user profile
+    if (!this.profileId) {
+      throw new Error('Profile not loaded.');
+    }
+
+    // cache
+    if (this.messages.length) {
+      if (+new Date() - this.messageCache < this.cacheTTL) {
+
+        return Promise.resolve(this.messages);
+      }
+    }
+
+    const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
+    return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
+      JSON.stringify(attributes))
+      .then((r: any) => r.data)
+      .then((list: any) => list.map((data: any) => {
+        return {
+          id: data.id,
+          published: new Date(data.published),
+          isNew: lastEngagementFetch ?
+            Date.parse(data.published) > parseInt(lastEngagementFetch, 10) : false,
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes
+        };
+      }))
+      .then((messages: EngagementMessage[]) => {
+        this.messages = messages;
+        this.messageCache = +new Date();
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString())
+          .catch();
         return messages;
       })
       .catch(async (e: any) => {

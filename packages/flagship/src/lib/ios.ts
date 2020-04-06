@@ -26,7 +26,7 @@ export function bundleId(configuration: Config): void {
   );
   fs.update(
     path.ios.fastfilePath(),
-    /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/,
+    /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/g,
     `"${bundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`
   );
 }
@@ -60,15 +60,17 @@ export function targetedDevice(configuration: Config): void {
   if (configuration.targetedDevices) {
     helpers.logInfo(`selecting targeted devices: ${configuration.targetedDevices}`);
 
-    const devices: {[key: string]: any} = {
+    const devices: { [key: string]: any } = {
       iPhone: 1,
       iPad: 2,
       Universal: `"1,2"`
     };
 
+    const productNameRx = new RegExp(`PRODUCT_NAME\\s*=\\s*${configuration.name}`, 'g');
+
     fs.update(
       path.ios.pbxprojFilePath(configuration),
-      `PRODUCT_NAME = ${configuration.name}`,
+      productNameRx,
       `PRODUCT_NAME = ${configuration.name};
         TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
     );
@@ -167,10 +169,15 @@ export function launchScreen(configuration: Config): void {
     'LaunchImages.xcassets'
   );
 
-  const sourceLaunchScreen = configuration.launchScreen.ios.xib;
+  const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
+  if (!sourceLaunchScreen) {
+    helpers.logError('xib support has been removed. Please include a storyboard file.' +
+      ' Using the default Flagship storyboard.');
+    return;
+  }
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
-    'LaunchScreen.xib'
+    'LaunchScreen.storyboard'
   );
 
   try {
@@ -248,22 +255,77 @@ export function usageDescription(configuration: Config): void {
   configuration.usageDescriptionIOS.forEach(usage => {
     if (fs.doesKeywordExist(infoPlist, usage.key)) {
       // Replace the existing usage description for this key
-      fs.update(
-        infoPlist,
-        new RegExp(`<key>${usage.key}<\\/key>\\s+<string>[^<]+<\\/string>`),
-        `<key>${usage.key}</key><string>${usage.string}</string>`
-      );
+      if (usage.array) {
+        const stringArray = usage.array.map(res => {
+          return `<string>${res}</string>`;
+        });
+        fs.update(
+          infoPlist,
+          new RegExp(
+            `<key>${usage.key}<\\/key>\\s+<array>\\s+(<string>[^<]+<\\/string>\\s+){0,}<\\/array>`
+          ),
+          `<key>${usage.key}</key><array>${stringArray}</array>`
+        );
+      } else {
+        fs.update(
+          infoPlist,
+          new RegExp(`<key>${usage.key}<\\/key>\\s+<string>[^<]+<\\/string>`),
+          `<key>${usage.key}</key><string>${usage.string}</string>`
+        );
+      }
     } else {
       // This key doesn't exist so add it to the file
-      fs.update(
-        infoPlist,
-        '<key>UIRequiredDeviceCapabilities</key>',
-        `<key>${usage.key}</key><string>${
+      if (usage.array) {
+        const stringArray = usage.array.map(res => {
+          return `<string>${res}</string>`;
+        });
+        fs.update(
+          infoPlist,
+          '<key>UIRequiredDeviceCapabilities</key>',
+          `<key>${usage.key}</key>`
+          + `<array>${stringArray.join('')}</array>`
+          + `<key>UIRequiredDeviceCapabilities</key>`
+        );
+      } else {
+        fs.update(
+          infoPlist,
+          '<key>UIRequiredDeviceCapabilities</key>',
+          `<key>${usage.key}</key><string>${
           usage.string
-        }</string><key>UIRequiredDeviceCapabilities</key>`
-      );
+          }</string><key>UIRequiredDeviceCapabilities</key>`
+        );
+      }
     }
   });
+}
+
+/**
+ * Adds usage description from the project configuration.
+ *
+ * @param {object} configuration The project configuration.
+ */
+export function backgroundModes(configuration: Config): void {
+  if (!configuration.UIBackgroundModes) {
+    return;
+  }
+
+  helpers.logInfo(
+    `updating iOS background modes: [${configuration.UIBackgroundModes.map(u => u.string)}]`
+  );
+
+  const infoPlist = path.ios.infoPlistPath(configuration);
+
+  fs.update(
+    infoPlist,
+    '<key>UIRequiredDeviceCapabilities</key>',
+    `<key>UIBackgroundModes</key>
+      <array>
+      ${configuration.UIBackgroundModes.map(mode => {
+        return `<string>${mode.string}</string>`;
+      })}
+      </array>
+    <key>UIRequiredDeviceCapabilities</key>`
+  );
 }
 
 /**

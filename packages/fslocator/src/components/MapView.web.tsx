@@ -86,16 +86,16 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     );
   }
 
-  componentWillReceiveProps(nextProps: PropType): void {
+  componentDidUpdate(prevProps: PropType): void {
     if (
-      nextProps.locations !== this.props.locations ||
-      nextProps.isCollapsed !== this.props.isCollapsed ||
-      nextProps.center !== this.props.center
+      this.props.locations !== prevProps.locations ||
+      this.props.isCollapsed !== prevProps.isCollapsed ||
+      this.props.center !== prevProps.center
     ) {
       this.moveToLocation(
-        nextProps.locations,
-        nextProps.isCollapsed,
-        nextProps.center
+        this.props.locations,
+        this.props.isCollapsed,
+        this.props.center
       );
     }
   }
@@ -180,20 +180,22 @@ export default class MapViewWeb extends Component<PropType, StateType> {
           zoom={zoom}
           onChange={this.handleChange}
         >
-          {currentLocation &&
+          {currentLocation && (
             <CurrentLocationPin
               lat={currentLocation.latitude}
               lng={currentLocation.longitude}
-            />}
-
-          {locations.map((location, i) =>
-            <Marker
-              key={i}
-              lat={location.address.latlng.lat}
-              lng={location.address.latlng.lng}
-              selected={location.selected}
-              onPress={this.handleMarkerPress(location)}
             />
+          )}
+
+          {locations.map((location, i) => (
+              <Marker
+                key={i}
+                lat={location.address.latlng.lat}
+                lng={location.address.latlng.lng}
+                selected={location.selected}
+                onPress={this.handleMarkerPress(location)}
+              />
+            )
           )}
         </GoogleMapReact>
       </View>

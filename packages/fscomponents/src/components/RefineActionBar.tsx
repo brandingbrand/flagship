@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -40,27 +40,27 @@ const S = StyleSheet.create({
   }
 });
 
-export class RefineActionBar extends Component<RefineActionBarProps> {
-  render(): JSX.Element {
-    return (
-      <View style={[S.container, this.props.style]}>
-        <TouchableOpacity
-          onPress={this.props.onFilterPress}
-          style={[S.button, S.buttonLeft, this.props.filterButtonStyle]}
-        >
-          <Text style={[S.buttonText, this.props.filterButtonTextStyle]}>
-            {FSI18n.string(translationKeys.flagship.sort.actions.filter.actionBtn)}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.props.onSortPress}
-          style={[S.button, S.buttonRight, this.props.sortButtonStyle]}
-        >
-          <Text style={[S.buttonText, this.props.sortButtonTextStyle]}>
-            {FSI18n.string(translationKeys.flagship.sort.actions.sort.actionBtn)}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+export const RefineActionBar: FunctionComponent<RefineActionBarProps> =
+memo((props): JSX.Element => {
+
+  return (
+    <View style={[S.container, props.style]}>
+      <TouchableOpacity
+        onPress={props.onFilterPress}
+        style={[S.button, S.buttonLeft, props.filterButtonStyle]}
+      >
+        <Text style={[S.buttonText, props.filterButtonTextStyle]}>
+          {FSI18n.string(translationKeys.flagship.sort.actions.filter.actionBtn)}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={props.onSortPress}
+        style={[S.button, S.buttonRight, props.sortButtonStyle]}
+      >
+        <Text style={[S.buttonText, props.sortButtonTextStyle]}>
+          {FSI18n.string(translationKeys.flagship.sort.actions.sort.actionBtn)}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+});
