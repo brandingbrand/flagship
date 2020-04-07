@@ -10,10 +10,10 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
-const { version } = projectEnv;
+const version = require('../../env/env').version;
 
 const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgent(),
+  userAgent: DeviceInfo.getUserAgentSync(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
   appName: DeviceInfo.getApplicationName(),
@@ -23,7 +23,7 @@ const commonConfiguration = {
 
 const googleAnalyticsConfiguration = {
   trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueID()
+  clientId: DeviceInfo.getUniqueId()
 };
 
 const providers = [

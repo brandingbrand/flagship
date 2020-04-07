@@ -17,6 +17,7 @@ import { ImageData, ZoomCarouselProps } from './types';
 import { PageIndicator } from '../PageIndicator';
 import { MultiCarousel } from '../MultiCarousel';
 import { ZoomImages } from './ZoomImages';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 export interface ZoomCarouselStateType {
   isZooming: boolean;
@@ -30,6 +31,7 @@ export interface ZoomCarouselStateType {
   currentZoomIndex: number;
 }
 
+const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? 64 : 68;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -687,6 +689,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         centerMode={this.props.centerMode}
         style={this.props.fillContainer ? S.fullHeight : null}
         nextArrowOnBlur={this.props.nextArrowOnBlur}
+        contentContainerStyle={this.props.contentContainerStyle}
       />
     );
   }
@@ -705,16 +708,22 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           </View>
 
           {this.renderModal()}
-
-          <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
-            {this.props.renderZoomButton ? (
-              this.props.renderZoomButton(this.openZoom)
-            ) : (
-              <TouchableOpacity style={S.zoomButton} onPress={this.openZoom}>
-                <Image style={S.searchIcon} source={searchIcon} />
-              </TouchableOpacity>
-            )}
-          </View>
+          {!this.props.hideZoomButton && (
+            <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
+              {this.props.renderZoomButton ? (
+                this.props.renderZoomButton(this.openZoom)
+              ) : (
+                <TouchableOpacity
+                  style={S.zoomButton}
+                  onPress={this.openZoom}
+                  accessibilityRole={'button'}
+                  accessibilityLabel={FSI18n.string(componentTranslationKeys.fullscreen.actionBtn)}
+                >
+                  <Image style={S.searchIcon} source={searchIcon} />
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
         </View>
 
         {this.props.showThumbnails &&
@@ -740,6 +749,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                     this.state.currentIndex === i && S.thumbnailSelected
                   ]}
                   onPress={this.makeHandleThumbPress(i)}
+                  accessibilityRole={'button'}
+                  accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
                 >
                   <Image
                     resizeMode='cover'

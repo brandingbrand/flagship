@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsshopify",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "9.0.1",
   "description": "Shopify Commerce Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,18 +13,19 @@
     "test": "jest /fsshopify/ --colors --config ../../jest.json"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^7.4.3",
-    "@brandingbrand/fsfoundation": "^7.4.3",
-    "@brandingbrand/fsi18n": "^7.4.3",
-    "@brandingbrand/fsnetwork": "^7.4.3",
+    "@brandingbrand/fsapp": "^9.0.1",
+    "@brandingbrand/fscommerce": "^9.0.1",
+    "@brandingbrand/fsfoundation": "^9.0.1",
+    "@brandingbrand/fsi18n": "^9.0.1",
+    "@brandingbrand/fsnetwork": "^9.0.1",
+    "@brandingbrand/react-native-payments": "^0.10.0",
     "decimal.js": "^10.0.1",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
-    "react-native-navigation": "https://github.com/brandingbrand/react-native-navigation#v1",
-    "react-native-payments": "^0.7.0"
+    "react": "^16.11.0",
+    "react-native": "^0.61.0",
+    "react-native-navigation": "^4.0.0"
   },
   "devDependencies": {
-    "axios": "~0.18.1"
+    "axios": "~0.19.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
