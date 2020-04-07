@@ -9,7 +9,7 @@ import ShopifyDataSource from './ShopifyDataSource';
 import {
   PaymentDetailsInit,
   PaymentMethodData
-} from 'react-native-payments';
+} from '@brandingbrand/react-native-payments';
 
 export interface ShopifyAddress extends CommerceTypes.Address, GeoLocation {
   zip: string;

@@ -1,6 +1,6 @@
 import { Config } from '../types';
 import * as fs from './fs';
-import { logInfo } from '../helpers';
+import { logInfo, logWarn } from '../helpers';
 
 /**
  * Configures the project Fastfile from the project configuration.
@@ -67,11 +67,18 @@ export function configure(path: string, configuration: Config): void {
   if (configuration && configuration.appCenter) {
     const { apiToken, organization, distribute } = configuration.appCenter;
 
-    fs.update(
-      path,
-      /.+#PROJECT_MODIFY_FLAG_appcenter_api_token/g,
-      `api_token: "${apiToken}", #PROJECT_MODIFY_FLAG_appcenter_api_token`
-    );
+    if (apiToken) {
+      logWarn(
+        'appCenter.apiToken is deprecated and will be removed in a future release;'
+        + ' use APPCENTER_API_TOKEN environment variable instead'
+      );
+
+      fs.update(
+        path,
+        /.+#PROJECT_MODIFY_FLAG_appcenter_api_token/g,
+        `api_token: "${apiToken}", #PROJECT_MODIFY_FLAG_appcenter_api_token`
+      );
+    }
 
     fs.update(
       path,
