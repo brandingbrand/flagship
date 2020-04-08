@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-
-import { Platform } from 'react-native';
+import { Options } from 'react-native-navigation';
 import { dataSource, reviewDataSource } from '../lib/datasource';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
-import { navBarDefault, navBarProductDetail } from '../styles/Navigation';
+import { navBarProductDetail } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { PSProductDetail } from '../components/PSProductDetail';
 import PSRecentlyViewedCarousel from '../components/PSRecentlyViewedCarousel';
@@ -13,11 +12,6 @@ import withAccount, { AccountProps } from '../providers/accountProvider';
 import withRecentlyViewed, {
   RecentlyViewedProps
 } from '../providers/recentlyViewedProvider';
-
-// Seeing an Android issue in which if the user clicks on one of the PDP tabs and then goes
-// back, the back buttons are invisible. Until we can investigate deeper we'll just make
-// the PDP have a dark header. -BW
-const NAVIGATOR_STYLE = Platform.OS === 'android' ? navBarDefault : navBarProductDetail;
 
 export interface ProductDetailProps
   extends ScreenProps,
@@ -28,34 +22,41 @@ export interface ProductDetailProps
 }
 
 class ProductDetail extends Component<ProductDetailProps> {
-  static navigatorStyle: NavigatorStyle = NAVIGATOR_STYLE;
+  static options: Options = navBarProductDetail;
   static leftButtons: NavButton[] = [backButton];
-
   onOpenHTMLView = (html: string, title?: string) => {
     this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title,
-      passProps: {
-        html
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        },
+        passProps: {
+          html
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 
   render(): JSX.Element {
-    const { navigator, productId } = this.props;
+    const { productId } = this.props;
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         hideGlobalBanner={true}
-        navigator={navigator}
       >
         <PSProductDetail
           id={productId}
           commerceDataSource={dataSource}
           reviewDataSource={reviewDataSource}
           commerceToReviewMap={'id'}
-          navigator={navigator}
+          navigator={this.props.navigator}
           onOpenHTMLView={this.onOpenHTMLView}
           addToRecentlyViewed={this.props.addToRecentlyViewed}
           recentlyViewed={this.props.recentlyViewed}
@@ -71,7 +72,8 @@ class ProductDetail extends Component<ProductDetailProps> {
   }
 
   goBack = () => {
-    this.props.navigator.pop();
+    this.props.navigator.pop()
+      .catch(e => console.warn('POP error: ', e));
   }
 
   renderRecentlyViewed = () => {
