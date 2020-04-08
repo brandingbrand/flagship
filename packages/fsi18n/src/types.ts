@@ -110,6 +110,9 @@ export interface CartTranslations<KeyType> {
       actionBtn: KeyType;
     };
   };
+  digitalWallet: {
+    appleError: KeyType;
+  };
   item: {
     unitPrice: KeyType;
     totalPrice: KeyType;

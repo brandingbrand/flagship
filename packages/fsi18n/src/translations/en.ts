@@ -50,6 +50,9 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Remove'
         }
       },
+      digitalWallet: {
+        appleError: 'Apple Pay was unable to complete your request.'
+      },
       item: {
         unitPrice: 'Unit Price',
         totalPrice: 'Total Price'
