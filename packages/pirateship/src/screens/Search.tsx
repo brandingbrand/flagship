@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 
 import {
   SearchScreen as SearchSuggestionScreen
@@ -8,7 +9,7 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import PSButton from '../components/PSButton';
 import PSProductCarousel from '../components/PSProductCarousel';
 import { debounce, flatten, get } from 'lodash-es';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { dataSource } from '../lib/datasource';
 import { handleDeeplink } from '../lib/deeplinkHandler';
 
@@ -98,7 +99,7 @@ export interface SearchProps extends ScreenProps {
 }
 
 class Search extends Component<SearchProps, SearchState> {
-  static navigatorStyle: NavigatorStyle = navBarHide;
+  static options: Options = navBarHide;
   state: SearchState = {
     suggestions: null,
     showResult: false,
@@ -118,15 +119,14 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const result = this.state.showResult ? [] : this.state.suggestions;
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         scroll={false}
         hideGlobalBanner={true}
         needInSafeArea={true}
-        navigator={navigator}
       >
         <SearchSuggestionScreen
           results={result}
@@ -180,7 +180,10 @@ class Search extends Component<SearchProps, SearchState> {
           {translate.string(translationKeys.search.noResults.text, { keyword })}
         </Text>
         {translationKeys.search.noResults.suggestions.map(suggestion => (
-          <Text style={NoSearchResultsStyle.listItem}>
+          <Text
+            style={NoSearchResultsStyle.listItem}
+            key={suggestion}
+          >
             &bull; {translate.string(suggestion)}
           </Text>
         ))}
@@ -240,22 +243,31 @@ class Search extends Component<SearchProps, SearchState> {
 
   shopByCategory = () => {
     this.props.navigator.push({
-      screen: 'Category',
-      title: translate.string(translationKeys.screens.allCategories.title),
-      passProps: {
-        categoryId: ''
+      component: {
+        name: 'Category',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.allCategories.title)
+            }
+          }
+        },
+        passProps: {
+          categoryId: ''
+        }
       }
-    });
+    }).catch(e => console.warn('Category PUSH error: ', e));
   }
 
   onPress = (item: CommerceTypes.Product) => () => {
-    const { navigator } = this.props;
-    navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId: item.id
+    this.props.navigator.push({
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId: item.id
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
   handleCancel = () => {
@@ -269,13 +281,21 @@ class Search extends Component<SearchProps, SearchState> {
     if (item.query) {
       return this.handleInputSubmit(item.query);
     } else {
-      return this.props.navigator.push({
-        screen: 'ProductIndex',
-        title: item.title,
-        passProps: {
-          categoryId: item.categoryId
+      this.props.navigator.push({
+        component: {
+          name: 'ProductIndex',
+          options: {
+            topBar: {
+              title: {
+                text: item.title
+              }
+            }
+          },
+          passProps: {
+            categoryId: item.categoryId
+          }
         }
-      });
+      }).catch(e => console.warn('ProductIndex PUSH error: ', e));
     }
   }
 

@@ -5,7 +5,9 @@ import {
   ReviewTypes
 } from '@brandingbrand/fscommerce';
 import * as BazaarvoiceNormalizer from './BazaarvoiceNormalizer';
+import * as BazaarvoiceDenormalizer from './BazaarvoiceDenormalizer';
 import { BazaarvoiceReviewRequest } from './BazaarvoiceReviewRequest';
+import qs from 'qs';
 
 export interface BazaarvoiceConfig {
   endpoint: string;
@@ -30,18 +32,26 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
 
   async fetchReviewDetails(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewDetails[]> {
     const id = Array.isArray(query.ids) ? query.ids[0] : query.ids;
+    const filter = query.filter || `ProductId:${id}`;
+
     const params: BazaarvoiceReviewRequest = {
-      Filter: `ProductId:${id}`,
+      Filter: filter,
       Include: 'Products',
       Stats: 'Reviews',
-      Limit: query.limit || 10
+      Limit: query.limit || 10,
+      Sort: query.sort
     };
 
     if (query.page) {
       params.Offset = params.Limit * (query.page - 1);
     }
 
-    const { data } = await this.client.get('/data/reviews.json', { params });
+    const { data } = await this.client.get('/data/reviews.json', {
+      params,
+      paramsSerializer: (params: BazaarvoiceReviewRequest) => {
+        return qs.stringify(params, { indices: false });
+      }
+    });
 
     return [{
       id,
@@ -94,5 +104,16 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     });
 
     return BazaarvoiceNormalizer.questions(data);
+  }
+
+  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+    const params = {
+      ...BazaarvoiceDenormalizer.writeReviewParams(command),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('AdditionalField', command.additionalFields),
+      ...BazaarvoiceDenormalizer.mapAdditionalFields('Rating', command.additionalRatings)
+    };
+    const { data } = await this.client.post('data/submitreview.json', undefined, { params });
+
+    return BazaarvoiceNormalizer.writeReview(data);
   }
 }

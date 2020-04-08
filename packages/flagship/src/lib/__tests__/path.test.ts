@@ -125,3 +125,6 @@ test(`get android fast file path`, () => {
     nodePath.join(tempRootDir, `android/fastlane/Fastfile`)
   );
 });
+
+// Force to be treated as a module
+export {};
