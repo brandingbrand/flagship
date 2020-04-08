@@ -99,7 +99,7 @@ export function entitlements(configuration: Config): void {
   fs.update(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
-    `CODE_SIGN_ENTITLEMENTS = ${configuration.name}/${configuration.name}.entitlements;
+    `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
 }

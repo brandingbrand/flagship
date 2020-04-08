@@ -26,7 +26,7 @@ test(`update bundle id`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(`<key>CFBundleIdentifier</key><string>test.bundle.id</string>`);
@@ -39,7 +39,7 @@ test(`enable capabilities`, () => {
   });
 
   const pbxprojFile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}.xcodeproj/project.pbxproj`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, `${appName}.xcodeproj`, `project.pbxproj`))
     .toString();
 
   expect(pbxprojFile).toMatch(`com.apple.Push = { enabled = 1;`);
@@ -53,17 +53,19 @@ test(`enable entitlements`, () => {
   });
 
   const entitlementsFileSource = fs
-    .readFileSync(nodePath.join(tempRootDir, `env/${appName}.entitlements`))
+    .readFileSync(nodePath.join(tempRootDir, `env`, `${appName}.entitlements`))
     .toString();
   const entitlementsFile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/${appName}.entitlements`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `${appName}.entitlements`))
     .toString();
   const pbxprojFile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}.xcodeproj/project.pbxproj`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, `${appName}.xcodeproj`, `project.pbxproj`))
     .toString();
 
   expect(entitlementsFileSource).toEqual(entitlementsFile);
-  expect(pbxprojFile).toMatch(`CODE_SIGN_ENTITLEMENTS = ${appName}/${appName}.entitlements`);
+  expect(pbxprojFile).toMatch(
+    `CODE_SIGN_ENTITLEMENTS = ${appName + nodePath.sep + appName}.entitlements`
+  );
 });
 
 test(`update display name`, () => {
@@ -73,7 +75,7 @@ test(`update display name`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(`<key>CFBundleDisplayName</key><string>Mock App</string>`);
@@ -83,15 +85,15 @@ test(`update icon`, () => {
   ios.icon({
     name: appName,
     appIconDir: {
-      ios: nodePath.join(tempRootDir, `assets/appIcons/ios`)
+      ios: nodePath.join(tempRootDir, 'assets', 'appIcons', 'ios')
     }
   });
 
   const iconFilesSource = fs
-    .readdirSync(nodePath.join(tempRootDir, `assets/appIcons/ios`))
+    .readdirSync(nodePath.join(tempRootDir, 'assets', 'appIcons' , 'ios'))
     .toString();
   const iconFiles = fs
-    .readdirSync(nodePath.join(tempRootDir, `ios/${appName}/Images.xcassets/AppIcon.appiconset`))
+    .readdirSync(nodePath.join(tempRootDir, `ios`, appName, `Images.xcassets/AppIcon.appiconset`))
     .toString();
 
   expect(iconFilesSource).toEqual(iconFiles);
@@ -102,25 +104,27 @@ test(`update launch screen`, () => {
     name: appName,
     launchScreen: {
       ios: {
-        images: nodePath.join(tempRootDir, `assets/launchScreen/ios/images`),
-        storyboard: nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`)
+        images: nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `images`),
+        storyboard: nodePath.join(
+          tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`)
       }
     }
   });
 
   const launchScreenImagesSource = fs
-    .readdirSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/images`))
+    .readdirSync(nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `images`))
     .toString();
   const launchScreenImages = fs
-    .readdirSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchImages.xcassets`))
+    .readdirSync(nodePath.join(tempRootDir, `ios`, appName, `LaunchImages.xcassets`))
     .toString();
 
   const xibSource = fs
-    .readFileSync(nodePath.join(tempRootDir, `assets/launchScreen/ios/launchScreen.storyboard`))
+    .readFileSync(
+      nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`))
     .toString();
 
   const xib = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/LaunchScreen.storyboard`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `LaunchScreen.storyboard`))
     .toString();
 
   expect(launchScreenImagesSource).toEqual(launchScreenImages);
@@ -134,7 +138,7 @@ test(`add exception domains by string`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(
@@ -149,7 +153,7 @@ test(`add exception domains by object`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(`<key>some-domain.com</key><dict>SOMEVALUE</dict>`);
@@ -161,7 +165,7 @@ test(`add exception domains with disableDevFeature turned off`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(
@@ -176,7 +180,7 @@ test(`add exception domains with disableDevFeature turned on`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).not.toMatch(`<key>localhost</key>`);
@@ -189,7 +193,7 @@ test(`add usage description`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(`<key>Camera</key><string>Camera is needed for ${appName}</string>`);
@@ -201,7 +205,7 @@ test(`set url scheme without specifying urlScheme`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(
@@ -217,7 +221,7 @@ test(`set url scheme by specifying urlScheme`, () => {
   });
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(
@@ -237,7 +241,7 @@ test(`update version number`, () => {
   );
 
   const infoPlist = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
     .toString();
 
   expect(infoPlist).toMatch(`<key>CFBundleShortVersionString</key>\n\t<string>${version}</string>`);
@@ -253,7 +257,7 @@ test(`set env switcher initial env`, () => {
   );
 
   const EnvSwitcherFile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/EnvSwitcher.m`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `EnvSwitcher.m`))
     .toString();
 
   expect(EnvSwitcherFile).toMatch(
@@ -266,15 +270,15 @@ test(`copy sentry properties`, () => {
   ios.sentryProperties({
     name: appName,
     sentry: {
-      propertiesPath: nodePath.join(tempRootDir, `assets/sentry.properties`)
+      propertiesPath: nodePath.join(tempRootDir, `assets`, `sentry.properties`)
     }
   });
 
   const sentryPropertiesPathSource = fs
-    .readFileSync(nodePath.join(tempRootDir, `assets/sentry.properties`))
+    .readFileSync(nodePath.join(tempRootDir, `assets`, `sentry.properties`))
     .toString();
   const sentryPropertiesPath = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/sentry.properties`))
+    .readFileSync(nodePath.join(tempRootDir, `ios`, `sentry.properties`))
     .toString();
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
