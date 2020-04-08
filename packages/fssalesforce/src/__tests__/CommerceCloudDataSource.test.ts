@@ -72,6 +72,7 @@ describe('Demandware Data Source', () => {
 
   beforeEach(() => {
     dataSource = new CommerceCloudDataSource({
+      // @ts-ignore
       networkClient: {
         get: (url: string, options: any = {}) => {
           return cachedRequest('get', url, null, options);
@@ -79,10 +80,10 @@ describe('Demandware Data Source', () => {
         post: (url: string, data: any, options: any = {}) => {
           return cachedRequest('post', url, data, options);
         },
-        delete: async () => {
+        delete: async (uri: string): Promise<any> => {
           return Promise.reject('no');
         },
-        request: async () => {
+        request: async (config: any): Promise<any> => {
           return Promise.reject('no');
         }
       },
@@ -235,7 +236,7 @@ describe('Demandware Data Source', () => {
   });
 });
 
-function cachedRequest(method: string, url: string, data: any, options: any): any {
+function cachedRequest(method: keyof FSNetwork, url: string, data: any, options: any): any {
   let fixtureUrl = url + (options.params ? '?' + qs.stringify(options.params) : '');
   fixtureUrl = crypto.createHash('md5').update(fixtureUrl).digest('hex');
   const fixtureFile = path.join(__dirname, 'fixtures', fixtureUrl + '.json');
@@ -243,6 +244,7 @@ function cachedRequest(method: string, url: string, data: any, options: any): an
   if (fs.existsSync(fixtureFile)) {
     return Promise.resolve(require(fixtureFile));
   } else {
+    // @ts-ignore Force to work with any function
     return networkClient[method](url, data || options, options)
       .then((response: any) => {
         fs.writeFileSync(fixtureFile, JSON.stringify({
@@ -255,3 +257,6 @@ function cachedRequest(method: string, url: string, data: any, options: any): an
       });
   }
 }
+
+// Force to be treated as a module
+export {};
