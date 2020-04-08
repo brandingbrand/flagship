@@ -11,7 +11,7 @@ import {
 // @ts-ignore: TODO fix types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '../Form/Form';
-import { FormLabelPosition } from '../Form/Templates';
+import { FormLabelPosition } from '../Form/Templates/fieldTemplates';
 import { Button } from '../Button';
 import { emailRegex } from '../../lib/email';
 
