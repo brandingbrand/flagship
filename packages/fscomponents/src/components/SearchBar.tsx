@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { ClearButtonMode } from '../types/Store';
 import { style as S } from '../styles/SearchBar';
+import { tr, trKeys } from '../lib/translations';
 
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
@@ -27,6 +28,7 @@ const isAndroid = Platform.OS === 'android';
 
 export interface SearchBarProps {
   placeholder?: string;
+  initialValue?: string;
   onSubmit?: (value: string) => void;
   onChange?: (value: string) => void;
   onFocus?: (input: any, container: any) => void;
@@ -36,6 +38,7 @@ export interface SearchBarProps {
 
   // accessibility
   accessibilityLabel?: string;
+  rightBtnAccessibilityLabel?: string;
 
   // visibility
   showSearchIcon?: boolean;
@@ -108,7 +111,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     }
 
     this.state = {
-      value: '',
+      value: props.initialValue || '',
       cancelButtonWidth,
       isFocused: false
     };
@@ -225,6 +228,10 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <TouchableOpacity
         style={rightBtnStyle}
         onPress={onRightBtnPress || this.handleSubmit}
+        accessibilityLabel={this.props.rightBtnAccessibilityLabel ||
+          tr.string(
+            trKeys.flagship.search.actions.search.accessibilityLabel, {value: this.state.value}
+          )}
         accessibilityRole='button'
       >
         {icon}
