@@ -4,20 +4,20 @@
 import React, { Component } from 'react';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import Row from '../components/PSRow';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-type Screen = import ('react-native-navigation').Screen;
+import { LayoutComponent, Options } from 'react-native-navigation';
 
-const screens: Screen[] = [
-  { title: 'Product Index', screen: 'ProductIndex' },
-  { title: 'Product Detail', screen: 'ProductDetail' },
-  { title: 'Accordion', screen: 'AccordionSample' },
-  { title: 'Action Bar', screen: 'ActionBarSample' },
-  { title: 'BreadCrumbs', screen: 'BreadCrumbsSample' },
-  { title: 'Image With Overlay', screen: 'ImageWithOverlaySample' },
-  { title: 'Cart Count', screen: 'CartCountSample'},
-  { title: 'PS Half Modal', screen: 'EmailSignUp' }
+const screens: LayoutComponent[] = [
+  { options: { topBar: { title: { text: 'Product Index' }}}, name: 'ProductIndex' },
+  { options: { topBar: { title: { text: 'Product Detail' }}}, name: 'ProductDetail' },
+  { options: { topBar: { title: { text: 'Accordion' }}}, name: 'AccordionSample' },
+  { options: { topBar: { title: { text: 'Action Bar' }}}, name: 'ActionBarSample' },
+  { options: { topBar: { title: { text: 'BreadCrumbs' }}}, name: 'BreadCrumbsSample' },
+  { options: { topBar: { title: { text: 'Image With Overlay' }}}, name: 'ImageWithOverlaySample' },
+  { options: { topBar: { title: { text: 'Cart Count' }}}, name: 'CartCountSample'},
+  { options: { topBar: { title: { text: 'PS Half Modal' }}}, name: 'EmailSignUp' }
 ];
 
 export interface DevelopmentScreenState {
@@ -27,36 +27,41 @@ export interface DevelopmentScreenState {
 export interface DevelopmentScreenProps extends ScreenProps, AccountProps {}
 
 class Development extends Component<DevelopmentScreenProps, DevelopmentScreenState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
 
   state: DevelopmentScreenState = {
     deviceToken: 'NOT INITIALIZED'
   };
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
+        navigator={this.props.navigator}
       >
         <Row
           title='Sign Out without clearing saved credentials'
           onPress={this.softSignOut}
         />
-        {screens.map((screen, i) => (
-          <Row
-            key={i}
-            title={screen.title || `Screen ${i}`}
-            onPress={this.goTo(screen)}
-          />
-        ))}
+        {screens.map((screen, i) => {
+          const title: string = screen.options && screen.options.topBar &&
+            screen.options.topBar.title && screen.options.topBar.title.text || '';
+          return (
+            <Row
+              key={i}
+              title={title || `Screen ${i}`}
+              onPress={this.goTo(screen)}
+            />
+          );
+        })}
       </PSScreenWrapper>
     );
   }
 
-  goTo = (screen: Screen) => () => {
-    this.props.navigator.push(screen);
+  goTo = (screen: LayoutComponent) => () => {
+    this.props.navigator.push({
+      component: screen
+    }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }
 
   softSignOut = () => {
