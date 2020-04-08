@@ -102,6 +102,7 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
   itemsInCart: KeyType;
+  error: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
@@ -109,6 +110,9 @@ export interface CartTranslations<KeyType> {
     remove: {
       actionBtn: KeyType;
     };
+  };
+  digitalWallet: {
+    appleError: KeyType;
   };
   item: {
     unitPrice: KeyType;

@@ -24,7 +24,7 @@
     "lodash-es": "^4.17.10",
     "memoize-one": "^5.0.0",
     "photoswipe": "^4.1.2",
-    "qs": "^6.7.0",
+    "qs": "^6.9.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-id-swiper": "^2.0.0",
