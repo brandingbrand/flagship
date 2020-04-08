@@ -1,7 +1,7 @@
 import React, { Component, ComponentClass } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Provider } from 'react-redux';
-import screenWrapper, { GenericScreenProp } from '../components/screenWrapper';
+import screenWrapper, { GenericScreenProp } from '../components/screenWrapper.web';
 import {
   BrowserRouter,
   HashRouter,
@@ -102,7 +102,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       }
     });
 
-    if (!screen || !screen.screen) {
+    if (!screen || !screen.name) {
       throw new Error('screen is required in appConfig for web');
     }
 
@@ -113,7 +113,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         path={'/'}
         render={this._renderDrawerWrapper(
           screenWrapper(
-            screens[screen.screen],
+            screens[screen.name],
             appConfig,
             api,
             this.toggleDrawer
@@ -200,13 +200,13 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     // The following code assumes that only one drawer can be open at a time.
     if (side === 'left') {
       this.setState({
-        leftDrawerOpen: to ? to === 'open' : !this.state.leftDrawerOpen,
+        leftDrawerOpen: to === 'toggle' ? !this.state.leftDrawerOpen : (to === 'open'),
         rightDrawerOpen: false
       });
     } else {
       this.setState({
         leftDrawerOpen: false,
-        rightDrawerOpen: to ? to === 'open' : !this.state.rightDrawerOpen
+        rightDrawerOpen: to === 'toggle' ? !this.state.rightDrawerOpen : (to === 'open')
       });
     }
   }

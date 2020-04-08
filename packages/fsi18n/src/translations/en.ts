@@ -42,6 +42,7 @@ export const keys: FSTranslationKeys = {
     cart: {
       isEmpty: 'Empty Cart',
       itemsInCart: 'Items In Your Cart',
+      error: 'Quantity and VariantID must be defined to add to cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'
@@ -49,6 +50,9 @@ export const keys: FSTranslationKeys = {
         remove: {
           actionBtn: 'Remove'
         }
+      },
+      digitalWallet: {
+        appleError: 'Apple Pay was unable to complete your request.'
       },
       item: {
         unitPrice: 'Unit Price',
@@ -310,7 +314,10 @@ export const keys: FSTranslationKeys = {
       nextBtn: 'Show next'
     },
     shareButton: {
-      text: 'Click To Share'
+      text: 'Click To Share',
+      copied: 'URL copied to clipboard',
+      notCopied: 'Unable to copy the URL to the clipboard',
+      notSupported: 'Message sharing is not supported by your browser.'
     },
     loginForm: {
       email: 'Email',
@@ -320,6 +327,10 @@ export const keys: FSTranslationKeys = {
       password: 'Password',
       passwordError: 'Please enter your password',
       submit: 'Submit'
+    },
+    emailForm: {
+      placeholder: 'Email',
+      error: 'Required Field'
     }
   }
 };

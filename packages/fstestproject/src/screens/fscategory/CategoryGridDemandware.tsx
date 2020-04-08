@@ -5,6 +5,7 @@ import {
 
 import { demandware } from '../../lib/datasource';
 import { Category } from '@brandingbrand/fscategory';
+import { goToNavPush } from '../../lib/navigation';
 
 export default class CategoryGridDemandware extends Component<any> {
   constructor(props: any) {
@@ -18,14 +19,7 @@ export default class CategoryGridDemandware extends Component<any> {
     if (Platform.OS === 'web') {
       this.props.history.push('/' + screen);
     } else {
-      this.props.navigator.push({
-        screen: 'fscategory.' + screen,
-        title: category.title,
-        backButtonTitle,
-        passProps: {
-          categoryId: category.id
-        }
-      });
+      goToNavPush('fscategory', this.props.componentId, screen, category.title, backButtonTitle);
     }
   }
 

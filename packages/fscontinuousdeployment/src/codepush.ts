@@ -8,7 +8,7 @@ import request from 'request';
 
 const appConfig = require(path.join(process.cwd(), 'env' , 'env'));
 const packageJson = require(path.join(process.cwd(), 'package.json'));
-const github = new (require('github'))({
+const github = new (require('@octokit/rest'))({
   version: '3.0.0',
   timeout: 5000
 });

@@ -65,4 +65,4 @@ export default {
   ImageWithOverlaySample,
   CartCountSample,
   EngagementComp
-};
+} as any;
