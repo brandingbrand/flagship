@@ -134,6 +134,6 @@ function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
 
 export default function withAccount(
   WrappedComponent: React.ComponentClass<any>
-): React.ComponentClass<any> {
+): any {
   return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 }

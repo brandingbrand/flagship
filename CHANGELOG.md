@@ -3,6 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [9.0.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v9.0.0) (2020-03-30)
+
+### BREAKING CHANGES
+
+Flagship 9 introduces support for React Native 0.61 and React Navigation v4. For a comprehensive list of changes and for instructions on upgrading your project to this version, please refer to the following article in the wiki: https://github.com/brandingbrand/flagship/wiki/Flagship-9
+
+
+# [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
+
+
+### Features
+
+* **fscomponents:** Add knobs to zoom carousel ([#1099](https://github.com/brandingbrand/flagship/issues/1099)) ([c7b8b07](https://github.com/brandingbrand/flagship/commit/c7b8b07cbdfec68b4328530eb29471488a33b791))
+* **fscomponents:** custom a11yLabel for selector title ([#1097](https://github.com/brandingbrand/flagship/issues/1097)) ([147da0c](https://github.com/brandingbrand/flagship/commit/147da0c08c0d727e1b33cb55508a34aa84bc8108))
+* **fscomponents:** ShareButton web support ([#1102](https://github.com/brandingbrand/flagship/issues/1102)) ([4a369a4](https://github.com/brandingbrand/flagship/commit/4a369a4633ce00f9493ede3d3f3387679efcb223))
+
+
+
+
+
+## [8.6.1](https://github.com/brandingbrand/flagship/compare/v8.6.0...v8.6.1) (2020-03-23)
+
+
+### Bug Fixes
+
+* **fscomponents:** add accessibilityRole to selector title ([#1096](https://github.com/brandingbrand/flagship/issues/1096)) ([0110c2e](https://github.com/brandingbrand/flagship/commit/0110c2e560563f553b050b2f3bfc1a7e3f841275))
+
+
+
+
+
+# [8.6.0](https://github.com/brandingbrand/flagship/compare/v8.5.0...v8.6.0) (2020-03-23)
+
+
+### Features
+
+* **fscomponents:** Add image counter, new style options to ZoomCarousel ([#1093](https://github.com/brandingbrand/flagship/issues/1093)) ([bb02ec7](https://github.com/brandingbrand/flagship/commit/bb02ec70c00c0ad239090d4e9165cb33e7109d45))
+
+
+
+
+
+# [8.5.0](https://github.com/brandingbrand/flagship/compare/v8.4.0...v8.5.0) (2020-03-19)
+
+
+### Features
+
+* **fsapp:** Allow setting the application root tag ([#1082](https://github.com/brandingbrand/flagship/issues/1082)) ([7db681a](https://github.com/brandingbrand/flagship/commit/7db681ade9b8b92b792a2e3124d602479710f17b))
+* **fscomponents:** Add styling and prop options to ZoomCarousel ([#1087](https://github.com/brandingbrand/flagship/issues/1087)) ([43c4bc5](https://github.com/brandingbrand/flagship/commit/43c4bc564ff45858859e7344bb239af901c2c328))
+
+
+
+
+
+# [8.4.0](https://github.com/brandingbrand/flagship/compare/v8.3.0...v8.4.0) (2020-03-09)
+
+
+### Features
+
+* **fsbazaarvoice:** Add recommended ratio to normalized data ([#1077](https://github.com/brandingbrand/flagship/issues/1077)) ([a705b04](https://github.com/brandingbrand/flagship/commit/a705b046bb6a124897b609da29012881e90e3433))
+
+
+
+
+
+# [8.3.0](https://github.com/brandingbrand/flagship/compare/v8.2.0...v8.3.0) (2020-02-12)
+
+
+### Features
+
+* **fsbazaarvoice:** Expand review data source ([7d84d58](https://github.com/brandingbrand/flagship/commit/7d84d586393f360239bb20f8a49f03c5f4e841a4))
+
+
+
+
+
 # [8.2.0](https://github.com/brandingbrand/flagship/compare/v8.1.0...v8.2.0) (2020-02-10)
 
 

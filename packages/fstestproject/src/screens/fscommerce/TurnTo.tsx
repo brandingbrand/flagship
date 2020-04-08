@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 import { TurnToDataSource } from '@brandingbrand/fsturnto';
@@ -30,22 +31,13 @@ export default class TurnTo extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   fetchReviewDetails = () => {
     this.client
       .fetchReviewDetails({
         ids: kExampleProductId
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -58,7 +50,7 @@ export default class TurnTo extends Component<any, any> {
         ids: kExampleProductId
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);
@@ -71,7 +63,7 @@ export default class TurnTo extends Component<any, any> {
         ids: kExampleProductId
       })
       .then((data: any) => {
-        this.showData(data);
+        showDataNavPush(this.props.componentId, data);
       })
       .catch((err: any) => {
         console.warn(err);

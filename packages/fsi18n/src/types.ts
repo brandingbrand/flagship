@@ -4,7 +4,7 @@ export interface I18n {
   currentLocale: () => string;
   fallbacks?: boolean;
   translations: Translations;
-  translate: (scope: I18n.Scope, options?: I18n.TranslateOptions) => string;
+  translate: (scope: TranslationKey, options?: I18n.TranslateOptions) => string;
 }
 
 export interface Translations {
@@ -110,6 +110,9 @@ export interface CartTranslations<KeyType> {
     remove: {
       actionBtn: KeyType;
     };
+  };
+  digitalWallet: {
+    appleError: KeyType;
   };
   item: {
     unitPrice: KeyType;
@@ -378,6 +381,9 @@ export interface MultiCarouselTranslations<KeyType> {
 
 export interface ShareButtonTranslations<KeyType> {
   text: KeyType;
+  copied: KeyType;
+  notCopied: KeyType;
+  notSupported: KeyType;
 }
 export interface LoginFormTranslations<KeyType> {
   email: KeyType;

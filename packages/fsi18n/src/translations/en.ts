@@ -51,6 +51,9 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Remove'
         }
       },
+      digitalWallet: {
+        appleError: 'Apple Pay was unable to complete your request.'
+      },
       item: {
         unitPrice: 'Unit Price',
         totalPrice: 'Total Price'
@@ -311,7 +314,10 @@ export const keys: FSTranslationKeys = {
       nextBtn: 'Show next'
     },
     shareButton: {
-      text: 'Click To Share'
+      text: 'Click To Share',
+      copied: 'URL copied to clipboard',
+      notCopied: 'Unable to copy the URL to the clipboard',
+      notSupported: 'Message sharing is not supported by your browser.'
     },
     loginForm: {
       email: 'Email',
