@@ -48,10 +48,19 @@ export function reviewSummary(bvProductStatistics: any): ReviewTypes.ReviewSumma
 
 export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
   const bvStats = bvProduct.ReviewStatistics;
+
+  const recommendedCount = bvStats.RecommendedCount;
+  const nonRecommendedCount = bvStats.NotRecommendedCount;
+  const recommendedTotal = recommendedCount + nonRecommendedCount;
+
+  const recommendedRatio = recommendedTotal !== 0 ?
+  (recommendedCount / (recommendedTotal)) : 0;
+
   return {
     id: bvProduct.Id,
     averageRating: bvStats.AverageOverallRating,
     reviewCount: bvStats.TotalReviewCount,
+    recommendedRatio,
     ratingDistribution: bvStats.RatingDistribution.map((distribution: any) => {
       return {
         value: distribution.RatingValue,
