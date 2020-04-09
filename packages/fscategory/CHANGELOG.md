@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.8.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v8.8.0) (2020-04-09)
+
+**Note:** Version bump only for package @brandingbrand/fscategory
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 **Note:** Version bump only for package @brandingbrand/fscategory

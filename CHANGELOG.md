@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.8.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v8.8.0) (2020-04-09)
+
+
+### Features
+
+* **fscomponents:** add ada label and initial value prop to searh v8 ([54dd4c2](https://github.com/brandingbrand/flagship/commit/54dd4c234b4ab8524cc24032b575cc8df15c2a2f))
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 
