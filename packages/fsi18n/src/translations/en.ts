@@ -159,6 +159,9 @@ export const keys: FSTranslationKeys = {
         clear: {
           actionBtn: 'Clear',
           accessibility: 'Clear Recent Search'
+        },
+        search: {
+          accessibilityLabel: 'Search and return results for {{value}}'
         }
       }
     },
