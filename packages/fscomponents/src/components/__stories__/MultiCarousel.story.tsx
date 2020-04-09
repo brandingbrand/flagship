@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-import { MultiCarousel } from '../MultiCarousel';
-import { ProductItem } from '../../ProductItem';
+import { MultiCarousel } from '../MultiCarousel/MultiCarousel';
+import { ProductItem } from '../ProductItem';
 import Decimal from 'decimal.js';
 import {
   boolean
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,

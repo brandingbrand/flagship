@@ -33,6 +33,10 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
     this.client.collectLifecycleData();
   }
 
+  async asyncInit(): Promise<void> {
+    // Do nothing
+  }
+
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
