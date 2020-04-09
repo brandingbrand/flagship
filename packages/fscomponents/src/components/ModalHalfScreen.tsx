@@ -89,11 +89,10 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
 
       Dimensions.addEventListener('change', this.dimensionsListener);
 
-      NativeModules.StatusBarManager.getHeight((response: any) => {
-        if (response.height !== this.state.statusBarHeight) {
-          this.setState({ statusBarHeight: response.height });
-        }
-      });
+      const statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
+      if (statusBarHeight !== this.state.statusBarHeight) {
+        this.setState({ statusBarHeight });
+      }
     } catch (exception) {
       console.warn(exception);
     }

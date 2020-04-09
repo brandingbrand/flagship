@@ -1,7 +1,7 @@
 const mockFn = jest.fn(() => {
   return new Promise(resolve => {
     return resolve();
-  })
+  });
 });
 
 // react-native-cookies currently throws an "add files to XCode project" error when running
@@ -16,5 +16,5 @@ jest.mock('react-native-cookies', () => {
     getAll: mockFn,
     clearAll: mockFn,
     clearByName: mockFn,
-  }
+  };
 });

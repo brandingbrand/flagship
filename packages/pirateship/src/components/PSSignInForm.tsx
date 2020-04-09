@@ -5,6 +5,7 @@ import * as t from 'tcomb-form-native';
 import { merge } from 'lodash-es';
 import TouchId, { AuthenticationError, IsSupportedError } from 'react-native-touch-id';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { EventSubscription } from 'react-native-navigation';
 import { EMAIL_REGEX } from '../lib/constants';
 import { textboxWithRightIcon } from '../lib/formTemplate';
 import formFieldStyles from '../styles/FormField';
@@ -12,6 +13,7 @@ import translate, { translationKeys } from '../lib/translations';
 import * as variables from '../styles/variables';
 
 import PSButton from './PSButton';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const touchIdIcon = require('../../assets/images/touchId.png');
 const faceIdIcon = require('../../assets/images/faceId.png');
@@ -64,6 +66,7 @@ export interface PSSignInProps {
   signInButtonText?: string;
   onNav?: (handler: (event: any) => void) => void;
   runBioAuthImmediately?: boolean;
+  navigator: Navigator;
 }
 
 export interface PSSignInState {
@@ -84,6 +87,7 @@ export default class PSSignInForm extends Component<
   private fieldStyles: { [key: string]: any };
   private fields: { [key: string]: any };
   private form: any;
+  private navigationEventListener: EventSubscription | null = null;
 
   constructor(props: PSSignInProps) {
     super(props);
@@ -100,10 +104,9 @@ export default class PSSignInForm extends Component<
       }
     };
 
-    if (!this.props.runBioAuthImmediately && typeof props.onNav === 'function') {
-      props.onNav(this.onNavigatorEvent);
+    if (!this.props.runBioAuthImmediately) {
+      this.navigationEventListener = this.props.navigator.bindNavigation(this);
     }
-
     this.fieldStyles = this.getFormFieldStyles();
     this.fields = this.getFormFields();
     this.fieldOptions = this.getFormFieldOptions(this.fieldStyles);
@@ -118,14 +121,14 @@ export default class PSSignInForm extends Component<
     }
   }
 
-  onNavigatorEvent = (event: any): void => {
-    if (event.id === 'didAppear') {
-      this.triggerSavedLogin();
-
-      if (typeof this.props.onNav === 'function') {
-        this.props.onNav(noop);
-      }
+  componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
     }
+  }
+
+  componentDidAppear(): void {
+    this.triggerSavedLogin();
   }
 
   triggerSavedLogin = (): void => {

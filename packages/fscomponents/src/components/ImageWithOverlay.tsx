@@ -32,10 +32,11 @@ export const ImageWithOverlay = React.memo((props: ImageWithOverlayProps): JSX.E
   return (
     <View style={style}>
       <FadeInImage {...imageProps} />
-      {overlay &&
+      {overlay && (
         <View style={[S.overlayContainer, overlayStyle]}>
           {overlay}
-        </View>}
+        </View>
+      )}
     </View>
   );
 });

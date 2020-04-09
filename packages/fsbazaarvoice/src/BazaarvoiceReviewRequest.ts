@@ -1,5 +1,6 @@
 export interface BazaarvoiceReviewRequest {
-  Filter: string;
+  Filter: string | string[];
+  Sort?: string;
   Include: 'Products';
   Stats: 'Reviews';
   Limit: number;

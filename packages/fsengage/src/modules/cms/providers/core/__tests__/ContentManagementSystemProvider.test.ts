@@ -2,7 +2,8 @@
 import { assert, stub } from 'sinon'; // tslint:disable-line:no-implicit-dependencies
 
 import CoreContentManagementSystemProvider from '../CoreContentManagementSystemProvider';
-import ContentManagementSystemContext from '../../ContentManagementSystemProvider';
+import { ContentManagementSystemContext } from '../../ContentManagementSystemProvider';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 const fixture = require('./ContentManagementSystem.fixture.json');
 const fixture2 = require('./ContentManagementSystem2.fixture.json');
@@ -39,7 +40,8 @@ describe('Content Management System Provider', () => {
           return Promise.resolve(fixture.payload);
         });
 
-      const context = {
+      const context: ContentManagementSystemContext = {
+        // @ts-ignore Partial object
         locator: {
           getCurrentLocation: async () => {
             return Promise.resolve(fixture.location.inside);
@@ -51,8 +53,8 @@ describe('Content Management System Provider', () => {
         'Homepage',
         'Hero-Carousel',
         undefined,
-        context as ContentManagementSystemContext
-      ).then(content => {
+        context
+      ).then((content: Dictionary) => {
         const expectedContent = fixture.payload.data.Homepage['Hero-Carousel'];
 
         // Removes the instance with invalid date.
@@ -76,7 +78,8 @@ describe('Content Management System Provider', () => {
           return Promise.resolve(fixture2);
         });
 
-      const context = {
+      const context: ContentManagementSystemContext = {
+        // @ts-ignore Partial object
         locator: {
           getCurrentLocation: async () => {
             return Promise.resolve(fixture.location.inside);
@@ -88,8 +91,8 @@ describe('Content Management System Provider', () => {
         'home',
         'header-text',
         undefined,
-        context as ContentManagementSystemContext
-      ).then(content => {
+        context
+      ).then((content: Dictionary) => {
         expect(content).toBeNull();
 
         assert.calledOnce(
