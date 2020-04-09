@@ -14,11 +14,13 @@ const projectEnv = require('../env/env');
 const appConfig: FSAppTypes.AppConfigType = {
   packageJson: require('../package.json'),
   appType: 'singleScreen',
-  screen: { screen: 'Shop', title: 'Pirate Ship' },
+  devMenuScreens: [{ name: 'Development' }],
+  screen: { name: 'Shop', options: {
+    title: 'Pirate Ship'
+  }},
   screens,
   reducers,
   env: projectEnv,
-  appStyle: {},
   variables: {},
   drawer: {
     left: {

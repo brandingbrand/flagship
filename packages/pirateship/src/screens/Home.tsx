@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import { DiscoveryMessage, EngagementComp } from '../lib/engagement';
 import {
-  NavigatorStyle, ScreenProps
+  ScreenProps
 } from '../lib/commonTypes';
 import { CombinedStore } from '../reducers';
 import { fetchInbox } from '../providers/inboxProvider';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { navBarShopScreen } from '../styles/Navigation';
 import { connect } from 'react-redux';
+import { Options } from 'react-native-navigation';
 
 export interface HomeProps extends ScreenProps {
   fetchInbox: (accountData: any, initialLoad: boolean) => void;
@@ -17,7 +18,7 @@ export interface HomeProps extends ScreenProps {
 }
 
 export class Home extends Component<HomeProps> {
-  static navigatorStyle: NavigatorStyle = navBarShopScreen;
+  static options: Options = navBarShopScreen;
 
   componentDidMount(): void {
     this.props.fetchInbox({}, true);
