@@ -70,7 +70,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     };
 
     PasswordType.getValidationErrorMessage = (s: string) => {
-      if (s.length < 6) {
+      if (s?.length < 6) {
         return FSI18n.string(componentTranslationKeys.errors.password.tooShort, {
           characterCount: 6
         });
