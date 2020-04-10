@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   ImageStyle,
   ImageURISource,
@@ -39,48 +39,46 @@ const styles = StyleSheet.create({
 /**
  * StepIndicator component for displaying a series of steps in their completed state
  */
-export class StepIndicator extends Component<StepIndicatorProps> {
-  render(): JSX.Element {
-    return (
-      <View style={[styles.container, this.props.style]}>
-        {this.props.stepTitles.map(this.renderStep)}
-      </View>
-    );
-  }
+export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props): JSX.Element => {
+  const stepPressed = (index: number, title: string): () => void => {
+    return () => {
+      if (props.onStepPressed) {
+        props.onStepPressed(index, title);
+      }
+    };
+  };
 
-  private renderStep = (title: string, index: number): JSX.Element => {
-    const completed = index < this.props.currentStep;
-    let stepStyle = this.props.defaultStyle;
-    let textStyle = this.props.defaultTextStyle;
+  const renderStep = (title: string, index: number): JSX.Element => {
+    const completed = index < props.currentStep;
+    let stepStyle = props.defaultStyle;
+    let textStyle = props.defaultTextStyle;
 
-    if (index === this.props.currentStep) {
-      stepStyle = this.props.currentStyle;
-      textStyle = this.props.currentTextStyle;
+    if (index === props.currentStep) {
+      stepStyle = props.currentStyle;
+      textStyle = props.currentTextStyle;
     } else if (completed) {
-      stepStyle = this.props.completedStyle;
-      textStyle = this.props.completedTextStyle;
+      stepStyle = props.completedStyle;
+      textStyle = props.completedTextStyle;
     }
 
     return (
       <Step
         completed={completed}
-        completedIcon={this.props.completedIcon}
-        completedIconStyle={this.props.completedIconStyle}
+        completedIcon={props.completedIcon}
+        completedIconStyle={props.completedIconStyle}
         key={`step-indicator-step-${index}`}
-        onPress={this.stepPressed(index, title)}
+        onPress={stepPressed(index, title)}
         stepNumber={index + 1}
         style={stepStyle}
         title={title}
         titleStyle={textStyle}
       />
     );
-  }
+  };
 
-  private stepPressed = (index: number, title: string): () => void => {
-    return () => {
-      if (this.props.onStepPressed) {
-        this.props.onStepPressed(index, title);
-      }
-    };
-  }
-}
+  return (
+    <View style={[styles.container, props.style]}>
+      {props.stepTitles.map(renderStep)}
+    </View>
+  );
+});

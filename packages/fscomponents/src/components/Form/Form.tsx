@@ -9,6 +9,7 @@ import * as t from 'tcomb-form-native';
 import {
   aboveLabels,
   floatingLabels,
+  FormLabelPosition,
   hiddenLabels,
   inlineLabels,
   // styles returns a modified version of t-comb default stylesheet to suit templating needs
@@ -20,13 +21,6 @@ type TcombForm = any;
 
 const TcombForm = t.form.Form;
 const defaultTemplates = t.form.Form.templates;
-
-export enum FormLabelPosition {
-  Above,
-  Floating,
-  Hidden,
-  Inline
-}
 
 const LabelMap = {
   [FormLabelPosition.Inline]: inlineLabels,
