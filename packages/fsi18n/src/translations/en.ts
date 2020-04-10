@@ -18,9 +18,31 @@ export const keys: FSTranslationKeys = {
       ok: 'OK',
       cancel: 'Cancel'
     },
+    addressForm: {
+      firstName: 'First Name',
+      firstNameError: 'Please enter the first name',
+      lastName: 'Last Name',
+      lastNameError: 'Please enter the last name',
+      address1: 'Address Line 1',
+      address1Error: 'Please enter the address',
+      address2: 'Address Line 2',
+      city: 'City',
+      cityError: 'Please enter the city',
+      postal: 'Zip Code',
+      postalError: 'Please enter a valid zip code',
+      state: 'State',
+      stateError: 'Please enter the state',
+      phone: 'Phone',
+      phoneError: 'Please enter a valid phone number',
+      email: 'Email',
+      emailError: 'Please enter a valid email address',
+      poBox: 'Check if this is P.O Box',
+      submit: 'Submit'
+    },
     cart: {
       isEmpty: 'Empty Cart',
       itemsInCart: 'Items In Your Cart',
+      error: 'Quantity and VariantID must be defined to add to cart',
       actions: {
         add: {
           actionBtn: 'Add to Cart'
@@ -28,6 +50,9 @@ export const keys: FSTranslationKeys = {
         remove: {
           actionBtn: 'Remove'
         }
+      },
+      digitalWallet: {
+        appleError: 'Apple Pay was unable to complete your request.'
       },
       item: {
         unitPrice: 'Unit Price',
@@ -118,6 +143,7 @@ export const keys: FSTranslationKeys = {
       }
     },
     reviews: {
+      indicatorDefault: 'out of 5 stars',
       verified: 'Verified Purchase',
       helpful: 'Helpful',
       notHelpful: 'Not Helpful',
@@ -137,6 +163,9 @@ export const keys: FSTranslationKeys = {
         clear: {
           actionBtn: 'Clear',
           accessibility: 'Clear Recent Search'
+        },
+        search: {
+          accessibilityLabel: 'Search and return results for {{value}}'
         }
       }
     },
@@ -189,6 +218,10 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Focus item in carousel'
         }
       }
+    },
+    promoForm: {
+      enterPromo: 'Enter Promo Code',
+      error: 'Please enter a valid promo code'
     },
     registration: {
       actions: {
@@ -284,12 +317,23 @@ export const keys: FSTranslationKeys = {
       nextBtn: 'Show next'
     },
     shareButton: {
-      text: 'Click To Share'
+      text: 'Click To Share',
+      copied: 'URL copied to clipboard',
+      notCopied: 'Unable to copy the URL to the clipboard',
+      notSupported: 'Message sharing is not supported by your browser.'
     },
     loginForm: {
       email: 'Email',
+      emailReq: 'Email is required',
+      emailNotValid: ' is not an valid email',
+      emailError: 'Please enter a valid email',
       password: 'Password',
+      passwordError: 'Please enter your password',
       submit: 'Submit'
+    },
+    emailForm: {
+      placeholder: 'Email',
+      error: 'Required Field'
     }
   }
 };
