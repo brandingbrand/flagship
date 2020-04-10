@@ -3,7 +3,6 @@ import { formatHours } from '../helpers';
 const hours = [
   {
     dayOfWeek: 1,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
@@ -11,7 +10,6 @@ const hours = [
   },
   {
     dayOfWeek: 2,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
@@ -19,7 +17,6 @@ const hours = [
   },
   {
     dayOfWeek: 3,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
@@ -27,7 +24,6 @@ const hours = [
   },
   {
     dayOfWeek: 4,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
@@ -35,7 +31,6 @@ const hours = [
   },
   {
     dayOfWeek: 6,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
@@ -43,7 +38,6 @@ const hours = [
   },
   {
     dayOfWeek: 0,
-    date: null,
     open: '6:30 AM',
     close: '7 PM',
     serviceId: 316,
@@ -51,7 +45,6 @@ const hours = [
   },
   {
     dayOfWeek: 5,
-    date: null,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,

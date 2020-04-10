@@ -89,11 +89,10 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
 
       Dimensions.addEventListener('change', this.dimensionsListener);
 
-      NativeModules.StatusBarManager.getHeight((response: any) => {
-        if (response.height !== this.state.statusBarHeight) {
-          this.setState({ statusBarHeight: response.height });
-        }
-      });
+      const statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
+      if (statusBarHeight !== this.state.statusBarHeight) {
+        this.setState({ statusBarHeight });
+      }
     } catch (exception) {
       console.warn(exception);
     }
@@ -103,17 +102,14 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     Dimensions.removeEventListener('change', this.dimensionsListener);
   }
 
-  componentWillReceiveProps(nextProps: ModalHalfScreenProps): void {
+  componentDidUpdate(prevProps: ModalHalfScreenProps, prevState: ModalHalfScreenState): void {
     if (
-      nextProps.height &&
-      nextProps.height !== this.props.height &&
-      nextProps.height !== this.state.height
+      this.props.height &&
+      this.props.height !== prevProps.height &&
+      this.props.height !== prevState.height
     ) {
-      this.setState({ height: nextProps.height });
+      this.setState({ height: this.props.height });
     }
-  }
-
-  componentDidUpdate(prevProps: ModalHalfScreenProps): void {
     if (prevProps.visible && !this.props.visible) {
       this.hideContent();
     } else if (!prevProps.visible && this.props.visible) {
