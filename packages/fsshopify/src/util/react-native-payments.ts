@@ -1,1 +1,1 @@
-export * from 'react-native-payments';
+export * from '@brandingbrand/react-native-payments';
