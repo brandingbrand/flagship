@@ -217,6 +217,9 @@ export interface SearchTranslations<KeyType> {
       actionBtn: KeyType;
       accessibility: KeyType;
     };
+    search: {
+      accessibilityLabel: KeyType;
+    };
   };
 }
 
