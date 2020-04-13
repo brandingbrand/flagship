@@ -1,16 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { configure, addDecorator } from '@storybook/react';
+import { addDecorator, addParameters, configure } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
-import { configureViewport, INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 // Add knobs to all stories
 addDecorator(withKnobs);
 
 // Default viewport
-configureViewport({
-  defaultViewport: 'iphone6',
-  viewports: INITIAL_VIEWPORTS
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+    defaultViewport: 'iphonex',
+  },
 });
 
 function loadStories() {

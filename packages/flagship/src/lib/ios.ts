@@ -99,7 +99,7 @@ export function entitlements(configuration: Config): void {
   fs.update(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
-    `CODE_SIGN_ENTITLEMENTS = ${configuration.name}/${configuration.name}.entitlements;
+    `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
 }
@@ -169,10 +169,15 @@ export function launchScreen(configuration: Config): void {
     'LaunchImages.xcassets'
   );
 
-  const sourceLaunchScreen = configuration.launchScreen.ios.xib;
+  const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
+  if (!sourceLaunchScreen) {
+    helpers.logError('xib support has been removed. Please include a storyboard file.' +
+      ' Using the default Flagship storyboard.');
+    return;
+  }
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
-    'LaunchScreen.xib'
+    'LaunchScreen.storyboard'
   );
 
   try {

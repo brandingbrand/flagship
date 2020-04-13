@@ -5,8 +5,8 @@ import {
   number,
   object,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { ReviewItem } from '../ReviewItem';
 
 const review: import ('@brandingbrand/fscommerce').ReviewTypes.Review = {
