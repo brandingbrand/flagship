@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
   },
   tagLine: {
     textAlign: 'center'
+  },
+  icon: {
+    width: 99,
+    height: 24
   }
 });
 
@@ -96,6 +100,7 @@ export class PayPalCheckoutButton extends Component<PayPalCheckoutButtonProps> {
       <View style={{paddingVertical: 10}}>
         <Button
           icon={selectedTheme.icon}
+          iconStyle={styles.icon}
           underlayColor={selectedTheme.bgActive}
           {...buttonProps}
         />
