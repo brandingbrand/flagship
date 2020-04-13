@@ -42,6 +42,7 @@ export * from './PromoForm';
 export * from './PromoFormFK';
 export * from './RefineActionBar';
 export * from './RegistrationForm';
+export * from './RegistrationFormFK';
 export * from './ReviewIndicator';
 export * from './ReviewItem';
 export * from './ReviewsList';

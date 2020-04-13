@@ -317,11 +317,20 @@ export const keys: FSTranslationKeys = {
       password: 'Password',
       submit: 'Submit'
     },
-    promoForm: {
+    promoFormFK: {
       label: 'Promo code',
       placeholder: 'Enter Promo Code',
       errorMessage: 'Invalid promo code',
       button: 'Submit'
+    },
+    registrationForm: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email Address',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      submit: 'Submit',
+      passwordDoNotMatch: 'Passwords don\'t match'
     }
   }
 };
