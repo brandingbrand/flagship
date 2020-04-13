@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Picker, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { PaymentCurrencyAmount, PaymentRequest } from 'react-native-payments';
+import { PaymentCurrencyAmount, PaymentRequest } from '@brandingbrand/react-native-payments';
 import ShopifyAPIError from '../util/ShopifyAPIError';
 import { GooglePayShippingOptionsModalProps } from '../customTypes';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -56,11 +56,13 @@ export default class GooglePayShippingOptionsModal extends
           {this.props.orderDetails.shippingOptions &&
           this.props.orderDetails.shippingOptions.map(option => {
             const { id, label, amount } = option;
-            return <Picker.Item
-              key={id}
-              label={label + ' ' + FSI18n.currency(amount.value, amount.currency)}
-              value={id}
-            />;
+            return (
+              <Picker.Item
+                key={id}
+                label={label + ' ' + FSI18n.currency(amount.value, amount.currency)}
+                value={id}
+              />
+            );
           })}
         </Picker>
 

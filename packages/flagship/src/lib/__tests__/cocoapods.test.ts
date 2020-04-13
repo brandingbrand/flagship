@@ -6,7 +6,6 @@ const os = require(`../os`);
 
 const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
 const tempRootDir = nodePath.join(__dirname, `__cocoapods_test`);
-const appName = `MOCKAPP`;
 
 jest.mock('child_process');
 global.process.cwd = () => nodePath.resolve(tempRootDir);
@@ -24,7 +23,7 @@ afterEach(() => {
 test(`pod install`, () => {
   let stashedCmd = '';
 
-  childProcess.execSync.mockImplementation(cmd => stashedCmd = cmd);
+  childProcess.execSync.mockImplementation((cmd: string) => stashedCmd = cmd);
   cocoapods.install();
 
   expect(stashedCmd).toMatch(`cd "${nodePath.join(tempRootDir, 'ios')}" && pod install`);
@@ -33,8 +32,9 @@ test(`pod install`, () => {
 test(`pod install failing`, () => {
   let stashedCode = null;
 
-  global.process.exit = code => stashedCode = code;
-  childProcess.execSync.mockImplementation(cmd => { throw new Error(''); });
+  // @ts-ignore Allow function to return
+  global.process.exit = (code?: number): never => { stashedCode = code; };
+  childProcess.execSync.mockImplementation((cmd: string) => { throw new Error(''); });
 
   cocoapods.install();
 
@@ -42,11 +42,12 @@ test(`pod install failing`, () => {
 });
 
 test(`pod install on linux`, () => {
-  let stashedCode = null;
-  let stashedCmd = null;
+  let stashedCode: number | undefined | null = null;
+  let stashedCmd: string | null = null;
 
-  global.process.exit = code => stashedCode = code;
-  childProcess.execSync.mockImplementation(cmd => stashedCmd = cmd);
+  // @ts-ignore Allow function to return
+  global.process.exit = (code?: number): never => { stashedCode = code; };
+  childProcess.execSync.mockImplementation((cmd: string) => stashedCmd = cmd);
 
   os.linux = true;
   cocoapods.install();
@@ -78,3 +79,5 @@ test('add pod sources to podfile', () => {
   expect(Podfile).toMatch('POD_SOURCE_2');
 });
 
+// Force to be treated as a module
+export {};

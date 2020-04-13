@@ -98,7 +98,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     let response;
 
     if (!quantity || !variantId) {
-      response = Promise.reject(new Error('Quantity and VariantID must be defined to add to cart'));
+      response = Promise.reject(new Error(FSI18n.string(translationKeys.flagship.cart.error)));
     } else {
       response = commerceDataSource.addToCart(variantId, quantity);
     }
