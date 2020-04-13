@@ -6,10 +6,12 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
 type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palette'>;
+export type ButtonShape = 'pill' | 'rect';
+export type ButtonTheme = 'gold' | 'blue' | 'silver' | 'black';
 
 export interface PayPalCheckoutButtonProps extends LimitedButtonProps {
-  shape: 'pill' | 'rect';
-  theme: 'gold' | 'blue' | 'silver' | 'black';
+  shape: ButtonShape;
+  theme: ButtonTheme;
   tagLine?: string;
   tagLineStyle?: StyleProp<TextStyle>;
 }
