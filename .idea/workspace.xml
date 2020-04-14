@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="14025f5c-8c7b-44f9-a3d6-ef1f69a3151f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/fscomponents/src/components/__stories__/ChangePassword.story.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1WesOVWR9zQFRaRw7peevGoth0H" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/packages/fscomponents/src/components/__stories__" />
+      <recent name="$PROJECT_DIR$/packages/fscomponents/src/components" />
+      <recent name="$PROJECT_DIR$/packages/fscomponents/node_modules" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.precommit">
+    <configuration name="precommit" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="precommit" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="prepare:fscodestyle" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="prepare:fscodestyle" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="ship:compile-web" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="ship:compile-web" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="ship:init-web" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="ship:init-web" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="ship:run-web" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="ship:run-web" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.ship:run-web" />
+        <item itemvalue="npm.ship:init-web" />
+        <item itemvalue="npm.ship:compile-web" />
+        <item itemvalue="npm.prepare:fscodestyle" />
+        <item itemvalue="npm.precommit" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="14025f5c-8c7b-44f9-a3d6-ef1f69a3151f" name="Default Changelist" comment="" />
+      <created>1579521362723</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579521362723</updated>
+      <workItem from="1579521363934" duration="14848000" />
+      <workItem from="1579536787398" duration="8072000" />
+      <workItem from="1579597410312" duration="45647000" />
+      <workItem from="1579766709348" duration="2411000" />
+      <workItem from="1580219908238" duration="6430000" />
+      <workItem from="1580293378521" duration="3201000" />
+      <workItem from="1580374396462" duration="1560000" />
+      <workItem from="1580476718017" duration="4909000" />
+      <workItem from="1585054007650" duration="157000" />
+      <workItem from="1585054310350" duration="657000" />
+      <workItem from="1585055749955" duration="999000" />
+      <workItem from="1585064852139" duration="1797000" />
+      <workItem from="1585068008776" duration="656000" />
+      <workItem from="1585074222865" duration="706000" />
+      <workItem from="1585077884090" duration="204000" />
+      <workItem from="1585078254103" duration="3038000" />
+      <workItem from="1585129178390" duration="107000" />
+      <workItem from="1585129728152" duration="130000" />
+      <workItem from="1585129886954" duration="162000" />
+      <workItem from="1585130113369" duration="57000" />
+      <workItem from="1585130389634" duration="614000" />
+      <workItem from="1585132003868" duration="35000" />
+      <workItem from="1585134019765" duration="12000" />
+      <workItem from="1585135472807" duration="650000" />
+      <workItem from="1585138866038" duration="71000" />
+      <workItem from="1585139411161" duration="752000" />
+      <workItem from="1585140770521" duration="1104000" />
+      <workItem from="1586422595452" duration="431000" />
+      <workItem from="1586423466689" duration="11074000" />
+      <workItem from="1586440389323" duration="3148000" />
+      <workItem from="1586445963087" duration="24371000" />
+      <workItem from="1586784109334" duration="8560000" />
+      <workItem from="1586848890086" duration="1694000" />
+      <workItem from="1586850704617" duration="740000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat(fscomponents): Add formik, yup to fscomponents and ChangePasswordComponent">
+      <created>1579606641848</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579606641848</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat(fscomponents): Implement SingleLineForm with Formik">
+      <created>1579700565284</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1579700565284</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK">
+      <created>1579770032251</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1579770032251</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK added story">
+      <created>1580222694979</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1580222694979</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(fscomponents): Implement SingleLineForm with Formik added story">
+      <created>1580297060660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1580297060660</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(fscomponents): Add formik, yup to fscomponents and ChangePasswordComponentFK">
+      <created>1580374871372</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1580374871372</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(fscomponents): Implement SingleLineForm with Formik - resolved conflicts">
+      <created>1580375307649</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1580375307649</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK - resolved conflicts">
+      <created>1580375727044</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1580375727044</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK - add story">
+      <created>1580481066408</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1580481066408</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(fscomponents): Implement SingleLineForm with Formik - fixed PR issues">
+      <created>1580483030253</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1580483030253</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: add story to ChangePassword component">
+      <created>1586440819694</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1586440819694</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: Create LoginFormFK story">
+      <created>1586510762163</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1586510762163</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: Create LoginFormFK story">
+      <created>1586510937867</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1586510937867</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: Create UpdateNameOrEmail story">
+      <created>1586521320074</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1586521320074</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: Create Search Screen story">
+      <created>1586534540723</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1586534540723</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: Create CreditCardNumber story">
+      <created>1586793581142</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1586793581142</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: Create CreditCardNumber story">
+      <created>1586849385335</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1586849385335</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/node_modules/typedoc-plugin-monorepo/plugin.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/utils.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/cli.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/commandOptions.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/commandOptions.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/jsonPointer.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/jsonPointer.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/cli.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/utils.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaId.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/dtsGenerator.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/utils.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/jsonSchema.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaConvertor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/index.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/jsonSchema.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/index.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaId.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/writeProcessor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/dtsGenerator.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/utils.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/typeNameConvertor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/writeProcessor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/typeNameConvertor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaConvertor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/referenceResolver.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/referenceResolver.js.map" />
+        <option value="$PROJECT_DIR$/packages/pirateship/node_modules/react-native-svg/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/node_modules/typedoc-plugin-monorepo/plugin.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/utils.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/cli.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/commandOptions.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/commandOptions.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/jsonPointer.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/jsonPointer.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/cli.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/utils.js" />
+        <option value="$PROJECT_DIR$/packages/pirateship/node_modules/react-native-svg/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaId.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/dtsGenerator.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/utils.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/jsonSchema.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaConvertor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/index.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/jsonSchema.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/index.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaId.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/writeProcessor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/dtsGenerator.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/utils.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/typeNameConvertor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/writeProcessor.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/typeNameConvertor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/schemaConvertor.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/referenceResolver.js" />
+        <option value="$PROJECT_DIR$/node_modules/dtsgenerator/src/core/referenceResolver.js.map" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-svg/src/index.d.ts" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents and ChangePasswordComponent" />
+    <MESSAGE value="feat(fscomponents): Implement SingleLineForm with Formik" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents and UpdateNameOrEmail" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK added story" />
+    <MESSAGE value="feat(fscomponents): Implement SingleLineForm with Formik added story" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents and ChangePasswordComponentFK" />
+    <MESSAGE value="feat(fscomponents): Implement SingleLineForm with Formik - resolved conflicts" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK - resolved conflicts" />
+    <MESSAGE value="feat(fscomponents): Add formik, yup to fscomponents UpdateNameOrEmailFK - add story" />
+    <MESSAGE value="feat(fscomponents): Implement SingleLineForm with Formik - fixed PR issues" />
+    <MESSAGE value="feat: add story to ChangePassword component" />
+    <MESSAGE value="feat: Create LoginFormFK story" />
+    <MESSAGE value="feat: Create UpdateNameOrEmail story" />
+    <MESSAGE value="feat: Create Search Screen story" />
+    <MESSAGE value="feat: Create CreditCardNumber story" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Create CreditCardNumber story" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="675" y="421" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579702683373">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="675" y="421" key="#com.intellij.fileTypes.FileTypeChooser/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1579702683373" />
+    <state x="645" y="299" key="#precommit" timestamp="1586427225492">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="645" y="316" key="#precommit/0.23.1920.1177@0.23.1920.1177" timestamp="1585066616570" />
+    <state x="645" y="299" key="#precommit/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586427225492" />
+    <state x="0" y="150" width="1920" height="662" key="CommitChangelistDialog2" timestamp="1586849384685">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="0" y="150" width="1920" height="662" key="CommitChangelistDialog2/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586849384685" />
+    <state x="554" y="214" key="CommitChangelistDialog2/1920.0.1920.1080/0.23.1920.1177@0.23.1920.1177" timestamp="1579606641145" />
+    <state x="0" y="23" width="1920" height="1177" key="CommitChangelistDialog2/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1580483029254" />
+    <state width="1899" height="276" key="GridCell.Tab.0.bottom" timestamp="1579521360381">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1579521360381" />
+    <state width="1899" height="276" key="GridCell.Tab.0.center" timestamp="1579521360379">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1579521360379" />
+    <state width="1899" height="276" key="GridCell.Tab.0.left" timestamp="1579521360377">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1579521360377" />
+    <state width="1899" height="276" key="GridCell.Tab.0.right" timestamp="1579521360380">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1579521360380" />
+    <state x="192" y="130" key="MergeDialog" timestamp="1580375062726">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="192" y="130" key="MergeDialog/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1580375062726" />
+    <state x="673" y="334" key="MultipleFileMergeDialog" timestamp="1580375488076">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="673" y="334" key="MultipleFileMergeDialog/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1580375488076" />
+    <state x="687" y="318" key="RollbackChangesDialog" timestamp="1586527627762">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="687" y="318" key="RollbackChangesDialog/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586527627762" />
+    <state x="687" y="335" key="RollbackChangesDialog/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1585138298483" />
+    <state x="560" y="334" key="Vcs.Push.Dialog.v2" timestamp="1586849557857">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="560" y="334" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586849557857" />
+    <state x="560" y="351" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.23.1920.1177@0.23.1920.1177" timestamp="1579606676286" />
+    <state x="560" y="351" key="Vcs.Push.Dialog.v2/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1580483042785" />
+    <state x="100" y="100" width="1720" height="1000" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586850676602">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="100" y="100" width="1720" height="1000" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586850676602" />
+    <state x="626" y="362" width="667" height="486" key="find.popup" timestamp="1586788376042">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="626" y="378" width="770" height="486" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1585078417474" />
+    <state x="626" y="362" width="667" height="486" key="find.popup/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586788376042" />
+    <state x="626" y="378" width="667" height="476" key="find.popup/1920.0.1920.1080/0.23.1920.1177@0.23.1920.1177" timestamp="1579615840340" />
+    <state x="626" y="378" width="782" height="486" key="find.popup/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1585139451892" />
+    <state x="636" y="398" key="git4idea.merge.GitPullDialog" timestamp="1586852614647">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="636" y="398" key="git4idea.merge.GitPullDialog/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586852614647" />
+    <state x="636" y="413" key="git4idea.merge.GitPullDialog/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1585125639230" />
+    <state x="625" y="270" width="670" height="690" key="search.everywhere.popup" timestamp="1586531632014">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="625" y="270" width="670" height="690" key="search.everywhere.popup/1920.0.1920.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1586531632014" />
+    <state x="625" y="288" width="670" height="676" key="search.everywhere.popup/1920.23.1920.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1580477571878" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/pirateship/src/components/PSShopLandingCategories.tsx</url>
+          <line>54</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fsproductindex/src/components/ProductIndexGrid.tsx</url>
+          <line>88</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/pirateship/src/components/PSProductIndex.tsx</url>
+          <line>258</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/ProductItem/ProductItem.tsx</url>
+          <line>191</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/Grid.tsx</url>
+          <line>26</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/Grid.tsx</url>
+          <line>305</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/pirateship/src/components/PSProductIndex.tsx</url>
+          <line>38</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/ChangePasswordComponent.tsx</url>
+          <line>58</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/ChangePasswordComponent.tsx</url>
+          <line>40</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/fscomponents/src/components/ChangePasswordComponent.tsx</url>
+          <line>25</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
