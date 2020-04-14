@@ -45,7 +45,7 @@ const defaultStyle = {
   },
   errorBlock: {
     fontSize: 15
-  },
+  }
 };
 
 const renderChangePasswordBox = (): JSX.Element => {
