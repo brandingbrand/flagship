@@ -39,6 +39,7 @@
     "@babel/core",
     "@babel/runtime",
     "@types/react",
-    "@types/react-native"
+    "@types/react-native",
+    "@react-native-community/cli"
   ]
 }
