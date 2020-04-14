@@ -21,7 +21,7 @@ export interface CategoryBoxProps extends CommerceTypes.Category {
   underlayColor?: string;
 }
 
-export const CategoryBox = React.memo((props: CategoryBoxProps): JSX.Element => {
+const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
   const {
     image,
     showImage,
@@ -48,15 +48,13 @@ export const CategoryBox = React.memo((props: CategoryBoxProps): JSX.Element => 
       accessibilityRole='imagebutton'
     >
       <View style={S.boxInner}>
-        {showImage && image && <Image source={image} style={imageStyle} />}
+        {showImage !== false && image && <Image source={image} style={imageStyle} />}
         <Text style={[S.boxText, titleStyle]}>
           {title}
         </Text>
       </View>
     </TouchableHighlight>
   );
-}) as any;
-
-CategoryBox.defaultProps = {
-  showImage: true
 };
+
+export const CategoryBox = React.memo(CategoryBoxInner);

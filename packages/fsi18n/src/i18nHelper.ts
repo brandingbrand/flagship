@@ -168,7 +168,7 @@ export default class I18nHelper {
    *
    * @returns {string} - Localized string
    */
-  public string(translationKey?: I18n.Scope, options?: I18n.TranslateOptions): string {
+  public string(translationKey?: TranslationKey, options?: I18n.TranslateOptions): string {
     if (Object.getOwnPropertyNames(this.i18n.translations).length === 0) {
       throw MISSING_TRANSLATIONS_ERROR;
     }

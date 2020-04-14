@@ -99,7 +99,7 @@ export function entitlements(configuration: Config): void {
   fs.update(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
-    `CODE_SIGN_ENTITLEMENTS = ${configuration.name}/${configuration.name}.entitlements;
+    `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
 }
@@ -169,10 +169,15 @@ export function launchScreen(configuration: Config): void {
     'LaunchImages.xcassets'
   );
 
-  const sourceLaunchScreen = configuration.launchScreen.ios.xib;
+  const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
+  if (!sourceLaunchScreen) {
+    helpers.logError('xib support has been removed. Please include a storyboard file.' +
+      ' Using the default Flagship storyboard.');
+    return;
+  }
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
-    'LaunchScreen.xib'
+    'LaunchScreen.storyboard'
   );
 
   try {
@@ -343,7 +348,11 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
+    || versionLib.normalize(newVersion);
+
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
+  helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
 
   fs.update(
     path.ios.infoPlistPath(configuration),
@@ -354,7 +363,7 @@ export function version(configuration: Config, newVersion: string): void {
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleVersion</key>\n\t<string>${versionLib.normalize(newVersion)}</string>`
+    `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
   );
 }
 
