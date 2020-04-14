@@ -2,6 +2,8 @@ import React, { FunctionComponent, memo } from 'react';
 import { StyleProp, Text, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export interface ReviewIndicatorProps {
   value: number;
@@ -91,7 +93,7 @@ memo((props): JSX.Element => {
           <Star
             text='★'
             style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, { color: props.emptyColor || S.emptyStar }]}
+              starHalfRightStyle, S.emptyStar, { color: props.emptyColor }]}
           />
         </View>
       </View>
@@ -123,7 +125,7 @@ memo((props): JSX.Element => {
   }
 
   const label = props.accessibilityLabel ? props.accessibilityLabel :
-    `${props.value} out of 5 stars`;
+    props.value + FSI18n.string(componentTranslationKeys.indicatorDefault);
 
   return (
     <View
@@ -144,7 +146,7 @@ memo((props): JSX.Element => {
         <Star
           text='★'
           renderStar={renderEmptyStar}
-          style={[customStarStyle, { color: props.emptyColor || S.emptyStar }]}
+          style={[customStarStyle, S.emptyStar, { color: props.emptyColor }]}
           key={v}
         />
       ))}
