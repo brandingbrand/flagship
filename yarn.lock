@@ -1229,7 +1229,7 @@
   dependencies:
     "@brandingbrand/fsfoundation" "^0.1.0"
 
-"@brandingbrand/react-native-payments@^0.10.0":
+"@brandingbrand/react-native-payments@^0.10.0", "@brandingbrand/react-native-payments@^0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-payments/-/react-native-payments-0.10.1.tgz#73ddd11b8231e6fb320f1deefb166bb3b0abfb96"
   integrity sha512-T6ULhmEYN6RyMHWV9stYA0YFAjD/dplE1X9SRo5nt6U+zDxFBRZH+I4AfjDgDeseaPxSi9cPpJpFZ//9famV1Q==

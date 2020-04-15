@@ -4,6 +4,7 @@ export * from './AddToCart';
 export * from './AddressForm';
 export * from './Alert';
 export * from './ApplePayButton';
+export * from './ApplePayButtonFK';
 export * from './Breadcrumbs';
 export * from './Button';
 export * from './CMSBanner';
