@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-import { MultiCarousel } from '../MultiCarousel/MultiCarousel';
+import { MultiCarousel } from '../MultiCarousel';
 import { ProductItem } from '../ProductItem';
 import Decimal from 'decimal.js';
 import {
-  boolean, object
+  boolean, number, object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { StyleSheet } from 'react-native';
@@ -51,7 +51,7 @@ storiesOf('MultiCarousel', module)
     <MultiCarousel
       items={productItems}
       renderItem={renderItem}
-      itemsPerPage={3}
+      itemsPerPage={number('itemsPerPage', 3)}
       showArrow={boolean('arrow?', true)}
     />
   ));
