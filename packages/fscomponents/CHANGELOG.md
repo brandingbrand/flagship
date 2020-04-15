@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **flagship:** Unify qs versions to 6.9.1 (6f3a9da)
+* **fscomponents:** Correct empty star order (27ee0ae)
+* **fscomponents:** Fix circular require (29bdc5f)
+* **fscomponents:** Fix other style order (ae5a252)
+* **fscomponents:** Fix updating button title (9b924fc)
+* **fscomponents:** Fix use of empty star style for reviews (63644aa)
+* **fscomponents:** Name inner component functions (c45bfae)
+* **fscomponents:** Remove any from CategoryBox (fc74c48)
+* **fscomponents:** Remove ModalHalfScreen componentWillReceiveProps (14bd6fb)
+* **fscomponents:** Update form tests (654569e)
+* **fscomponents:** Updated Accordion component (e2a94b0)
+
+
+### Features
+
+* Add SerializableAccordionProps (ff68583)
+* **fscomponents:** add ada label and initial value prop to searchbar (89d16ac)
+* add story to cartItem component (218a717)
+* add story to fadeInImage component (acf8c82)
+* add story to PageIndicator component (9db9ed2)
+* add story to PageIndicator component (2124350)
+* Create CreditCardNumber story (6b04725)
+* **fscomponents:** add knobs to accordian stories (b22371b)
+* **fscomponents:** Added arrowRange prop (23ebe77)
+
+
+
+
+
 ## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
