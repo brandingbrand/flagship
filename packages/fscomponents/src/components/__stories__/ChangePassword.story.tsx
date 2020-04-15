@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChangePassword } from '../../../../fscomponents/src/components/ChangePasswordComponent';
+import { ChangePassword } from '../ChangePasswordComponent';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
   object,
