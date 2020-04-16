@@ -19,3 +19,9 @@ update_configs:
           dependency_name: "@types/react"
       - match:
           dependency_name: "@types/react-native"
+      - match:
+          dependency_name: "react-native-navigation"
+      - match:
+          dependency_name: "react"
+      - match:
+          dependency_name: "react-dom"
