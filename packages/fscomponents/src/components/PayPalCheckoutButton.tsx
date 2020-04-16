@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 import { Button, ButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
@@ -57,54 +57,62 @@ const styles = StyleSheet.create({
   }
 });
 
-export class PayPalCheckoutButton extends Component<PayPalCheckoutButtonProps> {
-  static defaultProps: DefaultProps = {
+export const PayPalCheckoutButton: FunctionComponent<PayPalCheckoutButtonProps> =
+memo((props): JSX.Element => {
+
+  const defaultProps: DefaultProps = {
     shape: 'rect',
     theme: 'gold',
     title: FSI18n.string(componentTranslationKeys.defaultTitle),
     tagLine: FSI18n.string(componentTranslationKeys.defaultTagLine)
   };
 
-  render(): JSX.Element {
-    const {
-      shape,
-      style,
-      tagLine,
-      tagLineStyle,
-      titleStyle,
-      theme
-    } = this.props;
-    const selectedTheme = themes[theme];
+  const {
+    shape,
+    style,
+    tagLine,
+    tagLineStyle,
+    titleStyle,
+    title,
+    theme
+  } = props;
 
-    const buttonProps = {
-      ...this.props,
-      titleStyle: StyleSheet.flatten([
-        styles.buttonTitle,
-        { color: selectedTheme.text },
-        titleStyle
-      ]),
-      style: StyleSheet.flatten([
-        {
-          backgroundColor: selectedTheme.bg,
-          borderRadius: shape === 'rect' ? 3 : 23
-        },
-        style
-      ])
-    };
+  const shapeVal = shape ? shape : defaultProps.shape;
+  const themeVal = theme ? theme : defaultProps.theme;
+  const titleVal = title ? title : defaultProps.title;
+  const tagLineVal = tagLine ? tagLine : defaultProps.tagLine;
 
-    return (
-      <View style={{paddingVertical: 10}}>
-        <Button
-          icon={selectedTheme.icon}
-          underlayColor={selectedTheme.bgActive}
-          {...buttonProps}
-        />
-        {!!tagLine && (
-          <Text style={[styles.tagLine, tagLineStyle]}>
-            {tagLine}
-          </Text>
-        )}
-      </View>
-    );
-  }
-}
+  const selectedTheme = themes[themeVal];
+
+  const buttonProps = {
+    ...props,
+    titleStyle: StyleSheet.flatten([
+      styles.buttonTitle,
+      { color: selectedTheme.text },
+      titleStyle
+    ]),
+    style: StyleSheet.flatten([
+      {
+        backgroundColor: selectedTheme.bg,
+        borderRadius: shapeVal === 'rect' ? 3 : 23
+      },
+      style
+    ])
+  };
+
+  return (
+    <View style={{ paddingVertical: 10 }}>
+      <Button
+        title={titleVal}
+        icon={selectedTheme.icon}
+        underlayColor={selectedTheme.bgActive}
+        {...buttonProps}
+      />
+      {!!tagLineVal && (
+        <Text style={[styles.tagLine, tagLineStyle]}>
+          {tagLineVal}
+        </Text>
+      )}
+    </View>
+  );
+});
