@@ -42,3 +42,5 @@ export {
   default as runMiddleware,
   MiddlewareFunction
 } from './lib/runMiddleware';
+
+export { AuthType } from './Commerce/types/CustomerAccount';
