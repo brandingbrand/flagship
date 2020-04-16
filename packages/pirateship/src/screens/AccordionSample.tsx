@@ -67,6 +67,16 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
             openIconImage={icons.open}
             closedIconImage={icons.closed}
           />
+          <Accordion
+            title={'Open Parent Accordion with Image'}
+            state={'open'}
+          >
+            <Accordion
+              title={<Text>Nested Accordion with Image</Text>}
+              content={imageContent}
+              paddingHorizontal={0}
+            />
+          </Accordion>
         </View>
       </PSScreenWrapper>
     );
