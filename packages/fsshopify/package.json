@@ -22,7 +22,7 @@
     "decimal.js": "^10.0.1",
     "react": "^16.11.0",
     "react-native": "^0.61.0",
-    "react-native-navigation": "^4.0.0"
+    "react-native-navigation": "^6.4.0"
   },
   "devDependencies": {
     "axios": "~0.19.0"
