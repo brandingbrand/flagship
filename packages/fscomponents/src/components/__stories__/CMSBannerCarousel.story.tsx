@@ -18,6 +18,9 @@ const defaultCarouselProps = {
   showArrow: true
 };
 
+const containerStyle = { padding: 0 };
+const imageContainerStyle = { padding: 0 };
+
 storiesOf('CMSBannerCarousel', module)
   .add('basic usage', () => (
     <CMSBannerCarousel
@@ -25,5 +28,7 @@ storiesOf('CMSBannerCarousel', module)
       cmsProviderGroup='Shop'
       cmsProviderSlot='Banner-Carousel'
       carouselProps={object('carouselProps', defaultCarouselProps)}
+      style={object('containerStyle', containerStyle)}
+      imageContainerStyle={object('imageContainerStyle', imageContainerStyle)}
     />
   ));
