@@ -1,9 +1,8 @@
 import React from 'react';
 // @ts-ignore: TODO fix types for tcomb-form-native
 import * as t from 'tcomb-form-native';
-import StatefulTextbox from './StatefulTextbox';
+import StatefulTextbox, { FormLabelPosition } from './StatefulTextbox';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import { FormLabelPosition } from './fieldTemplates';
 
 export function labelAboveTextbox(locals: Dictionary, componentFactory?:
   (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element): JSX.Element {
