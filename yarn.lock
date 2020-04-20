@@ -3398,9 +3398,9 @@
   integrity sha512-qHbSMjWCmcPp1b3wZ+uGK08pwKANmWMboxFYHS9vbXK2qZfXz1INemoHuuD7lo/rma7iJJoJFDtXdzVerfyXNQ==
 
 "@types/react-native-video@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.0.tgz#464cef936e53563d78dccbbc2ce6deded0b7f552"
-  integrity sha512-9pKAKE1FL6ZaxI/9W6v/4Zr18ghgTrLJfAcSqr+964r/Zp0p+pWzCqx1foV0T4dQX2r/DkIHxzRDWnxZ+z14Uw==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.1.tgz#605b3e3170b2a91c514e828b486030ff426e2e9c"
+  integrity sha512-GxQV9fR7EzE2L02pKk6RpklcD6cbUxph9xl6OYaiY+YJNSlm0H6sQXLJ3sYRybmyoQQpF8VLncOkWjlMzVnbmQ==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
