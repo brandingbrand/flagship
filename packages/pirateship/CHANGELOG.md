@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **fscomponents:** Updated Accordion component ([e2a94b0](https://github.com/brandingbrand/flagship/commit/e2a94b05924209775ccbc2e095e84d4ab1905ca9))
+
+
+
+
+
 ## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
