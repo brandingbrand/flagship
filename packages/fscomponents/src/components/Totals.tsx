@@ -3,8 +3,12 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 import { Total, TotalProps } from './Total';
 
-export interface TotalsProps {
+export interface SerializableTotalsProps {
   totals: TotalProps[];
+  style?: ViewStyle;
+}
+
+export interface TotalsProps extends Pick<SerializableTotalsProps, 'totals'> {
   style?: StyleProp<ViewStyle>;
 }
 
