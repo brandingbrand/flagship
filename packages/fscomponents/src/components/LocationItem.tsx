@@ -112,10 +112,6 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
     }
   };
 
-  return (
-    <View style={[S.container, style]}>{renderByFormat(format)}</View>
-  );
-
   /* tslint:enable */
 
   const renderStoreDetail = (options: any = {}) => {
@@ -461,4 +457,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
       </View>
     );
   };
+  return (
+    <View style={[S.container, style]}>{renderByFormat(format)}</View>
+  );
 };
