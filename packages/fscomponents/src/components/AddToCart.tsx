@@ -10,7 +10,6 @@ import {
   CommerceTypes
 } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { Omit } from '@brandingbrand/fsfoundation';
 
 export interface SerializedAddToCartProps {
   defaultVariantId?: string;
