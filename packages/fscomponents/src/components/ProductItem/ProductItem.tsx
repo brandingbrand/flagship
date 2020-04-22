@@ -28,29 +28,26 @@ import {
 
 import { style as S } from '../../styles/ProductItem';
 
-export interface ProductItemProps extends CommerceTypes.Product {
-  style?: StyleProp<ViewStyle>;
-  contentStyle?: StyleProp<ViewStyle>;
-  titleStyle?: StyleProp<TextStyle>;
-  brandStyle?: StyleProp<TextStyle>;
-  imageStyle?: StyleProp<ImageStyle>;
-  imageContainerStyle?: StyleProp<ViewStyle>;
-  onPress: () => void;
-  priceStyle?: StyleProp<TextStyle>;
-  originalPriceStyle?: StyleProp<TextStyle>;
-  salePriceStyle?: StyleProp<TextStyle>;
-  promoContainerStyle?: StyleProp<ViewStyle>;
-  promoStyle?: StyleProp<TextStyle>;
-  variantText?: string;
-  variantTextStyle?: StyleProp<TextStyle>;
-  reviewStyle?: StyleProp<ViewStyle>;
-  reviewCountStyle?: StyleProp<TextStyle>;
-  reviewIndicatorProps?: ReviewIndicatorProps;
-  extraElement?: JSX.Element;
-  swatchItems?: SwatchItemType[];
-  swatchStyle?: StyleProp<ViewStyle>;
-  swatchesProps?: SwatchesProps;
 
+export interface SerializableProductItemProps {
+  style?: ViewStyle;
+  contentStyle?: ViewStyle;
+  titleStyle?: TextStyle;
+  imageStyle?: ImageStyle;
+  imageContainerStyle?: ViewStyle;
+  priceStyle?: TextStyle;
+  originalPriceStyle?: TextStyle;
+  salePriceStyle?: TextStyle;
+  promoContainerStyle?: ViewStyle;
+  promoStyle?: TextStyle;
+  variantText?: string;
+  variantTextStyle?: TextStyle;
+  reviewStyle?: ViewStyle;
+  reviewCountStyle?: TextStyle;
+  reviewIndicatorProps?: ReviewIndicatorProps;
+  swatchItems?: SwatchItemType[];
+  swatchStyle?: ViewStyle;
+  swatchesProps?: SwatchesProps;
   /**
    * @deprecated you probably want FSCommerce's "promotions"
    */
@@ -71,26 +68,11 @@ export interface ProductItemProps extends CommerceTypes.Product {
 
   // button
   buttonText?: string;
-  buttonStyle?: StyleProp<ViewStyle>;
-  buttonTextStyle?: StyleProp<TextStyle>;
-  buttonProps?: Partial<ButtonProps>;
-  onButtonPress?: () => void;
-  renderButton?: () => React.ReactNode;
+  buttonStyle?: ViewStyle;
+  buttonTextStyle?: TextStyle;
 
   // fav button
-  onFavButtonPress?: () => void;
   favButtonImage?: ImageURISource;
-  renderFavButton?: () => React.ReactNode;
-
-  // custom render
-  renderPrice?: () => React.ReactNode;
-  renderPromos?: () => React.ReactNode;
-  renderTitle?: () => React.ReactNode;
-  renderVariantText?: () => React.ReactNode;
-  renderBrand?: () => React.ReactNode;
-  renderImage?: () => React.ReactNode;
-  renderReviews?: () => React.ReactNode;
-  renderSwatches?: () => React.ReactNode;
 
   // hide components
   hidePrice?: boolean;
@@ -105,6 +87,67 @@ export interface ProductItemProps extends CommerceTypes.Product {
 
   // orientation
   orientation?: 'vertical' | 'horizontal';
+}
+
+export interface ProductItemProps extends CommerceTypes.Product, Omit<
+  SerializableProductItemProps,
+  'titleTouchStyle' |
+  'style' |
+  'contentStyle' |
+  'titleStyle' |
+  'imageStyle' |
+  'imageContainerStyle' |
+  'priceStyle' |
+  'originalPriceStyle' |
+  'salePriceStyle' |
+  'promoContainerStyle' |
+  'promoStyle' |
+  'variantTextStyle' |
+  'reviewStyle' |
+  'reviewCountStyle' |
+  'swatchStyle' |
+  'buttonStyle' |
+  'buttonTextStyle'
+  > {
+  style?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+  brandStyle?: StyleProp<TextStyle>;
+  imageStyle?: StyleProp<ImageStyle>;
+  imageContainerStyle?: StyleProp<ViewStyle>;
+  onPress: () => void;
+  priceStyle?: StyleProp<TextStyle>;
+  originalPriceStyle?: StyleProp<TextStyle>;
+  salePriceStyle?: StyleProp<TextStyle>;
+  promoContainerStyle?: StyleProp<ViewStyle>;
+  promoStyle?: StyleProp<TextStyle>;
+  variantTextStyle?: StyleProp<TextStyle>;
+  reviewStyle?: StyleProp<ViewStyle>;
+  reviewCountStyle?: StyleProp<TextStyle>;
+  extraElement?: JSX.Element;
+  swatchStyle?: StyleProp<ViewStyle>;
+
+  // button
+  buttonStyle?: StyleProp<ViewStyle>;
+  buttonTextStyle?: StyleProp<TextStyle>;
+  buttonProps?: Partial<ButtonProps>;
+  onButtonPress?: () => void;
+  renderButton?: () => React.ReactNode;
+
+  // fav button
+  onFavButtonPress?: () => void;
+  renderFavButton?: () => React.ReactNode;
+
+  // custom render
+  renderPrice?: () => React.ReactNode;
+  renderPromos?: () => React.ReactNode;
+  renderTitle?: () => React.ReactNode;
+  renderVariantText?: () => React.ReactNode;
+  renderBrand?: () => React.ReactNode;
+  renderImage?: () => React.ReactNode;
+  renderReviews?: () => React.ReactNode;
+  renderSwatches?: () => React.ReactNode;
+
 }
 
 export class ProductItem extends Component<ProductItemProps> {
