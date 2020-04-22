@@ -5,14 +5,38 @@ export interface ImageData {
   zoomSrc?: ImageURISource;
 }
 
-export interface ZoomCarouselProps {
-  images: ImageData[];
+export interface SerializableZoomCarouselProps {
   gapSize?: number;
   centerMode?: boolean;
   hideZoomButton?: boolean;
   fillContainer?: boolean;
   peekSize?: number;
   showArrow?: boolean;
+  showThumbnails?: boolean;
+  images: ImageData[];
+  contentContainerStyle?: ViewStyle;
+  imageContainerStyle?: ViewStyle;
+  imageCounterStyle?: ViewStyle;
+  /**
+   * Boolean to turn on and off the page indicator (dots)
+   *
+   * @example true
+   */
+  hidePageIndicator?: boolean;
+  /**
+   * Dicates whether the default image counter displays
+   *
+   * @example true
+   */
+  showImageCounter?: boolean;
+}
+
+export interface ZoomCarouselProps extends Omit<
+  SerializableZoomCarouselProps,
+  'contentContainerStyle' |
+  'imageContainerStyle' |
+  'imageCounterStyle'
+  > {
   pageIndicatorZoomStyle?: any;
   closeButtonStyle?: any;
   dotStyle?: any;
@@ -40,7 +64,6 @@ export interface ZoomCarouselProps {
     goTo: (index: number, options: any) => void
   ) => React.ReactNode;
   nextArrowOnBlur?: () => void;
-  showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
 
@@ -50,27 +73,12 @@ export interface ZoomCarouselProps {
    * @example {{flex: 1}}
    */
   contentContainerStyle?: StyleProp<ViewStyle>;
-
-  /**
-   * Boolean to turn on and off the page indicator (dots)
-   *
-   * @example true
-   */
-  hidePageIndicator?: boolean;
-
   /**
    * The styling of the container that holds just the image carousel
    *
    * @example {{minHeight: 400px}}
    */
   imageContainerStyle?: StyleProp<ViewStyle>;
-
-  /**
-   * Dicates whether the default image counter displays
-   *
-   * @example true
-   */
-  showImageCounter?: boolean;
 
   /**
    * Custom styling for the imageCounter. Use absolute positioning to set the location
