@@ -7,15 +7,27 @@ export interface SlideChangeEvent {
   nextIndex: number;
 }
 
+export interface SerializableMultiCarouselProps {
+  centerMode?: boolean;
+  peekSize?: number;
+  itemsPerPage?: number;
+  hidePageIndicator?: boolean;
+  showArrow?: boolean;
+  hideZoomButton?: boolean;
+  contentContainerStyle?: ViewStyle;
+}
+
+
 // TODO: Clean up these props
-export interface MultiCarouselProps<ItemT> {
+export interface MultiCarouselProps<ItemT> extends Omit<
+  SerializableMultiCarouselProps,
+  'contentContainerStyle'
+  > {
   brandStyle?: any;
   buttonProps?: any;
-  centerMode?: boolean;
   dotActiveStyle?: any;
   dotStyle?: any;
   items: ItemT[];
-  itemsPerPage?: number;
   itemStyle?: any;
   itemUpdated?: (oldItem: ItemT, newItem: ItemT, index: number, changed: () => void) => void;
   onSlideChange?: (data: SlideChangeEvent) => void;
@@ -23,17 +35,13 @@ export interface MultiCarouselProps<ItemT> {
   nextArrowStyle?: any;
   nextArrowOnBlur?: () => void;
   pageIndicatorStyle?: any;
-  peekSize?: number;
   prevArrowContainerStyle?: any;
   prevArrowStyle?: any;
   prevArrowOnBlur?: () => void;
   renderItem: (data: any, i: number) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
-  hidePageIndicator?: boolean;
-  showArrow?: boolean;
   style?: any;
   zoomButtonStyle?: any;
   keyExtractor?: (item: ItemT, index: number) => string;
-  hideZoomButton?: boolean;
   contentContainerStyle?: StyleProp<ViewStyle>;
 }
