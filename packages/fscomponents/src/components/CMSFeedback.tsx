@@ -52,26 +52,11 @@ export interface CMSFeedbackType {
   feedback?: string;
 }
 
-export interface CMSFeedbackProps {
-  propertyId: string; // Only required prop: Brand CMS Property ID
-
-  modalContainerStyle?: StyleProp<ViewStyle>;
+export interface SerializedCMSFeedbackProps {
   modalTitle?: string;
-  modalTitleStyle?: StyleProp<TextStyle>;
-  renderModalTitle?: () => React.ReactNode; // Optional; will override default render
-  renderModalBody?: () => React.ReactNode; // Optional instructions/details for the user
-
+  propertyId: string; // Only required prop: Brand CMS Property ID
   successMessage?: string;
-  successMessageStyle?: StyleProp<TextStyle>;
-  renderSuccessMessage?: () => React.ReactNode; // Optional; will override default render
-
   errorMessage?: string;
-  errorMessageStyle?: StyleProp<TextStyle>;
-  renderErrorMessage?: () => React.ReactNode; // Optional; will override default render
-
-  // Options to customize how Tcomb Form & React Native Forms handle inputs.
-  // See https://github.com/gcanti/tcomb-form-native#rendering-options
-  fieldOptions?: any;
 
   closeButtonProps?: ButtonProps; // Props to send to Button component for close button
   openButtonProps?: ButtonProps; // Props to send to Button component for open button
@@ -79,6 +64,34 @@ export interface CMSFeedbackProps {
 
   vid?: string; // Optional vid (video id) string to get passed to CMS Feedback
   referrer?: string; // Optional referrer string to get passed to CMS Feedback
+
+  modalContainerStyle?: ViewStyle;
+  modalTitleStyle?: TextStyle;
+  successMessageStyle?: TextStyle;
+  errorMessageStyle?: TextStyle;
+}
+
+export interface CMSFeedbackProps extends Omit<
+  SerializedCMSFeedbackProps,
+  'modalContainerStyle' |
+  'modalTitleStyle' |
+  'successMessageStyle' |
+  'errorMessageStyle'
+  > {
+
+  renderModalTitle?: () => React.ReactNode; // Optional; will override default render
+  renderModalBody?: () => React.ReactNode; // Optional instructions/details for the user
+  renderSuccessMessage?: () => React.ReactNode; // Optional; will override default render
+  renderErrorMessage?: () => React.ReactNode; // Optional; will override default render
+
+  successMessageStyle?: StyleProp<TextStyle>;
+  modalContainerStyle?: StyleProp<ViewStyle>;
+  modalTitleStyle?: StyleProp<TextStyle>;
+  errorMessageStyle?: StyleProp<TextStyle>;
+
+  // Options to customize how Tcomb Form & React Native Forms handle inputs.
+  // See https://github.com/gcanti/tcomb-form-native#rendering-options
+  fieldOptions?: any;
 
   // Optional callback to inspect or transform form data before it's submitted to the CMS
   onSubmit?: (data: CMSFeedbackType) => void;
