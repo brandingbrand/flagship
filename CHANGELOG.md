@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **flagship:** Fix line length ([4ff58ac](https://github.com/brandingbrand/flagship/commit/4ff58acc74ed1a0c95c9e32ce9a701f9cd1ad171))
+* **flagship:** Fix slashes for running iOS tests on Windows ([7e4881a](https://github.com/brandingbrand/flagship/commit/7e4881ad9f3df0f19732e7f4e0a686a30e2869ef))
+* **flagship:** Unify qs versions to 6.9.1 ([6f3a9da](https://github.com/brandingbrand/flagship/commit/6f3a9da4adef0d6f8be3e535efdac866f972221a))
+* **fscomponents:** Correct empty star order ([27ee0ae](https://github.com/brandingbrand/flagship/commit/27ee0ae94c0cc2375a78d9756806e4e57fd11a76))
+* **fscomponents:** Fix circular require ([29bdc5f](https://github.com/brandingbrand/flagship/commit/29bdc5f3df5945245cd5422d42bdf52a24695584))
+* **fscomponents:** Fix other style order ([ae5a252](https://github.com/brandingbrand/flagship/commit/ae5a25222db3d9c9ec5fce12d6c2461e00854ac2))
+* **fscomponents:** Fix updating button title ([9b924fc](https://github.com/brandingbrand/flagship/commit/9b924fc7142bdb4a58bf60eb9f8783559629dd7a))
+* **fscomponents:** Fix use of empty star style for reviews ([63644aa](https://github.com/brandingbrand/flagship/commit/63644aa4b5e15d972518ebfbc6c9e58ee837bd5c))
+* **fscomponents:** Name inner component functions ([c45bfae](https://github.com/brandingbrand/flagship/commit/c45bfaec8b84f761ee77335fd363748b31772c49))
+* **fscomponents:** Remove any from CategoryBox ([fc74c48](https://github.com/brandingbrand/flagship/commit/fc74c48ed273f7145f7f9da479a8c03264ee9755))
+* **fscomponents:** Remove ModalHalfScreen componentWillReceiveProps ([14bd6fb](https://github.com/brandingbrand/flagship/commit/14bd6fbdd30cb0f46daffa197fc01df34d5a3ce9))
+* **fscomponents:** Update form tests ([654569e](https://github.com/brandingbrand/flagship/commit/654569ed2b418c5daa0f42a79e18aef2685cb068))
+* **fscomponents:** Updated Accordion component ([e2a94b0](https://github.com/brandingbrand/flagship/commit/e2a94b05924209775ccbc2e095e84d4ab1905ca9))
+* **fsweb:** Fixes for web dependencies ([878492f](https://github.com/brandingbrand/flagship/commit/878492ffce2f84ba1b3c705070760b06cf37c4fe))
+
+
+### Features
+
+* **flagship:** add ability to provide custom ios bundle version string ([84e4e9e](https://github.com/brandingbrand/flagship/commit/84e4e9e3351d3cbd98e1113a1f4d06b8ffff3c4e))
+* Add SerializableAccordionProps ([ff68583](https://github.com/brandingbrand/flagship/commit/ff68583a427f3ad5f4a4186381aec1b9daf03f93))
+* **fscomponents:** add ada label and initial value prop to searchbar ([89d16ac](https://github.com/brandingbrand/flagship/commit/89d16ace977f3dd4664c9c2587799adbe40f2b66))
+* add story to cartItem component ([218a717](https://github.com/brandingbrand/flagship/commit/218a7173577e6b9e6b8fc239800b8db02e47908f))
+* add story to fadeInImage component ([acf8c82](https://github.com/brandingbrand/flagship/commit/acf8c825b77e0a29c532ae63b9d257c8723a1d81))
+* add story to PageIndicator component ([9db9ed2](https://github.com/brandingbrand/flagship/commit/9db9ed2406b3fe550aad47ae5db90b7285efb590))
+* add story to PageIndicator component ([2124350](https://github.com/brandingbrand/flagship/commit/2124350f317185100dc086ab36fd97d5a26cfae5))
+* Create CreditCardNumber story ([6b04725](https://github.com/brandingbrand/flagship/commit/6b0472508f93dde06466c35491eebde1740ba321))
+* **fscomponents:** add knobs to accordian stories ([b22371b](https://github.com/brandingbrand/flagship/commit/b22371b23c0fae6e6596bcc98bced4bf1bd93459))
+* **fscomponents:** Added arrowRange prop ([23ebe77](https://github.com/brandingbrand/flagship/commit/23ebe778229ea4989209a904f53a263e33596bf8))
+
+
+
+
+
+## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [9.0.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v9.0.0) (2020-03-30)
+
+### BREAKING CHANGES
+
+Flagship 9 introduces support for React Native 0.61 and React Navigation v4. For a comprehensive list of changes and for instructions on upgrading your project to this version, please refer to the following article in the wiki: https://github.com/brandingbrand/flagship/wiki/Flagship-9
+
+
+# [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
+
+
+### Features
+
+* **fscomponents:** Add knobs to zoom carousel ([#1099](https://github.com/brandingbrand/flagship/issues/1099)) ([c7b8b07](https://github.com/brandingbrand/flagship/commit/c7b8b07cbdfec68b4328530eb29471488a33b791))
+* **fscomponents:** custom a11yLabel for selector title ([#1097](https://github.com/brandingbrand/flagship/issues/1097)) ([147da0c](https://github.com/brandingbrand/flagship/commit/147da0c08c0d727e1b33cb55508a34aa84bc8108))
+* **fscomponents:** ShareButton web support ([#1102](https://github.com/brandingbrand/flagship/issues/1102)) ([4a369a4](https://github.com/brandingbrand/flagship/commit/4a369a4633ce00f9493ede3d3f3387679efcb223))
+
+
+
+
+
 ## [8.6.1](https://github.com/brandingbrand/flagship/compare/v8.6.0...v8.6.1) (2020-03-23)
 
 
