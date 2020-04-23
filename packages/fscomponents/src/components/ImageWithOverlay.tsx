@@ -4,7 +4,16 @@ import { style as S } from '../styles/ImageWithOverlay';
 import { FadeInImage, FadeInImageProps } from './FadeInImage';
 import { get } from 'lodash-es';
 
-export interface ImageWithOverlayProps {
+export interface SerializedImageWithOverlayProps {
+  imageProps: FadeInImageProps;
+  overlay?: string | JSX.Element;
+  style?: ViewStyle;
+}
+
+export interface ImageWithOverlayProps extends Omit<SerializedImageWithOverlayProps,
+  'style' |
+  'overlayPosition'
+  > {
   imageProps: FadeInImageProps;
   overlay?: JSX.Element;
   style?: StyleProp<ViewStyle>;
