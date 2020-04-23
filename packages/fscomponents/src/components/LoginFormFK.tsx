@@ -8,26 +8,21 @@ import { style as S } from '../styles/FormFK';
 import { TextField } from './FormikFields/TextField';
 import { tr, trKeys} from '../lib/translations/index';
 
-export interface LoginFormProps {
+export interface SerializableLoginFormProps {
   /**
    * Outer container style
    */
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: ViewStyle;
 
   /**
    * Form fields style
    */
-  fieldStyle?: StyleProp<TextStyle>;
-
-  /**
-   * Form fields options
-   */
-  fieldsOptions?: FieldOption;
+  fieldStyle?: TextStyle;
 
   /**
    * Submit button styling
    */
-  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitButtonStyle?: ViewStyle;
 
   /**
    * Submit button text
@@ -49,6 +44,38 @@ export interface LoginFormProps {
    * @default Password
    */
   passLabel?: string;
+
+  /**
+   * Label Text Element Styling
+   */
+  labelStyle?: TextStyle;
+}
+
+export interface LoginFormProps extends Omit<SerializableLoginFormProps,
+  'containerStyle' |
+  'fieldStyle' |
+  'submitButtonStyle' |
+  'labelStyle'
+  > {
+  /**
+   * Outer container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Form fields style
+   */
+  fieldStyle?: StyleProp<TextStyle>;
+
+  /**
+   * Form fields options
+   */
+  fieldsOptions?: FieldOption;
+
+  /**
+   * Submit button styling
+   */
+  submitButtonStyle?: StyleProp<ViewStyle>;
 
   /**
    * Label Text Element Styling
