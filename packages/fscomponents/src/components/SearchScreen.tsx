@@ -34,7 +34,25 @@ export interface SearchScreenResult {
   [key: string]: any;
 }
 
-export interface SearchScreenProps {
+export interface SerializableSearchScreenProps {
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+  searchResultsScrollViewStyle?: ViewStyle;
+  searchBarContainerStyle?: ViewStyle;
+  /**
+   * Whether or not the search bar should automatically focus when the component mounts.
+   * Defaults to true.
+   */
+  searchBarShouldFocus?: boolean;
+}
+
+export interface SearchScreenProps extends Omit<
+  SerializableSearchScreenProps,
+  'itemStyle' |
+  'itemTextStyle' |
+  'searchResultsScrollViewStyle' |
+  'searchBarContainerStyle'
+  > {
   onClose: () => void;
   onResultPress?: (result: SearchScreenResult) => void;
   onInputChange?: (value: string) => void;
@@ -52,11 +70,6 @@ export interface SearchScreenProps {
   renderContentUnderSearchBar?: () => React.ReactNode;
   searchResultsScrollViewStyle?: StyleProp<ViewStyle>;
   searchBarContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether or not the search bar should automatically focus when the component mounts.
-   * Defaults to true.
-   */
-  searchBarShouldFocus?: boolean;
 }
 
 export interface SearchScreenState {
