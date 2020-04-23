@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { TextStyle, View, ViewStyle } from 'react-native';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import { Form } from './Form';
@@ -11,15 +11,28 @@ export interface ChangePasswordState {
   value: any;
 }
 
-export interface ChangePasswordProps {
+export interface SerializedChangePasswordProps {
+  fieldsStyleConfig?: ViewStyle;
+  submitButtonStyle?: ViewStyle;
+  submitTextStyle?: TextStyle;
+  submitText?: string | JSX.Element; // Text to override the submit button
+  style?: ViewStyle;
+  fieldsOptions?: any;
+  value?: string;
+}
+
+export interface ChangePasswordProps extends Omit<
+  SerializedChangePasswordProps,
+  'style' |
+  'fieldsStyleConfig' |
+  'submitButtonStyle' |
+  'submitTextStyle'
+  > {
   fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
   onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: any;
   submitTextStyle?: any;
-  submitText?: any; // Text to override the submit button
   style?: any;
-  fieldsOptions?: any; // any extra desired behaviour, like placeholders
-  value?: any;
 }
 
 // check for minimum password length of 6
