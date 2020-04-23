@@ -26,15 +26,9 @@ const kCancelButtonAnimationDuration = 200; // In ms
 const clearIcon = require('../../assets/images/clear.png');
 const isAndroid = Platform.OS === 'android';
 
-export interface SearchBarProps {
+export interface SerializableSearchBarProps {
   placeholder?: string;
   initialValue?: string;
-  onSubmit?: (value: string) => void;
-  onChange?: (value: string) => void;
-  onFocus?: (input: any, container: any) => void;
-  onBlur?: (input: any, container: any) => void;
-  onCancel?: () => void;
-  renderCancelButton?: () => React.ReactNode;
 
   // accessibility
   accessibilityLabel?: string;
@@ -52,11 +46,56 @@ export interface SearchBarProps {
   searchIcon?: ImageURISource;
   locateIcon?: ImageURISource;
   cancelImage?: ImageURISource;
-  onLocateButtonPress?: () => void;
 
   // input
   inputProps?: TextInputProperties;
   shouldClearOnSubmit?: boolean;
+
+  // style
+  style?: ViewStyle;
+  containerStyle?: ViewStyle;
+  searchTitleStyle?: TextStyle;
+  cancelTitleStyle?: TextStyle;
+  searchIconStyle?: ImageStyle;
+  locateIconStyle?: ImageStyle;
+  inputTextStyle?: TextStyle;
+  cancelImageStyle?: ImageStyle;
+  cancelImageBoxStyle?: ViewStyle;
+  cancelContainerStyle?: ViewStyle;
+
+  cancelButtonWidth?: number;
+  cancelButtonAlwaysVisible?: boolean;
+
+  showRightBtnIcon?: boolean;
+  rightBtnIcon?: ImageSourcePropType;
+  rightBtnStyle?: ViewStyle;
+  rightBtnIconStyle?: ImageStyle;
+}
+
+export interface SearchBarProps extends Omit<
+  SerializableSearchBarProps,
+  'style' |
+  'containerStyle' |
+  'searchTitleStyle' |
+  'cancelTitleStyle' |
+  'searchIconStyle' |
+  'locateIconStyle' |
+  'inputTextStyle' |
+  'cancelImageStyle' |
+  'cancelImageBoxStyle' |
+  'cancelContainerStyle' |
+  'rightBtnStyle' |
+  'rightBtnIconStyle'
+  > {
+  onSubmit?: (value: string) => void;
+  onChange?: (value: string) => void;
+  onFocus?: (input: any, container: any) => void;
+  onBlur?: (input: any, container: any) => void;
+  onCancel?: () => void;
+  renderCancelButton?: () => React.ReactNode;
+
+  // button
+  onLocateButtonPress?: () => void;
 
   // style
   style?: StyleProp<ViewStyle>;
@@ -69,12 +108,6 @@ export interface SearchBarProps {
   cancelImageStyle?: StyleProp<ImageStyle>;
   cancelImageBoxStyle?: StyleProp<ViewStyle>;
   cancelContainerStyle?: StyleProp<ViewStyle>;
-
-  cancelButtonWidth?: number;
-  cancelButtonAlwaysVisible?: boolean;
-
-  showRightBtnIcon?: boolean;
-  rightBtnIcon?: ImageSourcePropType;
   onRightBtnPress?: () => void;
   rightBtnStyle?: StyleProp<ViewStyle>;
   rightBtnIconStyle?: StyleProp<ImageStyle>;
