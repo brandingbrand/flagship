@@ -20,14 +20,39 @@ export interface SwatchItemType extends CommerceTypes.OptionValue {
   image?: ImageURISource;
 }
 
-export interface SwatchesProps extends SwatchStyle {
+export interface SerializableSwatchesProps {
   title?: string;
-  items: SwatchItemType[];
   defaultValue?: string;
+  style?: ViewStyle;
+  label?: boolean;
+  labelContainerStyle?: ViewStyle;
+  labelTitleStyle?: TextStyle;
+  labelValueStyle?: TextStyle;
+  showingMoreStyle?: ViewStyle;
+  showingLessStyle?: ViewStyle;
+
+  // Can you select swatches
+  disabled?: boolean;
+
+  // More/Less
+  maxSwatches?: number;
+  moreLessStyle?: ViewStyle;
+}
+
+export interface SwatchesProps extends SwatchStyle, Omit<
+  SerializableSwatchesProps,
+  'style' |
+  'labelContainerStyle' |
+  'labelTitleStyle' |
+  'labelValueStyle' |
+  'showingMoreStyle' |
+  'showingLessStyle' |
+  'moreLessStyle'
+> {
+  items: SwatchItemType[];
   style?: StyleProp<ViewStyle>;
   renderSwatch?: (swatch: any) => React.ReactNode;
 
-  label?: boolean;
   labelContainerStyle?: StyleProp<ViewStyle>;
   labelTitleStyle?: StyleProp<TextStyle>;
   labelValueStyle?: StyleProp<TextStyle>;
@@ -37,11 +62,7 @@ export interface SwatchesProps extends SwatchStyle {
 
   onChangeSwatch?: (swatch: any) => void;
 
-  // Can you select swatches
-  disabled?: boolean;
-
   // More/Less
-  maxSwatches?: number;
   renderMoreLess?: (showMore: boolean) => React.ReactNode;
   moreLessStyle?: StyleProp<ViewStyle>;
 }
