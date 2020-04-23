@@ -37,19 +37,55 @@ import { formatAddress, formatDistance, formatHours } from '../lib/helpers';
 import { Address, Hour } from '../types/Store';
 import { Button } from './Button';
 
-export interface LocationItemProps {
+export interface SerializableLocationItemProps {
   format: string;
 
   // address
   locationName: string;
-  address: Address;
 
   // hour
-  hours: Hour[];
   hourFormat?: string;
 
   // bottom button
   buttonTitle?: string;
+
+  // distance
+  distanceFormat?: string;
+
+  // phone button
+  phone: string;
+
+  // store image
+  storeImageStyle?: ImageStyle;
+
+  // style
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  textStyle?: TextStyle;
+  linkStyle?: ViewStyle;
+  linkTitleStyle?: TextStyle;
+  buttonStyle?: ViewStyle;
+  buttonTitleStyle?: TextStyle;
+}
+
+export interface LocationItemProps extends Omit<SerializableLocationItemProps,
+  'storeImageStyle' |
+  'style' |
+  'titleStyle' |
+  'textStyle' |
+  'linkStyle' |
+  'linkTitleStyle' |
+  'buttonStyle' |
+  'buttonTitleStyle'
+  > {
+
+  // address
+  address: Address;
+
+  // hour
+  hours: Hour[];
+
+  // bottom button
   onButtonPress?: () => void;
 
   // nav button
@@ -58,10 +94,8 @@ export interface LocationItemProps {
 
   // distance
   distance?: Distance;
-  distanceFormat?: string;
 
   // phone button
-  phone: string;
   phoneIcon?: ImageURISource;
   onPhoneButtonPress?: () => void;
 
