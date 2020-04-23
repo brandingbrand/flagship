@@ -27,8 +27,17 @@ export interface SearchModalResult {
   [key: string]: any;
 }
 
-export interface SearchModalProps {
+export interface SerializableSearchModalProps {
   visible: boolean;
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+}
+
+export interface SearchModalProps extends Omit<
+  SerializableSearchModalProps,
+  'itemStyle' |
+  'itemTextStyle'
+  > {
   onClose: () => void;
   onResultPress?: (result: SearchModalResult) => void;
   onInputChange?: (value: string) => void;
