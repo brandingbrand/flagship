@@ -10,21 +10,39 @@ import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { style as S } from '../styles/ReviewsSummary';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-export interface ReviewsSummaryProps {
+export interface SerializableReviewsSummaryProps {
   value: number;
   count: number;
   base?: number;
   recommend?: number;
+  style?: ViewStyle;
+  countStyle?: TextStyle;
+  averageStyle?: TextStyle;
+  recommendStyle?: TextStyle;
+  rowStyle?: ViewStyle;
+  hideReviewIndicatorSubtitle?: boolean;
+  reviewIndicatorSubtitle?: string;
+  reviewIndicatorRowStyle?: ViewStyle;
+  reviewIndicatorTitleText?: string;
+  reviewIndicatorTitleTextStyle?: TextStyle;
+}
+
+export interface ReviewsSummaryProps extends Omit<SerializableReviewsSummaryProps,
+  'style' |
+  'countStyle' |
+  'averageStyle' |
+  'recommendStyle' |
+  'rowStyle' |
+  'reviewIndicatorRowStyle' |
+  'reviewIndicatorTitleTextStyle'
+  > {
   style?: StyleProp<ViewStyle>;
   countStyle?: StyleProp<TextStyle>;
   averageStyle?: StyleProp<TextStyle>;
   recommendStyle?: StyleProp<TextStyle>;
   rowStyle?: StyleProp<ViewStyle>;
   reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
-  hideReviewIndicatorSubtitle?: boolean;
-  reviewIndicatorSubtitle?: string;
   reviewIndicatorRowStyle?: StyleProp<ViewStyle>;
-  reviewIndicatorTitleText?: string;
   reviewIndicatorTitleTextStyle?: StyleProp<TextStyle>;
 }
 
