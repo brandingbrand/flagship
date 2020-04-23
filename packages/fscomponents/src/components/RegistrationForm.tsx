@@ -14,15 +14,12 @@ export interface RegistrationFormState {
 }
 
 export interface SerializableRegistrationFormProps {
-  fieldsStyleConfig?: ViewStyle;
   submitButtonStyle?: ViewStyle;
   submitTextStyle?: TextStyle;
   submitText?: string | JSX.Element; // Text to override the submit button
   style?: ViewStyle;
-  fieldsOptions?: any; // any extra desired behaviour, like placeholders
   value?: string;
 }
-
 
 export interface RegistrationFormProps extends Omit<
   SerializableRegistrationFormProps,
@@ -31,10 +28,9 @@ export interface RegistrationFormProps extends Omit<
   'submitTextStyle' |
   'style'
   > {
-  // the custom stylesheet we want to merge with the default stylesheet
-  fieldsStyleConfig?: StyleProp<ViewStyle>;
-  // the behaviour we want onpress of submit button
-  onSubmit?: (value: any) => void;
+  fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
+  fieldsOptions?: any; // any extra desired behaviour, like placeholders
+  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
