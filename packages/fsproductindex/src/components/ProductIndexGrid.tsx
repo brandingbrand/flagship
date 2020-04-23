@@ -20,12 +20,20 @@ import {
 } from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
-import { ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ListRenderItemInfo,
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.productIndex;
 
 export interface PropTyps extends ProductIndexPropType {
   onPress: (data: CommerceTypes.Product) => () => void;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const defaultErrorMessage =
@@ -693,7 +701,8 @@ export default class ProductIndexGrid extends Component<
       gridProps,
       loadingStyle,
       errorText,
-      errorTextStyle
+      errorTextStyle,
+      containerStyle
     } = this.props;
 
     if (this.state.isLoading && !this.props.filterInBackground) {
@@ -713,7 +722,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     return (
-      <View style={S.container}>
+      <View style={[S.container, containerStyle]}>
         <ProductList
           style={[S.list, listStyle]}
           columns={columns}
