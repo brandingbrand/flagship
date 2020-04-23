@@ -28,11 +28,44 @@ export enum RecommendationDisplayTypes {
   NegativeOnly
 }
 
-export interface ReviewItemProps extends ReviewTypes.Review {
+export interface SerializableReviewItemProps {
+  indicateSyndicated?: boolean;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  userStyle?: TextStyle;
+  rowStyle?: ViewStyle;
+  verifiedStyle?: TextStyle;
+  verifiedImageStyle?: ImageStyle;
+  verifiedRowStyle?: ViewStyle;
+  helpfulStyle?: TextStyle;
+  buttonStyle?: ViewStyle;
+  moreTextStyle?: TextStyle;
+  recommendedStyle?: ViewStyle;
+  recommendedImageStyle?: ImageStyle;
+  recommendedImageBoxStyle?: ViewStyle;
+  recommendedRowStyle?: ViewStyle;
+}
+
+export interface ReviewItemProps extends ReviewTypes.Review,
+  Omit<SerializableReviewItemProps,
+    'style' |
+    'titleStyle' |
+    'userStyle' |
+    'rowStyle' |
+    'verifiedStyle' |
+    'verifiedImageStyle' |
+    'verifiedRowStyle' |
+    'helpfulStyle' |
+    'buttonStyle' |
+    'moreTextStyle' |
+    'recommendedStyle' |
+    'recommendedImageStyle' |
+    'recommendedImageBoxStyle' |
+    'recommendedRowStyle'
+    > {
   recommendedImage?: ImageURISource;
   verifiedImage?: ImageURISource;
   showRecommendations?: RecommendationDisplayTypes;
-  indicateSyndicated?: boolean;
   renderSyndicatedIndicator?: (syndicationSource: ReviewTypes.SyndicationSource) => JSX.Element;
 
   // style
