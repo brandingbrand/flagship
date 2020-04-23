@@ -19,19 +19,31 @@ const icons: {[key: string]: ImageURISource} = {
   decrease: require('../../assets/images/decreaseImage.png')
 };
 
-export interface StatelessStepperProps {
+export interface SerializableStatelessStepperProps {
   format?: 'horizontalCenter' | 'horizontalLeft' | 'vertical';
+
+  // Stepper style
+  stepperStyle?: ViewStyle;
+
+  // Counter
+  count: number;
+  countUpperLimit?: number;
+  counterStyle?: TextStyle;
+  editable?: boolean;
+  prefix?: string;
+}
+
+export interface StatelessStepperProps extends Omit<SerializableStatelessStepperProps,
+  'stepperStyle' |
+  'counterStyle'
+  > {
   onChange?: (count: number) => void;
 
   // Stepper style
   stepperStyle?: StyleProp<ViewStyle>;
 
   // Counter
-  count: number;
-  countUpperLimit?: number;
   counterStyle?: StyleProp<TextStyle>;
-  editable?: boolean;
-  prefix?: string;
   renderText?: (text: string, style: StyleProp<TextStyle>, value: number) => React.ReactNode;
 
   // Decrease button
