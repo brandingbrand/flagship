@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.1](https://github.com/brandingbrand/flagship/compare/v8.8.0...v8.8.1) (2020-04-24)
+
+
+### Bug Fixes
+
+* **fscomponents:** added styling props for IE11 UI fix ([8d22b68](https://github.com/brandingbrand/flagship/commit/8d22b68d35d9ef68d2b70c4ee0e46f2407941535))
+
+
+
+
+
 # [8.8.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v8.8.0) (2020-04-09)
 
 

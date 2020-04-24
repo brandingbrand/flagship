@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.8.1](https://github.com/brandingbrand/flagship/compare/v8.8.0...v8.8.1) (2020-04-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** added styling props for IE11 UI fix ([22b9eb7](https://github.com/brandingbrand/flagship/commit/22b9eb7b495d64a8073922b4b579893b3a4646b8))
+
+
+
+
+
 # [8.8.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v8.8.0) (2020-04-09)
 
 **Note:** Version bump only for package @brandingbrand/fsproductindex
