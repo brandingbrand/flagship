@@ -21,8 +21,19 @@ export interface Tab {
   renderContent: () => React.ReactNode;
 }
 
-export interface TabbedContainerProps {
+export interface SerializableTabbedContainerProps {
   initialIndex?: number;
+  style?: ViewStyle;
+  tabContainerStyle?: ViewStyle;
+  tabTouchableStyle?: ViewStyle;
+}
+
+export interface TabbedContainerProps extends Omit<
+  SerializableTabbedContainerProps,
+  'style' |
+  'tabContainerStyle' |
+  'tabTouchableStyle'
+  > {
   style?: StyleProp<ViewStyle>;
   tabs: Tab[];
   tabContainerStyle?: StyleProp<ViewStyle>;
