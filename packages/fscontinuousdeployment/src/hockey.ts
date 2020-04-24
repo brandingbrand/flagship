@@ -47,7 +47,7 @@ request({
   headers: {
     'X-HockeyAppToken': process.env.HOCKEYAPP_API_TOKEN
   }
-}, (err: any, response: any, body: CodepushVersions) => {
+}, (err: Error, response: request.Response, body: CodepushVersions) => {
   const version = !err && body && body.app_versions && body.app_versions.length &&
     body.app_versions[0].shortversion;
 
