@@ -6,16 +6,17 @@ import { get } from 'lodash-es';
 
 export interface SerializedImageWithOverlayProps {
   imageProps: FadeInImageProps;
-  overlay?: string | JSX.Element;
+  overlay?: string;
   style?: ViewStyle;
 }
 
 export interface ImageWithOverlayProps extends Omit<SerializedImageWithOverlayProps,
   'style' |
-  'overlayPosition'
+  'overlayPosition' |
+  'overlay'
   > {
   imageProps: FadeInImageProps;
-  overlay?: JSX.Element;
+  overlay?: string | JSX.Element;
   style?: StyleProp<ViewStyle>;
   overlayPosition?:
     | 'bottomLeft'
