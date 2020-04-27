@@ -1196,10 +1196,64 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@brandingbrand/fsbazaarvoice@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbazaarvoice/-/fsbazaarvoice-9.1.0.tgz#88261712123b5ea49f9a8e4df33fcc0cb1071db1"
+  integrity sha512-tesmbFWZoFXGkIfFw44cb3htgaEXNBqXiSVfT9TJbJMfR4HBARvYys/f/lR5qsMuXd4uVVH+E0BK/Haf+/G1uA==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsnetwork" "^9.1.0"
+    qs "^6.9.1"
+
+"@brandingbrand/fsbrandcmsproductcatalog@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbrandcmsproductcatalog/-/fsbrandcmsproductcatalog-9.1.0.tgz#b63494a69c451bf4f5ee8e93a4b43e0b1fe23522"
+  integrity sha512-r7S4lUoBo1Tbimz92w6CWpgcXujBNLuTLvgJwOyDIlcmh4M1oVz5tr2ReEKVRywoHz5grbyFK/RhrfU6j00FwA==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsengage" "^9.1.0"
+
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
   integrity sha512-S4Wx+NAX1y+qSxI9Pjbn9rQWEw2lHTujh4dSAU8Ya4tPbTp1ATiJk0iWQQb0m4sGVX39tn43c3i78i0rbK5O3g==
+
+"@brandingbrand/fspowerreviews@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fspowerreviews/-/fspowerreviews-9.1.0.tgz#6ec9889a20c094129815686defd5b4d5e408c631"
+  integrity sha512-AXGxDoSfEsvXIURYjRJ0mZI7smWezvKJz1pfRp7ut74VjCtPHNutgJ5ZlaAoiUCSlKEUwyTcby0iPV9Uy3tHlQ==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsnetwork" "^9.1.0"
+
+"@brandingbrand/fssalesforce@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fssalesforce/-/fssalesforce-9.1.0.tgz#a387ef070547351c7f7c2361cd982f9224a18d44"
+  integrity sha512-Ay+uLqlcxOxmpQiu/BR4NpfhLsvbnTWBU8s8GvoGwdhX7xM7iNKEUg6CaKhfV5gM9TT558zh9XfOrspuppWkVA==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsfoundation" "^9.1.0"
+    "@brandingbrand/fsnetwork" "^9.1.0"
+    decimal.js "^10.0.1"
+    dtsgenerator "^2.0.7"
+    jwt-decode "^2.2.0"
+    qs "^6.9.1"
+
+"@brandingbrand/fsturnto@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsturnto/-/fsturnto-9.1.0.tgz#555907f08c94a1624cbf0a2518306411d730cff6"
+  integrity sha512-xAdORsoFpFutnAJb5i4ImSHLhr6YUWD+5y7OCU3A9ZBgXduQepLihdx7bTMYN0TKvEKzN1rThvm+7qpaFbsN+A==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsnetwork" "^9.1.0"
+
+"@brandingbrand/fsups@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsups/-/fsups-9.1.0.tgz#d3d69d3ff587ba52e7bc17ca57ebdda4aeac9b5a"
+  integrity sha512-qcsU+EYsayk16QKu89XgOoMOi41xhnm5e0kJsvC6blQ39nrgtKpK74Hf0IUeoXsjX0CpP1ObtqgGsKJrJRCz2Q==
+  dependencies:
+    "@brandingbrand/fscommerce" "^9.1.0"
+    "@brandingbrand/fsnetwork" "^9.1.0"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -2516,7 +2570,7 @@
     once "^1.4.0"
     universal-user-agent "^4.0.0"
 
-"@octokit/rest@^16.0.0", "@octokit/rest@^16.28.4":
+"@octokit/rest@^16.28.4":
   version "16.36.0"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-16.36.0.tgz#99892c57ba632c2a7b21845584004387b56c2cb7"
   integrity sha512-zoZj7Ya4vWBK4fjTwK2Cnmu7XBB1p9ygSvTk2TthN6DVJXM4hQZQoAiknWFLJWSTix4dnA3vuHtjPZbExYoCZA==
@@ -3317,11 +3371,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/caseless@*":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
-  integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -3615,16 +3664,6 @@
   dependencies:
     redux "^3.6.0"
 
-"@types/request@^2.47.1":
-  version "2.48.4"
-  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.4.tgz#df3d43d7b9ed3550feaa1286c6eabf0738e6cf7e"
-  integrity sha512-W1t1MTKYR8PxICH+A4HgEIPuAC3sbljoEVfyZbeFJJDbr30guDspJri2XOaM2E+Un7ZjrihaDi7cf6fPa2tbgw==
-  dependencies:
-    "@types/caseless" "*"
-    "@types/node" "*"
-    "@types/tough-cookie" "*"
-    form-data "^2.5.0"
-
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -3652,11 +3691,6 @@
   integrity sha512-9a7C5VHh+1BKblaYiq+7Tfc+EOmjMdZaD1MYtkQjSoxgB69tBjW98ry6SKsi4zEIWztLOMRuL87A3bdT/Fc/4w==
   dependencies:
     "@types/node" "*"
-
-"@types/tough-cookie@*":
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.6.tgz#c880579e087d7a0db13777ff8af689f4ffc7b0d5"
-  integrity sha512-wHNBMnkoEBiRAd3s8KTKwIuO9biFtTf0LehITzBhSco+HQI0xkXZbLOD55SW3Aqw3oUkHstkm5SPv58yaAdFPQ==
 
 "@types/url-parse@^1.4.1":
   version "1.4.3"
@@ -7854,15 +7888,6 @@ fork-ts-checker-webpack-plugin@1.5.0:
     semver "^5.6.0"
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
-
-form-data@^2.5.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
-  integrity sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.6"
-    mime-types "^2.1.12"
 
 form-data@~2.3.2:
   version "2.3.3"
