@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-use-translation-function */
 
-import React, { StatelessComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Text, View } from 'react-native';
 import { StepProps } from './CheckoutDemo';
 
@@ -15,7 +15,7 @@ const goTo = (stepProps: StepProps, stepName: string) => () => {
   stepProps.stepManager.goTo(stepName);
 };
 
-const StepReview: StatelessComponent<StepProps> = stepProps => {
+const StepReview: FunctionComponent<StepProps> = stepProps => {
   return (
     <View>
       <Text>review</Text>

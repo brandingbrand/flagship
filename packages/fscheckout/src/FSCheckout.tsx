@@ -1,8 +1,9 @@
-import React, { Component, ComponentClass, StatelessComponent } from 'react';
+import React, { Component, ComponentClass, FunctionComponent } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
   ScrollView,
+  ScrollViewProps,
   StyleProp,
   StyleSheet,
   View,
@@ -46,7 +47,7 @@ export interface FSCheckoutProps {
    *   component: StepShipping
    * }]
    */
-  steps: (Step & { component: StatelessComponent<any> })[];
+  steps: (Step & { component: FunctionComponent<any> })[];
 
   /**
    * Your entire checkout state; this usually is `this.state`
@@ -54,7 +55,7 @@ export interface FSCheckoutProps {
    * `isSameAsShipping`, form values, selected checkbox value for
    * shipping methods and payment methods
    */
-  checkoutState: any;
+  checkoutState: { [key: string]: any };
 
   /**
    * An object that defines checkout actions that interact with
@@ -89,7 +90,7 @@ export interface FSCheckoutProps {
    * Function to get a reference to ScrollView; you can use the
    * reference to scroll to certain positions on the page.
    */
-  scrollViewRef?: (ref: any) => void;
+  scrollViewRef?: (ref: ScrollView) => void;
 
   /**
    * Function to filter which steps you want to show in the step
@@ -127,12 +128,12 @@ export interface FSCheckoutProps {
    * Component class for using custom scroll view; this can be used to replace
    * ScrollView with a regular View.
    */
-  CustomScrollView?: ComponentClass<any>;
+  CustomScrollView?: ComponentClass<ScrollViewProps>;
 
   /**
    * Extra props to pass to ScrollView or CustomScrollView
    */
-  ScrollViewProps?: any;
+  ScrollViewProps?: ScrollViewProps;
 
   /**
    * Flag to turn on/off the animation.

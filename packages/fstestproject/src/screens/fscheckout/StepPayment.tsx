@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-use-translation-function */
 
-import React, { StatelessComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { StepProps } from './CheckoutDemo';
 
@@ -12,7 +12,7 @@ const submitPayment = (stepProps: StepProps) => () => {
     .catch(stepProps.checkoutActions.handleError);
 };
 
-const StepPayment: StatelessComponent<StepProps> = stepProps => {
+const StepPayment: FunctionComponent<StepProps> = stepProps => {
   return (
     <View>
       <Text>payment</Text>
