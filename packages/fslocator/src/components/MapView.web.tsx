@@ -6,7 +6,7 @@ import GoogleMapReact from 'google-map-react';
 // tslint:disable-next-line:no-submodule-imports
 import { fitBounds } from 'google-map-react/utils';
 import { GeoLocation } from '@brandingbrand/fsfoundation';
-import React, { Component } from 'react';
+import React, { Component, RefObject } from 'react';
 import {
   Dimensions,
   Image,
@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { getCenter, getDelta } from '../lib/helpers';
 import { style as S } from '../styles/MapView';
-import { Location, Region } from '../types/Location';
+import { LatLng, Location, Region } from '../types/Location';
 import CurrentLocationPin from './CurrentLocationPin';
 
 const googleMapMaker = require('../../assets/images/google-map-marker.png');
@@ -53,7 +53,14 @@ export interface StateType {
   zoom?: number;
 }
 
-function Marker({ lat, lng, onPress, selected }: any): JSX.Element {
+interface MarkerProps {
+  lat: number;
+  lng: number;
+  onPress: () => void;
+  selected?: boolean;
+}
+
+function Marker({ lat, lng, onPress, selected }: MarkerProps): JSX.Element {
   return (
     <TouchableOpacity onPress={onPress}>
       <Image
@@ -65,9 +72,9 @@ function Marker({ lat, lng, onPress, selected }: any): JSX.Element {
 }
 
 export default class MapViewWeb extends Component<PropType, StateType> {
-  map: any;
+  map: RefObject<GoogleMapReact> | null = null;
 
-  defaultCenter: any = { lat: 39.506061, lng: -96.409026 };
+  defaultCenter: LatLng = { lat: 39.506061, lng: -96.409026 };
   defaultZoom: number = 3;
 
   constructor(props: PropType) {
@@ -100,7 +107,7 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     }
   }
 
-  mapRef = (map: any): void => {
+  mapRef = (map: RefObject<GoogleMapReact>): void => {
     this.map = map;
   }
 
@@ -113,7 +120,7 @@ export default class MapViewWeb extends Component<PropType, StateType> {
   moveToLocation = (
     locations: Location[],
     isCollapsed?: boolean,
-    newCenter?: any
+    newCenter?: GeoLocation
   ) => {
     if (locations.length) {
       const centerPos = newCenter || getCenter(locations);

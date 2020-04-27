@@ -189,14 +189,18 @@ export default class LocatorContainer extends Component<PropType, StateType> {
       });
   }
 
+  toStringLocationId = (locationId?: number): string => {
+    return (!!locationId && locationId.toString()) || '';
+  }
+
   handlePhonePress = (
     phone: string,
-    locationId?: any,
+    locationId?: number,
     index?: number
   ) => () => {
     if (this.props.analytics) {
       this.props.analytics.click.generic('CallButton', {
-        identifier: locationId || '',
+        identifier: this.toStringLocationId(locationId),
         index
       });
     }
@@ -216,12 +220,12 @@ export default class LocatorContainer extends Component<PropType, StateType> {
 
   handleNavPress = (
     location: Location,
-    locationId?: any,
+    locationId?: number,
     index?: number
   ) => () => {
     if (this.props.analytics) {
       this.props.analytics.click.generic('DirectionButton', {
-        identifier: locationId || '',
+        identifier: this.toStringLocationId(locationId),
         index
       });
     }
@@ -239,7 +243,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
 
           this.props.analytics.location.directions('DirectionButton', {
             address: fullAddress,
-            identifier: locationId || ''
+            identifier: this.toStringLocationId(locationId)
           });
         }
       })

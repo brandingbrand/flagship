@@ -3,23 +3,27 @@ export interface GeoLocationDelta {
   longitudeDelta: number;
 }
 
+export interface LatLng {
+  lat: number;
+  lng: number;
+}
+
+export interface Address {
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+  latlng: LatLng;
+}
+
 export interface Location {
   id: number;
   title: string;
   services: Service[];
   selected?: boolean;
-  address: {
-    address1: string;
-    address2?: string;
-    city: string;
-    state: string;
-    country: string;
-    zip: string;
-    latlng: {
-      lat: number;
-      lng: number;
-    };
-  };
+  address: Address;
 }
 
 export interface Region {

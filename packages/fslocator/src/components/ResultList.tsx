@@ -3,6 +3,8 @@ import {
   ActivityIndicator,
   FlatList,
   ListRenderItemInfo,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   Text,
   TouchableOpacity,
@@ -16,9 +18,10 @@ import ResultItem from './ResultItem';
 
 export interface PropType extends LocatorPropType {
   scrollEnabled?: boolean;
-  onScroll?: (e: any) => void;
+  onScroll?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
   bounces?: boolean;
   onItemPress?: (location: Location, index: number) => void;
+  deselectLocation: () => void;
 }
 
 export interface StateType {
@@ -92,6 +95,7 @@ export default class ResultList extends Component<PropType, StateType> {
           locationItemProps={this.props.locationItemProps}
           selectLocation={this.props.selectLocation}
           renderLocationItem={this.props.renderLocationItem}
+          deselectLocation={this.props.deselectLocation}
         />
       </TouchableOpacity>
     );

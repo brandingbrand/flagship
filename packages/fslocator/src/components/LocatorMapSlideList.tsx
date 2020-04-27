@@ -2,9 +2,10 @@ import { SearchBar } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
 import {
   Animated,
-  Dimensions,
-  Image,
-  PanResponder,
+  Dimensions, GestureResponderEvent,
+  Image, NativeScrollEvent, NativeSyntheticEvent,
+  PanResponder, PanResponderGestureState,
+  PanResponderInstance,
   Text,
   TouchableOpacity,
   View
@@ -37,8 +38,8 @@ export default class LocatorMapSlideList extends Component<
   LocatorPropType,
   StateType
 > {
-  map: any;
-  panResponder: any;
+  map: MapView | null = null;
+  panResponder: PanResponderInstance | undefined;
   listPosition: ListPosition = 'middle';
   scrollY: number = 0;
 
@@ -129,14 +130,14 @@ export default class LocatorMapSlideList extends Component<
         }
       },
 
-      onPanResponderGrant: (evt: any, gestureState: any) => {
+      onPanResponderGrant: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
         this.setState({ scrollable: true });
 
         const listY = this.state.listY as any;
         this.state.listY.setOffset(listY._value);
         this.state.listY.setValue(0);
       },
-      onPanResponderMove: (evt: any, gestureState: any) => {
+      onPanResponderMove: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
         if (this.listPosition === 'middle' && gestureState.dy < -LIST_HEIGHT) {
           this.state.listY.setValue(-LIST_HEIGHT);
           return;
@@ -156,7 +157,7 @@ export default class LocatorMapSlideList extends Component<
     });
   }
 
-  handleMoveRease = (evt: any, gestureState: any): void => {
+  handleMoveRease = (evt: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
     this.state.listY.flattenOffset();
     const isUp = gestureState.dy < 0;
     const shouldMove =
@@ -210,9 +211,9 @@ export default class LocatorMapSlideList extends Component<
     return isUp ? 'top' : 'bottom';
   }
 
-  extractMapRef = (map: any) => (this.map = map);
+  extractMapRef = (map: MapView) => (this.map = map);
 
-  handleScroll = (e: any) => {
+  handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     this.scrollY = e.nativeEvent.contentOffset.y;
   }
 
@@ -332,7 +333,7 @@ export default class LocatorMapSlideList extends Component<
           {shouldShowList && (
             <Animated.View
               style={[S.slideListContainer, listAniamtedStyle]}
-              {...this.panResponder.panHandlers}
+              {...!!this.panResponder ? this.panResponder.panHandlers : {}}
             >
               <ResultList
                 {...this.props}

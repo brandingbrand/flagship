@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { GeoLocation } from '@brandingbrand/fsfoundation';
-import { GeoLocationDelta, Location } from '../types/Location';
+import { Address, GeoLocationDelta, Location } from '../types/Location';
 import promptToLink from './promptToLink';
 
 const NOT_NUMBER_REGEX = /[^\d]/g;
@@ -22,7 +22,7 @@ export function getCenter(locations: Location[]): GeoLocation {
   };
 }
 
-export function getDelta(locations: any[]): GeoLocationDelta {
+export function getDelta(locations: Location[]): GeoLocationDelta {
   const lat =
     Math.max.apply(null, locations.map(s => s.address.latlng.lat)) -
     Math.min.apply(null, locations.map(s => s.address.latlng.lat)) +
@@ -37,7 +37,7 @@ export function getDelta(locations: any[]): GeoLocationDelta {
   };
 }
 
-export async function callPhone(phone: string): Promise<any> {
+export async function callPhone(phone: string): Promise<void> {
   return promptToLink({
     title: formatPhone(phone),
     subTitle: '',
@@ -46,7 +46,7 @@ export async function callPhone(phone: string): Promise<any> {
   });
 }
 
-export async function startDirections(title: string, address: any): Promise<any> {
+export async function startDirections(title: string, address: Address): Promise<void> {
   const link = getMapLink(address);
 
   return promptToLink({
@@ -59,7 +59,7 @@ export async function startDirections(title: string, address: any): Promise<any>
   });
 }
 
-export function getMapLink(address: any): string {
+export function getMapLink(address: Address): string {
   const isIOSWeb =
     Platform.OS === 'web' && /(iPad|iPhone|iPod)/gi.test(navigator.userAgent);
 

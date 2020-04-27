@@ -1,11 +1,12 @@
 import { Alert } from '@brandingbrand/fscomponents';
+import { PromptToLinkType } from './promptToLink';
 
 export default async function promptToLink({
   title,
   subTitle,
   buttonText,
   link
-}: any): Promise<void> {
+}: PromptToLinkType): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     Alert.alert({
       title,
