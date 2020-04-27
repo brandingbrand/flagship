@@ -9,13 +9,13 @@ import { isArray, isFunction } from 'lodash-es';
  * @param {Object} normalized - The normalized data from the response
  * @returns {Object} Normalized data containing additional manipulations
  */
-export type MiddlewareFunction = (data: object, normalized: object) => any;
+export type MiddlewareFunction = (data: object, normalized: object) => object;
 
-async function runMiddleware(
+async function runMiddleware<T>(
   data: object,
   normalized: object,
   middleware: MiddlewareFunction | MiddlewareFunction[]
-): Promise<any> {
+): Promise<object> {
   if (middleware) {
     if (isMiddlewareArray(middleware)) {
       for (const fn of middleware) {

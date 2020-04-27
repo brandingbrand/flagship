@@ -1,14 +1,15 @@
-import CommerceSessionManager from './CommerceSessionManager';
+import CommerceSessionManager, {CommerceSessionManagerOptions} from './CommerceSessionManager';
 import { SessionToken } from '../types/SessionToken';
 const CookieManager = require('react-native-cookies');
 
 /**
  * Implementation of CommerceSessionManager token based authentication(jwt, oauth, etc.)
  */
-export default class CommerceCookieSessionManager extends CommerceSessionManager {
-  options: any;
 
-  constructor(options: any) {
+export default class CommerceCookieSessionManager extends CommerceSessionManager {
+  options: CommerceSessionManagerOptions;
+
+  constructor(options: CommerceSessionManagerOptions) {
     super(options);
     this.options = options;
   }

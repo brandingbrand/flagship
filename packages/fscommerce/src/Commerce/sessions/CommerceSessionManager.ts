@@ -7,7 +7,9 @@ export interface CommerceSessionManagerOptions {
     username: string,
     password: string
   ) => Promise<SessionToken>;
-  destroyToken: () => Promise<any>;
+  destroyToken: () => Promise<void>;
+  restoreCookies: () => Promise<void>;
+  sessionCookiesToToken: () => Promise<SessionToken | null>;
 }
 
 /**
@@ -15,7 +17,7 @@ export interface CommerceSessionManagerOptions {
  */
 export default abstract class CommerceSessionManager {
   static COMMERCE_TOKEN: string = 'COMMERCE_TOKEN';
-  refreshTimeout: any = null;
+  refreshTimeout?: NodeJS.Timer | null;
   options: CommerceSessionManagerOptions;
   token?: SessionToken;
 
@@ -47,7 +49,7 @@ export default abstract class CommerceSessionManager {
     return token;
   }
 
-  async logout(): Promise<any> {
+  async logout<T>(): Promise<void> {
     const response = await this.options.destroyToken();
     await this.delete();
     return response;

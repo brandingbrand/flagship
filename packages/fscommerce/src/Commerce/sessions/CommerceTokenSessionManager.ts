@@ -56,7 +56,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
           return null;
         }
       })
-      .catch(async (e: any) => {
+      .catch(async e => {
         console.log('error with mobile storage', e);
         return Promise.resolve(null);
       });
