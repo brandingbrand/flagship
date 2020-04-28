@@ -26,8 +26,8 @@ export interface PropType {
   onMakerPress?: (location: Location) => void;
   currentLocation?: GeoLocation;
   defaultRegion?: Region;
-  handleRegionChange?: (e: Region) => void;
-  handleRegionChangeComplete?: (e: Region) => void;
+  handleRegionChange?: (region: Region) => void;
+  handleRegionChangeComplete?: (region: Region) => void;
   mapMarkerIcon?: ImageURISource;
 }
 

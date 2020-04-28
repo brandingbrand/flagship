@@ -38,8 +38,8 @@ export interface PropType {
   onMakerPress?: (location: Location) => void;
   currentLocation?: GeoLocation;
   defaultRegion?: Region;
-  handleRegionChange?: (e: Region) => void;
-  handleRegionChangeComplete?: (e: Region) => void;
+  handleRegionChange?: (region: Region) => void;
+  handleRegionChangeComplete?: (region: Region) => void;
   mapMarkerIcon?: ImageURISource;
 }
 
@@ -188,10 +188,7 @@ export default class MapViewWeb extends Component<PropType, StateType> {
           onChange={this.handleChange}
         >
           {currentLocation && (
-            <CurrentLocationPin
-              lat={currentLocation.latitude}
-              lng={currentLocation.longitude}
-            />
+            <CurrentLocationPin />
           )}
 
           {locations.map((location, i) => (

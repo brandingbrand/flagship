@@ -17,8 +17,8 @@ export interface PropType
   useCurrentLocation: () => void;
   selectLocation: (location: Location) => void;
   deselectLocation: () => void;
-  handleRegionChange: (e: any) => void;
-  handleRegionChangeComplete: (e: any) => void;
+  handleRegionChange: (region: Region) => void;
+  handleRegionChangeComplete: (region: Region) => void;
   searchArea: () => void;
   defaultRegion?: Region;
   handleNavPress: (

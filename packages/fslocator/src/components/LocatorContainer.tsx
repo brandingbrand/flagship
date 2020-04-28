@@ -75,7 +75,7 @@ export interface PropType {
   resultLimit?: number;
   handleAddressNotFound?: () => void;
   handleLocationNotFound?: () => void;
-  customizedSearch?: (searchValue: string) => Promise<any>;
+  customizedSearch?: (searchValue: string) => Promise<Location[]>;
 }
 
 export interface StateType {
@@ -132,9 +132,9 @@ export default class LocatorContainer extends Component<PropType, StateType> {
             : res;
 
           this.setState({
-            locations: _data.locations,
+            locations: _data,
             isLoading: false,
-            locationsNotFound: !_data.locations || !_data.locations.length,
+            locationsNotFound: !_data || !_data.length,
             selectedLocation: undefined,
             shouldShowSearchAreaButton: false
           });
@@ -142,7 +142,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
           if (this.props.analytics) {
             this.props.analytics.search.generic('SeachBar', {
               term: searchValue,
-              count: _data.locations.length
+              count: _data.length
             });
           }
         })
