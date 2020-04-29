@@ -13,7 +13,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@octokit/rest": "^16.0.0",
+    "@octokit/rest": "^17.6.0",
     "request": "^2.88.0"
   },
   "devDependencies": {
