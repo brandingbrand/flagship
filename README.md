@@ -39,7 +39,7 @@
 
 **:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
 
-## About
+## About Flagship
 
 <img alt="Flagship accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
@@ -187,22 +187,6 @@ you ran `flagship init`. See [Environments](#environments).
 * [fscommerce](packages/fscommerce): product catalog, search, order and user account management, and
   reviews
 
-#### Reviews Packages
-
-* [fsbazaarvoice](packages/fsbazaarvoice): Bazaarvoice reviews provider
-* [fspowerreviews](packages/fspowerreviews): PowerReviews reviews provider
-* [fsturnto](packages/fsturnto): TurnTo reviews provider
-
-#### Product Catalog Pacakges
-
-* [fsbrandcmsproductcatalog](packages/fsbrandcmsproductcatalog): BrandCMS product catalog provider
-* [fssalesforce](packages/fssalesforce): Salesforce Commerce Cloud product catalog provider
-* [fsshopify](packages/fsshopify): Shopify product catalog provider
-
-#### Address Validation Packages
-
-* [fsups](packages/fsups): UPS address validation provider
-
 ### User Interface Packages
 
 * [fscomponents](packages/fscomponents): reusable, cross-platform frontend components
@@ -216,8 +200,6 @@ you ran `flagship init`. See [Environments](#environments).
 ### Utility Packages
 
 * [fscodestyle](packages/fscodestyle): a coding style used throughout Flagship
-* [fscontinuousdeployment](packages/fscontinuousdeployment): tools for continous deployment with
-  Travis and CodePush
 
 ### Example Projects
 

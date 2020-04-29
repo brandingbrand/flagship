@@ -55,7 +55,6 @@ export default class PSAccordionGroup extends Component<PSAccordionGroupProps> {
       <Accordion
         key={i}
         title={this.renderTitle(item.title)}
-        titleHeight={60}
         content={this.renderContent(item.items || [])}
         style={styles.container}
         plusMinusStyle={{

@@ -6,8 +6,8 @@ import {
   number,
   object,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { ActionBar } from '../ActionBar';
 import { Button } from '../Button';
 

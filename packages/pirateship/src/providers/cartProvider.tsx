@@ -77,6 +77,6 @@ function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
 // TODO - fix typing
 export default function withCart(
   WrappedComponent: React.ComponentClass<any>
-): React.ComponentClass<any> {
+): any {
   return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 }

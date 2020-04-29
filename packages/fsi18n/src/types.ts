@@ -4,7 +4,7 @@ export interface I18n {
   currentLocale: () => string;
   fallbacks?: boolean;
   translations: Translations;
-  translate: (scope: I18n.Scope, options?: I18n.TranslateOptions) => string;
+  translate: (scope: TranslationKey, options?: I18n.TranslateOptions) => string;
 }
 
 export interface Translations {
@@ -47,6 +47,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     multiCarousel: MultiCarouselTranslations<KeyType>;
     shareButton: ShareButtonTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
+    emailForm: EmailFormTranslations<KeyType>;
   };
 }
 
@@ -102,6 +103,7 @@ export interface FilterListDefaultTranslations<KeyType = TranslationKey> {
 export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
   itemsInCart: KeyType;
+  error: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
@@ -109,6 +111,9 @@ export interface CartTranslations<KeyType> {
     remove: {
       actionBtn: KeyType;
     };
+  };
+  digitalWallet: {
+    appleError: KeyType;
   };
   item: {
     unitPrice: KeyType;
@@ -211,6 +216,9 @@ export interface SearchTranslations<KeyType> {
     clear: {
       actionBtn: KeyType;
       accessibility: KeyType;
+    };
+    search: {
+      accessibilityLabel: KeyType;
     };
   };
 }
@@ -389,4 +397,9 @@ export interface LoginFormTranslations<KeyType> {
   password: KeyType;
   passwordError: KeyType;
   submit: KeyType;
+}
+
+export interface EmailFormTranslations<KeyType> {
+  placeholder: KeyType;
+  error: KeyType;
 }

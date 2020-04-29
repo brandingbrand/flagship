@@ -162,7 +162,9 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       findDOMNode(this.scrollView),
       index * this.getPageWidth(),
       200
-    );
+    ).catch(e => {
+      console.warn('animatedScrollTo error', e);
+    });
 
     if (this.props.onSlideChange && this.state.currentIndex !== index) {
       this.props.onSlideChange({

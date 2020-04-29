@@ -3,6 +3,230 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **flagship:** Unify qs versions to 6.9.1 ([6f3a9da](https://github.com/brandingbrand/flagship/commit/6f3a9da4adef0d6f8be3e535efdac866f972221a))
+* **fscomponents:** Correct empty star order ([27ee0ae](https://github.com/brandingbrand/flagship/commit/27ee0ae94c0cc2375a78d9756806e4e57fd11a76))
+* **fscomponents:** Fix circular require ([29bdc5f](https://github.com/brandingbrand/flagship/commit/29bdc5f3df5945245cd5422d42bdf52a24695584))
+* **fscomponents:** Fix other style order ([ae5a252](https://github.com/brandingbrand/flagship/commit/ae5a25222db3d9c9ec5fce12d6c2461e00854ac2))
+* **fscomponents:** Fix updating button title ([9b924fc](https://github.com/brandingbrand/flagship/commit/9b924fc7142bdb4a58bf60eb9f8783559629dd7a))
+* **fscomponents:** Fix use of empty star style for reviews ([63644aa](https://github.com/brandingbrand/flagship/commit/63644aa4b5e15d972518ebfbc6c9e58ee837bd5c))
+* **fscomponents:** Name inner component functions ([c45bfae](https://github.com/brandingbrand/flagship/commit/c45bfaec8b84f761ee77335fd363748b31772c49))
+* **fscomponents:** Remove any from CategoryBox ([fc74c48](https://github.com/brandingbrand/flagship/commit/fc74c48ed273f7145f7f9da479a8c03264ee9755))
+* **fscomponents:** Remove ModalHalfScreen componentWillReceiveProps ([14bd6fb](https://github.com/brandingbrand/flagship/commit/14bd6fbdd30cb0f46daffa197fc01df34d5a3ce9))
+* **fscomponents:** Update form tests ([654569e](https://github.com/brandingbrand/flagship/commit/654569ed2b418c5daa0f42a79e18aef2685cb068))
+* **fscomponents:** Updated Accordion component ([e2a94b0](https://github.com/brandingbrand/flagship/commit/e2a94b05924209775ccbc2e095e84d4ab1905ca9))
+
+
+### Features
+
+* Add SerializableAccordionProps ([ff68583](https://github.com/brandingbrand/flagship/commit/ff68583a427f3ad5f4a4186381aec1b9daf03f93))
+* **fscomponents:** add ada label and initial value prop to searchbar ([89d16ac](https://github.com/brandingbrand/flagship/commit/89d16ace977f3dd4664c9c2587799adbe40f2b66))
+* add story to cartItem component ([218a717](https://github.com/brandingbrand/flagship/commit/218a7173577e6b9e6b8fc239800b8db02e47908f))
+* add story to fadeInImage component ([acf8c82](https://github.com/brandingbrand/flagship/commit/acf8c825b77e0a29c532ae63b9d257c8723a1d81))
+* add story to PageIndicator component ([9db9ed2](https://github.com/brandingbrand/flagship/commit/9db9ed2406b3fe550aad47ae5db90b7285efb590))
+* add story to PageIndicator component ([2124350](https://github.com/brandingbrand/flagship/commit/2124350f317185100dc086ab36fd97d5a26cfae5))
+* Create CreditCardNumber story ([6b04725](https://github.com/brandingbrand/flagship/commit/6b0472508f93dde06466c35491eebde1740ba321))
+* **fscomponents:** add knobs to accordian stories ([b22371b](https://github.com/brandingbrand/flagship/commit/b22371b23c0fae6e6596bcc98bced4bf1bd93459))
+* **fscomponents:** Added arrowRange prop ([23ebe77](https://github.com/brandingbrand/flagship/commit/23ebe778229ea4989209a904f53a263e33596bf8))
+
+
+
+
+
+## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [9.0.0](https://github.com/brandingbrand/flagship/compare/v8.7.0...v9.0.0) (2020-03-30)
+
+
+### Features
+
+* flagship 9 with rn 61 and rn navigation 4 ([#1109](https://github.com/brandingbrand/flagship/issues/1109)) ([6875b1b](https://github.com/brandingbrand/flagship/commit/6875b1be7217245f00c479d9991717441a73b2e8)), closes [#816](https://github.com/brandingbrand/flagship/issues/816) [#871](https://github.com/brandingbrand/flagship/issues/871) [#872](https://github.com/brandingbrand/flagship/issues/872) [#873](https://github.com/brandingbrand/flagship/issues/873) [#923](https://github.com/brandingbrand/flagship/issues/923) [#958](https://github.com/brandingbrand/flagship/issues/958) [#915](https://github.com/brandingbrand/flagship/issues/915) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905) [#889](https://github.com/brandingbrand/flagship/issues/889) [#925](https://github.com/brandingbrand/flagship/issues/925) [#926](https://github.com/brandingbrand/flagship/issues/926) [#924](https://github.com/brandingbrand/flagship/issues/924) [#932](https://github.com/brandingbrand/flagship/issues/932) [#936](https://github.com/brandingbrand/flagship/issues/936) [#922](https://github.com/brandingbrand/flagship/issues/922) [#929](https://github.com/brandingbrand/flagship/issues/929) [#930](https://github.com/brandingbrand/flagship/issues/930) [#944](https://github.com/brandingbrand/flagship/issues/944) [#952](https://github.com/brandingbrand/flagship/issues/952) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905) [#889](https://github.com/brandingbrand/flagship/issues/889) [#925](https://github.com/brandingbrand/flagship/issues/925) [#926](https://github.com/brandingbrand/flagship/issues/926) [#924](https://github.com/brandingbrand/flagship/issues/924) [#932](https://github.com/brandingbrand/flagship/issues/932) [#936](https://github.com/brandingbrand/flagship/issues/936) [#922](https://github.com/brandingbrand/flagship/issues/922) [#929](https://github.com/brandingbrand/flagship/issues/929) [#930](https://github.com/brandingbrand/flagship/issues/930) [#944](https://github.com/brandingbrand/flagship/issues/944) [#954](https://github.com/brandingbrand/flagship/issues/954) [#947](https://github.com/brandingbrand/flagship/issues/947) [#913](https://github.com/brandingbrand/flagship/issues/913) [#957](https://github.com/brandingbrand/flagship/issues/957) [#950](https://github.com/brandingbrand/flagship/issues/950) [#959](https://github.com/brandingbrand/flagship/issues/959) [#960](https://github.com/brandingbrand/flagship/issues/960) [#962](https://github.com/brandingbrand/flagship/issues/962) [#953](https://github.com/brandingbrand/flagship/issues/953) [#961](https://github.com/brandingbrand/flagship/issues/961) [#956](https://github.com/brandingbrand/flagship/issues/956) [#911](https://github.com/brandingbrand/flagship/issues/911) [#972](https://github.com/brandingbrand/flagship/issues/972) [#970](https://github.com/brandingbrand/flagship/issues/970) [#969](https://github.com/brandingbrand/flagship/issues/969) [#893](https://github.com/brandingbrand/flagship/issues/893) [#910](https://github.com/brandingbrand/flagship/issues/910) [#988](https://github.com/brandingbrand/flagship/issues/988) [#983](https://github.com/brandingbrand/flagship/issues/983) [#984](https://github.com/brandingbrand/flagship/issues/984) [#985](https://github.com/brandingbrand/flagship/issues/985) [#986](https://github.com/brandingbrand/flagship/issues/986) [#1007](https://github.com/brandingbrand/flagship/issues/1007) [#1008](https://github.com/brandingbrand/flagship/issues/1008) [#1009](https://github.com/brandingbrand/flagship/issues/1009) [#1030](https://github.com/brandingbrand/flagship/issues/1030) [#1039](https://github.com/brandingbrand/flagship/issues/1039) [#1042](https://github.com/brandingbrand/flagship/issues/1042) [#1088](https://github.com/brandingbrand/flagship/issues/1088) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905) [#889](https://github.com/brandingbrand/flagship/issues/889) [#925](https://github.com/brandingbrand/flagship/issues/925) [#926](https://github.com/brandingbrand/flagship/issues/926) [#924](https://github.com/brandingbrand/flagship/issues/924) [#932](https://github.com/brandingbrand/flagship/issues/932) [#936](https://github.com/brandingbrand/flagship/issues/936) [#922](https://github.com/brandingbrand/flagship/issues/922) [#929](https://github.com/brandingbrand/flagship/issues/929) [#930](https://github.com/brandingbrand/flagship/issues/930) [#944](https://github.com/brandingbrand/flagship/issues/944) [#954](https://github.com/brandingbrand/flagship/issues/954) [#947](https://github.com/brandingbrand/flagship/issues/947) [#957](https://github.com/brandingbrand/flagship/issues/957) [#950](https://github.com/brandingbrand/flagship/issues/950) [#959](https://github.com/brandingbrand/flagship/issues/959) [#960](https://github.com/brandingbrand/flagship/issues/960) [#962](https://github.com/brandingbrand/flagship/issues/962) [#953](https://github.com/brandingbrand/flagship/issues/953) [#961](https://github.com/brandingbrand/flagship/issues/961) [#956](https://github.com/brandingbrand/flagship/issues/956) [#911](https://github.com/brandingbrand/flagship/issues/911) [#972](https://github.com/brandingbrand/flagship/issues/972) [#970](https://github.com/brandingbrand/flagship/issues/970) [#969](https://github.com/brandingbrand/flagship/issues/969) [#893](https://github.com/brandingbrand/flagship/issues/893) [#910](https://github.com/brandingbrand/flagship/issues/910) [#988](https://github.com/brandingbrand/flagship/issues/988) [#983](https://github.com/brandingbrand/flagship/issues/983) [#984](https://github.com/brandingbrand/flagship/issues/984) [#985](https://github.com/brandingbrand/flagship/issues/985) [#986](https://github.com/brandingbrand/flagship/issues/986) [#1007](https://github.com/brandingbrand/flagship/issues/1007) [#1008](https://github.com/brandingbrand/flagship/issues/1008) [#1009](https://github.com/brandingbrand/flagship/issues/1009) [#1030](https://github.com/brandingbrand/flagship/issues/1030) [#1039](https://github.com/brandingbrand/flagship/issues/1039) [#1042](https://github.com/brandingbrand/flagship/issues/1042) [#1074](https://github.com/brandingbrand/flagship/issues/1074) [#1077](https://github.com/brandingbrand/flagship/issues/1077) [#1083](https://github.com/brandingbrand/flagship/issues/1083) [#1082](https://github.com/brandingbrand/flagship/issues/1082) [#1091](https://github.com/brandingbrand/flagship/issues/1091)
+
+
+### BREAKING CHANGES
+
+* splash screens will need to be converted to storyboards
+
+* feat: update fsapp to use react-native-navigation 2
+
+- Use global event handlers for popToRoot on tab press for Android and restoring screen on load
+option
+- Add requirement for tabs to have ids
+* Tabs must now have ids defined in their configuration
+
+* feat: update pirateship to use react-native-navigation 2
+
+* refactor: Use react native community version of AsyncStorage
+
+* feat(fsengagement): add new zones
+
+* fix: fix codepush integration with RNN v2
+
+* fix(fsapp): RNN v2 allow passing static styling as a function
+
+RNN v2 by default is passing static styling as a function so passProps info can be included. Updated to support the default behavior. This is not breaking the backward-compatible logic
+
+* feat(fsengagement): add gridwall and product carousel
+
+* feat(fsengagement): cache last update + add isNew flag to each message
+* This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+* chore: ensure android ci step uses node 10
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+
+* chore: pin react-native-sensitive-info to 5.4.x
+
+* feat(fscomponents): support more styling options for MultiCarousel
+
+* feat(fscomponents): add hideZoomButton props to ZoomCarousel
+
+* fix: Add 'Marquis' feature to Button with title dynamically reflecting CTA state
+
+* chore(fscomponents): add missing typedef to modalhalfscreen component
+
+* fix(flagship): update string replace to work in new fastfile
+
+* fix: get default env from initial script
+
+* build: upgrade deprecated webpack dev server
+
+* fix(flagship): fix fastlane build lane
+
+Added missing xcargs flags that tells xcode to make an unprovisioned build when "fastlane build" is executed.
+
+* chore: tell greenkeeper to ignore more dependencies
+react, metro-react-babel-preset, and babel should only be updated as part of coordinated React Native upgrades.
+* This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+* fix(flagship): Latest react-native-payments and react-native-swiper
+
+Also:
+- added supportLibVersion to the gradle file
+- advises what to do instead of calling setOnNavigatorEvent
+- fix for NativeModules.StatusBarManager.HEIGHT
+- fix for instances.filter being called on an object instead of an array
+
+* chore: empty commit to restart coveralls
+
+* chore(release): publish v8.0.0
+
+* fix(flagship): Updated modules and fixed pirateship Android
+
+Jetifier doesn't run on hoisted modules, so this makes @brandingbrand/react-native-payments get updated. Also updated path-to-regexp to v6, react-native-svg to v10, react-native-webview to v8, react-native-video to 5, and removed the unused uglifyjs-webpack-plugin. Also updated all packages to the latest in-range version, excluding the @babel modules and modules that have it as a higher-versioned dependency, such as the @storybook modules.
+
+* refactor(fscomponents): FLAGSHIP-59 Updating To Function Component
+
+* refactor(fscomponents): FLAGSHIP-58 Updating To Function Component
+
+* fix(fscomponents): FLAGSHIP-64 - Make Shelf a function component
+
+* refactor(fscomponents): FLAGSHIP-60 Updating To Function Component
+
+* feat(fscomponents): Add formik, yup to fscomponents and LoginForm
+
+* refactor(fscomponents): FLAGSHIP-63 - Updating To Function Component
+
+* fix(flagship): Run react-native link to link assets
+
+Assets like fonts need to be linked so the application will have access to them.
+
+* refactor(fscomponents): FLAGSHIP-50 Update to a function component
+
+* refactor(fscomponents): FLAGSHIP-49 - Make AddressForm a function component
+* This removes the add-keys-ios and add-keys-android scripts as they required an internal BB workflow to work. The new scripts, add-keys-ios-internal and add-keys-android-internal, can be configured with the environment files with passwords being passed in as environment variables.
+
+For usage instructions, see the new wiki article: https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps
+
+* chore: pin react-native-sensitive-info to 5.4.x
+
+* feat(fscomponents): support more styling options for MultiCarousel
+
+* feat(fscomponents): add hideZoomButton props to ZoomCarousel
+
+* fix: Add 'Marquis' feature to Button with title dynamically reflecting CTA state
+
+* chore(fscomponents): add missing typedef to modalhalfscreen component
+
+* fix(flagship): update string replace to work in new fastfile
+
+* build: upgrade deprecated webpack dev server
+
+* fix(flagship): fix fastlane build lane
+
+Added missing xcargs flags that tells xcode to make an unprovisioned build when "fastlane build" is executed.
+
+* chore: tell greenkeeper to ignore more dependencies
+react, metro-react-babel-preset, and babel should only be updated as part of coordinated React Native upgrades.
+* This requires updating CocoaPods (including in CI) to v1.7.2+ in order for pod install to work with the CDN. This allows CocoaPods to pull from their own CDN which avoids rate limiting when pulling sources from GitHub instead.
+
+* chore: empty commit to restart coveralls
+
+* chore(release): publish v8.0.0
+
+* refactor(fscomponents): FLAGSHIP-59 Updating To Function Component
+
+* refactor(fscomponents): FLAGSHIP-58 Updating To Function Component
+
+* fix(fscomponents): FLAGSHIP-64 - Make Shelf a function component
+
+* refactor(fscomponents): FLAGSHIP-60 Updating To Function Component
+
+* feat(fscomponents): Add formik, yup to fscomponents and LoginForm
+
+* refactor(fscomponents): FLAGSHIP-63 - Updating To Function Component
+
+* refactor(fscomponents): FLAGSHIP-50 Update to a function component
+
+* refactor(fscomponents): FLAGSHIP-49 - Make AddressForm a function component
+
+
+
+
+
+# [8.3.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.3-rnn2.0...v8.3.0-rnn2.0) (2019-10-17)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [8.1.3-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.3-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [8.1.2-rnn2.0](https://github.com/brandingbrand/flagship/compare/v8.1.1-rnn2.0...v8.1.2-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [8.1.1-rnn2.0](https://github.com/brandingbrand/flagship/compare/v7.4.1...v8.1.1-rnn2.0) (2019-10-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
 # [8.7.0](https://github.com/brandingbrand/flagship/compare/v8.6.1...v8.7.0) (2020-03-26)
 
 
