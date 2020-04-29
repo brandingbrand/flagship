@@ -1196,64 +1196,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@brandingbrand/fsbazaarvoice@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbazaarvoice/-/fsbazaarvoice-9.1.0.tgz#88261712123b5ea49f9a8e4df33fcc0cb1071db1"
-  integrity sha512-tesmbFWZoFXGkIfFw44cb3htgaEXNBqXiSVfT9TJbJMfR4HBARvYys/f/lR5qsMuXd4uVVH+E0BK/Haf+/G1uA==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsnetwork" "^9.1.0"
-    qs "^6.9.1"
-
-"@brandingbrand/fsbrandcmsproductcatalog@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsbrandcmsproductcatalog/-/fsbrandcmsproductcatalog-9.1.0.tgz#b63494a69c451bf4f5ee8e93a4b43e0b1fe23522"
-  integrity sha512-r7S4lUoBo1Tbimz92w6CWpgcXujBNLuTLvgJwOyDIlcmh4M1oVz5tr2ReEKVRywoHz5grbyFK/RhrfU6j00FwA==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsengage" "^9.1.0"
-
 "@brandingbrand/fsfoundation@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/fsfoundation/-/fsfoundation-0.1.0.tgz#4fbd3a497d6c6c8f7488bc79ea5a5d79fd55f35f"
   integrity sha512-S4Wx+NAX1y+qSxI9Pjbn9rQWEw2lHTujh4dSAU8Ya4tPbTp1ATiJk0iWQQb0m4sGVX39tn43c3i78i0rbK5O3g==
-
-"@brandingbrand/fspowerreviews@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fspowerreviews/-/fspowerreviews-9.1.0.tgz#6ec9889a20c094129815686defd5b4d5e408c631"
-  integrity sha512-AXGxDoSfEsvXIURYjRJ0mZI7smWezvKJz1pfRp7ut74VjCtPHNutgJ5ZlaAoiUCSlKEUwyTcby0iPV9Uy3tHlQ==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsnetwork" "^9.1.0"
-
-"@brandingbrand/fssalesforce@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fssalesforce/-/fssalesforce-9.1.0.tgz#a387ef070547351c7f7c2361cd982f9224a18d44"
-  integrity sha512-Ay+uLqlcxOxmpQiu/BR4NpfhLsvbnTWBU8s8GvoGwdhX7xM7iNKEUg6CaKhfV5gM9TT558zh9XfOrspuppWkVA==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsfoundation" "^9.1.0"
-    "@brandingbrand/fsnetwork" "^9.1.0"
-    decimal.js "^10.0.1"
-    dtsgenerator "^2.0.7"
-    jwt-decode "^2.2.0"
-    qs "^6.9.1"
-
-"@brandingbrand/fsturnto@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsturnto/-/fsturnto-9.1.0.tgz#555907f08c94a1624cbf0a2518306411d730cff6"
-  integrity sha512-xAdORsoFpFutnAJb5i4ImSHLhr6YUWD+5y7OCU3A9ZBgXduQepLihdx7bTMYN0TKvEKzN1rThvm+7qpaFbsN+A==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsnetwork" "^9.1.0"
-
-"@brandingbrand/fsups@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@brandingbrand/fsups/-/fsups-9.1.0.tgz#d3d69d3ff587ba52e7bc17ca57ebdda4aeac9b5a"
-  integrity sha512-qcsU+EYsayk16QKu89XgOoMOi41xhnm5e0kJsvC6blQ39nrgtKpK74Hf0IUeoXsjX0CpP1ObtqgGsKJrJRCz2Q==
-  dependencies:
-    "@brandingbrand/fscommerce" "^9.1.0"
-    "@brandingbrand/fsnetwork" "^9.1.0"
 
 "@brandingbrand/greenkeeper-lockfile@^0.0.1":
   version "0.0.1"
@@ -5749,7 +5695,7 @@ commander@^2.12.1, commander@^2.19.0, commander@^2.20.0, commander@~2.20.3:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
-commander@^4.0.0, commander@^4.0.1:
+commander@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.0.tgz#545983a0603fe425bc672d66c9e3c89c42121a83"
   integrity sha512-NIQrwvv9V39FHgGFm36+U9SMQzbiHvU79k+iADraJTpmrFFfx7Ds0IvDoAdZsDrknlkRk14OYoWXb57uTh7/sw==
@@ -6189,14 +6135,6 @@ credit-card@^3.0.1:
   dependencies:
     lodash.merge "4.6.x"
     reach "1.x.x"
-
-cross-fetch@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.4.tgz#7bef7020207e684a7638ef5f2f698e24d9eb283c"
-  integrity sha512-MSHgpjQqgbT/94D4CyADeNoYh52zMkCX4pcJvPP5WqPsLFMKjr2TCMg381ox5qI0ii2dPwaLx/00477knXqXVw==
-  dependencies:
-    node-fetch "2.6.0"
-    whatwg-fetch "3.0.0"
 
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
@@ -6944,19 +6882,6 @@ dotenv@^8.0.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
-
-dtsgenerator@^2.0.7:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/dtsgenerator/-/dtsgenerator-2.3.2.tgz#d5282b25f94ae016f465c2552651ae7e2d95fc90"
-  integrity sha512-3MRxDGZgtAl+C4ZQKFMTr5mflkdz1mm8cxoe1aoq7+iVUhXcYauZiJpoPpT3WHTiLb1Dy7RXKGeIkjI1rXpJ1Q==
-  dependencies:
-    commander "^4.0.1"
-    cross-fetch "^3.0.4"
-    debug "^4.1.1"
-    glob "^7.1.6"
-    js-yaml "^3.13.1"
-    mkdirp "^0.5.1"
-    tslib "^1.10.0"
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -10173,11 +10098,6 @@ just-extend@^4.0.2:
   resolved "https://registry.yarnpkg.com/just-extend/-/just-extend-4.0.2.tgz#f3f47f7dfca0f989c55410a7ebc8854b07108afc"
   integrity sha512-FrLwOgm+iXrPV+5zDU6Jqu4gCRXbWEQg2O3SKONsWE4w7AXFRkryS53bpWdaL9cNol+AmR3AEYz6kn+o0fCPnw==
 
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
-  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
-
 keymirror@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
@@ -11580,11 +11500,6 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@2.6.0, node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
-
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -11592,6 +11507,11 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 node-forge@0.9.0:
   version "0.9.0"
@@ -16622,7 +16542,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@3.0.0, whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
