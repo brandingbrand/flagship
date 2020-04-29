@@ -4,8 +4,7 @@
   "version": "9.1.0",
   "description": "Continuous deployment scripts",
   "bin": {
-    "codepush": "dist/codepush.js",
-    "hockey": "dist/hockey.js"
+    "codepush": "dist/codepush.js"
   },
   "license": "MIT",
   "scripts": {
