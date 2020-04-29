@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ProductIndex } from '@brandingbrand/fsproductindex';
-import { demandware, powerreviews } from '../../lib/datasource';
+import { mockCommerceDataSource, mockReviewDataSource } from '../../lib/datasource';
 
-export default class ProductIndexDemandwareList extends Component<any> {
+export default class ProductIndexList extends Component<any> {
   goTo = (data: any) => {
     alert(JSON.stringify(data));
   }
@@ -10,8 +10,8 @@ export default class ProductIndexDemandwareList extends Component<any> {
   render(): JSX.Element {
     return (
       <ProductIndex
-        commerceDataSource={demandware}
-        reviewDataSource={powerreviews}
+        commerceDataSource={mockCommerceDataSource}
+        reviewDataSource={mockReviewDataSource}
         commerceToReviewMap='id'
         onNavigate={this.goTo}
         format='list'
