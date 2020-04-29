@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {
   Platform
 } from 'react-native';
+
+import { mockCommerceDataSource } from '../../lib/datasource';
+import { Category } from '@brandingbrand/fscategory';
 import { goToNavPush } from '../../lib/navigation';
 
-import { demandware } from '../../lib/datasource';
-import { Category } from '@brandingbrand/fscategory';
-
-export default class CategoryListDemandware extends Component<any> {
+export default class CategoryGrid extends Component<any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -26,11 +26,13 @@ export default class CategoryListDemandware extends Component<any> {
   render(): JSX.Element {
     return (
       <Category
-        commerceDataSource={demandware}
+        format='grid'
+        columns={3}
+        commerceDataSource={mockCommerceDataSource}
         categoryId={this.props.categoryId}
-        onNavigate={this.goTo('CategoryListDemandware')}
+        onNavigate={this.goTo('CategoryGrid')}
         categoryItemProps={{
-          style: { height: 50 }
+          style: { height: 120 }
         }}
       />
     );
