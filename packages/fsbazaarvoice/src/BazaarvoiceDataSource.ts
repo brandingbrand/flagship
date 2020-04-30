@@ -106,7 +106,9 @@ export class BazaarvoiceDataSource extends AbstractReviewDataSource implements R
     return BazaarvoiceNormalizer.questions(data);
   }
 
-  async writeReview(command: ReviewTypes.WriteReviewCommand): Promise<any> {
+  async writeReview(
+    command: ReviewTypes.WriteReviewCommand
+  ): Promise<ReviewTypes.WriteReviewSubmission> {
     const params = {
       ...BazaarvoiceDenormalizer.writeReviewParams(command),
       ...BazaarvoiceDenormalizer.mapAdditionalFields('AdditionalField', command.additionalFields),

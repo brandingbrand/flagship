@@ -1,8 +1,17 @@
 import {
   ReviewTypes
 } from '@brandingbrand/fscommerce';
+import {
+  AnswerType,
+  BvProduct,
+  BvProductStatistics,
+  BvResults,
+  BvReview, BvWriteReview,
+  ContextDataDistributionValueType,
+  DistributionType, ErrorsType, ResultsType
+} from './types';
 
-export function review(bvReview: any): ReviewTypes.Review {
+export function review(bvReview: BvReview): ReviewTypes.Review {
   return {
     id: bvReview.Id,
     title: bvReview.Title,
@@ -38,7 +47,7 @@ export function review(bvReview: any): ReviewTypes.Review {
   };
 }
 
-export function reviewSummary(bvProductStatistics: any): ReviewTypes.ReviewSummary {
+export function reviewSummary(bvProductStatistics: BvProductStatistics): ReviewTypes.ReviewSummary {
   return {
     id: bvProductStatistics.ProductId,
     averageRating: bvProductStatistics.ReviewStatistics.AverageOverallRating,
@@ -46,7 +55,7 @@ export function reviewSummary(bvProductStatistics: any): ReviewTypes.ReviewSumma
   };
 }
 
-export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
+export function reviewStatistics(bvProduct: BvProduct): ReviewTypes.ReviewStatistics {
   const bvStats = bvProduct.ReviewStatistics;
 
   const recommendedCount = bvStats.RecommendedCount;
@@ -61,7 +70,7 @@ export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
     averageRating: bvStats.AverageOverallRating,
     reviewCount: bvStats.TotalReviewCount,
     recommendedRatio,
-    ratingDistribution: bvStats.RatingDistribution.map((distribution: any) => {
+    ratingDistribution: bvStats.RatingDistribution.map((distribution: DistributionType) => {
       return {
         value: distribution.RatingValue,
         count: distribution.Count
@@ -72,7 +81,7 @@ export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
       return {
         id: context.Id,
         label: context.Label,
-        values: context.Values.map((distribution: any) => {
+        values: context.Values.map((distribution: ContextDataDistributionValueType) => {
           return {
             value: distribution.Value,
             count: distribution.Count
@@ -93,14 +102,14 @@ export function reviewStatistics(bvProduct: any): ReviewTypes.ReviewStatistics {
   };
 }
 
-export function questions(bvResults: any): ReviewTypes.ReviewQuestion[] {
-  return bvResults.Results.map((question: any) => {
+export function questions(bvResults: BvResults): ReviewTypes.ReviewQuestion[] {
+  return bvResults.Results.map((question: ResultsType) => {
     return {
       id: question.Id,
       user: user(question),
       text: question.QuestionDetails,
       summary: question.QuestionSummary,
-      answers: question.AnswerIds.map((answerId: any) => {
+      answers: question.AnswerIds.map((answerId: number) => {
         return answer(bvResults.Includes.Answers[answerId]);
       }),
       feedback: {
@@ -113,7 +122,7 @@ export function questions(bvResults: any): ReviewTypes.ReviewQuestion[] {
   });
 }
 
-export function answer(bvAnswer: any): ReviewTypes.ReviewAnswer {
+export function answer(bvAnswer: AnswerType): ReviewTypes.ReviewAnswer {
   return {
     id: bvAnswer.Id,
     user: user(bvAnswer),
@@ -127,14 +136,14 @@ export function answer(bvAnswer: any): ReviewTypes.ReviewAnswer {
   };
 }
 
-function user(bvReview: any): ReviewTypes.ReviewUser {
+function user(bvReview: BvReview | ResultsType | AnswerType): ReviewTypes.ReviewUser {
   return {
     location: bvReview.UserLocation ? bvReview.UserLocation : undefined,
     name: bvReview.UserNickname
   };
 }
 
-export function writeReview(bvWriteReview: any): ReviewTypes.WriteReviewSubmission {
+export function writeReview(bvWriteReview: BvWriteReview): ReviewTypes.WriteReviewSubmission {
   const { Review, HasErrors } = bvWriteReview;
 
   if (!Review && !HasErrors) {
@@ -153,9 +162,9 @@ export function writeReview(bvWriteReview: any): ReviewTypes.WriteReviewSubmissi
     submissionId: bvWriteReview.SubmissionId || '',
     hoursToPost: bvWriteReview.TypicalHoursToPost,
     errors: bvWriteReview.Errors && bvWriteReview.Errors.length > 0
-      ? bvWriteReview.Errors.map((error: any) => {
+      ? bvWriteReview.Errors.map((error: ErrorsType) => {
         return {
-          message: error.Message || 0,
+          message: error.Message || '0',
           code: error.Code
         };
       })
