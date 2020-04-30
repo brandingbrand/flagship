@@ -4,8 +4,9 @@
 import {
   CommerceTypes as FSCommerceTypes
 } from '@brandingbrand/fscommerce';
+import { CmsCategoryItem, CmsRetinaImage } from './types';
 
-function image(cmsRetinaImage: any): FSCommerceTypes.Image | undefined {
+function image(cmsRetinaImage: CmsRetinaImage): FSCommerceTypes.Image | undefined {
   if (!cmsRetinaImage.path) {
     return undefined;
   }
@@ -17,7 +18,7 @@ function image(cmsRetinaImage: any): FSCommerceTypes.Image | undefined {
   };
 }
 
-function category(cmsCategoryItem: any): FSCommerceTypes.Category {
+function category(cmsCategoryItem: CmsCategoryItem): FSCommerceTypes.Category {
   return {
     id: cmsCategoryItem.Identifier,
     title: cmsCategoryItem.Title,

@@ -5,6 +5,7 @@ import {
 
 import brandCMSNormalizer from './BrandCMSNormalizer';
 import { ContentManagementSystem } from '@brandingbrand/fsengage';
+import { ContentForSlotData } from './types';
 
 export interface BrandCMSConfig {
   CMS: ContentManagementSystem;
@@ -30,7 +31,7 @@ export class BrandCMSProductCatalog implements ProductCatalogDataSource {
     }
 
     return this.CMS.contentForSlot(group, slot, identifier).then(
-      (data: any) => {
+      (data: ContentForSlotData) => {
         if (!data || !data.instances) {
           throw new Error(`WARN: [${id}] is not correctly setup.`);
         }
