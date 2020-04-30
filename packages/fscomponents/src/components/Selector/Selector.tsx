@@ -18,14 +18,14 @@ export interface SelectorItem {
   disabled?: boolean;
   label: string;
   selected?: boolean;
-  value: any;
+  value: string;
 }
 
 export interface SelectorProps {
   items: SelectorItem[];
   title?: string;
   placeholder?: string;
-  selectedValue?: any;
+  selectedValue?: string;
   onValueChange?: (value: string) => void;
   itemHeight?: number;
   renderDropdownArrow?: () => React.ReactNode;
@@ -48,7 +48,7 @@ export interface SelectorProps {
 
 export interface SelectorStateType {
   modalVisible: boolean;
-  selectedValue: SelectorItem;
+  selectedValue?: string;
 }
 
 export class Selector extends PureComponent<
@@ -67,8 +67,6 @@ export class Selector extends PureComponent<
 
     return null;
   }
-
-  listView: any;
 
   constructor(props: SelectorProps) {
     super(props);
@@ -202,7 +200,7 @@ export class Selector extends PureComponent<
     });
   }
 
-  chooseItem = (value: any) => {
+  chooseItem = (value: string) => {
     return () => {
       this.setState({
         selectedValue: value
