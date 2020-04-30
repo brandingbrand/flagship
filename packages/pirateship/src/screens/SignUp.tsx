@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavButton, ScreenProps } from '../lib/commonTypes';
 import TouchId from 'react-native-touch-id';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { dataSource } from '../lib/datasource';
+// import { dataSource } from '../lib/datasource';
 import { backButton } from '../lib/navStyles';
 import {
   Alert,
@@ -16,8 +16,9 @@ import {
 import { Options } from 'react-native-navigation';
 import PSButton from '../components/PSButton';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import ContactInfoForm, { ContactFormValues } from '../components/ContactInfoForm';
-import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
+// TODO: Swap these for Formik versions
+// import ContactInfoForm, { ContactFormValues } from '../components/ContactInfoForm';
+// import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
 import translate, { translationKeys } from '../lib/translations';
 
 import GlobalStyle from '../styles/Global';
@@ -105,8 +106,8 @@ export interface SignUpProps extends ScreenProps, AccountProps {
 interface SignUpState {
   isLoading: boolean;
   errors?: string[];
-  contactFormValues: ContactFormValues;
-  shippingFormValues: AddressFormValues;
+  // contactFormValues: ContactFormValues;
+  // shippingFormValues: AddressFormValues;
 }
 
 class SignUp extends Component<SignUpProps, SignUpState> {
@@ -121,11 +122,11 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     super(props);
 
     this.state = {
-      isLoading: false,
-      contactFormValues: {},
-      shippingFormValues: {
-        receiveEmail: true
-      }
+      isLoading: false
+      // contactFormValues: {},
+      // shippingFormValues: {
+      //   receiveEmail: true
+      // }
     };
   }
 
@@ -181,19 +182,19 @@ class SignUp extends Component<SignUpProps, SignUpState> {
             {translate.string(translationKeys.account.actions.signUp.contactFormHeader)}
           </Text>
         </View>
-        <ContactInfoForm
+        {/* <ContactInfoForm
           updateFormRef={this.updateFormRef('contactForm')}
           onChange={this.updateFormValues('contactFormValues')}
           values={this.state.contactFormValues}
           hiddenFields={['specials']}
           optionalFields={['age', 'gender']}
-        />
+        /> */}
         <View style={styles.formHeaderContainer}>
           <Text style={styles.formHeader}>
             {translate.string(translationKeys.account.actions.signUp.shippingFormHeader)}
           </Text>
         </View>
-        <PSAddressForm
+        {/* <PSAddressForm
           updateFormRef={this.updateFormRef('addressForm')}
           onChange={this.updateFormValues('shippingFormValues')}
           values={this.state.shippingFormValues}
@@ -210,7 +211,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
             'postalCode'
           ]}
           hiddenFields={['email']}
-        />
+        /> */}
         <PSButton
           title={translate.string(translationKeys.account.actions.signUp.actionBtn)}
           onPress={this.signUp}
@@ -245,7 +246,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
       // Sync first name and last name between forms
       if (targetKey === 'contactFormValues') {
         changes.shippingFormValues = {
-          ...this.state.shippingFormValues,
+          // ...this.state.shippingFormValues,
           ...{
             firstName: values.firstName,
             lastName: values.lastName
@@ -253,7 +254,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
         };
       } else if (targetKey === 'shippingFormValues') {
         changes.contactFormValues = {
-          ...this.state.contactFormValues,
+          // ...this.state.contactFormValues,
           ...{
             firstName: values.firstName,
             lastName: values.lastName
@@ -309,27 +310,27 @@ class SignUp extends Component<SignUpProps, SignUpState> {
       return;
     }
 
-    const { contactFormValues, shippingFormValues } = this.state;
-    const account = {
-      ...contactFormValues,
-      addresses: [
-        {
-          id: '',
-          preferred: true,
-          ...shippingFormValues
-        }
-      ],
-      receiveEmail: shippingFormValues.receiveEmail,
-      login: contactFormValues.email
-    } as any;
+    // const { contactFormValues, shippingFormValues } = this.state;
+    // const account = {
+    //   ...contactFormValues,
+    //   addresses: [
+    //     {
+    //       id: '',
+    //       preferred: true
+    //       ...shippingFormValues
+    //     }
+    //   ]
+    //   receiveEmail: shippingFormValues.receiveEmail,
+    //   login: contactFormValues.email
+    // } as any;
 
     try {
       this.setState({ isLoading: true });
-      const { email = '', password = '' } = contactFormValues;
+      // const { email = '', password = '' } = contactFormValues;
 
-      await dataSource.register(account, password);
+      // await dataSource.register(account, password);
       await this.promptToStoreCredentials();
-      await this.props.signIn(email, password);
+      // await this.props.signIn(email, password);
       this.signUpFinished();
     } catch (e) {
       let errorMsgs = [translate.string(translationKeys.account.actions.signUp.error)];
@@ -394,11 +395,11 @@ class SignUp extends Component<SignUpProps, SignUpState> {
   }
 
   storeCredentials = async () => {
-    const { email, password } = this.state.contactFormValues;
-    if (!email || !password) {
-      return;
-    }
-    await this.props.saveCredentials(email, password);
+    // const { email, password } = this.state.contactFormValues;
+    // if (!email || !password) {
+    //   return;
+    // }
+    // await this.props.saveCredentials(email, password);
   }
 
   signUpFinished = () => {

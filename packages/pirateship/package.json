@@ -23,7 +23,6 @@
     "build-web-demo": "./scripts/buildWebDemo.sh"
   },
   "dependencies": {
-    "@babel/runtime": "~7.5.5",
     "@brandingbrand/flagship": "^9.1.0",
     "@brandingbrand/fsapp": "^9.1.0",
     "@brandingbrand/fsbazaarvoice": "^9.1.0",
@@ -62,8 +61,7 @@
     "react-native-touch-id": "~4.4.0",
     "react-native-video": "^5.0.0",
     "react-native-webview": "^8.0.0",
-    "react-redux": "^7.0.0",
-    "tcomb-form-native": "^0.6.12"
+    "react-redux": "^7.0.0"
   },
   "flagship": {
     "webEnabled": false,

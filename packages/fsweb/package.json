@@ -11,9 +11,8 @@
     "start-prod": "webpack-dev-server -d --config ./webpack.config.js --mode production"
   },
   "dependencies": {
-    "@babel/core": "^7.7.2",
+    "@babel/core": "~7.6.0",
     "@babel/preset-env": "^7.7.1",
-    "@babel/runtime": "~7.5.5",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
     "babel-plugin-react-native-web": "^0.11.7",
