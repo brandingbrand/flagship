@@ -23,7 +23,7 @@ export interface StatefulTextboxState {
   validated: boolean;
 }
 
-export type ComputeFieldType = (prevField: any) => () => void;
+export type ComputeFieldType = (prevField: () => void) => () => void;
 
 export default class StatefulTextbox extends Component<StatefulTextboxProps,
 StatefulTextboxState> {

@@ -1,5 +1,5 @@
 import React, { PureComponent, RefObject } from 'react';
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import memoize from 'memoize-one';
 // dynamically generates stylesheet w/ correct active, error, inactive colors
 import { Dictionary } from '@brandingbrand/fsfoundation';
@@ -30,12 +30,12 @@ const LabelMap = {
 };
 
 export interface FormProps {
-  fieldsTypes: any;
-  fieldsOptions?: any;
-  fieldsStyleConfig?: any;
+  fieldsTypes: Dictionary;
+  fieldsOptions?: Dictionary;
+  fieldsStyleConfig?: Dictionary;
   labelPosition?: FormLabelPosition;
-  style?: any;
-  value?: any;
+  style?: StyleProp<ViewStyle>;
+  value?: Dictionary;
   onChange?: (value: any) => void;
   templates?: FormTemplates;
   activeColor?: string;
@@ -45,12 +45,12 @@ export interface FormProps {
 }
 
 export interface FormTemplates {
-  checkbox?: (locals: any) => React.ReactNode;
-  datepicker?: (locals: any) => React.ReactNode;
-  list?: (locals: any) => React.ReactNode;
-  select?: (locals: any) => React.ReactNode;
-  struct?: (locals: any) => React.ReactNode;
-  textbox?: (locals: any) => React.ReactNode;
+  checkbox?: (locals: Dictionary) => React.ReactNode;
+  datepicker?: (locals: Dictionary) => React.ReactNode;
+  list?: (locals: Dictionary) => React.ReactNode;
+  select?: (locals: Dictionary) => React.ReactNode;
+  struct?: (locals: Dictionary) => React.ReactNode;
+  textbox?: (locals: Dictionary) => React.ReactNode;
 }
 
 type CalculateStylesType =
@@ -108,12 +108,14 @@ export class Form extends PureComponent<FormProps> {
   }
 
   // for individual field validation
+  // TODO: Update tcomb-form-native to support typing
   validateField = (path: any) => {
     if (this.form.current) {
       return this.form.current.getComponent(path).validate();
     }
   }
 
+  // TODO: Update tcomb-form-native to support typing
   getComponent = (...args: any[]) => {
     if (this.form.current) {
       return this.form.current.getComponent.apply(this.form.current, args);
@@ -141,7 +143,7 @@ export class Form extends PureComponent<FormProps> {
     // returns a new version stylesheet customized with new or changed color props, if any
     const stylesheet = this.calculateStyles(activeColor, errorColor, inactiveColor);
 
-    if (validateOnBlur !== false) {
+    if (validateOnBlur !== false && !!fieldsOptions) {
       this.calculateBlurs(fieldsOptions);
     }
 

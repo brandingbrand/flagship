@@ -54,26 +54,26 @@ function renderCCNumber(locals: Dictionary, textboxStyle: Dictionary, color: str
 }
 
 
-export function creditCardAboveLabelTemplate(locals: any): React.ReactNode {
+export function creditCardAboveLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelAboveFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderCCNumber(locals, textboxStyle, color);
   });
 }
 
-export function creditCardFloatingLabelTemplate(locals: any): React.ReactNode {
+export function creditCardFloatingLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelFloatingFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderCCNumber(locals, textboxStyle, color);
   });
 }
 
 
-export function creditCardHiddenLabelTemplate(locals: any): React.ReactNode {
+export function creditCardHiddenLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelHiddenFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderCCNumber(locals, textboxStyle, color);
   });
 }
 
-export function creditCardInlineLabelTemplate(locals: any): React.ReactNode {
+export function creditCardInlineLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelInlineFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderCCNumber(locals, textboxStyle, color);
   });
