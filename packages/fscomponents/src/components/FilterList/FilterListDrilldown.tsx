@@ -14,15 +14,16 @@ import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import { SelectedItems } from './FilterList';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
 export interface FilterListDrilldownProps {
   items: FilterItem[];
-  onApply: (selectedItems: Record<string, string[]>, info?: { isButtonPress: boolean }) => void;
+  onApply: (selectedItems: SelectedItems, info?: { isButtonPress: boolean }) => void;
   onReset: (info?: { isButtonPress: boolean }) => void;
-  selectedItems?: Record<string, string[]>;
+  selectedItems?: SelectedItems;
   style?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
   applyButtonStyle?: StyleProp<ViewStyle>;
