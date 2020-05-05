@@ -6,7 +6,7 @@ import { Navigation } from 'react-native-navigation';
 
 import Row from '../../components/Row';
 
-export default class Home extends Component<any, any> {
+export default class Home extends Component { // ToDo ask
   startCheckout = () => {
     Navigation.showModal({
       component: {

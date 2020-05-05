@@ -3,8 +3,12 @@ import { ScrollView } from 'react-native';
 import { goToNavPush } from '../../lib/navigation';
 import Row from '../../components/Row';
 
-export default class Home extends Component<any, any> {
-  goTo = (screen: any, title: any, backButtonTitle: any) => () => {
+interface HomeProps {
+  componentId: string;
+}
+
+export default class Home extends Component<HomeProps> {
+  goTo = (screen: string, title: string, backButtonTitle: string) => () => {
     goToNavPush('fscommerce', this.props.componentId, screen, title, backButtonTitle);
   }
 

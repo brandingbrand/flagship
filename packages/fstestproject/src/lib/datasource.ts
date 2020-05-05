@@ -29,12 +29,12 @@ export const demandware = new CommerceCloudDataSource({
   networkClient,
   middleware: {
     fetchCategory: [
-      (data: any, normalized: any) => {
+      (data, normalized: any) => {
         normalized.middle = 'middle';
         normalized.ware = 'middle';
         return normalized;
       },
-      (data: any, normalized: any) => {
+      (data, normalized: any) => {
         normalized.ware = 'ware';
         return normalized;
       }

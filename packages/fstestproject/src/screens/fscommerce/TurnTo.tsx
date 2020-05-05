@@ -10,10 +10,14 @@ import { env as projectEnv } from '@brandingbrand/fsapp';
 
 const kExampleProductId = '';
 
-export default class TurnTo extends Component<any, any> {
-  client: any = null;
+interface TurnToProps {
+  componentId: string;
+}
 
-  constructor(props: any) {
+export default class TurnTo extends Component<TurnToProps> {
+  client: TurnToDataSource | null = null;
+
+  constructor(props: TurnToProps) {
     super(props);
     this.client = new TurnToDataSource(projectEnv.turnTo);
   }
@@ -32,41 +36,47 @@ export default class TurnTo extends Component<any, any> {
   }
 
   fetchReviewDetails = () => {
-    this.client
-      .fetchReviewDetails({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewDetails({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 
   fetchReviewSummary = () => {
-    this.client
-      .fetchReviewSummary({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewSummary({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 
   fetchReviewStatistics = () => {
-    this.client
-      .fetchReviewStatistics({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewStatistics({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ProductDetail } from '@brandingbrand/fsproductdetail';
 import { demandware } from '../../lib/datasource';
 
-export default class ProductDetailExample extends Component<any> {
+export default class ProductDetailExample extends Component {
   render(): JSX.Element {
     return (
       <ProductDetail

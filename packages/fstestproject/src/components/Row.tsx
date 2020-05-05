@@ -16,7 +16,12 @@ const S = StyleSheet.create({
   }
 });
 
-export default class Row extends Component<any> {
+interface RowPropsInterface {
+  onPress: () => void;
+  text: string;
+}
+
+export default class Row extends Component<RowPropsInterface> {
   render(): JSX.Element {
     return (
       <TouchableHighlight

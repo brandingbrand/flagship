@@ -9,10 +9,14 @@ import { mockReviewDataSource } from '../../lib/datasource';
 
 const kExampleReviewId = 'P0150';
 
-export default class MockReviewDataSource extends Component<any, any> {
+interface MockReviewDataSourceProps {
+  componentId: string;
+}
+
+export default class MockReviewDataSource extends Component<MockReviewDataSourceProps> {
   client: import ('@brandingbrand/fsmockdatasources').MockReviewDataSource;
 
-  constructor(props: any) {
+  constructor(props: MockReviewDataSourceProps) {
     super(props);
     this.client = mockReviewDataSource;
   }

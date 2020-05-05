@@ -24,7 +24,7 @@ export const goToNavPush = (
   }).catch(err => console.warn(`${scope}.${screen} PUSH error: `, err));
 };
 
-export const showDataNavPush = (componentId: string, data: any): void => {
+export const showDataNavPush = <T>(componentId: string, data: T): void => {
   Navigation.push(componentId, {
     component: {
       name: 'fscommerce.DataView',

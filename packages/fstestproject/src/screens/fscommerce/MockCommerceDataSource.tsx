@@ -7,6 +7,7 @@ import { showDataNavPush } from '../../lib/navigation';
 import Row from '../../components/Row';
 import { mockCommerceDataSource } from '../../lib/datasource';
 import { CommerceDataSource } from '@brandingbrand/fscommerce';
+import {MockDataSource} from "@brandingbrand/fsmockdatasources/dist/commerce";
 
 const exampleCategoryId = 'electronics-digital-cameras';
 const exampleProductId1 = 'sony-alpha350-wlen';
@@ -16,21 +17,25 @@ const examplePipRefinement = { brand: 'Sony' };
 const validPromoCode = 'VALID';
 const invalidPromoCode = 'INVALID';
 
-export default class MockCommerceDataSource extends Component<any, any> {
+interface MockCommerceDataSourceProps {
+  componentId: string;
+}
+
+export default class MockCommerceDataSource extends Component<MockCommerceDataSourceProps> {
   private dataSource: CommerceDataSource;
 
-  constructor(props: any) {
+  constructor(props: MockCommerceDataSourceProps) {
     super(props);
 
-    // Capture and display any error messages that are created by the data source
+    // Capture and display error messages that are created by the data source
     this.dataSource = new Proxy(mockCommerceDataSource, {
-      get: (target: any, prop: any) => {
+      get: (target: MockDataSource, prop: keyof MockDataSource) => {
         if (typeof target[prop] !== 'function') {
           return target[prop];
         }
 
         return (...args: any[]) => {
-          const ret = target[prop](...args);
+          const ret = (target[prop] as (...args: any[]) => Promise<void> | void)(...args);
           if (ret instanceof Promise) {
             ret.catch((e: Error) =>
               showDataNavPush(this.props.componentId, { message: e.message }));

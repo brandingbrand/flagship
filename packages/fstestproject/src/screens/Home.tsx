@@ -3,7 +3,11 @@ import { ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Row from '../components/Row';
 
-export default class Home extends Component<any> {
+interface HomeProps {
+  componentId: string;
+}
+
+export default class Home extends Component<HomeProps> {
   render(): JSX.Element {
     return (
       <ScrollView>

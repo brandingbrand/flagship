@@ -18,7 +18,16 @@ const S = StyleSheet.create({
   }
 });
 
-export default class Home extends Component<any> {
+interface HomeProps {
+  componentId: string;
+}
+
+interface RowArgs {
+  text: string;
+  onPress: () => void;
+}
+
+export default class Home extends Component<HomeProps> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
     goToNavPush('fsproductdetail', this.props.componentId, screen, title, backButtonTitle);
   }
@@ -35,7 +44,7 @@ export default class Home extends Component<any> {
   }
 }
 
-function Row({ text, onPress }: any): JSX.Element {
+function Row({ text, onPress }: RowArgs): JSX.Element {
   return (
     <TouchableHighlight onPress={onPress} style={S.row} underlayColor='#eee'>
       <Text style={S.rowText}>
