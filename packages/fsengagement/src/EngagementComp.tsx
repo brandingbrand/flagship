@@ -245,6 +245,16 @@ export default function(
     handlePageCounterRef = (ref: any) => this.AnimatedPageCounter = ref;
     handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
 
+    componentWillUnmount(): void {
+      // Check if closing because of navigation change or ui
+      if (!this.state.isClosingAnimation) {
+        // If navigation change also try to return back out of the story
+        if (this.props.onBack) {
+          this.props.onBack();
+        }
+      }
+    }
+
     componentDidMount(): void {
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
