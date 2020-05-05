@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.6.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.5.0-rnn2.0...v9.6.0-rnn2.0) (2020-05-05)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
 # [9.5.0-rnn2.0](https://github.com/brandingbrand/flagship/compare/v9.4.0-rnn2.0...v9.5.0-rnn2.0) (2020-03-27)
 
 **Note:** Version bump only for package @brandingbrand/fstestproject
