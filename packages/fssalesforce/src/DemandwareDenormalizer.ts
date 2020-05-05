@@ -194,8 +194,13 @@ function updateOrder(data: Partial<FSCommerceTypes.Order>): Partial<SFCC.Order> 
  * @param {ProductQuery} query - The query to format for use in Demandware
  * @returns {DemandwareProductQuery} The query formatted for use in Demandware
  */
+
+interface ProductQueryRefinements {
+  cgid: string;
+}
+
 function productQuery(query: FSCommerceTypes.ProductQuery): DemandwareProductQuery {
-  const refinements: any = query.refinements ? { ...query.refinements } : {};
+  const refinements: ProductQueryRefinements = query.refinements ? { ...query.refinements } : {};
   const options: DemandwareProductQuery = {};
 
   if (query.categoryId && !refinements.cgid) {
@@ -236,12 +241,12 @@ function productQuery(query: FSCommerceTypes.ProductQuery): DemandwareProductQue
  * @param {Object} refinements - The refinements to be serialized
  * @returns {Array.<string>} An array of serialized refinements
  */
-function serializeRefinements(refinements: any = {}): string[] {
-  return Object.keys(refinements).map((key, index) => {
-    let value = refinements[key];
+function serializeRefinements<T, K extends keyof T>(refinements: T): string[] {
+  return Object.keys(refinements).map(key => {
+    let value: T[K] | string = refinements[key as K];
 
     if (key === 'priceRange') {
-      value = serializePrice(refinements[key]);
+      value = serializePrice(refinements[key as K] as never as PriceRange); // TODO: check this
     } else if (Array.isArray(value)) {
       value = value.join('|');
     }

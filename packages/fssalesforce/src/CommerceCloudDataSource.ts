@@ -128,7 +128,7 @@ export class CommerceCloudDataSource extends Classes.DemandwareBase
     throw new Error(kErrorMessageStandIn);
   }
 
-  async destroyCart(): Promise<any> {
+  async destroyCart<T>(): Promise<T> {
     throw new Error(kErrorMessageStandIn);
   }
 
@@ -159,11 +159,11 @@ export class CommerceCloudDataSource extends Classes.DemandwareBase
     throw new Error(kErrorMessageStandIn);
   }
 
-  async fetchOrder(orderId: string): Promise<any> {
+  async fetchOrder<T>(orderId: string): Promise<T> {
     throw new Error(kErrorMessageStandIn);
   }
 
-  async fetchOrders(): Promise<any> {
+  async fetchOrders<T>(): Promise<T> {
     throw new Error(kErrorMessageStandIn);
   }
 
@@ -185,7 +185,7 @@ export class CommerceCloudDataSource extends Classes.DemandwareBase
     throw new Error(kErrorMessageStandIn);
   }
 
-  async logout(): Promise<any> {
+  async logout<T>(): Promise<T> {
     throw new Error(kErrorMessageStandIn);
   }
 
