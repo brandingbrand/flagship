@@ -32,7 +32,7 @@ export class Carousel extends Component<CarouselProps> {
 
     const _showsPagination =
       typeof showsPagination === 'undefined' ? true : showsPagination;
-    const _children: any = children;
+    const _children: React.ReactNode = children;
 
     return (
       <View style={style}>
@@ -45,7 +45,7 @@ export class Carousel extends Component<CarouselProps> {
             } : {}}
             {...webOptions}
           >
-            {_children.map((child: any, i: number) => {
+            {React.Children.map(_children, (child: React.ReactNode, i: number) => {
               return (
                 <View key={i} style={{ height }}>
                   {child}
