@@ -1,25 +1,34 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
+import React, { FunctionComponent } from 'react';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
+// @ts-ignore TODO: Update tcomb-form-native to support typing
+import * as t from 'tcomb-form-native';
 import { cloneDeep, merge, pickBy } from 'lodash-es';
 import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 const componentTranslationKeys = translationKeys.flagship.addressForm;
 
 export interface AddressFormProps {
-  fieldsStyleConfig?: any;
+  fieldsStyleConfig?: Dictionary;
   labelPosition?: FormLabelPosition;
-  onSubmit?: (value: any) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any;
-  value?: any;
-  style?: any;
-  checkboxStyleConfig?: any;
-  fieldsOptions?: any;
-  fieldsTypes?: any;
+  onSubmit?: (value: Dictionary) => void;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  submitText?: string;
+  value?: Dictionary;
+  style?: StyleProp<ViewStyle>;
+  checkboxStyleConfig?: Dictionary;
+  fieldsOptions?: Dictionary;
+  fieldsTypes?: Dictionary;
 }
 
 const EmailType = t.refinement(t.String, (str: string) => {
@@ -37,10 +46,7 @@ const S = StyleSheet.create({
 
 
 export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Element => {
-  useEffect(() => {
-    console.warn('AddressForm is deprecated and will be removed in the next version of Flagship.');
-  }, []);
-  let form: any;
+  let form: Form | null;
 
   const fieldsStyleConfig = {
     textbox: {
@@ -75,7 +81,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
     )
   );
 
-  let checkboxStyleConfig: any = null;
+  let checkboxStyleConfig: Dictionary;
   if (props.checkboxStyleConfig) {
     checkboxStyleConfig = props.checkboxStyleConfig;
   } else {
@@ -88,7 +94,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
   }
 
   const focusField = (fieldName: string) => {
-    const field = form.getComponent(fieldName);
+    const field = form !== null ? form.getComponent(fieldName) : null;
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -171,7 +177,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
 
   const handleSubmit = () => {
     const { onSubmit } = props;
-    const value = form.getValue();
+    const value = form !== null && form.getValue();
     if (onSubmit && value) {
       onSubmit(value);
     }
