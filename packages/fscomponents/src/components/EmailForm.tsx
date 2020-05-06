@@ -6,6 +6,8 @@ import * as t from 'tcomb-form-native';
 import { SingleLineForm } from './SingleLineForm';
 import { FormLabelPosition } from './Form';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import {Dictionary} from '@brandingbrand/fsfoundation';
+import {StyleProp, ViewStyle} from 'react-native';
 const componentTranslationKeys = translationKeys.flagship.emailForm;
 
 export interface EmailFormValue {
@@ -13,15 +15,15 @@ export interface EmailFormValue {
 }
 
 export interface EmailFormProps {
-  fieldsStyleConfig?: any;
+  fieldsStyleConfig?: Dictionary;
   labelPosition?: FormLabelPosition;
   onSubmit?: (value: EmailFormValue) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<ViewStyle>;
+  submitText?: StyleProp<ViewStyle>;
   value?: EmailFormValue;
-  style?: any;
-  fieldsOptions?: any;
+  style?: StyleProp<ViewStyle>;
+  fieldsOptions?: Dictionary;
 }
 
 const EmailType = t.refinement(t.String, (str: string) => {
@@ -29,8 +31,8 @@ const EmailType = t.refinement(t.String, (str: string) => {
 });
 
 export class EmailForm extends Component<EmailFormProps> {
-  fieldsTypes: any;
-  fieldsOptions: any;
+  fieldsTypes: Dictionary;
+  fieldsOptions: Dictionary;
   labelPosition: FormLabelPosition;
 
   constructor(props: EmailFormProps) {
