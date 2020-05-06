@@ -65,7 +65,7 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: any;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);
@@ -88,14 +88,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
+    if (this.searchBar !== null && (searchBarShouldFocus === undefined || searchBarShouldFocus)) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar) => {
     this.searchBar = ref;
   }
 
@@ -233,7 +233,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
@@ -288,7 +288,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {
