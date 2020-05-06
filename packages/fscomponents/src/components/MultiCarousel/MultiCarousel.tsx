@@ -1,9 +1,13 @@
-import React, { Component, RefObject } from 'react';
+import React, {Component, RefObject} from 'react';
 import {
   Animated,
   Easing,
   FlatList,
+  GestureResponderEvent,
+  LayoutChangeEvent,
   ListRenderItemInfo,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -11,7 +15,7 @@ import {
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-import { MultiCarouselProps } from './MultiCarouselProps';
+import {MultiCarouselProps, OptionsType} from './MultiCarouselProps';
 import { PageIndicator } from '../PageIndicator';
 
 export interface MultiCarouselState {
@@ -64,13 +68,14 @@ const S = StyleSheet.create({
   }
 });
 
+
 export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, MultiCarouselState> {
   currentScrollX: number = 0;
   initialScrollX: number = 0;
   defaultPeekSize: number = 0;
   defaultItemsPerPage: number = 2;
 
-  private scrollView: RefObject<FlatList<ItemT>>;
+  private readonly scrollView: RefObject<FlatList<ItemT>>;
 
   constructor(props: MultiCarouselProps<ItemT>) {
     super(props);
@@ -103,8 +108,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   componentDidUpdate(
     prevProps: MultiCarouselProps<ItemT>,
-    prevState: MultiCarouselState,
-    snapshot: any
+    prevState: MultiCarouselState
   ): void {
     const animateItemChange = () => {
       this.state.opacity.setValue(0);
@@ -140,7 +144,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     }
   }
 
-  handleContainerSizeChange = (e: any) => {
+  handleContainerSizeChange = (e: LayoutChangeEvent) => {
     const containerWidth = e.nativeEvent.layout.width;
 
     if (containerWidth === this.state.containerWidth) {
@@ -153,7 +157,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     });
   }
 
-  goToNext = (options?: any) => {
+  goToNext = (e?: GestureResponderEvent , options?: OptionsType) => {
     options = options || { animated: true };
     const { currentIndex } = this.state;
     const nextIndex =
@@ -162,7 +166,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.goTo(nextIndex, options);
   }
 
-  goToPrev = (options?: any) => {
+  goToPrev = (e?: GestureResponderEvent, options?: OptionsType): void => {
     options = options || { animated: true };
 
     const { currentIndex } = this.state;
@@ -170,7 +174,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.goTo(nextIndex, options);
   }
 
-  goTo = (index: number, options?: any) => {
+  goTo = (index: number, options?: OptionsType) => {
     options = options || { animated: true };
 
     // No scrollView when there is only one image
@@ -202,30 +206,31 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.goTo(currentIndex);
   }
 
-  handleScrollRelease = (e: any) => {
+  handleScrollRelease = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (Platform.OS !== 'android') {
       return;
     }
 
     const diffX = e.nativeEvent.contentOffset.x - this.initialScrollX;
-
-    if (diffX > 80 || e.nativeEvent.velocity.x < -0.5) {
-      this.goToNext();
-    } else if (diffX < -80 || e.nativeEvent.velocity.x > 0.5) {
-      this.goToPrev();
-    } else {
-      this.goToOrigin();
+    if (e.nativeEvent && e.nativeEvent.velocity) {
+      if (diffX > 80 || e.nativeEvent.velocity.x < -0.5) {
+        this.goToNext();
+      } else if (diffX < -80 || e.nativeEvent.velocity.x > 0.5) {
+        this.goToPrev();
+      } else {
+        this.goToOrigin();
+      }
     }
   }
 
-  handleScrollBegin = (e: any) => {
+  handleScrollBegin = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (Platform.OS !== 'android') {
       return;
     }
     this.initialScrollX = e.nativeEvent.contentOffset.x;
   }
 
-  handleMomentumScrollEnd = (e: any) => {
+  handleMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (Platform.OS !== 'ios') {
       return;
     }

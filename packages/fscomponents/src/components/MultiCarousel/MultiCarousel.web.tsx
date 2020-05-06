@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Animated,
+  LayoutChangeEvent,
+  NativeSyntheticEvent,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -9,11 +11,11 @@ import {
 import { findDOMNode } from 'react-dom';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-import { MultiCarouselProps } from './MultiCarouselProps';
+import {MultiCarouselProps} from './MultiCarouselProps';
 import { animatedScrollTo } from '../../lib/helpers';
 import { PageIndicator } from '../PageIndicator';
 
-const ScrollViewCopy: any = ScrollView;
+const ScrollViewCopy: any = ScrollView; // TODO fix this any
 
 export interface MultiCarouselState {
   containerWidth: number;
@@ -89,8 +91,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   componentDidUpdate(
     prevProps: MultiCarouselProps<ItemT>,
-    prevState: MultiCarouselState,
-    snapshot: any
+    prevState: MultiCarouselState
   ): void {
     const animateItemChange = () => {
       this.state.opacity.setValue(0);
@@ -125,7 +126,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     }
   }
 
-  handleContainerSizeChange = (e: any) => {
+  handleContainerSizeChange = (e: LayoutChangeEvent) => {
     const containerWidth = e.nativeEvent.layout.width;
 
     if (containerWidth === this.state.containerWidth) {
@@ -138,26 +139,23 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     });
   }
 
-  goToNext = (options?: any) => {
-    options = options || { animated: true };
+  goToNext = () => {
     const { currentIndex } = this.state;
     const nextIndex =
       currentIndex + 1 > this.getPageNum() - 1
         ? this.getPageNum() - 1
         : currentIndex + 1;
 
-    this.goTo(nextIndex, options);
+    this.goTo(nextIndex);
   }
 
-  goToPrev = (options?: any) => {
-    options = options || { animated: true };
-
+  goToPrev = () => {
     const { currentIndex } = this.state;
     const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
-    this.goTo(nextIndex, options);
+    this.goTo(nextIndex);
   }
 
-  goTo = (index: number, options?: any) => {
+  goTo = (index: number) => {
     animatedScrollTo(
       findDOMNode(this.scrollView),
       index * this.getPageWidth(),
@@ -207,7 +205,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     );
   }
 
-  handleTouchStart = (e: any) => {
+  handleTouchStart = (e: NativeSyntheticEvent<MouseEvent>) => {
     const scrollViewNode = findDOMNode(this.scrollView);
     this.initialScrollX = e.nativeEvent.pageX;
     if (scrollViewNode instanceof Element) {
@@ -217,7 +215,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.mouseDown = true;
   }
 
-  handleTouchEnd = (e: any) => {
+  handleTouchEnd = (e: NativeSyntheticEvent<MouseEvent>) => {
     this.mouseDown = false;
     const dx = this.initialScrollX - e.nativeEvent.pageX;
     const vx = dx / (this.initialScrollXTime - Date.now());
@@ -231,7 +229,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     }
   }
 
-  handleTouchMove = (e: any) => {
+  handleTouchMove = (e: NativeSyntheticEvent<MouseEvent>) => {
     if (this.mouseDown) {
       const dx = this.initialScrollX - e.nativeEvent.pageX;
       const scrollX = this.currentScrollX + dx;
@@ -259,7 +257,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     );
   }
 
-  _saveScrollViewRef = (ref: any) => this.scrollView = ref;
+  _saveScrollViewRef = (ref: HTMLElement) => this.scrollView = ref;
 
   // tslint:disable-next-line:cyclomatic-complexity
   render(): React.ReactNode {
