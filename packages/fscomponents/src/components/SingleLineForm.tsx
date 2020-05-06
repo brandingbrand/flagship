@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 import { Form, FormLabelPosition } from './Form';
+import {Dictionary} from '@brandingbrand/fsfoundation';
 
 export interface SingleLineFormProps {
-  fieldsTypes: any;
-  fieldsOptions?: any;
-  fieldsStyleConfig?: any;
+  fieldsTypes: Dictionary;
+  fieldsOptions?: Dictionary;
+  fieldsStyleConfig?: Dictionary;
   labelPosition?: FormLabelPosition;
-  onSubmit?: (value: any) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any;
-  value?: any;
-  style?: any;
+  onSubmit?: <T>(value: T) => void;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<ViewStyle>;
+  submitText?: () => void;
+  value?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
 const S = StyleSheet.create({
@@ -35,10 +35,10 @@ const S = StyleSheet.create({
 });
 
 export class SingleLineForm extends PureComponent<SingleLineFormProps> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
+  form?: Form | null;
+  fieldsStyleConfig: Dictionary;
+  fieldsTypes: Dictionary;
+  fieldsOptions?: Dictionary;
   labelPosition: FormLabelPosition;
 
   constructor(props: SingleLineFormProps) {
@@ -57,7 +57,7 @@ export class SingleLineForm extends PureComponent<SingleLineFormProps> {
   }
 
   handleSubmit = () => {
-    const value = this.form.getValue();
+    const value = this.form ? this.form.getValue() : null;
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
