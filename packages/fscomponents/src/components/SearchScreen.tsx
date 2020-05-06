@@ -101,7 +101,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus !== false && this.searchBar) {
+    if (this.searchBar !== null && (searchBarShouldFocus === undefined || searchBarShouldFocus)) {
       this.searchBar.focusInput();
     }
 
@@ -299,7 +299,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {
