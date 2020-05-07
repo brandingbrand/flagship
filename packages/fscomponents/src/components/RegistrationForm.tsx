@@ -73,7 +73,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
       return value === this.state.value.password;
     });
 
-    ConfirmPasswordType.getValidationErrorMessage = (s: string) => {
+    ConfirmPasswordType.getValidationErrorMessage = () => {
       return FSI18n.string(componentTranslationKeys.errors.password.mismatch);
     };
 
@@ -186,7 +186,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     }
   }
 
-  handleChange = (value: () => void) => {
+  handleChange = (value: string) => {
     this.setState({
       value
     });
