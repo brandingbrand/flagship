@@ -8,6 +8,8 @@ import { WithProductIndexProps } from './ProductIndexProvider';
 import ProductList from './ProductList';
 
 import {
+  FilterItem,
+  FilterItemValue,
   FilterList,
   FilterListDrilldown,
   Loading,
@@ -103,6 +105,7 @@ export default class ProductIndexGrid extends Component<
     return (
       <ProductItem
         style={S.productItem}
+        id={item.id}
         title={item.title}
         brand={item.brand}
         image={item.images && item.images.find(img => !!img.uri)}
@@ -151,7 +154,7 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  renderHeader = () => {
+  renderHeader = (): JSX.Element | null => {
     const { commerceData } = this.props;
 
     if (!commerceData) {
@@ -204,11 +207,14 @@ export default class ProductIndexGrid extends Component<
     this.setState({ sortModalVisble: false });
   }
 
-  handleFilterApply = (selectedItems: any, info: any) => {
+  handleFilterApply = (
+    selectedItems: { [key: string]: string[] },
+    info?: { isButtonPress: boolean }
+  ) => {
     if (!this.props.filterInBackground) {
       this.closeFilterModal();
     } else {
-      if (info && info.isButtonPress) {
+      if (!!info && info.isButtonPress) {
         this.closeFilterModal();
         return;
       }
@@ -377,7 +383,7 @@ export default class ProductIndexGrid extends Component<
     return newQuery;
   }
 
-  renderModalHeader = ({ title, onPress }: any) => {
+  renderModalHeader = ({ title, onPress }: { title: string; onPress: () => void }) => {
     const drilldownStyle =
       this.props.filterType === 'drilldown'
         ? { height: 50, paddingTop: 0 }
@@ -421,7 +427,7 @@ export default class ProductIndexGrid extends Component<
               onPress: this.closeSortModal
             })}
             <SelectableList
-              items={commerceData.sortingOptions}
+              items={commerceData.sortingOptions || []}
               onChange={this.handleSortChange}
               selectedId={commerceData.selectedSortingOption}
               {...this.props.sortListProps}
@@ -438,8 +444,9 @@ export default class ProductIndexGrid extends Component<
     });
   }
 
-  renderModal = ({ content, visible, closeModal }: any) => {
-    const SelectedModal: any =
+  renderModal = ({ content, visible, closeModal }:
+    { content: JSX.Element | null; visible: boolean; closeModal: () => void }) => {
+    const SelectedModal =
       this.props.modalType === 'half-screen' ? ModalHalfScreen : Modal;
     return (
       <SelectedModal
@@ -461,12 +468,15 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  mergeRefinementsAndSort = (refinementsData: any, sortingData: any) => {
+  mergeRefinementsAndSort = (
+    refinementsData: CommerceTypes.Refinement[],
+    sortingData: CommerceTypes.SortingOption[]
+  ) => {
     const refinements = [...refinementsData];
     refinements.unshift({
       id: SORT_ITEM_KEY,
       title: 'Sort By',
-      values: sortingData.map((item: any) => ({
+      values: sortingData.map((item: CommerceTypes.SortingOption) => ({
         id: item.id,
         value: item.id,
         title: item.title
@@ -477,7 +487,7 @@ export default class ProductIndexGrid extends Component<
   }
 
   mergeSelectedRefinementsAndSort = (
-    selectedRefinements: any,
+    selectedRefinements: Pick<CommerceTypes.ProductIndex, 'refinements'>,
     selectedSortId: string
   ) => {
     return {
@@ -510,13 +520,13 @@ export default class ProductIndexGrid extends Component<
       const items = this.props.mergeSortToFilter
         ? this.mergeRefinementsAndSort(
             commerceData.refinements,
-            commerceData.sortingOptions
+            commerceData.sortingOptions || []
           )
         : commerceData.refinements;
 
       const selectedItems = this.props.mergeSortToFilter && commerceData.selectedSortingOption
         ? this.mergeSelectedRefinementsAndSort(
-            commerceData.selectedRefinements,
+            commerceData.selectedRefinements || {},
             commerceData.selectedSortingOption
           )
         : commerceData.selectedRefinements;
@@ -524,7 +534,7 @@ export default class ProductIndexGrid extends Component<
       content = (
         <View style={S.modalContainer}>
           <FilterListDrilldown
-            items={items}
+            items={items as FilterItem[]}
             onApply={this.handleFilterApply}
             onReset={this.handleFilterReset}
             selectedItems={selectedItems}
@@ -532,7 +542,7 @@ export default class ProductIndexGrid extends Component<
             renderFilterItemValue={this.renderItemValueForCombinedFilterAndSort}
             applyOnSelect={this.props.filterInBackground}
             singleFilterIds={
-              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : null
+              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : undefined
             }
             {...this.props.FilterListDrilldownProps}
           />
@@ -565,12 +575,12 @@ export default class ProductIndexGrid extends Component<
   }
 
   renderItemForCombinedFilterAndSort = (
-    item: any,
-    index: any,
-    selectedValues: any,
-    handlePress: any,
-    renderFilterItem: any
-  ) => {
+    item: FilterItem,
+    index: number,
+    selectedValues: string[],
+    handlePress: () => void,
+    renderFilterItem: Function
+  ): JSX.Element => {
     if (item.id === SORT_ITEM_KEY) {
       return (
         <View>
@@ -588,13 +598,13 @@ export default class ProductIndexGrid extends Component<
   }
 
   renderItemValueForCombinedFilterAndSort = (
-    item: any,
-    index: any,
-    value: any,
-    handleSelect: any,
-    selected: any,
-    renderFilterItemValue: any
-  ) => {
+    item: FilterItem,
+    index: number,
+    value: FilterItemValue,
+    handleSelect: Function,
+    selected: boolean,
+    renderFilterItemValue: Function
+  ): JSX.Element => {
     if (item.id === SORT_ITEM_KEY) {
       const selectableRowProps =
         this.props.FilterListDrilldownProps &&
@@ -702,7 +712,7 @@ export default class ProductIndexGrid extends Component<
     }
   }
 
-  renderFooter = () => {
+  renderFooter = (): JSX.Element | null => {
     const { commerceData } = this.props;
     const hasAnotherPage: boolean = commerceData !== undefined && commerceData.page !== undefined &&
       commerceData.page < this.maxPage(commerceData);

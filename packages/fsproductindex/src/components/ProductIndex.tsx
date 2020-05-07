@@ -5,7 +5,15 @@ import {
   CommerceDataSource,
   CommerceTypes
 } from '@brandingbrand/fscommerce';
-import { Loading } from '@brandingbrand/fscomponents';
+import {
+  FilterListDrilldownProps,
+  FilterListProps,
+  GridProps,
+  Loading,
+  ProductItemProps,
+  RefineActionBarProps,
+  SelectableListProps
+} from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
 import ProductIndexGrid from './ProductIndexGrid';
@@ -24,9 +32,10 @@ export interface UnwrappedProductIndexProps {
   errorText?: string;
   errorTextStyle?: StyleProp<TextStyle>;
   filterHeaderTitle?: string;
-  filterListProps?: any;
-  gridProps?: any;
-  handleFilterApply?: (data: any) => void;
+  filterListProps?: Omit<FilterListProps, 'items' | 'onApply' | 'onReset' | 'selectedItems'>;
+  gridProps?: Omit<GridProps<any>,
+    'style' | 'columns' | 'data' | 'renderItem' | 'renderHeader' | 'renderFooter'>;
+  handleFilterApply?: (data: {[key: string]: string[]}) => void;
   handleFilterReset?: () => void;
   onLoadComplete?: (
     loadMore: Function,
@@ -34,21 +43,21 @@ export interface UnwrappedProductIndexProps {
     count?: number,
     responseCount?: number
   ) => void;
-  handleSortChange?: (data: any) => void;
+  handleSortChange?: (data: string) => void;
   hideActionBar?: boolean;
-  keywords?: any;
-  listStyle?: any;
-  loadingStyle?: any;
+  listStyle?: StyleProp<ViewStyle>;
+  loadingStyle?: StyleProp<ViewStyle>;
   loadMoreButtonStyle?: StyleProp<ViewStyle>;
   loadMoreButtonTextStyle?: StyleProp<TextStyle>;
   loadMoreLoadingStyle?: StyleProp<ViewStyle>;
   modalCancelStyle?: StyleProp<ViewStyle>;
   modalHeaderStyle?: StyleProp<ViewStyle>;
   modalHeaderTextStyle?: StyleProp<TextStyle>;
-  onNavigate?: (data: any) => void;
-  productItemProps?: any;
+  onNavigate?: (data: CommerceTypes.Product) => void;
+  productItemProps?: Partial<ProductItemProps>;
   productQuery: CommerceTypes.ProductQuery;
-  refineActionBarProps?: any;
+  refineActionBarProps?: Omit<RefineActionBarProps,
+    'onSortPress' | 'onFilterPress' | 'sortButtonStyle'>;
   renderFilter?: (
     handleFilterApply: Function,
     handleFilterReset: Function,
@@ -72,9 +81,10 @@ export interface UnwrappedProductIndexProps {
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
   sortHeaderStyle?: string;
-  sortListProps?: any;
-  FilterListDrilldownProps?: any;
-  style?: any;
+  sortListProps?: Omit<SelectableListProps, 'items' | 'onChange' | 'selectedId'>;
+  FilterListDrilldownProps?: Omit<FilterListDrilldownProps,
+    'items' | 'onApply' | 'onReset' | 'selectedItems' | 'applyOnSelect' | 'singleFilterIds'>;
+  style?: StyleProp<ViewStyle>;
   modalAnimationType?: 'none' | 'slide' | 'fade';
   modalType?: 'full-screen' | 'half-screen';
   filterType?: 'accordion' | 'drilldown';
