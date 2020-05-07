@@ -11,7 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import screenWrapper from '../components/screenWrapper';
 import { AppConfigType, Tab } from '../types';
-import { NativeModules, Platform } from 'react-native';
+import { InteractionManager, NativeModules, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 const { CodePush } = NativeModules;
 import NativeConstants from '../lib/native-constants';
@@ -122,12 +122,14 @@ export class FSApp extends FSAppBase {
       }
     }
 
-    return Navigation.setRoot({
-      root: {
-        stack: {
-          children
+    return InteractionManager.runAfterInteractions(async () => {
+      return Navigation.setRoot({
+        root: {
+          stack: {
+            children
+          }
         }
-      }
+      });
     });
   }
 
@@ -143,14 +145,18 @@ export class FSApp extends FSAppBase {
     }
 
     const tabPromises = tabs.map(this.prepareTab.bind(this));
-    return Navigation.setRoot({
-      root: {
-        bottomTabs: {
-          id: bottomTabsId || 'bottomTabsId',
-          children: await Promise.all(tabPromises),
-          options: bottomTabsOptions
+    const children = await Promise.all(tabPromises);
+
+    return InteractionManager.runAfterInteractions(async () => {
+      return Navigation.setRoot({
+        root: {
+          bottomTabs: {
+            id: bottomTabsId || 'bottomTabsId',
+            children,
+            options: bottomTabsOptions
+          }
         }
-      }
+      });
     });
   }
 
@@ -204,7 +210,9 @@ export class FSApp extends FSAppBase {
     }
 
     const children: LayoutStackChildren[] = [{
-      component: tab
+      component: {
+        name: tab.name
+      }
     }];
 
     // Push saved screen onto the first tab stack
