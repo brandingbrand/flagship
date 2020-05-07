@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // @ts-ignore TODO: Update tcomb-form-native to support typing
 import * as t from 'tcomb-form-native';
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
-import { Omit } from '@brandingbrand/fsfoundation';
+import {Dictionary, Omit} from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.promoForm;
 
@@ -18,8 +18,8 @@ export interface PromoFormProps extends Omit<SingleLineFormProps, 'fieldsTypes'>
 }
 
 export class PromoForm extends Component<PromoFormProps> {
-  fieldsTypes: any;
-  fieldsOptions: any;
+  fieldsTypes: Dictionary;
+  fieldsOptions: Dictionary;
 
   constructor(props: PromoFormProps) {
     super(props);
