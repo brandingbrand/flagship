@@ -243,7 +243,8 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
   }
 
   private keyExtractor = (items: ItemT[], index: number): string => {
-    const key = items.map((item: any) => item && (item.key || item.id)).filter(Boolean).join();
+    const key = items.map((item: ItemT & { id?: string; key?: string }) =>
+      item && (item.key || item.id)).filter(Boolean).join();
 
     return key || '' + index;
   }
