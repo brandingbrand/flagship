@@ -7,6 +7,7 @@ import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import {Dictionary} from '@brandingbrand/fsfoundation';
 const componentTranslationKeys = translationKeys.flagship.loginForm;
 
 export interface LoginFormProps {
@@ -22,12 +23,12 @@ export interface LoginFormProps {
   /**
    * Form fields style
    */
-  fieldsStyleConfig?: any;
+  fieldsStyleConfig?: Dictionary;
 
   /**
    * Form fields options
    */
-  fieldsOptions?: any;
+  fieldsOptions?: Dictionary;
 
   /**
    * Submit button text styling
@@ -54,7 +55,7 @@ export interface LoginFormProps {
   /**
    * Called on form submission
    */
-  onSubmit: (value: any) => void;
+  onSubmit: <T>(value: T) => void;
 }
 
 export interface LoginFormState {
@@ -75,10 +76,10 @@ EmailType.getValidationErrorMessage = (s: string) => {
 };
 
 export class LoginForm extends Component<LoginFormProps, LoginFormState> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
+  form?: Form | null;
+  fieldsStyleConfig: Dictionary;
+  fieldsTypes: Dictionary;
+  fieldsOptions: Dictionary;
   labelPosition: FormLabelPosition;
 
   constructor(props: LoginFormProps) {
@@ -124,14 +125,14 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
   }
 
   handleSubmit = () => {
-    const value = this.form.getValue();
+    const value = this?.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   }
 
   focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+    const field = this?.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -139,7 +140,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     }
   }
 
-  handleChange = (value: any) => {
+  handleChange = (value: string) => {
     this.setState({
       value
     });
