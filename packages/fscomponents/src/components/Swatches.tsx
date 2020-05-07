@@ -13,7 +13,7 @@ import { findIndex } from 'lodash-es';
 
 import { style as S } from '../styles/Swatches';
 
-import { Swatch, SwatchStyle } from './Swatch';
+import { Swatch, SwatchProps, SwatchStyle } from './Swatch';
 
 export interface SwatchItemType extends CommerceTypes.OptionValue {
   color?: string;
@@ -25,7 +25,7 @@ export interface SwatchesProps extends SwatchStyle {
   items: SwatchItemType[];
   defaultValue?: string;
   style?: StyleProp<ViewStyle>;
-  renderSwatch?: (swatch: any) => React.ReactNode;
+  renderSwatch?: (swatch: SwatchProps) => React.ReactNode;
 
   label?: boolean;
   labelContainerStyle?: StyleProp<ViewStyle>;
@@ -33,9 +33,9 @@ export interface SwatchesProps extends SwatchStyle {
   labelValueStyle?: StyleProp<TextStyle>;
   showingMoreStyle?: StyleProp<ViewStyle>;
   showingLessStyle?: StyleProp<ViewStyle>;
-  renderLabel?: (swatch: any) => void;
+  renderLabel?: (swatch: SelectedSwatchItem) => void;
 
-  onChangeSwatch?: (swatch: any) => void;
+  onChangeSwatch?: (swatch: string) => void;
 
   // Can you select swatches
   disabled?: boolean;
@@ -46,9 +46,16 @@ export interface SwatchesProps extends SwatchStyle {
   moreLessStyle?: StyleProp<ViewStyle>;
 }
 
-export interface SwatchesState {
-  selected: any;
+export interface SelectedSwatchItem {
+  value: string;
+  name: string;
+}
 
+export interface SwatchesState {
+  selected: {
+    index: number | null;
+    swatch: SelectedSwatchItem;
+  };
   shouldShowMoreLess: boolean;
   showMore: boolean;
 }
@@ -85,8 +92,8 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       selected: {
         index: null,
         swatch: {
-          value: null,
-          name: null
+          value: '',
+          name: ''
         }
       },
       shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
@@ -94,10 +101,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     };
   }
 
-  onSelect = (swatch: any) => {
+  onSelect = (swatch: SwatchProps) => {
     const option = {
-      value: swatch.value,
-      name: swatch.name
+      value: swatch.value || '',
+      name: swatch.name || ''
     };
 
     this.setState({
@@ -109,7 +116,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     const { onChangeSwatch } = this.props;
     if (onChangeSwatch) {
-      onChangeSwatch(swatch.value);
+      onChangeSwatch(swatch.value || '');
     }
   }
 
@@ -170,7 +177,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     );
   }
 
-  _renderLabel = (swatch: any) => {
+  _renderLabel = (swatch: SelectedSwatchItem) => {
     const {
       title,
       labelContainerStyle,
