@@ -1,5 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Animated, Dimensions, PanResponder, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  PanResponder,
+  PanResponderInstance,
+  StyleProp,
+  View,
+  ViewStyle
+} from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -7,8 +15,8 @@ export interface ZoomCarouselItemProps {
   onItemMoveOutX: (dx: number) => void;
   onItemMoveOutY: (dy: number) => void;
   onZoomRelease: (didistanceDiffff: number) => void;
-  onMoveRelease: (evt: any, gestureState: any, justMoveX: boolean) => void;
-  style?: any;
+  onMoveRelease: <T, K>(evt: T, gestureState: K, justMoveX: boolean) => void;
+  style?: StyleProp<ViewStyle>;
 }
 export interface ZoomCarouselItemState {
   zoomImageSize: Animated.Value;
@@ -20,7 +28,7 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
   distanceDiff: number = 0;
   isZooming: boolean = false;
   justMoveX?: boolean;
-  panResponder: any = null;
+  panResponder?: PanResponderInstance;
 
   constructor(props: ZoomCarouselItemProps) {
     super(props);
@@ -136,7 +144,7 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
       ]
     };
     return (
-      <View {...this.panResponder.panHandlers} style={this.props.style}>
+      <View {...this?.panResponder?.panHandlers} style={this.props.style}>
         <Animated.View style={zoomStyle}>{this.props.children}</Animated.View>
       </View>
     );

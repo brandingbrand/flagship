@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import {
   Dimensions,
-  Image,
+  Image, ImageSourcePropType,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,7 +16,7 @@ import {
   View
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
-import { MultiCarousel } from '../MultiCarousel';
+import {MultiCarousel, SlideChangeEvent} from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 import { Modal } from '../Modal';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -27,11 +27,11 @@ const searchIcon = require('../../../assets/images/search.png');
 
 let ZOOM_CAROUSEL_ID = 0;
 
-type ImageGetSize = (
+type ImageGetSize = <T>(
   uri: string,
   success: (width: number, height: number) => void,
-  failure: (error: any) => void
-) => any;
+  failure: (error: Error) => void
+) => T;
 
 // @ts-ignore @types/react-native does not correctly define Image.getSize as a static method.
 const getSize: ImageGetSize = Image.getSize.bind(Image);
@@ -206,7 +206,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     });
   }
 
-  handleSlideChange = ({ currentIndex, nextIndex }: any) => {
+  handleSlideChange = ({ nextIndex }: SlideChangeEvent) => {
     this.setState({
       currentIndex: nextIndex
     });
@@ -214,11 +214,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   handleZoomCarouselChange = (pswp: any) => {
     const currentIndex = pswp.getCurrentIndex();
+    // TODO Cannot find declaration of function getCurrentIndex
     this.setState({ currentIndex });
     this.multiCarousel.goTo(currentIndex);
   }
 
-  handleLayoutChange = (e: any) => {
+  handleLayoutChange = () => {
     const { centerMode, peekSize = 0, gapSize = 0 } = this.props;
     const screenWidth = Dimensions.get('window').width;
 
@@ -256,7 +257,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     }
   }
 
-  renderImage = (item: any, i: number) => {
+  renderImage = (item: {src: ImageSourcePropType}, i: number) => {
     return (
       <View style={this.props.fillContainer ? S.fullHeight : null}>
         {this.props.renderImageWeb &&
