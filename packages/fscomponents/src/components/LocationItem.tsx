@@ -79,8 +79,12 @@ export interface LocationItemProps {
   buttonTitleStyle?: StyleProp<TextStyle>;
 }
 
+interface RenderOption {
+  showDistance?: boolean;
+}
+
 export class LocationItem extends Component<LocationItemProps> {
-  render(): any {
+  render(): JSX.Element {
     const { format, style } = this.props;
 
     return (
@@ -119,7 +123,7 @@ export class LocationItem extends Component<LocationItemProps> {
   };
   /* tslint:enable */
 
-  renderStoreDetail = (options: any = {}) => {
+  renderStoreDetail = (options: RenderOption = {}) => {
     const {
       locationName,
       address,
@@ -147,7 +151,7 @@ export class LocationItem extends Component<LocationItemProps> {
     );
   }
 
-  renderNavIcon = (options: any = {}) => {
+  renderNavIcon = (options: RenderOption = {}) => {
     const {
       navIcon,
       distance,
