@@ -14,6 +14,7 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 const TcForm = require('@brandingbrand/tcomb-form-native');
 import { cloneDeep } from 'lodash-es';
 import { stringify } from 'qs';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 import { Button, ButtonProps } from './Button';
 import { Modal } from './Modal';
@@ -71,7 +72,7 @@ export interface CMSFeedbackProps {
 
   // Options to customize how Tcomb Form & React Native Forms handle inputs.
   // See https://github.com/gcanti/tcomb-form-native#rendering-options
-  fieldOptions?: any;
+  fieldOptions?: Dictionary;
 
   closeButtonProps?: ButtonProps; // Props to send to Button component for close button
   openButtonProps?: ButtonProps; // Props to send to Button component for open button
