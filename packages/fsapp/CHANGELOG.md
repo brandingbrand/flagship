@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* address android bundle restart crashes (83e2dc5), closes [/github.com/wix/react-native-navigation/issues/3767#issuecomment-438029517](https://github.com//github.com/wix/react-native-navigation/issues/3767/issues/issuecomment-438029517) [/github.com/wix/react-native-navigation/issues/5096#issuecomment-492032466](https://github.com//github.com/wix/react-native-navigation/issues/5096/issues/issuecomment-492032466)
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 
