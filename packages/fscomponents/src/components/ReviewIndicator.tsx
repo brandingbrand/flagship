@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -24,13 +24,20 @@ export interface NormalizedValue {
   hasHalf: boolean;
 }
 
-const Star = ({ renderStar, style, text }: any) => {
+interface StarProps {
+  style: StyleProp<TextStyle>;
+  text: string;
+  renderStar?: () => React.ReactNode;
+}
+
+const Star = ({ renderStar, style, text }: StarProps): JSX.Element => {
   if (renderStar) {
-    return renderStar();
+    return renderStar() as JSX.Element;
   }
 
   return <Text style={[S.star, style]}>{text}</Text>;
 };
+
 export const ReviewIndicator: FunctionComponent<ReviewIndicatorProps> =
 memo((props): JSX.Element => {
 
@@ -68,9 +75,9 @@ memo((props): JSX.Element => {
 
   const renderHalf = (): JSX.Element => {
     const { itemSize, itemColor } = props;
-    const customStarStyle: any = {};
-    const containerStarStyle: any = {};
-    const starHalfRightStyle: any = {};
+    const customStarStyle: StyleProp<TextStyle> = {};
+    const containerStarStyle: StyleProp<ViewStyle> = {};
+    const starHalfRightStyle: StyleProp<TextStyle> = {};
 
     if (itemSize) {
       customStarStyle.fontSize = itemSize;
@@ -112,7 +119,7 @@ memo((props): JSX.Element => {
   } = props;
 
   const itemData = getItemData(value, base);
-  const customStarStyle: any = {};
+  const customStarStyle: StyleProp<TextStyle> = {};
 
   if (itemSize) {
     customStarStyle.fontSize = itemSize;
