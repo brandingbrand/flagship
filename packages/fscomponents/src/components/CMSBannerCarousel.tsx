@@ -17,11 +17,11 @@ const DEFAULT_CAROUSEL_PROPS = {
   height: 200
 };
 
-export interface CMSBannerCarouselProps extends CMSBannerProps, CMSProviderProps {
-  carouselProps?: MultiCarouselProps<CMSBannerCarouselProps>;
+export interface CMSBannerCarouselProps<T> extends CMSBannerProps, CMSProviderProps {
+  carouselProps?: MultiCarouselProps<T>;
 }
 
-class CMSBannerCarousel extends CMSBanner<CMSBannerCarouselProps> {
+class CMSBannerCarousel<T> extends CMSBanner<CMSBannerCarouselProps<T>> {
   render(): React.ReactNode {
     const { carouselProps } = this.props;
     const { cmsData } = this.props;
