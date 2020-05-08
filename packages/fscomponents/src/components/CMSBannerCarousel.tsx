@@ -11,14 +11,14 @@ import { View } from 'react-native';
 import { CMSProviderProps, withCMSProvider } from './CMSProvider';
 
 import { CMSBanner, CMSBannerProps } from './CMSBanner';
-import { MultiCarousel } from './MultiCarousel';
+import {MultiCarousel, MultiCarouselProps} from './MultiCarousel';
 
 const DEFAULT_CAROUSEL_PROPS = {
   height: 200
 };
 
 export interface CMSBannerCarouselProps extends CMSBannerProps, CMSProviderProps {
-  carouselProps?: any;
+  carouselProps?: MultiCarouselProps<CMSBannerCarouselProps>;
 }
 
 class CMSBannerCarousel extends CMSBanner<CMSBannerCarouselProps> {
