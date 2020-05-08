@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* update fstestproject to only use mock data sources ([1ce3c54](https://github.com/brandingbrand/flagship/commit/1ce3c54067b4fd51ee0d4f2c17f27278db52ad95))
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 **Note:** Version bump only for package @brandingbrand/fstestproject
