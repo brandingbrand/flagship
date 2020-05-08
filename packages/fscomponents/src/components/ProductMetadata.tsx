@@ -130,7 +130,9 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       reviewCountStyle,
       reviewIndicatorProps
     } = props;
-    const stats = review && review.statistics || {} as any;
+
+    const statsType: {[p: string ]: number } = {};
+    const stats = review && review.statistics || statsType;
     const { averageRating, reviewCount } = stats;
 
     return (
