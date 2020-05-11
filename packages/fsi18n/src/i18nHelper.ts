@@ -43,6 +43,15 @@ export default class I18nHelper {
   }
 
   /**
+   * Change language
+   *
+   * @param {string} locale - Set locale
+   */
+  public setLocale(locale: string): void {
+    this.i18n.locale = locale;
+  }
+
+  /**
    * Creates an object matching the same structure as the translation definitions
    * object, but with the string translation values replaced by their object path
    *
@@ -168,7 +177,7 @@ export default class I18nHelper {
    *
    * @returns {string} - Localized string
    */
-  public string(translationKey?: I18n.Scope, options?: I18n.TranslateOptions): string {
+  public string(translationKey?: TranslationKey, options?: I18n.TranslateOptions): string {
     if (Object.getOwnPropertyNames(this.i18n.translations).length === 0) {
       throw MISSING_TRANSLATIONS_ERROR;
     }

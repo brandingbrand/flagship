@@ -14,6 +14,7 @@ import { SelectableRow } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
@@ -279,6 +280,9 @@ export class FilterListDrilldown extends PureComponent<
       <TouchableOpacity
         style={[S.firstLevelItemContainer, this.props.itemStyle]}
         onPress={this.drilldown(item)}
+        accessibilityRole={'button'}
+        accessibilityHint={FSI18n.string(componentTranslationKeys.hintToggle)}
+        accessibilityLabel={item.title}
       >
         <View style={S.firstLevelItem}>
           <Text
@@ -304,7 +308,7 @@ export class FilterListDrilldown extends PureComponent<
             numberOfLines={1}
             ellipsizeMode='tail'
           >
-            {selectedValueTitles.join(', ') || 'All'}
+            {selectedValueTitles.join(', ') || FSI18n.string(componentTranslationKeys.all)}
           </Text>
         </View>
         <View style={[S.arrow, S.arrowNext]} />
@@ -347,6 +351,9 @@ export class FilterListDrilldown extends PureComponent<
         <TouchableOpacity
           style={S.secondLevelHeader}
           onPress={this.backToFirstLevel}
+          accessibilityRole={'button'}
+          accessibilityHint={FSI18n.string(componentTranslationKeys.hintBack)}
+          accessibilityLabel={item.title}
         >
           <View style={S.arrowContainer}>
             <View style={[S.arrow, S.arrowBack]} />
@@ -369,18 +376,22 @@ export class FilterListDrilldown extends PureComponent<
           <TouchableOpacity
             style={[S.resetButton, this.props.resetButtonStyle]}
             onPress={this.handleRest}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
           >
             <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || 'Clear All'}
+              {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
             </Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity
           style={[S.applyButton, this.props.applyButtonStyle]}
           onPress={this.handleApply}
+          accessibilityRole={'button'}
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
         >
           <Text style={this.props.applyButtonTextStyle}>
-            {this.props.applyText || 'Done'}
+            {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
           </Text>
         </TouchableOpacity>
         <Text style={S.filterTitle}>
