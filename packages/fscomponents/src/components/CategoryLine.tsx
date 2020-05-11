@@ -15,19 +15,32 @@ import { TouchableHighlightLink } from './TouchableHighlightLink';
 
 import { style as S } from '../styles/CategoryLine';
 
-export interface CategoryLineProps extends CommerceTypes.Category {
-  accessorySrc?: ImageURISource;
-  accessoryStyle?: StyleProp<ImageStyle>;
+export interface SerializableCategoryLineProps {
+  accessoryStyle?: ImageStyle;
   href?: string;
-  imageStyle?: StyleProp<ImageStyle>;
-  onPress?: (item: CommerceTypes.Category) => void;
+  imageStyle?: ImageStyle;
   showAccessory?: boolean;
-  renderAccessory?: () => React.ReactNode;
   showImage?: boolean;
-  style?: StyleProp<ViewStyle>;
-  titleStyle?: StyleProp<TextStyle>;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
   underlayColor?: string;
   accessibilityLabel?: string;
+}
+
+export interface CategoryLineProps extends CommerceTypes.Category,
+  Omit<SerializableCategoryLineProps,
+  'accessoryStyle' |
+  'imageStyle' |
+  'style' |
+  'titleStyle'
+  > {
+  accessorySrc?: ImageURISource;
+  accessoryStyle?: StyleProp<ImageStyle>;
+  imageStyle?: StyleProp<ImageStyle>;
+  onPress?: (item: CommerceTypes.Category) => void;
+  renderAccessory?: () => React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   accessibilityRole?: AccessibilityRole;
 }
 
