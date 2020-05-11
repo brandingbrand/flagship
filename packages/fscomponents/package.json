@@ -17,7 +17,7 @@
     "@brandingbrand/fsi18n": "^9.2.1",
     "@brandingbrand/fsnetwork": "^9.2.1",
     "@react-native-community/async-storage": "^1.6.1",
-    "@types/yup": "^0.26.27",
+    "@types/yup": "^0.28.1",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
     "formik": "^2.1.1",
