@@ -1,6 +1,7 @@
 export type NumberLike = number | string | import('decimal.js').Decimal;
 
 export interface I18n {
+  locale: string;
   currentLocale: () => string;
   fallbacks?: boolean;
   translations: Translations;
