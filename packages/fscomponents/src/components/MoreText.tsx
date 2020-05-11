@@ -14,20 +14,35 @@ const componentTranslationKeys = translationKeys.flagship.moreText;
 
 export type FormatType = 'outward' | 'inward';
 
-export interface MoreTextProps {
+export interface SerializableMoreTextProps {
   numberOfCharacters: number;
   format?: FormatType;
 
   // Container
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: ViewStyle;
 
   // Text
   text: string;
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: TextStyle;
 
   // More/Less Section
   textMore?: string;
   textLess?: string;
+  textMoreLessStyle?: TextStyle;
+}
+
+export interface MoreTextProps extends Omit<SerializableMoreTextProps,
+  'containerStyle' |
+  'textStyle' |
+  'textMoreLessStyle'
+  > {
+  // Container
+  containerStyle?: StyleProp<ViewStyle>;
+
+  // Text
+  textStyle?: StyleProp<TextStyle>;
+
+  // More/Less Section
   textMoreLessStyle?: StyleProp<TextStyle>;
   renderMoreLessOutwardSection?:
     (shouldShowMore: boolean, handlePress: () => void) => React.ReactNode;
