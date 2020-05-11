@@ -6,7 +6,8 @@ beforeEach(() => {
   i18n = new i18nHelper({
     currentLocale: () => 'en-US',
     translate: () => 'test',
-    translations: {}
+    translations: {},
+    locale: 'en-US'
   });
 });
 
