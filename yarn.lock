@@ -3367,9 +3367,9 @@
     hoist-non-react-statics "^3.3.0"
 
 "@types/i18n-js@*", "@types/i18n-js@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.2.tgz#0ead61f15a3f563ed0aa2cf37bbb569bacc22663"
-  integrity sha512-dBzhpFDXV8CsHeaXcVXvAYcUAqg0gl8PPeMRTMY9ZauTFn+NQamM3F8Ras4LZSqNgwL1Phewf1zzcojweAsiqA==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.3.tgz#84f66fb969741fecd91b854387e0682aa7fd70b7"
+  integrity sha512-GiZzazvxQ5j+EA4Zf4MtDsSaokAR/gW7FxxTlHi2p2xKFUhwAUT0B/MB8WL77P1TcqAO3MefWorFFyZS8F7s0Q==
 
 "@types/inquirer@^6.5.0":
   version "6.5.0"
