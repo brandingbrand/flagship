@@ -21,6 +21,7 @@ export interface DrawerState {
 
 const DEFAULT_BACKGROUND_COLOR = 'white';
 
+// hack to avoid ts complaint about certain web-only properties not being valid
 const StyleSheetCreate: any = StyleSheet.create;
 
 const S = StyleSheetCreate({
@@ -77,7 +78,7 @@ export default class Drawer extends Component<PropType, DrawerState> {
     }
   }
 
-  animationRef = (ref: any): void => {
+  animationRef = (ref: View | null): void => {
     if (ref) {
       if (this.drawView) {
         this.drawView.removeEventListener('transitionend', this.animationListener);
