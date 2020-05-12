@@ -33,6 +33,7 @@
     "@brandingbrand/fsengage": "^9.1.0",
     "@brandingbrand/fsengagement": "^9.1.0",
     "@brandingbrand/fsi18n": "^9.1.0",
+    "@brandingbrand/fsfoundation": "^9.1.0",
     "@brandingbrand/fsmockdatasources": "^9.1.0",
     "@brandingbrand/fsnetwork": "^9.1.0",
     "@brandingbrand/fsproductdetail": "^9.1.0",
