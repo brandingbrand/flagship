@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { color, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 
 import Svg, {
   Rect
 } from 'react-native-svg';
+import {CommerceTypes} from '@brandingbrand/fscommerce';
 
 export interface PSFilterActionBarProps {
-  showFilterModal: any;
-  showSortModal: any;
-  commerceData: any;
+  showFilterModal: (e: GestureResponderEvent) => void;
+  commerceData: CommerceTypes.ProductIndex;
   handleColumnToggle: () => void;
   isMultiColumn?: boolean;
   keyword?: string;
