@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Features
+
+* add serializable props for CategoryBox component ([e6d53c6](https://github.com/brandingbrand/flagship/commit/e6d53c60836fae70e556c4f98b9571708ed78d85))
+* add serializable props for CategoryLine component ([b1dfbc2](https://github.com/brandingbrand/flagship/commit/b1dfbc20c6d5ce55747ca8e816dcf6d797558e42))
+* add serializable props for MoreText component ([8392ed5](https://github.com/brandingbrand/flagship/commit/8392ed582042f06578906aca2239833e4b58bcd4))
+* add serializable props for ReviewsList ([4ab1110](https://github.com/brandingbrand/flagship/commit/4ab1110948a7688dd9bfb4e571807bb87ae53bae))
+* add serializable props for ReviewsSummary ([a21f924](https://github.com/brandingbrand/flagship/commit/a21f9245992a22c4504ad3ca47b04dfecc7175f9))
+* add serializable props for StatelessStepper component ([b650f1a](https://github.com/brandingbrand/flagship/commit/b650f1a729b2f383ac9e0d3db6d3822524f570ca))
+* add serializable props for Step and StepIndicator ([9997c62](https://github.com/brandingbrand/flagship/commit/9997c627702907e870909645f29b9591087131ba))
+* add serializable props for swatches ([7fb6966](https://github.com/brandingbrand/flagship/commit/7fb6966bc3a1557db67f2dd114904cea4886ee27))
+* add serializable props to Alert component ([76b0842](https://github.com/brandingbrand/flagship/commit/76b08426df74f6e7297585fe1a973a05f624223b))
+* add serializable props to carousel component ([dabcbcb](https://github.com/brandingbrand/flagship/commit/dabcbcb36a2903cea542664917cdde1e6e7fbd5d))
+* **fscomponents:** add knobs to alert stories ([40e3092](https://github.com/brandingbrand/flagship/commit/40e309236eaad7314db8e37fcc886dd4dea2534d))
+* add serializable props to CartCount component ([1ecb808](https://github.com/brandingbrand/flagship/commit/1ecb80864d46cb428ccf1340e877660feda296c6))
+* add serializable props to PayPalCheckoutButton component ([0b2d1e6](https://github.com/brandingbrand/flagship/commit/0b2d1e6b8d9b66bbdfa3d22b112827ef07fe8f2c))
+* add serializable props to SearchModal Form component ([59280fe](https://github.com/brandingbrand/flagship/commit/59280fea7f583eb1dbd32a899cc2e1b4f8e59aca))
+* add serializable props to SearchScreen component ([1388c05](https://github.com/brandingbrand/flagship/commit/1388c05052f0d9668c20a85be76f8507db4c61bd))
+* add serializable props to Stepper component ([52c3ab2](https://github.com/brandingbrand/flagship/commit/52c3ab2fece8df04e33b06f4488188f1361413be))
+* Create LoginFormFK story ([a41723f](https://github.com/brandingbrand/flagship/commit/a41723fdba9d344f4ac8c28af9a28a00f93caec2))
+* create RegistrationForm story ([011107a](https://github.com/brandingbrand/flagship/commit/011107a8adcc1a0230b45189024511bf4e6ddc9b))
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 

@@ -12,9 +12,11 @@ import { style as S } from '../styles/MoreText';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.moreText;
 
+export type FormatType = 'outward' | 'inward';
+
 export interface SerializableMoreTextProps {
   numberOfCharacters: number;
-  format?: 'outward' | 'inward';
+  format?: FormatType;
 
   // Container
   containerStyle?: ViewStyle;
@@ -28,6 +30,7 @@ export interface SerializableMoreTextProps {
   textLess?: string;
   textMoreLessStyle?: TextStyle;
 }
+
 export interface MoreTextProps extends Omit<SerializableMoreTextProps,
   'containerStyle' |
   'textStyle' |
