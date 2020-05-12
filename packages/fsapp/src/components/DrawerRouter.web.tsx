@@ -37,7 +37,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   drawerConfig: any;
   screensRoutes: Route[];
 
-  constructor(props: any) {
+  constructor(props: PropType) {
     super(props);
 
     const { appConfig, api } = this.props;
