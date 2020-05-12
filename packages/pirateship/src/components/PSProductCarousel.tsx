@@ -86,7 +86,7 @@ export default class PSProductCarousel extends Component<
           promoStyle={styles.promoText}
           buttonProps={{ palette }}
           promoContainerStyle={styles.promosContainer}
-          reviewIndicatorProps={{ itemSize: 15 } as any}
+          reviewIndicatorProps={{ itemSize: 15, value: 0 }}
           {...item}
         />
       </View>
