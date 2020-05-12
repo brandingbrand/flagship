@@ -57,10 +57,15 @@ const totals: TotalProps[] = [
   }
 ];
 
+const style = {
+  padding: 20,
+  borderWidth: 1
+};
+
 storiesOf('Totals', module)
   .add('basic usage', () => (
     <Totals
       totals={totals}
-      style={object('totalsStyle', styles.style)}
+      style={object('containerStyle', style)}
     />
   ));
