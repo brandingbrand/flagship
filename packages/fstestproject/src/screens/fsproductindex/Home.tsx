@@ -15,22 +15,22 @@ export default class Home extends Component<any> {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Row
-          text='Search DemandWare With Provider'
-          onPress={this.goTo('SearchDemandware', 'SearchDemandware', 'Back')}
+          text='Search With Provider'
+          onPress={this.goTo('Search', 'Search', 'Back')}
         />
         <Row
-          text='Product Index DemandwareGrid'
+          text='Product Index Grid'
           onPress={this.goTo(
-            'ProductIndexDemandwareGrid',
-            'ProductIndexDemandwareGrid',
+            'ProductIndexGrid',
+            'ProductIndexGrid',
             'Back'
           )}
         />
         <Row
-          text='Product Index DemandwareList'
+          text='Product Index List'
           onPress={this.goTo(
-            'ProductIndexDemandwareList',
-            'ProductIndexDemandwareList',
+            'ProductIndexList',
+            'ProductIndexList',
             'Back'
           )}
         />

@@ -27,35 +27,8 @@ export const handleAccountRequestError = (
 ): void => {
   if (error.response && error.response.status && error.response.status === 401) {
     signOutFn()
-      .then(() => {
-        navigator.setStackRoot({
-          component: {
-            name: 'Account',
-            options: {
-              topBar: {
-                title: {
-                  text: 'Account'
-                }
-              }
-            }
-          }
-        }).catch(e => console.warn('Account SETSTACKROOT error: ', e));
-      })
       .catch(e => {
         console.warn('Error signing user out', e);
-
-        navigator.setStackRoot({
-          component: {
-            name: 'Account',
-            options: {
-              topBar: {
-                title: {
-                  text: 'Account'
-                }
-              }
-            }
-          }
-        }).catch(e => console.warn('Account SETSTACKROOT error: ', e));
       });
   } else {
     console.warn(error, error.response);
