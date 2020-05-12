@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
   },
   tagLine: {
     textAlign: 'center'
+  },
+  icon: {
+    width: 99,
+    height: 24
   }
 });
 
@@ -112,6 +116,7 @@ memo((props): JSX.Element => {
       <Button
         title={titleVal}
         icon={selectedTheme.icon}
+        iconStyle={styles.icon}
         underlayColor={selectedTheme.bgActive}
         {...buttonProps}
       />
