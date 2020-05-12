@@ -3,13 +3,18 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
-import { Text } from 'react-native';
+import { ImageURISource, Text } from 'react-native';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { CreditCardForm } from '../CreditCardForm';
 import { CreditCardType } from '../../types/Store';
 import { FormLabelPosition } from '../Form';
+import {
+  object,
+  select
+// tslint:disable-next-line:no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
-const icons = {
+const icons: Record<string, ImageURISource> = {
   cvv: require('./assets/images/cvv.png'),
   card: require('./assets/images/credit_card.png')
 };
@@ -30,18 +35,31 @@ const fieldsStyle = {
   }
 };
 
+const cscIconStyle = {
+  marginLeft: 5,
+  marginTop: 35
+};
+
+const supportedIconStyle = {
+  height: 16,
+  width: 26,
+  marginLeft: 10
+};
+
+const supportedCardsLabel = <Text>Supported</Text>;
+
 const renderCCForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
   return (
     () => (
       <CreditCardForm
-        cscIcon={icons.cvv}
-        cscIconStyle={{ marginLeft: 5, marginTop: 35 }}
+        cscIcon={icons[select('Open Icon', Object.keys(icons), 'cvv')]}
+        cscIconStyle={object('style', cscIconStyle)}
         fieldsStyleConfig={fieldsStyle}
         defaultCardImage={icons.card}
         supportedCards={cardIcons}
-        supportedCardsLabel={<Text>Supported</Text>}
-        supportedCardsStyle={{ justifyContent: 'flex-start' }}
-        supportedIconStyle={{ height: 16, width: 26, marginLeft: 10 }}
+        supportedCardsLabel={supportedCardsLabel}
+        supportedCardsStyle={{justifyContent: 'flex-start'}}
+        supportedIconStyle={object('style', supportedIconStyle)}
         labelPosition={labelPosition}
       />
     )
