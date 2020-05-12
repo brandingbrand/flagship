@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+
+### Bug Fixes
+
+* **fsi18n:** Add set locale to fscomponents ([224259d](https://github.com/brandingbrand/flagship/commit/224259d9a2419a51597ccdf5b2a1b86c7472ea91))
+* **fsi18n:** Add set locale to fscomponents ([99b3371](https://github.com/brandingbrand/flagship/commit/99b33711899306b67f930c136b1844117efb80e7))
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 
