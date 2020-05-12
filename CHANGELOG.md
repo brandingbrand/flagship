@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+
+### Bug Fixes
+
+* **fsi18n:** Add set locale to fscomponents ([224259d](https://github.com/brandingbrand/flagship/commit/224259d9a2419a51597ccdf5b2a1b86c7472ea91))
+* **fsi18n:** Add set locale to fscomponents ([99b3371](https://github.com/brandingbrand/flagship/commit/99b33711899306b67f930c136b1844117efb80e7))
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* add debounce to EngagementComp ([5d11c91](https://github.com/brandingbrand/flagship/commit/5d11c91e009abe2c8b84b6d9cc1da3389dee41f9))
+* **fsengagement:** Header for discover missing after deeplinking ([c34da47](https://github.com/brandingbrand/flagship/commit/c34da47d1ed1e7361a66b4d74626bb6de0929f62)), closes [#1322](https://github.com/brandingbrand/flagship/issues/1322)
+* address android bundle restart crashes ([83e2dc5](https://github.com/brandingbrand/flagship/commit/83e2dc5ea7617d989a5728f8e202dedcc40f5249)), closes [/github.com/wix/react-native-navigation/issues/3767#issuecomment-438029517](https://github.com//github.com/wix/react-native-navigation/issues/3767/issues/issuecomment-438029517) [/github.com/wix/react-native-navigation/issues/5096#issuecomment-492032466](https://github.com//github.com/wix/react-native-navigation/issues/5096/issues/issuecomment-492032466)
+* update fstestproject to only use mock data sources ([1ce3c54](https://github.com/brandingbrand/flagship/commit/1ce3c54067b4fd51ee0d4f2c17f27278db52ad95))
+
+
+### Code Refactoring
+
+* restructure project structure ([7c267d6](https://github.com/brandingbrand/flagship/commit/7c267d643bcebde4e908ba2a3973700a1618a704))
+
+
+### Features
+
+* add serializable props for CategoryBox component ([e6d53c6](https://github.com/brandingbrand/flagship/commit/e6d53c60836fae70e556c4f98b9571708ed78d85))
+* add serializable props for CategoryLine component ([b1dfbc2](https://github.com/brandingbrand/flagship/commit/b1dfbc20c6d5ce55747ca8e816dcf6d797558e42))
+* add serializable props for MoreText component ([8392ed5](https://github.com/brandingbrand/flagship/commit/8392ed582042f06578906aca2239833e4b58bcd4))
+* add serializable props for ReviewsList ([4ab1110](https://github.com/brandingbrand/flagship/commit/4ab1110948a7688dd9bfb4e571807bb87ae53bae))
+* add serializable props for ReviewsSummary ([a21f924](https://github.com/brandingbrand/flagship/commit/a21f9245992a22c4504ad3ca47b04dfecc7175f9))
+* add serializable props for StatelessStepper component ([b650f1a](https://github.com/brandingbrand/flagship/commit/b650f1a729b2f383ac9e0d3db6d3822524f570ca))
+* add serializable props for Step and StepIndicator ([9997c62](https://github.com/brandingbrand/flagship/commit/9997c627702907e870909645f29b9591087131ba))
+* add serializable props for swatches ([7fb6966](https://github.com/brandingbrand/flagship/commit/7fb6966bc3a1557db67f2dd114904cea4886ee27))
+* add serializable props to Alert component ([76b0842](https://github.com/brandingbrand/flagship/commit/76b08426df74f6e7297585fe1a973a05f624223b))
+* add serializable props to carousel component ([dabcbcb](https://github.com/brandingbrand/flagship/commit/dabcbcb36a2903cea542664917cdde1e6e7fbd5d))
+* **fscomponents:** add knobs to alert stories ([40e3092](https://github.com/brandingbrand/flagship/commit/40e309236eaad7314db8e37fcc886dd4dea2534d))
+* add serializable props to CartCount component ([1ecb808](https://github.com/brandingbrand/flagship/commit/1ecb80864d46cb428ccf1340e877660feda296c6))
+* add serializable props to PayPalCheckoutButton component ([0b2d1e6](https://github.com/brandingbrand/flagship/commit/0b2d1e6b8d9b66bbdfa3d22b112827ef07fe8f2c))
+* add serializable props to SearchModal Form component ([59280fe](https://github.com/brandingbrand/flagship/commit/59280fea7f583eb1dbd32a899cc2e1b4f8e59aca))
+* add serializable props to SearchScreen component ([1388c05](https://github.com/brandingbrand/flagship/commit/1388c05052f0d9668c20a85be76f8507db4c61bd))
+* add serializable props to Stepper component ([52c3ab2](https://github.com/brandingbrand/flagship/commit/52c3ab2fece8df04e33b06f4488188f1361413be))
+* Create LoginFormFK story ([a41723f](https://github.com/brandingbrand/flagship/commit/a41723fdba9d344f4ac8c28af9a28a00f93caec2))
+* create RegistrationForm story ([011107a](https://github.com/brandingbrand/flagship/commit/011107a8adcc1a0230b45189024511bf4e6ddc9b))
+
+
+### BREAKING CHANGES
+
+* several packages will no longer be found in this repo
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 

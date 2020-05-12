@@ -10,19 +10,38 @@ import {
 } from 'react-native';
 import { Step } from './Step';
 
+export interface SerializableStepIndicatorProps {
+  completedStyle: ViewStyle;
+  completedTextStyle: TextStyle;
+  completedIconStyle?: ImageStyle;
+  currentStyle: ViewStyle;
+  currentStep: number;
+  currentTextStyle: TextStyle;
+  defaultStyle: ViewStyle;
+  defaultTextStyle: TextStyle;
+  style?: ViewStyle;
+  stepTitles: string[];
+}
 
-export interface StepIndicatorProps {
+export interface StepIndicatorProps extends Omit<SerializableStepIndicatorProps,
+  'completedStyle' |
+  'completedTextStyle' |
+  'completedIconStyle' |
+  'currentStyle' |
+  'currentTextStyle' |
+  'defaultStyle' |
+  'defaultTextStyle' |
+  'style'
+  > {
   completedStyle: StyleProp<ViewStyle>;
   completedTextStyle: StyleProp<TextStyle>;
   completedIcon?: ImageURISource;
   completedIconStyle?: StyleProp<ImageStyle>;
   currentStyle: StyleProp<ViewStyle>;
-  currentStep: number;
   currentTextStyle: StyleProp<TextStyle>;
   defaultStyle: StyleProp<ViewStyle>;
   defaultTextStyle: StyleProp<TextStyle>;
   onStepPressed?: (step: number, title: string) => void;
-  stepTitles: string[];
   style?: StyleProp<ViewStyle>;
 }
 
