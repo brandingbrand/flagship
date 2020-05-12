@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **flagship:** Fix line length ([4ff58ac](https://github.com/brandingbrand/flagship/commit/4ff58acc74ed1a0c95c9e32ce9a701f9cd1ad171))
+* **flagship:** Fix slashes for running iOS tests on Windows ([7e4881a](https://github.com/brandingbrand/flagship/commit/7e4881ad9f3df0f19732e7f4e0a686a30e2869ef))
+
+
+### Features
+
+* **flagship:** add ability to provide custom ios bundle version string ([84e4e9e](https://github.com/brandingbrand/flagship/commit/84e4e9e3351d3cbd98e1113a1f4d06b8ffff3c4e))
+
+
+
+
+
 ## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
 
 **Note:** Version bump only for package @brandingbrand/flagship
