@@ -66,7 +66,7 @@ export default class Card extends Component<ComponentProps> {
 
   onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = this.props;
-    const actionPayload: any = storyGradient ?
+    const actionPayload: JSON = storyGradient ?
       { ...story, storyGradient } : { ...story };
     return this.handleStoryAction(actionPayload);
   }

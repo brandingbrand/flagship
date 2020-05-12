@@ -96,12 +96,12 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
       item
     } = this.props;
 
-    const horizontalMap: any = {
+    const horizontalMap = {
       left: 'flex-start',
       center: 'center',
       right: 'flex-end'
     };
-    const verticalMap: any = {
+    const verticalMap = {
       top: 'flex-start',
       center: 'center',
       bottom: 'flex-end'
@@ -110,8 +110,12 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
     if (item && item.textOverlay) {
       textContainerStyle = {
         flex: 1,
-        justifyContent: verticalMap[item.textOverlay.options.verticalAlignment],
-        alignItems: horizontalMap[item.textOverlay.options.horizontalAlignment],
+        justifyContent: verticalMap[
+          item.textOverlay.options.verticalAlignment as keyof typeof verticalMap
+        ],
+        alignItems: horizontalMap[
+          item.textOverlay.options.horizontalAlignment as keyof typeof horizontalMap
+        ],
         marginBottom: item.textOverlay.options &&
           item.textOverlay.options.verticalAlignment === 'bottom' ?
           item.textOverlay.options.verticalDistanceFromEdge : 0,

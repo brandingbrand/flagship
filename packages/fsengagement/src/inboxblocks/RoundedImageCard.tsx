@@ -76,9 +76,9 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
   AnimatedContent: any;
   isLoaded: boolean = false;
 
-  handleImageRef = (ref: any) => this.AnimatedImage = ref;
-  handleViewRef = (ref: any) => this.myComponent = ref;
-  handleContentRef = (ref: any) => this.AnimatedContent = ref;
+  handleImageRef: <T>(ref: T) => T = ref => this.AnimatedImage = ref;
+  handleViewRef: <T>(ref: T) => T = ref => this.myComponent = ref;
+  handleContentRef: <T>(ref: T) => T = ref => this.AnimatedContent = ref;
   getChildContext = () => ({
     story: this.props.story,
     handleStoryAction: this.handleStoryAction,
@@ -182,7 +182,14 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     if (story &&
       (!actions || (actions && (actions.type === null || actions.type === 'story')))
     ) {
-      this.viewComponent.measure((fx: any, fy: any, width: any, height: any, px: any, py: any) => {
+      this.viewComponent.measure((
+        fx: number,
+        fy: number,
+        width: number,
+        height: number,
+        px: number,
+        py: number
+      ) => {
         this.AnimatedImage.transitionTo({
           scale: 1.15
         }, 500, 'ease-out');
@@ -213,7 +220,9 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
       contents, textOverlay
     } = this.props;
 
-    const verticalMap: any = {
+    const verticalMap: {
+      [p: string]: 'flex-start' | 'center' | 'flex-end';
+    } = {
       top: 'flex-start',
       center: 'center',
       bottom: 'flex-end'
@@ -221,7 +230,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     let textContainerStyle: ViewStyle = {};
     if (textOverlay) {
       textContainerStyle = {
-        justifyContent: verticalMap[textOverlay.verticalAlignment],
+        justifyContent: verticalMap[textOverlay.verticalAlignment as keyof typeof verticalMap],
         marginBottom: textOverlay.verticalAlignment === 'bottom' ?
           textOverlay.verticalDistanceFromEdge : 0,
         marginTop: textOverlay.verticalAlignment === 'top' ?

@@ -6,8 +6,10 @@ import {
   ImageURISource,
   LayoutChangeEvent,
   StyleProp,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
+import { Sizes } from '../types';
 
 export interface ImageBlockProps {
   source: ImageURISource;
@@ -16,7 +18,7 @@ export interface ImageBlockProps {
   ratio?: string;
   useRatio?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: any;
+  containerStyle?: StyleProp<ViewStyle> & Sizes;
 }
 
 export interface ImageBlockState {
@@ -47,7 +49,6 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
     const { ratio, useRatio } = this.props;
     if (useRatio && ratio) {
       this.setState(this.findImageRatio());
-
     }
   }
   findImageRatio = (): ImageBlockState => {
@@ -58,6 +59,11 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
     const win = Dimensions.get('window');
     const result: ImageBlockState = { height: undefined, width: undefined };
     result.width = win.width;
+
+    if (!containerStyle) {
+      return result;
+    }
+
     if (containerStyle.paddingLeft) {
       result.width = result.width - containerStyle.paddingLeft;
     }

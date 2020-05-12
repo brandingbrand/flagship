@@ -6,11 +6,13 @@ import {
   StyleSheet,
   TextStyle,
   TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 import WebView from 'react-native-webview';
 import VideoPlayer, { VideoProperties } from 'react-native-video';
 import * as _ from 'lodash-es';
+import { DimensionsType } from '../types';
 
 export interface VideoSource {
   src: string;
@@ -21,7 +23,7 @@ export interface VideoBlockProps {
   autoPlay?: boolean;
   repeat?: VideoProperties['repeat'];
   resizeMode?: VideoProperties['resizeMode'];
-  style?: any;
+  style?: StyleProp<ViewStyle> & DimensionsType;
   muted?: VideoProperties['muted'];
   fullscreen?: boolean;
   containerStyle?: StyleProp<TextStyle>;
@@ -67,7 +69,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
     isCard: PropTypes.bool
   };
   player: any | null = null;
-  constructor(props: any) {
+  constructor(props: VideoBlockProps) {
     super(props);
     this.state = {
       videoPaused: false,
@@ -165,21 +167,21 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
   render(): JSX.Element {
     const {
       source,
-      style = {},
+      style,
       containerStyle
     } = this.props;
 
     if (!source) {
       return <View />;
     }
-    let height = style.height || 200;
+    let height = style ? style.height || 200 : 200;
     const width = DEFAULT_WIDTH;
 
     if (source.ratio) {
       height = width / source.ratio;
     }
 
-    const blockStyle = _.cloneDeep(style);
+    const blockStyle = _.cloneDeep(style) as StyleProp<ViewStyle> & DimensionsType;
     blockStyle.height = height;
     blockStyle.width = width;
 

@@ -270,8 +270,8 @@ export default class EngagementProductModal extends
       }, 0);
     }
   }
-  handleAnimatedRef = (ref: any) => this.AnimatedModal = ref;
-  handleAnimatedContentRef = (ref: any) => this.AnimatedContent = ref;
+  handleAnimatedRef: <T>(ref: T) => T = ref => this.AnimatedModal = ref;
+  handleAnimatedContentRef: <T>(ref: T) => T = ref => this.AnimatedContent = ref;
   onBackPress = (): void => {
     this.props.navigator.pop();
   }
@@ -495,7 +495,6 @@ export default class EngagementProductModal extends
   }
   render(): JSX.Element {
     const { products } = this.props;
-    console.log(products)
     return (
       <View style={styles.growStretch}>
         <Animatable.View
