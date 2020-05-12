@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { demandware } from '../../lib/datasource';
+import { mockCommerceDataSource } from '../../lib/datasource';
 
 import { Cart } from '@brandingbrand/fscart';
 const kExampleProductIds = [
-  '701644155391',
-  '701644574116',
-  '701644395636'
+  'P0150',
+  '793775370033',
+  '842204063326'
 ];
 
 export default class CartTest extends Component<any> {
@@ -32,7 +32,7 @@ export default class CartTest extends Component<any> {
   }
 
   handlePress = (id: string) => () => {
-    demandware.addToCart(id)
+    mockCommerceDataSource.addToCart(id)
       .then(this.reloadCart)
       .catch(e => console.warn(e));
   }
@@ -57,7 +57,7 @@ export default class CartTest extends Component<any> {
         <ScrollView>
           {this.state.cartVisible && (
             <Cart
-              commerceDataSource={demandware}
+              commerceDataSource={mockCommerceDataSource}
               onChange={this.onChange}
               onImagePress={this.imagePress}
             />
