@@ -6,7 +6,11 @@ import { goToNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 
-export default class Home extends Component<any> {
+interface HomeProps {
+  componentId: string;
+}
+
+export default class Home extends Component<HomeProps> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
     goToNavPush('fscategory', this.props.componentId, screen, title, backButtonTitle);
   }

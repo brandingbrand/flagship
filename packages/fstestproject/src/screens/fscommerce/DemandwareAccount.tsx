@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { demandware } from '../../lib/datasource';
 import translate from '../../lib/translations';
+import {CommerceTypes as FSCommerceTypes} from "@brandingbrand/fscommerce";
+import {Shipment} from "@brandingbrand/fscommerce/dist/Commerce/types/Shipment";
 
 const styles = StyleSheet.create({
   section: {
@@ -30,7 +32,17 @@ const styles = StyleSheet.create({
   }
 });
 
-const parseError = (error: any) =>
+interface ErrorType {
+  response: {
+    data: {
+      fault: string;
+    }
+  }
+}
+
+type EmptyProps = {};
+
+const parseError = (error: ErrorType) =>
   (error &&
     error.response &&
     error.response.data &&
@@ -94,7 +106,7 @@ const testData = {
 /**
  * Example Component for testing Account and Session for DemandwareDataSource
  */
-export default class DemandwareAccount extends Component<any, any> {
+export default class DemandwareAccount extends Component {
   render(): JSX.Element {
     return (
       <ScrollView>
@@ -120,8 +132,13 @@ export default class DemandwareAccount extends Component<any, any> {
   }
 }
 
-class FetchAccount extends Component<any, any> {
-  constructor(props: any) {
+interface FetchAccountState {
+  lastUpdated: string | null;
+  account: FSCommerceTypes.CustomerAccount | null;
+}
+
+class FetchAccount extends  Component<EmptyProps, FetchAccountState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       account: null,
@@ -141,13 +158,13 @@ class FetchAccount extends Component<any, any> {
           onPress={() => {
             demandware
               .fetchAccount()
-              .then((account: any) =>
+              .then((account) =>
                 this.setState({
                   account,
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: Error) => {
                 console.warn(e);
                 this.setState({
                   account: null,
@@ -161,8 +178,16 @@ class FetchAccount extends Component<any, any> {
   }
 }
 
-class LoginWithGuestBasket extends Component<any, any> {
-  constructor(props: any) {
+interface LoginWithGuestBasketState {
+  message: string;
+  email: string;
+  password: string;
+  cart: FSCommerceTypes.Cart | null;
+  lastUpdated: string | null;
+}
+
+class LoginWithGuestBasket extends Component<EmptyProps, LoginWithGuestBasketState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       message: "",
@@ -208,14 +233,14 @@ class LoginWithGuestBasket extends Component<any, any> {
               .addToCart("100701", 1)
               .then(() => demandware.login(email, password))
               .then(() => demandware.fetchCart())
-              .then((cart: any) =>
+              .then(cart =>
                 this.setState({
                   message: "Login Successful",
                   lastUpdated: new Date().toISOString(),
                   cart
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -229,8 +254,15 @@ class LoginWithGuestBasket extends Component<any, any> {
   }
 }
 
-class Login extends Component<any, any> {
-  constructor(props: any) {
+interface LoginState {
+  message: string;
+  email: string;
+  password: string;
+  lastUpdated: string | null;
+}
+
+class Login extends Component<EmptyProps, LoginState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       message: "",
@@ -268,13 +300,13 @@ class Login extends Component<any, any> {
           onPress={() => {
             demandware
               .login(email, password)
-              .then((token: any) =>
+              .then(() =>
                 this.setState({
                   message: "Login Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -288,8 +320,13 @@ class Login extends Component<any, any> {
   }
 }
 
-class Logout extends Component<any, any> {
-  constructor(props: any) {
+interface LogoutState {
+  message: string;
+  lastUpdated: string | null;
+}
+
+class Logout extends Component<EmptyProps, LogoutState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       message: "",
@@ -309,13 +346,13 @@ class Logout extends Component<any, any> {
           onPress={() => {
             demandware
               .logout()
-              .then((resp: any) =>
+              .then(() =>
                 this.setState({
                   message: "Logout Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: Error) => {
                 console.warn(e);
                 this.setState({
                   message: "API failed (currently expected) but token cleared",
@@ -329,8 +366,17 @@ class Logout extends Component<any, any> {
   }
 }
 
-class Register extends Component<any, any> {
-  constructor(props: any) {
+interface RegisterState {
+  lastUpdated: string | null;
+  message: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+
+class Register extends Component<EmptyProps, RegisterState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -389,14 +435,14 @@ class Register extends Component<any, any> {
           title="Register"
           onPress={() => {
             demandware
-              .register({ firstName, lastName, email } as any, password)
-              .then((account: any) =>
+              .register({ firstName, lastName, email } as FSCommerceTypes.CustomerAccount, password)
+              .then(() =>
                 this.setState({
                   message: "Register Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -410,8 +456,15 @@ class Register extends Component<any, any> {
   }
 }
 
-class UpdateAccount extends Component<any, any> {
-  constructor(props: any) {
+interface UpdateAccountState {
+  lastUpdated: string | null;
+  message: string;
+  firstName: string;
+  lastName: string;
+}
+
+class UpdateAccount extends Component<EmptyProps, UpdateAccountState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -447,14 +500,14 @@ class UpdateAccount extends Component<any, any> {
           title="Update Account"
           onPress={() => {
             demandware
-              .updateAccount({ firstName, lastName } as any)
-              .then((account: any) =>
+              .updateAccount({ firstName, lastName } as FSCommerceTypes.CustomerAccount)
+              .then(() =>
                 this.setState({
                   message: "Update Account Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -468,8 +521,15 @@ class UpdateAccount extends Component<any, any> {
   }
 }
 
-class UpdatePassword extends Component<any, any> {
-  constructor(props: any) {
+interface UpdatePasswordState {
+  lastUpdated: string | null;
+  message: string;
+  currentPassword: string;
+  password: string;
+}
+
+class UpdatePassword extends Component<EmptyProps, UpdatePasswordState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -508,13 +568,13 @@ class UpdatePassword extends Component<any, any> {
           onPress={() => {
             demandware
               .updatePassword(currentPassword, password)
-              .then((password: any) =>
+              .then(() =>
                 this.setState({
                   message: "Update Password Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -528,8 +588,14 @@ class UpdatePassword extends Component<any, any> {
   }
 }
 
-class ForgotPassword extends Component<any, any> {
-  constructor(props: any) {
+interface ForgotPasswordState {
+  email: string;
+  lastUpdated: string | null;
+  message: string;
+}
+
+class ForgotPassword extends Component<EmptyProps, ForgotPasswordState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       email: testData.existingAccount.email,
@@ -558,13 +624,13 @@ class ForgotPassword extends Component<any, any> {
           onPress={() => {
             demandware
               .forgotPassword(email)
-              .then((password: any) =>
+              .then(() =>
                 this.setState({
                   message: "Forgot password request sent",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -578,8 +644,34 @@ class ForgotPassword extends Component<any, any> {
   }
 }
 
-class FetchOrders extends Component<any, any> {
-  constructor(props: any) {
+interface FetchOrdersState {
+  lastUpdated: string | null;
+  message: string;
+  orders: OrderType[] | null;
+}
+
+interface OrderType {
+  orderId: string | number;
+  creationDate: Date;
+  status: string;
+  billingAddress: {
+    fullName: string;
+    address1: string;
+    address2: string;
+    city: string;
+    stateCode: number;
+    postalCode: number;
+    phone: number | string;
+  }
+  shipments: FSCommerceTypes.Shipment[];
+  orderTax: number | string;
+  orderTotal: number | string;
+  productItems: FSCommerceTypes.ProductItem[];
+  payments: FSCommerceTypes.Payment[];
+}
+
+class FetchOrders extends Component<EmptyProps, FetchOrdersState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -596,7 +688,7 @@ class FetchOrders extends Component<any, any> {
         {lastUpdated && <Text>Last Response: {lastUpdated}</Text>}
         <Text>{message}</Text>
         {orders &&
-          orders.map((order: any) => (
+          orders.map((order: OrderType) => (
             <View
               key={order.orderId}
               style={{ backgroundColor: "#ccc", marginVertical: 5 }}
@@ -622,13 +714,13 @@ class FetchOrders extends Component<any, any> {
 
               <Text>#### Payment Method ####</Text>
               <Text>
-                {order.payments[0].paymentCard.cardType}{" "}
-                {order.payments[0].paymentCard.maskedNumber}
+                {order?.payments?.[0].paymentCard?.cardType}{" "}
+                {order?.payments?.[0].paymentCard?.maskedNumber}
               </Text>
 
               <Text>#### Shipping Info ####</Text>
               {order.shipments &&
-                order.shipments.map((shipment: any) => (
+                order.shipments.map((shipment: FSCommerceTypes.Shipment) => (
                   <View key={shipment.shipmentNumber}>
                     <Text>Shipment No. {shipment.shipmentNumber}</Text>
                     <Text>{shipment.address.fullName}</Text>
@@ -648,21 +740,28 @@ class FetchOrders extends Component<any, any> {
 
               <Text>#### Product Info ####</Text>
               {order.productItems &&
-                order.productItems.map((product: any) => (
+                order.productItems.map((product: FSCommerceTypes.ProductItem) => (
                   <View key={product.productId}>
                     <Text>SKU: {product.productId}</Text>
                     <Text>Product: {product.title}</Text>
                     <Text>Qty: {product.quantity}</Text>
-                    <Text>Total Price: {translate.currency(product.totalPrice)}</Text>
+                    {product && product.totalPrice &&
+                      <Text>Total Price: {translate.currency(product.totalPrice)}</Text>
+                    }
                   </View>
                 ))}
 
               <Text>#### Footer ####</Text>
               {Array.isArray(order.shipments) && order.shipments
-                .filter((shipment: any) => shipment.shippingMethod && shipment.shippingMethod.price)
-                .map((shipment: any) => (
-                  <Text>Shipping {translate.currency(shipment.shippingMethod.price)}</Text>
-                )
+                .filter((shipment: FSCommerceTypes.Shipment) => shipment.shippingMethod && shipment.shippingMethod.price)
+                .map((shipment: Shipment) => {
+                    if(shipment && shipment.shippingMethod && shipment.shippingMethod.price){
+                      return (
+                        <Text>Shipping {translate.currency(shipment.shippingMethod.price)}</Text>
+                      )
+                    }
+                    return;
+                  }
               )}
               <Text>Tax {translate.currency(order.orderTax)}</Text>
               <Text>Total {translate.currency(order.orderTotal)}</Text>
@@ -673,14 +772,14 @@ class FetchOrders extends Component<any, any> {
           onPress={() => {
             demandware
               .fetchOrders()
-              .then((orders: any) =>
+              .then((orders: any) => // ToDo need to be fixed in package fssalesforce;
                 this.setState({
                   orders,
                   message: "Fetch Orders Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -694,8 +793,15 @@ class FetchOrders extends Component<any, any> {
   }
 }
 
-class FetchOrder extends Component<any, any> {
-  constructor(props: any) {
+interface FetchOrderState {
+  lastUpdated: string | null;
+  message: string;
+  order: OrderType | null;
+  orderId: string;
+}
+
+class FetchOrder extends Component<EmptyProps, FetchOrderState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -743,13 +849,13 @@ class FetchOrder extends Component<any, any> {
 
             <Text>#### Payment Method ####</Text>
             <Text>
-              {order.payments[0].paymentCard.cardType}{" "}
-              {order.payments[0].paymentCard.maskedNumber}
+              {order?.payments[0].paymentCard?.cardType}{" "}
+              {order?.payments[0].paymentCard?.maskedNumber}
             </Text>
 
             <Text>#### Shipping Info ####</Text>
             {order.shipments &&
-              order.shipments.map((shipment: any) => (
+              order.shipments.map((shipment: Shipment) => (
                 <View key={shipment.shipmentNumber}>
                   <Text>Shipment No. {shipment.shipmentNumber}</Text>
                   <Text>{shipment.address.fullName}</Text>
@@ -769,19 +875,25 @@ class FetchOrder extends Component<any, any> {
 
             <Text>#### Product Info ####</Text>
             {order.productItems &&
-              order.productItems.map((product: any) => (
+              order.productItems.map((product: FSCommerceTypes.ProductItem) => (
                 <View key={product.productId}>
                   <Text>SKU: {product.productId}</Text>
                   <Text>Product: {product.title}</Text>
                   <Text>Qty: {product.quantity}</Text>
-                  <Text>Total Price: {translate.currency(product.totalPrice)}</Text>
+                  {product && product.totalPrice && <Text>Total Price: {translate.currency(product.totalPrice)}</Text>}
                 </View>
               ))}
 
             <Text>#### Footer ####</Text>
-            {Array.isArray(order.shipments) && order.shipments.map((shipment: any) => (
-              <Text>Shipping {translate.currency(shipment.shippingMethod.price)}</Text>
-            ))}
+            {Array.isArray(order.shipments) && order.shipments.map((shipment:FSCommerceTypes.Shipment) => {
+                if (shipment && shipment?.shippingMethod && shipment?.shippingMethod.price){
+                  return (
+                    <Text>Shipping {translate.currency(shipment.shippingMethod.price)}</Text>
+                  )
+                }
+                return;
+              }
+            )}
             <Text>Tax {translate.currency(order.orderTax)}</Text>
             <Text>Total {translate.currency(order.orderTotal)}</Text>
           </View>
@@ -798,7 +910,7 @@ class FetchOrder extends Component<any, any> {
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -812,8 +924,14 @@ class FetchOrder extends Component<any, any> {
   }
 }
 
-class FetchSavedAddresses extends Component<any, any> {
-  constructor(props: any) {
+interface FetchSavedAddressesState {
+  lastUpdated: string | null;
+  message: string;
+  addresses: FSCommerceTypes.CustomerAddress[] | null
+}
+
+class FetchSavedAddresses extends Component<EmptyProps, FetchSavedAddressesState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -830,7 +948,7 @@ class FetchSavedAddresses extends Component<any, any> {
         {lastUpdated && <Text>Last Response: {lastUpdated}</Text>}
         <Text>{message}</Text>
         {addresses &&
-          addresses.map((address: any) => (
+          addresses.map(address => (
             <View
               key={address.id}
               style={{ backgroundColor: "#ccc", marginVertical: 5 }}
@@ -843,14 +961,14 @@ class FetchSavedAddresses extends Component<any, any> {
           onPress={() => {
             demandware
               .fetchSavedAddresses()
-              .then((addresses: any) =>
+              .then(addresses =>
                 this.setState({
                   addresses,
                   message: "Fetch Saved Addresses Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -864,8 +982,25 @@ class FetchSavedAddresses extends Component<any, any> {
   }
 }
 
-class AddSavedAddress extends Component<any, any> {
-  constructor(props: any) {
+interface AddSavedAddressState {
+  message: string;
+  lastUpdated: string | null;
+  id: string;
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  city: string;
+  stateCode: string;
+  postalCode: string;
+  phone: string;
+  email: string;
+  postalCode1? : string;
+  address?: FSCommerceTypes.CustomerAddress;
+}
+
+class AddSavedAddress extends Component<EmptyProps, AddSavedAddressState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -991,14 +1126,14 @@ class AddSavedAddress extends Component<any, any> {
                 countryCode: "US",
                 preferred: true
               })
-              .then((address: any) =>
+              .then((address: FSCommerceTypes.CustomerAddress) =>
                 this.setState({
                   address,
                   message: "Add Address Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -1012,8 +1147,24 @@ class AddSavedAddress extends Component<any, any> {
   }
 }
 
-class EditSavedAddress extends Component<any, any> {
-  constructor(props: any) {
+interface EditSavedAddressState {
+  lastUpdated: string | null;
+  message: string;
+  id: string,
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  city: string;
+  stateCode: string;
+  postalCode: string;
+  phone: string;
+  postalCode1? : string;
+  address?: FSCommerceTypes.CustomerAddress;
+}
+
+class EditSavedAddress extends Component<EmptyProps, EditSavedAddressState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -1130,14 +1281,14 @@ class EditSavedAddress extends Component<any, any> {
                 countryCode: "US",
                 preferred: true
               })
-              .then((address: any) =>
+              .then(address =>
                 this.setState({
                   address,
                   message: "Edit Address Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -1151,8 +1302,15 @@ class EditSavedAddress extends Component<any, any> {
   }
 }
 
-class DeleteSavedAddress extends Component<any, any> {
-  constructor(props: any) {
+interface DeleteSavedAddressState {
+  lastUpdated: string | null,
+  message: string;
+  id: string;
+  address?: boolean;
+}
+
+class DeleteSavedAddress extends Component<EmptyProps, DeleteSavedAddressState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -1181,14 +1339,14 @@ class DeleteSavedAddress extends Component<any, any> {
           onPress={() => {
             demandware
               .deleteSavedAddress(id)
-              .then((address: any) =>
+              .then(address =>
                 this.setState({
                   address,
                   message: "Delete Address Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -1202,8 +1360,14 @@ class DeleteSavedAddress extends Component<any, any> {
   }
 }
 
-class FetchSavedPayments extends Component<any, any> {
-  constructor(props: any) {
+interface FetchSavedPaymentsState {
+  lastUpdated: string | null,
+  message: string,
+  payments: FSCommerceTypes.Payment[] | null;
+}
+
+class FetchSavedPayments extends Component<EmptyProps, FetchSavedPaymentsState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -1220,7 +1384,7 @@ class FetchSavedPayments extends Component<any, any> {
         {lastUpdated && <Text>Last Response: {lastUpdated}</Text>}
         <Text>{message}</Text>
         {payments &&
-          payments.map((payment: any) => (
+          payments.map(payment => (
             <View
               key={payment.id}
               style={{ backgroundColor: "#ccc", marginVertical: 5 }}
@@ -1233,14 +1397,14 @@ class FetchSavedPayments extends Component<any, any> {
           onPress={() => {
             demandware
               .fetchSavedPayments()
-              .then((payments: any) =>
+              .then(payments =>
                 this.setState({
                   payments,
                   message: "Fetch Payments Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -1254,8 +1418,17 @@ class FetchSavedPayments extends Component<any, any> {
   }
 }
 
-class AddSavedPayment extends Component<any, any> {
-  constructor(props: any) {
+interface AddSavedPaymentState {
+  lastUpdated: string | null;
+  message: string;
+  expirationYear: string;
+  expirationMonth: string;
+  number: string;
+  address?: FSCommerceTypes.PaymentMethod;
+}
+
+class AddSavedPayment extends Component<EmptyProps, AddSavedPaymentState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -1313,14 +1486,14 @@ class AddSavedPayment extends Component<any, any> {
                 },
                 paymentMethodId: "CREDIT_CARD"
               })
-              .then((address: any) =>
+              .then(address =>
                 this.setState({
                   address,
                   message: "Add Payment Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),
@@ -1334,8 +1507,15 @@ class AddSavedPayment extends Component<any, any> {
   }
 }
 
-class DeleteSavedPayment extends Component<any, any> {
-  constructor(props: any) {
+interface DeleteSavedPaymentState {
+  message: string;
+  lastUpdated: null | string;
+  id: string;
+  address?: boolean;
+}
+
+class DeleteSavedPayment extends Component<EmptyProps, DeleteSavedPaymentState> {
+  constructor(props: EmptyProps) {
     super(props);
     this.state = {
       lastUpdated: null,
@@ -1364,14 +1544,14 @@ class DeleteSavedPayment extends Component<any, any> {
           onPress={() => {
             demandware
               .deleteSavedPayment(id)
-              .then((address: any) =>
+              .then(address =>
                 this.setState({
                   address,
                   message: "Delete Payment Successful",
                   lastUpdated: new Date().toISOString()
                 })
               )
-              .catch((e: any) => {
+              .catch((e: ErrorType) => {
                 console.warn(e);
                 this.setState({
                   message: parseError(e),

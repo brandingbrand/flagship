@@ -7,15 +7,21 @@ import { goToNavPush } from '../../lib/navigation';
 import { demandware } from '../../lib/datasource';
 import { Category } from '@brandingbrand/fscategory';
 
-export default class CategoryListDemandware extends Component<any> {
-  constructor(props: any) {
+interface CategoryListDemandwareProps {
+  history: string[];
+  componentId: string;
+  categoryId: string;
+}
+
+export default class CategoryListDemandware extends Component<CategoryListDemandwareProps> {
+  constructor(props: CategoryListDemandwareProps) {
     super(props);
     this.state = {
       categories: []
     };
   }
 
-  goTo = (screen: string, backButtonTitle: string = 'Back') => (category: any) => {
+  goTo = (screen: string, backButtonTitle: string = 'Back') => (category: {title: string}) => {
     if (Platform.OS === 'web') {
       this.props.history.push('/' + screen);
     } else {

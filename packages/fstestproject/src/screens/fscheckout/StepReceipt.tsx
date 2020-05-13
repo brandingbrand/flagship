@@ -1,17 +1,19 @@
-/* tslint:disable:jsx-use-translation-function */
-
 import React, { StatelessComponent } from 'react';
 import { Button, Text, View } from 'react-native';
 import { StepProps } from './CheckoutDemo';
 
+const receiptTitle = 'Receipt';
+const orderText = 'order number: ';
+const buttonTitle = 'Done';
+
 const StepReceipt: StatelessComponent<StepProps> = stepProps => {
   return (
     <View>
-      <Text>Receipt</Text>
-      <Text>order number: {stepProps.checkoutState.checkoutData.orderId}</Text>
+      <Text>{receiptTitle}</Text>
+      <Text>{orderText}{stepProps.checkoutState.checkoutData.orderId}</Text>
 
       <Button
-        title='Done'
+        title={buttonTitle}
         onPress={stepProps.checkoutActions.exitCheckout}
       />
     </View>

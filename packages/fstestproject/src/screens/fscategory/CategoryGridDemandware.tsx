@@ -7,15 +7,21 @@ import { demandware } from '../../lib/datasource';
 import { Category } from '@brandingbrand/fscategory';
 import { goToNavPush } from '../../lib/navigation';
 
-export default class CategoryGridDemandware extends Component<any> {
-  constructor(props: any) {
+interface CategoryGridDemandwareProps {
+  componentId: string;
+  history: string[];
+  categoryId: string;
+}
+
+export default class CategoryGridDemandware extends Component<CategoryGridDemandwareProps> {
+  constructor(props: CategoryGridDemandwareProps) {
     super(props);
     this.state = {
       categories: []
     };
   }
 
-  goTo = (screen: string, backButtonTitle: string = 'Back') => (category: any) => {
+  goTo = (screen: string, backButtonTitle: string = 'Back') => (category: {title: string}) => {
     if (Platform.OS === 'web') {
       this.props.history.push('/' + screen);
     } else {

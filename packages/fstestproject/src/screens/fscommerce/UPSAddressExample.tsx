@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput } from 'react-native';
 import { UPSAddressDataSource } from '@brandingbrand/fsups';
 import { env as projectEnv } from '@brandingbrand/fsapp';
+import {AddressTypeValidation} from '@brandingbrand/fscommerce';
 
 const styles = StyleSheet.create({
   label: {
@@ -18,9 +19,21 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class UPSAddressExample extends Component<any, any> {
-  client: any = null;
-  constructor(props: any) {
+interface UPSAddressExampleState {
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  zip: string;
+  results: AddressTypeValidation | null | {
+    error: Error;
+  };
+}
+
+export default class UPSAddressExample
+  extends Component<UPSAddressExample, UPSAddressExampleState> {
+  client: UPSAddressDataSource | null = null;
+  constructor(props: UPSAddressExample) {
     super(props);
     this.client = new UPSAddressDataSource({
       baseURL: projectEnv.ups.baseURL,
@@ -96,9 +109,7 @@ export default class UPSAddressExample extends Component<any, any> {
     if (!this.state.results) {
       return null;
     }
-    if (typeof this.state.results === 'string') {
-      return <Text>{this.state.results}</Text>;
-    }
+
     return <Text>{JSON.stringify(this.state.results, null, 2)}</Text>;
   }
   validateAddress = () => {
@@ -110,29 +121,31 @@ export default class UPSAddressExample extends Component<any, any> {
       postalCode: this.state.zip,
       country: 'US'
     };
-    this.client.verifyAddress(address)
-      .then((results: any) => {
-        console.log(results);
-        this.setState({ results });
-      })
-      .catch((e: any) => {
-        console.log(e);
-        this.setState({ results: { error: e } });
-      });
+    if (this.client) {
+      this.client.verifyAddress(address)
+        .then((results: AddressTypeValidation) => {
+          console.log(results);
+          this.setState({ results });
+        })
+        .catch((e: Error) => {
+          console.log(e);
+          this.setState({ results: { error: e } });
+        });
+    }
   }
-  setAddressLine1 = (value: any) => {
+  setAddressLine1 = (value: string) => {
     this.setState({ addressLine1: value });
   }
-  setAddressLine2 = (value: any) => {
+  setAddressLine2 = (value: string) => {
     this.setState({ addressLine2: value });
   }
-  setCity = (value: any) => {
+  setCity = (value: string) => {
     this.setState({ city: value });
   }
-  setStateState = (value: any) => {
+  setStateState = (value: string) => {
     this.setState({ state: value });
   }
-  setZip = (value: any) => {
+  setZip = (value: string) => {
     this.setState({ zip: value });
   }
 }

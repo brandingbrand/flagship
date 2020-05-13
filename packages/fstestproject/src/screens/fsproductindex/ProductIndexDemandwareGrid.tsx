@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { ProductIndex } from '@brandingbrand/fsproductindex';
 import { demandware, powerreviews } from '../../lib/datasource';
 
-export default class ProductIndexDemandwareGrid extends Component<any> {
-  goTo = (data: any) => {
+export default class ProductIndexDemandwareGrid extends Component {
+  goTo = <T, > (data: T) => {
     alert(JSON.stringify(data));
   }
 

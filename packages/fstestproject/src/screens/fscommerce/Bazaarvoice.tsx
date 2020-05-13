@@ -10,10 +10,14 @@ import { env as projectEnv } from '@brandingbrand/fsapp';
 
 const kExampleReviewId = '';
 
-export default class Bazaarvoice extends Component<any, any> {
+interface BazaarvoiceProps {
+  componentId: string;
+}
+
+export default class Bazaarvoice extends Component<BazaarvoiceProps> {
   client: BazaarvoiceDataSource;
 
-  constructor(props: any) {
+  constructor(props: BazaarvoiceProps) {
     super(props);
     this.client = new BazaarvoiceDataSource(projectEnv.bazaarvoice);
   }
@@ -36,10 +40,10 @@ export default class Bazaarvoice extends Component<any, any> {
       .fetchReviewDetails({
         ids: kExampleReviewId
       })
-      .then((data: any) => {
+      .then(data => {
         showDataNavPush(this.props.componentId, data);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         console.warn(err);
       });
   }
@@ -49,10 +53,10 @@ export default class Bazaarvoice extends Component<any, any> {
       .fetchReviewSummary({
         ids: kExampleReviewId
       })
-      .then((data: any) => {
+      .then(data => {
         showDataNavPush(this.props.componentId, data);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         console.warn(err);
       });
   }
@@ -62,10 +66,10 @@ export default class Bazaarvoice extends Component<any, any> {
       .fetchReviewStatistics({
         ids: kExampleReviewId
       })
-      .then((data: any) => {
+      .then(data => {
         showDataNavPush(this.props.componentId, data);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         console.warn(err);
       });
   }

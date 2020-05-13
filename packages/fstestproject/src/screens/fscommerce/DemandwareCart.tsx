@@ -70,14 +70,27 @@ const styles = StyleSheet.create({
 /**
  * Example Component for testing Cart for DemandwareDataSource
  */
-export default class DemandwareCart extends Component<any, any> {
-  constructor(props: any) {
+
+type EmptyProps = {};
+
+interface DemandwareCartState {
+  qty: string;
+  orderType: string;
+  responseData: string | null;
+  sku: string;
+  savedBillingId?: string;
+  savedShippingId?: string;
+  orderNumber?: string;
+}
+
+export default class DemandwareCart extends Component<EmptyProps, DemandwareCartState> {
+  constructor(props: EmptyProps) {
     super(props);
 
     this.state = {
-      qty: 0,
+      qty: '0',
       responseData: null,
-      sku: null,
+      sku: '',
       orderType: ''
     };
   }
@@ -86,7 +99,7 @@ export default class DemandwareCart extends Component<any, any> {
     let qty = 0;
     try{
       qty = parseInt(this.state.qty, 10);
-    }catch(e) {
+    } catch(e) {
       qty = 0;
     }
     if (!qty || !this.state.sku) {
@@ -98,8 +111,11 @@ export default class DemandwareCart extends Component<any, any> {
   getPaymentMethods = () => {
      this.runDemandwareRequest(() => {
        return demandware.fetchCart()
-         .then((cart: any) => {
-           return demandware.fetchPaymentMethods(cart.id);
+         .then(cart => {
+           if (cart && cart.id) {
+             return demandware.fetchPaymentMethods(cart.id);
+           }
+           return;
          });
      });
   }
@@ -107,8 +123,11 @@ export default class DemandwareCart extends Component<any, any> {
   getShipmentMethods = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.fetchShippingMethods(cart.id, cart.shipments[0].id);
+        .then(cart => {
+          if(cart && cart.id && cart.shipments) {
+            return demandware.fetchShippingMethods(cart.id, cart.shipments[0].id);
+          }
+          return;
         });
     });
   }
@@ -183,10 +202,10 @@ export default class DemandwareCart extends Component<any, any> {
       </ScrollView>
     );
   }
-  runDemandwareRequest(promiseThunk: any) {
-    promiseThunk()
-      .then((c: any) => this.setState({responseData: JSON.stringify(c, null, 2)}))
-      .catch((e: any) => this.setState({responseData: `ERROR: ${e}`}))
+  runDemandwareRequest<T>(promiseThunk: () => Promise<T>) {
+      promiseThunk()
+        .then((c: any) => this.setState({responseData: JSON.stringify(c, null, 2)}))
+        .catch((e: Error) => this.setState({responseData: `ERROR: ${e}`}))
   }
   setBBTestBilling = () => {
     this.runDemandwareRequest(() => {
@@ -203,28 +222,34 @@ export default class DemandwareCart extends Component<any, any> {
   setBBTestCustomerInfo = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.setCustomerInfo({email: "qatest@brandingbrand.com", cartId: cart.id});
+        .then(cart => {
+          if(cart && cart.id){
+            return demandware.setCustomerInfo({email: "qatest@brandingbrand.com", cartId: cart.id});
+          }
+          return;
         });
     });
   }
   setBBTestMethod = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.setShipmentMethod({
-            cartId: cart.id,
-            methodId: 'Ground-ContinentialUS',
-            shipmentId: 'me'
-          });
+        .then(cart => {
+          if (cart && cart.id) {
+            return demandware.setShipmentMethod({
+              cartId: cart.id,
+              methodId: 'Ground-ContinentialUS',
+              shipmentId: 'me'
+            });
+          }
+          return;
         });
     });
   }
   setBBTestPayment = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          if (cart.payments && cart.payments[0]) {
+        .then(cart => {
+          if (cart.payments && cart.payments[0].id && cart.id) {
             let updatePayment = {
               ...fakePayment,
               paymentCard: {
@@ -234,7 +259,10 @@ export default class DemandwareCart extends Component<any, any> {
             };
             return demandware.updatePayment(cart.id, cart.payments[0].id, updatePayment);
           } else {
-            return demandware.addPayment(cart.id, fakePayment);
+            if (cart.id){
+              return demandware.addPayment(cart.id, fakePayment);
+            }
+            return
           }
         });
     });
@@ -258,14 +286,17 @@ export default class DemandwareCart extends Component<any, any> {
   setTestGiftOptions = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          let updateGiftOptions = {
-            cartId: cart.id,
-            gift: true,
-            giftMessage: 'Hello World',
-            shipmentId: cart.shipments[0].id
-          };
-          return demandware.updateGiftOptions(updateGiftOptions);
+        .then(cart => {
+          if(cart && cart.shipments && cart.shipments[0].id && cart.id){
+            let updateGiftOptions = {
+              cartId: cart.id,
+              gift: true,
+              giftMessage: 'Hello World',
+              shipmentId: cart.shipments[0].id
+            };
+            return demandware.updateGiftOptions(updateGiftOptions);
+          }
+          return;
         });
     });
   }
@@ -279,11 +310,14 @@ export default class DemandwareCart extends Component<any, any> {
     }
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.setBillingAddress({
-            addressId: this.state.savedBillingId,
-            cartId: cart.id
-          });
+        .then(cart => {
+          if(cart && cart.id) {
+            return demandware.setBillingAddress({
+              addressId: this.state.savedBillingId,
+              cartId: cart.id
+            });
+          }
+          return;
         });
     });
   }
@@ -295,20 +329,26 @@ export default class DemandwareCart extends Component<any, any> {
     }
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.setShipmentAddress({
-            addressId: this.state.savedShippingId,
-            cartId: cart.id,
-            shipmentId: 'me'
-          });
+        .then(cart => {
+          if(cart && cart.id){
+            return demandware.setShipmentAddress({
+              addressId: this.state.savedShippingId,
+              cartId: cart.id,
+              shipmentId: 'me'
+            });
+          }
+          return;
         });
     });
   }
   submitOrder = () => {
     this.runDemandwareRequest(() => {
       return demandware.fetchCart()
-        .then((cart: any) => {
-          return demandware.submitOrder(cart.id);
+        .then(cart => {
+          if(cart && cart.id) {
+            return demandware.submitOrder(cart.id);
+          }
+          return;
         });
     });
   }
@@ -323,7 +363,7 @@ export default class DemandwareCart extends Component<any, any> {
 
   updateOrder = () => {
     this.runDemandwareRequest(() => {
-      return demandware.updateOrder({ orderId: this.state.orderNumber });
+        return demandware.updateOrder({ orderId: this.state.orderNumber || '' });
     });
   }
 }

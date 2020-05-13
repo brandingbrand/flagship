@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { withCommerceData } from '@brandingbrand/fscommerce';
+import {withCommerceData} from '@brandingbrand/fscommerce';
 
+interface CommerceViewProps {
+  commerceData: string;
+}
 
-class CommerceView extends Component<any, any> {
+class CommerceView extends Component<CommerceViewProps> {
   render(): JSX.Element {
     let content;
     if (!this.props.commerceData) {
@@ -18,8 +21,8 @@ class CommerceView extends Component<any, any> {
     );
   }
 }
-
-const Connected = withCommerceData<any, any>(async (datasource: any) => {
+// TODO: check FetchDataFunction
+const Connected = withCommerceData<any, any>(async () => {
   return new Promise<string>((resolve, reject) => {
     setTimeout(() => {
       resolve('Hello World');
@@ -29,14 +32,20 @@ const Connected = withCommerceData<any, any>(async (datasource: any) => {
   });
 })(CommerceView);
 
-// tslint:disable
-export default class CommerceProvider extends Component<any, any> {
+// tslint:disable-next-line:max-classes-per-file
+class CommerceProvider extends Component<any, any> {
+  dataLoader = (data: string) => (): void => {
+    return console.log(`data event:${data}`);
+  }
+
   render(): JSX.Element {
     return (
       <Connected
-        onDataLoaded={(data: any) => console.log(`data event:${data}`)}
+        onDataLoaded={this.dataLoader}
         {...this.props}
       />
     );
   }
 }
+
+export default CommerceProvider;

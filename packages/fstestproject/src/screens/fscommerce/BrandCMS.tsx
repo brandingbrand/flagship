@@ -15,10 +15,14 @@ import {
   BrandCMSProductCatalog
 } from '@brandingbrand/fsbrandcmsproductcatalog';
 
-export default class BrandCMS extends Component<any, any> {
+interface BrandCMS {
+  componentId: string;
+}
+
+class BrandCMS extends Component<BrandCMS> {
   client: BrandCMSProductCatalog;
 
-  constructor(props: any) {
+  constructor(props: BrandCMS) {
     super(props);
     this.client = cmsProductCatalog;
   }
@@ -51,14 +55,16 @@ export default class BrandCMS extends Component<any, any> {
     alert('not implemented');
   }
 
-  fetchCategory = (id: any) => () => {
+  fetchCategory = (id: string) => () => {
     this.client
       .fetchCategory(id)
-      .then((data: any) => {
+      .then(data => {
         showDataNavPush(this.props.componentId, data);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         console.warn(err);
       });
   }
 }
+
+export default BrandCMS;

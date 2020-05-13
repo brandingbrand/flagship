@@ -7,6 +7,7 @@ import StepPayment from './StepPayment';
 import StepReview from './StepReview';
 import StepReceipt from './StepReceipt';
 import StepSignIn from './StepSignIn';
+import {TextInput} from 'react-native';
 
 export interface CheckoutDemoState {
   checkoutData: CheckoutDataType;
@@ -27,13 +28,13 @@ export interface CheckoutActions {
   updateAddress: (address: string) => void;
   updatePayment: (payment: string) => void;
   handleError: (error: Error) => void;
-  getShippingFormRef: (ref: any) => void;
+  getShippingFormRef: (ref: TextInput | null) => void;
 }
 
 export interface StepProps extends FSCheckoutStepProps<CheckoutActions, CheckoutDemoState> {}
 
 export default class CheckoutDemo extends Component<CheckoutDemoState> {
-  shippingFormRef?: any;
+  shippingFormRef?: TextInput | null;
   stepManager?: StepManager;
   state: CheckoutDemoState = {
     checkoutData: {},

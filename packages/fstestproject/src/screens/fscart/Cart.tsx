@@ -11,12 +11,16 @@ const kExampleProductIds = [
   '701644395636'
 ];
 
-export default class CartTest extends Component<any> {
-  state: any = {
+interface CartTestState {
+  cartVisible: boolean;
+}
+
+export default class CartTest extends Component {
+  state: CartTestState = {  // ToDo delete when commit
     cartVisible: true
   };
 
-  onChange = (data: any) => {
+  onChange = <T, > (data: T): void => {
     console.log('cart was changed');
     console.log(data);
   }
@@ -27,7 +31,7 @@ export default class CartTest extends Component<any> {
     });
   }
 
-  imagePress = (item: any) => {
+  imagePress = (item: {title: string}) => {
     alert('Image pressed: ' + item.title);
   }
 

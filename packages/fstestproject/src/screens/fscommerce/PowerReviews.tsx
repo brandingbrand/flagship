@@ -10,9 +10,13 @@ import { env as projectEnv } from '@brandingbrand/fsapp';
 
 const kExampleProductId = '';
 
-export default class PowerReviews extends Component<any, any> {
-  client: any = null;
-  constructor(props: any) {
+interface PowerReviewsProps {
+  componentId: string;
+}
+
+export default class PowerReviews extends Component<PowerReviewsProps> {
+  client: PowerReviewsDataSource | null = null;
+  constructor(props: PowerReviewsProps) {
     super(props);
     this.client = new PowerReviewsDataSource(projectEnv.powerReviews);
   }
@@ -31,41 +35,47 @@ export default class PowerReviews extends Component<any, any> {
   }
 
   fetchReviewDetails = () => {
-    this.client
-      .fetchReviewDetails({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewDetails({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 
   fetchReviewSummary = () => {
-    this.client
-      .fetchReviewSummary({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewSummary({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 
   fetchReviewStatistics = () => {
-    this.client
-      .fetchReviewStatistics({
-        ids: kExampleProductId
-      })
-      .then((data: any) => {
-        showDataNavPush(this.props.componentId, data);
-      })
-      .catch((err: any) => {
-        console.warn(err);
-      });
+    if (this.client) {
+      this.client
+        .fetchReviewStatistics({
+          ids: kExampleProductId
+        })
+        .then(data => {
+          showDataNavPush(this.props.componentId, data);
+        })
+        .catch((err: Error) => {
+          console.warn(err);
+        });
+    }
   }
 }
