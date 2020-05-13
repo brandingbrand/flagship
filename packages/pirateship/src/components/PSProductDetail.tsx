@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import { cloneDeep, find, findIndex } from 'lodash-es';
 import {
+  ImageData as ImageDataZoomCarousel,
   Loading,
+  ProductItemProps,
   ReviewIndicator,
   ShareButton,
   Swatches,
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
 export interface UnwrappedPSProductDetailProps extends RecentlyViewedProps {
   id: string;
   navigator: Navigator;
-  onAddToCart?: (data: any) => any; // TODO: Update this with real types
+  onAddToCart?: () => void;
   onOpenHTMLView?: (html: string, title?: string) => void;
   reviewDataSource: ReviewDataSource;
 }
@@ -265,7 +267,7 @@ class PSProductDetailComponent extends Component<
   PSProductDetailComponentInternalProps,
   PSProductDetailState
   > {
-  miniModalTimer: any = null;
+  miniModalTimer: ReturnType<typeof setTimeout> | null = null;
   needsImpression: boolean = true;
 
   constructor(props: PSProductDetailComponentInternalProps) {
@@ -359,7 +361,7 @@ class PSProductDetailComponent extends Component<
       }
 
       // Search for matching variant
-      const variant = find(variants, { optionValues: newOptionValues }) as any;
+      const variant = find(variants, { optionValues: newOptionValues });
 
       if (
         variant &&
@@ -440,18 +442,18 @@ class PSProductDetailComponent extends Component<
     }
   }
 
-  goToProduct = (product: any) => () => {
+  goToProduct = (product: ProductItemProps) => () => {
     this.props.navigator.push({
       component: {
         name: 'ProductDetail',
         passProps: {
-          productId: product.productId
+          productId: product.id
         }
       }
     }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
-  openModal = (title: string, content: any, html: boolean = false) => () => {
+  openModal = (title: string, content: JSX.Element, html: boolean = false) => () => {
     let modalContent = content;
     if (html) {
       modalContent = <Text style={styles.modalText}>{content}</Text>;
@@ -463,8 +465,10 @@ class PSProductDetailComponent extends Component<
     this.setState({ modalVisible: false });
   }
 
-  openMiniModal = (content: any, timeout: number = 0) => {
-    clearTimeout(this.miniModalTimer);
+  openMiniModal = (content: ReactNode, timeout: number = 0) => {
+    if (this.miniModalTimer !== null) {
+      clearTimeout(this.miniModalTimer);
+    }
 
     const miniModalContent = (
       <View style={styles.atcModal}>
@@ -529,6 +533,8 @@ class PSProductDetailComponent extends Component<
   }
 
   renderShareButton = (): React.ReactNode => {
+    // TODO: Remove type assertion when we update this to match the commerce schema
+    /* tslint:disable-next-line:no-unnecessary-type-assertion */
     const commerceData = this.props.commerceData as CommerceTypes.Product & { [key: string]: any };
     const { id, title } = commerceData;
     const content = {
@@ -596,8 +602,7 @@ class PSProductDetailComponent extends Component<
       images = []
     } = commerceData;
 
-    // Update Image src (should be updated in ZoomCarousel component)
-    const imagesSources = images.map((image: any) => {
+    const imagesSources = images.map((image: CommerceTypes.Image): ImageDataZoomCarousel => {
       return { src: { uri: (image.uri || '').trim() } };
     });
 
@@ -723,15 +728,15 @@ class PSProductDetailComponent extends Component<
     );
   }
 
-  _renderCarousels = (carousel: any, index: number) => {
+  _renderCarousels = (carousel: { title: string; products: ProductItemProps[] }, index: number) => {
     return (
       <View key={index}>
         <Text style={styles.carouselTitle}>{carousel.title}</Text>
         <PSProductCarousel
           style={styles.productCarousel}
-          items={carousel.products.map((prod: any) => ({
+          items={carousel.products.map((prod: ProductItemProps) => ({
             ...prod,
-            image: { uri: prod.image },
+            image: (prod.images || []).find(img => !!img.uri),
             onPress: this.goToProduct(prod)
           }))}
         />
@@ -807,7 +812,7 @@ class PSProductDetailComponent extends Component<
     }
   }
 
-  navigateToScreen = (screen: string, title: string, props: any) => {
+  navigateToScreen = (screen: string, title: string, props: object) => {
     this.props.navigator.push({
       component: {
         name: screen,
@@ -825,7 +830,8 @@ class PSProductDetailComponent extends Component<
 }
 
 export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailProps>(
-  async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
-    DataSource.fetchProduct(props.id)
-  // TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent as any));
+  async (
+    DataSource: CommerceDataSource,
+    props: UnwrappedPSProductDetailProps
+  ) => DataSource.fetchProduct(props.id)
+)(withCart(PSProductDetailComponent));
