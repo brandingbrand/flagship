@@ -1,6 +1,7 @@
 export {
   default as ProductIndex,
   ProductIndex as UnwrappedProductIndex,
+  ProductIndexProps,
   UnwrappedProductIndexProps
 } from './components/ProductIndex';
 export {
@@ -13,5 +14,6 @@ export { default as ProductIndexGrid } from './components/ProductIndexGrid';
 export {
   default as ProductIndexSearch,
   ProductIndexSearch as UnwrappedProductIndexSearch,
+  ProductIndexSearchProps,
   UnwrappedProductIndexSearchProps
 } from './components/ProductIndexSearch';

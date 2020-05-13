@@ -11,15 +11,22 @@ import { Options } from 'react-native-navigation';
 
 import React, { Component } from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { ProductIndex, ProductIndexSearch } from '@brandingbrand/fsproductindex';
+import {
+  ProductIndex,
+  ProductIndexProps as FSProductIndexProps,
+  ProductIndexSearch,
+  ProductIndexSearchProps as FSProductIndexSearchProps
+} from '@brandingbrand/fsproductindex';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 import { dataSource, reviewDataSource } from '../lib/datasource';
+import { ProductIndex as BBPlatformProductIndex } from '../lib/BBPlatformDataSource';
 import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
-import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
+import { FilterItem, FilterItemValue, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
 import { NavButton } from '../lib/commonTypes';
@@ -160,7 +167,10 @@ export interface ProductIndexProps {
   categoryId?: string;
   keyword?: string;
   navigator: Navigator;
-  renderNoResult?: any;
+  renderNoResult?: (
+    commerceData: CommerceTypes.ProductIndex,
+    handleFilterReset: Function
+  ) => JSX.Element;
   productQuery?: CommerceTypes.ProductQuery;
   title?: string;
 }
@@ -170,13 +180,19 @@ export interface ProductIndexState {
   isMultiColumn: boolean;
 }
 
-const renderProductIndex = (indexProps: any) => {
+const renderProductIndex = (indexProps: FSProductIndexProps) => {
   return <ProductIndex {...indexProps} />;
 };
 
-const renderSearch = (indexProps: any, keyword: string, renderNoResult: any) => {
+const renderSearch = (
+  indexProps: FSProductIndexSearchProps,
+  renderNoResult?: (
+    commerceData: CommerceTypes.ProductIndex,
+    handleFilterReset: Function
+  ) => JSX.Element
+) => {
   return (
-    <ProductIndexSearch {...indexProps} keyword={keyword} renderNoResult={renderNoResult} />
+    <ProductIndexSearch {...indexProps} renderNoResult={renderNoResult} />
   );
 };
 
@@ -186,7 +202,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   static rightButtons: NavButton[] = [searchButton];
 
 
-  selectedRefinements: any = null;
+  selectedRefinements: Dictionary<string[]> = {};
   selectedSortingOption?: string;
   categoryId: string = ''; // used for selecting sub category from refine
   fullCategoryId: string = '';
@@ -200,12 +216,17 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
     };
   }
 
-  onDataLoaded = (data: any) => {
-    this.selectedRefinements = data.selectedRefinements;
+  onDataLoaded = <T extends BBPlatformProductIndex>(data: T) => {
+    const PageTitleDefault = 'Products';
+    if (!!data.selectedRefinements) {
+      this.selectedRefinements = data.selectedRefinements;
+    }
     this.selectedSortingOption = data.selectedSortingOption;
-    this.fullCategoryId = data.fullCategoryId;
+    if (!!data.fullCategoryId) {
+      this.fullCategoryId = data.fullCategoryId;
+    }
 
-    let newTitle = data.title || this.props.title;
+    let newTitle = this.props.title || PageTitleDefault;
 
     if (newTitle) {
       if (data.total) {
@@ -267,7 +288,11 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
     };
   }
 
-  renderRefineActionBar = (showFilterModal: any, showSortModal: any, commerceData: any) => {
+  renderRefineActionBar = (
+    showFilterModal: Function,
+    showSortModal: Function,
+    commerceData: CommerceTypes.ProductIndex
+  ) => {
     return (
       <PSFilterActionBar
         showFilterModal={showFilterModal}
@@ -285,9 +310,9 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
       return null;
     }
 
-    const { keyword, renderNoResult } = this.props;
+    const { renderNoResult } = this.props;
 
-    const indexProps: any = {
+    const indexProps: FSProductIndexProps = {
       columns: this.state.isMultiColumn ? 2 : 1,
       listStyle: PIPStyle.container,
       renderRefineActionBar: this.renderRefineActionBar,
@@ -317,8 +342,8 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
 
     return (
       <View style={PIPStyle.flex1}>
-        {keyword
-          ? renderSearch(indexProps, keyword, renderNoResult)
+        {!!indexProps.productQuery.keyword
+          ? renderSearch(indexProps as FSProductIndexSearchProps, renderNoResult)
           : renderProductIndex(indexProps)}
       </View>
     );
@@ -335,7 +360,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   }
 
   handleFilterReset = () => {
-    this.selectedRefinements = null;
+    this.selectedRefinements = {};
 
     // reload to trigger fetch
     this.setState({ isLoading: true }, () => {
@@ -377,9 +402,9 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
   }
 
   renderFilterItemCustom = (
-    item: any,
+    item: FilterItem,
     index: number,
-    selectedValues: any,
+    selectedValues: string[],
     handlePress: () => void,
     renderFilterItem: Function
   ) => {
@@ -428,7 +453,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
     };
   }
 
-  private handleSubcategoryPress = (refineItemValue: any) => () => {
+  private handleSubcategoryPress = (refineItemValue: FilterItemValue) => () => {
     this.categoryId = refineItemValue.categoryId;
 
     if (refineItemValue.value) {
