@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix circular dependency ([4120e03](https://github.com/brandingbrand/flagship/commit/4120e0308332bf518ef97103dffdf3a2a54ff136))
+* **fscomponents:** fix missing icon for paypal button on web ([545cea6](https://github.com/brandingbrand/flagship/commit/545cea6bfa0db3d347a67a0b188c770f50dc2c0c))
+* **LocationItem:** put return at end of component ([f020577](https://github.com/brandingbrand/flagship/commit/f0205771d9c7a8a7a35738178d132e77c1d0540e))
+
+
+### Features
+
+* add knobs - CreditCardForm story ([5710b5e](https://github.com/brandingbrand/flagship/commit/5710b5ece2a58c43ee96e0f6e2818cfc81214383))
+* add knobs for CMSBannerCarousel story ([b30f2e3](https://github.com/brandingbrand/flagship/commit/b30f2e3ef528ee0e4c9c24ea69eaabcad3dbfc17))
+* add knobs for ImageWithOverlay story ([4c7f7b7](https://github.com/brandingbrand/flagship/commit/4c7f7b771b2765561b060c8837e8c55455f4f10f))
+* add knobs for location item ([11a426d](https://github.com/brandingbrand/flagship/commit/11a426df59b03aea30360386122c4a21b2002543))
+* add knobs for modal ([0e0abdb](https://github.com/brandingbrand/flagship/commit/0e0abdbc6c916fa3d189116e15c95fbc9ca52731))
+* add knobs for MoreText story ([29107d5](https://github.com/brandingbrand/flagship/commit/29107d58c8fcbc68cbcc373710b48bc794b0d9fb))
+* add knobs for Selector story ([54db967](https://github.com/brandingbrand/flagship/commit/54db9674e1aab95c116ff837ed71a239ed046d9d))
+* add knobs for stepper story ([44f03a2](https://github.com/brandingbrand/flagship/commit/44f03a239d2a468f008be313395c2d51d1ef05dc))
+* **fscomponents:** add knobs to review list ([0edae45](https://github.com/brandingbrand/flagship/commit/0edae4544e7c2f335ce8e3a063ac1137e76f550a))
+* add knobs for swatches story ([32ddce3](https://github.com/brandingbrand/flagship/commit/32ddce357f270e8d6c3d496f209997f7f03dbe7d))
+* add knobs for TabbedContainer story ([c898759](https://github.com/brandingbrand/flagship/commit/c898759b31ac0858bab31d3684696734c42ea814))
+* add serializable props for LocationItem component ([f40c317](https://github.com/brandingbrand/flagship/commit/f40c317942cb6ce407c1c36bc948138acb2df613))
+* add serializable props for ReviewIndicator ([c073d4d](https://github.com/brandingbrand/flagship/commit/c073d4dafc3102a4afd5b8b8c156501c7f7b5181))
+* add serializable props to CartItem ([2fdb47d](https://github.com/brandingbrand/flagship/commit/2fdb47dc06796e9d1ee044c1519ca06897c421f8))
+* add serializable props to ShareButton component ([e83c067](https://github.com/brandingbrand/flagship/commit/e83c0678a59cb5ca95c2298878032de6d2b37cfe))
+* add serializable props to Swatch component ([3774ad4](https://github.com/brandingbrand/flagship/commit/3774ad43d5a747c184b3f25fc2e05cc54a9dc017))
+* add serializable props to TabbedContainer component ([d0c8916](https://github.com/brandingbrand/flagship/commit/d0c8916d88654a2338b7c12913c5fcbaa0a25b9e))
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Features
+
+* add serializable props for CategoryBox component ([e6d53c6](https://github.com/brandingbrand/flagship/commit/e6d53c60836fae70e556c4f98b9571708ed78d85))
+* add serializable props for CategoryLine component ([b1dfbc2](https://github.com/brandingbrand/flagship/commit/b1dfbc20c6d5ce55747ca8e816dcf6d797558e42))
+* add serializable props for MoreText component ([8392ed5](https://github.com/brandingbrand/flagship/commit/8392ed582042f06578906aca2239833e4b58bcd4))
+* add serializable props for ReviewsList ([4ab1110](https://github.com/brandingbrand/flagship/commit/4ab1110948a7688dd9bfb4e571807bb87ae53bae))
+* add serializable props for ReviewsSummary ([a21f924](https://github.com/brandingbrand/flagship/commit/a21f9245992a22c4504ad3ca47b04dfecc7175f9))
+* add serializable props for StatelessStepper component ([b650f1a](https://github.com/brandingbrand/flagship/commit/b650f1a729b2f383ac9e0d3db6d3822524f570ca))
+* add serializable props for Step and StepIndicator ([9997c62](https://github.com/brandingbrand/flagship/commit/9997c627702907e870909645f29b9591087131ba))
+* add serializable props for swatches ([7fb6966](https://github.com/brandingbrand/flagship/commit/7fb6966bc3a1557db67f2dd114904cea4886ee27))
+* add serializable props to Alert component ([76b0842](https://github.com/brandingbrand/flagship/commit/76b08426df74f6e7297585fe1a973a05f624223b))
+* add serializable props to carousel component ([dabcbcb](https://github.com/brandingbrand/flagship/commit/dabcbcb36a2903cea542664917cdde1e6e7fbd5d))
+* **fscomponents:** add knobs to alert stories ([40e3092](https://github.com/brandingbrand/flagship/commit/40e309236eaad7314db8e37fcc886dd4dea2534d))
+* add serializable props to CartCount component ([1ecb808](https://github.com/brandingbrand/flagship/commit/1ecb80864d46cb428ccf1340e877660feda296c6))
+* add serializable props to PayPalCheckoutButton component ([0b2d1e6](https://github.com/brandingbrand/flagship/commit/0b2d1e6b8d9b66bbdfa3d22b112827ef07fe8f2c))
+* add serializable props to SearchModal Form component ([59280fe](https://github.com/brandingbrand/flagship/commit/59280fea7f583eb1dbd32a899cc2e1b4f8e59aca))
+* add serializable props to SearchScreen component ([1388c05](https://github.com/brandingbrand/flagship/commit/1388c05052f0d9668c20a85be76f8507db4c61bd))
+* add serializable props to Stepper component ([52c3ab2](https://github.com/brandingbrand/flagship/commit/52c3ab2fece8df04e33b06f4488188f1361413be))
+* Create LoginFormFK story ([a41723f](https://github.com/brandingbrand/flagship/commit/a41723fdba9d344f4ac8c28af9a28a00f93caec2))
+* create RegistrationForm story ([011107a](https://github.com/brandingbrand/flagship/commit/011107a8adcc1a0230b45189024511bf4e6ddc9b))
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 
