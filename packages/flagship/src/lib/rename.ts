@@ -99,7 +99,7 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
     // Rename each path
     results.forEach(oldPath => {
       // Only replace the final occurence in the path
-      let newPath: any = oldPath.split('/');
+      let newPath: string[] | string = oldPath.split('/');
       const n = newPath.length - 1;
       newPath[n] = newPath[n]
         .replace(oldName, newName)

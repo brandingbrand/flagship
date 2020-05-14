@@ -60,7 +60,7 @@ export function targetedDevice(configuration: Config): void {
   if (configuration.targetedDevices) {
     helpers.logInfo(`selecting targeted devices: ${configuration.targetedDevices}`);
 
-    const devices: { [key: string]: any } = {
+    const devices: { [key: string]: number | string } = {
       iPhone: 1,
       iPad: 2,
       Universal: `"1,2"`
