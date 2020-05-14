@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix circular dependency (4120e03)
+* **fscomponents:** fix missing icon for paypal button on web (545cea6)
+* **LocationItem:** put return at end of component (f020577)
+
+
+### Features
+
+* add knobs - CreditCardForm story (5710b5e)
+* add knobs for CMSBannerCarousel story (b30f2e3)
+* add knobs for ImageWithOverlay story (4c7f7b7)
+* add knobs for location item (11a426d)
+* add knobs for modal (0e0abdb)
+* add knobs for MoreText story (29107d5)
+* add knobs for Selector story (54db967)
+* add knobs for stepper story (44f03a2)
+* **fscomponents:** add knobs to review list (0edae45)
+* add knobs for swatches story (32ddce3)
+* add knobs for TabbedContainer story (c898759)
+* add serializable props for LocationItem component (f40c317)
+* add serializable props for ReviewIndicator (c073d4d)
+* add serializable props to CartItem (2fdb47d)
+* add serializable props to ShareButton component (e83c067)
+* add serializable props to Swatch component (3774ad4)
+* add serializable props to TabbedContainer component (d0c8916)
+
+
+
+
+
 ## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
