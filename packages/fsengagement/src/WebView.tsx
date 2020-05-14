@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { EventSubscription } from 'react-native-navigation';
 
 import {
   Action,
@@ -34,7 +35,7 @@ export interface WebViewProps extends ScreenProps {
 }
 
 export default class EngagementWebView extends PureComponent<WebViewProps> {
-  navigationEventListener: any;
+  navigationEventListener?: EventSubscription | null;
   constructor(props: WebViewProps) {
     super(props);
   }

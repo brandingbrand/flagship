@@ -1,12 +1,24 @@
 /* tslint:disable */
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, Linking, Text, StyleProp, TextStyle, TouchableOpacity, View
+  Dimensions, Image, Linking, Text, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle
 } from 'react-native';
 import styles from './SliderEntry.style';
 
-export interface RenderProductProps {
-  data?: any;
+interface DataProps {
+  image: {
+    url: string
+  },
+  deepLinkUrl?: string;
+  productId: string;
+  name: string;
+  price: {
+    formattedValue: string;
+  };
+}
+
+export interface RenderProductProps<T> {
+  data: T;
   horizPadding?: number;
   spaceBetweenHorizontal?: number;
   spaceBetweenVertical?: number;
@@ -19,9 +31,10 @@ export interface RenderProductProps {
 
 const { height: viewportHeight } = Dimensions.get('window');
 
-export default class RenderProduct extends Component<RenderProductProps> {
-  get image(): any {
+export default class RenderProduct<T extends DataProps> extends Component<RenderProductProps<T>> {
+  get image(): React.ReactElement {
     const { data } = this.props;
+
     return (
       <Image
         source={{uri: data.image.url}}
@@ -29,9 +42,10 @@ export default class RenderProduct extends Component<RenderProductProps> {
       />
     );
   }
+
   onProductPress = (): void => {
     const { data } = this.props;
-    if (!data.deepLinkUrl) {
+    if (!data || !data.deepLinkUrl) {
       return;
     }
     const deeplink = data.deepLinkUrl + data.productId;
@@ -47,12 +61,10 @@ export default class RenderProduct extends Component<RenderProductProps> {
       }
     }).catch(err => alert('An error occurred: ' + err));
   }
-  render() {
+
+  render(): React.ReactElement {
     const {
-      data: {
-        name,
-        price
-      },
+      data,
       even = false,
       itemWidth,
       horizPadding = 0,
@@ -61,7 +73,7 @@ export default class RenderProduct extends Component<RenderProductProps> {
     } = this.props;
 
     const ratio = '.75';
-    let itemStyle: any = {};
+    let itemStyle: StyleProp<ViewStyle> = {};
     if (ratio && itemWidth) {
       itemStyle = {
         width: even ? itemWidth - 1 : itemWidth,
@@ -96,7 +108,7 @@ export default class RenderProduct extends Component<RenderProductProps> {
           <Text
             style={[styles.subtitle, this.props.priceStyle]}
           >
-            {price.formattedValue}
+            {data.price.formattedValue}
           </Text>
         </View>}
       </TouchableOpacity>

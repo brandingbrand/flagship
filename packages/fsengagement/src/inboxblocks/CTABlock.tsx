@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Image,
   StyleProp,
@@ -60,17 +59,6 @@ export interface CTABlockProps extends ScreenProps, EmitterProps {
 }
 
 export default class CTABlock extends Component<CTABlockProps> {
-  static contextTypes: any = {
-    story: PropTypes.object,
-    cardActions: PropTypes.object,
-    handleAction: PropTypes.func,
-    handleStoryAction: PropTypes.func,
-    name: PropTypes.string,
-    id: PropTypes.string,
-    language: PropTypes.string,
-    cardPosition: PropTypes.number
-  };
-
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
     const { handleAction, handleStoryAction, cardPosition } = this.context;
     if (story.html) {

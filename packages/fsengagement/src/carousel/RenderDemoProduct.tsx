@@ -2,65 +2,78 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './SliderEntry.style';
+import { Navigator } from '@brandingbrand/fsapp';
+import { noop } from 'lodash-es';
+import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import { DataProps } from '../types';
 
-export interface RenderDemoProductProps {
-  data?: any;
+export interface RenderDemoProductProps<D> {
+  data?: D & DataProps;
   index?: number;
   parallax?: any;
   parallaxProps?: any;
   even?: boolean;
-  navigator: any;
+  navigator: Navigator;
   onPressOpenModal?: boolean;
   products?: any[];
   isDemoProduct?: boolean;
   horizPadding: number;
   itemWidth: number;
 }
+
 const stars = require('../../assets/images/stars.png');
 
-export default class RenderDemoProduct extends Component<RenderDemoProductProps> {
+export default class RenderDemoProduct<T> extends Component<RenderDemoProductProps<T>> {
 
-  get image(): any {
-    const { data: { image } } = this.props;
+  get image() {
+    const { data } = this.props;
+
+    if (!data?.image) {
+      return null;
+    }
 
     return (
         <Image
-          source={image.source}
+          source={data.image.source}
           style={styles.image}
         />
       );
   }
+
   openCarouselModal = () => {
     if (!this.props.onPressOpenModal) {
       return;
     }
+
     this.props.navigator.showModal({
-      screen: 'EngagementProductModal',
-      animationType: 'none',
-      passProps: {
-        products: this.props.products,
-        index: this.props.index
-      },
-      navigatorStyle: {
-        navBarHidden: true,
-        screenBackgroundColor: 'transparent',
-        modalPresentationStyle: 'overCurrentContext',
-        tabBarHidden: true,
-        navBarTranslucent: true
+      component: {
+        name: 'EngagementProductModal',
+        options: {
+          animations: {
+            showModal: {
+              enabled: false
+            }
+          },
+          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+          bottomTabs: {
+            visible: false,
+            translucent: true
+          }
+        },
+        passProps: {
+          products: this.props.products,
+          index: this.props.index
+        }
       }
-    });
+    }).catch(noop);
   }
   render() {
-    const {
-      data: {
-        title,
-        image,
-        price
-      },
-      itemWidth,
-      horizPadding = 0
-    } = this.props;
-    const { ratio } = image;
+    const { data, itemWidth, horizPadding } = this.props;
+    if (!data) {
+      return null;
+    }
+
+    const { ratio } = data.image;
     const PROD_IMG_HEIGHT = 165;
     const PROD_ITEM_HEIGHT = 275;
 
@@ -99,7 +112,7 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
             style={styles.prodTitle}
             numberOfLines={2}
           >
-            {title}
+            {data.title}
           </Text>
           <Image
             source={stars}
@@ -108,7 +121,7 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
           <Text
             style={styles.price}
           >
-            {price}
+            {data.price}
           </Text>
 
         </View>

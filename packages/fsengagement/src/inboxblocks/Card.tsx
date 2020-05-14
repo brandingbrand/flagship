@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   DeviceEventEmitter,
   TouchableOpacity,
@@ -17,18 +16,6 @@ export interface ActionsCard extends CardProps {
 }
 
 export default class Card extends Component<ActionsCard> {
-  static childContextTypes: any = {
-    story: PropTypes.object,
-    handleStoryAction: PropTypes.func,
-    cardActions: PropTypes.object,
-    id: PropTypes.string,
-    name: PropTypes.string,
-    isCard: PropTypes.bool
-  };
-  static contextTypes: any = {
-    handleAction: PropTypes.func
-  };
-
   getChildContext = () => ({
     story: this.props.story,
     handleStoryAction: this.handleStoryAction,

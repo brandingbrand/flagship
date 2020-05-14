@@ -557,7 +557,7 @@ export default function(
         name,
         ...restProps
       };
-      if (!layoutComponents[private_type]) {
+      if (!private_type || !layoutComponents[private_type]) {
         return null;
       }
 
@@ -581,7 +581,7 @@ export default function(
         name,
         ...restProps
       };
-      if (!layoutComponents[private_type]) {
+      if (!private_type || !layoutComponents[private_type]) {
         return null;
       }
       props.navigator = this.props.navigator;

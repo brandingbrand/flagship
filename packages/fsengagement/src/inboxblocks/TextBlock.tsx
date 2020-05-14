@@ -31,7 +31,7 @@ export default class TextBlock extends Component<TextBlockProps> {
     language: PropTypes.string
   };
   fadeInView: any;
-  handleFadeInRef = (ref: any) => this.fadeInView = ref;
+  handleFadeInRef: <T>(ref: T) => T = ref => this.fadeInView = ref;
   componentDidMount(): void {
     if (this.props.animateIndex && this.props.animateIndex <= 3) {
       this.fadeInView.transition(

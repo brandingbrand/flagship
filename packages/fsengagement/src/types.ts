@@ -1,6 +1,7 @@
 import { ComponentClass } from 'react';
 import { Notification } from 'react-native-fcm';
 import {
+  ImageProps,
   ImageStyle,
   ImageURISource,
   StyleProp,
@@ -73,7 +74,7 @@ export interface JSON {
   isBlog?: boolean;
   backArrow?: StyleProp<ImageStyle>;
   private_blocks?: BlockItem[];
-  private_type: string;
+  private_type?: string;
   empty?: Empty;
   storyGradient?: StoryGradient;
   html?: HTML;
@@ -167,4 +168,22 @@ export interface EngagementProfile {
   devices: {
     [deviceID: string]: EngagmentDevice;
   };
+}
+
+export interface Sizes {
+  marginLeft?: number;
+  marginRight?: number;
+  paddingRight?: number;
+  paddingLeft?: number;
+}
+
+export interface DimensionsType {
+  width: number;
+  height: number;
+}
+
+export interface DataProps {
+  image: ImageProps & { ratio: number };
+  title: string;
+  price: number;
 }

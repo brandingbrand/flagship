@@ -1,16 +1,33 @@
 /* tslint:disable */
 import React, { Component } from 'react';
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
-import { ParallaxImage } from 'react-native-snap-carousel';
+import {
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
+import { ParallaxImage, ParallaxImageProps } from 'react-native-snap-carousel';
 import styles from './SliderEntry.style';
+import { Navigator } from '@brandingbrand/fsapp';
 
-export interface RenderItemProps {
-  data?: any;
+interface DataProps {
+  source: ImageSourcePropType;
+  ratio: string;
+  title: string;
+  subtitle: string;
+}
+
+export interface RenderItemProps<T> {
+  data: T;
   index?: number;
-  parallax?: any;
-  parallaxProps?: any;
+  parallax?: boolean;
+  parallaxProps?: ParallaxImageProps;
   even?: boolean;
-  navigator: any;
+  navigator: Navigator;
   onPressOpenModal?: boolean;
   isDemoProduct?: boolean;
   horizPadding: number;
@@ -19,8 +36,8 @@ export interface RenderItemProps {
 
 const { height: viewportHeight } = Dimensions.get('window');
 
-export default class RenderItem extends Component<RenderItemProps> {
-  get image(): any {
+export default class RenderItem<T extends DataProps> extends Component<RenderItemProps<T>> {
+  get image(): React.ReactElement {
     const { data: { source }, parallax, parallaxProps, even } = this.props;
 
     return parallax ? (
@@ -55,7 +72,7 @@ export default class RenderItem extends Component<RenderItemProps> {
       horizPadding = 0
     } = this.props;
 
-    let itemStyle: any = {};
+    let itemStyle: StyleProp<ViewStyle> = {};
     if (ratio && itemWidth) {
       itemStyle = {
         width: itemWidth,

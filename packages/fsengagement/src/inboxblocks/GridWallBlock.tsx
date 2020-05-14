@@ -76,6 +76,7 @@ export default class GridWallBlock
 
   async fetchProduct(id: string): Promise<any> {
     let imageFormat = this.props.imageFormat || 'Regular_Mobile';
+    // TODO: Set type for Items
     return this.network.get(id)
       .then((r: any) => r.data)
       .then((item: any) => {

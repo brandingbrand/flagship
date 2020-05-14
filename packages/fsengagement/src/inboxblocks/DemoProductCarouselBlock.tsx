@@ -11,20 +11,27 @@ import {
 } from 'react-native';
 import styles from '../carousel/index.style';
 import Carousel from 'react-native-snap-carousel';
+import { Navigator } from '@brandingbrand/fsapp';
+import { wp } from '../carousel/SliderEntry.style';
+import RenderDemoProduct from '../carousel/RenderDemoProduct';
+import {
+  CardProps, DataProps, Sizes
+} from '../types';
 
 const { width: viewportWidth } = Dimensions.get('window');
 const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
-let itemsArr: any = [];
-import { wp } from '../carousel/SliderEntry.style';
-import RenderDemoProduct from '../carousel/RenderDemoProduct';
+let itemsArr: RenderItemType<DataProps>[] = [];
 
-import {
-  CardProps
-} from '../types';
-let navigator: any;
+let navigator: Navigator;
+
+interface RenderItemType<T> {
+  item: T;
+  index: number;
+}
+
 export interface DemoProductCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -35,7 +42,7 @@ export interface DemoProductCarouselBlockProps extends CardProps {
   useRatio?: boolean;
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: any;
+  containerStyle?: StyleProp<ViewStyle> & Sizes;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
 }
@@ -46,10 +53,10 @@ export interface DemoProductCarouselBlockState {
   sliderActiveSlide: number;
 }
 // extends CardProps
-export default class DemoProductCarouselBlock
+export default class DemoProductCarouselBlock<T>
   extends Component<DemoProductCarouselBlockProps, DemoProductCarouselBlockState> {
   // readonly state: ImageCarouselBlockState = {};
-  _slider1Ref: any | null = null;
+  // _slider1Ref: any | null = null;
   constructor(props: DemoProductCarouselBlockProps) {
     super(props);
     this.state = {
@@ -60,7 +67,7 @@ export default class DemoProductCarouselBlock
   componentDidMount(): void {
     navigator = this.props.navigator;
   }
-  _renderItem(data: any): JSX.Element {
+  _renderItem(data: RenderItemType<DataProps>): JSX.Element {
     return <RenderDemoProduct
       data={data.item}
       index={data.index}
@@ -78,12 +85,18 @@ export default class DemoProductCarouselBlock
     const {
       containerStyle
     } = this.props;
+
+    if (!containerStyle) {
+      return 0;
+    }
+
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
+
   calculateSliderWidth() {
     return sliderWidth - this.horizontalMarginPadding();
   }

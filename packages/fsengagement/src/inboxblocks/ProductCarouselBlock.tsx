@@ -24,6 +24,7 @@ let renderItemPriceStyle: StyleProp<TextStyle> = {};
 let onBackPress: () => void;
 import { wp } from '../carousel/SliderEntry.style';
 import RenderProduct from '../carousel/RenderProduct';
+import { Sizes } from '../types';
 
 export interface ProductCarouselBlockProps {
   source: ImageURISource;
@@ -38,7 +39,7 @@ export interface ProductCarouselBlockProps {
   deepLinkUrl?: string;
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: any;
+  containerStyle?: StyleProp<ViewStyle> & Sizes;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
   priceStyle?: StyleProp<TextStyle>;
@@ -124,6 +125,11 @@ export default class ProductCarouselBlock
     const {
       containerStyle
     } = this.props;
+
+    if (!containerStyle) {
+      return 0;
+    }
+
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
