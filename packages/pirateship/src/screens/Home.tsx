@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { DiscoveryMessage, EngagementComp } from '../lib/engagement';
+import { DiscoveryMessage, EngagementComp, InboxFetch } from '../lib/engagement';
 import {
   ScreenProps
 } from '../lib/commonTypes';
@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { Options } from 'react-native-navigation';
 
 export interface HomeProps extends ScreenProps {
-  fetchInbox: (accountData: any, initialLoad: boolean) => void;
+  fetchInbox: (accountData: InboxFetch, initialLoad: boolean) => void;
   stories: DiscoveryMessage[];
   isLoading: boolean;
 }
@@ -66,12 +66,12 @@ export class Home extends Component<HomeProps> {
     this.props.fetchInbox({}, false);
   }
 }
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+const mapDispatchToProps = (dispatch: React.Dispatch<any>) => {
   return {
     fetchInbox: fetchInbox(dispatch)
   };
 };
-const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
+const mapStateToProps = (combinedStore: CombinedStore) => {
   const transformedStories = (combinedStore.inbox.value || []).map((message: DiscoveryMessage) => {
     return {
       name: message.title,

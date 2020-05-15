@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 import { Options } from 'react-native-navigation';
 import PSButton from '../components/PSButton';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -112,10 +113,9 @@ interface SignUpState {
 class SignUp extends Component<SignUpProps, SignUpState> {
   static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
-  fieldOptions: any;
-  screen: any;
-  contactForm: any;
-  addressForm: any;
+  fieldOptions: Dictionary = {};
+  contactForm: ContactInfoForm | null = null;
+  addressForm: PSAddressForm | null = null;
 
   constructor(props: SignUpProps) {
     super(props);
@@ -159,7 +159,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     );
   }
 
-  renderHeaderItem = (item: any) => {
+  renderHeaderItem = (item: Dictionary) => {
     return (
       <View style={styles.headerTextContainer}>
         <Image source={checkIcon} style={styles.checkIcon} />
@@ -168,7 +168,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     );
   }
 
-  headerKeyExtractor = (item: any, index: number) => {
+  headerKeyExtractor = (item: Dictionary, index: number) => {
     return (item.key = `${index}`);
   }
 
@@ -182,7 +182,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
           </Text>
         </View>
         <ContactInfoForm
-          updateFormRef={this.updateFormRef('contactForm')}
+          updateFormRef={this.updateContactFormRef}
           onChange={this.updateFormValues('contactFormValues')}
           values={this.state.contactFormValues}
           hiddenFields={['specials']}
@@ -194,7 +194,7 @@ class SignUp extends Component<SignUpProps, SignUpState> {
           </Text>
         </View>
         <PSAddressForm
-          updateFormRef={this.updateFormRef('addressForm')}
+          updateFormRef={this.updateAddressFormRef}
           onChange={this.updateFormValues('shippingFormValues')}
           values={this.state.shippingFormValues}
           optionalFields={[
@@ -238,41 +238,48 @@ class SignUp extends Component<SignUpProps, SignUpState> {
     return <View style={styles.errorContainer}>{msgs}</View>;
   }
 
-  updateFormValues = (targetKey: any) => {
-    return (values: any) => {
-      const changes = { [targetKey]: values } as any;
+  updateFormValues = (targetKey: 'contactFormValues' | 'shippingFormValues') => {
+    return (values: ContactFormValues | AddressFormValues) => {
 
       // Sync first name and last name between forms
       if (targetKey === 'contactFormValues') {
-        changes.shippingFormValues = {
+        const shippingFormValuesData = {
           ...this.state.shippingFormValues,
           ...{
             firstName: values.firstName,
             lastName: values.lastName
           }
         };
+        this.setState({ shippingFormValues: shippingFormValuesData });
       } else if (targetKey === 'shippingFormValues') {
-        changes.contactFormValues = {
+        const contactFormValuesData = {
           ...this.state.contactFormValues,
           ...{
             firstName: values.firstName,
             lastName: values.lastName
           }
         };
+        this.setState({ contactFormValues: contactFormValuesData });
       }
-
-      this.setState(changes);
     };
   }
 
-  updateFormRef = (formKey: any) => {
-    return (ref: any) => {
-      (this as any)[formKey] = ref;
-    };
+  updateContactFormRef = (ref: ContactInfoForm) => {
+    this.contactForm = ref;
   }
 
-  focusField = (path: string[], form: any) => {
-    const field = form.getComponent(path);
+  updateAddressFormRef = (ref: PSAddressForm) => {
+    this.addressForm = ref;
+  }
+
+  focusField = (path: string[], form: 'contactForm' | 'shippingForm') => {
+    let field = null;
+    if (form === 'contactForm' && this.contactForm !== null) {
+      field = this.contactForm.form.getComponent(path);
+    }
+    if (form === 'shippingForm' && this.addressForm !== null) {
+      field = this.addressForm.formRef.getComponent(path);
+    }
     const ref = field && field.refs && field.refs.input;
     if (ref && ref.focus) {
       ref.focus();
@@ -285,18 +292,20 @@ class SignUp extends Component<SignUpProps, SignUpState> {
 
   validateForms = () => {
     this.setState({ errors: [] });
-    const contactFormErrors = this.contactForm.validate().errors;
-    const addressFormErrors = this.addressForm.validate().errors;
+    const contactFormErrors = this.contactForm !== null ?
+      this.contactForm.form.validate().errors : [];
+    const addressFormErrors = this.addressForm !== null ?
+      this.addressForm.formRef.validate().errors : [];
 
     if (contactFormErrors.length > 0) {
       const firstError = contactFormErrors[0];
-      this.focusField(firstError.path, this.contactForm);
+      this.focusField(firstError.path, 'contactForm');
       return false;
     }
 
     if (addressFormErrors.length > 0) {
       const firstError = addressFormErrors[0];
-      this.focusField(firstError.path, this.addressForm);
+      this.focusField(firstError.path, 'shippingForm');
       return false;
     }
 
@@ -327,6 +336,8 @@ class SignUp extends Component<SignUpProps, SignUpState> {
       this.setState({ isLoading: true });
       const { email = '', password = '' } = contactFormValues;
 
+      // TODO: Explore type CommerceType.CustomerAccount. AddressForm has field
+      // 'address1' that incompatible with type CommerceType.CustomerAccount
       await dataSource.register(account, password);
       await this.promptToStoreCredentials();
       await this.props.signIn(email, password);

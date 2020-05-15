@@ -3,9 +3,11 @@ import { Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Options } from 'react-native-navigation';
 
 import {
-  SearchScreen as SearchSuggestionScreen
+  SearchScreen as SearchSuggestionScreen,
+  SearchScreenResult
 } from '@brandingbrand/fscomponents';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 import PSButton from '../components/PSButton';
 import PSProductCarousel from '../components/PSProductCarousel';
 import { debounce, flatten, get } from 'lodash-es';
@@ -87,8 +89,19 @@ const NoSearchResultsStyle = StyleSheet.create({
   }
 });
 
+interface PromoProductGroup <T extends CommerceTypes.Product & { href: string } =
+  CommerceTypes.Product & { href: string }> {
+  title: string;
+  products: T[];
+}
+
+export interface SuggestionsGroupPreset {
+  name: string;
+  dataKey: string;
+}
+
 export interface SearchState {
-  suggestions: any;
+  suggestions: SearchScreenResult[] | null;
   showResult: boolean;
   keyword: string;
 }
@@ -119,7 +132,7 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   render(): JSX.Element {
-    const result = this.state.showResult ? [] : this.state.suggestions;
+    const result = !this.state.showResult && !!this.state.suggestions ? this.state.suggestions : [];
 
     return (
       <PSScreenWrapper
@@ -210,7 +223,7 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   renderPromoProductCarousel = ({ section }: { section: number }) => {
-    const productGroup = get(
+    const productGroup: PromoProductGroup = get(
       this.props,
       'promoProduct.productGroups.' + section
     );
@@ -223,9 +236,9 @@ class Search extends Component<SearchProps, SearchState> {
         <Text style={NoSearchResultsStyle.sectionTitle}>{productGroup.title}</Text>
         <PSProductCarousel
           style={NoSearchResultsStyle.carousel}
-          items={productGroup.products.map((prod: any) => ({
+          items={productGroup.products.map(prod => ({
             ...prod,
-            image: { uri: prod.image },
+            image: (prod.images || []).find(img => !!img.uri),
             onPress: this.handlePromotedProductPress(prod.href)
           }))}
         />
@@ -276,7 +289,7 @@ class Search extends Component<SearchProps, SearchState> {
     }
   }
 
-  handleSearchResultPress = (item: any) => {
+  handleSearchResultPress = (item: SearchScreenResult) => {
     Keyboard.dismiss();
     if (item.query) {
       return this.handleInputSubmit(item.query);
@@ -300,11 +313,11 @@ class Search extends Component<SearchProps, SearchState> {
   }
 
   // tslint:disable-next-line
-  fetchSuggestions: any = debounce(
+  fetchSuggestions = debounce(
     (value: string) => {
       dataSource
         .searchSuggestion(value)
-        .then((data: any) => {
+        .then((data: CommerceTypes.SearchSuggestion) => {
           this.setState({
             suggestions: this.getAllSuggestions(data)
           });
@@ -370,15 +383,15 @@ class Search extends Component<SearchProps, SearchState> {
     }
   }
 
-  getAllSuggestions = (data: any) => {
-    const groups = [
+  getAllSuggestions = (data: Dictionary) => {
+    const groups: SuggestionsGroupPreset[] = [
       { name: 'brandSuggestions', dataKey: 'brands' },
       { name: 'categorySuggestions', dataKey: 'categories' },
       { name: 'brandPartSuggestions', dataKey: 'brandPartTypes' }
     ];
 
     const suggestions = groups
-      .map((key: any) => data[key.name] && data[key.name][key.dataKey])
+      .map((key: SuggestionsGroupPreset) => data[key.name] && data[key.name][key.dataKey])
       .filter(Boolean);
 
     return flatten(suggestions);

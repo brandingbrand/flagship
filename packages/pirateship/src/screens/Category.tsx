@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, ScaledSize, View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { Category as FSCategory } from '@brandingbrand/fscategory';
 
@@ -9,7 +9,7 @@ import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { NavArrow } from '@brandingbrand/fscomponents';
+import { CategoryBoxProps, NavArrow } from '@brandingbrand/fscomponents';
 import { palette } from '../styles/variables';
 
 // Default padding for CategoryBox component
@@ -25,7 +25,7 @@ const gridItemProps = {
     fontSize: 13,
     textAlign: 'center',
     marginTop: 10,
-    height: 65
+    lineHeight: 65
   }
 };
 
@@ -37,7 +37,7 @@ const listItemProps = {
   titleStyle: {
     fontSize: 15,
     textAlign: 'left',
-    height: 35,
+    lineHeight: 35,
     marginTop: 20
   },
   renderAccessory: (): JSX.Element => {
@@ -74,7 +74,7 @@ export default class Category extends Component<PropType, StateType> {
     Dimensions.removeEventListener('change', this.onDimensionsChange);
   }
 
-  onDimensionsChange = (dimensions: { window: any; screen: any }): void => {
+  onDimensionsChange = (dimensions: { window: ScaledSize; screen: ScaledSize }): void => {
     this.setState({
       screenWidth: dimensions.window.width
     });
@@ -98,15 +98,14 @@ export default class Category extends Component<PropType, StateType> {
     categoryPromise.then(category => {
       const screen = Array.isArray(category.categories) && category.categories.length > 0 ?
         'Category' : 'ProductIndex';
+      const passPropsFormat = screen === 'Category' ?
+        { format: dataSourceConfig.categoryFormat} : {};
 
-      const passProps: any = {
+      const passProps = {
         categoryId: category.id,
-        title: category.title || ''
+        title: category.title || '',
+        ...passPropsFormat
       };
-
-      if (screen === 'Category') {
-        passProps.format = dataSourceConfig.categoryFormat;
-      }
 
       this.props.navigator.push({
         component: {
@@ -131,8 +130,10 @@ export default class Category extends Component<PropType, StateType> {
     const { categoryId, format } = this.props;
     const categoryFormat = format && format === 'list' ? 'list' : 'grid';
     const margin = categoryFormat === 'grid' ? 15 : 0;
-    const itemProps: any =
-      categoryFormat === 'grid' ? gridItemProps : listItemProps;
+    const itemProps: Partial<CategoryBoxProps> =
+      categoryFormat === 'grid'
+        ? gridItemProps as Partial<CategoryBoxProps>
+        : listItemProps as Partial<CategoryBoxProps>;
 
     if (categoryFormat === 'grid') {
       let imageWidth = DEFAULT_IMAGE_WIDTH;
@@ -173,7 +174,7 @@ export default class Category extends Component<PropType, StateType> {
     );
   }
 
-  updateTitle = (data: any) => {
+  updateTitle: <T extends CommerceTypes.Category>(data: T) => void = data => {
     if (data && typeof data === 'object') {
       const { title = '' } = data;
       this.props.navigator.mergeOptions({

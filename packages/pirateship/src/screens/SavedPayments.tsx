@@ -67,9 +67,14 @@ const defaultMessage = 'Loading your payments...';
 
 interface SavedPaymentsScreenProps extends ScreenProps, AccountProps {}
 
-class SavedPayments extends Component<SavedPaymentsScreenProps> {
+interface SavedPaymentsScreenState {
+  payments: CommerceTypes.PaymentMethod[];
+  loading: boolean;
+  msg: string;
+}
+
+class SavedPayments extends Component<SavedPaymentsScreenProps, SavedPaymentsScreenState> {
   static options: Options = navBarDefault;
-  state: any;
 
   constructor(props: SavedPaymentsScreenProps) {
     super(props);
@@ -96,8 +101,9 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
     dataSource
       .fetchSavedPayments()
       .then(data => {
-        const payments: CommerceTypes.PaymentMethod[] = data.map((item: any) =>
-          ({ id: item.id, addressId: item.addressId, paymentCard: item.paymentCard }));
+        const payments: CommerceTypes.PaymentMethod[] =
+          data.map((item: CommerceTypes.PaymentMethod) =>
+          ({ id: item.id, paymentCard: item.paymentCard }));
         this.setState({
           payments,
           loading: false,
@@ -199,9 +205,8 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
                   throw new Error(translate.string(translationKeys.payment.actions.delete.error));
                 }
               })
-              // TODO: Add types for error response
-              .catch((e: any) => {
-                return handleAccountRequestError(e, this.props.navigator, this.props.signOut);
+              .catch(e => {
+                handleAccountRequestError(e, this.props.navigator, this.props.signOut);
               });
           }
         }],

@@ -1,6 +1,6 @@
 import React, { Component, RefObject } from 'react';
 import { Linking, Platform, StyleSheet, View } from 'react-native';
-import WebView from 'react-native-webview';
+import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 import { Options } from 'react-native-navigation';
 import url from 'url';
 
@@ -21,7 +21,7 @@ const { apiHost } = appEnv;
 // tslint:disable
 export const patchPostMessageFunction = function() {
   const originalPostMessage = window.postMessage;
-  const patchedPostMessage = function(message: any, targetOrigin: string, transfer?: any[]) {
+  const patchedPostMessage = function(message: any, targetOrigin: string, transfer?: Transferable[]) {
     originalPostMessage(message, targetOrigin, transfer);
   };
 
@@ -85,6 +85,8 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
     }
   }
 
+  // TODO: param 'error' has type 'WebViewErrorEvent'.
+  // 'WebViewErrorEvent' can't imported from package react-native-webview
   webviewOnError = (error: any): void => {
     console.log(error);
     this.props.navigator.popToRoot()
@@ -92,7 +94,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
   }
 
   // tslint:disable-next-line:cyclomatic-complexity
-  onNavigationStateChange = (state: any): boolean => {
+  onNavigationStateChange = (state: WebViewNavigation): boolean => {
     // this event fires multiple times per url
     // we only want to catch loading urls, not urls that have completed loading
     if (Platform.OS === 'android' && !state.loading) {
@@ -172,7 +174,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
     );
   }
 
-  handleMessage = (e: any) => {
+  handleMessage = (e: WebViewMessageEvent) => {
     if (e.nativeEvent.data && e.nativeEvent.data.indexOf('title:') === 0) {
       this.props.navigator.mergeOptions({
         topBar: {

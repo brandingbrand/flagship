@@ -203,12 +203,12 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
               currentPassword: password,
               onChangeSuccess: () => {
                 this.props.navigator.pop()
-                .catch((e: any) => console.warn('ChangePassword POP error: ', e));
+                .catch((e: Error) => console.warn('ChangePassword POP error: ', e));
                 onSignInSuccess(this.props)();
               }
             }
           }
-        }).catch((e: any) => console.warn('ChangePassword PUSH error: ', e));
+        }).catch((e: Error) => console.warn('ChangePassword PUSH error: ', e));
         return true;
       } else {
         const response = (e || {}).response;

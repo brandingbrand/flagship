@@ -6,7 +6,12 @@ import { ScreenProps } from '../lib/commonTypes';
 import GlobalStyles from '../styles/Global';
 import { padding, palette } from '../styles/variables';
 
-const links = [{
+export interface LeftDrawerMenuLink {
+  screen: string;
+  title: string;
+}
+
+const links: LeftDrawerMenuLink[] = [{
   screen: 'Shop',
   title: 'Shop'
 }, {
@@ -29,7 +34,7 @@ export default class LeftDrawerMenu extends Component<ScreenProps> {
     );
   }
 
-  renderLink = (link: any, index: number): JSX.Element => {
+  renderLink = (link: LeftDrawerMenuLink, index: number): JSX.Element => {
     return (
       <TouchableOpacity
         key={index}

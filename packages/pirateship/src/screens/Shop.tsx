@@ -35,6 +35,7 @@ import translate, { translationKeys } from '../lib/translations';
 import { connect } from 'react-redux';
 import { AccountActionProps, signOut } from '../providers/accountProvider';
 import PSProductCarousel from '../components/PSProductCarousel';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 const arrow = require('../../assets/images/arrow.png');
 const logo = require('../../assets/images/pirateship-120.png');
@@ -175,7 +176,7 @@ export class UnwrappedShop extends Component<ShopProps> {
     }
   }
 
-  handleCategoryItemPress = (item: any) => {
+  handleCategoryItemPress = (item: CommerceTypes.Category) => {
     // Shopify doesn't have the concept of subcategories so always direct users to product index
     const screen =
       dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
@@ -382,13 +383,13 @@ export class UnwrappedShop extends Component<ShopProps> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+const mapDispatchToProps = (dispatch: React.Dispatch<any>) => {
   return {
     signOut: signOut(dispatch)
   };
 };
 
-const mapStateToProps = (combinedStore: CombinedStore, ownProps: any) => {
+const mapStateToProps = (combinedStore: CombinedStore) => {
   return {
     account: combinedStore.account,
     promoProducts: combinedStore.promoProducts,

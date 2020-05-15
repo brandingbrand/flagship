@@ -4,7 +4,11 @@ const initialState = { isLoggedIn: false };
 
 export interface AccountStore {
   isLoggedIn: boolean;
-  store?: CommerceTypes.CustomerAccount;
+  store?: CommerceTypes.CustomerAccount & {
+    gender?: string;
+    age?: string;
+    receiveEmail?: boolean;
+  };
 }
 
 export default function accountReducer(
