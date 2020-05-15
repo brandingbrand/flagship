@@ -388,7 +388,7 @@ class Cart extends Component<CartScreenProps> {
           productId
         }
       }
-    }).catch((e: any) => console.warn('ProductDetail PUSH error: ', e));
+    }).catch((e: Error) => console.warn('ProductDetail PUSH error: ', e));
   }
 
   signIn = async () => {
@@ -401,17 +401,17 @@ class Cart extends Component<CartScreenProps> {
               dismissible: true,
               onDismiss: (screenProps: ScreenProps) => () => {
                 screenProps.navigator.dismissModal()
-                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
+                .catch((e: Error) => console.warn('DISMISSMODAL error: ', e));
               },
               onSignInSuccess: (screenProps: ScreenProps) => () => {
                 screenProps.navigator.dismissModal()
-                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
+                .catch((e: Error) => console.warn('DISMISSMODAL error: ', e));
               }
             }
           }
         }]
       }
-    }).catch((e: any) => console.warn('SignIn SHOWMODAL error: ', e));
+    }).catch((e: Error) => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
   continueShopping = () => {
@@ -426,11 +426,11 @@ class Cart extends Component<CartScreenProps> {
         component: {
           name: 'Shop'
         }
-      }).catch((e: any) => console.warn('Shop PUSH error: ', e));
+      }).catch((e: Error) => console.warn('Shop PUSH error: ', e));
     }
   }
 
-  renderCartItem = (item: any): JSX.Element => {
+  renderCartItem: <T extends CommerceTypes.CartItem>(item: T) => void = (item): JSX.Element => {
     return (
       <PSCartItem
         key={item.productId}
@@ -443,9 +443,10 @@ class Cart extends Component<CartScreenProps> {
     );
   }
 
-  doesProductExist = (items: any[], productId: string) => {
-    return items && items.findIndex(product => product.id === productId) > -1;
-  }
+  doesProductExist: <T extends CommerceTypes.Product>(items: T[], productId: string) => void =
+    (items, productId) => {
+      return items && items.findIndex(product => product.id === productId) > -1;
+    }
 
   goToProduct = async (item: CommerceTypes.CartItem) => {
     try {
@@ -486,7 +487,7 @@ class Cart extends Component<CartScreenProps> {
     );
   }
 
-  promoSubmit = (value: any) => {
+  promoSubmit = () => {
     alert('promo submit');
   }
 
@@ -553,12 +554,10 @@ class Cart extends Component<CartScreenProps> {
     );
   }
 
-  startCheckout = (useApplePay: boolean): any => {
-    return (): void => {
-      if (!useApplePay) {
-        alert('Not yet implemented');
-      }
-    };
+  startCheckout = (useApplePay: boolean) => (): void => {
+    if (!useApplePay) {
+      alert('Not yet implemented');
+    }
   }
 }
 

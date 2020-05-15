@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
-  ListRenderItemInfo,
+  ListRenderItemInfo, ScaledSize,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -128,7 +128,7 @@ export default class More extends Component<ScreenProps, MoreState> {
     Dimensions.removeEventListener('change', this.handleDimensionChange);
   }
 
-  handleDimensionChange = (event: any) => {
+  handleDimensionChange = (event: { window: ScaledSize; screen: ScaledSize }) => {
     this.setState({
       gridItemWidth: Math.floor(event.screen.width / 2)
     });

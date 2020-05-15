@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ListRenderItemInfo,
+  ScaledSize,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -146,7 +147,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     }
   }
 
-  handleDimensionChange = (event: any) => {
+  handleDimensionChange = (event: { window: ScaledSize; screen: ScaledSize }) => {
     this.setState({
       gridItemWidth: Math.floor(event.screen.width / 2)
     });
@@ -217,7 +218,7 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
             }
           }
         }
-      }).catch((e: any) => console.warn(`${path} PUSH error: `, e));
+      }).catch((e: Error) => console.warn(`${path} PUSH error: `, e));
     };
   }
 

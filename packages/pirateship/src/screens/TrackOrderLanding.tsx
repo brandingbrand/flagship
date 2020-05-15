@@ -4,6 +4,7 @@ import { Options } from 'react-native-navigation';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import { backButton } from '../lib/navStyles';
@@ -65,9 +66,9 @@ export interface TrackOrderLandingState {
 export default class TrackOrderLanding extends Component<ScreenProps, TrackOrderLandingState> {
   static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
-  form: any;
-  formFields: any;
-  formFieldOptions: any;
+  form: Form | null = null;
+  formFields: Dictionary;
+  formFieldOptions: Dictionary;
 
   constructor(props: ScreenProps) {
     super(props);
@@ -195,7 +196,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
     );
   }
 
-  updateFormRef = (form: any) => {
+  updateFormRef = (form: Form) => {
     this.form = form;
   }
 
@@ -207,7 +208,7 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
   }
 
   focusField = (field: string) => {
-    return () => this.form.getComponent(field).refs.input.focus();
+    return () => this.form !== null && this.form.getComponent(field).refs.input.focus();
   }
 
   renderErrors = () => {

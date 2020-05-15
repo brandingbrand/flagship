@@ -5,6 +5,7 @@ import { Options } from 'react-native-navigation';
 // @ts-ignore TODO: Add types for tcomb-form-native
 import * as t from 'tcomb-form-native';
 import { Form } from '@brandingbrand/fscomponents';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import React, { Component } from 'react';
 import { NavButton, ScreenProps } from '../lib/commonTypes';
@@ -113,9 +114,9 @@ export default class ForgotPassword extends Component<
 > {
   static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
-  fieldOptions: any;
-  fields: any;
-  form: any;
+  fieldOptions: Dictionary;
+  fields: Dictionary;
+  form: Form | null = null;
 
   constructor(props: ForgotPasswordScreenProps) {
     super(props);
@@ -298,13 +299,14 @@ export default class ForgotPassword extends Component<
     this.setState({ values });
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: Form) => {
     this.form = ref;
   }
 
   resetPassword = async () => {
     this.setState({ errors: [] });
-    const { errors } = this.form.validate();
+    const { errors } = this.form !== null ?
+      this.form.validate() : [];
 
     if (errors.length > 0) {
       return;

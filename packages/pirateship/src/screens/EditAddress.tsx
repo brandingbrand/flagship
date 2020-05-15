@@ -10,6 +10,7 @@ import withAccount, { AccountProps } from '../providers/accountProvider';
 import AccountStyle from '../styles/Account';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
+import { Form } from '@brandingbrand/fscomponents';
 
 interface EditAddressScreenProps extends ScreenProps, AccountProps {
   address: CommerceTypes.CustomerAddress;
@@ -17,10 +18,24 @@ interface EditAddressScreenProps extends ScreenProps, AccountProps {
   onComplete: Function;
 }
 
-class EditAddress extends Component<EditAddressScreenProps> {
-  state: any;
+interface EditAddressScreenState {
+  values: {
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    countryCode?: string;
+    address1?: string;
+    city?: string;
+    stateCode?: string;
+    postalCode?: string;
+    address2?: string;
+    receiveEmail?: boolean;
+  };
+}
+
+class EditAddress extends Component<EditAddressScreenProps, EditAddressScreenState> {
   address?: CommerceTypes.CustomerAddress;
-  form: any;
+  form: Form | null = null;
 
   constructor(props: EditAddressScreenProps) {
     super(props);
@@ -61,7 +76,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
     }
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: Form) => {
     this.form = ref;
   }
 
@@ -148,7 +163,7 @@ class EditAddress extends Component<EditAddressScreenProps> {
   }
 
   save = () => {
-    if (this.form.getValue() && this.address) {
+    if (this.form !== null && this.form.getValue() && this.address) {
       let update;
 
       if (this.props.edit) {

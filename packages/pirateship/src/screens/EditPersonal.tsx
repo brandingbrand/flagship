@@ -8,10 +8,9 @@ import { Options } from 'react-native-navigation';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import ContactInfoForm from '../components/ContactInfoForm';
+import ContactInfoForm, { ContactFormValues } from '../components/ContactInfoForm';
 import { handleAccountRequestError } from '../lib/shortcuts';
 import AccountStyle from '../styles/Account';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
 
 const styles = StyleSheet.create({
@@ -24,13 +23,14 @@ const styles = StyleSheet.create({
 
 interface EditPersonalScreenProps extends ScreenProps, AccountProps {}
 
-class EditPersonal extends Component<EditPersonalScreenProps> {
+interface EditPersonalScreenState {
+  values: ContactFormValues;
+}
+
+class EditPersonal extends Component<EditPersonalScreenProps, EditPersonalScreenState> {
   static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
-  form: any;
-  formFields: any;
-  formFieldOptions: any;
-  state: any;
+  form: ContactInfoForm | null = null;
 
   constructor(props: EditPersonalScreenProps) {
     super(props);
@@ -42,28 +42,19 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
       }
     });
 
-    // TODO: Update to match proper commerce types
-    const {
-      firstName,
-      lastName,
-      email,
-      age,
-      gender,
-      receiveEmail
-      /* tslint:disable-next-line:no-unnecessary-type-assertion */
-    } = this.props.account.store as CommerceTypes.CustomerAccount & { [key: string]: any };
+    const accountStore = this.props.account.store;
 
     this.state = {
       values: {
-        firstName,
-        lastName,
-        email,
-        emailConfirmation: email,
+        firstName: accountStore?.firstName ? accountStore.firstName : '',
+        lastName: accountStore?.lastName ? accountStore.lastName : '',
+        email: accountStore?.email ? accountStore.email : '',
+        emailConfirmation: accountStore?.email ? accountStore.email : '',
         password: '',
         passwordConfirmation: '',
-        age,
-        gender,
-        specials: receiveEmail
+        age: accountStore?.age ? accountStore.age : '',
+        gender: accountStore?.gender ? accountStore.gender : '',
+        specials: accountStore?.receiveEmail ? accountStore.receiveEmail : false
       }
     };
   }
@@ -113,7 +104,7 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
     );
   }
 
-  onChange = (values: any) => {
+  onChange = (values: ContactFormValues) => {
     this.setState({ values });
   }
 
@@ -123,18 +114,17 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   save = () => {
-    const values = this.form.getValue();
+    const values = this.form !== null && this.form.form.getValue();
     if (values) {
       this.props
         .updateAccount(values)
         .then(this.cancel)
-        // TODO: add types for errors
-        .catch((e: any) => handleAccountRequestError(
+        .catch((e: Error) => handleAccountRequestError(
           e, this.props.navigator, this.props.signOut));
     }
   }
 
-  updateFormRef = (form: any) => {
+  updateFormRef = (form: ContactInfoForm) => {
     this.form = form;
   }
 }

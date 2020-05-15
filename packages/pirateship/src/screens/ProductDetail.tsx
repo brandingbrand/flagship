@@ -12,6 +12,7 @@ import withAccount, { AccountProps } from '../providers/accountProvider';
 import withRecentlyViewed, {
   RecentlyViewedProps
 } from '../providers/recentlyViewedProvider';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 export interface ProductDetailProps
   extends ScreenProps,
@@ -67,9 +68,10 @@ class ProductDetail extends Component<ProductDetailProps> {
     );
   }
 
-  doesProductExist = (items: any[], productId: string) => {
-    return items && items.findIndex(product => product.id === productId) > -1;
-  }
+  doesProductExist: <T extends CommerceTypes.Product>(items: T[], productId: string) => void =
+    (items, productId) => {
+      return items && items.findIndex(product => product.id === productId) > -1;
+    }
 
   goBack = () => {
     this.props.navigator.pop()

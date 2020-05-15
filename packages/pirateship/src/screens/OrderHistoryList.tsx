@@ -323,11 +323,11 @@ class OrderHistoryList extends Component<PropType, OrderHistoryListState> {
           dismissible: true,
           onDismiss: () => {
             this.props.navigator.dismissModal()
-            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
+            .catch((e: Error) => console.warn('SignIn DISMISSMODAL error: ', e));
           },
           onSignInSuccess: async () => {
             this.props.navigator.dismissModal()
-            .catch((e: any) => console.warn('SignIn DISMISSMODAL error: ', e));
+            .catch((e: Error) => console.warn('SignIn DISMISSMODAL error: ', e));
             await this.fetchOrders();
           }
         }

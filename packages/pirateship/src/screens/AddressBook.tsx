@@ -61,9 +61,14 @@ const defaultMessage = translate.string(translationKeys.address.loading);
 
 interface AddressBookScreenProps extends ScreenProps, AccountProps {}
 
-class AddressBook extends Component<AddressBookScreenProps> {
+interface AddressBookScreenState {
+  addresses: CommerceTypes.CustomerAddress[];
+  loading: boolean;
+  msg: string;
+}
+
+class AddressBook extends Component<AddressBookScreenProps, AddressBookScreenState> {
   static options: Options = navBarDefault;
-  state: any;
 
   constructor(props: AddressBookScreenProps) {
     super(props);
@@ -90,7 +95,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
     this.setState({ loading: true });
     dataSource
       .fetchSavedAddresses()
-      .then(addresses => {
+      .then((addresses: CommerceTypes.CustomerAddress[]) => {
         this.setState({ addresses, loading: false, msg: defaultMessage });
       })
       .catch(e => {
@@ -172,7 +177,7 @@ class AddressBook extends Component<AddressBookScreenProps> {
     );
   }
 
-  setDefaultAddress = (addr: any) => {
+  setDefaultAddress = (addr: CommerceTypes.CustomerAddress) => {
     return () => {
       this.setState({
         loading: true,

@@ -18,6 +18,7 @@ const env = require('../../env/env');
 export interface OrderHistoryDetailState {
   isLoading: boolean;
   errors: string[];
+  // TODO: 'fetchOrder' not yet implemented
   order?: any;
 }
 
@@ -220,6 +221,7 @@ export default class OrderHistoryDetail extends Component<ScreenProps, OrderHist
 
   renderOrderHistoryDetails = () => {
     const { order } = this.state;
+    // TODO: 'fetchOrder' not yet implemented
     const { orderDetails, shippingAddress, orderTotalDetails } = order;
     const orderTotals = orderTotalDetails.map((line: any) => {
       line.textStyle = styles.orderTotalsText;

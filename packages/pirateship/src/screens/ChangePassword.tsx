@@ -88,7 +88,7 @@ interface FormValues {
 class ChangePassword extends Component<ChangePasswordScreenProps, ChangePasswordState> {
   static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
-  form: any;
+  form: ContactInfoForm | null = null;
 
   constructor(props: ChangePasswordScreenProps) {
     super(props);
@@ -195,13 +195,13 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
     this.setState({ values });
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: ContactInfoForm) => {
     this.form = ref;
   }
 
   handleChangePasswordPress = async () => {
     this.setState({ errors: [] });
-    const { errors } = this.form.validate();
+    const { errors } = this.form !== null ? this.form.form.validate() : [];
     if (errors.length > 0) {
       return;
     }
