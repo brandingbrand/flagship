@@ -20,6 +20,7 @@ import { Form } from '@brandingbrand/fscomponents';
 import { merge } from 'lodash-es';
 import { EMAIL_REGEX } from '../lib/constants';
 import translate, { translationKeys } from '../lib/translations';
+import { FieldOptions } from '../lib/FieldOptionsTypes';
 
 const kDeliveryType = 'Delivery Type';
 
@@ -61,6 +62,8 @@ const EmailType = t.refinement(t.String, (str: string) =>
   EMAIL_REGEX.test((str || '').trim())
 );
 
+const valuesType: {[p: string ]: AddressFormValues } = {};
+
 EmailType.getValidationErrorMessage = (value: string) => {
   if (!value) {
     return `Email is required`;
@@ -69,12 +72,13 @@ EmailType.getValidationErrorMessage = (value: string) => {
   }
 };
 
+
 export interface PSAddressFormProps {
   style?: StyleProp<ViewStyle>;
-  onChange?: (value: any) => void;
+  onChange?: <T>(value: T) => void;
   hiddenFields?: (keyof AddressFormFields)[];
   optionalFields?: (keyof AddressFormFields)[];
-  updateFormRef?: (ref: any) => void;
+  updateFormRef?: (ref: Form) => void;
   values: AddressFormValues;
 }
 
@@ -94,33 +98,35 @@ export interface AddressFormValues {
   receiveEmail?: boolean;
 }
 
+export type FieldOptionTypes = Record<keyof AddressFormValues, FieldOptions>;
+
 export interface AddressFormFields {
-  addressName: any;
-  firstName: any;
-  lastName: any;
-  phone: any;
-  email: any;
-  addressField1: any;
-  countryCode: any;
-  address1: any;
-  address2: any;
-  city: any;
-  stateCode: any;
-  postalCode: any;
-  receiveEmail: any;
+  addressName: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  addressField1: string;
+  countryCode: string;
+  address1: string;
+  address2: string;
+  city: string;
+  stateCode: string;
+  postalCode: string;
+  receiveEmail: string;
 }
 
 export interface PSAddressFormState {
-  types: any;
+  types: React.ReactNode;
 }
 
 export default class PSAddressForm extends Component<
   PSAddressFormProps,
   PSAddressFormState
 > {
-  formRef: any;
-  fields: any;
-  fieldOptions: any;
+  formRef?: Form;
+  fields?: AddressFormFields;
+  fieldOptions: FieldOptionTypes;
   hiddenFields: Set<keyof AddressFormFields>;
   optionalFields: Set<keyof AddressFormFields>;
 
@@ -136,8 +142,8 @@ export default class PSAddressForm extends Component<
   }
 
   componentDidUpdate(prevProps: PSAddressFormProps): void {
-    const values = prevProps.values || {} as any;
-    const newValues = this.props.values || {} as any;
+    const values = prevProps.values || valuesType;
+    const newValues = this.props.values || valuesType;
     const countryCode = (values && values.countryCode) || 'US';
 
     const wasPOState = values.stateCode && POStateCode.indexOf(values.stateCode) > -1;
@@ -182,8 +188,8 @@ export default class PSAddressForm extends Component<
     return t.struct(fields);
   }
 
-  getFormFieldOptions = () => {
-    const options = {
+  getFormFieldOptions = (): FieldOptionTypes => {
+    const options: FieldOptionTypes = {
       addressName: {
         hidden: this.hiddenFields.has('addressName'),
         label: translate.string(translationKeys.address.form.addressName.label),
@@ -192,6 +198,7 @@ export default class PSAddressForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         onSubmitEditing: () => this.focusField('firstName')
       },
       firstName: {
@@ -202,6 +209,7 @@ export default class PSAddressForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         onSubmitEditing: () => this.focusField('lastName')
       },
       lastName: {
@@ -212,6 +220,7 @@ export default class PSAddressForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         onSubmitEditing: () => this.focusField('phone')
       },
       phone: {
@@ -222,6 +231,7 @@ export default class PSAddressForm extends Component<
         placeholderTextColor: color.gray,
         keyboardType: 'phone-pad',
         returnKeyType: 'next',
+        config: {},
         onSubmitEditing: () => this.focusField('email')
       },
       email: {
@@ -233,6 +243,7 @@ export default class PSAddressForm extends Component<
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
+        config: {},
         onSubmitEditing: () => this.focusField('addressField1')
       },
       addressField1: {
@@ -266,6 +277,7 @@ export default class PSAddressForm extends Component<
         error: translate.string(translationKeys.address.form.address1.error),
         placeholder: translate.string(translationKeys.formPlaceholders.required),
         placeholderTextColor: color.gray,
+        config: {},
         returnKeyType: 'next',
         onSubmitEditing: () => this.focusField('address2')
       },
@@ -274,6 +286,7 @@ export default class PSAddressForm extends Component<
         label: translate.string(translationKeys.address.form.address2.label),
         placeholder: translate.string(translationKeys.address.form.address2.placeholder),
         placeholderTextColor: color.gray,
+        config: {},
         returnKeyType: 'next',
         onSubmitEditing: () => this.focusField('city')
       },
@@ -284,6 +297,7 @@ export default class PSAddressForm extends Component<
         placeholder: translate.string(translationKeys.formPlaceholders.required),
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
+        config: {},
         onSubmitEditing: () => this.focusField('stateCode'),
         nullOption: false
       },
@@ -323,7 +337,8 @@ export default class PSAddressForm extends Component<
         placeholder: translate.string(translationKeys.formPlaceholders.required),
         placeholderTextColor: color.gray,
         keyboardType: 'numbers-and-punctuation',
-        returnKeyType: 'next'
+        returnKeyType: 'next',
+        config: {}
       },
       receiveEmail: {
         hidden: this.hiddenFields.has('receiveEmail'),
@@ -332,6 +347,7 @@ export default class PSAddressForm extends Component<
           true: palette.secondary,
           false: null
         },
+        config: {},
         // Android changes the color of the thumb switch when toggled on to be a conflicting green
         thumbTintColor:
           Platform.OS === 'android' ? palette.surface : undefined,
@@ -356,17 +372,17 @@ export default class PSAddressForm extends Component<
           }
         })
       }
-    } as any;
+    };
 
     this.optionalFields.forEach(fieldName => {
       const optionalString = translate.string(translationKeys.formPlaceholders.optional);
       options[fieldName].placeholder = optionalString;
       options[fieldName].returnKeyType = 'done';
       options[fieldName].onSubmitEditing = undefined;
-      if (options[fieldName].config) {
+      if (options[fieldName]?.config) {
         options[fieldName].config.onValueChange = undefined;
 
-        if (options[fieldName].config.title) {
+        if (options[fieldName].config?.title) {
           options[fieldName].config.title += ` (${optionalString})`;
         }
         if (options[fieldName].config.placeholder) {
@@ -379,7 +395,7 @@ export default class PSAddressForm extends Component<
   }
 
   focusField = (fieldName: string) => {
-    const field = this.formRef.getComponent(fieldName);
+    const field = this.formRef?.getComponent(fieldName);
     if (!field) {
       return console.warn(`field ${fieldName} doesn't exist`);
     }
@@ -394,7 +410,7 @@ export default class PSAddressForm extends Component<
     }
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: Form) => {
     this.formRef = ref;
 
     const { updateFormRef } = this.props;
