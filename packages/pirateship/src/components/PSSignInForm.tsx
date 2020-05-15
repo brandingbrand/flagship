@@ -4,7 +4,9 @@ import { Form } from '@brandingbrand/fscomponents';
 import * as t from 'tcomb-form-native';
 import { merge } from 'lodash-es';
 import TouchId, { AuthenticationError, IsSupportedError } from 'react-native-touch-id';
-import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  Image, Platform, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle
+} from 'react-native';
 import { EventSubscription } from 'react-native-navigation';
 import { EMAIL_REGEX } from '../lib/constants';
 import { textboxWithRightIcon } from '../lib/formTemplate';
@@ -13,7 +15,8 @@ import translate, { translationKeys } from '../lib/translations';
 import * as variables from '../styles/variables';
 
 import PSButton from './PSButton';
-import { Navigator } from '@brandingbrand/fsapp';
+import { ScreenProps } from '../lib/commonTypes';
+import { FieldOptions } from '../lib/FieldOptionsTypes';
 
 const touchIdIcon = require('../../assets/images/touchId.png');
 const faceIdIcon = require('../../assets/images/faceId.png');
@@ -53,7 +56,13 @@ export interface FormValues {
   rememberMe: boolean;
 }
 
-export interface PSSignInProps {
+
+export type FieldOptionTypes = {
+  [key in keyof FormValues]: FieldOptions;
+};
+
+
+export interface PSSignInProps extends ScreenProps {
   signIn: (email: string, password: string) => Promise<boolean>;
   forgotPassword: () => void;
   saveCredentials: (email: string, password: string) => Promise<void>;
@@ -62,11 +71,9 @@ export interface PSSignInProps {
   passwordType?: CustomFormField;
   // see https://github.com/gcanti/tcomb-form-native/blob/master/docs/STYLESHEETS.md
   // for more info about fieldStyles
-  fieldStyles?: { [key: string]: any };
+  fieldStyles?: StyleProp<ViewStyle & TextStyle>;
   signInButtonText?: string;
-  onNav?: (handler: (event: any) => void) => void;
   runBioAuthImmediately?: boolean;
-  navigator: Navigator;
 }
 
 export interface PSSignInState {
@@ -83,10 +90,10 @@ export default class PSSignInForm extends Component<
   PSSignInState
 > {
   // TODO: Update these when we add tcomb-form-native types
-  private fieldOptions: { [key: string]: any };
-  private fieldStyles: { [key: string]: any };
-  private fields: { [key: string]: any };
-  private form: any;
+  private fieldOptions: FieldOptionTypes;
+  private fieldStyles: StyleProp<ViewStyle & TextStyle>;
+  private fields: { [key: string]: React.ReactNode };
+  private form?: Form | null;
   private navigationEventListener: EventSubscription | null = null;
 
   constructor(props: PSSignInProps) {
@@ -184,7 +191,7 @@ export default class PSSignInForm extends Component<
     });
   }
 
-  getFormFieldOptions = (fieldStyles: { [key: string]: any }): { [key: string]: any } => {
+  getFormFieldOptions = (fieldStyles: StyleProp<ViewStyle & TextStyle>): FieldOptionTypes => {
     const fieldOptions = {
       email: {
         template: textboxWithRightIcon,
@@ -249,7 +256,7 @@ export default class PSSignInForm extends Component<
       merge(fieldOptions.password, this.props.passwordType.options);
     }
 
-    return fieldOptions;
+    return fieldOptions as FieldOptionTypes;
   }
 
   render(): JSX.Element {
@@ -325,12 +332,12 @@ export default class PSSignInForm extends Component<
     this.setState({ values });
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: Form) => {
     this.form = ref;
   }
 
   focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -340,7 +347,7 @@ export default class PSSignInForm extends Component<
 
   handleSignInPress = async () => {
     this.setState({ errors: [] });
-    const { errors } = this.form.validate();
+    const { errors } = this.form?.validate();
 
     if (errors.length > 0) {
       return;
