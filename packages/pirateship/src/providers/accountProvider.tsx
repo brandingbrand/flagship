@@ -1,3 +1,4 @@
+import React from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { dataSource } from '../lib/datasource';
 import {
@@ -26,7 +27,8 @@ export interface AccountActionProps {
     password: string
   ) => Promise<CommerceTypes.SessionToken>;
   signOut: (clearSaved?: boolean) => Promise<void>;
-  updateAccount: (details: CommerceTypes.CustomerAccount) => any;
+  updateAccount: (details: CommerceTypes.CustomerAccount) =>
+    Promise<CommerceTypes.CustomerAccount | void>;
   updatePassword: (oldPassword: string, newPassword: string) => Promise<void>;
   saveCredentials: (email: string, password: string) => Promise<void>;
   updateCredentials: (email: string, password: string) => Promise<void>;
@@ -37,8 +39,7 @@ export interface AccountProps extends AccountStateProps, AccountActionProps {}
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(
-  combinedStore: CombinedStore,
-  ownProps: any
+  combinedStore: CombinedStore
 ): AccountStateProps {
   return {
     account: combinedStore.account
@@ -57,7 +58,7 @@ const reloadSessionData = async (): Promise<any> => {
   });
 };
 
-export const signOut = (dispatch: any) => async (clearSaved: boolean = true) => {
+export const signOut = (dispatch: React.Dispatch<any>) => async (clearSaved: boolean = true) => {
   return dataSource
     .logout('', '')
     .then(async () => {
@@ -77,12 +78,12 @@ export const signOut = (dispatch: any) => async (clearSaved: boolean = true) => 
 };
 
 // provide actions (that can change redux store) to wrapped component as props
-function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
+function mapDispatchToProps(dispatch: React.Dispatch<any>): AccountActionProps {
   return {
     signIn: async (email, password) => {
       return dataSource
         .login(email, password)
-        .then((signInData: any) => {
+        .then((signInData: CommerceTypes.SessionToken) => {
           dispatch({ type: SIGN_IN, data: signInData });
         })
         .then(reloadSessionData);
