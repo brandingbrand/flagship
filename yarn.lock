@@ -2564,7 +2564,7 @@
   dependencies:
     serve-static "^1.13.1"
 
-"@react-native-community/cli-platform-android@^3.0.0", "@react-native-community/cli-platform-android@^3.0.0-alpha.1":
+"@react-native-community/cli-platform-android@^3.0.0":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-3.0.3.tgz#e652abce79a7c1e3a8280228123e99df2c4b97b6"
   integrity sha512-rNO9DmRiVhB6aP2DVUjEJv7ecriTARDZND88ny3xNVUkrD1Y+zwF6aZu3eoT52VXOxLCSLiJzz19OiyGmfqxYg==
@@ -2573,6 +2573,22 @@
     chalk "^2.4.2"
     execa "^1.0.0"
     jetifier "^1.6.2"
+    logkitty "^0.6.0"
+    slash "^3.0.0"
+    xmldoc "^1.1.2"
+
+"@react-native-community/cli-platform-android@^4.8.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-4.8.0.tgz#f495b227e82c75c676dfa53c0dac33bf438b50b8"
+  integrity sha512-sYa4K0t0VL99j+bloHTL2BwXFJpHCdPN4SRTm9/wfxuWDkiPFvo9TaX0adh7GbUoKalLq2k0z+iEpHMN3HtZiw==
+  dependencies:
+    "@react-native-community/cli-tools" "^4.8.0"
+    chalk "^3.0.0"
+    execa "^1.0.0"
+    fs-extra "^8.1.0"
+    glob "^7.1.3"
+    jetifier "^1.6.2"
+    lodash "^4.17.15"
     logkitty "^0.6.0"
     slash "^3.0.0"
     xmldoc "^1.1.2"
@@ -2596,6 +2612,18 @@
     lodash "^4.17.5"
     mime "^2.4.1"
     node-fetch "^2.5.0"
+
+"@react-native-community/cli-tools@^4.8.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-4.8.0.tgz#144a029c741c2cf40a7f9c059819ce9a69e7f1e3"
+  integrity sha512-voXGruhYyyhCbEYM2uZ54dMZcBgXFFcQxVK3nLwJDG9nSQGObZInj9Zf76ix5qGnvKKGWIGUcbmRhyLpAzTXuQ==
+  dependencies:
+    chalk "^3.0.0"
+    lodash "^4.17.15"
+    mime "^2.4.1"
+    node-fetch "^2.6.0"
+    open "^6.2.0"
+    shell-quote "1.6.1"
 
 "@react-native-community/cli-types@^3.0.0":
   version "3.0.0"
