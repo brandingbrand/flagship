@@ -30,10 +30,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface TotalProps {
+export interface SerializableTotalProps {
   keyName: string | JSX.Element; // String or element for the row's key
   value: string | CurrencyValue | JSX.Element; // String or element for the row's value
 
+  keyStyle?: TextStyle; // Optional styling for the key text element
+  valueStyle?: TextStyle; // Optional styling for the value text element
+
+  style?: ViewStyle; // Optional styling for the entire total row
+}
+
+export interface TotalProps extends Pick<SerializableTotalProps, 'keyName' | 'value'> {
   keyStyle?: StyleProp<TextStyle>; // Optional styling for the key text element
   valueStyle?: StyleProp<TextStyle>; // Optional styling for the value text element
 
@@ -44,7 +51,7 @@ function isCurrency(data: JSX.Element | CurrencyValue): data is CurrencyValue {
   return !!((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
 }
 
-export const Total = React.memo((props: TotalProps): JSX.Element => {
+const TotalInner = (props: TotalProps): JSX.Element => {
   const renderData = (
     data: string | CurrencyValue | JSX.Element,
     style?: StyleProp<ViewStyle>): JSX.Element => {
@@ -77,4 +84,6 @@ export const Total = React.memo((props: TotalProps): JSX.Element => {
       </View>
     </View>
   );
-});
+};
+
+export const Total = React.memo(TotalInner);
