@@ -2748,7 +2748,7 @@
     prop-types "^15.7.2"
     util-deprecate "^1.0.2"
 
-"@storybook/addons@5.2.8", "@storybook/addons@~5.2.0":
+"@storybook/addons@5.2.8":
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-5.2.8.tgz#f8bf8bd555b7a69fb1e9a52ab8cdb96384d931ff"
   integrity sha512-yAo1N5z/45bNIQP8SD+HVTr7X898bYAtz1EZBrQ6zD8bGamzA2Br06rOLL9xXw29eQhsaVnPlqgDwCS1sTC7aQ==
@@ -2761,7 +2761,7 @@
     global "^4.3.2"
     util-deprecate "^1.0.2"
 
-"@storybook/addons@5.3.18":
+"@storybook/addons@5.3.18", "@storybook/addons@~5.3.18":
   version "5.3.18"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-5.3.18.tgz#5cbba6407ef7a802041c5ee831473bc3bed61f64"
   integrity sha512-ZQjDgTUDFRLvAiBg2d8FgPgghfQ+9uFyXQbtiGlTBLinrPCeQd7J86qiUES0fcGoohCCw0wWKtvB0WF2z1XNDg==
