@@ -48,7 +48,7 @@
     "@commitlint/travis-cli": "^8.3.1",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cli": "^3.0.0-alpha.1",
-    "@storybook/addon-actions": "~5.2.0",
+    "@storybook/addon-actions": "~5.3.18",
     "@storybook/addon-knobs": "~5.2.0",
     "@storybook/addon-viewport": "~5.3.18",
     "@storybook/addons": "~5.2.0",
