@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 
 export function textbox(locals: {[key: string]: any}): JSX.Element | null {
   if (locals.hidden) {

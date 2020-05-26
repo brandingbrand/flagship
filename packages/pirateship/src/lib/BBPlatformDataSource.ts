@@ -4,6 +4,7 @@ import {
 } from '@brandingbrand/fscommerce';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
+import {StyleProp, TextStyle} from 'react-native';
 
 const kErrorMessageNotImplemented = 'not implemented';
 
@@ -126,7 +127,7 @@ export interface OrderHistoryDetail {
 export interface KeyValuePair {
   label: string;
   value: string;
-  textStyle?: any;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 export interface Shipment {
@@ -442,6 +443,10 @@ export interface ProductIndex extends CommerceTypes.ProductIndex {
   fullCategoryId?: string; // internal category id, used for vehicle filter
 }
 
+interface ImageURI {
+  src: string;
+}
+
 export default class BBPlatformDataSource implements CommerceDataSource {
   client: FSNetwork;
   minRefinements: number = 0;
@@ -456,7 +461,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     const response = await this.client.get('product/' + id);
     const data = response.data;
 
-    data.images = (data.images || []).map((image: any) => {
+    data.images = (data.images || []).map((image: ImageURI) => {
       return {
         uri: image.src
       };
@@ -485,9 +490,9 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
     const data = response.data;
 
-    (data.products || []).forEach((product: any) => {
+    (data.products || []).forEach((product: CommerceTypes.ProductItem) => {
       if (product.images) {
-        product.images = product.images.map((image: any) => {
+        product.images = product.images.map(image => {
           return {
             uri: image.src
           };
@@ -505,7 +510,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     const response = await this.client.get('categories/' + (id || ''));
     const data = response.data;
 
-    (data.categories || []).forEach((category: any) => {
+    (data.categories || []).forEach((category: CommerceTypes.Category) => {
       if (category.image) {
         category.image.uri = category.image.src;
       }
@@ -548,9 +553,9 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
     const data = response.data;
 
-    (data.products || []).forEach((product: any) => {
+    (data.products || []).forEach((product: CommerceTypes.ProductItem) => {
       if (product.images) {
-        product.images = product.images.map((image: any) => {
+        product.images = product.images.map(image => {
           return {
             uri: image.src
           };
@@ -676,7 +681,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     return response.data;
   }
 
-  async editSavedPayment(payment: any): Promise<any> {
+  async editSavedPayment(payment: CommerceTypes.Payment): Promise<CommerceTypes.Payment> {
     const response = await this.client.put(
       `account/payment-method/${payment.id}`,
       payment
@@ -755,7 +760,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     return response.data;
   }
 
-  async addItemToWishlist(id: string): Promise<any> {
+  async addItemToWishlist(id: string): Promise<CommerceTypes.ProductItem> {
     const response = await this.client.post(`account/wishlist`, { id });
     return response.data;
   }
@@ -850,7 +855,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     throw new Error(kErrorMessageNotImplemented);
   }
 
-  async addToWishlist(productId: string): Promise<any> {
+  async addToWishlist(productId: string): Promise<CommerceTypes.ProductItem> {
     return this.client
       .post(`/account/wishlist/`, { id: productId })
       .then(response => {
@@ -858,7 +863,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
       });
   }
 
-  async removeFromWishlist(productId: string): Promise<any> {
+  async removeFromWishlist(productId: string): Promise<CommerceTypes.ProductItem> {
     return this.client
       .delete(`/account/wishlist/${productId}`)
       .then(response => {
@@ -866,19 +871,19 @@ export default class BBPlatformDataSource implements CommerceDataSource {
       });
   }
 
-  async fetchWishlist(): Promise<any> {
+  async fetchWishlist(): Promise<CommerceTypes.ProductItem> {
     return this.client.get(`/account/wishlist`).then(response => {
       return (response.data && response.data.products) || [];
     });
   }
 
-  async searchVehicle(query?: VehicleSearchQuery): Promise<any> {
+  async searchVehicle(query?: VehicleSearchQuery): Promise<VehicleSearchQuery> {
     return this.client
       .get(`/search/vehicle`, { params: query })
       .then(response => response.data);
   }
 
-  async searchVehicleFilter(query?: VehicleSearchQuery): Promise<any> {
+  async searchVehicleFilter(query?: VehicleSearchQuery): Promise<VehicleSearchQuery> {
     return this.client
       .get(`/search/vehicle/filter`, { params: query })
       .then(response => response.data);
@@ -929,7 +934,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
   async checkoutRemoveGiftCertificate(
     giftCardDeleteData: GiftCardDeleteData
-  ): Promise<any> {
+  ): Promise<GiftCardDeleteData> {
     return this.client
       .delete(
         '/checkout/giftCert/' +
@@ -942,13 +947,13 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
   async checkoutApplyGiftCertificate(
     giftCardPostData: GiftCardPostData
-  ): Promise<any> {
+  ): Promise<GiftCardPostData> {
     return this.client
       .post('/checkout/giftCert', giftCardPostData)
       .then(response => response.data);
   }
 
-  async checkoutSubmit(paymentFormData: PaymentFormData): Promise<any> {
+  async checkoutSubmit(paymentFormData: PaymentFormData): Promise<PaymentFormData> {
     return this.client
       .post('/checkout/submit', paymentFormData)
       .then(response => response.data);
@@ -972,11 +977,11 @@ export default class BBPlatformDataSource implements CommerceDataSource {
    * @param {object} cart - The cart object from a legacy API
    * @returns {CommerceTypes.Cart} The cart object translated to the Commerce spec
    */
-  private updateCartSchema(cart: any): CommerceTypes.Cart {
+  private updateCartSchema(cart: CommerceTypes.Cart): CommerceTypes.Cart {
     if (Array.isArray(cart.items)) {
       cart.items.forEach((item: CommerceTypes.CartItem) => {
         if (item.images) {
-          item.images = item.images.map((image: any) => {
+          item.images = item.images.map(image => {
             return {
               uri: image.src
             };

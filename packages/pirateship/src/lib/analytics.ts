@@ -36,11 +36,19 @@ const providers = [
 const Analytics = new FSAnalytics(providers);
 export default Analytics;
 
+interface AnalyticsProductType {
+  identifier: string;
+  quantity?: number;
+  name: string;
+  brand?: string;
+  price?: CommerceTypes.CurrencyValue;
+}
+
 export function mapProductToAnalytics(
   product: CommerceTypes.Product,
   quantity?: number
-): any {
-  const analyticsProduct: any = {
+): AnalyticsProductType {
+  const analyticsProduct: AnalyticsProductType = {
     identifier: product.id,
     name: product.title,
     brand: product.brand,

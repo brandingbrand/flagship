@@ -14,10 +14,14 @@ export const CMSProvider = new CoreContentManagementSystemProvider(
 );
 
 // CMS Slot Instance interface
-export type CMSSlot = any[];
+export type CMSSlot = string[];
 
 // CMS instance that can be used as a prop for some Pirate components
 export const CMS = new ContentManagementSystem(CMSProvider);
+
+interface CmsInstances {
+  instances: CMSSlot;
+}
 
 export async function fetchCMS(
   group: string,
@@ -25,7 +29,7 @@ export async function fetchCMS(
   identifier?: string
 ): Promise<CMSSlot> {
   try {
-    const result = await CMS.contentForSlot(group, slot, identifier) as any;
+    const result = await CMS.contentForSlot(group, slot, identifier) as CmsInstances;
     if (result && result.instances) {
       return result.instances as CMSSlot;
     } else {
