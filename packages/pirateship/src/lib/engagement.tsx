@@ -36,7 +36,7 @@ export interface Message {
 export interface InboxResponseMessage extends Message {
   sent: Attribute;
   audience: Attribute;
-  message: any;
+  message: string;
 }
 export interface DiscoveryMessage extends Message {
   account: string;

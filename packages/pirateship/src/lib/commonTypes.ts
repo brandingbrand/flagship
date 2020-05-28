@@ -10,7 +10,7 @@ export interface ScreenProps {
 
 export interface NavButton {
   button: OptionsTopBarButton;
-  action: <T>(params: T) => void;
+  action: (params: Navigator) => void;
 }
 
 export interface GridItem {

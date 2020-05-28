@@ -14,7 +14,7 @@ export const commerceCloudMiddleware = {
     // Determine which categories to show by comparing the normalized subcategories against the
     // raw data, in which categories meant to be displayed will have c_showInMenu set to true.
     const categoriesToShow = (data.categories || [])
-      .filter((category: any) => category.c_showInMenu)
+      .filter((category: CommerceTypes.Category) => category.c_showInMenu)
       .map((category: CommerceTypes.Category) => category.id);
 
     // c_showInMenu may only be a custom field within the Demandware demo API, so only filter the
