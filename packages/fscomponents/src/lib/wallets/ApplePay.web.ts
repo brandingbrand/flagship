@@ -1,8 +1,8 @@
 import { default as ApplePayBase } from './ApplePay.base';
 
 export interface ApplePaySession {
-  openPaymentSetup?: (identifier: string) => void;
-  canMakePaymentsWithActiveCard?: (identifier: string) => void;
+  openPaymentSetup: (identifier: string) => Promise<boolean>;
+  canMakePaymentsWithActiveCard: (identifier: string) => Promise<boolean>;
 }
 
 export type WindowApplePay = Window & {
@@ -32,11 +32,7 @@ export default class ApplePayWeb extends ApplePayBase {
     if (this.theWindow && this.theWindow.ApplePaySession) {
       const ApplePaySession = this.theWindow.ApplePaySession;
 
-      if (!ApplePaySession.canMakePaymentsWithActiveCard) {
-        return false;
-      }
-      ApplePaySession.canMakePaymentsWithActiveCard(this.merchantIdentifier);
-      return true;
+      return ApplePaySession.canMakePaymentsWithActiveCard(this.merchantIdentifier);
     } else {
       return Promise.reject(new Error('Apple Pay is not enabled on this device.'));
     }
@@ -46,12 +42,7 @@ export default class ApplePayWeb extends ApplePayBase {
     if (this.theWindow && this.theWindow.ApplePaySession) {
       const ApplePaySession = this.theWindow.ApplePaySession;
 
-      if (!ApplePaySession.openPaymentSetup) {
-        return false;
-      }
-
-      ApplePaySession.openPaymentSetup(this.merchantIdentifier);
-      return true;
+      return ApplePaySession.openPaymentSetup(this.merchantIdentifier);
     } else {
       return Promise.reject(new Error('Apple Pay is not enabled on this device.'));
     }
