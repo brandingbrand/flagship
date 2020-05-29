@@ -9,21 +9,40 @@ import {
 } from 'react-native';
 
 import { style as S } from '../styles/MoreText';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.moreText;
 
-export interface MoreTextProps {
+export type FormatType = 'outward' | 'inward';
+
+export interface SerializableMoreTextProps {
   numberOfCharacters: number;
-  format?: 'outward' | 'inward';
+  format?: FormatType;
 
   // Container
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: ViewStyle;
 
   // Text
   text: string;
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: TextStyle;
 
   // More/Less Section
   textMore?: string;
   textLess?: string;
+  textMoreLessStyle?: TextStyle;
+}
+
+export interface MoreTextProps extends Omit<SerializableMoreTextProps,
+  'containerStyle' |
+  'textStyle' |
+  'textMoreLessStyle'
+  > {
+  // Container
+  containerStyle?: StyleProp<ViewStyle>;
+
+  // Text
+  textStyle?: StyleProp<TextStyle>;
+
+  // More/Less Section
   textMoreLessStyle?: StyleProp<TextStyle>;
   renderMoreLessOutwardSection?:
     (shouldShowMore: boolean, handlePress: () => void) => React.ReactNode;
@@ -36,8 +55,8 @@ export interface MoreTextState {
 
 export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
   private readonly kButtonTouchabilityOpacity: number = 0.5;
-  private readonly kTextMore: string = 'Read more';
-  private readonly kTextLess: string = 'Read less';
+  private readonly kTextMore: string = FSI18n.string(componentTranslationKeys.readMore);
+  private readonly kTextLess: string = FSI18n.string(componentTranslationKeys.readLess);
 
   constructor(props: MoreTextProps) {
     super(props);

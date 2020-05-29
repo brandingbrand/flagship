@@ -2,11 +2,12 @@ import { ComponentClass } from 'react';
 import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
+  ImageURISource,
   StyleProp,
   TextStyle,
   ViewStyle
 } from 'react-native';
-import { Navigator } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
   navigator: Navigator;
@@ -19,6 +20,7 @@ export interface Action {
   body?: string;
   name?: string;
   id?: string;
+  position?: number;
 }
 
 export interface EmitterProps {
@@ -80,10 +82,27 @@ export interface JSON {
   pageCounterStyle?: StyleProp<ViewStyle>;
   id?: string;
   key?: string;
+  name?: string;
+  storyType?: string;
+  tabbedItems?: any[];
+  AnimatedPageCounter?: any;
+  AnimatedNavTitle?: any;
+  setScrollEnabled?: (enabled: boolean) => void;
+  onBack?: () => void;
+  fullScreenCardImage?: ImageURISource;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
   story?: JSON;
+  index?: number;
+  wrapper?: boolean;
+  testing?: string;
+  contents?: any;
+  fadeIn?: boolean;
+  forceBackground?: boolean;
+  fullScreenCard?: boolean;
+  animateIndex?: number;
+  position?: number;
 }
 
 export interface InjectedProps {

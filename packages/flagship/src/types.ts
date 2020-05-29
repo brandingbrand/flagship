@@ -24,7 +24,7 @@ export interface Config {
   };
 
   appCenter?: {
-    apiToken: string;
+    apiToken?: string; // deprecated; will be removed in a future release
     organization: string;
     distribute?: {
       appNameIOS?: string;
@@ -78,7 +78,8 @@ export interface Config {
   entitlementsFileIOS?: string;
   usageDescriptionIOS?: {
     key: string;
-    string: string;
+    string?: string;
+    array?: string[];
   }[];
 
   UIBackgroundModes?: {
@@ -99,7 +100,8 @@ export interface Config {
     android: string;
     ios: {
       images: string;
-      xib: string;
+      xib?: string;
+      storyboard?: string;
     };
   };
 
@@ -116,7 +118,7 @@ export interface Config {
   webScriptInjectHeader?: string;
   webScriptInjectFooter?: string;
   android?: AndroidConfig;
-  ios: IOSConfig;
+  ios?: IOSConfig;
   adobeAnalytics?: {
     ios: {
       configPath: string;
@@ -148,7 +150,8 @@ export interface AndroidConfig {
 }
 
 export interface IOSConfig {
-  pods: PodsConfig;
+  pods?: PodsConfig;
+  buildVersion?: string;
 }
 
 export interface PodsConfig {

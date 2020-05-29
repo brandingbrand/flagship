@@ -137,6 +137,11 @@ export interface GridProps<ItemT>
    * Style to apply to the separator between rows in the grid.
    */
   rowSeparatorStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Style to apply to parent view component.
+   */
+  gridContainerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
@@ -174,7 +179,8 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     const {
       style,
       renderHeader,
-      renderFooter
+      renderFooter,
+      gridContainerStyle
     } = this.props;
 
     // Only register for scroll events if we're supposed to show back to top
@@ -185,7 +191,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={[{ flex: 1, flexBasis: 'auto' }, gridContainerStyle]}>
         <FlatList
           data={this.state.data}
           keyExtractor={this.keyExtractor}

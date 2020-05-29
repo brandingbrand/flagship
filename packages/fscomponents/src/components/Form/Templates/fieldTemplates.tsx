@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import StatefulTextbox from './StatefulTextbox';
-import { FormLabelPosition } from '../Form';
+import StatefulTextbox, { FormLabelPosition } from './StatefulTextbox';
 
 export function labelAboveFieldTemplate(
   locals: Dictionary,

@@ -1,5 +1,6 @@
 default_platform :ios
 
+# make a provisioned build and upload to hockeyapp
 lane :beta do
   gym(
     scheme: "FLAGSHIP",
@@ -21,6 +22,7 @@ lane :beta do
   )
 end
 
+# make a provisioned build and upload to appcenter
 lane :appcenter do
   gym(
     scheme: "FLAGSHIP",
@@ -37,15 +39,16 @@ lane :appcenter do
   )
 
   appcenter_upload(
-    api_token: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_api_token
+    #PROJECT_MODIFY_FLAG_appcenter_api_token
     owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
     app_name: "INJECTED_FROM_CONFIG" #PROJECT_MODIFY_FLAG_appcenter_app_name_ios
   )
 end
 
+# make an unprovisioned build
 lane :build do
   xcodebuild(
     scheme: "FLAGSHIP",
-    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO"
+    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
   )
 end
