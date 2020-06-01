@@ -348,6 +348,9 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+  || newVersion;
+
   const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
     || versionLib.normalize(newVersion);
 
@@ -357,7 +360,7 @@ export function version(configuration: Config, newVersion: string): void {
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${newVersion}</string>`
+    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
