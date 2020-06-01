@@ -1,6 +1,6 @@
 import React from 'react';
 import { EventSubscription } from 'react-native';
-import pushRoute from './push-route';
+import pushRoute, { overwrite } from './push-route';
 import {
   AppConfigType,
   DrawerConfig,
@@ -81,6 +81,9 @@ export default class Navigator {
   async dismissAllModals(options?: NavOptions): Promise<any> {
     this.props.modals = [];
     this.props.updateModals(this.props.modals);
+  }
+  async updateProps(newProps: object, alternateId?: string): Promise<any> {
+    overwrite(newProps, this.props.history, this.props.appConfig);
   }
   mergeOptions(options: NavOptions, alternateId?: string): void {
     if (options.sideMenu && this.props.toggleDrawerFn) {
