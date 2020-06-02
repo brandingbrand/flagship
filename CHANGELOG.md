@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+
+### Bug Fixes
+
+* **fscomponents:** added styling props for IE11 UI fix ([763365d](https://github.com/brandingbrand/flagship/commit/763365d6b4f9360d2e012b23b25f78ca15ecd94a))
+* **fsproductindex:** added styling props for IE11 UI fix ([b1c15d3](https://github.com/brandingbrand/flagship/commit/b1c15d30bd3eeefb498397c2e50ccc2c65f1c8ee))
+
+
+### Features
+
+* **flagship:** Custom Short Version string for iOS ([cb68386](https://github.com/brandingbrand/flagship/commit/cb68386635286ef8d9da9ca488e151766d8bd3ae))
+* **fsapp:** Add updateProps to navigator ([23e1349](https://github.com/brandingbrand/flagship/commit/23e13497ea912ca9a83163fd4b3b648aeaf6267c))
+
+
+
+
+
 # [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
 
 
