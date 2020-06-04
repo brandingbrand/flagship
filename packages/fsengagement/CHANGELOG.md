@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+
+### Features
+
+* **fsengagement:** new methods to return segment list and messages (5bebff7)
+
+
+
+
+
 # [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
