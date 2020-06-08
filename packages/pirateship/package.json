@@ -55,7 +55,7 @@
     "react-native-navigation": "^4.0.0",
     "react-native-safe-area": "^0.5.0",
     "react-native-sensitive-info": "^5.5.0",
-    "react-native-svg": "^10.0.0",
+    "react-native-svg": "^12.1.0",
     "react-native-touch-id": "~4.4.0",
     "react-native-video": "^5.0.0",
     "react-native-webview": "^8.0.0",
