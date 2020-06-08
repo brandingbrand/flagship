@@ -48,7 +48,7 @@ export interface PSRowProps {
 const PSRow: FunctionComponent<PSRowProps> = (props): JSX.Element => {
   const renderImage = (): JSX.Element => {
     if (props.renderImage) {
-      return props.renderImage();
+      props.renderImage();
     }
 
     return (
