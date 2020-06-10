@@ -28,7 +28,7 @@ function generateBlacklist() {
 const config = {
   // Adds the monorepo root to the watchlist so the hoisted node_modules can be loaded
   watchFolders: [
-    path.resolve(__dirname, '../..')
+    path.resolve(__dirname, 'dist')
   ],
   resolver: {
     blacklistRE: generateBlacklist(),
