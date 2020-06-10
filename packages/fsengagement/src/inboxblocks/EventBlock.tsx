@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
 export interface EventWhen {
   date: string;
   time: string;
+  textDate?: string;
+  textTime?: string;
 }
 export interface EventInfo {
   when: EventWhen;
@@ -98,10 +100,24 @@ export default class EventBlock extends Component<EventBlockProps> {
               text='WHEN'
               textStyle={[styles.eventTitle, titleStyle]}
             />
-            <TextBlock
-              text={when.date + ' | ' + when.time}
-              textStyle={textStyle}
-            />
+            {!when.textDate && !when.textTime && (
+              <TextBlock
+                text={when.date + ' | ' + when.time}
+                textStyle={textStyle}
+              />
+            )}
+            {when.textDate && (
+              <TextBlock
+                text={when.textDate}
+                textStyle={textStyle}
+              />
+            )}
+            {when.textTime && (
+              <TextBlock
+                text={when.textTime}
+                textStyle={textStyle}
+              />
+            )}
           </View>
         </View>
         <View style={styles.eventType}>
