@@ -1,11 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { color, palette } from '../styles/variables';
+import { palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
-
-import Svg, {
-  Rect
-} from 'react-native-svg';
 
 export interface PSFilterActionBarProps {
   showFilterModal: any;
@@ -15,9 +11,6 @@ export interface PSFilterActionBarProps {
   isMultiColumn?: boolean;
   keyword?: string;
 }
-
-const buttonInactiveColor = color.gray;
-const buttonActiveColor = palette.primary;
 
 const styles = StyleSheet.create({
   actionBarContainer: {
@@ -53,76 +46,6 @@ const styles = StyleSheet.create({
 });
 
 const PSFilterActionBar: FunctionComponent<PSFilterActionBarProps> = (props): JSX.Element => {
-
-  const renderButtonSpacer = (): JSX.Element => {
-    return (
-      <View style={styles.buttonSpacer}>
-        <Svg height='30' width='1'>
-          <Rect
-            x='0'
-            y='0'
-            width='1'
-            height='30'
-            fill={color.lightGray}
-          />
-        </Svg>
-      </View>
-    );
-  };
-
-  const renderSingleColumnButton = (): JSX.Element => {
-    return (
-      <TouchableOpacity onPress={props.handleColumnToggle}>
-        <Svg height='21' width='21'>
-          <Rect
-            x='0'
-            y='0'
-            width='21'
-            height='21'
-            fill={props.isMultiColumn ? buttonInactiveColor : buttonActiveColor}
-          />
-        </Svg>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderMultiColumnButton = (): JSX.Element => {
-    return (
-      <TouchableOpacity onPress={props.handleColumnToggle}>
-        <Svg height='21' width='21'>
-          <Rect
-            x='0'
-            y='0'
-            width='8'
-            height='8'
-            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
-          />
-          <Rect
-            x='13'
-            y='0'
-            width='8'
-            height='8'
-            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
-          />
-          <Rect
-            x='0'
-            y='13'
-            width='8'
-            height='8'
-            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
-          />
-          <Rect
-            x='13'
-            y='13'
-            width='8'
-            height='8'
-            fill={props.isMultiColumn ? buttonActiveColor : buttonInactiveColor}
-          />
-        </Svg>
-      </TouchableOpacity>
-    );
-  };
-
   const renderFilterButton = (): JSX.Element => {
     const { selectedRefinements = {} } = props.commerceData;
     let numSelected = 0;
@@ -156,11 +79,6 @@ const PSFilterActionBar: FunctionComponent<PSFilterActionBarProps> = (props): JS
   return (
     <View style={styles.actionBarContainer}>
       {renderFilterButton()}
-      <View style={styles.buttonContainer}>
-        {renderSingleColumnButton()}
-        {renderButtonSpacer()}
-        {renderMultiColumnButton()}
-      </View>
     </View>
   );
 };
