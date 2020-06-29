@@ -303,6 +303,12 @@ class Cart extends Component<CartScreenProps> {
     };
   }
 
+  removeItem = (item: CommerceTypes.CartItem) => {
+    return () => {
+      this.props.removeFromCart(item);
+    };
+  }
+
   afterLoad = (cartData: CommerceTypes.Cart): void => {
     this.setState({
       cartData
@@ -438,6 +444,7 @@ class Cart extends Component<CartScreenProps> {
         navigateToProduct={this.goToProduct}
         item={item}
         updateQty={this.updateQuantity(item)}
+        removeItem={this.removeItem(item)}
         containerStyle={CartStyle.cartItemContainer}
       />
     );
