@@ -240,9 +240,17 @@ class Cart extends Component<CartScreenProps> {
     } else if (cartData && cartData.items) {
       const cartCount = this.props.cart.cartCount;
       const badge = !!cartCount && cartCount.toString() || undefined;
-      this.props.navigator.mergeOptions({
+
+      badge ? this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
+          badgeColor: palette.primary,
+          icon: cartTabIcon
+        }
+      }) :
+      this.props.navigator.mergeOptions({
+        bottomTab: {
+          badge: '',
           badgeColor: palette.primary,
           icon: cartTabIcon
         }
