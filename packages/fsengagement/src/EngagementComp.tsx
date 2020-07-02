@@ -23,7 +23,7 @@ import {
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
-import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 import {
   Action,
   BlockItem,
@@ -386,7 +386,7 @@ export default function(
                   style: 'dark' as 'dark'
                 },
                 topBar: {
-                  background: { color: '#f5f2ee' },
+                  background: '#f5f2ee',
                   rightButtons: [{
                     color: '#866d4b',
                     icon: require('../assets/images/closeBronze.png'),
