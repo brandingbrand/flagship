@@ -380,13 +380,13 @@ export default function(
           await this.props.navigator.showModal({
             component: {
               name: 'EngagementWebView',
-              passProps: { actions },
+              passProps: { actions, navigator: this.props.navigator },
               options: {
                 statusBar: {
                   style: 'dark' as 'dark'
                 },
                 topBar: {
-                  background: '#f5f2ee' as OptionsTopBarBackground,
+                  background: { color: '#f5f2ee' },
                   rightButtons: [{
                     color: '#866d4b',
                     icon: require('../assets/images/closeBronze.png'),
