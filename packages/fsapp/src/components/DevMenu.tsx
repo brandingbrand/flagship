@@ -243,7 +243,12 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   restart = () => {
-    RNRestart.Restart();
+    this.props.hideDevMenu();
+    this.props.navigator.dismissModal()
+      .then(() => {
+        RNRestart.Restart();
+      })
+      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
   }
 
   dismissModal = () => {
