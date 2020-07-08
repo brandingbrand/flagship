@@ -10,7 +10,7 @@ import {
 import { Navigator } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
-  navigator: Navigator;
+  componentId: string;
 }
 
 export interface Action {

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 
 import {
   Action,
@@ -35,12 +36,18 @@ export interface WebViewProps extends ScreenProps {
 
 export default class EngagementWebView extends PureComponent<WebViewProps> {
   navigationEventListener: any;
+  navigator: Navigator;
+
   constructor(props: WebViewProps) {
     super(props);
+    this.navigator = new Navigator({
+      componentId: props.componentId,
+      tabs: []
+    });
   }
 
   componentDidMount(): void {
-    this.navigationEventListener = this.props.navigator.bindNavigation(this);
+    this.navigationEventListener = this.navigator.bindNavigation(this);
   }
 
   componentWillUnmount(): void {
@@ -51,12 +58,12 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
 
   async navigationButtonPressed({ buttonId }: any): Promise<any> {
     if (buttonId === 'close') {
-      return this.props.navigator.dismissModal();
+      return this.navigator.dismissModal();
     }
   }
 
   onBackPress = async (): Promise<void> => {
-    return this.props.navigator.pop();
+    return this.navigator.pop();
   }
 
   injectBlogJS(): string {
