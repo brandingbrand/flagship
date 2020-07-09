@@ -20,10 +20,11 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
-import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 import {
   Action,
   BlockItem,
@@ -219,6 +220,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   headerName?: string;
   animate?: boolean;
   cardPosition?: number;
+  navigator: Navigator;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -386,7 +388,7 @@ export default function(
                   style: 'dark' as 'dark'
                 },
                 topBar: {
-                  background: '#f5f2ee' as OptionsTopBarBackground,
+                  background: { color: '#f5f2ee'},
                   rightButtons: [{
                     color: '#866d4b',
                     icon: require('../assets/images/closeBronze.png'),
@@ -547,25 +549,16 @@ export default function(
       );
     }
     renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
-      const {
-        private_blocks,
-        private_type,
-        ...restProps } = item;
-      const { id, name } = this.props;
-      const props = {
-        id,
-        name,
-        ...restProps
-      };
+      const { private_type } = item;
       if (!layoutComponents[private_type]) {
         return null;
       }
 
-      props.navigator = this.props.navigator;
       return React.createElement(
         layoutComponents[WHITE_INBOX_WRAPPER],
         {
-          key: this.dataKeyExtractor(item)
+          key: this.dataKeyExtractor(item),
+          navigator: this.props.navigator
         },
         this.renderBlock(item)
       );
@@ -584,7 +577,6 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
-      props.navigator = this.props.navigator;
       if (item.fullScreenCard) {
         delete item.fullScreenCard;
         props.AnimatedPageCounter = this.AnimatedPageCounter;
@@ -602,6 +594,7 @@ export default function(
           {
             key: this.dataKeyExtractor(item),
             animateIndex: item.animateIndex,
+            navigator: this.props.navigator,
             slideBackground: item.animateIndex && item.animateIndex <= 2 ?
               this.state.slideBackground : false
           },
@@ -612,6 +605,7 @@ export default function(
         layoutComponents[private_type],
         {
           ...props,
+          navigator: this.props.navigator,
           storyGradient: props.story ? json.storyGradient : null,
           api,
           key: this.dataKeyExtractor(item)
