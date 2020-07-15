@@ -45,7 +45,7 @@ export class Carousel extends Component<CarouselProps> {
             } : {}}
             {...webOptions}
           >
-            {_children.map((child: any, i: number) => {
+            {_children && _children.map((child: any, i: number) => {
               return (
                 <View key={i} style={{ height }}>
                   {child}
