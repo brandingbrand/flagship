@@ -66,4 +66,9 @@ storiesOf('Carousel', module)
       {textSlide}
       {textSlide}
     </Carousel>
+  ))
+  .add('empty', () => (
+    <Carousel
+      height={190}
+    />
   ));
