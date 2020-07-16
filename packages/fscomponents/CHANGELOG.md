@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crash for empty carousel (53aee9f)
+* **fscomponents:** Use React Children helper (0d33371)
+
+
+
+
+
 # [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
 
 
