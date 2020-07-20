@@ -45,7 +45,7 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
 
     const image = images && images.find(img => !!img.uri) || this.props.image;
 
-    if (!image) {
+    if (!image || !image.uri) {
       return null;
     }
 
