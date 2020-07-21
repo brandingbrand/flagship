@@ -70,6 +70,7 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
     );
   };
+  // tslint:disable-next-line: cyclomatic-complexity
   const renderPrice = (): JSX.Element => {
     const {
       originalPriceStyle,
@@ -85,11 +86,30 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       originalPrice && salePriceStyle || null
     ];
 
+    let convertedPrice: string | undefined;
+    try {
+      if (price) {
+        convertedPrice = FSI18n.currency(price);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    let convertedOriginalPrice: string | undefined;
+    try {
+      if (originalPrice) {
+        convertedOriginalPrice = FSI18n.currency(originalPrice);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+
     return (
       <View style={styles.priceContainer}>
-        {originalPrice && (
+        {convertedOriginalPrice && (
           <Text style={[styles.originalPrice, originalPriceStyle]}>
-            {FSI18n.currency(originalPrice)}
+            {convertedOriginalPrice}
           </Text>
         )}
         {price && (
@@ -97,7 +117,7 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
             <Text
               style={priceStyleGenerated}
             >
-              {FSI18n.currency(price)}
+              {convertedPrice}
             </Text>
           </View>
         )}
