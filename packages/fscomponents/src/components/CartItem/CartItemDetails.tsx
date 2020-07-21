@@ -61,13 +61,13 @@ memo((props): JSX.Element => {
       {convertedPrice && (
         <Text style={[defaultStyles.detailText, detailTextStyle]}>
           {FSI18n.string(componentTranslationKeys.unitPrice)}:
-          {FSI18n.currency(convertedPrice)}
+          {convertedPrice}
         </Text>
       )}
       {convertedTotalPrice && (
         <Text style={detailTextStyle}>
           {FSI18n.string(componentTranslationKeys.totalPrice)}:
-          {FSI18n.currency(convertedTotalPrice)}
+          {convertedTotalPrice}
         </Text>
       )}
     </View>
