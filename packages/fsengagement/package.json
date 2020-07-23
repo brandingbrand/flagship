@@ -24,7 +24,7 @@
     "react-native-navigation": "^4.0.0",
     "react-native-snap-carousel": "^3.8.0",
     "react-native-video": "^5.0.0",
-    "react-native-webview": "^8.0.0",
+    "react-native-webview": "^10.3.2",
     "uuid-js": "0.7.5"
   },
   "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
