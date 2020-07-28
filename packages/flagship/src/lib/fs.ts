@@ -73,7 +73,7 @@ export function update(path: string, oldText: string | RegExp, newText: string):
 export function doesKeywordExist(path: string, keyword: string | RegExp): boolean {
   // TODO: This should use a streaming buffer
   const fileContent = readFileSync(path, { encoding: 'utf8' });
-  if (typeof(keyword) === 'string') {
+  if (typeof keyword === 'string') {
     return fileContent.indexOf(keyword) > -1;
   } else {
     return keyword.test(fileContent);
