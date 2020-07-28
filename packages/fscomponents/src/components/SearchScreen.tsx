@@ -30,7 +30,6 @@ export interface HighlightResultAccumulator {
 
 export interface SearchScreenResult {
   title: string;
-  query: string;
   [key: string]: any;
 }
 
@@ -78,11 +77,12 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: any;
+  searchBar: SearchBar | null;
 
   constructor(props: SearchScreenProps) {
     super(props);
 
+    this.searchBar = null;
     this.state = {
       history: [],
       inputValue: ''
@@ -101,14 +101,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
+    if (searchBarShouldFocus !== false && this.searchBar) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar | null) => {
     this.searchBar = ref;
   }
 
@@ -236,17 +236,17 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         onPress={this.handleResultPress(item)}
         accessibilityLabel={`Search ${item.title}`}
       >
-        {this.renderTextWithHighLighs(item.title, this.state.inputValue)}
+        {this.renderTextWithHighLights(item.title, this.state.inputValue)}
       </TouchableHighlight>
     );
   }
 
-  renderTextWithHighLighs = (name: string = '', query: string) => {
+  renderTextWithHighLights = (name: string = '', query: string) => {
     const strArr = highlightStr(name, query);
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
