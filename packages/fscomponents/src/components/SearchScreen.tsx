@@ -200,12 +200,10 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   renderResult = () => {
-    if (!this.props.results || !this.props.results.length) {
-      if (this.props.results === undefined) {
-        return this.renderHistory();
-      } else {
-        return null;
-      }
+    if (!this.props.results) {
+      return this.renderHistory();
+    } else if (!this.props.results.length) {
+      return null;
     }
 
     return (
