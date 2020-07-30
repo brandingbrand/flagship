@@ -73,7 +73,7 @@
     "@types/redux-logger": "^3.0.6",
     "@types/storybook__react": "^4.0.0",
     "@types/url-parse": "^1.4.1",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^26.1.0",
     "babel-loader": "^8.0.0",
     "core-js": "^3.0.0",
     "coveralls": "^3.0.2",
