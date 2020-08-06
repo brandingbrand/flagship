@@ -3,25 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
-
-**Note:** Version bump only for package @brandingbrand/fsengagement
-
-
-
-
-
-## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
 
 
 ### Bug Fixes
 
-* **fsengagement:** fix page counter not fading away (b677b95)
+* **flagship:** Upgrade to react-native-navigation 6 (dd35a9f)
 
 
-### Reverts
+### BREAKING CHANGES
 
-* Revert "fix(flagship): Upgrade to react-native-navigation 6" (7f82083)
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
 
 
 

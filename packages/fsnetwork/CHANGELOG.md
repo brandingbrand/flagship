@@ -3,20 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
 
 **Note:** Version bump only for package @brandingbrand/fsnetwork
-
-
-
-
-
-## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
-
-
-### Reverts
-
-* Revert "fix(flagship): Upgrade to react-native-navigation 6" (7f82083)
 
 
 
