@@ -96,6 +96,7 @@ export default class ProductIndexGrid extends Component<
     return (
       <ProductItem
         style={S.productItem}
+        id={item.id}
         title={item.title}
         brand={item.brand}
         image={item.images && item.images.find(img => !!img.uri)}
@@ -160,7 +161,7 @@ export default class ProductIndexGrid extends Component<
     this.setState({ sortModalVisble: false });
   }
 
-  handleFilterApply = (selectedItems: any, info: any) => {
+  handleFilterApply = (selectedItems: any, info?: { isButtonPress: boolean }) => {
     if (!this.props.filterInBackground) {
       this.closeFilterModal();
     } else {
@@ -182,7 +183,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     if (this.props.handleFilterApply) {
-      this.props.handleFilterApply(selectedItems);
+      this.props.handleFilterApply(selectedItems, info);
     } else {
       this.reloadByQuery({
         ...refinementsQuery,
@@ -362,7 +363,7 @@ export default class ProductIndexGrid extends Component<
     if (commerceData) {
       if (this.props.renderSort) {
         content = this.props.renderSort(this.handleSortChange, commerceData);
-      } else {
+      } else if (commerceData.sortingOptions) {
         content = (
           <View style={S.modalContainer}>
             {this.renderModalHeader({
@@ -481,7 +482,7 @@ export default class ProductIndexGrid extends Component<
             renderFilterItemValue={this.renderItemValueForCombinedFilterAndSort}
             applyOnSelect={this.props.filterInBackground}
             singleFilterIds={
-              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : null
+              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : undefined
             }
             {...this.props.FilterListDrilldownProps}
           />
@@ -496,7 +497,7 @@ export default class ProductIndexGrid extends Component<
           })}
 
           <FilterList
-            items={commerceData.refinements}
+            items={commerceData.refinements || []}
             onApply={this.handleFilterApply}
             onReset={this.handleFilterReset}
             selectedItems={commerceData.selectedRefinements}
