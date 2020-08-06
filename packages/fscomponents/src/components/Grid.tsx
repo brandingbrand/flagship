@@ -72,12 +72,12 @@ export interface GridProps<ItemT>
   /**
    * An optional function to render a header component displayed at the top of the grid.
    */
-  renderHeader?: () => JSX.Element;
+  renderHeader?: () => JSX.Element | null;
 
   /**
    * An optional function to render a footer component, displayed at the bottom of the grid.
    */
-  renderFooter?: () => JSX.Element;
+  renderFooter?: () => JSX.Element | null;
 
   /**
    * Styles to apply to the container around the back to top button
