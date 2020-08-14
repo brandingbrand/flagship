@@ -13843,10 +13843,10 @@ react-native-web@^0.11.7:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native-webview@^8.0.0:
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-8.0.3.tgz#1dcd30de28aa4bdb314b4fa8a60e0abc2431a9d4"
-  integrity sha512-Uhd3o73HcqiQ0GWxyz5G5+Jkh1dd1A8Kz/rCYHiX/Ctkg3KO9qrZUmzRetq5y9X1+fUH9XJt6+LO3iO/Dxopfw==
+react-native-webview@^10.4.1:
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-10.4.1.tgz#87abc1c48df9d81ee7efc7708fcabe0fc3ea4b90"
+  integrity sha512-qC8lHeP6paHsT3Tiuiga3XHouvQQVhxEJtBDgyYjzX+CbZ5S9+bthkOahhkuP+nlLJMPmIPN7HtpvdGnrqyAFg==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
