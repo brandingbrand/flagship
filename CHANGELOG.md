@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** add init script to patch rn images for ios 14 ([11149da](https://github.com/brandingbrand/flagship/commit/11149da128f4ac83952526157144a1484e9832b4))
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **flagship:** iOS Pods not being added ([4e4c165](https://github.com/brandingbrand/flagship/commit/4e4c1653c2e60c279b2208dc2e16b7f7b88ea7d1))
+* **fscomponents:** Fix crashes with bad currency codes ([07070ea](https://github.com/brandingbrand/flagship/commit/07070ea7e2cefd3cf0c9c57918be07c2328cc93e))
+* **fscomponents:** Fix currency conversion ([f746451](https://github.com/brandingbrand/flagship/commit/f74645170aecc015c0c4faad6503249a5cddbed0))
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crash for empty carousel ([53aee9f](https://github.com/brandingbrand/flagship/commit/53aee9f6cedbb46d31fd8cdf2c209398475ca965))
+* **fscomponents:** Use React Children helper ([0d33371](https://github.com/brandingbrand/flagship/commit/0d33371a07c6f0ef231dfeacf94b4695eff4bff1))
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **flagship:** removed single/multi column buttons ([abd7d88](https://github.com/brandingbrand/flagship/commit/abd7d886b6bbe48e4c8e94edb63d7d0e43fc2126))
+* **fsapp:** Close dev menu before restart ([9570820](https://github.com/brandingbrand/flagship/commit/9570820664c9d7fc986d02b852fd500c55c152db)), closes [/github.com/wix/react-native-navigation/blob/a641b0976f18c54a0d649cf7905b6c83ab2ebf67/lib/ios/RNNModalManager.m#L70](https://github.com//github.com/wix/react-native-navigation/blob/a641b0976f18c54a0d649cf7905b6c83ab2ebf67/lib/ios/RNNModalManager.m/issues/L70)
+* **fscomponents:** Ensure required props are serializable for Swatches ([a8e4a8f](https://github.com/brandingbrand/flagship/commit/a8e4a8f80d4a30dd89257946518d67804078579e))
+* **fsengagement:** Update engagement for Navigator updates ([602e4dd](https://github.com/brandingbrand/flagship/commit/602e4dd563273b131529d0f0b4bd97764145b68f))
+* **pirateship:** add padding between swatches on PDP ([1316047](https://github.com/brandingbrand/flagship/commit/13160472f18700659401cc986019c0936a403678))
+* **pirateship:** svg arrows no longer black boxes ([f89e2d9](https://github.com/brandingbrand/flagship/commit/f89e2d9c2ce99036fab42d265c9b5008879071f3))
+
+
+### Features
+
+* bump websocket-extensions to resolve security vulnerability ([b71559f](https://github.com/brandingbrand/flagship/commit/b71559f5954e4be03f6b62b9062a4019093ff984))
+* **fsengagement:** add new time icon ([5fba223](https://github.com/brandingbrand/flagship/commit/5fba223e6cc72d5fc7694f2f5f45f8f35e86d7d5))
+* **fsengagement:** Update event card/block to allow for start/end dates ([f894f16](https://github.com/brandingbrand/flagship/commit/f894f169b063d9fa566d32c04a340a1977150095))
+
+
+
+
+
 # [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
 
 

@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **fsengagement:** Update engagement for Navigator updates ([602e4dd](https://github.com/brandingbrand/flagship/commit/602e4dd563273b131529d0f0b4bd97764145b68f))
+
+
+### Features
+
+* **fsengagement:** add new time icon ([5fba223](https://github.com/brandingbrand/flagship/commit/5fba223e6cc72d5fc7694f2f5f45f8f35e86d7d5))
+* **fsengagement:** Update event card/block to allow for start/end dates ([f894f16](https://github.com/brandingbrand/flagship/commit/f894f169b063d9fa566d32c04a340a1977150095))
+
+
+
+
+
 # [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
 
 

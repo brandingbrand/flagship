@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crashes with bad currency codes ([07070ea](https://github.com/brandingbrand/flagship/commit/07070ea7e2cefd3cf0c9c57918be07c2328cc93e))
+* **fscomponents:** Fix currency conversion ([f746451](https://github.com/brandingbrand/flagship/commit/f74645170aecc015c0c4faad6503249a5cddbed0))
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crash for empty carousel ([53aee9f](https://github.com/brandingbrand/flagship/commit/53aee9f6cedbb46d31fd8cdf2c209398475ca965))
+* **fscomponents:** Use React Children helper ([0d33371](https://github.com/brandingbrand/flagship/commit/0d33371a07c6f0ef231dfeacf94b4695eff4bff1))
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **fscomponents:** Ensure required props are serializable for Swatches ([a8e4a8f](https://github.com/brandingbrand/flagship/commit/a8e4a8f80d4a30dd89257946518d67804078579e))
+
+
+
+
+
 # [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
