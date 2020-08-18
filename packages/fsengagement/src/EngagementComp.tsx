@@ -455,11 +455,13 @@ export default function(
       return this.renderBlock(item);
     }
     renderHeaderName = () => {
-      const name = this.props.headerName || '';
+      const { json, headerName } = this.props;
+      const name = headerName || '';
+      const headerTitleStyle = json && json.headerTitleStyle || {};
       const comma = name ? ', ' : '';
       return (
-        <Text style={styles.headerName}>
-          HELLO{comma}{name.toUpperCase()}
+        <Text style={[styles.headerName, headerTitleStyle]}>
+          Hello{comma}{name}
         </Text>
       );
     }
