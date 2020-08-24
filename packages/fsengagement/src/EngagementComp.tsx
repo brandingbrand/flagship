@@ -20,10 +20,11 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import PropTypes from 'prop-types';
-import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 import {
   Action,
   BlockItem,
@@ -36,6 +37,7 @@ import EngagementWebView from './WebView';
 import EngagementProductModal from './EngagementProductModal';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
+import { debounce } from 'lodash-es';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
@@ -218,6 +220,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   headerName?: string;
   animate?: boolean;
   cardPosition?: number;
+  navigator: Navigator;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -275,6 +278,15 @@ export default function(
     handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
     handleWelcomeRef = (ref: any) => this.AnimatedWelcome = ref;
     handleAppleCloseRef = (ref: any) => this.AnimatedAppleClose = ref;
+    componentWillUnmount(): void {
+      // Check if closing because of navigation change or ui
+      if (!this.state.isClosingAnimation) {
+        // If navigation change also try to return back out of the story
+        if (this.props.onBack) {
+          this.props.onBack();
+        }
+      }
+    }
     componentDidMount(): void {
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
@@ -336,8 +348,8 @@ export default function(
       cardPosition: this.props.cardPosition || 0
     })
 
-    // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = async (actions: Action) => {
+    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
+    handleAction = debounce(async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -376,7 +388,7 @@ export default function(
                   style: 'dark' as 'dark'
                 },
                 topBar: {
-                  background: '#f5f2ee' as OptionsTopBarBackground,
+                  background: { color: '#f5f2ee'},
                   rightButtons: [{
                     color: '#866d4b',
                     icon: require('../assets/images/closeBronze.png'),
@@ -421,7 +433,7 @@ export default function(
           break;
       }
       return;
-    }
+    }, 300);
 
     onBackPress = async (): Promise<void> => {
       return this.props.navigator.pop();
@@ -537,25 +549,16 @@ export default function(
       );
     }
     renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
-      const {
-        private_blocks,
-        private_type,
-        ...restProps } = item;
-      const { id, name } = this.props;
-      const props = {
-        id,
-        name,
-        ...restProps
-      };
+      const { private_type } = item;
       if (!layoutComponents[private_type]) {
         return null;
       }
 
-      props.navigator = this.props.navigator;
       return React.createElement(
         layoutComponents[WHITE_INBOX_WRAPPER],
         {
-          key: this.dataKeyExtractor(item)
+          key: this.dataKeyExtractor(item),
+          navigator: this.props.navigator
         },
         this.renderBlock(item)
       );
@@ -574,7 +577,6 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
-      props.navigator = this.props.navigator;
       if (item.fullScreenCard) {
         delete item.fullScreenCard;
         props.AnimatedPageCounter = this.AnimatedPageCounter;
@@ -592,6 +594,7 @@ export default function(
           {
             key: this.dataKeyExtractor(item),
             animateIndex: item.animateIndex,
+            navigator: this.props.navigator,
             slideBackground: item.animateIndex && item.animateIndex <= 2 ?
               this.state.slideBackground : false
           },
@@ -602,6 +605,7 @@ export default function(
         layoutComponents[private_type],
         {
           ...props,
+          navigator: this.props.navigator,
           storyGradient: props.story ? json.storyGradient : null,
           api,
           key: this.dataKeyExtractor(item)

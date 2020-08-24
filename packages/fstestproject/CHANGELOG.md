@@ -3,6 +3,101 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* update fstestproject to only use mock data sources ([1ce3c54](https://github.com/brandingbrand/flagship/commit/1ce3c54067b4fd51ee0d4f2c17f27278db52ad95))
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 **Note:** Version bump only for package @brandingbrand/fstestproject

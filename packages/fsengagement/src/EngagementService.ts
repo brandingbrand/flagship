@@ -17,7 +17,11 @@ export interface EngagementServiceConfig {
   baseURL: string;
   cacheTTL?: number; // default = 10 mins
 }
-
+export interface Segment {
+  id: number;
+  name: string;
+  attributes?: string[];
+}
 export interface Attribute {
   key: string;
   value: string;
@@ -179,6 +183,20 @@ export class EngagementService {
       });
   }
 
+  async getSegments(attribute?: string): Promise<Segment[]> {
+    return this.networkClient.get(`/App/${this.appId}/getSegments`, {
+      params: {
+        attribute
+      }
+    })
+      .then(r => r.data)
+      .catch((e: any) => {
+        console.log(e.response);
+        console.error(e);
+      });
+  }
+
+
   async setPushToken(pushToken: string): Promise<any> {
     const uniqueId = DeviceInfo.getUniqueId();
     const device = this.profileData && this.profileData.devices &&
@@ -290,6 +308,41 @@ export class EngagementService {
           ret = this.messages;
         }
 
+        return Promise.resolve(ret);
+      });
+  }
+
+
+  async getInboxBySegment(
+    segmentId: number | string,
+    segmentOnly?: boolean
+  ): Promise<EngagementMessage[]> {
+    return this.networkClient.post(`/App/${this.appId}/getInboxBySegment/${segmentId}`, {
+      segmentOnly
+    })
+      .then((r: any) => r.data)
+      .then((list: any) => list.map((data: any) => {
+        return {
+          id: data.id,
+          published: new Date(data.published),
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes
+        };
+      }))
+      .then((messages: EngagementMessage[]) => {
+        this.messages = messages;
+        this.messageCache = +new Date();
+        return messages;
+      })
+      .catch(async (e: any) => {
+        console.log('Unable to fetch inbox messages', e);
+        let ret: EngagementMessage[] = [];
+        // respond with stale cache if we have it
+        if (this.messages.length) {
+          ret = this.messages;
+        }
         return Promise.resolve(ret);
       });
   }
