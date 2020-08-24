@@ -61,8 +61,14 @@ const TotalInner = (props: TotalProps): JSX.Element => {
       );
     }
     if (isCurrency(data)) {
+      let convertedTotal: string | undefined;
+      try {
+        convertedTotal = FSI18n.currency(data);
+      } catch (e) {
+        console.error(e);
+      }
       return (
-        <Text style={style}>{FSI18n.currency(data)}</Text>
+        <Text style={style}>{convertedTotal}</Text>
       );
     }
     return data;
