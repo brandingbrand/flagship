@@ -3,22 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
-
-**Note:** Version bump only for package @brandingbrand/fsmockdatasources
-
-
-
-
-
-# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
-
-**Note:** Version bump only for package @brandingbrand/fsmockdatasources
-
-
-
-
-
 ## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
 
 **Note:** Version bump only for package @brandingbrand/fsmockdatasources
