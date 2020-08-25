@@ -912,15 +912,6 @@ export default function(
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json && json.private_blocks && json.private_blocks.length > 0) && (
-              <View style={[styles.pageCounter, json.pageCounterStyle]}>
-                <Text
-                  style={[styles.pageNum, json.pageNumberStyle]}
-                >
-                  {this.state.pageNum} / {json.private_blocks.length}
-                </Text>
-              </View>
-            )}
           </Fragment>
         );
       } else if (fullScreenCardImage) {
