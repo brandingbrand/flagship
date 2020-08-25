@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsapp",
   "sideEffects": false,
-  "version": "10.0.0-alpha.1",
+  "version": "9.6.2",
   "description": "Flagship app base",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,9 +12,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^10.0.0-alpha.1",
-    "@brandingbrand/fsfoundation": "^10.0.0-alpha.1",
-    "@brandingbrand/fsnetwork": "^10.0.0-alpha.1",
+    "@brandingbrand/fsengage": "^9.6.2",
+    "@brandingbrand/fsfoundation": "^9.6.2",
+    "@brandingbrand/fsnetwork": "^9.6.2",
     "@react-native-community/async-storage": "^1.6.1",
     "path-to-regexp": "^1.7.0",
     "qs": "^6.7.0",
@@ -23,7 +23,7 @@
     "react-native": "^0.61.0",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
-    "react-native-navigation": "^6.0.0",
+    "react-native-navigation": "^4.0.0",
     "react-native-restart": "git+https://github.com/brandingbrand/react-native-restart#0.0.13-hotfix",
     "react-native-sensitive-info": "^5.5.0",
     "react-native-web-modal": "^1.0.1",
