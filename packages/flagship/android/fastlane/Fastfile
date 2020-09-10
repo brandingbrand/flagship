@@ -18,7 +18,6 @@ lane :appcenter_app_bundle do
 
   appcenter_upload(
     #PROJECT_MODIFY_FLAG_appcenter_api_token
-    destination_type: "store",
     owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
     app_name: "INJECTED_FROM_CONFIG" #PROJECT_MODIFY_FLAG_appcenter_app_name_android
   )
