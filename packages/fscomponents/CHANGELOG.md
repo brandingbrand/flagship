@@ -3,17 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
-
-**Note:** Version bump only for package @brandingbrand/fscomponents
+## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
 
 
+### Bug Fixes
+
+* **fscomponents:** fix serializable accordion props ([5c7f0ea](https://github.com/brandingbrand/flagship/commit/5c7f0eae296870c4c63e55f9b7f953ccbdd1c010))
 
 
 
-# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
 
-**Note:** Version bump only for package @brandingbrand/fscomponents
+
+## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+
+
+### Reverts
+
+* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
 
 
 
