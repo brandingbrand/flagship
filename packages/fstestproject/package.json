@@ -20,7 +20,6 @@
     "lint": "fscodestyle"
   },
   "dependencies": {
-    "@babel/runtime": "7.4.5",
     "@brandingbrand/flagship": "^9.6.4",
     "@brandingbrand/fsapp": "^9.6.4",
     "@brandingbrand/fscart": "^9.6.4",

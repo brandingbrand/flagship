@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import { Options } from 'react-native-navigation';
-
-import { PromoForm } from '@brandingbrand/fscomponents';
+// TODO: Swap this for Formik version
+// import { PromoForm } from '@brandingbrand/fscomponents';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarFullBleed } from '../styles/Navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
@@ -240,9 +240,17 @@ class Cart extends Component<CartScreenProps> {
     } else if (cartData && cartData.items) {
       const cartCount = this.props.cart.cartCount;
       const badge = !!cartCount && cartCount.toString() || undefined;
-      this.props.navigator.mergeOptions({
+
+      badge ? this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
+          badgeColor: palette.primary,
+          icon: cartTabIcon
+        }
+      }) :
+      this.props.navigator.mergeOptions({
+        bottomTab: {
+          badge: '',
           badgeColor: palette.primary,
           icon: cartTabIcon
         }
@@ -300,6 +308,12 @@ class Cart extends Component<CartScreenProps> {
           name: item.title
         });
       }
+    };
+  }
+
+  removeItem = (item: CommerceTypes.CartItem) => {
+    return () => {
+      this.props.removeFromCart(item);
     };
   }
 
@@ -438,6 +452,7 @@ class Cart extends Component<CartScreenProps> {
         navigateToProduct={this.goToProduct}
         item={item}
         updateQty={this.updateQuantity(item)}
+        removeItem={this.removeItem(item)}
         containerStyle={CartStyle.cartItemContainer}
       />
     );
@@ -469,21 +484,24 @@ class Cart extends Component<CartScreenProps> {
 
   renderPromo = (): JSX.Element => {
     return (
-      <View key='promoForm' style={CartStyle.promoContainer}>
-        <PromoForm
-          submitText='APPLY'
-          onSubmit={this.promoSubmit}
-          fieldsStyleConfig={{
-            textbox: {
-              normal: CartStyle.fieldsStyleConfig,
-              error: CartStyle.fieldsStyleErrorConfig
-            }
-          }}
-          submitButtonStyle={CartStyle.submitButtonStyle}
-          submitTextStyle={CartStyle.submitTextStyle}
-        />
-      </View>
+      <View />
     );
+    // return (
+    //   <View key='promoForm' style={CartStyle.promoContainer}>
+    //     <PromoForm
+    //       submitText='APPLY'
+    //       onSubmit={this.promoSubmit}
+    //       fieldsStyleConfig={{
+    //         textbox: {
+    //           normal: CartStyle.fieldsStyleConfig,
+    //           error: CartStyle.fieldsStyleErrorConfig
+    //         }
+    //       }}
+    //       submitButtonStyle={CartStyle.submitButtonStyle}
+    //       submitTextStyle={CartStyle.submitTextStyle}
+    //     />
+    //   </View>
+    // );
   }
 
   promoSubmit = (value: any) => {

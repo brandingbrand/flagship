@@ -2,25 +2,26 @@ import { NavButton, ScreenProps } from '../lib/commonTypes';
 import React, { Component } from 'react';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
-import { border, padding } from '../styles/variables';
-import { ScrollView, StyleSheet, View } from 'react-native';
+// import { border, padding } from '../styles/variables';
+import { ScrollView, View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
-import ContactInfoForm from '../components/ContactInfoForm';
+// TODO: Swap this for Formik version
+// import ContactInfoForm from '../components/ContactInfoForm';
 import { handleAccountRequestError } from '../lib/shortcuts';
 import AccountStyle from '../styles/Account';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
 
-const styles = StyleSheet.create({
-  form: {
-    marginTop: padding.base,
-    borderTopWidth: border.width,
-    borderTopColor: border.color
-  }
-});
+// const styles = StyleSheet.create({
+//   form: {
+//     marginTop: padding.base,
+//     borderTopWidth: border.width,
+//     borderTopColor: border.color
+//   }
+// });
 
 interface EditPersonalScreenProps extends ScreenProps, AccountProps {}
 
@@ -84,13 +85,13 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
           keyboardShouldPersistTaps={'handled'}
           style={AccountStyle.formContainer}
         >
-          <ContactInfoForm
+          {/* <ContactInfoForm
             style={styles.form}
             values={this.state.values}
             onChange={this.onChange}
             updateFormRef={this.updateFormRef}
             optionalFields={['password', 'passwordConfirmation', 'age', 'gender']}
-          />
+          /> */}
         </ScrollView>
         <View style={AccountStyle.bottomRow}>
           <View style={AccountStyle.buttonsContainer}>

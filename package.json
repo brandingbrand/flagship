@@ -39,8 +39,7 @@
     "tsc": "echo 'Cannot run tsc from top level of monorepo; run \"yarn prepare\" instead' && exit 1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/runtime": "~7.5.5",
+    "@babel/core": "~7.6.0",
     "@brandingbrand/greenkeeper-lockfile": "^0.0.1",
     "@commitlint/cli": "^8.3.1",
     "@commitlint/config-conventional": "^8.3.1",
@@ -74,7 +73,7 @@
     "@types/storybook__react": "^4.0.0",
     "@types/url-parse": "^1.4.1",
     "babel-jest": "^24.8.0",
-    "babel-loader": "^8.0.0",
+    "babel-loader": "~8.0.6",
     "core-js": "^3.0.0",
     "coveralls": "^3.0.2",
     "husky": "^4.0.2",
