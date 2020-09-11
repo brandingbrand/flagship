@@ -151,6 +151,7 @@ export interface AndroidConfig {
 export interface IOSConfig {
   pods?: PodsConfig;
   buildVersion?: string;
+  shortVersion?: string;
 }
 
 export interface PodsConfig {

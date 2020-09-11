@@ -21,6 +21,7 @@ export interface CartStateProps {
 export interface CartActionProps {
   addToCart: (product: CommerceTypes.Product, quantity: number, variantId?: string) => Promise<any>;
   updateItemQuantity: (item: CommerceTypes.CartItem, quantity: number) => void;
+  removeFromCart: (item: CommerceTypes.CartItem) => void;
 }
 
 export interface CartProps extends CartStateProps, CartActionProps {}
@@ -70,6 +71,18 @@ function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
           dispatch({ type: RESET_CART_UPDATING });
           console.warn(e);
         });
+    },
+    removeFromCart: async (item: any) => {
+      dispatch({ type: SET_CART_UPDATING, verb: 'Updating' });
+
+      dataSource.removeCartItem(item.productId)
+      .then(cartData => {
+        dispatch({ type: UPDATE_CART, cartData });
+      })
+      .catch(e => {
+        dispatch({ type: RESET_CART_UPDATING });
+        console.warn(e);
+      });
     }
   };
 }
