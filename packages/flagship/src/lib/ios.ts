@@ -99,7 +99,7 @@ export function entitlements(configuration: Config): void {
   fs.update(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
-    `CODE_SIGN_ENTITLEMENTS = ${configuration.name}/${configuration.name}.entitlements;
+    `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
 }
@@ -348,18 +348,25 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+  || newVersion;
+
+  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
+    || versionLib.normalize(newVersion);
+
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
+  helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
 
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${newVersion}</string>`
+    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleVersion</key>\n\t<string>${versionLib.normalize(newVersion)}</string>`
+    `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
   );
 }
 

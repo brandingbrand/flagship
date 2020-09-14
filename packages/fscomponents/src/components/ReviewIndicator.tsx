@@ -5,17 +5,23 @@ import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
-export interface ReviewIndicatorProps {
+export interface SerializableReviewIndicatorProps {
   value: number;
   base?: number;
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
   itemSize?: number;
   itemColor?: string;
   emptyColor?: string;
+  accessibilityLabel?: string;
+}
+
+export interface ReviewIndicatorProps extends Omit<SerializableReviewIndicatorProps,
+  'style'
+  > {
+  style?: StyleProp<ViewStyle>;
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
   renderEmptyStar?: () => React.ReactNode;
-  accessibilityLabel?: string;
 }
 
 export interface NormalizedValue {
@@ -93,7 +99,7 @@ memo((props): JSX.Element => {
           <Star
             text='★'
             style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, { color: props.emptyColor || S.emptyStar }]}
+              starHalfRightStyle, S.emptyStar, { color: props.emptyColor }]}
           />
         </View>
       </View>
@@ -146,7 +152,7 @@ memo((props): JSX.Element => {
         <Star
           text='★'
           renderStar={renderEmptyStar}
-          style={[customStarStyle, { color: props.emptyColor || S.emptyStar }]}
+          style={[customStarStyle, S.emptyStar, { color: props.emptyColor }]}
           key={v}
         />
       ))}

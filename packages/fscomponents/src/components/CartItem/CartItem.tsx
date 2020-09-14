@@ -33,7 +33,63 @@ export type CartItemRenderFunction = (
   remove: CartItemRemoveFunction
 ) => React.ReactNode;
 
-export interface CartItemProps extends CommerceTypes.CartItem {
+export interface SerializableCartItemProps {
+  /**
+   * Styles to apply to the default stepper
+   */
+  stepperStyle?: ViewStyle;
+
+  /**
+   * Styles to apply to the default remove button
+   */
+  removeButtonStyle?: ViewStyle;
+
+  /**
+   * Styles to apply to the default remove button text
+   */
+  removeButtonTextStyle?: TextStyle;
+
+  /**
+   * Height of thumbnail image; required if image provided
+   */
+  imageHeight?: number;
+
+  /**
+   *  Width of thumbnail image; required if image provided
+   */
+  imageWidth?: number;
+
+  /**
+   * Styles to apply to the main container
+   */
+  style?: ViewStyle;
+
+  /**
+   * Styles to apply to the left (image) column
+   */
+  leftColumnStyle?: ViewStyle;
+
+  /**
+   *  Styles to apply to the right (details & quantity) column
+   */
+  rightColumnStyle?: ViewStyle;
+
+  /**
+   * Styles to apply to the quantity (stepper & remove button) row
+   */
+  quantityRowStyle?: ViewStyle;
+}
+
+export interface CartItemProps extends CommerceTypes.CartItem, Omit<
+SerializableCartItemProps,
+'stepperStyle' |
+'removeButtonStyle' |
+'removeButtonTextStyle' |
+'style' |
+'leftColumnStyle' |
+'rightColumnStyle' |
+'quantityRowStyle'
+> {
   /**
    * A function to invoke when the user wants to remove the item from cart.
    */
@@ -73,16 +129,6 @@ export interface CartItemProps extends CommerceTypes.CartItem {
    * Styles to apply to the default remove button text
    */
   removeButtonTextStyle?: StyleProp<TextStyle>;
-
-  /**
-   * Height of thumbnail image; required if image provided
-   */
-  imageHeight?: number;
-
-  /**
-   *  Width of thumbnail image; required if image provided
-   */
-  imageWidth?: number;
 
   /**
    * A callback to invoke if the user taps on the image
