@@ -21,6 +21,7 @@ export interface SwatchItemType extends CommerceTypes.OptionValue {
 }
 
 export interface SerializableSwatchesProps {
+  items: SwatchItemType[];
   title?: string;
   defaultValue?: string;
   style?: ViewStyle;
@@ -49,7 +50,6 @@ export interface SwatchesProps extends SwatchStyle, Omit<
   'showingLessStyle' |
   'moreLessStyle'
 > {
-  items: SwatchItemType[];
   style?: StyleProp<ViewStyle>;
   renderSwatch?: (swatch: any) => React.ReactNode;
 

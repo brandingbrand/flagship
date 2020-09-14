@@ -2,7 +2,7 @@
   "name": "@brandingbrand/fstestproject",
   "sideEffects": false,
   "private": true,
-  "version": "9.1.0",
+  "version": "10.0.0-alpha.2",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -21,30 +21,29 @@
   },
   "dependencies": {
     "@babel/runtime": "7.4.5",
-    "@brandingbrand/flagship": "^9.1.0",
-    "@brandingbrand/fsapp": "^9.1.0",
-    "@brandingbrand/fsbazaarvoice": "^9.1.0",
-    "@brandingbrand/fsbrandcmsproductcatalog": "^9.1.0",
-    "@brandingbrand/fscart": "^9.1.0",
-    "@brandingbrand/fscategory": "^9.1.0",
-    "@brandingbrand/fscheckout": "^9.1.0",
-    "@brandingbrand/fscodestyle": "^9.1.0",
-    "@brandingbrand/fscommerce": "^9.1.0",
-    "@brandingbrand/fsengage": "^9.1.0",
-    "@brandingbrand/fsi18n": "^9.1.0",
-    "@brandingbrand/fsmockdatasources": "^9.1.0",
-    "@brandingbrand/fsnetwork": "^9.1.0",
-    "@brandingbrand/fspowerreviews": "^9.1.0",
-    "@brandingbrand/fsproductdetail": "^9.1.0",
-    "@brandingbrand/fsproductindex": "^9.1.0",
-    "@brandingbrand/fssalesforce": "^9.1.0",
-    "@brandingbrand/fsturnto": "^9.1.0",
-    "@brandingbrand/fsups": "^9.1.0",
+    "@brandingbrand/flagship": "^10.0.0-alpha.2",
+    "@brandingbrand/fsapp": "^10.0.0-alpha.2",
+    "@brandingbrand/fscart": "^10.0.0-alpha.2",
+    "@brandingbrand/fscategory": "^10.0.0-alpha.2",
+    "@brandingbrand/fscheckout": "^10.0.0-alpha.2",
+    "@brandingbrand/fscodestyle": "^10.0.0-alpha.2",
+    "@brandingbrand/fscommerce": "^10.0.0-alpha.2",
+    "@brandingbrand/fsengage": "^10.0.0-alpha.2",
+    "@brandingbrand/fsi18n": "^10.0.0-alpha.2",
+    "@brandingbrand/fsmockdatasources": "^10.0.0-alpha.2",
+    "@brandingbrand/fsnetwork": "^10.0.0-alpha.2",
+    "@brandingbrand/fsproductdetail": "^10.0.0-alpha.2",
+    "@brandingbrand/fsproductindex": "^10.0.0-alpha.2",
     "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/cli-platform-android": "^3.0.0-alpha.1",
+    "@react-native-community/cli-platform-ios": "^3.0.0-alpha.1",
+    "@react-native-community/push-notification-ios": "^1.0.0",
     "jsc-android": "241213.x.x",
     "react": "^16.11.0",
     "react-native": "^0.61.0",
-    "react-native-navigation": "^4.0.0"
+    "react-native-cookies": "^3.3.0",
+    "react-native-device-info": "^5.0.0",
+    "react-native-navigation": "^6.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -56,7 +55,10 @@
       "**/fsapp/react-native*",
       "**/fsapp/react-native*/**",
       "jsc-android",
-      "@react-native-community/async-storage"
+      "@react-native-community/async-storage",
+      "@react-native-community/cli-platform-android",
+      "@react-native-community/cli-platform-ios",
+      "@react-native-community/push-notification-ios"
     ]
   }
 }

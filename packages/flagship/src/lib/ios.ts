@@ -349,6 +349,9 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+  || newVersion;
+
   const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
     || versionLib.normalize(newVersion);
 
@@ -358,7 +361,7 @@ export function version(configuration: Config, newVersion: string): void {
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${newVersion}</string>`
+    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
@@ -533,5 +536,33 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
     envSwitcherPath,
     /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
     `@"${env}"; // [EnvSwitcher initialEnvName]`
+  );
+}
+
+/**
+ * Patches RCTUIImageViewAnimated.m to fix displayLayer() to support iOS 14.
+ *
+ * @see https://github.com/facebook/react-native/issues/29268
+ */
+export function patchRCTUIImageViewAnimated(): void {
+  helpers.logInfo(`patching RCTUIImageViewAnimated.m to support iOS 14`);
+
+  const rnImagePath = path.project.resolve(
+    'node_modules', 'react-native', 'Libraries', 'Image', 'RCTUIImageViewAnimated.m'
+  );
+
+  fs.update(
+    rnImagePath,
+    /\(void\)displayLayer[\s\S]+?(?=#pragma)/g,
+    `(void)displayLayer:(CALayer *)layer
+{
+  if (_currentFrame) {
+    layer.contentsScale = self.animatedImageScale;
+    layer.contents = (__bridge id)_currentFrame.CGImage;
+  }
+  [super displayLayer:layer];
+}
+
+`
   );
 }

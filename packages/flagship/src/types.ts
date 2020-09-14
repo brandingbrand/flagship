@@ -158,6 +158,7 @@ export interface IOSConfig {
    * Useful for Rich Push notifications or widgets.
    */
   extensions?: IOSExtension[];
+  shortVersion?: string;
 }
 
 export interface PodsConfig {

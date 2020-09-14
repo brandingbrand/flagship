@@ -19,7 +19,6 @@ export default class Home extends Component<any, any> {
           onPress={this.goTo('Commerce', 'Commerce', 'Back')}
         />
         <Row text='Review' onPress={this.goTo('Review', 'Review', 'Back')} />
-        <Row text='Address' onPress={this.goTo('Address', 'Address', 'Back')} />
       </ScrollView>
     );
   }
