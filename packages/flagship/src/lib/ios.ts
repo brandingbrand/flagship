@@ -417,3 +417,31 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
     `@"${env}"; // [EnvSwitcher initialEnvName]`
   );
 }
+
+/**
+ * Patches RCTUIImageViewAnimated.m to fix displayLayer() to support iOS 14.
+ *
+ * @see https://github.com/facebook/react-native/issues/29268
+ */
+export function patchRCTUIImageViewAnimated(): void {
+  helpers.logInfo(`patching RCTUIImageViewAnimated.m to support iOS 14`);
+
+  const rnImagePath = path.project.resolve(
+    'node_modules', 'react-native', 'Libraries', 'Image', 'RCTUIImageViewAnimated.m'
+  );
+
+  fs.update(
+    rnImagePath,
+    /\(void\)displayLayer[\s\S]+?(?=#pragma)/g,
+    `(void)displayLayer:(CALayer *)layer
+{
+  if (_currentFrame) {
+    layer.contentsScale = self.animatedImageScale;
+    layer.contents = (__bridge id)_currentFrame.CGImage;
+  }
+  [super displayLayer:layer];
+}
+
+`
+  );
+}

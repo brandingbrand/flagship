@@ -15,39 +15,39 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
-    protected List<ReactPackage> getPackages(Application application, boolean debug) {
-      @SuppressWarnings("UnnecessaryLocalVariable")
-      List<ReactPackage> packages = new PackageList(this).getPackages();
-      // Packages that cannot be autolinked yet can be added manually here, for example:
-      packages.add(new NativeConstantsPackage());
-      packages.add(new EnvSwitcherPackage());
-      packages.add(new ReactNativeRestartPackage());
-      return packages;
-    }
-
     @Override
     protected ReactGateway createReactGateway() {
-        ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
+        ReactNativeHost host = new NavigationReactNativeHost(this) {
+            @Override
             protected String getJSMainModuleName() {
                 return "index";
             }
+            @Override
+            public boolean getUseDeveloperSupport() {
+                return BuildConfig.DEBUG;
+            }
+            @Override
+            public List<ReactPackage> getPackages() {
+                List<ReactPackage> packages = new PackageList(this).getPackages();
+                // Packages that cannot be autolinked yet can be added manually here, for example:
+                packages.add(new NativeConstantsPackage());
+                packages.add(new EnvSwitcherPackage());
+                packages.add(new ReactNativeRestartPackage());
+                return packages;
+            }
+
             // [CODEPUSH FUNCTIONS INJECT]
         };
-        return new ReactGateway(this, isDebug(), host);
+        return new ReactGateway(host);
     }
 
-    @Override
     public boolean isDebug() {
         // Make sure you are using BuildConfig from your own application
         return BuildConfig.DEBUG;
-    }
-
-    @Override
-    public List<ReactPackage> createAdditionalReactPackages() {
-        return getPackages(this, BuildConfig.DEBUG);
     }
 
     public String getJSMainModuleName() {
