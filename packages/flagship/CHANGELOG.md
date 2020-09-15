@@ -3,22 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
 
 
 ### Bug Fixes
 
-* **flagship:** add init script to patch rn images for ios 14 ([11149da](https://github.com/brandingbrand/flagship/commit/11149da128f4ac83952526157144a1484e9832b4))
-* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+* **flagship:** appcenter upload groups for android ([ef3238d](https://github.com/brandingbrand/flagship/commit/ef3238d79c323c25622fbbf2f4ccbeedb88526ee))
+* resolve android build tools in subprojects ([21c9a26](https://github.com/brandingbrand/flagship/commit/21c9a26897f02e65d039baf20ebcb1f041ffde44))
 
 
-### BREAKING CHANGES
 
-* **flagship:** upgrade to react-native-navigation 6
-Should not affect most cases.
-https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
 
-Fixes issues with tab bar icons not showing up in iOS 14.
+
+## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+
+
+### Reverts
+
+* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
 
 
 
