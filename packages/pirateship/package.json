@@ -23,7 +23,6 @@
     "build-web-demo": "./scripts/buildWebDemo.sh"
   },
   "dependencies": {
-    "@babel/runtime": "~7.5.5",
     "@brandingbrand/flagship": "^10.0.0-alpha.2",
     "@brandingbrand/fsapp": "^10.0.0-alpha.2",
     "@brandingbrand/fscategory": "^10.0.0-alpha.2",
@@ -40,14 +39,14 @@
     "@brandingbrand/react-native-leanplum": "^5.0.0",
     "@brandingbrand/react-native-payments": "^0.10.0",
     "@react-native-community/async-storage": "^1.6.2",
-    "@react-native-community/cli-platform-android": "^3.0.0-alpha.1",
-    "@react-native-community/cli-platform-ios": "^3.0.0-alpha.1",
+    "@react-native-community/cli-platform-android": "^4.7.0",
+    "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/push-notification-ios": "^1.0.0",
     "credit-card-type": "^8.3.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
-    "react": "^16.11.0",
-    "react-native": "^0.61.0",
+    "react": "^16.13.1",
+    "react-native": "^0.63.2",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
     "react-native-htmlview": "^0.15.0",
@@ -59,8 +58,7 @@
     "react-native-touch-id": "~4.4.0",
     "react-native-video": "^5.0.0",
     "react-native-webview": "^8.0.0",
-    "react-redux": "^7.0.0",
-    "tcomb-form-native": "^0.6.12"
+    "react-redux": "^7.0.0"
   },
   "flagship": {
     "webEnabled": false,
