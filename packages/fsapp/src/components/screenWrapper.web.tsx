@@ -9,7 +9,7 @@ import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
 import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: any = StyleSheet.create;
+const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
 
 const styles = StyleSheetCreate({
   screenContainer: {
@@ -43,7 +43,7 @@ export interface GenericScreenProp extends GenericScreenStateProp,
   api: FSNetwork;
   href: string;
   match: any;
-  location: any;
+  location: Location;
 }
 
 export interface GenericScreenState {
