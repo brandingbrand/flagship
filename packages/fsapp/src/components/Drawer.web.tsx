@@ -22,7 +22,7 @@ export interface DrawerState {
 const DEFAULT_BACKGROUND_COLOR = 'white';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: any = StyleSheet.create;
+const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
 
 const S = StyleSheetCreate({
   container: {
@@ -47,7 +47,7 @@ const S = StyleSheetCreate({
 });
 
 export default class Drawer extends Component<PropType, DrawerState> {
-  drawView?: any;
+  drawView?: Element | Text | null;
 
   constructor(props: PropType) {
     super(props);
@@ -70,7 +70,7 @@ export default class Drawer extends Component<PropType, DrawerState> {
     }
   }
 
-  animationListener = (e: any): void => {
+  animationListener = (e: Event): void => {
     if (!this.props.isOpen) {
       this.setState({
         drawerVisible: false
