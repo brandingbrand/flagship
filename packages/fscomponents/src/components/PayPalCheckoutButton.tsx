@@ -2,6 +2,7 @@ import React, { FunctionComponent, memo } from 'react';
 import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 import { Button, ButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
+import { omit as lodashOmit } from 'lodash-es';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
@@ -118,7 +119,7 @@ memo((props): JSX.Element => {
         icon={selectedTheme.icon}
         iconStyle={styles.icon}
         underlayColor={selectedTheme.bgActive}
-        {...buttonProps}
+        {...lodashOmit(buttonProps, ['title'])}
       />
       {!!tagLineVal && (
         <Text style={[styles.tagLine, tagLineStyle]}>
