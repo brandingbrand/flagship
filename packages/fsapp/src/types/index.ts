@@ -46,6 +46,13 @@ export interface Drawer {
   type?: string;
   animationType?: string;
   disableOpenGesture?: boolean;
+  webSlideContainer?: boolean;
+  webWidth?: number;
+  webDuration?: number;
+  webOpacity?: number;
+  webOverlayOpacity?: number;
+  webLeftBackgroundColor?: string;
+  webRightBackgroundColor?: string;
 }
 
 export interface Screen {

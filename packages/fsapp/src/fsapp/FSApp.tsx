@@ -62,10 +62,12 @@ export class FSApp extends FSAppBase {
 
     enhancedScreens.forEach(({ key, Screen }) => {
       Navigation.registerComponent(key, () => props => {
-        return (
+        return this.store ? (
           <Provider store={this.store}>
-            <Screen {...props}/>
+            <Screen {...props} />
           </Provider>
+        ) : (
+          <Screen {...props} />
         );
       }
       , () => Screen);

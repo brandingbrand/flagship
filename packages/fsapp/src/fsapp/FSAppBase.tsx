@@ -2,11 +2,12 @@ import { AppConfigType } from '../types';
 import { AppRegistry } from 'react-native';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import configureStore from '../store/configureStore';
+import { Store } from 'redux';
 
 export abstract class FSAppBase {
   appConfig: AppConfigType;
   api: FSNetwork;
-  store: any;
+  store?: Store;
 
   constructor(appConfig: AppConfigType) {
     this.appConfig = appConfig;
@@ -17,7 +18,7 @@ export abstract class FSAppBase {
     this.registerScreens();
   }
 
-  getApp(appConfig?: AppConfigType): any {
+  getApp(appConfig?: AppConfigType): string | undefined {
     // @ts-ignore: Is set in react-native-web
     if (AppRegistry.getApplication) {
       const config = appConfig || this.appConfig;
