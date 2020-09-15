@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
+import { omit } from 'lodash-es';
 import NavRender from './Navigator.web';
 import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
 import { AppConfigType, DrawerConfig, NavModal } from '../types';
@@ -76,7 +77,7 @@ export default function wrapScreen(
         modals: [],
         toggleDrawerFn,
         updateModals: this.updateModals,
-        ...props
+        ...omit(props, ['appConfig', 'modals', 'updateModals'])
       });
     }
     updateModals = (navModals: NavModal[]): void => {
@@ -132,7 +133,7 @@ export default function wrapScreen(
             modals={this.state.navModals}
             navigator={this.navigator}
             onDismiss={this.onDismiss}
-            {...this.props}
+            {...omit(this.props, 'appConfig', 'modals')}
           />
         </View>
       );
