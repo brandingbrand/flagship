@@ -6,7 +6,6 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
@@ -37,7 +36,6 @@ public class MainApplication extends NavigationApplication {
                 // Packages that cannot be autolinked yet can be added manually here, for example:
                 packages.add(new NativeConstantsPackage());
                 packages.add(new EnvSwitcherPackage());
-                packages.add(new ReactNativeRestartPackage());
                 return packages;
             }
 

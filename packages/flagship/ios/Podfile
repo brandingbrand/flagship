@@ -17,8 +17,6 @@ target 'FLAGSHIP' do
 
   use_react_native!
 
-  pod 'RCTRestart', :path => '../node_modules/react-native-restart/ios'
-
   # Add new pods below this line
 
   # Enables Flipper.
