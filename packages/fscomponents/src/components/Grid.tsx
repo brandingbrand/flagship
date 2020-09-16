@@ -310,7 +310,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
           return (
             <View style={[gridStyle.item, { width: columnWidth + '%' }]} key={index}>
               <View style={gridStyle.itemRow}>
-                {renderItem({item, index, separators: info.separators})}
+                {renderItem && renderItem({item, index, separators: info.separators})}
                 {showRowSeparators && showRowSeparator && (
                   <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
                 )}
