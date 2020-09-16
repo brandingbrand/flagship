@@ -74,9 +74,6 @@
       "react-native-svg",
       "react-native-payments"
     ],
-    "forceLink": [
-      "react-native-restart"
-    ],
     "webTitle": "PirateShip"
   },
   "publishConfig": {
