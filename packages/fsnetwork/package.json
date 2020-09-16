@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsfoundation": "^10.0.0-alpha.2",
-    "axios": "~0.18.1"
+    "axios": "~0.20.0",
+    "@brandingbrand/fsfoundation": "^10.0.0-alpha.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
