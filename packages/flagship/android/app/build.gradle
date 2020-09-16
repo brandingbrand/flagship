@@ -208,7 +208,6 @@ dependencies {
     }
 
     implementation project(':react-native-navigation')
-    implementation project(':react-native-restart')
 
     // JSC from node_modules
     if (useIntlJsc) {
