@@ -95,7 +95,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     const animateItemChange = () => {
       this.state.opacity.setValue(0);
       Animated.timing(this.state.opacity, {
-        toValue: 1
+        toValue: 1,
+        useNativeDriver: true
       }).start();
     };
     if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
