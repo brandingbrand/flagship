@@ -1,15 +1,14 @@
-import Permissions from 'react-native-permissions';
+import {check, Permission, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import { Platform } from 'react-native';
 
-const kLocationPermissionStatuses: any = {
-  Authorized: 'authorized',
-  Denied: 'denied',
-  Restricted: 'restricted',
-  Undetermined: 'undetermined'
-};
+function getPermissionToCheck(): Permission {
+  return Platform.OS === 'ios' ?
+    PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+}
 
 export async function isGeolocationAllowed(): Promise<boolean> {
-  return Permissions.check('location')
-    .then(status => status === kLocationPermissionStatuses.Authorized)
+  return check(getPermissionToCheck())
+    .then(status => status === RESULTS.GRANTED)
     .catch(error => {
       if (__DEV__) {
         console.log(
@@ -25,6 +24,6 @@ export async function isGeolocationAllowed(): Promise<boolean> {
 }
 
 export async function requestGeolocationPermission(): Promise<boolean> {
-  return Permissions.request('location')
-    .then(status => status === kLocationPermissionStatuses.Authorized);
+  return request(getPermissionToCheck())
+    .then(status => status === RESULTS.GRANTED);
 }
