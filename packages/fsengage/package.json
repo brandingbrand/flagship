@@ -19,7 +19,7 @@
     "decimal.js": "^10.0.0",
     "react": "^16.11.0",
     "react-native": "^0.61.0",
-    "react-native-permissions": "~1.1.1",
+    "react-native-permissions": "^2.2.0",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
