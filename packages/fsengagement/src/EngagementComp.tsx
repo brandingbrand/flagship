@@ -221,6 +221,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   animate?: boolean;
   cardPosition?: number;
   navigator: Navigator;
+  renderHeader?: () => void;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -490,7 +491,7 @@ export default function(
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
-      if (!(this.props.animateScroll || this.props.welcomeHeader)) {
+      if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
       }
 
@@ -1035,6 +1036,7 @@ export default function(
 
       return (
         <Fragment>
+          {this.props.renderHeader && this.props.renderHeader()}
           {this.renderContent()}
           {(this.props.renderType && this.props.renderType === 'carousel' &&
             json && json.private_blocks && json.private_blocks.length > 0) &&
