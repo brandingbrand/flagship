@@ -16,7 +16,6 @@
     "@brandingbrand/fsfoundation": "^10.0.0-alpha.2",
     "@brandingbrand/fsnetwork": "^10.0.0-alpha.2",
     "@react-native-community/async-storage": "^1.6.1",
-    "lodash-es": "^4.17.10",
     "path-to-regexp": "^1.7.0",
     "qs": "^6.7.0",
     "react": "^16.11.0",
