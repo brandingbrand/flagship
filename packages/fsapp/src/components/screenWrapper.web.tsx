@@ -73,11 +73,11 @@ export default function wrapScreen(
         navModals: []
       };
       this.navigator = new Navigator({
-        appConfig,
-        modals: [],
+        ...props,
         toggleDrawerFn,
+        appConfig,
         updateModals: this.updateModals,
-        ...props
+        modals: props.modals || []
       });
     }
     updateModals = (navModals: NavModal[]): void => {
@@ -129,11 +129,11 @@ export default function wrapScreen(
           {this.renderPage()}
           {this.renderVersion()}
           <NavRender
-            appConfig={appConfig}
-            modals={this.state.navModals}
-            navigator={this.navigator}
-            onDismiss={this.onDismiss}
             {...this.props}
+            modals={this.state.navModals}
+            appConfig={appConfig}
+            onDismiss={this.onDismiss}
+            navigator={this.navigator}
           />
         </View>
       );
