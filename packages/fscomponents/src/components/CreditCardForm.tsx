@@ -106,10 +106,23 @@ export interface CreditCardFormData {
 }
 
 
-export interface CreditCardFormProps {
+export interface SerializableCreditCardFormProps {
+  hideName?: boolean;
+  cscIconStyle?: ImageStyle;
+  style?: ViewStyle;
+  supportedCardsStyle?: ViewStyle;
+  supportedIconStyle?: ImageStyle;
+}
+
+export interface CreditCardFormProps extends Omit<
+  SerializableCreditCardFormProps,
+  'cscIconStyle' |
+  'style' |
+  'supportedCardsStyle' |
+  'supportedIconStyle'
+> {
   fieldsOptions?: any;
   fieldsStyleConfig?: any;
-  hideName?: boolean;
   cscIcon?: ImageURISource;
   cscIconStyle?: StyleProp<ImageStyle>;
   defaultCardImage?: ImageURISource;
