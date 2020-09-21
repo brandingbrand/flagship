@@ -59,7 +59,7 @@ export interface SearchModalState {
 }
 
 export class SearchModal extends Component<SearchModalProps, SearchModalState> {
-  searchBar: any;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchModalProps) {
     super(props);
@@ -77,7 +77,9 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
   componentDidUpdate(prevProps: SearchModalProps): void {
     if (!prevProps.visible && this.props.visible) {
       setTimeout(() => {
-        this.searchBar.focusInput();
+        if (this.searchBar !== null) {
+          this.searchBar.focusInput();
+        }
       }, 100);
 
       this.loadHistoryToState();
@@ -92,7 +94,7 @@ export class SearchModal extends Component<SearchModalProps, SearchModalState> {
       .catch(e => console.warn(e));
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar) => {
     this.searchBar = ref;
   }
 
