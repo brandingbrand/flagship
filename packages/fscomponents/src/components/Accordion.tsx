@@ -142,7 +142,7 @@ export interface AccordionProps extends Omit<
    * Content of the accordion
    * @deprecated Make the contents a child instead
    */
-  content?: JSX.Element;
+  content?: JSX.Element | JSX.Element[];
   /**
    * Styles for the accordion content container
    */

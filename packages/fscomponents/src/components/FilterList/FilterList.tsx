@@ -10,19 +10,24 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { Accordion } from '../Accordion';
-import { SelectableRow } from '../SelectableRow';
+import { Accordion, AccordionProps } from '../Accordion';
+import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import {FilterItemValue} from './FilterItemValue';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
+export interface SelectedItems {
+  [key: string]: string[];
+}
+
 export interface FilterListProps {
-  items: any;
-  onApply: (selectedItems: any) => void;
+  items: FilterItem[];
+  onApply: (selectedItems: SelectedItems) => void;
   onReset: () => void;
-  selectedItems?: any;
+  selectedItems?: SelectedItems;
   style?: StyleProp<ViewStyle>;
   buttonContainerStyle?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
@@ -33,20 +38,20 @@ export interface FilterListProps {
   resetText?: string;
   itemStyle?: StyleProp<ViewStyle>;
   itemTextStyle?: StyleProp<TextStyle>;
-  selectableRowProps?: any;
-  accordionProps?: any;
+  selectableRowProps?: SelectableRowProps;
+  accordionProps?: AccordionProps;
   singleFilterIds?: string[];
-  renderFilterTitle?: (item: any, selectedValues: string[]) => React.ReactNode;
+  renderFilterTitle?: (item: FilterItem, selectedValues: string[]) => JSX.Element;
   renderFilterItemValue?: (
-    item: any,
-    value: any,
+    item: FilterItem,
+    value: FilterItemValue,
     handleSelect: Function,
     selected: boolean
-  ) => React.ReactNode;
+  ) => JSX.Element;
 }
 
 export interface FilterListState {
-  selectedItems: any;
+  selectedItems: SelectedItems;
 }
 
 const S = StyleSheet.create({
@@ -128,7 +133,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     }
   }
 
-  renderFilterItemValue = (item: any) => (value: any, i: number) => {
+  renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number):
+    JSX.Element => {
     const selected =
       this.state.selectedItems[item.id] &&
       this.state.selectedItems[item.id].indexOf(value.value) > -1;
@@ -156,8 +162,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
   renderFilterItem = ({ item }: ListRenderItemInfo<FilterItem>) => {
     const selectedValues = this.state.selectedItems[item.id] || [];
     const selectedValueTitle = item.values
-      .filter((v: any) => selectedValues.indexOf(v.value) > -1)
-      .map((v: any) => v.title);
+      .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
+      .map((v: FilterItemValue) => v.title);
 
     const accordionTitle = this.props.renderFilterTitle ? (
       this.props.renderFilterTitle(item, selectedValues)
