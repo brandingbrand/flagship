@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+
+
+### Bug Fixes
+
+* resolve android build tools in subprojects ([21c9a26](https://github.com/brandingbrand/flagship/commit/21c9a26897f02e65d039baf20ebcb1f041ffde44))
+
+
+
+
+
+## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+
+
+### Reverts
+
+* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **flagship:** removed single/multi column buttons ([abd7d88](https://github.com/brandingbrand/flagship/commit/abd7d886b6bbe48e4c8e94edb63d7d0e43fc2126))
+* **pirateship:** add padding between swatches on PDP ([1316047](https://github.com/brandingbrand/flagship/commit/13160472f18700659401cc986019c0936a403678))
+* **pirateship:** svg arrows no longer black boxes ([f89e2d9](https://github.com/brandingbrand/flagship/commit/f89e2d9c2ce99036fab42d265c9b5008879071f3))
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* address android bundle restart crashes ([83e2dc5](https://github.com/brandingbrand/flagship/commit/83e2dc5ea7617d989a5728f8e202dedcc40f5249)), closes [/github.com/wix/react-native-navigation/issues/3767#issuecomment-438029517](https://github.com//github.com/wix/react-native-navigation/issues/3767/issues/issuecomment-438029517) [/github.com/wix/react-native-navigation/issues/5096#issuecomment-492032466](https://github.com//github.com/wix/react-native-navigation/issues/5096/issues/issuecomment-492032466)
+
+
+### Code Refactoring
+
+* restructure project structure ([7c267d6](https://github.com/brandingbrand/flagship/commit/7c267d643bcebde4e908ba2a3973700a1618a704))
+
+
+### BREAKING CHANGES
+
+* several packages will no longer be found in this repo
+
+
+
+
+
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+
+### Bug Fixes
+
+* **fscomponents:** Updated Accordion component ([e2a94b0](https://github.com/brandingbrand/flagship/commit/e2a94b05924209775ccbc2e095e84d4ab1905ca9))
+
+
+
+
+
 ## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
 
 **Note:** Version bump only for package @brandingbrand/pirateship

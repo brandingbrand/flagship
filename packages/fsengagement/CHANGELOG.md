@@ -3,6 +3,118 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+
+
+### Bug Fixes
+
+* **fsengagement:** fix page counter not fading away ([b677b95](https://github.com/brandingbrand/flagship/commit/b677b95fab7c53334167316cdc8fa7a4c6ccc2d8))
+
+
+### Reverts
+
+* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **fsengagement:** Update engagement for Navigator updates ([602e4dd](https://github.com/brandingbrand/flagship/commit/602e4dd563273b131529d0f0b4bd97764145b68f))
+
+
+### Features
+
+* **fsengagement:** add new time icon ([5fba223](https://github.com/brandingbrand/flagship/commit/5fba223e6cc72d5fc7694f2f5f45f8f35e86d7d5))
+* **fsengagement:** Update event card/block to allow for start/end dates ([f894f16](https://github.com/brandingbrand/flagship/commit/f894f169b063d9fa566d32c04a340a1977150095))
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+
+### Features
+
+* **fsengagement:** new methods to return segment list and messages ([5bebff7](https://github.com/brandingbrand/flagship/commit/5bebff75650e70525bd617ddf9199345a693588c))
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* add debounce to EngagementComp ([5d11c91](https://github.com/brandingbrand/flagship/commit/5d11c91e009abe2c8b84b6d9cc1da3389dee41f9))
+* **fsengagement:** Header for discover missing after deeplinking ([c34da47](https://github.com/brandingbrand/flagship/commit/c34da47d1ed1e7361a66b4d74626bb6de0929f62)), closes [#1322](https://github.com/brandingbrand/flagship/issues/1322)
+
+
+
+
+
+# [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
 ## [9.0.1](https://github.com/brandingbrand/flagship/compare/v9.0.0...v9.0.1) (2020-04-03)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
