@@ -17,6 +17,8 @@
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
+    "start:server-dev": "cd web && yarn server-dev",
+    "start:server-prod": "cd web && yarn server-prod",
     "lint": "fscodestyle"
   },
   "dependencies": {
