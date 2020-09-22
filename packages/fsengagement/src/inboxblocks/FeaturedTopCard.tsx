@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import { Navigator } from '@brandingbrand/fsapp';
 import {
   EmitterProps,
   JSON,
@@ -27,11 +27,19 @@ export interface ComponentProps extends ScreenProps, EmitterProps {
 }
 
 export default class Card extends Component<ComponentProps> {
-
   static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func
   };
+  navigator: Navigator;
+
+  constructor(props: ComponentProps) {
+    super(props);
+    this.navigator = new Navigator({
+      componentId: props.componentId,
+      tabs: []
+    });
+  }
 
   getChildContext = () => ({
     story: this.props.story,
@@ -46,7 +54,7 @@ export default class Card extends Component<ComponentProps> {
     this.props.api.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    return this.props.navigator.push({
+    return this.navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
