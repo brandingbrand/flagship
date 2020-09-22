@@ -60,6 +60,6 @@ const renderCustomLoginForm = () => {
   );
 };
 
-storiesOf('LoginForm', module).
+storiesOf('LoginFormFK', module).
 add('basic usage', renderLoginForm()).
 add('custom styling', renderCustomLoginForm());

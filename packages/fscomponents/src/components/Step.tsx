@@ -34,14 +34,24 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface StepProps {
+export interface SerializableStepProps {
   completed: boolean;
+  completedIconStyle?: ImageStyle;
+  title: string;
+  titleStyle?: TextStyle;
+  stepNumber: number;
+  style?: ViewStyle;
+}
+
+export interface StepProps extends Omit<SerializableStepProps,
+  'completedIconStyle' |
+  'titleStyle' |
+  'style'
+  > {
   completedIcon?: ImageURISource;
   completedIconStyle?: StyleProp<ImageStyle>;
   onPress?: () => void;
-  title: string;
   titleStyle?: StyleProp<TextStyle>;
-  stepNumber: number;
   style?: StyleProp<ViewStyle>;
 }
 

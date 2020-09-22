@@ -18,12 +18,16 @@ import ImageBlock from './ImageBlock';
 
 const styles = StyleSheet.create({
   whenIcon: {
-    width: 10,
-    height: 10
+    width: 13,
+    height: 13
+  },
+  timeIcon: {
+    width: 14,
+    height: 14
   },
   whereIcon: {
-    width: 8,
-    height: 11
+    width: 10,
+    height: 14
   },
   eventContainer: {
     marginLeft: 50,
@@ -51,6 +55,7 @@ export interface ComponentProps extends CardProps {
   contents: any;
 }
 
+const timeIcon = require('../../assets/images/time.png');
 const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 
@@ -113,16 +118,43 @@ export default class EventCard extends Component<ComponentProps> {
           <TextBlock
             {...contents.Title}
           />
-          <View style={styles.eventType}>
-            <ImageBlock
-              source={whenIcon}
-              containerStyle={styles.dateRow}
-              imageStyle={styles.whenIcon}
-            />
-            <TextBlock
-              {...contents.When}
-            />
-          </View>
+          {!contents.When.textDate && !contents.When.textTime && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={whenIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.whenIcon}
+              />
+              <TextBlock
+                {...contents.When}
+              />
+            </View>
+          )}
+          {contents.When.textDate && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={whenIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.whenIcon}
+              />
+              <TextBlock
+                {...{ ...contents.When, text: contents.When.textDate }}
+              />
+            </View>
+          )}
+          {contents.When.textTime && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={timeIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.timeIcon}
+              />
+              <TextBlock
+                {...{ ...contents.When, text: contents.When.textTime }}
+              />
+            </View>
+          )}
+
           <View style={styles.eventType}>
             <ImageBlock
               source={whereIcon}

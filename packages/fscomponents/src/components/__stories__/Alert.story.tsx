@@ -8,22 +8,27 @@ import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-imp
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { Button } from '../Button';
 import { Alert } from '../Alert';
+// tslint:disable-next-line:no-implicit-dependencies
+import { boolean, text } from '@storybook/addon-knobs';
 
 const simpleAlert = () => {
-  Alert.alert('simple alert');
+  Alert.alert(text('title', 'simple alert'));
 };
 
 const titleAlert = () => {
-  Alert.alert({ title: 'Test Title', text: 'test text, test text.' });
+  Alert.alert({
+    title: text('title', 'Test Title'),
+    text: text('text?', 'test text, test text.')
+  });
 };
 
 const confirmAlert = () => {
   Alert.alert({
-    title: 'Are you sure?',
-    text: 'You will not be able to recover this imaginary file!',
-    showCancelButton: true,
-    cancelButtonText: 'Cancel',
-    confirmButtonText: 'Confirm',
+    title: text('title', 'Are you sure?'),
+    text: text('text?', 'You will not be able to recover this imaginary file!'),
+    showCancelButton: boolean('showCancelButton?', true),
+    cancelButtonText: text('cancelButtonText?', 'Cancel'),
+    confirmButtonText: text('confirmButtonText?', 'Confirm'),
     onConfirm: action('Confirm'),
     onCancel: action('Cancel')
   });
