@@ -45,5 +45,7 @@ target 'FLAGSHIP' do
 
   pod 'RCTRestart', :path => '../node_modules/react-native-restart/ios'
 
+  # Add new pods below this line
+
   use_native_modules!
 end
