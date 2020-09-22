@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+
+
+### Bug Fixes
+
+* **fscomponents:** fix serializable accordion props ([5c7f0ea](https://github.com/brandingbrand/flagship/commit/5c7f0eae296870c4c63e55f9b7f953ccbdd1c010))
+
+
+
+
+
+## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+
+
+### Reverts
+
+* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crashes with bad currency codes ([07070ea](https://github.com/brandingbrand/flagship/commit/07070ea7e2cefd3cf0c9c57918be07c2328cc93e))
+* **fscomponents:** Fix currency conversion ([f746451](https://github.com/brandingbrand/flagship/commit/f74645170aecc015c0c4faad6503249a5cddbed0))
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crash for empty carousel ([53aee9f](https://github.com/brandingbrand/flagship/commit/53aee9f6cedbb46d31fd8cdf2c209398475ca965))
+* **fscomponents:** Use React Children helper ([0d33371](https://github.com/brandingbrand/flagship/commit/0d33371a07c6f0ef231dfeacf94b4695eff4bff1))
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **fscomponents:** Ensure required props are serializable for Swatches ([a8e4a8f](https://github.com/brandingbrand/flagship/commit/a8e4a8f80d4a30dd89257946518d67804078579e))
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+
+### Bug Fixes
+
+* **fscomponents:** added styling props for IE11 UI fix ([763365d](https://github.com/brandingbrand/flagship/commit/763365d6b4f9360d2e012b23b25f78ca15ecd94a))
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix circular dependency ([4120e03](https://github.com/brandingbrand/flagship/commit/4120e0308332bf518ef97103dffdf3a2a54ff136))
+* **fscomponents:** fix missing icon for paypal button on web ([545cea6](https://github.com/brandingbrand/flagship/commit/545cea6bfa0db3d347a67a0b188c770f50dc2c0c))
+* **LocationItem:** put return at end of component ([f020577](https://github.com/brandingbrand/flagship/commit/f0205771d9c7a8a7a35738178d132e77c1d0540e))
+
+
+### Features
+
+* add knobs - CreditCardForm story ([5710b5e](https://github.com/brandingbrand/flagship/commit/5710b5ece2a58c43ee96e0f6e2818cfc81214383))
+* add knobs for CMSBannerCarousel story ([b30f2e3](https://github.com/brandingbrand/flagship/commit/b30f2e3ef528ee0e4c9c24ea69eaabcad3dbfc17))
+* add knobs for ImageWithOverlay story ([4c7f7b7](https://github.com/brandingbrand/flagship/commit/4c7f7b771b2765561b060c8837e8c55455f4f10f))
+* add knobs for location item ([11a426d](https://github.com/brandingbrand/flagship/commit/11a426df59b03aea30360386122c4a21b2002543))
+* add knobs for modal ([0e0abdb](https://github.com/brandingbrand/flagship/commit/0e0abdbc6c916fa3d189116e15c95fbc9ca52731))
+* add knobs for MoreText story ([29107d5](https://github.com/brandingbrand/flagship/commit/29107d58c8fcbc68cbcc373710b48bc794b0d9fb))
+* add knobs for Selector story ([54db967](https://github.com/brandingbrand/flagship/commit/54db9674e1aab95c116ff837ed71a239ed046d9d))
+* add knobs for stepper story ([44f03a2](https://github.com/brandingbrand/flagship/commit/44f03a239d2a468f008be313395c2d51d1ef05dc))
+* **fscomponents:** add knobs to review list ([0edae45](https://github.com/brandingbrand/flagship/commit/0edae4544e7c2f335ce8e3a063ac1137e76f550a))
+* add knobs for swatches story ([32ddce3](https://github.com/brandingbrand/flagship/commit/32ddce357f270e8d6c3d496f209997f7f03dbe7d))
+* add knobs for TabbedContainer story ([c898759](https://github.com/brandingbrand/flagship/commit/c898759b31ac0858bab31d3684696734c42ea814))
+* add serializable props for LocationItem component ([f40c317](https://github.com/brandingbrand/flagship/commit/f40c317942cb6ce407c1c36bc948138acb2df613))
+* add serializable props for ReviewIndicator ([c073d4d](https://github.com/brandingbrand/flagship/commit/c073d4dafc3102a4afd5b8b8c156501c7f7b5181))
+* add serializable props to CartItem ([2fdb47d](https://github.com/brandingbrand/flagship/commit/2fdb47dc06796e9d1ee044c1519ca06897c421f8))
+* add serializable props to ShareButton component ([e83c067](https://github.com/brandingbrand/flagship/commit/e83c0678a59cb5ca95c2298878032de6d2b37cfe))
+* add serializable props to Swatch component ([3774ad4](https://github.com/brandingbrand/flagship/commit/3774ad43d5a747c184b3f25fc2e05cc54a9dc017))
+* add serializable props to TabbedContainer component ([d0c8916](https://github.com/brandingbrand/flagship/commit/d0c8916d88654a2338b7c12913c5fcbaa0a25b9e))
+
+
+
+
+
 ## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

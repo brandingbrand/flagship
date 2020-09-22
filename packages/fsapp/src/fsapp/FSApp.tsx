@@ -21,16 +21,22 @@ import DevMenu from '../components/DevMenu';
 const LAST_SCREEN_KEY = 'lastScreen';
 const DEV_KEEP_SCREEN = 'devKeepPage';
 
+export interface CodePushVersion {
+  label: string;
+}
+
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);
 
     if (CodePush) {
-      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then((version: any) => {
-        if (version) {
-          this.appConfig.codePushVersionLabel = version.label;
+      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then(
+        (version: CodePushVersion) => {
+          if (version) {
+            this.appConfig.codePushVersionLabel = version.label;
+          }
         }
-      });
+      );
     }
 
     this.startApp();
