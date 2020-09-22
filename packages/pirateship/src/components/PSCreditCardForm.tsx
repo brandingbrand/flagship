@@ -3,8 +3,8 @@ import { ImageRequireSource, InteractionManager, StyleProp, View, ViewStyle } fr
 import formFieldStyles from '../styles/FormField';
 import { select, textbox, textboxWithRightIcon } from '../lib/formTemplate';
 import { Form } from '@brandingbrand/fscomponents';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import CCType, { CardBrand } from 'credit-card-type';
 
 const months = require('../../assets/months.json');

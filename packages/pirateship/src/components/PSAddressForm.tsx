@@ -14,8 +14,8 @@ import {
 import { border, color, fontSize, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { select, textbox } from '../lib/formTemplate';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import { merge } from 'lodash-es';
 import { EMAIL_REGEX } from '../lib/constants';

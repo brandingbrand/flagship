@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';

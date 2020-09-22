@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as TcForm from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const TcForm = require('tcomb-form-native');
 import { cloneDeep } from 'lodash-es';
 import { stringify } from 'qs';
 

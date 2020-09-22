@@ -7,8 +7,8 @@ import {
   ViewStyle
 } from 'react-native';
 import React, { Component } from 'react';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import { EMAIL_REGEX } from '../lib/constants';
 import { select, textbox } from '../lib/formTemplate';
