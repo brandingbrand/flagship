@@ -71,7 +71,7 @@
     "@types/react-redux": "^7.0.0",
     "@types/react-router-dom": "^5.1.2",
     "@types/redux-logger": "^3.0.6",
-    "@types/storybook__react": "^4.0.0",
+    "@types/storybook__react": "^5.2.1",
     "@types/url-parse": "^1.4.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.0",
