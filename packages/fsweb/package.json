@@ -8,7 +8,9 @@
     "build": "webpack --mode production",
     "build:size": "webpack --json | webpack-bundle-size-analyzer",
     "start": "webpack-dev-server -d --config ./webpack.config.js --mode development --inline --hot",
-    "start-prod": "webpack-dev-server -d --config ./webpack.config.js --mode production"
+    "start-prod": "webpack-dev-server -d --config ./webpack.config.js --mode production",
+    "server-dev": "node ./proxy/server.dev.js",
+    "server-prod": "node ./proxy/server.prod.js"
   },
   "dependencies": {
     "@babel/core": "^7.7.2",
@@ -21,13 +23,16 @@
     "cache-loader": "^4.0.0",
     "copy-webpack-plugin": "^5.1.0",
     "core-js": "^3.0.0",
+    "cors": "^2.8.5",
     "css-loader": "^3.0.0",
     "cssnano": "^4.0.0",
+    "express": "^4.17.1",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "^4.0.0",
     "global": "^4.3.2",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "http-proxy-middleware": "^1.0.5",
     "metro-react-native-babel-preset": "^0.57.0",
     "path-to-regexp": "^1.7.0",
     "postcss-flexbugs-fixes": "^4.1.0",
