@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { SelectableRow, SelectableRowProps } from './SelectableRow';
@@ -22,28 +22,26 @@ const S = StyleSheet.create({
   }
 });
 
-export class SelectableList extends Component<SelectableListProps> {
-  renderItem = (item: SelectableListItem, index: number) => {
+export const SelectableList = (props: SelectableListProps): JSX.Element => {
+  const handlePress = (item: SelectableListItem) => () => {
+    props.onChange(item);
+  };
+
+  const renderItem = (item: SelectableListItem, index: number) => {
     return (
       <SelectableRow
         key={item.id || index}
         title={item.title}
-        selected={item.id === this.props.selectedId}
-        onPress={this.handlePress(item)}
-        {...this.props.selectableRow}
+        selected={item.id === props.selectedId}
+        onPress={handlePress(item)}
+        {...props.selectableRow}
       />
     );
-  }
+  };
 
-  handlePress = (item: SelectableListItem) => () => {
-    this.props.onChange(item);
-  }
-
-  render(): JSX.Element {
-    return (
-      <View style={[S.container, this.props.style]}>
-        {this.props.items.map(this.renderItem)}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={[S.container, props.style]}>
+      {props.items.map(renderItem)}
+    </View>
+  );
+};
