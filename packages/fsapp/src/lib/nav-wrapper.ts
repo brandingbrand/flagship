@@ -37,6 +37,9 @@ export default class Navigator {
   async dismissAllModals(options?: NavOptions): Promise<any> {
     return Navigation.dismissAllModals(options);
   }
+  async updateProps(newProps: object, alternateId?: string): Promise<any> {
+    return Navigation.updateProps(alternateId || this.componentId, newProps);
+  }
   mergeOptions(options: NavOptions, alternateId?: string): void {
     return Navigation.mergeOptions(alternateId || this.componentId, options);
   }
