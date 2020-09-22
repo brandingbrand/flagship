@@ -103,6 +103,8 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
   }
 
   componentDidMount(): void {
+    console.warn('EmailSignUp is deprecated and will be removed in the next version of Flagship.');
+
     fetchCMS('EmailSignup', 'promo')
       .then(instances => {
         if (instances[0] && instances[0].Value) {

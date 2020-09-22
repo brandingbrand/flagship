@@ -139,6 +139,11 @@ export default class ForgotPassword extends Component<
     };
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ForgotPassword is deprecated and will be removed in the next version of Flagship.');
+  }
+
   getFormFields = () => {
     const EmailType = t.refinement(t.String, (value: string) => {
       return EMAIL_REGEX.test((value || '').trim());

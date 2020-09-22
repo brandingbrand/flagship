@@ -87,6 +87,11 @@ export default class ContactInfoForm extends Component<
     this.fieldOptions = this.getFormFieldOptions();
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ContactInfoForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   getFormFields = () => {
     const EmailType = t.refinement(t.String, (value: string) => {
       const { email, emailConfirmation } = this.props.values;

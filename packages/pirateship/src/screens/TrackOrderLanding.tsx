@@ -116,6 +116,10 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
     };
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('TrackOrderLanding is deprecated and will be removed in the next version of Flagship.');
+  }
 
   render(): JSX.Element {
     return (

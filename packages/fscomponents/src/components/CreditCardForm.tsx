@@ -133,6 +133,11 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
 
   formRef: any;
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('CreditCardForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   fieldOptions = (labelPosition?: FormLabelPosition) => {
     const defaultFieldOptions = {
       name: {

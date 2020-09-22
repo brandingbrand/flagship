@@ -109,6 +109,11 @@ export default class PSCreditCardForm extends Component<
     this.updateCCIcon(this.state.value && this.state.value.ccNumber);
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('PSCreditCardForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   render(): JSX.Element {
     return (
       <View style={this.props.style}>

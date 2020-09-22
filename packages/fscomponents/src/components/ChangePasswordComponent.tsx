@@ -120,6 +120,11 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
 
   } // end constructor
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.');
+  }
+
   handleSubmit = () => {
     const value = this.form.getValue();
     if (value && this.props.onSubmit) {

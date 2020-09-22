@@ -57,6 +57,10 @@ export class EmailForm extends Component<EmailFormProps> {
       props.labelPosition : FormLabelPosition.Inline;
   }
 
+  componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   render(): JSX.Element {
     return (
       <SingleLineForm

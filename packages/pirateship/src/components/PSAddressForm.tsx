@@ -135,6 +135,11 @@ export default class PSAddressForm extends Component<
     this.fieldOptions = this.getFormFieldOptions();
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('PSAddressForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   componentDidUpdate(prevProps: PSAddressFormProps): void {
     const values = prevProps.values || {} as any;
     const newValues = this.props.values || {} as any;

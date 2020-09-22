@@ -116,6 +116,8 @@ export default class PSSignInForm extends Component<
   }
 
   componentDidMount(): void {
+    console.warn('PSSignInForm is deprecated and will be removed in the next version of Flagship.');
+
     if (this.props.runBioAuthImmediately) {
       this.triggerSavedLogin();
     }

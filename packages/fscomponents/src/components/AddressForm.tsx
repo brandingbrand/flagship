@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('tcomb-form-native');
@@ -37,6 +37,9 @@ const S = StyleSheet.create({
 
 
 export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Element => {
+  useEffect(() => {
+    console.warn('AddressForm is deprecated and will be removed in the next version of Flagship.');
+  }, []);
   let form: any;
 
   const fieldsStyleConfig = {
