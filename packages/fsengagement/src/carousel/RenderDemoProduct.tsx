@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './SliderEntry.style';
+import { OptionsModalPresentationStyle } from 'react-native-navigation';
 
 export interface RenderDemoProductProps {
   data?: any;
@@ -35,18 +36,33 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
       return;
     }
     this.props.navigator.showModal({
-      screen: 'EngagementProductModal',
-      animationType: 'none',
-      passProps: {
-        products: this.props.products,
-        index: this.props.index
-      },
-      navigatorStyle: {
-        navBarHidden: true,
-        screenBackgroundColor: 'transparent',
-        modalPresentationStyle: 'overCurrentContext',
-        tabBarHidden: true,
-        navBarTranslucent: true
+      component: {
+        name: 'EngagementProductModal',
+        passProps: {
+          products: this.props.products,
+          index: this.props.index
+        },
+        options: {
+          animations: {
+            showModal: {
+              enabled: false
+            }
+          },
+          topBar: {
+            visible: false,
+            drawBehind: true,
+            background: {
+              translucent: true
+            }
+          },
+          layout: {
+            backgroundColor: 'transparent'
+          },
+          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+          bottomTabs: {
+            visible: false
+          }
+        }
       }
     });
   }

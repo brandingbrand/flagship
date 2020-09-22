@@ -61,9 +61,7 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
 }
 
 export interface AppConfigType {
-  screens: {
-    [key: string]: RoutableComponentClass;
-  };
+  screens: Record<string, RoutableComponentClass>;
   appType?: 'singleScreen';
   packageJson?: Dictionary; // TODO: deprecated, insecure - should be removed after the transition
   version?: string; // TODO: mark version & basename as required after the transition
