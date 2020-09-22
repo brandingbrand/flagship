@@ -136,6 +136,10 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
 
   } // end constructor
 
+  componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   handleSubmit = () => {
     const value = this.form.getValue();
     if (value && this.props.onSubmit) {

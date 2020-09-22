@@ -123,6 +123,10 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
       props.labelPosition : FormLabelPosition.Inline;
   }
 
+  componentDidMount(): void {
+    console.warn('LoginForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   handleSubmit = () => {
     const value = this.form.getValue();
     if (value && this.props.onSubmit) {
