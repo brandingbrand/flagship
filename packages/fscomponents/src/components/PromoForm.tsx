@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
 import { Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -40,6 +40,10 @@ export class PromoForm extends Component<PromoFormProps> {
         ...props.fieldsOptions.promoCode
       }
     };
+  }
+
+  componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
   }
 
   render(): JSX.Element {

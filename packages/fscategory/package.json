@@ -13,8 +13,8 @@
   "dependencies": {
     "@brandingbrand/fscommerce": "^10.0.0-alpha.2",
     "@brandingbrand/fscomponents": "^10.0.0-alpha.2",
-    "react": "^16.11.0",
-    "react-native": "^0.61.0"
+    "react": "^16.13.1",
+    "react-native": "^0.63.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

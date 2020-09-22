@@ -1,7 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-// @ts-ignore: TODO fix types for tcomb-form-native
-import * as t from 'tcomb-form-native';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export function getColor(state: Dictionary, locals: Dictionary): String {

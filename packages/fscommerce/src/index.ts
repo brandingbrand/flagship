@@ -5,7 +5,8 @@ export {
   WithCommerceProps,
   WithCommerceProviderProps,
   WithCommerceState,
-  FetchDataFunction
+  FetchDataFunction,
+  InitialDataFunction
 } from './Commerce/CommerceProvider';
 export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
 export {
@@ -42,3 +43,5 @@ export {
   default as runMiddleware,
   MiddlewareFunction
 } from './lib/runMiddleware';
+
+export { AuthType } from './Commerce/types/CustomerAccount';

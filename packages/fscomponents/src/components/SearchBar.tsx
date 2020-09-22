@@ -289,7 +289,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // The cancel button may not be visible. Animate it to full width.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: cancelButtonWidth || kCancelButtonWidthDefault,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: true
       }).start();
     }
   }
@@ -307,7 +308,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // Cancel button is not supposed to be visible on blur. Animate it away.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: 0,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: true
       }).start();
     }
   }
