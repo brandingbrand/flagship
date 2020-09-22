@@ -36,20 +36,38 @@ memo((props): JSX.Element => {
     totalPrice
   } = props;
 
+  let convertedPrice: string | undefined;
+  try {
+    if (price) {
+      convertedPrice = FSI18n.currency(price);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  let convertedTotalPrice: string | undefined;
+  try {
+    if (totalPrice) {
+      convertedTotalPrice = FSI18n.currency(totalPrice);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
   return (
     <View style={style}>
       {itemText && <Text style={[defaultStyles.detailText, detailTextStyle]}>{itemText}</Text>}
       {productId && <Text style={[defaultStyles.detailText, detailTextStyle]}>#{productId}</Text>}
-      {price && (
+      {convertedPrice && (
         <Text style={[defaultStyles.detailText, detailTextStyle]}>
           {FSI18n.string(componentTranslationKeys.unitPrice)}:
-          {FSI18n.currency(price)}
+          {convertedPrice}
         </Text>
       )}
-      {totalPrice && (
+      {convertedTotalPrice && (
         <Text style={detailTextStyle}>
           {FSI18n.string(componentTranslationKeys.totalPrice)}:
-          {FSI18n.currency(totalPrice)}
+          {convertedTotalPrice}
         </Text>
       )}
     </View>
