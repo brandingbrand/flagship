@@ -131,6 +131,10 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     errorVisible: false
   };
 
+  componentDidMount(): void {
+    console.warn('CMSFeedback is deprecated and will be removed in the next version of Flagship.');
+  }
+
   submitReview = () => {
     if (this.form) {
       const success = this.form.validate();

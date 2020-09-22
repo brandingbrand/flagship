@@ -95,6 +95,10 @@ export class Form extends PureComponent<FormProps> {
     this.form = React.createRef<TcombForm>();
   }
 
+  componentDidMount(): void {
+    console.warn('Form is deprecated and will be removed in the next version of Flagship.');
+  }
+
   getValue = () => {
     if (this.form.current) {
       return this.form.current.getValue();

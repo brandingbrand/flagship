@@ -42,6 +42,10 @@ export class PromoForm extends Component<PromoFormProps> {
     };
   }
 
+  componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   render(): JSX.Element {
     return (
       <SingleLineForm
