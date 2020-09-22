@@ -13,4 +13,12 @@ export default interface Pageable {
    * @example 10
    */
   limit: number;
+
+  /**
+   * The page number of the first page of products if the data represents a range of pages
+   *
+   * @example 3
+   */
+  minPage?: number;
+
 }
