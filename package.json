@@ -66,7 +66,7 @@
     "@types/react-dom": "^16.9.3",
     "@types/react-native": "^0.60.22",
     "@types/react-native-i18n": "^2.0.0",
-    "@types/react-native-permissions": "^1.1.1",
+    "@types/react-native-permissions": "^2.0.0",
     "@types/react-native-touch-id": "^4.0.0",
     "@types/react-redux": "^7.0.0",
     "@types/react-router-dom": "^5.1.2",
