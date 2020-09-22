@@ -99,6 +99,7 @@ const globalConfig = {
             test: /\.m?jsx?$/,
             include: [
               new RegExp('node_modules' + escapedSep + 'react-native-'),
+              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')

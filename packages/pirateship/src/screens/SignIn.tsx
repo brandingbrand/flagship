@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { Loading } from '@brandingbrand/fscomponents';
-// TODO: Swap this for Formik version
-// import PSSignInForm from '../components/PSSignInForm';
+import PSSignInForm from '../components/PSSignInForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
@@ -112,10 +111,10 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
       return <Loading style={styles.loading} />;
     }
 
-    // const {
-    //   saveCredentials,
-    //   getCredentials
-    // } = this.props;
+    const {
+      saveCredentials,
+      getCredentials
+    } = this.props;
     /// default to close
     const dismissButtonStyle = this.props.dismissButtonStyle || DismissButtonStyle.Close;
 
@@ -148,14 +147,14 @@ class SignIn extends Component<SignInScreenProps, SignInScreenState> {
             </Text>
           </View>
           <View style={styles.formContainer}>
-            {/* <PSSignInForm
+            <PSSignInForm
               signIn={this.signIn}
               forgotPassword={this.forgotPassword}
               saveCredentials={saveCredentials}
               getCredentials={getCredentials}
               onNav={this.props.onNav}
               navigator={this.props.navigator}
-            /> */}
+            />
           </View>
           <View style={styles.signUpContainer}>
             <Text style={styles.signUpText}>

@@ -14,13 +14,16 @@ import Home from './screens/Home';
 import DesktopPassthrough from './screens/DesktopPassthrough';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
+import TrackOrderLanding from './screens/TrackOrderLanding';
 import OrderHistoryList from './screens/OrderHistoryList';
 import OrderHistoryDetail from './screens/OrderHistoryDetail';
 import SavedPayments from './screens/SavedPayments';
 import EditPersonal from './screens/EditPersonal';
 import AddressBook from './screens/AddressBook';
 import EditAddress from './screens/EditAddress';
+import ForgotPassword from './screens/ForgotPassword';
 import ChangePassword from './screens/ChangePassword';
+import EmailSignUp from './screens/EmailSignUp';
 import LeftDrawerMenu from './screens/LeftDrawerMenu';
 import Search from './screens/Search';
 import BreadCrumbsSample from './screens/BreadCrumbsSample';
@@ -46,14 +49,14 @@ export default {
   DesktopPassthrough,
   SignIn,
   SignUp,
-  // TrackOrderLanding,
+  TrackOrderLanding,
   OrderHistoryList,
   OrderHistoryDetail,
   EditPersonal,
   AddressBook,
   EditAddress,
-  // ForgotPassword,
-  // EmailSignUp,
+  ForgotPassword,
+  EmailSignUp,
   ChangePassword,
   Search,
   BreadCrumbsSample,
