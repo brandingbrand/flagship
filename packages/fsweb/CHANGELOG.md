@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* **fsweb:** Upgrade react-native-web to 0.12.2 (5c701ca)
+
+
+### Reverts
+
+* Revert "chore(fscomponents): Remove tcomb-form-native" (396630c)
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/fsweb

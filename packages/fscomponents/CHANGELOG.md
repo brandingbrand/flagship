@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* fix imports of tcomb-form-native (4dbcab9)
+* remove unnecessary lodash omit from props (273bae6)
+* **fscomponents:** Better backwards compatibility (da268d4)
+* **fscomponents:** Fix empty stars for reviews (1b02443)
+* **fscomponents:** Fix search history display (e57d0b5)
+* **fscomponents:** Remove redundant code in SearchModal (d874255)
+
+
+### Features
+
+* upgrade to RN 0.63 (507d0e4)
+* upgrade typescript to 4.0.2 (b6e6bac)
+* **flagship:** RNDiff updates for RN63 (63b22b3)
+* Replace all occurrences of "any" in fscomponents/ProductItem (7331806)
+
+
+### Reverts
+
+* Revert "chore(fscomponents): Remove tcomb-form-native" (396630c)
+
+
+### BREAKING CHANGES
+
+* major react native update
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
