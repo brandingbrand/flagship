@@ -4,7 +4,7 @@
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-native",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -14,13 +14,12 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
+    "target": "es5",
     "rootDir": "src",
     "outDir": "dist"
   },
   "exclude": [
     "**/*.test.ts",
-    "dist/",
-    "web/"
+    "dist/"
   ]
 }
