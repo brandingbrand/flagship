@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Features
+
+* Replace all occurrences of "any" in FSMockDataSources package ([3a0c881](https://github.com/brandingbrand/flagship/commit/3a0c881776f3283b64926b8689f034b0119cfd3f))
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/fsmockdatasources

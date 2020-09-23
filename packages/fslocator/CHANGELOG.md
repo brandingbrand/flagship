@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Features
+
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* upgrade to RN 0.63 ([507d0e4](https://github.com/brandingbrand/flagship/commit/507d0e4618cc6e557af6c475a655aa12f57b6607))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* major react native update
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/fslocator
