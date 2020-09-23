@@ -16,7 +16,7 @@ const icons: { [key in CardBrand]?: ImageRequireSource } = {
 };
 
 export interface FormOptions {
-  stylesheet: any;
+  stylesheet: object;
   fields: any;
 }
 
@@ -34,11 +34,11 @@ export default class PSCreditCardForm extends Component<
   PSCreditCardFormProps,
   PSCreditCardFormState
 > {
-  formRef: any;
+  formRef: Form | null = null;
 
-  formType: any;
+  formType: object;
 
-  fieldOptions: any = {
+  fieldOptions: object = {
     ccNumber: {
       factory: t.form.Textbox,
       template: textboxWithRightIcon,
@@ -126,7 +126,7 @@ export default class PSCreditCardForm extends Component<
   }
 
   focusField = (fieldName: string) => {
-    const field = this.formRef.getComponent(fieldName);
+    const field = this.formRef && this.formRef.getComponent(fieldName);
     if (!field) {
       return console.warn(`field ${fieldName} doesn't exist`);
     }
@@ -142,8 +142,8 @@ export default class PSCreditCardForm extends Component<
   }
 
   getFormRef = (ref: any) => (this.formRef = ref);
-  getValue = () => this.formRef.getValue();
-  validate = () => this.formRef.validate();
+  getValue = () => this.formRef && this.formRef.getValue();
+  validate = () => this.formRef && this.formRef.validate();
   handleChange = (value: any) => {
     const oldCC = this.state.value && this.state.value.ccNumber;
     const newCC = value.ccNumber;

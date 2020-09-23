@@ -10,19 +10,20 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { SelectableRow } from '../SelectableRow';
+import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
+import { SelectedItems } from './FilterList';
 
 const defaultSingleFilterIds = [`cgid`];
 
 export interface FilterListDrilldownProps {
   items: FilterItem[];
-  onApply: (selectedItems: any, info?: { isButtonPress: boolean }) => void;
+  onApply: (selectedItems: SelectedItems, info?: { isButtonPress: boolean }) => void;
   onReset: (info?: { isButtonPress: boolean }) => void;
-  selectedItems?: any;
+  selectedItems?: SelectedItems;
   style?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
   applyButtonStyle?: StyleProp<ViewStyle>;
@@ -34,8 +35,7 @@ export interface FilterListDrilldownProps {
   itemTextStyle?: StyleProp<TextStyle>;
   itemTextSelectedStyle?: StyleProp<TextStyle>;
   selectedValueStyle?: StyleProp<TextStyle>;
-  selectableRowProps?: any;
-  accordionProps?: any;
+  selectableRowProps?: SelectableRowProps;
   singleFilterIds?: string[]; // Filter IDs for which only one value can be selected at a time
   ignoreActiveStyleIds?: string[]; // Filter IDs for which active styling won't be applied
   applyOnSelect?: boolean;
@@ -158,8 +158,8 @@ const S = StyleSheet.create({
 });
 
 export interface FilterListDrilldownState {
-  selectedItems: any;
-  secondLevelItem: any;
+  selectedItems: SelectedItems;
+  secondLevelItem: FilterItem | null;
 }
 
 export class FilterListDrilldown extends PureComponent<
@@ -181,7 +181,7 @@ export class FilterListDrilldown extends PureComponent<
 
     if (this.props.items !== prevProps.items && this.state.secondLevelItem) {
       stateChanges.secondLevelItem = this.props.items.find(item => (
-        item.id === this.state.secondLevelItem.id
+        item.id === this.state.secondLevelItem?.id
       ));
     }
 
@@ -263,8 +263,8 @@ export class FilterListDrilldown extends PureComponent<
   ): JSX.Element => {
     const selectedValues = this.state.selectedItems[item.id] || [];
     const selectedValueTitles = item.values
-      .filter((v: any) => selectedValues.indexOf(v.value) > -1)
-      .map((v: any) => v.title);
+      .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
+      .map((v: FilterItemValue) => v.title);
 
     if (this.props.renderFilterItem && !skipCustomRender) {
       return this.props.renderFilterItem(

@@ -47,14 +47,28 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
       return null;
     }
 
+    let convertedPrice: string | undefined;
+    try {
+      convertedPrice = FSI18n.currency(price);
+    } catch (e) {
+      console.error(e);
+    }
+
     if (originalPrice && !originalPrice.value.equals(price.value)) {
+      let convertedOriginalPrice: string | undefined;
+      try {
+        convertedOriginalPrice = FSI18n.currency(originalPrice);
+      } catch (e) {
+        console.error(e);
+      }
+
       return (
         <View style={[style.priceContainer]}>
           <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>
-            {FSI18n.currency(originalPrice)}
+            {convertedOriginalPrice}
           </Text>
           <Text style={[types.small, weights.medium, style.salePrice, salePriceStyle]}>
-            {FSI18n.currency(price)}
+            {convertedPrice}
           </Text>
         </View>
       );
@@ -62,7 +76,7 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
       return (
         <View style={[style.priceContainer]}>
           <Text style={[types.small, weights.medium, priceStyle]}>
-            {FSI18n.currency(price)}
+            {convertedPrice}
           </Text>
         </View>
       );

@@ -105,10 +105,21 @@ export interface CreditCardFormData {
   };
 }
 
+interface CreditCardValidation {
+  number: string;
+  name: string;
+  expirationDate: string;
+  cvv: string;
+}
+
+interface CCNumber {
+  number: string;
+}
+
 
 export interface CreditCardFormProps {
-  fieldsOptions?: any;
-  fieldsStyleConfig?: any;
+  fieldsOptions?: Dictionary;
+  fieldsStyleConfig?: Dictionary;
   hideName?: boolean;
   cscIcon?: ImageURISource;
   cscIconStyle?: StyleProp<ImageStyle>;
@@ -131,7 +142,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     labelPosition: FormLabelPosition.Inline
   };
 
-  formRef: any;
+  formRef?: Form;
 
   fieldOptions = (labelPosition?: FormLabelPosition) => {
     const defaultFieldOptions = {
@@ -195,10 +206,10 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     };
   }
   getValue = () => {
-    return this.formRef.getValue();
+    return this?.formRef?.getValue();
   }
 
-  _saveFormRef = (ref: any) => {
+  _saveFormRef = (ref: Form) => {
     this.formRef = ref;
   }
 
@@ -233,7 +244,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     );
   }
 
-  handleNumberError = (value: any, path: any, context: any) => {
+  handleNumberError = (value: CCNumber) => {
     const isValid = this.validateNumber(value);
     if (!isValid) {
       return FSI18n.string(componentTranslationKeys.numberError);
@@ -253,7 +264,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  validateNumber = (val: any) => {
+  validateNumber = (val: CCNumber) => {
     if (this.formRef) {
       const validation = this.formRef.getComponent('number').validate();
       if (validation.isValid()) {
@@ -264,20 +275,20 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  private validateCCNumber = (value: any) => {
+  private validateCCNumber = (value: CCNumber) => {
     const validationResult = creditCard.validate({
       cardType: creditCard.determineCardType(value.number),
       number: value.number
     });
     let valid = true;
     if (!validationResult.validCardNumber) {
-      this.formRef.getComponent('number').setState({ hasError: true });
+      this?.formRef?.getComponent('number').setState({ hasError: true });
       valid = false;
     }
     return valid;
   }
 
-  private validateCreditCard = (value: any) => {
+  private validateCreditCard = (value: CreditCardValidation) => {
     let valid = true;
 
     const expirationDateParts = (value.expirationDate || '').split('/');
@@ -293,7 +304,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     });
 
     if (!validationResult.validCardNumber) {
-      this.formRef.getComponent('number').setState({ hasError: true });
+      this?.formRef?.getComponent('number').setState({ hasError: true });
       valid = false;
     }
 
@@ -302,12 +313,12 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
       || !validationResult.validExpiryYear
       || creditCard.isExpired(expirationMonth, expirationYear)
     ) {
-      this.formRef.getComponent('expirationDate').setState({ hasError: true });
+      this?.formRef?.getComponent('expirationDate').setState({ hasError: true });
       valid = false;
     }
 
     if (!validationResult.validCvv) {
-      this.formRef.getComponent('cvv').setState({ hasError: true });
+      this?.formRef?.getComponent('cvv').setState({ hasError: true });
       valid = false;
     }
 
