@@ -22,7 +22,7 @@ export interface UpdateNameOrEmailState {
 
 export interface UpdateNameOrEmailProps {
   fieldsStyleConfig?: Dictionary; // custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: <T>(value: T) => void; // the behaviour we want onpress of submit button
+  onSubmit?: <T = any>(value: T) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: () => string; // Text to override the submit button
