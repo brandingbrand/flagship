@@ -40,7 +40,7 @@ class Proxy {
     ) => res.send(this.hostPackageJSON.name));
   }
 
-  initProxy() {
+  initProxy(buildPath) {
     const endpoint = this.apiConfig.endpoint;
     if (!endpoint) {
       throw new Error('"proxyEndpoint" key is required for Proxy Configuration');
@@ -62,6 +62,12 @@ class Proxy {
         ...this.proxyConfig
       })
     );
+
+    if (buildPath) {
+      this.app.use(
+        express.static(buildPath)
+      )
+    }
 
     return this.app;
   }
