@@ -205,4 +205,3 @@ you ran `flagship init`. See [Environments](#environments).
 
 * [fstestproject](packages/fstestproject): a test project built using Flagship
 * [pirateship](packages/pirateship): an example app built using Flagship
-
