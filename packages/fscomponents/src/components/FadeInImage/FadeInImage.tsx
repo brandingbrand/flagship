@@ -1,12 +1,20 @@
 import React, { PureComponent, RefObject } from 'react';
-import { Animated, View, ViewProps } from 'react-native';
+import {Animated, ImageStyle, StyleProp, View, ViewProps} from 'react-native';
 import { FadeInImageProps } from './FadeInImageProps';
 
 export interface FadeInImageState {
   opacity: Animated.Value;
 }
 
-export class FadeInImage extends PureComponent<FadeInImageProps, FadeInImageState> {
+export interface SerializableFadeInImageProps {
+  style?: ImageStyle;
+}
+
+export interface FadeInProps extends FadeInImageProps, Omit<SerializableFadeInImageProps, 'style'> {
+  style?: StyleProp<ImageStyle>;
+}
+
+export class FadeInImage extends PureComponent<FadeInProps, FadeInImageState> {
   private view: RefObject<View>;
 
   constructor(props: FadeInImageProps) {
