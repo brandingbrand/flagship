@@ -3,6 +3,16 @@ module.exports = {
   name: 'PirateShip',
   displayName: 'PirateShip',
   enabledCapabilitiesIOS: [],
+  pinnedCerts: [
+    {
+      baseUrl: 'https://demo-ocapi.demandware.net',
+      path: 'assets/ssl/cert1.cer'
+    },
+    {
+      baseUrl: 'https://demo-ocapi.demandware.net',
+      path: 'assets/ssl/cert2.cer'
+    }
+  ],
   buildConfig: {
     ios: {
       appleCert: '../certs/apple.cer',

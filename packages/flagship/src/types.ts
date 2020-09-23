@@ -9,12 +9,18 @@ export enum TargetedDevices {
   Universal = 'Universal'
 }
 
+export interface PinnedCertificate {
+  baseUrl: string;
+  path: string;
+}
+
 export interface Config {
   name: string;
   displayName: string;
   associatedDomains: string[];
   disableDevFeature?: boolean;
   googleMapApiKey: string;
+  pinnedCerts?: PinnedCertificate[];
 
   // TODO - unify with appCenter config
   codepush?: {
