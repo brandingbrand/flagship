@@ -31,7 +31,7 @@
     "react-native": "^0.63.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-svg": "^10.0.0",
-    "react-native-swiper": "1.6.0-rc.3",
+    "react-native-swiper": "1.6.0",
     "react-native-web-modal": "^1.0.1",
     "sweetalert": "^2.1.0",
     "tcomb-form-native": "^0.6.12",

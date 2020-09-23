@@ -18,11 +18,11 @@ jobs:
     node_js: '12'
     script:
       - yarn prepare || travis_terminate 1
-      - commitlint-travis || travis_terminate 1
       - yarn prepare:fscodestyle || travis_terminate 1
       - yarn lint || travis_terminate 1
       - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
-      - yarn build:storybook
+      - yarn build:storybook || travis_terminate 1
+      - commitlint-travis
   - stage: test
     language: generic
     sudo: true
