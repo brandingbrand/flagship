@@ -8,12 +8,13 @@ const { demandwareProxyConfig } = require('./lib');
 const port = process.env.PORT || 3000;
 const hostname = process.env.HOST || 'localhost';
 const envPath = process.env.ENV_PATH || 'env';
+const envFile = process.env.ENV || 'env'
 const proxyConfigPath = process.env.PROXY_CONFIG_PATH || 'proxy'
 
 const rootDir = '../../';
 
 const env = require(
-  path.resolve(__dirname, rootDir, envPath, 'env')
+  path.resolve(__dirname, rootDir, envPath, envFile)
 );
 
 if (env && env.dataSource && env.dataSource.enableProxy) {
