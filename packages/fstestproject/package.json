@@ -17,7 +17,10 @@
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
-    "lint": "fscodestyle"
+    "start:server-dev": "cd web && yarn server-dev",
+    "start:server-prod": "cd web && yarn server-prod",
+    "lint": "fscodestyle",
+    "build-web": "./scripts/buildWeb.sh"
   },
   "dependencies": {
     "@babel/runtime": "7.4.5",

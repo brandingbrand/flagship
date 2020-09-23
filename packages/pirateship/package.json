@@ -16,11 +16,14 @@
     "init:web": "node scripts/fixRNLink.js && flagship clean && flagship init web",
     "init:android-jetify": "jetify",
     "init:android-jetify-reverse": "jetify -r",
+    "start:server-dev": "cd web && yarn server-dev",
+    "start:server-prod": "cd web && yarn server-prod",
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
     "lint": "fscodestyle",
-    "build-web-demo": "./scripts/buildWebDemo.sh"
+    "build-web-demo": "./scripts/buildWebDemo.sh",
+    "build-web": "./scripts/buildWeb.sh"
   },
   "dependencies": {
     "@babel/runtime": "~7.5.5",
