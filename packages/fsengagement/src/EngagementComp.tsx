@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
+    textTransform: 'uppercase',
     fontWeight: 'bold',
     color: '#000',
     fontSize: 26,
