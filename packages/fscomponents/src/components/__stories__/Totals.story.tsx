@@ -8,6 +8,8 @@ import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
 import { TotalProps } from '../Total';
 import { Totals } from '../Totals';
+// tslint:disable-next-line:no-implicit-dependencies
+import { object } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
   style: {
@@ -18,6 +20,14 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   }
 });
+
+const valueContent = (
+  <TouchableOpacity onPress={action('Totals Shipping onPress')}>
+    <Text style={styles.zipCode}>
+      Enter Zip Code
+    </Text>
+  </TouchableOpacity>
+);
 
 const totals: TotalProps[] = [
   {
@@ -30,13 +40,7 @@ const totals: TotalProps[] = [
   },
   {
     keyName: 'Shipping',
-    value: (
-      <TouchableOpacity onPress={action('Totals Shipping onPress')}>
-        <Text style={styles.zipCode}>
-          Enter Zip Code
-        </Text>
-      </TouchableOpacity>
-    )
+    value: valueContent
   },
   {
     keyName: 'Total',
@@ -53,10 +57,15 @@ const totals: TotalProps[] = [
   }
 ];
 
+const style = {
+  padding: 20,
+  borderWidth: 1
+};
+
 storiesOf('Totals', module)
   .add('basic usage', () => (
     <Totals
       totals={totals}
-      style={styles.style}
+      style={object('containerStyle', style)}
     />
   ));
