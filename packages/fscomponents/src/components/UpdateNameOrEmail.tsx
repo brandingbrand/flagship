@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   NativeSyntheticEvent,
   StyleProp,
-  TextInputFocusEventData,
+  TextInputFocusEventData, TextStyle,
   View,
   ViewStyle
 } from 'react-native';
@@ -24,11 +24,11 @@ export interface UpdateNameOrEmailProps {
   fieldsStyleConfig?: Dictionary; // custom stylesheet we want to merge with the default stylesheet
   onSubmit?: <T>(value: T) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
-  submitTextStyle?: StyleProp<ViewStyle>;
-  submitText?: () => void; // Text to override the submit button
+  submitTextStyle?: StyleProp<TextStyle>;
+  submitText?: () => string; // Text to override the submit button
   style?: StyleProp<ViewStyle>;
   fieldsOptions?: Dictionary; // extra desired behaviour, like placeholders
-  value?: string;
+  value?: Dictionary;
 }
 
 // check for validity as part of the type
