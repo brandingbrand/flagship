@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* **flagship:** Swift library fix (b022f63)
+* fix iOS compilation error (97084a7)
+* **flagship:** add init script to patch rn images for ios 14 (9667620)
+* **flagship:** Upgrade to react-native-navigation 6 (1766342)
+
+
+### chore
+
+* merge develop into master ([#838](https://github.com/brandingbrand/flagship/issues/838)) (1bb87b2), closes [#620](https://github.com/brandingbrand/flagship/issues/620) [#817](https://github.com/brandingbrand/flagship/issues/817) [#814](https://github.com/brandingbrand/flagship/issues/814) [#823](https://github.com/brandingbrand/flagship/issues/823) [#808](https://github.com/brandingbrand/flagship/issues/808) [#143](https://github.com/brandingbrand/flagship/issues/143) [#862](https://github.com/brandingbrand/flagship/issues/862) [#864](https://github.com/brandingbrand/flagship/issues/864) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905)
+
+
+### Features
+
+* implement react-native-permissions v2 support (e017806)
+* **flagship:** RNDiff updates for RN63 (63b22b3)
+* remove hockeyapp and update appcenter for fastlane (839cb59)
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+* This removes the apiToken env config that could be used to configure App Center uploads. This was previously deprecated in favor of passing in an environment variable instead: APPCENTER_API_TOKEN.
+
+This also removes the :beta lanes from the Fastfiles, as these attempted to upload builds to Hockeyapp which has been shut down. The available lanes are :appcenter and :build for iOS and :appcenter, :appcenter_bundle, and :build for Android.
+* If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+* Revert yarn.lock changes
+
+* feat: update bv components w/ syndicated indicator
+
+**Description**
+Some reviews are syndicated by the manufacturer. When this is the case, if the client wants to display the indicator, another row will appear on the bottom of the review indicating that it is syndicated.
+
+* chore(release): publish v7.0.0
+
+* feat(flagship): support background modes
+
+* feat: update bv syndicated indicator style
+
+**Description**
+There were some bugs with the syndication badges on smaller devices. Fixed them with flex-wrap. Also updated copy.
+
+* chore(release): publish v7.1.0
+
+* feat: add position property for half modal component
+
+* chore: add state typing for component CMSBanner
+
+* fix: excessive calls of handleContainerSizeChange in MultiCarousel
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/flagship
