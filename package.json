@@ -22,6 +22,9 @@
     "testproject:run-bundler": "lerna run --stream --scope @brandingbrand/fstestproject start",
     "testproject:compile-ios": "lerna run --stream --scope @brandingbrand/fstestproject compile-ios",
     "testproject:compile-android": "lerna run --stream --scope @brandingbrand/fstestproject compile-android",
+    "testproject:build-web": "lerna run --stream --scope @brandingbrand/fstestproject build-web",
+    "testproject:start-server-dev": "lerna run --stream --scope @brandingbrand/fstestproject start:server-dev",
+    "testproject:start-server-prod": "lerna run --stream --scope @brandingbrand/fstestproject start:server-prod",
     "ship:init": "lerna run --stream --scope @brandingbrand/pirateship init",
     "ship:init-web": "lerna run --stream --scope @brandingbrand/pirateship init:web",
     "ship:run-ios": "run-p ship:run-bundler tsc:watch ship:compile-ios",
@@ -36,6 +39,7 @@
     "ship:android-jetify-reverse": "lerna run --stream --scope @brandingbrand/pirateship init:android-jetify-reverse",
     "ship:start-server-dev": "lerna run --stream --scope @brandingbrand/pirateship start:server-dev",
     "ship:start-server-prod": "lerna run --stream --scope @brandingbrand/pirateship start:server-prod",
+    "ship:build-web": "lerna run --stream --scope @brandingbrand/pirateship build-web",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
     "docs": "run-s build:docs build:storybook",
     "tsc": "echo 'Cannot run tsc from top level of monorepo; run \"yarn prepare\" instead' && exit 1"

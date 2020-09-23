@@ -22,7 +22,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
     "lint": "fscodestyle",
-    "build-web-demo": "./scripts/buildWebDemo.sh"
+    "build-web-demo": "./scripts/buildWebDemo.sh",
+    "build-web": "./scripts/buildWeb.sh"
   },
   "dependencies": {
     "@babel/runtime": "~7.5.5",

@@ -19,7 +19,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput",
     "start:server-dev": "cd web && yarn server-dev",
     "start:server-prod": "cd web && yarn server-prod",
-    "lint": "fscodestyle"
+    "lint": "fscodestyle",
+    "build-web": "./scripts/buildWeb.sh"
   },
   "dependencies": {
     "@babel/runtime": "7.4.5",
@@ -45,7 +46,7 @@
     "react-native": "^0.61.0",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
-    "react-native-navigation": "^4.0.0"
+    "react-native-navigation": "^4.0.0",
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

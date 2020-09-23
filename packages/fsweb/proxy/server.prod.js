@@ -4,12 +4,13 @@ const Proxy = require('./proxy');
 const { demandwareProxyConfig } = require("./lib");
 
 const envPath = process.env.ENV_PATH || 'env';
+const envFile = process.env.ENV || 'env';
 const proxyConfigPath = process.env.PROXY_CONFIG_PATH || 'proxy'
 const buildPath = process.env.BUILD_PATH || 'web-compiled';
 const rootDir = '../../'
 
 const env = require(
-  path.resolve(__dirname, rootDir, envPath, 'env')
+  path.resolve(__dirname, rootDir, envPath, envFile)
 );
 
 const proxyConfigFile = require(
@@ -33,18 +34,14 @@ if (env && env.dataSource && env.dataSource.enableProxy) {
     }
   }
 
+  const build = path.resolve(__dirname, rootDir, buildPath);
+
   const proxy = new Proxy(apiConfig, proxyConfig)
-    .initProxy();
+    .initProxy(build);
 
   if (!proxy) {
     return;
   }
-
-  const build = path.resolve(__dirname, rootDir, buildPath);
-
-  proxy.use(
-    express.static(build)
-  );
 
   proxy.listen(port, error => {
     if (error) {
