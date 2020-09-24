@@ -42,6 +42,16 @@ const PasswordType = t.refinement(t.String, (str: string) => {
   return str.length >= 6;
 });
 
+PasswordType.getValidationErrorMessage = (s: string) => {
+  if (!s) {
+    return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
+  }
+  if (s.length < 6) {
+    return FSI18n.string(componentTranslationKeys.form.password.error.tooShort);
+  }
+  return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
+};
+
 export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateNameOrEmailState> {
   form: any;
   fieldsStyleConfig: any;
@@ -52,14 +62,6 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
     super(props);
 
     this.state = { value: props.value };
-
-    PasswordType.getValidationErrorMessage = (s: string) => {
-      if (s.length < 6) {
-        return FSI18n.string(componentTranslationKeys.form.password.error.tooShort);
-      } else {
-        return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
-      }
-    };
 
     this.fieldsTypes = t.struct({
       firstName: t.String,
