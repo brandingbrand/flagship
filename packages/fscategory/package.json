@@ -14,7 +14,9 @@
     "@brandingbrand/fscommerce": "^10.2.2",
     "@brandingbrand/fscomponents": "^10.2.2",
     "react": "^16.13.1",
-    "react-native": "^0.63.2"
+    "react-content-loader": "^5.1.2",
+    "react-native": "^0.63.2",
+    "react-native-svg": "^10.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
