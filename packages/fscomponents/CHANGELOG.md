@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+
+
+### Features
+
+*  add story to SearchScreen component ([5d31e1f](https://github.com/brandingbrand/flagship/commit/5d31e1f86dd9e04ce0c2d9fda9f153cbdaa4d907))
+* add knobs - Carousel story ([e40f19e](https://github.com/brandingbrand/flagship/commit/e40f19ea9c3699333756c8fdb49ce852a37b57dc))
+* add knobs - loginForm story ([bbb1cb8](https://github.com/brandingbrand/flagship/commit/bbb1cb8eafd2d8b11dcb2d97bdcaa2bc7e426af6))
+* add knobs - MultiCarousel story ([e317d52](https://github.com/brandingbrand/flagship/commit/e317d529b1e75e3f706f9bd866122d5286da118c))
+* add knobs - MultiCarousel story ([b44cd43](https://github.com/brandingbrand/flagship/commit/b44cd43c62d76f818dc2ef877af05345936044a6))
+* add knobs - Totals story ([12e3b31](https://github.com/brandingbrand/flagship/commit/12e3b3143a8b9dc342e39b33820c8fa9ba5863f9))
+* add knobs - Totals story ([6923e0c](https://github.com/brandingbrand/flagship/commit/6923e0c1627b1d66314a8df815f7d1f0a36ef610))
+* add knobs for CMSFeedback story ([835d647](https://github.com/brandingbrand/flagship/commit/835d647bfe56f7978cb567a3b82aeae02e844efa))
+* Create UpdateNameOrEmail story ([994ebe0](https://github.com/brandingbrand/flagship/commit/994ebe0af7b6c70a66efdb2dcd2cd2ffaa48a2da))
+* Create UpdateNameOrEmail story ([6bc2e33](https://github.com/brandingbrand/flagship/commit/6bc2e33e65fb2f9241aa929236e3dd945cc7962e))
+
+
+
+
+
 # [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
 
 

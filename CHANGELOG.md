@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+* **fsweb:** add build scripts for web ([5551f89](https://github.com/brandingbrand/flagship/commit/5551f89cc00bc4c14d10bddc2cbb96c35b028d95))
+* **fsweb:** Remove stray comma ([b7eedb7](https://github.com/brandingbrand/flagship/commit/b7eedb7ffa998448f4aea1bc21c2b5bdd91a5157))
+
+
+### Features
+
+* **fsweb:** Convert proxy to Typescript ([d5990bc](https://github.com/brandingbrand/flagship/commit/d5990bcb82ec68901f11f64169d5c650c5e024a4))
+* add knobs - Totals story ([12e3b31](https://github.com/brandingbrand/flagship/commit/12e3b3143a8b9dc342e39b33820c8fa9ba5863f9))
+* Update FS component to allow custom header to be passed in ([ab93e8c](https://github.com/brandingbrand/flagship/commit/ab93e8c82248cbd32cb03819b1fa3e3eb4a67d1d))
+* **fsweb:** add proxy support ([1e8f1c8](https://github.com/brandingbrand/flagship/commit/1e8f1c880512bd37c0ea8b5c5fc3ad6a4d02d952))
+*  add story to SearchScreen component ([5d31e1f](https://github.com/brandingbrand/flagship/commit/5d31e1f86dd9e04ce0c2d9fda9f153cbdaa4d907))
+* add knobs - Carousel story ([e40f19e](https://github.com/brandingbrand/flagship/commit/e40f19ea9c3699333756c8fdb49ce852a37b57dc))
+* add knobs - loginForm story ([bbb1cb8](https://github.com/brandingbrand/flagship/commit/bbb1cb8eafd2d8b11dcb2d97bdcaa2bc7e426af6))
+* add knobs - MultiCarousel story ([e317d52](https://github.com/brandingbrand/flagship/commit/e317d529b1e75e3f706f9bd866122d5286da118c))
+* add knobs - MultiCarousel story ([b44cd43](https://github.com/brandingbrand/flagship/commit/b44cd43c62d76f818dc2ef877af05345936044a6))
+* add knobs - Totals story ([6923e0c](https://github.com/brandingbrand/flagship/commit/6923e0c1627b1d66314a8df815f7d1f0a36ef610))
+* add knobs for CMSFeedback story ([835d647](https://github.com/brandingbrand/flagship/commit/835d647bfe56f7978cb567a3b82aeae02e844efa))
+* Create UpdateNameOrEmail story ([994ebe0](https://github.com/brandingbrand/flagship/commit/994ebe0af7b6c70a66efdb2dcd2cd2ffaa48a2da))
+* Create UpdateNameOrEmail story ([6bc2e33](https://github.com/brandingbrand/flagship/commit/6bc2e33e65fb2f9241aa929236e3dd945cc7962e))
+* Update FS component to allow custom header to be passed in ([61f3bfb](https://github.com/brandingbrand/flagship/commit/61f3bfb73c920ed7b5ccf9535d31116ebe3111a5))
+* Update FS component to allow custom header to be passed in ([7467aea](https://github.com/brandingbrand/flagship/commit/7467aea7754be77226079d07a705a3cf00794045))
+
+
+
+
+
 # [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
 
 
