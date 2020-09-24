@@ -3,30 +3,135 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
 
 
 ### Bug Fixes
 
-* **flagship:** appcenter upload groups for android ([ef3238d](https://github.com/brandingbrand/flagship/commit/ef3238d79c323c25622fbbf2f4ccbeedb88526ee))
-* resolve android build tools in subprojects ([21c9a26](https://github.com/brandingbrand/flagship/commit/21c9a26897f02e65d039baf20ebcb1f041ffde44))
-* **fscomponents:** fix serializable accordion props ([5c7f0ea](https://github.com/brandingbrand/flagship/commit/5c7f0eae296870c4c63e55f9b7f953ccbdd1c010))
+* fix imports of tcomb-form-native ([4dbcab9](https://github.com/brandingbrand/flagship/commit/4dbcab957c9586bb07dbc4863a664b5d09f2948b))
+* **flagship:** Swift library fix ([b022f63](https://github.com/brandingbrand/flagship/commit/b022f636d1a2dfba77a6c70c028b15888314bd4b))
+* fix iOS compilation error ([97084a7](https://github.com/brandingbrand/flagship/commit/97084a7154fcbcaa7e86bdb1c5f4856c128c638b))
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **flagship:** add init script to patch rn images for ios 14 ([9667620](https://github.com/brandingbrand/flagship/commit/9667620ca54432f07670940acdd4fc8401795fc2))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+* **fscomponents:** Better backwards compatibility ([da268d4](https://github.com/brandingbrand/flagship/commit/da268d4e808171ddca141b6cbb7cc0507c57fc93))
+* **fscomponents:** Fix empty stars for reviews ([1b02443](https://github.com/brandingbrand/flagship/commit/1b02443cd70108f51d569a6e7e1435e2e099ad5b))
+* **fscomponents:** Fix search history display ([e57d0b5](https://github.com/brandingbrand/flagship/commit/e57d0b5ef31fd88d91a433eab948af315d4efc05))
+* **fscomponents:** Remove redundant code in SearchModal ([d874255](https://github.com/brandingbrand/flagship/commit/d87425568e9e9231125488bdef929c23460d564b))
+* pressing X on cart item removes from cart ([9f2d86c](https://github.com/brandingbrand/flagship/commit/9f2d86c9174ee7d26fde59525e8a9654bf0cb0f7))
+* remove cart item count badge when removing items from cart ([abaa899](https://github.com/brandingbrand/flagship/commit/abaa89901c7f204ec6a79c7bd7cd5ce6cadb442b))
+* **fsweb:** Upgrade react-native-web to 0.12.2 ([5c701ca](https://github.com/brandingbrand/flagship/commit/5c701cacf3abd0958f6ee5549471a755618d11af))
 
 
+### chore
+
+* merge develop into master ([#838](https://github.com/brandingbrand/flagship/issues/838)) ([1bb87b2](https://github.com/brandingbrand/flagship/commit/1bb87b2b692b398dece0f564b7cbd277de431f5e)), closes [#620](https://github.com/brandingbrand/flagship/issues/620) [#817](https://github.com/brandingbrand/flagship/issues/817) [#814](https://github.com/brandingbrand/flagship/issues/814) [#823](https://github.com/brandingbrand/flagship/issues/823) [#808](https://github.com/brandingbrand/flagship/issues/808) [#143](https://github.com/brandingbrand/flagship/issues/143) [#862](https://github.com/brandingbrand/flagship/issues/862) [#864](https://github.com/brandingbrand/flagship/issues/864) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905)
 
 
+### Features
 
-## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
-
-
-### Bug Fixes
-
-* **fsengagement:** fix page counter not fading away ([b677b95](https://github.com/brandingbrand/flagship/commit/b677b95fab7c53334167316cdc8fa7a4c6ccc2d8))
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* remove hockeyapp and update appcenter for fastlane ([839cb59](https://github.com/brandingbrand/flagship/commit/839cb59376fa46b51babf03ac52ed4ae757717cb))
+* replace all any in PSCartItem ([3505c56](https://github.com/brandingbrand/flagship/commit/3505c56cb3444c7720fef7494fc91944ba074256))
+* Replace all occurrences of "any" in fscomponents/ProductItem ([7331806](https://github.com/brandingbrand/flagship/commit/7331806e4e941bf4e00a14fb549a65346e6ad5e5))
+* Replace all occurrences of "any" in FSMockDataSources package ([3a0c881](https://github.com/brandingbrand/flagship/commit/3a0c881776f3283b64926b8689f034b0119cfd3f))
+* upgrade to RN 0.63 ([507d0e4](https://github.com/brandingbrand/flagship/commit/507d0e4618cc6e557af6c475a655aa12f57b6607))
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **any-occurrences:** Replace all occurrences of "any" in PageDots ([65f0116](https://github.com/brandingbrand/flagship/commit/65f011666366df7b50c25f3d1eeddff8be45cad1))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+* **fscommerce:** Allow setting the commerce provider's initial data ([55d9da0](https://github.com/brandingbrand/flagship/commit/55d9da0617c145c8d0e07c1c46ae90689cbef68f))
+* **fsproductindex:** Add functionality for loading previous pages ([bbc6bb0](https://github.com/brandingbrand/flagship/commit/bbc6bb016d41d4aadcdae3152209de5956bd1129))
 
 
 ### Reverts
 
-* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* major react native update
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+* This removes the apiToken env config that could be used to configure App Center uploads. This was previously deprecated in favor of passing in an environment variable instead: APPCENTER_API_TOKEN.
+
+This also removes the :beta lanes from the Fastfiles, as these attempted to upload builds to Hockeyapp which has been shut down. The available lanes are :appcenter and :build for iOS and :appcenter, :appcenter_bundle, and :build for Android.
+* If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+* Revert yarn.lock changes
+
+* feat: update bv components w/ syndicated indicator
+
+**Description**
+Some reviews are syndicated by the manufacturer. When this is the case, if the client wants to display the indicator, another row will appear on the bottom of the review indicating that it is syndicated.
+
+* chore(release): publish v7.0.0
+
+* feat(flagship): support background modes
+
+* feat: update bv syndicated indicator style
+
+**Description**
+There were some bugs with the syndication badges on smaller devices. Fixed them with flex-wrap. Also updated copy.
+
+* chore(release): publish v7.1.0
+
+* feat: add position property for half modal component
+
+* chore: add state typing for component CMSBanner
+
+* fix: excessive calls of handleContainerSizeChange in MultiCarousel
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** add init script to patch rn images for ios 14 ([11149da](https://github.com/brandingbrand/flagship/commit/11149da128f4ac83952526157144a1484e9832b4))
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
 
 
 

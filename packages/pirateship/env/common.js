@@ -45,48 +45,14 @@ module.exports = {
     android: 'com.brandingbrand.reactnative.and.pirateship',
     ios: 'com.brandingbrand.reactnative.pirateship',
   },
-  usageDescriptionIOS: [
-    {
-      key: 'NSAppleMusicUsageDescription',
-      string: ''
+  permissions: {
+    ios: {
+      LOCATION_WHEN_IN_USE: 'Test Description'
     },
-    {
-      key: 'NSBluetoothPeripheralUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSCalendarsUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSCameraUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSLocationWhenInUseUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSMotionUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSPhotoLibraryAddUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSPhotoLibraryUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSSpeechRecognitionUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSFaceIDUsageDescription',
-      string: ''
-    }
-  ],
+    android: [
+      'ACCESS_FINE_LOCATION'
+    ]
+  },
   associatedDomains: [],
   targetedDevices: 'Universal'
 };
