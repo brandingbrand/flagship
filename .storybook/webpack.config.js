@@ -44,6 +44,7 @@ module.exports = ({ config, env }) => {
   ];
 
   config.resolve.alias["react-native"] = "react-native-web";
+  config.resolve.alias["@react-native-community/async-storage"] = "@react-native-community/async-storage/packages/storage-web/build/index.js";
 
   // Disable __DEV__ mode (this is traditionally set by react-native)
   config.plugins.push(new webpack.DefinePlugin({
