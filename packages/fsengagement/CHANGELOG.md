@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Features
+
+* Update FS component to allow custom header to be passed in (ab93e8c)
+* Update FS component to allow custom header to be passed in (61f3bfb)
+* Update FS component to allow custom header to be passed in (7467aea)
+
+
+
+
+
 # [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
 
 
