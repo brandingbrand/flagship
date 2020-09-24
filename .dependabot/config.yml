@@ -25,3 +25,7 @@ update_configs:
           dependency_name: "react"
       - match:
           dependency_name: "react-dom"
+      - match:
+          dependency_name: "@react-native-community/cli-platform-ios"
+      - match:
+          dependency_name: "@react-native-community/cli-platform-android"
