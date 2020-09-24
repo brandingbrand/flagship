@@ -32,7 +32,7 @@ import SInfo, { SensitiveInfoEntry } from 'react-native-sensitive-info';
 import TouchableRow from './TouchableRow';
 
 export interface CookieMangerState {
-  data: any;
+  data: string | null;
 }
 
 export default class CookieManger extends Component<{}, CookieMangerState> {
@@ -40,7 +40,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
     data: null
   };
 
-  showData = (data: any) => {
+  showData = (data: string) => {
     this.setState({ data });
   }
 
@@ -131,9 +131,9 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
-          .catch((e: any) => console.log('cannot delete item from react-native-sensitive-info', e));
+          .catch(e => console.log('cannot delete item from react-native-sensitive-info', e));
       })
-      .catch((e: any) => console.log('cannot get all items from react-native-sensitive-info', e));
+      .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
   }
 
   viewSensitiveInfo = () => {

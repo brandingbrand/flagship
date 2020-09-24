@@ -55,7 +55,13 @@ const globalConfig = {
     alias: {
       'react-native': 'react-native-web',
       'react-native-svg': 'svgs',
-      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
+      'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
+      'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
+      'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
+      'react-native-web/dist/exports/ProgressViewIOS': 'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/SegmentedControlIOS': 'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/WebView': 'react-native-web-webview',
+      '@react-native-community/async-storage': path.resolve(__dirname, './AsyncStorage.web.js')
     },
     modules: [
       path.resolve('./node_modules'),
@@ -150,6 +156,10 @@ const globalConfig = {
                 }
               ]
             })
+          },
+          {
+            test: /\.html$/i,
+            loader: 'html-loader'
           },
           {
             loader: require.resolve('file-loader'),

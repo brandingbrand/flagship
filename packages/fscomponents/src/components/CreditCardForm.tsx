@@ -11,8 +11,8 @@ import {
 
 // @ts-ignore TODO: Update credit-card to support typing
 import * as creditCard from 'credit-card';
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('tcomb-form-native');
 import {
   creditCardAboveLabelTemplate,
   creditCardFloatingLabelTemplate,
@@ -132,6 +132,11 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
   };
 
   formRef: any;
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('CreditCardForm is deprecated and will be removed in the next version of Flagship.');
+  }
 
   fieldOptions = (labelPosition?: FormLabelPosition) => {
     const defaultFieldOptions = {
