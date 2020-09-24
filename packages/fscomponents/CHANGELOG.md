@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing (dcc9286)
+
+
+### Features
+
+*  add story to SearchScreen component (5d31e1f)
+* add knobs - Carousel story (e40f19e)
+* add knobs - loginForm story (bbb1cb8)
+* add knobs - MultiCarousel story (e317d52)
+* add knobs - MultiCarousel story (b44cd43)
+* add knobs - Totals story (12e3b31)
+* add knobs - Totals story (6923e0c)
+* add knobs for CMSFeedback story (835d647)
+* Create UpdateNameOrEmail story (994ebe0)
+* Create UpdateNameOrEmail story (6bc2e33)
+
+
+
+
+
 # [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
 
 
