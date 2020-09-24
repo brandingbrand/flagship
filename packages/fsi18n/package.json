@@ -14,7 +14,8 @@
     "@brandingbrand/fscommerce": "^9.6.4",
     "decimal.js": "^10.0.1",
     "i18n-js": "^3.3.0",
-    "lodash-es": "^4.17.10"
+    "lodash-es": "^4.17.10",
+    "react-content-loader": "^5.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@brandingbrand/fsfoundation": "^9.6.4",
-    "axios": "~0.18.1"
+    "axios": "~0.18.1",
+    "react-content-loader": "^5.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

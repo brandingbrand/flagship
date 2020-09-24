@@ -19,6 +19,7 @@
     "path-to-regexp": "^1.7.0",
     "qs": "^6.7.0",
     "react": "^16.11.0",
+    "react-content-loader": "^5.1.2",
     "react-dom": "^16.9.0",
     "react-native": "^0.61.0",
     "react-native-cookies": "^3.3.0",

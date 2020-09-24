@@ -14,7 +14,8 @@
     "@brandingbrand/fscommerce": "^9.6.4",
     "@brandingbrand/fsfoundation": "^9.6.4",
     "decimal.js": "^10.0.1",
-    "faker": "^4.1.0"
+    "faker": "^4.1.0",
+    "react-content-loader": "^5.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

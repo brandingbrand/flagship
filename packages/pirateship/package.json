@@ -50,6 +50,7 @@
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
     "react": "^16.11.0",
+    "react-content-loader": "^5.1.2",
     "react-native": "^0.61.0",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",

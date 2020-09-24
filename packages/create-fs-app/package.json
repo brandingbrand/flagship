@@ -15,6 +15,7 @@
     "fs-extra": "^8.0.0",
     "inquirer": "^7.0.0",
     "node-fetch": "^2.6.0",
+    "react-content-loader": "^5.1.2",
     "tar": "^5.0.0"
   },
   "devDependencies": {

@@ -18,6 +18,7 @@
     "@brandingbrand/react-native-leanplum": "^5.0.0",
     "decimal.js": "^10.0.0",
     "react": "^16.11.0",
+    "react-content-loader": "^5.1.2",
     "react-native": "^0.61.0",
     "react-native-permissions": "~1.1.1",
     "url-parse": "^1.4.3"
