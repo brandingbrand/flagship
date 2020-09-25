@@ -16518,10 +16518,6 @@ react-native-permissions@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.2.0.tgz#7980caccf98814c6a4677816d21e90ba456362d3"
   integrity sha512-y5GvcYdEe9PEWVM12UgdkNI/BVvjEU6SZGN7zBpoalTczSlWGQ4SeD2dBz9KfCu1jg5l1752sKDAggTjaq3QKQ==
 
-"react-native-restart@git+https://github.com/brandingbrand/react-native-restart#0.0.13-hotfix":
-  version "0.0.13"
-  resolved "git+https://github.com/brandingbrand/react-native-restart#57c34c52e3bc573554b92f22ef4ce0500f41973e"
-
 react-native-safe-area@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area/-/react-native-safe-area-0.5.1.tgz#b0263f5fcd1341c74dee0e5f0b296da965242a14"
