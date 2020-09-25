@@ -1,11 +1,12 @@
 import { Platform } from 'react-native';
+import type { default as RNPermissions, Permission } from 'react-native-permissions';
 
 // Geolocation is currently bundled with fsengage even though apps may not use location-based
 // targeting. Because react-native-permissions requires apps to expose the permissions they use,
 // this makes permissions a "soft" dependency that apps can opt into by including rn-permissions
 // as a dependency. TODO - refactor fsengage so that location-based permissions are taken out of
 // engage core.
-let rnPermissions: any = null;
+let rnPermissions: typeof RNPermissions | null = null;
 
 try {
   rnPermissions = require('react-native-permissions');
@@ -16,22 +17,20 @@ try {
   );
 }
 
-function getPermissionToCheck(): any {
-  if (!rnPermissions) {
-    return null;
-  }
-
+function getPermissionToCheck(rnPermissions: typeof RNPermissions): Permission {
   return Platform.OS === 'ios' ?
     rnPermissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
       : rnPermissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 }
 
 export async function isGeolocationAllowed(): Promise<boolean> {
-  const permissionToCheck = getPermissionToCheck();
+  const permissions = rnPermissions;
 
-  if (permissionToCheck) {
-    return rnPermissions.check(permissionToCheck)
-      .then((status: any) => status === rnPermissions.RESULTS.GRANTED)
+  if (permissions) {
+    const permissionToCheck = getPermissionToCheck(permissions);
+
+    return permissions.check(permissionToCheck)
+      .then(status => status === permissions.RESULTS.GRANTED)
       .catch((error: Error) => {
         if (__DEV__) {
           console.log(
@@ -50,11 +49,13 @@ export async function isGeolocationAllowed(): Promise<boolean> {
 }
 
 export async function requestGeolocationPermission(): Promise<boolean> {
-  const permissionToCheck = getPermissionToCheck();
+  const permissions = rnPermissions;
 
-  if (permissionToCheck) {
-    return rnPermissions.request(permissionToCheck)
-      .then((status: any) => status === rnPermissions.RESULTS.GRANTED);
+  if (permissions) {
+    const permissionToCheck = getPermissionToCheck(permissions);
+
+    return permissions.request(permissionToCheck)
+      .then(status => status === permissions.RESULTS.GRANTED);
   }
 
   return Promise.resolve(false);
