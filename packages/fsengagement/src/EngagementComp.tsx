@@ -521,7 +521,7 @@ export default function(
         return (
           <Animatable.View
             ref={this.handleWelcomeRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={{
               transform: [
                 { translateY: -100 }
@@ -771,7 +771,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -779,7 +779,7 @@ export default function(
             {backButton && (
               <Animatable.View
                 ref={this.handleAppleCloseRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={styles.closeModalButton}
               >
                 <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
@@ -799,7 +799,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -976,7 +976,7 @@ export default function(
               scrollEventThrottle={16}
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-                { useNativeDriver: true }
+                { useNativeDriver: false }
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
@@ -1044,7 +1044,7 @@ export default function(
             (
               <Animatable.View
                 ref={this.handlePageCounterRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={[styles.pageCounter, this.pageCounterStyle]}
               >
                 <Text
@@ -1059,7 +1059,7 @@ export default function(
             <Animatable.Text
               style={[styles.navBarTitle, navBarTitleStyle]}
               ref={this.handleNavTitleRef}
-              useNativeDriver
+              useNativeDriver={false}
             >
               {navBarTitle}
             </Animatable.Text>

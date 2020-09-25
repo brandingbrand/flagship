@@ -290,7 +290,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: cancelButtonWidth || kCancelButtonWidthDefault,
         duration: kCancelButtonAnimationDuration,
-        useNativeDriver: true
+        useNativeDriver: false
       }).start();
     }
   }
@@ -309,7 +309,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: 0,
         duration: kCancelButtonAnimationDuration,
-        useNativeDriver: true
+        useNativeDriver: false
       }).start();
     }
   }

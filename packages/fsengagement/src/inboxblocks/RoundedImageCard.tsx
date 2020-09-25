@@ -263,7 +263,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
           <Animatable.Image
             source={contents.Image.source}
             ref={this.handleImageRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={[StyleSheet.absoluteFill, styles.fullScreen]}
           />
           <View
@@ -274,7 +274,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
           >
             <Animatable.View
               ref={this.handleContentRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.bottom, textContainerStyle]}
             >
               <TextBlock
