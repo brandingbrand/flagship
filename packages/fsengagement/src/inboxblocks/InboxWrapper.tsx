@@ -56,7 +56,7 @@ export default class InboxWrapper extends Component<CardProps> {
               height: '100%'
             }]}
             ref={this.handleFadeInRef}
-            useNativeDriver
+            useNativeDriver={false}
           >
             {this.props.children}
           </Animatable.View>
