@@ -71,13 +71,13 @@ export default class LocatorMapSlideList extends Component<
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: MAP_HEIGHT,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 
@@ -90,13 +90,13 @@ export default class LocatorMapSlideList extends Component<
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('bottom'),
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 
@@ -108,13 +108,13 @@ export default class LocatorMapSlideList extends Component<
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('top'),
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 
@@ -179,7 +179,7 @@ export default class LocatorMapSlideList extends Component<
       setTimeout(() => {
         Animated.spring(this.state.listButtonY, {
           toValue: -SHOW_LIST_BUTTON_HEIGHT,
-          useNativeDriver: true
+          useNativeDriver: false
         }).start();
         this.expandMap();
       }, 200);
@@ -188,7 +188,7 @@ export default class LocatorMapSlideList extends Component<
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY(nextPostion),
-      useNativeDriver: true
+      useNativeDriver: false
     }).start(() => {
       this.setState({ scrollable: true });
     });
@@ -235,13 +235,13 @@ export default class LocatorMapSlideList extends Component<
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('top'),
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 

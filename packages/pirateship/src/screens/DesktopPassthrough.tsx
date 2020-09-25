@@ -218,6 +218,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
               onError={this.webviewOnError}
               javaScriptEnabled={true}
               onNavigationStateChange={this.onNavigationStateChange}
+              onShouldStartLoadWithRequest={this.onNavigationStateChange}
               startInLoadingState={true}
               renderLoading={this.renderLoading}
               onMessage={this.handleMessage}

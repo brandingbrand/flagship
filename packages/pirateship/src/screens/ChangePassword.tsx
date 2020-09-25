@@ -7,8 +7,7 @@ import {
   View
 } from 'react-native';
 import { Options } from 'react-native-navigation';
-// TODO: Swap this for Formik version
-// import ContactInfoForm from '../components/ContactInfoForm';
+import ContactInfoForm from '../components/ContactInfoForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
@@ -144,7 +143,7 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
           </View>
           {this.renderErrors()}
           <View style={styles.formContainer}>
-            {/* <ContactInfoForm
+            <ContactInfoForm
               values={this.state.values}
               onChange={this.onChange}
               updateFormRef={this.updateFormRef}
@@ -157,7 +156,7 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
                 'gender',
                 'specials'
               ]}
-            /> */}
+            />
             <PSButton
               title={translate.string(translationKeys.account.actions.changePassword.actionBtn)}
               onPress={this.handleChangePasswordPress}

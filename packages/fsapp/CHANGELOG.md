@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+
+
+### Features
+
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+
+
+### BREAKING CHANGES
+
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
 # [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

@@ -1,8 +1,7 @@
 import { ScreenProps } from '../lib/commonTypes';
 import { Component, default as React } from 'react';
 import { ScrollView, View } from 'react-native';
-// TODO: Swap this for Formik version
-// import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
+import PSAddressForm, { AddressFormValues } from '../components/PSAddressForm';
 import PSButton from '../components/PSButton';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { dataSource } from '../lib/datasource';
@@ -87,11 +86,11 @@ class EditAddress extends Component<EditAddressScreenProps> {
           keyboardShouldPersistTaps={'handled'}
           style={AccountStyle.formContainer}
         >
-          {/* <PSAddressForm
+          <PSAddressForm
             values={this.state.values}
             onChange={this.onFormUpdate}
             updateFormRef={this.updateFormRef}
-          /> */}
+          />
         </ScrollView>
 
         <View style={AccountStyle.bottomRow}>
@@ -115,33 +114,33 @@ class EditAddress extends Component<EditAddressScreenProps> {
     );
   }
 
-  // onFormUpdate = (values: AddressFormValues) => {
-  //   const {
-  //     address1 = '',
-  //     address2,
-  //     city = '',
-  //     countryCode = '',
-  //     firstName = '',
-  //     lastName = '',
-  //     phone = '',
-  //     postalCode = '',
-  //     stateCode = ''
-  //   } = values;
+  onFormUpdate = (values: AddressFormValues) => {
+    const {
+      address1 = '',
+      address2,
+      city = '',
+      countryCode = '',
+      firstName = '',
+      lastName = '',
+      phone = '',
+      postalCode = '',
+      stateCode = ''
+    } = values;
 
-  //   this.address = {
-  //     id: this.props.address && this.props.address.id,
-  //     preferred: this.props.address && this.props.address.preferred,
-  //     address1,
-  //     address2,
-  //     city,
-  //     countryCode,
-  //     firstName,
-  //     lastName,
-  //     phone,
-  //     postalCode,
-  //     stateCode
-  //   };
-  // }
+    this.address = {
+      id: this.props.address && this.props.address.id,
+      preferred: this.props.address && this.props.address.preferred,
+      address1,
+      address2,
+      city,
+      countryCode,
+      firstName,
+      lastName,
+      phone,
+      postalCode,
+      stateCode
+    };
+  }
 
   cancel = async () => {
     return this.props.navigator.dismissModal()

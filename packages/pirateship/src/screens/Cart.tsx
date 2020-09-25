@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import { Options } from 'react-native-navigation';
-// TODO: Swap this for Formik version
-// import { PromoForm } from '@brandingbrand/fscomponents';
+
+import { PromoForm } from '@brandingbrand/fscomponents';
 import { ScreenProps } from '../lib/commonTypes';
 import { navBarFullBleed } from '../styles/Navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
@@ -484,24 +484,21 @@ class Cart extends Component<CartScreenProps> {
 
   renderPromo = (): JSX.Element => {
     return (
-      <View />
+      <View key='promoForm' style={CartStyle.promoContainer}>
+        <PromoForm
+          submitText='APPLY'
+          onSubmit={this.promoSubmit}
+          fieldsStyleConfig={{
+            textbox: {
+              normal: CartStyle.fieldsStyleConfig,
+              error: CartStyle.fieldsStyleErrorConfig
+            }
+          }}
+          submitButtonStyle={CartStyle.submitButtonStyle}
+          submitTextStyle={CartStyle.submitTextStyle}
+        />
+      </View>
     );
-    // return (
-    //   <View key='promoForm' style={CartStyle.promoContainer}>
-    //     <PromoForm
-    //       submitText='APPLY'
-    //       onSubmit={this.promoSubmit}
-    //       fieldsStyleConfig={{
-    //         textbox: {
-    //           normal: CartStyle.fieldsStyleConfig,
-    //           error: CartStyle.fieldsStyleErrorConfig
-    //         }
-    //       }}
-    //       submitButtonStyle={CartStyle.submitButtonStyle}
-    //       submitTextStyle={CartStyle.submitTextStyle}
-    //     />
-    //   </View>
-    // );
   }
 
   promoSubmit = (value: any) => {
