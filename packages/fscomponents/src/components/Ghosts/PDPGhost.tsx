@@ -66,45 +66,87 @@ export interface SerializablePDPGhostProps {
   /**
    * Styles to container
    */
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default pagination
    */
-  paginationStyle?: StyleProp<ViewStyle>;
+  paginationStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default paginationActive
    */
-  paginationActiveStyle?: StyleProp<ViewStyle>;
+  paginationActiveStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default ghostContentWrapper
    */
-  ghostContentWrapperStyle?: StyleProp<ViewStyle>;
+  ghostContentWrapperStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default starsWrapper
    */
-  starsWrapperStyle?: StyleProp<ViewStyle>;
+  starsWrapperStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default buttonWrapper
    */
-  buttonWrapperStyle?: StyleProp<ViewStyle>;
+  buttonWrapperStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default button
    */
-  buttonStyle?: StyleProp<ViewStyle>;
+  buttonStyle?: ViewStyle;
 
   /**
    * Styles to apply to the default buttonText
    */
-  buttonTextStyle?: StyleProp<TextStyle>;
+  buttonTextStyle?: TextStyle;
+
+  /**
+   * Main width screen
+   */
+  screenWidth?: number;
+
+  /**
+   * Count of indicators
+   */
+  countPages?: number;
+
+  /**
+   * Image height
+   */
+  imageHeight?: number;
+
+  /**
+   * Title width
+   */
+  titleWidth?: number;
 }
 
-interface PDPGhostProps extends SerializablePDPGhostProps {
+interface PDPGhostProps extends Omit<
+  SerializablePDPGhostProps,
+  'containerStyle' |
+  'paginationStyle' |
+  'paginationActiveStyle' |
+  'ghostContentWrapperStyle' |
+  'starsWrapperStyle' |
+  'buttonWrapperStyle' |
+  'buttonStyle' |
+  'buttonTextStyle' |
+  'screenWidth' |
+  'countPages' |
+  'imageHeight' |
+  'titleWidth'
+  > {
+  containerStyle?: StyleProp<ViewStyle>;
+  paginationStyle?: StyleProp<ViewStyle>;
+  paginationActiveStyle?: StyleProp<ViewStyle>;
+  ghostContentWrapperStyle?: StyleProp<ViewStyle>;
+  starsWrapperStyle?: StyleProp<ViewStyle>;
+  buttonWrapperStyle?: StyleProp<ViewStyle>;
+  buttonStyle?: StyleProp<ViewStyle>;
+  buttonTextStyle?: StyleProp<TextStyle>;
   screenWidth?: number;
   countPages?: number;
   imageHeight?: number;
