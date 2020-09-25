@@ -25,18 +25,14 @@ const defaultStyle = StyleSheet.create({
 });
 
 export interface SerializableCategoryListGhostProps {
-  itemContainerStyle?: StyleProp<ViewStyle>;
+  itemContainerStyle?: ViewStyle;
   count?: number;
   height?: number;
 }
 
-export interface ItemProps extends SerializableCategoryListGhostProps {
-  renderAccessory?: () => React.ReactNode;
-}
-
 const keyExtractor = (item: any, index: number) => index.toString();
 
-const renderItem = (itemProps: ItemProps) => (
+const renderItem = (itemProps: CategoryListGhostProps) => (
   { index }: ListRenderItemInfo<any>
 ) => {
   const width = index % 2 ? 142 : 207;
@@ -75,7 +71,7 @@ export interface CategoryListGhostProps extends Partial<FlatListProps<any>>, Omi
 }
 
 export const CategoryListGhost: React.FC<CategoryListGhostProps> = React.memo(props => {
-  const { count = 6, height = 24, renderAccessory, itemContainerStyle, ...flatListProps } = props;
+  const { count = 6, ...flatListProps } = props;
   const data = Array(count).fill(null);
 
   return (
@@ -83,7 +79,7 @@ export const CategoryListGhost: React.FC<CategoryListGhostProps> = React.memo(pr
       {...flatListProps}
       data={data}
       keyExtractor={keyExtractor}
-      renderItem={renderItem({height, renderAccessory, itemContainerStyle})}
+      renderItem={renderItem(flatListProps)}
     />
   );
 });
