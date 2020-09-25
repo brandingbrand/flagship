@@ -30,7 +30,7 @@ export async function isGeolocationAllowed(): Promise<boolean> {
   const permissionToCheck = getPermissionToCheck();
 
   if (permissionToCheck) {
-    return rnPermissions.check(getPermissionToCheck())
+    return rnPermissions.check(permissionToCheck)
       .then((status: any) => status === rnPermissions.RESULTS.GRANTED)
       .catch((error: Error) => {
         if (__DEV__) {
@@ -53,7 +53,7 @@ export async function requestGeolocationPermission(): Promise<boolean> {
   const permissionToCheck = getPermissionToCheck();
 
   if (permissionToCheck) {
-    return rnPermissions.request(getPermissionToCheck())
+    return rnPermissions.request(permissionToCheck)
       .then((status: any) => status === rnPermissions.RESULTS.GRANTED);
   }
 
