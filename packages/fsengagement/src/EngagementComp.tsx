@@ -259,6 +259,8 @@ export default function(
     scrollPosition: number = 0;
     AnimatedAppleClose: any;
     AnimatedWelcome: any;
+    componentIsMounted: boolean = false;
+
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
@@ -288,8 +290,12 @@ export default function(
           this.props.onBack();
         }
       }
+
+      this.componentIsMounted = false;
     }
     componentDidMount(): void {
+      this.componentIsMounted = true;
+
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
           this.setState({ showDarkX: true });
@@ -321,7 +327,9 @@ export default function(
       }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
-          this.setState({ showCarousel: true });
+          if (this.componentIsMounted) {
+            this.setState({ showCarousel: true });
+          }
         }, 500);
       }
     }
