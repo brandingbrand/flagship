@@ -22,7 +22,8 @@
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
-    "sinon": "^8.0.2"
+    "sinon": "^8.0.2",
+    "react-native-permissions": "^2.2.0"
   },
   "peerDependencies": {
     "react-native-permissions": "^2.2.0"
