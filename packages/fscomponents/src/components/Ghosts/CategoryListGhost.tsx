@@ -24,13 +24,13 @@ const defaultStyle = StyleSheet.create({
   }
 });
 
-export interface SerializableCartItemProps {
+export interface SerializableCategoryListGhostProps {
   itemContainerStyle?: StyleProp<ViewStyle>;
   count?: number;
   height?: number;
 }
 
-export interface ItemProps extends SerializableCartItemProps {
+export interface ItemProps extends SerializableCategoryListGhostProps {
   renderAccessory?: () => React.ReactNode;
 }
 
@@ -57,7 +57,7 @@ const renderItem = (itemProps: ItemProps) => (
 };
 
 export interface CategoryListGhostProps extends Partial<FlatListProps<any>>, Omit<
-  SerializableCartItemProps,
+  SerializableCategoryListGhostProps,
   'itemContainerStyle' |
   'count' |
   'height'
