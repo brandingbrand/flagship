@@ -41,7 +41,7 @@ const renderItem = (itemProps: ItemProps) => (
 ) => {
   const width = index % 2 ? 142 : 207;
   return (
-    <View style={itemProps.itemContainerStyle || defaultStyle.itemContainer}>
+    <View style={[defaultStyle.itemContainer, itemProps.itemContainerStyle]}>
       <ContentLoader
         width={width}
         height={itemProps.height}
