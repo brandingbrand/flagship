@@ -45,14 +45,6 @@ module.exports = {
     android: 'com.brandingbrand.reactnative.and.pirateship',
     ios: 'com.brandingbrand.reactnative.pirateship',
   },
-  permissions: {
-    ios: {
-      LOCATION_WHEN_IN_USE: 'Test Description'
-    },
-    android: [
-      'ACCESS_FINE_LOCATION'
-    ]
-  },
   associatedDomains: [],
   targetedDevices: 'Universal'
 };
