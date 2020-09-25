@@ -19,11 +19,13 @@
     "decimal.js": "^10.0.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
-    "react-native-permissions": "^2.2.0",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
     "sinon": "^8.0.2"
+  },
+  "peerDependencies": {
+    "react-native-permissions": "^2.2.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
