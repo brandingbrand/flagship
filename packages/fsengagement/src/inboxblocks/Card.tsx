@@ -43,7 +43,7 @@ export default class Card extends Component<ActionsCard> {
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
+    this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
     return this.props.navigator.push({

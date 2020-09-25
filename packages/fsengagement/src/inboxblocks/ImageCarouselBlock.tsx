@@ -1,4 +1,3 @@
-// tslint:disable
 import React, { Component } from 'react';
 import {
   Dimensions,
@@ -60,18 +59,20 @@ export default class ImageCarouselBlock
   componentDidMount(): void {
     navigator = this.props.navigator;
   }
-  _renderItem(data: any): JSX.Element {
-    return <RenderItem
-      data={data.item}
-      index={data.index}
-      navigator={navigator}
-      horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
-      itemWidth={renderItemWidth}
-      even={false}
-    />;
+  _renderItem = (data: any): JSX.Element => {
+    return (
+      <RenderItem
+        data={data.item}
+        index={data.index}
+        navigator={navigator}
+        horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
+        itemWidth={renderItemWidth}
+        even={false}
+      />
+    );
   }
 
-  horizontalMarginPadding() {
+  horizontalMarginPadding(): number {
     const {
       containerStyle
     } = this.props;
@@ -81,10 +82,10 @@ export default class ImageCarouselBlock
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth() {
+  calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth() {
+  calculateItemWidth(): number {
     const {
       options
     } = this.props;
@@ -92,6 +93,9 @@ export default class ImageCarouselBlock
     const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
     return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
   }
+
+  onSnapToItem = (index: number) => this.setState({ sliderActiveSlide: index + 1 });
+
   createCarousel(): JSX.Element {
     const {
       items,
@@ -113,7 +117,7 @@ export default class ImageCarouselBlock
         containerCustomStyle={styles.slider}
         contentContainerCustomStyle={styles.sliderContentContainer}
         activeAnimationType={'spring'}
-        onSnapToItem={(index) => this.setState({ sliderActiveSlide: index + 1 })}
+        onSnapToItem={this.onSnapToItem}
       />
     );
   }
@@ -131,13 +135,15 @@ export default class ImageCarouselBlock
     return (
       <View style={containerStyle}>
         {carousel}
-        {pageCounter && <View style={[styles.pageCounter, pageCounterStyle]}>
-          <Text
-            style={[styles.pageNum, pageNumberStyle]}
-          >
-            {this.state.sliderActiveSlide} / {items.length}
-          </Text>
-        </View>}
+        {pageCounter && (
+          <View style={[styles.pageCounter, pageCounterStyle]}>
+            <Text
+              style={[styles.pageNum, pageNumberStyle]}
+            >
+              {this.state.sliderActiveSlide} / {items.length}
+            </Text>
+          </View>
+        )}
       </View>
     );
   }

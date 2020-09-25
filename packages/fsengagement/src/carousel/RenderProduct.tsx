@@ -1,7 +1,6 @@
-/* tslint:disable */
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, Linking, Text, StyleProp, TextStyle, TouchableOpacity, View
+  Dimensions, Image, Linking, StyleProp, Text, TextStyle, TouchableOpacity, View
 } from 'react-native';
 import styles from './SliderEntry.style';
 
@@ -47,7 +46,7 @@ export default class RenderProduct extends Component<RenderProductProps> {
       }
     }).catch(err => alert('An error occurred: ' + err));
   }
-  render() {
+  render(): JSX.Element {
     const {
       data: {
         name,
@@ -73,7 +72,7 @@ export default class RenderProduct extends Component<RenderProductProps> {
     } else {
       itemStyle = {
         width: itemWidth,
-        height: viewportHeight * .36,
+        height: viewportHeight * 0.36,
         paddingHorizontal: horizPadding
       };
     }
@@ -86,19 +85,21 @@ export default class RenderProduct extends Component<RenderProductProps> {
         <View style={styles.imageContainerNoCard}>
           {this.image}
         </View>
-        {name && <View style={styles.textContainer}>
-          <Text
-            style={[styles.title, this.props.titleStyle]}
-            numberOfLines={2}
-          >
-            {name}
-          </Text>
-          <Text
-            style={[styles.subtitle, this.props.priceStyle]}
-          >
-            {price.formattedValue}
-          </Text>
-        </View>}
+        {name && (
+          <View style={styles.textContainer}>
+            <Text
+              style={[styles.title, this.props.titleStyle]}
+              numberOfLines={2}
+            >
+              {name}
+            </Text>
+            <Text
+              style={[styles.subtitle, this.props.priceStyle]}
+            >
+              {price.formattedValue}
+            </Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   }

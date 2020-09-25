@@ -1,4 +1,3 @@
-// tslint:disable
 import React, { Component } from 'react';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import {
@@ -55,9 +54,9 @@ export interface ProductCarouselBlockState {
 
 export default class ProductCarouselBlock
   extends Component<ProductCarouselBlockProps, ProductCarouselBlockState> {
+  _slider1Ref: any | null = null;
 
   private network: FSNetwork;
-  _slider1Ref: any | null = null;
   constructor(props: ProductCarouselBlockProps) {
     super(props);
     this.state = {
@@ -77,10 +76,10 @@ export default class ProductCarouselBlock
       products: products.filter((item: any) => !item.error),
       loading: false
     });
-   }
+  }
 
   async fetchProduct(id: string): Promise<any> {
-    let imageFormat = this.props.imageFormat || 'Regular_Mobile';
+    const imageFormat = this.props.imageFormat || 'Regular_Mobile';
     return this.network.get(id)
       .then((r: any) => r.data)
       .then((item: any) => {
@@ -106,21 +105,23 @@ export default class ProductCarouselBlock
     const promises = items.map(async item => {
       return this.fetchProduct(item.productId);
     });
-    return await Promise.all(promises);
+    return Promise.all(promises);
   }
 
-  _renderItem(data: any): JSX.Element {
-    return <RenderProduct
-              data={data.item}
-              horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
-              itemWidth={renderItemWidth}
-              onBackPress={onBackPress}
-              titleStyle={renderItemTitleStyle}
-              priceStyle={renderItemPriceStyle}
-           />;
+  _renderItem = (data: any): JSX.Element => {
+    return (
+      <RenderProduct
+        data={data.item}
+        horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
+        itemWidth={renderItemWidth}
+        onBackPress={onBackPress}
+        titleStyle={renderItemTitleStyle}
+        priceStyle={renderItemPriceStyle}
+      />
+    );
   }
 
-  horizontalMarginPadding() {
+  horizontalMarginPadding(): number {
     const {
       containerStyle
     } = this.props;
@@ -130,10 +131,10 @@ export default class ProductCarouselBlock
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth() {
+  calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth() {
+  calculateItemWidth(): number {
     const {
       options
     } = this.props;
@@ -141,6 +142,9 @@ export default class ProductCarouselBlock
     const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
     return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
   }
+
+  onSnapToItem = (index: number) => this.setState({ sliderActiveSlide: index + 1 });
+
   createCarousel(): JSX.Element {
     const {
       options,
@@ -165,7 +169,7 @@ export default class ProductCarouselBlock
         containerCustomStyle={styles.slider}
         contentContainerCustomStyle={styles.sliderContentContainer}
         activeAnimationType={'spring'}
-        onSnapToItem={(index) => this.setState({ sliderActiveSlide: index + 1 })}
+        onSnapToItem={this.onSnapToItem}
       />
     );
   }
@@ -180,9 +184,11 @@ export default class ProductCarouselBlock
 
     return (
       <View style={containerStyle}>
-        {this.state.loading && <View style={styles.loadingInner}>
-          <ActivityIndicator color='rgba(0,0,0,0.5)' />
-        </View>}
+        {this.state.loading && (
+          <View style={styles.loadingInner}>
+            <ActivityIndicator color='rgba(0,0,0,0.5)' />
+          </View>
+        )}
         {carousel}
       </View>
     );

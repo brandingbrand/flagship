@@ -22,7 +22,11 @@ module.exports = ({ config, env }) => {
 
   config.module.rules.push({
     test: /\.jsx?$/,
-    include: path.resolve('node_modules/tcomb-form-native/'),
+    include: [
+      path.resolve('node_modules/tcomb-form-native/'),
+      path.resolve('node_modules/react-native-snap-carousel/'),
+      path.resolve('node_modules/react-native-animatable/')
+    ],
     loader: require.resolve('babel-loader'),
     options: {
       cacheDirectory: true
