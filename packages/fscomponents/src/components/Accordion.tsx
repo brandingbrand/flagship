@@ -353,7 +353,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       Animated.spring(this.state.contentHeightAnimation, {
         bounciness: 0,
         toValue: height,
-        useNativeDriver: true
+        useNativeDriver: false
       }).start();
     } else {
       this.state.contentHeightAnimation.setValue(height);
