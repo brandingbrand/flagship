@@ -34,7 +34,25 @@ export interface SearchScreenResult {
   [key: string]: any;
 }
 
-export interface SearchScreenProps {
+export interface SerializableSearchScreenProps {
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+  searchResultsScrollViewStyle?: ViewStyle;
+  searchBarContainerStyle?: ViewStyle;
+  /**
+   * Whether or not the search bar should automatically focus when the component mounts.
+   * Defaults to true.
+   */
+  searchBarShouldFocus?: boolean;
+}
+
+export interface SearchScreenProps extends Omit<
+  SerializableSearchScreenProps,
+  'itemStyle' |
+  'itemTextStyle' |
+  'searchResultsScrollViewStyle' |
+  'searchBarContainerStyle'
+  > {
   onClose: () => void;
   onResultPress?: (result: SearchScreenResult) => void;
   onInputChange?: (value: string) => void;
@@ -52,11 +70,6 @@ export interface SearchScreenProps {
   renderContentUnderSearchBar?: () => React.ReactNode;
   searchResultsScrollViewStyle?: StyleProp<ViewStyle>;
   searchBarContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether or not the search bar should automatically focus when the component mounts.
-   * Defaults to true.
-   */
-  searchBarShouldFocus?: boolean;
 }
 
 export interface SearchScreenState {
@@ -65,7 +78,7 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: any;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);
@@ -88,14 +101,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
+    if (this.searchBar !== null && (searchBarShouldFocus === undefined || searchBarShouldFocus)) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar) => {
     this.searchBar = ref;
   }
 
@@ -233,7 +246,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
@@ -288,7 +301,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {

@@ -13,42 +13,70 @@ import { findIndex } from 'lodash-es';
 
 import { style as S } from '../styles/Swatches';
 
-import { Swatch, SwatchStyle } from './Swatch';
+import { Swatch, SwatchProps, SwatchStyle } from './Swatch';
 
 export interface SwatchItemType extends CommerceTypes.OptionValue {
   color?: string;
   image?: ImageURISource;
 }
 
-export interface SwatchesProps extends SwatchStyle {
-  title?: string;
+export interface SerializableSwatchesProps {
   items: SwatchItemType[];
+  title?: string;
   defaultValue?: string;
-  style?: StyleProp<ViewStyle>;
-  renderSwatch?: (swatch: any) => React.ReactNode;
-
+  style?: ViewStyle;
   label?: boolean;
-  labelContainerStyle?: StyleProp<ViewStyle>;
-  labelTitleStyle?: StyleProp<TextStyle>;
-  labelValueStyle?: StyleProp<TextStyle>;
-  showingMoreStyle?: StyleProp<ViewStyle>;
-  showingLessStyle?: StyleProp<ViewStyle>;
-  renderLabel?: (swatch: any) => void;
-
-  onChangeSwatch?: (swatch: any) => void;
+  labelContainerStyle?: ViewStyle;
+  labelTitleStyle?: TextStyle;
+  labelValueStyle?: TextStyle;
+  showingMoreStyle?: ViewStyle;
+  showingLessStyle?: ViewStyle;
 
   // Can you select swatches
   disabled?: boolean;
 
   // More/Less
   maxSwatches?: number;
+  moreLessStyle?: ViewStyle;
+}
+
+export interface SwatchesProps extends SwatchStyle, Omit<
+  SerializableSwatchesProps,
+  'style' |
+  'labelContainerStyle' |
+  'labelTitleStyle' |
+  'labelValueStyle' |
+  'showingMoreStyle' |
+  'showingLessStyle' |
+  'moreLessStyle'
+> {
+  style?: StyleProp<ViewStyle>;
+  renderSwatch?: (swatch: SwatchProps) => React.ReactNode;
+
+  labelContainerStyle?: StyleProp<ViewStyle>;
+  labelTitleStyle?: StyleProp<TextStyle>;
+  labelValueStyle?: StyleProp<TextStyle>;
+  showingMoreStyle?: StyleProp<ViewStyle>;
+  showingLessStyle?: StyleProp<ViewStyle>;
+  renderLabel?: (swatch: SelectedSwatchItem) => void;
+
+  onChangeSwatch?: (swatch: string) => void;
+
+  // More/Less
   renderMoreLess?: (showMore: boolean) => React.ReactNode;
   moreLessStyle?: StyleProp<ViewStyle>;
 }
 
-export interface SwatchesState {
-  selected: any;
+export interface SelectedSwatchItem {
+  value: string;
+  name: string;
+}
 
+export interface SwatchesState {
+  selected: {
+    index: number | null;
+    swatch: SelectedSwatchItem;
+  };
   shouldShowMoreLess: boolean;
   showMore: boolean;
 }
@@ -85,8 +113,8 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       selected: {
         index: null,
         swatch: {
-          value: null,
-          name: null
+          value: '',
+          name: ''
         }
       },
       shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
@@ -94,10 +122,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     };
   }
 
-  onSelect = (swatch: any) => {
+  onSelect = (swatch: SwatchProps) => {
     const option = {
-      value: swatch.value,
-      name: swatch.name
+      value: swatch.value || '',
+      name: swatch.name || ''
     };
 
     this.setState({
@@ -109,7 +137,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     const { onChangeSwatch } = this.props;
     if (onChangeSwatch) {
-      onChangeSwatch(swatch.value);
+      onChangeSwatch(swatch.value || '');
     }
   }
 
@@ -170,7 +198,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     );
   }
 
-  _renderLabel = (swatch: any) => {
+  _renderLabel = (swatch: SelectedSwatchItem) => {
     const {
       title,
       labelContainerStyle,
