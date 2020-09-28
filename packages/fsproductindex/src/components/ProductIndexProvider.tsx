@@ -153,11 +153,11 @@ function withProductIndexData<
           onReceiveCommerceData,
           disableReviews,
           ...props
-        } = this.props as any; // TypeScript does not support rest parameters for generics :(
+        } = this.props;
 
         return (
           <WrappedComponent
-            {...props}
+            {...props as any} // TypeScript does not support rest parameters for generics :(
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
             reviewsData={(this.state && this.state.reviewsData)}
           />

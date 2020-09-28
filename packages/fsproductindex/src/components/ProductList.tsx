@@ -1,14 +1,16 @@
 import React, { FunctionComponent, memo } from 'react';
-import { Grid } from '@brandingbrand/fscomponents';
+import { Grid, GridProps } from '@brandingbrand/fscomponents';
+import { ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 
-export interface ProductListProps {
-  items?: any;
-  style?: any;
+export interface ProductListProps<ItemT extends CommerceTypes.Product = CommerceTypes.Product> {
+  items: ItemT[];
+  style: StyleProp<ViewStyle>;
   columns?: number;
-  gridProps?: any;
-  renderItem?: any;
-  renderHeader?: any;
-  renderFooter?: any;
+  gridProps?: Partial<GridProps<ItemT>>;
+  renderItem: ({ item }: ListRenderItemInfo<ItemT>) => JSX.Element;
+  renderHeader: () => JSX.Element | null;
+  renderFooter: () => JSX.Element | null;
 }
 
 const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {
