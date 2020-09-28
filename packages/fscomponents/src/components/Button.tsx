@@ -23,19 +23,17 @@ import { Loading } from './Loading';
 
 const DEFAULT_TINT_PERC = 15;
 
-export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop'> {
+export interface SerializedButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop'> {
   title: string;
   dynamicTitleStates?: string[];
   selectedTitleState?: number;
   accessibilityLabel?: string;
-  style?: StyleProp<ViewStyle>;
-  onPress: () => void;
-  onLongPress?: () => void;
-  titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
   icon?: ImageSourcePropType;
-  iconStyle?: StyleProp<ImageStyle>;
-  viewStyle?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  iconStyle?: ImageStyle;
+  viewStyle?: ViewStyle;
 
   // style
   palette?: typeof palette;
@@ -52,6 +50,21 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
 
   // expand horizontally
   full?: boolean;
+}
+
+export interface ButtonProps extends Omit<
+  SerializedButtonProps,
+  'style' |
+  'titleStyle' |
+  'iconStyle' |
+  'viewStyle'
+  > {
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
+  onLongPress?: () => void;
+  titleStyle?: StyleProp<TextStyle>;
+  iconStyle?: StyleProp<ImageStyle>;
+  viewStyle?: StyleProp<ViewStyle>;
 }
 
 export interface ButtonState {
