@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 // TODO: Rename this interface
@@ -7,33 +7,33 @@ export interface SlideChangeEvent {
   nextIndex: number;
 }
 
-// TODO: Clean up these props
+export interface OptionsType {
+  animated: boolean;
+}
+
 export interface MultiCarouselProps<ItemT> {
-  brandStyle?: any;
-  buttonProps?: any;
+  width: number;
   centerMode?: boolean;
-  dotActiveStyle?: any;
-  dotStyle?: any;
+  dotActiveStyle?: StyleProp<ViewStyle>;
+  dotStyle?: StyleProp<ViewStyle>;
   items: ItemT[];
   itemsPerPage?: number;
-  itemStyle?: any;
+  itemStyle?: ViewStyle;
   itemUpdated?: (oldItem: ItemT, newItem: ItemT, index: number, changed: () => void) => void;
   onSlideChange?: (data: SlideChangeEvent) => void;
-  nextArrowContainerStyle?: any;
-  nextArrowStyle?: any;
+  nextArrowContainerStyle?: StyleProp<ViewStyle>;
+  nextArrowStyle?: StyleProp<ViewStyle>;
   nextArrowOnBlur?: () => void;
-  pageIndicatorStyle?: any;
+  pageIndicatorStyle?: StyleProp<ViewStyle>;
   peekSize?: number;
-  prevArrowContainerStyle?: any;
-  prevArrowStyle?: any;
+  prevArrowContainerStyle?: StyleProp<ViewStyle>;
+  prevArrowStyle?: StyleProp<ViewStyle>;
   prevArrowOnBlur?: () => void;
-  renderItem: (data: any, i: number) => ReactNode;
+  renderItem: <T>(data: T, i: number) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
   hidePageIndicator?: boolean;
   showArrow?: boolean;
-  style?: any;
-  zoomButtonStyle?: any;
+  style?: StyleProp<ViewStyle>;
   keyExtractor?: (item: ItemT, index: number) => string;
-  hideZoomButton?: boolean;
   contentContainerStyle?: StyleProp<ViewStyle>;
 }
