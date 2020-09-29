@@ -11,7 +11,7 @@ import {
 
 import FSNetwork from '@brandingbrand/fsnetwork';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const TcForm = require('tcomb-form-native');
+const TcForm = require('@brandingbrand/tcomb-form-native');
 import { cloneDeep } from 'lodash-es';
 import { stringify } from 'qs';
 

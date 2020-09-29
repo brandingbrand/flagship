@@ -12,7 +12,7 @@ import {
 // @ts-ignore TODO: Update credit-card to support typing
 import * as creditCard from 'credit-card';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('tcomb-form-native');
+const t = require('@brandingbrand/tcomb-form-native');
 import {
   creditCardAboveLabelTemplate,
   creditCardFloatingLabelTemplate,
