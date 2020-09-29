@@ -16,7 +16,7 @@
     "@brandingbrand/fsfoundation": "^10.0.0-alpha.5",
     "@brandingbrand/fsi18n": "^10.0.0-alpha.5",
     "@brandingbrand/fsnetwork": "^10.0.0-alpha.5",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/async-storage": "^1.9.0",
     "@types/yup": "^0.28.1",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",
