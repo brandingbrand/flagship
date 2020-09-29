@@ -249,7 +249,7 @@ export default class I18nHelper {
    * @returns {boolean} - Whether or not the value is a translation key
    */
   protected isTranslationKey(
-    translationKey: TranslationKey
+    translationKey: any
   ): boolean {
     const isString = typeof translationKey === 'string';
     const hasPluralizationKeys = !!translationKey && typeof translationKey === 'object' && (
