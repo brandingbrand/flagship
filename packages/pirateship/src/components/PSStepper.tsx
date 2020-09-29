@@ -95,7 +95,7 @@ export default class PSStepper extends Component<PSStepperProps, PSStepperState>
 
   render(): JSX.Element {
     const { stepperStyle } = this.props;
-    const mergeStepperStyle: any = [styles.stepper, stepperStyle];
+    const mergeStepperStyle: StyleProp<ViewStyle> = [styles.stepper, stepperStyle];
     return (
       <StatelessStepper
         count={this.state.quantity}

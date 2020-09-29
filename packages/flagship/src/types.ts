@@ -24,7 +24,6 @@ export interface Config {
   };
 
   appCenter?: {
-    apiToken?: string; // deprecated; will be removed in a future release
     organization: string;
     distribute?: {
       appNameIOS?: string;
@@ -152,6 +151,7 @@ export interface AndroidConfig {
 export interface IOSConfig {
   pods?: PodsConfig;
   buildVersion?: string;
+  shortVersion?: string;
 }
 
 export interface PodsConfig {

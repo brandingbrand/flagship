@@ -1,1 +1,0 @@
-export { BazaarvoiceDataSource } from './BazaarvoiceDataSource';

@@ -30,10 +30,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface TotalProps {
+export interface SerializableTotalProps {
   keyName: string | JSX.Element; // String or element for the row's key
   value: string | CurrencyValue | JSX.Element; // String or element for the row's value
 
+  keyStyle?: TextStyle; // Optional styling for the key text element
+  valueStyle?: TextStyle; // Optional styling for the value text element
+
+  style?: ViewStyle; // Optional styling for the entire total row
+}
+
+export interface TotalProps extends Pick<SerializableTotalProps, 'keyName' | 'value'> {
   keyStyle?: StyleProp<TextStyle>; // Optional styling for the key text element
   valueStyle?: StyleProp<TextStyle>; // Optional styling for the value text element
 
@@ -54,8 +61,14 @@ const TotalInner = (props: TotalProps): JSX.Element => {
       );
     }
     if (isCurrency(data)) {
+      let convertedTotal: string | undefined;
+      try {
+        convertedTotal = FSI18n.currency(data);
+      } catch (e) {
+        console.error(e);
+      }
       return (
-        <Text style={style}>{FSI18n.currency(data)}</Text>
+        <Text style={style}>{convertedTotal}</Text>
       );
     }
     return data;

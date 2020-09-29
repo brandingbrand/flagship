@@ -9,10 +9,17 @@ type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palett
 export type ButtonShape = 'pill' | 'rect';
 export type ButtonTheme = 'gold' | 'blue' | 'silver' | 'black';
 
-export interface PayPalCheckoutButtonProps extends LimitedButtonProps {
+export interface SerializablePayPalCheckoutButtonProps extends LimitedButtonProps {
   shape: ButtonShape;
   theme: ButtonTheme;
   tagLine?: string;
+  tagLineStyle?: TextStyle;
+}
+
+export interface PayPalCheckoutButtonProps extends LimitedButtonProps, Omit<
+  SerializablePayPalCheckoutButtonProps,
+  'tagLineStyle'
+  > {
   tagLineStyle?: StyleProp<TextStyle>;
 }
 type DefaultProps = Pick<PayPalCheckoutButtonProps, 'shape' | 'theme' | 'title' | 'tagLine'>;
@@ -54,6 +61,10 @@ const styles = StyleSheet.create({
   },
   tagLine: {
     textAlign: 'center'
+  },
+  icon: {
+    width: 99,
+    height: 24
   }
 });
 
@@ -105,6 +116,7 @@ memo((props): JSX.Element => {
       <Button
         title={titleVal}
         icon={selectedTheme.icon}
+        iconStyle={styles.icon}
         underlayColor={selectedTheme.bgActive}
         {...buttonProps}
       />

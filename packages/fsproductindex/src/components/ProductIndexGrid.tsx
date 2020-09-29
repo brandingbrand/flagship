@@ -20,12 +20,20 @@ import {
 } from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
-import { ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ListRenderItemInfo,
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.productIndex;
 
 export interface PropTyps extends ProductIndexPropType {
   onPress: (data: CommerceTypes.Product) => () => void;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const defaultErrorMessage =
@@ -37,7 +45,6 @@ export interface StateType {
   filterModalVisble: boolean;
   isLoading: boolean;
   isMoreLoading: boolean;
-  hasAnotherPage: boolean;
   hasFetchError: boolean;
 }
 
@@ -45,38 +52,54 @@ export default class ProductIndexGrid extends Component<
   PropTyps & WithProductIndexProps,
   StateType
 > {
-  page: number = 1;
-
   constructor(props: PropTyps & WithProductIndexProps) {
     super(props);
 
     const { commerceData, onLoadComplete } = props;
-
-    const hasAnotherPage = this.hasAnotherPage(commerceData);
+    let maxPageLoaded = 1;
+    let maxCount = 1;
+    if (commerceData) {
+      maxCount = this.maxCount(commerceData);
+      if (commerceData.page) {
+        maxPageLoaded = commerceData.page;
+        if (commerceData.limit && commerceData.products) {
+          maxCount = (commerceData.limit * (commerceData.page - 1)) + commerceData.products.length;
+        }
+      }
+      if (onLoadComplete) {
+        onLoadComplete(this.loadMore, maxPageLoaded < this.maxPage(commerceData),
+          maxCount, maxCount);
+      }
+    }
 
     this.state = {
       sortModalVisble: false,
       filterModalVisble: false,
       isLoading: false,
       isMoreLoading: false,
-      hasFetchError: false,
-      hasAnotherPage
+      hasFetchError: false
     };
 
-    if (commerceData && onLoadComplete) {
-      const count = commerceData.products && commerceData.products.length;
+  }
 
-      onLoadComplete(this.loadMore, hasAnotherPage, count, count);
+  maxCount = (commerceData?: CommerceTypes.ProductIndex): number => {
+    if (commerceData && commerceData.limit && commerceData.total && commerceData.page) {
+      const maxPage = this.maxPage(commerceData);
+      if (commerceData.page < maxPage) {
+        return commerceData.page * commerceData.limit;
+      } else {
+        return commerceData.total;
+      }
+    } else {
+      return 0;
     }
   }
 
-  hasAnotherPage = (data?: CommerceTypes.ProductIndex) => {
-    if (!data || !data.page || !data.total) {
-      return false;
+  maxPage = (commerceData?: CommerceTypes.ProductIndex) => {
+    if (commerceData && commerceData.total && commerceData.limit) {
+      return Math.ceil(commerceData.total / commerceData.limit);
     }
-
-    // fall back to count instead of limit in instances where limit wasn't specified in query
-    return data.page * (data.limit || data.products.length) < data.total;
+    return 1;
   }
 
   renderItem = ({ item }: ListRenderItemInfo<CommerceTypes.Product>): JSX.Element => {
@@ -104,7 +127,7 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  renderHeader = () => {
+  renderActionBar = () => {
     const {
       commerceData,
       hideActionBar,
@@ -133,6 +156,43 @@ export default class ProductIndexGrid extends Component<
         sortButtonStyle={mergeSortToFilter ? { display: 'none' } : null}
         {...refineActionBarProps}
       />
+    );
+  }
+
+  renderHeader = () => {
+    const { commerceData } = this.props;
+
+    if (!commerceData) {
+      return null;
+    }
+
+    let loadPrev: JSX.Element | null = null;
+    if (this.props.renderLoadPrev) {
+      if (this.state.isMoreLoading) {
+        loadPrev = this.props.renderLoading ? (
+          this.props.renderLoading()
+        ) : (
+          <Loading
+            style={[
+              S.loading,
+              S.loadingLoadMore,
+              this.props.loadMoreLoadingStyle
+            ]}
+          />
+        );
+      } else {
+        loadPrev = this.props.renderLoadPrev(
+          this.loadPrev,
+          (commerceData.minPage || commerceData.page || 1) > 1
+        );
+      }
+    }
+
+    return (
+      <View>
+        {loadPrev}
+        {this.renderActionBar()}
+      </View>
     );
   }
 
@@ -208,7 +268,12 @@ export default class ProductIndexGrid extends Component<
   reloadByQuery = (query: CommerceTypes.ProductQuery) => {
     this.setState({ isLoading: true, hasFetchError: false });
     this.fetchByExtraQuery(query)
-      .then(this.handleNewData)
+      .then((data: CommerceTypes.ProductIndex) => {
+        this.handleNewData(data);
+        this.setState({
+          isLoading: false
+        });
+      })
       .catch(() => {
         this.setState({
           isLoading: false,
@@ -240,6 +305,9 @@ export default class ProductIndexGrid extends Component<
           this.closeFilterModal();
         }
         this.handleNewData(data);
+        this.setState({
+          isLoading: false
+        });
       })
       .catch(() => {
         this.setState({
@@ -249,17 +317,16 @@ export default class ProductIndexGrid extends Component<
       });
   }
 
-  handleNewData = (data: any) => {
-    this.page = 1;
-    const hasAnotherPage = this.hasAnotherPage(data);
+  handleNewData = (data: CommerceTypes.ProductIndex) => {
+    const newState: any = {};
+    const maxPageLoaded = data.page || 1;
+    const maxCount = this.maxCount(data);
+
     if (this.props.onLoadComplete) {
-      const count = data.products && data.products.length;
-      this.props.onLoadComplete(this.loadMore, hasAnotherPage, count, count);
+      this.props.onLoadComplete(this.loadMore, maxPageLoaded < this.maxPage(data),
+        maxCount, maxCount);
     }
-    this.setState({
-      isLoading: false,
-      hasAnotherPage
-    });
+    this.setState(newState);
 
     if (this.props.commerceLoadData) {
       this.props.commerceLoadData(data);
@@ -597,13 +664,13 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  loadMore = () => {
+  loadPage = (page: number) => {
     const {
       commerceData,
       commerceProviderLoadMore
     } = this.props;
 
-    if (!commerceData || !commerceData.page) {
+    if (!commerceData) {
       // Cannot load more
       return;
     }
@@ -612,29 +679,13 @@ export default class ProductIndexGrid extends Component<
       isMoreLoading: true
     });
 
-    const newQuery = this.newProductQuery({ page: commerceData.page + 1 });
+    const newQuery = this.newProductQuery({ page });
     if (commerceProviderLoadMore) {
       commerceProviderLoadMore(newQuery)
-        .then(data => {
-          const hasAnotherPage = this.hasAnotherPage(data);
-          let totalCount: number = 0;
-
-          // TODO: Pageable properties should not be optional on Product Index type
-          if (data.limit && data.page) {
-            totalCount = (data.limit * (data.page - 1)) + data.products.length;
-          }
-
-          if (this.props.onLoadComplete) {
-            this.props.onLoadComplete(
-              this.loadMore,
-              hasAnotherPage,
-              totalCount,
-              data.products.length
-            );
-          }
+        .then((data: CommerceTypes.ProductIndex) => {
+          this.handleNewData(data);
           this.setState({
-            isMoreLoading: false,
-            hasAnotherPage
+            isMoreLoading: false
           });
         })
         .catch(() => {
@@ -645,7 +696,24 @@ export default class ProductIndexGrid extends Component<
     }
   }
 
+  loadPrev = () => {
+    const { commerceData } = this.props;
+    if (commerceData) {
+      this.loadPage((commerceData.minPage || commerceData.page || 1) - 1);
+    }
+  }
+
+  loadMore = () => {
+    const { commerceData } = this.props;
+    if (commerceData) {
+      this.loadPage((commerceData.page || 1) + 1);
+    }
+  }
+
   renderFooter = () => {
+    const { commerceData } = this.props;
+    const hasAnotherPage: boolean = commerceData !== undefined && commerceData.page !== undefined &&
+      commerceData.page < this.maxPage(commerceData);
     if (this.state.isMoreLoading) {
       return this.props.renderLoading ? (
         this.props.renderLoading()
@@ -663,11 +731,11 @@ export default class ProductIndexGrid extends Component<
     if (this.props.renderLoadMore) {
       return this.props.renderLoadMore(
         this.loadMore,
-        this.state.hasAnotherPage
+        hasAnotherPage
       );
     }
 
-    if (!this.state.hasAnotherPage) {
+    if (!hasAnotherPage) {
       return null;
     }
 
@@ -693,7 +761,8 @@ export default class ProductIndexGrid extends Component<
       gridProps,
       loadingStyle,
       errorText,
-      errorTextStyle
+      errorTextStyle,
+      containerStyle
     } = this.props;
 
     if (this.state.isLoading && !this.props.filterInBackground) {
@@ -713,7 +782,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     return (
-      <View style={S.container}>
+      <View style={[S.container, containerStyle]}>
         <ProductList
           style={[S.list, listStyle]}
           columns={columns}

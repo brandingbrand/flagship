@@ -43,6 +43,15 @@ export default class I18nHelper {
   }
 
   /**
+   * Change language
+   *
+   * @param {string} locale - Set locale
+   */
+  public setLocale(locale: string): void {
+    this.i18n.locale = locale;
+  }
+
+  /**
    * Creates an object matching the same structure as the translation definitions
    * object, but with the string translation values replaced by their object path
    *
