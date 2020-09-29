@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import screenWrapper from '../components/screenWrapper';
 import { AppConfigType, Tab } from '../types';
 import { InteractionManager, NativeModules, Platform } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../lib/asyncStorage';
 const { CodePush } = NativeModules;
 import NativeConstants from '../lib/native-constants';
 import { FSAppBase } from './FSAppBase';
@@ -242,10 +242,10 @@ export class FSApp extends FSAppBase {
 
   protected async screenChangeListener(event: ComponentDidAppearEvent): Promise<void> {
     try {
-      const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
+      const keepLastScreen = await AsyncStorage.get(DEV_KEEP_SCREEN);
 
       if (keepLastScreen === 'true') {
-        await AsyncStorage.setItem(LAST_SCREEN_KEY, JSON.stringify(event));
+        await AsyncStorage.set(LAST_SCREEN_KEY, JSON.stringify(event));
       }
 
     } catch (e) {
@@ -255,12 +255,12 @@ export class FSApp extends FSAppBase {
 
   protected async getSavedScreen(): Promise<LayoutComponent | undefined> {
     try {
-      const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
+      const keepLastScreen = await AsyncStorage.get(DEV_KEEP_SCREEN);
       if (keepLastScreen !== 'true') {
         return;
       }
 
-      const json = await AsyncStorage.getItem(LAST_SCREEN_KEY);
+      const json = await AsyncStorage.get(LAST_SCREEN_KEY);
 
       if (!json) {
         return;

@@ -1,5 +1,5 @@
 import FCM, { FCMEvent } from 'react-native-fcm';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from './lib/asyncStorage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
@@ -147,7 +147,7 @@ export class EngagementService {
       return Promise.resolve(this.profileId);
     }
 
-    const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
+    const savedProfileId = await AsyncStorage.get('ENGAGEMENT_PROFILE_ID');
     if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
@@ -173,7 +173,7 @@ export class EngagementService {
         this.profileId = data.id;
         this.profileData = data;
 
-        AsyncStorage.setItem('ENGAGEMENT_PROFILE_ID', data.id).catch();
+        AsyncStorage.set('ENGAGEMENT_PROFILE_ID', data.id).catch();
 
         return data.id;
       })
@@ -275,7 +275,7 @@ export class EngagementService {
       }
     }
 
-    const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
+    const lastEngagementFetch = await AsyncStorage.get('LAST_ENGAGEMENT_FETCH');
     return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
       JSON.stringify(attributes))
       .then((r: any) => r.data)
@@ -294,7 +294,7 @@ export class EngagementService {
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
-        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString())
+        AsyncStorage.set('LAST_ENGAGEMENT_FETCH', Date.now().toString())
           .catch();
         return messages;
       })

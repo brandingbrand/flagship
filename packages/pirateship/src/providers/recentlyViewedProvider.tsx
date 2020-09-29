@@ -5,7 +5,7 @@ import {
 import { CombinedStore } from '../reducers';
 import { connect } from 'react-redux';
 import { RecentlyViewedStore } from '../reducers/recentlyViewedReducer';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../lib/asyncStorage';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { find } from 'lodash-es';
 
@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
   return {
     loadRecentlyViewed: async () => {
       try {
-        const initialItems = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS);
+        const initialItems = await AsyncStorage.get(RECENTLY_VIEWED_ITEMS);
         let items = [];
         if (initialItems) {
           const json = JSON.parse(initialItems);
@@ -55,12 +55,8 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
     },
     addToRecentlyViewed: async product => {
       try {
-        const existingItemsJson = await AsyncStorage.getItem(RECENTLY_VIEWED_ITEMS) || '[]';
-        let existingItems = JSON.parse(existingItemsJson);
-
-        if (!Array.isArray(existingItems)) {
-          existingItems = [];
-        }
+        const existingItemsJson = await AsyncStorage.get(RECENTLY_VIEWED_ITEMS) || '[]';
+        const existingItems = JSON.parse(existingItemsJson);
 
         if (find(existingItems, { id: product.id }) === undefined) {
           existingItems.unshift(product);
@@ -69,12 +65,12 @@ function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionP
             existingItems.pop();
           }
 
-          await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, JSON.stringify(existingItems));
+          await AsyncStorage.set(RECENTLY_VIEWED_ITEMS, JSON.stringify(existingItems));
           dispatch({ type: UPDATE_RECENTLY_VIEWED, existingItems });
         }
       } catch (e) {
         const items = [] as CommerceTypes.Product[];
-        await AsyncStorage.setItem(RECENTLY_VIEWED_ITEMS, '[]');
+        await AsyncStorage.set('RECENTLY_VIEWED_ITEMS', '[]');
         dispatch({ type: UPDATE_RECENTLY_VIEWED, items });
         console.warn('Failed to add to recently viewed items', e);
       }

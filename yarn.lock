@@ -3512,10 +3512,25 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@react-native-community/async-storage@^1.6.1", "@react-native-community/async-storage@^1.6.2":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.7.1.tgz#ef2104d865de61ad91bba66613e57e689ff4e6a1"
-  integrity sha512-/oX/x+EU4xNaqIaC/epVKzO8XghzImPA7l8cLz3USEFmtFiXFjBbTeeIFjjEm/u4/cv38Wi1xMEa10PHIWygRg==
+"@react-native-community/async-storage-backend-legacy@2.0.0-rc.3":
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage-backend-legacy/-/async-storage-backend-legacy-2.0.0-rc.3.tgz#4f905bcfa4168918b61835bcd80ab16c68e2f5a5"
+  integrity sha512-nWH8GDMxQ93Ayx1ZhQWZkH70yz8e2mGOeiF7xY7h1/GNxl0taWJrjaWRaHb9FNcC7xe42c33hIjJBRZe0cMlFQ==
+  dependencies:
+    "@react-native-community/async-storage" "^2.0.0-rc.3"
+
+"@react-native-community/async-storage-backend-web@2.0.0-rc.3":
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage-backend-web/-/async-storage-backend-web-2.0.0-rc.3.tgz#1a87efe55d9b65de4503d18d2f494cdbac383e99"
+  integrity sha512-bgXNLXliG4x1V59JFj/kSNw8iluctTHYvDZM7mv/M4fAOBFJs2ZCSTIcCUIVBkdI70iXxD9r5+avoWgSC8bSVw==
+  dependencies:
+    "@react-native-community/async-storage" "^2.0.0-rc.3"
+    idb-keyval "^3.2.0"
+
+"@react-native-community/async-storage@2.0.0-rc.3", "@react-native-community/async-storage@^2.0.0-rc.3":
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-2.0.0-rc.3.tgz#e2ad162ef5eff1a32005753a7c054d463307b38f"
+  integrity sha512-inAIetMy5HwKA9vZGKrVzXA+Uxr7EzKy/IG+DsWTISEqQMwl0b3JWufRZHk3Xj7MqMSn8PdBDM/mmk5tY15qLg==
 
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
@@ -11249,6 +11264,11 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
   integrity sha512-4aFq7wvWyMHKgxsH8QQtGpvbASCf+eM3wPRLI6R+MgAnTCZ6STYsRvttLvRWK0Nfif5piF394St3HeJDaljGPA==
   dependencies:
     postcss "^7.0.14"
+
+idb-keyval@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/idb-keyval/-/idb-keyval-3.2.0.tgz#cbbf354deb5684b6cdc84376294fc05932845bd6"
+  integrity sha512-slx8Q6oywCCSfKgPgL0sEsXtPVnSbTLWpyiDcu6msHOyKOLari1TD1qocXVCft80umnkk3/Qqh3lwoFt8T/BPQ==
 
 ieee754@^1.1.4:
   version "1.1.13"

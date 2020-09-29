@@ -9,7 +9,9 @@
   "dependencies": {
     "@brandingbrand/fsapp": "^10.0.0-alpha.5",
     "@brandingbrand/fsnetwork": "^10.0.0-alpha.5",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/async-storage": "2.0.0-rc.3",
+    "@react-native-community/async-storage-backend-legacy": "2.0.0-rc.3",
+    "@react-native-community/async-storage-backend-web": "2.0.0-rc.3",
     "@types/prop-types": "^15.0.0",
     "@types/react-native-snap-carousel": "^3.7.3",
     "@types/react-native-video": "^5.0.0",

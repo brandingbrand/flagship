@@ -13,7 +13,7 @@ import {
   View
 } from 'react-native';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../lib/asyncStorage';
 
 const styles = StyleSheet.create({
   closeBtn: {
@@ -97,7 +97,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   clearAsyncStorage = () => {
-    AsyncStorage.clear()
+    AsyncStorage.clearStorage()
       .then(() => {
         alert('AsyncStorage cleared.');
       })
@@ -107,9 +107,9 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   viewAsyncStorage = () => {
-    AsyncStorage.getAllKeys()
+    AsyncStorage.getKeys()
       .then(keys => {
-        AsyncStorage.multiGet(keys)
+        AsyncStorage.getMultiple(keys)
           .then(stores => {
             this.showData(JSON.stringify(stores, null, '  '));
           })

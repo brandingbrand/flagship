@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../lib/asyncStorage';
 import { GenericScreenProp } from './screenWrapper';
 import CodePushDevMenu from './CodePushDevMenu';
 import NativeConstants from '../lib/native-constants';
@@ -125,7 +125,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   componentDidMount(): void {
-    AsyncStorage.getItem('devKeepPage')
+    AsyncStorage.get('devKeepPage')
       .then(devKeepPage => {
         this.setState({
           devKeepPage: !!devKeepPage
@@ -172,12 +172,12 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   keepLastPage = () => {
     if (this.state.devKeepPage) {
       this.setState({ devKeepPage: false });
-      AsyncStorage.setItem('devKeepPage', '').catch(e =>
+      AsyncStorage.set('devKeepPage', '').catch(e =>
         console.log('cannot set devKeepPage flag in AsyncStorage', e)
       );
     } else {
       this.setState({ devKeepPage: true });
-      AsyncStorage.setItem('devKeepPage', 'true').catch(e =>
+      AsyncStorage.set('devKeepPage', 'true').catch(e =>
         console.log('cannot set devKeepPage flag in AsyncStorage', e)
       );
     }

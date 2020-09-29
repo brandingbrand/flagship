@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '../lib/asyncStorage';
 import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -113,12 +113,12 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   getHistory = async (): Promise<SearchScreenResult[]> => {
-    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY) || '[]';
+    const historyData = await AsyncStorage.get(SEARCH_MODAL_HISTORY_KEY) || '[]';
     try {
       const history = JSON.parse(historyData);
       return history.slice(0, MAX_HISTORY_ITEM_NUM);
     } catch (e) {
-      await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
+      await AsyncStorage.set(SEARCH_MODAL_HISTORY_KEY, '[]');
       return [];
     }
   }
@@ -137,7 +137,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
       history = history.slice(0, MAX_HISTORY_ITEM_NUM);
     }
 
-    await AsyncStorage.setItem(
+    await AsyncStorage.set(
       SEARCH_MODAL_HISTORY_KEY,
       JSON.stringify(history)
     );
@@ -163,7 +163,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   clearHistory = async () => {
-    await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
+    await AsyncStorage.set(SEARCH_MODAL_HISTORY_KEY, '[]');
     this.setState({ history: [] });
   }
 
