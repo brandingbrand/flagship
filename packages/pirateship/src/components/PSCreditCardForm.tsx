@@ -4,7 +4,7 @@ import formFieldStyles from '../styles/FormField';
 import { select, textbox, textboxWithRightIcon } from '../lib/formTemplate';
 import { Form } from '@brandingbrand/fscomponents';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('tcomb-form-native');
+const t = require('@brandingbrand/tcomb-form-native');
 import CCType, { CardBrand } from 'credit-card-type';
 
 const months = require('../../assets/months.json');

@@ -22,7 +22,10 @@ module.exports = ({ config, env }) => {
 
   config.module.rules.push({
     test: /\.jsx?$/,
-    include: path.resolve('node_modules/tcomb-form-native/'),
+    include: [
+      path.resolve('node_modules/@brandingbrand/tcomb-form-native/'),
+      path.resolve('node_modules/@react-native-community/picker')
+    ],
     loader: require.resolve('babel-loader'),
     options: {
       cacheDirectory: true
