@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, { Component } from 'react';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('tcomb-form-native');
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import { EMAIL_REGEX } from '../lib/constants';
 import { select, textbox } from '../lib/formTemplate';

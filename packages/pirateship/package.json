@@ -42,6 +42,7 @@
     "@brandingbrand/fsweb": "^10.0.0-alpha.5",
     "@brandingbrand/react-native-leanplum": "^5.0.0",
     "@brandingbrand/react-native-payments": "^0.10.0",
+    "@brandingbrand/tcomb-form-native": "^0.6.20",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/cli-platform-android": "^4.7.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
@@ -62,8 +63,7 @@
     "react-native-touch-id": "~4.4.0",
     "react-native-video": "^5.0.0",
     "react-native-webview": "^10.9.0",
-    "react-redux": "^7.0.0",
-    "tcomb-form-native": "^0.6.12"
+    "react-redux": "^7.0.0"
   },
   "flagship": {
     "webEnabled": false,

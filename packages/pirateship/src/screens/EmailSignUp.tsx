@@ -9,7 +9,7 @@ import {
 import { Options } from 'react-native-navigation';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const tcomb = require('tcomb-form-native');
+const tcomb = require('@brandingbrand/tcomb-form-native');
 import { CMSBannerStacked, Form } from '@brandingbrand/fscomponents';
 
 import { NavButton, ScreenProps } from '../lib/commonTypes';
