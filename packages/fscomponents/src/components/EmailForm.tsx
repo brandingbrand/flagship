@@ -12,14 +12,17 @@ export interface EmailFormValue {
   email: string;
 }
 
-export interface EmailFormProps {
+export interface SerializedEmailFormProps {
+  value?: EmailFormValue;
+}
+
+export interface EmailFormProps extends Omit<SerializedEmailFormProps, any> {
   fieldsStyleConfig?: any;
   labelPosition?: FormLabelPosition;
   onSubmit?: (value: EmailFormValue) => void;
   submitButtonStyle?: any;
   submitTextStyle?: any;
   submitText?: any;
-  value?: EmailFormValue;
   style?: any;
   fieldsOptions?: any;
 }
