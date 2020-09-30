@@ -15,15 +15,14 @@ import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
-import { SelectedItems } from './FilterList';
 
 const defaultSingleFilterIds = [`cgid`];
 
 export interface FilterListDrilldownProps {
   items: FilterItem[];
-  onApply: (selectedItems: SelectedItems, info?: { isButtonPress: boolean }) => void;
+  onApply: (selectedItems: Record<string, string[]>, info?: { isButtonPress: boolean }) => void;
   onReset: (info?: { isButtonPress: boolean }) => void;
-  selectedItems?: SelectedItems;
+  selectedItems?: Record<string, string[]>;
   style?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
   applyButtonStyle?: StyleProp<ViewStyle>;
@@ -35,7 +34,7 @@ export interface FilterListDrilldownProps {
   itemTextStyle?: StyleProp<TextStyle>;
   itemTextSelectedStyle?: StyleProp<TextStyle>;
   selectedValueStyle?: StyleProp<TextStyle>;
-  selectableRowProps?: SelectableRowProps;
+  selectableRowProps?: Partial<SelectableRowProps>;
   singleFilterIds?: string[]; // Filter IDs for which only one value can be selected at a time
   ignoreActiveStyleIds?: string[]; // Filter IDs for which active styling won't be applied
   applyOnSelect?: boolean;
@@ -50,7 +49,7 @@ export interface FilterListDrilldownProps {
     item: FilterItem,
     i: number,
     value: FilterItemValue,
-    handleSelect: Function,
+    handleSelect: () => void,
     selected: boolean,
     renderFilterItemValue: (
       item: FilterItem,
@@ -158,8 +157,8 @@ const S = StyleSheet.create({
 });
 
 export interface FilterListDrilldownState {
-  selectedItems: SelectedItems;
-  secondLevelItem: FilterItem | null;
+  selectedItems: Record<string, string[]>;
+  secondLevelItem?: FilterItem;
 }
 
 export class FilterListDrilldown extends PureComponent<
@@ -170,7 +169,7 @@ export class FilterListDrilldown extends PureComponent<
     super(props);
     this.state = {
       selectedItems: props.selectedItems || {},
-      secondLevelItem: null
+      secondLevelItem: undefined
     };
   }
 
@@ -262,7 +261,7 @@ export class FilterListDrilldown extends PureComponent<
     skipCustomRender: boolean = false
   ): JSX.Element => {
     const selectedValues = this.state.selectedItems[item.id] || [];
-    const selectedValueTitles = item.values
+    const selectedValueTitles = (item.values || [])
       .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
       .map((v: FilterItemValue) => v.title);
 
@@ -333,7 +332,7 @@ export class FilterListDrilldown extends PureComponent<
 
   backToFirstLevel = () => {
     this.setState({
-      secondLevelItem: null
+      secondLevelItem: undefined
     });
   }
 
@@ -361,7 +360,7 @@ export class FilterListDrilldown extends PureComponent<
           <Text style={S.secondLevelTitle}>{item.title}</Text>
         </TouchableOpacity>
         <FlatList
-          data={item.values}
+          data={item.values || []}
           renderItem={this.renderFilterItemValue(item)}
           extraData={this.state}
         />

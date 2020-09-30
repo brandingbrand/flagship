@@ -60,8 +60,7 @@ const globalConfig = {
       'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
       'react-native-web/dist/exports/ProgressViewIOS': 'react-native-web/dist/modules/UnimplementedView',
       'react-native-web/dist/exports/SegmentedControlIOS': 'react-native-web/dist/modules/UnimplementedView',
-      'react-native-web/dist/exports/WebView': 'react-native-web-webview',
-      '@react-native-community/async-storage': path.resolve(__dirname, './AsyncStorage.web.js')
+      'react-native-web/dist/exports/WebView': 'react-native-web-webview'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -99,7 +98,8 @@ const globalConfig = {
             test: /\.m?jsx?$/,
             include: [
               new RegExp('node_modules' + escapedSep + 'react-native-'),
-              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'tcomb-form-native'),
+              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep + 'picker'),
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')

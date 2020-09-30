@@ -215,6 +215,8 @@ function initIOS(
   ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  ios.patchRCTUIImageViewAnimated();
+
   if (configuration.ios) {
     if (configuration.ios.pods) {
       if (configuration.ios.pods.sources) {

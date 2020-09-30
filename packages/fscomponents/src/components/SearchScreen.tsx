@@ -30,7 +30,6 @@ export interface HighlightResultAccumulator {
 
 export interface SearchScreenResult {
   title: string;
-  query: string;
   [key: string]: any;
 }
 
@@ -83,6 +82,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   constructor(props: SearchScreenProps) {
     super(props);
 
+    this.searchBar = null;
     this.state = {
       history: [],
       inputValue: ''
@@ -101,14 +101,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (this.searchBar !== null && (searchBarShouldFocus === undefined || searchBarShouldFocus)) {
+    if (searchBarShouldFocus !== false && this.searchBar) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: SearchBar) => {
+  getSearchBarRef = (ref: SearchBar | null) => {
     this.searchBar = ref;
   }
 
@@ -200,12 +200,10 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   renderResult = () => {
-    if (!this.props.results || !this.props.results.length) {
-      if (this.props.results === null) {
-        return this.renderHistory();
-      } else {
-        return null;
-      }
+    if (!this.props.results) {
+      return this.renderHistory();
+    } else if (!this.props.results.length) {
+      return null;
     }
 
     return (
@@ -236,12 +234,12 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         onPress={this.handleResultPress(item)}
         accessibilityLabel={`Search ${item.title}`}
       >
-        {this.renderTextWithHighLighs(item.title, this.state.inputValue)}
+        {this.renderTextWithHighLights(item.title, this.state.inputValue)}
       </TouchableHighlight>
     );
   }
 
-  renderTextWithHighLighs = (name: string = '', query: string) => {
+  renderTextWithHighLights = (name: string = '', query: string) => {
     const strArr = highlightStr(name, query);
 
     return (
