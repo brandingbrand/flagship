@@ -12,7 +12,8 @@ import {
 
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
-  boolean
+  boolean,
+  number, object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
@@ -21,7 +22,6 @@ import { Carousel } from '../Carousel';
 const style = StyleSheet.create({
   slide: {
     flex: 1,
-    backgroundColor: '#f83',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -33,15 +33,16 @@ const style = StyleSheet.create({
   }
 });
 
+
 const imageSlide = (
   <Image
     source={{ uri: 'https://placehold.it/375x150' }}
-    style={style.slideImage}
+    style={object('slideImageStyle', style.slideImage)}
   />
 );
 
 const textSlide = (
-  <View style={style.slide}>
+  <View style={[object('textSlideStyle', {backgroundColor: '#f83'}), style.slide]}>
     <Text>Text Slide</Text>
   </View>
 );
@@ -49,7 +50,7 @@ const textSlide = (
 storiesOf('Carousel', module)
   .add('basic usage', () => (
     <Carousel
-      height={190}
+      height={number('Height', 190)}
       showsPagination={boolean('showsPagination', true)}
     >
       {imageSlide}
@@ -59,11 +60,16 @@ storiesOf('Carousel', module)
   ))
   .add('looping', () => (
     <Carousel
-      height={250}
-      loop={true}
+      height={number('Height', 250)}
+      loop={boolean('loop', true)}
     >
       {textSlide}
       {textSlide}
       {textSlide}
     </Carousel>
+  ))
+  .add('empty', () => (
+    <Carousel
+      height={190}
+    />
   ));
