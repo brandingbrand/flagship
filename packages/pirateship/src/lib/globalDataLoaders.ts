@@ -13,7 +13,7 @@ import app from '../index';
 
 export async function loadCartData(): Promise<void> {
   return dataSource.fetchCart().then(cartData => {
-    app.store.dispatch({ type: UPDATE_CART, cartData });
+    app.store?.dispatch({ type: UPDATE_CART, cartData });
   });
 }
 
@@ -21,7 +21,7 @@ export async function loadAccountData(): Promise<void> {
   return dataSource
     .fetchAccount()
     .then(account => {
-      app.store.dispatch({ type: UPDATE_ACCOUNT, account });
+      app.store?.dispatch({ type: UPDATE_ACCOUNT, account });
     })
     .catch(e => {
       console.log('not logged in', e);
@@ -32,7 +32,7 @@ export async function loadTopCategories(): Promise<void> {
   return dataSource
     .fetchCategory()
     .then(data => {
-      app.store.dispatch({
+      app.store?.dispatch({
         type: UPDATE_TOP_CATEGORIES,
         data: formatCategories(data).slice(0, 10)
       });
@@ -53,7 +53,7 @@ export async function loadPromoProducts(): Promise<void> {
         limit: 5
       })
       .then(data => {
-        app.store.dispatch({
+        app.store?.dispatch({
           type: UPDATE_PROMO_PRODUCTS,
           data: data.products
         });

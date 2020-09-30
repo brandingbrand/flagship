@@ -3,23 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
 
 
 ### Bug Fixes
 
-* **fscomponents:** fix serializable accordion props ([5c7f0ea](https://github.com/brandingbrand/flagship/commit/5c7f0eae296870c4c63e55f9b7f953ccbdd1c010))
+* audit usenativedriver settings for animations ([a3622c0](https://github.com/brandingbrand/flagship/commit/a3622c07479cf7d7e174b6ae84536c1379795ead))
 
 
 
 
 
-## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+
+
+### Features
+
+*  add story to SearchScreen component ([5d31e1f](https://github.com/brandingbrand/flagship/commit/5d31e1f86dd9e04ce0c2d9fda9f153cbdaa4d907))
+* add knobs - Carousel story ([e40f19e](https://github.com/brandingbrand/flagship/commit/e40f19ea9c3699333756c8fdb49ce852a37b57dc))
+* add knobs - loginForm story ([bbb1cb8](https://github.com/brandingbrand/flagship/commit/bbb1cb8eafd2d8b11dcb2d97bdcaa2bc7e426af6))
+* add knobs - MultiCarousel story ([e317d52](https://github.com/brandingbrand/flagship/commit/e317d529b1e75e3f706f9bd866122d5286da118c))
+* add knobs - MultiCarousel story ([b44cd43](https://github.com/brandingbrand/flagship/commit/b44cd43c62d76f818dc2ef877af05345936044a6))
+* add knobs - Totals story ([12e3b31](https://github.com/brandingbrand/flagship/commit/12e3b3143a8b9dc342e39b33820c8fa9ba5863f9))
+* add knobs - Totals story ([6923e0c](https://github.com/brandingbrand/flagship/commit/6923e0c1627b1d66314a8df815f7d1f0a36ef610))
+* add knobs for CMSFeedback story ([835d647](https://github.com/brandingbrand/flagship/commit/835d647bfe56f7978cb567a3b82aeae02e844efa))
+* Create UpdateNameOrEmail story ([994ebe0](https://github.com/brandingbrand/flagship/commit/994ebe0af7b6c70a66efdb2dcd2cd2ffaa48a2da))
+* Create UpdateNameOrEmail story ([6bc2e33](https://github.com/brandingbrand/flagship/commit/6bc2e33e65fb2f9241aa929236e3dd945cc7962e))
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* fix imports of tcomb-form-native ([4dbcab9](https://github.com/brandingbrand/flagship/commit/4dbcab957c9586bb07dbc4863a664b5d09f2948b))
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **fscomponents:** Better backwards compatibility ([da268d4](https://github.com/brandingbrand/flagship/commit/da268d4e808171ddca141b6cbb7cc0507c57fc93))
+* **fscomponents:** Fix empty stars for reviews ([1b02443](https://github.com/brandingbrand/flagship/commit/1b02443cd70108f51d569a6e7e1435e2e099ad5b))
+* **fscomponents:** Fix search history display ([e57d0b5](https://github.com/brandingbrand/flagship/commit/e57d0b5ef31fd88d91a433eab948af315d4efc05))
+* **fscomponents:** Remove redundant code in SearchModal ([d874255](https://github.com/brandingbrand/flagship/commit/d87425568e9e9231125488bdef929c23460d564b))
+
+
+### Features
+
+* upgrade to RN 0.63 ([507d0e4](https://github.com/brandingbrand/flagship/commit/507d0e4618cc6e557af6c475a655aa12f57b6607))
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* Replace all occurrences of "any" in fscomponents/ProductItem ([7331806](https://github.com/brandingbrand/flagship/commit/7331806e4e941bf4e00a14fb549a65346e6ad5e5))
 
 
 ### Reverts
 
-* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+### BREAKING CHANGES
+
+* major react native update
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
 
 
 

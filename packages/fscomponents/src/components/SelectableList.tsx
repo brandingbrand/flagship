@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 import { SelectableRow, SelectableRowProps } from './SelectableRow';
 
-export interface SelectableListItem {
-  title: string;
-  id: string;
-}
+export type SelectableListItem = CommerceTypes.SortingOption;
 
 export interface SelectableListProps {
   style?: StyleProp<ViewStyle>;

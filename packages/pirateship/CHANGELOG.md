@@ -3,23 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.6.4](https://github.com/brandingbrand/flagship/compare/v9.6.3...v9.6.4) (2020-09-09)
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
 
 
 ### Bug Fixes
 
-* resolve android build tools in subprojects ([21c9a26](https://github.com/brandingbrand/flagship/commit/21c9a26897f02e65d039baf20ebcb1f041ffde44))
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+* **fsweb:** add build scripts for web ([5551f89](https://github.com/brandingbrand/flagship/commit/5551f89cc00bc4c14d10bddc2cbb96c35b028d95))
+
+
+### Features
+
+* **fsweb:** add proxy support ([1e8f1c8](https://github.com/brandingbrand/flagship/commit/1e8f1c880512bd37c0ea8b5c5fc3ad6a4d02d952))
+* **fsweb:** Convert proxy to Typescript ([d5990bc](https://github.com/brandingbrand/flagship/commit/d5990bcb82ec68901f11f64169d5c650c5e024a4))
 
 
 
 
 
-## [9.6.3](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v9.6.3) (2020-08-25)
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* fix imports of tcomb-form-native ([4dbcab9](https://github.com/brandingbrand/flagship/commit/4dbcab957c9586bb07dbc4863a664b5d09f2948b))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+* **fscomponents:** Remove redundant code in SearchModal ([d874255](https://github.com/brandingbrand/flagship/commit/d87425568e9e9231125488bdef929c23460d564b))
+* pressing X on cart item removes from cart ([9f2d86c](https://github.com/brandingbrand/flagship/commit/9f2d86c9174ee7d26fde59525e8a9654bf0cb0f7))
+* remove cart item count badge when removing items from cart ([abaa899](https://github.com/brandingbrand/flagship/commit/abaa89901c7f204ec6a79c7bd7cd5ce6cadb442b))
+
+
+### Features
+
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* **any-occurrences:** Replace all occurrences of "any" in PageDots ([65f0116](https://github.com/brandingbrand/flagship/commit/65f011666366df7b50c25f3d1eeddff8be45cad1))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+* replace all any in PSCartItem ([3505c56](https://github.com/brandingbrand/flagship/commit/3505c56cb3444c7720fef7494fc91944ba074256))
 
 
 ### Reverts
 
-* Revert "fix(flagship): Upgrade to react-native-navigation 6" ([7f82083](https://github.com/brandingbrand/flagship/commit/7f820832b906d9fb3802f1041818d8295ec389ea))
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
 
 
 

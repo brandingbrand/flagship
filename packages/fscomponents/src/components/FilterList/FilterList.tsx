@@ -13,8 +13,8 @@ import {
 import { Accordion, AccordionProps } from '../Accordion';
 import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
+import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import {FilterItemValue} from './FilterItemValue';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
@@ -25,9 +25,9 @@ export interface SelectedItems {
 
 export interface FilterListProps {
   items: FilterItem[];
-  onApply: (selectedItems: SelectedItems) => void;
+  onApply: (selectedItems: Record<string, string[]>, info?: { isButtonPress: boolean }) => void;
   onReset: () => void;
-  selectedItems?: SelectedItems;
+  selectedItems?: Record<string, string[]>;
   style?: StyleProp<ViewStyle>;
   buttonContainerStyle?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
@@ -38,20 +38,20 @@ export interface FilterListProps {
   resetText?: string;
   itemStyle?: StyleProp<ViewStyle>;
   itemTextStyle?: StyleProp<TextStyle>;
-  selectableRowProps?: SelectableRowProps;
-  accordionProps?: AccordionProps;
+  selectableRowProps?: Partial<SelectableRowProps>;
+  accordionProps?: Partial<AccordionProps>;
   singleFilterIds?: string[];
   renderFilterTitle?: (item: FilterItem, selectedValues: string[]) => JSX.Element;
   renderFilterItemValue?: (
     item: FilterItem,
     value: FilterItemValue,
-    handleSelect: Function,
+    handleSelect: () => void,
     selected: boolean
   ) => JSX.Element;
 }
 
 export interface FilterListState {
-  selectedItems: SelectedItems;
+  selectedItems: Record<string, string[]>;
 }
 
 const S = StyleSheet.create({
@@ -133,8 +133,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     }
   }
 
-  renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number):
-    JSX.Element => {
+  renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number) => {
     const selected =
       this.state.selectedItems[item.id] &&
       this.state.selectedItems[item.id].indexOf(value.value) > -1;
@@ -161,31 +160,37 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
 
   renderFilterItem = ({ item }: ListRenderItemInfo<FilterItem>) => {
     const selectedValues = this.state.selectedItems[item.id] || [];
-    const selectedValueTitle = item.values
+    const selectedValueTitle = (item.values || [])
       .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
       .map((v: FilterItemValue) => v.title);
 
-    const accordionTitle = this.props.renderFilterTitle ? (
-      this.props.renderFilterTitle(item, selectedValues)
-    ) : (
-      <View style={[S.accordionheader, this.props.itemStyle]}>
-        <Text style={[S.titleStyle, this.props.itemTextStyle]}>
-          {item.title}
-        </Text>
-        <Text
-          style={S.selectedValueStyle}
-          numberOfLines={1}
-          ellipsizeMode='tail'
-        >
-          {selectedValueTitle.join(', ')}
-        </Text>
-      </View>
-    );
+    let accordionTitle: JSX.Element | undefined = this.props.renderFilterTitle &&
+      this.props.renderFilterTitle(item, selectedValues);
+    if (!accordionTitle) {
+      accordionTitle = (
+        <View style={[S.accordionheader, this.props.itemStyle]}>
+          <Text style={[S.titleStyle, this.props.itemTextStyle]}>
+            {item.title}
+          </Text>
+          <Text
+            style={S.selectedValueStyle}
+            numberOfLines={1}
+            ellipsizeMode='tail'
+          >
+            {selectedValueTitle.join(', ')}
+          </Text>
+        </View>
+      );
+    }
 
     return (
       <Accordion
         title={accordionTitle}
-        content={item.values.map(this.renderFilterItemValue(item))}
+        content={(
+          <>
+            {(item.values || []).map(this.renderFilterItemValue(item))}
+          </>
+        )}
         {...this.props.accordionProps}
       />
     );
