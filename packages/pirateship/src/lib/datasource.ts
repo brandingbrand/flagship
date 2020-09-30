@@ -12,6 +12,7 @@ export interface DataSourceConfig {
   type: 'bbplatform' | 'commercecloud' | 'shopify' | 'mock';
   categoryFormat: 'grid' | 'list';
   apiConfig: any;
+  enableProxy?: boolean;
 }
 
 if (env.dataSource.type === 'bbplatform') {
