@@ -33,7 +33,7 @@ const appConfig: FSAppTypes.AppConfigType = {
           icon: require('../assets/images/shop-inbox-icn.png')
         }
       }
-    },     {
+    }, {
       id: 'SHOP_TAB',
       name: 'Shop',
       options: {

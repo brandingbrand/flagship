@@ -1,3 +1,5 @@
+import { Image } from './Image';
+
 /**
  * Interface describing a single value of a key-value pair.
  */
@@ -23,6 +25,18 @@ export interface OptionValue {
    * can be purchased.
    */
   available?: boolean;
+
+  /**
+   * Swatches to display instead of the text, typically used for colors
+   * Can be a string to represent a color or an image
+   */
+  swatch?: string | Image;
+
+  /**
+   * Images to display when this option is selected
+   * Typically used for color swatches to show images of the product in the matching color
+   */
+  images?: Image[];
 }
 
 /**

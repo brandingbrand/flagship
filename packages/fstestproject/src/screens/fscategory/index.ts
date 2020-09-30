@@ -1,13 +1,9 @@
 import Home from './Home';
-import CategoryListDemandware from './CategoryListDemandware';
-import CategoryGridDemandware from './CategoryGridDemandware';
-import CategoryListBrandCMS from './CategoryListBrandCMS';
-import CategoryGridBrandCMS from './CategoryGridBrandCMS';
+import CategoryList from './CategoryList';
+import CategoryGrid from './CategoryGrid';
 
 export default {
   Home,
-  CategoryListDemandware,
-  CategoryGridDemandware,
-  CategoryListBrandCMS,
-  CategoryGridBrandCMS
+  CategoryList,
+  CategoryGrid
 };

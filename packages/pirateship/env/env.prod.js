@@ -1,5 +1,5 @@
-const commerceCloudDataSource = require('./env.commercecloud');
+const mockDataSource = require('./env.mock');
 
 module.exports = {
-  ...commerceCloudDataSource
+  ...mockDataSource
 };
