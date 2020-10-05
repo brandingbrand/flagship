@@ -5,7 +5,15 @@ import {
   CommerceDataSource,
   CommerceTypes
 } from '@brandingbrand/fscommerce';
-import { Loading } from '@brandingbrand/fscomponents';
+import {
+  FilterListDrilldownProps,
+  FilterListProps,
+  GridProps,
+  Loading,
+  ProductItemProps,
+  RefineActionBarProps,
+  SelectableListProps
+} from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
 import ProductIndexGrid from './ProductIndexGrid';
@@ -24,57 +32,56 @@ export interface UnwrappedProductIndexProps {
   errorText?: string;
   errorTextStyle?: StyleProp<TextStyle>;
   filterHeaderTitle?: string;
-  filterListProps?: any;
-  gridProps?: any;
-  handleFilterApply?: (data: any) => void;
+  filterListProps?: Partial<FilterListProps>;
+  gridProps?: Partial<GridProps<any>>;
+  handleFilterApply?: (data: any, info?: { isButtonPress: boolean }) => void;
   handleFilterReset?: () => void;
   onLoadComplete?: (
-    loadMore: Function,
+    loadMore: () => void,
     hasAnotherPage?: boolean,
     count?: number,
     responseCount?: number
   ) => void;
-  handleSortChange?: (data: any) => void;
+  handleSortChange?: (data: CommerceTypes.SortingOption['id']) => void;
   hideActionBar?: boolean;
-  keywords?: any;
-  listStyle?: any;
-  loadingStyle?: any;
+  listStyle?: StyleProp<ViewStyle>;
+  loadingStyle?: StyleProp<ViewStyle>;
   loadMoreButtonStyle?: StyleProp<ViewStyle>;
   loadMoreButtonTextStyle?: StyleProp<TextStyle>;
   loadMoreLoadingStyle?: StyleProp<ViewStyle>;
   modalCancelStyle?: StyleProp<ViewStyle>;
   modalHeaderStyle?: StyleProp<ViewStyle>;
   modalHeaderTextStyle?: StyleProp<TextStyle>;
-  onNavigate?: (data: any) => void;
-  productItemProps?: any;
+  onNavigate?: (data: CommerceTypes.Product) => void;
+  productItemProps?: Partial<ProductItemProps>;
   productQuery: CommerceTypes.ProductQuery;
-  refineActionBarProps?: any;
+  refineActionBarProps?: Partial<RefineActionBarProps>;
   renderFilter?: (
-    handleFilterApply: Function,
-    handleFilterReset: Function,
+    handleFilterApply: (data: any, info?: { isButtonPress: boolean }) => void,
+    handleFilterReset: () => void,
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
-  renderLoadPrev?: (loadPrev: Function, hasAnotherPage: boolean) => JSX.Element;
-  renderLoadMore?: (loadMore: Function, hasAnotherPage: boolean) => JSX.Element;
+  renderLoadPrev?: (loadPrev: () => void, hasAnotherPage: boolean) => JSX.Element;
+  renderLoadMore?: (loadMore: () => void, hasAnotherPage: boolean) => JSX.Element;
   renderLoading?: () => JSX.Element;
   renderNoResult?: (
     commerceData: CommerceTypes.ProductIndex,
-    handleFilterReset: Function
+    handleFilterReset: () => void
   ) => JSX.Element;
   renderProductItem?: (data: CommerceTypes.Product) => JSX.Element;
   renderRefineActionBar?: (
-    showFilterModal: Function,
-    showSortModal: Function,
+    showFilterModal: () => void,
+    showSortModal: () => void,
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
   renderSort?: (
-    handleSortChange: Function,
+    handleSortChange: (sortItem: CommerceTypes.SortingOption) => void,
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
   sortHeaderStyle?: string;
-  sortListProps?: any;
-  FilterListDrilldownProps?: any;
-  style?: any;
+  sortListProps?: Partial<SelectableListProps>;
+  FilterListDrilldownProps?: Partial<FilterListDrilldownProps>;
+  style?: StyleProp<ViewStyle>;
   modalAnimationType?: 'none' | 'slide' | 'fade';
   modalType?: 'full-screen' | 'half-screen';
   filterType?: 'accordion' | 'drilldown';

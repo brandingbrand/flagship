@@ -14,8 +14,8 @@ import {
 import { border, color, fontSize, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { select, textbox } from '../lib/formTemplate';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import { merge } from 'lodash-es';
 import { EMAIL_REGEX } from '../lib/constants';
@@ -133,6 +133,11 @@ export default class PSAddressForm extends Component<
       types: this.getFormFields(props.values)
     };
     this.fieldOptions = this.getFormFieldOptions();
+  }
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('PSAddressForm is deprecated and will be removed in the next version of Flagship.');
   }
 
   componentDidUpdate(prevProps: PSAddressFormProps): void {

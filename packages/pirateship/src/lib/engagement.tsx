@@ -1,16 +1,7 @@
-import { Component } from 'react';
-import { View } from 'react-native';
+import React, { Component } from 'react';
+import {StyleProp, View, ViewStyle} from 'react-native';
 
-interface EngagementProps {
-  navigator: any;
-  refreshControl: any;
-  isLoading: any;
-  json: any;
-  welcomeHeader?: boolean;
-  headerName?: string;
-}
-
-export class EngagementComp extends Component<EngagementProps> {
+export class EngagementComp extends Component {
   render(): JSX.Element {
     return (
       <View />
@@ -45,7 +36,7 @@ export interface Message {
 export interface InboxResponseMessage extends Message {
   sent: Attribute;
   audience: Attribute;
-  message: any;
+  message: string;
 }
 export interface DiscoveryMessage extends Message {
   account: string;
@@ -59,7 +50,7 @@ export interface DiscoveryMessage extends Message {
 export interface MessageDetails {
   cardStyle: string;
   cartType: string;
-  containerStyle: any;
+  containerStyle: StyleProp<ViewStyle>;
   key: string;
   private_type: string;
   private_blocks: MessageDetails[];

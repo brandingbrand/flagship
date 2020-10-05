@@ -3,6 +3,265 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+
+### Bug Fixes
+
+* audit usenativedriver settings for animations ([a3622c0](https://github.com/brandingbrand/flagship/commit/a3622c07479cf7d7e174b6ae84536c1379795ead))
+
+
+### Features
+
+* make permissions a soft dependency in fsengage ([e805007](https://github.com/brandingbrand/flagship/commit/e805007d178986685706253cb6f9143d53e3e0e0))
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+* **fsweb:** add build scripts for web ([5551f89](https://github.com/brandingbrand/flagship/commit/5551f89cc00bc4c14d10bddc2cbb96c35b028d95))
+* **fsweb:** Remove stray comma ([b7eedb7](https://github.com/brandingbrand/flagship/commit/b7eedb7ffa998448f4aea1bc21c2b5bdd91a5157))
+
+
+### Features
+
+* **fsweb:** Convert proxy to Typescript ([d5990bc](https://github.com/brandingbrand/flagship/commit/d5990bcb82ec68901f11f64169d5c650c5e024a4))
+* add knobs - Totals story ([12e3b31](https://github.com/brandingbrand/flagship/commit/12e3b3143a8b9dc342e39b33820c8fa9ba5863f9))
+* Update FS component to allow custom header to be passed in ([ab93e8c](https://github.com/brandingbrand/flagship/commit/ab93e8c82248cbd32cb03819b1fa3e3eb4a67d1d))
+* **fsweb:** add proxy support ([1e8f1c8](https://github.com/brandingbrand/flagship/commit/1e8f1c880512bd37c0ea8b5c5fc3ad6a4d02d952))
+*  add story to SearchScreen component ([5d31e1f](https://github.com/brandingbrand/flagship/commit/5d31e1f86dd9e04ce0c2d9fda9f153cbdaa4d907))
+* add knobs - Carousel story ([e40f19e](https://github.com/brandingbrand/flagship/commit/e40f19ea9c3699333756c8fdb49ce852a37b57dc))
+* add knobs - loginForm story ([bbb1cb8](https://github.com/brandingbrand/flagship/commit/bbb1cb8eafd2d8b11dcb2d97bdcaa2bc7e426af6))
+* add knobs - MultiCarousel story ([e317d52](https://github.com/brandingbrand/flagship/commit/e317d529b1e75e3f706f9bd866122d5286da118c))
+* add knobs - MultiCarousel story ([b44cd43](https://github.com/brandingbrand/flagship/commit/b44cd43c62d76f818dc2ef877af05345936044a6))
+* add knobs - Totals story ([6923e0c](https://github.com/brandingbrand/flagship/commit/6923e0c1627b1d66314a8df815f7d1f0a36ef610))
+* add knobs for CMSFeedback story ([835d647](https://github.com/brandingbrand/flagship/commit/835d647bfe56f7978cb567a3b82aeae02e844efa))
+* Create UpdateNameOrEmail story ([994ebe0](https://github.com/brandingbrand/flagship/commit/994ebe0af7b6c70a66efdb2dcd2cd2ffaa48a2da))
+* Create UpdateNameOrEmail story ([6bc2e33](https://github.com/brandingbrand/flagship/commit/6bc2e33e65fb2f9241aa929236e3dd945cc7962e))
+* Update FS component to allow custom header to be passed in ([61f3bfb](https://github.com/brandingbrand/flagship/commit/61f3bfb73c920ed7b5ccf9535d31116ebe3111a5))
+* Update FS component to allow custom header to be passed in ([7467aea](https://github.com/brandingbrand/flagship/commit/7467aea7754be77226079d07a705a3cf00794045))
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* fix imports of tcomb-form-native ([4dbcab9](https://github.com/brandingbrand/flagship/commit/4dbcab957c9586bb07dbc4863a664b5d09f2948b))
+* **flagship:** Swift library fix ([b022f63](https://github.com/brandingbrand/flagship/commit/b022f636d1a2dfba77a6c70c028b15888314bd4b))
+* fix iOS compilation error ([97084a7](https://github.com/brandingbrand/flagship/commit/97084a7154fcbcaa7e86bdb1c5f4856c128c638b))
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **flagship:** add init script to patch rn images for ios 14 ([9667620](https://github.com/brandingbrand/flagship/commit/9667620ca54432f07670940acdd4fc8401795fc2))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+* **fscomponents:** Better backwards compatibility ([da268d4](https://github.com/brandingbrand/flagship/commit/da268d4e808171ddca141b6cbb7cc0507c57fc93))
+* **fscomponents:** Fix empty stars for reviews ([1b02443](https://github.com/brandingbrand/flagship/commit/1b02443cd70108f51d569a6e7e1435e2e099ad5b))
+* **fscomponents:** Fix search history display ([e57d0b5](https://github.com/brandingbrand/flagship/commit/e57d0b5ef31fd88d91a433eab948af315d4efc05))
+* **fscomponents:** Remove redundant code in SearchModal ([d874255](https://github.com/brandingbrand/flagship/commit/d87425568e9e9231125488bdef929c23460d564b))
+* pressing X on cart item removes from cart ([9f2d86c](https://github.com/brandingbrand/flagship/commit/9f2d86c9174ee7d26fde59525e8a9654bf0cb0f7))
+* remove cart item count badge when removing items from cart ([abaa899](https://github.com/brandingbrand/flagship/commit/abaa89901c7f204ec6a79c7bd7cd5ce6cadb442b))
+* **fsweb:** Upgrade react-native-web to 0.12.2 ([5c701ca](https://github.com/brandingbrand/flagship/commit/5c701cacf3abd0958f6ee5549471a755618d11af))
+
+
+### chore
+
+* merge develop into master ([#838](https://github.com/brandingbrand/flagship/issues/838)) ([1bb87b2](https://github.com/brandingbrand/flagship/commit/1bb87b2b692b398dece0f564b7cbd277de431f5e)), closes [#620](https://github.com/brandingbrand/flagship/issues/620) [#817](https://github.com/brandingbrand/flagship/issues/817) [#814](https://github.com/brandingbrand/flagship/issues/814) [#823](https://github.com/brandingbrand/flagship/issues/823) [#808](https://github.com/brandingbrand/flagship/issues/808) [#143](https://github.com/brandingbrand/flagship/issues/143) [#862](https://github.com/brandingbrand/flagship/issues/862) [#864](https://github.com/brandingbrand/flagship/issues/864) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905)
+
+
+### Features
+
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* remove hockeyapp and update appcenter for fastlane ([839cb59](https://github.com/brandingbrand/flagship/commit/839cb59376fa46b51babf03ac52ed4ae757717cb))
+* replace all any in PSCartItem ([3505c56](https://github.com/brandingbrand/flagship/commit/3505c56cb3444c7720fef7494fc91944ba074256))
+* Replace all occurrences of "any" in fscomponents/ProductItem ([7331806](https://github.com/brandingbrand/flagship/commit/7331806e4e941bf4e00a14fb549a65346e6ad5e5))
+* Replace all occurrences of "any" in FSMockDataSources package ([3a0c881](https://github.com/brandingbrand/flagship/commit/3a0c881776f3283b64926b8689f034b0119cfd3f))
+* upgrade to RN 0.63 ([507d0e4](https://github.com/brandingbrand/flagship/commit/507d0e4618cc6e557af6c475a655aa12f57b6607))
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **any-occurrences:** Replace all occurrences of "any" in PageDots ([65f0116](https://github.com/brandingbrand/flagship/commit/65f011666366df7b50c25f3d1eeddff8be45cad1))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+* **fscommerce:** Allow setting the commerce provider's initial data ([55d9da0](https://github.com/brandingbrand/flagship/commit/55d9da0617c145c8d0e07c1c46ae90689cbef68f))
+* **fsproductindex:** Add functionality for loading previous pages ([bbc6bb0](https://github.com/brandingbrand/flagship/commit/bbc6bb016d41d4aadcdae3152209de5956bd1129))
+
+
+### Reverts
+
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* major react native update
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+* This removes the apiToken env config that could be used to configure App Center uploads. This was previously deprecated in favor of passing in an environment variable instead: APPCENTER_API_TOKEN.
+
+This also removes the :beta lanes from the Fastfiles, as these attempted to upload builds to Hockeyapp which has been shut down. The available lanes are :appcenter and :build for iOS and :appcenter, :appcenter_bundle, and :build for Android.
+* If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+* Revert yarn.lock changes
+
+* feat: update bv components w/ syndicated indicator
+
+**Description**
+Some reviews are syndicated by the manufacturer. When this is the case, if the client wants to display the indicator, another row will appear on the bottom of the review indicating that it is syndicated.
+
+* chore(release): publish v7.0.0
+
+* feat(flagship): support background modes
+
+* feat: update bv syndicated indicator style
+
+**Description**
+There were some bugs with the syndication badges on smaller devices. Fixed them with flex-wrap. Also updated copy.
+
+* chore(release): publish v7.1.0
+
+* feat: add position property for half modal component
+
+* chore: add state typing for component CMSBanner
+
+* fix: excessive calls of handleContainerSizeChange in MultiCarousel
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** add init script to patch rn images for ios 14 ([11149da](https://github.com/brandingbrand/flagship/commit/11149da128f4ac83952526157144a1484e9832b4))
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **flagship:** iOS Pods not being added ([4e4c165](https://github.com/brandingbrand/flagship/commit/4e4c1653c2e60c279b2208dc2e16b7f7b88ea7d1))
+* **fscomponents:** Fix crashes with bad currency codes ([07070ea](https://github.com/brandingbrand/flagship/commit/07070ea7e2cefd3cf0c9c57918be07c2328cc93e))
+* **fscomponents:** Fix currency conversion ([f746451](https://github.com/brandingbrand/flagship/commit/f74645170aecc015c0c4faad6503249a5cddbed0))
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix crash for empty carousel ([53aee9f](https://github.com/brandingbrand/flagship/commit/53aee9f6cedbb46d31fd8cdf2c209398475ca965))
+* **fscomponents:** Use React Children helper ([0d33371](https://github.com/brandingbrand/flagship/commit/0d33371a07c6f0ef231dfeacf94b4695eff4bff1))
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+
+### Bug Fixes
+
+* **flagship:** removed single/multi column buttons ([abd7d88](https://github.com/brandingbrand/flagship/commit/abd7d886b6bbe48e4c8e94edb63d7d0e43fc2126))
+* **fsapp:** Close dev menu before restart ([9570820](https://github.com/brandingbrand/flagship/commit/9570820664c9d7fc986d02b852fd500c55c152db)), closes [/github.com/wix/react-native-navigation/blob/a641b0976f18c54a0d649cf7905b6c83ab2ebf67/lib/ios/RNNModalManager.m#L70](https://github.com//github.com/wix/react-native-navigation/blob/a641b0976f18c54a0d649cf7905b6c83ab2ebf67/lib/ios/RNNModalManager.m/issues/L70)
+* **fscomponents:** Ensure required props are serializable for Swatches ([a8e4a8f](https://github.com/brandingbrand/flagship/commit/a8e4a8f80d4a30dd89257946518d67804078579e))
+* **fsengagement:** Update engagement for Navigator updates ([602e4dd](https://github.com/brandingbrand/flagship/commit/602e4dd563273b131529d0f0b4bd97764145b68f))
+* **pirateship:** add padding between swatches on PDP ([1316047](https://github.com/brandingbrand/flagship/commit/13160472f18700659401cc986019c0936a403678))
+* **pirateship:** svg arrows no longer black boxes ([f89e2d9](https://github.com/brandingbrand/flagship/commit/f89e2d9c2ce99036fab42d265c9b5008879071f3))
+
+
+### Features
+
+* bump websocket-extensions to resolve security vulnerability ([b71559f](https://github.com/brandingbrand/flagship/commit/b71559f5954e4be03f6b62b9062a4019093ff984))
+* **fsengagement:** add new time icon ([5fba223](https://github.com/brandingbrand/flagship/commit/5fba223e6cc72d5fc7694f2f5f45f8f35e86d7d5))
+* **fsengagement:** Update event card/block to allow for start/end dates ([f894f16](https://github.com/brandingbrand/flagship/commit/f894f169b063d9fa566d32c04a340a1977150095))
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+
+### Features
+
+* **fsengagement:** new methods to return segment list and messages ([5bebff7](https://github.com/brandingbrand/flagship/commit/5bebff75650e70525bd617ddf9199345a693588c))
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+
+### Bug Fixes
+
+* **fscomponents:** added styling props for IE11 UI fix ([763365d](https://github.com/brandingbrand/flagship/commit/763365d6b4f9360d2e012b23b25f78ca15ecd94a))
+* **fsproductindex:** added styling props for IE11 UI fix ([b1c15d3](https://github.com/brandingbrand/flagship/commit/b1c15d30bd3eeefb498397c2e50ccc2c65f1c8ee))
+
+
+### Features
+
+* **flagship:** Custom Short Version string for iOS ([cb68386](https://github.com/brandingbrand/flagship/commit/cb68386635286ef8d9da9ca488e151766d8bd3ae))
+* **fsapp:** Add updateProps to navigator ([23e1349](https://github.com/brandingbrand/flagship/commit/23e13497ea912ca9a83163fd4b3b648aeaf6267c))
+
+
+
+
+
 # [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
 
 

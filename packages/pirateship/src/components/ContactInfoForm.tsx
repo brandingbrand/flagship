@@ -6,16 +6,16 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import React, {Component} from 'react';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
-import {Form} from '@brandingbrand/fscomponents';
-import {EMAIL_REGEX} from '../lib/constants';
-import {select, textbox} from '../lib/formTemplate';
-import {border, color, padding, palette} from '../styles/variables';
+import React, { Component } from 'react';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
+import { Form } from '@brandingbrand/fscomponents';
+import { EMAIL_REGEX } from '../lib/constants';
+import { select, textbox } from '../lib/formTemplate';
+import { border, color, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
-import {merge} from 'lodash-es';
-import translate, {translationKeys} from '../lib/translations';
+import { merge } from 'lodash-es';
+import translate, { translationKeys } from '../lib/translations';
 import { FieldOptions } from '../lib/FieldOptionsTypes';
 
 const styles = StyleSheet.create({
@@ -86,6 +86,11 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
     this.optionalFields = new Set(props.optionalFields);
     this.fields = this.getFormFields();
     this.fieldOptions = this.getFormFieldOptions();
+  }
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ContactInfoForm is deprecated and will be removed in the next version of Flagship.');
   }
 
   getFormFields = () => {

@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import PSRow from './PSRow';
 import { border, fontSize, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { Loading, NavArrow } from '@brandingbrand/fscomponents';
+import { Loading } from '@brandingbrand/fscomponents';
 
 const styles = StyleSheet.create({
   loading: {
@@ -41,12 +41,6 @@ const PSShopLandingCategories: FunctionComponent<PSShopLandingCategoriesProps> =
     props.onItemPress(category);
   };
 
-  const renderImage = (): JSX.Element => {
-    return (
-      <NavArrow color={palette.primary} />
-    );
-  };
-
   const renderContent = (): React.ReactNode => {
     if (!props.categories) {
       return <Loading style={styles.loading} />;
@@ -58,7 +52,6 @@ const PSShopLandingCategories: FunctionComponent<PSShopLandingCategoriesProps> =
         title={category.title}
         onPress={handleItemPress(category)}
         showImage={true}
-        renderImage={renderImage}
       />
     ));
   };

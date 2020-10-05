@@ -4,8 +4,8 @@ import memoize from 'memoize-one';
 // dynamically generates stylesheet w/ correct active, error, inactive colors
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import {
   aboveLabels,
   floatingLabels,
@@ -93,6 +93,10 @@ export class Form extends PureComponent<FormProps> {
     super(props);
 
     this.form = React.createRef<TcombForm>();
+  }
+
+  componentDidMount(): void {
+    console.warn('Form is deprecated and will be removed in the next version of Flagship.');
   }
 
   getValue = () => {

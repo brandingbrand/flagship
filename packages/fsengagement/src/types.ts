@@ -10,7 +10,7 @@ import {
 import { Navigator } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
-  navigator: Navigator;
+  componentId: string;
 }
 
 export interface Action {
@@ -78,6 +78,7 @@ export interface JSON {
   storyGradient?: StoryGradient;
   html?: HTML;
   pageNumberStyle?: StyleProp<TextStyle>;
+  headerTitleStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
   id?: string;
