@@ -7,22 +7,27 @@
     "clean": "rm -rf ./build/static && rm -f ./build/index.html && rm -f ./build/service-worker.js && rm -f ./build/asset-manifest.json",
     "build": "webpack --mode production",
     "build:size": "webpack --json | webpack-bundle-size-analyzer",
+    "build-ssr": "node --max_old_space_size=4096 ./node_modules/.bin/webpack --config ./webpack.ssr.js",
     "start": "webpack-dev-server -d --config ./webpack.config.js --mode development --inline --hot",
     "start-prod": "webpack-dev-server -d --config ./webpack.config.js --mode production",
     "server-dev": "node ./dist/server.dev.js",
     "server-prod": "node ./dist/server.prod.js",
+    "server-ssr": "node ./dist/server.ssr.js",
     "prepare": "tsc",
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/runtime": "~7.5.5",
     "@react-native-community/datetimepicker": "^2.3.2",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
     "babel-plugin-react-native-web": "^0.11.7",
+    "babel-plugin-transform-imports": "^2.0.0",
     "cache-loader": "^4.0.0",
+    "cookie-parser": "^1.4.5",
     "copy-webpack-plugin": "^5.1.0",
     "core-js": "^3.0.0",
     "cors": "^2.8.5",
@@ -36,9 +41,12 @@
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^1.0.5",
     "metro-react-native-babel-preset": "^0.57.0",
+    "module-replace-webpack-plugin": "^0.0.12",
     "path-to-regexp": "^1.7.0",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^6.1.0",
     "react-id-swiper": "^2.0.0",
     "react-native-web-image-loader": "^0.0.7",
     "react-native-web-modal": "^1.0.1",
@@ -57,8 +65,10 @@
     "workbox-webpack-plugin": "^4.3.1"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.8"
+    "@types/express": "^4.17.8",
+    "@types/react-helmet": "^6.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
