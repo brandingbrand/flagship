@@ -1,5 +1,6 @@
 import { env } from '@brandingbrand/fsapp';
 import fsengagement from '@brandingbrand/fsengagement';
+import {StyleProp, ViewStyle} from 'react-native';
 
 const { engagement: {
   appId, apiKey, baseURL, cacheTTL
@@ -37,7 +38,7 @@ export interface Message {
 export interface InboxResponseMessage extends Message {
   sent: Attribute;
   audience: Attribute;
-  message: any;
+  message: string;
 }
 export interface DiscoveryMessage extends Message {
   account: string;
@@ -51,7 +52,7 @@ export interface DiscoveryMessage extends Message {
 export interface MessageDetails {
   cardStyle: string;
   cartType: string;
-  containerStyle: any;
+  containerStyle: StyleProp<ViewStyle>;
   key: string;
   private_type: string;
   private_blocks: MessageDetails[];
@@ -67,5 +68,5 @@ export async function fetchEngagementInbox(userInfo: InboxFetch): Promise<Discov
   await engagementService.getProfile(userInfo.login);
 
   const inboxResponse = await engagementService.getMessages();
-  return inboxResponse.map((inboxMessage: any) => (inboxMessage.message));
+  return inboxResponse.map((inboxMessage: {message: string}) => (inboxMessage.message));
 }

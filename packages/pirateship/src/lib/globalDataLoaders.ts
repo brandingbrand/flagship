@@ -64,7 +64,14 @@ export async function loadPromoProducts(): Promise<void> {
   }
 }
 
-function formatCategories(rootCategory: CommerceTypes.Category): any {
+type FormattedCategory = {
+  handle: string;
+  id: string;
+  title: string;
+  items: { id: string; title: string }[];
+}[];
+
+function formatCategories(rootCategory: CommerceTypes.Category): FormattedCategory {
   return (rootCategory.categories || []).map(subCategory => ({
     id: subCategory.id,
     handle: subCategory.id,
