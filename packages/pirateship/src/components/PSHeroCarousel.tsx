@@ -10,7 +10,7 @@ import {
 import { get } from 'lodash-es';
 import { MultiCarousel } from '@brandingbrand/fscomponents';
 import { palette } from '../styles/variables';
-import {CMSSlot, fetchCMS} from '../lib/cms';
+import { CMSSlot, fetchCMS } from '../lib/cms';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +62,7 @@ export interface PSHeroCarouselProps {
 }
 
 export interface PSHeroCarouselState {
-  slotData: CMSSlot;
+  slotData: CMSSlot[];
 }
 
 export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHeroCarouselState> {

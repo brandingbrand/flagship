@@ -5,7 +5,10 @@ interface FetchProductData {
 }
 
 interface FetchCategoryData {
-  categories: CommerceTypes.Category[];
+  categories: {
+    c_showInMenu: boolean;
+    id: string;
+  }[];
 }
 
 export const commerceCloudMiddleware = {
@@ -14,8 +17,8 @@ export const commerceCloudMiddleware = {
     // Determine which categories to show by comparing the normalized subcategories against the
     // raw data, in which categories meant to be displayed will have c_showInMenu set to true.
     const categoriesToShow = (data.categories || [])
-      .filter((category: CommerceTypes.Category) => category.c_showInMenu)
-      .map((category: CommerceTypes.Category) => category.id);
+      .filter(category => category.c_showInMenu)
+      .map(category => category.id);
 
     // c_showInMenu may only be a custom field within the Demandware demo API, so only filter the
     // categories if at least one category has c_showInMenu set to true. This will prevent all

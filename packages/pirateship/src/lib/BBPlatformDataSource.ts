@@ -439,12 +439,35 @@ export interface CheckoutSubmitResponse {
   ccVerifyUrl?: string;
 }
 
-export interface ProductIndex extends CommerceTypes.ProductIndex {
-  fullCategoryId?: string; // internal category id, used for vehicle filter
-}
-
 interface ImageURI {
   src: string;
+}
+
+interface PlatformCategory {
+  image?: ImageURI;
+}
+
+interface PlatformProduct {
+  id: CommerceTypes.Product['id'];
+  title: CommerceTypes.Product['title'];
+  images?: ImageURI[];
+}
+
+interface PlatformProductIndex {
+  products?: PlatformProduct[];
+}
+
+interface PlatformCartItem {
+  itemId: string;
+  productId: string;
+  handle: string;
+  title: string;
+  quantity: number;
+  images?: ImageURI[];
+}
+
+interface PlatformCart {
+  items?: PlatformCartItem[];
 }
 
 export default class BBPlatformDataSource implements CommerceDataSource {
@@ -483,24 +506,26 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
   async fetchProductIndex(
     query: CommerceTypes.ProductQuery
-  ): Promise<ProductIndex> {
+  ): Promise<CommerceTypes.ProductIndex> {
     const response = await this.client.get('products', {
       params: query
     });
 
-    const data = response.data;
+    const data: PlatformProductIndex = response.data;
 
-    (data.products || []).forEach((product: CommerceTypes.ProductItem) => {
-      if (product.images) {
-        product.images = product.images.map(image => {
-          return {
-            uri: image.src
-          };
-        });
-      }
-    });
-
-    return data;
+    return {
+      ...data,
+      products: (data.products || []).map((product: PlatformProduct) => {
+        return {
+          ...product,
+          images: product.images?.map((image: ImageURI) => {
+            return {
+              uri: image.src
+            };
+          })
+        };
+      })
+    };
   }
 
   async fetchCategory(
@@ -510,13 +535,17 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     const response = await this.client.get('categories/' + (id || ''));
     const data = response.data;
 
-    (data.categories || []).forEach((category: CommerceTypes.Category) => {
-      if (category.image) {
-        category.image.uri = category.image.src;
-      }
-    });
-
-    return data;
+    return {
+      ...data,
+      categories: (data.categories || []).map((category: PlatformCategory) => {
+        return {
+          ...category,
+          image: category.image && {
+            uri: category.image.src
+          }
+        };
+      })
+    };
   }
 
   async fetchCart(
@@ -545,7 +574,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
   async search(
     keyword: string,
     query: CommerceTypes.ProductQuery
-  ): Promise<ProductIndex> {
+  ): Promise<CommerceTypes.ProductIndex> {
     keyword = encodeURIComponent(keyword);
     const response = await this.client.get(`products?kw=${keyword}`, {
       params: query
@@ -553,17 +582,19 @@ export default class BBPlatformDataSource implements CommerceDataSource {
 
     const data = response.data;
 
-    (data.products || []).forEach((product: CommerceTypes.ProductItem) => {
-      if (product.images) {
-        product.images = product.images.map(image => {
-          return {
-            uri: image.src
-          };
-        });
-      }
-    });
-
-    return data;
+    return {
+      ...data,
+      products: (data.products || []).map((product: PlatformProduct) => {
+        return {
+          ...product,
+          images: product.images?.map(image => {
+            return {
+              uri: image.src
+            };
+          })
+        };
+      })
+    };
   }
 
   async searchSuggestion(
@@ -977,19 +1008,19 @@ export default class BBPlatformDataSource implements CommerceDataSource {
    * @param {object} cart - The cart object from a legacy API
    * @returns {CommerceTypes.Cart} The cart object translated to the Commerce spec
    */
-  private updateCartSchema(cart: CommerceTypes.Cart): CommerceTypes.Cart {
-    if (Array.isArray(cart.items)) {
-      cart.items.forEach((item: CommerceTypes.CartItem) => {
-        if (item.images) {
-          item.images = item.images.map(image => {
+  private updateCartSchema(cart: PlatformCart): CommerceTypes.Cart {
+    return {
+      ...cart,
+      items: (cart.items || []).map((item: PlatformCartItem) => {
+        return {
+          ...item,
+          images: item.images?.map(image => {
             return {
               uri: image.src
             };
-          });
-        }
-      });
-    }
-
-    return cart;
+          })
+        };
+      })
+    };
   }
 }
