@@ -4,6 +4,7 @@ import * as helpers from '../helpers';
 import * as path from './path';
 import * as versionLib from './version';
 import * as nativeConstants from './native-constants';
+import * as usageDescriptions from './usage-descriptions';
 
 /**
  * Updates app bundle id.
@@ -250,53 +251,7 @@ export function usageDescription(configuration: Config): void {
     `updating iOS usage description: [${configuration.usageDescriptionIOS.map(u => u.key)}]`
   );
 
-  const infoPlist = path.ios.infoPlistPath(configuration);
-
-  configuration.usageDescriptionIOS.forEach(usage => {
-    if (fs.doesKeywordExist(infoPlist, usage.key)) {
-      // Replace the existing usage description for this key
-      if (usage.array) {
-        const stringArray = usage.array.map(res => {
-          return `<string>${res}</string>`;
-        });
-        fs.update(
-          infoPlist,
-          new RegExp(
-            `<key>${usage.key}<\\/key>\\s+<array>\\s+(<string>[^<]+<\\/string>\\s+){0,}<\\/array>`
-          ),
-          `<key>${usage.key}</key><array>${stringArray}</array>`
-        );
-      } else {
-        fs.update(
-          infoPlist,
-          new RegExp(`<key>${usage.key}<\\/key>\\s+<string>[^<]+<\\/string>`),
-          `<key>${usage.key}</key><string>${usage.string}</string>`
-        );
-      }
-    } else {
-      // This key doesn't exist so add it to the file
-      if (usage.array) {
-        const stringArray = usage.array.map(res => {
-          return `<string>${res}</string>`;
-        });
-        fs.update(
-          infoPlist,
-          '<key>UIRequiredDeviceCapabilities</key>',
-          `<key>${usage.key}</key>`
-          + `<array>${stringArray.join('')}</array>`
-          + `<key>UIRequiredDeviceCapabilities</key>`
-        );
-      } else {
-        fs.update(
-          infoPlist,
-          '<key>UIRequiredDeviceCapabilities</key>',
-          `<key>${usage.key}</key><string>${
-          usage.string
-          }</string><key>UIRequiredDeviceCapabilities</key>`
-        );
-      }
-    }
-  });
+  usageDescriptions.add(configuration, configuration.usageDescriptionIOS);
 }
 
 /**
@@ -348,6 +303,9 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+  || newVersion;
+
   const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
     || versionLib.normalize(newVersion);
 
@@ -357,7 +315,7 @@ export function version(configuration: Config, newVersion: string): void {
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${newVersion}</string>`
+    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
@@ -412,5 +370,33 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
     envSwitcherPath,
     /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
     `@"${env}"; // [EnvSwitcher initialEnvName]`
+  );
+}
+
+/**
+ * Patches RCTUIImageViewAnimated.m to fix displayLayer() to support iOS 14.
+ *
+ * @see https://github.com/facebook/react-native/issues/29268
+ */
+export function patchRCTUIImageViewAnimated(): void {
+  helpers.logInfo(`patching RCTUIImageViewAnimated.m to support iOS 14`);
+
+  const rnImagePath = path.project.resolve(
+    'node_modules', 'react-native', 'Libraries', 'Image', 'RCTUIImageViewAnimated.m'
+  );
+
+  fs.update(
+    rnImagePath,
+    /\(void\)displayLayer[\s\S]+?(?=#pragma)/g,
+    `(void)displayLayer:(CALayer *)layer
+{
+  if (_currentFrame) {
+    layer.contentsScale = self.animatedImageScale;
+    layer.contents = (__bridge id)_currentFrame.CGImage;
+  }
+  [super displayLayer:layer];
+}
+
+`
   );
 }

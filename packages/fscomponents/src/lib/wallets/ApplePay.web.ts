@@ -1,22 +1,31 @@
 import { default as ApplePayBase } from './ApplePay.base';
 
+export interface ApplePaySession {
+  openPaymentSetup: (identifier: string) => Promise<boolean>;
+  canMakePaymentsWithActiveCard: (identifier: string) => Promise<boolean>;
+}
+
+export type WindowApplePay = Window & {
+  ApplePaySession?: ApplePaySession;
+};
+
 export default class ApplePayWeb extends ApplePayBase {
-  theWindow: any;
+  theWindow: WindowApplePay;
 
   constructor(merchantIdentifier: string) {
     super(merchantIdentifier);
 
-    this.theWindow = window;
+    this.theWindow = window as WindowApplePay;
   }
 
   isEnabled(): boolean {
-    return this.theWindow && this.theWindow.ApplePaySession;
+    return this.theWindow && !!this.theWindow.ApplePaySession;
   }
 
   canCallSetup(): boolean {
     return this.theWindow
-      && this.theWindow.ApplePaySession
-      && this.theWindow.ApplePaySession.openPaymentSetup;
+      && !!this.theWindow.ApplePaySession
+      && !!this.theWindow.ApplePaySession.openPaymentSetup;
   }
 
   async hasActiveCard(): Promise<boolean> {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ImageSourcePropType, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { fontSize, palette } from '../styles/variables';
 import { fetchCMS } from '../lib/cms';
 import { ImageWithOverlay } from '@brandingbrand/fscomponents';
@@ -22,11 +22,18 @@ const styles = StyleSheet.create({
 export const kPromoImageKey = 'Banner-Promo-Image';
 export const kPromoDescriptionKey = 'Banner-Promo-Description';
 export const kPromoBackgroundColorKey = 'Background-Color';
+export const kPromoTextColorKey = 'Text-Color';
+
+export interface PSGlobalBannerSlotItemImage {
+  height: number;
+  path: ImageSourcePropType;
+}
 
 export interface PSGlobalBannerSlotItem {
-  [kPromoImageKey]?: object;
+  [kPromoImageKey]?: PSGlobalBannerSlotItemImage;
   [kPromoDescriptionKey]: string;
   [kPromoBackgroundColorKey]?: string;
+  [kPromoTextColorKey]: string;
 }
 
 export interface PSGlobalBannerProps {
@@ -40,7 +47,7 @@ export interface PSGlobalBannerProps {
 }
 
 export interface PSGlobalBannerState {
-  slotData: any;
+  slotData: PSGlobalBannerSlotItem | null;
   isLoading: boolean;
 }
 
@@ -121,13 +128,13 @@ export default class PSGlobalBanner extends Component<
     const textStyle = [
       styles.text,
       this.props.fontColor ? { color: this.props.fontColor } : null,
-      this.state.slotData['Text-Color']
-        ? { color: this.state.slotData['Text-Color'] }
+      this.state.slotData && this.state.slotData[kPromoTextColorKey]
+        ? { color: this.state.slotData[kPromoTextColorKey] }
         : null
     ];
     return (
       <Text style={textStyle}>
-        {this.state.slotData[kPromoDescriptionKey]}
+        {this.state.slotData && this.state.slotData[kPromoDescriptionKey]}
       </Text>
     );
   }

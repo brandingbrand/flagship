@@ -1,6 +1,6 @@
 import React from 'react';
 import { EventSubscription } from 'react-native';
-import pushRoute from './push-route';
+import pushRoute, { overwrite } from './push-route';
 import {
   AppConfigType,
   DrawerConfig,
@@ -82,6 +82,9 @@ export default class Navigator {
     this.props.modals = [];
     this.props.updateModals(this.props.modals);
   }
+  async updateProps(newProps: object, alternateId?: string): Promise<any> {
+    overwrite(newProps, this.props.history, this.props.appConfig);
+  }
   mergeOptions(options: NavOptions, alternateId?: string): void {
     if (options.sideMenu && this.props.toggleDrawerFn) {
       if (options.sideMenu.left && options.sideMenu.left.visible !== undefined) {
@@ -131,7 +134,7 @@ export default class Navigator {
           }
         }
       }
-    }).catch((e: any) => {
+    }).catch(e => {
       console.error(e);
     });
   }
@@ -142,7 +145,7 @@ export default class Navigator {
   setTabBadge(options: {
     tabIndex: number;
     badge: string | number | null;
-    badgeColor?: any;
+    badgeColor?: string;
   }): void {
     console.warn('setTabBadge has been deprecated. ' +
       'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +

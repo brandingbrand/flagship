@@ -49,10 +49,21 @@ export interface PSScreenWrapperProps {
   hideWebHeader?: boolean;
 }
 
+interface Position {
+  top: number;
+  left: number;
+  bottom: number;
+  right: number;
+}
+
+export interface PSScreenWrapperStateType {
+  safeAreaInsets: Position;
+}
+
 export default class PSScreenWrapper extends PureComponent<
-  PSScreenWrapperProps
+  PSScreenWrapperProps, PSScreenWrapperStateType
   > {
-  state: any = {
+  state: PSScreenWrapperStateType = {
     safeAreaInsets: {
       top: 0,
       left: 0,
@@ -94,7 +105,7 @@ export default class PSScreenWrapper extends PureComponent<
   }
 
   onSafeAreaInsetsForRootViewChange = (result: {
-    safeAreaInsets: any;
+    safeAreaInsets: Position;
   }) => {
     const { safeAreaInsets } = result;
     this.setState({ safeAreaInsets });

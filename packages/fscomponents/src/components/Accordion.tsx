@@ -88,7 +88,7 @@ export interface SerializableAccordionProps {
   /**
    * Content of the accordion title
    */
-  title: string | JSX.Element;
+  title: string;
   /**
    *  Styles for the accordion title container
    */
@@ -121,6 +121,7 @@ export interface AccordionProps extends Omit<
   'openTitleStyle' |
   'plusMinusStyle' |
   'style' |
+  'title' |
   'titleContainerStyle' |
   'titleStyle' |
   'titleTouchStyle'
@@ -141,7 +142,7 @@ export interface AccordionProps extends Omit<
    * Content of the accordion
    * @deprecated Make the contents a child instead
    */
-  content?: JSX.Element;
+  content?: JSX.Element | JSX.Element[];
   /**
    * Styles for the accordion content container
    */
@@ -166,6 +167,10 @@ export interface AccordionProps extends Omit<
    * Styles for the accordion container
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * Content of the accordion title
+   */
+  title: string | JSX.Element;
   /**
    *  Styles for the accordion title container
    */
@@ -347,7 +352,8 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     if (this.shouldEnableAnimation()) {
       Animated.spring(this.state.contentHeightAnimation, {
         bounciness: 0,
-        toValue: height
+        toValue: height,
+        useNativeDriver: false
       }).start();
     } else {
       this.state.contentHeightAnimation.setValue(height);

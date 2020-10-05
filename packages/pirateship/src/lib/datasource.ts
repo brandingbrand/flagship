@@ -14,6 +14,7 @@ export interface DataSourceConfig {
   apiConfig: {
     apiHost: string;
   };
+  enableProxy?: boolean;
 }
 
 if (env.dataSource.type === 'bbplatform') {

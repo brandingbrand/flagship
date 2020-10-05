@@ -20,12 +20,20 @@ import {
 } from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
-import { ListRenderItemInfo, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ListRenderItemInfo,
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.productIndex;
 
 export interface PropTyps extends ProductIndexPropType {
   onPress: (data: CommerceTypes.Product) => () => void;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const defaultErrorMessage =
@@ -103,6 +111,7 @@ export default class ProductIndexGrid extends Component<
     return (
       <ProductItem
         style={S.productItem}
+        id={item.id}
         title={item.title}
         brand={item.brand}
         image={item.images && item.images.find(img => !!img.uri)}
@@ -204,7 +213,7 @@ export default class ProductIndexGrid extends Component<
     this.setState({ sortModalVisble: false });
   }
 
-  handleFilterApply = (selectedItems: any, info: any) => {
+  handleFilterApply = (selectedItems: any, info?: { isButtonPress: boolean }) => {
     if (!this.props.filterInBackground) {
       this.closeFilterModal();
     } else {
@@ -226,7 +235,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     if (this.props.handleFilterApply) {
-      this.props.handleFilterApply(selectedItems);
+      this.props.handleFilterApply(selectedItems, info);
     } else {
       this.reloadByQuery({
         ...refinementsQuery,
@@ -413,7 +422,7 @@ export default class ProductIndexGrid extends Component<
     if (commerceData) {
       if (this.props.renderSort) {
         content = this.props.renderSort(this.handleSortChange, commerceData);
-      } else {
+      } else if (commerceData.sortingOptions) {
         content = (
           <View style={S.modalContainer}>
             {this.renderModalHeader({
@@ -532,7 +541,7 @@ export default class ProductIndexGrid extends Component<
             renderFilterItemValue={this.renderItemValueForCombinedFilterAndSort}
             applyOnSelect={this.props.filterInBackground}
             singleFilterIds={
-              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : null
+              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : undefined
             }
             {...this.props.FilterListDrilldownProps}
           />
@@ -547,7 +556,7 @@ export default class ProductIndexGrid extends Component<
           })}
 
           <FilterList
-            items={commerceData.refinements}
+            items={commerceData.refinements || []}
             onApply={this.handleFilterApply}
             onReset={this.handleFilterReset}
             selectedItems={commerceData.selectedRefinements}
@@ -753,7 +762,8 @@ export default class ProductIndexGrid extends Component<
       gridProps,
       loadingStyle,
       errorText,
-      errorTextStyle
+      errorTextStyle,
+      containerStyle
     } = this.props;
 
     if (this.state.isLoading && !this.props.filterInBackground) {
@@ -773,7 +783,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     return (
-      <View style={S.container}>
+      <View style={[S.container, containerStyle]}>
         <ProductList
           style={[S.list, listStyle]}
           columns={columns}

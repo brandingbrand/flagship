@@ -3,6 +3,111 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsweb:** add build scripts for web ([5551f89](https://github.com/brandingbrand/flagship/commit/5551f89cc00bc4c14d10bddc2cbb96c35b028d95))
+
+
+### Features
+
+* **fsweb:** add proxy support ([1e8f1c8](https://github.com/brandingbrand/flagship/commit/1e8f1c880512bd37c0ea8b5c5fc3ad6a4d02d952))
+* **fsweb:** Convert proxy to Typescript ([d5990bc](https://github.com/brandingbrand/flagship/commit/d5990bcb82ec68901f11f64169d5c650c5e024a4))
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* **fsweb:** Upgrade react-native-web to 0.12.2 ([5c701ca](https://github.com/brandingbrand/flagship/commit/5c701cacf3abd0958f6ee5549471a755618d11af))
+
+
+### Reverts
+
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
 # [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
 
 **Note:** Version bump only for package @brandingbrand/fsweb
