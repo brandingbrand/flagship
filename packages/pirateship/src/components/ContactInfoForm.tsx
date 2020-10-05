@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 export interface ContactInfoFormProps {
   values: ContactFormValues;
-  onChange: <T>(values: T) => void;
+  onChange: (values: any) => void;
   updateFormRef: (ref: Form) => void;
   style?: StyleProp<ViewStyle>;
   hiddenFields?: (keyof FormFields)[];
@@ -95,7 +95,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
 
   getFormFields = () => {
     const EmailType = t.refinement(t.String, (value: string) => {
-      const {email, emailConfirmation} = this.props.values;
+      const { email, emailConfirmation } = this.props.values;
       const isEmailFormat = EMAIL_REGEX.test((value || '').trim());
       const isSameEmail = email === emailConfirmation;
 
@@ -114,7 +114,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
     };
 
     const PasswordType = t.refinement(t.String, (value: string) => {
-      const {password, passwordConfirmation} = this.props.values;
+      const { password, passwordConfirmation } = this.props.values;
 
       const isLongEnough = value.length >= 6;
       const passwordsMatch = password === passwordConfirmation;
@@ -123,7 +123,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
     });
 
     PasswordType.getValidationErrorMessage = (value: string) => {
-      const {password, passwordConfirmation} = this.props.values;
+      const { password, passwordConfirmation } = this.props.values;
 
       if (!value) {
         return translate.string(translationKeys.contactInfo.errors.password.invalid);
@@ -330,7 +330,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
   }
 
   render(): JSX.Element {
-    const {values, onChange} = this.props;
+    const { values, onChange } = this.props;
     this.fieldOptions = t.update(this.fieldOptions, {
       password: {
         secureTextEntry: {
@@ -359,7 +359,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
   }
 
   updateFormRef = (ref: Form) => {
-    const {updateFormRef} = this.props;
+    const { updateFormRef } = this.props;
     if (updateFormRef) {
       updateFormRef(ref);
     }
@@ -367,7 +367,7 @@ export default class ContactInfoForm extends Component<ContactInfoFormProps,
   }
 
   focusField = (fieldName: string) => {
-    const field = this?.form?.getComponent(fieldName);
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
