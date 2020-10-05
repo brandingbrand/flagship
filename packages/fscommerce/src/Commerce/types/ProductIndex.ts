@@ -84,6 +84,14 @@ export interface ProductIndex<T extends Product = Product> extends Partial<Pagea
    */
   products: T[];
 
+
+  /**
+   * A unique identifier for the product index category, used for vehicle filter
+   *
+   * @example 'shoes'
+   */
+  fullCategoryId?: string;
+
   /**
    * The total number of products that comprise a product index.
    *
