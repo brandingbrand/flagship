@@ -19,12 +19,14 @@
     "start:dev-proxy": "cd web && yarn server-dev",
     "start:server-dev": "run-p compile-web start:dev-proxy",
     "start:server-prod": "cd web && yarn server-prod",
+    "start:server-ssr": "cd web && yarn server-ssr",
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
     "lint": "fscodestyle",
     "build-web-demo": "./scripts/buildWebDemo.sh",
-    "build-web": "./scripts/buildWeb.sh"
+    "build-web": "./scripts/buildWeb.sh",
+    "build-ssr": "cd web/ && node --max_old_space_size=4096 ./node_modules/.bin/webpack --config ./webpack.ssr.js"
   },
   "dependencies": {
     "@brandingbrand/flagship": "^10.0.0-alpha.5",

@@ -16,6 +16,7 @@
     "@brandingbrand/fsfoundation": "^10.0.0-alpha.5",
     "@brandingbrand/fsnetwork": "^10.0.0-alpha.5",
     "@react-native-community/async-storage": "^1.9.0",
+    "fs-extra": "^8.0.0",
     "path-to-regexp": "^1.7.0",
     "qs": "^6.7.0",
     "react": "^16.13.1",
@@ -32,6 +33,16 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "react-helmet": "^6.1.0"
+  },
+  "peerDependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "react-helmet": "^6.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
