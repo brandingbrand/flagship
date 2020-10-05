@@ -6,6 +6,8 @@ import EnvSwitcher from './lib/env-switcher';
 import projectEnvs from '../project_env_index';
 const env = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
 
+export * from './lib/helpers';
+
 export { default as Navigator } from './lib/nav-wrapper';
 
 export { env, FSApp, FSAppTypes };
