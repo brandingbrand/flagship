@@ -61,5 +61,4 @@ export interface Category {
    * An identifier representing a category's ancestor.
    */
   parentId?: string;
-  c_showInMenu?: boolean;
 }
