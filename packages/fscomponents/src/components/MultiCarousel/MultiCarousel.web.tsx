@@ -161,9 +161,9 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   goTo = (index: number, options?: any) => {
     const scrollViewElement = findDOMNode(this.scrollView);
 
-    if (!!scrollViewElement) {
+    if (scrollViewElement instanceof Element) {
       animatedScrollTo(
-        scrollViewElement as Element,
+        scrollViewElement,
         index * this.getPageWidth(),
         200
       ).catch(e => {
