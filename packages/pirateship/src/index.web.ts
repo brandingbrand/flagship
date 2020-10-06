@@ -27,7 +27,5 @@ if (window.initialState) {
   };
 }
 
-console.log(webConfig.initialState);
-
 const app = new FSApp(webConfig);
 export default app;
