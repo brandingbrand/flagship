@@ -1,5 +1,7 @@
 import { appConfig } from './appConfig';
-import { FSApp, FSAppTypes } from '@brandingbrand/fsapp';
+import type { FSAppTypes } from '@brandingbrand/fsapp';
+// tslint:disable-next-line: no-submodule-imports
+import { attachSSR } from '@brandingbrand/fsapp/dist/lib/ssr';
 import Analytics from './lib/analytics';
 
 const webConfig: FSAppTypes.AppConfigType = {
@@ -18,16 +20,6 @@ const webConfig: FSAppTypes.AppConfigType = {
   analytics: Analytics
 };
 
-// @ts-ignore May be set by SSR
-if (window.initialState) {
-  webConfig.initialState = {
-    ...webConfig.initialState,
-    // @ts-ignore
-    ...window.initialState
-  };
+export default function(app: any): void {
+  attachSSR(app, webConfig);
 }
-
-console.log(webConfig.initialState);
-
-const app = new FSApp(webConfig);
-export default app;

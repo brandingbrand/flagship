@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Update to newer version of async-storage ([b2bbad0](https://github.com/brandingbrand/flagship/commit/b2bbad0dd34337db7174319fc0d4b4aeff4e87fd))
+
+
+### Features
+
+* **fsapp:** Add SSR support ([aa2fd4c](https://github.com/brandingbrand/flagship/commit/aa2fd4c87149738755c3fcde46403d12e7a705cb))
+* replace react-native-restart with RN DevSettings ([7139061](https://github.com/brandingbrand/flagship/commit/71390610796967e32fbd21c32decfeda7b4c71d5))
+* replaced tcomb-form-native with bb fork ([d9993ea](https://github.com/brandingbrand/flagship/commit/d9993ea0fb99c4062518bee397a3b241859e3843))
+
+
+
+
+
 # [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
