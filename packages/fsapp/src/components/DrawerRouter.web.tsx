@@ -13,6 +13,7 @@ import pathToRegexp, { Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { pathForScreen } from '../lib/helpers';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
 const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
@@ -130,7 +131,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     );
 
     const screensRoutes = Object.keys(screens).map((key, i) => {
-      const path = screens[key].path ? screens[key].path : `/_s/${key}/`;
+      const path = pathForScreen(screens[key], key);
       const component = screens[key];
 
       return (
