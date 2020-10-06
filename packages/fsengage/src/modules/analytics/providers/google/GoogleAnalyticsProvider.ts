@@ -34,27 +34,6 @@ export interface GoogleAnalyticsProviderConfiguration {
   clientId?: string | Promise<string>;
   trackerName?: string;
   cookieDomain?: string;
-
-  /**
-   * queryParamsKey provides an "escape hatch" to directly set query string parameters in the
-   * Google Analytics calls. Since arbitrary data can be passed into the tracking calls of
-   * Analytics module's properties, add an object with the key/values you want to set.
-   *
-   * Note: The object's properties MUST match GA's query string parameters, which can be found at:
-   * https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
-   *
-   * For example, if you wanted to set a custom dimension, you could set
-   * queryParamsKey to `gaParams` and in your calls do:
-   *
-   * Analytics.screenview('Cart', {
-   *   url: '/cart',
-   *   gaParams: {
-   *     cd1: 'Some Data'
-   *   }
-   * });
-   *
-   */
-  queryParamsKey?: string;
 }
 
 interface GoogleAnalyticsEventProperties {
@@ -509,12 +488,10 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   }
 
   private extractExtraData(
-    properties: import ('@brandingbrand/fsfoundation').Dictionary
+    properties: import ('../../Analytics').BaseEvent
   ): object | undefined {
-    if (!this.configuration.queryParamsKey) {
-      return;
-    }
+    // TODO: Add warning/errors for invalid query string parameters
 
-    return properties[this.configuration.queryParamsKey];
+    return properties.gaQueryParams;
   }
 }

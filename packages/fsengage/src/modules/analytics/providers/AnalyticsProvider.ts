@@ -1,10 +1,10 @@
 import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
 import Decimal from 'decimal.js';
-type Dictionary = import ('@brandingbrand/fsfoundation').Dictionary;
+type BaseEvent = import ('../Analytics').BaseEvent;
 
 // Common Interface
 
-export interface Generics extends Dictionary {
+export interface Generics extends BaseEvent {
   eventAction: string;
   eventCategory: string;
 }
@@ -41,7 +41,7 @@ export interface SearchGeneric extends Generics {
   count?: number;
 }
 
-export interface Screenview extends Dictionary {
+export interface Screenview extends BaseEvent {
   eventCategory: string;
   url: string;
 }
@@ -82,14 +82,14 @@ export interface Promotion extends Generics {
   slot?: string;
 }
 
-export interface RefundProduct extends Dictionary {
+export interface RefundProduct extends BaseEvent {
   identifier: string;
   quantity: number;
   price?: string | Decimal;
   coupons?: string[];
 }
 
-export interface TransactionProduct extends Dictionary {
+export interface TransactionProduct extends BaseEvent {
   identifier: string;
   name: string;
   brand?: string;
@@ -111,16 +111,16 @@ export interface TransactionRefund extends Generics {
 
 // Enhanced Commerce Action Interfaces
 
-export interface ProductAction extends Dictionary {
+export interface ProductAction extends BaseEvent {
   list?: string;
 }
 
-export interface CheckoutAction extends Dictionary {
+export interface CheckoutAction extends BaseEvent {
   step?: number;
   option?: string;
 }
 
-export interface TransactionAction extends Dictionary {
+export interface TransactionAction extends BaseEvent {
   identifier: string;
   affiliation?: string;
   revenue?: string;
@@ -131,7 +131,7 @@ export interface TransactionAction extends Dictionary {
 
 // App Lifercyle Interfaces
 
-export interface App extends Dictionary {
+export interface App extends BaseEvent {
   eventAction: string;
   lifecycle: string;
 }
