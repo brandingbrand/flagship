@@ -1,5 +1,6 @@
 import {
   Analytics as FSAnalytics,
+  AnalyticsTypes,
   GoogleAnalyticsProvider
 } from '@brandingbrand/fsengage';
 
@@ -36,23 +37,15 @@ const providers = [
 const Analytics = new FSAnalytics(providers);
 export default Analytics;
 
-interface AnalyticsProductType {
-  identifier: string;
-  quantity?: number;
-  name: string;
-  brand?: string;
-  price?: CommerceTypes.CurrencyValue;
-}
-
 export function mapProductToAnalytics(
   product: CommerceTypes.Product,
   quantity?: number
-): AnalyticsProductType {
-  const analyticsProduct: AnalyticsProductType = {
+): AnalyticsTypes.Product {
+  const analyticsProduct: AnalyticsTypes.Product = {
     identifier: product.id,
     name: product.title,
     brand: product.brand,
-    price: product.price
+    price: product.price?.value.toString()
   };
 
   if (quantity) {

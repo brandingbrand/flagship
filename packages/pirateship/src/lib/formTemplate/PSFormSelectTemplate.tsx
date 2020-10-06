@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import { Selector } from '@brandingbrand/fscomponents';
-// tslint:disable-next-line:no-implicit-dependencies
 
 interface Option {
   value: any;
