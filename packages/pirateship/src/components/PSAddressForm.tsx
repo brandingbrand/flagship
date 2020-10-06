@@ -379,10 +379,10 @@ export default class PSAddressForm extends Component<
       options[fieldName].placeholder = optionalString;
       options[fieldName].returnKeyType = 'done';
       options[fieldName].onSubmitEditing = undefined;
-      if (options[fieldName]?.config) {
+      if (options[fieldName].config) {
         options[fieldName].config.onValueChange = undefined;
 
-        if (options[fieldName].config?.title) {
+        if (options[fieldName].config.title) {
           options[fieldName].config.title += ` (${optionalString})`;
         }
         if (options[fieldName].config.placeholder) {
