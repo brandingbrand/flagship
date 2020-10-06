@@ -102,6 +102,7 @@ to the following configuration signatures.
   | clientId | string | **yes** |
   | trackerName | string | no |
   | cookieDomain | string | no |
+  | queryParamsKey | string | no |
 
 #### # LeanplumProviderConfiguration
 
