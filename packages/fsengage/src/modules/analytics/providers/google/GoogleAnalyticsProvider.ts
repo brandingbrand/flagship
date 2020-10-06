@@ -34,6 +34,27 @@ export interface GoogleAnalyticsProviderConfiguration {
   clientId?: string | Promise<string>;
   trackerName?: string;
   cookieDomain?: string;
+
+  /**
+   * queryParamsKey provides an "escape hatch" to directly set query string parameters in the
+   * Google Analytics calls. Since arbitrary data can be passed into the tracking calls of
+   * Analytics module's properties, add an object with the key/values you want to set.
+   *
+   * Note: The object's properties MUST match GA's query string parameters, which can be found at:
+   * https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
+   *
+   * For example, if you wanted to set a custom dimension, you could set
+   * queryParamsKey to `gaParams` and in your calls do:
+   *
+   * Analytics.screenview('Cart', {
+   *   url: '/cart',
+   *   gaParams: {
+   *     cd1: 'Some Data'
+   *   }
+   * });
+   *
+   */
+  queryParamsKey?: string;
 }
 
 interface GoogleAnalyticsEventProperties {
@@ -101,28 +122,34 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.number
-    });
+    }, extraData);
   }
 
   contactEmail(properties: ContactEmail): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.to
-    });
+    }, extraData);
   }
 
   clickGeneric(properties: ClickGeneric): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.identifier || properties.name,
       value: properties.index
-    });
+    }, extraData);
   }
 
   impressionGeneric(properties: ImpressionGeneric): void {
@@ -131,40 +158,47 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   }
 
   locationDirections(properties: LocationDirections): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.identifier || properties.address
-    });
+    }, extraData);
   }
 
   pageview(properties: Screenview): void {
     const parser = properties.url && parseURL(properties.url);
+    const extraData = this.extractExtraData(properties);
 
     this._sendPageView({
       hostname: parser && parser.host,
       page: parser && parser.pathname,
       title: properties.eventCategory
-    });
+    }, extraData);
   }
 
   screenview(properties: Screenview): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendScreenView({
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
       appVersion: this.appVersion,
       screenName: properties.eventCategory
-    });
+    }, extraData);
   }
 
   searchGeneric(properties: SearchGeneric): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.term,
       value: properties.count
-    });
+    }, extraData);
   }
 
   // Enhanced Commerce Functions
@@ -369,11 +403,13 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   // App Lifecycle Functions
 
   lifecycle(properties: App): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: this.appId,
       category: properties.eventAction,
       label: properties.lifecycle
-    });
+    }, extraData);
   }
 
   // Trigger Functions
@@ -400,14 +436,20 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendEvent(properties: GoogleAnalyticsEventProperties): void {
+  private _sendEvent(properties: GoogleAnalyticsEventProperties, extraProps?: object): void {
     if (this.client) {
-      this.client.send(new GAHits.Event(
+      const hit = new GAHits.Event(
         properties.category,
         properties.action,
         properties.label,
         properties.value
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -417,13 +459,19 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendPageView(properties: GoogleAnalyticsPageViewProperties): void {
+  private _sendPageView(properties: GoogleAnalyticsPageViewProperties, extraProps?: object): void {
     if (this.client) {
-      this.client.send(new GAHits.PageView(
+      const hit = new GAHits.PageView(
         properties.hostname,
         properties.page,
         properties.title
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -433,15 +481,24 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendScreenView(properties: GoogleAnalyticsScreenViewProperties): void {
+  private _sendScreenView(
+    properties: GoogleAnalyticsScreenViewProperties,
+    extraProps?: object
+  ): void {
     if (this.client) {
-      this.client.send(new GAHits.ScreenView(
+      const hit = new GAHits.ScreenView(
         properties.appName,
         properties.screenName,
         properties.appVersion,
         properties.appId,
         properties.appInstallerId
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -449,5 +506,15 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         params: arguments
       });
     }
+  }
+
+  private extractExtraData(
+    properties: import ('@brandingbrand/fsfoundation').Dictionary
+  ): object | undefined {
+    if (!this.configuration.queryParamsKey) {
+      return;
+    }
+
+    return properties[this.configuration.queryParamsKey];
   }
 }
