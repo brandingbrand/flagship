@@ -9,60 +9,62 @@ import {
   UPDATE_TOP_CATEGORIES
 } from './constants';
 
-import app from '../index';
-
-export async function loadCartData(): Promise<void> {
-  return dataSource.fetchCart().then(cartData => {
-    app.store?.dispatch({ type: UPDATE_CART, cartData });
+export default (dispatch?: any) => {
+  const dispatcher = dispatch || (() => {
+    // Fallback noop dispatcher
   });
-}
-
-export async function loadAccountData(): Promise<void> {
-  return dataSource
-    .fetchAccount()
-    .then(account => {
-      app.store?.dispatch({ type: UPDATE_ACCOUNT, account });
-    })
-    .catch(e => {
-      console.log('not logged in', e);
-    });
-}
-
-export async function loadTopCategories(): Promise<void> {
-  return dataSource
-    .fetchCategory()
-    .then(data => {
-      app.store?.dispatch({
-        type: UPDATE_TOP_CATEGORIES,
-        data: formatCategories(data).slice(0, 10)
+  return {
+    async loadCartData(): Promise<void> {
+      return dataSource.fetchCart().then((cartData: CommerceTypes.Cart) => {
+        dispatcher({ type: UPDATE_CART, cartData });
       });
-    })
-    .catch(err => {
-      console.error(
-        'error when fetching Top Categories',
-        err
-      );
-    });
-}
-
-export async function loadPromoProducts(): Promise<void> {
-  if (appEnv.dataSource && appEnv.dataSource.promoProducts) {
-    return dataSource
-      .fetchProductIndex({
-        categoryId: appEnv.dataSource.promoProducts.categoryId,
-        limit: 5
-      })
-      .then(data => {
-        app.store?.dispatch({
-          type: UPDATE_PROMO_PRODUCTS,
-          data: data.products
+    },
+    async loadAccountData(): Promise<void> {
+      return dataSource
+        .fetchAccount()
+        .then((account: CommerceTypes.CustomerAccount) => {
+          dispatcher({ type: UPDATE_ACCOUNT, account });
+        })
+        .catch((e: Error) => {
+          console.log('not logged in', e);
         });
-      })
-      .catch(err => {
-        console.error('error fetching promo products', err);
-      });
-  }
-}
+    },
+    async loadTopCategories(): Promise<void> {
+      return dataSource
+        .fetchCategory()
+        .then((data: CommerceTypes.Category) => {
+          dispatcher({
+            type: UPDATE_TOP_CATEGORIES,
+            data: formatCategories(data).slice(0, 10)
+          });
+        })
+        .catch((err: Error) => {
+          console.error(
+            'error when fetching Top Categories',
+            err
+          );
+        });
+    },
+    async loadPromoProducts(): Promise<void> {
+      if (appEnv.dataSource && appEnv.dataSource.promoProducts) {
+        return dataSource
+          .fetchProductIndex({
+            categoryId: appEnv.dataSource.promoProducts.categoryId,
+            limit: 5
+          })
+          .then((data: CommerceTypes.ProductIndex) => {
+            dispatcher({
+              type: UPDATE_PROMO_PRODUCTS,
+              data: data.products
+            });
+          })
+          .catch((err: Error) => {
+            console.error('error fetching promo products', err);
+          });
+      }
+    }
+  };
+};
 
 type FormattedCategory = {
   handle: string;
@@ -71,12 +73,12 @@ type FormattedCategory = {
   items: { id: string; title: string }[];
 }[];
 
-function formatCategories(rootCategory: CommerceTypes.Category): FormattedCategory {
+export function formatCategories(rootCategory: CommerceTypes.Category): FormattedCategory {
   return (rootCategory.categories || []).map(subCategory => ({
     id: subCategory.id,
     handle: subCategory.id,
     title: subCategory.title,
-    items: (subCategory.categories || []).map(subSubCategory => ({
+    items: (subCategory.categories || []).map((subSubCategory: CommerceTypes.Category) => ({
       id: subSubCategory.id,
       title: subSubCategory.title
     }))

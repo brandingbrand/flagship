@@ -12,6 +12,7 @@ import {
 } from 'react-native-navigation';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
+import type { Request } from 'express';
 
 export interface DrawerType {
   screen: string;
@@ -65,6 +66,13 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
   path?: string;
   toPath?: PathFunction;
   paramKeys?: any[];
+  cache?: number;
+  loadInitialData?: (initialState: any, req: Request) => Promise<any>;
+}
+
+export interface SSRData {
+  initialState: any;
+  variables: any;
 }
 
 export interface AppConfigType {
@@ -95,6 +103,8 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+  uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+  cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
 }
 
 export interface Tab extends LayoutComponent {
