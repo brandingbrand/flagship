@@ -175,7 +175,7 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
       /**
        * Updates the component state with the new data and invokes the onDataLoaded callback
        *
-       * @param data - New data to repalce state with
+       * @param data - New data to replace state with
        */
       private setData = (data?: Data) => {
         this.setState({

@@ -1,13 +1,13 @@
-import CommerceSessionManager from './CommerceSessionManager';
+import CommerceSessionManager, {CommerceSessionManagerOptions} from './CommerceSessionManager';
 import { SessionToken } from '../types/SessionToken';
 
 /**
  * Implementation of CommerceSessionManager token based authentication(jwt, oauth, etc.)
  */
 export default class CommerceCookieSessionManager extends CommerceSessionManager {
-  options: any;
+  options: CommerceSessionManagerOptions;
 
-  constructor(options: any) {
+  constructor(options: CommerceSessionManagerOptions) {
     super(options);
     this.options = options;
   }

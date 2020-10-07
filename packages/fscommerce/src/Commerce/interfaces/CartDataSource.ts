@@ -23,9 +23,9 @@ export default interface CartDataSource {
    * @param {string} productId - The ID of the product to add to cart
    * @param {number} [qty] - The quantity of product to add to cart
    * @param {Product} [product] - A product instance to be added to cart
-   * @returns {Promise.<any>}  A Promise representing metadata about the active cart
+   * @returns {Promise.<object>}  A Promise representing metadata about the active cart
    */
-  addToCart(productId: string, qty?: number, product?: Product): Promise<any>;
+  addToCart(productId: string, qty?: number, product?: Product): Promise<object>;
 
   /**
    * Add a payment instance to a specified cart.
