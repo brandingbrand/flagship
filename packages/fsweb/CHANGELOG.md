@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+
+### Bug Fixes
+
+* **fsweb:** bump datetimepicker version ([f3a4a00](https://github.com/brandingbrand/flagship/commit/f3a4a004280cd2a73678ffd1f2807543d8f83cc4))
+* **fsweb:** Fix path check ([44d14e6](https://github.com/brandingbrand/flagship/commit/44d14e60882c4a199b466f6bf807940380d5d6e9))
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Add languages to navigator ([687b563](https://github.com/brandingbrand/flagship/commit/687b563b58d3ee204a910f4291603ba5c2bef798))
+
+
+
+
+
 # [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
 
 
