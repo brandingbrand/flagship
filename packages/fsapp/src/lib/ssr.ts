@@ -1,6 +1,6 @@
 import { FSApp } from '../fsapp/FSApp';
 import * as FSAppTypes from '../types';
-import type { default as expressRoot, Express, Request, Response } from 'express';
+import type { default as expressRoot, Express, NextFunction, Request, Response } from 'express';
 import type { default as helmetRoot, HelmetData } from 'react-helmet';
 import type { default as cookieParserRoot } from 'cookie-parser';
 import fs from 'fs-extra';
@@ -47,7 +47,14 @@ try {
   );
 }
 
-const baseHTML = fs.readFileSync(path.resolve('..', 'web-compiled', 'index.html')).toString();
+export interface SSROptions {
+  // The html to render the application into.
+  // default: load from ../web-compiled/index.html
+  overrideHTML?: string;
+  // Whether to run SSR for /
+  // default: true
+  renderRoot?: boolean;
+}
 
 export interface InitResponse {
   flagship: FSApp;
@@ -85,6 +92,7 @@ _global.IS_SERVER_SIDE = true;
 declare const BUNDLE_TIMESTAMP: string;
 
 async function renderApp(
+  baseHTML: string,
   res: Response,
   flagshipApp: InitResponse,
   cache: boolean,
@@ -179,8 +187,12 @@ async function flagshipPreinit(
 
 export const attachSSR = (
   app: Express,
-  appConfig: FSAppTypes.AppConfigType
+  appConfig: FSAppTypes.AppConfigType,
+  options?: SSROptions
 ) => {
+  const baseHTML = options?.overrideHTML ||
+    fs.readFileSync(path.resolve('..', 'web-compiled', 'index.html')).toString();
+
   if (cookieParser) {
     app.use(cookieParser());
   }
@@ -211,13 +223,27 @@ export const attachSSR = (
         const path = pathForScreen(screen, key);
         const keys: Key[] = [];
         const regex = pathToRegexp(path, keys);
-        app.get(regex, (req: Request, res: Response) => {
+        app.get(regex, (req: Request, res: Response, next: NextFunction) => {
+          if (screen.instantNext) {
+            next();
+            return;
+          }
           flagshipPreinit(req, config, screen.loadInitialData)
-            .then((pageConfig: FSAppTypes.AppConfigType) => {
-              if (screen.cache) {
+            .then(async (pageConfig: FSAppTypes.AppConfigType) => {
+              if (screen.shouldNext) {
+                if (await screen.shouldNext({
+                  initialState: pageConfig.initialState,
+                  variables: pageConfig.variables
+                }, req)) {
+                  next();
+                  return;
+                }
+              }
+              if (screen.cache !== undefined) {
                 res.set('Cache-Control', 'max-age=' + screen.cache);
               }
               renderApp(
+                baseHTML,
                 res,
                 {
                   flagship,
@@ -234,21 +260,24 @@ export const attachSSR = (
         });
       });
 
-      app.get('/', (req: Request, res: Response) => {
-        flagshipPreinit(req, config)
-          .then((pageConfig: FSAppTypes.AppConfigType) => {
-            renderApp(
-              res,
-              {
-                flagship,
-                config: pageConfig
-              },
-              false,
-              req
-            ).catch(handleRequestError(req, res));
-          })
-          .catch(handleRequestError(req, res));
-      });
+      if (options?.renderRoot !== false) {
+        app.get('/', (req: Request, res: Response) => {
+          flagshipPreinit(req, config)
+            .then((pageConfig: FSAppTypes.AppConfigType) => {
+              renderApp(
+                baseHTML,
+                res,
+                {
+                  flagship,
+                  config: pageConfig
+                },
+                false,
+                req
+              ).catch(handleRequestError(req, res));
+            })
+            .catch(handleRequestError(req, res));
+        });
+      }
     }).catch((e: any) => {
       // There was an error initializing the SSR React App
       console.error(e);
