@@ -68,6 +68,11 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
   paramKeys?: any[];
   cache?: number;
   loadInitialData?: (initialState: any, req: Request) => Promise<any>;
+  // Set to true to call next immediately if this is matched
+  instantNext?: boolean;
+  // Function to call to determine programmatically whether to call next
+  // Includes data after running loadInitialState
+  shouldNext?: (data: SSRData, req: Request) => Promise<boolean>;
 }
 
 export interface SSRData {
