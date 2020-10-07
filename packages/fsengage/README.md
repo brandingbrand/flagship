@@ -480,7 +480,9 @@ analytics.lifecycle.suspend(): void;
 
 ### Sending Custom Fields to Google Analytics
 
-The Google Analytics provider has support for specifying custom fields by way of setting  `gaQueryParams` in the payload. A full list of officially supported GA fields can be found here: https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference
+The Google Analytics provider has support for specifying custom fields by way of setting
+`gaQueryParams` in the payload. A full list of officially supported GA fields can be found
+[here](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference).
 
 Example usage:
 
