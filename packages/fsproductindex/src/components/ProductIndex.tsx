@@ -54,6 +54,7 @@ export interface UnwrappedProductIndexProps {
     handleFilterReset: Function,
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
+  renderLoadPrev?: (loadPrev: Function, hasAnotherPage: boolean) => JSX.Element;
   renderLoadMore?: (loadMore: Function, hasAnotherPage: boolean) => JSX.Element;
   renderLoading?: () => JSX.Element;
   renderNoResult?: (
