@@ -4,9 +4,11 @@ import {
   Dimensions,
   Easing,
   Image,
-  ImageProperties,
+  ImageProps,
   Modal,
   PanResponder,
+  PanResponderGestureState,
+  PanResponderInstance,
   Platform,
   ScrollView,
   StyleSheet,
@@ -15,7 +17,7 @@ import {
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { PageIndicator } from '../PageIndicator';
-import { MultiCarousel } from '../MultiCarousel';
+import {MultiCarousel, SlideChangeEvent} from '../MultiCarousel';
 import { ZoomImages } from './ZoomImages';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -30,6 +32,7 @@ export interface ZoomCarouselStateType {
   currentIndex: number;
   currentZoomIndex: number;
 }
+
 
 const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? 64 : 68;
@@ -139,7 +142,8 @@ const S = StyleSheet.create({
   }
 });
 
-export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselStateType> {
+
+export class ZoomCarousel<T> extends Component<ZoomCarouselProps, ZoomCarouselStateType> {
   static defaultProps: ZoomCarouselProps = {
     images: [],
     peekSize: 0,
@@ -147,16 +151,14 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     gapSize: 1
   };
 
-  originalImgs: React.Component<ImageProperties, React.ComponentState>[] = [];
+  originalImgs: React.Component<ImageProps, React.ComponentState>[] = [];
   lastScrollXStart?: number;
   lastScrollX?: number;
-  scrollView: any;
+  scrollView?: Element;
   lastPinchDistance?: number;
   zoomOpenning: boolean = false;
-  modalRef: any;
-  initialScrollX: number = 0;
-  panResponder: any;
-  multiCarousel: any;
+  panResponder?: PanResponderInstance;
+  multiCarousel?: any; // TODO Change generic in multiCarousel
 
   zoomContainerWidth: number;
   itemWidth: number;
@@ -253,7 +255,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     });
   }
 
-  goToZoomNext = (vx: number) => {
+  goToZoomNext = () => {
     const { currentZoomIndex } = this.state;
     const nextIndex =
       currentZoomIndex + 1 > this.props.images.length - 1
@@ -267,7 +269,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     const nextOffsetX =
       -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
 
-    this.multiCarousel.goToNext({ animated: false });
+    this?.multiCarousel?.goToNext({ animated: false });
 
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
@@ -276,7 +278,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     }).start();
   }
 
-  goToZoomPrev = (vx: number) => {
+  goToZoomPrev = () => {
     const { currentZoomIndex } = this.state;
     const nextIndex = currentZoomIndex - 1 < 0 ? 0 : currentZoomIndex - 1;
 
@@ -317,6 +319,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   openZoom = () => {
     const image: any = this.originalImgs[this.state.currentIndex];
+    // TODO image need to declare type:NativeMethodsMixinStatic to have measure functions.
 
     image.measure(
       (ox: number, oy: number, width: number, height: number, px: number, py: number) => {
@@ -457,7 +460,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
-  handleItemMoveOutX = (offsetX: any) => {
+  handleItemMoveOutX = (offsetX: number) => {
     const itemSnapX =
       this.state.currentZoomIndex * SCREEN_WIDTH +
       this.state.currentZoomIndex * this.gapSizeScaled;
@@ -487,20 +490,20 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.lastScrollX = offsetX;
   }
 
-  handleZoomRelease = (distance: any) => {
+  handleZoomRelease = (distance: number) => {
     if (distance < -50) {
       this.closeZoom();
     }
   }
 
-  handleMoveRelease = (evt: any, gestureState: any, justMoveX: boolean) => {
+  handleMoveRelease = (gestureState: PanResponderGestureState, justMoveX: boolean) => {
     if (justMoveX) {
       const offsetXDiff = (this.lastScrollX || 0) - (this.lastScrollXStart || 0);
 
       if (offsetXDiff > 80 || gestureState.vx > 0.5) {
-        this.goToZoomPrev(gestureState.vx);
+        this.goToZoomPrev();
       } else if (offsetXDiff < -80 || gestureState.vx < -0.5) {
-        this.goToZoomNext(gestureState.vx);
+        this.goToZoomNext();
       } else {
         this.goToZoomOrigin();
       }
@@ -602,7 +605,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   }
 
   makeHandleThumbPress = (i: number) => () => {
-    this.multiCarousel.goTo(i);
+    if (this.multiCarousel) {
+      this.multiCarousel.goTo(i);
+    }
   }
 
   itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
@@ -656,7 +661,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     );
   }
 
-  handleSlideChange = ({ currentIndex, nextIndex }: any) => {
+  handleSlideChange = ({ nextIndex }: SlideChangeEvent) => {
     this.setState({
       currentIndex: nextIndex
     });
@@ -700,7 +705,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         <View style={this.props.fillContainer ? S.fullHeight : null}>
           <View
             style={this.props.fillContainer ? S.fullHeight : null}
-            {...this.panResponder.panHandlers}
+            {...this?.panResponder?.panHandlers}
           >
 
           {this.renderCarousel()}

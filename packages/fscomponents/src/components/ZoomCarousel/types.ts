@@ -1,3 +1,4 @@
+import React from 'react';
 import { ImageProperties, ImageURISource, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageData {
@@ -13,12 +14,12 @@ export interface ZoomCarouselProps {
   fillContainer?: boolean;
   peekSize?: number;
   showArrow?: boolean;
-  pageIndicatorZoomStyle?: any;
-  closeButtonStyle?: any;
-  dotStyle?: any;
-  dotActiveStyle?: any;
-  pageIndicatorStyle?: any;
-  zoomButtonStyle?: any;
+  pageIndicatorZoomStyle?: StyleProp<ViewStyle>;
+  closeButtonStyle?: StyleProp<ViewStyle>;
+  dotStyle?: StyleProp<ViewStyle>;
+  dotActiveStyle?: StyleProp<ViewStyle>;
+  pageIndicatorStyle?: StyleProp<ViewStyle>;
+  zoomButtonStyle?: StyleProp<ViewStyle>;
   renderImage?: (
     item: ImageData,
     index: number,
@@ -27,7 +28,7 @@ export interface ZoomCarouselProps {
     imageHeight: number,
     openZoom: () => void
   ) => React.ReactNode;
-  renderImageWeb?: (data: any, i: number) => React.ReactNode;
+  renderImageWeb?: <T>(data: T, i: number) => React.ReactNode;
   renderCloseButton?: (closeZoom: () => void) => React.ReactNode;
   renderModalContent?: (closeModal: () => void) => React.ReactNode;
   renderPageIndicator?: (
@@ -37,12 +38,12 @@ export interface ZoomCarouselProps {
   renderZoomButton?: (openZoom: () => void) => React.ReactNode;
   renderThumbnails?: (
     currentIndex: number,
-    goTo: (index: number, options: any) => void
+    goTo: <T>(index: number, options: T) => void
   ) => React.ReactNode;
   nextArrowOnBlur?: () => void;
   showThumbnails?: boolean;
-  thumbnailStyle?: any;
-  thumbnailContainerStyle?: any;
+  thumbnailStyle?: StyleProp<ViewStyle>;
+  thumbnailContainerStyle?: StyleProp<ViewStyle>;
 
   /**
    * The styling of the container that holds the image carousel and thumbnails
