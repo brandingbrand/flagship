@@ -1,7 +1,7 @@
 import { appConfig } from './appConfig';
 import type { FSAppTypes } from '@brandingbrand/fsapp';
 // tslint:disable-next-line: no-submodule-imports
-import { attachSSR } from '@brandingbrand/fsapp/dist/lib/ssr';
+import { attachSSR, SSROptions } from '@brandingbrand/fsapp/dist/lib/ssr';
 import Analytics from './lib/analytics';
 
 const webConfig: FSAppTypes.AppConfigType = {
@@ -20,6 +20,6 @@ const webConfig: FSAppTypes.AppConfigType = {
   analytics: Analytics
 };
 
-export default function(app: any): void {
-  attachSSR(app, webConfig);
+export default function(app: any, options?: SSROptions): void {
+  attachSSR(app, webConfig, options);
 }
