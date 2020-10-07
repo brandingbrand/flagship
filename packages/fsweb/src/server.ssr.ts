@@ -25,7 +25,7 @@ const app = express();
 
 app.use((req, res, next) => {
   // Exclude index.html and '/' so SSR can run on it
-  if (['/index.html', '/'].indexOf(req.path) !== 0) {
+  if (['/index.html', '/'].indexOf(req.path) === -1) {
     express.static(path.resolve(__dirname, rootDir, buildPath))(req, res, next);
     return;
   }
