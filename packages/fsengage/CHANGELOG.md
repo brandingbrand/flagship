@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Features
+
+* statically set key name for ga query params ([dcb60c8](https://github.com/brandingbrand/flagship/commit/dcb60c8f9bd05e41947a87696ad502ca6b10b059))
+* **fsengage:** add support for directly setting google analytics params ([9ef47fa](https://github.com/brandingbrand/flagship/commit/9ef47fa6e52f41ade50120b2a10b176546cca2d6))
+
+
+
+
+
 # [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
 
 **Note:** Version bump only for package @brandingbrand/fsengage
