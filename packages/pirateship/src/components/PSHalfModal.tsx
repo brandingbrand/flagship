@@ -13,7 +13,7 @@ export interface PSHalfModalProps {
   visible: boolean;
   renderLeftItem?: () => JSX.Element;
   renderRightItem?: () => JSX.Element;
-  children?: any;
+  children?: JSX.Element;
 }
 
 const styles = StyleSheet.create({
