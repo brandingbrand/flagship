@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+
+### Features
+
+* **fsapp:** Add additional options to SSR ([79eb03d](https://github.com/brandingbrand/flagship/commit/79eb03d027ca92e60aeda136bb74a420972439ff))
+
+
+
+
+
 # [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
