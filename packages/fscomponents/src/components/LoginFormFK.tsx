@@ -63,7 +63,7 @@ export interface LoginFormProps {
   /**
    * Called on form submission
    */
-  onSubmit: (values: any) => void;
+  onSubmit: <T>(values: T) => void;
 }
 
 export type FieldOption = {
