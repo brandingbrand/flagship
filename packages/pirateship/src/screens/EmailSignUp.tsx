@@ -16,7 +16,7 @@ import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { CMSProvider, fetchCMS } from '../lib/cms';
+import { CMSProvider, CMSValueSlot, fetchCMS } from '../lib/cms';
 import { fontSize, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { textbox } from '../lib/formTemplate';
@@ -107,9 +107,10 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
 
     fetchCMS('EmailSignup', 'promo')
       .then(instances => {
-        if (instances[0] && instances[0].Value) {
+        const firstInstance = instances[0] as CMSValueSlot | undefined;
+        if (firstInstance && firstInstance.Value) {
           this.setState({
-            descriptionText: instances[0].Value
+            descriptionText: firstInstance.Value
           });
         }
       })

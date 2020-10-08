@@ -14,16 +14,6 @@ export interface SearchModalProps extends SearchScreenProps, SharedSearchModalPr
 }
 
 export class SearchModal extends Component<SearchModalProps> {
-  searchBar: any;
-
-  componentDidUpdate(prevProps: SearchModalProps): void {
-    if (!prevProps.visible && this.props.visible) {
-      setTimeout(() => {
-        this.searchBar.focusInput();
-      }, 100);
-    }
-  }
-
   render(): JSX.Element {
     const { visible, ...searchProps } = this.props;
     return (
