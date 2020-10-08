@@ -11,12 +11,12 @@ export default class ApplePayIos extends ApplePayBase {
     return false;
   }
 
-  async hasActiveCard(): Promise<any> {
+  async hasActiveCard(): Promise<boolean> {
     // TODO: implement
     return Promise.resolve(true);
   }
 
-  async setupApplePay(): Promise<any> {
+  async setupApplePay(): Promise<boolean> {
     // TODO: implement
     return Promise.reject(new Error('setupApplePay Not Implemented'));
   }

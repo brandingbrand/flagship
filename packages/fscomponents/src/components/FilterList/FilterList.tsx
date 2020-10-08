@@ -19,6 +19,10 @@ const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
+export interface SelectedItems {
+  [key: string]: string[];
+}
+
 export interface FilterListProps {
   items: FilterItem[];
   onApply: (selectedItems: Record<string, string[]>, info?: { isButtonPress: boolean }) => void;
@@ -43,7 +47,7 @@ export interface FilterListProps {
     value: FilterItemValue,
     handleSelect: () => void,
     selected: boolean
-  ) => React.ReactNode;
+  ) => JSX.Element;
 }
 
 export interface FilterListState {

@@ -113,6 +113,10 @@ export interface LocationItemProps extends Omit<SerializableLocationItemProps,
   buttonTitleStyle?: StyleProp<TextStyle>;
 }
 
+interface RenderOption {
+  showDistance?: boolean;
+}
+
 export const LocationItem: React.FunctionComponent<LocationItemProps> = props => {
   const { format, style } = props;
 
@@ -148,7 +152,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
 
   /* tslint:enable */
 
-  const renderStoreDetail = (options: any = {}) => {
+  const renderStoreDetail = (options: RenderOption = {}) => {
     const {
       locationName,
       address,
@@ -176,7 +180,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
     );
   };
 
-  const renderNavIcon = (options: any = {}) => {
+  const renderNavIcon = (options: RenderOption = {}) => {
     const {
       navIcon,
       distance,

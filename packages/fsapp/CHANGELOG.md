@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+
+### Features
+
+* **fsapp:** Add additional options to SSR ([79eb03d](https://github.com/brandingbrand/flagship/commit/79eb03d027ca92e60aeda136bb74a420972439ff))
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Update to newer version of async-storage ([b2bbad0](https://github.com/brandingbrand/flagship/commit/b2bbad0dd34337db7174319fc0d4b4aeff4e87fd))
+
+
+### Features
+
+* **fsapp:** Add SSR support ([aa2fd4c](https://github.com/brandingbrand/flagship/commit/aa2fd4c87149738755c3fcde46403d12e7a705cb))
+* replace react-native-restart with RN DevSettings ([7139061](https://github.com/brandingbrand/flagship/commit/71390610796967e32fbd21c32decfeda7b4c71d5))
+
+
+
+
+
 # [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

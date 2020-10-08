@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   NativeModules,
+  ScaledSize,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -117,7 +118,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }
   }
 
-  dimensionsListener = (event: any) => {
+  dimensionsListener = (event: { window: ScaledSize; screen: ScaledSize }) => {
     const { height } = event.window;
     const halfWindowHeight = height / 2;
 

@@ -39,7 +39,9 @@
     "ship:android-jetify-reverse": "lerna run --stream --scope @brandingbrand/pirateship init:android-jetify-reverse",
     "ship:start-server-dev": "lerna run --stream --scope @brandingbrand/pirateship start:server-dev",
     "ship:start-server-prod": "lerna run --stream --scope @brandingbrand/pirateship start:server-prod",
+    "ship:start-server-ssr": "lerna run --stream --scope @brandingbrand/pirateship start:server-ssr",
     "ship:build-web": "lerna run --stream --scope @brandingbrand/pirateship build-web",
+    "ship:build-ssr": "lerna run --stream --scope @brandingbrand/pirateship build-ssr",
     "build:docs": "typedoc --tsconfig ./tsconfig/tsconfig.docs.json",
     "docs": "run-s build:docs build:storybook",
     "tsc": "echo 'Cannot run tsc from top level of monorepo; run \"yarn prepare\" instead' && exit 1"

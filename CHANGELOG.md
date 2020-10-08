@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+
+### Features
+
+* **fsapp:** Add additional options to SSR ([79eb03d](https://github.com/brandingbrand/flagship/commit/79eb03d027ca92e60aeda136bb74a420972439ff))
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+
+### Bug Fixes
+
+* **fsweb:** bump datetimepicker version ([f3a4a00](https://github.com/brandingbrand/flagship/commit/f3a4a004280cd2a73678ffd1f2807543d8f83cc4))
+* **fsweb:** Fix path check ([44d14e6](https://github.com/brandingbrand/flagship/commit/44d14e60882c4a199b466f6bf807940380d5d6e9))
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Add languages to navigator ([687b563](https://github.com/brandingbrand/flagship/commit/687b563b58d3ee204a910f4291603ba5c2bef798))
+
+
+### Features
+
+* statically set key name for ga query params ([dcb60c8](https://github.com/brandingbrand/flagship/commit/dcb60c8f9bd05e41947a87696ad502ca6b10b059))
+* **fscommerce:** Add swatches and images to OptionValue ([e45778d](https://github.com/brandingbrand/flagship/commit/e45778d8390d3582e52f621bb9c793fa910be43d))
+* **fsengage:** add support for directly setting google analytics params ([9ef47fa](https://github.com/brandingbrand/flagship/commit/9ef47fa6e52f41ade50120b2a10b176546cca2d6))
+* **fsi18n:** Add functions to listen for locale updates ([8c780d4](https://github.com/brandingbrand/flagship/commit/8c780d49d8867a503d5defe3595ed8d05839d650))
+* add story to ChangePassword component ([87d086b](https://github.com/brandingbrand/flagship/commit/87d086bda7a554af91c72e183e7fe50d9fc9ef36))
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsengagement:** address cannot set state on unmounted component error ([e7a69fb](https://github.com/brandingbrand/flagship/commit/e7a69fbef27c2c6cc652b550336292ca2b8dcacf))
+* **fsweb:** Update to newer version of async-storage ([b2bbad0](https://github.com/brandingbrand/flagship/commit/b2bbad0dd34337db7174319fc0d4b4aeff4e87fd))
+
+
+### Features
+
+* **fsapp:** Add SSR support ([aa2fd4c](https://github.com/brandingbrand/flagship/commit/aa2fd4c87149738755c3fcde46403d12e7a705cb))
+* replace react-native-restart with RN DevSettings ([7139061](https://github.com/brandingbrand/flagship/commit/71390610796967e32fbd21c32decfeda7b4c71d5))
+* replaced tcomb-form-native with bb fork ([d9993ea](https://github.com/brandingbrand/flagship/commit/d9993ea0fb99c4062518bee397a3b241859e3843))
+
+
+
+
+
 # [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
 
 
