@@ -154,7 +154,7 @@ async function renderApp(
 async function flagshipPreinit(
   req: Request,
   config: FSAppTypes.AppConfigType,
-  pageState?: (initialState: FSAppTypes.SSRData, req: Request) => Promise<any>
+  pageState?: (data: FSAppTypes.SSRData, req: Request) => Promise<FSAppTypes.SSRData>
 ): Promise<FSAppTypes.AppConfigType> {
   let ssrData: FSAppTypes.SSRData = {
     initialState: {
