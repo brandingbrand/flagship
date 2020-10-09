@@ -24,7 +24,7 @@
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
     "react-native-navigation": "^4.0.0",
-    "react-native-restart": "git+https://github.com/brandingbrand/react-native-restart#0.0.13-hotfix",
+    "react-native-restart": "git+https://github.com/brandingbrand/react-native-restart#v0.0.15",
     "react-native-sensitive-info": "^5.5.0",
     "react-native-web-modal": "^1.0.1",
     "react-redux": "^7.0.0",
