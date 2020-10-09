@@ -21,19 +21,36 @@ import {
 
 import { style as S } from '../styles/ProductIndex';
 import {
+  Image,
   ListRenderItemInfo,
+  SafeAreaView,
   StyleProp,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewStyle
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+const images = {
+  close: require('../../assets/images/iconClose.png')
+};
+
+const styles = StyleSheet.create({
+  cancelButton: {
+    position: 'absolute',
+    top: 16,
+    right: 21.5
+  }
+});
+
 const componentTranslationKeys = translationKeys.flagship.productIndex;
 
 export interface PropTyps extends ProductIndexPropType {
   onPress: (data: CommerceTypes.Product) => () => void;
   containerStyle?: StyleProp<ViewStyle>;
+  headerWithCancelButton?: boolean;
 }
 
 const defaultErrorMessage =
@@ -41,8 +58,8 @@ const defaultErrorMessage =
 const SORT_ITEM_KEY = '__pirate_sort';
 
 export interface StateType {
-  sortModalVisble: boolean;
-  filterModalVisble: boolean;
+  sortModalVisible: boolean;
+  filterModalVisible: boolean;
   isLoading: boolean;
   isMoreLoading: boolean;
   hasFetchError: boolean;
@@ -73,8 +90,8 @@ export default class ProductIndexGrid extends Component<
     }
 
     this.state = {
-      sortModalVisble: false,
-      filterModalVisble: false,
+      sortModalVisible: false,
+      filterModalVisible: false,
       isLoading: false,
       isMoreLoading: false,
       hasFetchError: false
@@ -145,7 +162,9 @@ export default class ProductIndexGrid extends Component<
       return renderRefineActionBar(
         this.showFilterModal,
         this.showSortModal,
-        commerceData
+        commerceData,
+        this.handleFilterApply,
+        this.handleFilterReset
       );
     }
 
@@ -198,19 +217,19 @@ export default class ProductIndexGrid extends Component<
   }
 
   showFilterModal = () => {
-    this.setState({ filterModalVisble: true });
+    this.setState({ filterModalVisible: true });
   }
 
   closeFilterModal = () => {
-    this.setState({ filterModalVisble: false });
+    this.setState({ filterModalVisible: false });
   }
 
   showSortModal = () => {
-    this.setState({ sortModalVisble: true });
+    this.setState({ sortModalVisible: true });
   }
 
   closeSortModal = () => {
-    this.setState({ sortModalVisble: false });
+    this.setState({ sortModalVisible: false });
   }
 
   handleFilterApply = (selectedItems: any, info?: { isButtonPress: boolean }) => {
@@ -255,13 +274,25 @@ export default class ProductIndexGrid extends Component<
     }
   }
 
-  handleSortChange = (sortItem: CommerceTypes.SortingOption) => {
+  handleSortChange = (selectedItems: any) => (sortItem: CommerceTypes.SortingOption) => {
+    let refinementsQuery = {};
+
+    if (Object.keys(selectedItems).length > 0) {
+      refinementsQuery = {refinements: selectedItems};
+    }
+
     this.closeSortModal();
     if (this.props.handleSortChange) {
       this.props.handleSortChange(sortItem.id);
+    } else if (sortItem.id === 'default') {
+      this.reloadByQuery({
+        sortBy: undefined,
+        ...refinementsQuery
+      });
     } else {
       this.reloadByQuery({
-        sortBy: sortItem.id
+        sortBy: sortItem.id,
+        ...refinementsQuery
       });
     }
   }
@@ -386,6 +417,31 @@ export default class ProductIndexGrid extends Component<
     return newQuery;
   }
 
+  renderCancelButton = (onPress: () => void) => {
+    return (
+      <TouchableOpacity
+        style={styles.cancelButton}
+        onPress={onPress}
+        activeOpacity={0.7}
+      >
+        <Image source={images.close} />
+      </TouchableOpacity>
+    );
+  }
+
+  renderCancelText = (onPress: () => void) => {
+    return (
+      <TouchableOpacity
+        style={[S.modalHeaderClose, this.props.modalCancelStyle]}
+        onPress={onPress}
+      >
+        <Text style={S.modalHeaderCloseText}>
+          {FSI18n.string(componentTranslationKeys.cancel)}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
   renderModalHeader = ({ title, onPress }: any) => {
     const drilldownStyle =
       this.props.filterType === 'drilldown'
@@ -396,14 +452,11 @@ export default class ProductIndexGrid extends Component<
       <View
         style={[S.modalHeader, drilldownStyle, this.props.modalHeaderStyle]}
       >
-        <TouchableOpacity
-          style={[S.modalHeaderClose, this.props.modalCancelStyle]}
-          onPress={onPress}
-        >
-          <Text style={S.modalHeaderCloseText}>
-            {FSI18n.string(componentTranslationKeys.cancel)}
-          </Text>
-        </TouchableOpacity>
+        {
+          this.props.headerWithCancelButton
+            ? this.renderCancelButton(onPress)
+            : this.renderCancelText(onPress)
+        }
         <Text style={[S.modalHeaderText, this.props.modalHeaderTextStyle]}>
           {title}
         </Text>
@@ -411,38 +464,58 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   renderSortModal = () => {
     if (this.props.hideActionBar) {
       return null;
     }
 
-    const { commerceData } = this.props;
+    const { commerceData, defaultSortOption } = this.props;
     let content = null;
+
+    const sortOptions = commerceData?.sortingOptions ? [...commerceData.sortingOptions] : [];
+
+    if (defaultSortOption) {
+      sortOptions.unshift({
+        id: 'default',
+        title: defaultSortOption
+      });
+    }
+
+    const selectedOption = commerceData?.selectedSortingOption ?
+      commerceData?.selectedSortingOption : 'default';
+
+    const selectedItems = this.props.mergeSortToFilter && commerceData?.selectedSortingOption
+      ? this.mergeSelectedRefinementsAndSort(
+        commerceData.selectedRefinements,
+        commerceData.selectedSortingOption
+      )
+      : commerceData?.selectedRefinements;
 
     if (commerceData) {
       if (this.props.renderSort) {
-        content = this.props.renderSort(this.handleSortChange, commerceData);
-      } else if (commerceData.sortingOptions) {
+        content = this.props.renderSort(this.handleSortChange(selectedItems), commerceData);
+      } else if (sortOptions) {
         content = (
-          <View style={S.modalContainer}>
+          <SafeAreaView style={S.modalContainer}>
             {this.renderModalHeader({
               title: this.props.sortHeaderStyle || 'Sort By',
               onPress: this.closeSortModal
             })}
             <SelectableList
-              items={commerceData.sortingOptions}
-              onChange={this.handleSortChange}
-              selectedId={commerceData.selectedSortingOption}
+              items={sortOptions}
+              onChange={this.handleSortChange(selectedItems)}
+              selectedId={selectedOption}
               {...this.props.sortListProps}
             />
-          </View>
+          </SafeAreaView>
         );
       }
     }
 
     return this.renderModal({
       content,
-      visible: this.state.sortModalVisble,
+      visible: this.state.sortModalVisible,
       closeModal: this.closeSortModal
     });
   }
@@ -531,11 +604,12 @@ export default class ProductIndexGrid extends Component<
         : commerceData.selectedRefinements;
 
       content = (
-        <View style={S.modalContainer}>
+        <SafeAreaView style={S.modalContainer}>
           <FilterListDrilldown
             items={items}
             onApply={this.handleFilterApply}
             onReset={this.handleFilterReset}
+            onClose={this.props.showDrilldownClose ? this.closeFilterModal : undefined}
             selectedItems={selectedItems}
             renderFilterItem={this.renderItemForCombinedFilterAndSort}
             renderFilterItemValue={this.renderItemValueForCombinedFilterAndSort}
@@ -545,7 +619,7 @@ export default class ProductIndexGrid extends Component<
             }
             {...this.props.FilterListDrilldownProps}
           />
-        </View>
+        </SafeAreaView>
       );
     } else {
       content = (
@@ -568,7 +642,7 @@ export default class ProductIndexGrid extends Component<
 
     return this.renderModal({
       content,
-      visible: this.state.filterModalVisble,
+      visible: this.state.filterModalVisible,
       closeModal: this.closeFilterModal
     });
   }
@@ -613,7 +687,7 @@ export default class ProductIndexGrid extends Component<
           key={index}
           title={value.title}
           selected={selected}
-          onPress={this.handleSortSelectedInRefine(value)}
+          onPress={this.handleSortSelectedInRefine(value, selected)}
           {...selectableRowProps}
         />
       );
@@ -622,9 +696,10 @@ export default class ProductIndexGrid extends Component<
     }
   }
 
-  handleSortSelectedInRefine = (value: any) => () => {
+  handleSortSelectedInRefine = (value: any, selected: any) => () => {
     this.closeFilterModal();
-    this.handleSortChange(value);
+    // TODO: Test is needed.
+    this.handleSortChange(selected)(value);
   }
 
   renderNoResult = () => {
@@ -754,6 +829,7 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
+  // tslint:disable-next-line: cyclomatic-complexity
   render(): React.ReactNode {
     const {
       commerceData,
@@ -767,6 +843,9 @@ export default class ProductIndexGrid extends Component<
     } = this.props;
 
     if (this.state.isLoading && !this.props.filterInBackground) {
+      if (this.props.renderGhost) {
+        return this.props.renderGhost();
+      }
       return <Loading style={[S.loading, loadingStyle]} />;
     }
 
@@ -793,8 +872,8 @@ export default class ProductIndexGrid extends Component<
           renderFooter={this.renderFooter}
           gridProps={gridProps}
         />
-        {this.state.sortModalVisble && this.renderSortModal()}
-        {this.state.filterModalVisble && this.renderFilterModal()}
+        {this.state.sortModalVisible && this.renderSortModal()}
+        {this.state.filterModalVisible && this.renderFilterModal()}
       </View>
     );
   }
