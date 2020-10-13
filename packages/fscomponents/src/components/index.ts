@@ -36,6 +36,7 @@ export * from './MultiCarousel';
 export * from './NavArrow';
 export * from './PageIndicator';
 export * from './PayPalCheckoutButton';
+export * from './Price';
 export * from './ProductItem';
 export * from './ProductMetadata';
 export * from './PromoForm';
