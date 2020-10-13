@@ -26,7 +26,6 @@
     "photoswipe": "^4.1.2",
     "qs": "^6.9.1",
     "react": "^16.11.0",
-    "react-content-loader": "^5.1.2",
     "react-dom": "^16.11.0",
     "react-id-swiper": "^2.0.0",
     "react-native": "^0.61.0",

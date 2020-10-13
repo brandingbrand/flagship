@@ -11,8 +11,8 @@ import {
   ViewStyle
 } from 'react-native';
 import ContentLoader, { Rect } from '../../lib/RNContentLoader';
-import { PageIndicator } from '../PageIndicator';
-import { tr, trKeys } from '../../lib/translations';
+import { PageIndicator } from '@brandingbrand/fscomponents';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const baseStyles = StyleSheet.create({
   imageContainer: {
@@ -59,7 +59,7 @@ const baseStyles = StyleSheet.create({
 });
 
 const icons = {
-  ghostStar: require('../../../assets/images/ghostStar.png')
+  ghostStar: require('../../../../fscomponents/assets/images/ghostStar.png')
 };
 
 export interface SerializablePDPGhostProps {
@@ -217,7 +217,7 @@ const PDPGhost: FC<PDPGhostProps> = (props: PDPGhostProps) => {
           style={[baseStyles.button, buttonStyle]}
         >
           <Text style={[baseStyles.buttonText, buttonTextStyle]}>
-            {tr.string(trKeys.flagship.productIndex.addToBag)}
+            {FSI18n.string(translationKeys.flagship.productIndex.addToBag)}
           </Text>
         </View>
       </View>
