@@ -39,7 +39,7 @@ if (!(buildConfig && buildConfig.storeFile && buildConfig.keyAlias)) {
 const gradlePropertiesPath = project.resolve('android', 'gradle.properties');
 
 if (buildConfig && buildConfig.storeFile) {
-  // add hockey keystore setting to {project}/android/gradle.properties
+  // add keystore setting to {project}/android/gradle.properties
   copyKeystore(buildConfig.storeFile);
   helpers.appendFile(
     gradlePropertiesPath,

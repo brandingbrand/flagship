@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from '@brandingbrand/fscomponents';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { merge } from 'lodash-es';
 import TouchId, { AuthenticationError, IsSupportedError } from 'react-native-touch-id';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
@@ -116,6 +116,8 @@ export default class PSSignInForm extends Component<
   }
 
   componentDidMount(): void {
+    console.warn('PSSignInForm is deprecated and will be removed in the next version of Flagship.');
+
     if (this.props.runBioAuthImmediately) {
       this.triggerSavedLogin();
     }

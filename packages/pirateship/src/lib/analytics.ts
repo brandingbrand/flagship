@@ -1,5 +1,6 @@
 import {
   Analytics as FSAnalytics,
+  AnalyticsTypes,
   GoogleAnalyticsProvider
 } from '@brandingbrand/fsengage';
 
@@ -39,12 +40,12 @@ export default Analytics;
 export function mapProductToAnalytics(
   product: CommerceTypes.Product,
   quantity?: number
-): any {
-  const analyticsProduct: any = {
+): AnalyticsTypes.Product {
+  const analyticsProduct: AnalyticsTypes.Product = {
     identifier: product.id,
     name: product.title,
     brand: product.brand,
-    price: product.price
+    price: product.price?.value.toString()
   };
 
   if (quantity) {

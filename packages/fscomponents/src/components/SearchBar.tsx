@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TextInputProperties,
+  TextInputProps,
   TextStyle,
   TouchableOpacity,
   View,
@@ -31,8 +31,8 @@ export interface SearchBarProps {
   initialValue?: string;
   onSubmit?: (value: string) => void;
   onChange?: (value: string) => void;
-  onFocus?: (input: any, container: any) => void;
-  onBlur?: (input: any, container: any) => void;
+  onFocus?: (input: TextInput, container: View) => void;
+  onBlur?: (input: TextInput, container: View) => void;
   onCancel?: () => void;
   renderCancelButton?: () => React.ReactNode;
 
@@ -55,7 +55,7 @@ export interface SearchBarProps {
   onLocateButtonPress?: () => void;
 
   // input
-  inputProps?: TextInputProperties;
+  inputProps?: TextInputProps;
   shouldClearOnSubmit?: boolean;
 
   // style
@@ -117,7 +117,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     };
   }
 
-  render(): any {
+  render(): JSX.Element {
     const {
       showCancel,
       style,
@@ -135,8 +135,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     );
   }
 
-  saveContainerRef = (container: any) => (this.container = container);
-  saveInputRef = (input: any) => (this.input = input);
+  saveContainerRef = (container: View) => (this.container = container);
+  saveInputRef = (input: TextInput) => (this.input = input);
 
   renderInput = () => {
     const {
@@ -289,7 +289,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // The cancel button may not be visible. Animate it to full width.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: cancelButtonWidth || kCancelButtonWidthDefault,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: false
       }).start();
     }
   }
@@ -307,7 +308,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // Cancel button is not supposed to be visible on blur. Animate it away.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: 0,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: false
       }).start();
     }
   }

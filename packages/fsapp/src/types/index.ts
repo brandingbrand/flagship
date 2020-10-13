@@ -12,6 +12,7 @@ import {
 } from 'react-native-navigation';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
+import type { Request } from 'express';
 
 export interface DrawerType {
   screen: string;
@@ -46,6 +47,13 @@ export interface Drawer {
   type?: string;
   animationType?: string;
   disableOpenGesture?: boolean;
+  webSlideContainer?: boolean;
+  webWidth?: number;
+  webDuration?: number;
+  webOpacity?: number;
+  webOverlayOpacity?: number;
+  webLeftBackgroundColor?: string;
+  webRightBackgroundColor?: string;
 }
 
 export interface Screen {
@@ -58,6 +66,18 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
   path?: string;
   toPath?: PathFunction;
   paramKeys?: any[];
+  cache?: number;
+  loadInitialData?: (data: SSRData, req: Request) => Promise<SSRData>;
+  // Set to true to call next immediately if this is matched
+  instantNext?: boolean;
+  // Function to call to determine programmatically whether to call next
+  // Includes data after running loadInitialState
+  shouldNext?: (data: SSRData, req: Request) => Promise<boolean>;
+}
+
+export interface SSRData {
+  initialState: any;
+  variables: any;
 }
 
 export interface AppConfigType {
@@ -88,6 +108,8 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+  uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+  cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
 }
 
 export interface Tab extends LayoutComponent {
