@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix typing on loadInitialData (032e992)
+
+
+
+
+
 # [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
 
 
