@@ -1,21 +1,57 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle
+} from 'react-native';
 import { Button, ButtonProps } from './Button';
 import { ModalHalfScreen, ModalHalfScreenProps } from './ModalHalfScreen';
 
+const closeIcon = require('../../assets/images/iconClose.png');
 const styles = StyleSheet.create({
   button: {
     margin: 5
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  modalTitle: {
+    flexGrow: 1,
+    textAlign: 'center',
+    fontSize: 16,
+    paddingVertical: 22
+  },
+  closeBtn: {
+    position: 'absolute',
+    right: 5
+  },
+  closeIcon: {
+    margin: 10,
+    width: 12,
+    height: 12
   }
 });
 
 export interface NestingButtonsProps {
   showMoreTitle: string;
   buttonsProps: ButtonProps[];
+  /**
+   * Inclusive maximum number of buttons to be displayed before collapsing.
+   *
+   * @default 3
+   */
   maxCount?: number;
-  style?: ViewStyle;
+  showMoreButtonProps?: Omit<ButtonProps, 'title' | 'onPress'>;
   containerStyle?: ViewStyle;
-  showMoreButtonProps?: ButtonProps;
+  modalContainerStyle?: ViewStyle;
+  modalTitle?: string;
+  modalTitleStyle?: TextStyle;
   modalProps?: Omit<ModalHalfScreenProps, 'visible' | 'onRequestClose'>;
 }
 
@@ -28,8 +64,10 @@ export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props =>
     showMoreButtonProps,
     modalProps,
     containerStyle,
-    style,
-    maxCount = 3
+    maxCount = 3,
+    modalTitle,
+    modalTitleStyle,
+    modalContainerStyle
   } = props;
 
   const buttons = buttonsProps.map((buttonProps, index) => (
@@ -40,22 +78,20 @@ export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props =>
     />
   ));
 
-  const buttonsContainer = (
-    <View style={style}>
-      {buttons}
-    </View>
-  );
-
   if (buttons.length <= maxCount) {
-    return buttonsContainer;
+    return (
+      <View style={containerStyle}>
+        {buttons}
+      </View>
+    );
   }
 
   return (
     <View style={containerStyle}>
       <Button
-        title={showMoreTitle}
-        onPress={toggleModal}
         {...showMoreButtonProps}
+        onPress={toggleModal}
+        title={showMoreTitle}
         style={[styles.button, showMoreButtonProps?.style]}
       />
       <ModalHalfScreen
@@ -63,8 +99,22 @@ export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props =>
         onRequestClose={toggleModal}
         {...modalProps}
       >
-        <ScrollView>
-          {buttonsContainer}
+        <ScrollView style={modalContainerStyle}>
+          <View style={styles.modalHeader}>
+            <Text style={[styles.modalTitle, modalTitleStyle]}>
+              {modalTitle}
+            </Text>
+            <TouchableOpacity
+              onPress={toggleModal}
+              style={styles.closeBtn}
+            >
+              <Image
+                source={closeIcon}
+                style={styles.closeIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          {buttons}
         </ScrollView>
       </ModalHalfScreen>
     </View>
