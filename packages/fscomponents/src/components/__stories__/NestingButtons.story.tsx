@@ -21,5 +21,6 @@ storiesOf('NestingButtons', module)
       showMoreTitle={text('Show More Title', 'Checkout Options')}
       maxCount={number('Max Number of Buttons', 3)}
       buttonsProps={generateButtons(number('Number of Buttons', 5))}
+      modalTitle={text('Modal Header Text', 'Modal Header')}
     />
   ));
