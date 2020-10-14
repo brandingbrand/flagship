@@ -2,18 +2,17 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
+  boolean,
   number,
   object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import { StepIndicator } from '../StepIndicator';
+import { IdStep, StepIndicator } from '../StepIndicator';
 
 const styles = StyleSheet.create({
   completed: {
     backgroundColor: '#ddd',
-    borderWidth: 0,
-    width: 100,
-    flex: 0
+    borderWidth: 0
   },
   completedText: {
     fontSize: 12,
@@ -22,8 +21,7 @@ const styles = StyleSheet.create({
   },
   current: {
     borderWidth: 0,
-    backgroundColor: 'rgb(88, 89, 91)',
-    width: 100
+    backgroundColor: 'rgb(88, 89, 91)'
   },
   currentText: {
     fontSize: 12,
@@ -41,11 +39,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const stepTitles = [
-  '1. Delivery',
-  '2. Shipping',
-  '3. Payment'
-];
+const stepTitles: (string | IdStep)[] = [{
+  id: 1,
+  name: 'Delivery'
+}, {
+  id: 2,
+  name: 'Shipping'
+}, {
+  id: 3,
+  name: 'Payment'
+}];
 
 const stepKnobOptions = {
   range: true,
@@ -65,5 +68,6 @@ storiesOf('StepIndicator', module)
       defaultStyle={styles.default}
       defaultTextStyle={styles.defaultText}
       stepTitles={object('stepTitles', stepTitles)}
+      line={boolean('Line', false)}
     />
   ));
