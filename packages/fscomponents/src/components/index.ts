@@ -34,6 +34,7 @@ export * from './ModalHalfScreen';
 export * from './MoreText';
 export * from './MultiCarousel';
 export * from './NavArrow';
+export * from './NestingButtons';
 export * from './PageIndicator';
 export * from './PayPalCheckoutButton';
 export * from './Price';
