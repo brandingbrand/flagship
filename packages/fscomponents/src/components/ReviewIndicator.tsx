@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -13,6 +13,7 @@ export interface SerializableReviewIndicatorProps {
   itemColor?: string;
   emptyColor?: string;
   accessibilityLabel?: string;
+  emptyStar?: boolean;
 }
 
 export interface ReviewIndicatorProps extends Omit<SerializableReviewIndicatorProps,
@@ -30,15 +31,21 @@ export interface NormalizedValue {
   hasHalf: boolean;
 }
 
-const Star = ({ renderStar, style, text }: any) => {
+interface StarProps {
+  style: StyleProp<TextStyle>;
+  text: string;
+  renderStar?: () => React.ReactNode;
+}
+
+const Star = ({ renderStar, style, text }: StarProps): JSX.Element => {
   if (renderStar) {
-    return renderStar();
+    return renderStar() as JSX.Element;
   }
 
   return <Text style={[S.star, style]}>{text}</Text>;
 };
-export const ReviewIndicator: FunctionComponent<ReviewIndicatorProps> =
-memo((props): JSX.Element => {
+export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
+(props): JSX.Element => {
 
   const getItemData = (value: number, base: number = 5): NormalizedValue => {
     if (value >= base) {
@@ -73,10 +80,10 @@ memo((props): JSX.Element => {
   };
 
   const renderHalf = (): JSX.Element => {
-    const { itemSize, itemColor } = props;
-    const customStarStyle: any = {};
-    const containerStarStyle: any = {};
-    const starHalfRightStyle: any = {};
+    const customStarStyle: StyleProp<TextStyle> = {};
+    const containerStarStyle: StyleProp<ViewStyle> = {};
+    const starHalfRightStyle: StyleProp<TextStyle> = {};
+    const { emptyStar, itemSize, itemColor } = props;
 
     if (itemSize) {
       customStarStyle.fontSize = itemSize;
@@ -97,9 +104,11 @@ memo((props): JSX.Element => {
         </View>
         <View style={S.starHalfRightWrap}>
           <Star
-            text='★'
+            text={emptyStar === true ? '☆' : '★'}
             style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, S.emptyStar, { color: props.emptyColor }]}
+              starHalfRightStyle, S.emptyStar, props.emptyColor ? {
+                color: props.emptyColor
+              } : undefined]}
           />
         </View>
       </View>
@@ -109,6 +118,7 @@ memo((props): JSX.Element => {
   const {
     value,
     base,
+    emptyStar,
     itemSize,
     itemColor,
     style,
@@ -118,7 +128,7 @@ memo((props): JSX.Element => {
   } = props;
 
   const itemData = getItemData(value, base);
-  const customStarStyle: any = {};
+  const customStarStyle: StyleProp<TextStyle> = {};
 
   if (itemSize) {
     customStarStyle.fontSize = itemSize;
@@ -150,15 +160,19 @@ memo((props): JSX.Element => {
         (renderHalfStar ? renderHalfStar() : renderHalf())}
       {newArray(itemData.empty).map(v => (
         <Star
-          text='★'
+          text={emptyStar === true ? '☆' : '★'}
           renderStar={renderEmptyStar}
-          style={[customStarStyle, S.emptyStar, { color: props.emptyColor }]}
+          style={[customStarStyle, S.emptyStar, props.emptyColor ? {
+            color: props.emptyColor
+          } : undefined]}
           key={v}
         />
       ))}
     </View>
   );
-});
+};
+
+export const ReviewIndicator = memo(ReviewIndicatorInner);
 
 function newArray(num: number): number[] {
   const arr = [];

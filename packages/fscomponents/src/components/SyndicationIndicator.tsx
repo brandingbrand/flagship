@@ -8,6 +8,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { ReviewTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
@@ -27,7 +28,7 @@ const S = StyleSheet.create({
 });
 
 export interface SyndicationIndicatorProps {
-  syndicationSource: any;
+  syndicationSource: ReviewTypes.SyndicationSource;
   rowStyle?: StyleProp<ViewStyle>;
 }
 
@@ -44,7 +45,7 @@ export const SyndicationIndicator: FunctionComponent<SyndicationIndicatorProps> 
     };
 
     Image.getSize(
-      props.syndicationSource.LogoImageUrl,
+      props.syndicationSource.LogoImageUrl || '',
       getImageSizeSuccess,
       () => null
     );

@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import { Options } from 'react-native-navigation';
 
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as tcomb from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const tcomb = require('@brandingbrand/tcomb-form-native');
 import { CMSBannerStacked, Form } from '@brandingbrand/fscomponents';
 
 import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { CMSProvider, fetchCMS } from '../lib/cms';
+import { CMSProvider, CMSValueSlot, fetchCMS } from '../lib/cms';
 import { fontSize, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { textbox } from '../lib/formTemplate';
@@ -103,11 +103,14 @@ export default class EmailSignUp extends Component<ScreenProps, EmailSignUpState
   }
 
   componentDidMount(): void {
+    console.warn('EmailSignUp is deprecated and will be removed in the next version of Flagship.');
+
     fetchCMS('EmailSignup', 'promo')
       .then(instances => {
-        if (instances[0] && instances[0].Value) {
+        const firstInstance = instances[0] as CMSValueSlot | undefined;
+        if (firstInstance && firstInstance.Value) {
           this.setState({
-            descriptionText: instances[0].Value
+            descriptionText: firstInstance.Value
           });
         }
       })

@@ -17,7 +17,7 @@ const ITEM_HEIGHT = 50;
 export interface SelectorListProps {
   items: SelectorItem[];
   onSelectChange: Function;
-  selectedValue?: any;
+  selectedValue?: string;
   itemHeight?: number;
 
   // styles
@@ -37,7 +37,7 @@ export class SelectorList extends Component<SelectorListProps> {
     this.listView = React.createRef<FlatList<SelectorItem>>();
   }
 
-  scrollToSelected = (value?: any) => {
+  scrollToSelected = (value?: string) => {
     value = value || this.props.selectedValue;
     let index = this.props.items.findIndex(i => i.value === value);
     if (index >= this.props.items.length - 3) {
@@ -99,7 +99,7 @@ export class SelectorList extends Component<SelectorListProps> {
     return item.value;
   }
 
-  private getItemLayout = (data: SelectorItem[] | null, index: number) => ({
+  private getItemLayout = (data: SelectorItem[] | null | undefined, index: number) => ({
     length: this.props.itemHeight || ITEM_HEIGHT,
     offset: (this.props.itemHeight || ITEM_HEIGHT) * index,
     index
