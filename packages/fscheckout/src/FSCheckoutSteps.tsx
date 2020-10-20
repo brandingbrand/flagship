@@ -1,13 +1,13 @@
-import React, { Component, StatelessComponent } from 'react';
+import React, { Component, FunctionComponent } from 'react';
 import { Animated } from 'react-native';
 import StepManager from './StepManager';
 import { Step } from './types';
 
 export interface FSCheckoutStepsProps {
-  steps: (Step & { component: StatelessComponent<any> })[];
+  steps: (Step & { component: FunctionComponent<any> })[];
   activeStep: Step;
   stepManager: StepManager;
-  checkoutState?: any;
+  checkoutState?: { [key: string]: any };
   checkoutActions?: { [key: string]: any };
   animated?: boolean;
 }
