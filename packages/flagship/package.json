@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "replace-in-file": "^5.0.2",
+    "xcode": "^3.0.0",
     "yargs": "^15.0.1"
   },
   "devDependencies": {
