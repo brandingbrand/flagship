@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import {
   FlatList,
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   ListRenderItemInfo,
   StyleProp,
   StyleSheet,
@@ -36,7 +36,7 @@ export interface FilterListDrilldownProps {
   closeButtonImageStyle?: StyleProp<ImageStyle>;
   resetButtonTextStyle?: StyleProp<TextStyle>;
   applyButtonTextStyle?: StyleProp<TextStyle>;
-  closeIcon?: ImageURISource;
+  closeIcon?: ImageSourcePropType;
   applyText?: string;
   resetText?: string;
   floatingReset?: boolean;
@@ -206,6 +206,10 @@ const S = StyleSheet.create({
   },
   emptyCell: {
     height: 100
+  },
+  closeButtonImage: {
+    height: 16,
+    width: 16
   }
 });
 
@@ -442,7 +446,7 @@ export class FilterListDrilldown extends PureComponent<
             >
               <Image
                 source={this.props.closeIcon || closeIcon}
-                style={this.props.closeButtonImageStyle}
+                style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
               />
             </TouchableOpacity>
           ) : null}
@@ -494,7 +498,7 @@ export class FilterListDrilldown extends PureComponent<
           >
             <Image
               source={this.props.closeIcon || closeIcon}
-              style={this.props.closeButtonImageStyle}
+              style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
             />
           </TouchableOpacity>
         ) : (
