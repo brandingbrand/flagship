@@ -14,7 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 const version = require('../../env/env').version;
 
 const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgentSync(),
+  userAgent: DeviceInfo.getUserAgent(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
   appName: DeviceInfo.getApplicationName(),
