@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Update typing for pirateship lib ([6011628](https://github.com/brandingbrand/flagship/commit/60116280fbdb68faddcca78a477c969557cf51b7))
+
+
+### Features
+
+* Replace all occurrences of "any" in pirateship/lib ([93268fa](https://github.com/brandingbrand/flagship/commit/93268fa7a1169422946886839d1835652f8de0ba))
+* Replace all occurrences of "any" in pirateship/lib ([b8d9129](https://github.com/brandingbrand/flagship/commit/b8d9129de2764ed1989db74d56267c341008a17a))
+
+
+
+
+
 # [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce

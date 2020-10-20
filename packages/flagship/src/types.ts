@@ -208,6 +208,12 @@ export interface AndroidConfig {
 export interface IOSConfig {
   pods?: PodsConfig;
   buildVersion?: string;
+  /**
+   * Add target extensions when initing.
+   * Requires additional provisioning profiles to be generated.
+   * Useful for Rich Push notifications or widgets.
+   */
+  extensions?: IOSExtension[];
   shortVersion?: string;
 }
 
@@ -223,4 +229,53 @@ export interface NPMPackageConfig {
     [key: string]: string;
   };
   [key: string]: any;
+}
+
+export interface IOSExtension {
+  /**
+   * Provisioning profile of the target extension
+   * ex: Flagship Project Extension
+   */
+  provisioningProfileName: string;
+  /**
+   * Bundle id for target extension
+   * ex: com.company.project.extension
+   */
+  bundleExtensionId: string;
+  /**
+   * Path from project root source
+   */
+  extensionPath: string;
+  /**
+   * Display name of target extension
+   */
+  displayName?: string;
+  /**
+   * PList file name in extension folder
+   * Extension-Info.plist
+   */
+  plistName?: string;
+  /**
+   * Entitlements file name in extension folder
+   */
+  entitlements: string;
+  /**
+   * Additional occurrences where text needs to be replaced on init
+   * Ex: Set a PList attribute
+   */
+  additionalFiles?: FindReplaceFile[];
+  /**
+   * Path to frameworks that need to be copied into target
+   * Needed for Widgets of apps using frameworks
+   */
+  frameworks?: string[];
+}
+
+export interface FindReplaceFile {
+  oldText: string;
+  newText: string;
+  /**
+   * Path to files relative to ios root
+   */
+  paths: string[];
 }
