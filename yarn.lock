@@ -14409,9 +14409,9 @@ react-native-sensitive-info@^5.5.0:
   integrity sha512-ShRqvHTZnY4VYNEF+5pCBUu/2wslojY445FdA9nuH9nkVqOQRXxIGYqTRYXJ42mDLTt+KnW5hcvuAjpVVokafQ==
 
 react-native-snap-carousel@^3.8.0:
-  version "3.8.4"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.4.tgz#4c749c6a714d46ed82de527233850cb5da41bc62"
-  integrity sha512-KMxLl75Tyf12DzeTCtV7xU0KuPZQQs/2+2iM90cgxcm3lrg4+hLXff5/61ynasBkzzJ5v4bTRq5CEy/qGUJVQw==
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz#6fd9bd8839546c2c6043a41d2035afbc6fe0443e"
+  integrity sha512-xWEGusacIgK1YaDXLi7Gao2+ISLoGPVEBR8fcMf4tOOJQufutlNwkoLu0l6B8Qgsrre0nTxoVZikRgGRDWlLaQ==
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
