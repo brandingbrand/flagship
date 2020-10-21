@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** update RNFirebase pod ([#1738](https://github.com/brandingbrand/flagship/issues/1738)) ([bcbca47](https://github.com/brandingbrand/flagship/commit/bcbca47cbe64fdec164932bf3524efcdbdcc3cb6))
+* **flagship:** Update storybook and rn-device-info ([4d3428b](https://github.com/brandingbrand/flagship/commit/4d3428b0df9b39452835f9bae6cd9f2dad79ab29))
+* **flagship:** Updates for PR review ([111b464](https://github.com/brandingbrand/flagship/commit/111b464583a2303f8744a851bead6512fefe9d24))
+* **fscomponents:** Fixes for FilterListDrilldown ([26892b6](https://github.com/brandingbrand/flagship/commit/26892b6b3fe202237abb47408ecbea1e3115aa5e))
+
+
+### Features
+
+* **flagship:** iOS Multiple Target Support ([#1287](https://github.com/brandingbrand/flagship/issues/1287)) ([b501fd1](https://github.com/brandingbrand/flagship/commit/b501fd1cdc0fc7e5ca6c8e3169c83995179653b4))
+* **fscomponents:** Add RadioButtonLine component ([0815e13](https://github.com/brandingbrand/flagship/commit/0815e1340823825948c1744081bd56b916fe3378))
+* add header in the nesting button modal ([#1734](https://github.com/brandingbrand/flagship/issues/1734)) ([5ecc911](https://github.com/brandingbrand/flagship/commit/5ecc9119e574e9409a80602c01bb0f4dc3d62893))
+* **fscomponents:** Update FilterListDrilldown ([2479a29](https://github.com/brandingbrand/flagship/commit/2479a295ddf892ce5b7eedae7ecdaf9cec679060))
+* **fscomponents:** Update StepIndicator ([ebc41e9](https://github.com/brandingbrand/flagship/commit/ebc41e9a84ef54259e729dc2655ddce7aa1f8d1b))
+* **fsproductindex:** Updated ProductIndex ([d3a6fc0](https://github.com/brandingbrand/flagship/commit/d3a6fc0738fae1bfd5ad5b82150b6ad8fb2f3a9a))
+
+
+
+
+
 # [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
 
 

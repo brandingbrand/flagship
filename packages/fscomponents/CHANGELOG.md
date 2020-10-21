@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for FilterListDrilldown ([26892b6](https://github.com/brandingbrand/flagship/commit/26892b6b3fe202237abb47408ecbea1e3115aa5e))
+
+
+### Features
+
+* **fscomponents:** Add RadioButtonLine component ([0815e13](https://github.com/brandingbrand/flagship/commit/0815e1340823825948c1744081bd56b916fe3378))
+* add header in the nesting button modal ([#1734](https://github.com/brandingbrand/flagship/issues/1734)) ([5ecc911](https://github.com/brandingbrand/flagship/commit/5ecc9119e574e9409a80602c01bb0f4dc3d62893))
+* **fscomponents:** Update FilterListDrilldown ([2479a29](https://github.com/brandingbrand/flagship/commit/2479a295ddf892ce5b7eedae7ecdaf9cec679060))
+* **fscomponents:** Update StepIndicator ([ebc41e9](https://github.com/brandingbrand/flagship/commit/ebc41e9a84ef54259e729dc2655ddce7aa1f8d1b))
+
+
+
+
+
 # [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
 
 
