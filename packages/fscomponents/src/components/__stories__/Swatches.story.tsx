@@ -17,15 +17,15 @@ const swatchSize = 25;
 const maxSwatches = 6;
 const title = 'Selected';
 const items = [
-  { color: 'red', name: 'red' },
-  { color: 'green', name: 'green' },
-  { color: 'blue', name: 'blue' },
-  { color: 'red', name: 'red' },
-  { color: 'green', name: 'green' },
-  { color: 'blue', name: 'blue' },
-  { color: 'red', name: 'red', available: false },
-  { color: 'green', name: 'green', available: false },
-  { color: 'blue', name: 'blue', available: false }
+  { color: 'red', name: 'red', value: 'red' },
+  { color: 'green', name: 'green', value: 'green' },
+  { color: 'blue', name: 'blue', value: 'blue' },
+  { color: 'red', name: 'red', value: 'red2' },
+  { color: 'green', name: 'green', value: 'green2' },
+  { color: 'blue', name: 'blue', value: 'blue2' },
+  { color: 'red', name: 'red', value: 'red3', available: false },
+  { color: 'green', name: 'green', value: 'green3', available: false },
+  { color: 'blue', name: 'blue', value: 'blue3', available: false }
 ];
 
 storiesOf('Swatches', module)
@@ -41,7 +41,8 @@ storiesOf('Swatches', module)
       }}
       labelTitleStyle={object('labelStyle', labelStyle)}
       style={object('containerStyle', containerStyle)}
-      items={items as any}
+      items={items}
       onChangeSwatch={action('Swatches onChangeSwatch')}
+      defaultValue={'blue'}
     />
   ));

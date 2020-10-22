@@ -16,8 +16,8 @@ import { style as S } from '../styles/Swatches';
 import { Swatch, SwatchProps, SwatchStyle } from './Swatch';
 
 export interface SwatchItemType extends CommerceTypes.OptionValue {
-  color?: string;
-  image?: ImageURISource;
+  color?: string; // deprecated
+  image?: ImageURISource; // deprecated
 }
 
 export interface SerializableSwatchesProps {
@@ -61,10 +61,12 @@ export interface SwatchesProps extends SwatchStyle, Omit<
   renderLabel?: (swatch: SelectedSwatchItem) => void;
 
   onChangeSwatch?: (swatch: string) => void;
+  onColorPress?: (elem: CommerceTypes.OptionValue) => void;
 
   // More/Less
   renderMoreLess?: (showMore: boolean) => React.ReactNode;
   moreLessStyle?: StyleProp<ViewStyle>;
+  onClickPlus?: () => void;
 }
 
 export interface SelectedSwatchItem {
@@ -108,6 +110,21 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
   constructor(props: SwatchesProps) {
     super(props);
 
+    let hasColor = false;
+    let hasImage = false;
+    props.items.forEach(item => {
+      hasColor = hasColor || !!item.color;
+      hasImage = hasImage || !!item.image;
+    });
+
+    if (hasColor) {
+      console.error('Swatch "color" is deprecated. Please use "swatch" instead.');
+    }
+
+    if (hasImage) {
+      console.error('Swatch "image" is deprecated. Please use "swatch" instead.');
+    }
+
     // Default State
     this.state = {
       selected: {
@@ -135,7 +152,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       }
     });
 
-    const { onChangeSwatch } = this.props;
+    const { onColorPress, onChangeSwatch } = this.props;
+    if (onColorPress) {
+      onColorPress(swatch);
+    }
     if (onChangeSwatch) {
       onChangeSwatch(swatch.value || '');
     }
@@ -228,22 +248,22 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
   _renderMoreLess = () => {
     const { shouldShowMoreLess, showMore } = this.state;
-    const { textStyle, moreLessStyle, renderMoreLess } = this.props;
-
-    let moreLess;
-    if (renderMoreLess) {
-      moreLess = renderMoreLess(showMore);
-    } else {
-      // Default Render: + or - text
-      moreLess = <Text style={[S.textItem, textStyle]}>{showMore ? '-' : '+'}</Text>;
-    }
+    const { textStyle, moreLessStyle, onClickPlus, renderMoreLess } = this.props;
 
     if (shouldShowMoreLess) {
+      let moreLess;
+      if (renderMoreLess) {
+        moreLess = renderMoreLess(showMore);
+      } else {
+        // Default Render: + or - text
+        moreLess = <Text style={[S.textItem, textStyle]}>{showMore ? '-' : '+'}</Text>;
+      }
+
       return (
         <TouchableOpacity
           accessibilityLabel='Toggle More/Less Swatches'
           activeOpacity={0.8}
-          onPress={this.toggleMoreLess}
+          onPress={onClickPlus || this.toggleMoreLess}
           style={moreLessStyle}
         >
           {moreLess}
