@@ -88,7 +88,7 @@ const NoSearchResultsStyle = StyleSheet.create({
 });
 
 export interface SearchState {
-  suggestions: any;
+  suggestions: (CommerceTypes.BrandSuggestion | CommerceTypes.CategorySuggestion)[] | null;
   showResult: boolean;
   keyword: string;
 }
@@ -129,7 +129,7 @@ class Search extends Component<SearchProps, SearchState> {
         needInSafeArea={true}
       >
         <SearchSuggestionScreen
-          results={result}
+          results={result || undefined}
           onClose={this.handleCancel}
           onResultPress={this.handleSearchResultPress}
           onInputChange={this.handleInputChange}
@@ -304,7 +304,7 @@ class Search extends Component<SearchProps, SearchState> {
     (value: string) => {
       dataSource
         .searchSuggestion(value)
-        .then((data: any) => {
+        .then((data: CommerceTypes.SearchSuggestion) => {
           this.setState({
             suggestions: this.getAllSuggestions(data)
           });
@@ -370,15 +370,10 @@ class Search extends Component<SearchProps, SearchState> {
     }
   }
 
-  getAllSuggestions = (data: any) => {
-    const groups = [
-      { name: 'brandSuggestions', dataKey: 'brands' },
-      { name: 'categorySuggestions', dataKey: 'categories' },
-      { name: 'brandPartSuggestions', dataKey: 'brandPartTypes' }
-    ];
-
-    const suggestions = groups
-      .map((key: any) => data[key.name] && data[key.name][key.dataKey])
+  getAllSuggestions = (data: CommerceTypes.SearchSuggestion) => {
+    const suggestions: (CommerceTypes.BrandSuggestion | CommerceTypes.CategorySuggestion)[] =
+      (data.brandSuggestions?.brands || [])
+      .concat(data.categorySuggestions?.categories || [])
       .filter(Boolean);
 
     return flatten(suggestions);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { dataSource } from '../lib/datasource';
 import {
@@ -9,10 +10,7 @@ import {
 import { CombinedStore } from '../reducers';
 import { connect } from 'react-redux';
 import { AccountStore } from '../reducers/accountReducer';
-import {
-  loadAccountData,
-  loadCartData
-} from '../lib/globalDataLoaders';
+import globalDataLoaders from '../lib/globalDataLoaders';
 // @ts-ignore TODO: Add types for react-native-sensitive-info
 import SInfo from 'react-native-sensitive-info';
 
@@ -26,7 +24,8 @@ export interface AccountActionProps {
     password: string
   ) => Promise<CommerceTypes.SessionToken>;
   signOut: (clearSaved?: boolean) => Promise<void>;
-  updateAccount: (details: CommerceTypes.CustomerAccount) => any;
+  updateAccount: (details: CommerceTypes.CustomerAccount) =>
+    Promise<CommerceTypes.CustomerAccount | void>;
   updatePassword: (oldPassword: string, newPassword: string) => Promise<void>;
   saveCredentials: (email: string, password: string) => Promise<void>;
   updateCredentials: (email: string, password: string) => Promise<void>;
@@ -37,15 +36,19 @@ export interface AccountProps extends AccountStateProps, AccountActionProps {}
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(
-  combinedStore: CombinedStore,
-  ownProps: any
+  combinedStore: CombinedStore
 ): AccountStateProps {
   return {
     account: combinedStore.account
   };
 }
 
-const reloadSessionData = async (): Promise<any> => {
+const reloadSessionData = async (dispatch: any): Promise<any> => {
+  const {
+    loadAccountData,
+    loadCartData
+  } = globalDataLoaders(dispatch);
+
   return Promise.all([
     loadCartData(),
     loadAccountData()
@@ -57,7 +60,7 @@ const reloadSessionData = async (): Promise<any> => {
   });
 };
 
-export const signOut = (dispatch: any) => async (clearSaved: boolean = true) => {
+export const signOut = (dispatch: React.Dispatch<any>) => async (clearSaved: boolean = true) => {
   return dataSource
     .logout('', '')
     .then(async () => {
@@ -73,35 +76,35 @@ export const signOut = (dispatch: any) => async (clearSaved: boolean = true) => 
     .then(() => {
       dispatch({ type: SIGN_OUT });
     })
-    .then(reloadSessionData);
+    .then(() => reloadSessionData(dispatch));
 };
 
 // provide actions (that can change redux store) to wrapped component as props
-function mapDispatchToProps(dispatch: any, ownProps: any): AccountActionProps {
+function mapDispatchToProps(dispatch: React.Dispatch<any>): AccountActionProps {
   return {
     signIn: async (email, password) => {
       return dataSource
         .login(email, password)
-        .then((signInData: any) => {
+        .then((signInData: CommerceTypes.SessionToken) => {
           dispatch({ type: SIGN_IN, data: signInData });
         })
-        .then(reloadSessionData);
+        .then(() => reloadSessionData(dispatch));
     },
     signOut: signOut(dispatch),
     updateAccount: async (details: CommerceTypes.CustomerAccount) => {
       return dataSource
         .updateAccount(details)
-        .then(account => {
+        .then((account: CommerceTypes.CustomerAccount) => {
           dispatch({ type: UPDATE_ACCOUNT, account });
 
           return account;
         })
-        .catch(e => console.warn('Unable to update account info', e));
+        .catch((e: Error) => console.warn('Unable to update account info', e));
     },
     updatePassword: async (oldPassword: string, newPassword: string) => {
       return dataSource
         .updatePassword(oldPassword, newPassword)
-        .then(reloadSessionData);
+        .then(() => reloadSessionData(dispatch));
     },
     saveCredentials: async (email: string, password: string) => {
       if (!email || !password) {

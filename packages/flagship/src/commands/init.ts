@@ -214,7 +214,10 @@ function initIOS(
   ios.usageDescription(configuration); // Add usage descriptions
   ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
+  ios.iosExtensions(configuration, version); // Add extension targets
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+  ios.patchRCTUIImageViewAnimated();
+
   if (configuration.ios) {
     if (configuration.ios.pods) {
       if (configuration.ios.pods.sources) {

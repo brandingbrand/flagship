@@ -13,9 +13,10 @@ import pathToRegexp, { Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { pathForScreen } from '../lib/helpers';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: any = StyleSheet.create;
+const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
 const DEFAULT_DRAWER_WIDTH = '60%';
 const DEFAULT_DRAWER_DURATION = '0.3s';
 const DEFAULT_DRAWER_OVERLAY_OPACITY = 0.5;
@@ -27,17 +28,24 @@ export interface AppStateTypes {
 
 export interface PropType {
   appConfig: AppConfigType;
-  api: any;
+  api: FSNetwork;
   store: any;
 }
 
 export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   leftDrawerComponent?: ComponentClass<GenericScreenProp>;
   rightDrawerComponent?: ComponentClass<GenericScreenProp>;
-  drawerConfig: any;
-  screensRoutes: Route[];
+  drawerConfig: {
+    drawerWidth: string;
+    drawerDuration: React.ReactText;
+    drawerOverlayOpacity: number;
+    drawerLeftBackgroundColor?: string;
+    drawerRightBackgroundColor?: string;
+    appStyle: StyleSheet.NamedStyles<any>;
+  };
+  screensRoutes: JSX.Element[];
 
-  constructor(props: any) {
+  constructor(props: PropType) {
     super(props);
 
     const { appConfig, api } = this.props;
@@ -122,8 +130,8 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       />
     );
 
-    const screensRoutes = Object.keys(screens).map<any>((key, i): any => {
-      const path = screens[key].path ? screens[key].path : `/_s/${key}/`;
+    const screensRoutes = Object.keys(screens).map((key, i) => {
+      const path = pathForScreen(screens[key], key);
       const component = screens[key];
 
       return (
@@ -142,7 +150,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   }
 
   generateAppStyles = (appConfig: AppConfigType) => {
-    const { drawer = {} as any } = appConfig;
+    const { drawer = {} } = appConfig;
     const drawerWidth = '90%' || drawer.webWidth || DEFAULT_DRAWER_WIDTH;
     const drawerDuration = drawer.webDuration || DEFAULT_DRAWER_DURATION;
     const drawerOverlayOpacity = drawer.webOverlayOpacity || DEFAULT_DRAWER_OVERLAY_OPACITY;
@@ -163,10 +171,10 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         flexBasis: 'auto'
       },
       containerDrawerLeftOpen: {
-        marginLeft: drawerWidth
+        marginLeft: drawer.webSlideContainer === false ? undefined : drawerWidth
       },
       containerDrawerRightOpen: {
-        marginLeft: '-' + drawerWidth
+        marginLeft: drawer.webSlideContainer === false ? undefined : ('-' + drawerWidth)
       },
       containerOverlay: {
         backgroundColor: 'black',

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View
 } from 'react-native';
-import FSI18n from '@brandingbrand/fsi18n';
 import { ProductItemProps } from '../ProductItem';
 import { types, weights } from '../../../styles/variables';
+import { Price } from '../../Price';
 
 const style = StyleSheet.create({
   priceContainer: {
@@ -43,43 +42,37 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
       return renderPrice();
     }
 
-    if (!price) {
-      return null;
-    }
+    const flattenedOriginalPriceStyle = StyleSheet.flatten([
+      types.small,
+      weights.regular,
+      style.originalPrice,
+      originalPriceStyle
+    ]);
 
-    let convertedPrice: string | undefined;
-    try {
-      convertedPrice = FSI18n.currency(price);
-    } catch (e) {
-      console.error(e);
-    }
+    const flattenedPriceStyle = StyleSheet.flatten([
+      types.small,
+      weights.medium,
+      priceStyle
+    ]);
 
-    if (originalPrice && !originalPrice.value.equals(price.value)) {
-      let convertedOriginalPrice: string | undefined;
-      try {
-        convertedOriginalPrice = FSI18n.currency(originalPrice);
-      } catch (e) {
-        console.error(e);
-      }
+    const flattenedSalePriceStyle = StyleSheet.flatten([
+      types.small,
+      weights.medium,
+      style.salePrice,
+      salePriceStyle
+    ]);
 
-      return (
-        <View style={[style.priceContainer]}>
-          <Text style={[types.small, weights.regular, style.originalPrice, originalPriceStyle]}>
-            {convertedOriginalPrice}
-          </Text>
-          <Text style={[types.small, weights.medium, style.salePrice, salePriceStyle]}>
-            {convertedPrice}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={[style.priceContainer]}>
-          <Text style={[types.small, weights.medium, priceStyle]}>
-            {convertedPrice}
-          </Text>
-        </View>
-      );
-    }
+    return (
+      <View style={[style.priceContainer]}>
+        <Price
+          originalPriceFirst={true}
+          originalPrice={originalPrice}
+          price={price}
+          originalPriceStyle={flattenedOriginalPriceStyle}
+          priceStyle={flattenedPriceStyle}
+          salePriceStyle={flattenedSalePriceStyle}
+        />
+      </View>
+    );
   }
 }

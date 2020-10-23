@@ -359,7 +359,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
           </TouchableOpacity>
 
           <ScrollView>
-            {item.values.filter(v => v.categoryId && v.title).map((v, i) => (
+            {(item.values || []).filter(v => v.categoryId && v.title).map((v, i) => (
               <TouchableOpacity
                 key={v.categoryId}
                 style={PIPStyle.secondLevelRow}
