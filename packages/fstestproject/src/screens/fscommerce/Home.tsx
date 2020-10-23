@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 
 export default class Home extends Component<any, any> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
-    this.props.navigator.push({ screen: 'fscommerce.' + screen, title, backButtonTitle });
+    goToNavPush('fscommerce', this.props.componentId, screen, title, backButtonTitle);
   }
 
   render(): JSX.Element {
@@ -18,7 +19,6 @@ export default class Home extends Component<any, any> {
           onPress={this.goTo('Commerce', 'Commerce', 'Back')}
         />
         <Row text='Review' onPress={this.goTo('Review', 'Review', 'Back')} />
-        <Row text='Address' onPress={this.goTo('Address', 'Address', 'Back')} />
       </ScrollView>
     );
   }

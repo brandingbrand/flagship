@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Navigation } from 'react-native-navigation';
 import { FSCheckout, FSCheckoutStepProps, Step, StepManager } from '@brandingbrand/fscheckout';
 import { CheckoutDataType, datasource } from './datasource';
 import StepShipping from './StepShipping';
@@ -7,9 +8,6 @@ import StepReview from './StepReview';
 import StepReceipt from './StepReceipt';
 import StepSignIn from './StepSignIn';
 
-export interface CheckoutDemoProps {
-  navigator: any;
-}
 export interface CheckoutDemoState {
   checkoutData: CheckoutDataType;
   address: string;
@@ -34,7 +32,7 @@ export interface CheckoutActions {
 
 export interface StepProps extends FSCheckoutStepProps<CheckoutActions, CheckoutDemoState> {}
 
-export default class CheckoutDemo extends Component<CheckoutDemoProps, CheckoutDemoState> {
+export default class CheckoutDemo extends Component<CheckoutDemoState> {
   shippingFormRef?: any;
   stepManager?: StepManager;
   state: CheckoutDemoState = {
@@ -87,7 +85,8 @@ export default class CheckoutDemo extends Component<CheckoutDemoProps, CheckoutD
     },
 
     exitCheckout: () => {
-      this.props.navigator.dismissModal();
+      Navigation.dismissAllModals()
+      .catch(err => console.warn('exitCheckout DISMISSALLMODALS error: ', err));
     },
 
     showLoading: () => {

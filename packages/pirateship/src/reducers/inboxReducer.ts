@@ -1,18 +1,23 @@
 import { INBOX_LOADED, INBOX_LOADING, INBOX_LOADING_ERROR } from '../lib/constants';
+import { DiscoveryMessage } from '../lib/engagement';
 
 const INITIAL_STATE: InboxStore = {
   loading: false,
-  value: undefined
+  value: []
 };
 
 export interface InboxStore {
   loading: boolean;
-  value: any;
+  value: DiscoveryMessage[];
+}
+
+export interface InboxAction extends InboxStore {
+  type: 'INBOX_LOADED' | 'INBOX_LOADING' | 'INBOX_LOADING_ERROR';
 }
 
 export default function inboxReducer(
   inboxStore: InboxStore = INITIAL_STATE,
-  action: any
+  action: InboxAction
 ): InboxStore {
   switch (action.type) {
     case INBOX_LOADED: {

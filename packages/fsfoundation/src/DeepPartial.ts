@@ -1,1 +1,1 @@
-export type DeepPartial<T> = { [K in keyof T]?: DeepPartial<T[K]> };
+export { DeepPartial } from 'redux';

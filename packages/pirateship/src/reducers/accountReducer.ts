@@ -7,9 +7,15 @@ export interface AccountStore {
   store?: CommerceTypes.CustomerAccount;
 }
 
+export interface AccountAction {
+  type: 'SIGN_IN' | 'SIGN_OUT' | 'UPDATE_ACCOUNT';
+  isLoggedIn: boolean;
+  account?: CommerceTypes.CustomerAccount;
+}
+
 export default function accountReducer(
   accountStore: AccountStore = initialState,
-  action: any
+  action: AccountAction
 ): AccountStore {
   switch (action.type) {
     case SIGN_IN: {

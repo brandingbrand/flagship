@@ -85,42 +85,48 @@ export default class RecipeBlock extends Component<RecipeBlockProps> {
       return (
 
         <View key={index}>
-          {item.link ? (<TouchableOpacity
-            onPress={this.onButtonPress(item.link.actions)}
-            activeOpacity={0.8}
-            style={[styles.linkContainer, styles.recipeContainer]}
-          >
-            {(item.thumbnail && item.thumbnail.source) && <ImageBlock
-              source={item.thumbnail.source}
-              containerStyle={styles.imageContainer}
-              imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
-            />}
-            <View style={styles.eventText}>
-              <TextBlock
-                text={item.text}
-                textStyle={[styles.recipeTitle, textStyle, { textDecorationLine: 'underline' }]}
-              />
-            </View>
-          </TouchableOpacity>) : (
-              <View style={styles.recipeContainer}>
-                {(item.thumbnail && item.thumbnail.source) && <ImageBlock
+          {item.link ? (
+            <TouchableOpacity
+              onPress={this.onButtonPress(item.link.actions)}
+              activeOpacity={0.8}
+              style={[styles.linkContainer, styles.recipeContainer]}
+            >
+              {(item.thumbnail && item.thumbnail.source) && (
+                <ImageBlock
                   source={item.thumbnail.source}
                   containerStyle={styles.imageContainer}
                   imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
-                />}
-                <View
-                  style={[
-                    styles.eventText,
-                    !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 }
-                  ]}
-                >
-                  <TextBlock
-                    text={item.text}
-                    textStyle={[styles.recipeTitle, textStyle]}
-                  />
-                </View>
+                />
+              )}
+              <View style={styles.eventText}>
+                <TextBlock
+                  text={item.text}
+                  textStyle={[styles.recipeTitle, textStyle, { textDecorationLine: 'underline' }]}
+                />
               </View>
-            )}
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.recipeContainer}>
+              {(item.thumbnail && item.thumbnail.source) && (
+                <ImageBlock
+                  source={item.thumbnail.source}
+                  containerStyle={styles.imageContainer}
+                  imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
+                />
+              )}
+              <View
+                style={[
+                  styles.eventText,
+                  !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 }
+                ]}
+              >
+                <TextBlock
+                  text={item.text}
+                  textStyle={[styles.recipeTitle, textStyle]}
+                />
+              </View>
+            </View>
+          )}
         </View>
       );
     });

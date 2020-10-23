@@ -5,45 +5,49 @@ import { Platform } from 'react-native';
 import AnalyticsProvider from './providers/AnalyticsProvider';
 type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
 
+export type BaseEvent<T = any> = Dictionary<T> & {
+  gaQueryParams?: object;
+};
+
 // Commerce Interfaces
 
-export interface ClickGeneric extends Dictionary {
+export interface ClickGeneric extends BaseEvent {
   identifier?: string;
   name?: string;
   index?: number;
 }
 
-export interface ContactCall extends Dictionary {
+export interface ContactCall extends BaseEvent {
   number: string;
 }
 
-export interface ContactEmail extends Dictionary {
+export interface ContactEmail extends BaseEvent {
   to: string;
 }
 
-export interface ImpressionGeneric extends Dictionary {
+export interface ImpressionGeneric extends BaseEvent {
   identifier?: string;
   name?: string;
   index?: number;
 }
 
-export interface LocationDirections extends Dictionary {
+export interface LocationDirections extends BaseEvent {
   identifier?: string;
   address?: string;
 }
 
-export interface SearchGeneric extends Dictionary {
+export interface SearchGeneric extends BaseEvent {
   term: string;
   count?: number;
 }
 
-export interface Screenview extends Dictionary {
+export interface Screenview extends BaseEvent {
   url: string;
 }
 
 // Enhanced Commerce Interfaces
 
-export interface ImpressionProduct extends Dictionary {
+export interface ImpressionProduct extends BaseEvent {
   identifier: string;
   name: string;
   brand?: string;
@@ -54,7 +58,7 @@ export interface ImpressionProduct extends Dictionary {
   index?: number;
 }
 
-export interface Product extends Dictionary {
+export interface Product extends BaseEvent {
   identifier: string;
   name: string;
   brand?: string;
@@ -66,14 +70,14 @@ export interface Product extends Dictionary {
   index?: number;
 }
 
-export interface Promotion extends Dictionary {
+export interface Promotion extends BaseEvent {
   identifier: string;
   name: string;
   creative?: string;
   slot?: string;
 }
 
-export interface RefundProduct extends Dictionary {
+export interface RefundProduct extends BaseEvent {
   identifier: string;
   quantity: number;
   price?: string;
@@ -82,16 +86,16 @@ export interface RefundProduct extends Dictionary {
 
 // Enhanced Commerce Action Interfaces
 
-export interface ProductAction extends Dictionary {
+export interface ProductAction extends BaseEvent {
   list?: string;
 }
 
-export interface CheckoutAction extends Dictionary {
+export interface CheckoutAction extends BaseEvent {
   step?: number;
   option?: string;
 }
 
-export interface TransactionAction extends Dictionary {
+export interface TransactionAction extends BaseEvent {
   identifier: string;
   affiliation?: string;
   revenue?: string;

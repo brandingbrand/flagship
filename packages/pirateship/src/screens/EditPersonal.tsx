@@ -1,9 +1,10 @@
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import React, { Component } from 'react';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
 import { border, padding } from '../styles/variables';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
 interface EditPersonalScreenProps extends ScreenProps, AccountProps {}
 
 class EditPersonal extends Component<EditPersonalScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   form: any;
   formFields: any;
@@ -33,8 +34,12 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
 
   constructor(props: EditPersonalScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.editPersonal.title)
+    props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.editPersonal.title)
+        }
+      }
     });
 
     // TODO: Update to match proper commerce types
@@ -64,17 +69,16 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={false}
         style={AccountStyle.container}
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
-        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
@@ -113,8 +117,9 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
     this.setState({ values });
   }
 
-  cancel = () => {
-    return this.props.navigator.pop();
+  cancel = async () => {
+    return this.props.navigator.pop()
+    .catch(e => console.warn('POP error: ', e));
   }
 
   save = () => {
@@ -124,7 +129,8 @@ class EditPersonal extends Component<EditPersonalScreenProps> {
         .updateAccount(values)
         .then(this.cancel)
         // TODO: add types for errors
-        .catch((e: any) => handleAccountRequestError(e, this.props.navigator, this.props.signOut));
+        .catch((e: any) => handleAccountRequestError(
+          e, this.props.navigator, this.props.signOut));
     }
   }
 

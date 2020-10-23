@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  StyleProp,
+  TextInputFocusEventData, TextStyle,
+  View,
+  ViewStyle
+} from 'react-native';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import {Dictionary} from '@brandingbrand/fsfoundation';
 const componentTranslationKeys = translationKeys.flagship.updateNameOrEmail;
 
 export interface UpdateNameOrEmailState {
@@ -14,14 +21,14 @@ export interface UpdateNameOrEmailState {
 }
 
 export interface UpdateNameOrEmailProps {
-  fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any; // Text to override the submit button
-  style?: any;
-  fieldsOptions?: any; // any extra desired behaviour, like placeholders
-  value?: any;
+  fieldsStyleConfig?: Dictionary; // custom stylesheet we want to merge with the default stylesheet
+  onSubmit?: <T = any>(value: T) => void; // the behaviour we want onpress of submit button
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  submitText?: () => string; // Text to override the submit button
+  style?: StyleProp<ViewStyle>;
+  fieldsOptions?: Dictionary; // extra desired behaviour, like placeholders
+  value?: Dictionary;
 }
 
 // check for validity as part of the type
@@ -42,24 +49,26 @@ const PasswordType = t.refinement(t.String, (str: string) => {
   return str.length >= 6;
 });
 
-export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateNameOrEmailState> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
+PasswordType.getValidationErrorMessage = (s: string) => {
+  if (!s) {
+    return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
+  }
+  if (s.length < 6) {
+    return FSI18n.string(componentTranslationKeys.form.password.error.tooShort);
+  }
+  return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
+};
 
-  constructor(props: any) {
+export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateNameOrEmailState> {
+  form?: Form | null;
+  fieldsStyleConfig: Dictionary;
+  fieldsTypes: Dictionary;
+  fieldsOptions: Dictionary;
+
+  constructor(props: UpdateNameOrEmailProps) {
     super(props);
 
     this.state = { value: props.value };
-
-    PasswordType.getValidationErrorMessage = (s: string) => {
-      if (s.length < 6) {
-        return FSI18n.string(componentTranslationKeys.form.password.error.tooShort);
-      } else {
-        return FSI18n.string(componentTranslationKeys.form.password.error.invalid);
-      }
-    };
 
     this.fieldsTypes = t.struct({
       firstName: t.String,
@@ -101,7 +110,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('confirmPassword'),
         secureTextEntry: true,
-        onChange: (e: any) => {
+        onChange: (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
           const currentVal = this.state.value;
           const newVal = { ...currentVal, password:  e.nativeEvent.text };
           this.setState({
@@ -136,15 +145,19 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
 
   } // end constructor
 
+  componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   handleSubmit = () => {
-    const value = this.form.getValue();
+    const value = this?.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   }
 
   focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+    const field = this?.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -152,7 +165,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
     }
   }
 
-  handleChange = (value: any) => {
+  handleChange = (value: string) => {
     this.setState({
       value
     });

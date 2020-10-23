@@ -5,7 +5,7 @@
  * a "renderContent" function which will return JSX to be displayed when the tab is active.
  */
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import {
   StyleProp,
@@ -21,16 +21,23 @@ export interface Tab {
   renderContent: () => React.ReactNode;
 }
 
-export interface TabbedContainerProps {
+export interface SerializableTabbedContainerProps {
   initialIndex?: number;
+  style?: ViewStyle;
+  tabContainerStyle?: ViewStyle;
+  tabTouchableStyle?: ViewStyle;
+}
+
+export interface TabbedContainerProps extends Omit<
+  SerializableTabbedContainerProps,
+  'style' |
+  'tabContainerStyle' |
+  'tabTouchableStyle'
+  > {
   style?: StyleProp<ViewStyle>;
   tabs: Tab[];
   tabContainerStyle?: StyleProp<ViewStyle>;
   tabTouchableStyle?: StyleProp<ViewStyle>;
-}
-
-export interface TabbedContainerState {
-  selectedIndex: number;
 }
 
 const styles = StyleSheet.create({
@@ -42,33 +49,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export class TabbedContainer extends Component<TabbedContainerProps, TabbedContainerState> {
-  state: TabbedContainerState;
+export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = props => {
+  const [selectedIndex, setSelectedIndex] = useState<number>(props.initialIndex || 0);
 
-  constructor(props: TabbedContainerProps) {
-    super(props);
+  const selectTab = (index: number) => () => {
+    setSelectedIndex(index);
+  };
 
-    this.state = {
-      selectedIndex: this.props.initialIndex || 0
-    };
-  }
-
-  selectTab = (index: number) => () => {
-    this.setState({
-      selectedIndex: index
-    });
-  }
-
-  renderTabs(): JSX.Element {
+  const renderTabs = (): JSX.Element => {
     return (
-      <View style={[styles.tabContainer, this.props.tabContainerStyle]}>
-        {this.props.tabs.map((tab, index) => {
-          const tabToUse = this.state.selectedIndex === index ? tab.activeTab : tab.tab;
+      <View style={[styles.tabContainer, props.tabContainerStyle]}>
+        {props.tabs.map((tab, index) => {
+          const tabToUse = selectedIndex === index ? tab.activeTab : tab.tab;
 
           return (
             <TouchableOpacity
-              onPress={this.selectTab(index)}
-              style={[styles.tabTouchableOpacity, this.props.tabTouchableStyle]}
+              onPress={selectTab(index)}
+              style={[styles.tabTouchableOpacity, props.tabTouchableStyle]}
               key={index}
             >
               {tabToUse}
@@ -77,14 +74,12 @@ export class TabbedContainer extends Component<TabbedContainerProps, TabbedConta
         })}
       </View>
     );
-  }
+  };
 
-  render(): JSX.Element {
-    return (
-      <View style={this.props.style}>
-        {this.renderTabs()}
-        {this.props.tabs[this.state.selectedIndex].renderContent()}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={props.style}>
+        {renderTabs()}
+        {props.tabs[selectedIndex].renderContent()}
+    </View>
+  );
+};

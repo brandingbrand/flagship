@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 import { border, palette } from '../styles/variables';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import { dataSource } from '../lib/datasource';
 import { handleAccountRequestError } from '../lib/shortcuts';
@@ -61,13 +62,17 @@ const defaultMessage = translate.string(translationKeys.address.loading);
 interface AddressBookScreenProps extends ScreenProps, AccountProps {}
 
 class AddressBook extends Component<AddressBookScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   state: any;
 
   constructor(props: AddressBookScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.editAddresses.title)
+    this.props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.editAddresses.title)
+        }
+      }
     });
 
     this.state = {
@@ -188,16 +193,24 @@ class AddressBook extends Component<AddressBookScreenProps> {
   }
 
   editAddress = (addr: CommerceTypes.CustomerAddress) => {
-    return () => {
+    return async () => {
       return this.props.navigator.showModal({
-        screen: 'EditAddress',
-        title: translate.string(translationKeys.screens.editAddress.noId),
-        passProps: {
-          edit: true,
-          address: addr,
-          onComplete: this.onComplete
+        component: {
+          name: 'EditAddress',
+          options: {
+            topBar: {
+              title: {
+                text: translate.string(translationKeys.screens.editAddress.noId)
+              }
+            }
+          },
+          passProps: {
+            edit: true,
+            address: addr,
+            onComplete: this.onComplete
+          }
         }
-      });
+      }).catch(e => console.warn('EditAddress SHOWMODAL'));
     };
   }
 
@@ -238,7 +251,8 @@ class AddressBook extends Component<AddressBookScreenProps> {
                     throw new Error(translate.string(translationKeys.address.actions.delete.error));
                   }
                 })
-                .catch(e => handleAccountRequestError(e, this.props.navigator, this.props.signOut));
+                .catch(e => handleAccountRequestError(
+                  e, this.props.navigator, this.props.signOut));
             }
           }
         ],
@@ -246,15 +260,23 @@ class AddressBook extends Component<AddressBookScreenProps> {
     };
   }
 
-  addNewAddress = () => {
+  addNewAddress = async () => {
     return this.props.navigator.showModal({
-      screen: 'EditAddress',
-      title: translate.string(translationKeys.screens.newAddress.title),
-      passProps: {
-        edit: false,
-        onComplete: this.onComplete
+      component: {
+        name: 'EditAddress',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.newAddress.title)
+            }
+          }
+        },
+        passProps: {
+          edit: false,
+          onComplete: this.onComplete
+        }
       }
-    });
+    }).catch(e => console.warn('EditAddress SHOWMODAL error: ', e));
   }
 }
 

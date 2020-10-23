@@ -3,7 +3,7 @@
 // in this file since it should only be used in development
 
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { GenericScreenProp } from './screenWrapper';
 import CodePushDevMenu from './CodePushDevMenu';
@@ -11,11 +11,10 @@ import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
 import StorageManager from './StorageManager';
 import TouchableRow from './TouchableRow';
-// @ts-ignore no type definition file
-import RNRestart from 'react-native-restart';
-import { Screen } from 'react-native-navigation';
+import { LayoutComponent } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
+import NavWrapper from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -73,13 +72,17 @@ const styles = StyleSheet.create({
   }
 });
 
+export interface DevMenuProp extends GenericScreenProp {
+  navigator: NavWrapper;
+}
+
 export interface DevMenuState {
   devView: string;
   devKeepPage: boolean;
   selectedEnv: string;
 }
 
-export default class DevMenu extends Component<GenericScreenProp, DevMenuState> {
+export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   state: DevMenuState = {
     devView: 'menu',
     selectedEnv: '',
@@ -157,9 +160,12 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
     );
   }
 
-  renderCustomDevScreen = (item: Screen, i: number) => {
+  renderCustomDevScreen = (item: LayoutComponent, i: number) => {
+    const name = item.name;
+    const title = item.options && item.options.topBar &&
+      item.options.topBar.title && item.options.topBar.title.text;
     return (
-      <TouchableRow key={i} text={item.title || item.screen} onPress={this.pushToScreen(item)} />
+      <TouchableRow key={i} text={title || name} onPress={this.pushToScreen(item)} />
     );
   }
 
@@ -230,15 +236,22 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
   handleHideDevMenu = () => {
     this.props.hideDevMenu();
-    this.props.navigator.dismissModal();
+    this.props.navigator.dismissModal()
+      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
   }
 
   restart = () => {
-    RNRestart.Restart();
+    this.props.hideDevMenu();
+    this.props.navigator.dismissModal()
+      .then(() => {
+        DevSettings.reload();
+      })
+      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
   }
 
   dismissModal = () => {
-    this.props.navigator.dismissModal();
+    this.props.navigator.dismissModal()
+      .catch(err => console.log('DevMenu DISMISSMODAL error: ', err));
   }
 
   updateSelectedEnv = (env: string) => () => {
@@ -250,12 +263,13 @@ export default class DevMenu extends Component<GenericScreenProp, DevMenuState> 
 
   switchToSelectedEnv = () => {
     EnvSwitcher.setEnv(this.state.selectedEnv).then(() => {
-      RNRestart.Restart();
+      this.restart();
     });
   }
 
-  pushToScreen = (item: Screen) => () => {
-    this.props.navigator.push(item);
+  pushToScreen = (item: LayoutComponent) => () => {
+    this.props.navigator.push({ component: item })
+      .catch(err => console.log('DevMenu PUSH error: ', err));
   }
 
   showDevView = (devView: string) => () => {

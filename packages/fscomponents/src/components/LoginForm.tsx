@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
 import { Button } from './Button';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.loginForm;
 
 export interface LoginFormProps {
   /**
@@ -66,9 +68,9 @@ const EmailType = t.refinement(t.String, (str: string) => {
 
 EmailType.getValidationErrorMessage = (s: string) => {
   if (!s) {
-    return 'Email is required';
+    return FSI18n.string(componentTranslationKeys.emailReq);
   } else {
-    return `${s} is not an valid email`;
+    return s + FSI18n.string(componentTranslationKeys.emailNotValid);
   }
 };
 
@@ -91,23 +93,23 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
     this.fieldsOptions = {
       emailAddress: {
-        label: 'Email',
-        placeholder: 'Email',
+        label: FSI18n.string(componentTranslationKeys.email),
+        placeholder: FSI18n.string(componentTranslationKeys.email),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: 'Please enter a valid email'
+        error: FSI18n.string(componentTranslationKeys.emailError)
       },
       password: {
-        label: 'Password',
-        placeholder: 'Password',
+        label: FSI18n.string(componentTranslationKeys.password),
+        placeholder: FSI18n.string(componentTranslationKeys.password),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
         secureTextEntry: true,
-        error: 'Please enter your password'
+        error: FSI18n.string(componentTranslationKeys.passwordError)
       },
       ...props.fieldsOptions
     };
@@ -119,6 +121,10 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
     this.labelPosition = (typeof props.labelPosition === 'number') ?
       props.labelPosition : FormLabelPosition.Inline;
+  }
+
+  componentDidMount(): void {
+    console.warn('LoginForm is deprecated and will be removed in the next version of Flagship.');
   }
 
   handleSubmit = () => {
@@ -158,7 +164,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
           onChange={this.handleChange}
         />
         <Button
-          title={submitText || 'Submit'}
+          title={submitText || FSI18n.string(componentTranslationKeys.submit)}
           onPress={this.handleSubmit}
           style={submitButtonStyle}
         />

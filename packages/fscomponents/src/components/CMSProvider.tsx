@@ -23,7 +23,6 @@ export function withCMSProvider<P extends {}>(
   return class CommerceProvider extends Component<
     ResultProps,
     CMSProviderState> {
-    cmsData: any;
 
     constructor(props: ResultProps) {
       super(props);

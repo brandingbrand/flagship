@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Dimensions,
   StyleProp,
   StyleSheet,
   TextStyle,
   TouchableOpacity,
-  View,
-  WebView
+  View
 } from 'react-native';
-import VideoPlayer from 'react-native-video';
+import WebView from 'react-native-webview';
+import VideoPlayer, { VideoProperties } from 'react-native-video';
 import * as _ from 'lodash-es';
 
 export interface VideoSource {
@@ -18,10 +19,10 @@ export interface VideoSource {
 export interface VideoBlockProps {
   source: VideoSource;
   autoPlay?: boolean;
-  repeat?: boolean;
-  resizeMode?: string;
+  repeat?: VideoProperties['repeat'];
+  resizeMode?: VideoProperties['resizeMode'];
   style?: any;
-  muted?: boolean;
+  muted?: VideoProperties['muted'];
   fullscreen?: boolean;
   containerStyle?: StyleProp<TextStyle>;
 }
@@ -62,6 +63,9 @@ const styles = StyleSheet.create({
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 export default class VideoBlock extends Component<VideoBlockProps, StateType> {
+  static contextTypes: any = {
+    isCard: PropTypes.bool
+  };
   player: any | null = null;
   constructor(props: any) {
     super(props);
@@ -101,6 +105,7 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       repeat = false,
       muted = false
     } = this.props;
+    const { isCard } = this.context;
 
     return (
       <View>
@@ -118,15 +123,18 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
           paused={this.state.videoPaused}
           style={{ width, height }}
         />
+        {!isCard && (
         <TouchableOpacity
           onPress={this.toggleVideo}
           style={[styles.VideoButton, { width, height }]}
         >
-          {this.state.videoPaused &&
+          {this.state.videoPaused && (
             <View style={styles.VideoButtonWrapper}>
               <View style={styles.VideoButtonInner} />
-            </View>}
+            </View>
+          )}
         </TouchableOpacity>
+        )}
       </View>
     );
   }
@@ -161,6 +169,9 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
       containerStyle
     } = this.props;
 
+    if (!source) {
+      return <View />;
+    }
     let height = style.height || 200;
     const width = DEFAULT_WIDTH;
 

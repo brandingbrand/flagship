@@ -95,7 +95,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     const animateItemChange = () => {
       this.state.opacity.setValue(0);
       Animated.timing(this.state.opacity, {
-        toValue: 1
+        toValue: 1,
+        useNativeDriver: true
       }).start();
     };
     if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
@@ -158,11 +159,17 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   }
 
   goTo = (index: number, options?: any) => {
-    animatedScrollTo(
-      findDOMNode(this.scrollView),
-      index * this.getPageWidth(),
-      200
-    );
+    const scrollViewElement = findDOMNode(this.scrollView);
+
+    if (scrollViewElement instanceof Element) {
+      animatedScrollTo(
+        scrollViewElement,
+        index * this.getPageWidth(),
+        200
+      ).catch(e => {
+        console.warn('animatedScrollTo error', e);
+      });
+    }
 
     if (this.props.onSlideChange && this.state.currentIndex !== index) {
       this.props.onSlideChange({
@@ -322,7 +329,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             this.state.currentIndex,
             this.props.items.length
           )
-        ) : (
+        ) : !this.props.hidePageIndicator && (
           <PageIndicator
             style={this.props.pageIndicatorStyle}
             currentIndex={this.state.currentIndex}

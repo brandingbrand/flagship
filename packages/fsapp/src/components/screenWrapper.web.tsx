@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
 import qs from 'qs';
-import pushRoute from '../lib/push-route';
-import { AppConfigType, DrawerConfig } from '../types';
+import NavRender from './Navigator.web';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
+import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
-const StyleSheetCreate: any = StyleSheet.create;
+// hack to avoid ts complaint about certain web-only properties not being valid
+const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
 
 const styles = StyleSheetCreate({
   screenContainer: {
@@ -28,27 +30,24 @@ const styles = StyleSheetCreate({
   }
 });
 
-type Navigator = import ('react-native-navigation').Navigator;
-const NOT_IMPLMENTED = (prop: keyof Navigator) => {
-  return (...args: any[]): any => console.log(`${prop} is not implemented`);
-};
-
 export interface GenericScreenStateProp {
   devMenuHidden: boolean;
 }
 
 export interface GenericScreenDispatchProp {
-  navigator: Navigator;
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
-  appConfig: AppConfigType;
+export interface GenericScreenProp extends GenericScreenStateProp,
+  GenericScreenDispatchProp, GenericNavProp {
   api: FSNetwork;
   href: string;
   match: any;
-  location: any;
-  history: any;
+  location: Location;
+}
+
+export interface GenericScreenState {
+  navModals: NavModal[];
 }
 
 export default function wrapScreen(
@@ -56,14 +55,13 @@ export default function wrapScreen(
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): React.ComponentClass<GenericScreenProp> & {
-  WrappedComponent: React.ComponentType<GenericScreenProp>;
-} {
+): any {
   if (!PageComponent) {
     throw new Error('no PageComponent passed to wrapScreen.web');
   }
 
-  class GenericScreen extends Component<GenericScreenProp> {
+  class GenericScreen extends Component<GenericScreenProp, GenericScreenState> {
+    navigator: Navigator;
     showDevMenu: boolean;
 
     constructor(props: GenericScreenProp) {
@@ -71,8 +69,21 @@ export default function wrapScreen(
       this.showDevMenu =
         __DEV__ ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-
+      this.state = {
+        navModals: []
+      };
+      this.navigator = new Navigator({
+        ...props,
+        toggleDrawerFn,
+        appConfig,
+        updateModals: this.updateModals,
+        modals: props.modals || []
+      });
     }
+    updateModals = (navModals: NavModal[]): void => {
+      this.setState({ navModals });
+    }
+
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
 
@@ -87,11 +98,29 @@ export default function wrapScreen(
       }
     }
 
-    openDevMenu = () => {
-      this.props.navigator.push({
-        screen: 'devMenu',
-        title: 'FLAGSHIP Dev Menu'
+    onDismiss = (index: number): void => {
+      this.state.navModals.splice(index, 1);
+      this.setState({
+        navModals: this.state.navModals
       });
+    }
+
+    openDevMenu = () => {
+      this.navigator.push({
+        component: {
+          name: 'devMenu',
+          passProps: {
+            hideDevMenu: this.props.hideDevMenu
+          },
+          options: {
+            topBar: {
+              title: {
+                text: 'FLAGSHIP Dev Menu'
+              }
+            }
+          }
+        }
+      }).catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
     }
 
     render(): JSX.Element {
@@ -99,6 +128,13 @@ export default function wrapScreen(
         <View style={styles.screenContainer}>
           {this.renderPage()}
           {this.renderVersion()}
+          <NavRender
+            {...this.props}
+            modals={this.state.navModals}
+            appConfig={appConfig}
+            onDismiss={this.onDismiss}
+            navigator={this.navigator}
+          />
         </View>
       );
     }
@@ -142,6 +178,7 @@ export default function wrapScreen(
           {...passProps}
           appConfig={appConfig}
           api={api}
+          navigator={this.navigator}
         />
       );
     }
@@ -157,38 +194,7 @@ export default function wrapScreen(
     dispatch: any,
     ownProps: GenericScreenProp
   ): GenericScreenDispatchProp {
-    const { history } = ownProps;
-
-    const navigator: Navigator = {
-      push: route => pushRoute(route, history, appConfig),
-      showModal: route => pushRoute(route, history, appConfig),
-      pop: () => history.goBack(),
-      toggleDrawer: config => toggleDrawerFn && toggleDrawerFn(config),
-      switchToTab: route => pushRoute(route, history, appConfig),
-      popToRoot: () => pushRoute(appConfig.screen, history, appConfig),
-      setTitle: NOT_IMPLMENTED('setTitle'),
-      setSubTitle: NOT_IMPLMENTED('setSubTitle'),
-      resetTo: NOT_IMPLMENTED('resetTo'),
-      dismissModal: NOT_IMPLMENTED('dismissModal'),
-      dismissAllModals: NOT_IMPLMENTED('dismissAllModals'),
-      showLightBox: NOT_IMPLMENTED('showLightBox'),
-      dismissLightBox: NOT_IMPLMENTED('dismissLightBox'),
-      showInAppNotification: NOT_IMPLMENTED('showInAppNotification'),
-      handleDeepLink: NOT_IMPLMENTED('handleDeepLink'),
-      setButtons: NOT_IMPLMENTED('setButtons'),
-      setDrawerEnabled: NOT_IMPLMENTED('setDrawerEnabled'),
-      toggleTabs: NOT_IMPLMENTED('toggleTabs'),
-      setTabBadge: NOT_IMPLMENTED('setTabBadge'),
-      setTabButton: NOT_IMPLMENTED('setTabButton'),
-      toggleNavBar: NOT_IMPLMENTED('toggleNavBar'),
-      setOnNavigatorEvent: NOT_IMPLMENTED('setOnNavigatorEvent'),
-      addOnNavigatorEvent: NOT_IMPLMENTED('addOnNavigatorEvent'),
-      screenIsCurrentlyVisible: NOT_IMPLMENTED('screenIsCurrentlyVisible'),
-      setStyle: NOT_IMPLMENTED('setStyle')
-    };
-
     return {
-      navigator,
       hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true }))
     };
   }

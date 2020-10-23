@@ -38,10 +38,11 @@ export const TextField: React.FC<FormFieldProps> = (
         onBlur={setTouched}
         value={field.value}
       />
-      {meta.touched && meta.error ?
+      {meta.touched && meta.error ? (
         <Text style={[S.errorMessageText, errStyle]}>
           {meta.error}
-        </Text> : null}
+        </Text>
+      ) : null}
     </View>
   );
 };

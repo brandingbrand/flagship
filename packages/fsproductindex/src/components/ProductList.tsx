@@ -1,14 +1,15 @@
 import React, { FunctionComponent, memo } from 'react';
-import { Grid } from '@brandingbrand/fscomponents';
+import { Grid, GridProps } from '@brandingbrand/fscomponents';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface ProductListProps {
-  items?: any;
-  style?: any;
+  items: readonly any[] | null;
+  style?: StyleProp<ViewStyle>;
   columns?: number;
-  gridProps?: any;
-  renderItem?: any;
-  renderHeader?: any;
-  renderFooter?: any;
+  gridProps?: Partial<GridProps<any>>;
+  renderItem: GridProps<any>['renderItem'];
+  renderHeader?: () => JSX.Element | null;
+  renderFooter?: () => JSX.Element | null;
 }
 
 const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {

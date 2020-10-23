@@ -39,7 +39,7 @@ export interface SwatchStyle {
   disabledImageStyle?: StyleProp<ImageStyle>;
 }
 
-export interface SwatchProps extends SwatchStyle {
+export interface SerializaSwatchProps {
   // data
   color?: string;
   value?: string;
@@ -50,7 +50,9 @@ export interface SwatchProps extends SwatchStyle {
   index: number;
   selected: boolean;
   disabled?: boolean;
+}
 
+export interface SwatchProps extends SwatchStyle, SerializaSwatchProps {
   // actions
   onSelect: (swatch: SwatchProps) => void;
 

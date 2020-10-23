@@ -1,12 +1,11 @@
 /* tslint:disable:jsx-use-translation-function */
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { LayoutComponent, Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
 import { Accordion, AccordionProps } from '@brandingbrand/fscomponents';
-
-type Screen = import ('react-native-navigation').Screen;
 
 export interface AccordionSampleScreenProps extends ScreenProps, AccordionProps {}
 
@@ -17,10 +16,9 @@ const styles = StyleSheet.create({
 });
 
 class AccordionSample extends Component<AccordionSampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static options: Options = navBarTabLanding;
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const icons = {
       closed: require('../../assets/images/alert.png'),
       open: require('../../assets/images/check.png'),
@@ -45,7 +43,7 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
+        navigator={this.props.navigator}
       >
         <View style={styles.section}>
           <Accordion
@@ -69,13 +67,24 @@ class AccordionSample extends Component<AccordionSampleScreenProps> {
             openIconImage={icons.open}
             closedIconImage={icons.closed}
           />
+          <Accordion
+            title={'Open Parent Accordion with Image'}
+            state={'open'}
+          >
+            <Accordion
+              title={<Text>Nested Accordion with Image</Text>}
+              content={imageContent}
+              paddingHorizontal={0}
+            />
+          </Accordion>
         </View>
       </PSScreenWrapper>
     );
   }
 
-  goTo = (screen: Screen) => () => {
-    this.props.navigator.push(screen);
+  goTo = (component: LayoutComponent) => () => {
+    this.props.navigator.push({ component })
+    .catch(e => console.warn(`${component.name} PUSH error: `, e));
   }
 }
 

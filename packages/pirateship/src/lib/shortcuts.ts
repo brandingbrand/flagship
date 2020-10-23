@@ -1,40 +1,40 @@
-type Navigator = import ('react-native-navigation').Navigator;
+import { Navigator } from '@brandingbrand/fsapp';
+import { ScreenProps } from './commonTypes';
+
+interface ErrorHandler {
+  response: {
+    status: number;
+  };
+}
 
 export const openSignInModal = (navigator: Navigator) => () => {
   navigator.showModal({
-    screen: 'SignIn',
-    passProps: {
-      dismissible: true,
-      onDismiss: () => {
-        navigator.dismissModal();
-      },
-      onSignInSuccess: () => {
-        navigator.dismissModal();
+    component: {
+      name: 'SignIn',
+      passProps: {
+        dismissible: true,
+        onDismiss: (screenProps: ScreenProps) => {
+          screenProps.navigator.dismissModal()
+          .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+        },
+        onSignInSuccess: (screenProps: ScreenProps) => {
+          screenProps.navigator.dismissModal()
+          .catch(e => console.warn('SignIn DISMISSMODAL error: ', e));
+        }
       }
     }
-  });
+  }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
 };
 
 export const handleAccountRequestError = (
-  error: any,
+  error: ErrorHandler,
   navigator: Navigator,
-  signOutFn: () => Promise<any>
+  signOutFn: () => Promise<void>
 ): void => {
   if (error.response && error.response.status && error.response.status === 401) {
     signOutFn()
-      .then(() => {
-        navigator.resetTo({
-          screen: 'Account',
-          title: 'Account'
-        });
-      })
       .catch(e => {
         console.warn('Error signing user out', e);
-
-        navigator.resetTo({
-          screen: 'Account',
-          title: 'Account'
-        });
       });
   } else {
     console.warn(error, error.response);

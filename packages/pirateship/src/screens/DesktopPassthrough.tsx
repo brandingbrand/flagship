@@ -1,5 +1,7 @@
 import React, { Component, RefObject } from 'react';
-import { Linking, Platform, StyleSheet, View, WebView } from 'react-native';
+import { Linking, Platform, StyleSheet, View } from 'react-native';
+import WebView from 'react-native-webview';
+import { Options } from 'react-native-navigation';
 import url from 'url';
 
 import { Loading } from '@brandingbrand/fscomponents';
@@ -9,7 +11,7 @@ import { handleDeeplink } from '../lib/deeplinkHandler';
 
 import { backButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 
 const appEnv = require('../../env/env');
 const { apiHost } = appEnv;
@@ -19,7 +21,7 @@ const { apiHost } = appEnv;
 // tslint:disable
 export const patchPostMessageFunction = function() {
   const originalPostMessage = window.postMessage;
-  const patchedPostMessage = function(message: any, targetOrigin: string, transfer: any[]) {
+  const patchedPostMessage = function(message: any, targetOrigin: string, transfer?: any[]) {
     originalPostMessage(message, targetOrigin, transfer);
   };
 
@@ -56,8 +58,9 @@ const styles = StyleSheet.create({
 });
 
 export default class DesktopPassthrough extends Component<DesktopPassthroughProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
+
   isFirstPageview: boolean = true;
   previousUrl?: string;
   path?: string;
@@ -76,16 +79,16 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
     if (this.props.url) {
       const urlParts = url.parse(this.props.url);
-      this.path = urlParts.path;
-      this.host = urlParts.host;
+      this.path = urlParts.path || undefined;
+      this.host = urlParts.host || undefined;
       this.hash = urlParts.hash || '';
     }
   }
 
   webviewOnError = (error: any): void => {
     console.log(error);
-
-    this.props.navigator.popToRoot();
+    this.props.navigator.popToRoot()
+    .catch(e => console.warn('POPTOROOT error: ', e));
   }
 
   // tslint:disable-next-line:cyclomatic-complexity
@@ -118,7 +121,7 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
         // Navigate back to an app screen if we know how to handle the URL or push a new
         // passthrough screen if not.
         handleDeeplink(
-          urlParts.protocol + '//' + this.host + urlParts.path,
+          urlParts.protocol + '//' + (this.host || '') + (urlParts.path || ''),
           this.props.navigator
         );
 
@@ -171,14 +174,17 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
 
   handleMessage = (e: any) => {
     if (e.nativeEvent.data && e.nativeEvent.data.indexOf('title:') === 0) {
-      this.props.navigator.setTitle({
-        title: e.nativeEvent.data.replace('title:', '')
+      this.props.navigator.mergeOptions({
+        topBar: {
+          title: {
+            text: e.nativeEvent.data.replace('title:', '')
+          }
+        }
       });
     }
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     if (this.path && this.path.split('.').pop() === 'pdf') {
       const pdfUrl =
         Platform.OS === 'android'
@@ -186,8 +192,8 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
           : apiHost + this.path;
       return (
         <PSScreenWrapper
+          navigator={this.props.navigator}
           scroll={false}
-          navigator={navigator}
         >
           <View style={styles.flex1}>
             <WebView source={{ uri: pdfUrl }} />
@@ -197,13 +203,13 @@ export default class DesktopPassthrough extends Component<DesktopPassthroughProp
     } else {
       const source = this.path ?
         { uri: apiHost + this.path + this.hash } :
-        { html: this.props.html };
+        { html: this.props.html || '' };
       return (
         <PSScreenWrapper
           scroll={false}
           hideGlobalBanner={!!this.props.html}
           hideWebHeader={!!this.props.html}
-          navigator={navigator}
+          navigator={this.props.navigator}
         >
           <View style={styles.flex1}>
             <WebView

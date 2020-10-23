@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 import { TouchableDelay } from './TouchableDelay';
 
-const TouchableWithoutFeedbackWithHref: any = TouchableWithoutFeedback;
+const TouchableWithoutFeedbackWithHref:
+  React.ComponentClass<TouchableWithoutFeedbackLinkProps> = TouchableWithoutFeedback;
 
 export interface TouchableWithoutFeedbackLinkProps extends TouchableWithoutFeedbackProperties {
   href?: string;

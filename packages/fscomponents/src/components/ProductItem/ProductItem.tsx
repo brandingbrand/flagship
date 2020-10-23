@@ -45,7 +45,7 @@ export interface ProductItemProps extends CommerceTypes.Product {
   variantTextStyle?: StyleProp<TextStyle>;
   reviewStyle?: StyleProp<ViewStyle>;
   reviewCountStyle?: StyleProp<TextStyle>;
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   extraElement?: JSX.Element;
   swatchItems?: SwatchItemType[];
   swatchStyle?: StyleProp<ViewStyle>;
@@ -192,72 +192,90 @@ export class ProductItem extends Component<ProductItemProps> {
         <View style={style}>
           <View style={isHorizontal ? S.horizontalListContainer : null}>
             <View style={isHorizontal ? S.horizontalLeft : null}>
-              {!hideImage && <ProductItemImage
-                images={images}
-                imageStyle={imageStyle}
-                imageContainerStyle={imageContainerStyle}
-                renderImage={renderImage}
-                image={image}
-              />}
-              {!hideVariantText && <ProductItemVariant
-                variantText={variantText}
-                variantTextStyle={variantTextStyle}
-                renderVariantText={renderVariantText}
-              />}
+              {!hideImage && (
+                <ProductItemImage
+                  images={images}
+                  imageStyle={imageStyle}
+                  imageContainerStyle={imageContainerStyle}
+                  renderImage={renderImage}
+                  image={image}
+                />
+              )}
+              {!hideVariantText && (
+                <ProductItemVariant
+                  variantText={variantText}
+                  variantTextStyle={variantTextStyle}
+                  renderVariantText={renderVariantText}
+                />
+              )}
             </View>
             <View style={[isHorizontal ? S.horizontalRight : null, contentStyle]}>
-              {!hideSwatches && <ProductItemSwatches
-                swatchItems={swatchItems}
-                swatchStyle={swatchStyle}
-                swatchesProps={swatchesProps}
-                renderSwatches={renderSwatches}
-              />}
-              {!hideBrand && <ProductItemBrand
-                brand={brand}
-                brandStyle={brandStyle}
-                renderBrand={renderBrand}
-              />}
-              {!hideTitle && <ProductItemTitle
-                title={title}
-                titleStyle={titleStyle}
-                renderTitle={renderTitle}
-              />}
-              {!hidePrice && <ProductItemPrice
-                price={price}
-                originalPrice={originalPrice}
-                priceStyle={priceStyle}
-                originalPriceStyle={originalPriceStyle}
-                salePriceStyle={salePriceStyle}
-                renderPrice={renderPrice}
-              />}
-              {!hideReviews && <ProductItemReviews
-                review={review}
-                reviewStyle={reviewStyle}
-                reviewCountStyle={reviewCountStyle}
-                reviewIndicatorProps={reviewIndicatorProps}
-                renderReviews={renderReviews}
-                reviewValue={reviewValue}
-                reviewCount={reviewCount}
-              />}
-              {!hidePromos && <ProductItemPromos
-                promotions={promotions}
-                promoStyle={promoStyle}
-                promoContainerStyle={promoContainerStyle}
-                renderPromos={renderPromos}
-                promos={promos}
-              />}
+              {!hideSwatches && (
+                <ProductItemSwatches
+                  swatchItems={swatchItems}
+                  swatchStyle={swatchStyle}
+                  swatchesProps={swatchesProps}
+                  renderSwatches={renderSwatches}
+                />
+              )}
+              {!hideBrand && (
+                <ProductItemBrand
+                  brand={brand}
+                  brandStyle={brandStyle}
+                  renderBrand={renderBrand}
+                />
+              )}
+              {!hideTitle && (
+                <ProductItemTitle
+                  title={title}
+                  titleStyle={titleStyle}
+                  renderTitle={renderTitle}
+                />
+              )}
+              {!hidePrice && (
+                <ProductItemPrice
+                  price={price}
+                  originalPrice={originalPrice}
+                  priceStyle={priceStyle}
+                  originalPriceStyle={originalPriceStyle}
+                  salePriceStyle={salePriceStyle}
+                  renderPrice={renderPrice}
+                />
+              )}
+              {!hideReviews && (
+                <ProductItemReviews
+                  review={review}
+                  reviewStyle={reviewStyle}
+                  reviewCountStyle={reviewCountStyle}
+                  reviewIndicatorProps={reviewIndicatorProps}
+                  renderReviews={renderReviews}
+                  reviewValue={reviewValue}
+                  reviewCount={reviewCount}
+                />
+              )}
+              {!hidePromos && (
+                <ProductItemPromos
+                  promotions={promotions}
+                  promoStyle={promoStyle}
+                  promoContainerStyle={promoContainerStyle}
+                  renderPromos={renderPromos}
+                  promos={promos}
+                />
+              )}
               {extraElement}
             </View>
           </View>
           <View>
-            {!hideButton && <ProductItemButton
-              buttonText={buttonText}
-              buttonStyle={buttonStyle}
-              buttonTextStyle={buttonTextStyle}
-              onButtonPress={onButtonPress}
-              renderButton={renderButton}
-              {...buttonProps}
-            />}
+            {!hideButton && (
+              <ProductItemButton
+                buttonText={buttonText}
+                buttonStyle={buttonStyle}
+                buttonTextStyle={buttonTextStyle}
+                onButtonPress={onButtonPress}
+                renderButton={renderButton}
+                {...buttonProps}
+              />
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>

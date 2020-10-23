@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TextInputProperties,
+  TextInputProps,
   TextStyle,
   TouchableOpacity,
   View,
@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { ClearButtonMode } from '../types/Store';
 import { style as S } from '../styles/SearchBar';
+import { tr, trKeys } from '../lib/translations';
 
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
@@ -27,15 +28,17 @@ const isAndroid = Platform.OS === 'android';
 
 export interface SearchBarProps {
   placeholder?: string;
+  initialValue?: string;
   onSubmit?: (value: string) => void;
   onChange?: (value: string) => void;
-  onFocus?: (input: any, container: any) => void;
-  onBlur?: (input: any, container: any) => void;
+  onFocus?: (input: TextInput, container: View) => void;
+  onBlur?: (input: TextInput, container: View) => void;
   onCancel?: () => void;
   renderCancelButton?: () => React.ReactNode;
 
   // accessibility
   accessibilityLabel?: string;
+  rightBtnAccessibilityLabel?: string;
 
   // visibility
   showSearchIcon?: boolean;
@@ -52,7 +55,7 @@ export interface SearchBarProps {
   onLocateButtonPress?: () => void;
 
   // input
-  inputProps?: TextInputProperties;
+  inputProps?: TextInputProps;
   shouldClearOnSubmit?: boolean;
 
   // style
@@ -108,13 +111,13 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     }
 
     this.state = {
-      value: '',
+      value: props.initialValue || '',
       cancelButtonWidth,
       isFocused: false
     };
   }
 
-  render(): any {
+  render(): JSX.Element {
     const {
       showCancel,
       style,
@@ -132,8 +135,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     );
   }
 
-  saveContainerRef = (container: any) => (this.container = container);
-  saveInputRef = (input: any) => (this.input = input);
+  saveContainerRef = (container: View) => (this.container = container);
+  saveInputRef = (input: TextInput) => (this.input = input);
 
   renderInput = () => {
     const {
@@ -225,6 +228,10 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <TouchableOpacity
         style={rightBtnStyle}
         onPress={onRightBtnPress || this.handleSubmit}
+        accessibilityLabel={this.props.rightBtnAccessibilityLabel ||
+          tr.string(
+            trKeys.flagship.search.actions.search.accessibilityLabel, {value: this.state.value}
+          )}
         accessibilityRole='button'
       >
         {icon}
@@ -282,7 +289,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // The cancel button may not be visible. Animate it to full width.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: cancelButtonWidth || kCancelButtonWidthDefault,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: false
       }).start();
     }
   }
@@ -300,7 +308,8 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       // Cancel button is not supposed to be visible on blur. Animate it away.
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: 0,
-        duration: kCancelButtonAnimationDuration
+        duration: kCancelButtonAnimationDuration,
+        useNativeDriver: false
       }).start();
     }
   }

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 });
 
 // Helper component for QA header
-const QAHeader = (props: any) => {
+const QAHeader = (props: ReviewTypes.ReviewQuestion) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={[styles.header, styles.user]}>{props.user}</Text>
@@ -85,7 +85,7 @@ const QAHeader = (props: any) => {
 
 export interface PSQAndAProps {
   id: string;
-  onDataLoaded?: (data: any) => void;
+  onDataLoaded?: (data: ReviewTypes.ReviewQuestion[]) => void;
 }
 
 export interface PSQAndAState {
@@ -109,7 +109,7 @@ export default class PSQAndA extends Component<PSQAndAProps, PSQAndAState> {
     }
 
     reviewDataSource.fetchQuestions({ ids: this.props.id })
-      .then((data: any) => {
+      .then((data: ReviewTypes.ReviewQuestion[]) => {
         this.setState({ questions: data, isLoading: false });
         if (this.props.onDataLoaded) {
           this.props.onDataLoaded(data);

@@ -1,18 +1,19 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { TouchableHighlight, TouchableHighlightProperties } from 'react-native';
 
 export interface TouchableHighlightLinkProps extends TouchableHighlightProperties {
   href?: string;
 }
 
-export class TouchableHighlightLink extends PureComponent<TouchableHighlightLinkProps> {
-  render(): JSX.Element {
-    const { href, ...props } = this.props;
+export const TouchableHighlightLink: FunctionComponent<TouchableHighlightLinkProps> = ({
+  children,
+  ...props
+}): JSX.Element => {
+  const { href, ...rest } = props;
 
-    return (
-      <TouchableHighlight accessibilityTraits='link' {...props}>
-        {this.props.children}
-      </TouchableHighlight>
-    );
-  }
-}
+  return (
+    <TouchableHighlight accessibilityTraits='link' {...rest}>
+      {children}
+    </TouchableHighlight>
+  );
+};

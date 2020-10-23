@@ -7,15 +7,16 @@ import {
   ViewStyle
 } from 'react-native';
 import React, { Component } from 'react';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import { EMAIL_REGEX } from '../lib/constants';
 import { select, textbox } from '../lib/formTemplate';
 import { border, color, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
 import { merge } from 'lodash-es';
-import translate, {translationKeys} from '../lib/translations';
+import translate, { translationKeys } from '../lib/translations';
+import { FieldOptions } from '../lib/FieldOptionsTypes';
 
 const styles = StyleSheet.create({
   helpBlockContainer: {
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
 export interface ContactInfoFormProps {
   values: ContactFormValues;
   onChange: (values: any) => void;
-  updateFormRef: (ref: any) => void;
+  updateFormRef: (ref: Form) => void;
   style?: StyleProp<ViewStyle>;
   hiddenFields?: (keyof FormFields)[];
   optionalFields?: (keyof FormFields)[];
@@ -52,26 +53,26 @@ export interface ContactFormValues {
 }
 
 export interface FormFields {
-  firstName: any;
-  lastName: any;
-  email: any;
-  emailConfirmation: any;
-  password: any;
-  passwordConfirmation: any;
-  age: any;
-  gender: any;
-  specials: any;
+  firstName: string;
+  lastName: string;
+  email: string;
+  emailConfirmation: string;
+  password: string;
+  passwordConfirmation: string;
+  age: string;
+  gender: string;
+  specials: boolean;
 }
 
-export default class ContactInfoForm extends Component<
-  ContactInfoFormProps,
-  ContactInfoFormState
-> {
+type Options = Record<keyof ContactFormValues, FieldOptions>;
+
+export default class ContactInfoForm extends Component<ContactInfoFormProps,
+  ContactInfoFormState> {
   hiddenFields: Set<keyof FormFields>;
   optionalFields: Set<keyof FormFields>;
-  fieldOptions: any;
-  fields: any;
-  form: any;
+  fieldOptions: Options;
+  fields: FormFields;
+  form?: Form | null;
 
   constructor(props: ContactInfoFormProps) {
     super(props);
@@ -87,6 +88,11 @@ export default class ContactInfoForm extends Component<
     this.fieldOptions = this.getFormFieldOptions();
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ContactInfoForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
   getFormFields = () => {
     const EmailType = t.refinement(t.String, (value: string) => {
       const { email, emailConfirmation } = this.props.values;
@@ -96,7 +102,7 @@ export default class ContactInfoForm extends Component<
       return isEmailFormat && isSameEmail;
     });
     EmailType.getValidationErrorMessage = (value: string) => {
-      const { email, emailConfirmation } = this.props.values;
+      const {email, emailConfirmation} = this.props.values;
 
       if (!value) {
         return translate.string(translationKeys.contactInfo.errors.email.missing);
@@ -168,8 +174,8 @@ export default class ContactInfoForm extends Component<
     return t.struct(fields);
   }
 
-  getFormFieldOptions = () => {
-    const options = {
+  getFormFieldOptions = (): Options => {
+    const options: Options = {
       firstName: {
         label: translate.string(translationKeys.contactInfo.form.firstName.label),
         error: translate.string(translationKeys.contactInfo.form.firstName.error),
@@ -177,6 +183,7 @@ export default class ContactInfoForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         onSubmitEditing: () => this.focusField('lastName')
       },
       lastName: {
@@ -186,6 +193,7 @@ export default class ContactInfoForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         onSubmitEditing: () => this.focusField('email')
       },
       email: {
@@ -198,7 +206,7 @@ export default class ContactInfoForm extends Component<
                 formFieldStyles.helpBlock.normal
               ]}
             >
-              <Text style={{ fontWeight: 'bold' }}>
+              <Text style={{fontWeight: 'bold'}}>
                 {translate.string(translationKeys.contactInfo.notes.callout)}
               </Text>
               <Text>: {translate.string(translationKeys.contactInfo.notes.email)}</Text>
@@ -209,6 +217,7 @@ export default class ContactInfoForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         keyboardType: 'email-address',
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('emailConfirmation')
@@ -219,6 +228,7 @@ export default class ContactInfoForm extends Component<
         placeholderTextColor: color.gray,
         returnKeyType: 'next',
         autoCorrect: false,
+        config: {},
         keyboardType: 'email-address',
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('password')
@@ -232,6 +242,7 @@ export default class ContactInfoForm extends Component<
         autoCapitalize: 'none',
         secureTextEntry: this.state.hidePassword,
         password: true,
+        config: {},
         onSubmitEditing: () => this.focusField('passwordConfirmation')
       },
       passwordConfirmation: {
@@ -243,6 +254,7 @@ export default class ContactInfoForm extends Component<
         autoCapitalize: 'none',
         secureTextEntry: this.state.hidePasswordConfirmation,
         password: true,
+        config: {},
         onSubmitEditing: () => this.focusField('age')
       },
       age: {
@@ -265,6 +277,7 @@ export default class ContactInfoForm extends Component<
       },
       specials: {
         label: 'Send me emails about store specials.',
+        config: {},
         trackColor: {
           true: palette.secondary,
           false: null
@@ -293,20 +306,20 @@ export default class ContactInfoForm extends Component<
           }
         })
       }
-    } as any;
+    };
 
     this.optionalFields.forEach(fieldName => {
       options[fieldName].placeholder = translate.string(translationKeys.formPlaceholders.optional);
       options[fieldName].returnKeyType = 'done';
       options[fieldName].onSubmitEditing = undefined;
-      if (options[fieldName].config) {
+      if (options[fieldName]?.config) {
         options[fieldName].config.onValueChange = undefined;
 
-        if (options[fieldName].config.title) {
+        if (options[fieldName].config?.title) {
           options[fieldName].config.title +=
-          ` (${translate.string(translationKeys.formPlaceholders.optional)})`;
+            ` (${translate.string(translationKeys.formPlaceholders.optional)})`;
         }
-        if (options[fieldName].config.placeholder) {
+        if (options[fieldName].config?.placeholder) {
           options[fieldName].config.placeholder +=
             ` (${translate.string(translationKeys.formPlaceholders.optional)})`;
         }
@@ -340,12 +353,12 @@ export default class ContactInfoForm extends Component<
         fieldsStyleConfig={formFieldStyles}
         value={values}
         onChange={onChange}
-        templates={{ textbox, select }}
+        templates={{textbox, select}}
       />
     );
   }
 
-  updateFormRef = (ref: any) => {
+  updateFormRef = (ref: Form) => {
     const { updateFormRef } = this.props;
     if (updateFormRef) {
       updateFormRef(ref);
@@ -354,7 +367,7 @@ export default class ContactInfoForm extends Component<
   }
 
   focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {

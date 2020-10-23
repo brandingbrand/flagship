@@ -1,9 +1,9 @@
 export default interface AnalyticsProviderConfiguration {
-  userAgent: string;
-  osType: string;
-  osVersion: string;
-  appName: string;
-  appId: string;
-  appVersion: string;
-  appInstallerId?: string;
+  userAgent: string | Promise<string>;
+  osType: string | Promise<string>;
+  osVersion: string | Promise<string>;
+  appName: string | Promise<string>;
+  appId: string | Promise<string>;
+  appVersion: string | Promise<string>;
+  appInstallerId?: string | Promise<string>;
 }

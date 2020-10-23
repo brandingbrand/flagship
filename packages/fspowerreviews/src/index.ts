@@ -1,1 +1,0 @@
-export { PowerReviewsDataSource } from './PowerReviewsDataSource';

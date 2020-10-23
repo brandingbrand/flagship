@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import TouchId from 'react-native-touch-id';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { dataSource } from '../lib/datasource';
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Options } from 'react-native-navigation';
 import PSButton from '../components/PSButton';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import ContactInfoForm, { ContactFormValues } from '../components/ContactInfoForm';
@@ -109,7 +110,7 @@ interface SignUpState {
 }
 
 class SignUp extends Component<SignUpProps, SignUpState> {
-  static navigatorStyle: NavigatorStyle = navBarHide;
+  static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
   fieldOptions: any;
   screen: any;
@@ -129,17 +130,15 @@ class SignUp extends Component<SignUpProps, SignUpState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
-
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
-        navigator={navigator}
       >
         {this.props.dismissible && (
           <View style={styles.dismissButtonContainer}>

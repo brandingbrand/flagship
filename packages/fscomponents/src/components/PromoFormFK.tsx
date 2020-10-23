@@ -83,7 +83,7 @@ const promoFormFKSchema = defineSchema<PromoFormFKValue>({
   promoCode: yup
     .string()
     .required()
-    .label(tr.string(trKeys.flagship.promoForm.errorMessage))
+    .label(tr.string(trKeys.flagship.promoFormFK.errorMessage))
 });
 
 export class PromoFormFK extends Component<PromoFormFKProps> {
@@ -153,7 +153,7 @@ export class PromoFormFK extends Component<PromoFormFKProps> {
     return (
       <Button
         onPress={submitForm}
-        title={this.props.submitText || tr.string(trKeys.flagship.promoForm.button)}
+        title={this.props.submitText || tr.string(trKeys.flagship.promoFormFK.button)}
         style={[style, this.props.submitButtonStyle]}
       />
     );

@@ -7,8 +7,8 @@ import {
   object,
   select,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { CategoryBox } from '../CategoryBox';
 import { CategoryLine } from '../CategoryLine';
 import { Grid } from '../Grid';

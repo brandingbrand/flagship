@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, WebView } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 
 import {
   Action,
   ScreenProps
 } from './types';
+import WebView from 'react-native-webview';
 
 const styles = StyleSheet.create({
   growStretch: {
@@ -33,21 +35,35 @@ export interface WebViewProps extends ScreenProps {
 }
 
 export default class EngagementWebView extends PureComponent<WebViewProps> {
+  navigationEventListener: any;
+  navigator: Navigator;
+
   constructor(props: WebViewProps) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    this.navigator = new Navigator({
+      componentId: props.componentId,
+      tabs: []
+    });
   }
 
-  onNavigatorEvent = (event: any) => {
-    if (event.type === 'NavBarButtonPress') {
-      if (event.id === 'close') {
-        this.props.navigator.dismissModal();
-      }
+  componentDidMount(): void {
+    this.navigationEventListener = this.navigator.bindNavigation(this);
+  }
+
+  componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
     }
   }
 
-  onBackPress = (): void => {
-    this.props.navigator.pop();
+  async navigationButtonPressed({ buttonId }: any): Promise<any> {
+    if (buttonId === 'close') {
+      return this.navigator.dismissModal();
+    }
+  }
+
+  onBackPress = async (): Promise<void> => {
+    return this.navigator.pop();
   }
 
   injectBlogJS(): string {
@@ -64,14 +80,15 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
           source={{ uri: value }}
           injectedJavaScript={this.injectBlogJS()}
         />
-        {this.props.backButton &&
+        {this.props.backButton && (
           <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
             <Image
               resizeMode='contain'
               source={backArrow}
               style={styles.backIcon}
             />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+        )}
       </View>
     );
   }

@@ -1,8 +1,9 @@
-import { fetchEngagementInbox } from '../lib/engagement';
+import { fetchEngagementInbox, InboxFetch } from '../lib/engagement';
 import { INBOX_LOADED, INBOX_LOADING, INBOX_LOADING_ERROR } from '../lib/constants';
 
-export function fetchInbox(dispatch: any): (accountData: any, initialLoad: boolean) => void {
-  return (accountData: any, initialLoad: boolean) => {
+export function fetchInbox(dispatch: React.Dispatch<any>):
+  (accountData: InboxFetch, initialLoad: boolean) => void {
+  return (accountData: InboxFetch, initialLoad: boolean) => {
     if (!initialLoad) {
       dispatch({ type: INBOX_LOADING });
     }

@@ -19,13 +19,39 @@ const searchIcon = require('../../assets/images/search.png');
 const SEARCH_MODAL_HISTORY_KEY = 'SEARCH_MODAL_HISTORY_KEY';
 const MAX_HISTORY_ITEM_NUM = 5;
 
+export interface HighlightResult {
+  str: string;
+  isHighlight: boolean;
+}
+
+export interface HighlightResultAccumulator {
+  result: HighlightResult[];
+}
+
 export interface SearchScreenResult {
   title: string;
-  query: string;
   [key: string]: any;
 }
 
-export interface SearchScreenProps {
+export interface SerializableSearchScreenProps {
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+  searchResultsScrollViewStyle?: ViewStyle;
+  searchBarContainerStyle?: ViewStyle;
+  /**
+   * Whether or not the search bar should automatically focus when the component mounts.
+   * Defaults to true.
+   */
+  searchBarShouldFocus?: boolean;
+}
+
+export interface SearchScreenProps extends Omit<
+  SerializableSearchScreenProps,
+  'itemStyle' |
+  'itemTextStyle' |
+  'searchResultsScrollViewStyle' |
+  'searchBarContainerStyle'
+  > {
   onClose: () => void;
   onResultPress?: (result: SearchScreenResult) => void;
   onInputChange?: (value: string) => void;
@@ -43,11 +69,6 @@ export interface SearchScreenProps {
   renderContentUnderSearchBar?: () => React.ReactNode;
   searchResultsScrollViewStyle?: StyleProp<ViewStyle>;
   searchBarContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether or not the search bar should automatically focus when the component mounts.
-   * Defaults to true.
-   */
-  searchBarShouldFocus?: boolean;
 }
 
 export interface SearchScreenState {
@@ -56,11 +77,12 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: any;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);
 
+    this.searchBar = null;
     this.state = {
       history: [],
       inputValue: ''
@@ -79,14 +101,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
+    if (searchBarShouldFocus !== false && this.searchBar) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar | null) => {
     this.searchBar = ref;
   }
 
@@ -178,12 +200,10 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   renderResult = () => {
-    if (!this.props.results || !this.props.results.length) {
-      if (this.props.results === null) {
-        return this.renderHistory();
-      } else {
-        return null;
-      }
+    if (!this.props.results) {
+      return this.renderHistory();
+    } else if (!this.props.results.length) {
+      return null;
     }
 
     return (
@@ -214,17 +234,17 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         onPress={this.handleResultPress(item)}
         accessibilityLabel={`Search ${item.title}`}
       >
-        {this.renderTextWithHighLighs(item.title, this.state.inputValue)}
+        {this.renderTextWithHighLights(item.title, this.state.inputValue)}
       </TouchableHighlight>
     );
   }
 
-  renderTextWithHighLighs = (name: string = '', query: string) => {
+  renderTextWithHighLights = (name: string = '', query: string) => {
     const strArr = highlightStr(name, query);
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
@@ -279,7 +299,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {
@@ -303,29 +323,25 @@ function highlightStr(name: string, query: string): any {
     ];
   }
 
-  // TODO: Fix reduce usage here requiring @ts-ignore
   const textSplits = name.split(queryRegx).reduce(
-    (acc, item) => {
+    (acc: HighlightResultAccumulator, item, index) => {
       if (item) {
-        // @ts-ignore
         acc.result.push({
           str: item,
           isHighlight: false
         });
       }
 
-      if (matches[acc.matchIndex]) {
-        // @ts-ignore
+      if (matches[index]) {
         acc.result.push({
-          str: matches[acc.matchIndex],
+          str: matches[index],
           isHighlight: true
         });
       }
 
-      acc.matchIndex += 1;
       return acc;
     },
-    { result: [], matchIndex: 0 }
+    { result: [] }
   );
 
   return textSplits.result;

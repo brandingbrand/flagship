@@ -10,7 +10,7 @@ import {
 import { get } from 'lodash-es';
 import { MultiCarousel } from '@brandingbrand/fscomponents';
 import { palette } from '../styles/variables';
-import { fetchCMS } from '../lib/cms';
+import { CMSSlot, fetchCMS } from '../lib/cms';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,8 +61,12 @@ export interface PSHeroCarouselProps {
   onItemPress?: (item: PSHeroCarouselItem) => void;
 }
 
-export default class PSHeroCarousel extends Component<PSHeroCarouselProps> {
-  state: any = {
+export interface PSHeroCarouselState {
+  slotData: CMSSlot[];
+}
+
+export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHeroCarouselState> {
+  state: PSHeroCarouselState = {
     slotData: []
   };
 
@@ -73,13 +77,14 @@ export default class PSHeroCarousel extends Component<PSHeroCarouselProps> {
   }
 
   render(): JSX.Element {
+    const getCurrentStyles = () => {
+      return this.state.slotData.length ?
+        [styles.container, styles.containerLoaded, this.props.style] :
+        [styles.container, this.props.style];
+    };
     return (
       <View
-        style={[
-          styles.container,
-          this.state.slotData.length && styles.containerLoaded,
-          this.props.style
-        ]}
+        style={getCurrentStyles()}
       >
         <MultiCarousel
           itemsPerPage={1}

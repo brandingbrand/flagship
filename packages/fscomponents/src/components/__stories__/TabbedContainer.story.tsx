@@ -6,6 +6,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { TabbedContainer } from '../TabbedContainer';
+import {
+  number
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
   tab: {
@@ -27,49 +31,30 @@ const styles = StyleSheet.create({
   }
 });
 
-const tabs = [
-  {
-    tab: (
-      <View style={styles.tab}>
-        <Text style={styles.tabText}>Tab 1</Text>
-      </View>
-    ),
-    activeTab: (
-      <View style={[styles.tab, styles.activeTab]}>
-        <Text style={[styles.tabText, styles.activeTabText]}>Tab 1</Text>
-      </View>
-    ),
-    renderContent: () => {
-      return (
-        <View style={styles.content}>
-          <Text>Tab 1 Content</Text>
-        </View>
-      );
-    }
-  }, {
-    tab: (
-      <View style={styles.tab}>
-        <Text style={styles.tabText}>Tab 2</Text>
-      </View>
-    ),
-    activeTab: (
-      <View style={[styles.tab, styles.activeTab]}>
-        <Text style={[styles.tabText, styles.activeTabText]}>Tab 2</Text>
-      </View>
-    ),
-    renderContent: () => {
-      return (
-        <View style={styles.content}>
-          <Text>Tab 2 Content</Text>
-        </View>
-      );
-    }
-  }
-];
-
 storiesOf('TabbedContainer', module)
-  .add('basic usage', () => (
-    <TabbedContainer
-      tabs={tabs}
-    />
-  ));
+  .add('basic usage', () => {
+    const tabs = [...Array(number('itemsCount', 2))].map((x, i) => ({
+      tab: (
+        <View style={styles.tab}>
+          <Text style={styles.tabText}>{`Tab ${i + 1}`}</Text>
+        </View>
+      ),
+      activeTab: (
+        <View style={[styles.tab, styles.activeTab]}>
+          <Text style={[styles.tabText, styles.activeTabText]}>{`Tab ${i + 1}`}</Text>
+        </View>
+      ),
+      renderContent: () => {
+        return (
+          <View style={styles.content}>
+            <Text>{`Tab ${i + 1} Content`}</Text>
+          </View>
+        );
+      }
+    }));
+    return (
+      <TabbedContainer
+        tabs={tabs}
+      />
+    );
+  });

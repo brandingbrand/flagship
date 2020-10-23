@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
-import {
-  TouchableWithoutFeedback,
-  TouchableWithoutFeedbackProperties
-} from 'react-native';
+import React, { FunctionComponent } from 'react';
+import { TouchableWithoutFeedback, TouchableWithoutFeedbackProperties } from 'react-native';
 
 export interface TouchableWithoutFeedbackLinkProps extends TouchableWithoutFeedbackProperties {
   href?: string;
 }
 
-export class TouchableWithoutFeedbackLink extends Component<TouchableWithoutFeedbackLinkProps> {
-  render(): JSX.Element {
-    const { href, ...props } = this.props;
+export const TouchableWithoutFeedbackLink: FunctionComponent<TouchableWithoutFeedbackLinkProps> = ({
+  children,
+  ...props
+}): JSX.Element => {
+  const { href, ...rest } = props;
 
-    return (
-      <TouchableWithoutFeedback accessibilityTraits='link' {...props}>
-        {this.props.children}
-      </TouchableWithoutFeedback>
-    );
-  }
-}
+  return (
+    <TouchableWithoutFeedback accessibilityTraits='link' {...rest}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+};

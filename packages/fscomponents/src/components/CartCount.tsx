@@ -11,22 +11,37 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.cart.itemsInCart;
 
 const DEFAULT_CART_IMAGE = require('../../assets/images/cart.png');
 
 export type TextPositions = 'topLeft' | 'topRight' | 'center' | 'bottomLeft' | 'bottomRight';
 
-export interface CartCountProps {
+export interface SerializableCartCountProps {
   // Optional alternate URI for the cart image; if different than 25x25 will need restyled
   cartImage?: ImageURISource;
   // Styles for the cart image
-  cartImageStyle?: StyleProp<ImageStyle>;
+  cartImageStyle?: ImageStyle;
   // The cart count; won't display if zero
   count: number;
   // The style of the main container
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
   // Position of the item count; defaults to center
   textPosition: TextPositions;
+  // Styles for the item count
+  textStyle?: TextStyle;
+}
+
+export interface CartCountProps extends Omit<
+  SerializableCartCountProps,
+  'cartImageStyle' |
+  'style' |
+  'textStyle'> {
+  // Styles for the cart image
+  cartImageStyle?: StyleProp<ImageStyle>;
+  // The style of the main container
+  style?: StyleProp<ViewStyle>;
   // Styles for the item count
   textStyle?: StyleProp<TextStyle>;
 }
@@ -78,18 +93,22 @@ const styles = StyleSheet.create({
 export const CartCount: FunctionComponent<CartCountProps> = memo((props): JSX.Element => {
 
   const textPosition = props.textPosition || 'center';
-
+  const accessibilityString = FSI18n.number(props.count)
+    + ' ' + FSI18n.string(componentTranslationKeys);
   return (
-    <View style={[styles.container, props.style]}>
+    <View
+      style={[styles.container, props.style]}
+      accessibilityLabel={accessibilityString}
+    >
       <Image
         resizeMode='contain'
         style={[styles.image, props.cartImageStyle]}
         source={props.cartImage || DEFAULT_CART_IMAGE}
+        accessibilityRole={'image'}
+        accessibilityLabel={accessibilityString}
       />
       {props.count && (
-        <Text
-          style={[styles.text, styles[textPosition], props.textStyle]}
-        >
+        <Text style={[styles.text, styles[textPosition], props.textStyle]}>
           {props.count}
         </Text>
       )}

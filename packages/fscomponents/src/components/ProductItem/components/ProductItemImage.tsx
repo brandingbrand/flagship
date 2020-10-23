@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
-  ImageStyle,
+  ImageStyle, LayoutChangeEvent,
   StyleSheet,
   View
 } from 'react-native';
@@ -60,7 +60,7 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
     );
   }
 
-  onLayout = (event: any) => {
+  onLayout = (event: LayoutChangeEvent) => {
     const { images, imageStyle } = this.props;
     const containerWidth = event.nativeEvent.layout.width;
 

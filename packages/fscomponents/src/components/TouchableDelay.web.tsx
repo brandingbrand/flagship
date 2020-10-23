@@ -3,8 +3,9 @@ import { GestureResponderEvent, TouchableWithoutFeedbackProperties } from 'react
 
 const kOnPressDelayMS = 200; // Delay before sending an onPress event to wait for scroll
 
-export class TouchableDelay<P extends TouchableWithoutFeedbackProperties> extends Component<P> {
-  private onPressDelayTimer: any;
+export abstract class TouchableDelay<P extends TouchableWithoutFeedbackProperties>
+extends Component<P> {
+  private onPressDelayTimer: ReturnType<typeof setTimeout> | null = null;
 
   componentWillUnmount(): void {
     window.removeEventListener('scroll', this.handleScroll);

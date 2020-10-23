@@ -11,8 +11,8 @@ import {
 
 // @ts-ignore TODO: Update credit-card to support typing
 import * as creditCard from 'credit-card';
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import {
   creditCardAboveLabelTemplate,
   creditCardFloatingLabelTemplate,
@@ -27,6 +27,9 @@ import {
 } from './Form';
 import { CreditCardType } from '../types/Store';
 import { Dictionary } from '@brandingbrand/fsfoundation';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.checkout.creditCardForm;
+
 
 function getFieldTemplates(labelPosition?: FormLabelPosition): Dictionary {
   switch (labelPosition) {
@@ -102,10 +105,21 @@ export interface CreditCardFormData {
   };
 }
 
+interface CreditCardValidation {
+  number: string;
+  name: string;
+  expirationDate: string;
+  cvv: string;
+}
+
+interface CCNumber {
+  number: string;
+}
+
 
 export interface CreditCardFormProps {
-  fieldsOptions?: any;
-  fieldsStyleConfig?: any;
+  fieldsOptions?: Dictionary;
+  fieldsStyleConfig?: Dictionary;
   hideName?: boolean;
   cscIcon?: ImageURISource;
   cscIconStyle?: StyleProp<ImageStyle>;
@@ -128,20 +142,25 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     labelPosition: FormLabelPosition.Inline
   };
 
-  formRef: any;
+  formRef?: Form;
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('CreditCardForm is deprecated and will be removed in the next version of Flagship.');
+  }
 
   fieldOptions = (labelPosition?: FormLabelPosition) => {
     const defaultFieldOptions = {
       name: {
-        label: 'Name',
-        placeholder: 'Name',
+        label: FSI18n.string(componentTranslationKeys.name),
+        placeholder: FSI18n.string(componentTranslationKeys.name),
         autoCorrect: false,
-        error: 'Please enter your name'
+        error: FSI18n.string(componentTranslationKeys.nameError)
       },
       number: {
         auto: 'none',
-        label: 'Card Number',
-        placeholder: 'Credit Card Number',
+        label: FSI18n.string(componentTranslationKeys.numberLabel),
+        placeholder: FSI18n.string(componentTranslationKeys.numberPlaceholder),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
@@ -160,10 +179,10 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         }
       },
       cvv: {
-        error: 'Invalid CSC',
+        error: FSI18n.string(componentTranslationKeys.cscError),
         keyboardType: 'phone-pad',
-        label: 'CSC',
-        placeholder: 'CSC',
+        label: FSI18n.string(componentTranslationKeys.cscPlaceholder),
+        placeholder: FSI18n.string(componentTranslationKeys.cscPlaceholder),
         template: getFieldTemplates(labelPosition).maskedInput,
         config: {
           type: 'custom',
@@ -173,10 +192,10 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
         }
       },
       expirationDate: {
-        error: 'Invalid MM/YY',
+        error: FSI18n.string(componentTranslationKeys.expirationError),
         template: getFieldTemplates(labelPosition).maskedInput,
-        label: 'Exp. Date',
-        placeholder: 'Exp. Date (MM/YY)',
+        label: FSI18n.string(componentTranslationKeys.expirationLabel),
+        placeholder: FSI18n.string(componentTranslationKeys.expirationPlaceholder),
         keyboardType: 'phone-pad',
         config: {
           type: 'custom',
@@ -192,10 +211,10 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     };
   }
   getValue = () => {
-    return this.formRef.getValue();
+    return this?.formRef?.getValue();
   }
 
-  _saveFormRef = (ref: any) => {
+  _saveFormRef = (ref: Form) => {
     this.formRef = ref;
   }
 
@@ -230,10 +249,10 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     );
   }
 
-  handleNumberError = (value: any, path: any, context: any) => {
+  handleNumberError = (value: CCNumber) => {
     const isValid = this.validateNumber(value);
     if (!isValid) {
-      return 'invalid card number entered';
+      return FSI18n.string(componentTranslationKeys.numberError);
     }
     return '';
   }
@@ -250,7 +269,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  validateNumber = (val: any) => {
+  validateNumber = (val: CCNumber) => {
     if (this.formRef) {
       const validation = this.formRef.getComponent('number').validate();
       if (validation.isValid()) {
@@ -261,20 +280,20 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     return true;
   }
 
-  private validateCCNumber = (value: any) => {
+  private validateCCNumber = (value: CCNumber) => {
     const validationResult = creditCard.validate({
       cardType: creditCard.determineCardType(value.number),
       number: value.number
     });
     let valid = true;
     if (!validationResult.validCardNumber) {
-      this.formRef.getComponent('number').setState({ hasError: true });
+      this?.formRef?.getComponent('number').setState({ hasError: true });
       valid = false;
     }
     return valid;
   }
 
-  private validateCreditCard = (value: any) => {
+  private validateCreditCard = (value: CreditCardValidation) => {
     let valid = true;
 
     const expirationDateParts = (value.expirationDate || '').split('/');
@@ -290,7 +309,7 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
     });
 
     if (!validationResult.validCardNumber) {
-      this.formRef.getComponent('number').setState({ hasError: true });
+      this?.formRef?.getComponent('number').setState({ hasError: true });
       valid = false;
     }
 
@@ -299,12 +318,12 @@ export class CreditCardForm extends Component<CreditCardFormProps> {
       || !validationResult.validExpiryYear
       || creditCard.isExpired(expirationMonth, expirationYear)
     ) {
-      this.formRef.getComponent('expirationDate').setState({ hasError: true });
+      this?.formRef?.getComponent('expirationDate').setState({ hasError: true });
       valid = false;
     }
 
     if (!validationResult.validCvv) {
-      this.formRef.getComponent('cvv').setState({ hasError: true });
+      this?.formRef?.getComponent('cvv').setState({ hasError: true });
       valid = false;
     }
 

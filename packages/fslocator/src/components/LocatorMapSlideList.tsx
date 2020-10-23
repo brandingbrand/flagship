@@ -70,12 +70,14 @@ export default class LocatorMapSlideList extends Component<
     });
 
     Animated.spring(this.state.listButtonY, {
-      toValue: 0
+      toValue: 0,
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
-      toValue: MAP_HEIGHT
+      toValue: MAP_HEIGHT,
+      useNativeDriver: false
     }).start();
   }
 
@@ -87,12 +89,14 @@ export default class LocatorMapSlideList extends Component<
     });
 
     Animated.spring(this.state.listButtonY, {
-      toValue: 0
+      toValue: 0,
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
-      toValue: this.getPositionY('bottom')
+      toValue: this.getPositionY('bottom'),
+      useNativeDriver: false
     }).start();
   }
 
@@ -103,12 +107,14 @@ export default class LocatorMapSlideList extends Component<
     });
 
     Animated.spring(this.state.listButtonY, {
-      toValue: 0
+      toValue: 0,
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
-      toValue: this.getPositionY('top')
+      toValue: this.getPositionY('top'),
+      useNativeDriver: false
     }).start();
   }
 
@@ -172,7 +178,8 @@ export default class LocatorMapSlideList extends Component<
     if (this.listPosition === 'bottom') {
       setTimeout(() => {
         Animated.spring(this.state.listButtonY, {
-          toValue: -SHOW_LIST_BUTTON_HEIGHT
+          toValue: -SHOW_LIST_BUTTON_HEIGHT,
+          useNativeDriver: false
         }).start();
         this.expandMap();
       }, 200);
@@ -180,7 +187,8 @@ export default class LocatorMapSlideList extends Component<
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
-      toValue: this.getPositionY(nextPostion)
+      toValue: this.getPositionY(nextPostion),
+      useNativeDriver: false
     }).start(() => {
       this.setState({ scrollable: true });
     });
@@ -226,12 +234,14 @@ export default class LocatorMapSlideList extends Component<
     this.listPosition = 'top';
 
     Animated.spring(this.state.listButtonY, {
-      toValue: 0
+      toValue: 0,
+      useNativeDriver: false
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
-      toValue: this.getPositionY('top')
+      toValue: this.getPositionY('top'),
+      useNativeDriver: false
     }).start();
   }
 

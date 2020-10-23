@@ -1,7 +1,8 @@
 const rename = require('../rename');
 const fs = require('fs-extra');
 const path = require('path');
-const trueCasePathSync = require('true-case-path'); // tslint:disable-line:no-implicit-dependencies
+const { trueCasePathSync } =
+  require('true-case-path'); // tslint:disable-line:no-implicit-dependencies
 
 const kFileNameOld = 'OldName/test_file_OldName.js';
 const kFileNameTest = 'lib/test_file.js';
@@ -89,3 +90,6 @@ test("don't rename source code under Pods folder", () => {
 
   expect(content).toBe(kTestContents);
 });
+
+// Force to be treated as a module
+export {};

@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   NativeModules,
+  ScaledSize,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -89,11 +90,10 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
 
       Dimensions.addEventListener('change', this.dimensionsListener);
 
-      NativeModules.StatusBarManager.getHeight((response: any) => {
-        if (response.height !== this.state.statusBarHeight) {
-          this.setState({ statusBarHeight: response.height });
-        }
-      });
+      const statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
+      if (statusBarHeight !== this.state.statusBarHeight) {
+        this.setState({ statusBarHeight });
+      }
     } catch (exception) {
       console.warn(exception);
     }
@@ -103,17 +103,14 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     Dimensions.removeEventListener('change', this.dimensionsListener);
   }
 
-  componentWillReceiveProps(nextProps: ModalHalfScreenProps): void {
+  componentDidUpdate(prevProps: ModalHalfScreenProps, prevState: ModalHalfScreenState): void {
     if (
-      nextProps.height &&
-      nextProps.height !== this.props.height &&
-      nextProps.height !== this.state.height
+      this.props.height &&
+      this.props.height !== prevProps.height &&
+      this.props.height !== prevState.height
     ) {
-      this.setState({ height: nextProps.height });
+      this.setState({ height: this.props.height });
     }
-  }
-
-  componentDidUpdate(prevProps: ModalHalfScreenProps): void {
     if (prevProps.visible && !this.props.visible) {
       this.hideContent();
     } else if (!prevProps.visible && this.props.visible) {
@@ -121,7 +118,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }
   }
 
-  dimensionsListener = (event: any) => {
+  dimensionsListener = (event: { window: ScaledSize; screen: ScaledSize }) => {
     const { height } = event.window;
     const halfWindowHeight = height / 2;
 
@@ -135,7 +132,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       // Open the drawer after we start the modal fade animation
       Animated.spring(this.state.contentOffset, {
         toValue: 1,
-        useNativeDriver: true,
+        useNativeDriver: false,
         bounciness: 0
       }).start();
     });
@@ -145,7 +142,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     // Close the drawer
     Animated.spring(this.state.contentOffset, {
       toValue: 0,
-      useNativeDriver: true,
+      useNativeDriver: false,
       bounciness: 0
     }).start();
 

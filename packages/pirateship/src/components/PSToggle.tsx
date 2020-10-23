@@ -3,13 +3,6 @@ import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from '
 
 import { border } from '../styles/variables';
 
-export interface PSToggleProps {
-  enabled: boolean;
-  label: JSX.Element;
-  style?: StyleProp<ViewStyle>;
-  onPress?: Function;
-}
-
 const styles = StyleSheet.create({
   toggler: {
     flex: 1,
@@ -36,13 +29,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PSToggle extends Component<PSToggleProps> {
-  state: any = {};
+export interface PSToggleProps {
+  enabled: boolean;
+  label: JSX.Element;
+  style?: StyleProp<ViewStyle>;
+  onPress?: Function;
+}
+
+export interface PSToggleState {
+  enabled: boolean;
+}
+
+export default class PSToggle extends Component<PSToggleProps, PSToggleState> {
 
   constructor(props: PSToggleProps) {
     super(props);
 
-    this.state.enabled = props.enabled;
+    this.state = {
+      enabled: this.props.enabled
+    };
   }
 
   render(): JSX.Element {

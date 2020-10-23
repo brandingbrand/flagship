@@ -1,15 +1,16 @@
-import { ImageURISource } from 'react-native';
-export type PushedScreen<P> = import ('react-native-navigation').PushedScreen<P>;
-export type NavigatorStyle = import ('react-native-navigation').NavigatorStyle;
+import {GestureResponderEvent, ImageURISource} from 'react-native';
+import { OptionsTopBarButton } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
 
 export interface ScreenProps {
-  navigator: import ('react-native-navigation').Navigator;
-  onNav: (handler: (event: any) => void) => void;
+  isWebModal?: boolean;
+  onNav: (handler: (event: GestureResponderEvent) => void) => void;
+  navigator: Navigator;
 }
 
 export interface NavButton {
-  button: import ('react-native-navigation').NavigatorButton;
-  action: (params: any) => void;
+  button: OptionsTopBarButton;
+  action: (params: Navigator) => void;
 }
 
 export interface GridItem {

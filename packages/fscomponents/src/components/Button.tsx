@@ -65,10 +65,11 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     title: this.titleState
   };
 
-  componentDidUpdate({ selectedTitleState: prevSelectedTitleState }: ButtonProps): void {
-    const { selectedTitleState } = this.props;
-    if (selectedTitleState !== prevSelectedTitleState) {
-      this.setState({ title: this.titleState });
+  componentDidUpdate(): void {
+    const { title } = this.state;
+    const newTitle = this.titleState;
+    if (newTitle !== title) {
+      this.setState({ title: newTitle });
     }
   }
 
@@ -165,13 +166,8 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       dynamicTitleStates
      } = this.props;
 
-    if (
-      (!selectedTitleState && selectedTitleState !== 0) ||
-      !dynamicTitleStates ||
-      (
-        selectedTitleState >= dynamicTitleStates.length
-      )
-      ) {
+    if (selectedTitleState === undefined || !dynamicTitleStates ||
+      selectedTitleState >= dynamicTitleStates.length) {
       return title;
     }
 

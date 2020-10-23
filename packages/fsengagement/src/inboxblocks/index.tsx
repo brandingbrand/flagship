@@ -10,6 +10,9 @@ import TwinCTABlock from './TwinCTABlock';
 import EventBlock from './EventBlock';
 import ShareBlock from './ShareBlock';
 import FeaturedTopCard from './FeaturedTopCard';
+import ProductCarouselBlock from './ProductCarouselBlock';
+import GridWallBlock from './GridWallBlock';
+import TextWithIconBlock from './TextWithIconBlock';
 import EventCard from './EventCard';
 import ImageCarouselBlock from './ImageCarouselBlock';
 import SimpleCard from './SimpleCard';
@@ -17,6 +20,7 @@ import RoundedImageCard from './RoundedImageCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
 import RecipeBlock from './RecipeBlock';
+import InboxWrapper from './InboxWrapper';
 import ImageGrid from './ImageGrid';
 import WhiteInboxWrapper from './WhiteInboxWrapper';
 import DemoProductCarouselBlock from './DemoProductCarouselBlock';
@@ -32,6 +36,10 @@ export default {
   Divider: DividerBlock,
   WhiteInboxWrapper,
   ImageCarousel: ImageCarouselBlock,
+  ProductCarousel: ProductCarouselBlock,
+  GridWall: GridWallBlock,
+  TextWithIcon: TextWithIconBlock,
+  InboxWrapper,
   DemoProductCarousel: DemoProductCarouselBlock,
   FeaturedTopCard,
   RoundedImageCard,

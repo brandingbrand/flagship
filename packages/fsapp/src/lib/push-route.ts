@@ -1,24 +1,62 @@
 import qs from 'qs';
-import { AppConfigType } from '../types';
+import { AppConfigType, NavLayout, RoutableComponentClass } from '../types';
+import pathToRegexp from 'path-to-regexp';
 
-export default function push(
-  route: any,
+export function overwrite(
+  newProps: any,
   history: any,
   appConfig: AppConfigType
 ): any {
-  const href = (route.passProps && route.passProps.href) || '';
+  let matchedScreen: {
+    screen: RoutableComponentClass;
+    screenName: string;
+  } | undefined;
+  for (const screenName in appConfig.screens) {
+    if (appConfig.screens.hasOwnProperty(screenName)) {
+      const screen = appConfig.screens[screenName];
+      let pathReg = new RegExp('^\/_s\/' + screenName + '/?$');
 
-  if (route.screen) {
+      if (screen.path) {
+        pathReg = pathToRegexp(screen.path);
+      }
+      if (pathReg.test(window.location.pathname)) {
+        matchedScreen = {
+          screen,
+          screenName
+        };
+      }
+    }
+  }
+  if (matchedScreen) {
     const path = getPathWithPassProps(
-      route.screen,
-      appConfig.screens[route.screen],
-      route.passProps
+      matchedScreen.screenName,
+      matchedScreen.screen,
+      newProps
     );
-    return history.push(path);
-  } else if (href) {
-    return history.push(href);
+    history.replace(path);
   } else {
-    console.error('ERROR: `screen` or `passProps: { href }` is required.');
+    console.error('Could not match current screen');
+  }
+}
+
+export default function push(
+  layout: NavLayout,
+  history: any,
+  appConfig: AppConfigType
+): any {
+  if (layout.component) {
+    if (appConfig.screens[layout.component.name]) {
+      const path = getPathWithPassProps(
+        String(layout.component.name),
+        appConfig.screens[layout.component.name],
+        layout.component.passProps
+      );
+      history.push(path);
+    } else {
+      console.error('Unknown screen: ' + layout.component.name);
+    }
+  } else {
+    console.error('No component to push');
   }
 }
 

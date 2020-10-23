@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 export interface KeyValuePair {
   label: string;
   value: string;
-  textStyle?: any;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 export interface PSLabeledValuesProps {

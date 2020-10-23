@@ -1,8 +1,8 @@
 {
   "globals": {
     "ts-jest": {
-      "useBabelrc": true,
-      "tsConfigFile": "tsconfig/tsconfig.jest.json"
+      "babelConfig": true,
+      "tsConfig": "tsconfig/tsconfig.jest.json"
     }
   },
   "preset": "react-native",

@@ -3,7 +3,8 @@ export { ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    flexBasis: 'auto'
   },
   loading: {
     paddingTop: 20

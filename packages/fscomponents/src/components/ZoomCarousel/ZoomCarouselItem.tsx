@@ -102,11 +102,11 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
           Animated.parallel([
             Animated.spring(this.state.zoomImageSize, {
               toValue: SCREEN_WIDTH,
-              useNativeDriver: true
+              useNativeDriver: false
             }),
             Animated.spring(this.state.zoomImagePosition, {
               toValue: { x: 0, y: 0 },
-              useNativeDriver: true
+              useNativeDriver: false
             })
           ]).start();
           this.props.onZoomRelease(this.distanceDiff);

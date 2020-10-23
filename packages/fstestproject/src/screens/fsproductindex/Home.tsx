@@ -2,34 +2,35 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 
 export default class Home extends Component<any> {
   goTo = (screen: string, title: string, backButtonTitle: string) => () => {
-    this.props.navigator.push({ screen: 'fsproductindex.' + screen, title, backButtonTitle });
+    goToNavPush('fsproductindex', this.props.componentId, screen, title, backButtonTitle);
   }
 
   render(): JSX.Element {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Row
-          text='Search DemandWare With Provider'
-          onPress={this.goTo('SearchDemandware', 'SearchDemandware', 'Back')}
+          text='Search With Provider'
+          onPress={this.goTo('Search', 'Search', 'Back')}
         />
         <Row
-          text='Product Index DemandwareGrid'
+          text='Product Index Grid'
           onPress={this.goTo(
-            'ProductIndexDemandwareGrid',
-            'ProductIndexDemandwareGrid',
+            'ProductIndexGrid',
+            'ProductIndexGrid',
             'Back'
           )}
         />
         <Row
-          text='Product Index DemandwareList'
+          text='Product Index List'
           onPress={this.goTo(
-            'ProductIndexDemandwareList',
-            'ProductIndexDemandwareList',
+            'ProductIndexList',
+            'ProductIndexList',
             'Back'
           )}
         />

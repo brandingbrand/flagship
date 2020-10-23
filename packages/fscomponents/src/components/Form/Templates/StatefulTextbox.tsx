@@ -6,7 +6,7 @@ import {
   defaultTextboxStyle,
   getColor
 } from './formStyles';
-import { FormLabelPosition } from '../Form';
+import { FormLabelPosition } from './fieldTemplates';
 
 export const successIcon = require('../../../../assets/images/checkmarkValidation.png');
 export const errorIcon = require('../../../../assets/images/alert.png');
@@ -107,6 +107,11 @@ StatefulTextboxState> {
         this.textboxStyle = this.defaultStyle.textboxInlineStyle;
         this.labelViewStyle = this.defaultStyle.inlineLabelViewStyle;
     }
+  }
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('StatefulTextbox is deprecated and will be removed in the next version of Flagship.');
   }
 
   render(): JSX.Element {

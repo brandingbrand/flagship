@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { ActivityIndicator, ActivityIndicatorProperties } from 'react-native';
 
 export type LoadingProps = Pick<ActivityIndicatorProperties, 'style'>;
 
-export class Loading extends PureComponent<LoadingProps> {
-  render(): JSX.Element {
-    return <ActivityIndicator style={this.props.style} />;
-  }
-}
+const LoadingInner = (props: LoadingProps) => {
+  return <ActivityIndicator style={props.style} />;
+};
+
+export const Loading: React.FunctionComponent<LoadingProps> = React.memo(LoadingInner);

@@ -5,8 +5,8 @@ import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-imp
 import {
   boolean,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { SearchBar } from '../SearchBar';
 
 const icons = {

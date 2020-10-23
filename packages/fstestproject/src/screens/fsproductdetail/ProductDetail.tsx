@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 import { ProductDetail } from '@brandingbrand/fsproductdetail';
-import { demandware } from '../../lib/datasource';
+import { mockCommerceDataSource } from '../../lib/datasource';
 
 export default class ProductDetailExample extends Component<any> {
   render(): JSX.Element {
     return (
       <ProductDetail
-        commerceDataSource={demandware}
+        commerceDataSource={mockCommerceDataSource}
         commerceToReviewMap='id'
-        id='25589652'
+        id='P0150'
       />
     );
   }
