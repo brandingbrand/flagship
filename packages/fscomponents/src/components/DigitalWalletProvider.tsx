@@ -44,7 +44,7 @@ export function withDigitalWallet<P extends {}>(
 
   return class DigitalWalletProvider extends React.Component<ResultProps, WithDigitalWalletState> {
     applePay: ApplePay;
-    promises: Promise<any>[] = [];
+    promises: Promise<void>[] = [];
 
     constructor(props: ResultProps) {
       super(props);
@@ -77,8 +77,8 @@ export function withDigitalWallet<P extends {}>(
         });
     }
 
-    async initApplePay(): Promise<any> {
-      return new Promise<boolean>((resolve, reject) => {
+    async initApplePay(): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
         // Check if user has Apple Pay on their device
         if (this.applePay.isEnabled()) {
           // Check if user has a card already set up
