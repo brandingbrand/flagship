@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** Update storybook and rn-device-info ([4d3428b](https://github.com/brandingbrand/flagship/commit/4d3428b0df9b39452835f9bae6cd9f2dad79ab29))
+* **flagship:** Updates for PR review ([111b464](https://github.com/brandingbrand/flagship/commit/111b464583a2303f8744a851bead6512fefe9d24))
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Update typing for pirateship lib ([6011628](https://github.com/brandingbrand/flagship/commit/60116280fbdb68faddcca78a477c969557cf51b7))
+* **pirateship:** Fix compilation error ([e836dd9](https://github.com/brandingbrand/flagship/commit/e836dd9fdef0e7c90959196e38e9168cd2f703ef))
+* **pirateship:** fix error in cart when recently viewed items isn't set ([0b4160f](https://github.com/brandingbrand/flagship/commit/0b4160fd84a6f556a90fa7477c92489074a05f8f))
+* **pirateship:** Remove unneeded checks ([a5075c7](https://github.com/brandingbrand/flagship/commit/a5075c738eb33f57dae62f9245e3e3d87e4c7370))
+
+
+### Features
+
+* Replace all occurrences of "any" in ContactInfoForm ([bdb7393](https://github.com/brandingbrand/flagship/commit/bdb73934156f88a0721641aa603a94eff662ba10))
+* Replace all occurrences of "any" in pirateship/lib ([93268fa](https://github.com/brandingbrand/flagship/commit/93268fa7a1169422946886839d1835652f8de0ba))
+* Replace all occurrences of "any" in pirateship/lib ([b8d9129](https://github.com/brandingbrand/flagship/commit/b8d9129de2764ed1989db74d56267c341008a17a))
+* **any-occurrences:** Replace all occurrences of "any" in /pirateship/src/providers ([d9d161a](https://github.com/brandingbrand/flagship/commit/d9d161a36325ac46e95a1bf915ccd922f6c0b81e))
+* **any-occurrences:** Replace all occurrences of "any" in /pirateship/src/reducers ([64a5f54](https://github.com/brandingbrand/flagship/commit/64a5f5467311ef7c9f1cbe5bb348f1559b978b80))
+* Replace all occurrences of "any" in PSAddressForm ([3cda525](https://github.com/brandingbrand/flagship/commit/3cda525bbd6b01aed4250c52928e2135c12d283f))
+* Replace all occurrences of "any" in PSScreenWrapper ([967c9ae](https://github.com/brandingbrand/flagship/commit/967c9ae34ea49470757f2fcf5bdea32f212a4988))
+* **any-occurrences:** Replace all occurrences of "any" in PSTotals ([58ceb55](https://github.com/brandingbrand/flagship/commit/58ceb550eb3609c45a98243fd76e98e5fc54571d))
+* **pirateship:** Replace all occurrences of "any" in PSHeroCarousel ([182b16a](https://github.com/brandingbrand/flagship/commit/182b16aafbb2675b256f3a3eca01adb9c74cc799))
+* **pirateship:** Replace all occurrences of "any" in PSLabeledValues ([34df9de](https://github.com/brandingbrand/flagship/commit/34df9de28131682a42f0803492cc4a82e7642ebf))
+* **pirateship:** Replace all occurrences of "any" in PSPlaceholder ([334a2c3](https://github.com/brandingbrand/flagship/commit/334a2c3a970c707d1f09740625b6f2452c7d0964))
+* **pirateshipPSModalComponent:** Replace all occurrences of "any" in PSModal ([23d7000](https://github.com/brandingbrand/flagship/commit/23d7000a92bcec341d782b0d914241eb37074469))
+* **pirateshipPSStepperComponent:** Replace all occurrences of "any" in PSStepper ([6535571](https://github.com/brandingbrand/flagship/commit/65355715686551cc660edc4aacb92d9a747ff136))
+* **pirateshipPSToggleComponent:** Replace all occurrences of "any" in PSToggle ([beeaec0](https://github.com/brandingbrand/flagship/commit/beeaec0134c2eec17d17afdf07cb2de585ee5e98))
+
+
+
+
+
 # [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
 
 

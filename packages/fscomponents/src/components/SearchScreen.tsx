@@ -96,7 +96,7 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: SearchBar | null;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);

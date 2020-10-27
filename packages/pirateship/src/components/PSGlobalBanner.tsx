@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { ImageSourcePropType, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { fontSize, palette } from '../styles/variables';
-import { fetchCMS } from '../lib/cms';
+import {
+  CMSBannerSlot,
+  fetchCMS,
+  kPromoBackgroundColorKey,
+  kPromoDescriptionKey,
+  kPromoImageKey,
+  kPromoTextColorKey
+} from '../lib/cms';
 import { ImageWithOverlay } from '@brandingbrand/fscomponents';
 
 const styles = StyleSheet.create({
@@ -19,23 +26,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const kPromoImageKey = 'Banner-Promo-Image';
-export const kPromoDescriptionKey = 'Banner-Promo-Description';
-export const kPromoBackgroundColorKey = 'Background-Color';
-export const kPromoTextColorKey = 'Text-Color';
-
-export interface PSGlobalBannerSlotItemImage {
-  height: number;
-  path: ImageSourcePropType;
-}
-
-export interface PSGlobalBannerSlotItem {
-  [kPromoImageKey]?: PSGlobalBannerSlotItemImage;
-  [kPromoDescriptionKey]: string;
-  [kPromoBackgroundColorKey]?: string;
-  [kPromoTextColorKey]: string;
-}
-
 export interface PSGlobalBannerProps {
   cmsGroup: string;
   cmsSlot: string;
@@ -43,11 +33,11 @@ export interface PSGlobalBannerProps {
   style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   fontColor?: string;
-  override?: PSGlobalBannerSlotItem;
+  override?: CMSBannerSlot;
 }
 
 export interface PSGlobalBannerState {
-  slotData: PSGlobalBannerSlotItem | null;
+  slotData: CMSBannerSlot | null;
   isLoading: boolean;
 }
 
@@ -72,12 +62,13 @@ export default class PSGlobalBanner extends Component<
         this.props.cmsSlot,
         this.props.cmsIdentifier
       )
-        .then(data =>
+        .then(data => {
+          const firstData = (data[0] as CMSBannerSlot | undefined) || null;
           this.setState({
             isLoading: false,
-            slotData: data && data.length && data[0]
-          })
-        )
+            slotData: firstData
+          });
+        })
         .catch(e => {
           console.warn('error fetching cms slot ', e);
           this.setState({ isLoading: false });
