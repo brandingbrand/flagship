@@ -16,6 +16,7 @@ export interface SelectableRowProps {
   selected?: boolean;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  selectedTextStyle?: StyleProp<TextStyle>;
   markerIconStyle?: StyleProp<ViewStyle>;
   renderCheckMark?: () => React.ReactNode;
   renderUncheckMark?: () => React.ReactNode;
@@ -82,7 +83,13 @@ memo((props): JSX.Element => {
       accessibilityLabel={props.accessibilityLabel || props.title}
       accessibilityRole={props.accessibilityRole || 'button'}
     >
-      <Text style={[S.rowText, props.textStyle]}>
+      <Text
+        style={[
+          S.rowText,
+          props.textStyle,
+          props.selected ? props.selectedTextStyle : undefined
+        ]}
+      >
         {props.title}
       </Text>
       {props.selected
