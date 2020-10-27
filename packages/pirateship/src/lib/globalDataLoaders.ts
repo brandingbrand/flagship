@@ -66,8 +66,15 @@ export default (dispatch?: any) => {
   };
 };
 
-export function formatCategories(rootCategory: CommerceTypes.Category): any {
-  return (rootCategory.categories || []).map((subCategory: CommerceTypes.Category) => ({
+type FormattedCategory = {
+  handle: string;
+  id: string;
+  title: string;
+  items: { id: string; title: string }[];
+}[];
+
+export function formatCategories(rootCategory: CommerceTypes.Category): FormattedCategory {
+  return (rootCategory.categories || []).map(subCategory => ({
     id: subCategory.id,
     handle: subCategory.id,
     title: subCategory.title,

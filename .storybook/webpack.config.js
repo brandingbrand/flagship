@@ -24,7 +24,8 @@ module.exports = ({ config, env }) => {
     test: /\.jsx?$/,
     include: [
       path.resolve('node_modules/@brandingbrand/tcomb-form-native/'),
-      path.resolve('node_modules/@react-native-community/picker')
+      path.resolve('node_modules/@react-native-community/picker'),
+      path.resolve('node_modules/react-native-picker-select')
     ],
     loader: require.resolve('babel-loader'),
     options: {
