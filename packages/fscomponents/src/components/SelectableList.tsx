@@ -91,7 +91,6 @@ export class SelectableList extends Component<SelectableListProps, SelectableLis
       } else {
         return (
           <Button
-            // tslint:disable-next-line: jsx-use-translation-function TODO: use translation function
             title={this.props.applyButtonText ||
               FSI18n.string(translationKeys.flagship.button.apply)}
             onPress={this.handleApply}
