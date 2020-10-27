@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** update RNFirebase pod ([#1738](https://github.com/brandingbrand/flagship/issues/1738)) ([bcbca47](https://github.com/brandingbrand/flagship/commit/bcbca47cbe64fdec164932bf3524efcdbdcc3cb6))
+
+
+### Features
+
+* **flagship:** iOS Multiple Target Support ([#1287](https://github.com/brandingbrand/flagship/issues/1287)) ([b501fd1](https://github.com/brandingbrand/flagship/commit/b501fd1cdc0fc7e5ca6c8e3169c83995179653b4))
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
 # [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
 
 **Note:** Version bump only for package @brandingbrand/flagship

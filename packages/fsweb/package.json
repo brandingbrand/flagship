@@ -2,7 +2,7 @@
   "name": "@brandingbrand/fsweb",
   "sideEffects": false,
   "license": "MIT",
-  "version": "10.0.0-alpha.9",
+  "version": "10.1.0",
   "scripts": {
     "clean": "rm -rf ./build/static && rm -f ./build/index.html && rm -f ./build/service-worker.js && rm -f ./build/asset-manifest.json",
     "build": "webpack --mode production",
@@ -23,7 +23,7 @@
     "@react-native-community/datetimepicker": "^3.0.2",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.0",
-    "babel-plugin-react-native-web": "^0.11.7",
+    "babel-plugin-react-native-web": "^0.13.14",
     "babel-plugin-transform-imports": "^2.0.0",
     "cache-loader": "^4.0.0",
     "cookie-parser": "^1.4.5",
