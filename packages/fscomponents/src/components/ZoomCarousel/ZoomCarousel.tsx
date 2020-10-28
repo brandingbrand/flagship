@@ -272,7 +272,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
       easing: APPLE_EASING,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 
@@ -292,7 +292,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
       easing: APPLE_EASING,
-      useNativeDriver: true
+      useNativeDriver: false
     }).start();
   }
 
@@ -305,12 +305,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       Animated.timing(this.openScale, {
         toValue: 1,
         easing: APPLE_EASING,
-        useNativeDriver: true
+        useNativeDriver: false
       }),
       Animated.timing(this.scrollViewPosition, {
         toValue: { x: nextOffsetX, y: 0 },
         easing: APPLE_EASING,
-        useNativeDriver: true
+        useNativeDriver: false
       })
     ]).start();
   }
@@ -353,14 +353,14 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             Animated.parallel([
               Animated.spring(this.openScale, {
                 toValue: 1,
-                useNativeDriver: true
+                useNativeDriver: false
               }),
               Animated.spring(this.scrollViewSize, {
                 toValue: SCREEN_WIDTH,
-                useNativeDriver: true
+                useNativeDriver: false
               }),
               Animated.spring(this.scrollViewPosition, {
-                useNativeDriver: true,
+                useNativeDriver: false,
                 toValue: {
                   x:
                     -this.state.currentIndex * SCREEN_WIDTH -
@@ -401,16 +401,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             toValue: 0,
             duration: 250,
             easing: APPLE_EASING,
-            useNativeDriver: true
+            useNativeDriver: false
           }),
           Animated.timing(this.scrollViewSize, {
             toValue: this.imageWidth,
             duration: 250,
-            useNativeDriver: true
+            useNativeDriver: false
           }),
           Animated.timing(this.scrollViewPosition, {
             duration: 250,
-            useNativeDriver: true,
+            useNativeDriver: false,
             toValue: {
               x:
                 -this.state.currentIndex * offsetWidth -

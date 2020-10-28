@@ -1,4 +1,5 @@
 import swal from 'sweetalert';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface AlertOptions {
   title: string;
@@ -10,13 +11,14 @@ export interface AlertOptions {
   onCancel?: () => void;
 }
 
+
 export const Alert = {
   setDefaults: swal.setDefaults, // tslint:disable-line:no-unbound-method
-  alert: async (options: string | AlertOptions): Promise<any> => {
+  alert: async (options: string | AlertOptions): Promise<void> => {
     if (typeof options === 'string') {
       return swal(options);
     } else {
-      const args: any = {
+      const args: Dictionary = {
         title: options.title,
         text: options.text
       };

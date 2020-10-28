@@ -217,7 +217,7 @@ class Cart extends Component<CartScreenProps> {
   static options: Options = navBarFullBleed;
 
   componentDidMount(): void {
-    if (!this.props.recentlyViewed.items.length) {
+    if (!this.props.recentlyViewed?.items?.length) {
       this.props.loadRecentlyViewed();
     }
   }
