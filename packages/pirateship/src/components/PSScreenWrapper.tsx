@@ -12,9 +12,10 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import PSGlobalBanner, { PSGlobalBannerSlotItem } from './PSGlobalBanner';
+import PSGlobalBanner from './PSGlobalBanner';
 import Header from './Header';
 import { palette } from '../styles/variables';
+import { CMSBannerSlot } from '../lib/cms';
 
 const keyboardAvoidingDefaults: KeyboardAvoidingViewProps = {
   behavior: Platform.OS === 'ios' ? 'padding' : undefined,
@@ -34,7 +35,7 @@ export interface PSScreenWrapperProps {
   style?: StyleProp<ViewStyle>;
 
   hideGlobalBanner?: boolean;
-  overrideGlobalBanner?: PSGlobalBannerSlotItem;
+  overrideGlobalBanner?: CMSBannerSlot;
 
   navigator: Navigator;
 
@@ -49,10 +50,21 @@ export interface PSScreenWrapperProps {
   hideWebHeader?: boolean;
 }
 
+interface Position {
+  top: number;
+  left: number;
+  bottom: number;
+  right: number;
+}
+
+export interface PSScreenWrapperStateType {
+  safeAreaInsets: Position;
+}
+
 export default class PSScreenWrapper extends PureComponent<
-  PSScreenWrapperProps
+  PSScreenWrapperProps, PSScreenWrapperStateType
   > {
-  state: any = {
+  state: PSScreenWrapperStateType = {
     safeAreaInsets: {
       top: 0,
       left: 0,
@@ -94,7 +106,7 @@ export default class PSScreenWrapper extends PureComponent<
   }
 
   onSafeAreaInsetsForRootViewChange = (result: {
-    safeAreaInsets: any;
+    safeAreaInsets: Position;
   }) => {
     const { safeAreaInsets } = result;
     this.setState({ safeAreaInsets });
