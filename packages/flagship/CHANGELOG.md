@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **flagship:** made rn camera patch script work again ([#1770](https://github.com/brandingbrand/flagship/issues/1770)) (774362b)
+
+
+
+
+
 ## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
 
 **Note:** Version bump only for package @brandingbrand/flagship
