@@ -40,14 +40,17 @@ export interface SwatchStyle {
   disabledImageStyle?: StyleProp<ImageStyle>;
 }
 
-export interface SerializaSwatchProps extends SwatchItemType {
+export interface SerializableSwatchProps extends SwatchItemType {
   // selection
   index: number;
   selected: boolean;
   disabled?: boolean;
 }
 
-export interface SwatchProps extends SwatchStyle, SerializaSwatchProps {
+// deprecated misspelling
+export type SerializaSwatchProps = SerializableSwatchProps;
+
+export interface SwatchProps extends SwatchStyle, SerializableSwatchProps {
   // actions
   onSelect: (swatch: SwatchProps) => void;
 
