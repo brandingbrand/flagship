@@ -31,6 +31,7 @@ export interface SerializableSwatchesProps {
   labelValueStyle?: TextStyle;
   showingMoreStyle?: ViewStyle;
   showingLessStyle?: ViewStyle;
+  separateMoreButton?: boolean;
 
   // Can you select swatches
   disabled?: boolean;
@@ -84,29 +85,6 @@ export interface SwatchesState {
 }
 
 export class Swatches extends Component<SwatchesProps, SwatchesState> {
-  static getDerivedStateFromProps(nextProps: SwatchesProps): Partial<SwatchesState> | null {
-    const { defaultValue, items } = nextProps;
-
-    // Default swatch selection
-    if (defaultValue) {
-      const defaultIndex = findIndex(items, { value: defaultValue });
-      if (defaultIndex > -1) {
-        const defaultSwatch = items[defaultIndex];
-        return {
-          selected: {
-            index: defaultIndex,
-            swatch: {
-              value: defaultSwatch.value,
-              name: defaultSwatch.name
-            }
-          }
-        };
-      }
-    }
-
-    return null;
-  }
-
   constructor(props: SwatchesProps) {
     super(props);
 
@@ -125,18 +103,52 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       console.error('Swatch "image" is deprecated. Please use "swatch" instead.');
     }
 
+    const selectedSwatch: SwatchesState['selected'] = this.getSelectedSwatch(props) || {
+      index: null,
+      swatch: {
+        value: '',
+        name: ''
+      }
+    };
+
     // Default State
     this.state = {
-      selected: {
-        index: null,
-        swatch: {
-          value: '',
-          name: ''
-        }
-      },
+      selected: selectedSwatch,
       shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
       showMore: false
     };
+  }
+
+  componentDidUpdate(prevProps: SwatchesProps, prevState: SwatchesState): void {
+    if (prevProps.defaultValue !== this.props.defaultValue ||
+      prevProps.items !== this.props.items) {
+      const selected = this.getSelectedSwatch(this.props);
+      if (selected !== null) {
+        this.setState({
+          selected
+        });
+      }
+    }
+  }
+
+  getSelectedSwatch(props: SwatchesProps): SwatchesState['selected'] | null {
+    const { defaultValue, items } = props;
+
+    // Default swatch selection
+    if (defaultValue) {
+      const defaultIndex = findIndex(items, { value: defaultValue });
+      if (defaultIndex > -1) {
+        const defaultSwatch = items[defaultIndex];
+        return {
+          index: defaultIndex,
+          swatch: {
+            value: defaultSwatch.value,
+            name: defaultSwatch.name
+          }
+        };
+      }
+    }
+    return null;
   }
 
   onSelect = (swatch: SwatchProps) => {
@@ -154,10 +166,18 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     const { onColorPress, onChangeSwatch } = this.props;
     if (onColorPress) {
-      onColorPress(swatch);
+      try {
+        onColorPress(swatch);
+      } catch (e) {
+        console.error(e);
+      }
     }
     if (onChangeSwatch) {
-      onChangeSwatch(swatch.value || '');
+      try {
+        onChangeSwatch(swatch.value || '');
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -303,8 +323,9 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
             className={'swatch-scroll ' + (showMore ? 'showing-more' : 'showing-less')}
           >
             {displayItems.map(this._renderSwatch)}
+            {this.props.separateMoreButton ? null : this._renderMoreLess()}
           </View>
-          {this._renderMoreLess()}
+          {this.props.separateMoreButton ? this._renderMoreLess() : null}
         </View>
       </View>
     );

@@ -10,7 +10,8 @@ export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 export const style = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    alignItems: 'center'
   },
   borderBox: {
     flex: 1,
