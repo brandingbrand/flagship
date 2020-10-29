@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
 import {
@@ -10,9 +11,15 @@ import {
 } from '@storybook/addon-knobs';
 import { Swatches } from '../Swatches';
 
-const containerStyle = { padding: 0 };
-const labelStyle = { padding: 0 };
-const showMoreLess = false;
+const styles = StyleSheet.create({
+  container: {
+    padding: 0
+  },
+  label: {
+    padding: 0
+  }
+});
+
 const swatchSize = 25;
 const maxSwatches = 6;
 const title = 'Selected';
@@ -33,14 +40,14 @@ storiesOf('Swatches', module)
     <Swatches
       label={boolean('label', true)}
       title={text('title', title)}
-      moreLessStyle={{ display: boolean('showMoreLess', showMoreLess) ? 'flex' : 'none'}}
+      moreLessStyle={{ display: boolean('showMoreLess', false) ? 'flex' : 'none'}}
       maxSwatches={number('maxSwatches', maxSwatches)}
       colorContainerStyle={{
         height: number('swatchSize', swatchSize),
         width: number('swatchSize', swatchSize)
       }}
-      labelTitleStyle={object('labelStyle', labelStyle)}
-      style={object('containerStyle', containerStyle)}
+      labelTitleStyle={object('labelStyle', styles.label)}
+      style={object('containerStyle', styles.container)}
       items={items}
       onChangeSwatch={action('Swatches onChangeSwatch')}
       defaultValue={'blue'}
