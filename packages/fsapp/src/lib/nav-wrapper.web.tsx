@@ -134,7 +134,7 @@ export default class Navigator {
           }
         }
       }
-    }).catch((e: any) => {
+    }).catch(e => {
       console.error(e);
     });
   }
@@ -145,7 +145,7 @@ export default class Navigator {
   setTabBadge(options: {
     tabIndex: number;
     badge: string | number | null;
-    badgeColor?: any;
+    badgeColor?: string;
   }): void {
     console.warn('setTabBadge has been deprecated. ' +
       'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +

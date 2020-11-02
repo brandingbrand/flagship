@@ -114,11 +114,11 @@ memo((props): JSX.Element => {
   return (
     <View style={{ paddingVertical: 10 }}>
       <Button
+        {...buttonProps}
         title={titleVal}
         icon={selectedTheme.icon}
         iconStyle={styles.icon}
         underlayColor={selectedTheme.bgActive}
-        {...buttonProps}
       />
       {!!tagLineVal && (
         <Text style={[styles.tagLine, tagLineStyle]}>

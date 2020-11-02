@@ -1,5 +1,6 @@
 import {
   Analytics as FSAnalytics,
+  AnalyticsTypes,
   GoogleAnalyticsProvider
 } from '@brandingbrand/fsengage';
 
@@ -13,7 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 const version = require('../../env/env').version;
 
 const commonConfiguration = {
-  userAgent: DeviceInfo.getUserAgentSync(),
+  userAgent: DeviceInfo.getUserAgent(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
   appName: DeviceInfo.getApplicationName(),
@@ -39,12 +40,12 @@ export default Analytics;
 export function mapProductToAnalytics(
   product: CommerceTypes.Product,
   quantity?: number
-): any {
-  const analyticsProduct: any = {
+): AnalyticsTypes.Product {
+  const analyticsProduct: AnalyticsTypes.Product = {
     identifier: product.id,
     name: product.title,
     brand: product.brand,
-    price: product.price
+    price: product.price?.value.toString()
   };
 
   if (quantity) {
