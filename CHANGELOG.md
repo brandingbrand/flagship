@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **flagship:** made rn camera patch script work again ([#1770](https://github.com/brandingbrand/flagship/issues/1770)) ([774362b](https://github.com/brandingbrand/flagship/commit/774362b23d8cb7b56bcaf5a7eedb7fc941cd958d))
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* fix android release variant compilation ([#1765](https://github.com/brandingbrand/flagship/issues/1765)) ([96e33f1](https://github.com/brandingbrand/flagship/commit/96e33f1d88db40859e792f7427695cdc10c7cedc))
+* **fscomponents:** Fix SearchScreen story ([5968581](https://github.com/brandingbrand/flagship/commit/5968581b53fafa65bbfd34d98ba2304532524807))
+* **fscomponents:** Remove unneeded tslint disable ([d8f2aa6](https://github.com/brandingbrand/flagship/commit/d8f2aa61a66b462de12517aea61ba4b6a4dd05fe))
+* **fscomponents:** Update SelectableList ([c55b936](https://github.com/brandingbrand/flagship/commit/c55b93689414336202773c7488dd114d8dd44d8e))
+
+
+### Features
+
+* **fscomponents:** Add Picker component ([e7e76bf](https://github.com/brandingbrand/flagship/commit/e7e76bf366c854ffcb4e992ef7b52e5225f9de0a))
+* **fscomponents:** Add ToggleButton component ([6130d4d](https://github.com/brandingbrand/flagship/commit/6130d4d6131ab7d61164d9cc5a989937992de18e))
+* **fscomponents:** Add TooltipDisplay component ([1193b5b](https://github.com/brandingbrand/flagship/commit/1193b5b716e984c4bec27cd878e16059d8d5a021))
+* **fscomponents:** Update SearchBar and SearchScreen ([572bad1](https://github.com/brandingbrand/flagship/commit/572bad1df978de5a97bd2ae9903bd650256c566c))
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** update RNFirebase pod ([#1738](https://github.com/brandingbrand/flagship/issues/1738)) ([bcbca47](https://github.com/brandingbrand/flagship/commit/bcbca47cbe64fdec164932bf3524efcdbdcc3cb6))
+* **flagship:** Update storybook and rn-device-info ([4d3428b](https://github.com/brandingbrand/flagship/commit/4d3428b0df9b39452835f9bae6cd9f2dad79ab29))
+* **flagship:** Updates for PR review ([111b464](https://github.com/brandingbrand/flagship/commit/111b464583a2303f8744a851bead6512fefe9d24))
+* **fscomponents:** Fixes for FilterListDrilldown ([26892b6](https://github.com/brandingbrand/flagship/commit/26892b6b3fe202237abb47408ecbea1e3115aa5e))
+
+
+### Features
+
+* **flagship:** iOS Multiple Target Support ([#1287](https://github.com/brandingbrand/flagship/issues/1287)) ([b501fd1](https://github.com/brandingbrand/flagship/commit/b501fd1cdc0fc7e5ca6c8e3169c83995179653b4))
+* **fscomponents:** Add RadioButtonLine component ([0815e13](https://github.com/brandingbrand/flagship/commit/0815e1340823825948c1744081bd56b916fe3378))
+* add header in the nesting button modal ([#1734](https://github.com/brandingbrand/flagship/issues/1734)) ([5ecc911](https://github.com/brandingbrand/flagship/commit/5ecc9119e574e9409a80602c01bb0f4dc3d62893))
+* **fscomponents:** Update FilterListDrilldown ([2479a29](https://github.com/brandingbrand/flagship/commit/2479a295ddf892ce5b7eedae7ecdaf9cec679060))
+* **fscomponents:** Update StepIndicator ([ebc41e9](https://github.com/brandingbrand/flagship/commit/ebc41e9a84ef54259e729dc2655ddce7aa1f8d1b))
+* **fsproductindex:** Updated ProductIndex ([d3a6fc0](https://github.com/brandingbrand/flagship/commit/d3a6fc0738fae1bfd5ad5b82150b6ad8fb2f3a9a))
+
+
+
+
+
 # [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
 
 

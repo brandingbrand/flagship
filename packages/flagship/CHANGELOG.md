@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **flagship:** made rn camera patch script work again ([#1770](https://github.com/brandingbrand/flagship/issues/1770)) ([774362b](https://github.com/brandingbrand/flagship/commit/774362b23d8cb7b56bcaf5a7eedb7fc941cd958d))
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* fix android release variant compilation ([#1765](https://github.com/brandingbrand/flagship/issues/1765)) ([96e33f1](https://github.com/brandingbrand/flagship/commit/96e33f1d88db40859e792f7427695cdc10c7cedc))
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** update RNFirebase pod ([#1738](https://github.com/brandingbrand/flagship/issues/1738)) ([bcbca47](https://github.com/brandingbrand/flagship/commit/bcbca47cbe64fdec164932bf3524efcdbdcc3cb6))
+
+
+### Features
+
+* **flagship:** iOS Multiple Target Support ([#1287](https://github.com/brandingbrand/flagship/issues/1287)) ([b501fd1](https://github.com/brandingbrand/flagship/commit/b501fd1cdc0fc7e5ca6c8e3169c83995179653b4))
+
+
+
+
+
 # [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
 
 **Note:** Version bump only for package @brandingbrand/flagship

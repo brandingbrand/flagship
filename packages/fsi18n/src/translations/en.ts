@@ -336,6 +336,9 @@ export const keys: FSTranslationKeys = {
     emailForm: {
       placeholder: 'Email',
       error: 'Required Field'
+    },
+    button: {
+      apply: 'Apply'
     }
   }
 };
