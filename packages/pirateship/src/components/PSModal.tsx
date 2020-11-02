@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 
 import { Modal } from '@brandingbrand/fscomponents';
@@ -59,7 +61,7 @@ export interface PSModalProps {
   content: JSX.Element;
   onClose: () => void;
   title?: string;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
 
   fullscreen?: boolean;
   backdropColor?: string;

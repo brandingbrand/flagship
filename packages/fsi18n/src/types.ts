@@ -49,6 +49,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     shareButton: ShareButtonTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
     emailForm: EmailFormTranslations<KeyType>;
+    button: ButtonTranslations<KeyType>;
   };
 }
 
@@ -403,4 +404,8 @@ export interface LoginFormTranslations<KeyType> {
 export interface EmailFormTranslations<KeyType> {
   placeholder: KeyType;
   error: KeyType;
+}
+
+export interface ButtonTranslations<KeyType> {
+  apply: KeyType;
 }

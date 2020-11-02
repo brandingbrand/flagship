@@ -97,7 +97,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     if (prevActiveStep !== currActiveStep || prevItemWidth !== currItemWidth) {
       if (this.props.animated) {
         Animated.timing(this.sliderPosition, {
-          useNativeDriver: true,
+          useNativeDriver: false,
           duration: 300,
           toValue: currActiveStep * this.state.itemWidth
         }).start();

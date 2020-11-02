@@ -72,12 +72,12 @@ export interface GridProps<ItemT>
   /**
    * An optional function to render a header component displayed at the top of the grid.
    */
-  renderHeader?: () => JSX.Element;
+  renderHeader?: () => JSX.Element | null;
 
   /**
    * An optional function to render a footer component, displayed at the bottom of the grid.
    */
-  renderFooter?: () => JSX.Element;
+  renderFooter?: () => JSX.Element | null;
 
   /**
    * Styles to apply to the container around the back to top button
@@ -243,7 +243,8 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
   }
 
   private keyExtractor = (items: ItemT[], index: number): string => {
-    const key = items.map((item: any) => item && (item.key || item.id)).filter(Boolean).join();
+    const key = items.map((item: ItemT & { id?: string; key?: string }) =>
+      item && (item.key || item.id)).filter(Boolean).join();
 
     return key || '' + index;
   }
@@ -310,7 +311,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
           return (
             <View style={[gridStyle.item, { width: columnWidth + '%' }]} key={index}>
               <View style={gridStyle.itemRow}>
-                {renderItem({item, index, separators: info.separators})}
+                {renderItem && renderItem({item, index, separators: info.separators})}
                 {showRowSeparators && showRowSeparator && (
                   <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
                 )}

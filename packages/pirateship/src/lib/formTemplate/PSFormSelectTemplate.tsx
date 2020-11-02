@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import { Selector } from '@brandingbrand/fscomponents';
 
 interface Option {
@@ -7,13 +7,13 @@ interface Option {
   text: string;
 }
 
-export function select(locals: any): any {
+export function select(locals: {[key: string]: any}): JSX.Element | null {
   if (locals.hidden) {
     return null;
   }
 
   const stylesheet = locals.stylesheet;
-  let formGroupStyle = stylesheet.formGroup.normal;
+  let formGroupStyle = stylesheet.formGroup?.normal;
   let controlLabelStyle = stylesheet.controlLabel.normal;
   const selectContainerStyle = stylesheet.selectContainer.normal;
   let selectStyle = stylesheet.select.normal;
@@ -65,7 +65,7 @@ export function select(locals: any): any {
     value
   }));
 
-  const onValueChange = (value: any) => {
+  const onValueChange = (value: string) => {
     locals.onChange(value);
     if (locals.config && locals.config.onValueChange) {
       locals.config.onValueChange(value);

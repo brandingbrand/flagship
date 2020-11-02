@@ -23,7 +23,7 @@ const searchBarProps = {
   inputTextStyle: {
     color: 'red'
   },
-  style: {
+  containerStyle: {
     borderColor: 'green',
     borderWidth: 1,
     borderRadius: 20
