@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Image,
   ImageStyle,
+  StyleProp,
   StyleSheet,
   Text,
   TextStyle,
@@ -86,65 +87,7 @@ const icons = {
   error: require('../../../assets/images/error.png')
 };
 
-export interface SerializableVariantCartItemProps {
-  /**
-   * Additional props that can be applied to the 'move to wishlist' button
-   */
-  wishlistButtonProps?: Partial<ButtonProps>;
-
-  /**
-   * Styles to apply to the main container
-   */
-  style?: ViewStyle;
-
-  /**
-   * Styles to apply to the product item title
-   */
-  titleStyle?: TextStyle;
-
-  /**
-   * Styles to apply to the left column container
-   * (eg. the column with the product image and move to wishlist button)
-   */
-  leftColumnStyle?: ViewStyle;
-
-  /**
-   * Styles to apply to the right column container
-   * (eg. the column with the product details and qty stepper)
-   */
-  rightColumnStyle?: ViewStyle;
-
-  productImageStyle?: ImageStyle;
-  originalPriceStyle?: TextStyle;
-  priceStyle?: TextStyle;
-
-  /**
-   * Text styles that will apply to the price if the item's price is less than originalPrice
-   */
-  salePriceStyle?: TextStyle;
-
-  /**
-   * Text styles that will apply to the item variant detail label (eg. 'Size')
-   */
-  itemDetailLabelStyle?: TextStyle;
-
-  /**
-   * Text styles that will apply to the item variant detail value (eg. 'Small')
-   */
-  itemDetailValueStyle?: TextStyle;
-
-  outOfStockTextStyle?: TextStyle;
-  stepperStyle?: ViewStyle;
-
-  /**
-   * Additional props that will be provided to the stepper
-   */
-  stepperProps?: Partial<StepperProps>;
-}
-
-export interface VariantCartItemProps extends
-  SerializableVariantCartItemProps,
-  CommerceTypes.CartItem {
+export interface VariantCartItemProps extends CommerceTypes.CartItem {
   /**
    * A function to invoke when the user wants to modify the quantity of an item in cart.
    */
@@ -161,6 +104,76 @@ export interface VariantCartItemProps extends
    * A callback to invoke if the user taps on the image
    */
   onImagePress?: (item: CommerceTypes.CartItem) => void;
+
+  /**
+   * Additional props that can be applied to the 'move to wishlist' button
+   */
+  wishlistButtonProps?: Partial<ButtonProps>;
+
+  /**
+   * Styles to apply to the main container
+   */
+  style?: StyleProp<ViewStyle>;
+
+  /**
+   * Styles to apply to the product item title
+   */
+  titleStyle?: StyleProp<TextStyle>;
+
+  /**
+   * Styles to apply to the left column container
+   * (eg. the column with the product image and move to wishlist button)
+   */
+  leftColumnStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Styles to apply to the right column container
+   * (eg. the column with the product details and qty stepper)
+   */
+  rightColumnStyle?: StyleProp<ViewStyle>;
+
+  productImageStyle?: StyleProp<ImageStyle>;
+  originalPriceStyle?: StyleProp<TextStyle>;
+  priceStyle?: StyleProp<TextStyle>;
+
+  /**
+   * Text styles that will apply to the price if the item's price is less than originalPrice
+   */
+  salePriceStyle?: StyleProp<TextStyle>;
+
+  /**
+   * Text styles that will apply to the item variant detail label (eg. 'Size')
+   */
+  itemDetailLabelStyle?: StyleProp<TextStyle>;
+
+  /**
+   * Text styles that will apply to the item variant detail value (eg. 'Small')
+   */
+  itemDetailValueStyle?: StyleProp<TextStyle>;
+
+  outOfStockTextStyle?: StyleProp<TextStyle>;
+  stepperStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Additional props that will be provided to the stepper
+   */
+  stepperProps?: Partial<StepperProps>;
+}
+
+export interface SerializableVariantCartItemProps extends
+  Omit<VariantCartItemProps, keyof CommerceTypes.CartItem> {
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  leftColumnStyle?: ViewStyle;
+  rightColumnStyle?: ViewStyle;
+  productImageStyle?: ImageStyle;
+  originalPriceStyle?: TextStyle;
+  priceStyle?: TextStyle;
+  salePriceStyle?: TextStyle;
+  itemDetailLabelStyle?: TextStyle;
+  itemDetailValueStyle?: TextStyle;
+  outOfStockTextStyle?: TextStyle;
+  stepperStyle?: ViewStyle;
 }
 
 const isOutOfStock = (item: CommerceTypes.CartItem): boolean => {
@@ -188,7 +201,7 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
     stepperStyle,
     stepperProps,
     ...item
-   } = props;
+  } = props;
   const onQtyChangeHandler = (qty: number) => {
     return onQtyChange?.(item.itemId, qty).catch(e => console.log(e));
   };
@@ -224,9 +237,9 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
               onPress={onMoveToWishlistHandler}
               title={i18n.string(translationKeys.flagship.cart.moveToWishlist)}
               color={'accent'}
-              titleStyle={styles.wishlistButtonText}
-              style={styles.wishlistButton}
               {...wishlistButtonProps}
+              titleStyle={[styles.wishlistButtonText, wishlistButtonProps?.titleStyle]}
+              style={[styles.wishlistButton, wishlistButtonProps?.style]}
             />
           )}
         </View>
@@ -261,7 +274,7 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
           </View>
           <Stepper
             count={item.quantity}
-            countUpperLimit={item.inventory?.stock}
+            countUpperLimit={item.inventory?.stock || 99}
             onChange={onQtyChangeHandler}
             stepperStyle={stepperStyle}
             {...stepperProps}

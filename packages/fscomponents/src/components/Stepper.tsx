@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   Image,
   ImageSourcePropType,
+  ImageStyle,
   StyleProp,
   Text,
   TextStyle,
@@ -27,6 +28,7 @@ export interface SerializableStepperProps {
   // Counter
   count?: number;
   countUpperLimit?: number;
+  countLowerLimit?: number;
   editable?: boolean;
   prefix?: string;
 
@@ -47,12 +49,20 @@ export interface SerializableStepperProps {
 
   // Remove button image that will replace the decrease button image if count is one.
   removeButtonImage?: ImageSourcePropType;
+
+  // Styles that will apply to the Touchable wrapping the quantity steppers
+  qtyChangeButtonStyle?: ViewStyle;
+
+  // Styles that will apply to the quantity stepper images
+  qtyChangeImageStyle?: ImageStyle;
 }
 
 export interface StepperProps extends Omit<
   SerializableStepperProps,
   'counterStyle' |
-  'stepperStyle'
+  'stepperStyle' |
+  'qtyChangeButtonStyle' |
+  'qtyChangeImageStyle'
   > {
   onChange?: (count: number) => void;
 
@@ -70,6 +80,12 @@ export interface StepperProps extends Omit<
   // Increase button
   onIncreaseButtonPress: (count: number) => void;
   renderIncreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
+
+  // Styles that will apply to the Touchable wrapping the quantity steppers
+  qtyChangeButtonStyle?: StyleProp<ViewStyle>;
+
+  // Styles that will apply to the quantity stepper images
+  qtyChangeImageStyle?: StyleProp<ImageStyle>;
 }
 
 export interface StepperState {
@@ -120,9 +136,15 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const {
       decreaseButtonImage = icons.decrease,
       removeButtonImage,
-      renderDecreaseButton
+      renderDecreaseButton,
+      qtyChangeButtonStyle,
+      qtyChangeImageStyle,
+      countLowerLimit = 0
     } = this.props;
     const { count } = this.state;
+    const icon = count <= countLowerLimit + 1 && !!removeButtonImage ?
+      removeButtonImage :
+      decreaseButtonImage;
 
     if (renderDecreaseButton) {
       return renderDecreaseButton(count, this.handleDecreasePress);
@@ -132,13 +154,14 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
       <TouchableOpacity
         accessibilityLabel='Decrease'
         activeOpacity={this.kButtonTouchabilityOpacity}
-        disabled={count <= 0}
+        disabled={count <= countLowerLimit}
         onPress={this.handleDecreasePress}
+        style={qtyChangeButtonStyle}
       >
         <Image
           resizeMode='contain'
-          source={count < 1 && !!removeButtonImage ? removeButtonImage : decreaseButtonImage}
-          style={[S.buttonImage, style]}
+          source={icon}
+          style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
@@ -148,7 +171,9 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const {
       countUpperLimit,
       increaseButtonImage = icons.increase,
-      renderIncreaseButton
+      renderIncreaseButton,
+      qtyChangeButtonStyle,
+      qtyChangeImageStyle
     } = this.props;
 
     if (renderIncreaseButton) {
@@ -161,11 +186,12 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         activeOpacity={this.kButtonTouchabilityOpacity}
         disabled={!countUpperLimit || this.state.count >= countUpperLimit}
         onPress={this.handleIncreasePress}
+        style={qtyChangeButtonStyle}
       >
         <Image
           resizeMode='contain'
           source={increaseButtonImage}
-          style={[S.buttonImage, style]}
+          style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
