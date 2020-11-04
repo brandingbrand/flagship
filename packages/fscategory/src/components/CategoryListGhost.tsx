@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import ContentLoader, { Rect } from '../../lib/RNContentLoader';
+import ContentLoader, { Rect } from '../lib/RNContentLoader';
 
 const defaultStyle = StyleSheet.create({
   itemContainer: {
@@ -36,16 +36,17 @@ const renderItem = (itemProps: CategoryListGhostProps) => (
   { index }: ListRenderItemInfo<any>
 ) => {
   const width = index % 2 ? 142 : 207;
+  const height = itemProps.height || 24;
   return (
     <View style={[defaultStyle.itemContainer, itemProps.itemContainerStyle]}>
       <ContentLoader
         width={width}
-        height={itemProps.height}
-        viewBox={`0 0 ${width} ${itemProps.height}`}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
         backgroundColor={'#EFEFEF'}
         foregroundColor={'#F9F9F9'}
       >
-        <Rect x='0' y='0' rx='4' ry='4' width={width} height={itemProps.height} />
+        <Rect x='0' y='0' rx='4' ry='4' width={width} height={height} />
       </ContentLoader>
       {itemProps.renderAccessory?.()}
     </View>
