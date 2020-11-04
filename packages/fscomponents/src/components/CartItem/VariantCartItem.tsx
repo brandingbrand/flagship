@@ -87,29 +87,16 @@ const icons = {
   error: require('../../../assets/images/error.png')
 };
 
-export interface VariantCartItemProps extends CommerceTypes.CartItem {
-  /**
-   * A function to invoke when the user wants to modify the quantity of an item in cart.
-   */
-  onQtyChange?: (itemId: string, qty: number) => Promise<void>;
-
-  /**
-   * A function to invoke when the user wants move the item to their wishlist.
-   *
-   * The move to wishlist button will only display if this is provided.
-   */
-  onMoveToWishlist?: (item: CommerceTypes.CartItem) => void;
-
-  /**
-   * A callback to invoke if the user taps on the image
-   */
-  onImagePress?: (item: CommerceTypes.CartItem) => void;
-
+interface BaseVariantCartItemProp extends CommerceTypes.CartItem {
   /**
    * Additional props that can be applied to the 'move to wishlist' button
    */
   wishlistButtonProps?: Partial<ButtonProps>;
 
+  /**
+   * Additional props that will be provided to the stepper
+   */
+  stepperProps?: Partial<StepperProps>;
   /**
    * Styles to apply to the main container
    */
@@ -153,15 +140,28 @@ export interface VariantCartItemProps extends CommerceTypes.CartItem {
 
   outOfStockTextStyle?: StyleProp<TextStyle>;
   stepperStyle?: StyleProp<ViewStyle>;
-
-  /**
-   * Additional props that will be provided to the stepper
-   */
-  stepperProps?: Partial<StepperProps>;
 }
 
-export interface SerializableVariantCartItemProps extends
-  Omit<VariantCartItemProps, keyof CommerceTypes.CartItem> {
+export interface VariantCartItemProps extends BaseVariantCartItemProp {
+  /**
+   * A function to invoke when the user wants to modify the quantity of an item in cart.
+   */
+  onQtyChange?: (itemId: string, qty: number) => Promise<void>;
+
+  /**
+   * A function to invoke when the user wants move the item to their wishlist.
+   *
+   * The move to wishlist button will only display if this is provided.
+   */
+  onMoveToWishlist?: (item: CommerceTypes.CartItem) => void;
+
+  /**
+   * A callback to invoke if the user taps on the image
+   */
+  onImagePress?: (item: CommerceTypes.CartItem) => void;
+}
+
+export interface SerializableVariantCartItemProps extends BaseVariantCartItemProp {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   leftColumnStyle?: ViewStyle;
