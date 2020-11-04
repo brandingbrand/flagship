@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import ContentLoader, { Rect } from '../../lib/RNContentLoader';
+import ContentLoader, { Rect } from '../lib/RNContentLoader';
 import { PageIndicator } from '@brandingbrand/fscomponents';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -59,10 +59,10 @@ const baseStyles = StyleSheet.create({
 });
 
 const icons = {
-  ghostStar: require('../../../../fscomponents/assets/images/ghostStar.png')
+  ghostStar: require('../../assets/images/ghostStar.png')
 };
 
-export interface SerializablePDPGhostProps {
+export interface SerializableProductDetailGhostProps {
   /**
    * Styles to container
    */
@@ -124,8 +124,8 @@ export interface SerializablePDPGhostProps {
   titleWidth?: number;
 }
 
-interface PDPGhostProps extends Omit<
-  SerializablePDPGhostProps,
+export interface ProductDetailGhostProps extends Omit<
+  SerializableProductDetailGhostProps,
   'containerStyle' |
   'paginationStyle' |
   'paginationActiveStyle' |
@@ -153,7 +153,7 @@ interface PDPGhostProps extends Omit<
   titleWidth?: number;
 }
 
-const PDPGhost: FC<PDPGhostProps> = (props: PDPGhostProps) => {
+const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGhostProps) => {
   const dimmensionWidth = Dimensions.get('screen').width;
 
   const {
@@ -176,13 +176,12 @@ const PDPGhost: FC<PDPGhostProps> = (props: PDPGhostProps) => {
   const starArray = new Array(5).fill({});
 
   return (
-    <ScrollView>
+    <ScrollView style={containerStyle}>
       <View style={baseStyles.imageContainer}>
         <ContentLoader
           width={screenWidth}
           height={mainImageHeight}
           viewBox={`0 0 ${screenWidth} ${mainImageHeight}`}
-          style={containerStyle}
         >
           <Rect x='0' y='0' rx='4' ry='4' width={screenWidth} height={mainImageHeight}/>
         </ContentLoader>
@@ -225,4 +224,4 @@ const PDPGhost: FC<PDPGhostProps> = (props: PDPGhostProps) => {
   );
 };
 
-export default PDPGhost;
+export default ProductDetailGhost;
