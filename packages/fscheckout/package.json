@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "react": "^16.13.1",
-    "react-content-loader": "^5.1.2",
     "react-native": "^0.63.2"
   },
   "publishConfig": {

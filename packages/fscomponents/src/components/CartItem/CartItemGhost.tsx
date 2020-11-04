@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentLoader, { Rect } from '../../../lib/RNContentLoader';
+import ContentLoader, { Rect } from '../../lib/RNContentLoader';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
