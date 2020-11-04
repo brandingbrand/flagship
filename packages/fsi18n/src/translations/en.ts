@@ -273,7 +273,8 @@ export const keys: FSTranslationKeys = {
       filterBy: 'Filter By',
       noResults: 'Sorry, no items matched your search.',
       resetFilters: 'RESET FILTER',
-      loadMore: 'Load More'
+      loadMore: 'Load More',
+      addToBag: 'Add To Bag'
     },
     checkout: {
       continue: 'Continue',

@@ -44,7 +44,6 @@
     "path-to-regexp": "^1.7.0",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
-    "react-content-loader": "^5.1.2",
     "react-dom": "^16.9.0",
     "react-helmet": "^6.1.0",
     "react-id-swiper": "^2.0.0",
