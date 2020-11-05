@@ -106,6 +106,8 @@ export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
   itemsInCart: KeyType;
   error: KeyType;
+  moveToWishlist: KeyType;
+  outOfStock: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
