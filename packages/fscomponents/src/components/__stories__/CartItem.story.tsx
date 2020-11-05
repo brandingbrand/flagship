@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import Decimal from 'decimal.js';
-import { CartItem } from '../CartItem';
+import { CartItem, VariantCartItem } from '../CartItem';
 import {Stepper} from '../Stepper';
 import FSI18n, {translationKeys} from '@brandingbrand/fsi18n';
 
@@ -44,11 +44,40 @@ const testCartItem: CommerceTypes.CartItem = {
   itemText: 'Test text',
   quantity: 3,
   totalPrice: {
-    value: new Decimal(0),
+    value: new Decimal(30),
+    currencyCode: 'USD'
+  },
+  price: {
+    value: new Decimal(10),
+    currencyCode: 'USD'
+  },
+  originalPrice: {
+    value: new Decimal(20),
     currencyCode: 'USD'
   },
   handle: 'Kingsford-24-Charcoal-Grill',
-  images: [{ uri: 'https://placehold.it/100x100' }]
+  images: [{ uri: 'https://placehold.it/100x100' }],
+  options: [{
+    id: 'size',
+    name: 'Size',
+    values: [{
+      name: 'Small',
+      value: 'S',
+      available: true
+    }, {
+      name: 'Large',
+      value: 'L',
+      available: true
+    }]
+  }],
+  variants: [{
+    id: '1534131',
+    available: true,
+    optionValues: [{
+      name: 'size',
+      value: 'L'
+    }]
+  }]
 };
 
 const renderStepper = () => {
@@ -88,5 +117,11 @@ storiesOf('CartItem', module)
       removeButtonTextStyle={styles.removeButtonTextStyle}
       renderStepper={renderStepper}
       renderRemoveButton={renderRemoveButton}
+    />
+  ))
+  .add('variant cart item', () => (
+    <VariantCartItem
+      {...object('CartItem', testCartItem)}
+      onQtyChange={noopPromise}
     />
   ));

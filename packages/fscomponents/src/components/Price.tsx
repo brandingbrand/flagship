@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
 // tslint:disable-next-line:no-submodule-imports
 import { CurrencyValue } from '@brandingbrand/fscommerce/dist/Commerce/CommerceTypes';
 import FSI18n from '@brandingbrand/fsi18n';
@@ -12,14 +12,20 @@ const styles = StyleSheet.create({
 
 export interface PriceProps {
   price?: CurrencyValue;
-  priceStyle?: TextStyle;
+  priceStyle?: StyleProp<TextStyle>;
   originalPrice?: CurrencyValue;
-  originalPriceStyle?: TextStyle;
+  originalPriceStyle?: StyleProp<TextStyle>;
   originalPriceFirst?: boolean;
 
   /**
    * salePriceStyle is only applied if `price` is less than `originalPrice`
    */
+  salePriceStyle?: StyleProp<TextStyle>;
+}
+
+export interface SerializablePriceProps extends PriceProps {
+  priceStyle?: TextStyle;
+  originalPriceStyle?: TextStyle;
   salePriceStyle?: TextStyle;
 }
 
