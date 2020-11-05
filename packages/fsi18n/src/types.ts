@@ -338,6 +338,7 @@ export interface ProductIndexTranslations<KeyType> {
   noResults: KeyType;
   resetFilters: KeyType;
   loadMore: KeyType;
+  addToBag: KeyType;
 }
 
 export interface CheckoutTranslations<KeyType> {
