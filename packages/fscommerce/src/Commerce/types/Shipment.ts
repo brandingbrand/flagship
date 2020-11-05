@@ -29,4 +29,13 @@ export interface Shipment extends BaseGiftOptions {
    * Information about the shipping method selected for the shipment.
    */
   shippingMethod: ShippingMethod;
+
+  /**
+   * The date that this shipment is estimated to arrive to the
+   * customer.
+   *
+   * @optional This value may be undefined if not implemented in
+   * a data source.
+   */
+  estimatedArrivalDate?: Date;
 }
