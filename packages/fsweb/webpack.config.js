@@ -56,7 +56,6 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs',
       'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
       'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
       'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
