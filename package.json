@@ -98,7 +98,6 @@
     "react-native-web": "^0.13.12",
     "react-native-web-modal": "^1.0.1",
     "rimraf": "^3.0.0",
-    "svgs": "^4.1.0",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.0.0",
     "typedoc": "^0.15.0",
