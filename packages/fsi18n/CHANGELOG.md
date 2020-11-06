@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Features
+
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) (c0baee9)
+* **ghost-screen:** PDPGhost | Add to Flagship Repo (324f93b)
+
+
+
+
+
 ## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n

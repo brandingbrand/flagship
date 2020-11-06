@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback fixes (c8659d6)
+* feedback fixes (4acbc34)
+* **fscomponents:** Fixes for swatches (1adc779)
+
+
+### Features
+
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) (c0baee9)
+* **fscomponents:** Updates to Swatches (20ca7d7)
+* CartItemGhost | Add to Flagship Repo (e76be4b)
+* CartItemGhost | Add to Flagship Repo - replaced to CartItem (4a63a6d)
+* CategoryListGhost | Add to Flagship Repo (07d123c)
+* CategoryListGhost | Add to Flagship Repo - fix adding itemContainerStyle (dc12da2)
+* CategoryListGhost | Add to Flagship Repo - fix changed naming (6fda510)
+* CategoryListGhost | Add to Flagship Repo - fix SerializableProps (3387293)
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory (f1a7143)
+
+
+
+
+
 ## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
