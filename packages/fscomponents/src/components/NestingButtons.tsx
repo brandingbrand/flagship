@@ -38,9 +38,13 @@ const styles = StyleSheet.create({
   }
 });
 
+export interface NestedButtonProps extends ButtonProps {
+  closeOnPress?: boolean;
+}
+
 export interface NestingButtonsProps {
   showMoreTitle: string;
-  buttonsProps: ButtonProps[];
+  buttonsProps: NestedButtonProps[];
   /**
    * Inclusive maximum number of buttons to be displayed before collapsing.
    *
@@ -58,6 +62,7 @@ export interface NestingButtonsProps {
 export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const toggleModal = () => setModalVisible(!modalVisible);
+  const closeModal = () => setModalVisible(false);
   const {
     buttonsProps,
     showMoreTitle,
@@ -70,13 +75,24 @@ export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props =>
     modalContainerStyle
   } = props;
 
-  const buttons = buttonsProps.map((buttonProps, index) => (
-    <Button
-      key={index}
-      {...buttonProps}
-      style={[styles.button, buttonProps.style]}
-    />
-  ));
+  const buttons = buttonsProps.map((buttonProps, index) => {
+    const handlePress = () => {
+      if (buttonProps.closeOnPress) {
+        closeModal();
+      }
+
+      buttonProps.onPress();
+    };
+
+    return (
+      <Button
+        key={index}
+        {...buttonProps}
+        onPress={handlePress}
+        style={[styles.button, buttonProps.style]}
+      />
+    );
+  });
 
   if (buttons.length <= maxCount) {
     return (
