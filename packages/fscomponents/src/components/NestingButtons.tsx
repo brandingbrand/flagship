@@ -56,8 +56,8 @@ export interface NestingButtonsProps {
 }
 
 export const NestingButtons: React.FC<NestingButtonsProps> = React.memo(props => {
-  const [modalVisible, setModalVisibile] = useState<boolean>(false);
-  const toggleModal = () => setModalVisibile(!modalVisible);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const toggleModal = () => setModalVisible(!modalVisible);
   const {
     buttonsProps,
     showMoreTitle,
