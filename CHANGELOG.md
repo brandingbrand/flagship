@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback changes ([61459b8](https://github.com/brandingbrand/flagship/commit/61459b8e44ca192290ee005e6091c08404be3830))
+* feedback fixes ([c8659d6](https://github.com/brandingbrand/flagship/commit/c8659d67af3215eb3a64a64ca97610dc070a73b0))
+* feedback fixes ([4acbc34](https://github.com/brandingbrand/flagship/commit/4acbc34d8a9376ad781a8248f17b5011f3beaca8))
+* **fscomponents:** Fixes for swatches ([1adc779](https://github.com/brandingbrand/flagship/commit/1adc7794fc73bb1e15b1d529b9ae8b517a52fda1))
+
+
+### Features
+
+* **flagship:** remove flipper support ([4297f9c](https://github.com/brandingbrand/flagship/commit/4297f9c557ed8b4b2be3810aa67bf63a39a0efdf))
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) ([c0baee9](https://github.com/brandingbrand/flagship/commit/c0baee97237d48a2be34ea8eb707d7829c7f0628))
+* **fscomponents:** Updates to Swatches ([20ca7d7](https://github.com/brandingbrand/flagship/commit/20ca7d7b84af2e4abf79099a0ab2324586612e37))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([9c83ae7](https://github.com/brandingbrand/flagship/commit/9c83ae7be5fcd925480bfe3e2d0d320f01409bc6))
+* CartItemGhost | Add to Flagship Repo ([e76be4b](https://github.com/brandingbrand/flagship/commit/e76be4be3d49f66e00d4a7b7e576dc57e730eb28))
+* CartItemGhost | Add to Flagship Repo - replaced to CartItem ([4a63a6d](https://github.com/brandingbrand/flagship/commit/4a63a6df8dc2aa768a2707a808d33be19566c222))
+* CategoryListGhost | Add to Flagship Repo ([fbad160](https://github.com/brandingbrand/flagship/commit/fbad1609358f317a0781b2ad67c958f3af7f2433))
+* CategoryListGhost | Add to Flagship Repo ([07d123c](https://github.com/brandingbrand/flagship/commit/07d123c792dedc57f080b0d21d35d841d6d37b23))
+* CategoryListGhost | Add to Flagship Repo - fix adding itemContainerStyle ([dc12da2](https://github.com/brandingbrand/flagship/commit/dc12da2447be0b6d520fe36c1b57de72c2997cb5))
+* CategoryListGhost | Add to Flagship Repo - fix changed naming ([6fda510](https://github.com/brandingbrand/flagship/commit/6fda5100213afa09c65823b8bc01083db063a738))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([8746c5f](https://github.com/brandingbrand/flagship/commit/8746c5f9a43aa8434703d84814cba32c69685df6))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([f1a7143](https://github.com/brandingbrand/flagship/commit/f1a7143410637f719e1946d08b47244219975a30))
+* statically set key name for ga query params ([aac2aac](https://github.com/brandingbrand/flagship/commit/aac2aac286ebfc0dccc19e6aefbd8fe1c595269f))
+* **fsengage:** add support for directly setting google analytics params ([5b3d5b0](https://github.com/brandingbrand/flagship/commit/5b3d5b03a68ee355b8498216c78e72e8aee57d8b))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([324f93b](https://github.com/brandingbrand/flagship/commit/324f93be56972f6b4944be7b083a870f98754856))
+* **ghost-screen:** PDPGhost | Serialize Props ([f33a33c](https://github.com/brandingbrand/flagship/commit/f33a33c50b57e58fd3841d94f5a39dcb42b993c3))
+* CategoryListGhost | Add to Flagship Repo - fix SerializableProps ([3387293](https://github.com/brandingbrand/flagship/commit/33872930217f6a1130487f7e7e6dd11e1300adc4))
+
+
+
+
+
 ## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
 
 

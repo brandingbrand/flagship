@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback changes ([61459b8](https://github.com/brandingbrand/flagship/commit/61459b8e44ca192290ee005e6091c08404be3830))
+
+
+### Features
+
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([9c83ae7](https://github.com/brandingbrand/flagship/commit/9c83ae7be5fcd925480bfe3e2d0d320f01409bc6))
+
+
+
+
+
 ## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
 
 **Note:** Version bump only for package @brandingbrand/fsproductdetail
