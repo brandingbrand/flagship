@@ -71,3 +71,4 @@ export * from './TouchableOpacityLink';
 export * from './TouchableWithoutFeedbackLink';
 export * from './UpdateNameOrEmail';
 export * from './ZoomCarousel';
+export * from './LinkCard';
