@@ -12,7 +12,7 @@ import {
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { style as S } from '../styles/CategoryBox';
 
-export interface SerializableCategoryBoxProps {
+export interface SerializableCategoryBoxProps extends CommerceTypes.Category {
   imageStyle?: ImageStyle;
   showImage?: boolean;
   style?: ViewStyle;
@@ -20,7 +20,7 @@ export interface SerializableCategoryBoxProps {
   underlayColor?: string;
 }
 
-export interface CategoryBoxProps extends CommerceTypes.Category, Omit<SerializableCategoryBoxProps,
+export interface CategoryBoxProps extends Omit<SerializableCategoryBoxProps,
   'imageStyle' |
   'style' |
   'titleStyle'> {

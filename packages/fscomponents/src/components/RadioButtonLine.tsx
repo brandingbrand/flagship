@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { palette } from '../styles/variables';
 
-interface SerializableRadioButtonLineProps {
+export interface SerializableRadioButtonLineProps {
   text: string;
   active?: boolean;
   activeOpacity?: number;
@@ -21,7 +21,7 @@ interface SerializableRadioButtonLineProps {
   styleTextActive?: TextStyle;
 }
 
-interface RadioButtonLineProps extends Omit<
+export interface RadioButtonLineProps extends Omit<
   SerializableRadioButtonLineProps,
   'styleContainer' | 'styleText' | 'styleTextActive'
 > {
