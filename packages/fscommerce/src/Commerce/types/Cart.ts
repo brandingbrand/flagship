@@ -142,6 +142,11 @@ export interface CartItem extends BaseProduct {
    * An array of promotions which apply to the cart item.
    */
   promotions?: CartPromo[];
+
+  /**
+   * The id of the shipment of which this item will be shipped in.
+   */
+  shipmentId?: string;
 }
 
 export interface CartPromo {
