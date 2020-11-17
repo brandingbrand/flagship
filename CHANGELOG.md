@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Use div for web multicarousel ([903f6c2](https://github.com/brandingbrand/flagship/commit/903f6c257be8a40578402e97d54386b81d8e4cc6))
+* **fsweb:** Actually remove svgs ([1da221f](https://github.com/brandingbrand/flagship/commit/1da221f81735c634cc1afb11b4a6d650f098c1fd))
+* **fsweb:** Remove svgs module ([c23171f](https://github.com/brandingbrand/flagship/commit/c23171fdb4dc00a11c09b37235187d59280a7ff3))
+
+
+### Features
+
+* **fsengagement:** add ghost content loading component ([3fac131](https://github.com/brandingbrand/flagship/commit/3fac131a646abbe456049a38488ad29defd24a32))
+
+
+
+
+
 # [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
 
 
