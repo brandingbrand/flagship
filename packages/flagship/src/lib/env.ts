@@ -88,7 +88,7 @@ function overwriteEnv(configuration: any): any {
  * @param {object} projectPackageJson The project package.json object
  * @returns {object} The project environment configuration.
  */
-export function configuration(env: string, projectPackageJson: NPMPackageConfig): any {
+export function configuration(env: string, projectPackageJson: NPMPackageConfig): object {
   let projectEnv;
 
   try {
