@@ -14205,10 +14205,10 @@ react-native-cookies@^3.3.0:
   dependencies:
     invariant "^2.1.0"
 
-react-native-device-info@^5.0.0:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.4.1.tgz#507d2cd4be98813fc0421a35731b471b86ca194d"
-  integrity sha512-eb1fadKkaCy0C6p2gozGQ6vHO+rhQBh1FTN+l7pE23McfI7EKtp6Wy7OCexHvmEe6xsxoHK93cMiCsZuyaTnMA==
+react-native-device-info@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-7.1.0.tgz#82610d190bf94ae5ee7ed28f693b230aba276b05"
+  integrity sha512-H0fQ9fi6DNq85SUmJK8Opo8twHKXKp86FI4jL1Abg2tH6CjVbQ871QibD12ZMjKLMy4kKHL7BRxNEPUcI79JNg==
 
 react-native-fcm@^16.0.0:
   version "16.2.4"
