@@ -14,7 +14,6 @@
     "@brandingbrand/fsengage": "^10.4.0",
     "@brandingbrand/fsfoundation": "^10.4.0",
     "@brandingbrand/fsnetwork": "^10.4.0",
-    "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.9.1",
     "react": "^16.13.1",

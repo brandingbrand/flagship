@@ -1,5 +1,5 @@
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 import { Address } from './Address';
-import { CurrencyValue } from '../CommerceTypes';
 import { CustomerAccount } from './CustomerAccount';
 import { Payment } from './Payment';
 import { ProductItem } from './ProductItem';

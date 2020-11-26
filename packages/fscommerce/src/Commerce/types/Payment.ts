@@ -1,4 +1,4 @@
-import { CurrencyValue } from '../CommerceTypes';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 import { BasePaymentMethod } from './PaymentMethod';
 
 /**

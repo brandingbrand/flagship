@@ -1,4 +1,5 @@
 import { CommerceTypes } from '@brandingbrand/fscommerce';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 import { DefaultCurrencyCode } from './Misc';
 import { Products } from './Products';
 import Decimal from 'decimal.js';
@@ -105,7 +106,7 @@ export class Cart {
       .filter((item): item is CommerceTypes.CartItem => item !== undefined);
   }
 
-  public getSubtotal() : CommerceTypes.CurrencyValue | undefined {
+  public getSubtotal() : CurrencyValue | undefined {
     const items = this.getItems();
     if (!Array.isArray(items) || items.length === 0) {
       return;
@@ -114,7 +115,7 @@ export class Cart {
     return this.calculateSubtotal(items);
   }
 
-  public getShipping(): CommerceTypes.CurrencyValue | undefined {
+  public getShipping(): CurrencyValue | undefined {
     if (!this.shipment) {
       return;
     }
@@ -123,7 +124,7 @@ export class Cart {
     return this.calculateShipping(shippingMethod);
   }
 
-  public getTax(): CommerceTypes.CurrencyValue | undefined {
+  public getTax(): CurrencyValue | undefined {
     const subtotal = this.getSubtotal();
     const promos = this.getPromoTotal();
 
@@ -134,7 +135,7 @@ export class Cart {
     return this.calculateTax(subtotal, promos);
   }
 
-  public getPromoTotal(): CommerceTypes.CurrencyValue | undefined {
+  public getPromoTotal(): CurrencyValue | undefined {
     const promos = (this.promos || []).filter(promo => promo.value);
     if (promos.length === 0) {
       return;
@@ -143,7 +144,7 @@ export class Cart {
     return this.calculatePromos(promos);
   }
 
-  public getTotal(): CommerceTypes.CurrencyValue | undefined {
+  public getTotal(): CurrencyValue | undefined {
     const subtotal = this.getSubtotal();
     const shipping = this.getShipping();
     const tax = this.getTax();
@@ -156,7 +157,7 @@ export class Cart {
     return this.calculateTotal(subtotal, tax, shipping, promos);
   }
 
-  protected calculateSubtotal(items: CommerceTypes.CartItem[]): CommerceTypes.CurrencyValue {
+  protected calculateSubtotal(items: CommerceTypes.CartItem[]): CurrencyValue {
     const subtotal = {
       currencyCode: DefaultCurrencyCode,
       value: new Decimal(0)
@@ -172,7 +173,7 @@ export class Cart {
     }, subtotal);
   }
 
-  protected calculateShipping(method: CommerceTypes.ShippingMethod): CommerceTypes.CurrencyValue {
+  protected calculateShipping(method: CommerceTypes.ShippingMethod): CurrencyValue {
     if (!method || !method.price) {
       return {
         currencyCode: DefaultCurrencyCode,
@@ -184,9 +185,9 @@ export class Cart {
   }
 
   protected calculateTax(
-    subtotal: CommerceTypes.CurrencyValue,
-    promosTotal?: CommerceTypes.CurrencyValue
-  ): CommerceTypes.CurrencyValue {
+    subtotal: CurrencyValue,
+    promosTotal?: CurrencyValue
+  ): CurrencyValue {
     const discounts = promosTotal ? promosTotal.value : new Decimal(0);
 
     return {
@@ -195,7 +196,7 @@ export class Cart {
     };
   }
 
-  protected calculatePromos(promos: CommerceTypes.Promo[]): CommerceTypes.CurrencyValue {
+  protected calculatePromos(promos: CommerceTypes.Promo[]): CurrencyValue {
     const promoTotal = promos.reduce(
       (total, promo) => promo.value ? total.add(promo.value.value) : total,
       new Decimal(0)
@@ -208,11 +209,11 @@ export class Cart {
   }
 
   protected calculateTotal(
-    subtotal: CommerceTypes.CurrencyValue,
-    tax: CommerceTypes.CurrencyValue,
-    shipping: CommerceTypes.CurrencyValue,
-    promos?: CommerceTypes.CurrencyValue
-  ): CommerceTypes.CurrencyValue {
+    subtotal: CurrencyValue,
+    tax: CurrencyValue,
+    shipping: CurrencyValue,
+    promos?: CurrencyValue
+  ): CurrencyValue {
     const discounts = promos ? promos.value : new Decimal(0);
 
     const totalValue = subtotal.value

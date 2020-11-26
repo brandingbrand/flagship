@@ -11,6 +11,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
+    "decimal.js": "^10.0.1",
     "redux": "^4.0.0"
   },
   "publishConfig": {

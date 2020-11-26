@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
-// tslint:disable-next-line:no-submodule-imports
-import { CurrencyValue } from '@brandingbrand/fscommerce/dist/Commerce/CommerceTypes';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 import FSI18n from '@brandingbrand/fsi18n';
 
 const styles = StyleSheet.create({

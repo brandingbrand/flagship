@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from 'react-native';
 import FSI18n from '@brandingbrand/fsi18n';
-type CurrencyValue = import ('@brandingbrand/fscommerce').CommerceTypes.CurrencyValue;
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 
 const styles = StyleSheet.create({
   row: {

@@ -1,4 +1,4 @@
-import { CurrencyValue } from '../CommerceTypes';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 import { Image } from './Image';
 import { Option, OptionValue } from './Option';
 import { ReviewDetails } from '../../Review/ReviewTypes';

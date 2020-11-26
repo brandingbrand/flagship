@@ -7,8 +7,7 @@ import {
 } from '@storybook/addon-knobs';
 import { Price } from '../Price';
 import Decimal from 'decimal.js';
-// tslint:disable-next-line:no-submodule-imports
-import { CurrencyValue } from '@brandingbrand/fscommerce/dist/Commerce/CommerceTypes';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 
 type SerializedPrice = Omit<CurrencyValue, 'value'> & { value: string };
 

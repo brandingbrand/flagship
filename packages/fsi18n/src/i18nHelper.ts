@@ -8,6 +8,7 @@ import {
   TranslationKeys,
   Translations
 } from './types';
+import { CurrencyValue } from '@brandingbrand/fsfoundation';
 
 const MISSING_TRANSLATIONS_ERROR = new Error('You must provide translations before translating.');
 const MISSING_CURRENCY_ERROR = new Error('You must provide a currency');
@@ -122,7 +123,7 @@ export default class I18nHelper {
    * @returns {string} - Formatted number
    */
   public currency(
-    num: NumberLike | import ('@brandingbrand/fscommerce').CommerceTypes.CurrencyValue,
+    num: NumberLike | CurrencyValue,
     currency?: string,
     options?: Intl.NumberFormatOptions
   ): string {
