@@ -53,9 +53,9 @@ const hours = [
 ];
 
 describe('formatHours', () => {
-  const currentDate = new Date('Tue Jul 25 2017 11:46:32 GMT-0400 (EDT)');
-  const beforeOpenDate = new Date('Tue Jul 25 2017 1:46:32 GMT-0400 (EDT)');
-  const afterCloesdDate = new Date('Tue Jul 25 2017 22:46:32 GMT-0400 (EDT)');
+  const currentDate = new Date('Tue Jul 25 2017 11:46:32');
+  const beforeOpenDate = new Date('Tue Jul 25 2017 1:46:32');
+  const afterClosedDate = new Date('Tue Jul 25 2017 22:46:32');
 
   test('default format', () => {
     expect(formatHours(hours, currentDate)).toBe('Open 6:30 AM to 9 PM');
@@ -76,13 +76,13 @@ describe('formatHours', () => {
   });
 
   test('format 3 after closed', () => {
-    expect(formatHours(hours, afterCloesdDate, '3')).toBe(
+    expect(formatHours(hours, afterClosedDate, '3')).toBe(
       'Closed | Closes 9 PM'
     );
   });
 
   test('hour not exist for the day', () => {
-    const housWithoutTues = hours.slice(2);
-    expect(formatHours(housWithoutTues, currentDate, '3')).toBe('');
+    const hoursWithoutTues = hours.slice(2);
+    expect(formatHours(hoursWithoutTues, currentDate, '3')).toBe('');
   });
 });

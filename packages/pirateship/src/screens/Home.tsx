@@ -51,6 +51,7 @@ export class Home extends Component<HomeProps> {
         hideGlobalBanner={true}
       >
         <EngagementComp
+          componentId={this.props.navigator.componentId}
           navigator={this.props.navigator}
           refreshControl={this.refreshInbox}
           isLoading={this.props.isLoading}

@@ -28,12 +28,12 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   dynamicTitleStates?: string[];
   selectedTitleState?: number;
   accessibilityLabel?: string;
-  style?: StyleProp<ViewStyle>;
   onPress: () => void;
   onLongPress?: () => void;
-  titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
   icon?: ImageSourcePropType;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
 
@@ -52,6 +52,13 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
 
   // expand horizontally
   full?: boolean;
+}
+
+export interface SerializableButtonProps extends Omit<ButtonProps, 'onPress' | 'onLongPress'> {
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  iconStyle?: ImageStyle;
+  viewStyle?: ViewStyle;
 }
 
 export interface ButtonState {

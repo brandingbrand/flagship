@@ -12,9 +12,10 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import PSGlobalBanner, { PSGlobalBannerSlotItem } from './PSGlobalBanner';
+import PSGlobalBanner from './PSGlobalBanner';
 import Header from './Header';
 import { palette } from '../styles/variables';
+import { CMSBannerSlot } from '../lib/cms';
 
 const keyboardAvoidingDefaults: KeyboardAvoidingViewProps = {
   behavior: Platform.OS === 'ios' ? 'padding' : undefined,
@@ -34,7 +35,7 @@ export interface PSScreenWrapperProps {
   style?: StyleProp<ViewStyle>;
 
   hideGlobalBanner?: boolean;
-  overrideGlobalBanner?: PSGlobalBannerSlotItem;
+  overrideGlobalBanner?: CMSBannerSlot;
 
   navigator: Navigator;
 

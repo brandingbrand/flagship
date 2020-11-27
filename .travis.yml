@@ -1,110 +1,96 @@
-language: node_js
-node_js: '10'
-sudo: false
 cache: yarn
 stages:
-- test
-- deploy
+  - name: test
+    if: type = pull_request AND tag IS blank
+  - name: deploy
+    if: branch = master AND head_branch IS blank
 install:
-- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-- export PATH=$HOME/.yarn/bin:$PATH
-- yarn global add lerna
-- yarn --silent --non-interactive --ignore-scripts
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  - nvm install 12
+  - npm install -g yarn
+  - yarn install
+  - yarn global add lerna
+  - yarn --silent --non-interactive --ignore-scripts
 jobs:
   include:
-  - script: commitlint-travis || travis_terminate 1
-  - before_install:
-    - node --version
-    - yarn --version
-    before_script: ./node_modules/.bin/greenkeeper-lockfile-update
-    script: yarn prepare || travis_terminate 1
-    after_script: ./node_modules/.bin/greenkeeper-lockfile-upload
-  - script:
-    - yarn prepare:fscodestyle
-    - yarn lint || travis_terminate 1
-  - script: yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
-  - script:
-    - yarn prepare
-    - yarn build:storybook || travis_terminate 1
-  - language: generic
+  - stage: test
+    language: node_js
+    node_js: '12'
+    script:
+      - yarn prepare || travis_terminate 1
+      - yarn prepare:fscodestyle || travis_terminate 1
+      - yarn lint || travis_terminate 1
+      - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
+      - yarn build:storybook || travis_terminate 1
+      - commitlint-travis
+  - stage: test
+    language: generic
     sudo: true
     dist: trusty
     os: linux
-    if: type = pull_request
     # android emulator setup based on https://github.com/brianegan/flutter_architecture_samples
     # from comment in https://github.com/googlemaps/android-maps-utils/issues/371#issuecomment-498921876
     before_install:
-    - nvm install 10
-    - ANDROID_SDK_TOOLS=4333796 # android-28
-    - ANDROID_PLATFORM_SDK=28
-    - ANDROID_BUILD_TOOLS=28.0.3
-    - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
-    # Install the Android SDK Dependency.
-    - export ANDROID_HOME=/opt/android-sdk-linux
-    - cd /opt
-    - wget -q https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_SDK_TOOLS.zip -O android-sdk-tools.zip
-    - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-    - rm android-sdk-tools.zip
-    - cd -
-    - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-    # Silence warning.
-    - mkdir -p ~/.android
-    - touch ~/.android/repositories.cfg
-    # Accept licenses before installing components, no need to echo y for each component
-    - yes | sdkmanager --licenses
-    # Platform and build tools (including flutter requirements)
-    - sdkmanager "emulator" "tools" "platform-tools" "platforms;android-${ANDROID_PLATFORM_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
-    - sdkmanager --list | head -15
+      - ANDROID_SDK_TOOLS=4333796 # android-28
+      - ANDROID_PLATFORM_SDK=28
+      - ANDROID_BUILD_TOOLS=28.0.3
+      - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
+      # Install the Android SDK Dependency.
+      - export ANDROID_HOME=/opt/android-sdk-linux
+      - cd /opt
+      - wget -q https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_SDK_TOOLS.zip -O android-sdk-tools.zip
+      - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+      - rm android-sdk-tools.zip
+      - cd -
+      - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+      # Silence warning.
+      - mkdir -p ~/.android
+      - touch ~/.android/repositories.cfg
+      # Accept licenses before installing components, no need to echo y for each component
+      - yes | sdkmanager --licenses
+      # Platform and build tools (including flutter requirements)
+      - sdkmanager "emulator" "tools" "platform-tools" "platforms;android-${ANDROID_PLATFORM_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
+      - sdkmanager --list | head -15
 
-    # Download a pinned version of the emulator since upgrades can cause issues
-    - ${ANDROID_HOME}/emulator/emulator -version
-    - emulator_version=5264690 #29.0.9.0 (build_id 5537588) ==> 28.0.23.0 (build_id 5264690)
-    - curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-linux-$emulator_version.zip"
-    - rm -rf "${ANDROID_HOME}/emulator"
-    - unzip -q emulator.zip -d "${ANDROID_HOME}"
-    - rm -f emulator.zip
-    - ${ANDROID_HOME}/emulator/emulator -version
+      # Download a pinned version of the emulator since upgrades can cause issues
+      - ${ANDROID_HOME}/emulator/emulator -version
+      - emulator_version=5264690 #29.0.9.0 (build_id 5537588) ==> 28.0.23.0 (build_id 5264690)
+      - curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-linux-$emulator_version.zip"
+      - rm -rf "${ANDROID_HOME}/emulator"
+      - unzip -q emulator.zip -d "${ANDROID_HOME}"
+      - rm -f emulator.zip
+      - ${ANDROID_HOME}/emulator/emulator -version
 
-    # install older platform and build tools (for emulator)
-    - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
-    # Create and start emulator.
-    - EMULATOR_API_LEVEL=22
-    - ANDROID_ABI="default;armeabi-v7a"
-    - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
-    - sdkmanager --list | head -15
-    - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
-    - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
-    - ./scripts/android-wait-for-emulator.sh
+      # install older platform and build tools (for emulator)
+      - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
+      # Create and start emulator.
+      - EMULATOR_API_LEVEL=22
+      - ANDROID_ABI="default;armeabi-v7a"
+      - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
+      - sdkmanager --list | head -15
+      - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
+      - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+      - ./scripts/android-wait-for-emulator.sh
     script:
-    - yarn prepare
-    - yarn ship:init
-    # ship:android-jetify-reverse android X patch, RN <0.60
-    # use android X patch `ship:android-jetify` instead in RN >=0.60
-    - yarn ship:android-jetify-reverse || travis_terminate 1
-    - yarn ship:compile-android || travis_terminate 1
-  - language: objective-c
-    if: type = pull_request
+      - yarn prepare
+      - yarn ship:init
+      - yarn ship:compile-android
+  - stage: test
+    language: objective-c
     os: osx
-    osx_image: xcode11.3
-    before_install:
-    - nvm install 10
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - node --version
-    - yarn --version
+    osx_image: xcode12
     script:
     - yarn prepare
     - pod repo update
     - yarn ship:init
-    - yarn ship:compile-ios || travis_terminate 1
+    - yarn ship:compile-ios
   - stage: deploy
-    if: branch = master AND head_branch IS blank
     git:
       depth: false
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
     script:
-    - yarn prepare
-    - yarn docs
+      - yarn prepare
+      - yarn docs
     deploy:
       provider: pages
       skip-cleanup: true
