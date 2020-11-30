@@ -63,10 +63,17 @@ export class FSApp extends FSAppBase {
     }
 
     if (this.appConfig.notFoundRedirect) {
-      enhancedScreens.unshift({
-        key: '*',
-        Screen: screenWrapper(NotFound(this.appConfig.notFoundRedirect), this.appConfig, this.api)
-      });
+      if (typeof this.appConfig.notFoundRedirect === 'function') {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(this.appConfig.notFoundRedirect, this.appConfig, this.api)
+        });
+      } else {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(NotFound(this.appConfig.notFoundRedirect), this.appConfig, this.api)
+        });
+      }
     }
 
     enhancedScreens.forEach(({ key, Screen }) => {
