@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@adobe/react-native-acpanalytics@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@adobe/react-native-acpanalytics/-/react-native-acpanalytics-1.2.6.tgz#eba51bfb2435826a0bdf43f6bdc6c1c56abf439c"
+  integrity sha512-O3QKdJjlNy465ShL25SPW5RiHmj1rQ08q8gCr6gUNpRpw91qhUcmEPE7dGusc85jFXe0Sj1vMno8HDJP/T0aog==
+
+"@adobe/react-native-acpcore@^1.2.5":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@adobe/react-native-acpcore/-/react-native-acpcore-1.4.0.tgz#bdae162f5c25f1009e3dd2ea7004759a1b56476d"
+  integrity sha512-6+8XjdyGgW0eIUdau9hS7y7WoxWlFl5rV4GXH3IOxSvS18v16mYZGedRWRP68AhgiKtGTb0hKMxA92hm0YHicg==
+
 "@babel/code-frame@7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
