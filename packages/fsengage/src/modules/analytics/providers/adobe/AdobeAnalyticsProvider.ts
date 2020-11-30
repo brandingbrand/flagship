@@ -1,6 +1,12 @@
 import AnalyticsProvider, * as Events from '../AnalyticsProvider';
 import Decimal from 'decimal.js';
-import { ACPCore, ACPIdentity, ACPLifecycle, ACPMobileLogLevel, ACPSignal } from '@adobe/react-native-acpcore';
+import {
+  ACPCore,
+  ACPIdentity,
+  ACPLifecycle,
+  ACPMobileLogLevel,
+  ACPSignal
+} from '@adobe/react-native-acpcore';
 import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
 
 type AnalyticsProviderConfiguration = import ('../types/AnalyticsProviderConfiguration').default;
@@ -66,13 +72,13 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     if (config.debug) {
       this.client.setLogLevel(ACPMobileLogLevel.DEBUG);
     }
-    this.client.configureWithAppId(config.appId)
+    this.client.configureWithAppId(config.appId);
     ACPLifecycle.registerExtension();
     ACPIdentity.registerExtension();
     ACPSignal.registerExtension();
     ACPAnalytics.registerExtension();
     this.client.lifecycleStart();
-    this.client.start();
+    this.client.start().catch(err => console.log('ACPCore start error: ', err));
     this.disabledEvents = config.disabledEvents || {};
     this.normalizers = config.eventNormalizers || {};
   }
