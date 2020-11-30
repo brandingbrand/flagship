@@ -87,7 +87,11 @@ function getGeneratedPathFromScreenProps(
   }
 }
 
-export function getPathFromScreenProps(screen: RoutableComponentClass, passProps: any): string {
+export function getPathFromScreenProps(
+  screenName: string,
+  screen: RoutableComponentClass,
+  passProps: any
+): string {
   const keys: Key[] = [];
 
   if (screen.path) {
@@ -99,7 +103,7 @@ export function getPathFromScreenProps(screen: RoutableComponentClass, passProps
     const toPath = pathToRegexp.compile(screen.path);
     const paramKeys = keys;
     return getGeneratedPathFromScreenProps(
-      screen.name,
+      screenName,
       screen,
       passProps,
       toPath,
@@ -107,7 +111,7 @@ export function getPathFromScreenProps(screen: RoutableComponentClass, passProps
     );
   } else {
     return getGeneratedPathFromScreenProps(
-      screen.name,
+      screenName,
       screen,
       passProps,
       undefined,

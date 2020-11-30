@@ -41,7 +41,7 @@ export const hrefToNav = (href: string, appConfig: AppConfigType): NavMatch | nu
           found = {
             layout: {
               component: {
-                name: screen.name,
+                name: key,
                 passProps: convertedProps
               }
             },

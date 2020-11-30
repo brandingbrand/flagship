@@ -183,7 +183,8 @@ export default function wrapScreen(
     }
 
     renderPage = () => {
-      const href = getPathFromScreenProps(PageComponent, this.props);
+      // Possible issue: PageComponent.name will not be correct if the source is mangled
+      const href = getPathFromScreenProps(PageComponent.name, PageComponent, this.props);
       return (
         <PageComponent
           {...this.props}
