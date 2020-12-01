@@ -148,15 +148,27 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     });
 
     if (appConfig.notFoundRedirect) {
-      screensRoutes.push((
-        <Route
-          key={'not-found'}
-          path={'*'}
-          render={this._renderDrawerWrapper(
-            screenWrapper(NotFound(appConfig.notFoundRedirect), appConfig, api, this.toggleDrawer)
-          )}
-        />
-      ));
+      if (typeof appConfig.notFoundRedirect === 'function') {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(appConfig.notFoundRedirect, appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      } else {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(NotFound(appConfig.notFoundRedirect), appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      }
     }
 
     return [rootComponent, ...screensRoutes];
