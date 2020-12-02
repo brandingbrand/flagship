@@ -187,6 +187,8 @@ export interface Config {
 
 export interface AndroidBuildConfig {
   additionalDependencies?: string[];
+  gifSupport?: boolean; // Defaults to true
+  webPSupport?: boolean; // Defaults to true
   versionName?: string | ((packageVersion: string) => string);
   versionShortCode?: string | ((packageVersion: string) => string);
   versionCode?: string | ((packageVersion: string) => string);
