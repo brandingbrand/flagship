@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { AppConfigType, NavLayout, RoutableComponentClass } from '../types';
-import pathToRegexp, { Key, PathFunction } from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp';
 
 export function overwrite(
   newProps: any,
@@ -60,74 +60,29 @@ export default function push(
   }
 }
 
-function getGeneratedPathFromScreenProps(
+function getPathWithPassProps(
   screenName: string,
-  screen: RoutableComponentClass,
-  passProps: any,
-  toPath?: PathFunction,
-  paramKeys?: Key[]
+  screen: any,
+  passProps: any
 ): string {
-  if (screen && screen.path && paramKeys && toPath) {
+  if (screen && screen.path) {
     if (screen.path.indexOf(':') > -1) {
       let convertProps = passProps;
       if (screen.urlConvert) {
         convertProps = screen.urlConvert(convertProps);
       }
-      const extraQS = getExtraQS(paramKeys, convertProps);
-      return toPath(convertProps, {
+      const extraQS = getExtraQS(screen.paramKeys, convertProps);
+      return screen.toPath(convertProps, {
         encode: (str: string): string => {
           return str;
         }
-      } as any) + extraQS;
+      }) + extraQS;
     } else {
       return screen.path + '?' + qs.stringify(passProps);
     }
   } else {
     return `/_s/${screenName}` + '?' + qs.stringify(passProps);
   }
-}
-
-export function getPathFromScreenProps(screen: RoutableComponentClass, passProps: any): string {
-  const keys: Key[] = [];
-
-  if (screen.path) {
-    pathToRegexp(screen.path, keys, {
-      encode: (str: string): string => {
-        return str;
-      }
-    } as any);
-    const toPath = pathToRegexp.compile(screen.path);
-    const paramKeys = keys;
-    return getGeneratedPathFromScreenProps(
-      screen.name,
-      screen,
-      passProps,
-      toPath,
-      paramKeys
-    );
-  } else {
-    return getGeneratedPathFromScreenProps(
-      screen.name,
-      screen,
-      passProps,
-      undefined,
-      undefined
-    );
-  }
-}
-
-export function getPathWithPassProps(
-  screenName: string,
-  screen: any,
-  passProps: any
-): string {
-  return getGeneratedPathFromScreenProps(
-    screenName,
-    screen,
-    passProps,
-    screen.toPath,
-    screen.paramKeys
-  );
 }
 
 function getExtraQS(paramKeys: any, passProps: any): string {
