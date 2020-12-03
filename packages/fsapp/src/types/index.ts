@@ -73,10 +73,6 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
   // Function to call to determine programmatically whether to call next
   // Includes data after running loadInitialState
   shouldNext?: (data: SSRData, req: Request) => Promise<boolean>;
-  matchConvert?: (data: any) => any;
-  urlConvert?: (data: any) => any;
-  defaultTab?: string;
-  defaultOpen?: 'push' | 'root';
 }
 
 export interface SSRData {
