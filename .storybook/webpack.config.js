@@ -25,7 +25,9 @@ module.exports = ({ config, env }) => {
     include: [
       path.resolve('node_modules/@brandingbrand/tcomb-form-native/'),
       path.resolve('node_modules/@react-native-community/picker'),
-      path.resolve('node_modules/react-native-picker-select')
+      path.resolve('node_modules/react-native-picker-select'),
+      path.resolve('node_modules/@adobe/react-native-acpcore'),
+      path.resolve('node_modules/@adobe/react-native-acpanalytics')
     ],
     loader: require.resolve('babel-loader'),
     options: {
