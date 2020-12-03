@@ -9,7 +9,6 @@ import {
   NavModal,
   NavOptions
 } from '../types';
-import { hrefToNav } from './helpers';
 
 export interface GenericNavProp {
   appConfig: AppConfigType;
@@ -107,25 +106,6 @@ export default class Navigator {
     // but is technically something TODO
     console.warn('binding to navigation events is not supported in web');
     return null;
-  }
-  async openUrl(href: string, alternateId?: string, openStyle?: 'push' | 'root'): Promise<boolean> {
-    const navMatch = hrefToNav(href, this.props.appConfig);
-    if (navMatch) {
-      const toOpen = openStyle || navMatch.screen.defaultOpen || 'push';
-      const tabToOpen = alternateId || navMatch.screen.defaultTab;
-      try {
-        if (toOpen === 'push') {
-          await this.push(navMatch.layout, tabToOpen);
-        } else {
-          await this.setStackRoot(navMatch.layout, tabToOpen);
-        }
-        return true;
-      } catch (e) {
-        console.error(e);
-        return false;
-      }
-    }
-    return false;
   }
   handleDeepLink(options: any): void {
     console.error('handleDeepLink is no longer part of react-native-navigation');
