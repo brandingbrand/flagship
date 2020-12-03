@@ -1,27 +1,17 @@
 import { EventSubscription, Navigation } from 'react-native-navigation';
-import { AppConfigType, NavLayout, NavModal, NavOptions, Tab } from '../types';
-import { hrefToNav } from './helpers';
+import { NavLayout, NavModal, NavOptions, Tab } from '../types';
 
 export interface GenericNavProp {
   componentId: string;
-  tabs?: Tab[];
-  appConfig?: AppConfigType;
+  tabs: Tab[];
 }
 
 export default class Navigator {
   componentId: string;
-  tabs?: Tab[];
-  appConfig?: AppConfigType;
+  tabs: Tab[];
   constructor(props: GenericNavProp, updateModals?: (modals: NavModal[]) => void) {
     this.componentId = props.componentId;
     this.tabs = props.tabs;
-    if (props.tabs) {
-      console.warn('Navigator.tabs is deprecated');
-    }
-    this.appConfig = props.appConfig;
-    if (!props.appConfig) {
-      console.warn('Navigator.appConfig will be required in a future version of Flagship');
-    }
   }
   async push(layout: NavLayout, alternateId?: string): Promise<any> {
     return Navigation.push(alternateId || this.componentId, layout);
@@ -55,50 +45,6 @@ export default class Navigator {
   }
   bindNavigation(bindee: React.Component, alternateId?: string): EventSubscription | null {
     return Navigation.events().bindComponent(bindee, alternateId || this.componentId);
-  }
-  // tslint:disable-next-line: cyclomatic-complexity
-  async openUrl(
-    href: string,
-    alternateId?: string,
-    openStyle?: 'push' | 'root',
-    stayOnTab?: boolean
-  ): Promise<boolean> {
-    if (this.appConfig) {
-      const navMatch = hrefToNav(href, this.appConfig);
-      if (navMatch) {
-        const toOpen = openStyle || navMatch.screen.defaultOpen || 'push';
-        const tabToOpen = alternateId || navMatch.screen.defaultTab;
-        try {
-          if (toOpen === 'push') {
-            await this.push(navMatch.layout, tabToOpen);
-          } else {
-            await this.setStackRoot(navMatch.layout, tabToOpen);
-          }
-          if (stayOnTab !== false && tabToOpen) {
-            let tabIndex = -1;
-            this.appConfig.tabs?.forEach((tab: Tab, index: number) => {
-              if (tab.id === tabToOpen) {
-                tabIndex = index;
-              }
-            });
-            if (tabIndex !== -1) {
-              this.mergeOptions({
-                bottomTabs: {
-                  currentTabIndex: tabIndex
-                }
-              });
-            }
-          }
-          return true;
-        } catch (e) {
-          console.error(e);
-          return false;
-        }
-      }
-    } else {
-      console.warn('openUrl will only work with a Navigator with appConfig configured');
-    }
-    return false;
   }
   handleDeepLink(options: any): void {
     console.error('handleDeepLink is no longer part of react-native-navigation');
@@ -152,19 +98,16 @@ export default class Navigator {
       'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +
       'badgeColor: \'rgb(255, 255, 255)\',\n    ' +
       'icon: iconImageSource\n  }\n}, componentIdOfTab) instead');
-    const tabs = this.appConfig?.tabs || this.tabs;
-    if (tabs) {
-      const icon = tabs[options.tabIndex].icon ||
-        tabs[options.tabIndex].options?.bottomTab?.icon;
-      if (icon) {
-        this.mergeOptions({
-          bottomTab: {
-            badge: options.badge !== null ? options.badge.toString() : undefined,
-            badgeColor: options.badgeColor,
-            icon
-          }
-        }, tabs[options.tabIndex].id);
-      }
+    const icon = this.tabs[options.tabIndex].icon ||
+    this.tabs[options.tabIndex].options?.bottomTab?.icon;
+    if (icon) {
+      this.mergeOptions({
+        bottomTab: {
+          badge: options.badge !== null ? options.badge.toString() : undefined,
+          badgeColor: options.badgeColor,
+          icon
+        }
+      }, this.tabs[options.tabIndex].id);
     }
   }
   setTitle(options: { title: string}): void {

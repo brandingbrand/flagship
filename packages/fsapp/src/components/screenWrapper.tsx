@@ -14,7 +14,6 @@ import { AppConfigType, DrawerConfig, NavButton } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
 import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
-import { getPathFromScreenProps } from '../lib/push-route';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -90,7 +89,7 @@ export default function wrapScreen(
         (appConfig.env && appConfig.env.isFLAGSHIP);
       this.navigator = new Navigator({
         componentId: props.componentId,
-        appConfig: props.appConfig || appConfig
+        tabs: (props.appConfig || appConfig).tabs || []
       });
     }
 
@@ -183,14 +182,12 @@ export default function wrapScreen(
     }
 
     renderPage = () => {
-      const href = getPathFromScreenProps(PageComponent, this.props);
       return (
         <PageComponent
           {...this.props}
           appConfig={appConfig}
           api={api}
           navigator={this.navigator}
-          href={href}
         />
       );
     }
