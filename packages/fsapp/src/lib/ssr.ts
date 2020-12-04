@@ -128,7 +128,7 @@ async function renderApp(
 
       const variables = JSON.stringify(updatedConfig.variables || {});
 
-      const document = baseHTML.replace(/(<head>)/, `$1
+      const document = baseHTML.replace(/<head>/, `<head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${helmet.link.toString()}
@@ -137,7 +137,7 @@ async function renderApp(
           var initialState = ${state};
           var variables = ${variables};
         </script>
-      `).replace(/(\<div id="root"\>)/, `$1
+      `).replace(/\<div id="root"\>/, `<div id="root">
         ${html}
       `);
 
