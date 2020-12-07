@@ -1,0 +1,32 @@
+.logo {
+  padding-right: 10px;
+  min-width: 25px;
+}
+
+.container-header {
+  display: flex;
+  align-items: center;
+}
+
+.packageName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.tsd-comment.tsd-typography h1 {
+  line-height: normal;
+}
+
+#storybook {
+  border-top: none;
+}
+
+#web-demo {
+  margin-bottom: 30px;
+}
+
+a.demo-link {
+  font-weight: bold;
+  color: #FF4D56;
+}
