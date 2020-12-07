@@ -25,7 +25,9 @@ module.exports = ({ config, env }) => {
     include: [
       path.resolve('node_modules/@brandingbrand/tcomb-form-native/'),
       path.resolve('node_modules/@react-native-community/picker'),
-      path.resolve('node_modules/react-native-picker-select')
+      path.resolve('node_modules/react-native-picker-select'),
+      path.resolve('node_modules/@adobe/react-native-acpcore'),
+      path.resolve('node_modules/@adobe/react-native-acpanalytics')
     ],
     loader: require.resolve('babel-loader'),
     options: {
@@ -48,7 +50,6 @@ module.exports = ({ config, env }) => {
   ];
 
   config.resolve.alias["react-native"] = "react-native-web";
-  config.resolve.alias["react-native-svg"] = "svg";
   config.resolve.alias['react-native-web/dist/exports/DatePickerIOS'] = '@react-native-community/datetimepicker';
   config.resolve.alias['react-native-web/dist/exports/PickerIOS'] = 'react-native-web/dist/exports/Picker';
   config.resolve.alias['react-native-web/dist/exports/ProgressBarAndroid'] = 'react-native-web/dist/exports/ProgressBar';

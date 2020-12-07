@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Use div for web multicarousel ([903f6c2](https://github.com/brandingbrand/flagship/commit/903f6c257be8a40578402e97d54386b81d8e4cc6))
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback fixes ([c8659d6](https://github.com/brandingbrand/flagship/commit/c8659d67af3215eb3a64a64ca97610dc070a73b0))
+* feedback fixes ([4acbc34](https://github.com/brandingbrand/flagship/commit/4acbc34d8a9376ad781a8248f17b5011f3beaca8))
+* **fscomponents:** Fixes for swatches ([1adc779](https://github.com/brandingbrand/flagship/commit/1adc7794fc73bb1e15b1d529b9ae8b517a52fda1))
+
+
+### Features
+
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) ([c0baee9](https://github.com/brandingbrand/flagship/commit/c0baee97237d48a2be34ea8eb707d7829c7f0628))
+* **fscomponents:** Updates to Swatches ([20ca7d7](https://github.com/brandingbrand/flagship/commit/20ca7d7b84af2e4abf79099a0ab2324586612e37))
+* CartItemGhost | Add to Flagship Repo ([e76be4b](https://github.com/brandingbrand/flagship/commit/e76be4be3d49f66e00d4a7b7e576dc57e730eb28))
+* CartItemGhost | Add to Flagship Repo - replaced to CartItem ([4a63a6d](https://github.com/brandingbrand/flagship/commit/4a63a6df8dc2aa768a2707a808d33be19566c222))
+* CategoryListGhost | Add to Flagship Repo ([07d123c](https://github.com/brandingbrand/flagship/commit/07d123c792dedc57f080b0d21d35d841d6d37b23))
+* CategoryListGhost | Add to Flagship Repo - fix adding itemContainerStyle ([dc12da2](https://github.com/brandingbrand/flagship/commit/dc12da2447be0b6d520fe36c1b57de72c2997cb5))
+* CategoryListGhost | Add to Flagship Repo - fix changed naming ([6fda510](https://github.com/brandingbrand/flagship/commit/6fda5100213afa09c65823b8bc01083db063a738))
+* CategoryListGhost | Add to Flagship Repo - fix SerializableProps ([3387293](https://github.com/brandingbrand/flagship/commit/33872930217f6a1130487f7e7e6dd11e1300adc4))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([f1a7143](https://github.com/brandingbrand/flagship/commit/f1a7143410637f719e1946d08b47244219975a30))
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
 # [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

@@ -3,6 +3,143 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+* add product index grid ghost component ([0c80ddb](https://github.com/brandingbrand/flagship/commit/0c80ddb7855e8eacb1b25a276a1820a8f95b9d98))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Use div for web multicarousel ([903f6c2](https://github.com/brandingbrand/flagship/commit/903f6c257be8a40578402e97d54386b81d8e4cc6))
+* **fsweb:** Actually remove svgs ([1da221f](https://github.com/brandingbrand/flagship/commit/1da221f81735c634cc1afb11b4a6d650f098c1fd))
+* **fsweb:** Remove svgs module ([c23171f](https://github.com/brandingbrand/flagship/commit/c23171fdb4dc00a11c09b37235187d59280a7ff3))
+
+
+### Features
+
+* **fsengagement:** add ghost content loading component ([3fac131](https://github.com/brandingbrand/flagship/commit/3fac131a646abbe456049a38488ad29defd24a32))
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback changes ([61459b8](https://github.com/brandingbrand/flagship/commit/61459b8e44ca192290ee005e6091c08404be3830))
+* feedback fixes ([c8659d6](https://github.com/brandingbrand/flagship/commit/c8659d67af3215eb3a64a64ca97610dc070a73b0))
+* feedback fixes ([4acbc34](https://github.com/brandingbrand/flagship/commit/4acbc34d8a9376ad781a8248f17b5011f3beaca8))
+* **fscomponents:** Fixes for swatches ([1adc779](https://github.com/brandingbrand/flagship/commit/1adc7794fc73bb1e15b1d529b9ae8b517a52fda1))
+
+
+### Features
+
+* **flagship:** remove flipper support ([4297f9c](https://github.com/brandingbrand/flagship/commit/4297f9c557ed8b4b2be3810aa67bf63a39a0efdf))
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) ([c0baee9](https://github.com/brandingbrand/flagship/commit/c0baee97237d48a2be34ea8eb707d7829c7f0628))
+* **fscomponents:** Updates to Swatches ([20ca7d7](https://github.com/brandingbrand/flagship/commit/20ca7d7b84af2e4abf79099a0ab2324586612e37))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([9c83ae7](https://github.com/brandingbrand/flagship/commit/9c83ae7be5fcd925480bfe3e2d0d320f01409bc6))
+* CartItemGhost | Add to Flagship Repo ([e76be4b](https://github.com/brandingbrand/flagship/commit/e76be4be3d49f66e00d4a7b7e576dc57e730eb28))
+* CartItemGhost | Add to Flagship Repo - replaced to CartItem ([4a63a6d](https://github.com/brandingbrand/flagship/commit/4a63a6df8dc2aa768a2707a808d33be19566c222))
+* CategoryListGhost | Add to Flagship Repo ([fbad160](https://github.com/brandingbrand/flagship/commit/fbad1609358f317a0781b2ad67c958f3af7f2433))
+* CategoryListGhost | Add to Flagship Repo ([07d123c](https://github.com/brandingbrand/flagship/commit/07d123c792dedc57f080b0d21d35d841d6d37b23))
+* CategoryListGhost | Add to Flagship Repo - fix adding itemContainerStyle ([dc12da2](https://github.com/brandingbrand/flagship/commit/dc12da2447be0b6d520fe36c1b57de72c2997cb5))
+* CategoryListGhost | Add to Flagship Repo - fix changed naming ([6fda510](https://github.com/brandingbrand/flagship/commit/6fda5100213afa09c65823b8bc01083db063a738))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([8746c5f](https://github.com/brandingbrand/flagship/commit/8746c5f9a43aa8434703d84814cba32c69685df6))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([f1a7143](https://github.com/brandingbrand/flagship/commit/f1a7143410637f719e1946d08b47244219975a30))
+* statically set key name for ga query params ([aac2aac](https://github.com/brandingbrand/flagship/commit/aac2aac286ebfc0dccc19e6aefbd8fe1c595269f))
+* **fsengage:** add support for directly setting google analytics params ([5b3d5b0](https://github.com/brandingbrand/flagship/commit/5b3d5b03a68ee355b8498216c78e72e8aee57d8b))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([324f93b](https://github.com/brandingbrand/flagship/commit/324f93be56972f6b4944be7b083a870f98754856))
+* **ghost-screen:** PDPGhost | Serialize Props ([f33a33c](https://github.com/brandingbrand/flagship/commit/f33a33c50b57e58fd3841d94f5a39dcb42b993c3))
+* CategoryListGhost | Add to Flagship Repo - fix SerializableProps ([3387293](https://github.com/brandingbrand/flagship/commit/33872930217f6a1130487f7e7e6dd11e1300adc4))
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **flagship:** made rn camera patch script work again ([#1770](https://github.com/brandingbrand/flagship/issues/1770)) ([774362b](https://github.com/brandingbrand/flagship/commit/774362b23d8cb7b56bcaf5a7eedb7fc941cd958d))
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
 # [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
 
 **Note:** Version bump only for package bb-flagship

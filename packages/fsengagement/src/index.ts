@@ -20,6 +20,7 @@ export {
   InjectedProps,
   JSON as EngagementJSON
 };
+export * from './EngagementCompGhost';
 
 export default function(params: EngagementSettings): EngagementUtilities {
   const api = new EngagementService(params);

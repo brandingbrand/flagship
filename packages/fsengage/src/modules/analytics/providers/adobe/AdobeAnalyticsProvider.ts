@@ -1,17 +1,25 @@
 import AnalyticsProvider, * as Events from '../AnalyticsProvider';
 import Decimal from 'decimal.js';
+import {
+  ACPCore,
+  ACPIdentity,
+  ACPLifecycle,
+  ACPMobileLogLevel,
+  ACPSignal
+} from '@adobe/react-native-acpcore';
+import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
+
 type AnalyticsProviderConfiguration = import ('../types/AnalyticsProviderConfiguration').default;
 type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
 type Arguments<F> = import ('@brandingbrand/fsfoundation').Arguments<F>;
 
 export interface AdobeAnalyticsClient {
-  init: (debug?: boolean) => void;
+  configureWithAppId: (appId?: string) => void;
+  lifecycleStart: (additionalContextData?: Dictionary) => void;
+  setLogLevel: (mode: string) => void;
+  start: () => Promise<boolean>;
   trackState: (state: string, contextData?: Dictionary) => void;
   trackAction: (action: string, contextData?: Dictionary) => void;
-  trackVideo: (action: string, settings?: Dictionary) => void;
-  trackTimedActionStart: (action: string, contextData?: Dictionary) => void;
-  trackTimedActionUpdate: (action: string, contextData?: Dictionary) => void;
-  trackTimedActionEnd: (action: string) => void;
 }
 
 type GenericProduct = Events.ImpressionProduct |
@@ -30,6 +38,7 @@ interface ContextData extends Dictionary<string> {
 }
 
 export interface AdobeAnalyticsConfig {
+  appId: string;
   debug?: boolean;
   eventNormalizers?: EventNormalizers;
   disabledEvents?: DisabledEvents;
@@ -56,12 +65,20 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
   protected client: AdobeAnalyticsClient;
   constructor(
     commonConfiguration: AnalyticsProviderConfiguration,
-    rnAdobeAnalytics: AdobeAnalyticsClient,
-    config: AdobeAnalyticsConfig = {}
+    config: AdobeAnalyticsConfig
   ) {
     super(commonConfiguration);
-    this.client = rnAdobeAnalytics;
-    this.client.init(config.debug);
+    this.client = ACPCore;
+    if (config.debug) {
+      this.client.setLogLevel(ACPMobileLogLevel.DEBUG);
+    }
+    this.client.configureWithAppId(config.appId);
+    ACPLifecycle.registerExtension();
+    ACPIdentity.registerExtension();
+    ACPSignal.registerExtension();
+    ACPAnalytics.registerExtension();
+    this.client.lifecycleStart();
+    this.client.start().catch(err => console.log('ACPCore start error: ', err));
     this.disabledEvents = config.disabledEvents || {};
     this.normalizers = config.eventNormalizers || {};
   }

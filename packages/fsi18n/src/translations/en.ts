@@ -43,6 +43,8 @@ export const keys: FSTranslationKeys = {
       isEmpty: 'Empty Cart',
       itemsInCart: 'Items In Your Cart',
       error: 'Quantity and VariantID must be defined to add to cart',
+      moveToWishlist: 'Move to Wishlist',
+      outOfStock: 'Out of Stock',
       actions: {
         add: {
           actionBtn: 'Add to Cart'
@@ -273,7 +275,8 @@ export const keys: FSTranslationKeys = {
       filterBy: 'Filter By',
       noResults: 'Sorry, no items matched your search.',
       resetFilters: 'RESET FILTER',
-      loadMore: 'Load More'
+      loadMore: 'Load More',
+      addToBag: 'Add To Bag'
     },
     checkout: {
       continue: 'Continue',
