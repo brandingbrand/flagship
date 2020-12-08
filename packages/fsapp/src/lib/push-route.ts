@@ -42,16 +42,21 @@ export function overwrite(
 export default function push(
   layout: NavLayout,
   history: any,
-  appConfig: AppConfigType
+  appConfig: AppConfigType,
+  href?: string
 ): any {
   if (layout.component) {
     if (appConfig.screens[layout.component.name]) {
-      const path = getPathWithPassProps(
-        String(layout.component.name),
-        appConfig.screens[layout.component.name],
-        layout.component.passProps
-      );
-      history.push(path);
+      if (href) {
+        history.push(href);
+      } else {
+        const path = getPathWithPassProps(
+          String(layout.component.name),
+          appConfig.screens[layout.component.name],
+          layout.component.passProps
+        );
+        history.push(path);
+      }
     } else {
       console.error('Unknown screen: ' + layout.component.name);
     }

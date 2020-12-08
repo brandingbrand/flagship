@@ -25,7 +25,7 @@ export default class Navigator {
   }
 
   async push(layout: NavLayout, alternateId?: string): Promise<any> {
-    pushRoute(layout, this.props.history, this.props.appConfig);
+    pushRoute(layout, this.props.history, this.props.appConfig, alternateId);
   }
   async pop(options?: NavOptions, alternateId?: string): Promise<any> {
     this.props.history.goBack();
