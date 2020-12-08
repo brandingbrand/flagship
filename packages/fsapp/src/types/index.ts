@@ -108,6 +108,7 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+  routerConfig?: any;
   notFoundRedirect?: RoutableComponentClass | NavLayout | true;
   uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
   cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
