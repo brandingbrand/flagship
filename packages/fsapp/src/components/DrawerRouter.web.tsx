@@ -95,16 +95,25 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   }
 
   generateRoutes = (appConfig: AppConfigType, api: FSNetwork) => {
-    const { screens, screen } = appConfig;
+    const { screens, screen, routerConfig } = appConfig;
+
+    const routes: any = {};
+    if (routerConfig) {
+      Object.keys(routerConfig).forEach(path => {
+        if (!routes[routerConfig[path].screen]) {
+          routes[routerConfig[path].screen] = path;
+        }
+      });
+    }
 
     // per-inject parsed path to screen object,
     // so it can be filled with passProps efficiently
     Object.keys(screens).forEach(key => {
-      const path = screens[key].path;
+      const path = screens[key].path || routes[key];
 
       if (path) {
         const keys: Key[] = [];
-
+        screens[key].path = path;
         pathToRegexp(path, keys);
         screens[key].toPath = pathToRegexp.compile(path);
         screens[key].paramKeys = keys;
