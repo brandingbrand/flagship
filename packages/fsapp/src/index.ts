@@ -9,5 +9,6 @@ const env = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
 export * from './lib/helpers';
 
 export { default as Navigator } from './lib/nav-wrapper';
+export { default as AppRouter } from './lib/app-router';
 
 export { env, FSApp, FSAppTypes };
