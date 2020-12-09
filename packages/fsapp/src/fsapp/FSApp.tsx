@@ -19,6 +19,7 @@ import { FSAppBase, WebApplication } from './FSAppBase';
 import DevMenu from '../components/DevMenu';
 import { Store } from 'redux';
 import { NotFound } from '../components/NotFound';
+import AppRouter from '../lib/app-router';
 
 const LAST_SCREEN_KEY = 'lastScreen';
 const DEV_KEEP_SCREEN = 'devKeepPage';
@@ -97,6 +98,9 @@ export class FSApp extends FSAppBase {
   async startApp(): Promise<void> {
     const { appType, defaultOptions, popToRootOnTabPressAndroid, tabs } = this.appConfig;
     await this.initApp();
+    if (this.appConfig.routerConfig) {
+      await this.initRouter();
+    }
 
     if (this.shouldShowDevMenu()) {
       Navigation.events().registerComponentDidAppearListener(this.screenChangeListener.bind(this));
@@ -128,6 +132,11 @@ export class FSApp extends FSAppBase {
         console.warn('FSApp setRoot error: ', e);
       }
     });
+  }
+
+  async initRouter(): Promise<void> {
+    const appRouter = new AppRouter(this.appConfig);
+    await appRouter.loadRoutes();
   }
 
   getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined {
