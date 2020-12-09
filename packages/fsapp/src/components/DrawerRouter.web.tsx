@@ -101,8 +101,9 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     if (routerConfig) {
       Object.keys(routerConfig).forEach(path => {
         if (!routes[routerConfig[path].screen]) {
-          routes[routerConfig[path].screen] = path;
+          routes[routerConfig[path].screen] = [];
         }
+        routes[routerConfig[path].screen].push(path);
       });
     }
 
@@ -110,12 +111,15 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     // so it can be filled with passProps efficiently
     Object.keys(screens).forEach(key => {
       const path = screens[key].path || routes[key];
-
+      // pathToRegexp is supposed to be able to take a string or array of string
+      // however it throws an error if its an array of ONE string (multiple works)
+      // - if there are multiple paths, leave as array, otherwise convert back to string
+      const newPath = Array.isArray(path) && path.length === 1 ? path[0] : path;
       if (path) {
         const keys: Key[] = [];
-        screens[key].path = path;
-        pathToRegexp(path, keys);
-        screens[key].toPath = pathToRegexp.compile(path);
+        screens[key].path = newPath;
+        pathToRegexp(newPath, keys);
+        screens[key].toPath = pathToRegexp.compile(newPath);
         screens[key].paramKeys = keys;
       }
     });
