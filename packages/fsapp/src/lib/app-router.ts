@@ -36,18 +36,42 @@ export default class AppRouter {
 
   async loadRoutes(): Promise<void> {
     this.pageRoutes = await this.fetchPageRoutes();
-    this.routerConfig = { ...this.pageRoutes, ...this.appRoutes };
+    this.routerConfig = { ...this.appRoutes, ...this.pageRoutes };
   }
 
-  getConfig(): void {
-    return this.routerConfig;
+  getConfig(): any {
+    const config = {
+      user: { ...this.pageRoutes },
+      app: { ...this.appRoutes }
+    };
+    return config;
   }
 
-  async url(navigator: Navigator, href: string, props?: any): Promise<any> {
+  getWebRouterConfig(): any {
+    const config: any = {};
+    for (const path in this.appRoutes) {
+      if (this.appRoutes.hasOwnProperty(path)) {
+        config[path] = { ...this.appRoutes[path] };
+      }
+    }
+    for (const path in this.pageRoutes) {
+      if (config.hasOwnProperty(path)) {
+        // already exists in app routes
+        if (path.indexOf(':') === -1) {
+          config[path] = { ...this.pageRoutes[path] };
+        }
+      } else {
+        config[path] = { ...this.pageRoutes[path] };
+      }
+    }
+    return config;
+  }
+
+  async url(navigator: Navigator, href: string, props?: any): Promise<void> {
     let found: any = {};
     if (!href) {
       console.warn('appRouter.url() must be called with an href');
-      return false;
+      return;
     }
     for (const path in this.pageRoutes) {
       if (this.pageRoutes.hasOwnProperty(path)) {
@@ -55,7 +79,7 @@ export default class AppRouter {
         const regexp = pathToRegexp(path, keys);
         const match = regexp.exec(href);
         if (match) {
-          if (!keys.length && this.pageRoutes[path]) {
+          if (!keys.length && this.pageRoutes.hasOwnProperty(path)) {
             found = {
               type: 'cms-page',
               title: this.pageRoutes[path].title || '',

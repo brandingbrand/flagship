@@ -4,7 +4,6 @@ import { FSAppBase, WebApplication } from './FSAppBase';
 import App from '../components/DrawerRouter.web';
 import DevMenu from '../components/DevMenu.web';
 import { Store } from 'redux';
-import AppRouter from '../lib/app-router';
 
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
@@ -34,9 +33,6 @@ export class FSApp extends FSAppBase {
 
   async startApp(): Promise<void> {
     await this.initApp();
-    if (this.appConfig.routerConfig) {
-      await this.initRouter();
-    }
 
     const startFn = requestAnimationFrame || ((cb: () => void) => cb());
     const startCallback = () => {
@@ -56,17 +52,13 @@ export class FSApp extends FSAppBase {
         initialProps: {
           appConfig: this.appConfig,
           api: this.api,
-          store: this.store
+          store: this.store,
+          appRouter: this.appRouter
         }
       });
     };
 
     startFn(startCallback);
-  }
-
-  async initRouter(): Promise<void> {
-    const appRouter = new AppRouter(this.appConfig);
-    await appRouter.loadRoutes();
   }
 
   getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined {

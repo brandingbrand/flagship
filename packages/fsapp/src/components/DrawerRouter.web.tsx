@@ -15,6 +15,7 @@ import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { pathForScreen } from '../lib/helpers';
 import { NotFound } from './NotFound';
+import AppRouter from '../lib/app-router';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
 const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
@@ -31,6 +32,7 @@ export interface PropType {
   appConfig: AppConfigType;
   api: FSNetwork;
   store: any;
+  appRouter: AppRouter;
 }
 
 export default class DrawerRouter extends Component<PropType, AppStateTypes> {
@@ -49,14 +51,14 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   constructor(props: PropType) {
     super(props);
 
-    const { appConfig, api } = this.props;
+    const { appConfig, api, appRouter } = this.props;
 
     this.drawerConfig = this.generateAppStyles(appConfig);
     const { leftDrawer, rightDrawer } = this.generateDrawers(appConfig, api);
     this.leftDrawerComponent = leftDrawer;
     this.rightDrawerComponent = rightDrawer;
 
-    this.screensRoutes = this.generateRoutes(appConfig, api);
+    this.screensRoutes = this.generateRoutes(appConfig, api, appRouter);
 
     this.state = {
       leftDrawerOpen: false,
@@ -94,16 +96,24 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     return { leftDrawer, rightDrawer };
   }
 
-  generateRoutes = (appConfig: AppConfigType, api: FSNetwork) => {
+  generateRoutes = (appConfig: AppConfigType, api: FSNetwork, appRouter: AppRouter) => {
     const { screens, screen, routerConfig } = appConfig;
 
     const routes: any = {};
     if (routerConfig) {
-      Object.keys(routerConfig).forEach(path => {
-        if (!routes[routerConfig[path].screen]) {
-          routes[routerConfig[path].screen] = [];
+      // getWebRouterConfig() is a method that returns the app routes plus the NA defined routes
+      // in a format/order that will correctly create the routing for web
+      // this means no duplicate paths and if the route has a handle (:productId) the app version
+      // takes precedence, if its a static route the NA defined route takes precedence
+      const config = appRouter && appRouter.getWebRouterConfig() || { ...routerConfig };
+
+      Object.keys(config).forEach(path => {
+        // NA defined routes go to the CMS screen
+        const s = config[path].screen || 'CMS';
+        if (!routes[s]) {
+          routes[s] = [];
         }
-        routes[routerConfig[path].screen].push(path);
+        routes[s].push(path);
       });
     }
 
@@ -119,7 +129,10 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         const keys: Key[] = [];
         screens[key].path = newPath;
         pathToRegexp(newPath, keys);
-        screens[key].toPath = pathToRegexp.compile(newPath);
+        // compile() cannot take an array, we don't need toPath for array values regardless
+        if (typeof newPath === 'string') {
+          screens[key].toPath = pathToRegexp.compile(newPath);
+        }
         screens[key].paramKeys = keys;
       }
     });
