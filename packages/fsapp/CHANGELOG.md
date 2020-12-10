@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
+
+
+### Features
+
+* add router (5e48817)
+* attach AppRouter to FSApp to set correct web router paths (8ce521d)
+
+
+
+
+
+# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
+
+
+### Features
+
+* add router (5e48817)
+* attach AppRouter to FSApp to set correct web router paths (8ce521d)
+
+
+
+
+
 # [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
 
 
