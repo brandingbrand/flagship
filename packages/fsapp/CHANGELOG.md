@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 # [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
