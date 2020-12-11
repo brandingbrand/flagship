@@ -14,6 +14,7 @@ import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { pathForScreen } from '../lib/helpers';
+import { NotFound } from './NotFound';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
 const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
@@ -145,6 +146,30 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         />
       );
     });
+
+    if (appConfig.notFoundRedirect) {
+      if (typeof appConfig.notFoundRedirect === 'function') {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(appConfig.notFoundRedirect, appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      } else {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(NotFound(appConfig.notFoundRedirect), appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      }
+    }
 
     return [rootComponent, ...screensRoutes];
   }

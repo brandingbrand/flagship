@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+* add product index grid ghost component ([0c80ddb](https://github.com/brandingbrand/flagship/commit/0c80ddb7855e8eacb1b25a276a1820a8f95b9d98))
+
+
+
+
+
 # [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
 
 
