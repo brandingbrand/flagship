@@ -1007,7 +1007,7 @@ export default class BBPlatformDataSource implements CommerceDataSource {
   }
 
   async fetchProductLists(
-    options: CommerceTypes.ProductListsOptions
+    options?: CommerceTypes.ProductListsOptions
   ): Promise<CommerceTypes.CustomerProductList[]> {
     throw new Error(kErrorMessageNotImplemented);
   }
