@@ -200,7 +200,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
     if (typeof window !== 'undefined' && window.location && window.location.reload) {
       setTimeout(() => {
         window.location.reload();
-      }, 0);
+      }, 500);
     }
   }
 
