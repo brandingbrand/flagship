@@ -8,6 +8,17 @@ import * as FlagshipTypes from '../types';
 const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
 const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
 
+const gifSupport = [
+  'implementation \'com.facebook.fresco:animated-base-support:1.3.0\'',
+  'implementation \'com.facebook.fresco:animated-gif:2.0.0\''
+];
+
+const webPSupport = [
+  'implementation \'com.facebook.fresco:animated-webp:2.1.0\'',
+  'implementation \'com.facebook.fresco:webpsupport:2.0.0\'',
+  'implementation \'com.facebook.fresco:webpsupport:2.0.0\''
+];
+
 const DEFAULT_ANDROID_CONFIG = {
   build: {
     versionName: (version: string) => version,
@@ -66,11 +77,17 @@ export function androidConfigWithDefault(
  * @param {FlagshipTypes.AndroidConfig} config - android config
  */
 export function additionalDependencies(config: FlagshipTypes.AndroidConfig): void {
-  if (!config.build || !config.build.additionalDependencies) {
+  let additionalDependencies: string[] = config.build?.additionalDependencies || [];
+  if (config.build?.gifSupport !== false) {
+    additionalDependencies = additionalDependencies.concat(gifSupport);
+  }
+  if (config.build?.webPSupport !== false) {
+    additionalDependencies = additionalDependencies.concat(webPSupport);
+  }
+  if (additionalDependencies.length === 0) {
     return;
   }
   helpers.logInfo('add additional android dependencies');
-  const additionalDependencies: string[] = config.build.additionalDependencies || [];
   fs.update(
     path.android.gradlePath(),
     '// __ADDITIONAL_DEPENDENCIES__',

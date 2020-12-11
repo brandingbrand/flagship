@@ -15,7 +15,7 @@ import { TouchableHighlightLink } from './TouchableHighlightLink';
 
 import { style as S } from '../styles/CategoryLine';
 
-export interface SerializableCategoryLineProps {
+export interface SerializableCategoryLineProps extends CommerceTypes.Category {
   accessoryStyle?: ImageStyle;
   href?: string;
   imageStyle?: ImageStyle;
@@ -24,24 +24,23 @@ export interface SerializableCategoryLineProps {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   underlayColor?: string;
+  accessorySrc?: ImageURISource;
   accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
 }
 
-export interface CategoryLineProps extends CommerceTypes.Category,
-  Omit<SerializableCategoryLineProps,
+export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
   'accessoryStyle' |
   'imageStyle' |
   'style' |
   'titleStyle'
   > {
-  accessorySrc?: ImageURISource;
   accessoryStyle?: StyleProp<ImageStyle>;
   imageStyle?: StyleProp<ImageStyle>;
   onPress?: (item: CommerceTypes.Category) => void;
   renderAccessory?: () => React.ReactNode;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
-  accessibilityRole?: AccessibilityRole;
 }
 
 // tslint:disable-next-line:cyclomatic-complexity
