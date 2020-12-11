@@ -12,6 +12,46 @@ import {
  */
 export default interface AccountDataSource {
   /**
+   * Retrieve information about the logged-in user's product lists. Requires a valid session token
+   * to exist in local storage.
+   *
+   * @param {ProductListsOptions} options - The options of the request
+   * @returns {Promise.<Array.<CustomerProductList>>} A Promise representing an array of product
+   * lists
+   */
+  fetchProductLists?: (
+    options?: ProductListsOptions
+  ) => Promise<CustomerProductList[]>;
+
+  /**
+   * Add item to the logged-in user's product list. Requires a valid session token
+   * to exist in local storage.
+   *
+   * @param {string} listId - The id of the list
+   * @param {ProductListAddItemOptions} options - The options of the request
+   * @returns {Promise.<Array.<CustomerProductList>>} A Promise representing an array of product
+   * lists
+   */
+  addItemToProductList?: (
+    listId: string,
+    options?: ProductListAddItemOptions
+  ) => Promise<CustomerProductListItem>;
+
+  /**
+   * Delete item from the logged-in user's product list. Requires a valid session token
+   * to exist in local storage.
+   *
+   * @param {string} listId - The id of the list
+   * @param {string} itemId - The id of the item
+   * @returns {Promise.<Array.<CustomerProductList>>} A Promise representing an array of product
+   * lists
+   */
+  deleteItemFromProductList?: (
+    listId: string,
+    itemId: string
+  ) => Promise<void>;
+
+  /**
    * Log a user in via their username and password.
    *
    * @param {string} username
