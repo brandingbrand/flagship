@@ -8,6 +8,8 @@ import { WithProductIndexProps } from './ProductIndexProvider';
 import ProductList from './ProductList';
 
 import {
+  FilterItem,
+  FilterItemValue,
   FilterList,
   FilterListDrilldown,
   Loading,
@@ -274,10 +276,12 @@ export default class ProductIndexGrid extends Component<
     }
   }
 
-  handleSortChange = (selectedItems: any) => (sortItem: CommerceTypes.SortingOption) => {
-    let refinementsQuery = {};
+  handleSortChange = (selectedItems?: Record<string, string[]>) => (
+    sortItem: CommerceTypes.SortingOption
+  ) => {
+    let refinementsQuery: CommerceTypes.ProductQuery = {};
 
-    if (Object.keys(selectedItems).length > 0) {
+    if (selectedItems && Object.keys(selectedItems).length > 0) {
       refinementsQuery = {refinements: selectedItems};
     }
 
@@ -485,7 +489,8 @@ export default class ProductIndexGrid extends Component<
     const selectedOption = commerceData?.selectedSortingOption ?
       commerceData?.selectedSortingOption : 'default';
 
-    const selectedItems = this.props.mergeSortToFilter && commerceData?.selectedSortingOption
+    const selectedItems: Record<string, string[]> | undefined = this.props.mergeSortToFilter &&
+      commerceData?.selectedSortingOption
       ? this.mergeSelectedRefinementsAndSort(
         commerceData.selectedRefinements,
         commerceData.selectedSortingOption
@@ -543,25 +548,28 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  mergeRefinementsAndSort = (refinementsData: any, sortingData: any) => {
-    const refinements = [...refinementsData];
+  mergeRefinementsAndSort = (
+    refinementsData?: CommerceTypes.Refinement[],
+    sortingData?: CommerceTypes.SortingOption[]
+  ) => {
+    const refinements = refinementsData ? [...refinementsData] : [];
     refinements.unshift({
       id: SORT_ITEM_KEY,
       title: 'Sort By',
-      values: sortingData.map((item: any) => ({
+      values: sortingData ? sortingData.map((item: CommerceTypes.SortingOption) => ({
         id: item.id,
         value: item.id,
         title: item.title
-      }))
+      })) : []
     });
 
     return refinements;
   }
 
   mergeSelectedRefinementsAndSort = (
-    selectedRefinements: any,
+    selectedRefinements: Record<string, string[]> | undefined,
     selectedSortId: string
-  ) => {
+  ): Record<string, string[]> => {
     return {
       ...selectedRefinements,
       [SORT_ITEM_KEY]: [selectedSortId]
@@ -648,11 +656,14 @@ export default class ProductIndexGrid extends Component<
   }
 
   renderItemForCombinedFilterAndSort = (
-    item: any,
-    index: any,
-    selectedValues: any,
-    handlePress: any,
-    renderFilterItem: any
+    item: FilterItem,
+    index: number,
+    selectedValues: string[],
+    handlePress: () => void,
+    renderFilterItem: (
+      info: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
+      skipCustomRender: boolean
+    ) => JSX.Element
   ) => {
     if (item.id === SORT_ITEM_KEY) {
       return (
@@ -671,12 +682,15 @@ export default class ProductIndexGrid extends Component<
   }
 
   renderItemValueForCombinedFilterAndSort = (
-    item: any,
-    index: any,
-    value: any,
-    handleSelect: any,
-    selected: any,
-    renderFilterItemValue: any
+    item: FilterItem,
+    index: number,
+    value: FilterItemValue,
+    handleSelect: () => void,
+    selected: boolean,
+    renderFilterItemValue: (
+      item: FilterItem,
+      skipCustomRender?: boolean
+    ) => (info: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>) => JSX.Element
   ) => {
     if (item.id === SORT_ITEM_KEY) {
       const selectableRowProps =
