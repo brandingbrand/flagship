@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsweb:** lock @types/cors (fae557f)
+
+
+
+
+
 # [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
 
 
