@@ -493,6 +493,10 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     return data;
   }
 
+  async fetchProducts(ids: string[]): Promise<Product[]> {
+    throw new Error(kErrorMessageNotImplemented);
+  }
+
   async setGiftWrapOnItem(
     itemId: string,
     enabled: boolean
@@ -1000,6 +1004,26 @@ export default class BBPlatformDataSource implements CommerceDataSource {
     await this.client.post('emailSignup', {
       email
     });
+  }
+
+  async fetchProductLists(
+    options?: CommerceTypes.ProductListsOptions
+  ): Promise<CommerceTypes.CustomerProductList[]> {
+    throw new Error(kErrorMessageNotImplemented);
+  }
+
+  async addItemToProductList(
+    listId: string,
+    options?: CommerceTypes.ProductListAddItemOptions
+  ): Promise<CommerceTypes.CustomerProductListItem> {
+    throw new Error(kErrorMessageNotImplemented);
+  }
+
+  async deleteItemFromProductList(
+    listId: string,
+    itemId: string
+  ): Promise<void> {
+    throw new Error(kErrorMessageNotImplemented);
   }
 
   /**
