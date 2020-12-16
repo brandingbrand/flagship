@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/create-fs-app",
   "sideEffects": false,
-  "version": "10.6.0",
+  "version": "10.6.1",
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch",
