@@ -3,7 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
 
@@ -11,31 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-**Note:** Version bump only for package @brandingbrand/pirateship
-
-
-
-
-
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-**Note:** Version bump only for package @brandingbrand/pirateship
-
-
-
-
-
-# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
-
-**Note:** Version bump only for package @brandingbrand/pirateship
-
-
-
-
-
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
 

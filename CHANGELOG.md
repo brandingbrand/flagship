@@ -3,58 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
 
 
 ### Bug Fixes
 
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
 * **fsweb:** lock @types/cors ([fae557f](https://github.com/brandingbrand/flagship/commit/fae557fe2249fdb6f7223d32a4cf82c3a30b470d))
 
 
-
-
-
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-
 ### Features
 
-* add router ([5e48817](https://github.com/brandingbrand/flagship/commit/5e48817a0de2b701c0a74af1f446693473dbd6a3))
-* attach AppRouter to FSApp to set correct web router paths ([8ce521d](https://github.com/brandingbrand/flagship/commit/8ce521d7cd9d4d4acabd05a8a2fed05f8f16dd1c))
-
-
-
-
-
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-
-### Features
-
-* add router ([5e48817](https://github.com/brandingbrand/flagship/commit/5e48817a0de2b701c0a74af1f446693473dbd6a3))
-* attach AppRouter to FSApp to set correct web router paths ([8ce521d](https://github.com/brandingbrand/flagship/commit/8ce521d7cd9d4d4acabd05a8a2fed05f8f16dd1c))
-
-
-
-
-
-# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
-
-
-### Features
-
-* allow screens to have multiple routes ([41778cc](https://github.com/brandingbrand/flagship/commit/41778cce5db79489afce3d8972a2ee2937ed5684))
-
-
-
-
-
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
-
-
-### Features
-
-* register custom routes when using routerConfig ([d43370a](https://github.com/brandingbrand/flagship/commit/d43370a6b7e231524b819e92a46ddd24ab1c122a))
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
 
 
 

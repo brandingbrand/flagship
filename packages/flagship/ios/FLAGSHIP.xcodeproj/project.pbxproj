@@ -375,7 +375,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = FLAGSHIP;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -409,7 +409,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = FLAGSHIP;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

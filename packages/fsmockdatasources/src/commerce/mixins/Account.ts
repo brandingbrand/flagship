@@ -81,5 +81,25 @@ export const AccountMixin = <T extends Constructor>(superclass: T) => {
     async fetchOrder(orderId: string): Promise<CommerceTypes.Order> {
       throw new Error('Not implemented yet');
     }
+
+    async fetchProductLists(
+      options?: CommerceTypes.ProductListsOptions
+    ): Promise<CommerceTypes.CustomerProductList[]> {
+      throw new Error('Not implemented yet');
+    }
+
+    async addItemToProductList(
+      listId: string,
+      options?: CommerceTypes.ProductListAddItemOptions
+    ): Promise<CommerceTypes.CustomerProductListItem> {
+      throw new Error('Not implemented yet');
+    }
+
+    async deleteItemFromProductList(
+      listId: string,
+      itemId: string
+    ): Promise<void> {
+      throw new Error('Not implemented yet');
+    }
   };
 };
