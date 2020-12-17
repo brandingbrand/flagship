@@ -53,7 +53,10 @@ export interface FilterListDrilldownProps {
     i: number,
     selectedValues: string[],
     handlePress: () => void,
-    renderFilterItem: (info: ListRenderItemInfo<FilterItem>) => JSX.Element
+    renderFilterItem: (
+      info: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
+      skipCustomRender: boolean
+    ) => JSX.Element
   ) => JSX.Element;
   renderFilterItemValue?: (
     item: FilterItem,
@@ -64,7 +67,7 @@ export interface FilterListDrilldownProps {
     renderFilterItemValue: (
       item: FilterItem,
       skipCustomRender?: boolean
-    ) => (info: ListRenderItemInfo<FilterItemValue>) => JSX.Element
+    ) => (info: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>) => JSX.Element
   ) => JSX.Element;
   renderSecondLevel?: (
     item: FilterItem,
@@ -285,7 +288,7 @@ export class FilterListDrilldown extends PureComponent<
   renderFilterItemValue = (filterItem: FilterItem, skipCustomRender?: boolean) => ({
     item,
     index
-  }: ListRenderItemInfo<FilterItemValue>): JSX.Element => {
+  }: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>): JSX.Element => {
     const selected =
       this.state.selectedItems[filterItem.id] &&
       this.state.selectedItems[filterItem.id].indexOf(item.value) > -1;
@@ -314,7 +317,7 @@ export class FilterListDrilldown extends PureComponent<
 
   // tslint:disable cyclomatic-complexity
   renderFilterItem = (
-    { item, index }: ListRenderItemInfo<FilterItem>,
+    { item, index }: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
     skipCustomRender: boolean = false
   ): JSX.Element => {
     const selectedValues = this.state.selectedItems[item.id] || [];
