@@ -44,7 +44,6 @@ export interface SerializableProductItemProps {
   variantTextStyle?: TextStyle;
   reviewStyle?: ViewStyle;
   reviewCountStyle?: TextStyle;
-  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   swatchItems?: SwatchItemType[];
   swatchStyle?: ViewStyle;
   swatchesProps?: SwatchesProps;
