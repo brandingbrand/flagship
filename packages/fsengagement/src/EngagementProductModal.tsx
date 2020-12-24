@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
+import { Navigator } from '@brandingbrand/fsapp';
 import {
   ScreenProps
 } from './types';
@@ -242,13 +243,18 @@ export interface EngagementProductModalState {
 
 export default class EngagementProductModal extends
   PureComponent<EngagementProductModalProps, EngagementProductModalState> {
+  navigator: Navigator;
+
   constructor(props: EngagementProductModalProps) {
     super(props);
     this.state = {
       scrollEnabled: true
     }
+    this.navigator = new Navigator({
+      componentId: props.componentId,
+      tabs: []
+    });
   }
-
 
   scrollPosition: number = 0;
   zoomedIn: boolean = false;
@@ -273,7 +279,7 @@ export default class EngagementProductModal extends
   handleAnimatedRef = (ref: any) => this.AnimatedModal = ref;
   handleAnimatedContentRef = (ref: any) => this.AnimatedContent = ref;
   onBackPress = (): void => {
-    this.props.navigator.pop();
+    this.navigator.pop();
   }
   onBuyPress = () => {
 
@@ -481,7 +487,7 @@ export default class EngagementProductModal extends
     }, 300)
 
     setTimeout(() => {
-      this.props.navigator.dismissModal({
+      this.navigator.dismissModal({
         animations: {
           dismissModal: {
             enabled: false
@@ -500,7 +506,7 @@ export default class EngagementProductModal extends
       <View style={styles.growStretch}>
         <Animatable.View
           ref={this.handleAnimatedRef}
-          useNativeDriver
+          useNativeDriver={false}
           style={styles.background}>
           <TouchableOpacity
             style={styles.modalBackground}
@@ -510,7 +516,7 @@ export default class EngagementProductModal extends
         </Animatable.View>
         <Animatable.View
           ref={this.handleAnimatedContentRef}
-          useNativeDriver
+          useNativeDriver={false}
           style={{
             marginTop: 50,
             transform: [

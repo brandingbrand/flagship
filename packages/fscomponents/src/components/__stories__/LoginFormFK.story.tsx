@@ -2,10 +2,15 @@ import React from 'react';
 import { FieldOption, FormValues, LoginFormFK } from '../LoginFormFK';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import {
+  object,
+  text
+  // tslint:disable-next-line:no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
 
 const onSubmit = (values: FormValues) => {
-  alert(`Values submitted: ${values.emailAddress} ${values.password}`);
+  alert(`${text('title', 'Values submitted:')} ${values.emailAddress} ${values.password}`);
 };
 
 const renderLoginForm = () => {
@@ -21,10 +26,10 @@ const renderLoginForm = () => {
 const renderCustomLoginForm = () => {
   const fieldOptions: FieldOption = {
     emailAddress: {
-      placeholder: 'Username'
+      placeholder: text('title', 'Username')
     },
     password: {
-      placeholder: 'Password'
+      placeholder: text('title', 'Password')
     }
   };
 
@@ -46,10 +51,10 @@ const renderCustomLoginForm = () => {
       <LoginFormFK
         onSubmit={onSubmit}
         fieldsOptions={fieldOptions}
-        fieldStyle={fieldStyle}
-        labelStyle={labelStyle}
-        submitButtonStyle={buttonStyle}
-        submitText={'Login'}
+        fieldStyle={object('style', fieldStyle)}
+        labelStyle={object('style', labelStyle)}
+        submitButtonStyle={object('style', buttonStyle)}
+        submitText={text('title', 'Login')}
       />
     )
   );

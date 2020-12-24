@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsengage",
   "sideEffects": false,
-  "version": "9.1.0",
+  "version": "10.7.0",
   "description": "Analytics, CMS, and Settings module for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,19 +11,24 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsfoundation": "^9.1.0",
-    "@brandingbrand/fsnetwork": "^9.1.0",
+    "@adobe/react-native-acpanalytics": "^1.2.6",
+    "@adobe/react-native-acpcore": "^1.2.5",
+    "@brandingbrand/fsfoundation": "^10.7.0",
+    "@brandingbrand/fsnetwork": "^10.7.0",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
     "@brandingbrand/react-native-google-analytics": "^2.1.0",
     "@brandingbrand/react-native-leanplum": "^5.0.0",
     "decimal.js": "^10.0.0",
-    "react": "^16.11.0",
-    "react-native": "^0.61.0",
-    "react-native-permissions": "~1.1.1",
+    "react": "^16.13.1",
+    "react-native": "^0.63.2",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
+    "react-native-permissions": "^2.2.0",
     "sinon": "^8.0.2"
+  },
+  "peerDependencies": {
+    "react-native-permissions": "^2.2.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -3,6 +3,279 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Features
+
+* Replace all occurrences of "any" in FSMockDataSources package ([3a0c881](https://github.com/brandingbrand/flagship/commit/3a0c881776f3283b64926b8689f034b0119cfd3f))
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsmockdatasources
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 **Note:** Version bump only for package @brandingbrand/fsmockdatasources

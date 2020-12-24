@@ -3,6 +3,284 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Features
+
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) ([c0baee9](https://github.com/brandingbrand/flagship/commit/c0baee97237d48a2be34ea8eb707d7829c7f0628))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([324f93b](https://github.com/brandingbrand/flagship/commit/324f93be56972f6b4944be7b083a870f98754856))
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* **fscomponents:** Update SelectableList ([c55b936](https://github.com/brandingbrand/flagship/commit/c55b93689414336202773c7488dd114d8dd44d8e))
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Features
+
+* **fsi18n:** Add functions to listen for locale updates ([8c780d4](https://github.com/brandingbrand/flagship/commit/8c780d49d8867a503d5defe3595ed8d05839d650))
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+
+### Bug Fixes
+
+* **fsi18n:** Add set locale to fscomponents ([224259d](https://github.com/brandingbrand/flagship/commit/224259d9a2419a51597ccdf5b2a1b86c7472ea91))
+* **fsi18n:** Add set locale to fscomponents ([99b3371](https://github.com/brandingbrand/flagship/commit/99b33711899306b67f930c136b1844117efb80e7))
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 

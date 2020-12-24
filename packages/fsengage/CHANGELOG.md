@@ -3,6 +3,299 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Update typing for pirateship lib ([6011628](https://github.com/brandingbrand/flagship/commit/60116280fbdb68faddcca78a477c969557cf51b7))
+
+
+
+
+
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Features
+
+* statically set key name for ga query params ([dcb60c8](https://github.com/brandingbrand/flagship/commit/dcb60c8f9bd05e41947a87696ad502ca6b10b059))
+* **fsengage:** add support for directly setting google analytics params ([9ef47fa](https://github.com/brandingbrand/flagship/commit/9ef47fa6e52f41ade50120b2a10b176546cca2d6))
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+
+### Features
+
+* make permissions a soft dependency in fsengage ([e805007](https://github.com/brandingbrand/flagship/commit/e805007d178986685706253cb6f9143d53e3e0e0))
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Features
+
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [9.6.0](https://github.com/brandingbrand/flagship/compare/v9.5.0...v9.6.0) (2020-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [9.5.0](https://github.com/brandingbrand/flagship/compare/v9.4.0...v9.5.0) (2020-06-04)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [9.4.0](https://github.com/brandingbrand/flagship/compare/v9.3.0...v9.4.0) (2020-06-02)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [9.3.0](https://github.com/brandingbrand/flagship/compare/v9.2.1...v9.3.0) (2020-05-14)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+## [9.2.1](https://github.com/brandingbrand/flagship/compare/v9.2.0...v9.2.1) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
+# [9.2.0](https://github.com/brandingbrand/flagship/compare/v9.1.0...v9.2.0) (2020-05-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengage
+
+
+
+
+
 # [9.1.0](https://github.com/brandingbrand/flagship/compare/v9.0.1...v9.1.0) (2020-04-15)
 
 **Note:** Version bump only for package @brandingbrand/fsengage

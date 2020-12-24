@@ -1,20 +1,34 @@
 import React, { FunctionComponent, memo } from 'react';
 import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
-import { Button, ButtonProps } from './Button';
+import { Button, ButtonProps, SerializableButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
 type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palette'>;
+type SerializableLimitedButtonProps = Omit<
+  SerializableButtonProps,
+  'color' | 'light' | 'link' | 'palette'
+>;
 export type ButtonShape = 'pill' | 'rect';
 export type ButtonTheme = 'gold' | 'blue' | 'silver' | 'black';
 
-export interface PayPalCheckoutButtonProps extends LimitedButtonProps {
+interface SharedInterface {
   shape: ButtonShape;
   theme: ButtonTheme;
   tagLine?: string;
+}
+
+export interface PayPalCheckoutButtonProps extends
+  SharedInterface, LimitedButtonProps {
   tagLineStyle?: StyleProp<TextStyle>;
 }
+
+export interface SerializablePayPalCheckoutButtonProps extends
+  SharedInterface, SerializableLimitedButtonProps {
+  tagLineStyle?: TextStyle;
+}
+
 type DefaultProps = Pick<PayPalCheckoutButtonProps, 'shape' | 'theme' | 'title' | 'tagLine'>;
 
 const blueLogo: ImageSourcePropType = require('../../assets/images/paypal-logo-blue.png');
@@ -54,6 +68,10 @@ const styles = StyleSheet.create({
   },
   tagLine: {
     textAlign: 'center'
+  },
+  icon: {
+    width: 99,
+    height: 24
   }
 });
 
@@ -103,10 +121,11 @@ memo((props): JSX.Element => {
   return (
     <View style={{ paddingVertical: 10 }}>
       <Button
+        {...buttonProps}
         title={titleVal}
         icon={selectedTheme.icon}
+        iconStyle={styles.icon}
         underlayColor={selectedTheme.bgActive}
-        {...buttonProps}
       />
       {!!tagLineVal && (
         <Text style={[styles.tagLine, tagLineStyle]}>

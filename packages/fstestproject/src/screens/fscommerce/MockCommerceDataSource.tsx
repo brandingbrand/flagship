@@ -12,7 +12,7 @@ const exampleCategoryId = 'electronics-digital-cameras';
 const exampleProductId1 = 'sony-alpha350-wlen';
 const exampleProductId2 = 'canon-powershot-g10';
 const exampleSearchTerm = 'Sony';
-const examplePipRefinement = { brand: 'Sony' };
+const examplePipRefinement = { brand: ['Sony'] };
 const validPromoCode = 'VALID';
 const invalidPromoCode = 'INVALID';
 
