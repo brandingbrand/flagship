@@ -12,10 +12,17 @@ import {
   ViewStyle
 } from 'react-native';
 
-export interface ActionBarProps {
-  style?: StyleProp<ViewStyle>;
+export interface SerializedActionBarProps {
   separatorWidth?: number;
+  style?: ViewStyle;
   children: ReactNode[];
+}
+
+export interface ActionBarProps extends Omit<
+  SerializedActionBarProps,
+  'style'
+  > {
+  style?: StyleProp<ViewStyle>;
 }
 
 const DEFAULT_SEPARATOR_WIDTH = 15;
