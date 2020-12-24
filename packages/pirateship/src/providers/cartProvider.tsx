@@ -1,3 +1,4 @@
+import React from 'react';
 import { dataSource } from '../lib/datasource';
 import {
   RESET_CART_UPDATING,
@@ -19,16 +20,17 @@ export interface CartStateProps {
 }
 
 export interface CartActionProps {
-  addToCart: (product: CommerceTypes.Product, quantity: number, variantId?: string) => Promise<any>;
+  addToCart: (product: CommerceTypes.Product, quantity: number, variantId?: string) =>
+    Promise<void | CommerceTypes.Cart>;
   updateItemQuantity: (item: CommerceTypes.CartItem, quantity: number) => void;
+  removeFromCart: (item: CommerceTypes.CartItem) => void;
 }
 
 export interface CartProps extends CartStateProps, CartActionProps {}
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(
-  state: CombinedStore,
-  ownProps: any
+  state: CombinedStore
 ): CartStateProps {
   return {
     cart: state.cart
@@ -36,7 +38,7 @@ function mapStateToProps(
 }
 
 // provide actions (that can change redux store) to wrapped component as props
-function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
+function mapDispatchToProps(dispatch: React.Dispatch<any>): CartActionProps {
   return {
     addToCart: async (product, quantity, variantId) => {
       dispatch({ type: SET_CART_UPDATING, verb: 'Updating' });
@@ -70,11 +72,22 @@ function mapDispatchToProps(dispatch: any, ownProps: any): CartActionProps {
           dispatch({ type: RESET_CART_UPDATING });
           console.warn(e);
         });
+    },
+    removeFromCart: async (item: any) => {
+      dispatch({ type: SET_CART_UPDATING, verb: 'Updating' });
+
+      dataSource.removeCartItem(item.productId)
+      .then(cartData => {
+        dispatch({ type: UPDATE_CART, cartData });
+      })
+      .catch(e => {
+        dispatch({ type: RESET_CART_UPDATING });
+        console.warn(e);
+      });
     }
   };
 }
 
-// TODO - fix typing
 export default function withCart(
   WrappedComponent: React.ComponentClass<any>
 ): any {

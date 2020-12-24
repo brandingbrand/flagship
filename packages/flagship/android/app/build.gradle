@@ -124,7 +124,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
         versionCode "${project.VERSION_CODE_SHORT}".toInteger()
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
     }
     signingConfigs {
         release {
@@ -193,9 +192,12 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     implementation project(':react-native-navigation')
-    implementation project(':react-native-restart')
 
     // JSC from node_modules
     if (useIntlJsc) {
@@ -203,6 +205,8 @@ dependencies {
     } else {
         implementation 'org.webkit:android-jsc:+'
     }
+
+    // __ADDITIONAL_DEPENDENCIES__
 }
 
 // Run this once to be able to run the application with BUCK

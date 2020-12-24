@@ -12,13 +12,22 @@ import {
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { style as S } from '../styles/CategoryBox';
 
-export interface CategoryBoxProps extends CommerceTypes.Category {
+export interface SerializableCategoryBoxProps extends CommerceTypes.Category {
+  imageStyle?: ImageStyle;
+  showImage?: boolean;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  underlayColor?: string;
+}
+
+export interface CategoryBoxProps extends Omit<SerializableCategoryBoxProps,
+  'imageStyle' |
+  'style' |
+  'titleStyle'> {
   imageStyle?: StyleProp<ImageStyle>;
   onPress?: (item: CommerceTypes.Category) => void;
-  showImage?: boolean;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
-  underlayColor?: string;
 }
 
 const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {

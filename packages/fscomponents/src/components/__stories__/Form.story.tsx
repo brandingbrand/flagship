@@ -8,8 +8,8 @@ import {
   text
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-// @ts-ignore: TODO fix types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '../Form/Form';
 import { FormLabelPosition } from '../Form/Templates/fieldTemplates';
 import { Button } from '../Button';

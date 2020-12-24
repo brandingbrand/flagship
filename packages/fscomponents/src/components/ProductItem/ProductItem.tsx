@@ -44,7 +44,7 @@ export interface SerializableProductItemProps {
   variantTextStyle?: TextStyle;
   reviewStyle?: ViewStyle;
   reviewCountStyle?: TextStyle;
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   swatchItems?: SwatchItemType[];
   swatchStyle?: ViewStyle;
   swatchesProps?: SwatchesProps;
@@ -124,6 +124,7 @@ export interface ProductItemProps extends CommerceTypes.Product, Omit<
   variantTextStyle?: StyleProp<TextStyle>;
   reviewStyle?: StyleProp<ViewStyle>;
   reviewCountStyle?: StyleProp<TextStyle>;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   extraElement?: JSX.Element;
   swatchStyle?: StyleProp<ViewStyle>;
 

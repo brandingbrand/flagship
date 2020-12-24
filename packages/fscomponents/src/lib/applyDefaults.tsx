@@ -1,6 +1,7 @@
 /* tslint:disable */
 // TODO: add proper types
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface ProjectWrapperComponent {}
 
@@ -9,12 +10,12 @@ export interface ProjectWrapperComponent {}
  * component default props, it can be used to specify project
  * specific styling
  */
-export default function applyDefaults(
-  defaultProps: any,
-  ComponentHolder: any
+export default function applyDefaults<T>(
+  defaultProps: Dictionary,
+  ComponentHolder: ComponentType<T>
 ): ProjectWrapperComponent {
   if (isStateless(ComponentHolder)) {
-    return function ProjectWrapperComponent(props: any): any {
+    return function ProjectWrapperComponent(props: T): React.ReactElement {
       const mergedProps = mergeProps(defaultProps, props);
       return <ComponentHolder {...mergedProps} />;
     };
@@ -88,6 +89,6 @@ export function mergeProps(defaultProps: any, newProps: any) {
   return props;
 }
 
-export function isStateless(Component: any) {
+export function isStateless<T>(Component: ComponentType<T>) {
   return !Component.prototype.render;
 }

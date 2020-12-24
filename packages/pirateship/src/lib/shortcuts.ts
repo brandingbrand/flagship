@@ -1,6 +1,12 @@
 import { Navigator } from '@brandingbrand/fsapp';
 import { ScreenProps } from './commonTypes';
 
+interface ErrorHandler {
+  response: {
+    status: number;
+  };
+}
+
 export const openSignInModal = (navigator: Navigator) => () => {
   navigator.showModal({
     component: {
@@ -21,41 +27,14 @@ export const openSignInModal = (navigator: Navigator) => () => {
 };
 
 export const handleAccountRequestError = (
-  error: any,
+  error: ErrorHandler,
   navigator: Navigator,
-  signOutFn: () => Promise<any>
+  signOutFn: () => Promise<void>
 ): void => {
   if (error.response && error.response.status && error.response.status === 401) {
     signOutFn()
-      .then(() => {
-        navigator.setStackRoot({
-          component: {
-            name: 'Account',
-            options: {
-              topBar: {
-                title: {
-                  text: 'Account'
-                }
-              }
-            }
-          }
-        }).catch(e => console.warn('Account SETSTACKROOT error: ', e));
-      })
       .catch(e => {
         console.warn('Error signing user out', e);
-
-        navigator.setStackRoot({
-          component: {
-            name: 'Account',
-            options: {
-              topBar: {
-                title: {
-                  text: 'Account'
-                }
-              }
-            }
-          }
-        }).catch(e => console.warn('Account SETSTACKROOT error: ', e));
       });
   } else {
     console.warn(error, error.response);

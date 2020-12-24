@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import {
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   StyleProp,
   Text,
   TextStyle,
@@ -10,6 +10,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import type { SwatchItemType } from './Swatches';
 
 import { style as S } from '../styles/Swatches';
 
@@ -39,18 +40,17 @@ export interface SwatchStyle {
   disabledImageStyle?: StyleProp<ImageStyle>;
 }
 
-export interface SwatchProps extends SwatchStyle {
-  // data
-  color?: string;
-  value?: string;
-  name?: string;
-  image?: ImageURISource;
-
+export interface SerializableSwatchProps extends SwatchItemType {
   // selection
   index: number;
   selected: boolean;
   disabled?: boolean;
+}
 
+// deprecated misspelling
+export type SerializaSwatchProps = SerializableSwatchProps;
+
+export interface SwatchProps extends SwatchStyle, SerializableSwatchProps {
   // actions
   onSelect: (swatch: SwatchProps) => void;
 
@@ -77,9 +77,8 @@ export class Swatch extends PureComponent<SwatchProps> {
     );
   }
 
-  _renderColor(): JSX.Element {
+  _renderColor(color: string): JSX.Element {
     const {
-      color,
       selected,
       colorContainerStyle,
       selectedColorContainerStyle,
@@ -112,9 +111,8 @@ export class Swatch extends PureComponent<SwatchProps> {
     );
   }
 
-  _renderImage(): React.ReactNode {
+  _renderImage(image: ImageSourcePropType): React.ReactNode {
     const {
-      image,
       selected,
       imageContainerStyle,
       selectedImageContainerStyle,
@@ -193,15 +191,22 @@ export class Swatch extends PureComponent<SwatchProps> {
       color,
       image,
       value,
-      render
+      render,
+      swatch
     } = this.props;
 
     if (render) {
       return render(this.props);
     } else if (color) {
-      return this._renderColor();
+      return this._renderColor(color);
     } else if (image) {
-      return this._renderImage();
+      return this._renderImage(image);
+    } else if (swatch) {
+      if (typeof swatch === 'string') {
+        return this._renderColor(swatch);
+      } else {
+        return this._renderImage(swatch);
+      }
     } else if (value) {
       return this._renderText();
     } else {

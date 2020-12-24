@@ -15,20 +15,32 @@ import { TouchableHighlightLink } from './TouchableHighlightLink';
 
 import { style as S } from '../styles/CategoryLine';
 
-export interface CategoryLineProps extends CommerceTypes.Category {
-  accessorySrc?: ImageURISource;
-  accessoryStyle?: StyleProp<ImageStyle>;
+export interface SerializableCategoryLineProps extends CommerceTypes.Category {
+  accessoryStyle?: ImageStyle;
   href?: string;
-  imageStyle?: StyleProp<ImageStyle>;
-  onPress?: (item: CommerceTypes.Category) => void;
+  imageStyle?: ImageStyle;
   showAccessory?: boolean;
-  renderAccessory?: () => React.ReactNode;
   showImage?: boolean;
-  style?: StyleProp<ViewStyle>;
-  titleStyle?: StyleProp<TextStyle>;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
   underlayColor?: string;
+  accessorySrc?: ImageURISource;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
+}
+
+export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
+  'accessoryStyle' |
+  'imageStyle' |
+  'style' |
+  'titleStyle'
+  > {
+  accessoryStyle?: StyleProp<ImageStyle>;
+  imageStyle?: StyleProp<ImageStyle>;
+  onPress?: (item: CommerceTypes.Category) => void;
+  renderAccessory?: () => React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 // tslint:disable-next-line:cyclomatic-complexity
