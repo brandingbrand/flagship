@@ -11,9 +11,9 @@ export function postLink(configuration: Config): void {
   let gradleAppBuild = fs.readFileSync(path.android.gradlePath(), { encoding: 'utf8' });
 
   gradleAppBuild = gradleAppBuild.replace(
-    /(missingDimensionStrategy)/,
-    `missingDimensionStrategy 'react-native-camera', 'general'
-    $1`
+    'defaultConfig {',
+    `defaultConfig {
+        missingDimensionStrategy 'react-native-camera', 'general'`
   );
 
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);

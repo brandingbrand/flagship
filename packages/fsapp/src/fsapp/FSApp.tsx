@@ -15,25 +15,33 @@ import { InteractionManager, NativeModules, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 const { CodePush } = NativeModules;
 import NativeConstants from '../lib/native-constants';
-import { FSAppBase } from './FSAppBase';
+import { FSAppBase, WebApplication } from './FSAppBase';
 import DevMenu from '../components/DevMenu';
+import { Store } from 'redux';
+import { NotFound } from '../components/NotFound';
 
 const LAST_SCREEN_KEY = 'lastScreen';
 const DEV_KEEP_SCREEN = 'devKeepPage';
+
+export interface CodePushVersion {
+  label: string;
+}
 
 export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);
 
     if (CodePush) {
-      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then((version: any) => {
-        if (version) {
-          this.appConfig.codePushVersionLabel = version.label;
+      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then(
+        (version: CodePushVersion) => {
+          if (version) {
+            this.appConfig.codePushVersionLabel = version.label;
+          }
         }
-      });
+      );
     }
 
-    this.startApp();
+    this.startApp().catch(e => console.error(e));
   }
 
   registerScreens(): void {
@@ -54,12 +62,28 @@ export class FSApp extends FSAppBase {
       });
     }
 
+    if (this.appConfig.notFoundRedirect) {
+      if (typeof this.appConfig.notFoundRedirect === 'function') {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(this.appConfig.notFoundRedirect, this.appConfig, this.api)
+        });
+      } else {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(NotFound(this.appConfig.notFoundRedirect), this.appConfig, this.api)
+        });
+      }
+    }
+
     enhancedScreens.forEach(({ key, Screen }) => {
       Navigation.registerComponent(key, () => props => {
-        return (
+        return this.store ? (
           <Provider store={this.store}>
-            <Screen {...props}/>
+            <Screen {...props} />
           </Provider>
+        ) : (
+          <Screen {...props} />
         );
       }
       , () => Screen);
@@ -70,8 +94,9 @@ export class FSApp extends FSAppBase {
     return NativeConstants && NativeConstants.ShowDevMenu && NativeConstants.ShowDevMenu === 'true';
   }
 
-  startApp(): void {
+  async startApp(): Promise<void> {
     const { appType, defaultOptions, popToRootOnTabPressAndroid, tabs } = this.appConfig;
+    await this.initApp();
 
     if (this.shouldShowDevMenu()) {
       Navigation.events().registerComponentDidAppearListener(this.screenChangeListener.bind(this));
@@ -103,6 +128,10 @@ export class FSApp extends FSAppBase {
         console.warn('FSApp setRoot error: ', e);
       }
     });
+  }
+
+  getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined {
+    return undefined;
   }
 
   protected async startSingleScreenApp(): Promise<void> {

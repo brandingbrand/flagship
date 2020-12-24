@@ -62,6 +62,7 @@ export default class Category extends Component<PropType, StateType> {
   static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   static rightButtons: NavButton[] = [searchButton];
+  static cache: number = 600;
   state: StateType = {
     screenWidth: Dimensions.get('window').width
   };

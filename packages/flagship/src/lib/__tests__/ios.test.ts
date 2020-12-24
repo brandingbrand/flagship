@@ -268,6 +268,26 @@ test('provide custom bundle version number', () => {
   expect(infoPlist).toMatch(`<key>CFBundleVersion</key>\n\t<string>1.3.3</string>`);
 });
 
+test('provide custom short version number', () => {
+  const version = '1.3.2';
+  ios.version(
+    {
+      name: appName,
+      ios: {
+        shortVersion: '1.3.3'
+      }
+    },
+    version
+  );
+
+  const infoPlist = fs
+    .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/Info.plist`))
+    .toString();
+
+  expect(infoPlist).toMatch(`<key>CFBundleShortVersionString</key>\n\t<string>1.3.3</string>`);
+  expect(infoPlist).toMatch(`<key>CFBundleVersion</key>\n\t<string>01003002</string>`);
+});
+
 test(`set env switcher initial env`, () => {
   ios.setEnvSwitcherInitialEnv(
     {
@@ -285,7 +305,6 @@ test(`set env switcher initial env`, () => {
   );
 });
 
-
 test(`copy sentry properties`, () => {
   ios.sentryProperties({
     name: appName,
@@ -302,6 +321,22 @@ test(`copy sentry properties`, () => {
     .toString();
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
+});
+
+test('targeted device should default to ios only', () => {
+  const realPbxprojFile: string = fs
+    .readFileSync(nodePath.join(
+      __dirname, '..', '..', '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'
+    ))
+    .toString();
+
+  const targetMatches = realPbxprojFile.match(/TARGETED_DEVICE_FAMILY = "[1-9\,]+"/g);
+
+  expect((targetMatches || []).length).toEqual(2);
+
+  (targetMatches || []).forEach(match => {
+    expect(match).toEqual('TARGETED_DEVICE_FAMILY = "1"');
+  });
 });
 
 // Force to be treated as a module

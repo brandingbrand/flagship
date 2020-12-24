@@ -1,11 +1,15 @@
 import { Image, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import React from 'react';
 
 type autoCapitalizeType = 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
 
 interface Config {
-  onIconPress: () => void;
-  icon: Image;
-  showIcon: boolean;
+  onIconPress?: () => void;
+  icon?: Image;
+  showIcon?: boolean;
+  title?: string;
+  placeholder?: string;
+  onValueChange?: () => void;
 }
 interface TrackColor {
   true: string | null;
@@ -25,7 +29,7 @@ export interface FieldOptions {
   keyboardType?: string;
   autoCapitalize?: autoCapitalizeType;
   onSubmitEditing?: () => void;
-  config?: Config;
+  config: Config;
   secureTextEntry?: boolean;
   password?: boolean;
   hidden?: boolean;
@@ -34,5 +38,8 @@ export interface FieldOptions {
   thumbTintColor?: string;
   stylesheet?: StyleProp<ViewStyle & TextStyle>;
   controlLabel?: ControlLabel;
+  nullOption?: boolean;
+  onValueChange?: () => void;
+  error?: string;
+  help?: React.ReactNode;
 }
-

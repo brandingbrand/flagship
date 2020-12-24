@@ -1,6 +1,13 @@
 import React from 'react';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import StatefulTextbox, { FormLabelPosition } from './StatefulTextbox';
+import StatefulTextbox from './StatefulTextbox';
+
+export enum FormLabelPosition {
+  Above,
+  Floating,
+  Hidden,
+  Inline
+}
 
 export function labelAboveFieldTemplate(
   locals: Dictionary,

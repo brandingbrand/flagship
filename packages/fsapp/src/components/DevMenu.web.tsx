@@ -205,7 +205,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   dismissModal = () => {
-    this.props.navigator.pop().catch((e: any) => { console.error(e); });
+    this.props.navigator.pop().catch(e => { console.error(e); });
   }
 
   showDevView = (devView: string) => () => {
@@ -215,7 +215,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   pushToScreen = (component: LayoutComponent) => () => {
     this.props.navigator.push({
       component
-    }).catch((e: any) => {
+    }).catch(e => {
       console.error('pushToScreen error', e);
     });
   }

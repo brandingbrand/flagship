@@ -49,6 +49,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     shareButton: ShareButtonTranslations<KeyType>;
     loginForm: LoginFormTranslations<KeyType>;
     emailForm: EmailFormTranslations<KeyType>;
+    button: ButtonTranslations<KeyType>;
   };
 }
 
@@ -105,6 +106,8 @@ export interface CartTranslations<KeyType> {
   isEmpty: KeyType;
   itemsInCart: KeyType;
   error: KeyType;
+  moveToWishlist: KeyType;
+  outOfStock: KeyType;
   actions: {
     add: {
       actionBtn: KeyType;
@@ -335,6 +338,7 @@ export interface ProductIndexTranslations<KeyType> {
   noResults: KeyType;
   resetFilters: KeyType;
   loadMore: KeyType;
+  addToBag: KeyType;
 }
 
 export interface CheckoutTranslations<KeyType> {
@@ -403,4 +407,8 @@ export interface LoginFormTranslations<KeyType> {
 export interface EmailFormTranslations<KeyType> {
   placeholder: KeyType;
   error: KeyType;
+}
+
+export interface ButtonTranslations<KeyType> {
+  apply: KeyType;
 }

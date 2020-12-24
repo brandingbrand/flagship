@@ -558,6 +558,7 @@ class PSProductDetailComponent extends Component<
 
           return (
             <Swatches
+              style={{paddingBottom: variables.padding.base}}
               key={index}
               title={option.name}
               items={option.values}

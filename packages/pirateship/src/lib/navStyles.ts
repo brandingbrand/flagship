@@ -9,7 +9,7 @@ export const backButton: NavButton = {
   },
   action: (navigator: Navigator) => {
     navigator.pop()
-    .catch((e: any) => console.warn('backButton POP error: ', e));
+    .catch((e: Error) => console.warn('backButton POP error: ', e));
   }
 };
 
@@ -20,7 +20,7 @@ export const dismissButton: NavButton = {
   },
   action: (navigator: Navigator) => {
     navigator.dismissModal()
-    .catch((e: any) => console.warn('dismissButton DISMISSMODAL error: ', e));
+    .catch((e: Error) => console.warn('dismissButton DISMISSMODAL error: ', e));
   }
 };
 
@@ -41,11 +41,11 @@ export const searchButton: NavButton = {
                   enabled: false
                 }
               }
-            }).catch((e: any) => console.warn('Search POP error: ', e));
+            }).catch((e: Error) => console.warn('Search POP error: ', e));
           }
         }
       }
-    }).catch((e: any) => console.warn('Search PUSH error: ', e));
+    }).catch((e: Error) => console.warn('Search PUSH error: ', e));
   }
 };
 
