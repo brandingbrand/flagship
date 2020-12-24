@@ -15,16 +15,25 @@ import {
 } from 'react-native';
 import { TouchableOpacityLink } from './TouchableOpacityLink';
 
-
-export interface CMSBannerProps {
-  imageContainerStyle?: StyleProp<ViewStyle>;
+export interface SerializableCMSBannerProps {
   imageHeight?: number;
   imageWidth?: number;
-  onPress?: (instance: any) => void;
-  style?: StyleProp<ViewStyle>;
   cmsData?: any;
   accessible?: boolean;
+  style?: ViewStyle;
+  imageContainerStyle?: ViewStyle;
+}
+
+
+export interface CMSBannerProps extends Omit<
+  SerializableCMSBannerProps,
+  'imageContainerStyle' |
+  'style'
+  > {
+  onPress?: (instance: any) => void;
   getAccessibilityLabel?: (instance: any) => string;
+  imageContainerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 }
 
 export interface CMSBannerState {
