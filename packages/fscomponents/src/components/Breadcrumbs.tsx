@@ -15,19 +15,58 @@ export interface Breadcrumb {
   href?: string;
 }
 
-export interface BreadcrumbsProps {
+export interface SerializedBreadcrumbsProps {
   /**
-   * Style for the container of a single breadcrumb & separator
+   * Separator string (default is ">")
    */
-  breadcrumbContainerStyle?: StyleProp<ViewStyle>;
+  separator?: string;
   /**
    * Collection of breadcrumb items
    */
   items: Breadcrumb[];
   /**
-   * Separator string (default is ">")
+   * Whether to show separator after final item (default false)
    */
-  separator?: string;
+  showTrailingSeparator?: boolean;
+  /**
+   * Style for the container of a single breadcrumb & separator
+   */
+  breadcrumbContainerStyle?: ViewStyle;
+  /**
+   * Style for the overarching component container
+   */
+  style?: ViewStyle;
+  /**
+   * Style for the separator text
+   */
+  separatorStyle?: TextStyle;
+  /**
+   * Style for titles that have an onPress attached
+   */
+  titleClickableStyle?: TextStyle;
+  /**
+   * Style for titles that do not have an onPress attached
+   */
+  titleDisabledStyle?: TextStyle;
+  /**
+   * Style for all titles
+   */
+  titleStyle?: TextStyle;
+}
+
+export interface BreadcrumbsProps extends Omit<
+  SerializedBreadcrumbsProps,
+  'breadcrumbContainerStyle' |
+  'style' |
+  'separatorStyle' |
+  'titleClickableStyle' |
+  'titleDisabledStyle' |
+  'titleStyle'
+  > {
+  /**
+   * Style for the container of a single breadcrumb & separator
+   */
+  breadcrumbContainerStyle?: StyleProp<ViewStyle>;
   /**
    * Style for the overarching component container
    */
@@ -36,10 +75,6 @@ export interface BreadcrumbsProps {
    * Style for the separator text
    */
   separatorStyle?: StyleProp<TextStyle>;
-  /**
-   * Whether to show separator after final item (default false)
-   */
-  showTrailingSeparator?: boolean;
   /**
    * Style for titles that have an onPress attached
    */
