@@ -11,14 +11,35 @@ import {
 } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-export interface AddToCartProps {
+export interface SerializedAddToCartProps {
+  defaultVariantId?: string;
   product: CommerceTypes.Product;
   commerceDataSource: CommerceDataSource;
-  defaultVariantId?: string;
 
-  // Events
-  onChangeOption?: (name: string, value: string, variant?: CommerceTypes.Variant) => void;
-  onAddToCart?: (cart: Promise<CommerceTypes.Cart>) => void;
+  // Styles
+  style?: ViewStyle;
+  swatchesStyle?: ViewStyle;
+  stepperStyle?: ViewStyle;
+  buttonStyle?: ViewStyle;
+  actionBarStyle?: ViewStyle;
+
+  // Child Props
+  buttonProps?: ButtonProps;
+  swatchesProps?: SwatchesProps;
+  stepperProps?: StepperProps;
+}
+
+export interface AddToCartProps extends Omit<
+  SerializedAddToCartProps,
+  'style' |
+  'swatchesStyle' |
+  'stepperStyle' |
+  'buttonStyle' |
+  'actionBarStyle' |
+  'buttonProps' |
+  'swatchesProps' |
+  'stepperProps'
+  > {
 
   // Styles
   style?: StyleProp<ViewStyle>;
@@ -31,6 +52,10 @@ export interface AddToCartProps {
   buttonProps?: Partial<ButtonProps>;
   swatchesProps?: Partial<SwatchesProps>;
   stepperProps?: Partial<StepperProps>;
+
+  // Events
+  onChangeOption?: (name: string, value: string, variant?: CommerceTypes.Variant) => void;
+  onAddToCart?: (cart: Promise<CommerceTypes.Cart>) => void;
 
   // Custom Rendering
   renderStepper?(onChange: (count: number) => void): JSX.Element;
