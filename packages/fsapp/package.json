@@ -21,7 +21,7 @@
     "qs": "^6.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.9.0",
-    "react-native": "^0.63.2",
+    "react-native": "^0.63.3",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
     "react-native-navigation": "^6.0.0",

@@ -17,7 +17,7 @@
     "glob": "^7.1.2",
     "jsc-android": "241213.x.x",
     "react": "^16.13.1",
-    "react-native": "^0.63.2",
+    "react-native": "^0.63.3",
     "replace-in-file": "^5.0.2",
     "xcode": "^3.0.0",
     "yargs": "^15.0.1"

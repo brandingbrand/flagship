@@ -21,7 +21,7 @@
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
     "react": "^16.13.1",
-    "react-native": "^0.63.2",
+    "react-native": "^0.63.3",
     "react-native-geocoder": "^0.5.0",
     "react-native-maps": "^0.26.0",
     "react-native-open-settings": "^1.0.1",
