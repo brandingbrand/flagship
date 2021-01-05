@@ -16,15 +16,11 @@ import Carousel from 'react-native-snap-carousel';
 const { width: viewportWidth } = Dimensions.get('window');
 const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
-let renderItemOptions: any = {};
-let renderItemWidth: number = 0;
-import { wp } from '../carousel/SliderEntry.style';
-import RenderItem from '../carousel/RenderItem';
+import RenderImageTextItem from '../carousel/RenderImageTextItem';
 
 import {
   CardProps
 } from '../types';
-let navigator: any;
 export interface ImageCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -36,6 +32,8 @@ export interface ImageCarouselBlockProps extends CardProps {
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
+  headerStyle?: any;
+  textStyle?: any;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
 }
@@ -44,6 +42,7 @@ export interface ImageCarouselBlockState {
   width?: number;
   height?: number;
   sliderActiveSlide: number;
+  overallHeight: number;
 }
 // extends CardProps
 export default class ImageCarouselBlock
@@ -53,22 +52,42 @@ export default class ImageCarouselBlock
   constructor(props: ImageCarouselBlockProps) {
     super(props);
     this.state = {
-      sliderActiveSlide: SLIDER_1_FIRST_ITEM
+      sliderActiveSlide: SLIDER_1_FIRST_ITEM,
+      overallHeight: 0
     };
   }
 
-  componentDidMount(): void {
-    navigator = this.props.navigator;
+  shouldComponentUpdate(nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState): boolean {
+    return this.props.containerStyle !== nextProps.containerStyle ||
+      this.props.items !== nextProps.items ||
+      this.props.ratio !== nextProps.ratio ||
+      this.props.options !== nextProps.options ||
+      this.props.resizeMode !== nextProps.resizeMode ||
+      this.props.source !== nextProps.source ||
+      this.props.headerStyle !== nextProps.headerStyle ||
+      this.props.textStyle !== nextProps.textStyle ||
+      this.state.overallHeight !== nextState.overallHeight;
   }
   _renderItem(data: any): JSX.Element {
-    return <RenderItem
-      data={data.item}
-      index={data.index}
-      navigator={navigator}
-      horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
-      itemWidth={renderItemWidth}
-      even={false}
-    />;
+    const {
+      headerStyle,
+      textStyle,
+      options
+    } = this.props;
+    let renderItemWidth = this.calculateItemWidth();
+    return (
+      <RenderImageTextItem
+        data={data.item}
+        key={data.index}
+        overallHeight={this.state.overallHeight}
+        itemWidth={renderItemWidth}
+        horizPadding={options.itemHorizontalPaddingPercent}
+        options={options}
+        headerStyle={headerStyle}
+        textStyle={textStyle}
+        even={false}
+      />
+    );
   }
 
   horizontalMarginPadding() {
@@ -88,21 +107,27 @@ export default class ImageCarouselBlock
     const {
       options
     } = this.props;
-    const slideWidth = wp(options.itemWidthPercent);
-    const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
-    return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
+
+    const slideWidth = Math.round((this.calculateSliderWidth() * options.itemWidthPercent) / 100);
+    return slideWidth + options.itemHorizontalPaddingPercent;
+    // const slideWidth = wp(options.itemWidthPercent);
+    // const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
+    // return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
   }
+
+// const slideWidth = Math.round((calculateSliderWidth() * options.itemWidthPercent) / 100);
+// return slideWidth;
   createCarousel(): JSX.Element {
     const {
       items,
       options
     } = this.props;
-    renderItemOptions = options;
-    renderItemWidth = this.calculateItemWidth();
+
+    let renderItemWidth = this.calculateItemWidth();
     return (
       <Carousel
         data={items}
-        renderItem={this._renderItem}
+        renderItem={this._renderItem.bind(this)}
         hasParallaxImages={false}
         sliderWidth={this.calculateSliderWidth()}
         itemWidth={renderItemWidth}

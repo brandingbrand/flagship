@@ -24,6 +24,11 @@ import InboxWrapper from './InboxWrapper';
 import ImageGrid from './ImageGrid';
 import WhiteInboxWrapper from './WhiteInboxWrapper';
 import DemoProductCarouselBlock from './DemoProductCarouselBlock';
+import TextBanner from './TextBanner';
+import ImageCard from './ImageCard';
+import TitleWithLink from './TitleWithLink';
+import IconText from './IconTextBlock';
+import ImageWithOverlay from './ImageWithOverlay';
 
 export default {
   Text: TextBlock,
@@ -50,5 +55,10 @@ export default {
   Share: ShareBlock,
   ShopIngredients: ShopIngredientsBlock,
   story: Story,
-  RecipeList: RecipeBlock
+  RecipeList: RecipeBlock,
+  ImageWithOverlay,
+  TextBanner,
+  ImageCard,
+  TitleWithLink,
+  IconText
 };

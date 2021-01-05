@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dimensions,
-  Image,
+  ImageBackground,
   ImageStyle,
   ImageURISource,
   LayoutChangeEvent,
@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-
+import TextBlock from './TextBlock';
 export interface ImageBlockProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -19,7 +19,7 @@ export interface ImageBlockProps {
   useRatio?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
-  outerContainerStyle?: any;
+  textOverlay?: any;
   link?: string;
 }
 
@@ -28,10 +28,9 @@ export interface ImageBlockState {
   height?: number;
 }
 
-export default class ImageBlock extends Component<ImageBlockProps, ImageBlockState> {
+export default class ImageWithOverlay extends Component<ImageBlockProps, ImageBlockState> {
   static contextTypes: any = {
-    handleAction: PropTypes.func,
-    isCard: PropTypes.bool
+    handleAction: PropTypes.func
   };
   readonly state: ImageBlockState = {};
 
@@ -58,9 +57,8 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
 
     }
   }
-  // tslint:disable-next-line:cyclomatic-complexity
   findImageRatio = (): ImageBlockState => {
-    const { containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
+    const { containerStyle, ratio, useRatio } = this.props;
     if (!useRatio) {
       return {};
     }
@@ -79,35 +77,24 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
     if (containerStyle.marginRight) {
       result.width = result.width - containerStyle.marginRight;
     }
-    if (outerContainerStyle) {
-      if (outerContainerStyle.paddingLeft) {
-        result.width = result.width - outerContainerStyle.paddingLeft;
-      }
-      if (outerContainerStyle.marginLeft) {
-        result.width = result.width - outerContainerStyle.marginLeft;
-      }
-      if (outerContainerStyle.paddingRight) {
-        result.width = result.width - outerContainerStyle.paddingRight;
-      }
-      if (outerContainerStyle.marginRight) {
-        result.width = result.width - outerContainerStyle.marginRight;
-      }
-    }
     if (ratio) {
       result.height = result.width / parseFloat(ratio);
     }
     return result;
   }
-  onPress = (link?: string) => () => {
-    if (!link) {
-      return;
-    }
+  onPress = (link: string) => () => {
     const { handleAction } = this.context;
     handleAction({
       type: 'deep-link',
       value: link
     });
   }
+  _renderItem(item: any, index: number): JSX.Element {
+    return (
+      <TextBlock {...item} />
+    );
+  }
+  // tslint:disable-next-line:cyclomatic-complexity
   render(): JSX.Element {
     const {
       imageStyle = {},
@@ -115,9 +102,12 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
       resizeMode = 'cover',
       resizeMethod = 'resize',
       source,
+      textOverlay,
       link
     } = this.props;
-    const { isCard } = this.context;
+    if (!source) {
+      return <View />;
+    }
     const imageRatioStyle: StyleProp<ImageStyle> = {};
     if (this.state.height) {
       imageRatioStyle.height = this.state.height;
@@ -125,31 +115,97 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
     if (this.state.width) {
       imageRatioStyle.width = this.state.width;
     }
-    if (link && !isCard) {
+
+    const horizontalMap: any = {
+      left: 'flex-start',
+      center: 'center',
+      right: 'flex-end'
+    };
+    const verticalMap: any = {
+      top: 'flex-start',
+      center: 'center',
+      bottom: 'flex-end'
+    };
+    let textContainerStyle = {};
+    let innerTextContainer: any = {};
+    if (textOverlay) {
+      textContainerStyle = {
+        flex: 1,
+        justifyContent: verticalMap[textOverlay.options.verticalAlignment],
+        alignItems: horizontalMap[textOverlay.options.horizontalAlignment],
+        marginBottom: textOverlay.options &&
+          textOverlay.options.verticalAlignment === 'bottom' ?
+          textOverlay.options.verticalDistanceFromEdge : 0,
+        marginTop: textOverlay.options &&
+          textOverlay.options.verticalAlignment !== 'bottom' ?
+          textOverlay.options.verticalDistanceFromEdge : 0,
+        marginLeft: textOverlay.options &&
+          textOverlay.options.horizontalLeftDistanceFromEdge,
+        marginRight: textOverlay.options &&
+          textOverlay.options.horizontalRightDistanceFromEdge
+      };
+      innerTextContainer = {
+        backgroundColor: textOverlay.options.backgroundColor,
+        padding: textOverlay.options.padding || 0
+      };
+      if (textOverlay.options.fullWidth) {
+     //   innerTextContainer.alignItems = horizontalMap[textOverlay.options.horizontalAlignment];
+        innerTextContainer.width = '100%';
+      }
+    }
+    if (link) {
       return (
         <TouchableOpacity
           activeOpacity={1}
           onPress={this.onPress(link)}
         >
           <View onLayout={this._onLayout} style={containerStyle}>
-            <Image
+            <ImageBackground
               source={source}
               style={[{ height: 200 }, imageStyle, imageRatioStyle]}
               resizeMode={resizeMode}
               resizeMethod={resizeMethod}
-            />
+            >
+              {!!(textOverlay && textOverlay.enabled &&
+                textOverlay.items && textOverlay.items.length) &&
+                (
+                  <View
+                    style={textContainerStyle}
+                  >
+                    <View style={innerTextContainer}>
+                      {(textOverlay.items || []).map((item: any, index: number) => {
+                        return this._renderItem(item, index);
+                      })}
+                    </View>
+                  </View>
+                )}
+            </ImageBackground>
           </View>
         </TouchableOpacity>
       );
     }
     return (
       <View onLayout={this._onLayout} style={containerStyle}>
-        <Image
+        <ImageBackground
           source={source}
           style={[{ height: 200 }, imageStyle, imageRatioStyle]}
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
-        />
+        >
+          {!!(textOverlay && textOverlay.enabled &&
+            textOverlay.items && textOverlay.items.length) &&
+            (
+              <View
+                style={textContainerStyle}
+              >
+                <View style={innerTextContainer}>
+                  {(textOverlay.items || []).map((item: any, index: number) => {
+                    return this._renderItem(item, index);
+                  })}
+                </View>
+              </View>
+            )}
+        </ImageBackground>
       </View>
     );
   }

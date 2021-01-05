@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextStyle,
+  TouchableOpacity,
   View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -25,10 +26,13 @@ export interface TextBlockProps {
   containerStyle?: StyleProp<TextStyle>;
   animateIndex?: number;
   localization?: LocalizationData[];
+  subtitle?: TextBlockProps;
+  link?: string;
 }
 export default class TextBlock extends Component<TextBlockProps> {
   static contextTypes: any = {
-    language: PropTypes.string
+    language: PropTypes.string,
+    handleAction: PropTypes.func
   };
   fadeInView: any;
   handleFadeInRef = (ref: any) => this.fadeInView = ref;
@@ -46,11 +50,20 @@ export default class TextBlock extends Component<TextBlockProps> {
       nextProps.containerStyle !== this.props.containerStyle ||
       nextProps.text !== this.props.text;
   }
+  onPress = (link: string) => () => {
+    const { handleAction } = this.context;
+    handleAction({
+      type: 'deep-link',
+      value: link
+    });
+  }
   render(): JSX.Element {
     const {
       textStyle,
       containerStyle,
-      localization
+      localization,
+      link,
+      subtitle
     } = this.props;
 
     let { text } = this.props;
@@ -76,9 +89,35 @@ export default class TextBlock extends Component<TextBlockProps> {
 
       );
     }
+    if (link) {
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={this.onPress(link)}
+        >
+          <View style={containerStyle}>
+            <Text style={[styles.default, textStyle]}>{text}</Text>
+            {subtitle &&
+              (
+                <View style={subtitle.containerStyle}>
+                  <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>
+                </View>
+              )
+            }
+          </View>
+        </TouchableOpacity>
+      );
+    }
     return (
       <View style={containerStyle}>
         <Text style={[styles.default, textStyle]}>{text}</Text>
+        {subtitle &&
+          (
+            <View style={subtitle.containerStyle}>
+              <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>
+            </View>
+          )
+        }
       </View>
     );
   }
