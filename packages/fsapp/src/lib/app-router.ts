@@ -13,11 +13,6 @@ import {
   RouterConfig
 } from '../types';
 
-export interface TestType {
-  [key: string]: string;
-}
-
-
 export default class AppRouter {
   cmsToken: string = '';
   appId: string;
