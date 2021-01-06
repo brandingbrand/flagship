@@ -1,5 +1,5 @@
 // tslint:disable:cyclomatic-complexity
-import FSNetwork, { AxiosResponse } from '@brandingbrand/fsnetwork';
+import FSNetwork from '@brandingbrand/fsnetwork';
 import { LayoutComponent } from 'react-native-navigation';
 import Navigator from './nav-wrapper';
 import pathToRegexp, { Key } from 'path-to-regexp';
@@ -12,6 +12,11 @@ import {
   PublishedPage,
   RouterConfig
 } from '../types';
+
+export interface TestType {
+  [key: string]: string;
+}
+
 
 export default class AppRouter {
   cmsToken: string = '';
@@ -90,10 +95,10 @@ export default class AppRouter {
             break;
           }
           const [, ...values] = match;
-          const passProps = keys.reduce((memo, key, index) => {
+          const passProps = keys.reduce<Record<string, string>>((memo, key, index) => {
             memo[key.name] = values[index];
             return memo;
-          }, {} as any);
+          }, {});
           if (this.pageRoutes[path].defaultInputs.length &&
             this.pageRoutes[path].dataInputs.length ===
             this.pageRoutes[path].defaultInputs.length) {
@@ -274,7 +279,7 @@ export default class AppRouter {
           Authorization: `Bearer ${this.cmsToken}`
         }
         // tslint:disable-next-line: cyclomatic-complexity
-      }).then(async (pageData: AxiosResponse) => {
+      }).then(async pageData => {
         let customRoutes;
         let parsedContent: LayoutBuilderObject | undefined;
 
@@ -303,7 +308,10 @@ export default class AppRouter {
         }
 
         return customRoutes.filter((page: PublishedPage) => page.path !== null)
-          .reduce((ret: any, page: PublishedPage) => {
+          .reduce((
+            ret: Record<string, Omit<PublishedPage, 'id' | 'path'>>,
+            page: PublishedPage
+          ) => {
             if (!page.path) {
               return ret;
             }
