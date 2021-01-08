@@ -1,13 +1,13 @@
 import React, { FunctionComponent, memo } from 'react';
 import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
-import { Button, ButtonProps, SerializableButtonProps } from './Button';
+import { Button, ButtonProps, SerializableFSButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
 type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palette'>;
 type SerializableLimitedButtonProps = Omit<
-  SerializableButtonProps,
+  SerializableFSButtonProps,
   'color' | 'light' | 'link' | 'palette'
 >;
 export type ButtonShape = 'pill' | 'rect';

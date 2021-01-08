@@ -11,7 +11,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { Button, ButtonProps, SerializableButtonProps } from '../Button';
+import { Button, ButtonProps, SerializableFSButtonProps } from '../Button';
 import { SerializableStepperProps, Stepper, StepperProps } from '../Stepper';
 import { Price } from '../Price';
 import i18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -162,7 +162,7 @@ export interface VariantCartItemProps extends BaseVariantCartItemProp {
 }
 
 export interface SerializableVariantCartItemProps extends BaseVariantCartItemProp {
-  wishlistButtonProps?: Partial<SerializableButtonProps>;
+  wishlistButtonProps?: Partial<SerializableFSButtonProps>;
   stepperProps?: Partial<SerializableStepperProps>;
   style?: ViewStyle;
   titleStyle?: TextStyle;
