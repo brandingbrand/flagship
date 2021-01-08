@@ -31,13 +31,20 @@
     "react-dom": "^16.11.0",
     "react-id-swiper": "^2.0.0",
     "react-native": "^0.63.2",
+    "react-native-elements": "^2.0.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-picker-select": "^8.0.0",
     "react-native-svg": "^10.0.0",
     "react-native-swiper": "1.6.0",
+    "react-native-video": "^5.0.2",
     "react-native-web-modal": "^1.0.1",
+    "react-native-webview": "^10.9.0",
+    "react-player": "^1.15.2",
     "sweetalert": "^2.1.0",
     "yup": "^0.29.0"
+  },
+  "devDependencies": {
+    "@types/react-native-video": "^2.0.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
