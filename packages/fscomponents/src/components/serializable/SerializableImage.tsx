@@ -1,6 +1,5 @@
 import React from 'react';
-import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
-import openRelativeUrl from '../../lib/openRelativeUrl';
+import { Image, ImageProps, ImageStyle, StyleProp, TouchableOpacity } from 'react-native';
 
 export interface SerializableImageProps extends Pick<ImageProps,
   'style' | 'blurRadius' | 'resizeMode' | 'source' | 'loadingIndicatorSource' |
@@ -8,20 +7,18 @@ export interface SerializableImageProps extends Pick<ImageProps,
   'fadeDuration' | 'progressiveRenderingEnabled'
 > {
   href?: string;
-  style?: ImageStyle;
+  style?: StyleProp<ImageStyle>;
+  onPress?: (href: string) => () => void;
 }
 
-const onPress = (href: string) => () => {
-  openRelativeUrl(href).catch(e => console.error(e));
-};
-
-export const SerializableImage: React.FC<SerializableImageProps> = React.memo(({
+export const FSSerializableImage: React.FC<SerializableImageProps> = React.memo(({
   href,
+  onPress,
   ...props
 }) => {
   const img = <Image {...props} />;
 
-  if (!href) {
+  if (!(href && onPress)) {
     return img;
   }
 
