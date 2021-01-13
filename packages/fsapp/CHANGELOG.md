@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
+
+
+### Bug Fixes
+
+* **fsapp:** fix typing for app router (7d0549e)
+* **fsapp:** remove temp type (471cd29)
+* **fsapp:** update missing types (49d990d)
+
+
+
 ## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
