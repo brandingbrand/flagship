@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
+
+
+### Bug Fixes
+
+* **fsapp:** fix typing for app router ([7d0549e](https://github.com/brandingbrand/flagship/commit/7d0549e41b55a48bb60f7079d43d5e0beffe4be6))
+* **fsapp:** remove temp type ([471cd29](https://github.com/brandingbrand/flagship/commit/471cd294014a48bcb0f4612141daa912206f6c00))
+* **fsapp:** update missing types ([49d990d](https://github.com/brandingbrand/flagship/commit/49d990d5ca5122ade1605780f80091ce30baf04f))
+
+
+### Features
+
+* **fscomponents:** add serializable base components ([f34a03e](https://github.com/brandingbrand/flagship/commit/f34a03e272ad2d0e1e3d51c3f171ca8eeaae3709))
+* **fscomponents:** remove openrealtiveurl ([b8739fd](https://github.com/brandingbrand/flagship/commit/b8739fd107c20ca7ff07419655d9fa8244bd5d11))
+
+
+
+# [10.8.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.8.0-alpha.0) (2020-12-17)
+
+
+### Bug Fixes
+
+* promise typing ([243cdbf](https://github.com/brandingbrand/flagship/commit/243cdbf48768bfe68a8ef267b738d44bdd1aac55))
+
+
+
+# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
+
+
+
+# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
+
+
+### Features
+
+* add router ([5e48817](https://github.com/brandingbrand/flagship/commit/5e48817a0de2b701c0a74af1f446693473dbd6a3))
+* attach AppRouter to FSApp to set correct web router paths ([8ce521d](https://github.com/brandingbrand/flagship/commit/8ce521d7cd9d4d4acabd05a8a2fed05f8f16dd1c))
+
+
+
+# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
+
+
+### Features
+
+* allow screens to have multiple routes ([41778cc](https://github.com/brandingbrand/flagship/commit/41778cce5db79489afce3d8972a2ee2937ed5684))
+
+
+
+# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
+
+
+### Features
+
+* register custom routes when using routerConfig ([d43370a](https://github.com/brandingbrand/flagship/commit/d43370a6b7e231524b819e92a46ddd24ab1c122a))
+
+
+
+
+
 ## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
 
 

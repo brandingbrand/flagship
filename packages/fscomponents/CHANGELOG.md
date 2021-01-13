@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
+
+
+### Features
+
+* **fscomponents:** add serializable base components ([f34a03e](https://github.com/brandingbrand/flagship/commit/f34a03e272ad2d0e1e3d51c3f171ca8eeaae3709))
+* **fscomponents:** remove openrealtiveurl ([b8739fd](https://github.com/brandingbrand/flagship/commit/b8739fd107c20ca7ff07419655d9fa8244bd5d11))
+
+
+
+# [10.8.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.8.0-alpha.0) (2020-12-17)
+
+
+### Bug Fixes
+
+* promise typing ([243cdbf](https://github.com/brandingbrand/flagship/commit/243cdbf48768bfe68a8ef267b738d44bdd1aac55))
+
+
+
+
+
 ## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
