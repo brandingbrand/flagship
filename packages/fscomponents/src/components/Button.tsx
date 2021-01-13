@@ -54,7 +54,7 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   full?: boolean;
 }
 
-export interface SerializableButtonProps extends Omit<ButtonProps, 'onPress' | 'onLongPress'> {
+export interface SerializableFSButtonProps extends Omit<ButtonProps, 'onPress' | 'onLongPress'> {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   iconStyle?: ImageStyle;

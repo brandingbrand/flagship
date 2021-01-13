@@ -54,6 +54,7 @@ export * from './SearchScreen';
 export * from './SelectableList';
 export * from './SelectableRow';
 export * from './Selector';
+export * from './serializable';
 export * from './ShareButton';
 export * from './Shelf';
 export * from './SingleLineForm';
