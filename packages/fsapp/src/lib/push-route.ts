@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { AppConfigType, NavLayout, RoutableComponentClass } from '../types';
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from 'path-to-regexp';
 
 export function overwrite(
   newProps: any,
