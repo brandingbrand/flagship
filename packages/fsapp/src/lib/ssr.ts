@@ -5,7 +5,7 @@ import type { default as helmetRoot, HelmetData } from 'react-helmet';
 import type { default as cookieParserRoot } from 'cookie-parser';
 import fs from 'fs-extra';
 import path from 'path';
-import pathToRegexp, { Key } from 'path-to-regexp';
+import { Key, pathToRegexp } from 'path-to-regexp';
 // tslint:disable:no-submodule-imports - submodule import is required here
 import ReactDOMServer from 'react-dom/server';
 import { inspect } from 'util';
