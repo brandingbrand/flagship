@@ -1,15 +1,8 @@
-import type {
-  AppRouterConstructor,
-  AppRouterOptions
-} from './types';
+import type { AppRouterConstructor, RouterConfig } from './types';
 import type { ActivatedRoute, Route, Routes } from '../types';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Navigation,
-  NavigationFunctionComponent,
-  OptionsBottomTab
-} from 'react-native-navigation';
+import { Navigation, NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
 
 import { ActivatedRouteProvider, NavigatorProvider } from '../context';
 import { NativeHistory } from '../History/NativeHistory';
@@ -20,9 +13,7 @@ import { resolveRoutes } from './utils';
 
 @StaticImplements<AppRouterConstructor>()
 export class AppRouter extends AppRouterBase {
-  public static async register(
-    options: AppRouterOptions & { name: string }
-  ): Promise<AppRouter> {
+  public static async register(options: RouterConfig): Promise<AppRouter> {
     const mergedRoutes = await resolveRoutes(options);
     const router = new AppRouter(mergedRoutes, options);
     return new Promise(resolve => {
@@ -32,10 +23,7 @@ export class AppRouter extends AppRouterBase {
     });
   }
 
-  private constructor(
-    routes: Routes,
-    private readonly options: AppRouterOptions
-  ) {
+  private constructor(routes: Routes, private readonly options: RouterConfig) {
     super(new NativeHistory(routes));
     this.registerRoutes(routes);
   }
@@ -61,9 +49,7 @@ export class AppRouter extends AppRouterBase {
         const LazyComponent = lazyComponent(
           async () => {
             const AwaitedComponent =
-              'component' in route
-                ? route.component
-                : await route.lazyComponent();
+              'component' in route ? route.component : await route.lazyComponent();
 
             return () => {
               const [loading, setLoading] = useState(false);
