@@ -19,7 +19,7 @@
     "@react-native-community/async-storage": "^1.9.0",
     "@loadable/component": "^5.14.1",
     "autobind-decorator": "^2.4.0",
-    "history": "^5.0.0",
+    "history": "^4.10.1",
     "lodash-es": "^4.17.10",
     "fs-extra": "^8.0.0",
     "path-to-regexp": "^6.2.0",
