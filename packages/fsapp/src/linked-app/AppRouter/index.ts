@@ -1,2 +1,2 @@
 export { AppRouter } from './AppRouter';
-export type { AppRouterOptions } from './types';
+export type { RouterConfig } from './types';

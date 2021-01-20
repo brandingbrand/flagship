@@ -1,9 +1,11 @@
-import type { ExternalRoutes, Routes } from '../types';
+import { ReactNode } from 'react';
+import type { ExternalRoutes, RouteComponentType, Routes } from '../types';
 
-export interface AppRouterOptions {
+export interface RouterConfig {
   routes: Routes;
   externalRoutes?: ExternalRoutes;
-  loading?: React.ReactNode;
+  loading?: ReactNode;
+  screenWrap?: (component: RouteComponentType) => RouteComponentType;
 }
 
 export interface AppRouter {
@@ -11,5 +13,5 @@ export interface AppRouter {
 }
 
 export interface AppRouterConstructor {
-  register(options: AppRouterOptions & { name: string }): Promise<AppRouter>;
+  register(options: RouterConfig & { name: string }): Promise<AppRouter>;
 }

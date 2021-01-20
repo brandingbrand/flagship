@@ -1,14 +1,17 @@
-import { AppRouterOptions } from '../AppRouter';
+import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
+import type { RouterConfig } from '../AppRouter';
+import type { GenericState, StoreConfig } from '../Store';
 
-export interface AppOptions {
-  name: string;
-  router: AppRouterOptions;
+export interface AppConfig<S extends GenericState> {
+  router: Omit<RouterConfig, 'screenWrap'>;
+  remote: FSNetworkRequestConfig;
+  state: StoreConfig<S>;
 }
 
 export interface App {
   openUrl(url: string) : void;
 }
 
-export interface AppConstructor {
-  bootstrap(options: AppOptions): Promise<App>;
+export interface AppConstructor<S = {}> {
+  bootstrap(options: AppConfig<S>): Promise<App>;
 }

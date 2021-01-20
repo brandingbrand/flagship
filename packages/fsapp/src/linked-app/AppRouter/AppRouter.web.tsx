@@ -1,5 +1,5 @@
 import type { ActivatedRoute, Route, Routes } from '../types';
-import { AppRouterConstructor, AppRouterOptions } from './types';
+import { AppRouterConstructor, RouterConfig } from './types';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { AppRegistry } from 'react-native';
@@ -17,9 +17,7 @@ import { resolveRoutes } from './utils';
 
 @StaticImplements<AppRouterConstructor>()
 export class AppRouter extends AppRouterBase {
-  public static async register(
-    options: AppRouterOptions & { name: string }
-  ): Promise<AppRouter> {
+  public static async register(options: RouterConfig): Promise<AppRouter> {
     const mergedRoutes = await resolveRoutes(options);
     const router = new AppRouter(mergedRoutes, options);
     return router;
@@ -27,24 +25,21 @@ export class AppRouter extends AppRouterBase {
 
   public constructor(
     private readonly routes: Routes,
-    private readonly routerOptions: AppRouterOptions & { name: string }
+    private readonly routerOptions: RouterConfig
   ) {
     super(new BrowserHistory(routes));
     this.registerRoutes();
   }
 
   private registerRoutes(): void {
-    AppRegistry.registerComponent(this.routerOptions.name, () => this.Outlet);
-    AppRegistry.runApplication(this.routerOptions.name, {
+    AppRegistry.registerComponent('Flagship', () => this.Outlet);
+    AppRegistry.runApplication('Flagship', {
       initialProps: {},
       rootTag: document.getElementById('app-root')
     });
   }
 
-  private constructRoutes = (
-    route: Route,
-    prefix?: string
-  ): JSX.Element | JSX.Element[] => {
+  private constructRoutes = (route: Route, prefix?: string): JSX.Element | JSX.Element[] => {
     const { id, path } = useMemo(() => buildPath(route, prefix), []);
     const [loading, setLoading] = useState(false);
     const [routeDetails, setRouteDetails] = useState<ActivatedRoute>();
@@ -58,19 +53,14 @@ export class AppRouter extends AppRouterBase {
     }, []);
 
     if ('lazyComponent' in route || 'component' in route) {
-      const LoadingPlaceholder = useMemo(
-        () => () => <>{this.routerOptions.loading}</>,
-        []
-      );
+      const LoadingPlaceholder = useMemo(() => () => <>{this.routerOptions.loading}</>, []);
 
       const LazyComponent = useMemo(
         () =>
           lazyComponent(
             async () => {
               const AwaitedComponent =
-                'lazyComponent' in route
-                  ? await route.lazyComponent()
-                  : route.component;
+                'lazyComponent' in route ? await route.lazyComponent() : route.component;
 
               return React.memo(() => <AwaitedComponent key={path} />);
             },
@@ -103,9 +93,7 @@ export class AppRouter extends AppRouterBase {
   private readonly Routes = () => {
     return (
       <NavigatorProvider value={this.history}>
-        <Switch>
-          {this.routes.map(child => this.constructRoutes(child))}
-        </Switch>
+        <Switch>{this.routes.map(child => this.constructRoutes(child))}</Switch>
       </NavigatorProvider>
     );
   }
