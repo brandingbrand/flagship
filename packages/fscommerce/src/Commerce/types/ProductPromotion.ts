@@ -32,14 +32,14 @@ export interface ProductPromotion {
    *
    * @example '2019-05-03T07:00Z'
    */
-  startDate: Date;
+  startDate?: Date;
 
   /**
    * End date of the promotion
    *
    * @example '2021-01-31T08:00Z'
    */
-  endDate: Date;
+  endDate?: Date;
 
   /**
    * Image for the promotion
