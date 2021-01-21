@@ -27,6 +27,7 @@ export * from './types/Product';
 export * from './types/ProductIndex';
 export * from './types/ProductItem';
 export * from './types/ProductQuery';
+export * from './types/ProductPromotion';
 export * from './types/Promo';
 export * from './types/SearchSuggestion';
 export * from './types/SessionToken';
