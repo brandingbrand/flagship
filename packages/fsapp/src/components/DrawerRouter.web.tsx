@@ -9,7 +9,7 @@ import {
   StaticRouter,
   Switch
 } from 'react-router-dom';
-import pathToRegexp, { Key } from 'path-to-regexp';
+import { compile, Key, pathToRegexp } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
@@ -131,7 +131,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         pathToRegexp(newPath, keys);
         // compile() cannot take an array, we don't need toPath for array values regardless
         if (typeof newPath === 'string') {
-          screens[key].toPath = pathToRegexp.compile(newPath);
+          screens[key].toPath = compile(newPath);
         }
         screens[key].paramKeys = keys;
       }
