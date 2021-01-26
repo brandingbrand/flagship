@@ -1,9 +1,21 @@
+import type { RouterHistory } from '../History';
+import type { AppRouter, AppRouterConstructor, RouterConfig } from './types';
+
 import { Linking } from 'react-native';
-import { RouterHistory } from '../History';
-import { AppRouter } from './types';
+
+import { resolveRoutes } from './utils';
 
 export abstract class AppRouterBase implements AppRouter {
-  protected constructor(protected history: RouterHistory) {}
+  protected static async createInstance<T extends AppRouterBase>(
+    This: AppRouterConstructor<T>,
+    options: RouterConfig
+  ): Promise<T> {
+    const mergedRoutes = await resolveRoutes(options);
+    return new This(mergedRoutes, options);
+  }
+
+  constructor(protected history: RouterHistory) {}
+
   public async open(url: string): Promise<void> {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
