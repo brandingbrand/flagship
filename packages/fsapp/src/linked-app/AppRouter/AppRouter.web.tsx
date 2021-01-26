@@ -1,42 +1,44 @@
 import type { ActivatedRoute, Route, Routes } from '../types';
-import { AppRouterConstructor, RouterConfig } from './types';
+import type { AppRouterConstructor, RouterConfig } from './types';
 
-import React, { useEffect, useMemo, useState } from 'react';
 import { AppRegistry } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Router } from 'react-router';
 import { Redirect, Route as Screen, Switch } from 'react-router-dom';
 
+import { History } from '../History';
 import { ActivatedRouteProvider, NavigatorProvider } from '../context';
-import { BrowserHistory } from '../History/BrowserHistory';
-
 import { buildPath, lazyComponent, StaticImplements } from '../utils';
 
 import { AppRouterBase } from './AppRouterBase';
-import { resolveRoutes } from './utils';
 
 @StaticImplements<AppRouterConstructor>()
 export class AppRouter extends AppRouterBase {
   public static async register(options: RouterConfig): Promise<AppRouter> {
-    const mergedRoutes = await resolveRoutes(options);
-    const router = new AppRouter(mergedRoutes, options);
-    return router;
+    return {
+      then: async callback => {
+        const router = await super.createInstance(this, options);
+        AppRegistry.runApplication('Flagship', {
+          initialProps: {},
+          rootTag: document.getElementById('app-root')
+        });
+
+        return callback?.(router);
+      }
+    };
   }
 
-  public constructor(
+  constructor(
     private readonly routes: Routes,
     private readonly routerOptions: RouterConfig
   ) {
-    super(new BrowserHistory(routes));
+    super(new History(routes));
     this.registerRoutes();
   }
 
   private registerRoutes(): void {
     AppRegistry.registerComponent('Flagship', () => this.Outlet);
-    AppRegistry.runApplication('Flagship', {
-      initialProps: {},
-      rootTag: document.getElementById('app-root')
-    });
   }
 
   private constructRoutes = (route: Route, prefix?: string): JSX.Element | JSX.Element[] => {

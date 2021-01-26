@@ -1,31 +1,67 @@
-import type { AppRouterConstructor, RouterConfig } from './types';
 import type { ActivatedRoute, Route, Routes } from '../types';
+import type { AppRouterConstructor, InternalRouterConfig, RouterConfig } from './types';
 
+import { Linking } from 'react-native';
 import React, { useEffect, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Navigation, NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
 
+import { History, stringifyLocation } from '../History';
 import { ActivatedRouteProvider, NavigatorProvider } from '../context';
-import { NativeHistory } from '../History/NativeHistory';
 import { buildPath, lazyComponent, StaticImplements } from '../utils';
 
 import { AppRouterBase } from './AppRouterBase';
-import { resolveRoutes } from './utils';
+
+const LAST_SCREEN_KEY = 'lastScreen';
+const DEV_KEEP_SCREEN = 'devKeepPage';
 
 @StaticImplements<AppRouterConstructor>()
 export class AppRouter extends AppRouterBase {
-  public static async register(options: RouterConfig): Promise<AppRouter> {
-    const mergedRoutes = await resolveRoutes(options);
-    const router = new AppRouter(mergedRoutes, options);
-    return new Promise(resolve => {
-      Navigation.events().registerAppLaunchedListener(() => {
-        resolve(router);
-      });
-    });
+  public static async register(options: RouterConfig & InternalRouterConfig): Promise<AppRouter> {
+    return {
+      then: async callback => {
+        const router = await super.createInstance(this, options);
+        Navigation.events().registerAppLaunchedListener(async () => {
+          Linking.addEventListener('url', ({ url }) => router.open(url));
+
+          const url = await Linking.getInitialURL();
+          if (url) {
+            await router.open(url);
+          } else {
+            const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
+            if (keepLastScreen === 'true') {
+              const url = await AsyncStorage.getItem(LAST_SCREEN_KEY);
+              if (url) {
+                await router.open(url);
+              }
+            }
+          }
+
+          callback?.(router);
+        });
+      }
+    };
   }
 
-  private constructor(routes: Routes, private readonly options: RouterConfig) {
-    super(new NativeHistory(routes));
+  constructor(routes: Routes, private readonly options: RouterConfig) {
+    super(new History(routes));
     this.registerRoutes(routes);
+    this.trackCurrentPage();
+  }
+
+  private trackCurrentPage(): void {
+    this.history.listen(async location => {
+      try {
+        const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
+
+        if (keepLastScreen === 'true') {
+          await AsyncStorage.setItem(LAST_SCREEN_KEY, JSON.stringify(stringifyLocation(location)));
+        }
+
+      } catch (e) {
+        console.log('Cannot get lastScreen from AsyncStorage', e);
+      }
+    });
   }
 
   private registerRoutes(

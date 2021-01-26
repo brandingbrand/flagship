@@ -7,6 +7,7 @@ import type {
   StackedLocation
 } from './types';
 
+import { InteractionManager } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -105,8 +106,7 @@ export class NativeHistory implements RouterHistory {
 
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
-
-        Navigation.events().registerAppLaunchedListener(async () => {
+        InteractionManager.runAfterInteractions(async () => {
           const activations = activatedPaths.map(async path => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
@@ -246,6 +246,7 @@ export class NativeHistory implements RouterHistory {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
       this.activeIndex = index;
+      this.lactationObservers.forEach(callback => callback(this.location, this.action));
     });
 
     Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex }) => {

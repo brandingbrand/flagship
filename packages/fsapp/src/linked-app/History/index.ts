@@ -1,4 +1,3 @@
-import type { RouterHistory } from './types';
-
 export { NativeHistory as History } from './NativeHistory';
-export type { RouterHistory };
+export { stringifyLocation } from './utils';
+export type { RouterHistory } from './types';
