@@ -15,7 +15,6 @@ const gifSupport = [
 
 const webPSupport = [
   'implementation \'com.facebook.fresco:animated-webp:2.1.0\'',
-  'implementation \'com.facebook.fresco:webpsupport:2.0.0\'',
   'implementation \'com.facebook.fresco:webpsupport:2.0.0\''
 ];
 
