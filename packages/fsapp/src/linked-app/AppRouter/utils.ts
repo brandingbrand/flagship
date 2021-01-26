@@ -1,7 +1,11 @@
 import type { RouteComponentType } from '../types';
-import type { RouterConfig } from './types';
+import type { InternalRouterConfig, RouterConfig } from './types';
 
-export const resolveRoutes = async ({ routes, externalRoutes, screenWrap }: RouterConfig) => {
+export const resolveRoutes = async ({
+  routes,
+  externalRoutes,
+  screenWrap
+}: RouterConfig & InternalRouterConfig) => {
   return [
     ...((await (typeof externalRoutes === 'function' ? externalRoutes() : externalRoutes)) ?? []),
     ...routes
