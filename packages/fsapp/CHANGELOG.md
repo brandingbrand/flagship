@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.1...v11.0.0-alpha.2) (2021-01-27)
+
+
+### Bug Fixes
+
+* **fsapp:** core fixes and refacoring after debuging ([6e9af39](https://github.com/brandingbrand/flagship/commit/6e9af396f6ccb44a66d10772c8ac3f1909b6a8b3))
+* **fsapp:** remove dangling import ([665ab5e](https://github.com/brandingbrand/flagship/commit/665ab5e8664d043eace283cbe79576f3608397e9))
+
+
+### Features
+
+* **fsapp:** clean linked-app abstractions ([483f06b](https://github.com/brandingbrand/flagship/commit/483f06be768d2bcdbb1f2703d6042613df0f2c68))
+
+
+
+
+
 # [11.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v11.0.0-alpha.1) (2021-01-25)
 
 
