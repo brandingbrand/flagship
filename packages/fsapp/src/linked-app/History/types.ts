@@ -5,7 +5,9 @@ import type {
   TransitionPromptHook,
   UnregisterCallback
 } from 'history';
+
 import type { ActivatedRoute } from '../types';
+import type { ModalComponentType } from '../Modals';
 
 export type ResolverListener = (route: ActivatedRoute) => void;
 export type LoadingListener = (loading: boolean) => void;
@@ -31,8 +33,8 @@ export interface RouterHistory extends History {
 }
 
 export type Blocker = string | boolean | TransitionPromptHook;
-export type StackedLocation = Location & { stack: number };
+export type StackedLocation = Readonly<Location> & { readonly stack: number };
 export interface Stack {
-  id: string;
-  children: Location[];
+  readonly id: string;
+  readonly children: Readonly<Location>[];
 }

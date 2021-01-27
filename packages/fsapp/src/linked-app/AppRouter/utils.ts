@@ -2,12 +2,13 @@ import type { RouteComponentType } from '../types';
 import type { InternalRouterConfig, RouterConfig } from './types';
 
 export const resolveRoutes = async ({
+  api,
   routes,
   externalRoutes,
   screenWrap
 }: RouterConfig & InternalRouterConfig) => {
   return [
-    ...((await (typeof externalRoutes === 'function' ? externalRoutes() : externalRoutes)) ?? []),
+    ...(await(typeof externalRoutes === 'function' ? externalRoutes(api) : externalRoutes) ?? []),
     ...routes
   ].map(route => {
     if ('component' in route) {
