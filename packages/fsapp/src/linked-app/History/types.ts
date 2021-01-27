@@ -7,7 +7,6 @@ import type {
 } from 'history';
 
 import type { ActivatedRoute } from '../types';
-import type { ModalComponentType } from '../Modals';
 
 export type ResolverListener = (route: ActivatedRoute) => void;
 export type LoadingListener = (loading: boolean) => void;
