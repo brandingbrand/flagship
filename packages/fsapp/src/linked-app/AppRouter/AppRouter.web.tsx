@@ -1,5 +1,5 @@
 import type { ActivatedRoute, Route, Routes } from '../types';
-import type { AppRouterConstructor, RouterConfig } from './types';
+import type { AppRouterConstructor, InternalRouterConfig, RouterConfig } from './types';
 
 import { AppRegistry } from 'react-native';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -12,16 +12,21 @@ import { ActivatedRouteProvider, NavigatorProvider } from '../context';
 import { buildPath, lazyComponent, StaticImplements } from '../utils';
 
 import { AppRouterBase } from './AppRouterBase';
+import { ModalProvider } from '../Modals/modal.provider';
 
 @StaticImplements<AppRouterConstructor>()
 export class AppRouter extends AppRouterBase {
-  public static async register(options: RouterConfig): Promise<AppRouter> {
+  public static async register(options: RouterConfig & InternalRouterConfig): Promise<AppRouter> {
+    const rootTag =
+      (typeof options.root === 'string' ? document.querySelector(options.root) : options.root) ??
+      document.getElementById('root');
+
     return {
       then: async callback => {
         const router = await super.createInstance(this, options);
         AppRegistry.runApplication('Flagship', {
-          initialProps: {},
-          rootTag: document.getElementById('app-root')
+          rootTag,
+          initialProps: {}
         });
 
         return callback?.(router);
@@ -29,10 +34,7 @@ export class AppRouter extends AppRouterBase {
     };
   }
 
-  constructor(
-    private readonly routes: Routes,
-    private readonly routerOptions: RouterConfig
-  ) {
+  constructor(private readonly routes: Routes, private readonly routerOptions: RouterConfig) {
     super(new History(routes));
     this.registerRoutes();
   }
@@ -74,12 +76,14 @@ export class AppRouter extends AppRouterBase {
       return (
         <Screen key={id} path={path} exact={route.exact}>
           <ActivatedRouteProvider {...{ ...routeDetails, loading }}>
-            <LazyComponent key={path} />
+            <ModalProvider>
+              <LazyComponent key={path} />
+            </ModalProvider>
           </ActivatedRouteProvider>
         </Screen>
       );
     } else if ('redirect' in route) {
-      return <Redirect key={id} path={path} to={route.redirect} />;
+      return <Redirect key={id} path={path} to={route.redirect} exact={route.exact} />;
     } else if ('children' in route) {
       return route.children
         .map(child => this.constructRoutes(child, path))
@@ -101,9 +105,11 @@ export class AppRouter extends AppRouterBase {
   }
 
   private readonly Outlet = () => {
+    const Routes = this.Routes;
+
     return (
       <Router history={this.history}>
-        <this.Routes />
+        <Routes />
       </Router>
     );
   }

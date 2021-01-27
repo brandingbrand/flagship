@@ -1,3 +1,4 @@
+import type { ModalComponentType } from '../Modals';
 import type {
   Blocker,
   LoadingListener,
@@ -7,7 +8,7 @@ import type {
   StackedLocation
 } from './types';
 
-import { InteractionManager } from 'react-native';
+import { InteractionManager, Linking } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -39,6 +40,7 @@ import {
   stringifyLocation
 } from './utils-native';
 import { Matchers } from './utils';
+import { MODALS_STACK, ROOT_STACK } from './constants';
 
 export class NativeHistory implements RouterHistory {
   public get stack(): Stack | undefined {
@@ -53,6 +55,10 @@ export class NativeHistory implements RouterHistory {
     return this.store[this.activeIndex] ?? parsePath('');
   }
 
+  public get modal(): string | undefined {
+    return this.modals[this.modals.length];
+  }
+
   public readonly length: number = 50;
 
   private readonly matchers: Matchers = buildMatchers(this.routes);
@@ -62,12 +68,15 @@ export class NativeHistory implements RouterHistory {
   private readonly store: StackedLocation[] = [];
 
   private activeStack: number = -1;
-  private readonly stacks: Stack[] = [];
+  private readonly stacks: Readonly<Stack>[] = [];
+  private readonly modals: Readonly<string>[] = [];
 
-  private readonly resolveObservers: Map<string, Map<string, ResolverListener>> = new Map();
+  private modalUnblock: UnregisterCallback | undefined;
   private readonly blockers: Map<string, Blocker> = new Map();
+  private readonly resolveObservers: Map<string, Map<string, ResolverListener>> = new Map();
   private readonly lactationObservers: Map<string, LocationListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
+
   constructor(private readonly routes: Routes) {
     this.observeNavigation();
 
@@ -146,8 +155,14 @@ export class NativeHistory implements RouterHistory {
   public push(location: LocationDescriptor): Promise<void>;
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
-    const newLocation = await this.getNextLocation(to, state);
-    await this.updateLocation(newLocation, 'PUSH');
+    if (typeof to === 'string' && /\w+:\/\//.exec(to)) {
+      await Linking.openURL(to);
+    } else if (typeof to !== 'string' && to.pathname && /\w+:\/\//.exec(to.pathname)) {
+      await Linking.openURL(to.pathname);
+    } else {
+      const newLocation = await this.getNextLocation(to, state);
+      await this.updateLocation(newLocation, 'PUSH');
+    }
   }
 
   public replace(path: string, state?: unknown): Promise<void>;
@@ -242,6 +257,78 @@ export class NativeHistory implements RouterHistory {
     return stringifyLocation(location);
   }
 
+  // TODO: Animations, Styles
+  @boundMethod
+  public async showModal<T>(modal: ModalComponentType<T>): Promise<T> {
+    if (!this.modalUnblock) {
+      this.modalUnblock = this.block();
+    }
+
+    return new Promise<T>(async (resolvePromise, rejectPromise) => {
+      const id = uniqueId(modal.type);
+
+      const resolve = async (data: T) => {
+        resolvePromise(data);
+        await this.dismissModal(id);
+      };
+
+      const reject = async () => {
+        rejectPromise();
+        await this.dismissModal(id);
+      };
+
+      await Navigation.showModal({
+        stack: {
+          id: MODALS_STACK,
+          children: [
+            {
+              component: {
+                id,
+                name: modal.type,
+                options: {
+                  modal: modal.options
+                },
+                passProps: {
+                  resolve,
+                  reject
+                }
+              }
+            }
+          ]
+        }
+      });
+
+      this.modals.push(id);
+    });
+  }
+
+  // TODO: Animation Type
+  @boundMethod
+  public async dismissModal(modalId?: string): Promise<void> {
+    const id = modalId ?? this.modal;
+
+    if (id) {
+      await Navigation.dismissModal(id);
+      const index = this.modals.indexOf(id);
+      this.modals.splice(index, 1);
+
+      if (!this.modals.length) {
+        this.modalUnblock?.();
+        this.modalUnblock = undefined;
+      }
+    }
+  }
+
+  // TODO: Animation Type
+  @boundMethod
+  public async dismissAllModals(): Promise<void> {
+    await Navigation.dismissAllModals();
+
+    this.modals.splice(0);
+    this.modalUnblock?.();
+    this.modalUnblock = undefined;
+  }
+
   private observeNavigation(): void {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
@@ -274,6 +361,15 @@ export class NativeHistory implements RouterHistory {
           }
         }
       });
+    });
+
+    Navigation.events().registerModalDismissedListener(({ modalsDismissed, componentId }) => {
+      if (modalsDismissed === 1) {
+        const index = this.modals.indexOf(componentId);
+        this.modals.splice(index, 1);
+      } else {
+        this.modals.splice(0);
+      }
     });
   }
 
@@ -329,8 +425,9 @@ export class NativeHistory implements RouterHistory {
                 typeof matchingRoute.title === 'function'
                   ? await matchingRoute.title({
                     data: matchingRoute.data ?? {},
-                    params: matchingRoute.params ?? {},
                     query: matchingRoute.params ?? {},
+                    params: matchingRoute.params ?? {},
+                    path: matchingRoute.matchedPath,
                     loading: true
                   })
                   : matchingRoute.title;
@@ -338,7 +435,7 @@ export class NativeHistory implements RouterHistory {
               this.store.push(location);
               this.activeIndex = this.store.length - 1;
               this.stacks[location.stack].children.push(location);
-              await Navigation.push(this.stack?.id ?? 'ROOT', {
+              await Navigation.push(this.stack?.id ?? ROOT_STACK, {
                 component: {
                   name: matchingRoute.id,
                   id: location.key,
@@ -378,6 +475,7 @@ export class NativeHistory implements RouterHistory {
       data: resolvedData,
       query: matchingRoute.query,
       params: matchingRoute.params,
+      path: matchingRoute.matchedPath,
       loading: true
     };
   }
@@ -412,7 +510,7 @@ export class NativeHistory implements RouterHistory {
   private async switchStack(stack: number | string): Promise<void> {
     const potentialTab = this.getStack(stack);
     const updatedTab = potentialTab !== -1 ? potentialTab : this.activeStack;
-    Navigation.mergeOptions('ROOT', {
+    Navigation.mergeOptions(ROOT_STACK, {
       bottomTabs: {
         currentTabIndex: updatedTab
       }

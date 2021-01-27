@@ -75,6 +75,7 @@ export class AppRouter extends AppRouterBase {
         data: {},
         params: {},
         query: {},
+        path: undefined,
         loading: true
       };
       this.history.registerResolver(id, details => {

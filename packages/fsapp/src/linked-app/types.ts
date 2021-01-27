@@ -1,5 +1,6 @@
+import FSNetwork from '@brandingbrand/fsnetwork';
 import { ParsedQs } from 'qs';
-import { FC, PureComponent } from 'react';
+import { Component, FC } from 'react';
 import { OptionsBottomTab } from 'react-native-navigation';
 
 /**
@@ -17,10 +18,7 @@ import { OptionsBottomTab } from 'react-native-navigation';
  * @see useRouteData - hook into the the data context
  */
 export type RouteFC = FC;
-export abstract class RouteComponent<State = {}> extends PureComponent<
-  {},
-  State
-> {}
+export abstract class RouteComponent<State = {}> extends Component<{}, State> {}
 export type RouteComponentType = RouteFC | typeof RouteComponent;
 export type Tab = string | OptionsBottomTab;
 
@@ -29,6 +27,7 @@ export type RouteParams = Record<string, string | undefined>;
 export type RouteQuery = ParsedQs;
 
 export interface ActivatedRoute {
+  path: string | undefined;
   loading: boolean;
   data: RouteData;
   params: RouteParams;
@@ -39,14 +38,10 @@ export interface Resolver<Data = unknown> {
   resolve(): Data | Promise<Data>;
 }
 
-export type ResolverConstructor<Data = unknown> = new (
-  route: ActivatedRoute
-) => Resolver<Data>;
+export type ResolverConstructor<Data = unknown> = new (route: ActivatedRoute) => Resolver<Data>;
 
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
-export type ResolverFunction<Data = unknown> = (
-  route: ActivatedRoute
-) => Data | Promise<Data>;
+export type ResolverFunction<Data = unknown> = (route: ActivatedRoute) => Data | Promise<Data>;
 
 // Uses a similar pattern to that of the Angular and Vue
 // Routers, this should make it familiar to those who have
@@ -60,9 +55,7 @@ export interface BaseRoute {
 export interface ComponentRoute extends BaseRoute {
   component: RouteComponentType;
 
-  title:
-    | string
-    | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
+  title: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
 
   // Used to pass in static data
   data?: RouteData;
@@ -145,7 +138,7 @@ export type Routes = readonly Route[];
  * Routes that will be loaded asynchronously at the start of
  * the application
  */
-export type ExternalRoutes = Promise<Routes> | (() => Routes | Promise<Routes>);
+export type ExternalRoutes = Promise<Routes> | ((api?: FSNetwork) => Routes | Promise<Routes>);
 
 export type IndexedComponentRoute =
   | (ComponentRoute & {

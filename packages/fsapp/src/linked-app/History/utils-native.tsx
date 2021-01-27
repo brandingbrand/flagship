@@ -7,6 +7,8 @@ import { Layout, Navigation } from 'react-native-navigation';
 import { uniqueId } from 'lodash-es';
 
 import { Matchers, matchRoute } from './utils';
+import { ROOT_STACK } from './constants';
+
 
 export const isTabRoute = (route: Route): route is TopLevelParentRoute =>
   'tab' in route;
@@ -20,7 +22,7 @@ export const createStack = ([component, title]: readonly [
   string
 ]): Layout => ({
   stack: {
-    id: component.tabAffinity || 'ROOT',
+    id: component.tabAffinity || ROOT_STACK,
     children: [
       {
         component: {
@@ -47,8 +49,9 @@ export const applyMatcher = async (
       typeof component.title === 'function'
         ? await component.title({
           data: component.data ?? {},
-          params: component.params,
           query: component.query,
+          params: component.params,
+          path: component.matchedPath,
           loading: true
         })
         : component.title;
@@ -72,7 +75,7 @@ const makeErrorComponent = (error: string): Layout => {
   Navigation.registerComponent(id, () => () => <Text>Error: {error}</Text>);
   return {
     stack: {
-      id: 'ROOT',
+      id: ROOT_STACK,
       children: [
         {
           component: {
@@ -98,7 +101,7 @@ export const makeRootLayout = async (
   if (tabs.length > 1) {
     return {
       bottomTabs: {
-        id: 'ROOT',
+        id: ROOT_STACK,
         children: tabs
       }
     };

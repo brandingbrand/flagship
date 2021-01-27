@@ -1,9 +1,10 @@
+import type { VideoBlockProps } from './VideoBlock.native';
+
 import React from 'react';
 import {
   View
 } from 'react-native';
 import ReactPlayer from 'react-player';
-import { VideoBlockProps } from './VideoBlock.native';
 
 export interface VideoProgressStateWeb {
   played: number;

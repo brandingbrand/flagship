@@ -1,36 +1,44 @@
-import type { AppConfig, AppConstructor } from './types';
+import type { App, AppConfig, AppConstructor } from './types';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { boundMethod } from 'autobind-decorator';
 
 import { AppRouter } from '../AppRouter';
 import { GenericState, StoreManager } from '../Store';
-import { makeScreenWrapper } from './screen-wrapper';
+import { makeScreenWrapper } from './screen.wrapper';
 
-export abstract class AppBase {
+export abstract class AppBase implements App {
   public static async bootstrap<S extends GenericState, T extends AppBase>(
     this: AppConstructor<T, S>,
     config: AppConfig<S>
-  ): Promise<AppBase> {
-    const api = new FSNetwork(config.remote);
-    const storeManager = new StoreManager(config.state);
+  ): Promise<T> {
+    const api = config.remote ? new FSNetwork(config.remote) : undefined;
+    const storeManager = config.state ? new StoreManager(config.state) : undefined;
 
     const version = await this.getVersion(config);
-    const store = await storeManager.getReduxStore(await storeManager.updatedInitialState());
+    const store = await storeManager?.getReduxStore(await storeManager.updatedInitialState());
 
+    let app: T | undefined;
     const router = await AppRouter.register({
-      screenWrap: makeScreenWrapper({ api, store }),
+      api,
+      screenWrap: makeScreenWrapper({
+        api,
+        store,
+        app: () => app
+      }),
       ...config.router
     });
 
-    return new this(version, router, api);
+    app = new this(version, router);
+    return app;
   }
 
   constructor(
-    public readonly version: string | undefined,
-    protected readonly router: AppRouter,
-    protected readonly api: FSNetwork
+    public readonly version: string,
+    protected readonly router: AppRouter
   ) {}
 
+  @boundMethod
   public async openUrl(url: string): Promise<void> {
     await this.router.open(url);
   }
