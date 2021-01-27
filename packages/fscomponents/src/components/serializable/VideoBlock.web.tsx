@@ -1,17 +1,10 @@
-import type { VideoBlockProps } from './VideoBlock.native';
+import type { VideoBlockProps, VideoProgressStateWeb } from './VideoBlock.types';
 
 import React from 'react';
 import {
   View
 } from 'react-native';
 import ReactPlayer from 'react-player';
-
-export interface VideoProgressStateWeb {
-  played: number;
-  playedSeconds: number;
-  loaded: number;
-  loadedSeconds: number;
-}
 
 export const VideoBlock = React.memo((props: VideoBlockProps) => {
   const { source, autoPlay, repeat, resizeMode, style, fullscreen, ...restProps } = props;
