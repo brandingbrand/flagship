@@ -19,6 +19,8 @@ import { promisedEntries } from '../utils';
 
 import { buildMatchers, matchRoute, resolveRoute, stringifyLocation } from './utils-web';
 import { Matchers } from './utils';
+import { ModalComponentType } from '../Modals';
+import { useModalService } from '../Modals/modal.provider';
 
 export class BrowserHistory implements RouterHistory {
   private get nextLoad(): Promise<void> {
@@ -33,12 +35,21 @@ export class BrowserHistory implements RouterHistory {
   public get length(): number {
     return this.browserHistory.length;
   }
+
   public get action(): Action {
     return this._action;
   }
+
   public get location(): Location<unknown> {
     return this._location;
   }
+
+  public get modal(): string | undefined {
+    return this.modals[this.modals.length];
+  }
+
+  private modalUnblock: UnregisterCallback | undefined;
+  private readonly modals: Readonly<string>[] = [];
 
   private readonly matchers: Matchers = buildMatchers(this.routes);
   private readonly browserHistory: History = createBrowserHistory();
@@ -73,9 +84,17 @@ export class BrowserHistory implements RouterHistory {
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
     if (typeof to === 'string') {
-      this.browserHistory.push(to, state);
+      if (/\w+:\/\//.exec(to)) {
+        window.location.href = to;
+      } else {
+        this.browserHistory.push(to, state);
+      }
     } else {
-      this.browserHistory.push(to);
+      if (to.pathname && /\w+:\/\//.exec(to.pathname)) {
+        window.location.href = to.pathname;
+      } else {
+        this.browserHistory.push(to);
+      }
     }
     await this.nextLoad;
   }
@@ -164,11 +183,58 @@ export class BrowserHistory implements RouterHistory {
     return this.browserHistory.createHref(location);
   }
 
+  @boundMethod
+  // TODO: Fix modalService reference
+  public async showModal<T>(Modal: ModalComponentType<T>): Promise<T> {
+    const service = useModalService();
+    if (!this.modalUnblock) {
+      this.modalUnblock = this.block();
+    }
+
+    return new Promise<T>((resolve, reject) => {
+      const id = uniqueId(Modal.type);
+      service.createModal(id, [Modal, resolve, reject]);
+
+      this.modals.push(id);
+    });
+  }
+
+  @boundMethod
+  public async dismissModal(modalId?: string): Promise<void> {
+    const service = useModalService();
+    const id = modalId ?? this.modal;
+    if (id) {
+      service.dismissModal(id);
+      const index = this.modals.indexOf(id);
+      this.modals.splice(index, 1);
+
+      if (!this.modals.length) {
+        this.modalUnblock?.();
+        this.modalUnblock = undefined;
+      }
+    }
+  }
+
+  @boundMethod
+  public async dismissAllModals(): Promise<void> {
+    const service = useModalService();
+    service.dismissAllModals();
+
+    this.modals.splice(0);
+    this.modalUnblock?.();
+    this.modalUnblock = undefined;
+  }
+
   private async initialNavigation(): Promise<void> {
     const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
 
     if (matchingRoute) {
-      return this.activateRoute(matchingRoute);
+      await this.activateRoute(matchingRoute);
+      this._action = this.browserHistory.action;
+      this._location = this.browserHistory.location;
+      this.locationObservers.forEach(listener => {
+        listener(this.browserHistory.location, this.browserHistory.action);
+      });
     }
   }
 
@@ -216,6 +282,7 @@ export class BrowserHistory implements RouterHistory {
       data: resolvedData,
       query: matchingRoute.query,
       params: matchingRoute.params,
+      path: matchingRoute.matchedPath,
       loading: true
     };
   }

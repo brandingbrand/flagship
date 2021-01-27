@@ -14,7 +14,7 @@ import type {
 import { createPath, LocationDescriptor, parsePath } from 'history';
 import { parse } from 'qs';
 
-import { match, MatchFunction } from 'path-to-regexp';
+import pathToRegexp, { Key } from 'path-to-regexp';
 
 import { buildPath } from '../utils';
 import { fromPairs } from 'lodash-es';
@@ -35,18 +35,38 @@ export const mapPromisedChildren = async <T extends any>(
   return mappedChildren.reduce((prev, next) => [...prev, ...next], []);
 };
 
+const matchPath = (path: string | undefined, route: Route) => {
+  return (checkPath: string) => {
+    const keys: Key[] = [];
+    const regex = pathToRegexp(path ?? '', keys, { strict: route.exact });
+    const [url, ...params] = regex.exec(checkPath.split('?')[ 0 ]) ?? [];
+    return url
+      ? {
+        params: keys.reduce<Record<string, string>>((memo, key, index) => {
+          memo[ key.name ] = params[ index ];
+          return memo;
+        }, {})
+      }
+      : undefined;
+  };
+};
+
 const buildMatcher = async (
   route: Route,
   tab: string | OptionsBottomTab = '',
   prefix = ''
-): Promise<(readonly [MatchFunction, IndexedComponentRoute | RedirectRoute])[]> => {
+): Promise<
+  (readonly [
+    (checkPath: string) => { params: Record<string, string | undefined> } | undefined,
+    IndexedComponentRoute | RedirectRoute
+  ])[]
+> => {
   const { id, path } = buildPath(route, prefix);
 
   const matchingRoute =
     'component' in route || 'lazyComponent' in route
       ? ([
-        (checkPath: string) =>
-            match(path ?? '', { strict: route.exact })(checkPath.split('?')[0]),
+        matchPath(path, route),
         {
           id,
           tabAffinity: typeof tab === 'string' ? tab : tab.text,
@@ -57,7 +77,7 @@ const buildMatcher = async (
 
   const matchingRedirect =
     !matchingRoute && 'redirect' in route
-      ? ([match(path ?? '', { strict: route.exact }), route] as const)
+      ? ([matchPath(path, route), route] as const)
       : undefined;
 
   const children =
@@ -112,8 +132,9 @@ export const resolveRoute = (route: MatchingRoute): RouteData => {
       key,
       resolve(resolver, {
         data: route.data ?? {},
-        params: route.params,
         query: route.query,
+        params: route.params,
+        path: route.matchedPath,
         loading: true
       })
     ])
@@ -138,7 +159,7 @@ export const matchRoute = async (
     if (matched && 'id' in route) {
       return {
         ...route,
-        params: matched.params as Record<string, string | undefined>,
+        params: matched.params,
         query: parse(search),
         matchedPath: path
       };

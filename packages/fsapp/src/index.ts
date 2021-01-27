@@ -11,3 +11,5 @@ export * from './lib/helpers';
 export { default as Navigator } from './lib/nav-wrapper';
 
 export { env, FSApp, FSAppTypes };
+
+export * from './linked-app';
