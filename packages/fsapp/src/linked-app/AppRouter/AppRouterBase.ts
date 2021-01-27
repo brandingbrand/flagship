@@ -1,5 +1,5 @@
 import type { RouterHistory } from '../History';
-import type { AppRouter, AppRouterConstructor, RouterConfig } from './types';
+import type { AppRouter, AppRouterConstructor, InternalRouterConfig, RouterConfig } from './types';
 
 import { Linking } from 'react-native';
 
@@ -8,7 +8,7 @@ import { resolveRoutes } from './utils';
 export abstract class AppRouterBase implements AppRouter {
   protected static async createInstance<T extends AppRouterBase>(
     This: AppRouterConstructor<T>,
-    options: RouterConfig
+    options: RouterConfig & InternalRouterConfig
   ): Promise<T> {
     const mergedRoutes = await resolveRoutes(options);
     return new This(mergedRoutes, options);

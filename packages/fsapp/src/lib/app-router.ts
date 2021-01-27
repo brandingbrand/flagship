@@ -2,7 +2,7 @@
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { LayoutComponent } from 'react-native-navigation';
 import Navigator from './nav-wrapper';
-import { Key, pathToRegexp } from 'path-to-regexp';
+import pathToRegexp, { Key } from 'path-to-regexp';
 import { Platform } from 'react-native';
 import {
   AppConfigType,

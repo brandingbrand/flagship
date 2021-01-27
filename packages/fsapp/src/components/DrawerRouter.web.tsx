@@ -9,7 +9,7 @@ import {
   StaticRouter,
   Switch
 } from 'react-router-dom';
-import { compile, Key, pathToRegexp } from 'path-to-regexp';
+import pathToRegexp, { compile, Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
