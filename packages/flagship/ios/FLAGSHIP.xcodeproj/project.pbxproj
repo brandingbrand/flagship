@@ -33,7 +33,7 @@
 		1484123B2315883E00E8D031 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FLAGSHIP/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = FLAGSHIP/ADBMobileConfig.json; sourceTree = "<group>"; };
 		289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EnvSwitcher.m; path = FLAGSHIP/EnvSwitcher.m; sourceTree = "<group>"; };
-		28AB2B671F9176780083673A /* FLAGSHIP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FLAGSHIP.entitlements; path = FLAGSHIP/FLAGSHIP.entitlements; sourceTree = "<group>"; };
+		28AB2B671F9176780083673A /* Flagship.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flagship.entitlements; path = FLAGSHIP/Flagship.entitlements; sourceTree = "<group>"; };
 		2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLAGSHIP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP.debug.xcconfig"; sourceTree = "<group>"; };
 		8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FLAGSHIP/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B48111A22B00C440025490E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -59,12 +59,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* FLAGSHIP */ = {
+		13B07FAE1A68108700A75B9A /* Flagship */ = {
 			isa = PBXGroup;
 			children = (
 				1484123B2315883E00E8D031 /* LaunchScreen.storyboard */,
 				8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */,
-				28AB2B671F9176780083673A /* FLAGSHIP.entitlements */,
+				28AB2B671F9176780083673A /* Flagship.entitlements */,
 				F93CD76E2065853300B6E5F3 /* CodePush.h */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -77,7 +77,7 @@
 				F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */,
 				14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */,
 			);
-			name = FLAGSHIP;
+			name = Flagship;
 			sourceTree = "<group>";
 		};
 		7701A92A99A4D944A5436FFA /* Frameworks */ = {
@@ -100,7 +100,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* FLAGSHIP */,
+				13B07FAE1A68108700A75B9A /* Flagship */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B85264EC2595B591EE3417D0 /* Pods */,
