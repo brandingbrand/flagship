@@ -38,7 +38,7 @@ import {
   matchStack,
   resolveRoute,
   stringifyLocation
-} from './utils';
+} from './utils.native';
 import { Matchers } from './utils.base';
 import { ROOT_STACK } from './constants';
 
