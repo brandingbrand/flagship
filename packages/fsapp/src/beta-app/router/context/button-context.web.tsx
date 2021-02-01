@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react';
-import { NOTHING_BURGER } from '../../utils.base';
+import { createContext, Fragment, useContext } from 'react';
 
 export interface ButtonContextOptions {
   onPress(buttonID: string, callback: () => void): void;
@@ -11,4 +10,4 @@ export const ButtonContext = createContext<ButtonContextOptions>({
 });
 export const useButtons = () => useContext(ButtonContext);
 
-export const ButtonProvider = NOTHING_BURGER;
+export const ButtonProvider = Fragment;

@@ -8,12 +8,12 @@ import type {
   Routes
 } from './types';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Navigation, NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
 
 import { History, stringifyLocation } from './history';
-import { buildPath, lazyComponent, NOTHING_BURGER, StaticImplements } from '../utils';
+import { buildPath, lazyComponent, StaticImplements } from '../utils';
 import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { VersionOverlay } from '../development/version-overlay.component';
 import { ModalProvider } from '../modal';
@@ -93,7 +93,7 @@ export class FSRouter extends FSRouterBase {
           { fallback: <LoadingPlaceholder /> }
         );
 
-        const Wrapper = this.options.screenWrap ?? NOTHING_BURGER;
+        const Wrapper = this.options.screenWrap ?? Fragment;
         const WrappedComponent: NavigationFunctionComponent = () => (
           <Wrapper>
             <NavigatorProvider value={this.history}>

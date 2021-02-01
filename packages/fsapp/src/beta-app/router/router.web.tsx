@@ -8,7 +8,7 @@ import type {
 } from './types';
 
 import { AppRegistry } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 
 import { Router } from 'react-router';
 import { Redirect, Route as Screen, Switch } from 'react-router-dom';
@@ -23,7 +23,6 @@ import { ActivatedRouteProvider, NavigatorProvider } from './context';
 import { FSRouterBase } from './router.base';
 import { History } from './history';
 import { trackView } from './utils';
-import { NOTHING_BURGER } from '../utils.base';
 
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
@@ -33,7 +32,7 @@ export class FSRouter extends FSRouterBase {
   }
 
   private registerRoutes(): void {
-    const Wrapper = this.options.screenWrap ?? NOTHING_BURGER;
+    const Wrapper = this.options.screenWrap ?? Fragment;
     AppRegistry.registerComponent('Flagship', () => () => (
       <Wrapper>
         <this.Outlet />

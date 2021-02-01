@@ -1,5 +1,4 @@
 import type { Dictionary } from '@brandingbrand/fsfoundation';
-import type { FC } from 'react';
 import type { Route } from './router';
 
 import loadable from '@loadable/component';
@@ -30,5 +29,3 @@ export const promisedEntries = async (data: Dictionary<unknown>) => {
 };
 
 export type Mutable<T> = { -readonly [P in keyof T]?: T[P] };
-
-export const NOTHING_BURGER: FC = ({ children }) => <>{children}</>;
