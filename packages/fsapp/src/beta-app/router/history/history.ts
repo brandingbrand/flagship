@@ -110,7 +110,7 @@ export class History implements FSRouterHistory {
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
         InteractionManager.runAfterInteractions(async () => {
-          const activations = activatedPaths.map(async (path, i) => {
+          const activations = activatedPaths.map(async path => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
               const activatedRoute = await this.resolveRouteDetails(matchingRoute);
