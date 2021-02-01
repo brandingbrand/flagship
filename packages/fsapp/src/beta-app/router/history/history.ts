@@ -2,6 +2,7 @@ import type {
   Blocker,
   FSRouterHistory,
   LoadingListener,
+  RequiredTitle,
   ResolverListener,
   Stack,
   StackedLocation
@@ -109,7 +110,7 @@ export class History implements FSRouterHistory {
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
         InteractionManager.runAfterInteractions(async () => {
-          const activations = activatedPaths.map(async path => {
+          const activations = activatedPaths.map(async (path, i) => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
               const activatedRoute = await this.resolveRouteDetails(matchingRoute);
@@ -243,6 +244,20 @@ export class History implements FSRouterHistory {
     return stringifyLocation(location);
   }
 
+  @boundMethod
+  public updateTitle(title: RequiredTitle): void {
+    Navigation.mergeOptions(stringifyLocation(this.location), {
+      topBar: {
+        title:
+          typeof title === 'string'
+            ? {
+              text: title
+            }
+            : title
+      }
+    });
+  }
+
   private observeNavigation(): void {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
@@ -340,13 +355,23 @@ export class History implements FSRouterHistory {
               this.store.push(location);
               this.activeIndex = this.store.length - 1;
               this.stacks[location.stack].children.push(location);
+              const componentOptions =
+                'component' in matchingRoute
+                  ? matchingRoute.component
+                  : await matchingRoute.lazyComponent();
+
               await Navigation.push(this.stack?.id ?? ROOT_STACK, {
                 component: {
                   name: matchingRoute.id,
                   id: location.key,
                   options: {
                     topBar: {
+                      rightButtons: undefined,
+                      leftButtons: undefined,
+                      ...matchingRoute.topBarStyle,
+                      ...componentOptions.buttons,
                       title: {
+                        ...matchingRoute.topBarStyle?.title,
                         text: title
                       }
                     }

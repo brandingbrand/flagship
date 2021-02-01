@@ -1,5 +1,5 @@
 import type { ActivatedRoute, MatchingRoute, Routes } from '../types';
-import type { FSRouterHistory, LoadingListener, ResolverListener } from './types';
+import type { FSRouterHistory, LoadingListener, RequiredTitle, ResolverListener } from './types';
 
 import { boundMethod } from 'autobind-decorator';
 import {
@@ -167,6 +167,11 @@ export class History implements FSRouterHistory {
     return this.browserHistory.createHref(location);
   }
 
+  @boundMethod
+  public updateTitle(title: RequiredTitle): void {
+    document.title = typeof title === 'string' ? title : title.text;
+  }
+
   private async initialNavigation(): Promise<void> {
     const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
 
@@ -187,10 +192,14 @@ export class History implements FSRouterHistory {
       listener(activatedRoute);
     });
 
-    document.title =
+    const title =
       typeof matchingRoute.title === 'function'
         ? await matchingRoute.title(activatedRoute)
         : matchingRoute.title;
+
+    if (title) {
+      document.title = title;
+    }
 
     this.setLoading(false);
   }

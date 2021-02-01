@@ -13,8 +13,11 @@ export {
   useRouteLoading,
   useRouteParams,
   useRoutePath,
-  useRouteQuery
+  useRouteQuery,
+  ButtonContext,
+  useButtons
 } from './context';
+export { ScreenProps, makeScreen } from './make-screen';
 
 export type {
   RouterConfig,
@@ -40,5 +43,10 @@ export type {
   MatchingRoute,
   Routes,
   Tab,
-  TopLevelParentRoute
+  TopLevelParentRoute,
+  TopBarStyle,
+  ExternalRoute,
+  ExternalRoutes,
+  ActionButton,
+  ScreenOptions
 } from './types';

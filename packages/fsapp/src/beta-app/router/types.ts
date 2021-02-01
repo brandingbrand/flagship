@@ -1,11 +1,25 @@
 import type FSNetwork from '@brandingbrand/fsnetwork';
 import type { Analytics } from '@brandingbrand/fsengage';
 import type { Dictionary } from '@brandingbrand/fsfoundation';
-import type { OptionsBottomTab } from 'react-native-navigation';
+import type {
+  OptionsBottomTab,
+  OptionsTopBar,
+  OptionsTopBarButton,
+  OptionsTopBarTitle
+} from 'react-native-navigation';
 import type { ParsedQs } from 'qs';
 import type { ShellConfig } from '../shell.web';
 
 import { Component, ComponentType, FC } from 'react';
+
+export type ActionButton = OptionsTopBarButton & { onPress?: () => void };
+
+export interface ScreenOptions {
+  buttons?: {
+    rightButtons?: ActionButton[];
+    leftButtons?: ActionButton[];
+  };
+}
 
 /**
  * A Function Component that expects no props.
@@ -21,10 +35,12 @@ import { Component, ComponentType, FC } from 'react';
  * @see useRouteQuery - hook into the query context
  * @see useRouteData - hook into the the data context
  */
-export type RouteFC = FC;
-export abstract class RouteComponent<State = {}> extends Component<{}, State> {}
+export type RouteFC = FC & ScreenOptions;
+export abstract class RouteComponent<State = {}> extends Component<{}, State> {
+  static buttons?: ScreenOptions['buttons'];
+}
 export type RouteComponentType = RouteFC | typeof RouteComponent;
-export type Tab = string | OptionsBottomTab;
+export type Tab = string | (OptionsBottomTab & { id: string });
 
 export type RouteData = Dictionary<unknown | undefined>;
 export type RouteParams = Dictionary<string | undefined>;
@@ -57,10 +73,16 @@ export interface BaseRoute {
   readonly quickDevMenu?: true;
 }
 
+export type TopBarStyle = Omit<OptionsTopBar, 'title'> & {
+  title?: Omit<OptionsTopBarTitle, 'text'>;
+  rightButtons?: never;
+};
+
 export interface ComponentRoute extends BaseRoute {
   readonly component: RouteComponentType;
 
-  readonly title: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
+  readonly title?: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
+  readonly topBarStyle?: TopBarStyle;
 
   // Used to pass in static data
   readonly data?: RouteData;

@@ -1,4 +1,3 @@
-import type { OptionsBottomTab } from 'react-native-navigation';
 import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type {
   ActivatedRoute,
@@ -10,7 +9,8 @@ import type {
   Route,
   RouteData,
   RouteParams,
-  Routes
+  Routes,
+  Tab
 } from '../types';
 
 import { createPath, LocationDescriptor, parsePath } from 'history';
@@ -65,7 +65,7 @@ const matchPath = (path: string | undefined, route: Route) => {
 
 const buildMatcher = async (
   route: Route,
-  tab: string | OptionsBottomTab = '',
+  tab: Tab = '',
   prefix = ''
 ): Promise<
   (readonly [
@@ -81,7 +81,7 @@ const buildMatcher = async (
         matchPath(path, route),
         {
           id,
-          tabAffinity: typeof tab === 'string' ? tab : tab.text,
+          tabAffinity: typeof tab === 'string' ? tab : tab.id,
           ...route
         }
       ] as const)
@@ -106,7 +106,7 @@ const buildMatcher = async (
 
 export const buildMatchers = async (
   routes: Routes,
-  tab?: string | OptionsBottomTab,
+  tab?: Tab,
   prefix?: string
 ) => {
   try {
