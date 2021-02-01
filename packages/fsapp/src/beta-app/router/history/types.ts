@@ -5,11 +5,14 @@ import type {
   TransitionPromptHook,
   UnregisterCallback
 } from 'history';
+import type { OptionsTopBarTitle } from 'react-native-navigation';
 
 import type { ActivatedRoute } from '../types';
 
 export type ResolverListener = (route: ActivatedRoute) => void;
 export type LoadingListener = (loading: boolean) => void;
+
+export type RequiredTitle = string | (OptionsTopBarTitle & { text: string });
 
 export interface FSRouterHistory extends History {
   open(path: string, state?: unknown): void;
@@ -29,6 +32,8 @@ export interface FSRouterHistory extends History {
 
   observeLoading(listener: LoadingListener): UnregisterCallback;
   registerResolver(listener: ResolverListener): UnregisterCallback;
+
+  updateTitle(title: RequiredTitle): void;
 }
 
 export type Blocker = string | boolean | TransitionPromptHook;

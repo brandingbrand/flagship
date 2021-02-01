@@ -18,6 +18,7 @@ export const dummyHistory: FSRouterHistory = {
   pop: throwError,
   push: throwError,
   registerResolver: throwError,
-  replace: throwError
+  replace: throwError,
+  updateTitle: throwError
 };
 

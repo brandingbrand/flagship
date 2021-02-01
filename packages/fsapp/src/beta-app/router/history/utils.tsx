@@ -17,23 +17,32 @@ export const isNotTabRoute = (
   route: Route
 ): route is Exclude<Route, TopLevelParentRoute> => !('tab' in route);
 
-export const createStack = ([component, title]: readonly [
-  MatchingRoute,
-  string
-]): Layout => ({
-  stack: {
-    id: component.tabAffinity || ROOT_STACK,
-    children: [
-      {
-        component: {
-          name: component.id,
-          id: component.matchedPath,
-          options: { topBar: { title: { text: title } } }
-        }
-      }
+export const createStack = async (
+    [route, title]: readonly [
+      MatchingRoute,
+      string | undefined
     ]
-  }
-});
+): Promise<Layout> => {
+  const buttons =
+    'component' in route
+      ? route.component.buttons
+      : (await route.lazyComponent()).buttons;
+
+  return {
+    stack: {
+      id: route.tabAffinity || ROOT_STACK,
+      children: [
+        {
+          component: {
+            name: route.id,
+            id: route.matchedPath,
+            options: { topBar: { title: { text: title ?? route.tabAffinity }, ...buttons } }
+          }
+        }
+      ]
+    }
+  };
+};
 
 export const createKey = () => {
   return Math.random().toString(36).substr(2, 8);

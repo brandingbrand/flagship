@@ -18,7 +18,12 @@ import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { VersionOverlay } from '../development/version-overlay.component';
 import { ModalProvider } from '../modal';
 
-import { ActivatedRouteProvider, defaultActivatedRoute, NavigatorProvider } from './context';
+import {
+  ActivatedRouteProvider,
+  ButtonProvider,
+  defaultActivatedRoute,
+  NavigatorProvider
+} from './context';
 import { FSRouterBase } from './router.base';
 import { trackView } from './utils';
 
@@ -75,9 +80,11 @@ export class FSRouter extends FSRouterBase {
               return (
                 <ActivatedRouteProvider {...activatedRoute} loading={loading}>
                   <ModalProvider>
-                    <VersionOverlay>
-                      <AwaitedComponent />
-                    </VersionOverlay>
+                    <ButtonProvider>
+                      <VersionOverlay>
+                        <AwaitedComponent />
+                      </VersionOverlay>
+                    </ButtonProvider>
                   </ModalProvider>
                 </ActivatedRouteProvider>
               );
