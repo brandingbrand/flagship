@@ -58,23 +58,23 @@ NSURL *jsCodeLocation;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
 
-NSMutableDictionary *copyOfLaunchOptions = [launchOptions mutableCopy];
+  NSMutableDictionary *copyOfLaunchOptions = [launchOptions mutableCopy];
 
-#if __has_include(<Leanplum/Leanplum.h>)
+  #if __has_include(<Leanplum/Leanplum.h>)
 
-  if (launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] && [launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] isKindOfClass:[NSDictionary class]]) {
-      NSDictionary *notification = launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"];
-      if (notification[@"_lpx"] && [notification[@"_lpx"] isKindOfClass:[NSDictionary class]]) {
-          NSDictionary *lpx = notification[@"_lpx"];
-          if (lpx[@"URL"] && [lpx[@"URL"] isKindOfClass:[NSString class]]) {
-              NSString *url = lpx[@"URL"];
-              copyOfLaunchOptions[@"UIApplicationLaunchOptionsURLKey"] = [NSURL URLWithString:url];
-          }
-      }
-  }
-#endif
-launchOptions = copyOfLaunchOptions;
-[ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
+    if (launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] && [launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *notification = launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        if (notification[@"_lpx"] && [notification[@"_lpx"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *lpx = notification[@"_lpx"];
+            if (lpx[@"URL"] && [lpx[@"URL"] isKindOfClass:[NSString class]]) {
+                NSString *url = lpx[@"URL"];
+                copyOfLaunchOptions[@"UIApplicationLaunchOptionsURLKey"] = [NSURL URLWithString:url];
+            }
+        }
+    }
+  #endif
+  launchOptions = copyOfLaunchOptions;
+  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
   return YES;
 }
