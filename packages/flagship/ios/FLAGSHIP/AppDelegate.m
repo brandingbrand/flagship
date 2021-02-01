@@ -21,7 +21,11 @@
 #endif
 
 #import "CodePush.h"
-#import <Leanplum-iOS-SDK/Leanplum.h>
+
+#if defined(__has_include) && __has_include(<Leanplum/Leanplum.h>)
+#import <Leanplum/Leanplum.h>
+#endif
+
 
 @implementation AppDelegate
 
@@ -54,8 +58,9 @@ NSURL *jsCodeLocation;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
 
-#if __has_include(<Leanplum-iOS-SDK/Leanplum.h>)
-  NSMutableDictionary *copyOfLaunchOptions = [launchOptions mutableCopy];
+NSMutableDictionary *copyOfLaunchOptions = [launchOptions mutableCopy];
+
+#if __has_include(<Leanplum/Leanplum.h>)
 
   if (launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] && [launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"] isKindOfClass:[NSDictionary class]]) {
       NSDictionary *notification = launchOptions[@"UIApplicationLaunchOptionsRemoteNotificationKey"];
@@ -67,9 +72,9 @@ NSURL *jsCodeLocation;
           }
       }
   }
-  launchOptions = copyOfLaunchOptions;
-  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 #endif
+launchOptions = copyOfLaunchOptions;
+[ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
   return YES;
 }
