@@ -3,8 +3,10 @@ import type { AppConfig, WebApplication } from './types';
 
 import { AppRegistry } from 'react-native';
 
+import { EnvSwitcher } from '../lib/env-switcher';
+
 export const getVersion = async (config: AppConfig<any>): Promise<string> => {
-  return config.version ?? '';
+  return `${config.version ?? ''}\nenv:${EnvSwitcher.envName ?? 'prod'}`;
 };
 
 const isWebRegistry = (
