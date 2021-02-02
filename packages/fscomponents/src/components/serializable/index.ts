@@ -7,3 +7,4 @@ export * from './SerializableButton';
 export * from './SerializableImage';
 export * from './SerializableImagePlaceholder';
 export * from './VideoBlock';
+export * from './VideoBlock.types';

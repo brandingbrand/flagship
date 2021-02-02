@@ -5,7 +5,7 @@ import { FlexStyle, Platform, Text, TextStyle, ViewStyle } from 'react-native';
 import { Modal } from '../Modal';
 import { StandardContainerProps } from '../../models';
 
-interface Props
+export interface PreStandardizedTooltipProps
   extends Pick<
     TooltipProps,
     | 'backgroundColor'
@@ -34,7 +34,7 @@ interface Props
   children: React.ReactNode;
 }
 
-export type SerializableTooltipProps = StandardContainerProps<Props>;
+export type SerializableTooltipProps = StandardContainerProps<PreStandardizedTooltipProps>;
 
 export const FSSerializableTooltip = React.memo<SerializableTooltipProps>(
   ({ popover, textStyle, style, children, skipAndroidStatusBar, ...props }) => {
