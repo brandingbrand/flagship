@@ -3,16 +3,13 @@ import { Image, TouchableOpacity } from 'react-native';
 import { SerializableImageProps } from './SerializableImage';
 
 export const SerializableImagePlaceholder = React.memo<SerializableImageProps>(
-  ({ href, onPress, ...props }) => {
+  ({ onPress, ...props }) => {
     const img = <Image {...props} />;
 
-    if (!(href && onPress)) {
+    if (!onPress) {
       return img;
     }
-    return (
-      <TouchableOpacity onPress={onPress(href)}>
-        {img}
-      </TouchableOpacity>
-    );
+
+    return <TouchableOpacity onPress={onPress}>{img}</TouchableOpacity>;
   }
 );

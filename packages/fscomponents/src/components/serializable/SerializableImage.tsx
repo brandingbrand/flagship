@@ -1,30 +1,41 @@
 import React from 'react';
-import { Image, ImageProps, ImageStyle, StyleProp, TouchableOpacity } from 'react-native';
+import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
+import { extractHostStyles } from '../../lib/style';
 
-export interface SerializableImageProps extends Pick<ImageProps,
-  'style' | 'blurRadius' | 'resizeMode' | 'source' | 'loadingIndicatorSource' |
-  'testID' | 'resizeMethod' | 'accessibilityLabel' | 'accessible' | 'capInsets' | 'defaultSource' |
-  'fadeDuration' | 'progressiveRenderingEnabled'
-> {
+export interface SerializableImageProps
+  extends Pick<
+    ImageProps,
+    | 'style'
+    | 'blurRadius'
+    | 'resizeMode'
+    | 'source'
+    | 'loadingIndicatorSource'
+    | 'testID'
+    | 'resizeMethod'
+    | 'accessibilityLabel'
+    | 'accessible'
+    | 'capInsets'
+    | 'defaultSource'
+    | 'fadeDuration'
+    | 'progressiveRenderingEnabled'
+  > {
   href?: string;
-  style?: StyleProp<ImageStyle>;
-  onPress?: (href: string) => () => void;
+  style?: ImageStyle;
+  onPress?: () => void;
 }
 
-export const FSSerializableImage: React.FC<SerializableImageProps> = React.memo(({
-  href,
-  onPress,
-  ...props
-}) => {
-  const img = <Image {...props} />;
+export const FSSerializableImage = React.memo<SerializableImageProps>(
+  ({ onPress, style, ...props }) => {
+    const [host, self] = extractHostStyles(style);
 
-  if (!(href && onPress)) {
-    return img;
+    if (!onPress) {
+      return <Image {...props} style={[host, self]} />;
+    }
+
+    return (
+      <TouchableOpacity style={host} onPress={onPress}>
+        <Image {...props} style={self} />
+      </TouchableOpacity>
+    );
   }
-
-  return (
-    <TouchableOpacity onPress={onPress(href)}>
-      {img}
-    </TouchableOpacity>
-  );
-});
+);

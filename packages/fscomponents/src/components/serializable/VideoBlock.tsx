@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
-export default class VideoBlock extends Component<VideoBlockProps, StateType> {
+export class VideoBlock extends Component<VideoBlockProps, StateType> {
   player: any | null = null;
   constructor(props: any) {
     super(props);
