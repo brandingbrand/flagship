@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.3...v11.0.0-alpha.4) (2021-02-02)
+
+
+### Bug Fixes
+
+* **fscomponents:** button styling (eab9c41)
+* **fscomponents:** serializable component fixes (514325b)
+
+
+
+
+
 # [11.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.2...v11.0.0-alpha.3) (2021-02-02)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
