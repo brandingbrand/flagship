@@ -1,25 +1,17 @@
 import React, { useMemo } from 'react';
 import {
-  Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle
+  Image,
+  ImageStyle,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle
 } from 'react-native';
 
 import { ButtonProps } from '../Button';
-import {
-  border,
-  palette as defaultPalette
-} from '../../styles/variables';
-import {
-  style as S,
-  stylesSize,
-  stylesTextSize
-} from '../../styles/Button';
-
-export const withPropTransformer = <P extends object, InputProps extends object = P>(
-  Component: React.ComponentType<P>,
-  propTransformer: (props: InputProps) => P
-): React.FC<InputProps> => (props: InputProps) => {
-  return <Component {...propTransformer(props)} />;
-};
+import { border, palette as defaultPalette } from '../../styles/variables';
+import { style as S, stylesSize, stylesTextSize } from '../../styles/Button';
 
 export interface SerializableButtonProps
   extends Pick<
@@ -44,11 +36,15 @@ export interface SerializableButtonProps
   titleStyle?: TextStyle;
   iconStyle?: ImageStyle;
   viewStyle?: ViewStyle;
+  noPadding?: boolean;
 }
 
-export const FSSerializableButton = React.memo<SerializableButtonProps & {
-  onPress?: () => void;
-}>(
+export const FSSerializableButton = React.memo<
+  SerializableButtonProps & {
+    onPress?: () => void;
+  }
+>(
+  // tslint:disable-next-line: cyclomatic-complexity
   ({
     title,
     style = {},
@@ -61,8 +57,10 @@ export const FSSerializableButton = React.memo<SerializableButtonProps & {
     icon,
     iconStyle,
     titleStyle,
+    noPadding,
     palette,
-    onPress = () => { // default
+    onPress = () => {
+      // default
     },
     ...props
   }) => {
@@ -77,6 +75,7 @@ export const FSSerializableButton = React.memo<SerializableButtonProps & {
         <View
           style={[
             S.container,
+            noPadding && { paddingLeft: 0, paddingRight: 0 },
             {
               backgroundColor: light || link ? 'transparent' : paletteButton[color],
               borderColor: light ? paletteButton[color] : undefined,
