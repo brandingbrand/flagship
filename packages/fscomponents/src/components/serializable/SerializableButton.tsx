@@ -12,6 +12,7 @@ import {
 import { ButtonProps } from '../Button';
 import { border, palette as defaultPalette } from '../../styles/variables';
 import { style as S, stylesSize, stylesTextSize } from '../../styles/Button';
+import { extractHostStyles } from '../../lib/style';
 
 export interface SerializableButtonProps
   extends Pick<
@@ -64,6 +65,7 @@ export const FSSerializableButton = React.memo<
     },
     ...props
   }) => {
+    const [host, self] = extractHostStyles(style);
     const paletteButton = palette || defaultPalette;
     const onColor = useMemo(
       () => `on${color.charAt(0).toUpperCase()}${color.slice(1)}` as keyof typeof paletteButton,
@@ -71,7 +73,7 @@ export const FSSerializableButton = React.memo<
     );
 
     return (
-      <TouchableOpacity onPress={onPress} {...props}>
+      <TouchableOpacity {...props} onPress={onPress} style={host} >
         <View
           style={[
             S.container,
@@ -83,7 +85,7 @@ export const FSSerializableButton = React.memo<
             },
             stylesSize[size],
             full && S.full,
-            style
+            self
           ]}
         >
           <View style={[S.buttonInner, { width: '100%' }]}>
