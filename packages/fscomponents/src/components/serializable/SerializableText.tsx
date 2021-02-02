@@ -22,12 +22,12 @@ export interface SerializableTextProps
   > {
   childText: string;
   style?: TextStyle;
-  containerStyle?: ViewStyle;
+  boxStyle?: ViewStyle;
 }
 
 export const FSSerializableText = React.memo<SerializableTextProps>(
-  ({ childText, containerStyle, ...textProps }) => (
-    <View style={containerStyle}>
+  ({ childText, boxStyle, ...textProps }) => (
+    <View style={boxStyle}>
       <Text {...textProps}>{childText}</Text>
     </View>
   )
