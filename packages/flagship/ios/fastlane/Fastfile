@@ -3,13 +3,13 @@ default_platform :ios
 # make a provisioned build and upload to appcenter
 lane :appcenter do
   gym(
-    scheme: "FLAGSHIP",
+    scheme: "Flagship",
     clean: true,
     export_method: "enterprise", #PROJECT_MODIFY_FLAG_export_method
     export_team_id: "762H5V79XV", #PROJECT_MODIFY_FLAG_export_team_id
     export_options: {
       provisioningProfiles: {
-"com.brandingbrand.reactnative.FLAGSHIP" => #PROJECT_MODIFY_FLAG_export_options_export_team_id
+"com.brandingbrand.reactnative.Flagship" => #PROJECT_MODIFY_FLAG_export_options_export_team_id
         "Branding Brand Enterprise" #PROJECT_MODIFY_FLAG_export_options_provisioning_profile
       }
     },
@@ -26,7 +26,7 @@ end
 # make an unprovisioned build
 lane :build do
   xcodebuild(
-    scheme: "FLAGSHIP",
+    scheme: "Flagship",
     xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
   )
 end

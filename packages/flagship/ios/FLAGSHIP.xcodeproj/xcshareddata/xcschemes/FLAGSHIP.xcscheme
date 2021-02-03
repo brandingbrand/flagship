@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "FLAGSHIP.app"
-               BlueprintName = "FLAGSHIP"
-               ReferencedContainer = "container:FLAGSHIP.xcodeproj">
+               BuildableName = "Flagship.app"
+               BlueprintName = "Flagship"
+               ReferencedContainer = "container:Flagship.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "FLAGSHIPTests.xctest"
-               BlueprintName = "FLAGSHIPTests"
-               ReferencedContainer = "container:FLAGSHIP.xcodeproj">
+               BuildableName = "FlagshipTests.xctest"
+               BlueprintName = "FlagshipTests"
+               ReferencedContainer = "container:Flagship.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FLAGSHIP.app"
-            BlueprintName = "FLAGSHIP"
-            ReferencedContainer = "container:FLAGSHIP.xcodeproj">
+            BuildableName = "Flagship.app"
+            BlueprintName = "Flagship"
+            ReferencedContainer = "container:Flagship.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FLAGSHIP.app"
-            BlueprintName = "FLAGSHIP"
-            ReferencedContainer = "container:FLAGSHIP.xcodeproj">
+            BuildableName = "Flagship.app"
+            BlueprintName = "Flagship"
+            ReferencedContainer = "container:Flagship.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

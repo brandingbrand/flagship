@@ -36,7 +36,7 @@ const TEMPLATE_ANDROID_PACKAGE = 'com.brandingbrand.reactnative.and.flagship';
 
 export const command = 'init [platform]';
 
-export const describe = 'initialize FLAGSHIP for [platform]';
+export const describe = 'initialize Flagship for [platform]';
 
 export function builder(yargs: BuilderArgs): void {
   yargs.option('env', {
@@ -195,8 +195,8 @@ function initIOS(
   fs.clone('ios');
 
   // Rename the boilerplate project with the app name
-  rename.source('FLAGSHIP', configuration.name, 'ios');
-  rename.files('FLAGSHIP', configuration.name, 'ios');
+  rename.source('Flagship', configuration.name, 'ios');
+  rename.files('Flagship', configuration.name, 'ios');
 
   fastlane.configure(path.ios.fastfilePath(), configuration); // Update Fastfile
 
