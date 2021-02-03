@@ -1,3 +1,6 @@
+// tslint:disable ter-max-len
+const exec = require('child_process').execSync;
+
 import { Config } from '../types';
 import * as fs from './fs';
 import * as helpers from '../helpers';
@@ -21,11 +24,8 @@ export function bundleId(configuration: Config): void {
 
   helpers.logInfo(`updating iOS bundle id`);
 
-  fs.update(
-    path.ios.infoPlistPath(configuration),
-    /<key>CFBundleIdentifier<\/key>\s+<string>[^<]+<\/string>/,
-    `<key>CFBundleIdentifier</key><string>${bundleId}</string>`
-  );
+  exec(`plutil -replace CFBundleIdentifier -string ${bundleId} ${path.ios.infoPlistPath(configuration)}`);
+
   fs.update(
     path.ios.fastfilePath(),
     /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/g,
@@ -117,11 +117,7 @@ export function displayName(configuration: Config): void {
 
   helpers.logInfo(`updating iOS app display name`);
 
-  fs.update(
-    path.ios.infoPlistPath(configuration),
-    /<key>CFBundleDisplayName<\/key>\s+<string>\w+<\/string>/,
-    `<key>CFBundleDisplayName</key><string>${configuration.displayName}</string>`
-  );
+  exec(`plutil -replace CFBundleDisplayName -string ${configuration.displayName} ${path.ios.infoPlistPath(configuration)}`);
 }
 
 /**
@@ -293,7 +289,7 @@ export function urlScheme(configuration: Config): void {
 
   helpers.logInfo(`setting iOS URL scheme to ${scheme}`);
 
-  fs.update(path.ios.infoPlistPath(configuration), 'default-bb-rn-url-scheme', scheme);
+  exec(`plutil -replace default-bb-rn-url-scheme -string ${scheme} ${path.ios.infoPlistPath(configuration)}`);
 }
 
 /**
@@ -311,18 +307,9 @@ export function version(configuration: Config, newVersion: string): void {
 
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
   helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
+  exec(`plutil -replace CFBundleShortVersionString -string ${shortVersion} ${path.ios.infoPlistPath(configuration)}`);
 
-  fs.update(
-    path.ios.infoPlistPath(configuration),
-    /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
-  );
-
-  fs.update(
-    path.ios.infoPlistPath(configuration),
-    /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
-  );
+  exec(`plutil -replace CFBundleVersion -string ${bundleVersion} ${path.ios.infoPlistPath(configuration)}`);
 }
 
 export function iosExtensions(configuration: Config, version: string): void {
