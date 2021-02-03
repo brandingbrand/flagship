@@ -399,16 +399,8 @@ export function iosExtensions(configuration: Config, version: string): void {
     );
 
     // Update Extension PList
-    fs.update(
-      extPlistPath,
-      /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
-      `<key>CFBundleShortVersionString</key>\n\t<string>${version}</string>`
-    );
-    fs.update(
-      extPlistPath,
-      /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
-      `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
-    );
+    exec(`plutil -replace CFBundleShortVersionString -string ${version} ${extPlistPath}`);
+    exec(`plutil -replace CFBundleVersion -string ${bundleVersion} ${extPlistPath}`);
 
     // Find and replace and additional strings
     for (const findReplace of extension.additionalFiles || []) {
