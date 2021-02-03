@@ -260,23 +260,16 @@ export function backgroundModes(configuration: Config): void {
     return;
   }
 
-  helpers.logInfo(
-    `updating iOS background modes: [${configuration.UIBackgroundModes.map(u => u.string)}]`
-  );
-
   const infoPlist = path.ios.infoPlistPath(configuration);
 
-  fs.update(
-    infoPlist,
-    '<key>UIRequiredDeviceCapabilities</key>',
-    `<key>UIBackgroundModes</key>
-      <array>
-      ${configuration.UIBackgroundModes.map(mode => {
-        return `<string>${mode.string}</string>`;
-      })}
-      </array>
-    <key>UIRequiredDeviceCapabilities</key>`
-  );
+  exec(`plutil -replace CFBundleDisplayName -string ${configuration.displayName} ${infoPlist}`);
+
+  const modesArray = configuration.UIBackgroundModes.map(mode => {
+    return `"${mode}"`;
+  });
+  helpers.logInfo(`updating iOS background modes: [${modesArray}]`);
+
+  exec(`plutil -replace UIBackgroundModes -json '[${modesArray}]' ${infoPlist}`);
 }
 
 /**
