@@ -1,5 +1,5 @@
-// tslint:disable ter-max-len
-const exec = require('child_process').execSync;
+ // tslint:disable-next-line:ter-max-len
+const execFileSync = require('child_process').execFileSync;
 
 import { Config } from '../types';
 import * as fs from './fs';
@@ -24,9 +24,14 @@ export function bundleId(configuration: Config): void {
 
   helpers.logInfo(`updating iOS bundle id`);
 
-  exec(`plutil -replace CFBundleIdentifier -string ${bundleId} ${path.ios.infoPlistPath(configuration)}`);
+  execFileSync('plutil', ['-replace',
+    'CFBundleIdentifier',
+    '-string',
+    bundleId,
+    path.ios.infoPlistPath(configuration)]
+  );
 
-  fs.update(
+  fs.replace(
     path.ios.fastfilePath(),
     /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/g,
     `"${bundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`
@@ -43,7 +48,7 @@ export function capabilities(configuration: Config): void {
     helpers.logInfo(`enabling iOS capabilities [${configuration.enabledCapabilitiesIOS}]`);
 
     configuration.enabledCapabilitiesIOS.forEach(capability => {
-      fs.update(
+      fs.replace(
         path.ios.pbxprojFilePath(configuration),
         new RegExp(`com.apple.${capability}\\s*=\\s*{\\s*enabled = 0;`),
         `com.apple.${capability} = { enabled = 1;`
@@ -70,7 +75,7 @@ export function targetedDevice(configuration: Config): void {
 
     const targetedDeviceRegex = new RegExp(`TARGETED_DEVICE_FAMILY = "1"`, 'g');
 
-    fs.update(
+    fs.replace(
       path.ios.pbxprojFilePath(configuration),
       targetedDeviceRegex,
       `TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
@@ -97,7 +102,7 @@ export function entitlements(configuration: Config): void {
   );
 
   fs.copySync(source, destination);
-  fs.update(
+  fs.replace(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
     `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
@@ -116,8 +121,13 @@ export function displayName(configuration: Config): void {
   }
 
   helpers.logInfo(`updating iOS app display name`);
-
-  exec(`plutil -replace CFBundleDisplayName -string ${configuration.displayName} ${path.ios.infoPlistPath(configuration)}`);
+  // tslint:disable-next-line:max-line-length
+  execFileSync('plutil', ['-replace',
+    'CFBundleDisplayName',
+    '-string',
+    configuration.displayName,
+    path.ios.infoPlistPath(configuration)]
+  );
 }
 
 /**
@@ -205,7 +215,7 @@ export function exceptionDomains(configuration: Config): void {
 
   if (configuration.disableDevFeature) {
     // remove localhost exception when dev feature is disabled
-    fs.update(
+    fs.replace(
       path.ios.infoPlistPath(configuration),
       // tslint:disable-next-line:ter-max-len
       /<!-- {NSExceptionDomains-localhost-start} -->[.\s\S]+<!-- {NSExceptionDomains-localhost-end} -->/,
@@ -214,7 +224,7 @@ export function exceptionDomains(configuration: Config): void {
   }
 
   if (exceptionDomains.length) {
-    fs.update(
+    fs.replace(
       path.ios.infoPlistPath(configuration),
       '<!-- {NSExceptionDomains} -->',
       exceptionDomains
@@ -262,14 +272,24 @@ export function backgroundModes(configuration: Config): void {
 
   const infoPlist = path.ios.infoPlistPath(configuration);
 
-  exec(`plutil -replace CFBundleDisplayName -string ${configuration.displayName} ${infoPlist}`);
+  execFileSync('plutil', ['-replace',
+    'CFBundleDisplayName',
+    '-string',
+    configuration.displayName,
+    infoPlist]
+  );
 
   const modesArray = configuration.UIBackgroundModes.map(mode => {
     return `"${mode}"`;
   });
   helpers.logInfo(`updating iOS background modes: [${modesArray}]`);
 
-  exec(`plutil -replace UIBackgroundModes -json '[${modesArray}]' ${infoPlist}`);
+  execFileSync('plutil', ['-replace',
+    'UIBackgroundModes',
+    '-json',
+    modesArray,
+    infoPlist]
+  );
 }
 
 /**
@@ -282,7 +302,12 @@ export function urlScheme(configuration: Config): void {
 
   helpers.logInfo(`setting iOS URL scheme to ${scheme}`);
 
-  exec(`plutil -replace default-bb-rn-url-scheme -string ${scheme} ${path.ios.infoPlistPath(configuration)}`);
+  execFileSync('plutil', ['-replace',
+    'default-bb-rn-url-scheme',
+    '-string',
+    scheme,
+    path.ios.infoPlistPath(configuration)]
+  );
 }
 
 /**
@@ -300,9 +325,20 @@ export function version(configuration: Config, newVersion: string): void {
 
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
   helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
-  exec(`plutil -replace CFBundleShortVersionString -string ${shortVersion} ${path.ios.infoPlistPath(configuration)}`);
 
-  exec(`plutil -replace CFBundleVersion -string ${bundleVersion} ${path.ios.infoPlistPath(configuration)}`);
+  execFileSync('plutil', ['-replace',
+    'CFBundleShortVersionString',
+    '-string',
+    shortVersion,
+    path.ios.infoPlistPath(configuration)]
+  );
+
+  execFileSync('plutil', ['-replace',
+    'CFBundleVersion',
+    '-string',
+    bundleVersion,
+    path.ios.infoPlistPath(configuration)]
+  );
 }
 
 export function iosExtensions(configuration: Config, version: string): void {
@@ -367,7 +403,7 @@ export function iosExtensions(configuration: Config, version: string): void {
     fs.writeFileSync(path.ios.pbxprojFilePath(configuration), project.writeSync());
 
     // Update Extension Build settings
-    fs.update(
+    fs.replace(
       projectPath,
       new RegExp(`PRODUCT_NAME = "${extensionPath}";`, 'g'),
       `PRODUCT_NAME = "${extensionPath}";
@@ -384,7 +420,7 @@ export function iosExtensions(configuration: Config, version: string): void {
     const oldProvisioning =
     `"${appBundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`;
     const oldProvisioningRegex = new RegExp(oldProvisioning, 'g');
-    fs.update(
+    fs.replace(
       fastFilePath,
       oldProvisioningRegex,
       `"${bundleExtensionId}" => "${provisioningProfileName}",
@@ -392,15 +428,26 @@ export function iosExtensions(configuration: Config, version: string): void {
     );
 
     // Update Extension PList
-    exec(`plutil -replace CFBundleShortVersionString -string ${version} ${extPlistPath}`);
-    exec(`plutil -replace CFBundleVersion -string ${bundleVersion} ${extPlistPath}`);
+
+    execFileSync('plutil', ['-replace',
+      'CFBundleShortVersionString',
+      '-string',
+      version,
+      extPlistPath]
+    );
+    execFileSync('plutil', ['-replace',
+      'CFBundleVersion',
+      '-string',
+      bundleVersion,
+      extPlistPath]
+    );
 
     // Find and replace and additional strings
     for (const findReplace of extension.additionalFiles || []) {
       const { newText, oldText, paths } = findReplace;
       for (const replacePath of paths) {
         const iosRelativePath = path.project.resolve('ios', replacePath);
-        fs.update(iosRelativePath, oldText, newText);
+        fs.replace(iosRelativePath, oldText, newText);
       }
     }
   }
@@ -458,7 +505,7 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
 
   const envSwitcherPath = path.resolve(path.ios.nativeProjectPath(configuration), 'EnvSwitcher.m');
 
-  fs.update(
+  fs.replace(
     envSwitcherPath,
     /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
     `@"${env}"; // [EnvSwitcher initialEnvName]`

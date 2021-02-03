@@ -46,6 +46,5 @@ module.exports = {
     ios: 'com.brandingbrand.reactnative.pirateship',
   },
   associatedDomains: [],
-  targetedDevices: 'Universal',
-  UIBackgroundModes: ['remote-notification']
+  targetedDevices: 'Universal'
 };
