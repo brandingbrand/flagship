@@ -62,7 +62,7 @@ export interface SerializableButtonProps extends Omit<ButtonProps, 'onPress' | '
 }
 
 export interface ButtonState {
-  palette: any;
+  palette: typeof palette;
   title: string;
 }
 
@@ -80,7 +80,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     }
   }
 
-  render(): any {
+  render(): JSX.Element {
     const {
       title,
       style = {},
@@ -143,7 +143,8 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     } = this.props;
 
     const { palette, title } = this.state;
-    const onColor = 'on' + color.charAt(0).toUpperCase() + color.slice(1);
+    const onColor = color.slice(0, 2) !== 'on' ?
+      'on' + color.charAt(0).toUpperCase() + color.slice(1) : color;
 
     if (loading) {
       return <Loading />;
@@ -154,7 +155,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
           <Text
             style={[
               S.text,
-              { color: light || link ? palette[color] : palette[onColor] },
+              { color: light || link ? palette[color] : palette[onColor as keyof typeof palette] },
               stylesTextSize[size],
               titleStyle
             ]}
