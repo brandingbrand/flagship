@@ -121,7 +121,9 @@ const globalConfig = {
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'),
-              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep)
+              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics')
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [

@@ -3,6 +3,109 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+
+
+### Features
+
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
 # [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce

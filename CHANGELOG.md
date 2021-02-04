@@ -3,6 +3,151 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **flagship:** Remove animated image patch ([03acfbe](https://github.com/brandingbrand/flagship/commit/03acfbeae5ec5537bb01fb995791f80def8bd2f0))
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+* **fsweb:** lock @types/cors ([fae557f](https://github.com/brandingbrand/flagship/commit/fae557fe2249fdb6f7223d32a4cf82c3a30b470d))
+
+
+### Features
+
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+* add product index grid ghost component ([0c80ddb](https://github.com/brandingbrand/flagship/commit/0c80ddb7855e8eacb1b25a276a1820a8f95b9d98))
+
+
+
+
+
 # [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
 
 
