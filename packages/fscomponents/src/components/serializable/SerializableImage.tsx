@@ -29,7 +29,7 @@ export const FSSerializableImage = React.memo<SerializableImageProps>(
     const [host, self] = extractHostStyles(style);
 
     if (!onPress) {
-      return <Image {...props} style={[host, self]} />;
+      return <Image {...props} style={[self, host]} />;
     }
 
     return (
