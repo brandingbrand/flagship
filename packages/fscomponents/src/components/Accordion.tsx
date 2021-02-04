@@ -142,7 +142,7 @@ export interface AccordionProps extends Omit<
    * Content of the accordion
    * @deprecated Make the contents a child instead
    */
-  content?: JSX.Element;
+  content?: JSX.Element | JSX.Element[];
   /**
    * Styles for the accordion content container
    */
@@ -352,7 +352,8 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     if (this.shouldEnableAnimation()) {
       Animated.spring(this.state.contentHeightAnimation, {
         bounciness: 0,
-        toValue: height
+        toValue: height,
+        useNativeDriver: false
       }).start();
     } else {
       this.state.contentHeightAnimation.setValue(height);

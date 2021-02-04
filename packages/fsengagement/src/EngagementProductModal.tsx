@@ -509,7 +509,7 @@ export default class EngagementProductModal extends
       <View style={styles.growStretch}>
         <Animatable.View
           ref={this.handleAnimatedRef}
-          useNativeDriver
+          useNativeDriver={false}
           style={styles.background}
         >
           <TouchableOpacity
@@ -520,7 +520,7 @@ export default class EngagementProductModal extends
         </Animatable.View>
         <Animatable.View
           ref={this.handleAnimatedContentRef}
-          useNativeDriver
+          useNativeDriver={false}
           style={{
             marginTop: 50,
             transform: [

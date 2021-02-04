@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
-
-// TODO: fix these types
-export default function persistReducer(key: string, reducer: any): any {
-  return (store: any, action: any) => {
+export default function persistReducer(
+  key: string, reducer: <T>(store: T, action: {type: string}) => void
+): object {
+  return <T>(store: T, action: {type: string}) => {
     const nextState = reducer(store, action);
     if (action.type.indexOf('@@') === -1 && nextState) {
       AsyncStorage.setItem(key, JSON.stringify(nextState)).catch(e =>

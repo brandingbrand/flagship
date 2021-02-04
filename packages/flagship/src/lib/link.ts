@@ -30,8 +30,8 @@ async function runLink(name?: string): Promise<void> {
  * @returns {Promise<void>} A promise representing the child process running react-native link.
  */
 export async function link(forceLink?: string[]): Promise<void> {
-  if (forceLink && forceLink.length) {
-    return new Promise<void>(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
+    if (forceLink && forceLink.length) {
       for (const name in forceLink) {
         if (forceLink.hasOwnProperty(name)) {
           helpers.logInfo('running react-native link for ' + [forceLink[name]]);
@@ -39,9 +39,9 @@ export async function link(forceLink?: string[]): Promise<void> {
           await runLink(forceLink[name]);
         }
       }
-      helpers.logInfo('running react-native link to link assets');
-      await runLink();
-      resolve();
-    });
-  }
+    }
+    helpers.logInfo('running react-native link to link assets');
+    await runLink();
+    resolve();
+  });
 }

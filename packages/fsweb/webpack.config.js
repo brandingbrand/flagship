@@ -7,6 +7,9 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BabelPluginTransformImports = require('babel-plugin-transform-imports');
+const BabelPluginReactNativeWeb = require('babel-plugin-react-native-web');
+const BabelPluginProposalClassProperties = require('@babel/plugin-proposal-class-properties');
 const escapedSep = '\\' + path.sep;
 
 let webConfig;
@@ -25,15 +28,14 @@ const globalConfig = {
   cache: true,
   devtool: 'none',
   entry: {
-    main: [
-      '../src/index.web.ts'
-    ]
+    bundle: '../src/index.web.ts'
   },
   output: {
     path: path.resolve(__dirname, 'build'),
     pathinfo: true,
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].js',
     chunkFilename: 'static/js/[name].chunk.js',
+    library: 'flagship',
     publicPath: '/',
     devtoolModuleFilenameTemplate:
       info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
@@ -54,8 +56,13 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs',
-      '@react-native-community/async-storage': 'react-native-web/dist/exports/AsyncStorage/index.js'
+      'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
+      'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
+      'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
+      'react-native-web/dist/exports/ProgressViewIOS': 'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/SegmentedControlIOS': 'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/WebView': 'react-native-web-webview',
+      'react-native-linear-gradient': 'react-native-web-linear-gradient'
     },
     modules: [
       path.resolve('./node_modules'),
@@ -81,7 +88,23 @@ const globalConfig = {
               {
                 loader: require.resolve("babel-loader"),
                 options: {
-                  cacheDirectory: true
+                  cacheDirectory: true,
+                  presets: [
+                    ["@babel/preset-env", {
+                        modules: false
+                    }]
+                  ],
+                  plugins: [
+                    [BabelPluginTransformImports, {
+                      'lodash-es': {
+                        transform: 'lodash-es/${member}',
+                        preventFullImport: true
+                      }
+                    }],
+                    [BabelPluginReactNativeWeb, {
+                      commonjs: false
+                    }]
+                  ]
                 }
               },
               {
@@ -93,10 +116,14 @@ const globalConfig = {
             test: /\.m?jsx?$/,
             include: [
               new RegExp('node_modules' + escapedSep + 'react-native-'),
-              new RegExp('node_modules' + escapedSep + 'tcomb-form-native'),
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'tcomb-form-native'),
+              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep + 'picker'),
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
-              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-')
+              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'),
+              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics')
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
@@ -104,13 +131,31 @@ const globalConfig = {
               {
                 loader: require.resolve("babel-loader"),
                 options: {
-                  cacheDirectory: true
+                  cacheDirectory: true,
+                  presets: [
+                    ["@babel/preset-env", {
+                        modules: false
+                    }]
+                  ],
+                  plugins: [
+                    [BabelPluginTransformImports, {
+                      'lodash-es': {
+                        transform: 'lodash-es/${member}',
+                        preventFullImport: true
+                      }
+                    }],
+                    [BabelPluginReactNativeWeb, {
+                      commonjs: false
+                    }],
+                    [BabelPluginProposalClassProperties]
+                  ]
                 }
               }
             ]
           },
           {
             test: /\.css$/,
+            sideEffects: true,
             loader: ExtractTextPlugin.extract({
               fallback: require.resolve('style-loader'),
               use: [
@@ -182,10 +227,12 @@ module.exports = function(env, options) {
 
   // add our environment specific config to the webpack config based on mode
   if (options && options.mode === 'production') {
+    const timestamp = Date.now();
     !options.json && console.log('Webpacking for Production');
     globalConfig.mode = 'production';
-    globalConfig.output.filename = 'static/js/bundle.[hash:8].js';
+    globalConfig.output.filename = `static/js/[name].${timestamp}.js`;
     globalConfig.optimization = {
+      usedExports: true,
       minimize: true,
       minimizer: [
         new TerserJsPlugin({
@@ -204,13 +251,15 @@ module.exports = function(env, options) {
     };
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
-        filename: 'static/css/[name].[hash:8].css'
+        filename: 'static/css/[name].css'
       }),
       new webpack.DefinePlugin({
         __DEV__: env && env.enableDev ? true : false,
-        __DEFAULT_ENV__: defaultEnv
+        __DEFAULT_ENV__: defaultEnv,
+        BUNDLE_TIMESTAMP: timestamp.toString()
       }),
       new HtmlWebpackPlugin({
+        chunks: ['bundle'],
         inject: true,
         template: path.resolve(__dirname, 'public', 'index.html'),
         minify: {

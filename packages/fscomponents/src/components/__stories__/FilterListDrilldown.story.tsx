@@ -1,6 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import {
+  boolean
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { FilterListDrilldown } from '../FilterList/FilterListDrilldown';
 
 const items = Array(10)
@@ -52,5 +56,10 @@ storiesOf('FilterListDrilldown', module)
       onApply={action('FilterList onApply')}
       onReset={action('FilterList onReset')}
       singleFilterIds={['sort']}
+      onClose={boolean('Show Close', true) ? action('FilterList onClose') : undefined}
+      showUnselected={boolean('Show Unselected', false)}
+      showSelectedCount={boolean('Show Selected Count', false)}
+      secondLevelShowApply={boolean('Show Second Level Apply', false)}
+      secondLevelShowClose={boolean('Show Second Level Close', false)}
     />
   ));
