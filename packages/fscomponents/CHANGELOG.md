@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.4...v11.0.0-alpha.5) (2021-02-04)
+
+
+### Bug Fixes
+
+* **fscomponents:** serializable image styling (effcd97)
+
+
+
+
+
 # [11.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.3...v11.0.0-alpha.4) (2021-02-02)
 
 
