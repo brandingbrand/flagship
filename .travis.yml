@@ -73,7 +73,7 @@ jobs:
       - ./scripts/android-wait-for-emulator.sh
     script:
       - yarn prepare
-      - yarn ship:init
+      - yarn ship:init-android
       - yarn ship:compile-android
   - stage: test
     language: objective-c
@@ -82,7 +82,7 @@ jobs:
     script:
     - yarn prepare
     - pod repo update
-    - yarn ship:init
+    - yarn ship:init-ios
     - yarn ship:compile-ios
   - stage: deploy
     git:

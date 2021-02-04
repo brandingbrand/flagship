@@ -79,3 +79,29 @@ export function doesKeywordExist(path: string, keyword: string | RegExp): boolea
     return keyword.test(fileContent);
   }
 }
+
+
+/**
+ * Updates a file, replacing a given string with a new one.
+ *
+ * @param {string} path The path to the file to update.
+ * @param {string} oldText The old text to replace.
+ * @param {string} newText The replacement text.
+ */
+export function replace(path: string, oldText: string | RegExp, newText: string): void {
+
+  const replace = require('replace-in-file');
+  const options = {
+    files: path,
+    from: oldText,
+    to: newText
+  };
+
+  replace(options)
+  .then(() => {
+    helpers.logInfo(`Updated file: ${path}`);
+  }).catch(() => {
+    console.error(`Error updating:, ${path}`);
+  });
+}
+
