@@ -8,7 +8,8 @@ import {
   LayoutChangeEvent,
   StyleProp,
   TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 
 export interface ImageBlockProps {
@@ -18,9 +19,10 @@ export interface ImageBlockProps {
   ratio?: string;
   useRatio?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: any;
-  outerContainerStyle?: any;
+  containerStyle?: ViewStyle;
+  outerContainerStyle?: ViewStyle;
   link?: string;
+  parentWidth?: number;
 }
 
 export interface ImageBlockState {
@@ -30,8 +32,7 @@ export interface ImageBlockState {
 
 export default class ImageBlock extends Component<ImageBlockProps, ImageBlockState> {
   static contextTypes: any = {
-    handleAction: PropTypes.func,
-    isCard: PropTypes.bool
+    handleAction: PropTypes.func
   };
   readonly state: ImageBlockState = {};
 
@@ -60,37 +61,42 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
   }
   // tslint:disable-next-line:cyclomatic-complexity
   findImageRatio = (): ImageBlockState => {
-    const { containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
+    const { parentWidth, containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
     if (!useRatio) {
       return {};
     }
     const win = Dimensions.get('window');
     const result: ImageBlockState = { height: undefined, width: undefined };
-    result.width = win.width;
-    if (containerStyle.paddingLeft) {
-      result.width = result.width - containerStyle.paddingLeft;
+    result.width = parentWidth || win.width;
+
+    if (containerStyle) {
+      if (containerStyle.paddingLeft) {
+        result.width = result.width - +containerStyle.paddingLeft;
+      }
+      if (containerStyle.marginLeft) {
+        result.width = result.width - +containerStyle.marginLeft;
+      }
+      if (containerStyle.paddingRight) {
+        result.width = result.width - +containerStyle.paddingRight;
+      }
+      if (containerStyle.marginRight) {
+        result.width = result.width - +containerStyle.marginRight;
+      }
     }
-    if (containerStyle.marginLeft) {
-      result.width = result.width - containerStyle.marginLeft;
-    }
-    if (containerStyle.paddingRight) {
-      result.width = result.width - containerStyle.paddingRight;
-    }
-    if (containerStyle.marginRight) {
-      result.width = result.width - containerStyle.marginRight;
-    }
+
+    // check for parent container margin/padding
     if (outerContainerStyle) {
       if (outerContainerStyle.paddingLeft) {
-        result.width = result.width - outerContainerStyle.paddingLeft;
+        result.width = result.width - +outerContainerStyle.paddingLeft;
       }
       if (outerContainerStyle.marginLeft) {
-        result.width = result.width - outerContainerStyle.marginLeft;
+        result.width = result.width - +outerContainerStyle.marginLeft;
       }
       if (outerContainerStyle.paddingRight) {
-        result.width = result.width - outerContainerStyle.paddingRight;
+        result.width = result.width - +outerContainerStyle.paddingRight;
       }
       if (outerContainerStyle.marginRight) {
-        result.width = result.width - outerContainerStyle.marginRight;
+        result.width = result.width - +outerContainerStyle.marginRight;
       }
     }
     if (ratio) {
@@ -117,7 +123,6 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
       source,
       link
     } = this.props;
-    const { isCard } = this.context;
     const imageRatioStyle: StyleProp<ImageStyle> = {};
     if (this.state.height) {
       imageRatioStyle.height = this.state.height;
@@ -125,7 +130,8 @@ export default class ImageBlock extends Component<ImageBlockProps, ImageBlockSta
     if (this.state.width) {
       imageRatioStyle.width = this.state.width;
     }
-    if (link && !isCard) {
+
+    if (link) {
       return (
         <TouchableOpacity
           activeOpacity={1}

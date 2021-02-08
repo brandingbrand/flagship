@@ -26,7 +26,11 @@ import WhiteInboxWrapper from './WhiteInboxWrapper';
 import DemoProductCarouselBlock from './DemoProductCarouselBlock';
 import TextBanner from './TextBanner';
 import ImageCard from './ImageCard';
+import CustomCarouselBlock from './CustomCarouselBlock';
+import VideoCard from './VideoCard';
+import StackedButtons from './StackedButtons';
 import TitleWithLink from './TitleWithLink';
+import ImageWithText from './ImageWithTextBlock';
 import IconText from './IconTextBlock';
 import ImageWithOverlay from './ImageWithOverlay';
 
@@ -59,6 +63,10 @@ export default {
   ImageWithOverlay,
   TextBanner,
   ImageCard,
+  VideoCard,
+  ImageWithText,
+  StackedButtons,
   TitleWithLink,
+  CustomCarousel: CustomCarouselBlock,
   IconText
 };

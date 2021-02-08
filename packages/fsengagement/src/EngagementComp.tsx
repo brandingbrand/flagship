@@ -847,7 +847,7 @@ export default function(
         );
       }
       return (
-        <View style={[styles.container, containerStyle]}>
+        <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
           {backButton &&
             (

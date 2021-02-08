@@ -26,9 +26,11 @@ export default class TextBannerBlock extends Component<TextBannerProps> {
 
     return (
       <View style={containerStyle}>
-        {contents.Eyebrow.enabled && <TextBlock
-          {...contents.Eyebrow}
-        />}
+        {contents.Eyebrow.enabled && (
+          <TextBlock
+            {...contents.Eyebrow}
+          />
+        )}
         <TextBlock
           {...contents.Text}
         />

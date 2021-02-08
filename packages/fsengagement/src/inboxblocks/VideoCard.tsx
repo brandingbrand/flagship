@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {
+  Action,
   CardProps,
   EmitterProps,
   JSON,
@@ -16,7 +17,7 @@ import {
 
 import TextBlock from './TextBlock';
 import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
+import VideoBlock from './VideoBlock';
 
 export interface ComponentProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<TextStyle>;
@@ -28,17 +29,29 @@ export interface ComponentProps extends ScreenProps, EmitterProps {
 
 export interface ComponentProps extends CardProps {
   contents: any;
+  actions?: Action;
 }
 
-export default class ImageCard extends Component<ComponentProps> {
+export default class VideoCard extends Component<ComponentProps> {
   static childContextTypes: any = {
     story: PropTypes.object,
-    handleStoryAction: PropTypes.func
+    handleStoryAction: PropTypes.func,
+    cardActions: PropTypes.object,
+    id: PropTypes.string,
+    name: PropTypes.string,
+    isCard: PropTypes.bool
+  };
+  static contextTypes: any = {
+    handleAction: PropTypes.func
   };
 
   getChildContext = () => ({
     story: this.props.story,
-    handleStoryAction: this.handleStoryAction
+    handleStoryAction: this.handleStoryAction,
+    cardActions: this.props.actions,
+    id: this.props.id,
+    name: this.props.name,
+    isCard: true
   })
 
   handleStoryAction = async (json: JSON) => {
@@ -68,10 +81,30 @@ export default class ImageCard extends Component<ComponentProps> {
   }
 
   onCardPress = async (): Promise<void> => {
-    const { story, storyGradient } = this.props;
+    const { handleAction } = this.context;
+    const { actions, story, storyGradient } = this.props;
+
+    // if there is a story attached and either
+    //    1) no actions object (legacy engagement)
+    //    2) actions.type is null or 'story' (new default tappable cards)
+
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    return this.handleStoryAction(actionPayload);
+
+    if (story &&
+      (!actions || (actions && (actions.type === null || actions.type === 'story')))
+    ) {
+      if (story.html) {
+        handleAction({
+          type: 'blog-url',
+          value: story.html.link
+        });
+      } else {
+        return this.handleStoryAction(actionPayload);
+      }
+    } else if (actions && actions.type) {
+      handleAction(actions);
+    }
   }
 
   render(): JSX.Element {
@@ -86,8 +119,9 @@ export default class ImageCard extends Component<ComponentProps> {
         activeOpacity={0.9}
         onPress={this.onCardPress}
       >
-        <ImageBlock
-          {...contents.Image}
+        <VideoBlock
+          {...contents.Video}
+          {...{ ...contents.Video, outerContainerStyle: containerStyle}}
         />
         <TextBlock
           {...contents.Text}

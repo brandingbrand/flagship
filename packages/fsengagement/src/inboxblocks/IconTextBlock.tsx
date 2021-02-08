@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   flexContainerReverse: {
     flexDirection: 'row-reverse'
@@ -54,8 +54,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 30,
     top: 40
-  },
-
+  }
 });
 
 export interface IconTextProps {
@@ -80,7 +79,7 @@ export default class IconTextBlock extends Component<IconTextProps> {
       value: link
     });
   }
-
+  // tslint:disable cyclomatic-complexity
   render(): JSX.Element {
     const {
       containerStyle,
@@ -96,7 +95,7 @@ export default class IconTextBlock extends Component<IconTextProps> {
 
     const iconWidth = contents.Image && contents.Image.iconWidth || 0;
     imageDimensions.width = iconWidth;
-    imageDimensions.height = contents.Image.ratio ?
+    imageDimensions.height = contents?.Image?.ratio ?
       iconWidth / parseFloat(contents.Image.ratio) : 0;
 
     const iconType: ArrowTypes = contents?.Icon?.type || 'rightArrow';
@@ -108,32 +107,36 @@ export default class IconTextBlock extends Component<IconTextProps> {
           onPress={this.onPress(link)}
           style={containerStyle}
         >
-          <View style={[
-            styles.flexContainer,
-            !!(imageAlignment && imageAlignment === 'right') && styles.flexContainerReverse
-            ]}>
-            <View
-              style={
-                [
+          <View
+            style={[
+              styles.flexContainer,
+              !!(imageAlignment && imageAlignment === 'right') && styles.flexContainerReverse
+            ]}
+          >
+            {contents.Image && (
+              <View
+                style={[
                   styles.iconContainer,
                   {width: iconWidth},
                   iconSpacing
-                ]
-              }
-            >
-              <ImageBlock
-                source={contents.Image.source}
-                containerStyle={contents.Image.containerStyle}
-                imageStyle={imageDimensions}
-              />
-            </View>
+                ]}
+              >
+                <ImageBlock
+                  source={contents.Image.source}
+                  containerStyle={contents.Image.containerStyle}
+                  imageStyle={imageDimensions}
+                />
+              </View>
+            )}
             <View
               style={{ flex: 1 }}
             >
               {(contents.Eyebrow && contents.Eyebrow.enabled) &&
-                <TextBlock
-                  {...contents.Eyebrow}
-                />
+                (
+                  <TextBlock
+                    {...contents.Eyebrow}
+                  />
+                )
               }
               <TextBlock
                 {...contents.Text}

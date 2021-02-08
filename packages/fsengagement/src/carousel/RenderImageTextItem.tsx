@@ -1,7 +1,16 @@
 /* tslint:disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Dimensions, Image, LayoutChangeEvent, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  LayoutChangeEvent,
+  StyleProp,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import styles from './SliderEntry.style';
 
 export interface RenderItemProps {
@@ -9,15 +18,18 @@ export interface RenderItemProps {
   parallax?: any;
   parallaxProps?: any;
   even?: boolean;
+  numColumns?: number;
   noMargin?: boolean;
   options?: any;
   itemWidth: number;
-  headerStyle?: any;
-  textStyle?: any;
-  eyebrowStyle?: any;
+  headerStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  additionalStyle?: StyleProp<TextStyle>;
+  eyebrowStyle?: StyleProp<TextStyle>;
   horizPadding?: number;
   verticalSpacing?: number;
   overallHeight?: number;
+  totalItemWidth?: number;
   grid?: boolean;
 }
 export interface TextValue {
@@ -85,6 +97,7 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
         showText,
         text,
         header,
+        additional,
         eyebrow
       },
       even,
@@ -94,19 +107,24 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
       verticalSpacing = 0,
       options,
       overallHeight = 0,
+      totalItemWidth = 0,
+      numColumns = 2,
       eyebrowStyle,
       headerStyle,
       textStyle,
+      additionalStyle,
       noMargin
     } = this.props;
 
     let itemStyle: any = {};
     let imageStyle: any = {};
+    const textPadding = options.textPadding || {};
     if (grid) {
       if (ratio && itemWidth) {
         itemStyle = {
-          width: noMargin ? Math.floor(itemWidth - 1) : Math.floor(itemWidth),
+          width: noMargin ? totalItemWidth - (itemWidth * (numColumns - 1)) : itemWidth,
           marginRight: noMargin ? 0 : horizPadding,
+          paddingHorizontal: 0,
           marginBottom: verticalSpacing
         };
       } else {
@@ -163,11 +181,11 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
             <View
             style={[{ height: this.state.viewHeight - ((itemWidth) / parseFloat(ratio)) }, textbg]}
             >
-              <View style={[{ padding: 10, justifyContent: 'center' }]}>
+              <View style={[textPadding, { justifyContent: 'center' }]}>
                 {!!(eyebrow && eyebrow.value) &&
-                  <Text style={[eyebrowStyle, { textAlign: options.textAlign, marginBottom: 5 }]}>{eyebrow.value}</Text>}
+                  <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>{eyebrow.value}</Text>}
                 {!!(header && header.value) &&
-                  <Text style={[headerStyle, { textAlign: options.textAlign, marginBottom: 5 }]}>{header.value}</Text>}
+                  <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>}
                 {!!(text && text.value) &&
                   <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>}
               </View>
@@ -194,13 +212,15 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
           <View
           style={[{ height: overallHeight - ((itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) / parseFloat(ratio)) }, textbg]}
           >
-            <View style={[{ padding: 10, justifyContent: 'center' }]}>
+            <View style={[textPadding, { justifyContent: 'center' }]}>
               {!!(eyebrow && eyebrow.value) &&
-                <Text style={[eyebrowStyle, { textAlign: options.textAlign, marginBottom: 5 }]}>{eyebrow.value}</Text>}
+                <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>{eyebrow.value}</Text>}
               {!!(header && header.value) &&
-                <Text style={[headerStyle, { textAlign: options.textAlign, marginBottom: 5 }]}>{header.value}</Text>}
+                <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>}
               {!!(text && text.value) &&
                 <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>}
+              {!!(additional && additional.value) &&
+                <Text style={[additionalStyle, { textAlign: options.textAlign }]}>{additional.value}</Text>}
             </View>
           </View>}
 

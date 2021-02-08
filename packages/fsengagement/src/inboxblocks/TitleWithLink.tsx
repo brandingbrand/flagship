@@ -13,16 +13,16 @@ import TextBlock from './TextBlock';
 
 const styles = StyleSheet.create({
   titleContainer: {
-      flex: 3,
-      alignItems: 'flex-start'
+    flex: 3,
+    alignItems: 'flex-start'
   },
   flexContainer: {
-      flexDirection: 'row',
-      alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   linkContainer: {
-      flex: 1,
-      alignItems: 'flex-end'
+    flex: 1,
+    alignItems: 'flex-end'
   }
 });
 

@@ -11,7 +11,6 @@ const { width: viewportWidth } = Dimensions.get('window');
 import RenderImageTextItem from '../carousel/RenderImageTextItem';
 
 const sliderWidth = viewportWidth;
-let renderItemWidth: number = 0;
 
 export interface GridItem {
   link: string;
@@ -71,6 +70,9 @@ export default class ImageGrid
   _renderItem(item: any, index: number): JSX.Element {
     const { options, eyebrowStyle, headerStyle, textStyle } = this.props;
     const { numColumns = 2 } = options;
+    const totalItemWidth =
+      this.calculateGridWidth() - (options.spaceBetweenHorizontal * (numColumns - 1));
+    const itemWidth = Math.round(totalItemWidth / numColumns);
     const spaceBetweenHorizontal = options.spaceBetweenHorizontal;
     const spaceBetweenVertical = options.spaceBetweenVertical;
 
@@ -78,7 +80,9 @@ export default class ImageGrid
       <RenderImageTextItem
         data={item}
         key={index}
-        itemWidth={renderItemWidth}
+        itemWidth={itemWidth}
+        numColumns={numColumns}
+        totalItemWidth={totalItemWidth}
         verticalSpacing={spaceBetweenVertical}
         horizPadding={spaceBetweenHorizontal}
         options={options}
@@ -103,21 +107,11 @@ export default class ImageGrid
     return ml + mr + pr + pl;
   }
 
-  calculateSliderWidth(): number {
+  calculateGridWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
 
-  calculateItemWidth(): number {
-    const {
-      options
-    } = this.props;
-    const { numColumns = 2 } = options;
-    const slideWidth = Math.round(this.calculateSliderWidth() / numColumns);
-    return slideWidth - ((options.spaceBetweenHorizontal * (numColumns - 1)) / numColumns);
-  }
-
   createGrid(): JSX.Element {
-    renderItemWidth = this.calculateItemWidth();
     return (
       <View
         style={{

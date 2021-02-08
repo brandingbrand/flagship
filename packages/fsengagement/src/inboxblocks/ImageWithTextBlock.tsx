@@ -26,15 +26,12 @@ export default class ImageWithTextBlock extends Component<ImageWithTextProps> {
 
     return (
       <View style={containerStyle}>
-        <TextBlock
-          {...contents.Text}
-        />
         <ImageBlock
           source={contents.Image.source}
-          {
-            ...contents.Image,
-            { outerContainerStyle: containerStyle }
-          }
+          {...{ ...contents.Image, outerContainerStyle: containerStyle}}
+        />
+        <TextBlock
+          {...contents.Text}
         />
       </View>
     );

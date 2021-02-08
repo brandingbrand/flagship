@@ -31,6 +31,9 @@ export interface EmitterProps {
 export interface ComponentList {
   [key: string]: ComponentClass<any>;
 }
+export interface AppSettings {
+  [key: string]: any;
+}
 
 export interface Icon {
   type: string;
@@ -81,6 +84,7 @@ export interface JSON {
   headerTitleStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
   id?: string;
   key?: string;
   name?: string;
