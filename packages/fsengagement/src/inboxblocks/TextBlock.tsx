@@ -97,7 +97,7 @@ export default class TextBlock extends Component<TextBlockProps> {
         >
           <View style={containerStyle}>
             <Text style={[styles.default, textStyle]}>{text}</Text>
-            {subtitle &&
+            {!!subtitle &&
               (
                 <View style={subtitle.containerStyle}>
                   <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>
@@ -111,7 +111,7 @@ export default class TextBlock extends Component<TextBlockProps> {
     return (
       <View style={containerStyle}>
         <Text style={[styles.default, textStyle]}>{text}</Text>
-        {subtitle &&
+        {!!subtitle &&
           (
             <View style={subtitle.containerStyle}>
               <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>

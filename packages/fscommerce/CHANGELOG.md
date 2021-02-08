@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
 # [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
 
 

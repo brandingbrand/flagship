@@ -12,16 +12,24 @@ import {
   StoryGradient
 } from '../types';
 
-import TextBlock from './TextBlock';
-import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
+import TextBlock, { TextBlockProps } from './TextBlock';
+import CTABlock, { CTABlockProps } from './CTABlock';
+import ImageBlock, { ImageBlockProps } from './ImageBlock';
+
+export interface FeaturedTopCardContents {
+  Image: ImageBlockProps;
+  Text: TextBlockProps;
+  CTA: CTABlockProps;
+}
+
 
 export interface ComponentProps extends CardProps {
   containerStyle?: StyleProp<TextStyle>;
   story?: JSON;
-  contents: any;
+  contents: FeaturedTopCardContents;
   api?: any;
   storyGradient?: StoryGradient;
+
 }
 
 export default class Card extends Component<ComponentProps> {
@@ -44,7 +52,7 @@ export default class Card extends Component<ComponentProps> {
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
+    this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
     return this.props.navigator.push({
@@ -92,7 +100,6 @@ export default class Card extends Component<ComponentProps> {
         />
         <CTABlock
           {...contents.CTA}
-          story={this.props.story}
         />
 
       </TouchableOpacity>

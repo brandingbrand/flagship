@@ -1,4 +1,4 @@
-// tslint:disable
+/* tslint:disable */
 import React, { Component } from 'react';
 import {
   Dimensions,
@@ -66,8 +66,10 @@ export default class ImageCarouselBlock
       overallHeight: 0
     };
   }
-
-  shouldComponentUpdate(nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState): boolean {
+  // tslint:disable-next-line:cyclomatic-complexity
+  shouldComponentUpdate(
+    nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState
+  ): boolean {
     return this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||
       this.props.ratio !== nextProps.ratio ||
@@ -77,9 +79,10 @@ export default class ImageCarouselBlock
       this.props.headerStyle !== nextProps.headerStyle ||
       this.props.textStyle !== nextProps.textStyle ||
       this.props.additionalStyle !== nextProps.additionalStyle ||
-      this.state.sliderActiveSlide != nextState.sliderActiveSlide ||
+      this.state.sliderActiveSlide !== nextState.sliderActiveSlide ||
       this.state.overallHeight !== nextState.overallHeight;
   }
+
   _renderItem(data: any): JSX.Element {
     const {
       headerStyle,
@@ -87,7 +90,7 @@ export default class ImageCarouselBlock
       additionalStyle,
       options
     } = this.props;
-    let renderItemWidth = this.calculateItemWidth();
+    const renderItemWidth = this.calculateItemWidth();
     return (
       <RenderImageTextItem
         data={data.item}
@@ -104,7 +107,7 @@ export default class ImageCarouselBlock
     );
   }
 
-  horizontalMarginPadding() {
+  horizontalMarginPadding(): number {
     const {
       containerStyle
     } = this.props;
@@ -114,10 +117,10 @@ export default class ImageCarouselBlock
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth() {
+  calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth() {
+  calculateItemWidth(): number {
     const {
       options
     } = this.props;
@@ -125,8 +128,9 @@ export default class ImageCarouselBlock
     const slideWidth = Math.round((this.calculateSliderWidth() * options.itemWidthPercent) / 100);
     return slideWidth + options.itemHorizontalPaddingPercent;
   }
+
   _onLayout = (event: LayoutChangeEvent) => {
-    var { height } = event.nativeEvent.layout;
+    const { height } = event.nativeEvent.layout;
     this.setState({
       overallHeight: height
     });
@@ -159,7 +163,7 @@ export default class ImageCarouselBlock
       loopClonesPerSide: 3
     } : {};
 
-    let renderItemWidth = this.calculateItemWidth();
+    const renderItemWidth = this.calculateItemWidth();
     return (
       <View onLayout={this._onLayout}>
         <Carousel
@@ -180,7 +184,6 @@ export default class ImageCarouselBlock
           {...loopProps}
         />
       </View>
-
     );
   }
   render(): JSX.Element {
@@ -207,7 +210,7 @@ export default class ImageCarouselBlock
             </Text>
           </View>
         )}
-        {pagination && (
+        {!!pagination && (
           <CarouselPagination
             activeIndex={this.state.sliderActiveSlide}
             pagination={pagination}

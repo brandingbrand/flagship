@@ -101,7 +101,10 @@ async function renderApp(
   const { flagship, config } = flagshipApp;
   const updatedConfig = {
     ...config,
-    initialState: await flagship.updatedInitialState(cache)
+    initialState: {
+      ...await flagship.updatedInitialState(cache),
+      ...config.initialState
+    }
   };
   flagship.getReduxStore(updatedConfig.initialState).then((reduxStore: Store) => {
     // prerender the app

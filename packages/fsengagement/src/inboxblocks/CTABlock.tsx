@@ -15,8 +15,7 @@ import {
   Action,
   EmitterProps,
   Icon,
-  JSON,
-  ScreenProps
+  JSON
 } from '../types';
 
 const images: any = {
@@ -47,10 +46,10 @@ interface LocalizationData {
   language: string;
 }
 
-export interface CTABlockProps extends ScreenProps, EmitterProps {
+export interface CTABlockProps extends EmitterProps {
   action: string;
   text: string;
-  icon: Icon;
+  icon?: Icon;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;

@@ -1,35 +1,47 @@
-/* tslint:disable */
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageURISource, Text, TouchableOpacity, View } from 'react-native';
 import styles from './SliderEntry.style';
-import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
+import {
+  OptionsModalPresentationStyle
+// tslint:disable-next-line: no-submodule-imports
+} from 'react-native-navigation/lib/dist/interfaces/Options';
+
+export interface RenderDemoProductData {
+  image: {
+    ratio: number;
+    source: ImageURISource;
+  };
+  price: string;
+  title: string;
+}
 
 export interface RenderDemoProductProps {
-  data?: any;
+  data: RenderDemoProductData;
   index?: number;
   parallax?: any;
   parallaxProps?: any;
   even?: boolean;
-  navigator: any;
+  navigator: Navigator;
   onPressOpenModal?: boolean;
   products?: any[];
   isDemoProduct?: boolean;
   horizPadding: number;
-  itemWidth: number;
+  itemWidth?: number;
 }
 const stars = require('../../assets/images/stars.png');
 
 export default class RenderDemoProduct extends Component<RenderDemoProductProps> {
 
-  get image(): any {
+  get image(): JSX.Element {
     const { data: { image } } = this.props;
 
     return (
-        <Image
-          source={image.source}
-          style={styles.image}
-        />
-      );
+      <Image
+        source={image.source}
+        style={styles.image}
+      />
+    );
   }
   openCarouselModal = () => {
     if (!this.props.onPressOpenModal) {
@@ -38,10 +50,6 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
     this.props.navigator.showModal({
       component: {
         name: 'EngagementProductModal',
-        passProps: {
-          products: this.props.products,
-          index: this.props.index
-        },
         options: {
           animations: {
             showModal: {
@@ -58,15 +66,19 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
           layout: {
             backgroundColor: 'transparent'
           },
-          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
           bottomTabs: {
             visible: false
-          }
+          },
+          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext
+        },
+        passProps: {
+          products: this.props.products,
+          index: this.props.index
         }
       }
-    });
+    }).catch(e => console.error(e));
   }
-  render() {
+  render(): JSX.Element {
     const {
       data: {
         title,
@@ -101,11 +113,13 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
         style={itemStyle}
         onPress={this.openCarouselModal}
       >
-        <View style={{
-          height: PROD_IMG_HEIGHT,
-          width: PROD_IMG_HEIGHT * ratio,
-          alignSelf: 'center'
-        }}>
+        <View
+          style={{
+            height: PROD_IMG_HEIGHT,
+            width: PROD_IMG_HEIGHT * ratio,
+            alignSelf: 'center'
+          }}
+        >
           <View style={[styles.imageContainerNoCard]}>
             {this.image}
           </View>

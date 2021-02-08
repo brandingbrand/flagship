@@ -23,6 +23,8 @@ module.exports = ({ config, env }) => {
   config.module.rules.push({
     test: /\.jsx?$/,
     include: [
+      path.resolve('node_modules/react-native-snap-carousel/'),
+      path.resolve('node_modules/react-native-animatable/'),
       path.resolve('node_modules/@brandingbrand/tcomb-form-native/'),
       path.resolve('node_modules/@react-native-community/picker'),
       path.resolve('node_modules/react-native-picker-select'),
