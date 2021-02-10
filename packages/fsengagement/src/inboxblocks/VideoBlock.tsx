@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dimensions,
-  StyleProp,
   StyleSheet,
-  TextStyle,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -24,7 +22,8 @@ export interface VideoBlockProps {
   style?: any;
   muted?: VideoProperties['muted'];
   fullscreen?: boolean;
-  containerStyle?: StyleProp<TextStyle>;
+  containerStyle?: any;
+  outerContainerStyle?: any;
 }
 
 export interface StateType {
@@ -162,30 +161,67 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
     }
   }
 
+  // tslint:disable cyclomatic-complexity
   render(): JSX.Element {
     const {
       source,
       style = {},
-      containerStyle
+      containerStyle,
+      outerContainerStyle
     } = this.props;
 
     if (!source) {
       return <View />;
     }
-    let height = style.height || 200;
+    const height = style.height || 200;
     const width = DEFAULT_WIDTH;
 
-    if (source.ratio) {
-      height = width / source.ratio;
-    }
-
     const blockStyle = _.cloneDeep(style);
-    blockStyle.height = height;
     blockStyle.width = width;
 
+    if (containerStyle) {
+      if (containerStyle.paddingLeft) {
+        blockStyle.width = blockStyle.width - +containerStyle.paddingLeft;
+      }
+      if (containerStyle.marginLeft) {
+        blockStyle.width = blockStyle.width - +containerStyle.marginLeft;
+      }
+      if (containerStyle.paddingRight) {
+        blockStyle.width = blockStyle.width - +containerStyle.paddingRight;
+      }
+      if (containerStyle.marginRight) {
+        blockStyle.width = blockStyle.width - +containerStyle.marginRight;
+      }
+    }
+    if (outerContainerStyle) {
+      if (outerContainerStyle.paddingLeft) {
+        blockStyle.width = blockStyle.width - outerContainerStyle.paddingLeft;
+      }
+      if (outerContainerStyle.marginLeft) {
+        blockStyle.width = blockStyle.width - outerContainerStyle.marginLeft;
+      }
+      if (outerContainerStyle.paddingRight) {
+        blockStyle.width = blockStyle.width - outerContainerStyle.paddingRight;
+      }
+      if (outerContainerStyle.marginRight) {
+        blockStyle.width = blockStyle.width - outerContainerStyle.marginRight;
+      }
+    }
+
+    if (source && source.ratio) {
+      blockStyle.height = blockStyle.width / source.ratio;
+    } else {
+      blockStyle.height = height;
+    }
+
     return (
-      <View style={[containerStyle, blockStyle]}>
-        {height > 0 ? this.renderVideo(source.src, { width, height }) : null}
+      <View style={containerStyle}>
+        <View style={blockStyle}>
+        {height > 0 ? this.renderVideo(source.src.replace(/ /g, '%20'), {
+          width: blockStyle.width,
+          height: blockStyle.height
+        }) : null}
+        </View>
       </View>
     );
   }

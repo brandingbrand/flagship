@@ -19,7 +19,8 @@ import {
 } from '../types';
 
 const images: any = {
-  rightArrow: require('../../assets/images/rightArrow.png')
+  rightArrow: require('../../assets/images/rightArrow.png'),
+  rightBlockArrow: require('../../assets/images/rightBlockArrow.png')
 };
 
 const styles = StyleSheet.create({
