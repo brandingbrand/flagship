@@ -13,6 +13,7 @@ import { ButtonProps } from '../Button';
 import { border, palette as defaultPalette } from '../../styles/variables';
 import { style as S, stylesSize, stylesTextSize } from '../../styles/Button';
 import { extractHostStyles } from '../../lib/style';
+import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableButtonProps
   extends Pick<
@@ -42,7 +43,7 @@ export interface SerializableButtonProps
 
 export const FSSerializableButton = React.memo<
   SerializableButtonProps & {
-    onPress?: () => void;
+    onPress?: (href: string) => void;
   }
 >(
   // tslint:disable-next-line: cyclomatic-complexity
@@ -60,7 +61,8 @@ export const FSSerializableButton = React.memo<
     titleStyle,
     noPadding,
     palette,
-    onPress = () => {
+    href,
+    onPress = (href: string) => {
       // default
     },
     ...props
@@ -72,8 +74,17 @@ export const FSSerializableButton = React.memo<
       [color]
     );
 
+    const navigator = useNavigator();
+    const handlePress = () => {
+      if (onPress) {
+        onPress(href);
+      } else {
+        navigator.open(href);
+      }
+    };
+
     return (
-      <TouchableOpacity {...props} onPress={onPress} style={host} >
+      <TouchableOpacity {...props} onPress={handlePress} style={host} >
         <View
           style={[
             S.container,

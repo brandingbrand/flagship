@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
 import { extractHostStyles } from '../../lib/style';
+import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableImageProps
   extends Pick<
@@ -21,19 +22,28 @@ export interface SerializableImageProps
   > {
   href?: string;
   style?: ImageStyle;
-  onPress?: () => void;
+  onPress?: (href?: string) => void;
 }
 
 export const FSSerializableImage = React.memo<SerializableImageProps>(
-  ({ onPress, style, ...props }) => {
+  ({ onPress, style, href, ...props }) => {
     const [host, self] = extractHostStyles(style);
+    const navigator = useNavigator();
 
-    if (!onPress) {
+    const handlePress = (href?: string) => () => {
+      if (onPress) {
+        onPress(href);
+      } else if (href) {
+        navigator.open(href);
+      }
+    };
+
+    if (!(href || onPress)) {
       return <Image {...props} style={[self, host]} />;
     }
 
     return (
-      <TouchableOpacity style={host} onPress={onPress}>
+      <TouchableOpacity style={host} onPress={handlePress(href)}>
         <Image {...props} style={self} />
       </TouchableOpacity>
     );

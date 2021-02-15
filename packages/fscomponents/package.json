@@ -11,6 +11,7 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
+    "@brandingbrand/fsapp": "^11.0.0-alpha.8",
     "@brandingbrand/fscommerce": "^11.0.0-alpha.8",
     "@brandingbrand/fsengage": "^11.0.0-alpha.8",
     "@brandingbrand/fsfoundation": "^11.0.0-alpha.8",
