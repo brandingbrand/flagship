@@ -75,13 +75,13 @@ export class History implements FSRouterHistory {
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
     if (typeof to === 'string') {
-      if (/\w+:\/\//.exec(to)) {
+      if (/^\w+:\/\//.exec(to)) {
         window.location.href = to;
       } else {
         this.browserHistory.push(to, state);
       }
     } else {
-      if (to?.pathname && /\w+:\/\//.exec(to.pathname)) {
+      if (to?.pathname && /^\w+:\/\//.exec(to.pathname)) {
         window.location.href = to.pathname;
       } else if (to) {
         this.browserHistory.push(to);
