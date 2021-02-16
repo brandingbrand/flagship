@@ -149,9 +149,9 @@ export class History implements FSRouterHistory {
   public push(location: LocationDescriptor): Promise<void>;
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
-    if (typeof to === 'string' && /\w+:\/\//.exec(to)) {
+    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
       await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /\w+:\/\//.exec(to.pathname)) {
+    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
       await Linking.openURL(to.pathname);
     } else {
       const newLocation = await this.getNextLocation(to, state);
@@ -336,7 +336,13 @@ export class History implements FSRouterHistory {
           if (matchingRoute) {
             if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
               this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails(matchingRoute);
+              const activatedRoute = await this.resolveRouteDetails({
+                ...matchingRoute,
+                data: {
+                  ...matchingRoute,
+                  ...(typeof this.location.state === 'object' ? this.location.state : {})
+                }
+              });
               this.activationObservers.forEach(listener => {
                 listener(activatedRoute);
               });
@@ -344,8 +350,16 @@ export class History implements FSRouterHistory {
               const title =
                 typeof matchingRoute.title === 'function'
                   ? await matchingRoute.title({
-                    data: matchingRoute.data ?? {},
-                    query: matchingRoute.params ?? {},
+                    data:
+                      // Linting can't figure out how deep it want's to
+                      // indent this
+                      // tslint:disable: ter-indent
+                      {
+                        ...matchingRoute.data,
+                        ...(typeof this.location.state === 'object' ? this.location.state : {})
+                      } ?? {},
+                      // tslint:enable: ter-indent
+                    query: matchingRoute.query ?? {},
                     params: matchingRoute.params ?? {},
                     path: matchingRoute.matchedPath,
                     loading: true
