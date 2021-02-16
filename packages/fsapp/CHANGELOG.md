@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.6...v11.0.0-alpha.7) (2021-02-16)
+
+
+### Bug Fixes
+
+* **fsapp:** linking conflicts ([ae906ab](https://github.com/brandingbrand/flagship/commit/ae906abd83498d3bf2a5843abe2121452d7082c8))
+* **fsapp:** missing type definitions ([945672b](https://github.com/brandingbrand/flagship/commit/945672bdc7ce63d9ccfd9c776135de56d0c2ffd2))
+
+
+### Features
+
+* **fsapp:** transfer state on push ([0e58261](https://github.com/brandingbrand/flagship/commit/0e58261e5fcfda539fadddaea8a8e9aa0b2e3718))
+
+
+
+
+
 # [11.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v11.0.0-alpha.6) (2021-02-16)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
