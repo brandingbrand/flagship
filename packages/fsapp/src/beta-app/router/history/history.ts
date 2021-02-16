@@ -149,9 +149,9 @@ export class History implements FSRouterHistory {
   public push(location: LocationDescriptor): Promise<void>;
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
-    if (typeof to === 'string' && /\w+:\/\//.exec(to)) {
+    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
       await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /\w+:\/\//.exec(to.pathname)) {
+    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
       await Linking.openURL(to.pathname);
     } else {
       const newLocation = await this.getNextLocation(to, state);
@@ -345,7 +345,7 @@ export class History implements FSRouterHistory {
                 typeof matchingRoute.title === 'function'
                   ? await matchingRoute.title({
                     data: matchingRoute.data ?? {},
-                    query: matchingRoute.params ?? {},
+                    query: matchingRoute.query ?? {},
                     params: matchingRoute.params ?? {},
                     path: matchingRoute.matchedPath,
                     loading: true

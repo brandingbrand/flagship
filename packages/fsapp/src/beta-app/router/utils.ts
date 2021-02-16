@@ -71,7 +71,7 @@ export const resolveRoutes = async ({
                 ({ tabAffinity }) =>
                   tabAffinity === (typeof route.tab === 'string' ? route.tab : route.tab?.text)
               )
-              .map(({ exact, ...external }) => ({
+              .map(external => ({
                 ...external,
                 path: external.path?.replace(`${route.path}`, '').replace(/\/$/, '')
               })),
