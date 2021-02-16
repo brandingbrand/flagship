@@ -48,7 +48,8 @@ const matchPath = (path: string | undefined, route: Route) => {
     }
 
     const keys: Key[] = [];
-    const regex = pathToRegexp(path.replace(/\/$/, ''), keys, { strict: route.exact });
+    const normalizedPath = path.length > 1 ? path.replace(/\/$/, '') : path;
+    const regex = pathToRegexp(normalizedPath, keys, { strict: route.exact });
     const [url, ...params] = regex.exec(checkPath.split('?')[0]) ?? [];
     return url
       ? {
