@@ -80,11 +80,16 @@ const HOST_STYLES = [
 export const extractHostStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
   style?: StyleProp<T>
 ) => {
-  if (!style || Object.keys(style).length === 0) {
+  if (!style) {
     return [{}, {}] as [Partial<T>, Partial<T>];
   }
 
   const styleSheet = StyleSheet.flatten(style);
+
+  if (Object.keys(styleSheet).length === 0) {
+    return [{}, {}] as [Partial<T>, Partial<T>];
+  }
+
   const [hostStylePairs, nonHostStylePairs] = partition(Object.entries(styleSheet), ([style]) =>
     HOST_STYLES.some(hostStyle => hostStyle.test(style))
   );
@@ -142,11 +147,16 @@ const CONTAINER_STYLES = [/display/, /Content/, /Items/, /flex(?!$)/];
 export const extractContainerStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
   style?: StyleProp<T>
 ) => {
-  if (!style || Object.keys(style).length === 0) {
+  if (!style) {
     return [{}, {}] as [Partial<T>, Partial<T>];
   }
 
   const styleSheet = StyleSheet.flatten(style);
+
+  if (Object.keys(styleSheet).length === 0) {
+    return [{}, {}] as [Partial<T>, Partial<T>];
+  }
+
   const [nestedStyles, nonNestedStyles] = partition(Object.entries(styleSheet), ([style]) =>
     CONTAINER_STYLES.some(nestedStyle => nestedStyle.test(style))
   );
