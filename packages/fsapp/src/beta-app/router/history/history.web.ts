@@ -176,7 +176,7 @@ export class History implements FSRouterHistory {
     const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
 
     if (matchingRoute) {
-      await this.activateRoute(matchingRoute);
+      await this.activateRoute(matchingRoute, this.browserHistory.location.state);
       this._action = this.browserHistory.action;
       this._location = this.browserHistory.location;
       this.locationObservers.forEach(listener => {
@@ -185,9 +185,9 @@ export class History implements FSRouterHistory {
     }
   }
 
-  private async activateRoute(matchingRoute: MatchingRoute): Promise<void> {
+  private async activateRoute(matchingRoute: MatchingRoute, state: unknown): Promise<void> {
     this.setLoading(true);
-    const activatedRoute = await this.resolveRouteDetails(matchingRoute);
+    const activatedRoute = await this.resolveRouteDetails(matchingRoute, state);
     this.activationObservers.forEach(listener => {
       listener(activatedRoute);
     });
@@ -209,7 +209,7 @@ export class History implements FSRouterHistory {
       const unblock = this.browserHistory.block(true);
       const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
       if (matchingRoute) {
-        await this.activateRoute(matchingRoute);
+        await this.activateRoute(matchingRoute, location.state);
         this._action = action;
         this._location = location;
         this.locationObservers.forEach(listener => {
@@ -228,10 +228,13 @@ export class History implements FSRouterHistory {
     this.loadingObservers.forEach(callback => callback(loading));
   }
 
-  private async resolveRouteDetails(matchingRoute: MatchingRoute): Promise<ActivatedRoute> {
+  private async resolveRouteDetails(
+    matchingRoute: MatchingRoute,
+    state: unknown
+  ): Promise<ActivatedRoute> {
     const resolvedData = await promisedEntries(resolveRoute(matchingRoute));
     return {
-      data: resolvedData,
+      data: { ...resolvedData, ...(typeof state === 'object' ? state : {}) },
       query: matchingRoute.query,
       params: matchingRoute.params,
       path: matchingRoute.matchedPath,
