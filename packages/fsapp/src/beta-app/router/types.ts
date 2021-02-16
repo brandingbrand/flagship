@@ -35,11 +35,11 @@ export interface ScreenOptions {
  * @see useRouteQuery - hook into the query context
  * @see useRouteData - hook into the the data context
  */
-export type RouteFC = FC & ScreenOptions;
-export abstract class RouteComponent<State = {}> extends Component<{}, State> {
+export type ScreenFC = FC & ScreenOptions;
+export abstract class ScreenComponent<State = {}> extends Component<{}, State> {
   static buttons?: ScreenOptions['buttons'];
 }
-export type RouteComponentType = RouteFC | typeof RouteComponent;
+export type ScreenComponentType = ScreenFC | typeof ScreenComponent;
 export type Tab = string | (OptionsBottomTab & { id: string });
 
 export type RouteData = Dictionary<unknown | undefined>;
@@ -79,7 +79,7 @@ export type TopBarStyle = Omit<OptionsTopBar, 'title'> & {
 };
 
 export interface ComponentRoute extends BaseRoute {
-  readonly component: RouteComponentType;
+  readonly component: ScreenComponentType;
 
   readonly title?: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
   readonly topBarStyle?: TopBarStyle;
@@ -101,7 +101,7 @@ export interface ComponentRoute extends BaseRoute {
 }
 
 export interface LazyComponentRoute extends Omit<ComponentRoute, 'component'> {
-  readonly lazyComponent: () => Promise<RouteComponentType>;
+  readonly lazyComponent: () => Promise<ScreenComponentType>;
 }
 
 export interface ParentRoute extends BaseRoute {
