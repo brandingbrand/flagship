@@ -38,6 +38,9 @@ export {
 export {
   default as ProductSearchDataSource
 } from './Commerce/interfaces/ProductSearchDataSource';
+export {
+  default as ContentDataSource
+} from './Commerce/interfaces/ContentDataSource';
 
 export {
   default as runMiddleware,
