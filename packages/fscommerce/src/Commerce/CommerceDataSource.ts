@@ -1,11 +1,13 @@
 import { Product } from './CommerceTypes';
 import AccountDataSource from './interfaces/AccountDataSource';
 import CartDataSource from './interfaces/CartDataSource';
+import ContentDataSource from './interfaces/ContentDataSource';
 import ProductCatalogDataSource from './interfaces/ProductCatalogDataSource';
 import ProductRecommendationDataSource from './interfaces/ProductRecommendationDataSource';
 import ProductSearchDataSource from './interfaces/ProductSearchDataSource';
 
 export default interface CommerceDataSource extends AccountDataSource,
+                                                    ContentDataSource,
                                                     CartDataSource,
                                                     ProductRecommendationDataSource,
                                                     ProductSearchDataSource,
