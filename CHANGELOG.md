@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.10.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.10.0-alpha.0...v10.10.0-alpha.1) (2021-02-17)
+
+
+### Bug Fixes
+
+* **fsengagement:** fix twitching on carousels ([01f077f](https://github.com/brandingbrand/flagship/commit/01f077f59f8d06bd5338e562f1fc23cd12df8b78))
+
+
+
+
+
 # [10.10.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0-alpha.0) (2021-02-10)
 
 
