@@ -131,9 +131,11 @@ export default class ImageCarouselBlock
 
   _onLayout = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
-    this.setState({
-      overallHeight: height
-    });
+    if (height - this.state.overallHeight >= 1) {
+      this.setState({
+        overallHeight: height
+      });
+    }
   }
 
   onSnapToItem = (index: number): void => {
