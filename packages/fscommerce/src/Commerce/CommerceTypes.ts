@@ -44,3 +44,4 @@ export * from './types/ProductListShippingAddress';
 export * from './types/CustomerProductListRegistrant';
 export * from './types/CustomerProductList';
 export * from './types/ProductListAddItemOptions';
+export * from './types/ContentResources';
