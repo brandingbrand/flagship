@@ -114,9 +114,6 @@ export default class CustomCarouselBlock
       ...restProps
     };
 
-    console.log('components',components)
-    console.log('item',item)
-    console.log('props',props)
     if (!components?.[private_type]) {
       return null;
     }
@@ -173,9 +170,11 @@ export default class CustomCarouselBlock
   }
   _onLayout = (event: LayoutChangeEvent) => {
     var { height } = event.nativeEvent.layout;
-    this.setState({
-      overallHeight: height
-    });
+    if (height - this.state.overallHeight >= 1) {
+      this.setState({
+        overallHeight: height
+      });
+    }
   }
 
   onSnapToItem = (index: number): void => {
