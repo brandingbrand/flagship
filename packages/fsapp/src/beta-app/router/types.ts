@@ -101,7 +101,7 @@ export interface ComponentRoute extends BaseRoute {
 }
 
 export interface LazyComponentRoute extends Omit<ComponentRoute, 'component'> {
-  readonly lazyComponent: () => Promise<ScreenComponentType>;
+  readonly loadComponent: (activatedRoute: ActivatedRoute) => Promise<ScreenComponentType>;
 }
 
 export interface ParentRoute extends BaseRoute {
