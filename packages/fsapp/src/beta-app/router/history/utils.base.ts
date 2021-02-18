@@ -48,7 +48,7 @@ const matchPath = (path: string | undefined, route: Route) => {
     }
 
     const keys: Key[] = [];
-    const normalizedPath = path.length > 1 ? path.replace(/\/$/, '') : path;
+    const normalizedPath = path.length > 1 ? path.replace(/\/$/, '').replace('//', '/') : path;
     const regex = pathToRegexp(normalizedPath, keys, { strict: route.exact });
     const [url, ...params] = regex.exec(checkPath.split('?')[0]) ?? [];
     return url
@@ -77,7 +77,7 @@ const buildMatcher = async (
   const { id, path } = buildPath(route, prefix);
 
   const matchingRoute =
-    'component' in route || 'lazyComponent' in route
+    'component' in route || 'loadComponent' in route
       ? ([
         matchPath(path, route),
         {

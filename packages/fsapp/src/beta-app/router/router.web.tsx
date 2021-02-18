@@ -19,7 +19,7 @@ import { VersionOverlay } from '../development';
 import { WebShellProvider } from '../shell.web';
 import { ModalProvider } from '../modal';
 
-import { ActivatedRouteProvider, NavigatorProvider } from './context';
+import { ActivatedRouteProvider, defaultActivatedRoute, NavigatorProvider } from './context';
 import { FSRouterBase } from './router.base';
 import { History } from './history';
 import { trackView } from './utils';
@@ -43,12 +43,12 @@ export class FSRouter extends FSRouterBase {
   private constructScreen = (
     route: Route,
     loading: boolean,
-    routeDetails?: ActivatedRoute,
+    routeDetails: ActivatedRoute,
     prefix?: string
   ): JSX.Element | JSX.Element[] => {
     const { id, path } = useMemo(() => buildPath(route, prefix), []);
 
-    if ('lazyComponent' in route || 'component' in route) {
+    if ('loadComponent' in route || 'component' in route) {
       const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
       useEffect(() => {
         const isMatch = () => {
@@ -71,7 +71,9 @@ export class FSRouter extends FSRouterBase {
           lazyComponent(
             async () => {
               const AwaitedComponent =
-                'lazyComponent' in route ? await route.lazyComponent() : route.component;
+                'loadComponent' in route
+                  ? await route.loadComponent(routeDetails)
+                  : route.component;
 
               return React.memo(() => {
                 useEffect(() => {
@@ -111,7 +113,7 @@ export class FSRouter extends FSRouterBase {
 
   private readonly Outlet = () => {
     const [loading, setLoading] = useState(false);
-    const [routeDetails, setRouteDetails] = useState<ActivatedRoute>();
+    const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(defaultActivatedRoute);
 
     const stopListening = useMemo(() => {
       const stopDetailsListening = this.history.registerResolver(setRouteDetails);

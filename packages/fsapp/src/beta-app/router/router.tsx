@@ -62,11 +62,11 @@ export class FSRouter extends FSRouterBase {
     routes.forEach((route: Route | ExternalRoute) => {
       const { path, id } = buildPath(route, prefix);
       const LoadingPlaceholder = () => <>{this.options.loading}</>;
-      if ('component' in route || 'lazyComponent' in route) {
+      if ('component' in route || 'loadComponent' in route) {
         const LazyComponent = lazyComponent(
           async () => {
             const AwaitedComponent =
-              'component' in route ? route.component : await route.lazyComponent();
+              'component' in route ? route.component : await route.loadComponent(routeDetails);
 
             return () => {
               const [loading, setLoading] = useState(false);
