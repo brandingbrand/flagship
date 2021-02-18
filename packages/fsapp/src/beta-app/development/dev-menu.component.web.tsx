@@ -75,7 +75,7 @@ const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
     routes?.reduce<string[]>(
       (prev, route) => [
         ...prev,
-        ...((('component' in route || 'lazyComponent' in route) && route.quickDevMenu) ||
+        ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu) ||
         'children' in route
           ? [
             `${prefix}/${route.path ?? ''}`,

@@ -28,6 +28,7 @@ import { ActivatedRoute, MatchingRoute, Routes } from '../types';
 import { isDefined, promisedEntries } from '../../utils';
 
 import {
+  activateStacks,
   buildMatchers,
   createKey,
   extractPagePaths,
@@ -117,11 +118,15 @@ export class History implements FSRouterHistory {
               this.activationObservers.forEach(listener => {
                 listener(activatedRoute);
               });
+
+              return [matchingRoute, activatedRoute] as const;
             }
+
+            return [undefined, undefined] as const;
           });
 
-          await Promise.all(activations);
-          await Navigation.setRoot({ root });
+          const activated = await Promise.all(activations);
+          await Navigation.setRoot(await activateStacks(root, activated));
         });
       })
       .catch();
@@ -339,8 +344,8 @@ export class History implements FSRouterHistory {
               const activatedRoute = await this.resolveRouteDetails({
                 ...matchingRoute,
                 data: {
-                  ...matchingRoute,
-                  ...(typeof this.location.state === 'object' ? this.location.state : {})
+                  ...matchingRoute.data,
+                  ...(typeof location.state === 'object' ? location.state : {})
                 }
               });
               this.activationObservers.forEach(listener => {
@@ -349,21 +354,7 @@ export class History implements FSRouterHistory {
 
               const title =
                 typeof matchingRoute.title === 'function'
-                  ? await matchingRoute.title({
-                    data:
-                      // Linting can't figure out how deep it want's to
-                      // indent this
-                      // tslint:disable: ter-indent
-                      {
-                        ...matchingRoute.data,
-                        ...(typeof this.location.state === 'object' ? this.location.state : {})
-                      } ?? {},
-                      // tslint:enable: ter-indent
-                    query: matchingRoute.query ?? {},
-                    params: matchingRoute.params ?? {},
-                    path: matchingRoute.matchedPath,
-                    loading: true
-                  })
+                  ? await matchingRoute.title(activatedRoute)
                   : matchingRoute.title;
 
               this.store.push(location);
@@ -372,7 +363,7 @@ export class History implements FSRouterHistory {
               const componentOptions =
                 'component' in matchingRoute
                   ? matchingRoute.component
-                  : await matchingRoute.lazyComponent();
+                  : await matchingRoute.loadComponent(activatedRoute);
 
               await Navigation.push(this.stack?.id ?? ROOT_STACK, {
                 component: {

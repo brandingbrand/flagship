@@ -106,8 +106,8 @@ export const getPath = (url: string) => {
     return url;
   }
 
-  const [schema, domainAndPath] = url.split('//', 2);
-  return schema === 'http' || schema === 'https'
-    ? `${domainAndPath.split('/', 1)[1] ?? ''}`
-    : `${domainAndPath ?? ''}`;
+  const [schema, ...domainAndPath] = url.split('//');
+  return schema.includes('http')
+    ? `/${domainAndPath.join('/').split('/').slice(1).join('/') ?? ''}`
+    : `/${domainAndPath.join('/') ?? ''}`;
 };
