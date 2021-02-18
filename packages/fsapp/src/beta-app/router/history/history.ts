@@ -28,6 +28,7 @@ import { ActivatedRoute, MatchingRoute, Routes } from '../types';
 import { isDefined, promisedEntries } from '../../utils';
 
 import {
+  activateStacks,
   buildMatchers,
   createKey,
   extractPagePaths,
@@ -117,11 +118,15 @@ export class History implements FSRouterHistory {
               this.activationObservers.forEach(listener => {
                 listener(activatedRoute);
               });
+
+              return [matchingRoute, activatedRoute] as const;
             }
+
+            return [undefined, undefined] as const;
           });
 
-          await Promise.all(activations);
-          await Navigation.setRoot({ root });
+          const activated = await Promise.all(activations);
+          await Navigation.setRoot(await activateStacks(root, activated));
         });
       })
       .catch();
@@ -149,9 +154,9 @@ export class History implements FSRouterHistory {
   public push(location: LocationDescriptor): Promise<void>;
   @boundMethod
   public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
-    if (typeof to === 'string' && /\w+:\/\//.exec(to)) {
+    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
       await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /\w+:\/\//.exec(to.pathname)) {
+    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
       await Linking.openURL(to.pathname);
     } else {
       const newLocation = await this.getNextLocation(to, state);
@@ -336,20 +341,20 @@ export class History implements FSRouterHistory {
           if (matchingRoute) {
             if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
               this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails(matchingRoute);
+              const activatedRoute = await this.resolveRouteDetails({
+                ...matchingRoute,
+                data: {
+                  ...matchingRoute.data,
+                  ...(typeof location.state === 'object' ? location.state : {})
+                }
+              });
               this.activationObservers.forEach(listener => {
                 listener(activatedRoute);
               });
 
               const title =
                 typeof matchingRoute.title === 'function'
-                  ? await matchingRoute.title({
-                    data: matchingRoute.data ?? {},
-                    query: matchingRoute.params ?? {},
-                    params: matchingRoute.params ?? {},
-                    path: matchingRoute.matchedPath,
-                    loading: true
-                  })
+                  ? await matchingRoute.title(activatedRoute)
                   : matchingRoute.title;
 
               this.store.push(location);
@@ -358,7 +363,7 @@ export class History implements FSRouterHistory {
               const componentOptions =
                 'component' in matchingRoute
                   ? matchingRoute.component
-                  : await matchingRoute.lazyComponent();
+                  : await matchingRoute.loadComponent(activatedRoute);
 
               await Navigation.push(this.stack?.id ?? ROOT_STACK, {
                 component: {

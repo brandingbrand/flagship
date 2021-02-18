@@ -35,7 +35,7 @@ export const ActivatedRouteProvider: React.FC<Partial<ActivatedRoute>> = ({
 }) => {
   const parentActivatedRoute = useActivatedRoute();
   const activatedRoute = useMemo(
-    () => defaults(details, parentActivatedRoute, defaultActivatedRoute),
+    () => defaults({}, details, parentActivatedRoute, defaultActivatedRoute),
     [details, parentActivatedRoute]
   );
 
