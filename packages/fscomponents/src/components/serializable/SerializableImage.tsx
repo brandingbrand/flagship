@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
 import { extractHostStyles } from '../../lib/style';
 import { useNavigator } from '@brandingbrand/fsapp';
@@ -30,20 +30,20 @@ export const FSSerializableImage = React.memo<SerializableImageProps>(
     const [host, self] = extractHostStyles(style);
     const navigator = useNavigator();
 
-    const handlePress = (href?: string) => () => {
+    const handlePress = useCallback(() => {
       if (onPress) {
         onPress(href);
       } else if (href) {
         navigator.open(href);
       }
-    };
+    }, [href]);
 
     if (!(href || onPress)) {
       return <Image {...props} style={[self, host]} />;
     }
 
     return (
-      <TouchableOpacity style={host} onPress={handlePress(href)}>
+      <TouchableOpacity style={host} onPress={handlePress}>
         <Image {...props} style={self} />
       </TouchableOpacity>
     );

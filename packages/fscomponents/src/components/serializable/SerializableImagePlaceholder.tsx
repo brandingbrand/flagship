@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { SerializableImageProps } from './SerializableImage';
 import { useNavigator } from '@brandingbrand/fsapp';
@@ -12,14 +12,14 @@ export const SerializableImagePlaceholder = React.memo<SerializableImageProps>(
       return img;
     }
 
-    const handlePress = (href?: string) => () => {
+    const handlePress = useCallback(() => {
       if (onPress) {
         onPress(href);
       } else if (href) {
         navigator.open(href);
       }
-    };
+    }, [href]);
 
-    return <TouchableOpacity onPress={handlePress(href)}>{img}</TouchableOpacity>;
+    return <TouchableOpacity onPress={handlePress}>{img}</TouchableOpacity>;
   }
 );

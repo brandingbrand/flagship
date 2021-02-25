@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Text, TextProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { useNavigator } from '@brandingbrand/fsapp';
 
@@ -31,15 +31,15 @@ export const FSSerializableText = React.memo<SerializableTextProps>(
   ({ childText, boxStyle, href, ...textProps }) => {
     const navigator = useNavigator();
 
-    const handlePress = (href?: string) => () => {
+    const handlePress = useCallback(() => {
       if (href) {
         navigator.open(href);
       }
-    };
+    }, [href]);
 
     if (href) {
       return (
-        <TouchableOpacity onPress={handlePress(href)}>
+        <TouchableOpacity onPress={handlePress}>
           <View style={boxStyle}>
             <Text {...textProps}>{childText}</Text>
           </View>
