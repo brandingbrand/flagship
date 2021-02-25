@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.8...v11.0.0-alpha.9) (2021-02-25)
+
+
+### Bug Fixes
+
+* remove HOFs ([677c8fb](https://github.com/brandingbrand/flagship/commit/677c8fbe653d87dfd23c53c64c0fb532bb3ee8bf))
+
+
+
+
+
 # [11.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.7...v11.0.0-alpha.8) (2021-02-16)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
