@@ -38,6 +38,12 @@ export interface Cart<T extends CartItem = CartItem> {
   items: T[];
 
   /**
+   * An array of products with detailed info for variants in the cart, their master
+   * products and bonus products in the cart.
+   */
+  product_details?: Product[];
+
+  /**
    * The total cost of the products in the cart before shipping feeds and taxes have
    * been added.
    *
