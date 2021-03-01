@@ -23,6 +23,15 @@ export default class CommerceCookieSessionManager extends CommerceSessionManager
   }
 
   /**
+   * Provides cookies to decide if the session can be converted to JWT
+   *
+   * @returns {Promise.<string | null>} A Promise representing cookies string
+   */
+  async getCookies(): Promise<string | null> {
+    return document.cookie;
+  }
+
+  /**
    * Returns current token for the session.
    *
    * Only one invocation at a time is allowed. If it's called again
@@ -32,9 +41,9 @@ export default class CommerceCookieSessionManager extends CommerceSessionManager
    *
    * The token is refreshed automatically upon expiration if `refreshToken` method was provided.
    *
-   * If no token exist it will attempt to convert current session into JWT,
-   * but only if the cookie `dwanonymous_*` is present.
-   * Otherwise, it will create new token for the guest user.
+   * If no token exist it will attempt to convert current session into JWT.
+   *
+   * If we could not convert current session, it will create new token for the guest user.
    *
    * @returns {Promise.<SessionToken | null>} A Promise representing token
    */
@@ -61,14 +70,10 @@ export default class CommerceCookieSessionManager extends CommerceSessionManager
       }
 
       // no token - get a token from the session
-      const sessionCookiesPresent = document.cookie?.includes('dwanonymous_');
-
-      if (sessionCookiesPresent) {
-        try {
-          token = await this.options.sessionCookiesToToken();
-        } catch (e) {
-          /* let it fail sliently */
-        }
+      try {
+        token = await this.options.sessionCookiesToToken();
+      } catch (e) {
+        /* let it fail sliently */
       }
 
       // got a token - store it
@@ -82,12 +87,7 @@ export default class CommerceCookieSessionManager extends CommerceSessionManager
       if (this.options.restoreCookies) {
         try {
           await this.options.restoreCookies();
-
-          const sessionCookiesPresent = document.cookie?.includes('dwanonymous_');
-
-          if (sessionCookiesPresent) {
-            token = await this.options.sessionCookiesToToken();
-          }
+          token = await this.options.sessionCookiesToToken();
         } catch (e) {
           /* let it fail sliently */
         }
