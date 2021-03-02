@@ -189,4 +189,20 @@ export interface Product extends BaseProduct {
    * @example 'Buy one get one free!'
    */
   productPromotions?: ProductPromotion[];
+
+  /**
+   * An id of the primary category
+   *
+   * @example 'skincare'
+   */
+  primaryCategoryId?: string;
+
+  /**
+   * The master product information. Only for types master, variation group and variant.
+   */
+  master?: {
+    id?: string;
+    orderable?: boolean;
+    price?: CurrencyValue;
+  };
 }

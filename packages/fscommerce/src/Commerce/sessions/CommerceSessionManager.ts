@@ -76,4 +76,14 @@ export default abstract class CommerceSessionManager {
       }, refreshMilliseconds);
     }
   }
+
+  /**
+   * Provides cookies to decide if the session can be converted to JWT.
+   * Defaults to returning null. Platform specific implementation is optional.
+   *
+   * @returns {Promise.<string | null>} A Promise representing cookies string
+   */
+  async getCookies(): Promise<string | null> {
+    return null;
+  }
 }
