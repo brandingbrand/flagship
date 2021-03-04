@@ -33,7 +33,6 @@ const HOST_STYLES = [
   /flexShrink/,
   /flexGrow/,
   /Self/,
-  /padding/,
   /margin/,
   /position/,
   /top/,
