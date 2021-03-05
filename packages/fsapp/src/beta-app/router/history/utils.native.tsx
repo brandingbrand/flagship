@@ -156,6 +156,7 @@ export const activateStacks = async (
       root: {
         ...root,
         bottomTabs: {
+          id: ROOT_STACK,
           children: await Promise.all(
             activated.map(([route, activated], i) => {
               const layout = root.bottomTabs?.children?.[i] as LayoutTabsChildren;
