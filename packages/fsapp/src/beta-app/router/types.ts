@@ -35,8 +35,9 @@ export interface ScreenOptions {
  * @see useRouteQuery - hook into the query context
  * @see useRouteData - hook into the the data context
  */
-export type ScreenFC = FC & ScreenOptions;
-export abstract class ScreenComponent<State = {}> extends Component<{}, State> {
+export type ScreenFC = FC<{ componentId: string }> & ScreenOptions;
+export abstract class ScreenComponent<State = {}> extends
+Component<{ componentId: string }, State> {
   static buttons?: ScreenOptions['buttons'];
 }
 export type ScreenComponentType = ScreenFC | typeof ScreenComponent;
