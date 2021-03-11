@@ -68,19 +68,19 @@ export class FSRouter extends FSRouterBase {
 
       const LazyComponent = useMemo(
         () =>
-          lazyComponent(
+          lazyComponent<{ componentId: string }>(
             async () => {
               const AwaitedComponent =
                 'loadComponent' in route
                   ? await route.loadComponent(routeDetails)
                   : route.component;
 
-              return React.memo(() => {
+              return React.memo(({ componentId }) => {
                 useEffect(() => {
                   trackView(this.options.analytics, route, filteredRoute, path);
                 }, [filteredRoute]);
 
-                return <AwaitedComponent />;
+                return <AwaitedComponent componentId={componentId} />;
               });
             },
             { fallback: this.options.loading }
@@ -92,7 +92,7 @@ export class FSRouter extends FSRouterBase {
         <Screen key={id} path={path} exact={route.exact}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
             <ModalProvider>
-              <LazyComponent />
+              <LazyComponent componentId={id} />
             </ModalProvider>
           </ActivatedRouteProvider>
         </Screen>
