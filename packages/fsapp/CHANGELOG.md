@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.10...v11.0.0-alpha.11) (2021-03-11)
+
+
+### Bug Fixes
+
+* add stack id to enable tab switching on native ([ddf0d61](https://github.com/brandingbrand/flagship/commit/ddf0d6122cf20d8035e63d34a8a7271db78c1b2b))
+* pass componentId into awaited component ([d5e0955](https://github.com/brandingbrand/flagship/commit/d5e0955eea92ff6cc3602cfc904fddb944a834f1))
+
+
+
+
+
 # [11.0.0-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v11.0.0-alpha.10) (2021-03-11)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
