@@ -40,8 +40,10 @@ const HOST_STYLES = [
   /left/,
   /right/,
   /bottom/,
-  /height/i,
-  /width/i
+  /height/,
+  /maxHeight/,
+  /width/,
+  /maxWidth/
 ];
 
 /**
