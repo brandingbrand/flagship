@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v11.0.0-alpha.10) (2021-03-11)
+
+
+### Bug Fixes
+
+* host border props (3c92447)
+
+
+
+
+
 # [11.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.8...v11.0.0-alpha.9) (2021-02-25)
 
 
