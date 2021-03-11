@@ -63,12 +63,12 @@ export class FSRouter extends FSRouterBase {
       const { path, id } = buildPath(route, prefix);
       const LoadingPlaceholder = () => <>{this.options.loading}</>;
       if ('component' in route || 'loadComponent' in route) {
-        const LazyComponent = lazyComponent(
+        const LazyComponent = lazyComponent<{ componentId: string }>(
           async () => {
             const AwaitedComponent =
               'component' in route ? route.component : await route.loadComponent(routeDetails);
 
-            return () => {
+            return ({ componentId }) => {
               const [loading, setLoading] = useState(false);
               const activatedRoute = useMemo(() => routeDetails, []);
               useEffect(() => this.history.observeLoading(setLoading), []);
@@ -82,7 +82,7 @@ export class FSRouter extends FSRouterBase {
                   <ModalProvider>
                     <ButtonProvider>
                       <VersionOverlay>
-                        <AwaitedComponent />
+                        <AwaitedComponent componentId={componentId} />
                       </VersionOverlay>
                     </ButtonProvider>
                   </ModalProvider>
@@ -94,10 +94,10 @@ export class FSRouter extends FSRouterBase {
         );
 
         const Wrapper = this.options.screenWrap ?? Fragment;
-        const WrappedComponent: NavigationFunctionComponent = () => (
+        const WrappedComponent: NavigationFunctionComponent = ({ componentId }) => (
           <Wrapper>
             <NavigatorProvider value={this.history}>
-              <LazyComponent />
+              <LazyComponent componentId={componentId} />
             </NavigatorProvider>
           </Wrapper>
         );
