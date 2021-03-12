@@ -61,9 +61,7 @@ export const FSSerializableButton = React.memo<
     noPadding,
     palette,
     href,
-    onPress = (href: string) => {
-      // default
-    },
+    onPress,
     ...props
   }) => {
     const [host, self] = extractHostStyles(style);
