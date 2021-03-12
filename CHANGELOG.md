@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.11...v11.0.0-alpha.12) (2021-03-12)
+
+
+### Bug Fixes
+
+* **fscomponents:** button linking ([817c68d](https://github.com/brandingbrand/flagship/commit/817c68d197bbed19978f2dc9d0fc255e3be1eec1))
+
+
+
+
+
 # [11.0.0-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.10...v11.0.0-alpha.11) (2021-03-11)
 
 
