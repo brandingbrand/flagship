@@ -15,7 +15,7 @@ interface IOSPermissionMeta {
 const permissionPods: {[k in IOSPermissionKeys]: IOSPermissionMeta} = {
   APP_TRACKING_TRANSPARENCY: {
     pod: 'pod \'Permission-AppTrackingTransparency\', :path => "../node_modules/react-native-permissions/ios/AppTrackingTransparency.podspec"',
-    usageDescriptionKey: 'NSAppleMusicUsageDescription'
+    usageDescriptionKey: 'NSUserTrackingUsageDescription'
   },
   BLUETOOTH_PERIPHERAL: {
     pod: 'pod \'Permission-BluetoothPeripheral\', :path => "../node_modules/react-native-permissions/ios/BluetoothPeripheral.podspec"',
