@@ -325,11 +325,14 @@ export function version(configuration: Config, newVersion: string): void {
   );
 }
 
+// tslint:disable:cyclomatic-complexity
 export function iosExtensions(configuration: Config, version: string): void {
   if (!configuration?.ios?.extensions) {
     return;
   }
   helpers.logInfo(`Adding iOS App Extensions`);
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+    || version;
   const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
   || versionLib.normalize(version);
   const extensions = configuration?.ios?.extensions;
@@ -415,7 +418,7 @@ export function iosExtensions(configuration: Config, version: string): void {
     fs.update(
       extPlistPath,
       /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
-      `<key>CFBundleShortVersionString</key>\n\t<string>${version}</string>`
+      `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
     );
     fs.update(
       extPlistPath,
