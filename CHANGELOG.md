@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+
+
 ## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
 
 
