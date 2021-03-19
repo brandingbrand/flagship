@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v11.0.0-alpha.13) (2021-03-19)
+
+
+### Bug Fixes
+
+* FS-2071 - remove padding from host style (3dbe7ee)
+
+
+
+
+
 # [11.0.0-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.11...v11.0.0-alpha.12) (2021-03-12)
 
 
