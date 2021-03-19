@@ -34,7 +34,7 @@
     "cssnano": "^4.0.0",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
-    "file-loader": "^4.0.0",
+    "file-loader": "^6.2.0",
     "global": "^4.3.2",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
