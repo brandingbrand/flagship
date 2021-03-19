@@ -36,9 +36,9 @@ const defaultLastItemViewStyle: ViewStyle = {
 
 export default class PSTotals extends Component<PSTotalsProps> {
   style: StyleProp<ViewStyle>;
-  promoItemTextStyle: any;
-  lastItemTextStyle: any;
-  lastItemViewStyle: any;
+  promoItemTextStyle: StyleProp<TextStyle>;
+  lastItemTextStyle: StyleProp<TextStyle>;
+  lastItemViewStyle: StyleProp<ViewStyle>;
 
   constructor(props: PSTotalsProps) {
     super(props);

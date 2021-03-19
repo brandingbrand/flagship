@@ -26,7 +26,7 @@ export interface FSNetworkRequestConfig extends AxiosRequestConfig {
   // Function that is called to intercept any responses
   responseIntercept?: (response: AxiosResponse) => AxiosResponse;
   // Function that is called to intercept any response errors
-  responseError?: (error: any) => any;
+  responseError?: (error: FSNetworkError) => FSNetworkError;
 }
 
 /**

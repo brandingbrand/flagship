@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscheckout",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "10.11.2",
   "description": "Checkout Libaray",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react": "^16.13.1",
+    "react-native": "^0.63.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

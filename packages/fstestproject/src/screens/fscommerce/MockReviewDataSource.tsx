@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 import { mockReviewDataSource } from '../../lib/datasource';
@@ -33,32 +34,23 @@ export default class MockReviewDataSource extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   fetchReviewDetails = async () => {
     const data = await this.client.fetchReviewDetails({ ids: kExampleReviewId });
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchReviewSummary = async () => {
     const data = await this.client.fetchReviewSummary({ ids: kExampleReviewId });
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchReviewStatistics = async () => {
     const data = await this.client.fetchReviewStatistics({ ids: kExampleReviewId });
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchQuestions = async () => {
     const data = await this.client.fetchQuestions({ ids: kExampleReviewId });
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 }

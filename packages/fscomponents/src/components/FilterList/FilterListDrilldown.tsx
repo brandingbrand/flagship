@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import {
   FlatList,
+  Image,
+  ImageSourcePropType,
+  ImageStyle,
   ListRenderItemInfo,
   StyleProp,
   StyleSheet,
@@ -10,31 +13,38 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { SelectableRow } from '../SelectableRow';
+import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
+const closeIcon = require('../../../assets/images/clear.png');
+
 export interface FilterListDrilldownProps {
   items: FilterItem[];
-  onApply: (selectedItems: any, info?: { isButtonPress: boolean }) => void;
+  onApply: (selectedItems: Record<string, string[]>, info?: { isButtonPress: boolean }) => void;
   onReset: (info?: { isButtonPress: boolean }) => void;
-  selectedItems?: any;
+  onClose?: () => void;
+  selectedItems?: Record<string, string[]>;
   style?: StyleProp<ViewStyle>;
+  closeButtonStyle?: StyleProp<ViewStyle>;
   resetButtonStyle?: StyleProp<ViewStyle>;
   applyButtonStyle?: StyleProp<ViewStyle>;
+  closeButtonImageStyle?: StyleProp<ImageStyle>;
   resetButtonTextStyle?: StyleProp<TextStyle>;
   applyButtonTextStyle?: StyleProp<TextStyle>;
+  closeIcon?: ImageSourcePropType;
   applyText?: string;
   resetText?: string;
+  floatingReset?: boolean;
   itemStyle?: StyleProp<ViewStyle>;
   itemTextStyle?: StyleProp<TextStyle>;
   itemTextSelectedStyle?: StyleProp<TextStyle>;
   selectedValueStyle?: StyleProp<TextStyle>;
-  selectableRowProps?: any;
-  accordionProps?: any;
+  selectableRowProps?: Partial<SelectableRowProps>;
   singleFilterIds?: string[]; // Filter IDs for which only one value can be selected at a time
   ignoreActiveStyleIds?: string[]; // Filter IDs for which active styling won't be applied
   applyOnSelect?: boolean;
@@ -43,18 +53,21 @@ export interface FilterListDrilldownProps {
     i: number,
     selectedValues: string[],
     handlePress: () => void,
-    renderFilterItem: (info: ListRenderItemInfo<FilterItem>) => JSX.Element
+    renderFilterItem: (
+      info: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
+      skipCustomRender: boolean
+    ) => JSX.Element
   ) => JSX.Element;
   renderFilterItemValue?: (
     item: FilterItem,
     i: number,
     value: FilterItemValue,
-    handleSelect: Function,
+    handleSelect: () => void,
     selected: boolean,
     renderFilterItemValue: (
       item: FilterItem,
       skipCustomRender?: boolean
-    ) => (info: ListRenderItemInfo<FilterItemValue>) => JSX.Element
+    ) => (info: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>) => JSX.Element
   ) => JSX.Element;
   renderSecondLevel?: (
     item: FilterItem,
@@ -64,6 +77,17 @@ export interface FilterListDrilldownProps {
       skipCustomRender?: boolean
     ) => JSX.Element
   ) => JSX.Element;
+  showUnselected?: boolean;
+  showSelectedCount?: boolean;
+  refineText?: string;
+  filterHeader?: StyleProp<ViewStyle>;
+  filterTitleStyle?: StyleProp<TextStyle>;
+  secondLevelTitle?: string;
+  secondLevelHeaderStyle?: StyleProp<ViewStyle>;
+  secondLevelTitleStyle?: StyleProp<TextStyle>;
+  secondLevelShowApply?: boolean;
+  secondLevelShowClose?: boolean;
+  optionsFooterStyles?: StyleProp<ViewStyle>;
 }
 
 const S = StyleSheet.create({
@@ -114,8 +138,7 @@ const S = StyleSheet.create({
   },
   arrowContainer: {
     position: 'absolute',
-    left: 15,
-    top: 18
+    left: 15
   },
   secondLevelHeader: {
     height: 50,
@@ -136,10 +159,37 @@ const S = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  applyButton: {
+  floatApplyButton: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    bottom: 15,
+    paddingVertical: 17,
+    backgroundColor: '#333132',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  floatApplyButtonText: {
+    color: 'white'
+  },
+  floatResetButton: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    bottom: 80,
+    paddingVertical: 16,
+    borderWidth: 1,
+    borderColor: '#565555',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  floatResetButtonText: {
+    color: '#333132'
+  },
+  rightButton: {
     position: 'absolute',
     right: 15,
-    top: 0,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center'
@@ -153,12 +203,22 @@ const S = StyleSheet.create({
   },
   filterTitle: {
     fontSize: 20
+  },
+  applyButton: {
+    flex: 1
+  },
+  emptyCell: {
+    height: 100
+  },
+  closeButtonImage: {
+    height: 16,
+    width: 16
   }
 });
 
 export interface FilterListDrilldownState {
-  selectedItems: any;
-  secondLevelItem: any;
+  selectedItems: Record<string, string[]>;
+  secondLevelItem?: FilterItem;
 }
 
 export class FilterListDrilldown extends PureComponent<
@@ -169,7 +229,7 @@ export class FilterListDrilldown extends PureComponent<
     super(props);
     this.state = {
       selectedItems: props.selectedItems || {},
-      secondLevelItem: null
+      secondLevelItem: undefined
     };
   }
 
@@ -180,7 +240,7 @@ export class FilterListDrilldown extends PureComponent<
 
     if (this.props.items !== prevProps.items && this.state.secondLevelItem) {
       stateChanges.secondLevelItem = this.props.items.find(item => (
-        item.id === this.state.secondLevelItem.id
+        item.id === this.state.secondLevelItem?.id
       ));
     }
 
@@ -228,7 +288,7 @@ export class FilterListDrilldown extends PureComponent<
   renderFilterItemValue = (filterItem: FilterItem, skipCustomRender?: boolean) => ({
     item,
     index
-  }: ListRenderItemInfo<FilterItemValue>): JSX.Element => {
+  }: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>): JSX.Element => {
     const selected =
       this.state.selectedItems[filterItem.id] &&
       this.state.selectedItems[filterItem.id].indexOf(item.value) > -1;
@@ -257,13 +317,13 @@ export class FilterListDrilldown extends PureComponent<
 
   // tslint:disable cyclomatic-complexity
   renderFilterItem = (
-    { item, index }: ListRenderItemInfo<FilterItem>,
+    { item, index }: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
     skipCustomRender: boolean = false
   ): JSX.Element => {
     const selectedValues = this.state.selectedItems[item.id] || [];
-    const selectedValueTitles = item.values
-      .filter((v: any) => selectedValues.indexOf(v.value) > -1)
-      .map((v: any) => v.title);
+    const selectedValueTitles = (item.values || [])
+      .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
+      .map((v: FilterItemValue) => v.title);
 
     if (this.props.renderFilterItem && !skipCustomRender) {
       return this.props.renderFilterItem(
@@ -279,6 +339,9 @@ export class FilterListDrilldown extends PureComponent<
       <TouchableOpacity
         style={[S.firstLevelItemContainer, this.props.itemStyle]}
         onPress={this.drilldown(item)}
+        accessibilityRole={'button'}
+        accessibilityHint={FSI18n.string(componentTranslationKeys.hintToggle)}
+        accessibilityLabel={item.title}
       >
         <View style={S.firstLevelItem}>
           <Text
@@ -291,21 +354,23 @@ export class FilterListDrilldown extends PureComponent<
             ]}
           >
             {item.title}
-            {selectedValueTitles.length
+            {(selectedValueTitles.length && this.props.showSelectedCount !== false)
               ? ` (${selectedValueTitles.length})`
               : ''}
           </Text>
-          <Text
-            style={[
-              S.selectedValueStyle,
-              (this.props.ignoreActiveStyleIds || []).indexOf(item.id) === -1 &&
+          {(selectedValueTitles.length || this.props.showUnselected !== false) ? (
+            <Text
+              style={[
+                S.selectedValueStyle,
+                (this.props.ignoreActiveStyleIds || []).indexOf(item.id) === -1 &&
                 this.props.selectedValueStyle
-            ]}
-            numberOfLines={1}
-            ellipsizeMode='tail'
-          >
-            {selectedValueTitles.join(', ') || 'All'}
-          </Text>
+              ]}
+              numberOfLines={1}
+              ellipsizeMode='tail'
+            >
+              {selectedValueTitles.join(', ') || FSI18n.string(componentTranslationKeys.all)}
+            </Text>
+          ) : null}
         </View>
         <View style={[S.arrow, S.arrowNext]} />
       </TouchableOpacity>
@@ -316,9 +381,15 @@ export class FilterListDrilldown extends PureComponent<
     this.props.onApply(this.state.selectedItems, { isButtonPress: true });
   }
 
-  handleRest = () => {
+  handleReset = () => {
     this.setState({ selectedItems: {} });
     this.props.onReset({ isButtonPress: true });
+  }
+
+  handleClose = () => {
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   }
 
   drilldown = (item: FilterItem) => () => {
@@ -329,8 +400,18 @@ export class FilterListDrilldown extends PureComponent<
 
   backToFirstLevel = () => {
     this.setState({
-      secondLevelItem: null
+      secondLevelItem: undefined
     });
+  }
+
+  getKey = (item: any, index: number) => {
+    return index.toString();
+  }
+
+  renderEmptyCell = () => {
+    return (
+      <View style={[S.emptyCell, this.props.optionsFooterStyles]}/>
+    );
   }
 
   renderSecondLevel = (item: FilterItem, skipCustomRender?: boolean): JSX.Element => {
@@ -343,48 +424,101 @@ export class FilterListDrilldown extends PureComponent<
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={S.applyButton}>
         <TouchableOpacity
-          style={S.secondLevelHeader}
+          style={[S.secondLevelHeader, this.props.secondLevelHeaderStyle]}
           onPress={this.backToFirstLevel}
+          accessibilityRole={'button'}
+          accessibilityHint={FSI18n.string(componentTranslationKeys.hintBack)}
+          accessibilityLabel={item.title}
         >
           <View style={S.arrowContainer}>
             <View style={[S.arrow, S.arrowBack]} />
           </View>
-          <Text style={S.secondLevelTitle}>{item.title}</Text>
+          <Text
+            style={[S.secondLevelTitle, this.props.secondLevelTitleStyle]}
+          >
+            {this.props.secondLevelTitle || item.title}
+          </Text>
+          {this.props.onClose && this.props.secondLevelShowClose ? (
+            <TouchableOpacity
+              style={[S.rightButton, this.props.closeButtonStyle]}
+              onPress={this.handleClose}
+              accessibilityRole={'button'}
+              accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+            >
+              <Image
+                source={this.props.closeIcon || closeIcon}
+                style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
+              />
+            </TouchableOpacity>
+          ) : null}
         </TouchableOpacity>
         <FlatList
-          data={item.values}
+          keyExtractor={this.getKey}
+          data={item.values || []}
           renderItem={this.renderFilterItemValue(item)}
           extraData={this.state}
+          ListFooterComponent={this.props.secondLevelShowApply ? this.renderEmptyCell : undefined}
         />
+        {this.props.secondLevelShowApply ? (
+          <TouchableOpacity
+            style={[S.floatApplyButton, this.props.applyButtonStyle]}
+            onPress={this.handleApply}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
+          >
+            <Text style={[S.floatApplyButtonText, this.props.applyButtonTextStyle]}>
+              {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   }
 
   renderDrilldownHeader = () => {
     return (
-      <View style={S.filterHeader}>
-        {Object.keys(this.state.selectedItems).length ? (
+      <View style={[S.filterHeader, this.props.filterHeader]}>
+        {!this.props.floatingReset && Object.keys(this.state.selectedItems).length ? (
           <TouchableOpacity
             style={[S.resetButton, this.props.resetButtonStyle]}
-            onPress={this.handleRest}
+            onPress={this.handleReset}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
           >
             <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || 'Clear All'}
+              {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
             </Text>
           </TouchableOpacity>
         ) : null}
-        <TouchableOpacity
-          style={[S.applyButton, this.props.applyButtonStyle]}
-          onPress={this.handleApply}
-        >
-          <Text style={this.props.applyButtonTextStyle}>
-            {this.props.applyText || 'Done'}
-          </Text>
-        </TouchableOpacity>
-        <Text style={S.filterTitle}>
-          {FSI18n.string(translationKeys.flagship.sort.actions.refine.actionBtn)}
+        {this.props.onClose ? (
+          <TouchableOpacity
+            style={[S.rightButton, this.props.closeButtonStyle]}
+            onPress={this.handleClose}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+          >
+            <Image
+              source={this.props.closeIcon || closeIcon}
+              style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[S.rightButton, this.props.applyButtonStyle]}
+            onPress={this.handleApply}
+            accessibilityRole={'button'}
+            accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+          >
+            <Text style={this.props.applyButtonTextStyle}>
+              {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
+            </Text>
+          </TouchableOpacity>
+        )}
+        <Text style={[S.filterTitle, this.props.filterTitleStyle]}>
+          {this.props.refineText ||
+          FSI18n.string(translationKeys.flagship.sort.actions.refine.actionBtn)}
         </Text>
       </View>
     );
@@ -404,7 +538,34 @@ export class FilterListDrilldown extends PureComponent<
             data={this.props.items}
             renderItem={this.renderFilterItem}
             extraData={this.state.selectedItems}
+            ListFooterComponent={this.props.onClose ? this.renderEmptyCell : undefined}
           />
+          {this.props.onClose ? (
+            <TouchableOpacity
+              style={[S.floatApplyButton, this.props.applyButtonStyle]}
+              onPress={this.handleApply}
+              accessibilityRole={'button'}
+              accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
+            >
+              <Text style={[S.floatApplyButtonText, this.props.applyButtonTextStyle]}>
+                {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+          {this.props.floatingReset && Object.keys(this.state.selectedItems).length ? (
+            <TouchableOpacity
+              style={[S.floatResetButton, this.props.onClose ? undefined : {
+                bottom: 15
+              }, this.props.resetButtonStyle]}
+              onPress={this.handleReset}
+              accessibilityRole={'button'}
+              accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
+            >
+              <Text style={[S.floatResetButtonText, this.props.resetButtonTextStyle]}>
+                {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
 
         {this.state.secondLevelItem &&

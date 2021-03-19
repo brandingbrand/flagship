@@ -1,10 +1,13 @@
 package CONFIG_BUNDLE_ID;
 
-import com.reactnativenavigation.controllers.SplashActivity;
+import com.reactnativenavigation.NavigationActivity;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
 
-public class MainActivity extends SplashActivity {
+public class MainActivity extends NavigationActivity {
     @Override
-    public int getSplashLayout() {
-        return R.layout.splash;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
     }
 }

@@ -10,6 +10,8 @@ export class SSLError implements AxiosError {
   request: any;
   response: AxiosResponse;
   stack: string;
+  isAxiosError: boolean;
+  toJSON: () => object;
 
   constructor(
     data: ReactNativeSSLPinning.Response,
@@ -21,5 +23,7 @@ export class SSLError implements AxiosError {
     this.message = data.bodyString && JSON.parse(data.bodyString).message || '';
     this.name = data.bodyString && JSON.parse(data.bodyString).name || '';
     this.stack = data.bodyString || '';
+    this.isAxiosError = false;
+    this.toJSON = () => data.bodyString && JSON.parse(data.bodyString).message || '';
   }
 }

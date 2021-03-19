@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/flagship",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "10.11.2",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -16,24 +16,16 @@
     "fs-extra": "^8.0.0",
     "glob": "^7.1.2",
     "jsc-android": "241213.x.x",
-    "react": "16.8.3",
-    "react-native": "0.59.10",
-    "react-native-svg": "^9.3.6",
-    "replace-in-file": "^4.1.0",
-    "yargs": "^12.0.1"
-  },
-  "rnpm": {
-    "android": {
-      "sourceDir": "nope"
-    },
-    "ios": {
-      "project": "nonExist/React.xcodeproj"
-    }
+    "react": "^16.13.1",
+    "react-native": "^0.63.2",
+    "replace-in-file": "^5.0.2",
+    "xcode": "^3.0.0",
+    "yargs": "^15.0.1"
   },
   "devDependencies": {
-    "@brandingbrand/fsengage": "^7.4.3",
-    "@types/yargs": "^12.0.1",
-    "true-case-path": "^1.0.3"
+    "@brandingbrand/fsengage": "^10.11.2",
+    "@types/yargs": "^15.0.0",
+    "true-case-path": "^2.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

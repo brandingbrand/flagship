@@ -1,19 +1,47 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext {
+        buildToolsVersion = "29.0.2"
+        minSdkVersion = 19
+        compileSdkVersion = 29
+        targetSdkVersion = 29
+        supportLibVersion = "28.0.0"
+        kotlinVersion = "1.3.72"
+        RNNKotlinVersion = kotlinVersion
+        detoxKotlinVersion = kotlinVersion
+    }
     repositories {
-        jcenter()
         google()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.4.0")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath("com.android.tools.build:gradle:3.5.3")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion "28.0.0"
+            }
+        }
+    }
+    afterEvaluate {
+        project -> if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion 28
+                buildToolsVersion "28.0.3"
+            }
+        }
     }
 }
 
@@ -22,42 +50,15 @@ allprojects {
         mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
-        // Repo for react-native-ssl-pinning
-        maven {
-            url "https://jitpack.io"
+            url("$rootDir/../node_modules/react-native/android")
         }
         maven {
-            // Local Maven repo containing AARs with JSC library built for Android
-            url "$rootDir/../node_modules/jsc-android/dist"
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
         }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
-        jcenter()
+
         google()
-    }
-}
-
-ext {
-    buildToolsVersion = "28.0.3"
-    minSdkVersion = 16
-    compileSdkVersion = 28
-    targetSdkVersion = 28
-    supportLibVersion = "28.0.0"
-    googlePlayServicesVersion = "16.+" // Needed for react-native-camera & react-native-maps
-}
-
-// Force subprojects to use the same SDK and build tools
-subprojects {
-    afterEvaluate {project ->
-        if (project.hasProperty("android")) {
-            android {
-                compileSdkVersion rootProject.ext.compileSdkVersion
-                buildToolsVersion rootProject.ext.buildToolsVersion
-            }
-        }
+        jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
 }

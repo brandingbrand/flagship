@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 // TODO: Rename this interface
 export interface SlideChangeEvent {
@@ -28,8 +29,11 @@ export interface MultiCarouselProps<ItemT> {
   prevArrowOnBlur?: () => void;
   renderItem: (data: any, i: number) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
+  hidePageIndicator?: boolean;
   showArrow?: boolean;
   style?: any;
   zoomButtonStyle?: any;
   keyExtractor?: (item: ItemT, index: number) => string;
+  hideZoomButton?: boolean;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 }

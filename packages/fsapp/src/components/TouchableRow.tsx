@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import { GestureResponderEvent, StyleSheet, Text, TouchableHighlight } from 'react-native';
 
 const styles = StyleSheet.create({
   row: {
@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
 });
 
 export interface TouchableRowProps {
-  text: string;
-  onPress: (event?: any) => void;
+  text?: string | number;
+  onPress: (event?: GestureResponderEvent) => void;
 }
 
 const TouchableRow: React.StatelessComponent<TouchableRowProps> = ({ text, onPress }) => {

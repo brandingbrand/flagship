@@ -13,12 +13,16 @@ import {
 } from 'react-native';
 
 import { ReviewTypes } from '@brandingbrand/fscommerce';
-import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
-import { MoreText, MoreTextProps } from './MoreText';
+import {
+  ReviewIndicator,
+  ReviewIndicatorProps,
+  SerializableReviewIndicatorProps
+} from './ReviewIndicator';
+import { MoreText, MoreTextProps, SerializableMoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import SyndicationIndicator from './SyndicationIndicator';
+import { SyndicationIndicator } from './SyndicationIndicator';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export enum RecommendationDisplayTypes {
@@ -58,6 +62,29 @@ export interface ReviewItemProps extends ReviewTypes.Review {
   // buttons
   onHelpful?: (props: ReviewItemProps) => void;
   onNotHelpful?: (props: ReviewItemProps) => void;
+}
+
+export interface SerializableReviewItemProps extends Omit<
+  ReviewItemProps,
+  'renderSyndicatedIndicator' | 'onHelpful' | 'onNotHelpful'
+> {
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  userStyle?: TextStyle;
+  rowStyle?: ViewStyle;
+  verifiedStyle?: TextStyle;
+  verifiedImageStyle?: ImageStyle;
+  verifiedRowStyle?: ViewStyle;
+  helpfulStyle?: TextStyle;
+  buttonStyle?: ViewStyle;
+  moreTextStyle?: TextStyle;
+  recommendedStyle?: ViewStyle;
+  recommendedImageStyle?: ImageStyle;
+  recommendedImageBoxStyle?: ViewStyle;
+  recommendedRowStyle?: ViewStyle;
+
+  reviewIndicatorProps?: Partial<SerializableReviewIndicatorProps>;
+  moreTextProps?: SerializableMoreTextProps;
 }
 
 export interface ReviewItemState {

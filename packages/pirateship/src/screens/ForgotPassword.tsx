@@ -1,12 +1,13 @@
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+import { Options } from 'react-native-navigation';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import React, { Component } from 'react';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import { dataSource } from '../lib/datasource';
 import { border, color, fontSize, padding, palette } from '../styles/variables';
 import formFieldStyles from '../styles/FormField';
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
 });
 
 export interface ForgotPasswordScreenProps extends ScreenProps {
-  onDismiss: () => void;
+  onDismiss: () => () => void;
   onSignUpSuccess: () => void;
 }
 
@@ -110,7 +111,7 @@ export default class ForgotPassword extends Component<
   ForgotPasswordScreenProps,
   ForgotPasswordState
 > {
-  static navigatorStyle: NavigatorStyle = navBarHide;
+  static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
   fieldOptions: any;
   fields: any;
@@ -118,8 +119,12 @@ export default class ForgotPassword extends Component<
 
   constructor(props: ForgotPasswordScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.forgotPassword.title)
+    props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.forgotPassword.title)
+        }
+      }
     });
 
     this.fields = this.getFormFields();
@@ -132,6 +137,11 @@ export default class ForgotPassword extends Component<
         email: ''
       }
     };
+  }
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('ForgotPassword is deprecated and will be removed in the next version of Flagship.');
   }
 
   getFormFields = () => {
@@ -167,7 +177,6 @@ export default class ForgotPassword extends Component<
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const { resetSent } = this.state;
     let body;
 
@@ -180,17 +189,17 @@ export default class ForgotPassword extends Component<
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled'
         }}
-        navigator={navigator}
       >
         <View style={styles.dismissButtonContainer}>
           <TouchableOpacity
             style={styles.dismissButton}
-            onPress={this.props.onDismiss}
+            onPress={this.props.onDismiss()}
           >
             <Image source={arrowIcon} />
           </TouchableOpacity>
@@ -217,7 +226,7 @@ export default class ForgotPassword extends Component<
           <PSButton
             titleStyle={styles.signUpText}
             title={translate.string(forgotPasswordTranslations.completedBtn)}
-            onPress={this.props.onDismiss}
+            onPress={this.props.onDismiss()}
             style={styles.button}
           />
         </View>
@@ -331,26 +340,28 @@ export default class ForgotPassword extends Component<
   }
 
   signUp = () => {
-    const { navigator, onSignUpSuccess } = this.props;
-
-    navigator.push({
-      title: translate.string(translationKeys.screens.register.title),
-      screen: 'SignUp',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          navigator.pop();
-        },
-        onSignUpSuccess: () => {
-          navigator.pop();
-          if (onSignUpSuccess) {
-            onSignUpSuccess();
-          } else {
-            console.warn('No onSignUpSuccess handler for Forgot Password');
+    const { onSignUpSuccess } = this.props;
+    this.props.navigator.push({
+      component: {
+        name: 'SignUp',
+        passProps: {
+          dismissible: true,
+          onDismiss: () => {
+            this.props.navigator.pop()
+            .catch(e => console.warn('SignUp POP error: ', e));
+          },
+          onSignUpSuccess: () => {
+            this.props.navigator.pop()
+            .catch(e => console.warn('SignUp POP error: ', e));
+            if (onSignUpSuccess) {
+              onSignUpSuccess();
+            } else {
+              console.warn('No onSignUpSuccess handler for Forgot Password');
+            }
           }
         }
       }
-    });
+    }).catch(e => console.warn('SignUp PUSH error: ', e));
   }
 }
 

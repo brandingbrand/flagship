@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 
 import { PromoForm } from '@brandingbrand/fscomponents';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarFullBleed } from '../styles/Navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
@@ -22,6 +23,8 @@ import withRecentlyViewed, {
 } from '../providers/recentlyViewedProvider';
 import Analytics from '../lib/analytics';
 import translate, { translationKeys } from '../lib/translations';
+
+const cartTabIcon = require('../../assets/images/cart-tab-icon.png');
 
 const CartStyle = StyleSheet.create({
   loading: {
@@ -211,16 +214,15 @@ export interface CartScreenProps
   RecentlyViewedProps { }
 
 class Cart extends Component<CartScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarFullBleed;
+  static options: Options = navBarFullBleed;
 
   componentDidMount(): void {
-    if (!this.props.recentlyViewed.items.length) {
+    if (!this.props.recentlyViewed?.items?.length) {
       this.props.loadRecentlyViewed();
     }
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     const { cartData, isLoading } = this.props.cart;
     let cart;
 
@@ -236,10 +238,22 @@ class Cart extends Component<CartScreenProps> {
         </View>
       );
     } else if (cartData && cartData.items) {
-      this.props.navigator.setTabBadge({
-        tabIndex: 1,
-        badge: this.props.cart.cartCount || null,
-        badgeColor: palette.primary
+      const cartCount = this.props.cart.cartCount;
+      const badge = !!cartCount && cartCount.toString() || undefined;
+
+      badge ? this.props.navigator.mergeOptions({
+        bottomTab: {
+          badge,
+          badgeColor: palette.primary,
+          icon: cartTabIcon
+        }
+      }) :
+      this.props.navigator.mergeOptions({
+        bottomTab: {
+          badge: '',
+          badgeColor: palette.primary,
+          icon: cartTabIcon
+        }
       });
 
       if (cartData.items.length === 0) {
@@ -251,11 +265,11 @@ class Cart extends Component<CartScreenProps> {
 
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={!isLoading}
         style={CartStyle.container}
         scrollViewProps={{ style: CartStyle.scrollView }}
-        navigator={navigator}
       >
         {cart}
       </PSScreenWrapper>
@@ -297,18 +311,25 @@ class Cart extends Component<CartScreenProps> {
     };
   }
 
+  removeItem = (item: CommerceTypes.CartItem) => {
+    return () => {
+      this.props.removeFromCart(item);
+    };
+  }
+
   afterLoad = (cartData: CommerceTypes.Cart): void => {
     this.setState({
       cartData
     });
-
-    this.props.navigator.setTabBadge({
-      tabIndex: 1,
-      badge:
-        (cartData.items &&
-          cartData.items.reduce((total, item) => total + item.quantity, 0)) ||
-        null,
-      badgeColor: palette.secondary
+    const quantity = (cartData.items &&
+      cartData.items.reduce((total, item) => total + item.quantity, 0));
+    const badge = !!quantity && quantity.toString() || undefined;
+    this.props.navigator.mergeOptions({
+      bottomTab: {
+        badge,
+        badgeColor: palette.secondary,
+        icon: cartTabIcon
+      }
     });
   }
 
@@ -375,37 +396,51 @@ class Cart extends Component<CartScreenProps> {
 
   handlePromotedProductPress = (productId: string) => () => {
     this.props.navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId
-      }
-    });
-  }
-
-  signIn = () => {
-    return this.props.navigator.showModal({
-      screen: 'SignIn',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          this.props.navigator.dismissModal();
-        },
-        onSignInSuccess: () => {
-          this.props.navigator.dismissModal();
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId
         }
       }
-    });
+    }).catch((e: any) => console.warn('ProductDetail PUSH error: ', e));
+  }
+
+  signIn = async () => {
+    return this.props.navigator.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'SignIn',
+            passProps: {
+              dismissible: true,
+              onDismiss: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
+              },
+              onSignInSuccess: (screenProps: ScreenProps) => () => {
+                screenProps.navigator.dismissModal()
+                .catch((e: any) => console.warn('DISMISSMODAL error: ', e));
+              }
+            }
+          }
+        }]
+      }
+    }).catch((e: any) => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
   continueShopping = () => {
     if (Platform.OS !== 'web') {
-      this.props.navigator.switchToTab({
-        tabIndex: 0
+      this.props.navigator.mergeOptions({
+        bottomTabs: {
+          currentTabIndex: 0
+        }
       });
     } else {
       this.props.navigator.push({
-        screen: 'Shop'
-      });
+        component: {
+          name: 'Shop'
+        }
+      }).catch((e: any) => console.warn('Shop PUSH error: ', e));
     }
   }
 
@@ -417,6 +452,7 @@ class Cart extends Component<CartScreenProps> {
         navigateToProduct={this.goToProduct}
         item={item}
         updateQty={this.updateQuantity(item)}
+        removeItem={this.removeItem(item)}
         containerStyle={CartStyle.cartItemContainer}
       />
     );
@@ -426,10 +462,24 @@ class Cart extends Component<CartScreenProps> {
     return items && items.findIndex(product => product.id === productId) > -1;
   }
 
-  goToProduct = (item: CommerceTypes.CartItem) => {
-    this.props.navigator.handleDeepLink({
-      link: 'shop/product/' + item.productId
-    });
+  goToProduct = async (item: CommerceTypes.CartItem) => {
+    try {
+      await this.props.navigator.push({
+        component: {
+          name: 'ProductDetail',
+          passProps: {
+            productId: item.productId
+          }
+        }
+      }, 'SHOP_TAB');
+      this.props.navigator.mergeOptions({
+        bottomTabs: {
+          currentTabId: 'SHOP_TAB'
+        }
+      });
+    } catch (e) {
+      console.warn('ProductDetail PUSH error: ', e);
+    }
   }
 
   renderPromo = (): JSX.Element => {

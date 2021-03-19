@@ -5,8 +5,8 @@ import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-imp
 import {
   object,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line: no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { AddressForm } from '../AddressForm';
 import { FormLabelPosition } from '../Form';
 

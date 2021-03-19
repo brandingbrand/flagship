@@ -45,52 +45,16 @@ module.exports = {
     android: 'com.brandingbrand.reactnative.and.pirateship',
     ios: 'com.brandingbrand.reactnative.pirateship',
   },
+  engagement: {
+    baseURL: 'https://api.brandingbrand.com/engagement-general/v1',
+    cacheTTL: 0,
+    appId: '31c51c2f-e65c-4b14-8edc-026dc6098e56',
+    apiKey: 'uWFd0FJ6TcrqFBCFMbd2TUs686K3Ii'
+  },
   bundleIds: {
     android: 'com.brandingbrand.reactnative.and.pirateship',
     ios: 'com.brandingbrand.reactnative.pirateship',
   },
-  usageDescriptionIOS: [
-    {
-      key: 'NSAppleMusicUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSBluetoothPeripheralUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSCalendarsUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSCameraUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSLocationWhenInUseUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSMotionUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSPhotoLibraryAddUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSPhotoLibraryUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSSpeechRecognitionUsageDescription',
-      string: ''
-    },
-    {
-      key: 'NSFaceIDUsageDescription',
-      string: ''
-    }
-  ],
   associatedDomains: [],
   targetedDevices: 'Universal'
 };

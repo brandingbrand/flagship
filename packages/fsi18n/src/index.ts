@@ -6,7 +6,7 @@ import { FSTranslationKeys, I18n as I18nInterface } from './types';
 // We're a little stricter/more explicit in our type definitions for translations,
 // so we need to do a type assertion. The translation type definitions are technically
 // compatible, but are not detected as such.
-const FSI18n = new I18nHelper(I18n as I18nInterface);
+const FSI18n = new I18nHelper(I18n as unknown as I18nInterface);
 
 const translations = {
   en: translationAssets.en.keys

@@ -52,26 +52,9 @@ export function configure(path: string, configuration: Config): void {
     }
   }
 
-  // Inject the Hockey API token
-  if (process.env.HOCKEYAPP_API_TOKEN) {
-    fs.update(
-      path,
-      /.+#PROJECT_MODIFY_FLAG_hockey_api_token/g,
-      `api_token: "${process.env.HOCKEYAPP_API_TOKEN}" #PROJECT_MODIFY_FLAG_hockey_api_token`
-    );
-
-    logInfo('updated Hockey API token from process ENV [HOCKEYAPP_API_TOKEN]');
-  }
-
   // Inject App Center configurations
   if (configuration && configuration.appCenter) {
-    const { apiToken, organization, distribute } = configuration.appCenter;
-
-    fs.update(
-      path,
-      /.+#PROJECT_MODIFY_FLAG_appcenter_api_token/g,
-      `api_token: "${apiToken}", #PROJECT_MODIFY_FLAG_appcenter_api_token`
-    );
+    const { organization, distribute } = configuration.appCenter;
 
     fs.update(
       path,

@@ -18,7 +18,7 @@
  *
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Image,
   ImageStyle,
@@ -37,19 +37,55 @@ import { formatAddress, formatDistance, formatHours } from '../lib/helpers';
 import { Address, Hour } from '../types/Store';
 import { Button } from './Button';
 
-export interface LocationItemProps {
+export interface SerializableLocationItemProps {
   format: string;
 
   // address
   locationName: string;
-  address: Address;
 
   // hour
-  hours: Hour[];
   hourFormat?: string;
 
   // bottom button
   buttonTitle?: string;
+
+  // distance
+  distanceFormat?: string;
+
+  // phone button
+  phone: string;
+
+  // store image
+  storeImageStyle?: ImageStyle;
+
+  // style
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  textStyle?: TextStyle;
+  linkStyle?: ViewStyle;
+  linkTitleStyle?: TextStyle;
+  buttonStyle?: ViewStyle;
+  buttonTitleStyle?: TextStyle;
+}
+
+export interface LocationItemProps extends Omit<SerializableLocationItemProps,
+  'storeImageStyle' |
+  'style' |
+  'titleStyle' |
+  'textStyle' |
+  'linkStyle' |
+  'linkTitleStyle' |
+  'buttonStyle' |
+  'buttonTitleStyle'
+  > {
+
+  // address
+  address: Address;
+
+  // hour
+  hours: Hour[];
+
+  // bottom button
   onButtonPress?: () => void;
 
   // nav button
@@ -58,10 +94,8 @@ export interface LocationItemProps {
 
   // distance
   distance?: Distance;
-  distanceFormat?: string;
 
   // phone button
-  phone: string;
   phoneIcon?: ImageURISource;
   onPhoneButtonPress?: () => void;
 
@@ -79,47 +113,46 @@ export interface LocationItemProps {
   buttonTitleStyle?: StyleProp<TextStyle>;
 }
 
-export class LocationItem extends Component<LocationItemProps> {
-  render(): any {
-    const { format, style } = this.props;
+interface RenderOption {
+  showDistance?: boolean;
+}
 
-    return (
-      <View style={[S.container, style]}>{this.renderByFormat(format)}</View>
-    );
-  }
+export const LocationItem: React.FunctionComponent<LocationItemProps> = props => {
+  const { format, style } = props;
 
   /* tslint:disable */
-  renderByFormat = (format: string) => {
+  const renderByFormat = (format: string) => {
     switch (format) {
       case '1':
-        return this.renderFormat1();
+        return renderFormat1();
       case '2':
-        return this.renderFormat2();
+        return renderFormat2();
       case '3':
-        return this.renderFormat3();
+        return renderFormat3();
       case '4':
-        return this.renderFormat4();
+        return renderFormat4();
       case '5':
-        return this.renderFormat5();
+        return renderFormat5();
       case '6':
-        return this.renderFormat6();
+        return renderFormat6();
       case '7':
-        return this.renderFormat7();
+        return renderFormat7();
       case '8':
-        return this.renderFormat8();
+        return renderFormat8();
       case '9':
-        return this.renderFormat9();
+        return renderFormat9();
       case '10':
-        return this.renderFormat10();
+        return renderFormat10();
       case '11':
-        return this.renderFormat11();
+        return renderFormat11();
       default:
-        return this.renderFormat1();
+        return renderFormat1();
     }
   };
+
   /* tslint:enable */
 
-  renderStoreDetail = (options: any = {}) => {
+  const renderStoreDetail = (options: RenderOption = {}) => {
     const {
       locationName,
       address,
@@ -129,7 +162,7 @@ export class LocationItem extends Component<LocationItemProps> {
       textStyle,
       distance,
       distanceFormat
-    } = this.props;
+    } = props;
     return (
       <View style={S.storeDetailContainer} accessible={true}>
         <Text style={[S.locationName, titleStyle]}>{locationName}</Text>
@@ -145,16 +178,16 @@ export class LocationItem extends Component<LocationItemProps> {
         </Text>
       </View>
     );
-  }
+  };
 
-  renderNavIcon = (options: any = {}) => {
+  const renderNavIcon = (options: RenderOption = {}) => {
     const {
       navIcon,
       distance,
       onNavButtonPress,
       distanceFormat,
       locationName
-    } = this.props;
+    } = props;
 
     if (!navIcon) {
       return null;
@@ -178,10 +211,10 @@ export class LocationItem extends Component<LocationItemProps> {
         </View>
       </TouchableOpacity>
     );
-  }
+  };
 
-  renderPhoneIcon = () => {
-    const { phoneIcon, onPhoneButtonPress, locationName } = this.props;
+  const renderPhoneIcon = () => {
+    const { phoneIcon, onPhoneButtonPress, locationName } = props;
 
     if (!phoneIcon) {
       return null;
@@ -197,15 +230,15 @@ export class LocationItem extends Component<LocationItemProps> {
         <Image source={phoneIcon} style={S.icon} resizeMode='contain' />
       </TouchableOpacity>
     );
-  }
+  };
 
-  renderBottomButton = () => {
+  const renderBottomButton = () => {
     const {
       buttonTitle,
       onButtonPress,
       buttonStyle,
       buttonTitleStyle
-    } = this.props;
+    } = props;
 
     if (!onButtonPress) {
       console.warn('onButtonPress must be specified to display bottom button');
@@ -225,40 +258,10 @@ export class LocationItem extends Component<LocationItemProps> {
         onPress={onButtonPress}
       />
     );
-  }
+  };
 
-  renderFormat1 = () => {
-    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = this.props;
-
-    if (!onPhoneButtonPress) {
-      console.warn('onPhoneButtonPress is required for this format');
-      return null;
-    }
-
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>
-            {this.renderStoreDetail()}
-            <Button
-              link
-              style={[S.linkButton, linkStyle]}
-              titleStyle={[S.linkButtonText, linkTitleStyle]}
-              title={phone}
-              onPress={onPhoneButtonPress}
-              accessibilityLabel={`call ${phone}`}
-            />
-          </View>
-          <View style={S.rightSection}>
-            {this.renderNavIcon({ showDistance: true })}
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  renderFormat2 = () => {
-    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = this.props;
+  const renderFormat1 = () => {
+    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = props;
 
     if (!onPhoneButtonPress) {
       console.warn('onPhoneButtonPress is required for this format');
@@ -269,7 +272,7 @@ export class LocationItem extends Component<LocationItemProps> {
       <View>
         <View style={S.topSection}>
           <View style={S.leftSection}>
-            {this.renderStoreDetail()}
+            {renderStoreDetail()}
             <Button
               link
               style={[S.linkButton, linkStyle]}
@@ -280,151 +283,181 @@ export class LocationItem extends Component<LocationItemProps> {
             />
           </View>
           <View style={S.rightSection}>
-            {this.renderNavIcon({ showDistance: true })}
+            {renderNavIcon({ showDistance: true })}
           </View>
         </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
       </View>
     );
-  }
+  };
 
-  renderFormat3 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{this.renderStoreDetail()}</View>
-          <View style={S.rightSection}>
-            {this.renderNavIcon({ showDistance: true })}
-          </View>
-        </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
-      </View>
-    );
-  }
+  const renderFormat2 = () => {
+    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = props;
 
-  renderFormat4 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{this.renderStoreDetail()}</View>
-          <View style={S.rightSection}>{this.renderPhoneIcon()}</View>
-        </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
-      </View>
-    );
-  }
+    if (!onPhoneButtonPress) {
+      console.warn('onPhoneButtonPress is required for this format');
+      return null;
+    }
 
-  renderFormat5 = () => {
     return (
       <View>
         <View style={S.topSection}>
           <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
-          </View>
-          <View style={S.twoIconsContainer}>
-            {this.renderPhoneIcon()}
-            {this.renderNavIcon({ showDistance: false })}
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  renderFormat6 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
-          </View>
-          <View style={S.twoIconsContainer}>
-            {this.renderPhoneIcon()}
-            {this.renderNavIcon({ showDistance: false })}
-          </View>
-        </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
-      </View>
-    );
-  }
-
-  renderFormat7 = () => {
-    const { storeImage } = this.props;
-    return (
-      <View>
-        <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
-          <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
-          </View>
-          <View style={S.twoIconsContainerVertical}>
-            {this.renderNavIcon({ showDistance: false })}
-            {this.renderPhoneIcon()}
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  renderFormat8 = () => {
-    const { storeImage } = this.props;
-    return (
-      <View>
-        <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
-          <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
-          </View>
-          <View style={S.twoIconsContainerVertical}>
-            {this.renderNavIcon({ showDistance: false })}
-            {this.renderPhoneIcon()}
-          </View>
-        </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
-      </View>
-    );
-  }
-
-  renderFormat9 = () => {
-    const { storeImage } = this.props;
-    return (
-      <View>
-        <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
-          <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
+            {renderStoreDetail()}
+            <Button
+              link
+              style={[S.linkButton, linkStyle]}
+              titleStyle={[S.linkButtonText, linkTitleStyle]}
+              title={phone}
+              onPress={onPhoneButtonPress}
+              accessibilityLabel={`call ${phone}`}
+            />
           </View>
           <View style={S.rightSection}>
-            {this.renderNavIcon({ showDistance: false })}
+            {renderNavIcon({ showDistance: true })}
           </View>
         </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
       </View>
     );
-  }
+  };
 
-  renderFormat10 = () => {
-    const { storeImage } = this.props;
+  const renderFormat3 = () => {
+    return (
+      <View>
+        <View style={S.topSection}>
+          <View style={S.leftSection}>{renderStoreDetail()}</View>
+          <View style={S.rightSection}>
+            {renderNavIcon({ showDistance: true })}
+          </View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat4 = () => {
+    return (
+      <View>
+        <View style={S.topSection}>
+          <View style={S.leftSection}>{renderStoreDetail()}</View>
+          <View style={S.rightSection}>{renderPhoneIcon()}</View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat5 = () => {
+    return (
+      <View>
+        <View style={S.topSection}>
+          <View style={S.leftSection}>
+            {renderStoreDetail({ showDistance: true })}
+          </View>
+          <View style={S.twoIconsContainer}>
+            {renderPhoneIcon()}
+            {renderNavIcon({ showDistance: false })}
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const renderFormat6 = () => {
+    return (
+      <View>
+        <View style={S.topSection}>
+          <View style={S.leftSection}>
+            {renderStoreDetail({ showDistance: true })}
+          </View>
+          <View style={S.twoIconsContainer}>
+            {renderPhoneIcon()}
+            {renderNavIcon({ showDistance: false })}
+          </View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat7 = () => {
+    const { storeImage } = props;
     return (
       <View>
         <View style={S.topSection}>
           {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
           <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
+            {renderStoreDetail({ showDistance: true })}
           </View>
-          <View style={S.rightSection}>{this.renderPhoneIcon()}</View>
+          <View style={S.twoIconsContainerVertical}>
+            {renderNavIcon({ showDistance: false })}
+            {renderPhoneIcon()}
+          </View>
         </View>
-        <View style={S.bottomSection}>{this.renderBottomButton()}</View>
       </View>
     );
-  }
+  };
 
-  renderFormat11 = () => {
+  const renderFormat8 = () => {
+    const { storeImage } = props;
+    return (
+      <View>
+        <View style={S.topSection}>
+          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          <View style={S.leftSection}>
+            {renderStoreDetail({ showDistance: true })}
+          </View>
+          <View style={S.twoIconsContainerVertical}>
+            {renderNavIcon({ showDistance: false })}
+            {renderPhoneIcon()}
+          </View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat9 = () => {
+    const { storeImage } = props;
+    return (
+      <View>
+        <View style={S.topSection}>
+          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          <View style={S.leftSection}>
+            {renderStoreDetail({ showDistance: true })}
+          </View>
+          <View style={S.rightSection}>
+            {renderNavIcon({ showDistance: false })}
+          </View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat10 = () => {
+    const { storeImage } = props;
+    return (
+      <View>
+        <View style={S.topSection}>
+          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          <View style={S.leftSection}>
+            {renderStoreDetail({ showDistance: true })}
+          </View>
+          <View style={S.rightSection}>{renderPhoneIcon()}</View>
+        </View>
+        <View style={S.bottomSection}>{renderBottomButton()}</View>
+      </View>
+    );
+  };
+
+  const renderFormat11 = () => {
     const {
       linkStyle,
       linkTitleStyle,
       buttonTitle,
       onButtonPress
-    } = this.props;
+    } = props;
 
     if (!onButtonPress) {
       console.warn('onButtonPress is required for this format');
@@ -440,7 +473,7 @@ export class LocationItem extends Component<LocationItemProps> {
       <View>
         <View style={S.topSection}>
           <View style={S.leftSection}>
-            {this.renderStoreDetail({ showDistance: true })}
+            {renderStoreDetail({ showDistance: true })}
             <Button
               link
               style={[S.linkButton, linkStyle]}
@@ -455,11 +488,14 @@ export class LocationItem extends Component<LocationItemProps> {
               S.twoIconsContainerVerticalTall
             ]}
           >
-            {this.renderNavIcon({ showDistance: true })}
-            {this.renderPhoneIcon()}
+            {renderNavIcon({ showDistance: true })}
+            {renderPhoneIcon()}
           </View>
         </View>
       </View>
     );
-  }
-}
+  };
+  return (
+    <View style={[S.container, style]}>{renderByFormat(format)}</View>
+  );
+};

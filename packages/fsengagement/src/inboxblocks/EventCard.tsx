@@ -18,12 +18,16 @@ import ImageBlock from './ImageBlock';
 
 const styles = StyleSheet.create({
   whenIcon: {
-    width: 10,
-    height: 10
+    width: 13,
+    height: 13
+  },
+  timeIcon: {
+    width: 14,
+    height: 14
   },
   whereIcon: {
-    width: 8,
-    height: 11
+    width: 10,
+    height: 14
   },
   eventContainer: {
     marginLeft: 50,
@@ -51,6 +55,7 @@ export interface ComponentProps extends CardProps {
   contents: any;
 }
 
+const timeIcon = require('../../assets/images/time.png');
 const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 
@@ -66,32 +71,36 @@ export default class EventCard extends Component<ComponentProps> {
     handleStoryAction: this.handleStoryAction
   })
 
-  handleStoryAction = (json: JSON) => {
+  handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
+    this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    this.props.navigator.push({
-      screen: 'EngagementComp',
-      navigatorStyle: {
-        navBarHidden: true
-      },
-      passProps: {
-        json,
-        backButton: true,
-        name: this.props.name,
-        id: this.props.id
+    return this.props.navigator.push({
+      component: {
+        name: 'EngagementComp',
+        options: {
+          topBar: {
+            visible: false
+          }
+        },
+        passProps: {
+          json,
+          backButton: true,
+          name: this.props.name,
+          id: this.props.id
+        }
       }
     });
   }
-  onCardPress = (): void => {
+  onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = this.props;
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    this.handleStoryAction(actionPayload);
+    return this.handleStoryAction(actionPayload);
   }
 
   render(): JSX.Element {
@@ -109,16 +118,43 @@ export default class EventCard extends Component<ComponentProps> {
           <TextBlock
             {...contents.Title}
           />
-          <View style={styles.eventType}>
-            <ImageBlock
-              source={whenIcon}
-              containerStyle={styles.dateRow}
-              imageStyle={styles.whenIcon}
-            />
-            <TextBlock
-              {...contents.When}
-            />
-          </View>
+          {!contents.When.textDate && !contents.When.textTime && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={whenIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.whenIcon}
+              />
+              <TextBlock
+                {...contents.When}
+              />
+            </View>
+          )}
+          {contents.When.textDate && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={whenIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.whenIcon}
+              />
+              <TextBlock
+                {...{ ...contents.When, text: contents.When.textDate }}
+              />
+            </View>
+          )}
+          {contents.When.textTime && (
+            <View style={styles.eventType}>
+              <ImageBlock
+                source={timeIcon}
+                containerStyle={styles.dateRow}
+                imageStyle={styles.timeIcon}
+              />
+              <TextBlock
+                {...{ ...contents.When, text: contents.When.textTime }}
+              />
+            </View>
+          )}
+
           <View style={styles.eventType}>
             <ImageBlock
               source={whereIcon}

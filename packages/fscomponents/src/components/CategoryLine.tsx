@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import {
   AccessibilityRole,
   Image,
@@ -15,77 +15,89 @@ import { TouchableHighlightLink } from './TouchableHighlightLink';
 
 import { style as S } from '../styles/CategoryLine';
 
-export interface CategoryLineProps extends CommerceTypes.Category {
-  accessorySrc?: ImageURISource;
-  accessoryStyle?: StyleProp<ImageStyle>;
+export interface SerializableCategoryLineProps extends CommerceTypes.Category {
+  accessoryStyle?: ImageStyle;
   href?: string;
-  imageStyle?: StyleProp<ImageStyle>;
-  onPress?: (item: CommerceTypes.Category) => void;
+  imageStyle?: ImageStyle;
   showAccessory?: boolean;
-  renderAccessory?: () => React.ReactNode;
   showImage?: boolean;
-  style?: StyleProp<ViewStyle>;
-  titleStyle?: StyleProp<TextStyle>;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
   underlayColor?: string;
+  accessorySrc?: ImageURISource;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
 }
 
-export class CategoryLine extends PureComponent<CategoryLineProps> {
-  static defaultProps: Partial<CategoryLineProps> = {
-    showAccessory: true,
-    showImage: true
-  };
+export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
+  'accessoryStyle' |
+  'imageStyle' |
+  'style' |
+  'titleStyle'
+  > {
+  accessoryStyle?: StyleProp<ImageStyle>;
+  imageStyle?: StyleProp<ImageStyle>;
+  onPress?: (item: CommerceTypes.Category) => void;
+  renderAccessory?: () => React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+}
 
-  render(): JSX.Element {
-    const {
-      renderAccessory,
-      showAccessory,
-      accessibilityLabel,
-      accessibilityRole,
-      accessorySrc,
-      accessoryStyle,
-      href,
-      image,
-      showImage,
-      imageStyle,
-      style,
-      title,
-      titleStyle,
-      underlayColor
-    } = this.props;
+// tslint:disable-next-line:cyclomatic-complexity
+export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): JSX.Element => {
 
-    return (
-      <TouchableHighlightLink
-        style={[S.container, style]}
-        underlayColor={underlayColor || '#eee'}
-        onPress={this.handlePress}
-        href={href}
-        accessibilityLabel={accessibilityLabel || title}
-        accessibilityRole={accessibilityRole || 'link'}
-      >
-        <View style={S.rowInner}>
-          {showImage && image && <Image source={image} style={imageStyle} />}
-          <Text style={[S.buttonText, titleStyle]}>
-            {title}
-          </Text>
-          {showAccessory && accessorySrc &&
-            <Image source={accessorySrc} style={accessoryStyle} resizeMode='contain' />
-          }
-          {renderAccessory && renderAccessory()}
-        </View>
-      </TouchableHighlightLink>
-    );
-  }
+  const {
+    renderAccessory,
+    showAccessory,
+    accessibilityLabel,
+    accessibilityRole,
+    accessorySrc,
+    accessoryStyle,
+    href,
+    image,
+    showImage,
+    imageStyle,
+    style,
+    title,
+    titleStyle,
+    underlayColor
+  } = props;
 
   /**
    * Called when a user taps on the item.
+   * @returns {void}
    */
-  private handlePress = () => {
-    const { onPress } = this.props;
+  const handlePress = () => {
+    const { onPress } = props;
 
     if (onPress) {
-      return onPress(this.props);
+      return onPress(props);
     }
-  }
-}
+  };
+
+  const showAccessoryValue = showAccessory === undefined ? true : showAccessory;
+  const showImageValue = showImage === undefined ? true : showImage;
+
+  return (
+    <TouchableHighlightLink
+      style={[S.container, style]}
+      underlayColor={underlayColor || '#eee'}
+      onPress={handlePress}
+      href={href}
+      accessibilityLabel={accessibilityLabel || title}
+      accessibilityRole={accessibilityRole || 'link'}
+    >
+      <View style={S.rowInner}>
+        {showImageValue && image && <Image source={image} style={imageStyle} />}
+        <Text style={[S.buttonText, titleStyle]}>
+          {title}
+        </Text>
+        {showAccessoryValue && accessorySrc &&
+          <Image source={accessorySrc} style={accessoryStyle} resizeMode='contain' />
+        }
+        {renderAccessory && renderAccessory()}
+      </View>
+    </TouchableHighlightLink>
+  );
+});
+

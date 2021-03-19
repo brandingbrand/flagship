@@ -12,6 +12,9 @@ export const UPDATE_TOP_CATEGORIES = 'UPDATE_TOP_CATEGORIES';
 export const UPDATE_PROMO_PRODUCTS = 'UPDATE_PROMO_PRODUCTS';
 export const LOAD_RECENTLY_VIEWED = 'LOAD_RECENTLY_VIEWED';
 export const UPDATE_RECENTLY_VIEWED = 'UPDATE_RECENTLY_VIEWED';
+export const INBOX_LOADED = 'INBOX_LOADED';
+export const INBOX_LOADING = 'INBOX_LOADING';
+export const INBOX_LOADING_ERROR = 'INBOX_LOADING_ERROR';
 export const EMAIL_REGEX = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
 export const STORAGE_KEYS = {
   username: 'signin_email',

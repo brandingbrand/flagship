@@ -1,14 +1,19 @@
-import React, { Component, ComponentClass, ComponentType } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { Component } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-
-import { Navigator, NavigatorStyle } from 'react-native-navigation';
+import {
+  EventSubscription,
+  Navigation,
+  NavigationButtonPressedEvent,
+  Options,
+  OptionsTopBar
+} from 'react-native-navigation';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
-import { AppConfigType, DrawerConfig, NavButton, NavigatorButtons, NavigatorEvent } from '../types';
+import { AppConfigType, DrawerConfig, NavButton } from '../types';
 import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
+import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -37,95 +42,66 @@ export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp, GenericScreenDispatchProp {
-  navigator: Navigator & { screenInstanceID: string };
+export interface GenericScreenProp extends GenericScreenStateProp,
+  GenericScreenDispatchProp, GenericNavProp {
   appConfig: AppConfigType;
   api: FSNetwork;
   testID: string;
 }
-
-let lastScreenLoaded = false;
 
 export default function wrapScreen(
   PageComponent: any,
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): ComponentClass<GenericScreenProp> & {
-  WrappedComponent: ComponentType<GenericScreenProp>;
-} {
+): any {
+  // Note: in RNN v2, PageComponent.options type is a function `(passProps: Props) => Options`
+  // the transformation code below for backward-compatibility purpose will only work
+  // if the incoming value is not a function
+  const pageOptions: Options = PageComponent.options;
+  const pageTopBar: OptionsTopBar = PageComponent.options && PageComponent.options.topBar;
   class GenericScreen extends Component<GenericScreenProp> {
-    static navigatorStyle: NavigatorStyle = PageComponent.navigatorStyle;
-    static navigatorButtons: NavigatorButtons = {
-      rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
-      leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
-    };
+    static options: Options =
+      typeof PageComponent.options === 'function' ?
+        PageComponent.options : {
+          ...pageOptions,
+          topBar: {
+            ...pageTopBar,
+            rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
+            leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
+          }
+        };
 
-    extraNavigatorEventHandler: any;
+    navigator: Navigator;
+    navigationEventListener: EventSubscription | null;
+    bottomTabEventListener: EventSubscription | null;
     showDevMenu: boolean;
 
     constructor(props: GenericScreenProp) {
       super(props);
 
-      this.extraNavigatorEventHandler = null;
+      this.navigationEventListener = null;
+      this.bottomTabEventListener = null;
       this.showDevMenu =
         (NativeConstants &&
           NativeConstants.ShowDevMenu &&
           NativeConstants.ShowDevMenu === 'true') ||
         (appConfig.env && appConfig.env.isFLAGSHIP);
-
-      // @ts-ignore wrong type in @types/react-native-navigation
-      props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
-
-      // DEV feature
-      if (this.showDevMenu) {
-        this.storeLastScreen(props);
-      }
-    }
-
-    storeLastScreen = (props: GenericScreenProp) => {
-      ['push', 'switchToTab', 'showModal'].forEach(action => {
-        const nav: any = props.navigator;
-        const originalFunc = nav[action];
-        nav[action] = (...args: any[]) => {
-          originalFunc.apply(props.navigator, args);
-          if (args && args[0] && args[0].screen === 'devMenu') {
-            return;
-          }
-          AsyncStorage.setItem('lastScreen', JSON.stringify({ action, args })).catch(e =>
-            console.log('Cannot get lastScreen from AsyncStorage', e)
-          );
-        };
+      this.navigator = new Navigator({
+        componentId: props.componentId,
+        tabs: (props.appConfig || appConfig).tabs || []
       });
     }
 
-    onNavigatorEvent = (event: NavigatorEvent) => {
-      if (event.type === 'NavBarButtonPress') {
-        this.handleNavButtonPress(event);
-      }
-
-      if (
-        event.id === 'bottomTabReselected' &&
-        Platform.OS === 'android' &&
-        appConfig.popToRootOnTabPressAndroid
-      ) {
-        this.props.navigator.popToRoot();
-      }
-
-      if (this.extraNavigatorEventHandler) {
-        this.extraNavigatorEventHandler(event);
-      }
-    }
-
-    handleNavButtonPress = (event: NavigatorEvent) => {
+    navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
       const navButtons = [
         ...(PageComponent.rightButtons || []),
         ...(PageComponent.leftButtons || [])
       ];
 
       navButtons.forEach(btn => {
-        if (event.id === btn.button.id) {
-          btn.action(this.props);
+        if (event.buttonId === btn.button.id) {
+          btn.action(this.navigator);
         }
       });
     }
@@ -133,59 +109,42 @@ export default function wrapScreen(
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
 
+      this.navigationEventListener = Navigation.events().bindComponent(this);
+
       if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
         appConfig.analytics.screenview(component, {
           url: component.name
         });
       }
-
-      // DEV feature
-      if (this.showDevMenu) {
-        this.handlekeepLastPage().catch(e => console.log('cannot handle keep Last Page', e));
-      }
     }
 
-    handlekeepLastPage = async () => {
-      if (lastScreenLoaded) {
-        return;
+    componentWillUnmount(): void {
+      if (this.navigationEventListener) {
+        this.navigationEventListener.remove();
       }
-      lastScreenLoaded = true;
-
-      const [devKeepPage, lastScreen] = await Promise.all([
-        AsyncStorage.getItem('devKeepPage'),
-        AsyncStorage.getItem('lastScreen')
-      ]);
-
-      if (!devKeepPage || !lastScreen) {
-        return;
-      }
-
-      let parsed = null;
-
-      try {
-        parsed = JSON.parse(lastScreen);
-      } catch (e) {
-        return;
-      }
-
-      if (!parsed) {
-        return;
-      }
-
-      if (!appConfig.screens[parsed.args && parsed.args[0].screen]) {
-        return;
-      }
-
-      const nav: any = this.props.navigator;
-      nav[parsed.action].apply(nav, parsed.args);
     }
 
     openDevMenu = () => {
-      this.props.navigator.showModal({
-        screen: 'devMenu',
-        title: 'FLAGSHIP Dev Menu',
-        passProps: { hideDevMenu: this.props.hideDevMenu }
-      });
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'devMenu',
+              passProps: {
+                hideDevMenu: this.props.hideDevMenu
+              },
+              options: {
+                topBar: {
+                  title: {
+                    text: 'FLAGSHIP Dev Menu'
+                  }
+                }
+              }
+            }
+          }]
+        }
+      })
+        .catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
     }
 
     render(): JSX.Element {
@@ -222,20 +181,13 @@ export default function wrapScreen(
       );
     }
 
-    setExtraNavigatorEventHandler = (handler: (event: NavigatorEvent) => void) => {
-      if (typeof handler !== 'function') {
-        throw new Error('onNav requires a function as parameter');
-      }
-      this.extraNavigatorEventHandler = handler;
-    }
-
     renderPage = () => {
       return (
         <PageComponent
           {...this.props}
           appConfig={appConfig}
           api={api}
-          onNav={this.setExtraNavigatorEventHandler}
+          navigator={this.navigator}
         />
       );
     }
