@@ -78,7 +78,7 @@
     "@types/react-router-dom": "^5.1.2",
     "@types/redux-logger": "^3.0.6",
     "@types/url-parse": "^1.4.1",
-    "babel-jest": "^25.1.0",
+    "babel-jest": "^26.6.3",
     "babel-loader": "~8.0.6",
     "core-js": "^3.0.0",
     "coveralls": "^3.0.2",
