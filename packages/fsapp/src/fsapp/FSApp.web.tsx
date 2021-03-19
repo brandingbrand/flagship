@@ -33,6 +33,7 @@ export class FSApp extends FSAppBase {
 
   async startApp(): Promise<void> {
     await this.initApp();
+
     const startFn = requestAnimationFrame || ((cb: () => void) => cb());
     const startCallback = () => {
       let rootTag: HTMLElement | null = null;
@@ -51,7 +52,8 @@ export class FSApp extends FSAppBase {
         initialProps: {
           appConfig: this.appConfig,
           api: this.api,
-          store: this.store
+          store: this.store,
+          appRouter: this.appRouter
         }
       });
     };
