@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.13...v11.0.0-alpha.14) (2021-03-22)
+
+
+### Bug Fixes
+
+* update web interface ([3b33752](https://github.com/brandingbrand/flagship/commit/3b33752906427eccbe13677f68f0305aae41e714))
+
+
+### Features
+
+* allow custom nav bar styles on makeModal ([37b70e0](https://github.com/brandingbrand/flagship/commit/37b70e0f7b39cb62458ba2101b979fac1a6b735d))
+
+
+
+
+
 # [11.0.0-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v11.0.0-alpha.13) (2021-03-19)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
