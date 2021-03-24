@@ -41,7 +41,7 @@ Component<{ componentId: string }, State> {
   static buttons?: ScreenOptions['buttons'];
 }
 export type ScreenComponentType = ScreenFC | typeof ScreenComponent;
-export type Tab = string | (OptionsBottomTab & { id: string });
+export type Tab = (OptionsBottomTab & { id: string });
 
 export type RouteData = Dictionary<unknown | undefined>;
 export type RouteParams = Dictionary<string | undefined>;
