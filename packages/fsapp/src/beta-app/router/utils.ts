@@ -54,9 +54,8 @@ export const resolveRoutes = async ({
 
   const withTabAffinity = (route: ExternalRoute): ExternalRoute => {
     const tab = findRoute(route);
-    const tabTitle = typeof tab === 'string' ? tab : tab?.text;
 
-    return { tabAffinity: tabTitle, ...route };
+    return { tabAffinity: tab?.id, ...route };
   };
 
   const tabbedExternalRoutes = externalRoutes.map(withTabAffinity);
@@ -69,7 +68,7 @@ export const resolveRoutes = async ({
           ...tabbedExternalRoutes
               .filter(
                 ({ tabAffinity }) =>
-                  tabAffinity === (typeof route.tab === 'string' ? route.tab : route.tab?.text)
+                  tabAffinity === route.tab?.id
               )
               .map(external => ({
                 ...external,
