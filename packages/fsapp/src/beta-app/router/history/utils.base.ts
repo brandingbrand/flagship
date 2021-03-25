@@ -66,7 +66,7 @@ const matchPath = (path: string | undefined, route: Route) => {
 
 const buildMatcher = async (
   route: Route,
-  tab: Tab = '',
+  tab?: Tab,
   prefix = ''
 ): Promise<
   (readonly [
@@ -82,7 +82,7 @@ const buildMatcher = async (
         matchPath(path, route),
         {
           id,
-          tabAffinity: typeof tab === 'string' ? tab : tab.id,
+          tabAffinity: tab?.id,
           ...route
         }
       ] as const)
