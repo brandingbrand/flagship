@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.14...v11.0.0-alpha.15) (2021-03-25)
+
+
+### Bug Fixes
+
+* make Tab nullable (d8f503c)
+* use tab id instead of title for tabAffinity (1124d58)
+
+
+
+
+
 # [11.0.0-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.13...v11.0.0-alpha.14) (2021-03-22)
 
 
