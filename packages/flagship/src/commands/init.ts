@@ -227,6 +227,9 @@ function initIOS(
         cocoapods.add(configuration.ios.pods.newPods);
       }
     }
+    if (configuration.ios.frameworks) {
+      ios.frameworks(configuration);
+    }
   }
 
   if (!configuration.disableDevFeature) {
