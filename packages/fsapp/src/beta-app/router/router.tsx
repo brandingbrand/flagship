@@ -58,62 +58,66 @@ export class FSRouter extends FSRouterBase {
     this.history.registerResolver(details => {
       routeDetails = details;
     });
+    const addedRoutes = new Set<string>();
 
     routes.forEach((route: Route | ExternalRoute) => {
       const { path, id } = buildPath(route, prefix);
-      const LoadingPlaceholder = () => <>{this.options.loading}</>;
-      if ('component' in route || 'loadComponent' in route) {
-        const LazyComponent = lazyComponent<{ componentId: string }>(
-          async () => {
-            const AwaitedComponent =
-              'component' in route ? route.component : await route.loadComponent(routeDetails);
+      if (!addedRoutes.has(id)) {
+        const LoadingPlaceholder = () => <>{this.options.loading}</>;
+        if ('component' in route || 'loadComponent' in route) {
+          const LazyComponent = lazyComponent<{ componentId: string }>(
+            async () => {
+              const AwaitedComponent =
+                'component' in route ? route.component : await route.loadComponent(routeDetails);
 
-            return ({ componentId }) => {
-              const [loading, setLoading] = useState(false);
-              const activatedRoute = useMemo(() => routeDetails, []);
-              useEffect(() => this.history.observeLoading(setLoading), []);
+              return ({ componentId }) => {
+                const [loading, setLoading] = useState(false);
+                const activatedRoute = useMemo(() => routeDetails, []);
+                useEffect(() => this.history.observeLoading(setLoading), []);
 
-              useEffect(() => {
-                trackView(this.options.analytics, route, activatedRoute, path);
-              }, [activatedRoute]);
+                useEffect(() => {
+                  trackView(this.options.analytics, route, activatedRoute, path);
+                }, [activatedRoute]);
 
-              return (
-                <ActivatedRouteProvider {...activatedRoute} loading={loading}>
-                  <ModalProvider>
-                    <ButtonProvider>
-                      <VersionOverlay>
-                        <AwaitedComponent componentId={componentId} />
-                      </VersionOverlay>
-                    </ButtonProvider>
-                  </ModalProvider>
-                </ActivatedRouteProvider>
-              );
-            };
-          },
-          { fallback: <LoadingPlaceholder /> }
-        );
+                return (
+                  <ActivatedRouteProvider {...activatedRoute} loading={loading}>
+                    <ModalProvider>
+                      <ButtonProvider>
+                        <VersionOverlay>
+                          <AwaitedComponent componentId={componentId} />
+                        </VersionOverlay>
+                      </ButtonProvider>
+                    </ModalProvider>
+                  </ActivatedRouteProvider>
+                );
+              };
+            },
+            { fallback: <LoadingPlaceholder /> }
+          );
 
-        const Wrapper = this.options.screenWrap ?? Fragment;
-        const WrappedComponent: NavigationFunctionComponent = ({ componentId }) => (
-          <Wrapper>
-            <NavigatorProvider value={this.history}>
-              <LazyComponent componentId={componentId} />
-            </NavigatorProvider>
-          </Wrapper>
-        );
-        WrappedComponent.options = {
-          bottomTab: typeof tab === 'string' ? { text: tab } : tab
-        };
-        Navigation.registerComponent(id, () => WrappedComponent);
-      } else if ('redirect' in route) {
-        return;
-      } else if ('children' in route) {
-        const tabAffinity = 'tab' in route ? route.tab : tab;
-        this.registerRoutes(
-          route.children,
-          path,
-          'tabAffinity' in route ? route.tabAffinity : tabAffinity
-        );
+          const Wrapper = this.options.screenWrap ?? Fragment;
+          const WrappedComponent: NavigationFunctionComponent = ({ componentId }) => (
+            <Wrapper>
+              <NavigatorProvider value={this.history}>
+                <LazyComponent componentId={componentId} />
+              </NavigatorProvider>
+            </Wrapper>
+          );
+          WrappedComponent.options = {
+            bottomTab: typeof tab === 'string' ? { text: tab } : tab
+          };
+          Navigation.registerComponent(id, () => WrappedComponent);
+        } else if ('redirect' in route) {
+          return;
+        } else if ('children' in route) {
+          const tabAffinity = 'tab' in route ? route.tab : tab;
+          this.registerRoutes(
+            route.children,
+            path,
+            'tabAffinity' in route ? route.tabAffinity : tabAffinity
+          );
+        }
+        addedRoutes.add(id);
       }
     });
   }
