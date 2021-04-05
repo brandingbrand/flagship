@@ -3,7 +3,7 @@ import type { StandardContainerProps } from '../../models';
 import React from 'react';
 import { FlexStyle, View, ViewProps, ViewStyle } from 'react-native';
 
-interface Props extends ViewProps {
+export interface PreStandardizedViewProps extends ViewProps {
   style: ViewStyle;
 
   /**
@@ -17,7 +17,7 @@ interface Props extends ViewProps {
   children: React.ReactNode;
 }
 
-export type SerializableViewProps = StandardContainerProps<Props>;
+export type SerializableViewProps = StandardContainerProps<PreStandardizedViewProps>;
 
 export const SerializableView = React.memo<SerializableViewProps>(
   ({ children, style, containerStyle, ...props }) => {

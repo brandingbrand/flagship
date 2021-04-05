@@ -1,4 +1,3 @@
-// tslint:disable
 import React, { Component } from 'react';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import {
@@ -50,9 +49,9 @@ export interface GridWallBlockState {
 
 export default class GridWallBlock
   extends Component<GridWallBlockProps, GridWallBlockState> {
+  _slider1Ref: any | null = null;
 
   private network: FSNetwork;
-  _slider1Ref: any | null = null;
   constructor(props: GridWallBlockProps) {
     super(props);
     this.state = {
@@ -72,10 +71,10 @@ export default class GridWallBlock
       products: products.filter((item: any) => !item.error),
       loading: false
     });
-   }
+  }
 
   async fetchProduct(id: string): Promise<any> {
-    let imageFormat = this.props.imageFormat || 'Regular_Mobile';
+    const imageFormat = this.props.imageFormat || 'Regular_Mobile';
     return this.network.get(id)
       .then((r: any) => r.data)
       .then((item: any) => {
@@ -101,23 +100,24 @@ export default class GridWallBlock
     const promises = items.map(async item => {
       return this.fetchProduct(item.productId);
     });
-    return await Promise.all(promises);
+    return Promise.all(promises);
   }
 
   _renderItem(item: any, index: number): JSX.Element {
     return (
-        <RenderProduct
-            data={item}
-            key={index}
-            onBackPress={onBackPress}
-            spaceBetweenHorizontal={renderItemOptions.spaceBetweenHorizontal}
-            spaceBetweenVertical={renderItemOptions.spaceBetweenVertical}
-            itemWidth={renderItemWidth}
-            even={(index + 1) % 2 === 0}
-    />);
+      <RenderProduct
+        data={item}
+        key={index}
+        onBackPress={onBackPress}
+        spaceBetweenHorizontal={renderItemOptions.spaceBetweenHorizontal}
+        spaceBetweenVertical={renderItemOptions.spaceBetweenVertical}
+        itemWidth={renderItemWidth}
+        even={(index + 1) % 2 === 0}
+      />
+    );
   }
 
-  horizontalMarginPadding() {
+  horizontalMarginPadding(): number {
     const {
       containerStyle
     } = this.props;
@@ -127,15 +127,15 @@ export default class GridWallBlock
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth() {
+  calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth() {
+  calculateItemWidth(): number {
     const {
       options
     } = this.props;
     const slideWidth = wp(50);
-    return slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding()/2);
+    return slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding() / 2);
   }
   createGrid(): JSX.Element {
     const {
@@ -144,11 +144,13 @@ export default class GridWallBlock
     renderItemOptions = options;
     renderItemWidth = this.calculateItemWidth();
     return (
-      <View style={{
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-      }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          flexWrap: 'wrap'
+        }}
+      >
         {(this.state.products || []).map((product: any, index: number) => {
           return this._renderItem(product, index);
         })}

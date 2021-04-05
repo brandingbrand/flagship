@@ -3,67 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [11.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v11.0.0-alpha.1) (2021-01-25)
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
 
 
 ### Bug Fixes
 
-* **fsapp:** react-router dependency versioning ([7b9784c](https://github.com/brandingbrand/flagship/commit/7b9784cecffc4e667137afa1a9c88a5f65343b41))
-
-
-### Features
-
-* **fsapp:** linked app - screen wrappers ([6055abe](https://github.com/brandingbrand/flagship/commit/6055abe6be9715514d0a8e9420ed1e57b81b6eda))
-* **fsapp:** linked app base ([d93d7a0](https://github.com/brandingbrand/flagship/commit/d93d7a001b55c65ac8ce3b6de5861cfe13d4a3f2))
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
 
 
 
 
 
-# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
 
-
-### Bug Fixes
-
-* **fsapp:** fix typing for app router ([7d0549e](https://github.com/brandingbrand/flagship/commit/7d0549e41b55a48bb60f7079d43d5e0beffe4be6))
-* **fsapp:** remove temp type ([471cd29](https://github.com/brandingbrand/flagship/commit/471cd294014a48bcb0f4612141daa912206f6c00))
-* **fsapp:** update missing types ([49d990d](https://github.com/brandingbrand/flagship/commit/49d990d5ca5122ade1605780f80091ce30baf04f))
+**Note:** Version bump only for package @brandingbrand/fsapp
 
 
 
-# [10.8.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.8.0-alpha.0) (2020-12-17)
 
 
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
 
-# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
-
-
-
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-
-### Features
-
-* add router ([5e48817](https://github.com/brandingbrand/flagship/commit/5e48817a0de2b701c0a74af1f446693473dbd6a3))
-* attach AppRouter to FSApp to set correct web router paths ([8ce521d](https://github.com/brandingbrand/flagship/commit/8ce521d7cd9d4d4acabd05a8a2fed05f8f16dd1c))
-
-
-
-# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
-
-
-### Features
-
-* allow screens to have multiple routes ([41778cc](https://github.com/brandingbrand/flagship/commit/41778cce5db79489afce3d8972a2ee2937ed5684))
-
-
-
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
-
-
-### Features
-
-* register custom routes when using routerConfig ([d43370a](https://github.com/brandingbrand/flagship/commit/d43370a6b7e231524b819e92a46ddd24ab1c122a))
+**Note:** Version bump only for package @brandingbrand/fsapp
 
 
 

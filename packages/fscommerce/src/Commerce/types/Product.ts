@@ -1,4 +1,4 @@
-import { CurrencyValue } from '../CommerceTypes';
+import { CurrencyValue, ProductPromotion } from '../CommerceTypes';
 import { Image } from './Image';
 import { Option, OptionValue } from './Option';
 import { ReviewDetails } from '../../Review/ReviewTypes';
@@ -182,4 +182,27 @@ export interface Product extends BaseProduct {
    * @example 'Buy one get one free!'
    */
   promotions?: string[];
+
+  /**
+   * An array of promotions for the product with details.
+   *
+   * @example 'Buy one get one free!'
+   */
+  productPromotions?: ProductPromotion[];
+
+  /**
+   * An id of the primary category
+   *
+   * @example 'skincare'
+   */
+  primaryCategoryId?: string;
+
+  /**
+   * The master product information. Only for types master, variation group and variant.
+   */
+  master?: {
+    id?: string;
+    orderable?: boolean;
+    price?: CurrencyValue;
+  };
 }
