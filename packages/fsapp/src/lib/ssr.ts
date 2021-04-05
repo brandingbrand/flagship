@@ -5,7 +5,7 @@ import type { default as helmetRoot, HelmetData } from 'react-helmet';
 import type { default as cookieParserRoot } from 'cookie-parser';
 import fs from 'fs-extra';
 import path from 'path';
-import { Key, pathToRegexp } from 'path-to-regexp';
+import pathToRegexp, { Key } from 'path-to-regexp';
 // tslint:disable:no-submodule-imports - submodule import is required here
 import ReactDOMServer from 'react-dom/server';
 import { inspect } from 'util';
@@ -101,7 +101,10 @@ async function renderApp(
   const { flagship, config } = flagshipApp;
   const updatedConfig = {
     ...config,
-    initialState: await flagship.updatedInitialState(cache)
+    initialState: {
+      ...await flagship.updatedInitialState(cache),
+      ...config.initialState
+    }
   };
   flagship.getReduxStore(updatedConfig.initialState).then((reduxStore: Store) => {
     // prerender the app

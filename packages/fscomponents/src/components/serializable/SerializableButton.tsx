@@ -1,25 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
-  Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle
+  Image,
+  ImageStyle,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle
 } from 'react-native';
-
+import { useNavigator } from '@brandingbrand/fsapp';
 import { ButtonProps } from '../Button';
-import {
-  border,
-  palette as defaultPalette
-} from '../../styles/variables';
-import {
-  style as S,
-  stylesSize,
-  stylesTextSize
-} from '../../styles/Button';
-
-export const withPropTransformer = <P extends object, InputProps extends object = P>(
-  Component: React.ComponentType<P>,
-  propTransformer: (props: InputProps) => P
-): React.FC<InputProps> => (props: InputProps) => {
-  return <Component {...propTransformer(props)} />;
-};
+import { border, palette as defaultPalette } from '../../styles/variables';
+import { style as S, stylesSize, stylesTextSize } from '../../styles/Button';
+import { extractHostStyles } from '../../lib/style';
 
 export interface SerializableButtonProps
   extends Pick<
@@ -44,11 +37,15 @@ export interface SerializableButtonProps
   titleStyle?: TextStyle;
   iconStyle?: ImageStyle;
   viewStyle?: ViewStyle;
+  noPadding?: boolean;
 }
 
-export const FSSerializableButton = React.memo<SerializableButtonProps & {
-  onPress?: () => void;
-}>(
+export const FSSerializableButton = React.memo<
+  SerializableButtonProps & {
+    onPress?: (href: string) => void;
+  }
+>(
+  // tslint:disable-next-line: cyclomatic-complexity
   ({
     title,
     style = {},
@@ -61,22 +58,35 @@ export const FSSerializableButton = React.memo<SerializableButtonProps & {
     icon,
     iconStyle,
     titleStyle,
+    noPadding,
     palette,
-    onPress = () => { // default
-    },
+    href,
+    onPress,
     ...props
   }) => {
+    const [host, self] = extractHostStyles(style);
     const paletteButton = palette || defaultPalette;
     const onColor = useMemo(
       () => `on${color.charAt(0).toUpperCase()}${color.slice(1)}` as keyof typeof paletteButton,
       [color]
     );
 
+    const navigator = useNavigator();
+
+    const handlePress = useCallback(() => {
+      if (onPress) {
+        onPress(href);
+      } else if (href) {
+        navigator.open(href);
+      }
+    }, [href]);
+
     return (
-      <TouchableOpacity onPress={onPress} {...props}>
+      <TouchableOpacity {...props} onPress={handlePress} style={host} >
         <View
           style={[
             S.container,
+            noPadding && { paddingLeft: 0, paddingRight: 0 },
             {
               backgroundColor: light || link ? 'transparent' : paletteButton[color],
               borderColor: light ? paletteButton[color] : undefined,
@@ -84,7 +94,7 @@ export const FSSerializableButton = React.memo<SerializableButtonProps & {
             },
             stylesSize[size],
             full && S.full,
-            style
+            self
           ]}
         >
           <View style={[S.buttonInner, { width: '100%' }]}>
