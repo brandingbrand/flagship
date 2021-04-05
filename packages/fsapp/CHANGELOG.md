@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+### Bug Fixes
+
+* fix external route paths (c9d6231)
+
+
+
 # [11.0.0-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.14...v11.0.0-alpha.15) (2021-03-25)
 
 
