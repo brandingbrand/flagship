@@ -6,5 +6,5 @@ export * from './SerializableShareButton';
 export * from './SerializableButton';
 export * from './SerializableImage';
 export * from './SerializableImagePlaceholder';
-export * from './VideoBlock.native';
-export * from './VideoBlock.web';
+export * from './VideoBlock';
+export * from './VideoBlock.types';

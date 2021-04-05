@@ -1,5 +1,6 @@
-import React from 'react';
-import { Text, TextProps, TextStyle, View, ViewStyle } from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, TextProps, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableTextProps
   extends Pick<
@@ -22,13 +23,33 @@ export interface SerializableTextProps
   > {
   childText: string;
   style?: TextStyle;
-  containerStyle?: ViewStyle;
+  boxStyle?: ViewStyle;
+  href?: string;
 }
 
 export const FSSerializableText = React.memo<SerializableTextProps>(
-  ({ childText, containerStyle, ...textProps }) => (
-    <View style={containerStyle}>
-      <Text {...textProps}>{childText}</Text>
-    </View>
-  )
+  ({ childText, boxStyle, href, ...textProps }) => {
+    const navigator = useNavigator();
+
+    const handlePress = useCallback(() => {
+      if (href) {
+        navigator.open(href);
+      }
+    }, [href]);
+
+    if (href) {
+      return (
+        <TouchableOpacity onPress={handlePress}>
+          <View style={boxStyle}>
+            <Text {...textProps}>{childText}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    return (
+      <View style={boxStyle}>
+        <Text {...textProps}>{childText}</Text>
+      </View>
+    );
+  }
 );

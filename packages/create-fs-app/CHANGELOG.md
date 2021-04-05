@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [11.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v11.0.0-alpha.1) (2021-01-25)
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/create-fs-app
 
@@ -11,27 +11,39 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+**Note:** Version bump only for package @brandingbrand/create-fs-app
 
 
 
-# [10.8.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.8.0-alpha.0) (2020-12-17)
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+**Note:** Version bump only for package @brandingbrand/create-fs-app
 
 
 
-# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
+
+**Note:** Version bump only for package @brandingbrand/create-fs-app
 
 
 
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+**Note:** Version bump only for package @brandingbrand/create-fs-app
 
 
 
-# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
 
 
-
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
 
 **Note:** Version bump only for package @brandingbrand/create-fs-app
 
