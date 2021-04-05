@@ -60,7 +60,8 @@ export const ModalProvider: FC = ({ children }) => {
                   id,
                   name: modal.definitionId,
                   options: {
-                    modal: modal.options
+                    modal: modal.options,
+                    topBar: modal.topBarOptions
                   },
                   passProps: {
                     resolve,
