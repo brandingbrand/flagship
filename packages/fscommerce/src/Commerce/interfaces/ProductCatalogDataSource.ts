@@ -5,6 +5,7 @@ import {
   ProductIndex,
   ProductQuery
 } from '../CommerceTypes';
+import { ProductPromotion } from '../types/ProductPromotion';
 
 /**
  * Methods to request product and/or category metadata from a data source.
@@ -34,4 +35,12 @@ export default interface ProductCatalogDataSource {
    * @returns {Promise.<Category>} A promise representing a category corresponding to id
    */
   fetchCategory(id?: string, query?: CategoryQuery): Promise<Category>;
+
+  /**
+   * Fetch information about a promotion
+   *
+   * @param {string} id - A promotion identifier to query
+   * @returns {Promise.<ProductPromotion>} A Promise representing a product's promotion metadata
+   */
+  fetchProductPromotion?(id: string): Promise<ProductPromotion>;
 }

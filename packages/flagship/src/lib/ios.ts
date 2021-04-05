@@ -68,13 +68,12 @@ export function targetedDevice(configuration: Config): void {
       Universal: `"1,2"`
     };
 
-    const productNameRx = new RegExp(`PRODUCT_NAME\\s*=\\s*${configuration.name}`, 'g');
+    const targetedDeviceRegex = new RegExp(`TARGETED_DEVICE_FAMILY = "1"`, 'g');
 
     fs.update(
       path.ios.pbxprojFilePath(configuration),
-      productNameRx,
-      `PRODUCT_NAME = ${configuration.name};
-        TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
+      targetedDeviceRegex,
+      `TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
     );
   }
 }
@@ -326,11 +325,14 @@ export function version(configuration: Config, newVersion: string): void {
   );
 }
 
+// tslint:disable:cyclomatic-complexity
 export function iosExtensions(configuration: Config, version: string): void {
   if (!configuration?.ios?.extensions) {
     return;
   }
   helpers.logInfo(`Adding iOS App Extensions`);
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+    || version;
   const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
   || versionLib.normalize(version);
   const extensions = configuration?.ios?.extensions;
@@ -416,7 +418,7 @@ export function iosExtensions(configuration: Config, version: string): void {
     fs.update(
       extPlistPath,
       /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
-      `<key>CFBundleShortVersionString</key>\n\t<string>${version}</string>`
+      `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
     );
     fs.update(
       extPlistPath,
@@ -491,33 +493,5 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
     envSwitcherPath,
     /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
     `@"${env}"; // [EnvSwitcher initialEnvName]`
-  );
-}
-
-/**
- * Patches RCTUIImageViewAnimated.m to fix displayLayer() to support iOS 14.
- *
- * @see https://github.com/facebook/react-native/issues/29268
- */
-export function patchRCTUIImageViewAnimated(): void {
-  helpers.logInfo(`patching RCTUIImageViewAnimated.m to support iOS 14`);
-
-  const rnImagePath = path.project.resolve(
-    'node_modules', 'react-native', 'Libraries', 'Image', 'RCTUIImageViewAnimated.m'
-  );
-
-  fs.update(
-    rnImagePath,
-    /\(void\)displayLayer[\s\S]+?(?=#pragma)/g,
-    `(void)displayLayer:(CALayer *)layer
-{
-  if (_currentFrame) {
-    layer.contentsScale = self.animatedImageScale;
-    layer.contents = (__bridge id)_currentFrame.CGImage;
-  }
-  [super displayLayer:layer];
-}
-
-`
   );
 }
