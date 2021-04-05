@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [11.0.0-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.14...v11.0.0-alpha.15) (2021-03-25)
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce
 
@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.13...v11.0.0-alpha.14) (2021-03-22)
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce
 
@@ -19,113 +19,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v11.0.0-alpha.13) (2021-03-19)
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
 
-**Note:** Version bump only for package @brandingbrand/fscommerce
 
+### Features
 
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
 
 
 
-# [11.0.0-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.11...v11.0.0-alpha.12) (2021-03-12)
 
-**Note:** Version bump only for package @brandingbrand/fscommerce
 
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
 
 
+### Bug Fixes
 
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
 
-# [11.0.0-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.10...v11.0.0-alpha.11) (2021-03-11)
 
-**Note:** Version bump only for package @brandingbrand/fscommerce
+### BREAKING CHANGES
 
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
 
 
 
 
-# [11.0.0-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v11.0.0-alpha.10) (2021-03-11)
 
-**Note:** Version bump only for package @brandingbrand/fscommerce
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
 
 
+### Features
 
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
 
 
-# [11.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.8...v11.0.0-alpha.9) (2021-02-25)
 
-**Note:** Version bump only for package @brandingbrand/fscommerce
 
 
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
 
 
+### Features
 
-# [11.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.7...v11.0.0-alpha.8) (2021-02-16)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.6...v11.0.0-alpha.7) (2021-02-16)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v11.0.0-alpha.6) (2021-02-16)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.4...v11.0.0-alpha.5) (2021-02-04)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.3...v11.0.0-alpha.4) (2021-02-02)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.2...v11.0.0-alpha.3) (2021-02-02)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.1...v11.0.0-alpha.2) (2021-01-27)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v11.0.0-alpha.1) (2021-01-25)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
-
-
-
-
-
-# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
-
-**Note:** Version bump only for package @brandingbrand/fscommerce
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
 
 
 

@@ -181,4 +181,13 @@ export default interface CartDataSource {
    * @returns {Promise.<Cart>} A Promise representing metadata about the updated cart
    */
   removePromo(promoItemId: string): Promise<Cart>;
+
+  /**
+   * Requests missing detailed info for the products in the cart
+   *
+   * @param {T} cartData - raw cart data from the datasource, may contain previously requested
+   *   detailed info for the products in the cart
+   * @returns {Promise.<Array.<Product>>} A Promise representing products with detailed info
+   */
+  mutateCartDataWithProductDetail?<T>(cartData: T): Promise<Product[]>;
 }

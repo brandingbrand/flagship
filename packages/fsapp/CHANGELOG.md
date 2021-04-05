@@ -3,35 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [11.0.0-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.14...v11.0.0-alpha.15) (2021-03-25)
-
-
-### Bug Fixes
-
-* make Tab nullable ([d8f503c](https://github.com/brandingbrand/flagship/commit/d8f503c3552fabd05d5faa9449fb41bf683b8593))
-* use tab id instead of title for tabAffinity ([1124d58](https://github.com/brandingbrand/flagship/commit/1124d588fc856f9ea919e5815c41526aa4df334b))
-
-
-
-
-
-# [11.0.0-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.13...v11.0.0-alpha.14) (2021-03-22)
-
-
-### Bug Fixes
-
-* update web interface ([3b33752](https://github.com/brandingbrand/flagship/commit/3b33752906427eccbe13677f68f0305aae41e714))
-
-
-### Features
-
-* allow custom nav bar styles on makeModal ([37b70e0](https://github.com/brandingbrand/flagship/commit/37b70e0f7b39cb62458ba2101b979fac1a6b735d))
-
-
-
-
-
-# [11.0.0-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v11.0.0-alpha.13) (2021-03-19)
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
 
@@ -39,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.11...v11.0.0-alpha.12) (2021-03-12)
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
 
@@ -47,19 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.10...v11.0.0-alpha.11) (2021-03-11)
-
-
-### Bug Fixes
-
-* add stack id to enable tab switching on native ([ddf0d61](https://github.com/brandingbrand/flagship/commit/ddf0d6122cf20d8035e63d34a8a7271db78c1b2b))
-* pass componentId into awaited component ([d5e0955](https://github.com/brandingbrand/flagship/commit/d5e0955eea92ff6cc3602cfc904fddb944a834f1))
-
-
-
-
-
-# [11.0.0-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v11.0.0-alpha.10) (2021-03-11)
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
 
@@ -67,46 +27,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.8...v11.0.0-alpha.9) (2021-02-25)
-
-
-### Features
-
-* **fsapp:** load components ([9a174b5](https://github.com/brandingbrand/flagship/commit/9a174b55d68f898ec7f880a14b607e63eac044f1))
-
-
-
-
-
-# [11.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.7...v11.0.0-alpha.8) (2021-02-16)
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
 
 
 ### Bug Fixes
 
-* root paths ([3cf7379](https://github.com/brandingbrand/flagship/commit/3cf7379111505cde16556833a560f66e02f5be16))
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
 
 
 
 
 
-# [11.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.6...v11.0.0-alpha.7) (2021-02-16)
-
-
-### Bug Fixes
-
-* **fsapp:** linking conflicts ([ae906ab](https://github.com/brandingbrand/flagship/commit/ae906abd83498d3bf2a5843abe2121452d7082c8))
-* **fsapp:** missing type definitions ([945672b](https://github.com/brandingbrand/flagship/commit/945672bdc7ce63d9ccfd9c776135de56d0c2ffd2))
-
-
-### Features
-
-* **fsapp:** transfer state on push ([0e58261](https://github.com/brandingbrand/flagship/commit/0e58261e5fcfda539fadddaea8a8e9aa0b2e3718))
-
-
-
-
-
-# [11.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v11.0.0-alpha.6) (2021-02-16)
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
 
@@ -114,116 +46,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [11.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.4...v11.0.0-alpha.5) (2021-02-04)
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
-
-
-
-
-
-# [11.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.3...v11.0.0-alpha.4) (2021-02-02)
-
-**Note:** Version bump only for package @brandingbrand/fsapp
-
-
-
-
-
-# [11.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.2...v11.0.0-alpha.3) (2021-02-02)
-
-
-### Bug Fixes
-
-* **fsapp:** build aliasing ([60b7a45](https://github.com/brandingbrand/flagship/commit/60b7a45de7b34309f83c4fa923c70a7c0281c524))
-
-
-### Features
-
-* **fsapp:** support top bar options ([84060ae](https://github.com/brandingbrand/flagship/commit/84060aeb6ed5e61eacf16e53f826b30590e3c77c))
-
-
-
-
-
-# [11.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.1...v11.0.0-alpha.2) (2021-01-27)
-
-
-### Bug Fixes
-
-* **fsapp:** core fixes and refacoring after debuging ([6e9af39](https://github.com/brandingbrand/flagship/commit/6e9af396f6ccb44a66d10772c8ac3f1909b6a8b3))
-* **fsapp:** remove dangling import ([665ab5e](https://github.com/brandingbrand/flagship/commit/665ab5e8664d043eace283cbe79576f3608397e9))
-
-
-### Features
-
-* **fsapp:** clean linked-app abstractions ([483f06b](https://github.com/brandingbrand/flagship/commit/483f06be768d2bcdbb1f2703d6042613df0f2c68))
-
-
-
-
-
-# [11.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v11.0.0-alpha.1) (2021-01-25)
-
-
-### Bug Fixes
-
-* **fsapp:** react-router dependency versioning ([7b9784c](https://github.com/brandingbrand/flagship/commit/7b9784cecffc4e667137afa1a9c88a5f65343b41))
-
-
-### Features
-
-* **fsapp:** linked app - screen wrappers ([6055abe](https://github.com/brandingbrand/flagship/commit/6055abe6be9715514d0a8e9420ed1e57b81b6eda))
-* **fsapp:** linked app base ([d93d7a0](https://github.com/brandingbrand/flagship/commit/d93d7a001b55c65ac8ce3b6de5861cfe13d4a3f2))
-
-
-
-
-
-# [11.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v11.0.0-alpha.0) (2021-01-13)
-
-
-### Bug Fixes
-
-* **fsapp:** fix typing for app router ([7d0549e](https://github.com/brandingbrand/flagship/commit/7d0549e41b55a48bb60f7079d43d5e0beffe4be6))
-* **fsapp:** remove temp type ([471cd29](https://github.com/brandingbrand/flagship/commit/471cd294014a48bcb0f4612141daa912206f6c00))
-* **fsapp:** update missing types ([49d990d](https://github.com/brandingbrand/flagship/commit/49d990d5ca5122ade1605780f80091ce30baf04f))
-
-
-
-# [10.8.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.8.0-alpha.0) (2020-12-17)
-
-
-
-# [10.6.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2020-12-10)
-
-
-
-# [10.6.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2020-12-10)
-
-
-### Features
-
-* add router ([5e48817](https://github.com/brandingbrand/flagship/commit/5e48817a0de2b701c0a74af1f446693473dbd6a3))
-* attach AppRouter to FSApp to set correct web router paths ([8ce521d](https://github.com/brandingbrand/flagship/commit/8ce521d7cd9d4d4acabd05a8a2fed05f8f16dd1c))
-
-
-
-# [10.6.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.6.0-alpha.0...v10.6.0-alpha.1) (2020-12-09)
-
-
-### Features
-
-* allow screens to have multiple routes ([41778cc](https://github.com/brandingbrand/flagship/commit/41778cce5db79489afce3d8972a2ee2937ed5684))
-
-
-
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
-
-
-### Features
-
-* register custom routes when using routerConfig ([d43370a](https://github.com/brandingbrand/flagship/commit/d43370a6b7e231524b819e92a46ddd24ab1c122a))
 
 
 

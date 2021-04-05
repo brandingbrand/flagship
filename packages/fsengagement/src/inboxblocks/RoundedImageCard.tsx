@@ -39,7 +39,10 @@ import {
   JSON
 } from '../types';
 import TextBlock from './TextBlock';
-import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import {
+  OptionsModalPresentationStyle
+// tslint:disable-next-line: no-submodule-imports
+} from 'react-native-navigation/lib/dist/interfaces/Options';
 const { width: viewportWidth } = Dimensions.get('window');
 
 export interface ImageProp {
@@ -124,7 +127,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
+    this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
     return this.props.navigator.showModal({
