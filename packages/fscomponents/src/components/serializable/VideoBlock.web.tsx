@@ -1,18 +1,10 @@
+import type { VideoBlockProps, VideoProgressStateWeb } from './VideoBlock.types';
+
 import React from 'react';
-import {
-  View
-} from 'react-native';
+import { View } from 'react-native';
 import ReactPlayer from 'react-player';
-import { VideoBlockProps } from './VideoBlock.native';
 
-export interface VideoProgressStateWeb {
-  played: number;
-  playedSeconds: number;
-  loaded: number;
-  loadedSeconds: number;
-}
-
-export const VideoBlock = React.memo((props: VideoBlockProps) => {
+export const VideoBlock = React.memo<VideoBlockProps>(props => {
   const { source, autoPlay, repeat, resizeMode, style, fullscreen, ...restProps } = props;
 
   const onProgress = (state: VideoProgressStateWeb) => {
@@ -22,9 +14,7 @@ export const VideoBlock = React.memo((props: VideoBlockProps) => {
   };
 
   return (
-    <View
-      style={style}
-    >
+    <View style={style}>
       <ReactPlayer
         url={source.uri}
         playing={autoPlay}
