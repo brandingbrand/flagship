@@ -72,7 +72,8 @@ export const resolveRoutes = async ({
               )
               .map(external => ({
                 ...external,
-                path: external.path?.replace(`${route.path}`, '').replace(/\/$/, '')
+                path: external.path?.replace(`${route.path}`, '')
+                  .replace(/\/$/, '').replace(/^\//, '')
               })),
           ...route.children
         ]
