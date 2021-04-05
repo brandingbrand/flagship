@@ -1,43 +1,42 @@
-// tslint:disable
 import React, { Component } from 'react';
 import {
   Dimensions,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  TextStyle,
   View,
   ViewStyle
 } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 import styles from '../carousel/index.style';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { CarouselProperties } from 'react-native-snap-carousel';
 
 const { width: viewportWidth } = Dimensions.get('window');
 const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
 let renderItemWidth: number = 0;
-let itemsArr: any = [];
 import { wp } from '../carousel/SliderEntry.style';
-import RenderDemoProduct from '../carousel/RenderDemoProduct';
+import RenderDemoProduct, { RenderDemoProductData } from '../carousel/RenderDemoProduct';
 
-import {
-  CardProps
-} from '../types';
-let navigator: any;
-export interface DemoProductCarouselBlockProps extends CardProps {
-  source: ImageURISource;
-  resizeMode?: any;
-  resizeMethod?: any;
-  items: any;
-  options: any;
-  ratio?: string;
-  useRatio?: boolean;
-  pageCounter?: boolean;
-  imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: any;
-  pageCounterStyle?: StyleProp<ViewStyle>;
-  pageNumberStyle?: StyleProp<TextStyle>;
+interface CarouselOptions extends Pick<CarouselProperties<any>,
+  'inactiveSlideScale' |
+  'inactiveSlideOpacity' |
+  'activeSlideAlignment'
+> {
+  itemWidthPercent: number;
+  itemHorizontalPaddingPercent: number;
+}
+
+interface NumberedHorizontalViewStyle extends ViewStyle {
+  marginLeft?: number;
+  marginRight?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
+}
+
+export interface DemoProductCarouselBlockProps {
+  items: RenderDemoProductData[];
+  options: CarouselOptions;
+  containerStyle?: NumberedHorizontalViewStyle;
+  navigator: Navigator;
 }
 
 export interface DemoProductCarouselBlockState {
@@ -57,37 +56,42 @@ export default class DemoProductCarouselBlock
     };
   }
 
-  componentDidMount(): void {
-    navigator = this.props.navigator;
-  }
-  _renderItem(data: any): JSX.Element {
-    return <RenderDemoProduct
-      data={data.item}
-      index={data.index}
-      navigator={navigator}
-      horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
-      itemWidth={renderItemWidth}
-      onPressOpenModal={true}
-      isDemoProduct={true}
-      products={itemsArr}
-      even={false}
-    />;
+  _renderItem = (data: {
+    item: RenderDemoProductData;
+    index: number;
+  }): JSX.Element => {
+    return (
+      <RenderDemoProduct
+        data={data.item}
+        index={data.index}
+        navigator={this.props.navigator}
+        horizPadding={wp(renderItemOptions.itemHorizontalPaddingPercent)}
+        itemWidth={renderItemWidth}
+        onPressOpenModal={true}
+        isDemoProduct={true}
+        products={this.props.items}
+        even={false}
+      />
+    );
   }
 
-  horizontalMarginPadding() {
+  horizontalMarginPadding(): number {
     const {
       containerStyle
     } = this.props;
-    const ml = containerStyle.marginLeft || 0;
-    const mr = containerStyle.marginRight || 0;
-    const pr = containerStyle.paddingRight || 0;
-    const pl = containerStyle.paddingLeft || 0;
-    return ml + mr + pr + pl;
+    if (containerStyle) {
+      const ml = containerStyle.marginLeft || 0;
+      const mr = containerStyle.marginRight || 0;
+      const pr = containerStyle.paddingRight || 0;
+      const pl = containerStyle.paddingLeft || 0;
+      return ml + mr + pr + pl;
+    }
+    return 0;
   }
-  calculateSliderWidth() {
+  calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth() {
+  calculateItemWidth(): number {
     const {
       options
     } = this.props;
@@ -95,6 +99,9 @@ export default class DemoProductCarouselBlock
     const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
     return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
   }
+
+  onSnapToItem = (index: number) => this.setState({ sliderActiveSlide: index + 1 });
+
   createCarousel(): JSX.Element {
     const {
       items,
@@ -116,16 +123,14 @@ export default class DemoProductCarouselBlock
         containerCustomStyle={styles.slider}
         contentContainerCustomStyle={styles.sliderContentContainer}
         activeAnimationType={'spring'}
-        onSnapToItem={(index) => this.setState({ sliderActiveSlide: index + 1 })}
+        onSnapToItem={this.onSnapToItem}
       />
     );
   }
   render(): JSX.Element {
     const {
-      containerStyle,
-      items
+      containerStyle
     } = this.props;
-    itemsArr = [...items];
     const carousel = this.createCarousel();
 
     return (
