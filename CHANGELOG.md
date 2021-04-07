@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+### Bug Fixes
+
+* fix external route paths ([c9d6231](https://github.com/brandingbrand/flagship/commit/c9d62319b4ab02cb166b2126b7b531b01f797b96))
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsengagement:** Adding stories for fsengagement ([e47f157](https://github.com/brandingbrand/flagship/commit/e47f15788167eb8bd67b1e68007b6d11276da40e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
 ## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 
