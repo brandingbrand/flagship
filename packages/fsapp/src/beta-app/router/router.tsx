@@ -4,6 +4,7 @@ import type {
   FSRouterConstructor,
   InternalRouterConfig,
   Route,
+  RouteCollection,
   RouterConfig,
   Routes
 } from './types';
@@ -51,7 +52,6 @@ export class FSRouter extends FSRouterBase {
 
   private registerRoutes(
     routes: Routes | ExternalRoutes,
-    prefix: string = '',
     tab?: string | OptionsBottomTab
   ): void {
     let routeDetails = defaultActivatedRoute;
@@ -60,8 +60,8 @@ export class FSRouter extends FSRouterBase {
     });
     const addedRoutes = new Set<string>();
 
-    routes.forEach((route: Route | ExternalRoute) => {
-      const { path, id } = buildPath(route, prefix);
+    routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
+      const { path, id } = buildPath(route);
       if (!addedRoutes.has(id)) {
         const LoadingPlaceholder = () => <>{this.options.loading}</>;
         if ('component' in route || 'loadComponent' in route) {
@@ -113,7 +113,6 @@ export class FSRouter extends FSRouterBase {
           const tabAffinity = 'tab' in route ? route.tab : tab;
           this.registerRoutes(
             route.children,
-            path,
             'tabAffinity' in route ? route.tabAffinity : tabAffinity
           );
         }

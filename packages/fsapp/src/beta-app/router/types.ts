@@ -109,9 +109,11 @@ export interface ParentRoute extends BaseRoute {
   readonly children: (Route & { tab?: never })[];
 }
 
-export interface TopLevelParentRoute extends ParentRoute {
-  readonly path: Exclude<string, ''>;
+// initial path required
+export interface RouteCollection {
+  readonly initialPath: Exclude<string, ''>;
   readonly tab: Tab;
+  readonly children: (Route & { tab?: never })[];
 }
 
 export interface RedirectRoute extends BaseRoute {
@@ -156,14 +158,13 @@ export type Route =
   | ComponentRoute
   | LazyComponentRoute
   | RedirectRoute
-  | ParentRoute
-  | TopLevelParentRoute;
+  | ParentRoute;
 
 /**
  * A list of routes
  * @see Route
  */
-export type Routes = readonly Route[];
+export type Routes = readonly (Route | RouteCollection)[];
 
 export type ExternalRoute = Route & { readonly tabAffinity?: string };
 export type ExternalRoutes = readonly ExternalRoute[];
