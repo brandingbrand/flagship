@@ -43,7 +43,7 @@ export type {
   MatchingRoute,
   Routes,
   Tab,
-  TopLevelParentRoute,
+  RouteCollection,
   TopBarStyle,
   ExternalRoute,
   ExternalRoutes,

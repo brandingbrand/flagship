@@ -18,7 +18,7 @@ export const resolveRoutes = async ({
     (await (typeof externalRoutesFactory === 'function'
       ? externalRoutesFactory(api)
       : externalRoutesFactory)) ?? [];
-
+  // tslint:disable-next-line: cyclomatic-complexity
   const findRoute = (
     search: ExternalRoute,
     children = routes,
@@ -28,7 +28,8 @@ export const resolveRoutes = async ({
     for (const child of children) {
       // Replace Variables
       const searchPath = search.path?.replace(/:\w+(?=\/)?/, ':') ?? '';
-      const childPath = child.path?.replace(/:\w+(?=\/)?/, ':') ?? '';
+      const childPath = ('initialPath' in child ? child.initialPath : child.path)
+        ?.replace(/:\w+(?=\/)?/, ':') ?? '';
       const prefixedPath = `${prefix}/${childPath}`;
 
       const tab = 'tab' in child ? child.tab : tabAffinity;
@@ -72,8 +73,7 @@ export const resolveRoutes = async ({
               )
               .map(external => ({
                 ...external,
-                path: external.path?.replace(`${route.path}`, '')
-                  .replace(/\/$/, '').replace(/^\//, '')
+                path: external.path?.replace(/\/$/, '').replace(/^\//, '')
               })),
           ...route.children
         ]

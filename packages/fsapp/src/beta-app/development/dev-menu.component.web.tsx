@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
+const extractDevRoutes = (routes?: Routes): string[] => {
   return (
     routes?.reduce<string[]>(
       (prev, route) => [
@@ -78,9 +78,9 @@ const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
         ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu) ||
         'children' in route
           ? [
-            `${prefix}/${route.path ?? ''}`,
+            'initialPath' in route ? `/${route.initialPath ?? ''}` : `/${route.path ?? ''}`,
             ...('children' in route
-                ? extractDevRoutes(route.children, `${prefix}/${route.path ?? ''}`)
+                ? extractDevRoutes(route.children)
                 : [])
           ]
           : [])
