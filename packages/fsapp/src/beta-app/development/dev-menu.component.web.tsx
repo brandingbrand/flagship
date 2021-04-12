@@ -78,9 +78,9 @@ const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
         ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu) ||
         'children' in route
           ? [
-            (('component' in route || 'loadComponent' in route) && route.quickDevMenu)
-              ? `${prefix}/${route.path ?? ''}`
-              : '',
+            ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu)
+              ? [`${prefix}/${route.path ?? ''}`]
+              : []),
             ...('children' in route
                 ? extractDevRoutes(
                     route.children,
@@ -91,7 +91,7 @@ const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
           : [])
       ],
       []
-    ).filter(path => path) ?? []
+    ) ?? []
   );
 };
 
