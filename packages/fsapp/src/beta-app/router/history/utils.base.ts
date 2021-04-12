@@ -66,14 +66,15 @@ const matchPath = (path: string | undefined, route: Route) => {
 
 const buildMatcher = async (
   route: Route,
-  tab?: Tab
+  tab?: Tab,
+  prefix = ''
 ): Promise<
   (readonly [
     (checkPath: string) => { params: RouteParams } | undefined,
     IndexedComponentRoute | RedirectRoute
   ])[]
 > => {
-  const { id, path } = buildPath(route);
+  const { id, path } = buildPath(route, prefix);
   const matchingRoute =
     'component' in route || 'loadComponent' in route
       ? ([
@@ -92,7 +93,7 @@ const buildMatcher = async (
   const children =
     !matchingRoute && !matchingRedirect
       ? await mapPromisedChildren(route, childRoute =>
-          buildMatcher(childRoute, tab)
+          buildMatcher(childRoute, tab, 'initialPath' in route ? '' : path)
         )
       : [];
 
