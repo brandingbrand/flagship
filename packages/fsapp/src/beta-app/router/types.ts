@@ -109,11 +109,16 @@ export interface ParentRoute extends BaseRoute {
   readonly children: (Route & { tab?: never })[];
 }
 
-// initial path required
+/**
+ * RouteCollection - tabbed collection of routes *
+ * @param {Exclude<string, ''>} initialPath Must match a child route
+ * @param {Tab} tab Tab used for tabAffinity
+ * @param {Route[]} children Child routes in collection
+ */
 export interface RouteCollection {
   readonly initialPath: Exclude<string, ''>;
   readonly tab: Tab;
-  readonly children: (Route & { tab?: never })[];
+  readonly children: Route[];
 }
 
 export interface RedirectRoute extends BaseRoute {

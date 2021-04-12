@@ -10,13 +10,18 @@ export const StaticImplements = <T extends any>() => <U extends T>(_constructor:
 
 export const isDefined = <T extends any>(value: T | undefined): value is T => value !== undefined;
 
-export const buildPath = (route: Route | RouteCollection) => {
-  const path = 'initialPath' in route
-    ? `/${route.initialPath?.replace(/^\//, '') ?? ''}`
-    : route.path !== undefined
-      ? `/${route.path?.replace(/^\//, '') ?? ''}`
-      : '/';
-  const id = path || `/undefined`;
+const routeCollectionPath = (route: Route | RouteCollection) => {
+  return 'initialPath' in route ? `/${route.initialPath?.replace(/^\//, '') ?? ''}` : undefined;
+};
+const pathFromRoute = (route: Route, prefix?: string) => {
+  return route.path !== undefined
+    ? `${prefix?.replace(/\/$/, '') ?? ''}/${route.path?.replace(/^\//, '') ?? ''}`
+    : prefix ?? '/';
+};
+
+export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
+  const path = routeCollectionPath(route) || pathFromRoute(route, prefix);
+  const id = path || `${prefix ?? ''}/undefined`;
   return { id, path };
 };
 

@@ -43,9 +43,10 @@ export class FSRouter extends FSRouterBase {
   private constructScreen = (
     route: Route,
     loading: boolean,
-    routeDetails: ActivatedRoute
+    routeDetails: ActivatedRoute,
+    prefix?: string
   ): JSX.Element | JSX.Element[] => {
-    const { id, path } = useMemo(() => buildPath(route), []);
+    const { id, path } = useMemo(() => buildPath(route, prefix), []);
 
     if ('loadComponent' in route || 'component' in route) {
       const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
@@ -100,7 +101,7 @@ export class FSRouter extends FSRouterBase {
       return <Redirect key={id} path={path} to={route.redirect} exact={route.exact} />;
     } else if ('children' in route) {
       return route.children
-        .map(child => this.constructScreen(child, loading, routeDetails))
+        .map(child => this.constructScreen(child, loading, routeDetails, path))
         .reduce<JSX.Element[]>(
           (prev, next) => [...prev, ...(Array.isArray(next) ? next : [next])],
           []
