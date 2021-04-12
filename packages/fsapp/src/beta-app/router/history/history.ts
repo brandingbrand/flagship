@@ -74,11 +74,10 @@ export class History implements FSRouterHistory {
 
   constructor(private readonly routes: Routes) {
     this.observeNavigation();
-
     const tabRoutes = this.routes.filter(isTabRoute);
     const universalRoutes = this.routes.filter(isNotTabRoute);
-    const stackMatchers = tabRoutes.map(({ children, tab, path }) =>
-      buildMatchers(children, tab, path ? `/${path}` : undefined)
+    const stackMatchers = tabRoutes.map(({ children, tab }) =>
+      buildMatchers(children, tab)
     );
 
     const promisedStacks = tabRoutes.map((route, i) => matchStack(route, stackMatchers[i]));

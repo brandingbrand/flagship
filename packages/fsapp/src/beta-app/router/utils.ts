@@ -5,6 +5,8 @@ import type {
   ExternalRoute,
   InternalRouterConfig,
   LazyComponentRoute,
+  Route,
+  RouteCollection,
   RouterConfig,
   Tab
 } from './types';
@@ -19,6 +21,10 @@ export const resolveRoutes = async ({
       ? externalRoutesFactory(api)
       : externalRoutesFactory)) ?? [];
 
+  const getChildPath = (route: Route | RouteCollection) => (
+    'initialPath' in route ? route.initialPath : route.path
+  );
+
   const findRoute = (
     search: ExternalRoute,
     children = routes,
@@ -28,7 +34,7 @@ export const resolveRoutes = async ({
     for (const child of children) {
       // Replace Variables
       const searchPath = search.path?.replace(/:\w+(?=\/)?/, ':') ?? '';
-      const childPath = child.path?.replace(/:\w+(?=\/)?/, ':') ?? '';
+      const childPath = getChildPath(child)?.replace(/:\w+(?=\/)?/, ':') ?? '';
       const prefixedPath = `${prefix}/${childPath}`;
 
       const tab = 'tab' in child ? child.tab : tabAffinity;
@@ -72,8 +78,7 @@ export const resolveRoutes = async ({
               )
               .map(external => ({
                 ...external,
-                path: external.path?.replace(`${route.path}`, '')
-                  .replace(/\/$/, '').replace(/^\//, '')
+                path: external.path?.replace(/\/$/, '').replace(/^\//, '')
               })),
           ...route.children
         ]
