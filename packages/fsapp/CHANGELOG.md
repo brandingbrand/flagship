@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+
+### Bug Fixes
+
+* refactor to support parent routes (764087a)
+* update dev-menu component (7d0deef)
+* update printed dev routes (6006436)
+* update printed dev routes (666cf7b)
+
+
+### Features
+
+* allow beta router to handle univeral links with need for prefix (70afa5b)
+
+
+
+
+
 # [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
 
 
