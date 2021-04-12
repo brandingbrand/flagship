@@ -106,7 +106,7 @@ export interface LazyComponentRoute extends Omit<ComponentRoute, 'component'> {
 }
 
 export interface ParentRoute extends BaseRoute {
-  readonly children: (Route & { tab?: never })[];
+  readonly children: Route[];
 }
 
 /**
