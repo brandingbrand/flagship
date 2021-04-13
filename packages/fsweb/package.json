@@ -60,7 +60,7 @@
     "webpack-dev-server": "^3.8.2",
     "webpack-hot-client": "^4.0.4",
     "webpack-manifest-plugin": "^2.0.2",
-    "workbox-webpack-plugin": "^4.3.1"
+    "workbox-webpack-plugin": "^6.1.5"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
