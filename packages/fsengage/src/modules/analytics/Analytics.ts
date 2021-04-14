@@ -104,7 +104,7 @@ export interface TransactionAction extends BaseEvent {
   coupons?: string[];
 }
 
-export interface Campaign extends BaseEvent {
+export interface Campaign {
   /**
    * Campaign id; used to identify particular campaign by an external identifier
    */
