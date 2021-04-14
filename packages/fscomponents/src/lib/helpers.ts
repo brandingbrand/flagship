@@ -141,7 +141,7 @@ export function animatedScrollTo(element: Element, target: number, duration: num
     return x * x * (3 - 2 * x);
   };
 
-  return new Promise(function(resolve, reject) {
+  return new Promise<void>(function(resolve, reject) {
     let previous_top = element.scrollLeft;
     let scroll_frame = function() {
       if (element.scrollLeft != previous_top) {
