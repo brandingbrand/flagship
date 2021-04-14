@@ -1,5 +1,6 @@
 import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
 import Decimal from 'decimal.js';
+import { Campaign } from '../Analytics';
 type BaseEvent = import ('../Analytics').BaseEvent;
 
 // Common Interface
@@ -190,7 +191,7 @@ export default abstract class AnalyticsProvider {
     });
   }
 
-  abstract async asyncInit(): Promise<void>;
+  abstract asyncInit(): Promise<void>;
 
   // Commerce Functions
 
@@ -239,4 +240,8 @@ export default abstract class AnalyticsProvider {
   // App Lifecycle Function
 
   abstract lifecycle(properties: App): void;
+
+  setTrafficSource(properties: Campaign): void {
+    // no-op
+  }
 }
