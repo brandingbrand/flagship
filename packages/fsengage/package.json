@@ -16,7 +16,7 @@
     "@brandingbrand/fsfoundation": "^11.0.0-alpha.17",
     "@brandingbrand/fsnetwork": "^11.0.0-alpha.17",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
-    "@brandingbrand/react-native-google-analytics": "^2.1.0",
+    "@brandingbrand/react-native-google-analytics": "^2.2.0",
     "@brandingbrand/react-native-leanplum": "^5.0.0",
     "decimal.js": "^10.0.0",
     "react": "^16.13.1",
