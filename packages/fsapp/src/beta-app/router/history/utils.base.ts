@@ -75,7 +75,6 @@ const buildMatcher = async (
   ])[]
 > => {
   const { id, path } = buildPath(route, prefix);
-
   const matchingRoute =
     'component' in route || 'loadComponent' in route
       ? ([
@@ -94,7 +93,7 @@ const buildMatcher = async (
   const children =
     !matchingRoute && !matchingRedirect
       ? await mapPromisedChildren(route, childRoute =>
-          buildMatcher(childRoute, 'tab' in route ? route.tab ?? tab : tab, path)
+          buildMatcher(childRoute, tab, 'initialPath' in route ? '' : path)
         )
       : [];
 
@@ -107,12 +106,11 @@ const buildMatcher = async (
 
 export const buildMatchers = async (
   routes: Routes,
-  tab?: Tab,
-  prefix?: string
+  tab?: Tab
 ) => {
   try {
     return routes
-      .map(route => buildMatcher(route, tab, prefix))
+      .map(route => buildMatcher(route, 'tab' in route ? route.tab : tab))
       .reduce(async (prev, next) => [...(await prev), ...(await next)], Promise.resolve([]));
   } catch (e) {
     return [];
