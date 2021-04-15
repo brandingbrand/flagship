@@ -39,17 +39,21 @@ export default interface Pageable {
 
   /**
    * An identifier used to divide the list into items that fall before or after the
-   * current result. Used for cursor-based pagination (as opposed to offset-based pagination).
+   * current result list. Will usually be the first result's cursor.
    *
-   *  @example eyJsYXN0X2lkIjoxMDA3OTc5NTc4OCwibGFzdF92YWx1ZSI6IjEwMDc5Nzk1Nzg4In0=
+   * Used for cursor-based pagination (as opposed to offset-based pagination).
+   *
+   *  @example eyJsYXN0X2lkIjoxMDA3OTc4ODg3NiwibGFzdF92YWx1ZSI6IjEwMDc5Nzg4ODc2In0=
    */
   prevCursor?: string;
 
   /**
    * An identifier used to divide the list into items that fall before or after the
-   * current result. Used for cursor-based pagination (as opposed to offset-based pagination).
+   * current result list. Will usually be the last result's cursor.
    *
-   *  @example eyJsYXN0X2lkIjoxMDA3OTc5NTc4OCwibGFzdF92YWx1ZSI6IjEwMDc5Nzk1Nzg4In0=
+   * Used for cursor-based pagination (as opposed to offset-based pagination).
+   *
+   *  @example eyJsYXN0X2lkIjoxMDA3OTc4ODg3NiwibGFzdF92YWx1ZSI6IjEwMDc5Nzg4ODc2In0=
    */
   nextCursor?: string;
 }
