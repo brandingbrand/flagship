@@ -21,4 +21,35 @@ export default interface Pageable {
    */
   minPage?: number;
 
+  /**
+   * A boolean value representing if a list of products has additional results before the
+   * current page or cursor.
+   *
+   * @example true
+   */
+  hasPrevPage?: boolean;
+
+  /**
+   * A boolean value representing if a list of products has additional results beyond the
+   * current page or cursor.
+   *
+   * @example true
+   */
+  hasNextPage?: boolean;
+
+  /**
+   * An identifier used to divide the list into items that fall before or after the
+   * current result. Used for cursor-based pagination (as opposed to offset-based pagination).
+   *
+   *  @example eyJsYXN0X2lkIjoxMDA3OTc5NTc4OCwibGFzdF92YWx1ZSI6IjEwMDc5Nzk1Nzg4In0=
+   */
+  prevCursor?: string;
+
+  /**
+   * An identifier used to divide the list into items that fall before or after the
+   * current result. Used for cursor-based pagination (as opposed to offset-based pagination).
+   *
+   *  @example eyJsYXN0X2lkIjoxMDA3OTc5NTc4OCwibGFzdF92YWx1ZSI6IjEwMDc5Nzk1Nzg4In0=
+   */
+  nextCursor?: string;
 }
