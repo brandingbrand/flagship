@@ -3,6 +3,7 @@ import type { Analytics } from '@brandingbrand/fsengage';
 import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type {
   OptionsBottomTab,
+  OptionsStatusBar,
   OptionsTopBar,
   OptionsTopBarButton,
   OptionsTopBarTitle
@@ -84,6 +85,7 @@ export interface ComponentRoute extends BaseRoute {
 
   readonly title?: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
   readonly topBarStyle?: TopBarStyle;
+  readonly statusBarStyle?: OptionsStatusBar;
 
   // Used to pass in static data
   readonly data?: RouteData;
@@ -119,6 +121,8 @@ export interface RouteCollection {
   readonly initialPath: Exclude<string, ''>;
   readonly tab: Tab;
   readonly children: Route[];
+  readonly topBarStyle?: TopBarStyle;
+  readonly statusBarStyle?: OptionsStatusBar;
 }
 
 export interface RedirectRoute extends BaseRoute {
