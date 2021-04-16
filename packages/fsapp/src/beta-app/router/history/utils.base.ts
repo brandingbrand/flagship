@@ -167,13 +167,14 @@ export const matchRoute = async (
     if (matched && 'redirect' in route) {
       return matchRoute(matchers, `/${route.redirect}`);
     }
-    const topBarStyle = routeCollection && 'initialPath' in routeCollection ? {
-      topBarStyle: { ...routeCollection.topBarStyle }
+    const navBarStyle = routeCollection && 'initialPath' in routeCollection ? {
+      topBarStyle: { ...routeCollection?.topBarStyle },
+      statusBarStyle: { ...routeCollection?.statusBarStyle }
     } : {};
     if (matched && 'id' in route) {
       return {
         ...route,
-        ...topBarStyle,
+        ...navBarStyle,
         params: matched.params,
         query: parse(search.substr(1)),
         matchedPath: path
