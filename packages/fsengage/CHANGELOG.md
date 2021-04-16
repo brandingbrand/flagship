@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+
+### Bug Fixes
+
+* **fsengage:** FS-2222 limit type for traffic source data ([5c376f6](https://github.com/brandingbrand/flagship/commit/5c376f672929c7a930206f0f7f10a3180318d98f))
+
+
+### Features
+
+* **fsengage:** FS-2222 add ability to set traffic attribution data ([762677f](https://github.com/brandingbrand/flagship/commit/762677f47e815b1f5b1ca9fb2809191a1249599f))
+* **fsengage:** FS-2222 bump react-native-google-analytics version ([fc882b7](https://github.com/brandingbrand/flagship/commit/fc882b7519c28ff24064d01b80c7ba1117d6e832))
+
+
+
+
+
 # [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
 
 **Note:** Version bump only for package @brandingbrand/fsengage
