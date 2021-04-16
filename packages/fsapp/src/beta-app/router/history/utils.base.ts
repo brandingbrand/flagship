@@ -3,10 +3,12 @@ import type {
   ActivatedRoute,
   IndexedComponentRoute,
   MatchingRoute,
+  ParentRoute,
   RedirectRoute,
   ResolverConstructor,
   ResolverFunction,
   Route,
+  RouteCollection,
   RouteData,
   RouteParams,
   Routes,
@@ -156,7 +158,8 @@ export const resolveRoute = (route: MatchingRoute): RouteData => {
 
 export const matchRoute = async (
   matchers: Matchers,
-  path: string
+  path: string,
+  routeCollection?: RouteCollection | ParentRoute
 ): Promise<MatchingRoute | undefined> => {
   const { search } = parsePath(path);
   for (const [matcher, route] of await matchers) {
@@ -164,10 +167,13 @@ export const matchRoute = async (
     if (matched && 'redirect' in route) {
       return matchRoute(matchers, `/${route.redirect}`);
     }
-
+    const topBarStyle = routeCollection && 'initialPath' in routeCollection ? {
+      topBarStyle: { ...routeCollection.topBarStyle }
+    } : {};
     if (matched && 'id' in route) {
       return {
         ...route,
+        ...topBarStyle,
         params: matched.params,
         query: parse(search.substr(1)),
         matchedPath: path

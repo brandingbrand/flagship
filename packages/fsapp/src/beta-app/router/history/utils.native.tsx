@@ -32,7 +32,16 @@ export const createStack = ([route, title]: readonly [
           component: {
             name: route.id,
             id: route.matchedPath,
-            options: { topBar: { title: { text: title ?? route.tabAffinity } } }
+            options: {
+              statusBar: { ...route?.statusBarStyle },
+              topBar: {
+                ...route?.topBarStyle,
+                title: {
+                  ...route?.topBarStyle?.title,
+                  text: title ?? route.tabAffinity
+                }
+              }
+            }
           }
         }
       ]
@@ -71,7 +80,8 @@ export const applyMatcher = async (matchers: Matchers, route: RouteCollection | 
       matchers,
       'initialPath' in route
         ? `/${route.initialPath}`
-        : route.path ? `/${route.path}` : '/');
+        : route.path ? `/${route.path}` : '/',
+      route);
   if (component) {
     const title =
       typeof component.title === 'function'
