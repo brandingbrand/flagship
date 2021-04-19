@@ -3,10 +3,12 @@ import type {
   ActivatedRoute,
   IndexedComponentRoute,
   MatchingRoute,
+  ParentRoute,
   RedirectRoute,
   ResolverConstructor,
   ResolverFunction,
   Route,
+  RouteCollection,
   RouteData,
   RouteParams,
   Routes,
@@ -75,7 +77,6 @@ const buildMatcher = async (
   ])[]
 > => {
   const { id, path } = buildPath(route, prefix);
-
   const matchingRoute =
     'component' in route || 'loadComponent' in route
       ? ([
@@ -94,7 +95,7 @@ const buildMatcher = async (
   const children =
     !matchingRoute && !matchingRedirect
       ? await mapPromisedChildren(route, childRoute =>
-          buildMatcher(childRoute, 'tab' in route ? route.tab ?? tab : tab, path)
+          buildMatcher(childRoute, tab, 'initialPath' in route ? '' : path)
         )
       : [];
 
@@ -107,12 +108,11 @@ const buildMatcher = async (
 
 export const buildMatchers = async (
   routes: Routes,
-  tab?: Tab,
-  prefix?: string
+  tab?: Tab
 ) => {
   try {
     return routes
-      .map(route => buildMatcher(route, tab, prefix))
+      .map(route => buildMatcher(route, 'tab' in route ? route.tab : tab))
       .reduce(async (prev, next) => [...(await prev), ...(await next)], Promise.resolve([]));
   } catch (e) {
     return [];
@@ -158,7 +158,8 @@ export const resolveRoute = (route: MatchingRoute): RouteData => {
 
 export const matchRoute = async (
   matchers: Matchers,
-  path: string
+  path: string,
+  routeCollection?: RouteCollection | ParentRoute
 ): Promise<MatchingRoute | undefined> => {
   const { search } = parsePath(path);
   for (const [matcher, route] of await matchers) {
@@ -166,10 +167,13 @@ export const matchRoute = async (
     if (matched && 'redirect' in route) {
       return matchRoute(matchers, `/${route.redirect}`);
     }
-
+    const topBarStyle = routeCollection && 'initialPath' in routeCollection ? {
+      topBarStyle: { ...routeCollection.topBarStyle }
+    } : {};
     if (matched && 'id' in route) {
       return {
         ...route,
+        ...topBarStyle,
         params: matched.params,
         query: parse(search.substr(1)),
         matchedPath: path

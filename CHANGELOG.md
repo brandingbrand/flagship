@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+
+### Bug Fixes
+
+* **fsengage:** FS-2222 limit type for traffic source data ([5c376f6](https://github.com/brandingbrand/flagship/commit/5c376f672929c7a930206f0f7f10a3180318d98f))
+
+
+### Features
+
+* **fscomponents:** Serializable Cateogry Line ([106c239](https://github.com/brandingbrand/flagship/commit/106c2390f7274eb601f6ede642b625cf9869614c))
+* **fsengage:** FS-2222 add ability to set traffic attribution data ([762677f](https://github.com/brandingbrand/flagship/commit/762677f47e815b1f5b1ca9fb2809191a1249599f))
+* **fsengage:** FS-2222 bump react-native-google-analytics version ([fc882b7](https://github.com/brandingbrand/flagship/commit/fc882b7519c28ff24064d01b80c7ba1117d6e832))
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+
+### Bug Fixes
+
+* refactor to support parent routes ([764087a](https://github.com/brandingbrand/flagship/commit/764087aa8ecccacf5e9547b30382237d043bc935))
+* update dev-menu component ([7d0deef](https://github.com/brandingbrand/flagship/commit/7d0deefb4f8a7c994f4d0b63515b64ff2bf1bd6b))
+* update printed dev routes ([6006436](https://github.com/brandingbrand/flagship/commit/60064363e76af50f012a96cd7abe7e89df07e746))
+* update printed dev routes ([666cf7b](https://github.com/brandingbrand/flagship/commit/666cf7bf76b9a3a62d6596a6cc528151067f3c1f))
+
+
+### Features
+
+* allow beta router to handle univeral links with need for prefix ([70afa5b](https://github.com/brandingbrand/flagship/commit/70afa5b08b563092ebf755d32fe2b71a54641c88))
+
+
+
+
+
 # [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
 
 
