@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
 # [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
 
 
