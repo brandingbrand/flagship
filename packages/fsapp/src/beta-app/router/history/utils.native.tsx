@@ -80,8 +80,8 @@ export const applyMatcher = async (matchers: Matchers, route: RouteCollection | 
       matchers,
       'initialPath' in route
         ? `/${route.initialPath}`
-        : route.path ? `/${route.path}` : '/',
-      route);
+        : route.path ? `/${route.path}` : '/'
+      );
   if (component) {
     const title =
       typeof component.title === 'function'
