@@ -116,7 +116,7 @@ export class FSRouter extends FSRouterBase {
     const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(defaultActivatedRoute);
 
     const stopListening = useMemo(() => {
-      const stopDetailsListening = this.history.registerResolver(setRouteDetails);
+      const stopDetailsListening = this.history.registerResolver('all', setRouteDetails);
       const stopLoadingListening = this.history.observeLoading(setLoading);
 
       return () => {
