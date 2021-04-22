@@ -55,10 +55,6 @@ export class FSRouter extends FSRouterBase {
     prefix: string = '',
     tab?: string | OptionsBottomTab
   ): void {
-    let routeDetails = defaultActivatedRoute;
-    this.history.registerResolver(details => {
-      routeDetails = details;
-    });
     const addedRoutes = new Set<string>();
 
     routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
@@ -67,6 +63,10 @@ export class FSRouter extends FSRouterBase {
       if (!addedRoutes.has(id)) {
         const LoadingPlaceholder = () => <>{this.options.loading}</>;
         if ('component' in route || 'loadComponent' in route) {
+          let routeDetails = defaultActivatedRoute;
+          this.history.registerResolver(id, details => {
+            routeDetails = details;
+          });
           const LazyComponent = lazyComponent<{ componentId: string }>(
             async () => {
               const AwaitedComponent =
