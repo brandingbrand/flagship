@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* allow native to have multiple tabs with same screen (b9e45d3)
+* apply status bar styles to Route Collection (8e942db)
+* correctly apply nav/status styles (f53e3e9)
+
+
+
+
+
 # [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
 
 
