@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* allow native to have multiple tabs with same screen ([b9e45d3](https://github.com/brandingbrand/flagship/commit/b9e45d3bfd2b87e8c6fac4978b487b354eba1ffe))
+* apply status bar styles to Route Collection ([8e942db](https://github.com/brandingbrand/flagship/commit/8e942db136b8d4716f7ffe909c244eba0ca1899b))
+* correctly apply nav/status styles ([f53e3e9](https://github.com/brandingbrand/flagship/commit/f53e3e9142b26c599526a32d321cf89aed648cd3))
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+
+### Bug Fixes
+
+* **fsengage:** FS-2222 limit type for traffic source data ([5c376f6](https://github.com/brandingbrand/flagship/commit/5c376f672929c7a930206f0f7f10a3180318d98f))
+
+
+### Features
+
+* **fscomponents:** Serializable Cateogry Line ([106c239](https://github.com/brandingbrand/flagship/commit/106c2390f7274eb601f6ede642b625cf9869614c))
+* **fsengage:** FS-2222 add ability to set traffic attribution data ([762677f](https://github.com/brandingbrand/flagship/commit/762677f47e815b1f5b1ca9fb2809191a1249599f))
+* **fsengage:** FS-2222 bump react-native-google-analytics version ([fc882b7](https://github.com/brandingbrand/flagship/commit/fc882b7519c28ff24064d01b80c7ba1117d6e832))
+
+
+
+
+
 # [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
 
 

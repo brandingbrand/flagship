@@ -28,6 +28,7 @@ import AnalyticsProvider, {
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
+import { Campaign } from '../../Analytics';
 
 export interface GoogleAnalyticsProviderConfiguration {
   trackerId: string | Promise<string>;
@@ -389,6 +390,25 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       category: properties.eventAction,
       label: properties.lifecycle
     }, extraData);
+  }
+
+  setTrafficSource(properties: Campaign): void {
+    if (this.client) {
+      this.client.set(new GAHits.TrafficSource({
+        utm_id: properties.id,
+        utm_source: properties.source,
+        utm_medium: properties.medium,
+        utm_campaign: properties.campaign,
+        utm_term: properties.term,
+        utm_content: properties.content
+      }));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.setTrafficSource,
+        params: arguments
+      });
+    }
   }
 
   // Trigger Functions

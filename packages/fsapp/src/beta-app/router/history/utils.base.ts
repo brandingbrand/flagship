@@ -164,7 +164,6 @@ export const matchRoute = async (
     if (matched && 'redirect' in route) {
       return matchRoute(matchers, `/${route.redirect}`);
     }
-
     if (matched && 'id' in route) {
       return {
         ...route,
