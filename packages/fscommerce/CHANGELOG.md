@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+
+### Features
+
+* FS-2185 add support for cursor-based pagination ([94d946a](https://github.com/brandingbrand/flagship/commit/94d946aae6888adf016a1fedcf448591fa03b3f2))
+
+
+
+
+
 # [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce
