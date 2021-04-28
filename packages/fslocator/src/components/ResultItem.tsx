@@ -3,12 +3,13 @@ import { getDistance } from '../lib/helpers';
 
 import { LocationItem, LocationItemProps } from '@brandingbrand/fscomponents';
 import { DistanceUnit } from '@brandingbrand/fsfoundation';
-import { Location } from '../types/Location';
+import { Location, Region } from '../types/Location';
+import { LocationItemData } from './LocatorContainer';
 
 export interface PropType {
   location: Location;
   locationItemProps?: LocationItemProps;
-  currentLocation?: any;
+  currentLocation?: Region;
   index?: number;
   handleNavPress: (
     location: Location,
@@ -17,8 +18,8 @@ export interface PropType {
   ) => () => void;
   handlePhonePress: (phone: string, locationId?: number, index?: number) => () => void;
   selectLocation: (location: Location) => void;
-  renderLocationItem?: (data: any) => JSX.Element;
-  selected?: boolean;
+  renderLocationItem?: (data: LocationItemData) => JSX.Element;
+  deselectLocation: () => void;
 }
 
 export default class ResultItem extends Component<PropType> {
@@ -32,7 +33,7 @@ export default class ResultItem extends Component<PropType> {
       handlePhonePress,
       selectLocation,
       renderLocationItem,
-      selected
+      deselectLocation
     } = this.props;
 
     // render custom location if provided
@@ -40,10 +41,10 @@ export default class ResultItem extends Component<PropType> {
       return renderLocationItem({
         location,
         index,
+        handlePhonePress,
         selectLocation,
         handleNavPress,
-        handlePhonePress,
-        selected
+        deselectLocation
       });
     }
 

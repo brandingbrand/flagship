@@ -5,8 +5,8 @@ export interface StateType {
   scale: Animated.Value;
 }
 
-export default class CurrentLocationPin extends Component<any, StateType> {
-  constructor(props: any) {
+export default class CurrentLocationPin extends Component<{}, StateType> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       scale: new Animated.Value(1)

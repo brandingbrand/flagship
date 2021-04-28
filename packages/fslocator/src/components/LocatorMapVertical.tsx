@@ -28,7 +28,7 @@ export default class Locator extends Component<
   LocatorPropType,
   LocatorStateType
 > {
-  map: any;
+  map: MapView | null = null;
 
   constructor(props: LocatorPropType) {
     super(props);
@@ -38,7 +38,7 @@ export default class Locator extends Component<
     };
   }
 
-  extractMapRef = (map: any) => (this.map = map);
+  extractMapRef = (map: MapView) => (this.map = map);
 
   onLayout = (e: LayoutChangeEvent): void => {
     const { width, height } = e.nativeEvent.layout;

@@ -67,12 +67,12 @@ export default class ResultItemWithBack extends Component<PropType> {
         <View style={S.itemContainer}>
           <ResultItem
             location={selectedLocation}
-            selected={true}
             handleNavPress={handleNavPress}
             handlePhonePress={handlePhonePress}
             locationItemProps={locationItemProps}
             selectLocation={selectLocation}
             renderLocationItem={renderLocationItem}
+            deselectLocation={deselectLocation}
           />
         </View>
       </View>

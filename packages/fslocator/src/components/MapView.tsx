@@ -26,13 +26,13 @@ export interface PropType {
   onMakerPress?: (location: Location) => void;
   currentLocation?: GeoLocation;
   defaultRegion?: Region;
-  handleRegionChange?: (e: Region) => void;
-  handleRegionChangeComplete?: (e: Region) => void;
+  handleRegionChange?: (region: Region) => void;
+  handleRegionChangeComplete?: (region: Region) => void;
   mapMarkerIcon?: ImageURISource;
 }
 
 export default class MapViewNative extends Component<PropType> {
-  map: any;
+  map: MapView | null = null;
 
   componentDidMount(): void {
     this.moveToLocation(
@@ -78,14 +78,12 @@ export default class MapViewNative extends Component<PropType> {
       delta.latitudeDelta += COLLAPSE_LAT_DELTA_PADDING;
       delta.longitudeDelta += COLLAPSE_LNG_DELTA_PADDING;
     }
-    const region = locations.length
-      ? {
-        ...center,
-        ...delta
-      }
-      : null;
+    const region = {
+      ...center,
+      ...delta
+    };
 
-    this.map.animateToRegion(region);
+    this.map?.animateToRegion(region);
   }
 
   handleMarkerPress = (location: Location) => () => {

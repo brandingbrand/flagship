@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const S = StyleSheet.create({
@@ -18,7 +18,7 @@ const S = StyleSheet.create({
 
 export interface PropType {
   searchArea: () => void;
-  style: any;
+  style: StyleProp<ViewStyle>;
 }
 
 export default class SeachAreaButton extends Component<PropType> {
