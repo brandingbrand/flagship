@@ -51,25 +51,25 @@ JSX.Element {
   );
 }
 
-export function maskedInputAboveLabelTemplate(locals: any): React.ReactNode {
+export function maskedInputAboveLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelAboveFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderMaskedInput(locals, textboxStyle, color);
   });
 }
 
-export function maskedInputFloatingLabelTemplate(locals: any): React.ReactNode {
+export function maskedInputFloatingLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelFloatingFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderMaskedInput(locals, textboxStyle, color);
   });
 }
 
-export function maskedInputHiddenLabelTemplate(locals: any): React.ReactNode {
+export function maskedInputHiddenLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelHiddenFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderMaskedInput(locals, textboxStyle, color);
   });
 }
 
-export function maskedInputInlineLabelTemplate(locals: any): React.ReactNode {
+export function maskedInputInlineLabelTemplate(locals: Dictionary): React.ReactNode {
   return labelInlineFieldTemplate(locals, (locals, textboxStyle, color) => {
     return renderMaskedInput(locals, textboxStyle, color);
   });
