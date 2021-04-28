@@ -267,9 +267,9 @@ export default class I18nHelper {
    */
   protected isTranslationKey(
     translationKey: any
-  ): translationKey is TranslationKey {
+  ): boolean {
     const isString = typeof translationKey === 'string';
-    const hasPluralizationKeys = translationKey && typeof translationKey === 'object' && (
+    const hasPluralizationKeys = !!translationKey && typeof translationKey === 'object' && (
       typeof translationKey.zero === 'string' ||
       typeof translationKey.one === 'string' ||
       typeof translationKey.other === 'string'
