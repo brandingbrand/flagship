@@ -13,9 +13,8 @@ import { CMSProviderProps, withCMSProvider } from './CMSProvider';
 import { CMSBanner, CMSBannerProps } from './CMSBanner';
 
 export interface CMSBannerStackedProps extends CMSBannerProps, CMSProviderProps {
-  carouselProps?: any;
   accessible?: boolean;
-  getAccessibilityLabel?: (instance: any) => string;
+  getAccessibilityLabel?: <T>(instance: T) => string;
 }
 
 class CMSBannerStacked extends CMSBanner<CMSBannerStackedProps> {
