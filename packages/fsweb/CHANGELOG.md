@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+
+### Bug Fixes
+
+* **fsweb:** deliver react bundle on all fall-through requests (126d012)
+
+
+
+
+
 # [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
 
 **Note:** Version bump only for package @brandingbrand/fsweb
