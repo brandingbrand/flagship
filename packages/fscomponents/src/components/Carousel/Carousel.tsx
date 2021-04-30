@@ -3,10 +3,12 @@ import Swiper from 'react-native-swiper';
 import { CarouselProps } from './CarouselProps';
 
 export class Carousel extends Component<CarouselProps> {
-  swiper: any;
+  swiper: Swiper | null = null;
 
   scrollBy = (index: number, animated?: boolean) => {
-    this.swiper.scrollBy(index, animated);
+    if (this.swiper !== null) {
+      this.swiper.scrollBy(index, animated);
+    }
   }
 
   render(): JSX.Element {

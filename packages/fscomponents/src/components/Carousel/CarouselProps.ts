@@ -1,11 +1,15 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import Swiper from 'react-native-swiper';
+
+type SwiperProps = Swiper['props'];
 
 // TODO: Unify these web/native options and clean up these types ...a lot
 export interface SerializableCarouselProps {
   currentPageIndicatorColor?: string;
   height?: number;
   loop?: boolean;
+  nativeOptions?: SwiperProps;
   pageIndicatorColor?: string;
   paginationMarginBottom?: number;
   showsPagination?: boolean;
