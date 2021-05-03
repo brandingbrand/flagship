@@ -20,7 +20,7 @@
     "react-native": "^0.63.2",
     "replace-in-file": "^5.0.2",
     "xcode": "^3.0.0",
-    "yargs": "^15.0.1"
+    "yargs": "^17.0.0"
   },
   "devDependencies": {
     "@brandingbrand/fsengage": "^11.0.0-alpha.22",
