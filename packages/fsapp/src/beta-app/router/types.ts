@@ -175,7 +175,10 @@ export type Route =
  */
 export type Routes = readonly (Route | RouteCollection)[];
 
-export type ExternalRoute = Route & { readonly tabAffinity?: string };
+export type ExternalRoute = Route & {
+  readonly tabAffinity?: string;
+  readonly statusBarStyle?: OptionsStatusBar;
+};
 export type ExternalRoutes = readonly ExternalRoute[];
 
 /**
