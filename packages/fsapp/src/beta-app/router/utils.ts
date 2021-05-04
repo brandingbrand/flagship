@@ -24,7 +24,9 @@ export const resolveRoutes = async ({
   const getChildPath = (route: Route | RouteCollection) => (
     'initialPath' in route ? route.initialPath : route.path
   );
-
+  const getPrefixedPath = (route: Route | RouteCollection, prefixedPath: string) => (
+    'initialPath' in route ? '' : prefixedPath
+  );
   const findRoute = (
     search: ExternalRoute,
     children = routes,
@@ -48,7 +50,7 @@ export const resolveRoutes = async ({
       }
 
       if ('children' in child) {
-        const found = findRoute(search, child.children, prefixedPath, tab);
+        const found = findRoute(search, child.children, getPrefixedPath(child, prefixedPath), tab);
         if (found) {
           return tab;
         }
