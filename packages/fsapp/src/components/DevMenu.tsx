@@ -184,9 +184,10 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   renderStorageManager = () => {
+    const sInfoKeys = this.props.appConfig.env?.sInfoKeys || {};
     return (
       <View style={styles.devViewcontainer}>
-        <StorageManager />
+        <StorageManager sInfoKeys={sInfoKeys} />
       </View>
     );
   }
