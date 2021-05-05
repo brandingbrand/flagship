@@ -28,17 +28,24 @@ const styles = StyleSheet.create({
 // @ts-ignore no type definition file
 import * as CookieManager from 'react-native-cookies';
 // @ts-ignore no type definition file
-import SInfo, { SensitiveInfoEntry } from 'react-native-sensitive-info';
+import SInfo, { RNSensitiveInfoOptions, SensitiveInfoEntry } from 'react-native-sensitive-info';
 import TouchableRow from './TouchableRow';
 
 export interface CookieMangerState {
   data: string | null;
 }
 
-export default class CookieManger extends Component<{}, CookieMangerState> {
-  state: CookieMangerState = {
-    data: null
-  };
+export interface CookieMangerProps {
+  sInfoKeys: RNSensitiveInfoOptions;
+}
+
+export default class CookieManger extends Component<CookieMangerProps, CookieMangerState> {
+  constructor(props: CookieMangerProps) {
+    super(props);
+    this.state = {
+      data: null
+    };
+  }
 
   showData = (data: string) => {
     this.setState({ data });
@@ -119,7 +126,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   clearSensitiveInfo = () => {
-    SInfo.getAllItems({})
+    SInfo.getAllItems(this.props.sInfoKeys)
       .then((values: [SensitiveInfoEntry[]]) => {
         if (!values || !values[0]) {
           return alert('Nothing to be cleared.');
@@ -127,7 +134,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
 
         const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
-        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, {})))
+        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, this.props.sInfoKeys)))
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
