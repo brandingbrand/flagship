@@ -211,5 +211,5 @@ export interface Product extends BaseProduct {
    *
    * @example '165139'
    */
-  reivewId?: string;
+  reviewId?: string;
 }
