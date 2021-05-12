@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+
+### Bug Fixes
+
+* **fscommerce:** fix misspelled reviewId ([938dc3b](https://github.com/brandingbrand/flagship/commit/938dc3b39e77e54359d443b2b046d2a15b9fd35c))
+
+
+
+
+
 # [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
 
 
