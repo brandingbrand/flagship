@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscommerce",
   "sideEffects": false,
-  "version": "11.0.0-alpha.21",
+  "version": "11.0.0-alpha.25",
   "description": "Commerce Data Layer for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,9 +11,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^11.0.0-alpha.21",
-    "@brandingbrand/fsfoundation": "^11.0.0-alpha.21",
-    "@brandingbrand/fsnetwork": "^11.0.0-alpha.21",
+    "@brandingbrand/fsengage": "^11.0.0-alpha.25",
+    "@brandingbrand/fsfoundation": "^11.0.0-alpha.25",
+    "@brandingbrand/fsnetwork": "^11.0.0-alpha.25",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
     "qs": "^6.9.1",

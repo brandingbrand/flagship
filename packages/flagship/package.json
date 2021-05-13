@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/flagship",
   "sideEffects": false,
-  "version": "11.0.0-alpha.21",
+  "version": "11.0.0-alpha.25",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "yargs": "^15.0.1"
   },
   "devDependencies": {
-    "@brandingbrand/fsengage": "^11.0.0-alpha.21",
+    "@brandingbrand/fsengage": "^11.0.0-alpha.25",
     "@types/yargs": "^15.0.0",
     "true-case-path": "^2.0.0"
   },

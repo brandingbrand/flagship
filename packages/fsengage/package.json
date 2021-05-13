@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsengage",
   "sideEffects": false,
-  "version": "11.0.0-alpha.21",
+  "version": "11.0.0-alpha.25",
   "description": "Analytics, CMS, and Settings module for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,8 +13,8 @@
   "dependencies": {
     "@adobe/react-native-acpanalytics": "^1.2.6",
     "@adobe/react-native-acpcore": "^1.2.5",
-    "@brandingbrand/fsfoundation": "^11.0.0-alpha.21",
-    "@brandingbrand/fsnetwork": "^11.0.0-alpha.21",
+    "@brandingbrand/fsfoundation": "^11.0.0-alpha.25",
+    "@brandingbrand/fsnetwork": "^11.0.0-alpha.25",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
     "@brandingbrand/react-native-google-analytics": "^2.2.0",
     "@brandingbrand/react-native-leanplum": "^5.0.0",

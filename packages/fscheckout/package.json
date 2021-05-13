@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscheckout",
   "sideEffects": false,
-  "version": "11.0.0-alpha.21",
+  "version": "11.0.0-alpha.25",
   "description": "Checkout Libaray",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
