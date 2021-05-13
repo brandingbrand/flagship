@@ -11,9 +11,9 @@ import {
   ViewStyle
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { TouchableHighlightLink } from '../TouchableHighlightLink';
+import { TouchableHighlightLink } from '../../TouchableHighlightLink';
 
-import { style as S } from '../../styles/CategoryLine';
+import { style as S } from '../../../styles/CategoryLine';
 import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableCategoryLineProps extends CommerceTypes.Category {

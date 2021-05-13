@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
-import { extractHostStyles } from '../../lib/style';
+import { extractHostStyles } from '../../../lib/style';
 import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableImageProps
