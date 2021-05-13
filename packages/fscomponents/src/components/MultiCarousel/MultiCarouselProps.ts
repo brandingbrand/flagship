@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
 
 // TODO: Rename this interface
 export interface SlideChangeEvent {
@@ -14,7 +14,7 @@ export interface MultiCarouselProps<ItemT> {
   centerMode?: boolean;
   dotActiveStyle?: any;
   dotStyle?: any;
-  items: ItemT[];
+  data: ItemT[];
   itemsPerPage?: number;
   itemStyle?: any;
   itemUpdated?: (oldItem: ItemT, newItem: ItemT, index: number, changed: () => void) => void;
@@ -27,7 +27,7 @@ export interface MultiCarouselProps<ItemT> {
   prevArrowContainerStyle?: any;
   prevArrowStyle?: any;
   prevArrowOnBlur?: () => void;
-  renderItem: (data: any, i: number) => ReactNode;
+  renderItem: (data: ListRenderItemInfo<ItemT>) => ReactNode;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => ReactNode;
   hidePageIndicator?: boolean;
   showArrow?: boolean;
