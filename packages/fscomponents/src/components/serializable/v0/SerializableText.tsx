@@ -27,7 +27,7 @@ export interface SerializableTextProps
   href?: string;
 }
 
-export const FSSerializableText = React.memo<SerializableTextProps>(
+export const SerializableText = React.memo<SerializableTextProps>(
   ({ childText, boxStyle, href, ...textProps }) => {
     const navigator = useNavigator();
 

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 });
 
 
-class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
+export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
   constructor(props: ToggleButtonProps) {
     super(props);
 
@@ -201,5 +201,3 @@ class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
     }
   }
 }
-
-export default ToggleButton;
