@@ -21,7 +21,7 @@ export interface VideoSource {
 }
 
 export interface SerializableVideoBlockProps
-  extends Omit<ReactPlayerProps, 'style'>,
+  extends ReactPlayerProps,
     Omit<VideoProperties, 'style' | 'onBuffer'> {
   source: VideoSource;
   autoPlay?: boolean;
