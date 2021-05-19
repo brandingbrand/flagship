@@ -515,7 +515,7 @@ class PSProductDetailComponent extends Component<
     }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
   }
 
-  renderCustomModal = (closeModal: () => void): React.ReactNode => {
+  renderCustomModal = (closeModal: () => void): JSX.Element => {
     const testText = 'Hello World';
     const closeText = 'Close';
     return (
