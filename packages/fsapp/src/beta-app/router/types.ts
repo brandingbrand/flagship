@@ -3,6 +3,7 @@ import type { Analytics } from '@brandingbrand/fsengage';
 import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type {
   OptionsBottomTab,
+  OptionsStatusBar,
   OptionsTopBar,
   OptionsTopBarButton,
   OptionsTopBarTitle
@@ -85,6 +86,7 @@ export interface ComponentRoute extends BaseRoute {
 
   readonly title?: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
   readonly topBarStyle?: TopBarStyle;
+  readonly statusBarStyle?: OptionsStatusBar;
 
   // Used to pass in static data
   readonly data?: RouteData;
@@ -107,12 +109,21 @@ export interface LazyComponentRoute extends Omit<ComponentRoute, 'component'> {
 }
 
 export interface ParentRoute extends BaseRoute {
-  readonly children: (Route & { tab?: never })[];
+  readonly children: Route[];
 }
 
-export interface TopLevelParentRoute extends ParentRoute {
-  readonly path: Exclude<string, ''>;
+/**
+ * RouteCollection - tabbed collection of routes *
+ * @param {Exclude<string, ''>} initialPath Must match a child route
+ * @param {Tab} tab Tab used for tabAffinity
+ * @param {Route[]} children Child routes in collection
+ */
+export interface RouteCollection {
+  readonly initialPath: Exclude<string, ''>;
   readonly tab: Tab;
+  readonly children: Route[];
+  readonly topBarStyle?: TopBarStyle;
+  readonly statusBarStyle?: OptionsStatusBar;
 }
 
 export interface RedirectRoute extends BaseRoute {
@@ -157,14 +168,13 @@ export type Route =
   | ComponentRoute
   | LazyComponentRoute
   | RedirectRoute
-  | ParentRoute
-  | TopLevelParentRoute;
+  | ParentRoute;
 
 /**
  * A list of routes
  * @see Route
  */
-export type Routes = readonly Route[];
+export type Routes = readonly (Route | RouteCollection)[];
 
 export type ExternalRoute = Route & { readonly tabAffinity?: string };
 export type ExternalRoutes = readonly ExternalRoute[];

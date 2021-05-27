@@ -4,6 +4,7 @@ import type {
   FSRouterConstructor,
   InternalRouterConfig,
   Route,
+  RouteCollection,
   RouterConfig,
   Routes
 } from './types';
@@ -54,17 +55,18 @@ export class FSRouter extends FSRouterBase {
     prefix: string = '',
     tab?: string | OptionsBottomTab
   ): void {
-    let routeDetails = defaultActivatedRoute;
-    this.history.registerResolver(details => {
-      routeDetails = details;
-    });
     const addedRoutes = new Set<string>();
 
-    routes.forEach((route: Route | ExternalRoute) => {
+    routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
       const { path, id } = buildPath(route, prefix);
+
       if (!addedRoutes.has(id)) {
         const LoadingPlaceholder = () => <>{this.options.loading}</>;
         if ('component' in route || 'loadComponent' in route) {
+          let routeDetails = defaultActivatedRoute;
+          this.history.registerResolver(id, details => {
+            routeDetails = details;
+          });
           const LazyComponent = lazyComponent<{ componentId: string }>(
             async () => {
               const AwaitedComponent =
@@ -107,17 +109,17 @@ export class FSRouter extends FSRouterBase {
             bottomTab: typeof tab === 'string' ? { text: tab } : tab
           };
           Navigation.registerComponent(id, () => WrappedComponent);
+          addedRoutes.add(id);
         } else if ('redirect' in route) {
           return;
         } else if ('children' in route) {
           const tabAffinity = 'tab' in route ? route.tab : tab;
           this.registerRoutes(
             route.children,
-            path,
+            'tab' in route ? '' : path,
             'tabAffinity' in route ? route.tabAffinity : tabAffinity
           );
         }
-        addedRoutes.add(id);
       }
     });
   }

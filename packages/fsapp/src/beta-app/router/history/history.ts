@@ -74,11 +74,10 @@ export class History implements FSRouterHistory {
 
   constructor(private readonly routes: Routes) {
     this.observeNavigation();
-
     const tabRoutes = this.routes.filter(isTabRoute);
     const universalRoutes = this.routes.filter(isNotTabRoute);
-    const stackMatchers = tabRoutes.map(({ children, tab, path }) =>
-      buildMatchers(children, tab, path ? `/${path}` : undefined)
+    const stackMatchers = tabRoutes.map(({ children, tab }) =>
+      buildMatchers(children, tab)
     );
 
     const promisedStacks = tabRoutes.map((route, i) => matchStack(route, stackMatchers[i]));
@@ -115,10 +114,8 @@ export class History implements FSRouterHistory {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
               const activatedRoute = await this.resolveRouteDetails(matchingRoute);
-              this.activationObservers.forEach(listener => {
-                listener(activatedRoute);
-              });
-
+              const observer = this.activationObservers.get(matchingRoute.id);
+              observer?.(activatedRoute);
               return [matchingRoute, activatedRoute] as const;
             }
 
@@ -126,6 +123,7 @@ export class History implements FSRouterHistory {
           });
 
           const activated = await Promise.all(activations);
+
           await Navigation.setRoot(await activateStacks(root, activated));
         });
       })
@@ -235,9 +233,7 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public registerResolver(listener: ResolverListener): UnregisterCallback {
-    const id = uniqueId('resolver-subscriber');
-
+  public registerResolver(id: string, listener: ResolverListener): UnregisterCallback {
     this.activationObservers.set(id, listener);
     return () => {
       this.activationObservers.delete(id);
@@ -348,9 +344,8 @@ export class History implements FSRouterHistory {
                   ...(typeof location.state === 'object' ? location.state : {})
                 }
               });
-              this.activationObservers.forEach(listener => {
-                listener(activatedRoute);
-              });
+              const observer = this.activationObservers.get(matchingRoute.id);
+              observer?.(activatedRoute);
 
               const title =
                 typeof matchingRoute.title === 'function'

@@ -3,6 +3,177 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+
+### Bug Fixes
+
+* **fscommerce:** fix misspelled reviewId ([938dc3b](https://github.com/brandingbrand/flagship/commit/938dc3b39e77e54359d443b2b046d2a15b9fd35c))
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+
+### Features
+
+* **fscommerce:** FS-2186 add review id to product data ([4200aa7](https://github.com/brandingbrand/flagship/commit/4200aa7137c287ee9e5c207330132130ce7deae8))
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+
+### Features
+
+* FS-2185 add support for cursor-based pagination ([94d946a](https://github.com/brandingbrand/flagship/commit/94d946aae6888adf016a1fedcf448591fa03b3f2))
+
+
+
+
+
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+
+
+
+
+
 ## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce

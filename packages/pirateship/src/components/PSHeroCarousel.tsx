@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  ListRenderItem,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -58,11 +59,11 @@ export interface PSHeroCarouselProps {
   cmsGroup: string;
   cmsSlot: string;
   cmsIdentifier?: string;
-  onItemPress?: (item: PSHeroCarouselItem) => void;
+  onItemPress?: (item: CMSSlot | PSHeroCarouselItem) => void;
 }
 
 export interface PSHeroCarouselState {
-  slotData: CMSSlot[];
+  slotData: CMSSlot[] | (CMSSlot & PSHeroCarouselItem)[];
 }
 
 export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHeroCarouselState> {
@@ -88,7 +89,7 @@ export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHer
       >
         <MultiCarousel
           itemsPerPage={1}
-          items={this.state.slotData}
+          data={this.state.slotData}
           pageIndicatorStyle={styles.pageIndicator}
           dotStyle={styles.dotStyle}
           dotActiveStyle={styles.dotActiveStyle}
@@ -98,7 +99,7 @@ export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHer
     );
   }
 
-  renderItem = (item: PSHeroCarouselItem) => {
+  renderItem: ListRenderItem<CMSSlot | PSHeroCarouselItem> = ({item}) => {
     const imagePath = get(item, 'Retina-Image.path');
 
     return (
@@ -115,7 +116,7 @@ export default class PSHeroCarousel extends Component<PSHeroCarouselProps, PSHer
     );
   }
 
-  handleItemPress = (item: PSHeroCarouselItem) => () => {
+  handleItemPress = (item: CMSSlot | PSHeroCarouselItem) => () => {
     if (this.props.onItemPress) {
       this.props.onItemPress(item);
     }

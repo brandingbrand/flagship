@@ -104,6 +104,40 @@ export interface TransactionAction extends BaseEvent {
   coupons?: string[];
 }
 
+export interface Campaign {
+  /**
+   * Campaign id; used to identify particular campaign by an external identifier
+   */
+  id?: string;
+
+  /**
+   * Campaign source; used to identify a search engine, newsletter, or other source
+   */
+  source?: string;
+
+  /**
+   * Campaign medium; used to identify a medium such as email or cost-per-click (cpc)
+   */
+  medium?: string;
+
+  /**
+   * Campaign name; used for keyword analysis to identify a specific product promotion or
+   * strategic campaign
+   */
+  campaign?: string;
+
+  /**
+   * Campaign term; used with paid search to supply the keywords for ads
+   */
+  term?: string;
+
+  /**
+   * Campaign content; used for A/B testing and content-targeted ads to differentiate ads or
+   * links that point to the same URL
+   */
+  content?: string;
+}
+
 // Class
 
 export default class Analytics {
@@ -776,5 +810,9 @@ export default class Analytics {
       },
       action
     ));
+  }
+
+  setTrafficSource(campaignData: Campaign): void {
+    this.triggerTask(provider => provider.setTrafficSource(campaignData));
   }
 }
