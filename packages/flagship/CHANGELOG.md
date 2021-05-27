@@ -3,6 +3,291 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **flagship:** Remove animated image patch ([03acfbe](https://github.com/brandingbrand/flagship/commit/03acfbeae5ec5537bb01fb995791f80def8bd2f0))
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
 # [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
 
 

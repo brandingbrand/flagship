@@ -2,7 +2,7 @@
   "name": "@brandingbrand/fsweb",
   "sideEffects": false,
   "license": "MIT",
-  "version": "10.3.0",
+  "version": "11.0.0-alpha.29",
   "scripts": {
     "clean": "rm -rf ./build/static && rm -f ./build/index.html && rm -f ./build/service-worker.js && rm -f ./build/asset-manifest.json",
     "build": "webpack --mode production",
@@ -51,7 +51,6 @@
     "react-native-web-modal": "^1.0.1",
     "react-native-web-webview": "^0.2.8",
     "style-loader": "^1.0.0",
-    "svgs": "^4.1.0",
     "swiper": "^5.0.0",
     "terser-webpack-plugin": "^1.4.2",
     "ts-loader": "^6.0.0",
@@ -65,7 +64,7 @@
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
-    "@types/cors": "^2.8.7",
+    "@types/cors": "2.8.8",
     "@types/express": "^4.17.8",
     "@types/react-helmet": "^6.1.0"
   },

@@ -1,19 +1,11 @@
-import React, { Component } from 'react';
-import {
-  Animated,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import React, { Component, MouseEvent, TouchEvent } from 'react';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { findDOMNode } from 'react-dom';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { MultiCarouselProps } from './MultiCarouselProps';
 import { animatedScrollTo } from '../../lib/helpers';
 import { PageIndicator } from '../PageIndicator';
-
-const ScrollViewCopy: any = ScrollView;
 
 export interface MultiCarouselState {
   containerWidth: number;
@@ -68,7 +60,7 @@ const S = StyleSheet.create({
 });
 
 export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, MultiCarouselState> {
-  scrollView: any;
+  scrollView?: React.RefObject<HTMLDivElement>;
   mouseDown: boolean = false;
   currentScrollX: number = 0;
   initialScrollX: number = 0;
@@ -85,6 +77,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       itemWidth: 0,
       opacity: new Animated.Value(this.props.itemUpdated ? 0 : 1)
     };
+
+    this.scrollView = React.createRef();
   }
 
   componentDidUpdate(
@@ -104,10 +98,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         itemWidth: this.getItemWidth(this.state.containerWidth)
       });
     }
-    if (this.props.items.length <= this.state.currentIndex) {
-      if (this.props.items.length) {
+    if (this.props.data.length <= this.state.currentIndex) {
+      if (this.props.data.length) {
         this.setState({
-          currentIndex: this.props.items.length - 1
+          currentIndex: this.props.data.length - 1
         });
       } else if (this.state.currentIndex !== 0) {
         this.setState({
@@ -118,8 +112,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       animateItemChange();
     } else if (this.props.itemUpdated) {
       this.props.itemUpdated(
-        prevProps.items[this.state.currentIndex],
-        this.props.items[this.state.currentIndex],
+        prevProps.data[this.state.currentIndex],
+        this.props.data[this.state.currentIndex],
         this.state.currentIndex,
         animateItemChange
       );
@@ -143,9 +137,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     options = options || { animated: true };
     const { currentIndex } = this.state;
     const nextIndex =
-      currentIndex + 1 > this.getPageNum() - 1
-        ? this.getPageNum() - 1
-        : currentIndex + 1;
+      currentIndex + 1 > this.getPageNum() - 1 ? this.getPageNum() - 1 : currentIndex + 1;
 
     this.goTo(nextIndex, options);
   }
@@ -159,14 +151,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   }
 
   goTo = (index: number, options?: any) => {
-    const scrollViewElement = findDOMNode(this.scrollView);
+    const scrollViewElement = findDOMNode(this.scrollView?.current);
 
     if (scrollViewElement instanceof Element) {
-      animatedScrollTo(
-        scrollViewElement,
-        index * this.getPageWidth(),
-        200
-      ).catch(e => {
+      animatedScrollTo(scrollViewElement, index * this.getPageWidth(), 200).catch(e => {
         console.warn('animatedScrollTo error', e);
       });
     }
@@ -190,31 +178,34 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   getPageNum = () => {
     return Math.ceil(
-      this.props.items.length /
-        Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
+      this.props.data.length / Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
     );
   }
 
   getPageWidth = () => {
-    return (
-      this.state.itemWidth *
-      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
-    );
+    return this.state.itemWidth * Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
   }
 
   getItemWidth = (containerWidth: number) => {
     const peekSize = this.props.peekSize || this.defaultPeekSize;
     const itemPerPage = this.props.itemsPerPage || this.defaultItemsPerPage;
 
-    return (
-      (containerWidth - peekSize * (this.props.centerMode ? 2 : 1)) /
-      itemPerPage
-    );
+    return (containerWidth - peekSize * (this.props.centerMode ? 2 : 1)) / itemPerPage;
   }
 
-  handleTouchStart = (e: any) => {
-    const scrollViewNode = findDOMNode(this.scrollView);
-    this.initialScrollX = e.nativeEvent.pageX;
+  handleMouseStart = (e: MouseEvent) => {
+    this.handleStart(e.pageX);
+  }
+
+  handleTouchStart = (e: TouchEvent) => {
+    if (e.touches.length) {
+      this.handleStart(e.touches[0].pageX);
+    }
+  }
+
+  handleStart = (pageX: number) => {
+    const scrollViewNode = findDOMNode(this.scrollView?.current);
+    this.initialScrollX = pageX;
     if (scrollViewNode instanceof Element) {
       this.currentScrollX = scrollViewNode.scrollLeft;
     }
@@ -222,9 +213,23 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     this.mouseDown = true;
   }
 
-  handleTouchEnd = (e: any) => {
+  handleMouseEnd = (e: MouseEvent) => {
+    this.handleEnd(e.pageX);
+  }
+
+  handleTouchEnd = (e: TouchEvent) => {
+    if (e.touches.length) {
+      this.handleEnd(e.touches[0].pageX);
+    } else {
+      const pageX =
+        this.initialScrollX + this.currentScrollX - (this.scrollView?.current?.scrollLeft || 0);
+      this.handleEnd(pageX);
+    }
+  }
+
+  handleEnd = (pageX: number) => {
     this.mouseDown = false;
-    const dx = this.initialScrollX - e.nativeEvent.pageX;
+    const dx = this.initialScrollX - pageX;
     const vx = dx / (this.initialScrollXTime - Date.now());
 
     if (dx > 80 || vx < -0.3) {
@@ -236,19 +241,29 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     }
   }
 
-  handleTouchMove = (e: any) => {
+  handleMouseMove = (e: MouseEvent) => {
+    this.handleMove(e.pageX);
+  }
+
+  handleTouchMove = (e: TouchEvent) => {
+    if (e.touches.length) {
+      this.handleMove(e.touches[0].pageX);
+    }
+  }
+
+  handleMove = (pageX: number) => {
     if (this.mouseDown) {
-      const dx = this.initialScrollX - e.nativeEvent.pageX;
+      const dx = this.initialScrollX - pageX;
       const scrollX = this.currentScrollX + dx;
-      this.scrollView.scrollTo({
-        x: scrollX,
-        y: 0
+      this.scrollView?.current?.scrollTo({
+        left: scrollX,
+        top: 0
       });
     }
   }
 
   renderSingle = () => {
-    if (!this.props.items || !this.props.items.length) {
+    if (!this.props.data || !this.props.data.length) {
       return null;
     }
 
@@ -258,58 +273,55 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         onLayout={this.handleContainerSizeChange}
       >
         <View style={[{ width: this.state.itemWidth }, this.props.itemStyle]}>
-          {this.props.renderItem(this.props.items[0], 0)}
+          {this.props.renderItem({
+            index: 0,
+            item: this.props.data[0],
+            separators: {
+              highlight: () => undefined,
+              unhighlight: () => undefined,
+              updateProps: () => undefined
+            }
+          })}
         </View>
       </View>
     );
   }
 
-  _saveScrollViewRef = (ref: any) => this.scrollView = ref;
-
-  // tslint:disable-next-line:cyclomatic-complexity
+  // tslint:disable-next-line: cyclomatic-complexity
   render(): React.ReactNode {
-    const snapToInterval =
-      this.state.itemWidth *
-      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
-
     const pageNum = this.getPageNum();
 
-    if (this.props.items.length <= 1) {
+    if (this.props.data.length <= 1) {
       return this.renderSingle();
     }
 
     return (
       <Animated.View
-        style={[
-          this.props.style,
-          { opacity: this.state.opacity, overflow: 'hidden' }
-        ]}
+        style={[this.props.style, { opacity: this.state.opacity, overflow: 'hidden' }]}
+        onLayout={this.handleContainerSizeChange}
       >
-        <ScrollViewCopy
-          className='carousel-scroll-view'
-          onLayout={this.handleContainerSizeChange}
-          horizontal={true}
-          ref={this._saveScrollViewRef}
-          decelerationRate={0}
-          snapToAlignment={'start'}
-          snapToInterval={snapToInterval}
-          showsHorizontalScrollIndicator={false}
+        <div
+          ref={this.scrollView}
           onTouchStart={this.handleTouchStart}
           onTouchEnd={this.handleTouchEnd}
           onTouchMove={this.handleTouchMove}
-          style={{ flexBasis: 'auto' }}
-          onMouseDown={this.handleTouchStart}
-          onMouseUp={this.handleTouchEnd}
-          onMouseMove={this.handleTouchMove}
+          style={{
+            display: 'flex',
+            flexBasis: 'auto',
+            flexDirection: 'row',
+            overflowY: 'hidden',
+            overflowX: 'scroll'
+          }}
+          onMouseDown={this.handleMouseStart}
+          onMouseUp={this.handleMouseEnd}
+          onMouseMove={this.handleMouseMove}
         >
-          <View
-            style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
-          />
-          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width))
-            && this.props.items.map((item, i) => {
+          <View style={{ width: this.props.centerMode ? this.props.peekSize : 0 }} />
+          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width)) &&
+            this.props.data.map((item, index) => {
               return (
                 <View
-                  key={i}
+                  key={this.props.keyExtractor?.(item, index) ?? index}
                   style={[
                     {
                       width: this.state.itemWidth
@@ -317,62 +329,57 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
                     this.props.itemStyle
                   ]}
                 >
-                  {this.props.renderItem(item, i)}
+                  {this.props.renderItem({
+                    item,
+                    index,
+                    separators: {
+                      highlight: () => undefined,
+                      unhighlight: () => undefined,
+                      updateProps: () => undefined
+                    }
+                  })}
                 </View>
               );
-            })
-          }
-        </ScrollViewCopy>
+            })}
+        </div>
 
-        {this.props.renderPageIndicator ? (
-          this.props.renderPageIndicator(
-            this.state.currentIndex,
-            this.props.items.length
-          )
-        ) : !this.props.hidePageIndicator && (
-          <PageIndicator
-            style={this.props.pageIndicatorStyle}
-            currentIndex={this.state.currentIndex}
-            itemsCount={pageNum}
-            dotStyle={this.props.dotStyle}
-            dotActiveStyle={this.props.dotActiveStyle}
-          />
+        {this.props.renderPageIndicator
+          ? this.props.renderPageIndicator(this.state.currentIndex, this.props.data.length)
+          : !this.props.hidePageIndicator && (
+              <PageIndicator
+                style={this.props.pageIndicatorStyle}
+                currentIndex={this.state.currentIndex}
+                itemsCount={pageNum}
+                dotStyle={this.props.dotStyle}
+                dotActiveStyle={this.props.dotActiveStyle}
+              />
+            )}
+
+        {this.state.currentIndex !== 0 && !!this.props.showArrow && (
+          <div onBlur={this.props.prevArrowOnBlur}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
+              onPress={this.goToPrev}
+            >
+              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
+            </TouchableOpacity>
+          </div>
         )}
 
-        {this.state.currentIndex !== 0 &&
-          !!this.props.showArrow && (
-            <div onBlur={this.props.prevArrowOnBlur}>
-              <TouchableOpacity
-                accessibilityRole='button'
-                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
-                style={[S.goToPrev, this.props.prevArrowContainerStyle]}
-                onPress={this.goToPrev}
-              >
-                <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
-              </TouchableOpacity>
-            </div>
-          )}
-
-        {this.state.currentIndex !== pageNum - 1 &&
-          !!this.props.showArrow && (
-            <div onBlur={this.props.nextArrowOnBlur}>
-              <TouchableOpacity
-                accessibilityRole='button'
-                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
-                style={[S.goToNext, this.props.nextArrowContainerStyle]}
-                onPress={this.goToNext}
-              >
-                <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
-              </TouchableOpacity>
-            </div>
-          )}
-
-        <style>
-          {/* tslint:disable:jsx-use-translation-function */}
-          {`.carousel-scroll-view {
-          overflow: hidden
-        }`}
-        </style>
+        {this.state.currentIndex !== pageNum - 1 && !!this.props.showArrow && (
+          <div onBlur={this.props.nextArrowOnBlur}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+              style={[S.goToNext, this.props.nextArrowContainerStyle]}
+              onPress={this.goToNext}
+            >
+              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
+            </TouchableOpacity>
+          </div>
+        )}
       </Animated.View>
     );
   }

@@ -3,6 +3,462 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+
+### Features
+
+* FS-2381 ([3a6721d](https://github.com/brandingbrand/flagship/commit/3a6721dffc87f069af322350bc21eb64dd36c98a))
+* vNext versioning ([803b64d](https://github.com/brandingbrand/flagship/commit/803b64d0e1798c5f846d9c21996bf65ea656a823))
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+
+### Features
+
+* serializable v1 ([9d11847](https://github.com/brandingbrand/flagship/commit/9d1184770195282eb964c09e4eb10adfbcfdc012))
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+
+### Bug Fixes
+
+* **fscommerce:** fix misspelled reviewId ([938dc3b](https://github.com/brandingbrand/flagship/commit/938dc3b39e77e54359d443b2b046d2a15b9fd35c))
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+
+### Features
+
+* **fscommerce:** FS-2186 add review id to product data ([4200aa7](https://github.com/brandingbrand/flagship/commit/4200aa7137c287ee9e5c207330132130ce7deae8))
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+
+### Bug Fixes
+
+* **fsapp:** adjust findRoute to handle RouteCollection types ([dca5702](https://github.com/brandingbrand/flagship/commit/dca5702476e58922659646d8d04260cb1c9a3a34))
+* **fsapp:** rename functions ([739c39a](https://github.com/brandingbrand/flagship/commit/739c39a85662a78a6a5c53dd1523fec2c0177b3a))
+
+
+
+
+
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+
+### Bug Fixes
+
+* **fsweb:** deliver react bundle on all fall-through requests ([126d012](https://github.com/brandingbrand/flagship/commit/126d012cad529b151d963b7b1b9b90cb3bcf6f5b))
+
+
+
+
+
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+
+### Features
+
+* FS-2185 add support for cursor-based pagination ([94d946a](https://github.com/brandingbrand/flagship/commit/94d946aae6888adf016a1fedcf448591fa03b3f2))
+
+
+
+
+
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* allow native to have multiple tabs with same screen ([b9e45d3](https://github.com/brandingbrand/flagship/commit/b9e45d3bfd2b87e8c6fac4978b487b354eba1ffe))
+* apply status bar styles to Route Collection ([8e942db](https://github.com/brandingbrand/flagship/commit/8e942db136b8d4716f7ffe909c244eba0ca1899b))
+* correctly apply nav/status styles ([f53e3e9](https://github.com/brandingbrand/flagship/commit/f53e3e9142b26c599526a32d321cf89aed648cd3))
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+
+### Bug Fixes
+
+* **fsengage:** FS-2222 limit type for traffic source data ([5c376f6](https://github.com/brandingbrand/flagship/commit/5c376f672929c7a930206f0f7f10a3180318d98f))
+
+
+### Features
+
+* **fscomponents:** Serializable Cateogry Line ([106c239](https://github.com/brandingbrand/flagship/commit/106c2390f7274eb601f6ede642b625cf9869614c))
+* **fsengage:** FS-2222 add ability to set traffic attribution data ([762677f](https://github.com/brandingbrand/flagship/commit/762677f47e815b1f5b1ca9fb2809191a1249599f))
+* **fsengage:** FS-2222 bump react-native-google-analytics version ([fc882b7](https://github.com/brandingbrand/flagship/commit/fc882b7519c28ff24064d01b80c7ba1117d6e832))
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+
+### Bug Fixes
+
+* refactor to support parent routes ([764087a](https://github.com/brandingbrand/flagship/commit/764087aa8ecccacf5e9547b30382237d043bc935))
+* update dev-menu component ([7d0deef](https://github.com/brandingbrand/flagship/commit/7d0deefb4f8a7c994f4d0b63515b64ff2bf1bd6b))
+* update printed dev routes ([6006436](https://github.com/brandingbrand/flagship/commit/60064363e76af50f012a96cd7abe7e89df07e746))
+* update printed dev routes ([666cf7b](https://github.com/brandingbrand/flagship/commit/666cf7bf76b9a3a62d6596a6cc528151067f3c1f))
+
+
+### Features
+
+* allow beta router to handle univeral links with need for prefix ([70afa5b](https://github.com/brandingbrand/flagship/commit/70afa5b08b563092ebf755d32fe2b71a54641c88))
+
+
+
+
+
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+### Bug Fixes
+
+* fix external route paths ([c9d6231](https://github.com/brandingbrand/flagship/commit/c9d62319b4ab02cb166b2126b7b531b01f797b96))
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsengagement:** Adding stories for fsengagement ([e47f157](https://github.com/brandingbrand/flagship/commit/e47f15788167eb8bd67b1e68007b6d11276da40e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fsengagement:** Adding stories for fsengagement ([e47f157](https://github.com/brandingbrand/flagship/commit/e47f15788167eb8bd67b1e68007b6d11276da40e))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **flagship:** Remove animated image patch ([03acfbe](https://github.com/brandingbrand/flagship/commit/03acfbeae5ec5537bb01fb995791f80def8bd2f0))
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+* **fsweb:** lock @types/cors ([fae557f](https://github.com/brandingbrand/flagship/commit/fae557fe2249fdb6f7223d32a4cf82c3a30b470d))
+
+
+### Features
+
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+* add product index grid ghost component ([0c80ddb](https://github.com/brandingbrand/flagship/commit/0c80ddb7855e8eacb1b25a276a1820a8f95b9d98))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Use div for web multicarousel ([903f6c2](https://github.com/brandingbrand/flagship/commit/903f6c257be8a40578402e97d54386b81d8e4cc6))
+* **fsweb:** Actually remove svgs ([1da221f](https://github.com/brandingbrand/flagship/commit/1da221f81735c634cc1afb11b4a6d650f098c1fd))
+* **fsweb:** Remove svgs module ([c23171f](https://github.com/brandingbrand/flagship/commit/c23171fdb4dc00a11c09b37235187d59280a7ff3))
+
+
+### Features
+
+* **fsengagement:** add ghost content loading component ([3fac131](https://github.com/brandingbrand/flagship/commit/3fac131a646abbe456049a38488ad29defd24a32))
+
+
+
+
+
 # [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
 
 

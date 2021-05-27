@@ -97,6 +97,7 @@ export const appConfig: FSAppTypes.AppConfigType = {
   bottomTabsId: 'bottomTabs',
   variables: {},
   webRouterType: 'browser',
+  notFoundRedirect: true,
   cachedData: async (
     initialData: FSAppTypes.SSRData, req: any
   ): Promise<FSAppTypes.SSRData> => {

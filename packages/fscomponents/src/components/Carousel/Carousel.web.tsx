@@ -47,9 +47,9 @@ export class Carousel extends Component<CarouselProps> {
           >
             {React.Children.map(_children, (child, i) => {
               return (
-                <View key={i} style={{ height }}>
+                <div key={i} style={{ height }}>
                   {child}
-                </View>
+                </div>
               );
             })}
           </Swiper>

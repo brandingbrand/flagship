@@ -1,10 +1,11 @@
 import { Address } from './Address';
-import { BaseProduct } from './Product';
+import { BaseProduct, Product } from './Product';
 import { CurrencyValue } from '../CommerceTypes';
 import { CustomerAccount } from './CustomerAccount';
 import { Payment } from './Payment';
 import { Promo } from './Promo';
 import { Shipment } from './Shipment';
+import { ProductPromotion } from './ProductPromotion';
 
 /**
  * Information about a cart. In Demandware transactions the cart is the base unit of a
@@ -35,6 +36,12 @@ export interface Cart<T extends CartItem = CartItem> {
    * An array of products of which the user has added to the cart.
    */
   items: T[];
+
+  /**
+   * An array of products with detailed info for variants in the cart, their master
+   * products and bonus products in the cart.
+   */
+  productDetails?: Product[];
 
   /**
    * The total cost of the products in the cart before shipping feeds and taxes have
@@ -87,6 +94,11 @@ export interface Cart<T extends CartItem = CartItem> {
    * @example. '3'
    */
   itemCount?: number;
+
+  /**
+   * An array of bonus discount line items available.
+   */
+  bonusDiscountLineItems?: BonusDiscountLineItem[];
 }
 
 /**
@@ -142,10 +154,56 @@ export interface CartItem extends BaseProduct {
    * An array of promotions which apply to the cart item.
    */
   promotions?: CartPromo[];
+
+  /**
+   * A unique identifier for a bonus discount line item.
+   *
+   * @example '1351413'
+   */
+  bonusDiscountLineItemId?: string;
 }
 
+/**
+ * Information about a single promotion in a cart.
+ */
 export interface CartPromo {
   id: string;
   text?: string;
   price?: CurrencyValue;
+}
+
+/**
+ * Information about a single bonus discount line item in a cart.
+ */
+export interface BonusDiscountLineItem {
+  /**
+   * A unique identifier for a bonus discount line item.
+   *
+   * @example '1351413'
+   */
+  id?: string;
+
+  /**
+   * Maximum quantity allowed for the bonus discount line item
+   *
+   * @example 1
+   */
+  maxBonusItems?: number;
+
+  /**
+   * A unique identifier for a promotion tied to this bonus discount line item.
+   *
+   * @example '1351413-KJHKJ'
+   */
+  promotionId?: string;
+
+  /**
+   * A promotion tied to this bonus discount line item.
+   */
+  promotion?: ProductPromotion;
+
+  /**
+   * An array of products eligible for this bonus discount line item.
+   */
+  bonusProducts: Product[];
 }

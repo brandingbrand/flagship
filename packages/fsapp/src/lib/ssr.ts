@@ -101,7 +101,10 @@ async function renderApp(
   const { flagship, config } = flagshipApp;
   const updatedConfig = {
     ...config,
-    initialState: await flagship.updatedInitialState(cache)
+    initialState: {
+      ...await flagship.updatedInitialState(cache),
+      ...config.initialState
+    }
   };
   flagship.getReduxStore(updatedConfig.initialState).then((reduxStore: Store) => {
     // prerender the app
@@ -128,7 +131,7 @@ async function renderApp(
 
       const variables = JSON.stringify(updatedConfig.variables || {});
 
-      const document = baseHTML.replace(/(<head>)/, `$1
+      const document = baseHTML.replace(/<head>/, `<head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${helmet.link.toString()}
@@ -137,7 +140,7 @@ async function renderApp(
           var initialState = ${state};
           var variables = ${variables};
         </script>
-      `).replace(/(\<div id="root"\>)/, `$1
+      `).replace(/\<div id="root"\>/, `<div id="root">
         ${html}
       `);
 

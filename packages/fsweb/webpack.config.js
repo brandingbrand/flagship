@@ -56,7 +56,6 @@ const globalConfig = {
     ],
     alias: {
       'react-native': 'react-native-web',
-      'react-native-svg': 'svgs',
       'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
       'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
       'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
@@ -122,7 +121,9 @@ const globalConfig = {
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'),
-              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep)
+              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'),
+              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics')
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [

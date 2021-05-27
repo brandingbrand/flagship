@@ -18,6 +18,7 @@ import NativeConstants from '../lib/native-constants';
 import { FSAppBase, WebApplication } from './FSAppBase';
 import DevMenu from '../components/DevMenu';
 import { Store } from 'redux';
+import { NotFound } from '../components/NotFound';
 
 const LAST_SCREEN_KEY = 'lastScreen';
 const DEV_KEEP_SCREEN = 'devKeepPage';
@@ -59,6 +60,20 @@ export class FSApp extends FSAppBase {
         key: 'devMenu',
         Screen: screenWrapper(DevMenu, this.appConfig, this.api)
       });
+    }
+
+    if (this.appConfig.notFoundRedirect) {
+      if (typeof this.appConfig.notFoundRedirect === 'function') {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(this.appConfig.notFoundRedirect, this.appConfig, this.api)
+        });
+      } else {
+        enhancedScreens.unshift({
+          key: '*',
+          Screen: screenWrapper(NotFound(this.appConfig.notFoundRedirect), this.appConfig, this.api)
+        });
+      }
     }
 
     enhancedScreens.forEach(({ key, Screen }) => {
