@@ -64,7 +64,7 @@
     "react-native-svg": "^10.0.0",
     "react-native-touch-id": "~4.4.0",
     "react-native-video": "^5.0.0",
-    "react-native-webview": "^10.9.0",
+    "react-native-webview": "^11.6.2",
     "react-redux": "^7.0.0"
   },
   "flagship": {
