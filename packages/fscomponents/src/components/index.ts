@@ -78,3 +78,4 @@ export * from './LinkCard';
 
 export * as SerializableV0 from './serializable/v0';
 export * as SerializableV1 from './serializable/v1';
+export * as SerializableVNext from './serializable/vNext';
