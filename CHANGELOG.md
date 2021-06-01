@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+
+### Features
+
+* FS-2381 ([3a6721d](https://github.com/brandingbrand/flagship/commit/3a6721dffc87f069af322350bc21eb64dd36c98a))
+* vNext versioning ([803b64d](https://github.com/brandingbrand/flagship/commit/803b64d0e1798c5f846d9c21996bf65ea656a823))
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+
+### Features
+
+* serializable v1 ([9d11847](https://github.com/brandingbrand/flagship/commit/9d1184770195282eb964c09e4eb10adfbcfdc012))
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+
+### Bug Fixes
+
+* **fscommerce:** fix misspelled reviewId ([938dc3b](https://github.com/brandingbrand/flagship/commit/938dc3b39e77e54359d443b2b046d2a15b9fd35c))
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+
+### Features
+
+* **fscommerce:** FS-2186 add review id to product data ([4200aa7](https://github.com/brandingbrand/flagship/commit/4200aa7137c287ee9e5c207330132130ce7deae8))
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+
+### Bug Fixes
+
+* **fsapp:** adjust findRoute to handle RouteCollection types ([dca5702](https://github.com/brandingbrand/flagship/commit/dca5702476e58922659646d8d04260cb1c9a3a34))
+* **fsapp:** rename functions ([739c39a](https://github.com/brandingbrand/flagship/commit/739c39a85662a78a6a5c53dd1523fec2c0177b3a))
+
+
+
+
+
 # [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
 
 

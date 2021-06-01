@@ -54,7 +54,6 @@ export * from './SearchScreen';
 export * from './SelectableList';
 export * from './SelectableRow';
 export * from './Selector';
-export * from './serializable';
 export * from './ShareButton';
 export * from './Shelf';
 export * from './SingleLineForm';
@@ -76,3 +75,7 @@ export * from './TouchableWithoutFeedbackLink';
 export * from './UpdateNameOrEmail';
 export * from './ZoomCarousel';
 export * from './LinkCard';
+
+export * as SerializableV0 from './serializable/v0';
+export * as SerializableV1 from './serializable/v1';
+export * as SerializableVNext from './serializable/vNext';
