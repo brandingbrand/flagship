@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { Image, ImageProps, ImageStyle } from 'react-native';
+import { ImageBackground, ImageProps, ImageStyle, View, ViewStyle } from 'react-native';
 
 export interface SerializableImageProps
   extends Pick<
@@ -14,16 +14,27 @@ export interface SerializableImageProps
     | 'progressiveRenderingEnabled'
     | 'resizeMethod'
     | 'resizeMode'
-    | 'style'
     | 'testID'
   > {
   uri?: string;
-  height?: number;
-  width?: number;
-  style?: ImageStyle;
+  style?: ViewStyle;
+  imageStyle?: ImageStyle;
+  children?: React.ReactNode;
 }
 
-export const SerializableImage: FC<SerializableImageProps> = ({ uri, height, width, ...props }) => {
-  const source = useMemo(() => ({ uri, height, width }), [uri, height, width]);
-  return <Image {...props} source={source} />;
-};
+export const SerializableImage: FC<SerializableImageProps> =
+  ({ children, style, uri, ...props }) => {
+    const source = useMemo(() => ({ uri }), [uri]);
+
+    return (
+      <View style={style}>
+        <ImageBackground
+          {...props}
+          source={source}
+          style={[{ flex: 1 }, style]}
+        >
+          {children}
+        </ImageBackground>
+      </View>
+    );
+  };
