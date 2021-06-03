@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from 'react';
-import { Image, ImageProps, ImageStyle } from 'react-native';
+import { FlexStyle, ImageBackground, ImageProps, ImageStyle, View, ViewStyle } from 'react-native';
+import { StandardContainerProps } from '../../../models';
 
-export interface SerializableImageProps
+export interface PreStandardizedSerializableImageProps
   extends Pick<
     ImageProps,
     | 'accessibilityLabel'
@@ -14,16 +15,43 @@ export interface SerializableImageProps
     | 'progressiveRenderingEnabled'
     | 'resizeMethod'
     | 'resizeMode'
-    | 'style'
     | 'testID'
   > {
-  uri?: string;
-  height?: number;
-  width?: number;
-  style?: ImageStyle;
+  uri: string;
+  imageStyle?: ImageStyle;
+  style: ViewStyle;
+
+  /**
+   * @TJS-ignore
+   */
+  containerStyle: FlexStyle;
+
+  /**
+   * @TJS-ignore
+   */
+  children: React.ReactNode;
 }
 
-export const SerializableImage: FC<SerializableImageProps> = ({ uri, height, width, ...props }) => {
-  const source = useMemo(() => ({ uri, height, width }), [uri, height, width]);
-  return <Image {...props} source={source} />;
-};
+export type SerializableImageProps = StandardContainerProps<PreStandardizedSerializableImageProps>;
+
+export const SerializableImage: FC<SerializableImageProps> =
+  ({ children, containerStyle, style = {}, uri, ...props }) => {
+    const source = useMemo(() => ({ uri }), [uri]);
+    const { alignItems, justifyContent, ...restStyles } = style;
+
+    return (
+      <View style={[restStyles, containerStyle]}>
+        <ImageBackground
+          {...props}
+          source={source}
+          style={{
+            flex: 1,
+            alignItems,
+            justifyContent
+          }}
+        >
+          {children}
+        </ImageBackground>
+      </View>
+    );
+  };
