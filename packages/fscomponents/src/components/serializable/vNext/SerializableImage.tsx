@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from 'react';
-import { ImageBackground, ImageProps, ImageStyle, View, ViewStyle } from 'react-native';
+import { FlexStyle, ImageBackground, ImageProps, ImageStyle, View, ViewStyle } from 'react-native';
+import { StandardContainerProps } from '../../../models';
 
-export interface SerializableImageProps
+export interface PreStandardizedSerializableImageProps
   extends Pick<
     ImageProps,
     | 'accessibilityLabel'
@@ -16,11 +17,22 @@ export interface SerializableImageProps
     | 'resizeMode'
     | 'testID'
   > {
-  uri?: string;
-  style?: ViewStyle;
+  uri: string;
   imageStyle?: ImageStyle;
-  children?: React.ReactNode;
+  style: ViewStyle;
+
+  /**
+   * @TJS-ignore
+   */
+  containerStyle: FlexStyle;
+
+  /**
+   * @TJS-ignore
+   */
+  children: React.ReactNode;
 }
+
+export type SerializableImageProps = StandardContainerProps<PreStandardizedSerializableImageProps>;
 
 export const SerializableImage: FC<SerializableImageProps> =
   ({ children, style, uri, ...props }) => {
