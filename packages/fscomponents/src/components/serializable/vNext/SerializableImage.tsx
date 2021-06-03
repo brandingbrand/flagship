@@ -35,12 +35,12 @@ export interface PreStandardizedSerializableImageProps
 export type SerializableImageProps = StandardContainerProps<PreStandardizedSerializableImageProps>;
 
 export const SerializableImage: FC<SerializableImageProps> =
-  ({ children, style = {}, uri, ...props }) => {
+  ({ children, containerStyle, style = {}, uri, ...props }) => {
     const source = useMemo(() => ({ uri }), [uri]);
     const { alignItems, justifyContent, ...restStyles } = style;
 
     return (
-      <View style={restStyles}>
+      <View style={[restStyles, containerStyle]}>
         <ImageBackground
           {...props}
           source={source}
