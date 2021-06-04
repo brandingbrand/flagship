@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { FlexStyle, ImageBackground, ImageProps, ImageStyle, View, ViewStyle } from 'react-native';
+import { extractContainerStyles } from '../../../lib/style';
 import { StandardContainerProps } from '../../../models';
 
 export interface PreStandardizedSerializableImageProps
@@ -37,18 +38,14 @@ export type SerializableImageProps = StandardContainerProps<PreStandardizedSeria
 export const SerializableImage: FC<SerializableImageProps> =
   ({ children, containerStyle, style = {}, uri, ...props }) => {
     const source = useMemo(() => ({ uri }), [uri]);
-    const { alignItems, justifyContent, ...restStyles } = style;
+    const [innerImageStyles, outerImageStyles] = extractContainerStyles(style);
 
     return (
-      <View style={[restStyles, containerStyle]}>
+      <View style={[outerImageStyles, containerStyle]}>
         <ImageBackground
           {...props}
           source={source}
-          style={{
-            flex: 1,
-            alignItems,
-            justifyContent
-          }}
+          style={[{ flex: 1 }, innerImageStyles]}
         >
           {children}
         </ImageBackground>
