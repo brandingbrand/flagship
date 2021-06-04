@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
+
+**Note:** Version bump only for package @brandingbrand/fstestproject
+
+
+
+
+
 # [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
 
 **Note:** Version bump only for package @brandingbrand/fstestproject
