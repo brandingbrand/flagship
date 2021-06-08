@@ -16,3 +16,7 @@ export {
   VideoSource
 } from './SerializableVideoBlock.types';
 export {SerializableProgressBarProps, SerializableProgressBar } from './SerializableProgressBar';
+export {
+  SerializableReviewIndicator,
+  SerializableReviewIndicatorProps
+} from './SerializableReviewIndicator';
