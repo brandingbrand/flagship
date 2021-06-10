@@ -5,20 +5,14 @@ import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
-export interface SerializableReviewIndicatorProps {
+export interface ReviewIndicatorProps {
   value: number;
   base?: number;
-  style?: ViewStyle;
   itemSize?: number;
   itemColor?: string;
   emptyColor?: string;
   accessibilityLabel?: string;
   emptyStar?: boolean;
-}
-
-export interface ReviewIndicatorProps extends Omit<SerializableReviewIndicatorProps,
-  'style'
-  > {
   style?: StyleProp<ViewStyle>;
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;

@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+
+### Bug Fixes
+
+* extract image styles for preview ([a9d3fe4](https://github.com/brandingbrand/flagship/commit/a9d3fe420b25742ffa91e460c08dde16b6cbd3c8))
+
+
+### Features
+
+* **fscomponents:** FS-2435 add serializable review indicator ([1e1d886](https://github.com/brandingbrand/flagship/commit/1e1d886439e23106f2ab6f4583c66ace17ebeb6d))
+
+
+
+
+
+# [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
+
+
+### Bug Fixes
+
+* babel build spam ([2fb9a49](https://github.com/brandingbrand/flagship/commit/2fb9a49b7dad9e64b35e175451a175e9a33b7b62))
+* use standardized container ([15c5cf5](https://github.com/brandingbrand/flagship/commit/15c5cf50b1f251a9fe324e1e96cca3d613e0568d))
+* use styles appropriately ([579e672](https://github.com/brandingbrand/flagship/commit/579e67249da007298c9d8c9d438e532765a07a30))
+* use styles appropriately ([5ec12e5](https://github.com/brandingbrand/flagship/commit/5ec12e573ccee67ae63443d0a8e5e3a1bcc7a316))
+
+
+### Features
+
+* **fscomponents:** FS-2308 - allow serializableImage to have children ([43e16a3](https://github.com/brandingbrand/flagship/commit/43e16a31e845522910dbad0001ace465408fc7c6))
+* **fscomponents:** serializable v2 component ([af105be](https://github.com/brandingbrand/flagship/commit/af105be4a998b37c5e8504c2216e15f2093a02b2))
+* public js docs ([b81b565](https://github.com/brandingbrand/flagship/commit/b81b56584e54ba22ea42e0cc1eba51ffb55da11a))
+
+
+
+
+
 # [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
 
 
