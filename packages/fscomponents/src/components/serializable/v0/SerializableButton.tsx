@@ -40,7 +40,7 @@ export interface SerializableButtonProps
   noPadding?: boolean;
 }
 
-export const FSSerializableButton = React.memo<
+export const SerializableButton = React.memo<
   SerializableButtonProps & {
     onPress?: (href: string) => void;
   }

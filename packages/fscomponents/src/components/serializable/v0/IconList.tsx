@@ -31,7 +31,7 @@ export const defaultIconListProps: IconListProps = {
   }
 };
 
-export const FSIconList = React.memo((props: IconListProps) => {
+export const IconList = React.memo((props: IconListProps) => {
   const { style, list, image, rowStyle, imageStyle, textStyle } = useMemo(
     () => defaults({ ...props }, defaultIconListProps),
     [props]

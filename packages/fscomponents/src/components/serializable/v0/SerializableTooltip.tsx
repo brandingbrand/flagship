@@ -36,7 +36,7 @@ export interface PreStandardizedTooltipProps
 
 export type SerializableTooltipProps = StandardContainerProps<PreStandardizedTooltipProps>;
 
-export const FSSerializableTooltip = React.memo<SerializableTooltipProps>(
+export const SerializableTooltip = React.memo<SerializableTooltipProps>(
   ({ popover, textStyle, style, children, skipAndroidStatusBar, ...props }) => {
     return (
       <Tooltip

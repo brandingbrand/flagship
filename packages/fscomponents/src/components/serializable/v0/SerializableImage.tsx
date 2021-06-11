@@ -25,7 +25,7 @@ export interface SerializableImageProps
   onPress?: (href?: string) => void;
 }
 
-export const FSSerializableImage = React.memo<SerializableImageProps>(
+export const SerializableImage = React.memo<SerializableImageProps>(
   ({ onPress, style, href, ...props }) => {
     const [host, self] = extractHostStyles(style);
     const navigator = useNavigator();
