@@ -17,6 +17,12 @@ export interface AppConfig<
   readonly version: string;
   readonly root?: Element | string;
   readonly serverSide?: true;
+  /**
+   * Only affects Web.
+   *
+   * If the client should hydrate server-rendered HTML.
+   */
+  readonly hydrate?: boolean;
   readonly analytics?: Analytics;
   readonly router: RouterConfig;
   readonly webShell?: ShellConfig;
