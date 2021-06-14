@@ -113,6 +113,13 @@ export interface AppConfigType {
   notFoundRedirect?: RoutableComponentClass | NavLayout | true;
   uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
   cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+
+  /**
+   * Only affects Web.
+   *
+   * If the client should hydrate server-rendered HTML.
+   */
+  hydrate?: boolean;
 }
 
 export interface Tab extends LayoutComponent {
