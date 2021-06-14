@@ -40,7 +40,7 @@
     "react-native-vector-icons": "^8.0.0",
     "react-native-video": "^5.0.2",
     "react-native-web-modal": "^1.0.1",
-    "react-native-webview": "^10.9.0",
+    "react-native-webview": "^11.6.4",
     "react-player": "^1.15.2",
     "sweetalert": "^2.1.0",
     "yup": "^0.29.0"
