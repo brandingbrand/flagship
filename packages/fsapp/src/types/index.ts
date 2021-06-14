@@ -88,6 +88,13 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+
+  /**
+   * Only affects Web.
+   *
+   * If the client should hydrate server-rendered HTML.
+   */
+  hydrate?: boolean;
 }
 
 export interface Tab extends LayoutComponent {

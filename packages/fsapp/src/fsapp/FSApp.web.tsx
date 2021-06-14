@@ -46,6 +46,7 @@ export class FSApp extends FSAppBase {
       }
       AppRegistry.runApplication('Flagship', {
         rootTag,
+        hydrate: this.appConfig.hydrate,
         initialProps: {
           appConfig: this.appConfig,
           api: this.api,
