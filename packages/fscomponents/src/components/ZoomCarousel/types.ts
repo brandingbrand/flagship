@@ -43,6 +43,7 @@ export interface ZoomCarouselProps {
   showThumbnails?: boolean;
   thumbnailStyle?: any;
   thumbnailContainerStyle?: any;
+  hideOverflow?: boolean;
 
   /**
    * The styling of the container that holds the image carousel and thumbnails
