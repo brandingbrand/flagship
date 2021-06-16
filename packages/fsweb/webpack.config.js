@@ -10,6 +10,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const BabelPluginTransformImports = require('babel-plugin-transform-imports');
 const BabelPluginReactNativeWeb = require('babel-plugin-react-native-web');
 const BabelPluginProposalClassProperties = require('@babel/plugin-proposal-class-properties');
+const BabelPluginProposalPrivateMethods = require('@babel/plugin-proposal-private-methods');
 const escapedSep = '\\' + path.sep;
 
 let webConfig;
@@ -103,7 +104,9 @@ const globalConfig = {
                     }],
                     [BabelPluginReactNativeWeb, {
                       commonjs: false
-                    }]
+                    }],
+                    [BabelPluginProposalClassProperties, { loose: true }],
+                    [BabelPluginProposalPrivateMethods, { loose: true }]
                   ]
                 }
               },
@@ -147,7 +150,8 @@ const globalConfig = {
                     [BabelPluginReactNativeWeb, {
                       commonjs: false
                     }],
-                    [BabelPluginProposalClassProperties]
+                    [BabelPluginProposalClassProperties, { loose: true }],
+                    [BabelPluginProposalPrivateMethods, { loose: true }]
                   ]
                 }
               }
