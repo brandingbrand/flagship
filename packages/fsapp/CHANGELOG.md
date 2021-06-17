@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
+
+
+### Features
+
+* Enable redux middleware in FSApp config ([9e2e7b8](https://github.com/brandingbrand/flagship/commit/9e2e7b8b346363f154a6abcfea10641198455572))
+* useButtonEffect ([8fd9ff7](https://github.com/brandingbrand/flagship/commit/8fd9ff7dc229f05162b9181b623040728754cc46))
+
+
+
+
+
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 # [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

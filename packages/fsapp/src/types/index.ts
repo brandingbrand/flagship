@@ -14,6 +14,7 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
 import type { Request } from 'express';
+import { Middleware } from 'redux';
 
 export interface DrawerType {
   screen: string;
@@ -110,6 +111,7 @@ export interface AppConfigType {
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
   routerConfig?: RouterConfig;
+  storeMiddleware?: Middleware[];
   notFoundRedirect?: RoutableComponentClass | NavLayout | true;
   uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
   cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;

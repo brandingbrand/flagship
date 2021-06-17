@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
+
+
+### Features
+
+* Enable redux middleware in FSApp config ([9e2e7b8](https://github.com/brandingbrand/flagship/commit/9e2e7b8b346363f154a6abcfea10641198455572))
+* useButtonEffect ([8fd9ff7](https://github.com/brandingbrand/flagship/commit/8fd9ff7dc229f05162b9181b623040728754cc46))
+
+
+
+
+
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+
+### Bug Fixes
+
+* extract image styles for preview ([a9d3fe4](https://github.com/brandingbrand/flagship/commit/a9d3fe420b25742ffa91e460c08dde16b6cbd3c8))
+
+
+### Features
+
+* **fscomponents:** FS-2435 add serializable review indicator ([1e1d886](https://github.com/brandingbrand/flagship/commit/1e1d886439e23106f2ab6f4583c66ace17ebeb6d))
+
+
+
+
+
 # [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
 
 
