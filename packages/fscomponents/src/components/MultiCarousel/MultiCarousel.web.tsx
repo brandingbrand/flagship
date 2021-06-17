@@ -323,7 +323,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             flexBasis: 'auto',
             flexDirection: 'row',
             overflowY: 'hidden',
-            overflowX: 'scroll'
+            overflowX: this.props.hideOverflow ? 'hidden' : 'scroll'
           }}
           onMouseDown={this.handleMouseStart}
           onMouseUp={this.handleMouseEnd}
