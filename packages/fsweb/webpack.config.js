@@ -237,7 +237,7 @@ module.exports = function(env, options) {
     globalConfig.output.filename = `static/js/[name].${timestamp}.js`;
     globalConfig.optimization = {
       usedExports: true,
-      minimize: true,
+      minimize: env && env.enableDev ? false : true,
       minimizer: [
         new TerserJsPlugin({
           test: /.m?[jt]sx?/,
