@@ -15,6 +15,7 @@ export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
     AppRegistry.runApplication('Flagship', {
       rootTag: this.root,
+      hydrate: this.config.hydrate,
       initialProps: {}
     });
   }
