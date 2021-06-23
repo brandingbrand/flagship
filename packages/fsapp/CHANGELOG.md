@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.34](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.33...v11.0.0-alpha.34) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** syncronous initialization ([8debecb](https://github.com/brandingbrand/flagship/commit/8debecb407a9690785fb32c555800905149d5eab))
+
+
+### Features
+
+* **fsapp:** expose history type ([9273e72](https://github.com/brandingbrand/flagship/commit/9273e7284c3b1d1fba78e0d80ae547677b58ea40))
+
+
+
+
+
 # [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
 
 
