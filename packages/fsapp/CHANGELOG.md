@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** broken links ([96aa986](https://github.com/brandingbrand/flagship/commit/96aa9860a465e9859c098b07cab646797c55b8b5))
+
+
+### Features
+
+* **fsapp:** FS-2511 expose hydrate config option for beta app ([3974a07](https://github.com/brandingbrand/flagship/commit/3974a0735f40f033446968c1e986c8e203f2dc13))
+* **fsapp:** FS-2511 expose hydrate RNW config option ([0ded47f](https://github.com/brandingbrand/flagship/commit/0ded47fe5ff2d596ad5797a3eb6ae1c4a8272c8e))
+
+
+
+
+
 # [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
 
 

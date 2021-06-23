@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
+
+
+### Features
+
+* **fscomponents:** add ability to hide oveflow on carousel ([379ccb0](https://github.com/brandingbrand/flagship/commit/379ccb080f6f4d3b416dbc017ecd9ee33f35d209))
+
+
+
+
+
 # [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
