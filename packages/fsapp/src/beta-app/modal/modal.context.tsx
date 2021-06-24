@@ -1,7 +1,11 @@
-import type { ModalComponentProps, ModalComponentType, ModalService } from './types';
+import type {
+  ModalComponentProps,
+  ModalComponentType,
+  ModalProviderProps,
+  ModalService
+} from './types';
 
 import React, {
-  ComponentType,
   createContext,
   FC,
   Fragment,
@@ -28,10 +32,6 @@ const ModalContext = createContext<ModalService>({
 });
 
 export const useModals = () => useContext(ModalContext);
-
-export interface ModalProviderProps {
-  readonly screenWrap?: ComponentType;
-}
 
 export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) => {
   const [registeredModals, setRegisteredModals] = useState(new Set<string>());
