@@ -83,7 +83,7 @@ export class FSRouter extends FSRouterBase {
 
                 return (
                   <ActivatedRouteProvider {...activatedRoute} loading={loading}>
-                    <ModalProvider>
+                    <ModalProvider screenWrap={this.options.screenWrap}>
                       <ButtonProvider>
                         <VersionOverlay>
                           <AwaitedComponent componentId={componentId} />
