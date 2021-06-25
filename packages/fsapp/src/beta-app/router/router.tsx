@@ -28,6 +28,11 @@ import {
 import { FSRouterBase } from './router.base';
 import { trackView } from './utils';
 
+// This is a hack. I am not happy about having to do this hack.
+// But it is required for Android. If no components are registered
+// Synchronously then errors are thrown and touch responses are eaten.
+Navigation.registerComponent('noop', () => () => null);
+
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
