@@ -30,7 +30,7 @@
     "react": "^16.13.1",
     "react-content-loader": "^5.1.2",
     "react-dom": "^16.11.0",
-    "react-id-swiper": "^2.0.0",
+    "react-id-swiper": "^4.0.0",
     "react-native": "^0.63.2",
     "react-native-elements": "^2.0.2",
     "react-native-masked-text": "^1.13.0",
