@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscart",
   "sideEffects": false,
-  "version": "11.0.0-alpha.34",
+  "version": "11.0.0-alpha.35",
   "description": "components for cart",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,9 +11,9 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^11.0.0-alpha.34",
-    "@brandingbrand/fscomponents": "^11.0.0-alpha.34",
-    "@brandingbrand/fsi18n": "^11.0.0-alpha.34",
+    "@brandingbrand/fscommerce": "^11.0.0-alpha.35",
+    "@brandingbrand/fscomponents": "^11.0.0-alpha.35",
+    "@brandingbrand/fsi18n": "^11.0.0-alpha.35",
     "react": "^16.13.1",
     "react-native": "^0.63.2"
   },

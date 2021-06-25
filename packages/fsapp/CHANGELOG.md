@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.35](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.34...v11.0.0-alpha.35) (2021-06-24)
+
+
+### Bug Fixes
+
+* **fsapp:** modal context web props ([957b6af](https://github.com/brandingbrand/flagship/commit/957b6afd134dc7a306dd709167a03b94a82d48e7))
+
+
+### Features
+
+* **fsapp:** redux in modals ([09afcab](https://github.com/brandingbrand/flagship/commit/09afcab95630066d973f10d0284487c5270d1dc6))
+
+
+
+
+
 # [11.0.0-alpha.34](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.33...v11.0.0-alpha.34) (2021-06-23)
 
 
