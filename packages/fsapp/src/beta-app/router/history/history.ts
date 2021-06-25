@@ -109,7 +109,7 @@ export class History implements FSRouterHistory {
 
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
-        Navigation.events().registerAppLaunchedListener(async () => {
+        setTimeout(async () => {
           const activations = activatedPaths.map(async path => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
