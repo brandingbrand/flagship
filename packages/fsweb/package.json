@@ -27,7 +27,7 @@
     "babel-plugin-transform-imports": "^2.0.0",
     "cache-loader": "^4.0.0",
     "cookie-parser": "^1.4.5",
-    "copy-webpack-plugin": "^5.1.0",
+    "copy-webpack-plugin": "^9.0.0",
     "core-js": "^3.0.0",
     "cors": "^2.8.5",
     "css-loader": "^3.0.0",
