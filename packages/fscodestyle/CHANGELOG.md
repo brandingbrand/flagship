@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.36](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.35...v11.0.0-alpha.36) (2021-06-25)
+
+**Note:** Version bump only for package @brandingbrand/fscodestyle
+
+
+
+
+
 # [11.0.0-alpha.35](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.34...v11.0.0-alpha.35) (2021-06-24)
 
 **Note:** Version bump only for package @brandingbrand/fscodestyle
