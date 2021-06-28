@@ -10,21 +10,6 @@
   A tool for building your best shopping app
 </p>
 
-<p align="center">
-  <a href="https://travis-ci.org/brandingbrand/flagship">
-    <img alt="Travis Status"
-      src="https://travis-ci.org/brandingbrand/flagship.svg?branch=master">
-  </a>
-  <a href="https://greenkeeper.io/">
-    <img alt="Greenkeeper"
-      src="https://badges.greenkeeper.io/brandingbrand/flagship.svg?ts=1523929763709">
-  </a>
-  <a href="https://lernajs.io/">
-    <img alt="Lerna"
-      src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg">
-  </a>
-</p>
-
 # Flagship
 
 * [About](#about)

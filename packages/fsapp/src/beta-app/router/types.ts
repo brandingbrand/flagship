@@ -77,6 +77,7 @@ export interface BaseRoute {
 
 export type TopBarStyle = Omit<OptionsTopBar, 'title'> & {
   title?: Omit<OptionsTopBarTitle, 'text'>;
+  leftButtons?: never;
   rightButtons?: never;
 };
 

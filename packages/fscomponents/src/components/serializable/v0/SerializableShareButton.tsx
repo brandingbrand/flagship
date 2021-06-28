@@ -3,7 +3,7 @@ import { ImageStyle } from 'react-native';
 import {
   ShareButton,
   ShareButtonProps
-} from '../ShareButton';
+} from '../../ShareButton';
 
 export interface SerializableShareButtonProps extends ShareButtonProps {
   style?: ImageStyle;
