@@ -91,7 +91,7 @@ export class FSRouter extends FSRouterBase {
       return (
         <Screen key={id} path={path} exact={route.exact}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
-            <ModalProvider>
+            <ModalProvider screenWrap={this.options.screenWrap}>
               <LazyComponent componentId={id} />
             </ModalProvider>
           </ActivatedRouteProvider>

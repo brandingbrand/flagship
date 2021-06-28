@@ -8,7 +8,7 @@ import type {
   StackedLocation
 } from './types';
 
-import { InteractionManager, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -109,7 +109,7 @@ export class History implements FSRouterHistory {
 
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
-        InteractionManager.runAfterInteractions(async () => {
+        setTimeout(async () => {
           const activations = activatedPaths.map(async path => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {

@@ -57,4 +57,15 @@ storiesOf('ZoomCarousel', module)
       showThumbnails={boolean('Show Thumbnails', true)}
       showImageCounter={boolean('Show Image Counter', true)}
     />
+)).add('without horizontal overflow', () => (
+  <ZoomCarousel
+    images={object('Images', defaultImages)}
+    peekSize={number('Peek Size', 20)}
+    gapSize={number('Gap Size', 10)}
+    centerMode={boolean('Center Mode', true)}
+    showArrow={boolean('Show Arrow', true)}
+    hideZoomButton={boolean('Hide Zoom Button', false)}
+    fillContainer={boolean('Fill Container', false)}
+    hideOverflow={true}
+  />
 ));
