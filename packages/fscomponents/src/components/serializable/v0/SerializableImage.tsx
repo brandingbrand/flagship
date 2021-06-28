@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Image, ImageProps, ImageStyle, TouchableOpacity } from 'react-native';
-import { extractHostStyles } from '../../lib/style';
+import { extractHostStyles } from '../../../lib/style';
 import { useNavigator } from '@brandingbrand/fsapp';
 
 export interface SerializableImageProps
@@ -25,7 +25,7 @@ export interface SerializableImageProps
   onPress?: (href?: string) => void;
 }
 
-export const FSSerializableImage = React.memo<SerializableImageProps>(
+export const SerializableImage = React.memo<SerializableImageProps>(
   ({ onPress, style, href, ...props }) => {
     const [host, self] = extractHostStyles(style);
     const navigator = useNavigator();

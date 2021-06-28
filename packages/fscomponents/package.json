@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
-  "version": "11.0.0-alpha.24",
+  "version": "11.0.0-alpha.36",
   "description": "Reusable, cross-platform frontend components",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,12 +11,12 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsapp": "^11.0.0-alpha.24",
-    "@brandingbrand/fscommerce": "^11.0.0-alpha.24",
-    "@brandingbrand/fsengage": "^11.0.0-alpha.24",
-    "@brandingbrand/fsfoundation": "^11.0.0-alpha.24",
-    "@brandingbrand/fsi18n": "^11.0.0-alpha.24",
-    "@brandingbrand/fsnetwork": "^11.0.0-alpha.24",
+    "@brandingbrand/fsapp": "^11.0.0-alpha.36",
+    "@brandingbrand/fscommerce": "^11.0.0-alpha.36",
+    "@brandingbrand/fsengage": "^11.0.0-alpha.36",
+    "@brandingbrand/fsfoundation": "^11.0.0-alpha.36",
+    "@brandingbrand/fsi18n": "^11.0.0-alpha.36",
+    "@brandingbrand/fsnetwork": "^11.0.0-alpha.36",
     "@brandingbrand/tcomb-form-native": "^0.6.20",
     "@react-native-community/async-storage": "^1.9.0",
     "@types/yup": "^0.28.1",

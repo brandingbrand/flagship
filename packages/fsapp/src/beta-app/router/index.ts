@@ -15,10 +15,12 @@ export {
   useRoutePath,
   useRouteQuery,
   ButtonContext,
-  useButtons
+  useButtons,
+  useButtonEffect
 } from './context';
 export { ScreenProps, makeScreen } from './make-screen';
 
+export type { FSRouterHistory } from './history';
 export type {
   RouterConfig,
   FSRouterConstructor,

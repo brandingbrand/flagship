@@ -35,6 +35,7 @@ import translate, { translationKeys } from '../lib/translations';
 import { connect } from 'react-redux';
 import { AccountActionProps, signOut } from '../providers/accountProvider';
 import PSProductCarousel from '../components/PSProductCarousel';
+import { CMSSlot } from '../lib/cms';
 
 const arrow = require('../../assets/images/arrow.png');
 const logo = require('../../assets/images/pirateship-120.png');
@@ -284,8 +285,8 @@ export class UnwrappedShop extends Component<ShopProps> {
     );
   }
 
-  handleHeroCarouselPress = (item: PSHeroCarouselItem) => {
-    if (item.Link) {
+  handleHeroCarouselPress = (item: CMSSlot | PSHeroCarouselItem) => {
+    if ('Link' in item) {
       handleDeeplink(item.Link, this.props.navigator);
     }
   }
