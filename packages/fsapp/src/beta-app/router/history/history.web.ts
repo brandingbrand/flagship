@@ -153,9 +153,7 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public registerResolver(listener: ResolverListener): UnregisterCallback {
-    const id = uniqueId('resolver-subscriber');
-
+  public registerResolver(id: string, listener: ResolverListener): UnregisterCallback {
     this.activationObservers.set(id, listener);
     return () => {
       this.activationObservers.delete(id);
@@ -188,9 +186,11 @@ export class History implements FSRouterHistory {
   private async activateRoute(matchingRoute: MatchingRoute, state: unknown): Promise<void> {
     this.setLoading(true);
     const activatedRoute = await this.resolveRouteDetails(matchingRoute, state);
-    this.activationObservers.forEach(listener => {
-      listener(activatedRoute);
-    });
+    const observer = this.activationObservers.get(matchingRoute.id);
+    observer?.(activatedRoute);
+
+    const allObserver = this.activationObservers.get('all');
+    allObserver?.(activatedRoute);
 
     const title =
       typeof matchingRoute.title === 'function'

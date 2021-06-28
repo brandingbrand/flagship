@@ -28,6 +28,11 @@ import {
 import { FSRouterBase } from './router.base';
 import { trackView } from './utils';
 
+// This is a hack. I am not happy about having to do this hack.
+// But it is required for Android. If no components are registered
+// Synchronously then errors are thrown and touch responses are eaten.
+Navigation.registerComponent('noop', () => () => null);
+
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
@@ -55,10 +60,6 @@ export class FSRouter extends FSRouterBase {
     prefix: string = '',
     tab?: string | OptionsBottomTab
   ): void {
-    let routeDetails = defaultActivatedRoute;
-    this.history.registerResolver(details => {
-      routeDetails = details;
-    });
     const addedRoutes = new Set<string>();
 
     routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
@@ -67,6 +68,10 @@ export class FSRouter extends FSRouterBase {
       if (!addedRoutes.has(id)) {
         const LoadingPlaceholder = () => <>{this.options.loading}</>;
         if ('component' in route || 'loadComponent' in route) {
+          let routeDetails = defaultActivatedRoute;
+          this.history.registerResolver(id, details => {
+            routeDetails = details;
+          });
           const LazyComponent = lazyComponent<{ componentId: string }>(
             async () => {
               const AwaitedComponent =
@@ -83,7 +88,7 @@ export class FSRouter extends FSRouterBase {
 
                 return (
                   <ActivatedRouteProvider {...activatedRoute} loading={loading}>
-                    <ModalProvider>
+                    <ModalProvider screenWrap={this.options.screenWrap}>
                       <ButtonProvider>
                         <VersionOverlay>
                           <AwaitedComponent componentId={componentId} />

@@ -1,4 +1,4 @@
-import type { StandardContainerProps } from '../../models';
+import type { StandardContainerProps } from '../../../models';
 
 import React from 'react';
 import { FlexStyle, View, ViewProps, ViewStyle } from 'react-native';

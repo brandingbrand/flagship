@@ -31,7 +31,7 @@ export interface FSRouterHistory extends History {
   go(n: number): void;
 
   observeLoading(listener: LoadingListener): UnregisterCallback;
-  registerResolver(listener: ResolverListener): UnregisterCallback;
+  registerResolver(id: string, listener: ResolverListener): UnregisterCallback;
 
   updateTitle(title: RequiredTitle): void;
 }
