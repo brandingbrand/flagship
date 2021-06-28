@@ -36,7 +36,7 @@ class CMSBannerCarousel extends CMSBanner<CMSBannerCarouselProps> {
       <View style={this.props.style}>
         <MultiCarousel
           itemsPerPage={1}
-          items={cmsData.instances}
+          data={cmsData.instances}
           renderItem={this.renderInstance}
           {..._carouselProps}
         />

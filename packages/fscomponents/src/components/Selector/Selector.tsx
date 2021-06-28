@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import styles from '../../styles/Selector';
+import { style as styles } from '../../styles/Selector';
 import { Modal } from '../Modal';
 import { SelectorList } from './SelectorList';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
