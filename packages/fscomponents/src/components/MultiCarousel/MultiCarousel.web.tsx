@@ -1,10 +1,5 @@
 import React, { Component, MouseEvent, TouchEvent } from 'react';
-import {
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { findDOMNode } from 'react-dom';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -103,10 +98,10 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         itemWidth: this.getItemWidth(this.state.containerWidth)
       });
     }
-    if (this.props.items.length <= this.state.currentIndex) {
-      if (this.props.items.length) {
+    if (this.props.data.length <= this.state.currentIndex) {
+      if (this.props.data.length) {
         this.setState({
-          currentIndex: this.props.items.length - 1
+          currentIndex: this.props.data.length - 1
         });
       } else if (this.state.currentIndex !== 0) {
         this.setState({
@@ -117,8 +112,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
       animateItemChange();
     } else if (this.props.itemUpdated) {
       this.props.itemUpdated(
-        prevProps.items[this.state.currentIndex],
-        this.props.items[this.state.currentIndex],
+        prevProps.data[this.state.currentIndex],
+        this.props.data[this.state.currentIndex],
         this.state.currentIndex,
         animateItemChange
       );
@@ -142,9 +137,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     options = options || { animated: true };
     const { currentIndex } = this.state;
     const nextIndex =
-      currentIndex + 1 > this.getPageNum() - 1
-        ? this.getPageNum() - 1
-        : currentIndex + 1;
+      currentIndex + 1 > this.getPageNum() - 1 ? this.getPageNum() - 1 : currentIndex + 1;
 
     this.goTo(nextIndex, options);
   }
@@ -161,11 +154,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     const scrollViewElement = findDOMNode(this.scrollView?.current);
 
     if (scrollViewElement instanceof Element) {
-      animatedScrollTo(
-        scrollViewElement,
-        index * this.getPageWidth(),
-        200
-      ).catch(e => {
+      animatedScrollTo(scrollViewElement, index * this.getPageWidth(), 200).catch(e => {
         console.warn('animatedScrollTo error', e);
       });
     }
@@ -189,26 +178,19 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
 
   getPageNum = () => {
     return Math.ceil(
-      this.props.items.length /
-        Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
+      this.props.data.length / Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
     );
   }
 
   getPageWidth = () => {
-    return (
-      this.state.itemWidth *
-      Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
-    );
+    return this.state.itemWidth * Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
   }
 
   getItemWidth = (containerWidth: number) => {
     const peekSize = this.props.peekSize || this.defaultPeekSize;
     const itemPerPage = this.props.itemsPerPage || this.defaultItemsPerPage;
 
-    return (
-      (containerWidth - peekSize * (this.props.centerMode ? 2 : 1)) /
-      itemPerPage
-    );
+    return (containerWidth - peekSize * (this.props.centerMode ? 2 : 1)) / itemPerPage;
   }
 
   handleMouseStart = (e: MouseEvent) => {
@@ -239,8 +221,8 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     if (e.touches.length) {
       this.handleEnd(e.touches[0].pageX);
     } else {
-      const pageX = this.initialScrollX + this.currentScrollX -
-        (this.scrollView?.current?.scrollLeft || 0);
+      const pageX =
+        this.initialScrollX + this.currentScrollX - (this.scrollView?.current?.scrollLeft || 0);
       this.handleEnd(pageX);
     }
   }
@@ -281,7 +263,7 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
   }
 
   renderSingle = () => {
-    if (!this.props.items || !this.props.items.length) {
+    if (!this.props.data || !this.props.data.length) {
       return null;
     }
 
@@ -291,26 +273,31 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
         onLayout={this.handleContainerSizeChange}
       >
         <View style={[{ width: this.state.itemWidth }, this.props.itemStyle]}>
-          {this.props.renderItem(this.props.items[0], 0)}
+          {this.props.renderItem({
+            index: 0,
+            item: this.props.data[0],
+            separators: {
+              highlight: () => undefined,
+              unhighlight: () => undefined,
+              updateProps: () => undefined
+            }
+          })}
         </View>
       </View>
     );
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // tslint:disable-next-line: cyclomatic-complexity
   render(): React.ReactNode {
     const pageNum = this.getPageNum();
 
-    if (this.props.items.length <= 1) {
+    if (this.props.data.length <= 1) {
       return this.renderSingle();
     }
 
     return (
       <Animated.View
-        style={[
-          this.props.style,
-          { opacity: this.state.opacity, overflow: 'hidden' }
-        ]}
+        style={[this.props.style, { opacity: this.state.opacity, overflow: 'hidden' }]}
         onLayout={this.handleContainerSizeChange}
       >
         <div
@@ -323,20 +310,18 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
             flexBasis: 'auto',
             flexDirection: 'row',
             overflowY: 'hidden',
-            overflowX: 'scroll'
+            overflowX: this.props.hideOverflow ? 'hidden' : 'scroll'
           }}
           onMouseDown={this.handleMouseStart}
           onMouseUp={this.handleMouseEnd}
           onMouseMove={this.handleMouseMove}
         >
-          <View
-            style={{ width: this.props.centerMode ? this.props.peekSize : 0 }}
-          />
-          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width))
-            && this.props.items.map((item, i) => {
+          <View style={{ width: this.props.centerMode ? this.props.peekSize : 0 }} />
+          {(this.state.itemWidth || (this.props.itemStyle && this.props.itemStyle.width)) &&
+            this.props.data.map((item, index) => {
               return (
                 <View
-                  key={i}
+                  key={this.props.keyExtractor?.(item, index) ?? index}
                   style={[
                     {
                       width: this.state.itemWidth
@@ -344,55 +329,57 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
                     this.props.itemStyle
                   ]}
                 >
-                  {this.props.renderItem(item, i)}
+                  {this.props.renderItem({
+                    item,
+                    index,
+                    separators: {
+                      highlight: () => undefined,
+                      unhighlight: () => undefined,
+                      updateProps: () => undefined
+                    }
+                  })}
                 </View>
               );
-            })
-          }
+            })}
         </div>
 
-        {this.props.renderPageIndicator ? (
-          this.props.renderPageIndicator(
-            this.state.currentIndex,
-            this.props.items.length
-          )
-        ) : !this.props.hidePageIndicator && (
-          <PageIndicator
-            style={this.props.pageIndicatorStyle}
-            currentIndex={this.state.currentIndex}
-            itemsCount={pageNum}
-            dotStyle={this.props.dotStyle}
-            dotActiveStyle={this.props.dotActiveStyle}
-          />
+        {this.props.renderPageIndicator
+          ? this.props.renderPageIndicator(this.state.currentIndex, this.props.data.length)
+          : !this.props.hidePageIndicator && (
+              <PageIndicator
+                style={this.props.pageIndicatorStyle}
+                currentIndex={this.state.currentIndex}
+                itemsCount={pageNum}
+                dotStyle={this.props.dotStyle}
+                dotActiveStyle={this.props.dotActiveStyle}
+              />
+            )}
+
+        {this.state.currentIndex !== 0 && !!this.props.showArrow && (
+          <div onBlur={this.props.prevArrowOnBlur}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+              style={[S.goToPrev, this.props.prevArrowContainerStyle]}
+              onPress={this.goToPrev}
+            >
+              <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
+            </TouchableOpacity>
+          </div>
         )}
 
-        {this.state.currentIndex !== 0 &&
-          !!this.props.showArrow && (
-            <div onBlur={this.props.prevArrowOnBlur}>
-              <TouchableOpacity
-                accessibilityRole='button'
-                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
-                style={[S.goToPrev, this.props.prevArrowContainerStyle]}
-                onPress={this.goToPrev}
-              >
-                <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
-              </TouchableOpacity>
-            </div>
-          )}
-
-        {this.state.currentIndex !== pageNum - 1 &&
-          !!this.props.showArrow && (
-            <div onBlur={this.props.nextArrowOnBlur}>
-              <TouchableOpacity
-                accessibilityRole='button'
-                accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
-                style={[S.goToNext, this.props.nextArrowContainerStyle]}
-                onPress={this.goToNext}
-              >
-                <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
-              </TouchableOpacity>
-            </div>
-          )}
+        {this.state.currentIndex !== pageNum - 1 && !!this.props.showArrow && (
+          <div onBlur={this.props.nextArrowOnBlur}>
+            <TouchableOpacity
+              accessibilityRole='button'
+              accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+              style={[S.goToNext, this.props.nextArrowContainerStyle]}
+              onPress={this.goToNext}
+            >
+              <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
+            </TouchableOpacity>
+          </div>
+        )}
       </Animated.View>
     );
   }

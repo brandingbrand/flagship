@@ -5,6 +5,7 @@ import {
   Easing,
   Image,
   ImageProperties,
+  ListRenderItem,
   Modal,
   PanResponder,
   Platform,
@@ -23,10 +24,10 @@ export interface ZoomCarouselStateType {
   isZooming: boolean;
   isZoomVisible: boolean;
   isOpeningZoom: boolean;
-  orignalImageWidth: number;
-  orignalImageHeight: number;
-  orignalImageX: number;
-  orignalImageY: number;
+  originalImageWidth: number;
+  originalImageHeight: number;
+  originalImageX: number;
+  originalImageY: number;
   currentIndex: number;
   currentZoomIndex: number;
 }
@@ -152,7 +153,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   lastScrollX?: number;
   scrollView: any;
   lastPinchDistance?: number;
-  zoomOpenning: boolean = false;
+  zoomOpening: boolean = false;
   modalRef: any;
   initialScrollX: number = 0;
   panResponder: any;
@@ -171,11 +172,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     super(props);
 
     if (props.gapSize && props.gapSize !== Math.floor(props.gapSize)) {
-      console.error(
-        `ZoomCarousel: gapSize must be an integer but got ${
-          props.gapSize
-        }`
-      );
+      console.error(`ZoomCarousel: gapSize must be an integer but got ${props.gapSize}`);
     }
 
     const peekSize = props.peekSize || 0;
@@ -188,7 +185,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     this.imageWidth = this.itemWidth - gapSize;
     this.imageHeight = this.itemWidth - gapSize;
-    this.gapSizeScaled = gapSize * SCREEN_WIDTH / this.imageWidth;
+    this.gapSizeScaled = (gapSize * SCREEN_WIDTH) / this.imageWidth;
 
     this.openScale = new Animated.Value(0);
     this.scrollViewSize = new Animated.Value(this.imageWidth);
@@ -200,10 +197,10 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       isZooming: false,
       isZoomVisible: false,
       isOpeningZoom: false,
-      orignalImageWidth: 0,
-      orignalImageHeight: 0,
-      orignalImageX: 0,
-      orignalImageY: 0,
+      originalImageWidth: 0,
+      originalImageHeight: 0,
+      originalImageX: 0,
+      originalImageY: 0,
       currentIndex: 0,
       currentZoomIndex: 0
     };
@@ -221,21 +218,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
       onPanResponderGrant: (evt, gestureState) => {
         this.lastPinchDistance = undefined;
-        this.zoomOpenning = false;
+        this.zoomOpening = false;
       },
       onPanResponderMove: (evt, gestureState) => {
-        if (evt.nativeEvent.changedTouches.length > 1 && !this.zoomOpenning) {
+        if (evt.nativeEvent.changedTouches.length > 1 && !this.zoomOpening) {
           const distanceX = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageX -
-              evt.nativeEvent.changedTouches[1].pageX
+            evt.nativeEvent.changedTouches[0].pageX - evt.nativeEvent.changedTouches[1].pageX
           );
           const distanceY = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageY -
-              evt.nativeEvent.changedTouches[1].pageY
+            evt.nativeEvent.changedTouches[0].pageY - evt.nativeEvent.changedTouches[1].pageY
           );
-          const distance = Math.sqrt(
-            distanceX * distanceX + distanceY * distanceY
-          );
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
           if (this.lastPinchDistance === undefined) {
             this.lastPinchDistance = distance;
@@ -244,7 +237,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             if (distanceDiff > 5) {
               this.openZoom();
               this.lastPinchDistance = undefined;
-              this.zoomOpenning = true;
+              this.zoomOpening = true;
             }
           }
         }
@@ -264,8 +257,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       currentZoomIndex: nextIndex
     });
 
-    const nextOffsetX =
-      -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
+    const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
 
     this.multiCarousel.goToNext({ animated: false });
 
@@ -284,8 +276,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       currentZoomIndex: nextIndex
     });
 
-    const nextOffsetX =
-      -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
+    const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
 
     this.multiCarousel.goToPrev({ animated: false });
 
@@ -298,8 +289,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   goToZoomOrigin = () => {
     const { currentZoomIndex } = this.state;
-    const nextOffsetX =
-      -currentZoomIndex * SCREEN_WIDTH - currentZoomIndex * this.gapSizeScaled;
+    const nextOffsetX = -currentZoomIndex * SCREEN_WIDTH - currentZoomIndex * this.gapSizeScaled;
 
     Animated.parallel([
       Animated.timing(this.openScale, {
@@ -325,16 +315,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             isZoomVisible: true,
             isZooming: true,
             isOpeningZoom: true,
-            orignalImageWidth: width,
-            orignalImageHeight: height,
-            orignalImageX: px,
-            orignalImageY: py,
+            originalImageWidth: width,
+            originalImageHeight: height,
+            originalImageX: px,
+            originalImageY: py,
             currentZoomIndex: this.state.currentIndex
           },
           () => {
             const andjustForContainer =
               (this.zoomContainerWidth -
-                this.zoomContainerWidth * this.imageWidth / SCREEN_WIDTH) /
+                (this.zoomContainerWidth * this.imageWidth) / SCREEN_WIDTH) /
               2;
 
             const peekSize = this.props.peekSize || 0;
@@ -343,10 +333,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               ? SCREEN_WIDTH - 2 * peekSize - gapSize
               : SCREEN_WIDTH - peekSize;
             this.scrollViewPosition.setValue({
-              x:
-                -this.state.currentIndex * offsetWidth -
-                andjustForContainer +
-                px,
+              x: -this.state.currentIndex * offsetWidth - andjustForContainer + px,
               y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + py
             });
 
@@ -381,9 +368,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   closeZoom = () => {
     const andjustForContainer =
-      (this.zoomContainerWidth -
-        this.zoomContainerWidth * this.imageWidth / SCREEN_WIDTH) /
-      2;
+      (this.zoomContainerWidth - (this.zoomContainerWidth * this.imageWidth) / SCREEN_WIDTH) / 2;
 
     const peekSize = this.props.peekSize || 0;
     const gapSize = this.props.gapSize || defaultGapSize;
@@ -415,11 +400,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               x:
                 -this.state.currentIndex * offsetWidth -
                 andjustForContainer +
-                this.state.orignalImageX,
-              y:
-                (this.imageHeight - SCREEN_HEIGHT) / 2 +
-                HEADER_HEIGHT +
-                this.state.orignalImageY
+                this.state.originalImageX,
+              y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + this.state.originalImageY
             }
           })
         ]).start(() => {
@@ -443,8 +425,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
   handleItemMoveOutY = (offsetY: number) => {
     const itemSnapX =
-      this.state.currentZoomIndex * SCREEN_WIDTH +
-      this.state.currentZoomIndex * this.gapSizeScaled;
+      this.state.currentZoomIndex * SCREEN_WIDTH + this.state.currentZoomIndex * this.gapSizeScaled;
 
     const halfScreenHeight = SCREEN_HEIGHT / 2;
 
@@ -452,15 +433,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       x: -itemSnapX,
       y: offsetY
     });
-    this.openScale.setValue(
-      (halfScreenHeight - Math.abs(offsetY)) / halfScreenHeight
-    );
+    this.openScale.setValue((halfScreenHeight - Math.abs(offsetY)) / halfScreenHeight);
   }
 
   handleItemMoveOutX = (offsetX: any) => {
     const itemSnapX =
-      this.state.currentZoomIndex * SCREEN_WIDTH +
-      this.state.currentZoomIndex * this.gapSizeScaled;
+      this.state.currentZoomIndex * SCREEN_WIDTH + this.state.currentZoomIndex * this.gapSizeScaled;
 
     const allItemSnapX =
       (this.props.images.length - 1) * SCREEN_WIDTH +
@@ -468,8 +446,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     let scrollViewOffsetX = offsetX - itemSnapX;
 
-    scrollViewOffsetX =
-      scrollViewOffsetX > 0 ? scrollViewOffsetX / 3 : scrollViewOffsetX;
+    scrollViewOffsetX = scrollViewOffsetX > 0 ? scrollViewOffsetX / 3 : scrollViewOffsetX;
 
     scrollViewOffsetX =
       scrollViewOffsetX < -allItemSnapX
@@ -535,21 +512,13 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     if (this.props.renderModalContent) {
       return (
-        <Modal
-          visible={this.state.isZooming}
-          transparent={true}
-          onRequestClose={this.closeZoom}
-        >
+        <Modal visible={this.state.isZooming} transparent={true} onRequestClose={this.closeZoom}>
           {this.props.renderModalContent(this.closeZoom)}
         </Modal>
       );
     } else {
       return (
-        <Modal
-          visible={this.state.isZooming}
-          transparent={true}
-          onRequestClose={this.closeZoom}
-        >
+        <Modal visible={this.state.isZooming} transparent={true} onRequestClose={this.closeZoom}>
           <ZoomImages
             gapSizeScaled={this.gapSizeScaled}
             zoomContainerWidth={this.zoomContainerWidth}
@@ -572,17 +541,10 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           />
 
           <Animated.View
-            style={[
-              S.pageIndicatorZoom,
-              opacityStyle,
-              this.props.pageIndicatorZoomStyle
-            ]}
+            style={[S.pageIndicatorZoom, opacityStyle, this.props.pageIndicatorZoomStyle]}
           >
             {this.props.renderPageIndicator ? (
-              this.props.renderPageIndicator(
-                this.state.currentIndex,
-                this.props.images.length
-              )
+              this.props.renderPageIndicator(this.state.currentIndex, this.props.images.length)
             ) : (
               <PageIndicator
                 currentIndex={this.state.currentIndex}
@@ -606,15 +568,15 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   }
 
   itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
-    if (newItem.src &&
-      ((newItem.src.uri ?
-      newItem.src.uri !== oldItem.src.uri :
-      newItem.src !== oldItem.src))) {
+    if (
+      newItem.src &&
+      (newItem.src.uri ? newItem.src.uri !== oldItem.src.uri : newItem.src !== oldItem.src)
+    ) {
       changed();
     }
   }
 
-  renderImage = (item: ImageData, index: number) => {
+  renderImage: ListRenderItem<ImageData> = ({ item, index }) => {
     const gapSize = this.props.gapSize || defaultGapSize;
 
     if (this.props.renderImage) {
@@ -673,11 +635,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       <MultiCarousel
         ref={this.extractMultiCarousel}
         onSlideChange={this.handleSlideChange}
-        peekSize={
-          peekSize + (this.props.centerMode ? gapSize / 2 : 0)
-        }
+        peekSize={peekSize + (this.props.centerMode ? gapSize / 2 : 0)}
         itemsPerPage={1}
-        items={this.props.images}
+        data={this.props.images}
         itemUpdated={this.itemUpdated}
         renderItem={this.renderImage}
         showArrow={this.props.showArrow}
@@ -702,9 +662,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             style={this.props.fillContainer ? S.fullHeight : null}
             {...this.panResponder.panHandlers}
           >
-
-          {this.renderCarousel()}
-
+            {this.renderCarousel()}
           </View>
 
           {this.renderModal()}
@@ -728,17 +686,11 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
         {this.props.showThumbnails &&
           (this.props.renderThumbnails ? (
-            this.props.renderThumbnails(
-              this.state.currentIndex,
-              this.handleThumbPress
-            )
+            this.props.renderThumbnails(this.state.currentIndex, this.handleThumbPress)
           ) : (
             <ScrollView
               horizontal={true}
-              contentContainerStyle={[
-                S.thumbnailContainer,
-                this.props.thumbnailContainerStyle
-              ]}
+              contentContainerStyle={[S.thumbnailContainer, this.props.thumbnailContainerStyle]}
             >
               {this.props.images.map((img, i) => (
                 <TouchableOpacity
@@ -752,11 +704,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                   accessibilityRole={'button'}
                   accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
                 >
-                  <Image
-                    resizeMode='cover'
-                    source={img.src}
-                    style={S.thumbnailImg}
-                  />
+                  <Image resizeMode='cover' source={img.src} style={S.thumbnailImg} />
                 </TouchableOpacity>
               ))}
             </ScrollView>

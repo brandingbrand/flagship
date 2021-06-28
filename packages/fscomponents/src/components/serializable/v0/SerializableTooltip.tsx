@@ -2,8 +2,8 @@
 import React from 'react';
 import { Tooltip, TooltipProps } from 'react-native-elements';
 import { FlexStyle, Platform, Text, TextStyle, ViewStyle } from 'react-native';
-import { Modal } from '../Modal';
-import { StandardContainerProps } from '../../models';
+import { Modal } from '../../Modal';
+import { StandardContainerProps } from '../../../models';
 
 export interface PreStandardizedTooltipProps
   extends Pick<
@@ -36,7 +36,7 @@ export interface PreStandardizedTooltipProps
 
 export type SerializableTooltipProps = StandardContainerProps<PreStandardizedTooltipProps>;
 
-export const FSSerializableTooltip = React.memo<SerializableTooltipProps>(
+export const SerializableTooltip = React.memo<SerializableTooltipProps>(
   ({ popover, textStyle, style, children, skipAndroidStatusBar, ...props }) => {
     return (
       <Tooltip
