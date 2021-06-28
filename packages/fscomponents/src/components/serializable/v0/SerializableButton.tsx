@@ -9,10 +9,10 @@ import {
   ViewStyle
 } from 'react-native';
 import { useNavigator } from '@brandingbrand/fsapp';
-import { ButtonProps } from '../Button';
-import { border, palette as defaultPalette } from '../../styles/variables';
-import { style as S, stylesSize, stylesTextSize } from '../../styles/Button';
-import { extractHostStyles } from '../../lib/style';
+import { ButtonProps } from '../../Button';
+import { border, palette as defaultPalette } from '../../../styles/variables';
+import { style as S, stylesSize, stylesTextSize } from '../../../styles/Button';
+import { extractHostStyles } from '../../../lib/style';
 
 export interface SerializableButtonProps
   extends Pick<
@@ -40,7 +40,7 @@ export interface SerializableButtonProps
   noPadding?: boolean;
 }
 
-export const FSSerializableButton = React.memo<
+export const SerializableButton = React.memo<
   SerializableButtonProps & {
     onPress?: (href: string) => void;
   }

@@ -8,7 +8,7 @@ import {
   boolean, number, object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import { StyleSheet } from 'react-native';
+import { ListRenderItem, StyleSheet } from 'react-native';
 
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,
@@ -27,13 +27,13 @@ const style = StyleSheet.create({
 });
 
 
-const renderItem = (item: any) => {
+const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
   return (
     <ProductItem
-      id={item.id}
+      id={`${item.id}`}
       handle={item.title}
       title={item.title}
-      image={item.image}
+      image={{ uri: item.image }}
       imageStyle={object('imageStyle', style.imageStyle)}
       contentStyle={object('contentStyle', style.contentStyle)}
       price={{
@@ -49,7 +49,7 @@ const renderItem = (item: any) => {
 storiesOf('MultiCarousel', module)
   .add('basic usage', () => (
     <MultiCarousel
-      items={productItems}
+      data={productItems}
       renderItem={renderItem}
       itemsPerPage={number('itemsPerPage', 3)}
       showArrow={boolean('arrow?', true)}

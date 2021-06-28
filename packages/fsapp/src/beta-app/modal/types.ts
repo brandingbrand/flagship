@@ -27,3 +27,7 @@ export type ModalComponentType<T = void, P = {}> = ComponentType<ModalComponentP
   readonly options?: ModalOptions;
   readonly topBarOptions?: TopBarStyle;
 };
+
+export interface ModalProviderProps {
+  readonly screenWrap?: ComponentType;
+}
