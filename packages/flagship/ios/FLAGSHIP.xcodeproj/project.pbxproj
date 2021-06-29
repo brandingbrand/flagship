@@ -43,7 +43,7 @@
 		F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "FLAGSHIP/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		F979949320640E35006BFFBD /* NativeConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeConstants.m; path = FLAGSHIP/NativeConstants.m; sourceTree = "<group>"; };
 		F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = FLAGSHIP/LaunchImages.xcassets; sourceTree = "<group>"; };
-		70DDE125CF18417ABBB0C386 /* RNSslPinning.xcodeproj */ = {isa = PBXFileReference; name = "RNSslPinning.xcodeproj"; path = "../node_modules/react-native-ssl-pinning/ios/RNSslPinning.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		70DDE125CF18417ABBB0C386 /* RNSslPinning.xcodeproj */ = {isa = PBXFileReference; name = "RNSslPinning.xcodeproj"; path = "../../../node_modules/react-native-ssl-pinning/ios/RNSslPinning.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		2228824746354A57807CEAEB /* libRNSslPinning.a */ = {isa = PBXFileReference; name = "libRNSslPinning.a"; path = "libRNSslPinning.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
