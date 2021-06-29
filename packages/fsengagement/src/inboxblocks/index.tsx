@@ -1,9 +1,9 @@
 
-import TextBlock from './TextBlock';
-import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
-import VideoBlock from './VideoBlock';
-import Card from './Card';
+import { TextBlock } from './TextBlock';
+import { CTABlock } from './CTABlock';
+import { ImageBlock } from './ImageBlock';
+import { VideoBlock } from './VideoBlock';
+import { Card } from './Card';
 import Story from './Story';
 import DividerBlock from './DividerBlock';
 import TwinCTABlock from './TwinCTABlock';
@@ -13,17 +13,25 @@ import FeaturedTopCard from './FeaturedTopCard';
 import ProductCarouselBlock from './ProductCarouselBlock';
 import GridWallBlock from './GridWallBlock';
 import TextWithIconBlock from './TextWithIconBlock';
-import EventCard from './EventCard';
+import { EventCard } from './EventCard';
 import ImageCarouselBlock from './ImageCarouselBlock';
 import SimpleCard from './SimpleCard';
 import RoundedImageCard from './RoundedImageCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
 import FullScreenImageCard from './FullScreenImageCard';
-import RecipeBlock from './RecipeBlock';
+import { RecipeBlock } from './RecipeBlock';
 import InboxWrapper from './InboxWrapper';
 import ImageGrid from './ImageGrid';
 import WhiteInboxWrapper from './WhiteInboxWrapper';
-import DemoProductCarouselBlock from './DemoProductCarouselBlock';
+import TextBanner from './TextBanner';
+import { ImageCard } from './ImageCard';
+import CustomCarouselBlock from './CustomCarouselBlock';
+import { VideoCard } from './VideoCard';
+import StackedButtons from './StackedButtons';
+import { TitleWithLink } from './TitleWithLink';
+import ImageWithText from './ImageWithTextBlock';
+import IconText from './IconTextBlock';
+import ImageWithOverlay from './ImageWithOverlay';
 
 export default {
   Text: TextBlock,
@@ -40,7 +48,6 @@ export default {
   GridWall: GridWallBlock,
   TextWithIcon: TextWithIconBlock,
   InboxWrapper,
-  DemoProductCarousel: DemoProductCarouselBlock,
   FeaturedTopCard,
   RoundedImageCard,
   FullScreenImageCard,
@@ -50,5 +57,14 @@ export default {
   Share: ShareBlock,
   ShopIngredients: ShopIngredientsBlock,
   story: Story,
-  RecipeList: RecipeBlock
+  RecipeList: RecipeBlock,
+  ImageWithOverlay,
+  TextBanner,
+  ImageCard,
+  VideoCard,
+  ImageWithText,
+  StackedButtons,
+  TitleWithLink,
+  CustomCarousel: CustomCarouselBlock,
+  IconText
 };

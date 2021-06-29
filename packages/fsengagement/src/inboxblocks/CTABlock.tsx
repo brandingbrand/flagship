@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   Image,
   StyleProp,
@@ -10,6 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { CardContext, EngagementContext } from '../lib/contexts';
 
 import {
   Action,
@@ -19,7 +19,8 @@ import {
 } from '../types';
 
 const images: any = {
-  rightArrow: require('../../assets/images/rightArrow.png')
+  rightArrow: require('../../assets/images/rightArrow.png'),
+  rightBlockArrow: require('../../assets/images/rightBlockArrow.png')
 };
 
 const styles = StyleSheet.create({
@@ -57,21 +58,22 @@ export interface CTABlockProps extends EmitterProps {
   onBack?: () => void;
   localization?: LocalizationData[];
 }
+export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
+  const { buttonStyle, textStyle, containerStyle, icon, localization } = props;
+  let { text } = props;
+  const { language } = React.useContext(EngagementContext);
 
-export default class CTABlock extends Component<CTABlockProps> {
-  static contextTypes: any = {
-    story: PropTypes.object,
-    cardActions: PropTypes.object,
-    handleAction: PropTypes.func,
-    handleStoryAction: PropTypes.func,
-    name: PropTypes.string,
-    id: PropTypes.string,
-    language: PropTypes.string,
-    cardPosition: PropTypes.number
-  };
+  const filterLocalization = localization && localization.find(item => {
+    return item.language === language;
+  }) || null;
+  if (filterLocalization) {
+    text = filterLocalization.value;
+  }
 
-  handleActionWithStory = (action: string, actions: Action, story: JSON) => {
-    const { handleAction, handleStoryAction, cardPosition } = this.context;
+  const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
+    const { handleAction, cardPosition } = React.useContext(EngagementContext);
+    const { handleStoryAction } = React.useContext(CardContext);
+
     if (story.html) {
       return handleAction({
         type: 'blog-url',
@@ -83,85 +85,59 @@ export default class CTABlock extends Component<CTABlockProps> {
       // go to story card
       return handleStoryAction(story);
     } else if (story && actions && actions.type !== 'story') {
-      return this.handleActionNoStory(actions);
+      return handleActionNoStory(actions);
     }
     return null;
-  }
+  };
 
-  handleActionNoStory = (actions: Action) => {
-    const { handleAction, cardActions, cardPosition } = this.context;
+  const handleActionNoStory = (actions: Action) => {
+    const { handleAction, cardPosition } = React.useContext(EngagementContext);
+    const { cardActions } = React.useContext(CardContext);
     if (actions && !actions.value) {
       return;
     }
     if (actions && actions.type) {
       return handleAction({
         ...actions,
-        name: this.props.name,
-        id: this.props.id,
+        name: props.name,
+        id: props.id,
         position: cardPosition
       });
     }
     // tappable card with no story - CTAs use actions of container card
     return handleAction({
       ...cardActions,
-      name: this.props.name,
-      id: this.props.id,
+      name: props.name,
+      id: props.id,
       position: cardPosition
     });
-  }
+  };
 
-  takeAction = (action: string, actions: Action): void => {
-    const { story } = this.context;
+  const takeAction = (action: string, actions: Action): void => {
+    const { story } = React.useContext(CardContext);
     if (action === 'story' || story) {
-      return this.handleActionWithStory(action, actions, story);
+      return handleActionWithStory(action, actions, story);
     }
-    return this.handleActionNoStory(actions);
-  }
+    return handleActionNoStory(actions);
+  };
 
-  onButtonPress = () => {
-    this.takeAction(this.props.action, this.props.actions);
-  }
+  const onButtonPress = () => {
+    takeAction(props.action, props.actions);
+  };
 
-  shouldComponentUpdate(nextProps: CTABlockProps): boolean {
-    return nextProps.buttonStyle !== this.props.buttonStyle ||
-      nextProps.textStyle !== this.props.textStyle ||
-      nextProps.containerStyle !== this.props.containerStyle ||
-      nextProps.text !== this.props.text ||
-      nextProps.icon !== this.props.icon;
-  }
+  return (
+    <View style={[styles.buttonContainer, containerStyle]}>
+      <TouchableOpacity
+        style={buttonStyle}
+        onPress={onButtonPress}
+        activeOpacity={1}
+      >
+        <View style={styles.buttonContents}>
+          <Text style={textStyle}>{text}</Text>
+          {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
+        </View>
 
-  render(): JSX.Element {
-    const {
-      buttonStyle,
-      textStyle,
-      containerStyle,
-      icon,
-      localization
-    } = this.props;
-
-    let { text } = this.props;
-    const { language } = this.context;
-    const filterLocalization = localization && localization.find(item => {
-      return item.language === language;
-    }) || null;
-    if (filterLocalization) {
-      text = filterLocalization.value;
-    }
-    return (
-      <View style={[styles.buttonContainer, containerStyle]}>
-        <TouchableOpacity
-          style={buttonStyle}
-          onPress={this.onButtonPress}
-          activeOpacity={1}
-        >
-          <View style={styles.buttonContents}>
-            <Text style={textStyle}>{text}</Text>
-            {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
-          </View>
-
-        </TouchableOpacity>
-      </View>
-    );
-
-  }
-}
+      </TouchableOpacity>
+    </View>
+  );
+});

@@ -13,7 +13,7 @@ import {
 
 import { CTABlock } from './CTABlock';
 
-export interface CTABlockProps extends ScreenProps {
+export interface StackedButtonsProps extends ScreenProps {
   story?: JSON;
   contents: any;
   containerStyle?: StyleProp<ViewStyle>;
@@ -21,15 +21,11 @@ export interface CTABlockProps extends ScreenProps {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   item: {
     flex: 1
   }
 });
-export default class TwinCTABlock extends Component<CTABlockProps> {
+export default class StackedButtons extends Component<StackedButtonsProps> {
   render(): JSX.Element {
     const {
       containerStyle,
@@ -39,16 +35,16 @@ export default class TwinCTABlock extends Component<CTABlockProps> {
     } = this.props;
 
     return (
-      <View style={[styles.row, containerStyle]}>
-        <View style={styles.item}>
+      <View style={containerStyle}>
+        <View style={[styles.item, buttonSpacing]}>
           <CTABlock
-            {...contents.leftCTA}
+            {...contents.topCTA}
             story={story}
           />
         </View>
-        <View style={[styles.item, buttonSpacing]}>
+        <View style={styles.item}>
           <CTABlock
-            {...contents.rightCTA}
+            {...contents.bottomCTA}
             story={story}
           />
         </View>

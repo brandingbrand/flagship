@@ -38,7 +38,7 @@ import {
   CardProps,
   JSON
 } from '../types';
-import TextBlock from './TextBlock';
+import { TextBlock } from './TextBlock';
 import {
   OptionsModalPresentationStyle
 // tslint:disable-next-line: no-submodule-imports
@@ -130,7 +130,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    return this.props.navigator.showModal({
+    return this.props.navigator?.showModal({
       component: {
         name: 'EngagementComp',
         options: {

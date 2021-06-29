@@ -7,8 +7,8 @@ import {
   ViewStyle
 } from 'react-native';
 
-import TextBlock from './TextBlock';
-import ImageBlock from './ImageBlock';
+import { TextBlock } from './TextBlock';
+import { ImageBlock } from './ImageBlock';
 
 const styles = StyleSheet.create({
   eventTitle: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: 25,
     alignItems: 'center',
     paddingTop: 2
-  },
+},
   whenIcon: {
     width: 20,
     height: 20
