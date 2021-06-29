@@ -16,10 +16,10 @@ export class SSLResponse<T = any> implements AxiosResponse {
       headers
     }: ReactNativeSSLPinning.Response,
     config: AxiosRequestConfig) {
-    this.data = JSON.parse(bodyString);
+    this.data = bodyString && JSON.parse(bodyString) || '';
     this.status = status;
     this.headers = headers;
     this.config = config;
-    this.statusText = JSON.parse(bodyString).message || '';
+    this.statusText = bodyString && JSON.parse(bodyString).message || '';
   }
 }
