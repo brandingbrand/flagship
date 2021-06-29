@@ -1,4 +1,4 @@
-import { ComponentClass } from 'react';
+import { ComponentClass, FunctionComponent } from 'react';
 import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
@@ -11,7 +11,7 @@ import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 
 export interface ScreenProps {
-  componentId: string;
+  componentId?: string;
 }
 
 export interface EmitterProps {
@@ -28,7 +28,10 @@ export interface Action extends EmitterProps {
 }
 
 export interface ComponentList {
-  [key: string]: ComponentClass<any>;
+  [key: string]: ComponentClass<any> | FunctionComponent<any>;
+}
+export interface AppSettings {
+  [key: string]: any;
 }
 
 export interface Icon {
@@ -44,7 +47,8 @@ export interface CardProps extends EmitterProps {
   api?: EngagementService;
   plainCard?: boolean;
   storyGradient?: StoryGradient;
-  navigator: Navigator;
+  navigator?: Navigator;
+  discoverPath?: string;
 }
 
 export interface Empty {
@@ -78,6 +82,8 @@ export interface JSON extends EmitterProps {
   headerTitleStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  id?: string;
   key?: string;
   storyType?: string;
   tabbedItems?: any[];

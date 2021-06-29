@@ -4,6 +4,7 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import {
+  AppSettings,
   EngagementMessage,
   EngagementProfile,
   EngagmentEvent,
@@ -37,6 +38,7 @@ export class EngagementService {
   profileId?: string;
   profileData?: EngagementProfile;
   messages: EngagementMessage[] = [];
+  environment?: string;
   messageCache: number = 0;
   cacheTTL: number = 1000 * 60 * 10;
 
@@ -45,7 +47,7 @@ export class EngagementService {
     if (typeof config.cacheTTL === 'number') {
       this.cacheTTL = config.cacheTTL;
     }
-
+    this.environment = ~config.baseURL.indexOf('uat') ? 'UAT' : 'PROD';
     this.networkClient = new FSNetwork({
       baseURL: config.baseURL,
       headers: {
@@ -147,7 +149,9 @@ export class EngagementService {
       return Promise.resolve(this.profileId);
     }
 
-    const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
+    const savedProfileId =
+      await AsyncStorage.getItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`);
+
     if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
@@ -173,7 +177,8 @@ export class EngagementService {
         this.profileId = data.id;
         this.profileData = data;
 
-        AsyncStorage.setItem('ENGAGEMENT_PROFILE_ID', data.id).catch();
+        AsyncStorage
+          .setItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`, data.id).catch();
 
         return data.id;
       })
@@ -312,6 +317,73 @@ export class EngagementService {
       });
   }
 
+  /**
+   * Accepts array of inbox messages
+   * Fetches sort order array (stored in app settings)
+   * @param {EngagementMessage[]} messages inbox messages to sort
+   * @returns {EngagementMessage[]} sorted inbox messages
+   */
+  async sortInbox(
+    messages: EngagementMessage[]
+  ): Promise<EngagementMessage[]> {
+
+    const order =
+      await this.networkClient.get(`/App/${this.appId}/getAppSettings`)
+    .then((r: any) => r.data)
+    .then((settings: AppSettings) => settings && settings.sort);
+
+    if (!order || !Array.isArray(order)) {
+      return messages;
+    }
+
+    // recently live - not yet sorted messages (they go at the top)
+    const liveNew = messages.filter((msg: EngagementMessage) => order.indexOf(msg.id) === -1);
+    const liveSort = messages.filter((msg: EngagementMessage) => order.indexOf(msg.id) > -1);
+    // sort the rest based on the sort array from `getAppSettings` (new core feature)
+    const sortedLive = liveSort.sort((a: EngagementMessage, b: EngagementMessage) => {
+      const A = a.id;
+      const B = b.id;
+      if (
+        order.indexOf(A) < order.indexOf(B) ||
+        order.indexOf(A) === -1 ||
+        order.indexOf(B) === -1
+      ) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    const sortedAll = [...liveNew, ...sortedLive];
+
+    const pinnedTopIndexes: number[] = [];
+    const pinnedBottomIndexes: number[] = [];
+
+    const pinnedTop = sortedAll.filter((msg, idx) => {
+      if (msg.message && msg.message.content && msg.message.content.pin &&
+        msg.message.content.pin === 'top') {
+        pinnedTopIndexes.push(idx);
+        return true;
+      }
+      return false;
+    });
+    for (let i = pinnedTopIndexes.length - 1; i >= 0; i--) {
+      sortedAll.splice(pinnedTopIndexes[i], 1);
+    }
+
+    const pinnedBottom = sortedAll.filter((msg, idx) => {
+      if (msg.message && msg.message.content && msg.message.content.pin &&
+        msg.message.content.pin === 'bottom') {
+        pinnedBottomIndexes.push(idx);
+        return true;
+      }
+      return false;
+    });
+    for (let idx = pinnedBottomIndexes.length - 1; idx >= 0; idx--) {
+      sortedAll.splice(pinnedBottomIndexes[idx], 1);
+    }
+
+    return [...pinnedTop, ...sortedAll, ...pinnedBottom];
+  }
 
   async getInboxBySegment(
     segmentId: number | string,
@@ -393,4 +465,3 @@ export class EngagementService {
     }
   }
 }
-

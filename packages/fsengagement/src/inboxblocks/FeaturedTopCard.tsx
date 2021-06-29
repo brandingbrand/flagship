@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import {
   DeviceEventEmitter,
+  StyleProp,
+  TextStyle,
   TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   CardProps,
-  JSON
+  JSON,
+  StoryGradient
 } from '../types';
 
-import TextBlock, { TextBlockProps } from './TextBlock';
-import CTABlock, { CTABlockProps } from './CTABlock';
-import ImageBlock, { ImageBlockProps } from './ImageBlock';
+import { TextBlock, TextBlockProps } from './TextBlock';
+import { CTABlock, CTABlockProps } from './CTABlock';
+import { ImageBlock, ImageBlockProps } from './ImageBlock';
 
 export interface FeaturedTopCardContents {
   Image: ImageBlockProps;
@@ -19,8 +22,14 @@ export interface FeaturedTopCardContents {
   CTA: CTABlockProps;
 }
 
+
 export interface ComponentProps extends CardProps {
+  containerStyle?: StyleProp<TextStyle>;
+  story?: JSON;
   contents: FeaturedTopCardContents;
+  api?: any;
+  storyGradient?: StoryGradient;
+
 }
 
 export default class Card extends Component<ComponentProps> {
@@ -46,7 +55,7 @@ export default class Card extends Component<ComponentProps> {
     this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    return this.props.navigator.push({
+    return this.props.navigator?.push({
       component: {
         name: 'EngagementComp',
         options: {

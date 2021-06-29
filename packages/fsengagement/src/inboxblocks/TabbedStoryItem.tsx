@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
-import TextBlock from './TextBlock';
+import { TextBlock } from './TextBlock';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
