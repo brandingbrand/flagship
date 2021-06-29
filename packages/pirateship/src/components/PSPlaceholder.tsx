@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle} from 'react-native';
 import { border, palette } from '../styles/variables';
 
 const styles = StyleSheet.create({
@@ -35,9 +35,9 @@ export interface PSPlaceholderProps {
 
 export default class PSPlaceholder extends Component<PSPlaceholderProps> {
   render(): JSX.Element {
-    let containerStyle: any = styles.container;
-    let innerStyle: any = styles.inner;
-    let textStyle: any = styles.text;
+    let containerStyle: StyleProp<ViewStyle> = styles.container;
+    let innerStyle: StyleProp<ViewStyle> = styles.inner;
+    let textStyle: StyleProp<TextStyle> = styles.text;
 
     if (this.props.type === 'light') {
       containerStyle = [styles.container, styles.containerLight];

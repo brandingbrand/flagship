@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
   object
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { CMSBannerCarousel } from '../CMSBannerCarousel';
 
 import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
@@ -18,6 +18,9 @@ const defaultCarouselProps = {
   showArrow: true
 };
 
+const containerStyle = { padding: 0 };
+const imageContainerStyle = { padding: 0 };
+
 storiesOf('CMSBannerCarousel', module)
   .add('basic usage', () => (
     <CMSBannerCarousel
@@ -25,5 +28,7 @@ storiesOf('CMSBannerCarousel', module)
       cmsProviderGroup='Shop'
       cmsProviderSlot='Banner-Carousel'
       carouselProps={object('carouselProps', defaultCarouselProps)}
+      style={object('containerStyle', containerStyle)}
+      imageContainerStyle={object('imageContainerStyle', imageContainerStyle)}
     />
   ));

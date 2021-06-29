@@ -38,8 +38,8 @@ import {
   CommerceTypes,
   ReviewDataSource
 } from '@brandingbrand/fscommerce';
-
-type Navigator = import ('react-native-navigation').Navigator;
+import { Navigator } from '@brandingbrand/fsapp';
+import { ScreenProps } from '../lib/commonTypes';
 
 const icons = {
   zoom: require('../../assets/images/icon-zoom.png'),
@@ -218,6 +218,11 @@ const styles = StyleSheet.create({
   },
   quantityView: {
     marginTop: 15
+  },
+  modalContainer: {
+    width: '50%',
+    margin: 'auto',
+    backgroundColor: 'white'
   }
 });
 
@@ -280,24 +285,37 @@ class PSProductDetailComponent extends Component<
     this.needsImpression = true;
   }
 
-  componentDidUpdate(): void {
+  componentDidUpdate(prevProps: PSProductDetailComponentInternalProps): void {
     const { commerceData } = this.props;
-    if (commerceData && this.state.id !== commerceData.id) {
-      if (!commerceData.variants || commerceData.variants.length === 0) {
-        return this.setState({
-          id: commerceData.id,
-          variantId: commerceData.id
-        });
+    if (commerceData) {
+      if (this.state.id !== commerceData.id) {
+        if (!commerceData.variants || commerceData.variants.length === 0) {
+          return this.setState({
+            id: commerceData.id,
+            variantId: commerceData.id
+          });
+        }
+
+        const variant = find(commerceData.variants, { id: commerceData.id })
+          || commerceData.variants[0];
+
+        if (variant) {
+          this.setState({
+            id: commerceData.id,
+            variantId: variant.id,
+            optionValues: cloneDeep(variant.optionValues)
+          });
+        }
       }
 
-      const variant = find(commerceData.variants, { id: commerceData.id })
-        || commerceData.variants[0];
-
-      if (variant) {
-        this.setState({
-          id: commerceData.id,
-          variantId: variant.id,
-          optionValues: cloneDeep(variant.optionValues)
+      if (commerceData.title &&
+        commerceData.title !== (prevProps.commerceData && prevProps.commerceData.title)) {
+        this.props.navigator.mergeOptions({
+          topBar: {
+            title: {
+              text: commerceData.title
+            }
+          }
         });
       }
     }
@@ -349,11 +367,13 @@ class PSProductDetailComponent extends Component<
         ['commercecloud', 'mock'].indexOf(dataSourceConfig.type) !== -1
       ) {
         this.props.navigator.push({
-          screen: 'ProductDetail',
-          passProps: {
-            productId: variant.id
+          component: {
+            name: 'ProductDetail',
+            passProps: {
+              productId: variant.id
+            }
           }
-        });
+        }).catch(e => console.warn('ProductDetail PUSH error: ', e));
       } else {
         // Update State
         this.setState(prevState => {
@@ -422,11 +442,13 @@ class PSProductDetailComponent extends Component<
 
   goToProduct = (product: any) => () => {
     this.props.navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId: product.productId
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId: product.productId
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
   openModal = (title: string, content: any, html: boolean = false) => () => {
@@ -464,26 +486,46 @@ class PSProductDetailComponent extends Component<
     this.setState({ miniModalVisible: false });
   }
 
-  openSignInModal = (navigator: Navigator) => () => {
-    navigator.showModal({
-      screen: 'SignIn',
-      passProps: {
-        dismissible: true,
-        onDismiss: () => {
-          navigator.dismissModal();
-        },
-        onSignInSuccess: () => {
-          navigator.popToRoot({ animated: false });
-          navigator.push({
-            screen: 'ProductDetail',
-            passProps: {
-              productId: this.props.id
-            }
-          });
-          navigator.dismissModal();
+  openSignInModal = () => () => {
+    this.props.navigator.showModal({
+      component: {
+        name: 'SignIn',
+        passProps: {
+          dismissible: true,
+          onDismiss: (screenProps: ScreenProps) => {
+            this.props.navigator.dismissModal()
+              .catch(e => console.warn('DISMISSMODAL error: ', e));
+          },
+          onSignInSuccess: (screenProps: ScreenProps) => {
+            screenProps.navigator.popToRoot()
+              .catch(e => console.warn('POPTOROOT error: ', e));
+            screenProps.navigator.push({
+              component: {
+                name: 'ProductDetail',
+                passProps: {
+                  productId: this.props.id
+                }
+              }
+            }).catch(e => console.warn('ProductDetail PUSH error: ', e));
+            screenProps.navigator.dismissModal()
+              .catch(e => console.warn('DISMISSMODAL error: ', e));
+          }
         }
       }
-    });
+    }).catch(e => console.warn('SignIn SHOWMODAL error: ', e));
+  }
+
+  renderCustomModal = (closeModal: () => void): JSX.Element => {
+    const testText = 'Hello World';
+    const closeText = 'Close';
+    return (
+      <View style={styles.modalContainer}>
+        <Text>{testText}</Text>
+        <TouchableOpacity onPress={closeModal}>
+          <Text>{closeText}</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   renderShareButton = (): React.ReactNode => {
@@ -516,6 +558,7 @@ class PSProductDetailComponent extends Component<
 
           return (
             <Swatches
+              style={{paddingBottom: variables.padding.base}}
               key={index}
               title={option.name}
               items={option.values}
@@ -568,6 +611,7 @@ class PSProductDetailComponent extends Component<
             dotActiveStyle={styles.zoomCarouselDotActiveStyle}
             renderZoomButton={this._renderZoomButton}
             zoomButtonStyle={styles.zoomCarouselZoomButtonStyle}
+            renderModalContent={this.props.id === '25752986' ? this.renderCustomModal : undefined}
           />
         </View>
         <View style={styles.edgePadding}>
@@ -591,9 +635,11 @@ class PSProductDetailComponent extends Component<
                     {translate.currency(originalPrice)}
                   </Text>
                 )}
-                {price && <Text style={styles.price}>
-                  {translate.currency(price)}
-                </Text>}
+                {price && (
+                  <Text style={styles.price}>
+                    {translate.currency(price)}
+                  </Text>
+                )}
               </View>
               {review &&
                 review.statistics && (
@@ -696,12 +742,20 @@ class PSProductDetailComponent extends Component<
 
   openWebView = (url: string, title: string) => () => {
     this.props.navigator.push({
-      screen: 'DesktopPassthrough',
-      title,
-      passProps: {
-        url
+      component: {
+        name: 'DesktopPassthrough',
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        },
+        passProps: {
+          url
+        }
       }
-    });
+    }).catch(e => console.warn('DesktopPassthrough PUSH error: ', e));
   }
 
   _renderZoomButton = (openZoom: () => void): JSX.Element => {
@@ -756,10 +810,18 @@ class PSProductDetailComponent extends Component<
 
   navigateToScreen = (screen: string, title: string, props: any) => {
     this.props.navigator.push({
-      screen,
-      title,
-      passProps: props
-    });
+      component: {
+        name: screen,
+        passProps: props,
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        }
+      }
+    }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }
 }
 
@@ -767,4 +829,4 @@ export const PSProductDetail = withProductDetailData<UnwrappedPSProductDetailPro
   async (DataSource: CommerceDataSource, props: UnwrappedPSProductDetailProps) =>
     DataSource.fetchProduct(props.id)
   // TODO: Update cart provider to separate out types correctly
-)(withCart(PSProductDetailComponent as any) as any);
+)(withCart(PSProductDetailComponent as any));

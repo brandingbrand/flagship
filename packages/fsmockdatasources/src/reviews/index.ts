@@ -40,6 +40,9 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
   async fetchReviewStatistics(
     query: ReviewTypes.ReviewQuery
   ): Promise<ReviewTypes.ReviewStatistics[]> {
+
+    const initialDistribution: {[p: string]: number} = {};
+
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
     const summaries = ids
       .filter(id => Reviews[id] && Reviews[id].length)
@@ -63,7 +66,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
         }, {
           recommendations: 0,
           ratings: 0,
-          distribution: {} as any
+          distribution: initialDistribution
         });
 
 
@@ -88,5 +91,11 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
 
     return ids.map(id => Questions[id]).reduce((all, current) => [...all, ...current], []);
+  }
+
+  async writeReview(
+    command: ReviewTypes.WriteReviewCommand
+  ): Promise<ReviewTypes.WriteReviewSubmission> {
+    throw new Error('Not implemented');
   }
 }

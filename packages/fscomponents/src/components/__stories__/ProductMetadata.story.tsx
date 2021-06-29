@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit
 import {
   object,
   text
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { ReviewTypes } from '@brandingbrand/fscommerce';
 import { ProductMetadata } from '../ProductMetadata';
 import Decimal from 'decimal.js';

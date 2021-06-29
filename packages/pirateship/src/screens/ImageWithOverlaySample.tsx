@@ -1,8 +1,9 @@
 /* tslint:disable:jsx-use-translation-function */
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarTabLanding } from '../styles/Navigation';
 import { ImageWithOverlay, ImageWithOverlayProps } from '@brandingbrand/fscomponents';
 
@@ -25,16 +26,14 @@ const overlay = <Text style={styles.overlay}>Text Overlay</Text>;
 export interface ImageWithOverlaySampleScreenProps extends ScreenProps, ImageWithOverlayProps {}
 
 class ImageWithOverlaySample extends Component<ImageWithOverlaySampleScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarTabLanding;
+  static options: Options = navBarTabLanding;
 
   render(): JSX.Element {
-
-    const { navigator } = this.props;
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
+        navigator={this.props.navigator}
       >
         <View style={styles.section}>
         <ImageWithOverlay

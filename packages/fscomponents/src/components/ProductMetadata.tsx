@@ -1,9 +1,7 @@
 /**
  * Component to display a product's brand, title, price, and review stars.
  */
-
-import React, { Component } from 'react';
-
+import React, { FunctionComponent, memo } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -14,7 +12,7 @@ import {
 } from 'react-native';
 import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import FSI18n from '@brandingbrand/fsi18n';
+import { Price } from './Price';
 
 export interface ProductMetadataProps extends CommerceTypes.Product {
   style?: StyleProp<ViewStyle>;
@@ -60,63 +58,50 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ProductMetadata extends Component<ProductMetadataProps> {
-  renderBrand(): JSX.Element {
+export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((props):
+  JSX.Element => {
+  const renderBrand = (): JSX.Element => {
     return (
-      <Text style={[styles.brand, this.props.brandStyle]}>{this.props.brand}</Text>
+      <Text style={[styles.brand, props.brandStyle]}>{props.brand}</Text>
     );
-  }
-
-  renderTitle(): JSX.Element {
+  };
+  const renderTitle = (): JSX.Element => {
     return (
-      <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
+      <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
     );
-  }
-
-  renderPrice(): JSX.Element {
+  };
+  // tslint:disable-next-line: cyclomatic-complexity
+  const renderPrice = (): JSX.Element => {
     const {
       originalPriceStyle,
       priceStyle,
       salePriceStyle,
       originalPrice,
       price
-    } = this.props;
-
-    const priceStyleGenerated = [
-      styles.price,
-      priceStyle || null,
-      originalPrice && styles.salePrice || null,
-      originalPrice && salePriceStyle || null
-    ];
+    } = props;
 
     return (
       <View style={styles.priceContainer}>
-        {originalPrice && (
-          <Text style={[styles.originalPrice, originalPriceStyle]}>
-            {FSI18n.currency(originalPrice)}
-          </Text>
-        )}
-        {price && (
-          <View style={styles.priceContainer}>
-            <Text
-              style={priceStyleGenerated}
-            >
-              {FSI18n.currency(price)}
-            </Text>
-          </View>
-        )}
+        <Price
+          originalPriceFirst={true}
+          originalPrice={originalPrice}
+          price={price}
+          originalPriceStyle={StyleSheet.flatten([styles.originalPrice, originalPriceStyle])}
+          priceStyle={StyleSheet.flatten([styles.price, priceStyle])}
+          salePriceStyle={StyleSheet.flatten([styles.salePrice, salePriceStyle])}
+        />
       </View>
     );
-  }
-
-  renderReviews(): JSX.Element {
+  };
+  const renderReviews = (): JSX.Element => {
     const {
       review,
       reviewCountStyle,
       reviewIndicatorProps
-    } = this.props;
+    } = props;
 
-    const stats = review && review.statistics || {} as any;
+    const statsType: {[p: string ]: number } = {};
+    const stats = review && review.statistics || statsType;
     const { averageRating, reviewCount } = stats;
 
     return (
@@ -133,16 +118,13 @@ export class ProductMetadata extends Component<ProductMetadataProps> {
         )}
       </View>
     );
-  }
-
-  render(): JSX.Element {
-    return (
-      <View style={this.props.style}>
-        {this.props.brand && this.renderBrand()}
-        {this.props.title && this.renderTitle()}
-        {(this.props.originalPrice || this.props.price) && this.renderPrice()}
-        {(typeof this.props.review !== 'undefined') && this.renderReviews()}
-      </View>
-    );
-  }
-}
+  };
+  return (
+    <View style={props.style}>
+      {props.brand && renderBrand()}
+      {props.title && renderTitle()}
+      {(props.originalPrice || props.price) && renderPrice()}
+      {(typeof props.review !== 'undefined') && renderReviews()}
+    </View>
+  );
+});

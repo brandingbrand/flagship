@@ -6,11 +6,12 @@ import {
   Text,
   View
 } from 'react-native';
+import { Options } from 'react-native-navigation';
 import ContactInfoForm from '../components/ContactInfoForm';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import { backButton } from '../lib/navStyles';
 import { navBarHide } from '../styles/Navigation';
-import { NavButton, NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { NavButton, ScreenProps } from '../lib/commonTypes';
 import withAccount, { AccountProps } from '../providers/accountProvider';
 import { border, padding, palette } from '../styles/variables';
 import PSButton from '../components/PSButton';
@@ -85,14 +86,18 @@ interface FormValues {
 }
 
 class ChangePassword extends Component<ChangePasswordScreenProps, ChangePasswordState> {
-  static navigatorStyle: NavigatorStyle = navBarHide;
+  static options: Options = navBarHide;
   static leftButtons: NavButton[] = [backButton];
   form: any;
 
   constructor(props: ChangePasswordScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.changePassword.title)
+    props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.changePassword.title)
+        }
+      }
     });
 
     const state = {
@@ -118,14 +123,13 @@ class ChangePassword extends Component<ChangePasswordScreenProps, ChangePassword
 
   render(): JSX.Element {
     const { isLoading } = this.state;
-    const { navigator } = this.props;
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={styles.screenContainer}
-        navigator={navigator}
       >
         <View style={styles.container}>
           <Image source={accountImage} style={styles.accountImage} />

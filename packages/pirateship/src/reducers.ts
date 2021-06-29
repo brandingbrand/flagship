@@ -3,6 +3,7 @@ import cartReducer, { CartStore } from './reducers/cartReducer';
 import topCategoryReducer, { TopCategoryStore } from './reducers/topCategoryReducer';
 import recentlyViewedReducer, { RecentlyViewedStore } from './reducers/recentlyViewedReducer';
 import promoProductsReducer, { PromoProductsStore } from './reducers/promoProductsReducer';
+import inboxReducer, { InboxStore } from './reducers/inboxReducer';
 
 export interface CombinedStore {
   account: AccountStore;
@@ -10,6 +11,7 @@ export interface CombinedStore {
   promoProducts: PromoProductsStore;
   topCategory: TopCategoryStore;
   recentlyViewed: RecentlyViewedStore;
+  inbox: InboxStore;
 }
 
 export default {
@@ -17,5 +19,6 @@ export default {
   cart: cartReducer,
   promoProducts: promoProductsReducer,
   topCategory: topCategoryReducer,
-  recentlyViewed: recentlyViewedReducer
+  recentlyViewed: recentlyViewedReducer,
+  inbox: inboxReducer
 };

@@ -51,10 +51,17 @@ export default class LeftDrawerMenu extends Component<ScreenProps> {
 
   goTo = (screen: string) => {
     return () => {
-      this.props.navigator.push({ screen });
-      this.props.navigator.toggleDrawer({
-        side: 'left',
-        to: 'closed'
+      this.props.navigator.push({
+        component: {
+          name: screen
+        }
+      }).catch(e => console.warn(`${screen} PUSH error: `, e));
+      this.props.navigator.mergeOptions({
+        sideMenu: {
+          left: {
+            visible: false
+          }
+        }
       });
     };
   }

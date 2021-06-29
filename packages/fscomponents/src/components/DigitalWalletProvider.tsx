@@ -16,6 +16,7 @@ import React, { ComponentClass, StatelessComponent } from 'react';
 
 import { default as ApplePay } from '../lib/wallets/ApplePay';
 import { Alert } from './Alert';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 // State for the DigitalWalletProvider component
 export interface WithDigitalWalletState {
@@ -67,7 +68,7 @@ export function withDigitalWallet<P extends {}>(
               showApplePaySetupButton: false
             });
           } else {
-            Alert.alert('Apple Pay was unable to complete your request.');
+            Alert.alert(FSI18n.string(translationKeys.flagship.cart.digitalWallet.appleError));
           }
         })
         .catch(e => {
@@ -76,8 +77,8 @@ export function withDigitalWallet<P extends {}>(
         });
     }
 
-    async initApplePay(): Promise<any> {
-      return new Promise<boolean>((resolve, reject) => {
+    async initApplePay(): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
         // Check if user has Apple Pay on their device
         if (this.applePay.isEnabled()) {
           // Check if user has a card already set up

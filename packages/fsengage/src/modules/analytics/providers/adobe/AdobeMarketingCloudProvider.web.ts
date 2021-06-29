@@ -48,6 +48,10 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
     // TODO: Trigger basic analytics.
   }
 
+  async asyncInit(): Promise<void> {
+    // Do nothing
+  }
+
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vkU-h5-Kc3">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="YJB-5w-pdm">
+            <objects>
+                <viewController id="vkU-h5-Kc3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fQO-qJ-EUl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Badge" translatesAutoresizingMaskIntoConstraints="NO" id="K6q-1c-pbC">
+                                <rect key="frame" x="-109" y="39" width="632" height="818"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="K6q-1c-pbC" secondAttribute="height" multiplier="17:22" id="rtj-xb-ksU"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.62352941179999999" green="0.90196078430000004" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="K6q-1c-pbC" firstAttribute="centerX" secondItem="b4t-KE-tK5" secondAttribute="centerX" id="3Wv-yW-diu"/>
+                            <constraint firstItem="K6q-1c-pbC" firstAttribute="height" secondItem="b4t-KE-tK5" secondAttribute="height" id="9Ko-yZ-jwY"/>
+                            <constraint firstItem="K6q-1c-pbC" firstAttribute="centerY" secondItem="fQO-qJ-EUl" secondAttribute="centerY" id="KDo-M7-DUi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="b4t-KE-tK5"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H1b-9N-sU4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="-101"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Badge" width="612" height="792"/>
+    </resources>
+</document>

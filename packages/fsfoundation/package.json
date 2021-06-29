@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsfoundation",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "11.0.0-alpha.37",
   "description": "Foundation types for Flagship",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
@@ -9,6 +9,9 @@
   "scripts": {
     "prepare": "tsc",
     "tsc:watch": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "redux": "^4.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

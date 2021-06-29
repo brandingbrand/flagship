@@ -7,9 +7,14 @@ export interface PromoProductsStore {
   products: CommerceTypes.Product[] | null;
 }
 
+export interface PromoProductsAction {
+  type: 'UPDATE_PROMO_PRODUCTS';
+  data: CommerceTypes.Product[];
+}
+
 export default function promoProductsReducer(
   promoProductsStore: PromoProductsStore = initialState,
-  action: any
+  action: PromoProductsAction
 ): PromoProductsStore {
   switch (action.type) {
     case UPDATE_PROMO_PRODUCTS: {

@@ -3,10 +3,10 @@ import Swiper from 'react-native-swiper';
 import { CarouselProps } from './CarouselProps';
 
 export class Carousel extends Component<CarouselProps> {
-  swiper: any;
+  swiper?: Swiper | null;
 
   scrollBy = (index: number, animated?: boolean) => {
-    this.swiper.scrollBy(index, animated);
+    this.swiper?.scrollBy(index, animated);
   }
 
   render(): JSX.Element {
@@ -24,8 +24,6 @@ export class Carousel extends Component<CarouselProps> {
       prevButton
     } = this.props;
 
-    const loopCopy = typeof loop === 'undefined' ? false : loop;
-
     return (
       <Swiper
         ref={swiper => (this.swiper = swiper)}
@@ -33,9 +31,9 @@ export class Carousel extends Component<CarouselProps> {
         activeDotColor={currentPageIndicatorColor}
         dotColor={pageIndicatorColor}
         height={height}
-        style={style}
+        containerStyle={style}
         bounces={true}
-        loop={loopCopy}
+        loop={loop ?? false}
         {...nativeOptions}
         showsButtons={showsButtons}
         nextButton={nextButton}

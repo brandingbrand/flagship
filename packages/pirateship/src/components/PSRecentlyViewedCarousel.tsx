@@ -11,8 +11,7 @@ import PSProductCarousel from './PSProductCarousel';
 import { border, palette } from '../styles/variables';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import translate, { translationKeys } from '../lib/translations';
-
-type Navigator = import ('react-native-navigation').Navigator;
+import { Navigator } from '@brandingbrand/fsapp';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,11 +46,13 @@ const PSRecentlyViewedCarousel: FunctionComponent<PSRecentlyViewedCarouselProps>
 
   const handlePromotedProductPress = (productId: string) => () => {
     props.navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   };
 
   return (

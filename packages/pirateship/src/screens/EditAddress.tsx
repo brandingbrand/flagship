@@ -31,7 +31,13 @@ class EditAddress extends Component<EditAddressScreenProps> {
         address: props.address.id
       });
     }
-    props.navigator.setTitle({ title });
+    this.props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: title
+        }
+      }
+    });
 
     if (this.props.edit) {
       this.state = {
@@ -65,18 +71,16 @@ class EditAddress extends Component<EditAddressScreenProps> {
       actionTranslations = translationKeys.address.actions.edit;
     }
 
-    const { navigator } = this.props;
-
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
+        navigator={this.props.navigator}
         needInSafeArea={true}
         scroll={false}
         style={AccountStyle.container}
         keyboardAvoidingViewProps={{
           keyboardVerticalOffset: 60 // offset action buttons
         }}
-        navigator={navigator}
       >
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
@@ -138,8 +142,9 @@ class EditAddress extends Component<EditAddressScreenProps> {
     };
   }
 
-  cancel = () => {
-    return this.props.navigator.dismissModal();
+  cancel = async () => {
+    return this.props.navigator.dismissModal()
+    .catch(e => console.warn('DISMISSMODAL error: ', e));
   }
 
   save = () => {
@@ -155,7 +160,8 @@ class EditAddress extends Component<EditAddressScreenProps> {
       update.then(result => {
         if (this.props.onComplete) {
           this.props.onComplete(this.address);
-          this.props.navigator.dismissModal();
+          this.props.navigator.dismissModal()
+          .catch(e => console.warn('DISMISSMODAL error: ', e));
         }
       })
       .catch(e => {

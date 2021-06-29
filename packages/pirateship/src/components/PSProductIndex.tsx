@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Options } from 'react-native-navigation';
 
 import React, { Component } from 'react';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
@@ -15,15 +16,14 @@ import { ProductIndex, ProductIndexSearch } from '@brandingbrand/fsproductindex'
 import { dataSource, reviewDataSource } from '../lib/datasource';
 import { backButton, searchButton } from '../lib/navStyles';
 import { navBarDefault } from '../styles/Navigation';
-import { NavButton, NavigatorStyle } from '../lib/commonTypes';
 
 import PSFilterActionBar from '../components/PSFilterActionBar';
 
 import { FilterItem, ProductItem } from '@brandingbrand/fscomponents';
 import { border, color, fontSize, palette } from '../styles/variables';
 import translate, { translationKeys } from '../lib/translations';
-
-type Navigator = import ('react-native-navigation').Navigator;
+import { NavButton } from '../lib/commonTypes';
+import { Navigator } from '@brandingbrand/fsapp';
 
 const window = Dimensions.get('window');
 
@@ -157,9 +157,9 @@ const PIPStyle = StyleSheet.create({
 });
 
 export interface ProductIndexProps {
-  navigator: Navigator;
   categoryId?: string;
   keyword?: string;
+  navigator: Navigator;
   renderNoResult?: any;
   productQuery?: CommerceTypes.ProductQuery;
   title?: string;
@@ -181,9 +181,11 @@ const renderSearch = (indexProps: any, keyword: string, renderNoResult: any) => 
 };
 
 class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   static leftButtons: NavButton[] = [backButton];
   static rightButtons: NavButton[] = [searchButton];
+
+
   selectedRefinements: any = null;
   selectedSortingOption?: string;
   categoryId: string = ''; // used for selecting sub category from refine
@@ -210,29 +212,43 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
         newTitle += ' (' + data.total + ')';
       }
 
-      this.props.navigator.setTitle({ title: newTitle });
+      this.props.navigator.mergeOptions({
+        topBar: {
+          title: {
+            text: newTitle
+          }
+        }
+      });
     }
   }
 
   onPress = (item: CommerceTypes.Product) => () => {
-    const { navigator } = this.props;
-    navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId: item.id
+    this.props.navigator.push({
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId: item.id
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
   onGroupPress = (item: CommerceTypes.Product) => () => {
-    const { navigator } = this.props;
-    navigator.push({
-      screen: 'ProductIndex',
-      title: item.title || '',
-      passProps: {
-        categoryId: item.id
+    this.props.navigator.push({
+      component: {
+        name: 'ProductIndex',
+        options: {
+          topBar: {
+            title: {
+              text: item.title || ''
+            }
+          }
+        },
+        passProps: {
+          categoryId: item.id
+        }
       }
-    });
+    }).catch(e => console.warn('ProductIndex PUSH error: ', e));
   }
 
   renderProductItem = () => {
@@ -343,7 +359,7 @@ class PSProductIndex extends Component<ProductIndexProps, ProductIndexState> {
           </TouchableOpacity>
 
           <ScrollView>
-            {item.values.filter(v => v.categoryId && v.title).map((v, i) => (
+            {(item.values || []).filter(v => v.categoryId && v.title).map((v, i) => (
               <TouchableOpacity
                 key={v.categoryId}
                 style={PIPStyle.secondLevelRow}

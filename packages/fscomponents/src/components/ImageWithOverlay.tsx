@@ -20,7 +20,7 @@ export interface ImageWithOverlayProps {
     | 'topRight';
 }
 
-export const ImageWithOverlay = (props: ImageWithOverlayProps): JSX.Element => {
+const ImageWithOverlayInner = (props: ImageWithOverlayProps): JSX.Element => {
   const {
     overlay,
     style,
@@ -32,10 +32,13 @@ export const ImageWithOverlay = (props: ImageWithOverlayProps): JSX.Element => {
   return (
     <View style={style}>
       <FadeInImage {...imageProps} />
-      {overlay &&
+      {overlay && (
         <View style={[S.overlayContainer, overlayStyle]}>
           {overlay}
-        </View>}
+        </View>
+      )}
     </View>
   );
 };
+
+export const ImageWithOverlay = React.memo(ImageWithOverlayInner);

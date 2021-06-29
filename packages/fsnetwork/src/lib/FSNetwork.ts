@@ -1,11 +1,13 @@
 import axios, {
   AxiosInstance
 } from 'axios';
+
 import {
   FSNetworkPromise,
   FSNetworkRequestConfig,
   FSNetworkRequestData
 } from './interfaces';
+
 import { SSLPinningInstance } from './sll';
 
 // As of Axios 0.18, the typings don't show the Axios property even though it exists

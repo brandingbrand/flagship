@@ -35,6 +35,7 @@ export interface PSStepperProps {
   initialQuantity?: number;
   upperLimit?: number;
   onChange?: (value: number) => void;
+  removeItem?: () => void;
   stepperStyle?: StyleProp<ViewStyle>;
 }
 
@@ -80,7 +81,7 @@ export default class PSStepper extends Component<PSStepperProps, PSStepperState>
     return (
       <TouchableOpacity
         disabled={disabled}
-        onPress={handleDecreasePress}
+        onPress={remove ? this.props.removeItem : handleDecreasePress}
       >
         <Image
           resizeMode='contain'
@@ -95,7 +96,7 @@ export default class PSStepper extends Component<PSStepperProps, PSStepperState>
 
   render(): JSX.Element {
     const { stepperStyle } = this.props;
-    const mergeStepperStyle: any = [styles.stepper, stepperStyle];
+    const mergeStepperStyle: StyleProp<ViewStyle> = [styles.stepper, stepperStyle];
     return (
       <StatelessStepper
         count={this.state.quantity}

@@ -5,6 +5,8 @@ import * as path from './path';
 import * as versionLib from './version';
 import * as nativeConstants from './native-constants';
 import { addFilesToXcodeProject } from './file';
+import * as xcode from 'xcode';
+import * as usageDescriptions from './usage-descriptions';
 
 /**
  * Updates app bundle id.
@@ -67,11 +69,12 @@ export function targetedDevice(configuration: Config): void {
       Universal: `"1,2"`
     };
 
+    const targetedDeviceRegex = new RegExp(`TARGETED_DEVICE_FAMILY = "1"`, 'g');
+
     fs.update(
       path.ios.pbxprojFilePath(configuration),
-      `PRODUCT_NAME = ${configuration.name}`,
-      `PRODUCT_NAME = ${configuration.name};
-        TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
+      targetedDeviceRegex,
+      `TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
     );
   }
 }
@@ -98,7 +101,7 @@ export function entitlements(configuration: Config): void {
   fs.update(
     path.ios.pbxprojFilePath(configuration),
     /CODE_SIGN_IDENTITY = /g,
-    `CODE_SIGN_ENTITLEMENTS = ${configuration.name}/${configuration.name}.entitlements;
+    `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
 }
@@ -168,10 +171,15 @@ export function launchScreen(configuration: Config): void {
     'LaunchImages.xcassets'
   );
 
-  const sourceLaunchScreen = configuration.launchScreen.ios.xib;
+  const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
+  if (!sourceLaunchScreen) {
+    helpers.logError('xib support has been removed. Please include a storyboard file.' +
+      ' Using the default Flagship storyboard.');
+    return;
+  }
   const destinationLaunchScreen = path.resolve(
     path.ios.nativeProjectPath(configuration),
-    'LaunchScreen.xib'
+    'LaunchScreen.storyboard'
   );
 
   try {
@@ -244,27 +252,7 @@ export function usageDescription(configuration: Config): void {
     `updating iOS usage description: [${configuration.usageDescriptionIOS.map(u => u.key)}]`
   );
 
-  const infoPlist = path.ios.infoPlistPath(configuration);
-
-  configuration.usageDescriptionIOS.forEach(usage => {
-    if (fs.doesKeywordExist(infoPlist, usage.key)) {
-      // Replace the existing usage description for this key
-      fs.update(
-        infoPlist,
-        new RegExp(`<key>${usage.key}<\\/key>\\s+<string>[^<]+<\\/string>`),
-        `<key>${usage.key}</key><string>${usage.string}</string>`
-      );
-    } else {
-      // This key doesn't exist so add it to the file
-      fs.update(
-        infoPlist,
-        '<key>UIRequiredDeviceCapabilities</key>',
-        `<key>${usage.key}</key><string>${
-        usage.string
-        }</string><key>UIRequiredDeviceCapabilities</key>`
-      );
-    }
-  });
+  usageDescriptions.add(configuration, configuration.usageDescriptionIOS);
 }
 
 /**
@@ -316,19 +304,149 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+  || newVersion;
+
+  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
+    || versionLib.normalize(newVersion);
+
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
+  helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
 
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleShortVersionString</key>\n\t<string>${newVersion}</string>`
+    `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
     path.ios.infoPlistPath(configuration),
     /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
-    `<key>CFBundleVersion</key>\n\t<string>${versionLib.normalize(newVersion)}</string>`
+    `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
   );
+}
+
+// tslint:disable:cyclomatic-complexity
+export function iosExtensions(configuration: Config, version: string): void {
+  if (!configuration?.ios?.extensions) {
+    return;
+  }
+  helpers.logInfo(`Adding iOS App Extensions`);
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
+    || version;
+  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
+  || versionLib.normalize(version);
+  const extensions = configuration?.ios?.extensions;
+  const projectPath = path.ios.pbxprojFilePath(configuration);
+  const fastFilePath = path.ios.fastfilePath();
+  const teamId = configuration.buildConfig.ios.exportTeamId;
+  const appBundleId = configuration.bundleIds.ios;
+  for (const extension of extensions) {
+    const {
+      extensionPath,
+      bundleExtensionId,
+      provisioningProfileName,
+      frameworks,
+      entitlements
+    } = extension;
+
+    const iosExtensionPath = path.project.resolve('ios', extensionPath);
+    const extPlistPath = path.resolve(iosExtensionPath, extension.plistName || 'Info.plist');
+
+    fs.copySync(
+      path.project.resolve(extensionPath),
+      path.resolve(iosExtensionPath)
+    );
+
+    const project = xcode.project(projectPath);
+    project.parseSync();
+
+    // Add Groups to projects
+    const files = fs.readdirSync(iosExtensionPath).map(file => file);
+
+    const extGroup = project.addPbxGroup(files, extensionPath, iosExtensionPath);
+    const groups = project.hash.project.objects.PBXGroup;
+
+    Object.keys(groups).forEach(key => {
+      if (groups[key].name === 'CustomTemplate') {
+        project.addToPbxGroup(extGroup.uuid, key);
+      }
+    });
+
+    // Create the target and add it to the build phases
+    const target = project.addTarget(
+      extensionPath,
+      'app_extension',
+      extensionPath,
+      bundleExtensionId
+    );
+    project.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', target.uuid);
+    project.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', target.uuid);
+
+    // Add custom frameworks to target
+    if (frameworks) {
+      addFrameworks(project, frameworks, target.uuid);
+    }
+
+    fs.writeFileSync(path.ios.pbxprojFilePath(configuration), project.writeSync());
+
+    // Update Extension Build settings
+    fs.update(
+      projectPath,
+      new RegExp(`PRODUCT_NAME = "${extensionPath}";`, 'g'),
+      `PRODUCT_NAME = "${extensionPath}";
+        OTHER_LDFLAGS = ("$(inherited)", "-ObjC", "-lc++");
+        CODE_SIGN_ENTITLEMENTS = "${extensionPath}/${entitlements}";
+        ENABLE_BITCODE = NO;
+        PROVISIONING_PROFILE_SPECIFIER = $EXT_PROFILE;
+        DEVELOPMENT_TEAM = ${teamId};
+        CODE_SIGN_IDENTITY = "iPhone Distribution";
+        EXT_PROFILE = "${provisioningProfileName}";`
+    );
+
+    // Fastfile code
+    const oldProvisioning =
+    `"${appBundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`;
+    const oldProvisioningRegex = new RegExp(oldProvisioning, 'g');
+    fs.update(
+      fastFilePath,
+      oldProvisioningRegex,
+      `"${bundleExtensionId}" => "${provisioningProfileName}",
+      "${appBundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`
+    );
+
+    // Update Extension PList
+    fs.update(
+      extPlistPath,
+      /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
+      `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
+    );
+    fs.update(
+      extPlistPath,
+      /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
+      `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
+    );
+
+    // Find and replace and additional strings
+    for (const findReplace of extension.additionalFiles || []) {
+      const { newText, oldText, paths } = findReplace;
+      for (const replacePath of paths) {
+        const iosRelativePath = path.project.resolve('ios', replacePath);
+        fs.update(iosRelativePath, oldText, newText);
+      }
+    }
+  }
+}
+
+/**
+ * @param {object} project XCode Project
+ * @param {string[]} frameworks Frameworks to add
+ * @param {string} uuid Target uuid
+ */
+function addFrameworks(project: xcode.XCodeproject, frameworks: string[], uuid: string): void {
+  for (const framework of frameworks || []) {
+    project.addFramework(framework, { target: uuid, customFramework: true, embed: true});
+  }
 }
 
 /**

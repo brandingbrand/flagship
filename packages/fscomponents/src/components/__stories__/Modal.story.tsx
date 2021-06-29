@@ -6,15 +6,17 @@ import React from 'react';
 import { Text } from 'react-native';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import {
-  boolean
-// tslint:disable-next-line no-submodule-imports no-implicit-dependencies
-} from '@storybook/addon-knobs/react';
+  boolean,
+  select
+// tslint:disable-next-line no-implicit-dependencies
+} from '@storybook/addon-knobs';
 import { Modal } from '../Modal';
 
 storiesOf('Modal', module)
   .add('basic usage', () => (
     <Modal
       visible={boolean('visible', true)}
+      animationType={select('animationType', ['none', 'slide', 'fade'], 'none')}
     >
       <Text>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus fuga recusandae cum.

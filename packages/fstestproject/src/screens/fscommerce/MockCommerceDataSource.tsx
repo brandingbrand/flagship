@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { showDataNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 import { mockCommerceDataSource } from '../../lib/datasource';
@@ -11,7 +12,7 @@ const exampleCategoryId = 'electronics-digital-cameras';
 const exampleProductId1 = 'sony-alpha350-wlen';
 const exampleProductId2 = 'canon-powershot-g10';
 const exampleSearchTerm = 'Sony';
-const examplePipRefinement = { brand: 'Sony' };
+const examplePipRefinement = { brand: ['Sony'] };
 const validPromoCode = 'VALID';
 const invalidPromoCode = 'INVALID';
 
@@ -31,7 +32,8 @@ export default class MockCommerceDataSource extends Component<any, any> {
         return (...args: any[]) => {
           const ret = target[prop](...args);
           if (ret instanceof Promise) {
-            ret.catch((e: Error) => this.showData({ message: e.message }));
+            ret.catch((e: Error) =>
+              showDataNavPush(this.props.componentId, { message: e.message }));
           }
           return ret;
         };
@@ -80,18 +82,9 @@ export default class MockCommerceDataSource extends Component<any, any> {
     );
   }
 
-  showData = (data: any) => {
-    this.props.navigator.push({
-      screen: 'fscommerce.DataView',
-      passProps: {
-        json: JSON.stringify(data, null, '  ')
-      }
-    });
-  }
-
   fetchCategory = async () => {
     const data = await this.dataSource.fetchCategory(exampleCategoryId);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchProducts = async () => {
@@ -99,7 +92,7 @@ export default class MockCommerceDataSource extends Component<any, any> {
       categoryId: exampleCategoryId
     });
 
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchProductsSorted = async () => {
@@ -108,7 +101,7 @@ export default class MockCommerceDataSource extends Component<any, any> {
       sortBy: 'price-desc'
     });
 
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchProductsFiltered = async () => {
@@ -117,7 +110,7 @@ export default class MockCommerceDataSource extends Component<any, any> {
       refinements: examplePipRefinement
     });
 
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchProductsPagination = async () => {
@@ -126,37 +119,37 @@ export default class MockCommerceDataSource extends Component<any, any> {
       page: 1,
       limit: 2
     });
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchProduct = async () => {
     const data = await this.dataSource.fetchProduct(exampleProductId1);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchRecommendations = async () => {
     const data = await this.dataSource.fetchProductRecommendations(exampleProductId1);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   searchSuggestion = async () => {
     const data = await this.dataSource.searchSuggestion('son');
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   search = async () => {
     const data = await this.dataSource.search(exampleSearchTerm);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   fetchCart = async () => {
     const data = await this.dataSource.fetchCart();
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   addToCart = (sku: string) => async () => {
     const data = await this.dataSource.addToCart(sku);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   removeCartItem = async () => {
@@ -167,7 +160,7 @@ export default class MockCommerceDataSource extends Component<any, any> {
     }
 
     const updatedCart = await this.dataSource.removeCartItem(items[0].itemId);
-    this.showData(updatedCart);
+    showDataNavPush(this.props.componentId, updatedCart);
   }
 
   updateCartItemQty = (qty: number) => async () => {
@@ -178,12 +171,12 @@ export default class MockCommerceDataSource extends Component<any, any> {
     }
 
     const updatedCart = await this.dataSource.updateCartItemQty(items[0].itemId, qty);
-    this.showData(updatedCart);
+    showDataNavPush(this.props.componentId, updatedCart);
   }
 
   applyPromo = (code: string) => async () => {
     const data = await this.dataSource.applyPromo(code);
-    this.showData(data);
+    showDataNavPush(this.props.componentId, data);
   }
 
   removePromo = async () => {
@@ -193,7 +186,7 @@ export default class MockCommerceDataSource extends Component<any, any> {
       throw new Error('no promo in the cart');
     }
     const updatedCart = await this.dataSource.removePromo(promos[0].id);
-    this.showData(updatedCart);
+    showDataNavPush(this.props.componentId, updatedCart);
   }
 
   destroyCart = async () => {

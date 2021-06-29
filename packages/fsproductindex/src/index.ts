@@ -15,3 +15,6 @@ export {
   ProductIndexSearch as UnwrappedProductIndexSearch,
   UnwrappedProductIndexSearchProps
 } from './components/ProductIndexSearch';
+export * from './components/ProductTileGhost';
+export * from './components/ProductIndexGhost';
+export * from './styles';

@@ -6,10 +6,13 @@
       "modules": false,
       "targets": {
         "browsers": ["last 2 versions", "ie >= 11"]
-      }
+      },
+      "useBuiltIns": "usage",
+      "corejs": 3
     }]
   ],
   "plugins": [
-    "react-native-web"
+    "react-native-web",
+    ["@babel/plugin-proposal-private-methods", { "loose": true }]
   ]
 }

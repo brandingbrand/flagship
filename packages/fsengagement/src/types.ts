@@ -2,28 +2,29 @@ import { ComponentClass } from 'react';
 import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
+  ImageURISource,
   StyleProp,
   TextStyle,
   ViewStyle
 } from 'react-native';
-import { Navigator } from 'react-native-navigation';
+import { Navigator } from '@brandingbrand/fsapp';
+import { EngagementService } from './EngagementService';
 
 export interface ScreenProps {
-  navigator: Navigator;
-}
-
-export interface Action {
-  type: string;
-  value: string;
-  subject?: string;
-  body?: string;
-  name?: string;
-  id?: string;
+  componentId: string;
 }
 
 export interface EmitterProps {
   id?: string;
   name?: string;
+}
+
+export interface Action extends EmitterProps {
+  type: string;
+  value: string;
+  subject?: string;
+  body?: string;
+  position?: number;
 }
 
 export interface ComponentList {
@@ -36,16 +37,14 @@ export interface Icon {
   iconStyle?: StyleProp<ImageStyle>;
 }
 
-export interface CardProps {
+export interface CardProps extends EmitterProps {
   containerStyle?: StyleProp<TextStyle>;
   private_blocks: BlockItem[];
   story?: JSON;
-  api?: any;
+  api?: EngagementService;
   plainCard?: boolean;
   storyGradient?: StoryGradient;
   navigator: Navigator;
-  name?: string;
-  id?: string;
 }
 
 export interface Empty {
@@ -67,7 +66,7 @@ export interface HTML {
   title: JSON;
 }
 
-export interface JSON {
+export interface JSON extends EmitterProps {
   isBlog?: boolean;
   backArrow?: StyleProp<ImageStyle>;
   private_blocks?: BlockItem[];
@@ -76,14 +75,30 @@ export interface JSON {
   storyGradient?: StoryGradient;
   html?: HTML;
   pageNumberStyle?: StyleProp<TextStyle>;
+  headerTitleStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
-  id?: string;
   key?: string;
+  storyType?: string;
+  tabbedItems?: any[];
+  AnimatedPageCounter?: any;
+  AnimatedNavTitle?: any;
+  setScrollEnabled?: (enabled: boolean) => void;
+  onBack?: () => void;
+  fullScreenCardImage?: ImageURISource;
 }
 
 export interface BlockItem extends ScreenProps, JSON {
   story?: JSON;
+  index?: number;
+  wrapper?: boolean;
+  testing?: string;
+  contents?: any;
+  fadeIn?: boolean;
+  forceBackground?: boolean;
+  fullScreenCard?: boolean;
+  animateIndex?: number;
+  position?: number;
 }
 
 export interface InjectedProps {

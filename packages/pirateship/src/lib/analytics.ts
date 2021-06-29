@@ -1,5 +1,6 @@
 import {
   Analytics as FSAnalytics,
+  AnalyticsTypes,
   GoogleAnalyticsProvider
 } from '@brandingbrand/fsengage';
 
@@ -10,7 +11,7 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
-const { version } = projectEnv;
+const version = require('../../env/env').version;
 
 const commonConfiguration = {
   userAgent: DeviceInfo.getUserAgent(),
@@ -23,7 +24,7 @@ const commonConfiguration = {
 
 const googleAnalyticsConfiguration = {
   trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueID()
+  clientId: DeviceInfo.getUniqueId()
 };
 
 const providers = [
@@ -39,12 +40,12 @@ export default Analytics;
 export function mapProductToAnalytics(
   product: CommerceTypes.Product,
   quantity?: number
-): any {
-  const analyticsProduct: any = {
+): AnalyticsTypes.Product {
+  const analyticsProduct: AnalyticsTypes.Product = {
     identifier: product.id,
     name: product.title,
     brand: product.brand,
-    price: product.price
+    price: product.price?.value.toString()
   };
 
   if (quantity) {

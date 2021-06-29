@@ -28,12 +28,12 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   dynamicTitleStates?: string[];
   selectedTitleState?: number;
   accessibilityLabel?: string;
-  style?: StyleProp<ViewStyle>;
   onPress: () => void;
   onLongPress?: () => void;
-  titleStyle?: StyleProp<TextStyle>;
   underlayColor?: string;
   icon?: ImageSourcePropType;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
 
@@ -54,6 +54,13 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   full?: boolean;
 }
 
+export interface SerializableFSButtonProps extends Omit<ButtonProps, 'onPress' | 'onLongPress'> {
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
+  iconStyle?: ImageStyle;
+  viewStyle?: ViewStyle;
+}
+
 export interface ButtonState {
   palette: any;
   title: string;
@@ -65,10 +72,11 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     title: this.titleState
   };
 
-  componentDidUpdate({ selectedTitleState: prevSelectedTitleState }: ButtonProps): void {
-    const { selectedTitleState } = this.props;
-    if (selectedTitleState !== prevSelectedTitleState) {
-      this.setState({ title: this.titleState });
+  componentDidUpdate(): void {
+    const { title } = this.state;
+    const newTitle = this.titleState;
+    if (newTitle !== title) {
+      this.setState({ title: newTitle });
     }
   }
 
@@ -165,13 +173,8 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       dynamicTitleStates
      } = this.props;
 
-    if (
-      (!selectedTitleState && selectedTitleState !== 0) ||
-      !dynamicTitleStates ||
-      (
-        selectedTitleState >= dynamicTitleStates.length
-      )
-      ) {
+    if (selectedTitleState === undefined || !dynamicTitleStates ||
+      selectedTitleState >= dynamicTitleStates.length) {
       return title;
     }
 

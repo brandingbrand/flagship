@@ -96,6 +96,17 @@ export type FetchDataFunction<P, Data, Source = CommerceDataSource> = (
 ) => Promise<Data>;
 
 /**
+ * A function that fetches data using the given datasource for a given query.
+ *
+ * @typeparam P The original props of the wrapped component.
+ * @typeparam Data The type of data provided to the wrapped component.
+ * @param {Readonly<P>} props The props passed to the wrapped component.
+ */
+export type InitialDataFunction<P, Data> = (
+  props: Readonly<P>
+) => Data | undefined;
+
+/**
  * A function that wraps a a component and returns a new high order component. The wrapped
  * component will be given commerce data as props.
  *
@@ -119,11 +130,14 @@ export type CommerceWrapper<P, Data, Source = CommerceDataSource> = (
  * @typeparam Data The type of product data that will be provided.
  * @typeparam Source The type of datasource providing the data. Defaults to `CommerceDataSource`.
  * @param {FetchDataFunction<P, Data, Source>} fetchData Function to retrieve commerce data
+ * @param {InitialDataFunction<P, Data>} initialData Function to determine initial data to be
+ * loaded into the provider
  * @returns {CommerceWrapper<P, Data, Source>} A function that wraps a a component and returns a new
  * high order component. The wrapped component will be given commerce data as props.
  */
 function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
-  fetchData: FetchDataFunction<P, Data, Source>
+  fetchData: FetchDataFunction<P, Data, Source>,
+  initialData?: InitialDataFunction<P, Data>
 ): CommerceWrapper<P, Data, Source> {
   // Return a function that accepts a component and returns a wrapped component with the commerce
   // data methods applied.
@@ -134,8 +148,22 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
       P & WithCommerceProviderProps<Data, Source>,
       WithCommerceState<Data>
     > {
+      constructor(props: any) {
+        super(props);
+        const commerceData = initialData ? initialData(props) : undefined;
+        this.state = {
+          commerceData,
+          isLoading: false
+        };
+      }
       componentDidMount(): void {
-        this.loadData();
+        if (this.state.commerceData) {
+          if (this.props.onDataLoaded) {
+            this.props.onDataLoaded(this.state.commerceData);
+          }
+        } else {
+          this.loadData();
+        }
       }
 
       render(): JSX.Element {
@@ -224,6 +252,10 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           const { commerceData } = this.state;
 
           if (data && commerceData) {
+            if ((commerceData as any).minPage === undefined) {
+              (commerceData as any).minPage = (commerceData as any).page;
+            }
+            (data as any).minPage = (commerceData as any).minPage;
             // TODO: Since the data isn't guarneteed to be Pagable we have to cast to any to check.
             // Figure out a way to not include this function for non-pagable Data types
             if ((data as any).page > (commerceData as any).page) {
@@ -231,7 +263,14 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
                 ...(commerceData as any).products,
                 ...(data as any).products
               ];
-
+              this.setData(data);
+            } else if ((data as any).page < (commerceData as any).minPage) {
+              (data as any).products = [
+                ...(data as any).products,
+                ...(commerceData as any).products
+              ];
+              (data as any).minPage = (data as any).page;
+              (data as any).page = (commerceData as any).page;
               this.setData(data);
             }
           }
