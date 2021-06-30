@@ -19,7 +19,6 @@
 		F93CD7992065853900B6E5F3 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */; };
 		F979949420640E35006BFFBD /* NativeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F979949320640E35006BFFBD /* NativeConstants.m */; };
 		F9F84A2A1FBBA294006783F0 /* LaunchImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */; };
-		1BA7211DD1F64C0CA4E0506E /* libRNSslPinning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2228824746354A57807CEAEB /* libRNSslPinning.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +42,6 @@
 		F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "FLAGSHIP/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		F979949320640E35006BFFBD /* NativeConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeConstants.m; path = FLAGSHIP/NativeConstants.m; sourceTree = "<group>"; };
 		F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = FLAGSHIP/LaunchImages.xcassets; sourceTree = "<group>"; };
-		2228824746354A57807CEAEB /* libRNSslPinning.a */ = {isa = PBXFileReference; name = "libRNSslPinning.a"; path = "libRNSslPinning.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +51,7 @@
 			files = (
 				8B48111B22B00C440025490E /* JavaScriptCore.framework in Frameworks */,
 				7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */,
-				7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */,
-				1BA7211DD1F64C0CA4E0506E /* libRNSslPinning.a in Frameworks */
+				7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +92,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				70DDE125CF18417ABBB0C386 /* RNSslPinning.xcodeproj */
 			);
 			name = Libraries;
 			sourceTree = "<group>";
