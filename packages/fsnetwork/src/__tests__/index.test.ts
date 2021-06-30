@@ -1,7 +1,7 @@
 import FSNetwork from '../index';
-import { SSLPinningInstance } from '../lib/sll';
-import { SSLError } from '../lib/sll/SSLError';
-import { SSLResponse } from '../lib/sll/SSLResponse';
+import { SSLPinningInstance } from '../lib/ssl';
+import { SSLError } from '../lib/ssl/SSLError';
+import { SSLResponse } from '../lib/ssl/SSLResponse';
 
 const sslResponseMockData = {
   bodyString: '{"testString": "test", "testObject": {"1": "1", "2": [1, 2]}}',

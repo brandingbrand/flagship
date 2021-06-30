@@ -480,7 +480,7 @@ export function addDevMenuFlag(configuration: Config): void {
   nativeConstants.addIOS(configuration, 'ShowDevMenu', 'true');
 }
 
-export function addSllCertificates(configuration: Config): void {
+export function addSslCertificates(configuration: Config): void {
   if (configuration.pinnedCerts && configuration.pinnedCerts.length) {
     addFilesToXcodeProject(configuration.pinnedCerts.map(item => item.path), configuration);
   }
