@@ -13,7 +13,7 @@
   "dependencies": {
     "@brandingbrand/fsfoundation": "^11.0.0-alpha.37",
     "axios": "~0.21.0",
-    "react-native-ssl-pinning": "^1.3.5",
+    "react-native-ssl-pinning": "^1.5.4",
     "react-native-cookies": "^3.3.0",
     "lodash-es": "^4.17.15"
   },
