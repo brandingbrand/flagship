@@ -13,6 +13,7 @@ import * as path from './lib/path';
 import * as rename from './lib/rename';
 import * as version from './lib/version';
 import * as web from './lib/web';
+import * as types from './types';
 
 export {
   android,
@@ -29,5 +30,6 @@ export {
   path,
   rename,
   version,
-  web
+  web,
+  types
 };

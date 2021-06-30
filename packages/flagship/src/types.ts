@@ -9,6 +9,11 @@ export enum TargetedDevices {
   Universal = 'Universal'
 }
 
+export interface PinnedCertificate {
+  baseUrl: string;
+  path: string;
+}
+
 export type IOSPermissionKeys =
   'APP_TRACKING_TRANSPARENCY'
   | 'BLUETOOTH_PERIPHERAL'
@@ -71,6 +76,7 @@ export interface Config {
   associatedDomains: string[];
   disableDevFeature?: boolean;
   googleMapApiKey: string;
+  pinnedCerts?: PinnedCertificate[];
 
   // TODO - unify with appCenter config
   codepush?: {

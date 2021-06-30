@@ -4,6 +4,7 @@ import * as helpers from '../helpers';
 import * as path from './path';
 import * as versionLib from './version';
 import * as nativeConstants from './native-constants';
+import { addFilesToXcodeProject } from './file';
 import * as xcode from 'xcode';
 import * as usageDescriptions from './usage-descriptions';
 
@@ -477,6 +478,12 @@ export function sentryProperties(configuration: Config): void {
  */
 export function addDevMenuFlag(configuration: Config): void {
   nativeConstants.addIOS(configuration, 'ShowDevMenu', 'true');
+}
+
+export function addSslCertificates(configuration: Config): void {
+  if (configuration.pinnedCerts && configuration.pinnedCerts.length) {
+    addFilesToXcodeProject(configuration.pinnedCerts.map(item => item.path), configuration);
+  }
 }
 
 /**

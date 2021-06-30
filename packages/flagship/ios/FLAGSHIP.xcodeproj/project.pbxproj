@@ -5,7 +5,6 @@
 	};
 	objectVersion = 48;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -52,7 +51,7 @@
 			files = (
 				8B48111B22B00C440025490E /* JavaScriptCore.framework in Frameworks */,
 				7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */,
-				7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */,
+				7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +376,10 @@
 				PRODUCT_NAME = FLAGSHIP;
 				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FLAGSHIP\"",
+				);
 			};
 			name = Debug;
 		};
@@ -411,6 +414,10 @@
 				PRODUCT_NAME = FLAGSHIP;
 				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FLAGSHIP\"",
+				);
 			};
 			name = Release;
 		};
