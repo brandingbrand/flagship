@@ -36,13 +36,11 @@ export const ActionBar: FunctionComponent<ActionBarProps> = (props): JSX.Element
 
   return (
     <View style={[styles.container, props.style]}>
-      { React.Children.map(props.children, (child: any, index) => {
-        let returnElem: any;
+      { React.Children.map(props.children, (child: React.ReactNode, index) => {
+        let returnElem: React.ReactNode;
 
         if (React.isValidElement(child)) {
           // If child is a React Element, add default style prop of flex:1
-          child = child as React.ReactElement;
-
           returnElem = React.cloneElement(child, {
             style: [
               styles.item,

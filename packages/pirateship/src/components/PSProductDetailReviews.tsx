@@ -97,21 +97,18 @@ Component<ProductDetailReviewsProps, ProductDetailReviewState> {
     const { reviewDataSource, reviewQuery } = this.props;
     const { reviewsData } = this.state;
 
-    if (!Array.isArray(reviewsData) || !reviewsData[0] || reviewsData[0].page === undefined) {
-      return;
+    if (Array.isArray(reviewsData) && reviewsData[0] && reviewsData[0].page !== undefined) {
+      this.setState({ loadingMore: true });
+      const newReviewsData = await reviewDataSource.fetchReviewDetails({
+        ...reviewQuery,
+        page: (reviewsData[0].page || 0) + 1
+      });
+
+      this.setState({
+        loadingMore: false,
+        reviewsData: reviewDataSource.mergeReviewDetails(reviewsData, newReviewsData)
+      });
     }
-
-    this.setState({ loadingMore: true });
-
-    const newReviewsData = await reviewDataSource.fetchReviewDetails({
-      ...reviewQuery,
-      page: reviewsData[0].page as number + 1
-    });
-
-    this.setState({
-      loadingMore: false,
-      reviewsData: reviewDataSource.mergeReviewDetails(reviewsData, newReviewsData)
-    });
   }
 
   renderLoadMore = () => {

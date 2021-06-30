@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView,
   StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Options } from 'react-native-navigation';
 import { border, palette } from '../styles/variables';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { navBarDefault } from '../styles/Navigation';
 import { dataSource } from '../lib/datasource';
 import withAccount, { AccountProps } from '../providers/accountProvider';
@@ -67,15 +68,18 @@ const defaultMessage = 'Loading your payments...';
 interface SavedPaymentsScreenProps extends ScreenProps, AccountProps {}
 
 class SavedPayments extends Component<SavedPaymentsScreenProps> {
-  static navigatorStyle: NavigatorStyle = navBarDefault;
+  static options: Options = navBarDefault;
   state: any;
 
   constructor(props: SavedPaymentsScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.editSavedPayments.title)
+    this.props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.editSavedPayments.title)
+        }
+      }
     });
-
     this.state = {
       payments: [],
       loading: true,
@@ -160,7 +164,8 @@ class SavedPayments extends Component<SavedPaymentsScreenProps> {
   }
 
   onComplete = (updated: boolean) => {
-    this.props.navigator.dismissModal();
+    this.props.navigator.dismissModal()
+    .catch(e => console.warn('DISMISSMODAL error: ', e));
     if (updated) {
       this.fetchData();
     }

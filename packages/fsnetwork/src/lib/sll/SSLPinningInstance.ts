@@ -1,4 +1,6 @@
-import Axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+  // tslint:disable promise-function-async
+
+import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { SSLMethodType, SSLRequest } from './SSLRequest';
 import { FSNetworkRequestConfig, PinnedCertificate } from '../interfaces';
 
@@ -12,14 +14,16 @@ export class SSLPinningInstance {
     this.sslRequest = new SSLRequest(certificates);
   }
 
-  request<T = any>(config: AxiosRequestConfig): AxiosPromise<T> {
+  request = async <T = any, R = AxiosResponse<T>>(config: AxiosRequestConfig): Promise<R> => {
     return this.sslRequest.send({
       ...this.config,
       ...config
     });
   }
 
-  get = <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> => {
+  get = async <T = any, R = AxiosResponse<T>>(
+    url: string, config?: AxiosRequestConfig
+  ): Promise<R> => {
     return this.sslRequest.send({
       ...this.config,
       ...config,
@@ -27,7 +31,9 @@ export class SSLPinningInstance {
     }, SSLMethodType.Get);
   }
 
-  post = <T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T> => {
+  post = async <T = any, R = AxiosResponse<T>>(
+    url: string, data?: any, config?: AxiosRequestConfig
+  ): Promise<R> => {
     return this.sslRequest.send({
       ...this.config,
       ...config,
@@ -35,7 +41,9 @@ export class SSLPinningInstance {
     }, SSLMethodType.Post, data);
   }
 
-  delete = (url: string, config?: AxiosRequestConfig): AxiosPromise => {
+  delete = async <T = any, R = AxiosResponse<T>>(
+    url: string, config?: AxiosRequestConfig
+  ): Promise<R> => {
     return this.sslRequest.send({
       ...this.config,
       ...config,
@@ -43,7 +51,9 @@ export class SSLPinningInstance {
     }, SSLMethodType.Delete);
   }
 
-  put = <T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T> => {
+  put = async <T = any, R = AxiosResponse<T>>(
+    url: string, data?: any, config?: AxiosRequestConfig
+  ): Promise<R> => {
     return this.sslRequest.send({
       ...this.config,
       ...config,
@@ -51,11 +61,15 @@ export class SSLPinningInstance {
     }, SSLMethodType.Put, data);
   }
 
-  head = (url: string, config?: AxiosRequestConfig): AxiosPromise => {
+  head = <T = any, R = AxiosResponse<T>>(
+    url: string, config?: AxiosRequestConfig
+  ): Promise<R> => {
     throw new Error('Method HEAD not allowed for SSL Pinning request');
   }
 
-  patch = <T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T> => {
+  patch = <T = any, R = AxiosResponse<T>>(
+    url: string, data?: any, config?: AxiosRequestConfig
+  ): Promise<R> => {
     throw new Error('Method PATCH not allowed for SSL Pinning request');
   }
 }

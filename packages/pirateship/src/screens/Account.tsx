@@ -8,13 +8,16 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import {
+  EventSubscription,
+  NavigationButtonPressedEvent,
+  Options } from 'react-native-navigation';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import SignIn from '../screens/SignIn';
 
 import {
   GridItem,
   NavButton,
-  NavigatorStyle,
   ScreenProps
 } from '../lib/commonTypes';
 import { signOutButton } from '../lib/navStyles';
@@ -77,19 +80,27 @@ const styles = StyleSheet.create({
   }
 });
 
-const accountNavStyle = {
+const accountNavStyle: Options = {
   ...navBarTabLanding,
-  navBarButtonColor: palette.secondary
+  topBar: {
+    leftButtonColor: palette.secondary,
+    rightButtonColor: palette.secondary
+  }
 };
 
 class Account extends Component<AccountScreenProps, AccountScreenState> {
-  static navigatorStyle: NavigatorStyle = accountNavStyle;
   static rightButtons: NavButton[] = [signOutButton];
+  static options: Options = accountNavStyle;
+  private navigationEventListener: EventSubscription | null = null;
 
   constructor(props: AccountScreenProps) {
     super(props);
-    props.navigator.setTitle({
-      title: translate.string(translationKeys.screens.account.title)
+    props.navigator.mergeOptions({
+      topBar: {
+        title: {
+          text: translate.string(translationKeys.screens.account.title)
+        }
+      }
     });
 
     // The grid items should be equal height and width. The width is dependent on the width
@@ -99,23 +110,19 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     };
 
     if (!props.account.isLoggedIn) {
-      props.navigator.setStyle(navBarHide);
+      this.props.navigator.mergeOptions(navBarHide);
     }
   }
 
   componentDidUpdate(prevProps: AccountScreenProps): void {
     if (prevProps.account.isLoggedIn && !this.props.account.isLoggedIn) {
-      prevProps.navigator.setStyle(navBarHide);
+      this.props.navigator.mergeOptions(navBarHide);
     } else if (!prevProps.account.isLoggedIn && this.props.account.isLoggedIn) {
-      prevProps.navigator.setStyle(accountNavStyle);
-      prevProps.navigator.setButtons({ rightButtons: [signOutButton.button] });
-    }
-  }
-
-  onNavigatorEvent = (event: any) => {
-    if (event.id === 'signOut') {
-      this.props.signOut().catch(e => {
-        console.warn('Error signing out', e);
+      this.props.navigator.mergeOptions(accountNavStyle);
+      this.props.navigator.mergeOptions({
+        topBar: {
+          rightButtons: [signOutButton.button]
+        }
       });
     }
   }
@@ -125,7 +132,18 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
   }
 
   componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
+    }
     Dimensions.removeEventListener('change', this.handleDimensionChange);
+  }
+
+  navigationButtonPressed(event: NavigationButtonPressedEvent): void {
+    if (event.buttonId === 'signOut') {
+      this.props.signOut().catch(e => {
+        console.warn('Error signing out', e);
+      });
+    }
   }
 
   handleDimensionChange = (event: any) => {
@@ -135,23 +153,21 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
   }
 
   render(): JSX.Element {
-    const { navigator } = this.props;
     if (!this.props.account.isLoggedIn) {
       return (
         <SignIn
-          navigator={navigator}
-          onNav={this.props.onNav}
           onSignInSuccess={this.onSignInSuccess}
+          navigator={this.props.navigator}
         />
       );
     } else {
-      this.props.onNav(this.onNavigatorEvent);
+      this.navigationEventListener = this.props.navigator.bindNavigation(this);
     }
 
     return (
       <PSScreenWrapper
         hideGlobalBanner={true}
-        navigator={navigator}
+        navigator={this.props.navigator}
       >
         <Grid
           style={styles.grid}
@@ -191,15 +207,28 @@ class Account extends Component<AccountScreenProps, AccountScreenState> {
     const { title, path } = item;
     return () => {
       this.props.navigator.push({
-        title,
-        screen: path
-      });
+        component: {
+          name: path,
+          options: {
+            topBar: {
+              title: {
+                text: title
+              }
+            }
+          }
+        }
+      }).catch((e: any) => console.warn(`${path} PUSH error: `, e));
     };
   }
 
   onSignInSuccess = () => {
-    this.props.navigator.setStyle(accountNavStyle);
-    this.props.navigator.setButtons({ rightButtons: [signOutButton.button] });
+    this.props.navigator.mergeOptions({
+      ...accountNavStyle,
+      topBar: {
+        ...accountNavStyle.topBar,
+        rightButtons: [signOutButton.button]
+      }
+    });
   }
 }
 

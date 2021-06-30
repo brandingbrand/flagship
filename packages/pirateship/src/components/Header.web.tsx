@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 import { padding, palette } from '../styles/variables';
 import GlobalStyles from '../styles/Global';
 
 export interface HeaderProps {
-  navigator: import ('react-native-navigation').Navigator;
+  navigator: Navigator;
 }
 
 const title = 'PIRATESHIP';
@@ -41,11 +42,21 @@ class Header extends Component<HeaderProps> {
   }
 
   toggleLeftDrawer = () => {
-    return this.props.navigator.toggleDrawer({ side: 'left' });
+    return this.props.navigator.mergeOptions({
+      sideMenu: {
+        left: {
+          visible: true
+        }
+      }
+    });
   }
 
-  goTo = (screen: string) => {
-    return () => this.props.navigator.push({ screen });
+  goTo = (name: string) => {
+    return () => this.props.navigator.push({
+      component: {
+        name
+      }
+    });
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import Row from '../components/Row';
 
 export default class Home extends Component<any> {
@@ -16,5 +17,7 @@ export default class Home extends Component<any> {
     );
   }
 
-  goTo = (screen: string) => () => this.props.navigator.push({ screen });
+  goTo = (screen: string) =>
+    () => Navigation.push(this.props.componentId, { component: { name: screen } })
+      .catch(err => console.warn(`${screen} PUSH error: `, err))
 }

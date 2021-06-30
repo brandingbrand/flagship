@@ -74,7 +74,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
           if (mutableContent.instantiable) {
             if (identifier) {
-              mutableContent.instances = mutableContent.instances[identifier] || {};
+              mutableContent.instances = mutableContent.instances[identifier] || [];
             }
           }
 
@@ -129,7 +129,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
 
   private currentInstances(content: any): any[] {
-    let instances = content && content.instances || {};
+    let instances = content && content.instances || [];
 
     // filter by campaign start/end date first
     instances = targetInstancesByDate(instances);

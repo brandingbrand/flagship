@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Options } from 'react-native-navigation';
 
 import { SearchBar } from '@brandingbrand/fscomponents';
 import { env as projectEnv } from '@brandingbrand/fsapp';
@@ -27,13 +28,14 @@ import { handleDeeplink } from '../lib/deeplinkHandler';
 import GlobalStyle from '../styles/Global';
 import { border, color, fontSize, palette } from '../styles/variables';
 import { navBarFullBleed } from '../styles/Navigation';
-import { NavigatorStyle, ScreenProps } from '../lib/commonTypes';
+import { ScreenProps } from '../lib/commonTypes';
 import { CombinedStore } from '../reducers';
 import { dataSourceConfig } from '../lib/datasource';
 import translate, { translationKeys } from '../lib/translations';
 import { connect } from 'react-redux';
 import { AccountActionProps, signOut } from '../providers/accountProvider';
 import PSProductCarousel from '../components/PSProductCarousel';
+import { CMSSlot } from '../lib/cms';
 
 const arrow = require('../../assets/images/arrow.png');
 const logo = require('../../assets/images/pirateship-120.png');
@@ -129,7 +131,7 @@ export interface ShopProps
   Pick<AccountActionProps, 'signOut'> { }
 
 export class UnwrappedShop extends Component<ShopProps> {
-  static navigatorStyle: NavigatorStyle = navBarFullBleed;
+  static options: Options = navBarFullBleed;
 
   constructor(props: ShopProps) {
     super(props);
@@ -150,59 +152,27 @@ export class UnwrappedShop extends Component<ShopProps> {
       });
     }
 
-    // Listen for navigator events
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
     // Add Keyboard listeners to hide tab bar on Android while the keyboard is open.
     // This is global and doesn't need to be added to the other tabs/screens.
     if (Platform.OS !== 'ios') {
+      // Not sure we still need this in rnn v2
       Keyboard.addListener('keyboardDidShow', () => {
-        props.navigator.toggleTabs({
-          to: 'hidden',
-          animated: false
+        this.props.navigator.mergeOptions({
+          bottomTabs: {
+            visible: false,
+            animate: false
+          }
         });
       });
 
       Keyboard.addListener('keyboardDidHide', () => {
-        props.navigator.toggleTabs({
-          to: 'shown',
-          animated: false
+        this.props.navigator.mergeOptions({
+          bottomTabs: {
+            visible: true,
+            animate: false
+          }
         });
       });
-    }
-  }
-
-  onNavigatorEvent(event: any): void {
-    if (event.type === 'DeepLink') {
-      const parts = event.link.split('/');
-      if (parts[0] === 'shop') {
-        let navAction: any = {
-          screen: null
-        };
-
-        if (parts[1] === 'product') {
-          // navigate to product
-          navAction = {
-            screen: 'ProductDetail',
-            passProps: {
-              productId: parts[2]
-            }
-          };
-        }
-
-        if (navAction.screen) {
-          // switch to shop tab if it's not already visible
-          this.props.navigator
-            .screenIsCurrentlyVisible()
-            .then(visible => {
-              if (!visible) {
-                this.props.navigator.switchToTab();
-              }
-              this.props.navigator.push(navAction);
-            })
-            .catch(e => null);
-        }
-      }
     }
   }
 
@@ -212,23 +182,31 @@ export class UnwrappedShop extends Component<ShopProps> {
       dataSourceConfig.type === 'shopify' ? 'ProductIndex' : 'Category';
 
     this.props.navigator.push({
-      screen,
-      title: item.title,
-      passProps: {
-        categoryId: item.id,
-        format: dataSourceConfig.categoryFormat
+      component: {
+        name: screen,
+        options: {
+          topBar: {
+            title: {
+              text: item.title
+            }
+          }
+        },
+        passProps: {
+          categoryId: item.id,
+          format: dataSourceConfig.categoryFormat
+        }
       }
-    });
+    }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }
 
   render(): JSX.Element {
-    const { account, navigator, topCategory } = this.props;
+    const { account, topCategory } = this.props;
     return (
       <PSScreenWrapper
+        navigator={this.props.navigator}
         needInSafeArea={true}
         style={ShopStyle.wrapper}
         scrollViewProps={{ style: ShopStyle.scrollView }}
-        navigator={navigator}
       >
         <View style={ShopStyle.container}>
           <PSWelcome
@@ -240,7 +218,7 @@ export class UnwrappedShop extends Component<ShopProps> {
             }
             isLoggedIn={account && account.isLoggedIn}
             style={ShopStyle.welcome}
-            onSignInPress={openSignInModal(navigator)}
+            onSignInPress={openSignInModal(this.props.navigator)}
             onSignOutPress={this.handleSignOut}
           />
           <PSHeroCarousel
@@ -307,8 +285,8 @@ export class UnwrappedShop extends Component<ShopProps> {
     );
   }
 
-  handleHeroCarouselPress = (item: PSHeroCarouselItem) => {
-    if (item.Link) {
+  handleHeroCarouselPress = (item: CMSSlot | PSHeroCarouselItem) => {
+    if ('Link' in item) {
       handleDeeplink(item.Link, this.props.navigator);
     }
   }
@@ -319,34 +297,58 @@ export class UnwrappedShop extends Component<ShopProps> {
 
   goToAllCategories = () => {
     this.props.navigator.push({
-      screen: 'Category',
-      title: translate.string(translationKeys.screens.allCategories.title),
-      passProps: {
-        categoryId: '',
-        format: 'list'
+      component: {
+        name: 'Category',
+        options: {
+          topBar: {
+            title: {
+              text: translate.string(translationKeys.screens.allCategories.title)
+            }
+          }
+        },
+        passProps: {
+          categoryId: '',
+          format: 'list'
+        }
       }
-    });
+    }).catch(e => console.warn('Category PUSH error: ', e));
   }
 
   showSearchScreen = () => {
     this.props.navigator.push({
-      screen: 'Search',
-      animated: false,
-      passProps: {
-        onCancel: () => {
-          this.props.navigator.pop({ animated: false });
+      component: {
+        name: 'Search',
+        passProps: {
+          onCancel: () => {
+            this.props.navigator.pop({
+              animations: {
+                pop: {
+                  enabled: false
+                }
+              }
+            }).catch(e => console.warn('Search POP error: ', e));
+          }
+        },
+        options: {
+          animations: {
+            push: {
+              enabled: false
+            }
+          }
         }
       }
-    });
+    }).catch(e => console.warn('Search PUSH error: ', e));
   }
 
   private handlePromotedProductPress = (productId: string) => () => {
     this.props.navigator.push({
-      screen: 'ProductDetail',
-      passProps: {
-        productId
+      component: {
+        name: 'ProductDetail',
+        passProps: {
+          productId
+        }
       }
-    });
+    }).catch(e => console.warn('ProductDetail PUSH error: ', e));
   }
 
   private renderPromoProducts = (): React.ReactNode => {

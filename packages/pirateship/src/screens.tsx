@@ -10,6 +10,7 @@ import Category from './screens/Category';
 import Account from './screens/Account';
 import More from './screens/More';
 import Development from './screens/Development';
+import Home from './screens/Home';
 import DesktopPassthrough from './screens/DesktopPassthrough';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
@@ -30,6 +31,7 @@ import AccordionSample from './screens/AccordionSample';
 import ActionBarSample from './screens/ActionBarSample';
 import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
 import CartCountSample from './screens/CartCountSample';
+import { EngagementComp } from './lib/engagement';
 
 export default {
   Shop,
@@ -42,6 +44,7 @@ export default {
   Category,
   Account,
   More,
+  Home,
   Development,
   DesktopPassthrough,
   SignIn,
@@ -60,5 +63,6 @@ export default {
   AccordionSample,
   ActionBarSample,
   ImageWithOverlaySample,
-  CartCountSample
-};
+  CartCountSample,
+  EngagementComp
+} as any;

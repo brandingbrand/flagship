@@ -37,7 +37,8 @@ node_modules/
 jspm_packages/
 packages/fstestproject/node_modules
 packages/pirateship/node_modules
-
+packages/pirateship/web-compiled
+packages/fstestproject/web-compiled
 # Typescript v1 declaration files
 typings/
 

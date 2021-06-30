@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscodestyle",
   "sideEffects": false,
-  "version": "7.4.3",
+  "version": "11.0.0-alpha.37",
   "license": "MIT",
   "bin": {
     "fscodestyle": "index.js"
@@ -13,7 +13,7 @@
   "dependencies": {
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",
-    "tslint-react": "^3.6.0"
+    "tslint-react": "^4.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

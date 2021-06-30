@@ -1,1 +1,1 @@
-export {default} from 'react-native-i18n';
+export {default} from 'i18n-js';

@@ -72,12 +72,12 @@ export interface GridProps<ItemT>
   /**
    * An optional function to render a header component displayed at the top of the grid.
    */
-  renderHeader?: () => JSX.Element;
+  renderHeader?: () => JSX.Element | null;
 
   /**
    * An optional function to render a footer component, displayed at the bottom of the grid.
    */
-  renderFooter?: () => JSX.Element;
+  renderFooter?: () => JSX.Element | null;
 
   /**
    * Styles to apply to the container around the back to top button
@@ -137,6 +137,11 @@ export interface GridProps<ItemT>
    * Style to apply to the separator between rows in the grid.
    */
   rowSeparatorStyle?: StyleProp<ViewStyle>;
+
+  /**
+   * Style to apply to parent view component.
+   */
+  gridContainerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
@@ -155,14 +160,14 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     };
   }
 
-  private listview: RefObject<FlatList<ItemT[]>>;
+  private listView: RefObject<FlatList<ItemT[]>>;
   private backTopOpacity: Animated.Value;
 
   // Separate items into rows
   constructor(props: GridProps<ItemT>) {
     super(props);
 
-    this.listview = React.createRef<FlatList<ItemT[]>>();
+    this.listView = React.createRef<FlatList<ItemT[]>>();
     this.backTopOpacity = new Animated.Value(0);
     this.state = {
       backToTopVisible: false,
@@ -171,11 +176,7 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
   }
 
   render(): React.ReactNode {
-    const {
-      style,
-      renderHeader,
-      renderFooter
-    } = this.props;
+    const { style, renderHeader, renderFooter, gridContainerStyle } = this.props;
 
     // Only register for scroll events if we're supposed to show back to top
     let onScroll;
@@ -185,14 +186,14 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={gridContainerStyle}>
         <FlatList
           data={this.state.data}
           keyExtractor={this.keyExtractor}
           ListFooterComponent={renderFooter}
           ListHeaderComponent={renderHeader}
           onScroll={onScroll}
-          ref={this.listview}
+          ref={this.listView}
           renderItem={this.renderRow}
           style={style}
           {...this.props.listViewProps}
@@ -203,8 +204,8 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
   }
 
   handleBackToTop = () => {
-    if (this.listview.current) {
-      this.listview.current.scrollToOffset({ offset: 0 });
+    if (this.listView.current) {
+      this.listView.current.scrollToOffset({ offset: 0 });
     }
   }
 
@@ -237,7 +238,10 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
   }
 
   private keyExtractor = (items: ItemT[], index: number): string => {
-    const key = items.map((item: any) => item && (item.key || item.id)).filter(Boolean).join();
+    const key = items
+      .map((item: ItemT & { id?: string; key?: string }) => item && (item.key || item.id))
+      .filter(Boolean)
+      .join();
 
     return key || '' + index;
   }
@@ -293,18 +297,17 @@ export class Grid<ItemT> extends Component<GridProps<ItemT>, GridState<ItemT>> {
 
     const showRowSeparator = this.state.data && this.state.data.length > info.index + 1;
 
-
-    const columnWidth = Math.floor(100 / columns * 100) / 100;
+    const columnWidth = Math.floor((100 / columns) * 100) / 100;
 
     return (
       <View style={gridStyle.row}>
         {info.item.map((item, index) => {
-          const showColumnSeparator = (((index + 1) % columns) !== 0);
+          const showColumnSeparator = (index + 1) % columns !== 0;
 
           return (
             <View style={[gridStyle.item, { width: columnWidth + '%' }]} key={index}>
               <View style={gridStyle.itemRow}>
-                {renderItem({item, index, separators: info.separators})}
+                {renderItem && renderItem({ item, index, separators: info.separators })}
                 {showRowSeparators && showRowSeparator && (
                   <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
                 )}

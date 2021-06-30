@@ -1,19 +1,24 @@
-export { default as CommerceTypes } from './Commerce/CommerceTypes';
+export * as CommerceTypes from './Commerce/CommerceTypes';
 export {
   default as withCommerceData,
   WithCommerceDataProps,
   WithCommerceProps,
   WithCommerceProviderProps,
   WithCommerceState,
-  FetchDataFunction
+  FetchDataFunction,
+  InitialDataFunction
 } from './Commerce/CommerceProvider';
 export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
 export {
   default as CommerceCookieSessionManager
 } from './Commerce/sessions/CommerceCookieSessionManager';
 
-export { default as ReviewTypes } from './Review/ReviewTypes';
-export { ReviewDataSource, AbstractReviewDataSource } from './Review/ReviewDataSource';
+export * as ReviewTypes from './Review/ReviewTypes';
+export {
+  ReviewDataSource,
+  AbstractReviewDataSource,
+  WriteReviewDataSource
+} from './Review/ReviewDataSource';
 
 export { AddressType, AddressTypeValidation } from './Address/AddressTypes';
 export { default as AddressDataSource } from './Address/AddressDataSource';
@@ -33,8 +38,13 @@ export {
 export {
   default as ProductSearchDataSource
 } from './Commerce/interfaces/ProductSearchDataSource';
+export {
+  default as ContentDataSource
+} from './Commerce/interfaces/ContentDataSource';
 
 export {
   default as runMiddleware,
   MiddlewareFunction
 } from './lib/runMiddleware';
+
+export { AuthType } from './Commerce/types/CustomerAccount';

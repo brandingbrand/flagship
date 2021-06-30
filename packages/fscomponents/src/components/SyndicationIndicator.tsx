@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo, useState } from 'react';
 
 import {
   Image,
@@ -8,6 +8,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { ReviewTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
@@ -27,63 +28,49 @@ const S = StyleSheet.create({
 });
 
 export interface SyndicationIndicatorProps {
-  syndicationSource: any;
+  syndicationSource: ReviewTypes.SyndicationSource;
   rowStyle?: StyleProp<ViewStyle>;
 }
 
-export interface SyndicationIndicatorState {
-  syndicatedImageHeight?: number;
-  syndicatedImageWidth?: number;
-}
+export const SyndicationIndicator: FunctionComponent<SyndicationIndicatorProps> =
+  memo((props): JSX.Element => {
+    const [syndicatedImageHeight, setSyndicatedImageHeight] = useState<number>();
+    const [syndicatedImageWidth, setSyndicatedImageWidth] = useState<number>();
 
-export default class SyndicationIndicator extends
-Component<SyndicationIndicatorProps, SyndicationIndicatorState> {
-  constructor(props: SyndicationIndicatorProps) {
-    super(props);
-    this.state = {};
-  }
+    const getImageSizeSuccess = (w: number, h: number) => {
+      if (!syndicatedImageHeight || !syndicatedImageWidth) {
+        setSyndicatedImageHeight(h);
+        setSyndicatedImageWidth(w);
+      }
+    };
 
-  getImageSizeSuccess = (w: number, h: number) => {
-    if (!this.state.syndicatedImageHeight || !this.state.syndicatedImageWidth) {
-      this.setState({
-        syndicatedImageHeight: h,
-        syndicatedImageWidth: w
-      });
-    }
-  }
-
-  async componentDidMount(): Promise<void> {
     Image.getSize(
-      this.props.syndicationSource.LogoImageUrl,
-      this.getImageSizeSuccess,
+      props.syndicationSource.LogoImageUrl || '',
+      getImageSizeSuccess,
       () => null
     );
-  }
 
-  render(): JSX.Element {
     return (
       <View
         style={[
           S.row, { flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 20 },
-          this.props.rowStyle
+          props.rowStyle
         ]}
       >
         <Image
           style={{
-            height: this.state.syndicatedImageHeight,
-            width: this.state.syndicatedImageWidth,
+            height: syndicatedImageHeight,
+            width: syndicatedImageWidth,
             marginRight: 6
           }}
-          source={{uri: this.props.syndicationSource.LogoImageUrl}}
-          accessibilityLabel={`${this.props.syndicationSource.Name} logo`}
+          source={{ uri: props.syndicationSource.LogoImageUrl }}
+          accessibilityLabel={`${props.syndicationSource.Name} logo`}
         />
         <Text style={[S.syndicatedLabel]}>
           {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
-            site: this.props.syndicationSource.Name
+            site: props.syndicationSource.Name
           })}
         </Text>
       </View>
     );
-
-  }
-}
+  });

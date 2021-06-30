@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
   ScrollView
 } from 'react-native';
+import { goToNavPush } from '../../lib/navigation';
 
 import Row from '../../components/Row';
 
 export default class Home extends Component<any, any> {
   goTo = (screen: any, title: any, backButtonTitle: any) => () => {
-    this.props.navigator.push({ screen: 'fscommerce.' + screen, title, backButtonTitle });
+    goToNavPush('fscommerce', this.props.componentId, screen, title, backButtonTitle);
   }
 
   render(): JSX.Element {
@@ -16,19 +17,6 @@ export default class Home extends Component<any, any> {
         <Row
           text='Commerce Provider'
           onPress={this.goTo('CommerceProvider', 'CommerceProvider', 'Back')}
-        />
-        <Row
-          text='Demandware'
-          onPress={this.goTo('Demandware', 'Demandware', 'Back')}
-        />
-        <Row text='Shopify' onPress={this.goTo('Shopify', 'Shopify', 'Back')} />
-        <Row
-          text='DemandwareAccount'
-          onPress={this.goTo('DemandwareAccount', 'DemandwareAccount', 'Back')}
-        />
-        <Row
-          text='DemandwareCart'
-          onPress={this.goTo('DemandwareCart', 'DemandwareCart', 'Back')}
         />
         <Row
           text='Mock Commerce Data Source'

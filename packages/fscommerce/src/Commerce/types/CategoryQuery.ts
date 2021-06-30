@@ -22,4 +22,12 @@ export interface CategoryQuery {
    * @example 2
    */
   page?: number;
+
+  /**
+   * Specifies how many levels of nested subcategories you want the server to return.
+   * The default value is 2.
+   *
+   * @example 3
+   */
+  levels?: number;
 }

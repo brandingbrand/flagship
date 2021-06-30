@@ -56,6 +56,6 @@ export interface ProductQuery extends Partial<Pageable> {
    *  'cgid': ['womens']
    * }
    */
-  refinements?: any;
+  refinements?: Record<string, string[]>;
 
 }

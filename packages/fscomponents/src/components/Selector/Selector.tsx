@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import styles from '../../styles/Selector';
+import { style as styles } from '../../styles/Selector';
 import { Modal } from '../Modal';
 import { SelectorList } from './SelectorList';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -18,14 +18,14 @@ export interface SelectorItem {
   disabled?: boolean;
   label: string;
   selected?: boolean;
-  value: any;
+  value: string;
 }
 
 export interface SelectorProps {
   items: SelectorItem[];
   title?: string;
   placeholder?: string;
-  selectedValue?: any;
+  selectedValue?: string;
   onValueChange?: (value: string) => void;
   itemHeight?: number;
   renderDropdownArrow?: () => React.ReactNode;
@@ -43,11 +43,12 @@ export interface SelectorProps {
   disabledItemStyle?: StyleProp<ViewStyle>;
   selectedItemStyle?: StyleProp<ViewStyle>;
   selectedItemTextStyle?: StyleProp<TextStyle>;
+  titleAccessibilityLabel?: string;
 }
 
 export interface SelectorStateType {
   modalVisible: boolean;
-  selectedValue: SelectorItem;
+  selectedValue?: string;
 }
 
 export class Selector extends PureComponent<
@@ -66,8 +67,6 @@ export class Selector extends PureComponent<
 
     return null;
   }
-
-  listView: any;
 
   constructor(props: SelectorProps) {
     super(props);
@@ -140,6 +139,7 @@ export class Selector extends PureComponent<
   }
 
   renderModal = () => {
+    const title = this.props.title || FSI18n.string(componentTranslationKeys.select);
     return (
       <Modal
         animationType='fade'
@@ -150,8 +150,12 @@ export class Selector extends PureComponent<
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={[styles.modalHeader, this.props.modalHeaderStyle]}>
-              <Text style={[styles.title, this.props.modalHeaderTextStyle]}>
-                {this.props.title || 'Select'}
+              <Text
+                style={[styles.title, this.props.modalHeaderTextStyle]}
+                accessibilityRole='header'
+                accessibilityLabel={this.props.titleAccessibilityLabel || title}
+              >
+                {title}
               </Text>
               {this.renderCloseButton()}
             </View>
@@ -196,7 +200,7 @@ export class Selector extends PureComponent<
     });
   }
 
-  chooseItem = (value: any) => {
+  chooseItem = (value: string) => {
     return () => {
       this.setState({
         selectedValue: value

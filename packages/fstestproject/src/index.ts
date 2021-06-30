@@ -5,8 +5,14 @@ const appConfig: FSAppTypes.AppConfigType = {
   screens,
   appType: 'singleScreen',
   screen: {
-    screen: 'Home',
-    title: 'Home'
+    name: 'Home',
+    options: {
+      topBar: {
+        title: {
+          text: 'Home'
+        }
+      }
+    }
   }
 };
 

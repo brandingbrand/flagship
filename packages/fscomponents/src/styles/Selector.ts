@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   selector: {
     padding: 10,
     height: 35,

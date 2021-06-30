@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // @ts-ignore TODO: Update react-id-swiper to support typing
 import Swiper from 'react-id-swiper';
-import 'react-id-swiper/src/styles/css/swiper.css'; // tslint:disable-line
+import 'swiper/css/swiper.css' // tslint:disable-line
 import { View } from 'react-native';
 import { CarouselProps } from './CarouselProps';
 
@@ -45,11 +45,11 @@ export class Carousel extends Component<CarouselProps> {
             } : {}}
             {...webOptions}
           >
-            {_children.map((child: any, i: number) => {
+            {React.Children.map(_children, (child, i) => {
               return (
-                <View key={i} style={{ height }}>
+                <div key={i} style={{ height }}>
                   {child}
-                </View>
+                </div>
               );
             })}
           </Swiper>

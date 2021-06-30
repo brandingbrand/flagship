@@ -4,7 +4,6 @@ const nodePath = require(`path`);
 
 const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
 const tempRootDir = nodePath.join(__dirname, `__fastlane_test`);
-const appName = `MOCKAPP`;
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -48,13 +47,5 @@ test(`add deeplink hosts`, () => {
 
 });
 
-test(`add hockeyapp api token`, () => {
-  process.env.HOCKEYAPP_API_TOKEN = `abc`;
-  fastlane.configure(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`));
-
-  const fastfileBody = fs.readFileSync(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`))
-    .toString();
-
-  expect(fastfileBody).toMatch(`api_token: "${process.env.HOCKEYAPP_API_TOKEN}" ` +
-    `#PROJECT_MODIFY_FLAG_hockey_api_token`);
-});
+// Force to be treated as a module
+export {};

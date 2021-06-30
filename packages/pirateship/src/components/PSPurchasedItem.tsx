@@ -110,18 +110,20 @@ const PSPurchasedItem: FunctionComponent<PSPurchasedItemProps> = (props): JSX.El
           <Text style={[styles.skuText, skuTextStyle]}>
             {translate.string(translationKeys.item.sku)}: {item.productId}
           </Text>
-          {item.price && <Text style={[styles.unitPrice, unitPriceStyle]}>
-            {translate.currency(item.price)}
-          </Text>}
+          {item.price && (
+            <Text style={[styles.unitPrice, unitPriceStyle]}>
+              {translate.currency(item.price)}
+            </Text>
+          )}
           <View style={[styles.qtyTotalPriceRow, qtyTotalPriceRowStyle]}>
             <Text style={[styles.purchasedQtyText, purchasedQtyTextStyle]}>
             {translate.string(translationKeys.item.qty)}: {item.quantity}
             </Text>
-            {item.totalPrice &&
+            {item.totalPrice && (
               <Text style={[styles.totalItemPriceText, totalItemPriceTextStyle]}>
                 {translate.currency(item.totalPrice)}
               </Text>
-            }
+            )}
           </View>
         </View>
       </View>
