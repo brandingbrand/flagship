@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.37](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.36...v11.0.0-alpha.37) (2021-06-28)
+
+
+### Bug Fixes
+
+* **fsapp:** touch inputs on android ([3c54840](https://github.com/brandingbrand/flagship/commit/3c5484088e78992a81f944c670cbcd03f9e15c8a))
+
+
+
+
+
 # [11.0.0-alpha.36](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.35...v11.0.0-alpha.36) (2021-06-25)
 
 
