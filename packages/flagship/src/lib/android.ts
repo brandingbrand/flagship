@@ -474,7 +474,7 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
   }
 }
 
-export function addSllCertificates({
+export function addSslCertificates({
   pinnedCerts
 }: FlagshipTypes.Config): void {
   if (pinnedCerts && pinnedCerts.length) {
