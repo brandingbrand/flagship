@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.50](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.49...v11.0.0-alpha.50) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsproductindex
+
+
+
+
+
 # [11.0.0-alpha.49](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.48...v11.0.0-alpha.49) (2021-07-01)
 
 **Note:** Version bump only for package @brandingbrand/fsproductindex
