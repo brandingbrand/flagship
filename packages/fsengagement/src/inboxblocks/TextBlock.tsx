@@ -43,7 +43,7 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(({
   let displayText = text;
   const handleFadeInRef = (ref: any) => fadeInView = ref;
 
-  const { language } = React.useContext(EngagementContext);
+  const { handleAction, language } = React.useContext(EngagementContext);
 
   const filterLocalization = localization && localization.find(item => {
     return item.language === language;
@@ -64,7 +64,6 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(({
   }, [animateIndex]);
 
   const onPress = (link: string) => () => {
-    const { handleAction } = React.useContext(EngagementContext);
     handleAction({
       type: 'deep-link',
       value: link

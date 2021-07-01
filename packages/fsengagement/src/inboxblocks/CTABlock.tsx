@@ -61,38 +61,18 @@ export interface CTABlockProps extends EmitterProps {
 export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
   const { buttonStyle, textStyle, containerStyle, icon, localization } = props;
   let { text } = props;
-  const { language } = React.useContext(EngagementContext);
+  const { handleAction, cardPosition, language } = React.useContext(EngagementContext);
+  const { cardActions, handleStoryAction, story } = React.useContext(CardContext);
 
   const filterLocalization = localization && localization.find(item => {
     return item.language === language;
   }) || null;
+
   if (filterLocalization) {
     text = filterLocalization.value;
   }
 
-  const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
-    const { handleAction, cardPosition } = React.useContext(EngagementContext);
-    const { handleStoryAction } = React.useContext(CardContext);
-
-    if (story.html) {
-      return handleAction({
-        type: 'blog-url',
-        value: story.html.link,
-        position: cardPosition
-      });
-    } else if (action === 'story' || (story && actions &&
-      (actions.type === null || actions.type === 'story'))) {
-      // go to story card
-      return handleStoryAction(story);
-    } else if (story && actions && actions.type !== 'story') {
-      return handleActionNoStory(actions);
-    }
-    return null;
-  };
-
   const handleActionNoStory = (actions: Action) => {
-    const { handleAction, cardPosition } = React.useContext(EngagementContext);
-    const { cardActions } = React.useContext(CardContext);
     if (actions && !actions.value) {
       return;
     }
@@ -113,8 +93,24 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
     });
   };
 
+  const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
+    if (story.html) {
+      return handleAction({
+        type: 'blog-url',
+        value: story.html.link,
+        position: cardPosition
+      });
+    } else if (action === 'story' || (story && actions &&
+      (actions.type === null || actions.type === 'story'))) {
+      // go to story card
+      return handleStoryAction(story);
+    } else if (story && actions && actions.type !== 'story') {
+      return handleActionNoStory(actions);
+    }
+    return null;
+  };
+
   const takeAction = (action: string, actions: Action): void => {
-    const { story } = React.useContext(CardContext);
     if (action === 'story' || story) {
       return handleActionWithStory(action, actions, story);
     }

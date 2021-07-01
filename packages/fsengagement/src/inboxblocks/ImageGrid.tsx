@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Dimensions,
   ImageURISource,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 
 
@@ -32,6 +33,7 @@ export interface ImageGridProps {
   size: any;
   text: any;
   headerStyle?: any;
+  cardContainerStyle?: ViewStyle;
   textStyle?: any;
   eyebrowStyle?: any;
   items: GridItem[];
@@ -96,6 +98,21 @@ export default class ImageGrid
     );
   }
 
+  parentCardStyles(): number {
+    const {
+      cardContainerStyle
+    } = this.props;
+
+    if (!cardContainerStyle) {
+      return 0;
+    }
+    const ml = +(cardContainerStyle.marginLeft || 0);
+    const mr = +(cardContainerStyle.marginRight || 0);
+    const pr = +(cardContainerStyle.paddingRight || 0);
+    const pl = +(cardContainerStyle.paddingLeft || 0);
+    return ml + mr + pr + pl;
+  }
+
   horizontalMarginPadding(): number {
     const {
       containerStyle
@@ -108,7 +125,7 @@ export default class ImageGrid
   }
 
   calculateGridWidth(): number {
-    return sliderWidth - this.horizontalMarginPadding();
+    return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
 
   createGrid(): JSX.Element {

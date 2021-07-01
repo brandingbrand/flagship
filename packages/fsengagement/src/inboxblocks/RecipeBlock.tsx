@@ -69,8 +69,9 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
     textStyle
   } = props;
 
+  const { handleAction } = React.useContext(EngagementContext);
+
   const onButtonPress = (actions: Action) => (): void => {
-    const { handleAction } = React.useContext(EngagementContext);
     if (actions && actions.type) {
       return handleAction({
         ...actions

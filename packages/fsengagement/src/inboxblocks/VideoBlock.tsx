@@ -58,6 +58,7 @@ const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
   const [videoPaused, setVideoPaused] = useState(false);
+  const { isCard } = React.useContext(CardContext);
 
   let player: any | null = null;
 
@@ -77,15 +78,23 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
   const blockStyle = _.cloneDeep(style);
   blockStyle.width = width;
 
-  const renderVideo = (src: string, size: any) => {
-    if (~src.indexOf('youtube://') || ~src.indexOf('facebook://')) {
-      const type = ~src.indexOf('youtube://') ? 'youtube' : 'facebook';
-      return renderSocial(src, size, type);
-    } else if (~src.indexOf('http://') || ~src.indexOf('https://')) {
-      return renderHttp(src, size);
+  const onFullscreenPlayerWillDismiss = () => {
+    if (props.fullscreen) {
+      setVideoPaused(true);
     }
-    return false;
-  }
+  };
+  const fullScreenPlayerDidPresent = () => {
+    if (props.fullscreen) {
+      setVideoPaused(false);
+    }
+  };
+  const toggleVideo = () => {
+    if (props.fullscreen) {
+      player.presentFullscreenPlayer();
+    } else {
+      setVideoPaused(!videoPaused);
+    }
+  };
 
   const renderSocial = (src: string, { width, height }: any, type: string) => {
     const socialID = src.replace(`${type}://`, '');
@@ -94,10 +103,10 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
       `https://www.facebook.com/video/embed?video_id=${socialID}`;
 
     return <WebView style={{ flex: 1 }} source={{ uri: iframeUri }} />;
-  }
+  };
 
   const checkAutoPlay = (autoPlay: boolean) => () => {
-    setVideoPaused(!autoPlay)
+    setVideoPaused(!autoPlay);
   };
 
   const renderHttp = (src: string, { width, height }: any) => {
@@ -107,7 +116,6 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
       repeat = false,
       muted = false
     } = props;
-    const { isCard } = React.useContext(CardContext);
 
     return (
       <View>
@@ -141,22 +149,14 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
     );
   };
 
-  const onFullscreenPlayerWillDismiss = () => {
-    if (props.fullscreen) {
-      setVideoPaused(true);
+  const renderVideo = (src: string, size: any) => {
+    if (~src.indexOf('youtube://') || ~src.indexOf('facebook://')) {
+      const type = ~src.indexOf('youtube://') ? 'youtube' : 'facebook';
+      return renderSocial(src, size, type);
+    } else if (~src.indexOf('http://') || ~src.indexOf('https://')) {
+      return renderHttp(src, size);
     }
-  };
-  const fullScreenPlayerDidPresent = () => {
-    if (props.fullscreen) {
-      setVideoPaused(false);
-    }
-  };
-  const toggleVideo = () => {
-    if (props.fullscreen) {
-      player.presentFullscreenPlayer();
-    } else {
-      setVideoPaused(!videoPaused);
-    }
+    return false;
   };
 
   // tslint:disable cyclomatic-complexity
