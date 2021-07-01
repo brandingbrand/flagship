@@ -127,9 +127,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api?.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
+
     return this.props.navigator?.showModal({
       component: {
         name: 'EngagementComp',
