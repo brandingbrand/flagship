@@ -2,6 +2,8 @@ cache: yarn
 stages:
   - name: test
     if: type = pull_request AND tag IS blank
+  - name: canary
+    if: branch = develop AND head_branch IS blank
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
@@ -84,6 +86,13 @@ jobs:
     - pod repo update
     - yarn ship:init
     - yarn ship:compile-ios
+  - stage: canary
+    git:
+      depth: false
+    before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+    script:
+      - yarn prepare
+      - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
     git:
       depth: false
