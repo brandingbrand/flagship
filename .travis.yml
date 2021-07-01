@@ -93,7 +93,7 @@ jobs:
       - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
       - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
     script:
-      - yarn global install typescript@4.2.4
+      - yarn global add typescript@4.2.4
       - git checkout develop
       - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
