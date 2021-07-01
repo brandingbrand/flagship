@@ -27,9 +27,7 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
       title: props.name,
       id: props.id
     });
-    props.api?.logEvent('viewInboxStory', {
-      messageId: props.id
-    });
+
     if (!navigator) {
       return;
     }

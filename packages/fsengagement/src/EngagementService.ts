@@ -1,4 +1,3 @@
-import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
@@ -7,10 +6,8 @@ import {
   AppSettings,
   EngagementMessage,
   EngagementProfile,
-  EngagmentEvent,
-  EngagmentNotification
+  EngagmentEvent
 } from './types';
-const uuid = require('uuid-js');
 
 export interface EngagementServiceConfig {
   appId: string;
@@ -57,31 +54,6 @@ export class EngagementService {
     });
   }
 
-  logEvent(type: string, data: any): void {
-    const event = {
-      type,
-      id: uuid.create().toString(),
-      data: JSON.stringify(data),
-      fired: new Date()
-    };
-    this.events.push(event);
-
-    if (this.profileId) {
-      // @TODO: can throttle here to save up events and send all at a threshold
-
-      this.networkClient.post(`/Profiles/${this.profileId}/trackEvents`, {
-        events: this.events
-      })
-        .then((response: any) => {
-          // clear the event queue on successful submit
-          if (response.status === 204) {
-            this.events = [];
-          }
-        })
-        .catch((e: any) => console.warn('Unable to log events', e));
-    }
-  }
-
   async setProfileAttributes(attributes: Attribute[]): Promise<boolean> {
     return this.networkClient
       .post(`/Profiles/${this.profileId}/setAttributes`, JSON.stringify(attributes))
@@ -116,31 +88,6 @@ export class EngagementService {
         console.warn('Unable to set profile attribute', e);
         return false;
       });
-  }
-
-  setNotification(): void {
-    // debugging local notifications
-    // FCM.cancelAllLocalNotifications()
-    // FCM.getScheduledLocalNotifications()
-    //  .then(notif => console.log('scheduled local push notifications', notif));
-
-    // get and store push token if available
-    FCM.getFCMToken()
-      .then(token => this.setPushToken(token))
-      .catch(e => console.log('getFCMToken error: ', e));
-
-    FCM.on(FCMEvent.RefreshToken, token => this.setPushToken(token));
-    // listen to notifications and handle them
-    FCM.on(FCMEvent.Notification, this.onNotification.bind(this));
-    // check if the app was opened from a notification and log it
-    // @TODO: follow the notifications link?
-    FCM.getInitialNotification()
-      .then(notif => {
-        if (notif && notif.messageId) {
-          this.logEvent('pushopen', { message: notif.messageId });
-        }
-      })
-      .catch();
   }
 
   // @TODO: does the profile need to be resynced anytime during a session?
@@ -213,10 +160,6 @@ export class EngagementService {
           .catch((e: any) => console.log('failed to set push token', e));
       }
     }
-  }
-
-  async requestPushPermissions(): Promise<void> {
-    return FCM.requestPermissions();
   }
 
   /**
@@ -417,51 +360,5 @@ export class EngagementService {
         }
         return Promise.resolve(ret);
       });
-  }
-
-  async onNotification(notif: EngagmentNotification): Promise<void> {
-    console.log('onNotification', notif);
-
-    if (notif.local_notification) {
-      // this is a local notification
-      console.log('got local notification', notif);
-    }
-
-    if (notif.opened_from_tray) {
-      console.log('notif.opened_from_tray: true');
-
-      // app resumed from push
-      if (notif.id) {
-        this.logEvent('pushopen', {
-          notificationId: notif.id,
-          messageId: notif.messageId
-        });
-      }
-
-      // app was backgrounded and now foregrounded
-    } else {
-      console.log('notif.opened_from_tray: false');
-      // app was open while the message came in
-
-      if (notif.future && notif.on && notif.title && notif.body && notif.messageId) {
-        const fireDate = new Date(parseInt(notif.on, 10));
-        FCM.scheduleLocalNotification({
-          fire_date: fireDate.getTime(),
-          id: notif.messageId,
-          body: notif.body,
-          title: notif.title,
-          messageId: notif.messageId,
-          show_in_foreground: true
-        });
-        console.log('schedule local notif', fireDate);
-      } else {
-        if (notif.id) {
-          this.logEvent('pushreceive', {
-            notificationId: notif.id,
-            messageId: notif.messageId
-          });
-        }
-      }
-    }
   }
 }

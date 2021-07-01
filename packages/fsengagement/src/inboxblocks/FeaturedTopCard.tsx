@@ -52,9 +52,7 @@ export default class Card extends Component<ComponentProps> {
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api?.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
+
     return this.props.navigator?.push({
       component: {
         name: 'EngagementComp',
