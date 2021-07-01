@@ -60,8 +60,7 @@ const timeIcon = require('../../assets/images/time.png');
 const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 
-export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(
-  (props) => {
+export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { contents } = props;
 
@@ -80,9 +79,9 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(
       return navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
-        name:props.name,
-        id:props.id
-      })
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
     }
     return navigator.push({
       component: {
@@ -110,10 +109,12 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(
   };
 
   return (
-    <CardContext.Provider value={{
-      story: props.story,
-      handleStoryAction: handleStoryAction
-    }}>
+    <CardContext.Provider
+      value={{
+        story: props.story,
+        handleStoryAction
+      }}
+    >
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={onCardPress}

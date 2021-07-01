@@ -16,10 +16,9 @@ import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 export interface ActionsCard extends CardProps {
   actions?: Action;
 }
-const CardContext = React.createContext<any>({});
-export const Card: React.FunctionComponent<ActionsCard> = React.memo(
-  (props) => {
 
+export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
+  const CardContext = React.createContext<any>({});
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
 
@@ -39,8 +38,8 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(
         json,
         backButton: true,
         name: props.name,
-        id: props.id
-      })
+        discoverPath: props.discoverPath
+      });
     }
     return navigator.push({
       component: {
@@ -87,14 +86,16 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(
 
   if (props.plainCard) {
     return (
-      <CardContext.Provider value={{
-        story: props.story,
-        handleStoryAction: handleStoryAction,
-        cardActions: props.actions,
-        id: props.id,
-        name: props.name,
-        isCard: true
-      }}>
+      <CardContext.Provider
+        value={{
+          story: props.story,
+          handleStoryAction,
+          cardActions: props.actions,
+          id: props.id,
+          name: props.name,
+          isCard: true
+        }}
+      >
         <View style={props.containerStyle}>
           {props.children}
         </View>
@@ -103,14 +104,16 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(
   }
 
   return (
-    <CardContext.Provider value={{
-      story: props.story,
-      handleStoryAction: handleStoryAction,
-      cardActions: props.actions,
-      id: props.id,
-      name: props.name,
-      isCard: true
-    }}>
+    <CardContext.Provider
+      value={{
+        story: props.story,
+        handleStoryAction,
+        cardActions: props.actions,
+        id: props.id,
+        name: props.name,
+        isCard: true
+      }}
+    >
       <TouchableOpacity
         style={props.containerStyle}
         activeOpacity={0.9}

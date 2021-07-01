@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: 25,
     alignItems: 'center',
     paddingTop: 2
-},
+  },
   whenIcon: {
     width: 20,
     height: 20

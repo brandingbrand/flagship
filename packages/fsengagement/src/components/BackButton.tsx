@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 14,
     height: 25
-  },
+  }
 });
 
 const backArrow = require('../../assets/images/backArrow.png');
@@ -28,7 +28,7 @@ export const BackButton: React.FunctionComponent<BackButtonProps> = React.memo(p
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const onBackPress = async (): Promise<void> => {
     return navigator?.pop();
-  }
+  };
   return (
     <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
       <Image

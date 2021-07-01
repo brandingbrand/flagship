@@ -33,8 +33,7 @@ export interface ComponentProps extends CardProps {
   actions?: Action;
 }
 
-export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(
-  (props) => {
+export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
   const { containerStyle, contents } = props;
@@ -54,9 +53,9 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(
       return navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
-        name:props.name,
-        id:props.id
-      })
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
     }
     return navigator.push({
       component: {
@@ -103,14 +102,16 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(
   };
 
   return (
-    <CardContext.Provider value={{
-      story: props.story,
-      handleStoryAction: handleStoryAction,
-      cardActions: props.actions,
-      id: props.id,
-      name: props.name,
-      isCard: true
-    }}>
+    <CardContext.Provider
+      value={{
+        story: props.story,
+        handleStoryAction,
+        cardActions: props.actions,
+        id: props.id,
+        name: props.name,
+        isCard: true
+      }}
+    >
       <TouchableOpacity
         style={containerStyle}
         activeOpacity={0.9}
