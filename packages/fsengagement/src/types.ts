@@ -1,5 +1,4 @@
 import { ComponentClass, FunctionComponent } from 'react';
-import { Notification } from 'react-native-fcm';
 import {
   ImageStyle,
   ImageURISource,
@@ -147,14 +146,6 @@ export interface EngagementMessage {
   title: string;
   inbox: string;
   attributes: any;
-}
-
-export interface EngagmentNotification extends Notification {
-  messageId?: string;
-  future?: boolean;
-  on?: string;
-  body?: string;
-  title?: string;
 }
 
 export interface EngagementProfile {

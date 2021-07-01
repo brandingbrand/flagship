@@ -43,9 +43,7 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(pro
       title: props.name,
       id: props.id
     });
-    props.api.logEvent('viewInboxStory', {
-      messageId: props.id
-    });
+
     if (!navigator) {
       return;
     }
