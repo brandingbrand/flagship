@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.60](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.59...v11.0.0-alpha.60) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
 # [11.0.0-alpha.59](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.58...v11.0.0-alpha.59) (2021-07-01)
 
 **Note:** Version bump only for package @brandingbrand/fsweb
