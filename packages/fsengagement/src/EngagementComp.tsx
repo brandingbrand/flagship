@@ -234,8 +234,6 @@ export interface EngagementState {
   scrollEnabled: boolean;
 }
 
-
-
 export default function(
   api: EngagementService,
   layoutComponents: ComponentList
@@ -889,6 +887,7 @@ export default function(
         pageNum
       });
     }
+
     renderFlatlistFooterPadding = (): JSX.Element => {
       return (
         <View style={styles.storyFooter} />
@@ -1050,12 +1049,14 @@ export default function(
       const navBarTitleStyle = json && json.navBarTitleStyle || {};
 
       return (
-        <EngagementContext.Provider value={{
-          handleAction: this.handleAction,
-          story: this.props.backButton ? this.props.json : null,
-          language: this.props.language,
-          cardPosition: this.props.cardPosition || 0
-        }}>
+        <EngagementContext.Provider
+          value={{
+            handleAction: this.handleAction,
+            story: this.props.backButton ? this.props.json : null,
+            language: this.props.language,
+            cardPosition: this.props.cardPosition || 0
+          }}
+        >
         <>
           {this.props.renderHeader && this.props.renderHeader()}
           {this.renderContent()}

@@ -60,6 +60,7 @@ export interface CustomCarouselBlockProps extends CardProps {
   containerStyle?: any;
   headerStyle?: any;
   textStyle?: any;
+  cardContainerStyle?: ViewStyle;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
   pagination?: any;
@@ -147,6 +148,21 @@ export default class CustomCarouselBlock
     );
   }
 
+  parentCardStyles(): number {
+    const {
+      cardContainerStyle
+    } = this.props;
+
+    if (!cardContainerStyle) {
+      return 0;
+    }
+    const ml = +(cardContainerStyle.marginLeft || 0);
+    const mr = +(cardContainerStyle.marginRight || 0);
+    const pr = +(cardContainerStyle.paddingRight || 0);
+    const pl = +(cardContainerStyle.paddingLeft || 0);
+    return ml + mr + pr + pl;
+  }
+
   horizontalMarginPadding() {
     const {
       containerStyle
@@ -158,7 +174,7 @@ export default class CustomCarouselBlock
     return ml + mr + pr + pl;
   }
   calculateSliderWidth() {
-    return sliderWidth - this.horizontalMarginPadding();
+    return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
   calculateItemWidth() {
     const {

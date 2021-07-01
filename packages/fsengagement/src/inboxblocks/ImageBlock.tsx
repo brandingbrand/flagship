@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { CardContext, EngagementContext } from '../lib/contexts';
+import { EngagementContext } from '../lib/contexts';
 
 export interface ImageBlockProps {
   source: ImageURISource;
@@ -32,9 +32,7 @@ export interface ImageDimensions {
 }
 
 export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
-
-  const cardContext = React.useContext(CardContext);
-  console.log('IMAGE BLOCK - cardContext: ', cardContext);
+  const { handleAction } = React.useContext(EngagementContext);
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
     height: 0,
     width: 0
@@ -58,18 +56,6 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
   if (imageDimensions.width) {
     imageRatioStyle.width = imageDimensions.width;
   }
-
-  useEffect(() => {
-    setImageDimensions(findImageRatio());
-  }, []);
-
-  const _onLayout = (event: LayoutChangeEvent) => {
-    const { ratio, useRatio } = props;
-    if (useRatio && ratio) {
-      setImageDimensions(findImageRatio());
-
-    }
-  };
 
   // tslint:disable-next-line:cyclomatic-complexity
   const findImageRatio = (): ImageDimensions => {
@@ -134,8 +120,20 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
     }
     return result;
   };
+
+  useEffect(() => {
+    setImageDimensions(findImageRatio());
+  }, []);
+
+  const _onLayout = (event: LayoutChangeEvent) => {
+    const { ratio, useRatio } = props;
+    if (useRatio && ratio) {
+      setImageDimensions(findImageRatio());
+
+    }
+  };
+
   const onPress = (link?: string) => () => {
-    const { handleAction } = React.useContext(EngagementContext);
     if (!link) {
       return;
     }
