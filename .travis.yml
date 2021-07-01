@@ -89,7 +89,9 @@ jobs:
   - stage: canary
     git:
       depth: false
-    before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+    before_install:
+      - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+      - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
     script:
       - git checkout develop
       - yarn prepare
