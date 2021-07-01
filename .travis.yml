@@ -91,6 +91,7 @@ jobs:
       depth: false
     before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
     script:
+      - git checkout develop
       - yarn prepare
       - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
