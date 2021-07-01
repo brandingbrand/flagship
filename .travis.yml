@@ -3,7 +3,7 @@ stages:
   - name: test
     if: type = pull_request AND tag IS blank
   - name: canary
-    if: branch = develop AND head_branch IS blank
+    if: branch = donotrun AND head_branch IS blank
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
