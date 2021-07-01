@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsmockdatasources",
   "sideEffects": false,
-  "version": "11.0.0-alpha.58",
+  "version": "11.0.0-alpha.59",
   "description": "Mock Commerce and Review Data Sources for Flagship",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,8 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fscommerce": "^11.0.0-alpha.58",
-    "@brandingbrand/fsfoundation": "^11.0.0-alpha.58",
+    "@brandingbrand/fscommerce": "^11.0.0-alpha.59",
+    "@brandingbrand/fsfoundation": "^11.0.0-alpha.59",
     "decimal.js": "^10.0.1",
     "faker": "^4.1.0"
   },
