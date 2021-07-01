@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.0.0-alpha.52](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.51...v11.0.0-alpha.52) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsi18n
+
+
+
+
+
 # [11.0.0-alpha.51](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.50...v11.0.0-alpha.51) (2021-07-01)
 
 **Note:** Version bump only for package @brandingbrand/fsi18n
