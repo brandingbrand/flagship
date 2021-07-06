@@ -3,7 +3,7 @@ stages:
   - name: test
     if: type = pull_request AND tag IS blank
   - name: canary
-    if: branch = donotrun AND head_branch IS blank
+    if: type = push AND branch = develop AND tag IS blank
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
@@ -92,9 +92,10 @@ jobs:
     before_install:
       - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
       - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
-    script:
-      - yarn global add typescript@4.2.4
       - git checkout develop
+    before_script:
+      - yarn global add typescript@4.0.3
+    script:
       - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
     git:
