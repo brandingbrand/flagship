@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.0...v11.0.1-alpha.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* make sinfokeys an optional prop to storage manager ([1e91734](https://github.com/brandingbrand/flagship/commit/1e917342f3aa6cc692d48f142e3d34b9f12d5f10))
+* **flagship:** usage description update ([7d7211e](https://github.com/brandingbrand/flagship/commit/7d7211e0a6d90743dac176b25570fb8efe9079fb))
+* **fsapp:** pass keys from env to dev menu for SInfo ([78c7b64](https://github.com/brandingbrand/flagship/commit/78c7b642aebce3d1e35132dd1452542858755b87))
+
+
+
+
+
 ## [11.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.61...v11.0.1-alpha.0) (2021-07-06)
 
 **Note:** Version bump only for package bb-flagship
