@@ -36,7 +36,7 @@ export interface CookieMangerState {
 }
 
 export interface CookieMangerProps {
-  sInfoKeys: RNSensitiveInfoOptions;
+  sInfoKeys?: RNSensitiveInfoOptions;
 }
 
 export default class CookieManger extends Component<CookieMangerProps, CookieMangerState> {
@@ -126,7 +126,7 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
   }
 
   clearSensitiveInfo = () => {
-    SInfo.getAllItems(this.props.sInfoKeys)
+    SInfo.getAllItems(this.props.sInfoKeys || {})
       .then((values: [SensitiveInfoEntry[]]) => {
         if (!values || !values[0]) {
           return alert('Nothing to be cleared.');
@@ -134,7 +134,7 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
 
         const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
-        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, this.props.sInfoKeys)))
+        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, this.props.sInfoKeys || {})))
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
