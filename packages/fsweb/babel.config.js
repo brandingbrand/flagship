@@ -12,6 +12,7 @@ module.exports = {
     }]
   ],
   "plugins": [
-    "react-native-web"
+    "react-native-web",
+    ["@babel/plugin-proposal-private-methods", { "loose": true }]
   ]
 };
