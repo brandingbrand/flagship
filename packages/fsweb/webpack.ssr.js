@@ -238,10 +238,7 @@ module.exports = function(env, options) {
   const ReactNativeWebImageLoader = require.resolve('react-native-web-image-loader');
   !options.json && console.log('Webpacking for Production');
   ssrConfig.mode = 'production';
-  definitionPluginOptions = {
-    ...definitionPluginOptions,
-    __DEV__: env && env.enableDev ? true : false
-  };
+  ssrConfig.optimization.minimize = env && env.enableDev ? false : true;
 
   ssrConfig.module.rules[0].oneOf.unshift({
     test: [/\.gif$/, /\.jpe?g$/, /\.png$/],

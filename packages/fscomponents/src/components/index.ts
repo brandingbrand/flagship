@@ -75,3 +75,9 @@ export * from './TouchableWithoutFeedbackLink';
 export * from './UpdateNameOrEmail';
 export * from './ZoomCarousel';
 export * from './LinkCard';
+
+export * as SerializableV0 from './serializable/v0';
+export * as SerializableV1 from './serializable/v1';
+export * as SerializableV2 from './serializable/v2';
+export * as SerializableV3 from './serializable/v3';
+export * as SerializableVNext from './serializable/vNext';

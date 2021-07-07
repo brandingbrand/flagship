@@ -305,7 +305,6 @@ test(`set env switcher initial env`, () => {
   );
 });
 
-
 test(`copy sentry properties`, () => {
   ios.sentryProperties({
     name: appName,
@@ -322,6 +321,22 @@ test(`copy sentry properties`, () => {
     .toString();
 
   expect(sentryPropertiesPathSource).toEqual(sentryPropertiesPath);
+});
+
+test('targeted device should default to ios only', () => {
+  const realPbxprojFile: string = fs
+    .readFileSync(nodePath.join(
+      __dirname, '..', '..', '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'
+    ))
+    .toString();
+
+  const targetMatches = realPbxprojFile.match(/TARGETED_DEVICE_FAMILY = "[1-9\,]+"/g);
+
+  expect((targetMatches || []).length).toEqual(2);
+
+  (targetMatches || []).forEach(match => {
+    expect(match).toEqual('TARGETED_DEVICE_FAMILY = "1"');
+  });
 });
 
 // Force to be treated as a module

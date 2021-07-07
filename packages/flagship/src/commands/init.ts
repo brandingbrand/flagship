@@ -217,7 +217,6 @@ function initIOS(
   ios.sentryProperties(configuration);
   ios.iosExtensions(configuration, version); // Add extension targets
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
-  ios.patchRCTUIImageViewAnimated();
 
   if (configuration.ios) {
     if (configuration.ios.pods) {
@@ -255,7 +254,10 @@ function initWeb(
 
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
-    path.project.resolve('web')
+    path.project.resolve('web'),
+    {
+      dereference: true
+    }
   );
 
   // create config for web version

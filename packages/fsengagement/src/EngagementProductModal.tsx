@@ -1,4 +1,4 @@
-/* tslint:disable */
+// tslint:disable: jsx-use-translation-function
 import React, { PureComponent } from 'react';
 import {
   Dimensions, Image, ImageStyle, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View
@@ -15,12 +15,12 @@ const stars = require('../assets/images/stars.png');
 const share = require('../assets/images/share-icn.png');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-function wp (percentage: number) {
+function wp(percentage: number): number {
   const value = (percentage * viewportWidth) / 100;
   return Math.round(value);
 }
 const IS_IOS = Platform.OS === 'ios';
-const slideHeight = viewportHeight * .95;
+const slideHeight = viewportHeight * 0.95;
 const slideWidth = wp(93);
 const itemHorizontalMargin = wp(1);
 const entryBorderRadius = 12;
@@ -244,22 +244,22 @@ export interface EngagementProductModalState {
 export default class EngagementProductModal extends
   PureComponent<EngagementProductModalProps, EngagementProductModalState> {
   navigator: Navigator;
+  scrollPosition: number = 0;
+  zoomedIn: boolean = false;
+  AnimatedModal: any;
+  AnimatedContent: any;
 
   constructor(props: EngagementProductModalProps) {
     super(props);
     this.state = {
       scrollEnabled: true
-    }
+    };
     this.navigator = new Navigator({
       componentId: props.componentId,
       tabs: []
     });
   }
 
-  scrollPosition: number = 0;
-  zoomedIn: boolean = false;
-  AnimatedModal: any;
-  AnimatedContent: any;
   componentDidMount(): void {
     if (this.AnimatedModal) {
       this.AnimatedModal.transition(
@@ -279,10 +279,10 @@ export default class EngagementProductModal extends
   handleAnimatedRef = (ref: any) => this.AnimatedModal = ref;
   handleAnimatedContentRef = (ref: any) => this.AnimatedContent = ref;
   onBackPress = (): void => {
-    this.navigator.pop();
+    this.navigator.pop().catch(e => console.error(e));
   }
   onBuyPress = () => {
-
+    // noop
   }
   onScrollCarouselItem = (event: any) => {
     this.scrollPosition = event.nativeEvent.contentOffset.y;
@@ -334,138 +334,141 @@ export default class EngagementProductModal extends
             onScroll={this.onScrollCarouselItem}
             scrollEventThrottle={16}
           >
-
-          <View style={styles.topContentContainer}>
-            <Image
-              source={item.image.source}
-              style={imageStyle}
-            />
-            <Text
-              style={styles.brand}
-            >
-              {item.brand}
-            </Text>
-            <Text
-              style={styles.title}
-              numberOfLines={2}
-            >
-              {item.title}
-            </Text>
-            <Text
-              style={styles.price}
-            >
-              {item.price}
-            </Text>
-            <View style={styles.starContainer}>
-              <View style={styles.alignStart}>
-                <Image
-                  source={stars}
-                  style={styles.stars}
-                />
-                <Text style={{ fontSize: 12, color: '#999' }}>
-                  {item.reviewCount} Ratings
-                </Text>
-              </View>
-              <View style={styles.alignEnd}>
-                <Image
-                  source={share}
-                  style={styles.share}
-                />
-              </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                activeOpacity={.6}
-                onPress={this.onBuyPress}
-                style={styles.buyButton}
+            <View style={styles.topContentContainer}>
+              <Image
+                source={item.image.source}
+                style={imageStyle}
+              />
+              <Text
+                style={styles.brand}
               >
-                <View style={styles.alignCenter}>
-                  <Text style={styles.buttonText}>
-                    BUY | {item.price}
+                {item.brand}
+              </Text>
+              <Text
+                style={styles.title}
+                numberOfLines={2}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={styles.price}
+              >
+                {item.price}
+              </Text>
+              <View style={styles.starContainer}>
+                <View style={styles.alignStart}>
+                  <Image
+                    source={stars}
+                    style={styles.stars}
+                  />
+                  <Text style={{ fontSize: 12, color: '#999' }}>
+                    {item.reviewCount} Ratings
                   </Text>
-
                 </View>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.secondaryButtonContainer}>
-              <View style={styles.alignStart}>
-                <Text style={{ fontSize: 12, color: '#777' }}>
-                  Available to ship now
-                </Text>
+                <View style={styles.alignEnd}>
+                  <Image
+                    source={share}
+                    style={styles.share}
+                  />
+                </View>
               </View>
-              <View style={[styles.alignEnd, { flexDirection: 'row' }]}>
+              <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                  activeOpacity={.6}
+                  activeOpacity={0.6}
                   onPress={this.onBuyPress}
-                  style={styles.wishlistButton}
+                  style={styles.buyButton}
                 >
                   <View style={styles.alignCenter}>
-                    <Text style={styles.wishlistText}>
-                      ADD TO WISHLIST
+                    <Text style={styles.buttonText}>
+                      BUY | {item.price}
                     </Text>
 
                   </View>
                 </TouchableOpacity>
               </View>
-            </View>
-            <View style={{ paddingBottom: 30 }}>
-              <Text style={[styles.categoryHeader, { marginBottom: 10 }]}>
-                Product Description
-              </Text>
-              <Text style={styles.regularText}>
-                {item.productInfo}
-              </Text>
-                <View style={styles.prodCatBorder} />
-                <Text
-                  style={[styles.categoryHeader, {
-                    marginBottom: 10,
-                    marginTop: 20,
-                  }]}
-                >
-                  Product Features
-              </Text>
-                <Text style={styles.regularText}>
-                  {item.features}
+              <View style={styles.secondaryButtonContainer}>
+                <View style={styles.alignStart}>
+                  <Text style={{ fontSize: 12, color: '#777' }}>
+                    Available to ship now
+                  </Text>
+                </View>
+                <View style={[styles.alignEnd, { flexDirection: 'row' }]}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={this.onBuyPress}
+                    style={styles.wishlistButton}
+                  >
+                    <View style={styles.alignCenter}>
+                      <Text style={styles.wishlistText}>
+                        ADD TO WISHLIST
+                      </Text>
+
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{ paddingBottom: 30 }}>
+                <Text style={[styles.categoryHeader, { marginBottom: 10 }]}>
+                  Product Description
                 </Text>
-                <View style={[styles.prodCatBorder, { paddingHorizontal: 30 }]} />
-                <View style={{
-                  flexDirection: 'row',
-                  marginVertical: 10,
-                  marginTop: 20,
-                }}>
-                  <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <Text style={styles.categoryHeader}>
-                      Customer Reviews
-                    </Text>
+                <Text style={styles.regularText}>
+                  {item.productInfo}
+                </Text>
+                  <View style={styles.prodCatBorder} />
+                  <Text
+                    style={[styles.categoryHeader, {
+                      marginBottom: 10,
+                      marginTop: 20
+                    }]}
+                  >
+                    Product Features
+                  </Text>
+                  <Text style={styles.regularText}>
+                    {item.features}
+                  </Text>
+                  <View style={[styles.prodCatBorder, { paddingHorizontal: 30 }]} />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginVertical: 10,
+                      marginTop: 20
+                    }}
+                  >
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                      <Text style={styles.categoryHeader}>
+                        Customer Reviews
+                      </Text>
+                    </View>
+                    <View style={styles.alignEnd}>
+                      <Text style={styles.seeAll}>
+                        See All
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.alignEnd}>
-                    <Text style={styles.seeAll}>
-                      See All
+
+                {item.review && (
+                  <View style={styles.reviewContainer}>
+                    <Text style={styles.reviewTitle}>
+                      Awesome Product!
                     </Text>
+                    <Text style={styles.reviewText}>
+                      {item.review}
+                    </Text>
+                    <View style={{ marginTop: 5, flexDirection: 'row', alignItems: 'center' }}>
+                      <Image
+                        source={stars}
+                        style={styles.starsSmall}
+                      />
+                      <Text style={styles.reviewDate}>
+                        Dec 5, 2019
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                )}
 
-              {item.review && <View style={styles.reviewContainer}>
-                  <Text style={styles.reviewTitle}>
-                    Awesome Product!
-                  </Text>
-                  <Text style={styles.reviewText}>
-                    {item.review}
-                  </Text>
-                  <View style={{ marginTop: 5, flexDirection: 'row', alignItems: 'center' }}>
-                  <Image
-                    source={stars}
-                    style={styles.starsSmall}
-                  />
-                  <Text style={styles.reviewDate}>
-                    Dec 5, 2019
-                  </Text>
-                </View>
-              </View>}
-
+              </View>
             </View>
-          </View>
-              </ScrollView>
+          </ScrollView>
         </View>
       </View>
     );
@@ -484,7 +487,7 @@ export default class EngagementProductModal extends
           { opacity: 0 },
           300, 'linear');
       }
-    }, 300)
+    }, 300);
 
     setTimeout(() => {
       this.navigator.dismissModal({
@@ -493,21 +496,22 @@ export default class EngagementProductModal extends
             enabled: false
           }
         }
-      });
+      }).catch(e => console.error(e));
     }, 650);
   }
   onSnapToItem = (index: number): void => {
-    console.log(index)
+    console.log(index);
   }
   render(): JSX.Element {
     const { products } = this.props;
-    console.log(products)
+    console.log(products);
     return (
       <View style={styles.growStretch}>
         <Animatable.View
           ref={this.handleAnimatedRef}
           useNativeDriver={false}
-          style={styles.background}>
+          style={styles.background}
+        >
           <TouchableOpacity
             style={styles.modalBackground}
             activeOpacity={1}
@@ -522,7 +526,8 @@ export default class EngagementProductModal extends
             transform: [
               { translateY: viewportHeight }
             ]
-          }}>
+          }}
+        >
           <Carousel
             data={products || []}
             layout={'default'}
