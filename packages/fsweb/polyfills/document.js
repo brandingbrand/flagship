@@ -2,7 +2,8 @@ export function createElement() {
   return {
     setAttribute: function() {},
     pathname: '',
-    style: {}
+    style: {},
+    nodeType: 1
   };
 };
 
@@ -16,4 +17,8 @@ export function getElementById() {
     pathname: '',
     style: {}
   };
+};
+
+export const body = document.body || {
+  appendChild: function() {}
 };
