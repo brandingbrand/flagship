@@ -5,7 +5,7 @@ const kOnPressDelayMS = 200; // Delay before sending an onPress event to wait fo
 
 export abstract class TouchableDelay<P extends TouchableWithoutFeedbackProperties>
 extends Component<P> {
-  private onPressDelayTimer: any;
+  private onPressDelayTimer: ReturnType<typeof setTimeout> | null = null;
 
   componentWillUnmount(): void {
     window.removeEventListener('scroll', this.handleScroll);

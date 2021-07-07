@@ -1,42 +1,31 @@
+import { appConfig } from './appConfig';
 import { FSApp, FSAppTypes } from '@brandingbrand/fsapp';
-import screens from './screens';
-import reducers from './reducers';
-import {
-  loadAccountData,
-  loadCartData,
-  loadPromoProducts,
-  loadTopCategories
-} from './lib/globalDataLoaders';
 import Analytics from './lib/analytics';
 
-const projectEnv = require('../env/env');
-
-const appConfig: FSAppTypes.AppConfigType = {
-  packageJson: require('../package.json'),
+const webConfig: FSAppTypes.AppConfigType = {
+  ...appConfig,
   appType: 'singleScreen',
-  devMenuScreens: [{ name: 'Development' }],
   screen: { name: 'Shop', options: {
     title: 'Pirate Ship'
   }},
-  screens,
-  reducers,
-  env: projectEnv,
-  variables: {},
+  tabs: undefined,
   drawer: {
     left: {
       screen: 'LeftDrawerMenu'
     },
     disableOpenGesture: false
   },
-  analytics: Analytics,
-  webRouterType: 'hash'
+  analytics: Analytics
 };
 
-const app = new FSApp(appConfig);
-export default app;
+// @ts-ignore May be set by SSR
+if (window.initialState) {
+  webConfig.initialState = {
+    ...webConfig.initialState,
+    // @ts-ignore
+    ...window.initialState
+  };
+}
 
-// wait for app initialized
-requestAnimationFrame(loadAccountData);
-requestAnimationFrame(loadCartData);
-requestAnimationFrame(loadTopCategories);
-requestAnimationFrame(loadPromoProducts);
+const app = new FSApp(webConfig);
+export default app;

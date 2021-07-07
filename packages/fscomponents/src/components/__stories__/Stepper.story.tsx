@@ -10,6 +10,7 @@ import {
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { Stepper } from '../Stepper';
+import { TextStyle } from 'react-native';
 
 const formats = [
   'horizontalCenter',
@@ -24,6 +25,15 @@ const defaultCounterStyle = {
   fontSize: 16
 };
 
+const defaultQtyStyle = {
+  fontSize: 16
+};
+const defaultPrefixStyle: TextStyle = {
+  fontWeight: 'bold'
+};
+
+const clearIcon = require('../../../assets/images/clear.png');
+
 storiesOf('Stepper', module)
   .add('basic usage', () => (
     <Stepper
@@ -35,5 +45,8 @@ storiesOf('Stepper', module)
       countUpperLimit={number('countUpperLimit', 10)}
       onDecreaseButtonPress={action('Stepper onDecreaseButtonPress')}
       onIncreaseButtonPress={action('Stepper onIncreaseButtonPress')}
+      qtyStyle={object('Quantity Text Style', defaultQtyStyle)}
+      prefixStyle={object('Prefix Text Style', defaultPrefixStyle)}
+      removeButtonImage={boolean('Use Remove Image Button', false) && clearIcon}
     />
   ));

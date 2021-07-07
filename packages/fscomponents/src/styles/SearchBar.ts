@@ -44,5 +44,9 @@ export const style = StyleSheet.create({
     height: 25,
     width: 25,
     marginRight: 10
+  },
+  clearIconWrapper: {
+    position: 'absolute',
+    right: 0
   }
 });

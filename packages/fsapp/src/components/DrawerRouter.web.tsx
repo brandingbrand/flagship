@@ -9,13 +9,16 @@ import {
   StaticRouter,
   Switch
 } from 'react-router-dom';
-import pathToRegexp, { Key } from 'path-to-regexp';
+import pathToRegexp, { compile, Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { pathForScreen } from '../lib/helpers';
+import { NotFound } from './NotFound';
+import AppRouter from '../lib/app-router';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: any = StyleSheet.create;
+const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
 const DEFAULT_DRAWER_WIDTH = '60%';
 const DEFAULT_DRAWER_DURATION = '0.3s';
 const DEFAULT_DRAWER_OVERLAY_OPACITY = 0.5;
@@ -27,27 +30,35 @@ export interface AppStateTypes {
 
 export interface PropType {
   appConfig: AppConfigType;
-  api: any;
+  api: FSNetwork;
   store: any;
+  appRouter: AppRouter;
 }
 
 export default class DrawerRouter extends Component<PropType, AppStateTypes> {
   leftDrawerComponent?: ComponentClass<GenericScreenProp>;
   rightDrawerComponent?: ComponentClass<GenericScreenProp>;
-  drawerConfig: any;
-  screensRoutes: Route[];
+  drawerConfig: {
+    drawerWidth: string;
+    drawerDuration: React.ReactText;
+    drawerOverlayOpacity: number;
+    drawerLeftBackgroundColor?: string;
+    drawerRightBackgroundColor?: string;
+    appStyle: StyleSheet.NamedStyles<any>;
+  };
+  screensRoutes: JSX.Element[];
 
-  constructor(props: any) {
+  constructor(props: PropType) {
     super(props);
 
-    const { appConfig, api } = this.props;
+    const { appConfig, api, appRouter } = this.props;
 
     this.drawerConfig = this.generateAppStyles(appConfig);
     const { leftDrawer, rightDrawer } = this.generateDrawers(appConfig, api);
     this.leftDrawerComponent = leftDrawer;
     this.rightDrawerComponent = rightDrawer;
 
-    this.screensRoutes = this.generateRoutes(appConfig, api);
+    this.screensRoutes = this.generateRoutes(appConfig, api, appRouter);
 
     this.state = {
       leftDrawerOpen: false,
@@ -85,19 +96,43 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     return { leftDrawer, rightDrawer };
   }
 
-  generateRoutes = (appConfig: AppConfigType, api: FSNetwork) => {
-    const { screens, screen } = appConfig;
+  generateRoutes = (appConfig: AppConfigType, api: FSNetwork, appRouter: AppRouter) => {
+    const { screens, screen, routerConfig } = appConfig;
+
+    const routes: any = {};
+    if (routerConfig) {
+      // getWebRouterConfig() is a method that returns the app routes plus the NA defined routes
+      // in a format/order that will correctly create the routing for web
+      // this means no duplicate paths and if the route has a handle (:productId) the app version
+      // takes precedence, if its a static route the NA defined route takes precedence
+      const config = appRouter && appRouter.getWebRouterConfig() || { ...routerConfig };
+
+      Object.keys(config).forEach(path => {
+        // NA defined routes go to the CMS screen
+        const s = config[path].screen || 'CMS';
+        if (!routes[s]) {
+          routes[s] = [];
+        }
+        routes[s].push(path);
+      });
+    }
 
     // per-inject parsed path to screen object,
     // so it can be filled with passProps efficiently
     Object.keys(screens).forEach(key => {
-      const path = screens[key].path;
-
+      const path = screens[key].path || routes[key];
+      // pathToRegexp is supposed to be able to take a string or array of string
+      // however it throws an error if its an array of ONE string (multiple works)
+      // - if there are multiple paths, leave as array, otherwise convert back to string
+      const newPath = Array.isArray(path) && path.length === 1 ? path[0] : path;
       if (path) {
         const keys: Key[] = [];
-
-        pathToRegexp(path, keys);
-        screens[key].toPath = pathToRegexp.compile(path);
+        screens[key].path = newPath;
+        pathToRegexp(newPath, keys);
+        // compile() cannot take an array, we don't need toPath for array values regardless
+        if (typeof newPath === 'string') {
+          screens[key].toPath = compile(newPath);
+        }
         screens[key].paramKeys = keys;
       }
     });
@@ -122,8 +157,8 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       />
     );
 
-    const screensRoutes = Object.keys(screens).map<any>((key, i): any => {
-      const path = screens[key].path ? screens[key].path : `/_s/${key}/`;
+    const screensRoutes = Object.keys(screens).map((key, i) => {
+      const path = pathForScreen(screens[key], key);
       const component = screens[key];
 
       return (
@@ -138,11 +173,35 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       );
     });
 
+    if (appConfig.notFoundRedirect) {
+      if (typeof appConfig.notFoundRedirect === 'function') {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(appConfig.notFoundRedirect, appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      } else {
+        screensRoutes.push((
+          <Route
+            key={'not-found'}
+            path={'*'}
+            render={this._renderDrawerWrapper(
+              screenWrapper(NotFound(appConfig.notFoundRedirect), appConfig, api, this.toggleDrawer)
+            )}
+          />
+        ));
+      }
+    }
+
     return [rootComponent, ...screensRoutes];
   }
 
   generateAppStyles = (appConfig: AppConfigType) => {
-    const { drawer = {} as any } = appConfig;
+    const { drawer = {} } = appConfig;
     const drawerWidth = '90%' || drawer.webWidth || DEFAULT_DRAWER_WIDTH;
     const drawerDuration = drawer.webDuration || DEFAULT_DRAWER_DURATION;
     const drawerOverlayOpacity = drawer.webOverlayOpacity || DEFAULT_DRAWER_OVERLAY_OPACITY;
@@ -163,10 +222,10 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         flexBasis: 'auto'
       },
       containerDrawerLeftOpen: {
-        marginLeft: drawerWidth
+        marginLeft: drawer.webSlideContainer === false ? undefined : drawerWidth
       },
       containerDrawerRightOpen: {
-        marginLeft: '-' + drawerWidth
+        marginLeft: drawer.webSlideContainer === false ? undefined : ('-' + drawerWidth)
       },
       containerOverlay: {
         backgroundColor: 'black',

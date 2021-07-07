@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   NativeModules,
+  ScaledSize,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -117,7 +118,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }
   }
 
-  dimensionsListener = (event: any) => {
+  dimensionsListener = (event: { window: ScaledSize; screen: ScaledSize }) => {
     const { height } = event.window;
     const halfWindowHeight = height / 2;
 
@@ -131,7 +132,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       // Open the drawer after we start the modal fade animation
       Animated.spring(this.state.contentOffset, {
         toValue: 1,
-        useNativeDriver: true,
+        useNativeDriver: false,
         bounciness: 0
       }).start();
     });
@@ -141,7 +142,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     // Close the drawer
     Animated.spring(this.state.contentOffset, {
       toValue: 0,
-      useNativeDriver: true,
+      useNativeDriver: false,
       bounciness: 0
     }).start();
 

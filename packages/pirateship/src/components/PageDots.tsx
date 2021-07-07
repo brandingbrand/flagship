@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 export default class PageDots extends Component<PageDotsProps> {
   renderDot = (index: number) => {
-    const otherStyles: any = index === this.props.activeIndex ?
+    const otherStyles: StyleProp<ViewStyle> = index === this.props.activeIndex ?
       [styles.active, this.props.activeDotStyle] :
       [styles.inactive, this.props.inactiveDotStyle];
 

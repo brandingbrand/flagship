@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
+    textTransform: 'uppercase',
     fontWeight: 'bold',
     color: '#000',
     fontSize: 26,
@@ -221,6 +222,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   animate?: boolean;
   cardPosition?: number;
   navigator: Navigator;
+  renderHeader?: () => void;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -257,6 +259,8 @@ export default function(
     scrollPosition: number = 0;
     AnimatedAppleClose: any;
     AnimatedWelcome: any;
+    componentIsMounted: boolean = false;
+
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
@@ -286,8 +290,12 @@ export default function(
           this.props.onBack();
         }
       }
+
+      this.componentIsMounted = false;
     }
     componentDidMount(): void {
+      this.componentIsMounted = true;
+
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
           this.setState({ showDarkX: true });
@@ -319,7 +327,9 @@ export default function(
       }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
-          this.setState({ showCarousel: true });
+          if (this.componentIsMounted) {
+            this.setState({ showCarousel: true });
+          }
         }, 500);
       }
     }
@@ -455,11 +465,13 @@ export default function(
       return this.renderBlock(item);
     }
     renderHeaderName = () => {
-      const name = this.props.headerName || '';
+      const { json, headerName } = this.props;
+      const name = headerName || '';
+      const headerTitleStyle = json && json.headerTitleStyle || {};
       const comma = name ? ', ' : '';
       return (
-        <Text style={styles.headerName}>
-          HELLO{comma}{name.toUpperCase()}
+        <Text style={[styles.headerName, headerTitleStyle]}>
+          Hello{comma}{name}
         </Text>
       );
     }
@@ -488,7 +500,7 @@ export default function(
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
-      if (!(this.props.animateScroll || this.props.welcomeHeader)) {
+      if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
       }
 
@@ -517,7 +529,7 @@ export default function(
         return (
           <Animatable.View
             ref={this.handleWelcomeRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={{
               transform: [
                 { translateY: -100 }
@@ -767,7 +779,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -775,7 +787,7 @@ export default function(
             {backButton && (
               <Animatable.View
                 ref={this.handleAppleCloseRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={styles.closeModalButton}
               >
                 <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
@@ -795,7 +807,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -912,15 +924,6 @@ export default function(
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json && json.private_blocks && json.private_blocks.length > 0) && (
-              <View style={[styles.pageCounter, json.pageCounterStyle]}>
-                <Text
-                  style={[styles.pageNum, json.pageNumberStyle]}
-                >
-                  {this.state.pageNum} / {json.private_blocks.length}
-                </Text>
-              </View>
-            )}
           </Fragment>
         );
       } else if (fullScreenCardImage) {
@@ -981,7 +984,7 @@ export default function(
               scrollEventThrottle={16}
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-                { useNativeDriver: true }
+                { useNativeDriver: false }
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
@@ -1042,13 +1045,14 @@ export default function(
 
       return (
         <Fragment>
+          {this.props.renderHeader && this.props.renderHeader()}
           {this.renderContent()}
           {(this.props.renderType && this.props.renderType === 'carousel' &&
             json && json.private_blocks && json.private_blocks.length > 0) &&
             (
               <Animatable.View
                 ref={this.handlePageCounterRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={[styles.pageCounter, this.pageCounterStyle]}
               >
                 <Text
@@ -1063,7 +1067,7 @@ export default function(
             <Animatable.Text
               style={[styles.navBarTitle, navBarTitleStyle]}
               ref={this.handleNavTitleRef}
-              useNativeDriver
+              useNativeDriver={false}
             >
               {navBarTitle}
             </Animatable.Text>

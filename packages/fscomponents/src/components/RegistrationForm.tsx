@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-// @ts-ignore TODO: Update tcomb-form-native to support typing
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';
@@ -161,6 +161,11 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     };
 
   } // end constructor
+
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('RegistrationForm is deprecated and will be removed in the next version of Flagship.');
+  }
 
   handleSubmit = () => {
     const value = this.form.getValue();

@@ -7,7 +7,10 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import {
+  OptionsModalPresentationStyle
+// tslint:disable-next-line: no-submodule-imports
+} from 'react-native-navigation/lib/dist/interfaces/Options';
 import * as Animatable from 'react-native-animatable';
 import GestureHandler from '../GestureHandler';
 
@@ -221,13 +224,13 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
             <Animatable.Image
               source={contents.Image.source}
               ref={this.handleImageRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[StyleSheet.absoluteFill, styles.fullScreen]}
             />
             <Animatable.View
               style={styles.bottom}
               ref={this.handleTextRef}
-              useNativeDriver
+              useNativeDriver={false}
             >
               {this.props.isNew &&
                 (

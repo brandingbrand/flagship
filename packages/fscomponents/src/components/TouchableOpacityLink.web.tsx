@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, TouchableOpacityProperties } from 'react-native';
 import { TouchableDelay } from './TouchableDelay';
 
-const TouchableOpacityWithHref: any = TouchableOpacity;
+const TouchableOpacityWithHref: React.ComponentClass<TouchableOpacityLinkProps> = TouchableOpacity;
 
 export interface TouchableOpacityLinkProps extends TouchableOpacityProperties {
   href?: string;

@@ -3,6 +3,1217 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.61...v11.0.1-alpha.0) (2021-07-06)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.61](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.60...v11.0.0-alpha.61) (2021-07-06)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.60](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.59...v11.0.0-alpha.60) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.59](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.58...v11.0.0-alpha.59) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.58](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.57...v11.0.0-alpha.58) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.57](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.56...v11.0.0-alpha.57) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.56](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.55...v11.0.0-alpha.56) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.55](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.54...v11.0.0-alpha.55) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.54](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.53...v11.0.0-alpha.54) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.53](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.52...v11.0.0-alpha.53) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.52](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.51...v11.0.0-alpha.52) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.51](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.50...v11.0.0-alpha.51) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.50](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.49...v11.0.0-alpha.50) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.49](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.48...v11.0.0-alpha.49) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.48](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.47...v11.0.0-alpha.48) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.47](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.46...v11.0.0-alpha.47) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.46](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.45...v11.0.0-alpha.46) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.45](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.44...v11.0.0-alpha.45) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.44](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.43...v11.0.0-alpha.44) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.43](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.42...v11.0.0-alpha.43) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.42](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.41...v11.0.0-alpha.42) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.41](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.40...v11.0.0-alpha.41) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.40](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.39...v11.0.0-alpha.40) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.39](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.38...v11.0.0-alpha.39) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.38](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.37...v11.0.0-alpha.38) (2021-07-01)
+
+**Note:** Version bump only for package flagship
+
+
+
+
+
+# [11.0.0-alpha.37](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.36...v11.0.0-alpha.37) (2021-06-28)
+
+
+### Bug Fixes
+
+* **fsapp:** touch inputs on android ([3c54840](https://github.com/brandingbrand/flagship/commit/3c5484088e78992a81f944c670cbcd03f9e15c8a))
+
+
+
+
+
+# [11.0.0-alpha.36](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.35...v11.0.0-alpha.36) (2021-06-25)
+
+
+### Bug Fixes
+
+* **fsapp:** asynchronous initialization ([01b7166](https://github.com/brandingbrand/flagship/commit/01b71664c9abef56ff499bb1448176fa8722ecca))
+
+
+
+
+
+# [11.0.0-alpha.35](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.34...v11.0.0-alpha.35) (2021-06-24)
+
+
+### Bug Fixes
+
+* **fsapp:** modal context web props ([957b6af](https://github.com/brandingbrand/flagship/commit/957b6afd134dc7a306dd709167a03b94a82d48e7))
+
+
+### Features
+
+* **fsapp:** redux in modals ([09afcab](https://github.com/brandingbrand/flagship/commit/09afcab95630066d973f10d0284487c5270d1dc6))
+
+
+
+
+
+# [11.0.0-alpha.34](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.33...v11.0.0-alpha.34) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** syncronous initialization ([8debecb](https://github.com/brandingbrand/flagship/commit/8debecb407a9690785fb32c555800905149d5eab))
+
+
+### Features
+
+* **fsapp:** expose history type ([9273e72](https://github.com/brandingbrand/flagship/commit/9273e7284c3b1d1fba78e0d80ae547677b58ea40))
+
+
+
+
+
+# [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** broken links ([96aa986](https://github.com/brandingbrand/flagship/commit/96aa9860a465e9859c098b07cab646797c55b8b5))
+* **fsweb:** update polyfills ([1a3f1f7](https://github.com/brandingbrand/flagship/commit/1a3f1f7117332c54a4d41f46c4df3e710cc27cde))
+
+
+### Features
+
+* **fsapp:** FS-2511 expose hydrate config option for beta app ([3974a07](https://github.com/brandingbrand/flagship/commit/3974a0735f40f033446968c1e986c8e203f2dc13))
+* **fsapp:** FS-2511 expose hydrate RNW config option ([0ded47f](https://github.com/brandingbrand/flagship/commit/0ded47fe5ff2d596ad5797a3eb6ae1c4a8272c8e))
+* **fscomponents:** add ability to hide oveflow on carousel ([379ccb0](https://github.com/brandingbrand/flagship/commit/379ccb080f6f4d3b416dbc017ecd9ee33f35d209))
+
+
+
+
+
+# [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
+
+
+### Features
+
+* Enable redux middleware in FSApp config ([9e2e7b8](https://github.com/brandingbrand/flagship/commit/9e2e7b8b346363f154a6abcfea10641198455572))
+* useButtonEffect ([8fd9ff7](https://github.com/brandingbrand/flagship/commit/8fd9ff7dc229f05162b9181b623040728754cc46))
+
+
+
+
+
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+
+### Bug Fixes
+
+* extract image styles for preview ([a9d3fe4](https://github.com/brandingbrand/flagship/commit/a9d3fe420b25742ffa91e460c08dde16b6cbd3c8))
+
+
+### Features
+
+* **fscomponents:** FS-2435 add serializable review indicator ([1e1d886](https://github.com/brandingbrand/flagship/commit/1e1d886439e23106f2ab6f4583c66ace17ebeb6d))
+
+
+
+
+
+# [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
+
+
+### Bug Fixes
+
+* babel build spam ([2fb9a49](https://github.com/brandingbrand/flagship/commit/2fb9a49b7dad9e64b35e175451a175e9a33b7b62))
+* use standardized container ([15c5cf5](https://github.com/brandingbrand/flagship/commit/15c5cf50b1f251a9fe324e1e96cca3d613e0568d))
+* use styles appropriately ([579e672](https://github.com/brandingbrand/flagship/commit/579e67249da007298c9d8c9d438e532765a07a30))
+* use styles appropriately ([5ec12e5](https://github.com/brandingbrand/flagship/commit/5ec12e573ccee67ae63443d0a8e5e3a1bcc7a316))
+
+
+### Features
+
+* **fscomponents:** FS-2308 - allow serializableImage to have children ([43e16a3](https://github.com/brandingbrand/flagship/commit/43e16a31e845522910dbad0001ace465408fc7c6))
+* **fscomponents:** serializable v2 component ([af105be](https://github.com/brandingbrand/flagship/commit/af105be4a998b37c5e8504c2216e15f2093a02b2))
+* public js docs ([b81b565](https://github.com/brandingbrand/flagship/commit/b81b56584e54ba22ea42e0cc1eba51ffb55da11a))
+
+
+
+
+
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+
+### Features
+
+* FS-2381 ([3a6721d](https://github.com/brandingbrand/flagship/commit/3a6721dffc87f069af322350bc21eb64dd36c98a))
+* vNext versioning ([803b64d](https://github.com/brandingbrand/flagship/commit/803b64d0e1798c5f846d9c21996bf65ea656a823))
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+
+### Features
+
+* serializable v1 ([9d11847](https://github.com/brandingbrand/flagship/commit/9d1184770195282eb964c09e4eb10adfbcfdc012))
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+
+### Bug Fixes
+
+* **fscommerce:** fix misspelled reviewId ([938dc3b](https://github.com/brandingbrand/flagship/commit/938dc3b39e77e54359d443b2b046d2a15b9fd35c))
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+
+### Features
+
+* **fscommerce:** FS-2186 add review id to product data ([4200aa7](https://github.com/brandingbrand/flagship/commit/4200aa7137c287ee9e5c207330132130ce7deae8))
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+
+### Bug Fixes
+
+* **fsapp:** adjust findRoute to handle RouteCollection types ([dca5702](https://github.com/brandingbrand/flagship/commit/dca5702476e58922659646d8d04260cb1c9a3a34))
+* **fsapp:** rename functions ([739c39a](https://github.com/brandingbrand/flagship/commit/739c39a85662a78a6a5c53dd1523fec2c0177b3a))
+
+
+
+
+
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+
+### Bug Fixes
+
+* **fsweb:** deliver react bundle on all fall-through requests ([126d012](https://github.com/brandingbrand/flagship/commit/126d012cad529b151d963b7b1b9b90cb3bcf6f5b))
+
+
+
+
+
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+
+### Features
+
+* FS-2185 add support for cursor-based pagination ([94d946a](https://github.com/brandingbrand/flagship/commit/94d946aae6888adf016a1fedcf448591fa03b3f2))
+
+
+
+
+
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* allow native to have multiple tabs with same screen ([b9e45d3](https://github.com/brandingbrand/flagship/commit/b9e45d3bfd2b87e8c6fac4978b487b354eba1ffe))
+* apply status bar styles to Route Collection ([8e942db](https://github.com/brandingbrand/flagship/commit/8e942db136b8d4716f7ffe909c244eba0ca1899b))
+* correctly apply nav/status styles ([f53e3e9](https://github.com/brandingbrand/flagship/commit/f53e3e9142b26c599526a32d321cf89aed648cd3))
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+
+### Bug Fixes
+
+* **fsengage:** FS-2222 limit type for traffic source data ([5c376f6](https://github.com/brandingbrand/flagship/commit/5c376f672929c7a930206f0f7f10a3180318d98f))
+
+
+### Features
+
+* **fscomponents:** Serializable Cateogry Line ([106c239](https://github.com/brandingbrand/flagship/commit/106c2390f7274eb601f6ede642b625cf9869614c))
+* **fsengage:** FS-2222 add ability to set traffic attribution data ([762677f](https://github.com/brandingbrand/flagship/commit/762677f47e815b1f5b1ca9fb2809191a1249599f))
+* **fsengage:** FS-2222 bump react-native-google-analytics version ([fc882b7](https://github.com/brandingbrand/flagship/commit/fc882b7519c28ff24064d01b80c7ba1117d6e832))
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+
+### Bug Fixes
+
+* refactor to support parent routes ([764087a](https://github.com/brandingbrand/flagship/commit/764087aa8ecccacf5e9547b30382237d043bc935))
+* update dev-menu component ([7d0deef](https://github.com/brandingbrand/flagship/commit/7d0deefb4f8a7c994f4d0b63515b64ff2bf1bd6b))
+* update printed dev routes ([6006436](https://github.com/brandingbrand/flagship/commit/60064363e76af50f012a96cd7abe7e89df07e746))
+* update printed dev routes ([666cf7b](https://github.com/brandingbrand/flagship/commit/666cf7bf76b9a3a62d6596a6cc528151067f3c1f))
+
+
+### Features
+
+* allow beta router to handle univeral links with need for prefix ([70afa5b](https://github.com/brandingbrand/flagship/commit/70afa5b08b563092ebf755d32fe2b71a54641c88))
+
+
+
+
+
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+### Bug Fixes
+
+* fix external route paths ([c9d6231](https://github.com/brandingbrand/flagship/commit/c9d62319b4ab02cb166b2126b7b531b01f797b96))
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsengagement:** Adding stories for fsengagement ([e47f157](https://github.com/brandingbrand/flagship/commit/e47f15788167eb8bd67b1e68007b6d11276da40e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* FS-2160 update all CFBundleShortVersionString to be shortVersion ([ecd0573](https://github.com/brandingbrand/flagship/commit/ecd05736fb6641ce94d10f9b60395d4f822b8f8c))
+
+
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+
+### Bug Fixes
+
+* FS-2158 incorrect usageDescriptionKey for att permission ([6ed5ad0](https://github.com/brandingbrand/flagship/commit/6ed5ad0f0ad38f974ce8a4580f95fa4f1df190a9))
+
+
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+### Features
+
+* **fscommerce:** types for salesforce content API ([1b30b72](https://github.com/brandingbrand/flagship/commit/1b30b72ef90ed91df6e0ab98fd0579dda8751cf1))
+
+
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+* **fscommerce:** session manager ([3fe7a30](https://github.com/brandingbrand/flagship/commit/3fe7a30cf786d4faa2925c0ed2d2bf239060966a))
+* **fscommerce:** session manager ([ec4a80f](https://github.com/brandingbrand/flagship/commit/ec4a80f1259a8beb27febaf566a469c0fb69e0e5))
+
+
+### Features
+
+* **fsengagement:** Adding stories for fsengagement ([e47f157](https://github.com/brandingbrand/flagship/commit/e47f15788167eb8bd67b1e68007b6d11276da40e))
+
+
+### BREAKING CHANGES
+
+* **fscommerce:** - allow only one invocation of the session manager `get` method at a time.
+- provide types for the `fetchCart` method to allow only one invocation of the method at a time.
+
+
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+
+### Features
+
+* **fscommerce:** types for salesforce bonus discount line items ([e4e7c2d](https://github.com/brandingbrand/flagship/commit/e4e7c2dde9c12099267b0d79f7e9ced16494292d))
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+
+### Features
+
+* **fscommerce:** product promotions ([1cca6bd](https://github.com/brandingbrand/flagship/commit/1cca6bd25e5745e26d76d4104a35c4874344b910))
+* **fscommerce:** product promotions ([4546a01](https://github.com/brandingbrand/flagship/commit/4546a0102d215ec76bb814de2b6d71667122079e))
+* **fsweb:** Add support for an array of endpoints ([c392d54](https://github.com/brandingbrand/flagship/commit/c392d5486038f3f88773034fdbfb316bd985bb01))
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **flagship:** Remove animated image patch ([03acfbe](https://github.com/brandingbrand/flagship/commit/03acfbeae5ec5537bb01fb995791f80def8bd2f0))
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
+
+
+### Features
+
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+* **fsweb:** lock @types/cors ([fae557f](https://github.com/brandingbrand/flagship/commit/fae557fe2249fdb6f7223d32a4cf82c3a30b470d))
+
+
+### Features
+
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+
+### Bug Fixes
+
+* **flagship:** link without forceLink 🔗 ([92a87de](https://github.com/brandingbrand/flagship/commit/92a87deef86e8b757402347440a842f3c632e357))
+* **fscomponents:** fix web carousel only showing one image ([a688072](https://github.com/brandingbrand/flagship/commit/a688072775170b0061f1d477935e786f7e4075a1))
+* **fsengage:** lint errors ([1a38931](https://github.com/brandingbrand/flagship/commit/1a38931052a98498dfe0a4b2adf980af106f4da8))
+
+
+### Features
+
+* **flagship:** Support for gifs and WebP in Android ([969a783](https://github.com/brandingbrand/flagship/commit/969a78398b3f002069aefbae8c75855c4d416758))
+* **fsengage:** integrate adobe v5 sdk ([de762cd](https://github.com/brandingbrand/flagship/commit/de762cd9f433ba0014337c427829003d69c9bfd7))
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fixes for serializable props ([6be0632](https://github.com/brandingbrand/flagship/commit/6be06322a03360f3ee3c5a26c0a32cc46711d01c))
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+* add link card ([19a0d6d](https://github.com/brandingbrand/flagship/commit/19a0d6d271d217edcc779787184eb47861dcbdc5))
+* add product index grid ghost component ([0c80ddb](https://github.com/brandingbrand/flagship/commit/0c80ddb7855e8eacb1b25a276a1820a8f95b9d98))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **fscomponents:** Use div for web multicarousel ([903f6c2](https://github.com/brandingbrand/flagship/commit/903f6c257be8a40578402e97d54386b81d8e4cc6))
+* **fsweb:** Actually remove svgs ([1da221f](https://github.com/brandingbrand/flagship/commit/1da221f81735c634cc1afb11b4a6d650f098c1fd))
+* **fsweb:** Remove svgs module ([c23171f](https://github.com/brandingbrand/flagship/commit/c23171fdb4dc00a11c09b37235187d59280a7ff3))
+
+
+### Features
+
+* **fsengagement:** add ghost content loading component ([3fac131](https://github.com/brandingbrand/flagship/commit/3fac131a646abbe456049a38488ad29defd24a32))
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+
+### Bug Fixes
+
+* feedback changes ([61459b8](https://github.com/brandingbrand/flagship/commit/61459b8e44ca192290ee005e6091c08404be3830))
+* feedback fixes ([c8659d6](https://github.com/brandingbrand/flagship/commit/c8659d67af3215eb3a64a64ca97610dc070a73b0))
+* feedback fixes ([4acbc34](https://github.com/brandingbrand/flagship/commit/4acbc34d8a9376ad781a8248f17b5011f3beaca8))
+* **fscomponents:** Fixes for swatches ([1adc779](https://github.com/brandingbrand/flagship/commit/1adc7794fc73bb1e15b1d529b9ae8b517a52fda1))
+
+
+### Features
+
+* **flagship:** remove flipper support ([4297f9c](https://github.com/brandingbrand/flagship/commit/4297f9c557ed8b4b2be3810aa67bf63a39a0efdf))
+* add new cart item component ([#1748](https://github.com/brandingbrand/flagship/issues/1748)) ([c0baee9](https://github.com/brandingbrand/flagship/commit/c0baee97237d48a2be34ea8eb707d7829c7f0628))
+* **fscomponents:** Updates to Swatches ([20ca7d7](https://github.com/brandingbrand/flagship/commit/20ca7d7b84af2e4abf79099a0ab2324586612e37))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([9c83ae7](https://github.com/brandingbrand/flagship/commit/9c83ae7be5fcd925480bfe3e2d0d320f01409bc6))
+* CartItemGhost | Add to Flagship Repo ([e76be4b](https://github.com/brandingbrand/flagship/commit/e76be4be3d49f66e00d4a7b7e576dc57e730eb28))
+* CartItemGhost | Add to Flagship Repo - replaced to CartItem ([4a63a6d](https://github.com/brandingbrand/flagship/commit/4a63a6df8dc2aa768a2707a808d33be19566c222))
+* CategoryListGhost | Add to Flagship Repo ([fbad160](https://github.com/brandingbrand/flagship/commit/fbad1609358f317a0781b2ad67c958f3af7f2433))
+* CategoryListGhost | Add to Flagship Repo ([07d123c](https://github.com/brandingbrand/flagship/commit/07d123c792dedc57f080b0d21d35d841d6d37b23))
+* CategoryListGhost | Add to Flagship Repo - fix adding itemContainerStyle ([dc12da2](https://github.com/brandingbrand/flagship/commit/dc12da2447be0b6d520fe36c1b57de72c2997cb5))
+* CategoryListGhost | Add to Flagship Repo - fix changed naming ([6fda510](https://github.com/brandingbrand/flagship/commit/6fda5100213afa09c65823b8bc01083db063a738))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([8746c5f](https://github.com/brandingbrand/flagship/commit/8746c5f9a43aa8434703d84814cba32c69685df6))
+* CategoryListGhost | Add to Flagship Repo - replace to fscategory ([f1a7143](https://github.com/brandingbrand/flagship/commit/f1a7143410637f719e1946d08b47244219975a30))
+* statically set key name for ga query params ([aac2aac](https://github.com/brandingbrand/flagship/commit/aac2aac286ebfc0dccc19e6aefbd8fe1c595269f))
+* **fsengage:** add support for directly setting google analytics params ([5b3d5b0](https://github.com/brandingbrand/flagship/commit/5b3d5b03a68ee355b8498216c78e72e8aee57d8b))
+* **ghost-screen:** PDPGhost | Add to Flagship Repo ([324f93b](https://github.com/brandingbrand/flagship/commit/324f93be56972f6b4944be7b083a870f98754856))
+* **ghost-screen:** PDPGhost | Serialize Props ([f33a33c](https://github.com/brandingbrand/flagship/commit/f33a33c50b57e58fd3841d94f5a39dcb42b993c3))
+* CategoryListGhost | Add to Flagship Repo - fix SerializableProps ([3387293](https://github.com/brandingbrand/flagship/commit/33872930217f6a1130487f7e7e6dd11e1300adc4))
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+
+### Bug Fixes
+
+* **flagship:** made rn camera patch script work again ([#1770](https://github.com/brandingbrand/flagship/issues/1770)) ([774362b](https://github.com/brandingbrand/flagship/commit/774362b23d8cb7b56bcaf5a7eedb7fc941cd958d))
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+
+### Bug Fixes
+
+* fix android release variant compilation ([#1765](https://github.com/brandingbrand/flagship/issues/1765)) ([96e33f1](https://github.com/brandingbrand/flagship/commit/96e33f1d88db40859e792f7427695cdc10c7cedc))
+* **fscomponents:** Fix SearchScreen story ([5968581](https://github.com/brandingbrand/flagship/commit/5968581b53fafa65bbfd34d98ba2304532524807))
+* **fscomponents:** Remove unneeded tslint disable ([d8f2aa6](https://github.com/brandingbrand/flagship/commit/d8f2aa61a66b462de12517aea61ba4b6a4dd05fe))
+* **fscomponents:** Update SelectableList ([c55b936](https://github.com/brandingbrand/flagship/commit/c55b93689414336202773c7488dd114d8dd44d8e))
+
+
+### Features
+
+* **fscomponents:** Add Picker component ([e7e76bf](https://github.com/brandingbrand/flagship/commit/e7e76bf366c854ffcb4e992ef7b52e5225f9de0a))
+* **fscomponents:** Add ToggleButton component ([6130d4d](https://github.com/brandingbrand/flagship/commit/6130d4d6131ab7d61164d9cc5a989937992de18e))
+* **fscomponents:** Add TooltipDisplay component ([1193b5b](https://github.com/brandingbrand/flagship/commit/1193b5b716e984c4bec27cd878e16059d8d5a021))
+* **fscomponents:** Update SearchBar and SearchScreen ([572bad1](https://github.com/brandingbrand/flagship/commit/572bad1df978de5a97bd2ae9903bd650256c566c))
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* **flagship:** update RNFirebase pod ([#1738](https://github.com/brandingbrand/flagship/issues/1738)) ([bcbca47](https://github.com/brandingbrand/flagship/commit/bcbca47cbe64fdec164932bf3524efcdbdcc3cb6))
+* **flagship:** Update storybook and rn-device-info ([4d3428b](https://github.com/brandingbrand/flagship/commit/4d3428b0df9b39452835f9bae6cd9f2dad79ab29))
+* **flagship:** Updates for PR review ([111b464](https://github.com/brandingbrand/flagship/commit/111b464583a2303f8744a851bead6512fefe9d24))
+* **fscomponents:** Fixes for FilterListDrilldown ([26892b6](https://github.com/brandingbrand/flagship/commit/26892b6b3fe202237abb47408ecbea1e3115aa5e))
+
+
+### Features
+
+* **flagship:** iOS Multiple Target Support ([#1287](https://github.com/brandingbrand/flagship/issues/1287)) ([b501fd1](https://github.com/brandingbrand/flagship/commit/b501fd1cdc0fc7e5ca6c8e3169c83995179653b4))
+* **fscomponents:** Add RadioButtonLine component ([0815e13](https://github.com/brandingbrand/flagship/commit/0815e1340823825948c1744081bd56b916fe3378))
+* add header in the nesting button modal ([#1734](https://github.com/brandingbrand/flagship/issues/1734)) ([5ecc911](https://github.com/brandingbrand/flagship/commit/5ecc9119e574e9409a80602c01bb0f4dc3d62893))
+* **fscomponents:** Update FilterListDrilldown ([2479a29](https://github.com/brandingbrand/flagship/commit/2479a295ddf892ce5b7eedae7ecdaf9cec679060))
+* **fscomponents:** Update StepIndicator ([ebc41e9](https://github.com/brandingbrand/flagship/commit/ebc41e9a84ef54259e729dc2655ddce7aa1f8d1b))
+* **fsproductindex:** Updated ProductIndex ([d3a6fc0](https://github.com/brandingbrand/flagship/commit/d3a6fc0738fae1bfd5ad5b82150b6ad8fb2f3a9a))
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix typing on loadInitialData ([032e992](https://github.com/brandingbrand/flagship/commit/032e9924459eaf658dfcb43e601ec476ac5e9456))
+* **fsapp:** Update typing for pirateship lib ([6011628](https://github.com/brandingbrand/flagship/commit/60116280fbdb68faddcca78a477c969557cf51b7))
+* **fscomponents:** Ensure node is Element ([1488f2f](https://github.com/brandingbrand/flagship/commit/1488f2f05c05835b6ed27538ed29df04914f8e25))
+* **pirateship:** Fix compilation error ([e836dd9](https://github.com/brandingbrand/flagship/commit/e836dd9fdef0e7c90959196e38e9168cd2f703ef))
+* **pirateship:** fix error in cart when recently viewed items isn't set ([0b4160f](https://github.com/brandingbrand/flagship/commit/0b4160fd84a6f556a90fa7477c92489074a05f8f))
+* **pirateship:** Remove unneeded checks ([a5075c7](https://github.com/brandingbrand/flagship/commit/a5075c738eb33f57dae62f9245e3e3d87e4c7370))
+
+
+### Features
+
+* **any-occurrences:** Replace all occurrences of "any" in /pirateship/src/providers ([d9d161a](https://github.com/brandingbrand/flagship/commit/d9d161a36325ac46e95a1bf915ccd922f6c0b81e))
+* **any-occurrences:** Replace all occurrences of "any" in /pirateship/src/reducers ([64a5f54](https://github.com/brandingbrand/flagship/commit/64a5f5467311ef7c9f1cbe5bb348f1559b978b80))
+* **any-occurrences:** Replace all occurrences of "any" in packages/fscomponents/src/lib/helpers.ts ([fc293b5](https://github.com/brandingbrand/flagship/commit/fc293b57511edfec1fc90e8697386029e87968d8))
+* **any-occurrences:** Replace all occurrences of "any" in packages/fscomponents/src/lib/wallets ([4ddc942](https://github.com/brandingbrand/flagship/commit/4ddc94209a25b28b11068a0136f10e778e3a67e0))
+* **any-occurrences:** Replace all occurrences of "any" in packages/fscomponents/src/lib/wallets (changes) ([7cf1458](https://github.com/brandingbrand/flagship/commit/7cf14583b13f48cee94dec84991d37eeb87e857c))
+* **fscomponents:** add NestingButtons component ([86cd839](https://github.com/brandingbrand/flagship/commit/86cd8398ad53192eb762b6aecc91d1f009f6d76a))
+* **fscomponents:** add price component ([#1709](https://github.com/brandingbrand/flagship/issues/1709)) ([a4de6f7](https://github.com/brandingbrand/flagship/commit/a4de6f76b647fdb6cdf4f86fa94cf9ade176ac36))
+* **fscomponents:** Replace all occurrences of "any" in LoginFormFK component ([9432f07](https://github.com/brandingbrand/flagship/commit/9432f07461eeba16a62ba9e7cfb024a69ad13145))
+* **fscomponents:** Replace all occurrences of "any" in LoginFormFK component ([9e7e0ba](https://github.com/brandingbrand/flagship/commit/9e7e0baac16f44d136b84cd10f9680788b1d0a0b))
+* Replace all occurrences of "any" in applyDefaults ([909540d](https://github.com/brandingbrand/flagship/commit/909540d7e56e7e61bb94390165d7beaa664caec6))
+* Replace all occurrences of "any" in ContactInfoForm ([bdb7393](https://github.com/brandingbrand/flagship/commit/bdb73934156f88a0721641aa603a94eff662ba10))
+* Replace all occurrences of "any" in fscomponents/Alert.web ([39f14f4](https://github.com/brandingbrand/flagship/commit/39f14f4f7f8d5727ec407d67a8e9f3613ec73a2e))
+* Replace all occurrences of "any" in fscomponents/CMSFeedback ([3153b1e](https://github.com/brandingbrand/flagship/commit/3153b1e1c3cd3dd595bf3c842c51d339fa0fda57))
+* Replace all occurrences of "any" in fscomponents/ProductMetadata ([1cbddf2](https://github.com/brandingbrand/flagship/commit/1cbddf21c2de0d7c974342829457c5923223e105))
+* Replace all occurrences of "any" in pirateship/lib ([93268fa](https://github.com/brandingbrand/flagship/commit/93268fa7a1169422946886839d1835652f8de0ba))
+* Replace all occurrences of "any" in pirateship/lib ([b8d9129](https://github.com/brandingbrand/flagship/commit/b8d9129de2764ed1989db74d56267c341008a17a))
+* Replace all occurrences of "any" in PSAddressForm ([3cda525](https://github.com/brandingbrand/flagship/commit/3cda525bbd6b01aed4250c52928e2135c12d283f))
+* Replace all occurrences of "any" in PSScreenWrapper ([967c9ae](https://github.com/brandingbrand/flagship/commit/967c9ae34ea49470757f2fcf5bdea32f212a4988))
+* **any-occurrences:** Replace all occurrences of "any" in PSTotals ([58ceb55](https://github.com/brandingbrand/flagship/commit/58ceb550eb3609c45a98243fd76e98e5fc54571d))
+* **CreditCardForm:** Replace all occurrences of "any" in CreditCardForm component ([7f1e04d](https://github.com/brandingbrand/flagship/commit/7f1e04d1a61ec6cc616a7fa4fbe2f6e3799ab840))
+* **fscomponents:** Replace all occurrences of "any" in ActionBar ([622d4cf](https://github.com/brandingbrand/flagship/commit/622d4cff7d569d65d36417debf360da89fe4d811))
+* **fscomponents:** Replace all occurrences of "any" in AddressForm ([1ee9423](https://github.com/brandingbrand/flagship/commit/1ee94239b900e32f4c99b21a79587b2e8f606a70))
+* **fscomponents:** replace all occurrences of "any" in Alert ([7bcdb62](https://github.com/brandingbrand/flagship/commit/7bcdb628cf362d09b2d36ebc39753e14a3c587c1))
+* **fscomponents:** Replace all occurrences of "any" in CMSProvider component ([f9e10d3](https://github.com/brandingbrand/flagship/commit/f9e10d355558b7d12288947566254b3b3ba724fd))
+* **fscomponents:** replace all occurrences of "any" in FilterList ([4b6aa08](https://github.com/brandingbrand/flagship/commit/4b6aa084700e243453a55c333d168fb833965762))
+* **fscomponents:** Replace all occurrences of "any" in LocationItem ([a73254b](https://github.com/brandingbrand/flagship/commit/a73254bb0c66ed1ea832e3f3afdf89b60e530f27))
+* **fscomponents:** Replace all occurrences of "any" in LoginFormFK component ([06ab1e2](https://github.com/brandingbrand/flagship/commit/06ab1e210faa8e0f8c6dc3291a864c0b9f5ef9e1))
+* **fscomponents:** Replace all occurrences of "any" in ModalHalfScreen ([05d78a5](https://github.com/brandingbrand/flagship/commit/05d78a5875d49554cabfc419d55f27bc09b3976f))
+* **fscomponents:** Replace all occurrences of "any" in ReviewIndicator ([bdbffd4](https://github.com/brandingbrand/flagship/commit/bdbffd404a0ab324300fc756caac55b2d5432474))
+* **fscomponents:** Replace all occurrences of "any" in SearchBar ([c6fd33f](https://github.com/brandingbrand/flagship/commit/c6fd33f3a4085c59feaf88e1d04300169cd40729))
+* **fscomponents:** Replace all occurrences of "any" in SearchModal ([daa0949](https://github.com/brandingbrand/flagship/commit/daa0949fe0cfa1f7e85c4d6d3e0712370c40889c))
+* **fscomponents:** Replace all occurrences of "any" in SearchScreen ([53a9b2f](https://github.com/brandingbrand/flagship/commit/53a9b2fc83f331c693ef59504116d200e4c6be37))
+* **fscomponents:** replace all occurrences of "any" in SyndicationIndicator ([394c2ee](https://github.com/brandingbrand/flagship/commit/394c2eed55b15fb38f21cb728a50297b48b05d06))
+* **fsnetwork:** Replace all occurrences of "any" in FSNetwork package ([4d546e2](https://github.com/brandingbrand/flagship/commit/4d546e2a33b69175cc036cf4d75cc57ce52b095c))
+* **GridComponent:** Replace all occurrences of "any" in Grid ([1cb7e8b](https://github.com/brandingbrand/flagship/commit/1cb7e8bb84762b432f2bff82e7553140459a0c9b))
+* **pirateship:** Replace all occurrences of "any" in PSHeroCarousel ([182b16a](https://github.com/brandingbrand/flagship/commit/182b16aafbb2675b256f3a3eca01adb9c74cc799))
+* **pirateship:** Replace all occurrences of "any" in PSLabeledValues ([34df9de](https://github.com/brandingbrand/flagship/commit/34df9de28131682a42f0803492cc4a82e7642ebf))
+* **pirateship:** Replace all occurrences of "any" in PSPlaceholder ([334a2c3](https://github.com/brandingbrand/flagship/commit/334a2c3a970c707d1f09740625b6f2452c7d0964))
+* **pirateshipPSModalComponent:** Replace all occurrences of "any" in PSModal ([23d7000](https://github.com/brandingbrand/flagship/commit/23d7000a92bcec341d782b0d914241eb37074469))
+* **pirateshipPSStepperComponent:** Replace all occurrences of "any" in PSStepper ([6535571](https://github.com/brandingbrand/flagship/commit/65355715686551cc660edc4aacb92d9a747ff136))
+* **pirateshipPSToggleComponent:** Replace all occurrences of "any" in PSToggle ([beeaec0](https://github.com/brandingbrand/flagship/commit/beeaec0134c2eec17d17afdf07cb2de585ee5e98))
+* **PromoForm:** Replace all occurrences of "any" in PromoForm component ([6188e92](https://github.com/brandingbrand/flagship/commit/6188e92b523d8ae4a7821f34611b515c6b8646ab))
+* **SwatchesComponent:** Replace all occurrences of "any" in Swatches ([1ae422f](https://github.com/brandingbrand/flagship/commit/1ae422fcfdd1417470a6037bc6646b6eb0d07023))
+* **touchableDelayWebComponent:** Replace all occurrences of "any" in TouchableDelay.web ([6eb3deb](https://github.com/brandingbrand/flagship/commit/6eb3deb3a20c3f27cd8a387fccd385740ec9156c))
+* **TouchableHighlightLinkWebComponent:** Replace all occurrences of "any" in TouchableHighlightLink.web ([4002779](https://github.com/brandingbrand/flagship/commit/4002779b014983eeee830894e18d7cf7d288f403))
+* **TouchableOpacityLinkWebComponent:** Replace all occurrences of "any" in TouchableOpacityLink.web ([04abad1](https://github.com/brandingbrand/flagship/commit/04abad10d420c280f5b8279990b5b2af20cde382))
+* **TouchableWithoutFeedbackLinkWebComponent:** Replace all occurrences of "any" in TouchableWithoutFeedbackLink.web ([921d8d4](https://github.com/brandingbrand/flagship/commit/921d8d4dddc29a84cca23b3ac4570ddfd6641742))
+* Replace all occurrences of "any" in fscomponents/Selector ([5318981](https://github.com/brandingbrand/flagship/commit/5318981456efea1bca6b2a43c394cfc16999fa35))
+
+
+
+
+
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+
+### Features
+
+* **fsapp:** Add additional options to SSR ([79eb03d](https://github.com/brandingbrand/flagship/commit/79eb03d027ca92e60aeda136bb74a420972439ff))
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+
+### Bug Fixes
+
+* **fsweb:** bump datetimepicker version ([f3a4a00](https://github.com/brandingbrand/flagship/commit/f3a4a004280cd2a73678ffd1f2807543d8f83cc4))
+* **fsweb:** Fix path check ([44d14e6](https://github.com/brandingbrand/flagship/commit/44d14e60882c4a199b466f6bf807940380d5d6e9))
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Add languages to navigator ([687b563](https://github.com/brandingbrand/flagship/commit/687b563b58d3ee204a910f4291603ba5c2bef798))
+
+
+### Features
+
+* statically set key name for ga query params ([dcb60c8](https://github.com/brandingbrand/flagship/commit/dcb60c8f9bd05e41947a87696ad502ca6b10b059))
+* **fscommerce:** Add swatches and images to OptionValue ([e45778d](https://github.com/brandingbrand/flagship/commit/e45778d8390d3582e52f621bb9c793fa910be43d))
+* **fsengage:** add support for directly setting google analytics params ([9ef47fa](https://github.com/brandingbrand/flagship/commit/9ef47fa6e52f41ade50120b2a10b176546cca2d6))
+* **fsi18n:** Add functions to listen for locale updates ([8c780d4](https://github.com/brandingbrand/flagship/commit/8c780d49d8867a503d5defe3595ed8d05839d650))
+* add story to ChangePassword component ([87d086b](https://github.com/brandingbrand/flagship/commit/87d086bda7a554af91c72e183e7fe50d9fc9ef36))
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsengagement:** address cannot set state on unmounted component error ([e7a69fb](https://github.com/brandingbrand/flagship/commit/e7a69fbef27c2c6cc652b550336292ca2b8dcacf))
+* **fsweb:** Update to newer version of async-storage ([b2bbad0](https://github.com/brandingbrand/flagship/commit/b2bbad0dd34337db7174319fc0d4b4aeff4e87fd))
+
+
+### Features
+
+* **fsapp:** Add SSR support ([aa2fd4c](https://github.com/brandingbrand/flagship/commit/aa2fd4c87149738755c3fcde46403d12e7a705cb))
+* replace react-native-restart with RN DevSettings ([7139061](https://github.com/brandingbrand/flagship/commit/71390610796967e32fbd21c32decfeda7b4c71d5))
+* replaced tcomb-form-native with bb fork ([d9993ea](https://github.com/brandingbrand/flagship/commit/d9993ea0fb99c4062518bee397a3b241859e3843))
+
+
+
+
+
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+
+### Bug Fixes
+
+* audit usenativedriver settings for animations ([a3622c0](https://github.com/brandingbrand/flagship/commit/a3622c07479cf7d7e174b6ae84536c1379795ead))
+
+
+### Features
+
+* make permissions a soft dependency in fsengage ([e805007](https://github.com/brandingbrand/flagship/commit/e805007d178986685706253cb6f9143d53e3e0e0))
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix product index typing ([dcc9286](https://github.com/brandingbrand/flagship/commit/dcc92861b9b77e6212406f1d8a4713cdca3a8dc5))
+* **fsweb:** add build scripts for web ([5551f89](https://github.com/brandingbrand/flagship/commit/5551f89cc00bc4c14d10bddc2cbb96c35b028d95))
+* **fsweb:** Remove stray comma ([b7eedb7](https://github.com/brandingbrand/flagship/commit/b7eedb7ffa998448f4aea1bc21c2b5bdd91a5157))
+
+
+### Features
+
+* **fsweb:** Convert proxy to Typescript ([d5990bc](https://github.com/brandingbrand/flagship/commit/d5990bcb82ec68901f11f64169d5c650c5e024a4))
+* add knobs - Totals story ([12e3b31](https://github.com/brandingbrand/flagship/commit/12e3b3143a8b9dc342e39b33820c8fa9ba5863f9))
+* Update FS component to allow custom header to be passed in ([ab93e8c](https://github.com/brandingbrand/flagship/commit/ab93e8c82248cbd32cb03819b1fa3e3eb4a67d1d))
+* **fsweb:** add proxy support ([1e8f1c8](https://github.com/brandingbrand/flagship/commit/1e8f1c880512bd37c0ea8b5c5fc3ad6a4d02d952))
+*  add story to SearchScreen component ([5d31e1f](https://github.com/brandingbrand/flagship/commit/5d31e1f86dd9e04ce0c2d9fda9f153cbdaa4d907))
+* add knobs - Carousel story ([e40f19e](https://github.com/brandingbrand/flagship/commit/e40f19ea9c3699333756c8fdb49ce852a37b57dc))
+* add knobs - loginForm story ([bbb1cb8](https://github.com/brandingbrand/flagship/commit/bbb1cb8eafd2d8b11dcb2d97bdcaa2bc7e426af6))
+* add knobs - MultiCarousel story ([e317d52](https://github.com/brandingbrand/flagship/commit/e317d529b1e75e3f706f9bd866122d5286da118c))
+* add knobs - MultiCarousel story ([b44cd43](https://github.com/brandingbrand/flagship/commit/b44cd43c62d76f818dc2ef877af05345936044a6))
+* add knobs - Totals story ([6923e0c](https://github.com/brandingbrand/flagship/commit/6923e0c1627b1d66314a8df815f7d1f0a36ef610))
+* add knobs for CMSFeedback story ([835d647](https://github.com/brandingbrand/flagship/commit/835d647bfe56f7978cb567a3b82aeae02e844efa))
+* Create UpdateNameOrEmail story ([994ebe0](https://github.com/brandingbrand/flagship/commit/994ebe0af7b6c70a66efdb2dcd2cd2ffaa48a2da))
+* Create UpdateNameOrEmail story ([6bc2e33](https://github.com/brandingbrand/flagship/commit/6bc2e33e65fb2f9241aa929236e3dd945cc7962e))
+* Update FS component to allow custom header to be passed in ([61f3bfb](https://github.com/brandingbrand/flagship/commit/61f3bfb73c920ed7b5ccf9535d31116ebe3111a5))
+* Update FS component to allow custom header to be passed in ([7467aea](https://github.com/brandingbrand/flagship/commit/7467aea7754be77226079d07a705a3cf00794045))
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* fix imports of tcomb-form-native ([4dbcab9](https://github.com/brandingbrand/flagship/commit/4dbcab957c9586bb07dbc4863a664b5d09f2948b))
+* **flagship:** Swift library fix ([b022f63](https://github.com/brandingbrand/flagship/commit/b022f636d1a2dfba77a6c70c028b15888314bd4b))
+* fix iOS compilation error ([97084a7](https://github.com/brandingbrand/flagship/commit/97084a7154fcbcaa7e86bdb1c5f4856c128c638b))
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **flagship:** add init script to patch rn images for ios 14 ([9667620](https://github.com/brandingbrand/flagship/commit/9667620ca54432f07670940acdd4fc8401795fc2))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+* **fscomponents:** Better backwards compatibility ([da268d4](https://github.com/brandingbrand/flagship/commit/da268d4e808171ddca141b6cbb7cc0507c57fc93))
+* **fscomponents:** Fix empty stars for reviews ([1b02443](https://github.com/brandingbrand/flagship/commit/1b02443cd70108f51d569a6e7e1435e2e099ad5b))
+* **fscomponents:** Fix search history display ([e57d0b5](https://github.com/brandingbrand/flagship/commit/e57d0b5ef31fd88d91a433eab948af315d4efc05))
+* **fscomponents:** Remove redundant code in SearchModal ([d874255](https://github.com/brandingbrand/flagship/commit/d87425568e9e9231125488bdef929c23460d564b))
+* pressing X on cart item removes from cart ([9f2d86c](https://github.com/brandingbrand/flagship/commit/9f2d86c9174ee7d26fde59525e8a9654bf0cb0f7))
+* remove cart item count badge when removing items from cart ([abaa899](https://github.com/brandingbrand/flagship/commit/abaa89901c7f204ec6a79c7bd7cd5ce6cadb442b))
+* **fsweb:** Upgrade react-native-web to 0.12.2 ([5c701ca](https://github.com/brandingbrand/flagship/commit/5c701cacf3abd0958f6ee5549471a755618d11af))
+
+
+### chore
+
+* merge develop into master ([#838](https://github.com/brandingbrand/flagship/issues/838)) ([1bb87b2](https://github.com/brandingbrand/flagship/commit/1bb87b2b692b398dece0f564b7cbd277de431f5e)), closes [#620](https://github.com/brandingbrand/flagship/issues/620) [#817](https://github.com/brandingbrand/flagship/issues/817) [#814](https://github.com/brandingbrand/flagship/issues/814) [#823](https://github.com/brandingbrand/flagship/issues/823) [#808](https://github.com/brandingbrand/flagship/issues/808) [#143](https://github.com/brandingbrand/flagship/issues/143) [#862](https://github.com/brandingbrand/flagship/issues/862) [#864](https://github.com/brandingbrand/flagship/issues/864) [#877](https://github.com/brandingbrand/flagship/issues/877) [#878](https://github.com/brandingbrand/flagship/issues/878) [#867](https://github.com/brandingbrand/flagship/issues/867) [#898](https://github.com/brandingbrand/flagship/issues/898) [#906](https://github.com/brandingbrand/flagship/issues/906) [#905](https://github.com/brandingbrand/flagship/issues/905)
+
+
+### Features
+
+* implement react-native-permissions v2 support ([e017806](https://github.com/brandingbrand/flagship/commit/e017806fba2d65beb4b658d144a47819dea21729))
+* remove hockeyapp and update appcenter for fastlane ([839cb59](https://github.com/brandingbrand/flagship/commit/839cb59376fa46b51babf03ac52ed4ae757717cb))
+* replace all any in PSCartItem ([3505c56](https://github.com/brandingbrand/flagship/commit/3505c56cb3444c7720fef7494fc91944ba074256))
+* Replace all occurrences of "any" in fscomponents/ProductItem ([7331806](https://github.com/brandingbrand/flagship/commit/7331806e4e941bf4e00a14fb549a65346e6ad5e5))
+* Replace all occurrences of "any" in FSMockDataSources package ([3a0c881](https://github.com/brandingbrand/flagship/commit/3a0c881776f3283b64926b8689f034b0119cfd3f))
+* upgrade to RN 0.63 ([507d0e4](https://github.com/brandingbrand/flagship/commit/507d0e4618cc6e557af6c475a655aa12f57b6607))
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **any-occurrences:** Replace all occurrences of "any" in PageDots ([65f0116](https://github.com/brandingbrand/flagship/commit/65f011666366df7b50c25f3d1eeddff8be45cad1))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+* **fscommerce:** Allow setting the commerce provider's initial data ([55d9da0](https://github.com/brandingbrand/flagship/commit/55d9da0617c145c8d0e07c1c46ae90689cbef68f))
+* **fsproductindex:** Add functionality for loading previous pages ([bbc6bb0](https://github.com/brandingbrand/flagship/commit/bbc6bb016d41d4aadcdae3152209de5956bd1129))
+
+
+### Reverts
+
+* Revert "chore(fscomponents): Remove tcomb-form-native" ([396630c](https://github.com/brandingbrand/flagship/commit/396630c8945957a1bc030b7eaf1113c0455b979f))
+
+
+### BREAKING CHANGES
+
+* This upgrades react-native-permissions from v1 to v2 and adds config support for adding the appropriate pods and permissions to the ios and android projects. Permissions v2 has a new API that will require changes for existing implementations.
+
+Usage of the library is described in their repo: https://github.com/react-native-community/react-native-permissions#methods
+* major react native update
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+* This removes the apiToken env config that could be used to configure App Center uploads. This was previously deprecated in favor of passing in an environment variable instead: APPCENTER_API_TOKEN.
+
+This also removes the :beta lanes from the Fastfiles, as these attempted to upload builds to Hockeyapp which has been shut down. The available lanes are :appcenter and :build for iOS and :appcenter, :appcenter_bundle, and :build for Android.
+* If anything hard codes the android native project path (ie.
+android/app/src/main/java/com/brandingbrand/reactnative/and/project-name), it will need to be
+updated to account for the dynamic package name. Flagship now exports its own modules, so
+`flagship.path.android.nativeProjectPath(config)` can be used to get the directory without hard
+coding a path.
+
+* Revert yarn.lock changes
+
+* feat: update bv components w/ syndicated indicator
+
+**Description**
+Some reviews are syndicated by the manufacturer. When this is the case, if the client wants to display the indicator, another row will appear on the bottom of the review indicating that it is syndicated.
+
+* chore(release): publish v7.0.0
+
+* feat(flagship): support background modes
+
+* feat: update bv syndicated indicator style
+
+**Description**
+There were some bugs with the syndication badges on smaller devices. Fixed them with flex-wrap. Also updated copy.
+
+* chore(release): publish v7.1.0
+
+* feat: add position property for half modal component
+
+* chore: add state typing for component CMSBanner
+
+* fix: excessive calls of handleContainerSizeChange in MultiCarousel
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** add init script to patch rn images for ios 14 ([11149da](https://github.com/brandingbrand/flagship/commit/11149da128f4ac83952526157144a1484e9832b4))
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **flagship:** iOS Pods not being added ([4e4c165](https://github.com/brandingbrand/flagship/commit/4e4c1653c2e60c279b2208dc2e16b7f7b88ea7d1))
+* **fscomponents:** Fix crashes with bad currency codes ([07070ea](https://github.com/brandingbrand/flagship/commit/07070ea7e2cefd3cf0c9c57918be07c2328cc93e))
+* **fscomponents:** Fix currency conversion ([f746451](https://github.com/brandingbrand/flagship/commit/f74645170aecc015c0c4faad6503249a5cddbed0))
+
+
+
+
+
 ## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
 
 

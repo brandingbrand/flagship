@@ -11,7 +11,10 @@ let reviewDataSource: ReviewDataSource;
 export interface DataSourceConfig {
   type: 'bbplatform' | 'commercecloud' | 'shopify' | 'mock';
   categoryFormat: 'grid' | 'list';
-  apiConfig: any;
+  apiConfig: {
+    apiHost: string;
+  };
+  enableProxy?: boolean;
 }
 
 if (env.dataSource.type === 'bbplatform') {

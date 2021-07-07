@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Options } from 'react-native-navigation';
-// @ts-ignore TODO: Add types for tcomb-form-native
-import * as t from 'tcomb-form-native';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '@brandingbrand/fscomponents';
 import PSScreenWrapper from '../components/PSScreenWrapper';
 import PSButton from '../components/PSButton';
@@ -116,6 +116,10 @@ export default class TrackOrderLanding extends Component<ScreenProps, TrackOrder
     };
   }
 
+  componentDidMount(): void {
+    // tslint:disable-next-line:ter-max-len
+    console.warn('TrackOrderLanding is deprecated and will be removed in the next version of Flagship.');
+  }
 
   render(): JSX.Element {
     return (

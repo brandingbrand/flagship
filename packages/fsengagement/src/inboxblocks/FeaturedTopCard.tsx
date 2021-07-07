@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import {
   DeviceEventEmitter,
-  StyleProp,
-  TextStyle,
   TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Navigator } from '@brandingbrand/fsapp';
 import {
-  EmitterProps,
-  JSON,
-  ScreenProps,
-  StoryGradient
+  CardProps,
+  JSON
 } from '../types';
 
-import TextBlock from './TextBlock';
-import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
+import TextBlock, { TextBlockProps } from './TextBlock';
+import CTABlock, { CTABlockProps } from './CTABlock';
+import ImageBlock, { ImageBlockProps } from './ImageBlock';
 
-export interface ComponentProps extends ScreenProps, EmitterProps {
-  containerStyle?: StyleProp<TextStyle>;
-  story?: JSON;
-  contents: any;
-  api?: any;
-  storyGradient?: StoryGradient;
+export interface FeaturedTopCardContents {
+  Image: ImageBlockProps;
+  Text: TextBlockProps;
+  CTA: CTABlockProps;
+}
+
+export interface ComponentProps extends CardProps {
+  contents: FeaturedTopCardContents;
 }
 
 export default class Card extends Component<ComponentProps> {
@@ -31,14 +28,9 @@ export default class Card extends Component<ComponentProps> {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func
   };
-  navigator: Navigator;
 
   constructor(props: ComponentProps) {
     super(props);
-    this.navigator = new Navigator({
-      componentId: props.componentId,
-      tabs: []
-    });
   }
 
   getChildContext = () => ({
@@ -51,10 +43,10 @@ export default class Card extends Component<ComponentProps> {
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
+    this.props.api?.logEvent('viewInboxStory', {
       messageId: this.props.id
     });
-    return this.navigator.push({
+    return this.props.navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
@@ -99,7 +91,6 @@ export default class Card extends Component<ComponentProps> {
         />
         <CTABlock
           {...contents.CTA}
-          story={this.props.story}
         />
 
       </TouchableOpacity>

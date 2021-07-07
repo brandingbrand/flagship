@@ -1,4 +1,3 @@
-/* tslint:disable */
 import React, { Component } from 'react';
 import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
@@ -43,12 +42,12 @@ export default class RenderItem extends Component<RenderItemProps> {
   onPress = () => {
     return false;
   }
-  render() {
+  render(): JSX.Element {
     const {
       data: {
         ratio,
-      title,
-      subtitle
+        title,
+        subtitle
       },
       even,
       itemWidth,
@@ -65,7 +64,7 @@ export default class RenderItem extends Component<RenderItemProps> {
     } else {
       itemStyle = {
         width: itemWidth,
-        height: viewportHeight * .36,
+        height: viewportHeight * 0.36,
         paddingHorizontal: horizPadding
       };
     }
@@ -87,15 +86,17 @@ export default class RenderItem extends Component<RenderItemProps> {
         <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
           {this.image}
         </View>
-        {title && <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-          {uppercaseTitle}
-          <Text
-            style={styles.subtitle}
-            numberOfLines={2}
-          >
-            {subtitle}
-          </Text>
-        </View>}
+        {title && (
+          <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
+            {uppercaseTitle}
+            <Text
+              style={styles.subtitle}
+              numberOfLines={2}
+            >
+              {subtitle}
+            </Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   }

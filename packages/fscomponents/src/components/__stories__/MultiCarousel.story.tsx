@@ -1,13 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
 import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-import { MultiCarousel } from '../MultiCarousel/MultiCarousel';
+import { MultiCarousel } from '../MultiCarousel';
 import { ProductItem } from '../ProductItem';
 import Decimal from 'decimal.js';
 import {
-  boolean
+  boolean, number, object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
+import { ListRenderItem, StyleSheet } from 'react-native';
 
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,
@@ -15,15 +16,26 @@ const productItems = [...Array(10)].map((a, i) => ({
   image: 'https://placehold.it/100x100'
 }));
 
-const renderItem = (item: any) => {
+const style = StyleSheet.create({
+  imageStyle: {
+    width: 100,
+    height: 100
+  },
+  contentStyle: {
+    alignItems: 'center'
+  }
+});
+
+
+const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
   return (
     <ProductItem
-      id={item.id}
+      id={`${item.id}`}
       handle={item.title}
       title={item.title}
-      image={item.image}
-      imageStyle={{ width: 100, height: 100 }}
-      contentStyle={{ alignItems: 'center' }}
+      image={{ uri: item.image }}
+      imageStyle={object('imageStyle', style.imageStyle)}
+      contentStyle={object('contentStyle', style.contentStyle)}
       price={{
         value: new Decimal('5.95'),
         currencyCode: 'USD'
@@ -37,9 +49,9 @@ const renderItem = (item: any) => {
 storiesOf('MultiCarousel', module)
   .add('basic usage', () => (
     <MultiCarousel
-      items={productItems}
+      data={productItems}
       renderItem={renderItem}
-      itemsPerPage={3}
+      itemsPerPage={number('itemsPerPage', 3)}
       showArrow={boolean('arrow?', true)}
     />
   ));

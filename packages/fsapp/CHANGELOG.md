@@ -3,6 +3,804 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.61...v11.0.1-alpha.0) (2021-07-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.61](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.60...v11.0.0-alpha.61) (2021-07-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.60](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.59...v11.0.0-alpha.60) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.59](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.58...v11.0.0-alpha.59) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.58](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.57...v11.0.0-alpha.58) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.57](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.56...v11.0.0-alpha.57) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.56](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.55...v11.0.0-alpha.56) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.55](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.54...v11.0.0-alpha.55) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.54](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.53...v11.0.0-alpha.54) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.53](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.52...v11.0.0-alpha.53) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.52](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.51...v11.0.0-alpha.52) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.51](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.50...v11.0.0-alpha.51) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.50](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.49...v11.0.0-alpha.50) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.49](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.48...v11.0.0-alpha.49) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.48](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.47...v11.0.0-alpha.48) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.47](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.46...v11.0.0-alpha.47) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.46](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.45...v11.0.0-alpha.46) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.45](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.44...v11.0.0-alpha.45) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.44](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.43...v11.0.0-alpha.44) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.43](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.42...v11.0.0-alpha.43) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.42](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.41...v11.0.0-alpha.42) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.41](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.40...v11.0.0-alpha.41) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.40](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.39...v11.0.0-alpha.40) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.39](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.38...v11.0.0-alpha.39) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.38](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.37...v11.0.0-alpha.38) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.37](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.36...v11.0.0-alpha.37) (2021-06-28)
+
+
+### Bug Fixes
+
+* **fsapp:** touch inputs on android ([3c54840](https://github.com/brandingbrand/flagship/commit/3c5484088e78992a81f944c670cbcd03f9e15c8a))
+
+
+
+
+
+# [11.0.0-alpha.36](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.35...v11.0.0-alpha.36) (2021-06-25)
+
+
+### Bug Fixes
+
+* **fsapp:** asynchronous initialization ([01b7166](https://github.com/brandingbrand/flagship/commit/01b71664c9abef56ff499bb1448176fa8722ecca))
+
+
+
+
+
+# [11.0.0-alpha.35](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.34...v11.0.0-alpha.35) (2021-06-24)
+
+
+### Bug Fixes
+
+* **fsapp:** modal context web props ([957b6af](https://github.com/brandingbrand/flagship/commit/957b6afd134dc7a306dd709167a03b94a82d48e7))
+
+
+### Features
+
+* **fsapp:** redux in modals ([09afcab](https://github.com/brandingbrand/flagship/commit/09afcab95630066d973f10d0284487c5270d1dc6))
+
+
+
+
+
+# [11.0.0-alpha.34](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.33...v11.0.0-alpha.34) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** syncronous initialization ([8debecb](https://github.com/brandingbrand/flagship/commit/8debecb407a9690785fb32c555800905149d5eab))
+
+
+### Features
+
+* **fsapp:** expose history type ([9273e72](https://github.com/brandingbrand/flagship/commit/9273e7284c3b1d1fba78e0d80ae547677b58ea40))
+
+
+
+
+
+# [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
+
+
+### Bug Fixes
+
+* **fsapp:** broken links ([96aa986](https://github.com/brandingbrand/flagship/commit/96aa9860a465e9859c098b07cab646797c55b8b5))
+
+
+### Features
+
+* **fsapp:** FS-2511 expose hydrate config option for beta app ([3974a07](https://github.com/brandingbrand/flagship/commit/3974a0735f40f033446968c1e986c8e203f2dc13))
+* **fsapp:** FS-2511 expose hydrate RNW config option ([0ded47f](https://github.com/brandingbrand/flagship/commit/0ded47fe5ff2d596ad5797a3eb6ae1c4a8272c8e))
+
+
+
+
+
+# [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
+
+
+### Features
+
+* Enable redux middleware in FSApp config ([9e2e7b8](https://github.com/brandingbrand/flagship/commit/9e2e7b8b346363f154a6abcfea10641198455572))
+* useButtonEffect ([8fd9ff7](https://github.com/brandingbrand/flagship/commit/8fd9ff7dc229f05162b9181b623040728754cc46))
+
+
+
+
+
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.26](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.25...v11.0.0-alpha.26) (2021-05-13)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.25](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.24...v11.0.0-alpha.25) (2021-05-12)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.24](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.23...v11.0.0-alpha.24) (2021-05-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.23](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.22...v11.0.0-alpha.23) (2021-05-05)
+
+
+### Bug Fixes
+
+* **fsapp:** adjust findRoute to handle RouteCollection types ([dca5702](https://github.com/brandingbrand/flagship/commit/dca5702476e58922659646d8d04260cb1c9a3a34))
+* **fsapp:** rename functions ([739c39a](https://github.com/brandingbrand/flagship/commit/739c39a85662a78a6a5c53dd1523fec2c0177b3a))
+
+
+
+
+
+# [11.0.0-alpha.22](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.21...v11.0.0-alpha.22) (2021-04-29)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.21](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.20...v11.0.0-alpha.21) (2021-04-27)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.20](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.19...v11.0.0-alpha.20) (2021-04-22)
+
+
+### Bug Fixes
+
+* allow native to have multiple tabs with same screen ([b9e45d3](https://github.com/brandingbrand/flagship/commit/b9e45d3bfd2b87e8c6fac4978b487b354eba1ffe))
+* apply status bar styles to Route Collection ([8e942db](https://github.com/brandingbrand/flagship/commit/8e942db136b8d4716f7ffe909c244eba0ca1899b))
+* correctly apply nav/status styles ([f53e3e9](https://github.com/brandingbrand/flagship/commit/f53e3e9142b26c599526a32d321cf89aed648cd3))
+
+
+
+
+
+# [11.0.0-alpha.19](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.18...v11.0.0-alpha.19) (2021-04-16)
+
+
+### Bug Fixes
+
+* apply navbar styles to RouteCollections ([0484bcf](https://github.com/brandingbrand/flagship/commit/0484bcfa7aae54ef210f5f98b4af696aab62453e))
+
+
+
+
+
+# [11.0.0-alpha.18](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.17...v11.0.0-alpha.18) (2021-04-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.0.0-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.16...v11.0.0-alpha.17) (2021-04-12)
+
+
+### Bug Fixes
+
+* refactor to support parent routes ([764087a](https://github.com/brandingbrand/flagship/commit/764087aa8ecccacf5e9547b30382237d043bc935))
+* update dev-menu component ([7d0deef](https://github.com/brandingbrand/flagship/commit/7d0deefb4f8a7c994f4d0b63515b64ff2bf1bd6b))
+* update printed dev routes ([6006436](https://github.com/brandingbrand/flagship/commit/60064363e76af50f012a96cd7abe7e89df07e746))
+* update printed dev routes ([666cf7b](https://github.com/brandingbrand/flagship/commit/666cf7bf76b9a3a62d6596a6cc528151067f3c1f))
+
+
+### Features
+
+* allow beta router to handle univeral links with need for prefix ([70afa5b](https://github.com/brandingbrand/flagship/commit/70afa5b08b563092ebf755d32fe2b71a54641c88))
+
+
+
+
+
+# [11.0.0-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.15...v11.0.0-alpha.16) (2021-04-05)
+
+
+### Bug Fixes
+
+* fix external route paths ([c9d6231](https://github.com/brandingbrand/flagship/commit/c9d62319b4ab02cb166b2126b7b531b01f797b96))
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.12...v10.11.1) (2021-03-16)
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.9...v10.10.0) (2021-03-02)
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.5...v10.9.0) (2021-02-04)
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.0...v10.8.0) (2021-01-22)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+
+
+
+
+
+## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.11.1](https://github.com/brandingbrand/flagship/compare/v10.11.0...v10.11.1) (2021-03-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.11.0](https://github.com/brandingbrand/flagship/compare/v10.10.0...v10.11.0) (2021-03-05)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.10.0](https://github.com/brandingbrand/flagship/compare/v10.9.0...v10.10.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix using loadInitialData to set state ([f55a7b1](https://github.com/brandingbrand/flagship/commit/f55a7b1ab341ee4374d7639accbf522e74f8319b))
+
+
+
+
+
+# [10.9.0](https://github.com/brandingbrand/flagship/compare/v10.8.0...v10.9.0) (2021-02-04)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.8.0](https://github.com/brandingbrand/flagship/compare/v10.7.1...v10.8.0) (2021-01-22)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.5.1](https://github.com/brandingbrand/flagship/compare/v10.5.0...v10.5.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ssr:** fix server side rendering of the $1 instances ([7d00a83](https://github.com/brandingbrand/flagship/commit/7d00a8371b4e74b13975420375b9802be46397ce))
+
+
+### BREAKING CHANGES
+
+* **ssr:** Fix the rendering on the server side when the body or variables contain $1 instances.
+
+
+
+
+
+# [10.5.0](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.1...v10.5.0) (2020-12-04)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.5.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.5.0-alpha.0...v10.5.0-alpha.1) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** Url handling for native ([e0c0f71](https://github.com/brandingbrand/flagship/commit/e0c0f71736e75fed04d1f3382854db017605e434))
+
+
+
+
+
+# [10.5.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.4.0...v10.5.0-alpha.0) (2020-11-30)
+
+
+### Features
+
+* **fsapp:** notFoundRedirect ([90005a0](https://github.com/brandingbrand/flagship/commit/90005a0d141a34cf9e227ef0b48eb4939bbd1bab))
+* **fsapp:** Screen option for notFoundRedirect ([042aa9b](https://github.com/brandingbrand/flagship/commit/042aa9b49601fac0c9bad2544923549ecc672a3a))
+
+
+
+
+
+# [10.4.0](https://github.com/brandingbrand/flagship/compare/v10.3.0...v10.4.0) (2020-11-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.3.0](https://github.com/brandingbrand/flagship/compare/v10.2.2...v10.3.0) (2020-11-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.2.2](https://github.com/brandingbrand/flagship/compare/v10.2.1...v10.2.2) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [10.2.1](https://github.com/brandingbrand/flagship/compare/v10.2.0...v10.2.1) (2020-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.2.0](https://github.com/brandingbrand/flagship/compare/v10.2.0-alpha.0...v10.2.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.2.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.1.0...v10.2.0-alpha.0) (2020-10-28)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.1.0](https://github.com/brandingbrand/flagship/compare/v10.0.0...v10.1.0) (2020-10-21)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.9...v10.0.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* **fsapp:** Fix typing on loadInitialData ([032e992](https://github.com/brandingbrand/flagship/commit/032e9924459eaf658dfcb43e601ec476ac5e9456))
+
+
+
+
+
+# [10.0.0-alpha.9](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.8...v10.0.0-alpha.9) (2020-10-07)
+
+
+### Features
+
+* **fsapp:** Add additional options to SSR ([79eb03d](https://github.com/brandingbrand/flagship/commit/79eb03d027ca92e60aeda136bb74a420972439ff))
+
+
+
+
+
+# [10.0.0-alpha.8](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.7...v10.0.0-alpha.8) (2020-10-07)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.7](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.6...v10.0.0-alpha.7) (2020-10-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.6](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.5...v10.0.0-alpha.6) (2020-10-06)
+
+
+### Bug Fixes
+
+* **fsweb:** Update to newer version of async-storage ([b2bbad0](https://github.com/brandingbrand/flagship/commit/b2bbad0dd34337db7174319fc0d4b4aeff4e87fd))
+
+
+### Features
+
+* **fsapp:** Add SSR support ([aa2fd4c](https://github.com/brandingbrand/flagship/commit/aa2fd4c87149738755c3fcde46403d12e7a705cb))
+* replace react-native-restart with RN DevSettings ([7139061](https://github.com/brandingbrand/flagship/commit/71390610796967e32fbd21c32decfeda7b4c71d5))
+
+
+
+
+
+# [10.0.0-alpha.5](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.4...v10.0.0-alpha.5) (2020-09-25)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.4](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.3...v10.0.0-alpha.4) (2020-09-24)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.3](https://github.com/brandingbrand/flagship/compare/v9.6.4...v10.0.0-alpha.3) (2020-09-23)
+
+
+### Bug Fixes
+
+* remove unnecessary lodash omit from props ([273bae6](https://github.com/brandingbrand/flagship/commit/273bae61dce72e950deaaf452cdc84b02d342a7e))
+* **flagship:** Upgrade to react-native-navigation 6 ([1766342](https://github.com/brandingbrand/flagship/commit/1766342ee7eb8415f747b6aed787c1e1d1cf2f68))
+
+
+### Features
+
+* upgrade typescript to 4.0.2 ([b6e6bac](https://github.com/brandingbrand/flagship/commit/b6e6bac0a1c01a1ec6ba6fb0cba4e196a5c81bc2))
+* **flagship:** RNDiff updates for RN63 ([63b22b3](https://github.com/brandingbrand/flagship/commit/63b22b3c9b4de3fbdc7d60cea93160d0816ef562))
+* **fsapp:** webSlideContainer Drawer option ([c297635](https://github.com/brandingbrand/flagship/commit/c2976352bc8ce262213cecda30a3d5e6bfc712be))
+
+
+### BREAKING CHANGES
+
+* This upgrades Typescript from 3.x to 4.x which includes changes that are for edge cases but still breaking nonetheless. The full changelog can be found here: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#breaking-changes
+
+Fixed a couple instances where TypeScript recognized that we were always overriding variables by using the spread operator.
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+# [10.0.0-alpha.2](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.1...v10.0.0-alpha.2) (2020-09-03)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.1](https://github.com/brandingbrand/flagship/compare/v10.0.0-alpha.0...v10.0.0-alpha.1) (2020-08-13)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [10.0.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v9.6.2...v10.0.0-alpha.0) (2020-08-06)
+
+
+### Bug Fixes
+
+* **flagship:** Upgrade to react-native-navigation 6 ([dd35a9f](https://github.com/brandingbrand/flagship/commit/dd35a9fe4e4c2c79dfe52ca3e49b1ced2e54ab2f))
+
+
+### BREAKING CHANGES
+
+* **flagship:** upgrade to react-native-navigation 6
+Should not affect most cases.
+https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md#breaking-changes
+
+Fixes issues with tab bar icons not showing up in iOS 14.
+
+
+
+
+
+## [9.6.2](https://github.com/brandingbrand/flagship/compare/v9.6.1...v9.6.2) (2020-07-28)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 ## [9.6.1](https://github.com/brandingbrand/flagship/compare/v9.6.0...v9.6.1) (2020-07-16)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
