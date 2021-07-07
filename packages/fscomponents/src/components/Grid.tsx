@@ -56,8 +56,7 @@ const gridStyle = StyleSheet.create({
 
 export type GridScrollToTopFunc = () => void;
 
-export interface GridProps<ItemT>
-  extends Pick<FlatListProps<ItemT>, 'style' | 'data' | 'renderItem'> {
+export interface SerializableGridProps {
   /**
    * The number of columns to display in the grid. Defaults to 2.
    */
@@ -68,6 +67,67 @@ export interface GridProps<ItemT>
    * false.
    */
   showBackToTop?: boolean;
+
+  /**
+   * Styles to apply to the container around the back to top button
+   */
+  backToTopContainerStyle?: ViewStyle;
+
+  /**
+   * Styles to apply to the back to top button. Does not apply if a custom back to top render
+   * function is used.
+   */
+  backToTopButtonStyle?: ViewStyle;
+
+  /**
+   * Styles to apply to the default back to top text. Does not apply if a custom back to top render
+   * function is used.
+   */
+  backToTopTextStyle?: TextStyle;
+
+  /**
+   * Copy to show inside the back to top button. Defaults to "Top". Does not apply if a custom back
+   * to top render function is used.
+   */
+  backToTopText?: string;
+
+  /**
+   * The distance the user needs to scroll down before the back to top button appears. Defaults to
+   * 100.
+   */
+  backToTopShowAtHeight?: number;
+
+  /**
+   * Whether or not to show a separator between columns in the grid.
+   */
+  showColumnSeparators?: boolean;
+
+  /**
+   * Style to apply to the separator between columns in the grid.
+   */
+  columnSeparatorStyle?: ViewStyle;
+
+  /**
+   * Whether or not to show a separator between rows in the grid.
+   */
+  showRowSeparators?: boolean;
+
+  /**
+   * Style to apply to the separator between rows in the grid.
+   */
+  rowSeparatorStyle?: ViewStyle;
+}
+
+export interface GridProps<ItemT>
+  extends Pick<FlatListProps<ItemT>, 'style' | 'data' | 'renderItem'>,
+  Omit<
+    SerializableGridProps,
+    'backToTopContainerStyle' |
+    'backToTopButtonStyle' |
+    'backToTopTextStyle' |
+    'columnSeparatorStyle' |
+    'rowSeparatorStyle'
+  > {
 
   /**
    * An optional function to render a header component displayed at the top of the grid.
@@ -97,18 +157,6 @@ export interface GridProps<ItemT>
   backToTopTextStyle?: StyleProp<TextStyle>;
 
   /**
-   * Copy to show inside the back to top button. Defaults to "Top". Does not apply if a custom back
-   * to top render function is used.
-   */
-  backToTopText?: string;
-
-  /**
-   * The distance the user needs to scroll down before the back to top button appears. Defaults to
-   * 100.
-   */
-  backToTopShowAtHeight?: number;
-
-  /**
    * An optional custom render function to render a back to top button.
    */
   renderBackToTopButton?: (scrollToTop: GridScrollToTopFunc) => JSX.Element;
@@ -119,19 +167,9 @@ export interface GridProps<ItemT>
   listViewProps?: Partial<FlatListProps<ItemT[]>>;
 
   /**
-   * Whether or not to show a separator between columns in the grid.
-   */
-  showColumnSeparators?: boolean;
-
-  /**
    * Style to apply to the separator between columns in the grid.
    */
   columnSeparatorStyle?: StyleProp<ViewStyle>;
-
-  /**
-   * Whether or not to show a separator between rows in the grid.
-   */
-  showRowSeparators?: boolean;
 
   /**
    * Style to apply to the separator between rows in the grid.
