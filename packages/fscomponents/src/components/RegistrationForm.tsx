@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
@@ -13,16 +13,29 @@ export interface RegistrationFormState {
   value: any;
 }
 
-export interface RegistrationFormProps {
-  fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any; // Text to override the submit button
-  style?: any;
-  fieldsOptions?: any; // any extra desired behaviour, like placeholders
-  value?: any;
+export interface SerializableRegistrationFormProps {
+  submitButtonStyle?: ViewStyle;
+  submitTextStyle?: TextStyle;
+  submitText?: string | JSX.Element; // Text to override the submit button
+  style?: ViewStyle;
+  value?: string;
 }
+
+export interface RegistrationFormProps extends Omit<
+  SerializableRegistrationFormProps,
+  'fieldsStyleConfig' |
+  'submitButtonStyle' |
+  'submitTextStyle' |
+  'style'
+  > {
+  fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
+  fieldsOptions?: any; // any extra desired behaviour, like placeholders
+  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  style?: StyleProp<ViewStyle>;
+}
+
 
 // check for validity as part of the type
 const EmailType = t.refinement(t.String, (str: string) => {
