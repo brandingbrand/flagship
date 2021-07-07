@@ -48,15 +48,21 @@ const styles = StyleSheet.create({
   }
 });
 
-export interface CreditCardNumberProps extends Omit<TextInputMaskProps, 'type'> {
-  cardImageStyle?: StyleProp<ImageStyle>;
+export interface SerializableCreditCardNumberProps {
+  cardImageStyle?: ImageStyle;
   cardImageWidth: number;
+  value?: string;
+}
+
+export interface CreditCardNumberProps extends
+  Omit<TextInputMaskProps, 'type'>,
+  Omit<SerializableCreditCardNumberProps, 'cardImageStyle'> {
+  cardImageStyle?: StyleProp<ImageStyle>;
   creditCardTypeImages: {
     type: CreditCardType;
     image: ImageURISource;
   }[];
   defaultCardImage: ImageURISource;
-  value?: string;
 }
 
 export interface CreditCardNumberState {
