@@ -1,24 +1,18 @@
 import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
-export interface SerializableReviewIndicatorProps {
+export interface ReviewIndicatorProps {
   value: number;
   base?: number;
-  style?: ViewStyle;
   itemSize?: number;
   itemColor?: string;
   emptyColor?: string;
   accessibilityLabel?: string;
   emptyStar?: boolean;
-}
-
-export interface ReviewIndicatorProps extends Omit<SerializableReviewIndicatorProps,
-  'style'
-  > {
   style?: StyleProp<ViewStyle>;
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
@@ -31,9 +25,15 @@ export interface NormalizedValue {
   hasHalf: boolean;
 }
 
-const Star = ({ renderStar, style, text }: any) => {
+interface StarProps {
+  style: StyleProp<TextStyle>;
+  text: string;
+  renderStar?: () => React.ReactNode;
+}
+
+const Star = ({ renderStar, style, text }: StarProps): JSX.Element => {
   if (renderStar) {
-    return renderStar();
+    return renderStar() as JSX.Element;
   }
 
   return <Text style={[S.star, style]}>{text}</Text>;
@@ -74,10 +74,10 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
   };
 
   const renderHalf = (): JSX.Element => {
+    const customStarStyle: StyleProp<TextStyle> = {};
+    const containerStarStyle: StyleProp<ViewStyle> = {};
+    const starHalfRightStyle: StyleProp<TextStyle> = {};
     const { emptyStar, itemSize, itemColor } = props;
-    const customStarStyle: any = {};
-    const containerStarStyle: any = {};
-    const starHalfRightStyle: any = {};
 
     if (itemSize) {
       customStarStyle.fontSize = itemSize;
@@ -122,7 +122,7 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
   } = props;
 
   const itemData = getItemData(value, base);
-  const customStarStyle: any = {};
+  const customStarStyle: StyleProp<TextStyle> = {};
 
   if (itemSize) {
     customStarStyle.fontSize = itemSize;

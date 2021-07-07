@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   LOAD_RECENTLY_VIEWED,
   UPDATE_RECENTLY_VIEWED
@@ -27,8 +28,7 @@ export interface RecentlyViewedProps
 
 // provide data (from redux store) to wrapped component as props
 function mapStateToProps(
-  combinedStore: CombinedStore,
-  ownProps: any
+  combinedStore: CombinedStore
 ): RecentlyViewedStateProps {
   return {
     recentlyViewed: combinedStore.recentlyViewed
@@ -36,7 +36,7 @@ function mapStateToProps(
 }
 
 // provide actions (that can change redux store) to wrapped component as props
-function mapDispatchToProps(dispatch: any, ownProps: any): RecentlyViewedActionProps {
+function mapDispatchToProps(dispatch: React.Dispatch<any>): RecentlyViewedActionProps {
   return {
     loadRecentlyViewed: async () => {
       try {

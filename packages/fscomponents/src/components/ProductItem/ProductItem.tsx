@@ -45,7 +45,7 @@ export interface ProductItemProps extends CommerceTypes.Product {
   variantTextStyle?: StyleProp<TextStyle>;
   reviewStyle?: StyleProp<ViewStyle>;
   reviewCountStyle?: StyleProp<TextStyle>;
-  reviewIndicatorProps?: ReviewIndicatorProps;
+  reviewIndicatorProps?: Partial<ReviewIndicatorProps>;
   extraElement?: JSX.Element;
   swatchItems?: SwatchItemType[];
   swatchStyle?: StyleProp<ViewStyle>;

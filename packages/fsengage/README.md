@@ -17,6 +17,7 @@ Analytics, Leanplum, and Adobe Cloud Marketing. Its CMS library supports our pro
     * [Enhanced Ecommerce Function Signatures](#enhanced-ecommerce)
     * [App Lifecycle Function Signatures](#app-lifecycle)
     * [Full List of Property Parameters for Tracking](#parameters)
+    * [Sending Custom Fields to Google Analytics](#sending-custom-fields-to-google-analytics)
 * [CMS](#cms)
   * [CMS Providers](#cms-providers)
     * [Core](#core)
@@ -345,6 +346,7 @@ analytics.lifecycle.suspend(): void;
   | identifier | string | **yes*** |
   | name | string | **yes*** |
   | index | number | no |
+  | gaQueryParams | object | no |
 
   \* Either **identifier** or **name** must be set.
 
@@ -353,12 +355,14 @@ analytics.lifecycle.suspend(): void;
   | Property | Type | Required |
   | - |:-:| :-:|
   | number | string | **yes** |
+  | gaQueryParams | object | no |
 
 #### # ContactEmail
 
   | Property | Type | Required |
   | - |:-:| :-:|
   | to | string | **yes** |
+  | gaQueryParams | object | no |
 
 #### # ImpressionGeneric
 
@@ -367,6 +371,7 @@ analytics.lifecycle.suspend(): void;
   | identifier | string | **yes*** |
   | name | string | **yes*** |
   | index | number | no |
+  | gaQueryParams | object | no |
 
   \* Either **identifier** or **name** must be set.
 
@@ -382,6 +387,7 @@ analytics.lifecycle.suspend(): void;
   | variant | string | no |
   | price | number | no |
   | index | number | no |
+  | gaQueryParams | object | no |
 
 #### # LocationDirections
 
@@ -389,6 +395,7 @@ analytics.lifecycle.suspend(): void;
   | - |:-:| :-:|
   | identifier | string | **yes*** |
   | address | string | **yes*** |
+  | gaQueryParams | object | no |
 
   \* Either **identifier** or **address** must be set.
 
@@ -405,6 +412,7 @@ analytics.lifecycle.suspend(): void;
   | price | string | no |
   | quantity | number | no |
   | index | number | no |
+  | gaQueryParams | object | no |
 
 #### # Promotion
 
@@ -414,6 +422,7 @@ analytics.lifecycle.suspend(): void;
   | name | string | **yes** |
   | creative | string | no |
   | slot | string | no |
+  | gaQueryParams | object | no |
 
 #### # RefundProduct
 
@@ -423,6 +432,7 @@ analytics.lifecycle.suspend(): void;
   | quantity | number | **yes** |
   | price | string | no |
   | coupons | string[] | no |
+  | gaQueryParams | object | no |
 
 #### # SearchGeneric
 
@@ -430,12 +440,14 @@ analytics.lifecycle.suspend(): void;
   | - |:-:| :-:|
   | term | string | **yes** |
   | count | number | no |
+  | gaQueryParams | object | no |
 
 #### # Screenview
 
   | Property | Type | Required |
   | - |:-:| :-:|
   | url | string | **yes** |
+  | gaQueryParams | object | no |
 
 ### Actions
 
@@ -444,6 +456,7 @@ analytics.lifecycle.suspend(): void;
   | Property | Type | Required |
   | - |:-:| :-:|
   | list | string | no |
+  | gaQueryParams | object | no |
 
 #### # CheckoutAction
 
@@ -451,6 +464,7 @@ analytics.lifecycle.suspend(): void;
   | - |:-:| :-:|
   | step | number | no |
   | option | string | no |
+  | gaQueryParams | object | no |
 
 #### # TransactionAction
 
@@ -462,6 +476,28 @@ analytics.lifecycle.suspend(): void;
   | tax | string | no |
   | shippingCost | string | no |
   | coupons | string[] | no |
+  | gaQueryParams | object | no |
+
+### Sending Custom Fields to Google Analytics
+
+The Google Analytics provider has support for specifying custom fields by way of setting
+`gaQueryParams` in the payload. A full list of officially supported GA fields can be found
+[here](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference).
+
+Example usage:
+
+```javascript
+analytics.impression.product({
+  component: 'ProductComponent',
+  properties: {
+    identifier: 'abc123',
+    name: 'Large Blue Pants',
+    gaQueryParams: {
+      tcc: 'SALE45'
+    }
+  }
+});
+```
 
 ## CMS
 

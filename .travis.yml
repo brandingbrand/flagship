@@ -2,6 +2,8 @@ cache: yarn
 stages:
   - name: test
     if: type = pull_request AND tag IS blank
+  - name: canary
+    if: type = push AND branch = develop AND tag IS blank
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
@@ -78,12 +80,23 @@ jobs:
   - stage: test
     language: objective-c
     os: osx
-    osx_image: xcode11.6
+    osx_image: xcode12
     script:
     - yarn prepare
     - pod repo update
     - yarn ship:init
     - yarn ship:compile-ios
+  - stage: canary
+    git:
+      depth: false
+    before_install:
+      - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+      - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
+      - git checkout develop
+    before_script:
+      - yarn global add typescript@4.0.3
+    script:
+      - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
     git:
       depth: false

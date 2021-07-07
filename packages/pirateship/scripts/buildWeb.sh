@@ -6,4 +6,4 @@ if [ -d "./web-compiled" ]; then
 fi
 
 cd web
-yarn run build --output-public-path './' --output-path '../web-compiled' --env.enableDev=false --env.defaultEnvName=prod
+yarn run build --output-public-path '/' --output-path '../web-compiled' --env.enableDev=false --env.defaultEnvName=prod

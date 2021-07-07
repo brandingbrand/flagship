@@ -259,6 +259,8 @@ export default function(
     scrollPosition: number = 0;
     AnimatedAppleClose: any;
     AnimatedWelcome: any;
+    componentIsMounted: boolean = false;
+
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
@@ -288,8 +290,12 @@ export default function(
           this.props.onBack();
         }
       }
+
+      this.componentIsMounted = false;
     }
     componentDidMount(): void {
+      this.componentIsMounted = true;
+
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
           this.setState({ showDarkX: true });
@@ -321,7 +327,9 @@ export default function(
       }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
-          this.setState({ showCarousel: true });
+          if (this.componentIsMounted) {
+            this.setState({ showCarousel: true });
+          }
         }, 500);
       }
     }
@@ -521,7 +529,7 @@ export default function(
         return (
           <Animatable.View
             ref={this.handleWelcomeRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={{
               transform: [
                 { translateY: -100 }
@@ -771,7 +779,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -779,7 +787,7 @@ export default function(
             {backButton && (
               <Animatable.View
                 ref={this.handleAppleCloseRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={styles.closeModalButton}
               >
                 <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
@@ -799,7 +807,7 @@ export default function(
           <Fragment>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -976,7 +984,7 @@ export default function(
               scrollEventThrottle={16}
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-                { useNativeDriver: true }
+                { useNativeDriver: false }
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
@@ -1044,7 +1052,7 @@ export default function(
             (
               <Animatable.View
                 ref={this.handlePageCounterRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={[styles.pageCounter, this.pageCounterStyle]}
               >
                 <Text
@@ -1059,7 +1067,7 @@ export default function(
             <Animatable.Text
               style={[styles.navBarTitle, navBarTitleStyle]}
               ref={this.handleNavTitleRef}
-              useNativeDriver
+              useNativeDriver={false}
             >
               {navBarTitle}
             </Animatable.Text>

@@ -13,7 +13,10 @@ import {
 } from 'react-native';
 
 import { ReviewTypes } from '@brandingbrand/fscommerce';
-import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
+import {
+  ReviewIndicator,
+  ReviewIndicatorProps
+} from './ReviewIndicator';
 import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';

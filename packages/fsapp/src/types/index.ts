@@ -10,8 +10,11 @@ import {
   Options,
   OptionsTopBarButton
 } from 'react-native-navigation';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
+import type { Request } from 'express';
+import { Middleware } from 'redux';
 
 export interface DrawerType {
   screen: string;
@@ -46,6 +49,13 @@ export interface Drawer {
   type?: string;
   animationType?: string;
   disableOpenGesture?: boolean;
+  webSlideContainer?: boolean;
+  webWidth?: number;
+  webDuration?: number;
+  webOpacity?: number;
+  webOverlayOpacity?: number;
+  webLeftBackgroundColor?: string;
+  webRightBackgroundColor?: string;
 }
 
 export interface Screen {
@@ -58,6 +68,18 @@ export interface RoutableComponentClass extends React.ComponentClass<any> {
   path?: string;
   toPath?: PathFunction;
   paramKeys?: any[];
+  cache?: number;
+  loadInitialData?: (data: SSRData, req: Request) => Promise<SSRData>;
+  // Set to true to call next immediately if this is matched
+  instantNext?: boolean;
+  // Function to call to determine programmatically whether to call next
+  // Includes data after running loadInitialState
+  shouldNext?: (data: SSRData, req: Request) => Promise<boolean>;
+}
+
+export interface SSRData {
+  initialState: any;
+  variables: any;
 }
 
 export interface AppConfigType {
@@ -88,6 +110,18 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+  routerConfig?: RouterConfig;
+  storeMiddleware?: Middleware[];
+  notFoundRedirect?: RoutableComponentClass | NavLayout | true;
+  uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+  cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+
+  /**
+   * Only affects Web.
+   *
+   * If the client should hydrate server-rendered HTML.
+   */
+  hydrate?: boolean;
 }
 
 export interface Tab extends LayoutComponent {
@@ -150,3 +184,50 @@ export interface NavLayout extends Layout {
 export interface NavModal {
   layout: NavLayout;
 }
+
+export interface PublishedPage {
+  id: string;
+  path: string | null;
+  content: string;
+  pageId: string;
+  title: string;
+  dataInputs: string[];
+  defaultInputs: string[];
+}
+
+export interface PropValue {
+  [key: string]: PropValue | boolean | string | number | string[];
+}
+
+export interface LayoutBuilderObject {
+  type: string;
+  childObjects?: LayoutBuilderObject[];
+  props?: PropValue;
+  publishedPages?: PublishedPage[];
+}
+
+export interface RouteProps {
+  id?: string;
+  query?: CommerceTypes.ProductQuery;
+  // I don't exactly know how this will work yet, we will probably end up changing the way
+  // we pass props anyway
+}
+
+export interface Route {
+  screen: string;
+  passProps?: RouteProps;
+  tabIndex?: number;
+}
+
+export interface RouterConfig {
+  [key: string]: Route;
+}
+
+export interface CMSRoutesConfig {
+  [key: string]: PublishedPage;
+}
+
+export interface CombinedRouter {
+  [key: string]: PublishedPage | Route;
+}
+

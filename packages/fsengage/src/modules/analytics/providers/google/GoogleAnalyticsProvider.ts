@@ -28,6 +28,7 @@ import AnalyticsProvider, {
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
+import { Campaign } from '../../Analytics';
 
 export interface GoogleAnalyticsProviderConfiguration {
   trackerId: string | Promise<string>;
@@ -101,28 +102,34 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.number
-    });
+    }, extraData);
   }
 
   contactEmail(properties: ContactEmail): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.to
-    });
+    }, extraData);
   }
 
   clickGeneric(properties: ClickGeneric): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.identifier || properties.name,
       value: properties.index
-    });
+    }, extraData);
   }
 
   impressionGeneric(properties: ImpressionGeneric): void {
@@ -131,40 +138,47 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   }
 
   locationDirections(properties: LocationDirections): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.identifier || properties.address
-    });
+    }, extraData);
   }
 
   pageview(properties: Screenview): void {
     const parser = properties.url && parseURL(properties.url);
+    const extraData = this.extractExtraData(properties);
 
     this._sendPageView({
       hostname: parser && parser.host,
       page: parser && parser.pathname,
       title: properties.eventCategory
-    });
+    }, extraData);
   }
 
   screenview(properties: Screenview): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendScreenView({
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
       appVersion: this.appVersion,
       screenName: properties.eventCategory
-    });
+    }, extraData);
   }
 
   searchGeneric(properties: SearchGeneric): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: properties.eventAction,
       category: properties.eventCategory,
       label: properties.term,
       value: properties.count
-    });
+    }, extraData);
   }
 
   // Enhanced Commerce Functions
@@ -369,11 +383,32 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   // App Lifecycle Functions
 
   lifecycle(properties: App): void {
+    const extraData = this.extractExtraData(properties);
+
     this._sendEvent({
       action: this.appId,
       category: properties.eventAction,
       label: properties.lifecycle
-    });
+    }, extraData);
+  }
+
+  setTrafficSource(properties: Campaign): void {
+    if (this.client) {
+      this.client.set(new GAHits.TrafficSource({
+        utm_id: properties.id,
+        utm_source: properties.source,
+        utm_medium: properties.medium,
+        utm_campaign: properties.campaign,
+        utm_term: properties.term,
+        utm_content: properties.content
+      }));
+    } else {
+      this.queue.unshift({
+        // tslint:disable-next-line: no-unbound-method
+        func: this.setTrafficSource,
+        params: arguments
+      });
+    }
   }
 
   // Trigger Functions
@@ -400,14 +435,20 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendEvent(properties: GoogleAnalyticsEventProperties): void {
+  private _sendEvent(properties: GoogleAnalyticsEventProperties, extraProps?: object): void {
     if (this.client) {
-      this.client.send(new GAHits.Event(
+      const hit = new GAHits.Event(
         properties.category,
         properties.action,
         properties.label,
         properties.value
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -417,13 +458,19 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendPageView(properties: GoogleAnalyticsPageViewProperties): void {
+  private _sendPageView(properties: GoogleAnalyticsPageViewProperties, extraProps?: object): void {
     if (this.client) {
-      this.client.send(new GAHits.PageView(
+      const hit = new GAHits.PageView(
         properties.hostname,
         properties.page,
         properties.title
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -433,15 +480,24 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     }
   }
 
-  private _sendScreenView(properties: GoogleAnalyticsScreenViewProperties): void {
+  private _sendScreenView(
+    properties: GoogleAnalyticsScreenViewProperties,
+    extraProps?: object
+  ): void {
     if (this.client) {
-      this.client.send(new GAHits.ScreenView(
+      const hit = new GAHits.ScreenView(
         properties.appName,
         properties.screenName,
         properties.appVersion,
         properties.appId,
         properties.appInstallerId
-      ));
+      );
+
+      if (extraProps) {
+        hit.set(extraProps);
+      }
+
+      this.client.send(hit);
     } else {
       this.queue.unshift({
         // tslint:disable-next-line: no-unbound-method
@@ -449,5 +505,13 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
         params: arguments
       });
     }
+  }
+
+  private extractExtraData(
+    properties: import ('../../Analytics').BaseEvent
+  ): object | undefined {
+    // TODO: Add warning/errors for invalid query string parameters
+
+    return properties.gaQueryParams;
   }
 }

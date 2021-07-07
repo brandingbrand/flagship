@@ -105,7 +105,7 @@ export interface ItemDetails {
 }
 
 export interface PSCartItemProps {
-  navigateToProduct?: (item: any) => void;
+  navigateToProduct?: (item: CommerceTypes.CartItem) => void;
   containerStyle?: StyleProp<ViewStyle>;
   itemHeaderStyle?: StyleProp<ViewStyle>;
   itemTextHeaderStyle?: StyleProp<TextStyle>;
