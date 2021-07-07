@@ -30,12 +30,13 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { Distance } from '@brandingbrand/fsfoundation';
+import { Distance, Omit } from '@brandingbrand/fsfoundation';
 import { style as S } from '../styles/LocationItem';
 
 import { formatAddress, formatDistance, formatHours } from '../lib/helpers';
 import { Address, Hour } from '../types/Store';
 import { Button } from './Button';
+import { StoreHours, StoreScheduleProps } from './StoreHours';
 
 export interface SerializableLocationItemProps {
   format: string;
@@ -45,6 +46,8 @@ export interface SerializableLocationItemProps {
 
   // hour
   hourFormat?: string;
+  hourExpandableLayout?: boolean;
+  hourExpandableLayoutProps?: Omit<StoreScheduleProps, 'hours'>;
 
   // bottom button
   buttonTitle?: string;
@@ -157,6 +160,8 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
       locationName,
       address,
       hours,
+      hourExpandableLayout,
+      hourExpandableLayoutProps,
       hourFormat,
       titleStyle,
       textStyle,
@@ -173,9 +178,14 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = props =>
             {formatDistance(distance, distanceFormat)} | {address.city}
           </Text>
         )}
-        <Text style={textStyle}>
-          {formatHours(hours, new Date(), hourFormat)}
-        </Text>
+        {!!hourExpandableLayout ? (
+          <StoreHours hours={hours} {...hourExpandableLayoutProps} />
+          ) : (
+            <Text style={textStyle}>
+              {formatHours(hours, new Date(), hourFormat)}
+            </Text>
+          )
+        }
       </View>
     );
   };
