@@ -3,12 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [10.6.0-alpha.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0-alpha.0) (2020-12-08)
+## [10.7.1](https://github.com/brandingbrand/flagship/compare/v10.7.0...v10.7.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **flagship:** Remove animated image patch ([03acfbe](https://github.com/brandingbrand/flagship/commit/03acfbeae5ec5537bb01fb995791f80def8bd2f0))
+
+
+
+
+
+# [10.7.0](https://github.com/brandingbrand/flagship/compare/v10.6.1...v10.7.0) (2020-12-16)
+
+
+### Bug Fixes
+
+* **fscommerce:** Make new functions optional ([18c19d7](https://github.com/brandingbrand/flagship/commit/18c19d75fb0b450d5ed321625e6dd264afca5722))
 
 
 ### Features
 
-* register custom routes when using routerConfig ([d43370a](https://github.com/brandingbrand/flagship/commit/d43370a6b7e231524b819e92a46ddd24ab1c122a))
+* **fscommerce:** customer's product lists in fssalesforce package ([deb7ed6](https://github.com/brandingbrand/flagship/commit/deb7ed6eec9e91f9fb0e38f332bab48a30628c58))
+
+
+
+
+
+## [10.6.1](https://github.com/brandingbrand/flagship/compare/v10.6.0...v10.6.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* fs-1893 update targeted devices wrong regex ([daded6f](https://github.com/brandingbrand/flagship/commit/daded6fb1eb722257e9a98153de28401244a76f8))
+* **flagship:** set proper device targets in ios template ([908ed4b](https://github.com/brandingbrand/flagship/commit/908ed4be67682a93e5dac391a5f5b0b30e3dfb55))
+
+
+
+
+
+# [10.6.0](https://github.com/brandingbrand/flagship/compare/v10.5.1...v10.6.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **fsproductindex:** Fix typing and add check ([9de9847](https://github.com/brandingbrand/flagship/commit/9de9847b7f8b1ad40f73a9a6e52f6b249c7c964f))
+* **fsweb:** lock @types/cors ([fae557f](https://github.com/brandingbrand/flagship/commit/fae557fe2249fdb6f7223d32a4cf82c3a30b470d))
+
+
+### Features
+
+* **category:** allow fetchCategory query to have levels parameter ([773a1ae](https://github.com/brandingbrand/flagship/commit/773a1ae716f30cb835ddf5394e4f49d93e408b68))
 
 
 

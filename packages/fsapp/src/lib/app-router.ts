@@ -4,24 +4,25 @@ import { LayoutComponent } from 'react-native-navigation';
 import Navigator from './nav-wrapper';
 import pathToRegexp, { Key } from 'path-to-regexp';
 import { Platform } from 'react-native';
-
-export interface PublishedPage {
-  id: string;
-  path: string | null;
-  dataInputs?: any[];
-  defaultInputs?: any[];
-}
+import {
+  AppConfigType,
+  CMSRoutesConfig,
+  CombinedRouter,
+  LayoutBuilderObject,
+  PublishedPage,
+  RouterConfig
+} from '../types';
 
 export default class AppRouter {
   cmsToken: string = '';
   appId: string;
   networkClient: FSNetwork;
-  pageRoutes: any = {};
-  routerConfig: any = {};
-  appRoutes: any = {};
+  pageRoutes: CMSRoutesConfig = {};
+  routerConfig: CombinedRouter = {};
+  appRoutes: RouterConfig = {};
 
-  constructor(appConfig: any) {
-    const { env, routerConfig } = appConfig;
+  constructor(appConfig: AppConfigType) {
+    const { env = {}, routerConfig = {} } = appConfig;
     const { cmsToken, engagement: { appId, baseURL } } = env;
     this.appRoutes = routerConfig;
     this.cmsToken = cmsToken;
@@ -89,13 +90,13 @@ export default class AppRouter {
             break;
           }
           const [, ...values] = match;
-          const passProps = keys.reduce((memo, key, index) => {
+          const passProps = keys.reduce<Record<string, string>>((memo, key, index) => {
             memo[key.name] = values[index];
             return memo;
-          }, {} as any);
-          if (this.pageRoutes[path]?.defaultInputs?.length &&
-              this.pageRoutes[path].dataInputs.length ===
-              this.pageRoutes[path].defaultInputs.length) {
+          }, {});
+          if (this.pageRoutes[path].defaultInputs.length &&
+            this.pageRoutes[path].dataInputs.length ===
+            this.pageRoutes[path].defaultInputs.length) {
             let valid = true;
             this.pageRoutes[path].dataInputs.forEach((inp: string, index: number) => {
               if (passProps[inp] !== this.pageRoutes[path].defaultInputs[index]) {
@@ -273,12 +274,12 @@ export default class AppRouter {
           Authorization: `Bearer ${this.cmsToken}`
         }
         // tslint:disable-next-line: cyclomatic-complexity
-      }).then(async (pageData: any) => {
+      }).then(async pageData => {
         let customRoutes;
-        let parsedContent: any | undefined;
+        let parsedContent: LayoutBuilderObject | undefined;
 
         if (pageData.data) {
-          customRoutes = pageData.data.map((data: any): any => {
+          customRoutes = pageData.data.map((data: PublishedPage) => {
             if (data.content) {
               try {
                 parsedContent = JSON.parse(data.content);
@@ -302,7 +303,13 @@ export default class AppRouter {
         }
 
         return customRoutes.filter((page: PublishedPage) => page.path !== null)
-          .reduce((ret: any, page: any) => {
+          .reduce((
+            ret: Record<string, Omit<PublishedPage, 'id' | 'path'>>,
+            page: PublishedPage
+          ) => {
+            if (!page.path) {
+              return ret;
+            }
             ret[page.path] = {
               pageId: page.id,
               title: page.title,
@@ -312,6 +319,7 @@ export default class AppRouter {
             };
             return ret;
           }, {});
+
       });
   }
 
