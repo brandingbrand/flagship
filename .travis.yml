@@ -3,7 +3,7 @@ stages:
   - name: test
     if: type = pull_request AND tag IS blank
   - name: canary
-    if: type = push AND branch = develop AND tag IS blank
+    if: type = push AND branch = DONOTRUN AND tag IS blank # disable auto-publish -BW
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
