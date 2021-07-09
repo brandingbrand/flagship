@@ -70,6 +70,7 @@ export default class CTABlock extends Component<CTABlockProps> {
     cardPosition: PropTypes.number
   };
 
+  // // tslint:disable-next-line:cyclomatic-complexity
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
     const { handleAction, handleStoryAction, cardPosition } = this.context;
     if (story.html) {
@@ -79,7 +80,8 @@ export default class CTABlock extends Component<CTABlockProps> {
         position: cardPosition
       });
     } else if (action === 'story' || (story && actions &&
-      (actions.type === null || actions.type === 'story'))) {
+      (actions.type === null || actions.type === 'story'))
+      && this.context?.handleStoryAction) {
       // go to story card
       return handleStoryAction(story);
     } else if (story && actions && actions.type !== 'story') {
