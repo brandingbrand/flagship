@@ -33,7 +33,7 @@ export interface FSRouterHistory extends History {
   observeLoading(listener: LoadingListener): UnregisterCallback;
   registerResolver(id: string, listener: ResolverListener): UnregisterCallback;
 
-  updateTitle(title: RequiredTitle): void;
+  updateTitle(title: RequiredTitle, componentId?: string): void;
 }
 
 export type Blocker = string | boolean | TransitionPromptHook;
