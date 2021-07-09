@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.3...v11.0.1-alpha.4) (2021-07-09)
+
+
+### Bug Fixes
+
+* **fscomponents:** Added V4 to exports ([793fc27](https://github.com/brandingbrand/flagship/commit/793fc27f9d4511e2cd8834cdb27a373cb0f3bb3e))
+
+
+
+
+
 ## [11.0.1-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.2...v11.0.1-alpha.3) (2021-07-09)
 
 
