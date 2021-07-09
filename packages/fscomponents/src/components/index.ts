@@ -80,4 +80,5 @@ export * as SerializableV0 from './serializable/v0';
 export * as SerializableV1 from './serializable/v1';
 export * as SerializableV2 from './serializable/v2';
 export * as SerializableV3 from './serializable/v3';
+export * as SerializableV4 from './serializable/v4';
 export * as SerializableVNext from './serializable/vNext';
