@@ -246,17 +246,20 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public updateTitle(title: RequiredTitle): void {
-    Navigation.mergeOptions(stringifyLocation(this.location), {
-      topBar: {
-        title:
-          typeof title === 'string'
-            ? {
-              text: title
-            }
-            : title
-      }
-    });
+  public updateTitle(title: RequiredTitle, componentId?: string): void {
+    const key = componentId ?? this.location.key;
+    if (key) {
+      Navigation.mergeOptions(key, {
+        topBar: {
+          title:
+            typeof title === 'string'
+              ? {
+                text: title
+              }
+              : title
+        }
+      });
+    }
   }
 
   private observeNavigation(): void {
