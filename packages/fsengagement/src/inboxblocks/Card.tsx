@@ -10,7 +10,7 @@ import {
   CardProps,
   JSON
 } from '../types';
-import { EngagementContext } from '../lib/contexts';
+import { CardContext, EngagementContext } from '../lib/contexts';
 import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
 export interface ActionsCard extends CardProps {
@@ -18,7 +18,6 @@ export interface ActionsCard extends CardProps {
 }
 
 export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
-  const CardContext = React.createContext<any>({});
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
 
