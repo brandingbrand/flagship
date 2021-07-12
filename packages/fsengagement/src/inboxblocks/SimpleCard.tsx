@@ -10,9 +10,9 @@ import {
   InboxBlock
 } from '../types';
 
-import TextBlock from './TextBlock';
-import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
+import { TextBlock } from './TextBlock';
+import { CTABlock } from './CTABlock';
+import { ImageBlock } from './ImageBlock';
 import ShareBlock from './ShareBlock';
 
 const styles = StyleSheet.create({

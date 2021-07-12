@@ -6,7 +6,7 @@ import {
   number
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import ToggleButton from '../ToggleButton';
+import { ToggleButton } from '../ToggleButton';
 
 storiesOf('ToggleButton', module)
   .add('basic usage', () => (

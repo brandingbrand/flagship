@@ -11,6 +11,7 @@ import {
   OptionsModalPresentationStyle
 // tslint:disable-next-line: no-submodule-imports
 } from 'react-native-navigation/lib/dist/interfaces/Options';
+// import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import * as Animatable from 'react-native-animatable';
 import GestureHandler from '../GestureHandler';
 
@@ -48,7 +49,7 @@ import {
   CardProps,
   JSON
 } from '../types';
-import TextBlock from './TextBlock';
+import { TextBlock } from './TextBlock';
 
 export interface ImageProp {
   uri: string;
@@ -64,8 +65,11 @@ export interface FullScreenCardProps extends CardProps {
   position?: number;
   setScrollEnabled: (enabled: boolean) => void;
 }
-
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
+// export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
+//   (props) => {
+//   const navigator = props.discoverPath ? useNavigator() : props.navigator;
+//   const { handleAction } = React.useContext(EngagementContext);
   static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func,
@@ -122,7 +126,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
       id: this.props.id,
       position: this.props.position
     });
-    return this.props.navigator.showModal({
+    return this.props.navigator?.showModal({
       stack: {
         children: [{
           component: {

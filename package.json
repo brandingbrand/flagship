@@ -9,7 +9,7 @@
     "lint:ts": "fscodestyle",
     "lint:md": "markdownlint --ignore \"{**/@(node_modules|Pods)/**/*.md,**/CHANGELOG.md}\" \"**/*.md\"",
     "lint": "run-p lint:ts lint:md",
-    "prepare": "lerna run prepare",
+    "prepare": "lerna run prepare && husky install",
     "prepare:fscodestyle": "lerna run --stream --scope @brandingbrand/fscodestyle prepare",
     "test": "jest --colors --config jest.json",
     "dev:storybook": "start-storybook -p 9001 -c .storybook",
@@ -58,7 +58,7 @@
     "@storybook/addon-actions": "^6.1.14",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/addon-viewport": "^6.1.14",
-    "@storybook/addons": "~6.1.14",
+    "@storybook/addons": "~6.3.0",
     "@storybook/react": "^6.1.14",
     "@strictsoftware/typedoc-plugin-monorepo": "^0.2.1",
     "@types/credit-card-type": "^7.0.0",
@@ -83,7 +83,7 @@
     "babel-loader": "~8.0.6",
     "core-js": "^3.0.0",
     "coveralls": "^3.0.2",
-    "husky": "^4.0.2",
+    "husky": "^7.0.1",
     "jest": "^25.1.0",
     "jetifier": "^1.6.4",
     "lerna": "^3.18.5",
@@ -123,11 +123,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "npm-run-all prepare -p lint test"
-    }
-  }
+  ]
 }

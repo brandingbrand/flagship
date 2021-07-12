@@ -1,13 +1,20 @@
 import { createContext, Fragment, useContext } from 'react';
 
-export interface ButtonContextOptions {
-  onPress(buttonID: string, callback: () => void): void;
-  onPress(buttonID: string, componentID: string, callback: () => void): void;
+export interface IButtonContext {
+  onPress(buttonId: string, callback: () => void): () => void;
+  onPress(buttonId: string, componentId: string, callback: () => void): () => void;
 }
 
-export const ButtonContext = createContext<ButtonContextOptions>({
-  onPress: () => undefined
+export const ButtonContext = createContext<IButtonContext>({
+  onPress: () => () => undefined
 });
 export const useButtons = () => useContext(ButtonContext);
 
 export const ButtonProvider = Fragment;
+
+export const useButtonEffect = (
+  _callback: () => void,
+  _ids: [buttonId: string] | [buttonId: string, componentId: string]
+) => {
+  // NOOP
+};

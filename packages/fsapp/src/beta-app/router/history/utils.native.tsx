@@ -3,7 +3,7 @@ import type {
   MatchingRoute,
   ParentRoute,
   Route,
-  TopLevelParentRoute
+  RouteCollection
 } from '../types';
 
 import React from 'react';
@@ -15,9 +15,9 @@ import { defaultsDeep, uniqueId } from 'lodash-es';
 import { Matchers, matchRoute } from './utils.base';
 import { ROOT_STACK } from './constants';
 
-export const isTabRoute = (route: Route): route is TopLevelParentRoute => 'tab' in route;
+export const isTabRoute = (route: Route): route is RouteCollection => 'tab' in route;
 
-export const isNotTabRoute = (route: Route): route is Exclude<Route, TopLevelParentRoute> =>
+export const isNotTabRoute = (route: Route): route is Exclude<Route, RouteCollection> =>
   !('tab' in route);
 
 export const createStack = ([route, title]: readonly [
@@ -32,7 +32,16 @@ export const createStack = ([route, title]: readonly [
           component: {
             name: route.id,
             id: route.matchedPath,
-            options: { topBar: { title: { text: title ?? route.tabAffinity } } }
+            options: {
+              statusBar: { ...route?.statusBarStyle },
+              topBar: {
+                ...route?.topBarStyle,
+                title: {
+                  ...route?.topBarStyle?.title,
+                  text: title ?? route.tabAffinity
+                }
+              }
+            }
           }
         }
       ]
@@ -65,8 +74,14 @@ export const createKey = () => {
   return Math.random().toString(36).substr(2, 8);
 };
 
-export const applyMatcher = async (matchers: Matchers, { path }: ParentRoute) => {
-  const component = await matchRoute(matchers, path ? `/${path}` : '/');
+export const applyMatcher = async (matchers: Matchers, route: RouteCollection | ParentRoute) => {
+  const component =
+    await matchRoute(
+      matchers,
+      'initialPath' in route
+        ? `/${route.initialPath}`
+        : route.path ? `/${route.path}` : '/'
+      );
   if (component) {
     const title =
       typeof component.title === 'function'
@@ -84,7 +99,7 @@ export const applyMatcher = async (matchers: Matchers, { path }: ParentRoute) =>
   return undefined;
 };
 
-export const matchStack = async (route: ParentRoute, matcher: Matchers) => {
+export const matchStack = async (route: RouteCollection | ParentRoute, matcher: Matchers) => {
   const component = await applyMatcher(matcher, route);
   return component ? createStack(component) : undefined;
 };

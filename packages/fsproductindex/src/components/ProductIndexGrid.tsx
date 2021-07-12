@@ -769,7 +769,12 @@ export default class ProductIndexGrid extends Component<
       isMoreLoading: true
     });
 
-    const newQuery = this.newProductQuery({ page });
+    const currentPage = commerceData.page || -1;
+    const newQuery = this.newProductQuery({
+      page,
+      prevCursor: page < currentPage ? commerceData.prevCursor : undefined,
+      nextCursor: page > currentPage ? commerceData.nextCursor : undefined
+    });
     if (commerceProviderLoadMore) {
       commerceProviderLoadMore(newQuery)
         .then((data: CommerceTypes.ProductIndex) => {
@@ -802,8 +807,18 @@ export default class ProductIndexGrid extends Component<
 
   renderFooter = () => {
     const { commerceData } = this.props;
-    const hasAnotherPage: boolean = commerceData !== undefined && commerceData.page !== undefined &&
-      commerceData.page < this.maxPage(commerceData);
+
+    // TODO: Completely move this logic into the normalizers to populate the "hasNextPage"
+    let hasAnotherPage = false;
+    if (commerceData?.hasNextPage !== undefined) {
+      hasAnotherPage = commerceData?.hasNextPage;
+    } else {
+      hasAnotherPage = (
+        commerceData?.page !== undefined &&
+        commerceData.page < this.maxPage(commerceData)
+      );
+    }
+
     if (this.state.isMoreLoading) {
       return this.props.renderLoading ? (
         this.props.renderLoading()
