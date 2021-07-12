@@ -13,7 +13,7 @@
 		1484123C2315883E00E8D031 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1484123B2315883E00E8D031 /* LaunchScreen.storyboard */; };
 		14A6AB6E2179BAEF0096DB28 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */; };
 		289DAC84207E9B9F00DFFECC /* EnvSwitcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */; };
-		7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35269AFEFAACE147946929 /* libPods-FLAGSHIP.a */; };
+		7441E75E72EAB0F64FB0E330 /* libPods-Flagship.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35269AFEFAACE147946929 /* libPods-Flagship.a */; };
 		7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B84D886876084ED9BA4BA9BF /* libz.tbd */; };
 		8B147E1A212DDF8F0053B1A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */; };
 		8B48111B22B00C440025490E /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48111A22B00C440025490E /* JavaScriptCore.framework */; };
@@ -23,26 +23,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A35269AFEFAACE147946929 /* libPods-FLAGSHIP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FLAGSHIP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* FLAGSHIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLAGSHIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FLAGSHIP/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FLAGSHIP/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FLAGSHIP/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FLAGSHIP/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FLAGSHIP/main.m; sourceTree = "<group>"; };
-		1484123B2315883E00E8D031 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FLAGSHIP/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = FLAGSHIP/ADBMobileConfig.json; sourceTree = "<group>"; };
-		289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EnvSwitcher.m; path = FLAGSHIP/EnvSwitcher.m; sourceTree = "<group>"; };
-		28AB2B671F9176780083673A /* FLAGSHIP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FLAGSHIP.entitlements; path = FLAGSHIP/FLAGSHIP.entitlements; sourceTree = "<group>"; };
-		2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLAGSHIP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP.debug.xcconfig"; sourceTree = "<group>"; };
-		8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FLAGSHIP/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A35269AFEFAACE147946929 /* libPods-Flagship.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flagship.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Flagship.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flagship.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Flagship/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Flagship/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Flagship/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Flagship/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Flagship/main.m; sourceTree = "<group>"; };
+		1484123B2315883E00E8D031 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Flagship/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = Flagship/ADBMobileConfig.json; sourceTree = "<group>"; };
+		289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EnvSwitcher.m; path = Flagship/EnvSwitcher.m; sourceTree = "<group>"; };
+		28AB2B671F9176780083673A /* Flagship.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flagship.entitlements; path = Flagship/Flagship.entitlements; sourceTree = "<group>"; };
+		2B05F7F5FCA846144EA80B62 /* Pods-Flagship.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flagship.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flagship/Pods-Flagship.debug.xcconfig"; sourceTree = "<group>"; };
+		8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Flagship/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B48111A22B00C440025490E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		B84D886876084ED9BA4BA9BF /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		E1986D12E0A22E2A8AEABF74 /* Pods-FLAGSHIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLAGSHIP.release.xcconfig"; path = "Pods/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP.release.xcconfig"; sourceTree = "<group>"; };
-		F93CD76E2065853300B6E5F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CodePush.h; path = FLAGSHIP/CodePush.h; sourceTree = "<group>"; };
-		F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "FLAGSHIP/AppCenter-Config.plist"; sourceTree = "<group>"; };
-		F979949320640E35006BFFBD /* NativeConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeConstants.m; path = FLAGSHIP/NativeConstants.m; sourceTree = "<group>"; };
-		F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = FLAGSHIP/LaunchImages.xcassets; sourceTree = "<group>"; };
+		E1986D12E0A22E2A8AEABF74 /* Pods-Flagship.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flagship.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flagship/Pods-Flagship.release.xcconfig"; sourceTree = "<group>"; };
+		F93CD76E2065853300B6E5F3 /* CodePush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CodePush.h; path = Flagship/CodePush.h; sourceTree = "<group>"; };
+		F93CD7982065853900B6E5F3 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "Flagship/AppCenter-Config.plist"; sourceTree = "<group>"; };
+		F979949320640E35006BFFBD /* NativeConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeConstants.m; path = Flagship/NativeConstants.m; sourceTree = "<group>"; };
+		F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = Flagship/LaunchImages.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B48111B22B00C440025490E /* JavaScriptCore.framework in Frameworks */,
-				7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */,
+				7441E75E72EAB0F64FB0E330 /* libPods-Flagship.a in Frameworks */,
 				7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,12 +59,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* FLAGSHIP */ = {
+		13B07FAE1A68108700A75B9A /* Flagship */ = {
 			isa = PBXGroup;
 			children = (
 				1484123B2315883E00E8D031 /* LaunchScreen.storyboard */,
 				8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */,
-				28AB2B671F9176780083673A /* FLAGSHIP.entitlements */,
+				28AB2B671F9176780083673A /* Flagship.entitlements */,
 				F93CD76E2065853300B6E5F3 /* CodePush.h */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -77,14 +77,14 @@
 				F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */,
 				14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */,
 			);
-			name = FLAGSHIP;
+			name = Flagship;
 			sourceTree = "<group>";
 		};
 		7701A92A99A4D944A5436FFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				8B48111A22B00C440025490E /* JavaScriptCore.framework */,
-				0A35269AFEFAACE147946929 /* libPods-FLAGSHIP.a */,
+				0A35269AFEFAACE147946929 /* libPods-Flagship.a */,
 				B84D886876084ED9BA4BA9BF /* libz.tbd */,
 			);
 			name = Frameworks;
@@ -100,7 +100,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* FLAGSHIP */,
+				13B07FAE1A68108700A75B9A /* Flagship */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B85264EC2595B591EE3417D0 /* Pods */,
@@ -114,7 +114,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* FLAGSHIP.app */,
+				13B07F961A680F5B00A75B9A /* Flagship.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,8 +122,8 @@
 		B85264EC2595B591EE3417D0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */,
-				E1986D12E0A22E2A8AEABF74 /* Pods-FLAGSHIP.release.xcconfig */,
+				2B05F7F5FCA846144EA80B62 /* Pods-Flagship.debug.xcconfig */,
+				E1986D12E0A22E2A8AEABF74 /* Pods-Flagship.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -138,9 +138,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* FLAGSHIP */ = {
+		13B07F861A680F5B00A75B9A /* Flagship */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FLAGSHIP" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Flagship" */;
 			buildPhases = (
 				D5ECC2EFCB0A6D785F191775 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -153,9 +153,9 @@
 			);
 			dependencies = (
 			);
-			name = FLAGSHIP;
+			name = Flagship;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* FLAGSHIP.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Flagship.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -243,7 +243,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FLAGSHIP" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Flagship" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -257,7 +257,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* FLAGSHIP */,
+				13B07F861A680F5B00A75B9A /* Flagship */,
 			);
 		};
 /* End PBXProject section */
@@ -299,7 +299,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Flagship/Pods-Flagship-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -308,7 +308,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Flagship/Pods-Flagship-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D5ECC2EFCB0A6D785F191775 /* [CP] Check Pods Manifest.lock */ = {
@@ -322,7 +322,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FLAGSHIP-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Flagship-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -348,10 +348,10 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */;
+			baseConfigurationReference = 2B05F7F5FCA846144EA80B62 /* Pods-Flagship.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = FLAGSHIP/FLAGSHIP.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Flagship/Flagship.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				HEADER_SEARCH_PATHS = (
@@ -361,7 +361,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**"
 				);
-				INFOPLIST_FILE = FLAGSHIP/Info.plist;
+				INFOPLIST_FILE = Flagship/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -374,7 +374,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = FLAGSHIP;
+				PRODUCT_NAME = Flagship;
 				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -382,10 +382,10 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E1986D12E0A22E2A8AEABF74 /* Pods-FLAGSHIP.release.xcconfig */;
+			baseConfigurationReference = E1986D12E0A22E2A8AEABF74 /* Pods-Flagship.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = FLAGSHIP/FLAGSHIP.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Flagship/Flagship.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				HEADER_SEARCH_PATHS = (
@@ -395,7 +395,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**"
 				);
-				INFOPLIST_FILE = FLAGSHIP/Info.plist;
+				INFOPLIST_FILE = Flagship/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -408,7 +408,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = FLAGSHIP;
+				PRODUCT_NAME = Flagship;
 				TARGETED_DEVICE_FAMILY = "1";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -494,7 +494,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FLAGSHIP" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Flagship" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -503,7 +503,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FLAGSHIP" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Flagship" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
