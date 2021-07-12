@@ -91,7 +91,7 @@ export class FSRouter extends FSRouterBase {
       return (
         <Screen key={id} path={path} exact={route.exact}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
-            <ModalProvider>
+            <ModalProvider screenWrap={this.options.screenWrap}>
               <LazyComponent componentId={id} />
             </ModalProvider>
           </ActivatedRouteProvider>
@@ -116,7 +116,7 @@ export class FSRouter extends FSRouterBase {
     const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(defaultActivatedRoute);
 
     const stopListening = useMemo(() => {
-      const stopDetailsListening = this.history.registerResolver(setRouteDetails);
+      const stopDetailsListening = this.history.registerResolver('all', setRouteDetails);
       const stopLoadingListening = this.history.observeLoading(setLoading);
 
       return () => {

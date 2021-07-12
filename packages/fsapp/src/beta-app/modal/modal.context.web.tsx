@@ -1,5 +1,5 @@
 import type { Dictionary } from '@brandingbrand/fsfoundation';
-import type { ModalComponentType, ModalService } from './types';
+import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
 
 import React, { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -44,7 +44,7 @@ const navStyle = StyleSheet.create({
   }
 });
 
-export const ModalProvider: FC = ({ children }) => {
+export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const app = useApp();
   const api = useAPI();
   const store = useStore();

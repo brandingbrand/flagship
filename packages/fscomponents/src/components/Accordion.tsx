@@ -14,7 +14,7 @@ import {
   ViewStyle
 } from 'react-native';
 
-export interface SerializableAccordionProps {
+export interface AccordionProps {
   /**
    * Duration of the icon spin animation
    */
@@ -24,10 +24,6 @@ export interface SerializableAccordionProps {
    */
   arrowIconImage?: ImageURISource;
   /**
-   * Styles for the arrow icon
-   */
-  arrowIconStyle?: ImageStyle;
-  /**
    * Range of rotation for open/closed arrows
    */
   arrowRange?: string[];
@@ -36,21 +32,9 @@ export interface SerializableAccordionProps {
    */
   openIconImage?: ImageURISource;
   /**
-   * Styles for open icon image
-   */
-  openIconStyle?: ImageStyle;
-  /**
    * Icon to use when closed if icon format is 'image'
    */
   closedIconImage?: ImageURISource;
-  /**
-   * Styles for open icon image
-   */
-  closedIconStyle?: ImageStyle;
-  /**
-   * Styles for the accordion content container
-   */
-  contentStyle?: ViewStyle;
   /**
    * Whether to disable the animation (default false)
    */
@@ -61,42 +45,15 @@ export interface SerializableAccordionProps {
    */
   iconFormat?: 'image' | 'plusminus' | 'arrow';
   /**
-   * Styles for the accordion container when open
-   */
-  openStyle?: ViewStyle;
-  /**
-   * Styles for the accordion title when open
-   */
-  openTitleStyle?: ViewStyle;
-  /**
    * Bottom padding
    * @deprecated Put the padding on the accordion contents instead
    */
   padding?: number;
   /**
-   * Styles for the plus minus icon
-   */
-  plusMinusStyle?: TextStyle;
-  /**
    * Whether to initialize as open or closed
    */
   state?: 'open' | 'closed';
-  /**
-   * Styles for the accordion container
-   */
-  style?: ViewStyle;
-  /**
-   * Content of the accordion title
-   */
-  title: string;
-  /**
-   *  Styles for the accordion title container
-   */
-  titleContainerStyle?: ViewStyle;
-  /**
-   * Styles for the accordion title
-   */
-  titleStyle?: ViewStyle;
+
   /**
    * Color of the title touch highlight
    */
@@ -105,27 +62,7 @@ export interface SerializableAccordionProps {
    * Left and right padding (has defaults)
    */
   paddingHorizontal?: number;
-  /**
-   * Height of title touch highlight (has default)
-   */
-  titleTouchStyle?: ViewStyle;
-}
 
-export interface AccordionProps extends Omit<
-  SerializableAccordionProps,
-  'arrowIconStyle' |
-  'openIconStyle' |
-  'closedIconStyle' |
-  'contentStyle' |
-  'openStyle' |
-  'openTitleStyle' |
-  'plusMinusStyle' |
-  'style' |
-  'title' |
-  'titleContainerStyle' |
-  'titleStyle' |
-  'titleTouchStyle'
-> {
   /**
    * Styles for the arrow icon
    */

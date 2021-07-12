@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   ViewStyle
 } from 'react-native';
-import styles from '../../styles/Selector';
+import { style as styles } from '../../styles/Selector';
 import { SelectorItem } from './Selector';
 
 const ITEM_HEIGHT = 50;
