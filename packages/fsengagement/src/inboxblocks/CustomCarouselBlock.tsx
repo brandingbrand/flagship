@@ -1,4 +1,4 @@
-/* tslint:disable */
+// tslint:disable
 import React, { Component } from 'react';
 import {
   Dimensions,
@@ -6,7 +6,6 @@ import {
   ImageURISource,
   LayoutChangeEvent,
   StyleProp,
-  Text,
   TextStyle,
   View,
   ViewStyle
@@ -14,20 +13,41 @@ import {
 import styles from '../carousel/index.style';
 import Carousel from 'react-native-snap-carousel';
 
+import {
+  BlockItem,
+  ComponentList
+} from '../types';
+import { CarouselPagination } from '../carousel/Pagination';
+
+import ImageWithOverlay from './ImageWithOverlay';
+import { TextBlock } from './TextBlock';
+import TextBanner from './TextBanner';
+import { ImageBlock } from './ImageBlock';
+import IconText from './IconTextBlock';
+import ImageWithTextBlock from './ImageWithTextBlock';
+
+const components: ComponentList = {
+  Text: TextBlock,
+  IconText,
+  ImageWithOverlay,
+  TextBanner,
+  ImageWithText: ImageWithTextBlock,
+  Image: ImageBlock
+};
+
 const { width: viewportWidth } = Dimensions.get('window');
 const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
-import RenderImageTextItem from '../carousel/RenderImageTextItem';
-import { CarouselPagination } from '../carousel/Pagination';
 
 interface Autoplay {
   autoplayDelay: string;
   autoplayInterval: string;
 }
+
 import {
   CardProps
 } from '../types';
-export interface ImageCarouselBlockProps extends CardProps {
+export interface CustomCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
   resizeMethod?: any;
@@ -38,9 +58,8 @@ export interface ImageCarouselBlockProps extends CardProps {
   pageCounter?: boolean;
   imageStyle?: StyleProp<ImageStyle>;
   containerStyle?: any;
-  headerStyle?: StyleProp<TextStyle>;
-  textStyle?: StyleProp<TextStyle>;
-  additionalStyle?: StyleProp<TextStyle>;
+  headerStyle?: any;
+  textStyle?: any;
   cardContainerStyle?: ViewStyle;
   pageCounterStyle?: StyleProp<ViewStyle>;
   pageNumberStyle?: StyleProp<TextStyle>;
@@ -56,21 +75,19 @@ export interface ImageCarouselBlockState {
   overallHeight: number;
 }
 // extends CardProps
-export default class ImageCarouselBlock
-  extends Component<ImageCarouselBlockProps, ImageCarouselBlockState> {
+export default class CustomCarouselBlock
+  extends Component<CustomCarouselBlockProps, ImageCarouselBlockState> {
   // readonly state: ImageCarouselBlockState = {};
   _slider1Ref: any | null = null;
-  constructor(props: ImageCarouselBlockProps) {
+  constructor(props: CustomCarouselBlockProps) {
     super(props);
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM,
       overallHeight: 0
     };
   }
-  // tslint:disable-next-line:cyclomatic-complexity
-  shouldComponentUpdate(
-    nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState
-  ): boolean {
+
+  shouldComponentUpdate(nextProps: CustomCarouselBlockProps, nextState: ImageCarouselBlockState): boolean {
     return this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||
       this.props.ratio !== nextProps.ratio ||
@@ -79,32 +96,55 @@ export default class ImageCarouselBlock
       this.props.source !== nextProps.source ||
       this.props.headerStyle !== nextProps.headerStyle ||
       this.props.textStyle !== nextProps.textStyle ||
-      this.props.additionalStyle !== nextProps.additionalStyle ||
-      this.state.sliderActiveSlide !== nextState.sliderActiveSlide ||
       this.state.overallHeight !== nextState.overallHeight;
   }
+  renderBlock = (item: BlockItem): React.ReactElement | null => {
+    const {
+      private_blocks,
+      private_type,
+      ...restProps } = item;
+    const {id, name, options } = this.props;
+    const renderItemWidth = this.calculateItemWidth()
+    const props = {
+      id,
+      name,
+      parentWidth: renderItemWidth,
+      outerContainerStyle: {
+        paddingRight: options.itemHorizontalPaddingPercent || 0
+      },
+      ...restProps
+    };
 
+    if (!components?.[private_type]) {
+      return null;
+    }
+    return React.createElement(
+      components[private_type],
+      {
+        ...props,
+        navigator: this.props.navigator
+      },
+      private_blocks && private_blocks.map(this.renderBlock)
+    );
+  }
+  dataKeyExtractor = (item: BlockItem): string => {
+    return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
+  }
   _renderItem(data: any): JSX.Element {
     const {
-      headerStyle,
-      textStyle,
-      additionalStyle,
       options
     } = this.props;
     const renderItemWidth = this.calculateItemWidth();
     return (
-      <RenderImageTextItem
-        data={data.item}
-        key={data.index}
-        overallHeight={this.state.overallHeight}
-        itemWidth={renderItemWidth}
-        horizPadding={options.itemHorizontalPaddingPercent}
-        options={options}
-        headerStyle={headerStyle}
-        textStyle={textStyle}
-        additionalStyle={additionalStyle}
-        even={false}
-      />
+      <View
+        key={this.dataKeyExtractor(data.index)}
+        style={{
+          width: renderItemWidth,
+          paddingRight: options.itemHorizontalPaddingPercent
+        }}
+      >
+        {this.renderBlock(data.item)}
+      </View>
     );
   }
 
@@ -123,7 +163,7 @@ export default class ImageCarouselBlock
     return ml + mr + pr + pl;
   }
 
-  horizontalMarginPadding(): number {
+  horizontalMarginPadding() {
     const {
       containerStyle
     } = this.props;
@@ -133,10 +173,10 @@ export default class ImageCarouselBlock
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth(): number {
+  calculateSliderWidth() {
     return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
-  calculateItemWidth(): number {
+  calculateItemWidth() {
     const {
       options
     } = this.props;
@@ -144,9 +184,8 @@ export default class ImageCarouselBlock
     const slideWidth = Math.round((this.calculateSliderWidth() * options.itemWidthPercent) / 100);
     return slideWidth + options.itemHorizontalPaddingPercent;
   }
-
   _onLayout = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
+    var { height } = event.nativeEvent.layout;
     if (height - this.state.overallHeight >= 1) {
       this.setState({
         overallHeight: height
@@ -175,13 +214,11 @@ export default class ImageCarouselBlock
       lockScrollWhileSnapping: true
     } : {};
     const enableMomentum = !autoplay;
-
     const loopProps = loop ? {
       loop: true,
       loopClonesPerSide: 3
     } : {};
-
-    const renderItemWidth = this.calculateItemWidth();
+    let renderItemWidth = this.calculateItemWidth();
     return (
       <View onLayout={this._onLayout}>
         <Carousel
@@ -202,33 +239,21 @@ export default class ImageCarouselBlock
           {...loopProps}
         />
       </View>
+
     );
   }
   render(): JSX.Element {
     const {
       containerStyle,
-      items,
       pagination,
-      pageCounter,
-      pageCounterStyle,
-      pageNumberStyle
+      items
     } = this.props;
 
     const carousel = this.createCarousel();
-
     return (
       <View style={containerStyle}>
         {carousel}
-        {pageCounter && (
-          <View style={[styles.pageCounter, pageCounterStyle]}>
-            <Text
-              style={[styles.pageNum, pageNumberStyle]}
-            >
-              {this.state.sliderActiveSlide} / {items.length}
-            </Text>
-          </View>
-        )}
-        {!!pagination && (
+        {pagination && (
           <CarouselPagination
             activeIndex={this.state.sliderActiveSlide}
             pagination={pagination}

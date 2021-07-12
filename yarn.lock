@@ -14718,11 +14718,6 @@ react-native-elements@^2.0.2:
     react-native-ratings "^7.2.0"
     react-native-status-bar-height "^2.5.0"
 
-react-native-fcm@^16.0.0:
-  version "16.2.4"
-  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-16.2.4.tgz#1ed0cf6a9712949c178ee01265cc0b98b103dfc3"
-  integrity sha512-1bUunJMz4PbnvWeFgSjdcEvSU3JIFz0T3N4b4XiyeZtF5pMEBYVx10kkWR+xF4AevPeE1+zpeiVxsa+XwcysZA==
-
 react-native-geocoder@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-native-geocoder/-/react-native-geocoder-0.5.0.tgz#ff4b9c55d5768a4784eefccb411761c82e067579"
@@ -17611,11 +17606,6 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
-
-uuid-js@0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
-  integrity sha1-bIhtAqU9LUDc8l2RoXC0p7JblNA=
 
 uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
