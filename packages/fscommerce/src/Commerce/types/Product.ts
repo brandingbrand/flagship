@@ -205,4 +205,11 @@ export interface Product extends BaseProduct {
     orderable?: boolean;
     price?: CurrencyValue;
   };
+
+  /**
+   * Identifier used to associate a product with a third-party review provider.
+   *
+   * @example '165139'
+   */
+  reviewId?: string;
 }
