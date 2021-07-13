@@ -15,14 +15,14 @@ export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): v
         fs.update(
           infoPlist,
           new RegExp(
-            `<key>${usage.key}<\\/key>\\s+<array>\\s+(<string>[^<]+<\\/string>\\s+){0,}<\\/array>`
+            `<key>${usage.key}<\\/key>\\s*<array>\\s*(<string>[^<]+<\\/string>\\s*){0,}<\\/array>`
           ),
           `<key>${usage.key}</key><array>${stringArray}</array>`
         );
       } else {
         fs.update(
           infoPlist,
-          new RegExp(`<key>${usage.key}<\\/key>\\s+<string>[^<]+<\\/string>`),
+          new RegExp(`<key>${usage.key}<\\/key>\\s*<string>[^<]+<\\/string>`),
           `<key>${usage.key}</key><string>${usage.string}</string>`
         );
       }
