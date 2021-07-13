@@ -33,9 +33,9 @@ export interface TitleWithLinkProps {
 
 export const TitleWithLink: React.FC<TitleWithLinkProps> = React.memo(props => {
   const { containerStyle, contents, titleContainer } = props;
+  const { handleAction } = React.useContext(EngagementContext);
 
   const onPress = (link: string) => () => {
-    const { handleAction } = React.useContext(EngagementContext);
     handleAction({
       type: 'deep-link',
       value: link
