@@ -9,7 +9,7 @@ import DividerBlock from './DividerBlock';
 import TwinCTABlock from './TwinCTABlock';
 import EventBlock from './EventBlock';
 import ShareBlock from './ShareBlock';
-import FeaturedTopCard from './FeaturedTopCard';
+import { FeaturedTopCard } from './FeaturedTopCard';
 import ProductCarouselBlock from './ProductCarouselBlock';
 import GridWallBlock from './GridWallBlock';
 import TextWithIconBlock from './TextWithIconBlock';
