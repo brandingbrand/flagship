@@ -217,11 +217,23 @@ export interface IOSConfig {
    */
   extensions?: IOSExtension[];
   shortVersion?: string;
+  frameworks?: FrameworksConfig[];
 }
 
 export interface PodsConfig {
   sources?: string[];
   newPods?: string[];
+}
+
+export interface FrameworksConfig {
+  /**
+   * iOS Framework to be added to project
+   */
+  framework: string;
+  /**
+   * iOS Framework directory path from project root source
+   */
+  frameworkPath?: string;
 }
 
 export interface NPMPackageConfig {
