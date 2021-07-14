@@ -25,6 +25,7 @@ import {
 import { chunk } from 'lodash-es';
 
 const DEFAULT_COLUMNS = 2;
+const DEFAULT_MIN_COLUMNS = 175;
 const DEFAULT_BACK_TOP_BUTTON_SHOW_AT_HEIGHT = 100;
 const DEFAULT_KEY_EXTRACTOR = <ItemT, >(items: ItemT[], index: number): string => {
   const key = items
@@ -37,6 +38,7 @@ const DEFAULT_KEY_EXTRACTOR = <ItemT, >(items: ItemT[], index: number): string =
 
 const gridStyle = StyleSheet.create({
   row: {
+    flexGrow: 1,
     flexDirection: 'row',
     flexWrap: 'nowrap'
   },
@@ -81,12 +83,12 @@ export interface GridProps<ItemT>
     | 'style'
     | 'data'
     | 'renderItem'
-    | 'numColumns'
     | 'refreshing'
     | 'refreshControl'
     | 'onRefresh'
     | 'onEndReachedThreshold'
     | 'onEndReached'
+    | 'onLayout'
     | 'ListEmptyComponent'
     | 'ListFooterComponent'
     | 'ListFooterComponentStyle'
@@ -94,7 +96,7 @@ export interface GridProps<ItemT>
     | 'ListHeaderComponentStyle'
   > {
   /**
-   * The number of columns to display in the grid. Defaults to 2.
+   * The number of columns to display in the grid.
    * @deprecated to be removed in fs12, use numColumns instead
    */
   columns?: number;
@@ -206,6 +208,20 @@ export interface GridProps<ItemT>
    * An optional custom render function to render a back to top button.
    */
   BackToTopComponent?: ComponentType<BackToTopComponentProps> | ReactElement;
+
+  /**
+   * The number of columns to display in the grid. Defaults to 'auto'.
+   *
+   * Note: When using `auto` there will always be at least 1 blank render
+   * prior to items being rendered while the container is measured.
+   */
+  numColumns?: number | 'auto';
+
+  /**
+   * The minium column width when `numColumns` is set to `auto`
+   * Defaults to 175
+   */
+  minColumnWidth?: number;
 }
 
 export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
@@ -230,9 +246,11 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     ListHeaderComponentStyle,
     columnSeparatorStyle,
     gridContainerStyle,
+    minColumnWidth,
     numColumns,
     onEndReached,
     onEndReachedThreshold,
+    onLayout,
     onRefresh,
     refreshControl,
     refreshing,
@@ -254,13 +272,44 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
   } = props;
 
   const listView = useRef<FlatList<ItemT[]>>(null);
+  const [width, setWidth] = useState<number | undefined>(() => {
+    const containerWidth = StyleSheet.flatten([gridContainerStyle]).width;
+    if (typeof containerWidth === 'number') {
+      return containerWidth;
+    }
+
+    const gridWidth = StyleSheet.flatten([style]).width;
+    if (typeof gridWidth === 'number') {
+      return gridWidth;
+    }
+
+    return undefined;
+  });
   const [backTopOpacity] = useState(new Animated.Value(0));
   const [backToTopVisible, setBackToTopVisible] = useState(false);
 
-  const chunkedData = useMemo(
-    () => chunk(data, columns ?? numColumns ?? DEFAULT_COLUMNS),
-    [data, columns, numColumns]
-  );
+  const totalColumns = useMemo(() => {
+    if (typeof numColumns !== 'number' || columns !== undefined) {
+      if (width) {
+        const calculatedColumns = Math.floor(width / (minColumnWidth ?? DEFAULT_MIN_COLUMNS));
+
+        return Math.max(calculatedColumns, 1);
+      } else {
+        return 0;
+      }
+
+    } else {
+      return columns ?? numColumns ?? DEFAULT_COLUMNS;
+    }
+  }, [columns, numColumns, minColumnWidth, width]);
+
+  const chunkedData = useMemo(() => {
+    if (totalColumns === 0) {
+      return [];
+    }
+
+    return chunk(data, totalColumns);
+  }, [data, totalColumns]);
 
   const handleBackToTop = useCallback(() => {
     listView.current?.scrollToOffset({ offset: 0 });
@@ -300,8 +349,6 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
   const renderRow = useCallback<ListRenderItem<ItemT[]>>(
     ({ index, item, separators }) => {
       const showRowSeparator = chunkedData?.length > index + 1;
-
-      const totalColumns = columns ?? numColumns ?? DEFAULT_COLUMNS;
       const columnWidth = Math.floor((100 / totalColumns) * 100) / 100;
 
       return (
@@ -328,8 +375,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     },
     [
       chunkedData,
-      columns,
-      numColumns,
+      totalColumns,
       renderItem,
       showRowSeparators,
       rowSeparatorStyle,
@@ -357,6 +403,8 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
         onScroll={showBackToTop || BackToTopComponent ? handleScroll : undefined}
         onEndReached={onEndReached}
         onEndReachedThreshold={onEndReachedThreshold}
+        onLayout={onLayout}
+        onContentSizeChange={setWidth}
         {...listViewProps}
       />
       {(showBackToTop || BackToTopComponent) && (
