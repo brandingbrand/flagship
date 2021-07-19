@@ -26,7 +26,8 @@ import { PageIndicator } from '../PageIndicator';
 import { MultiCarouselProps } from './MultiCarouselProps';
 
 const DEFAULT_PEEK_SIZE = 0;
-const DEFAULT_ITEMS_PER_PAGE = 2;
+const DEFAULT_ITEMS_PER_PAGE = 'auto';
+const DEFAULT_ITEM_WIDTH = 175;
 const DEFAULT_PAGE_INDICATOR_COMPONENT = PageIndicator;
 const DEFAULT_KEY_EXTRACTOR = <ItemT extends { key?: string; id?: string }>(
   item: ItemT,
@@ -61,7 +62,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderColor: 'black',
-    borderBottomColor: 'transparent',
     transform: [
       {
         rotate: '-45deg'
@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderRightWidth: 2,
     borderColor: 'black',
-    borderLeftColor: 'transparent',
     transform: [
       {
         rotate: '45deg'
@@ -95,6 +94,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
     keyExtractor = DEFAULT_KEY_EXTRACTOR,
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
+    itemWidth = DEFAULT_ITEM_WIDTH,
     peekSize = DEFAULT_PEEK_SIZE,
     centerMode,
     contentContainerStyle,
@@ -104,16 +104,16 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemsAreEqual,
     nextArrowContainerStyle,
     nextArrowStyle,
-    nextArrowOnBlur,
     onSlideChange,
     pageIndicatorStyle,
     prevArrowContainerStyle,
     prevArrowStyle,
-    prevArrowOnBlur,
     showArrow,
     style,
     itemUpdated,
     hidePageIndicator,
+    nextArrowOnBlur,
+    prevArrowOnBlur,
     renderPageIndicator
   } = props;
 
@@ -127,27 +127,49 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const [initialScrollX, setInitialScrollX] = useState<number>();
 
-  const numberOfPages = useMemo(
-    () => Math.ceil((data?.length ?? 0) / Math.floor(itemsPerPage)),
-    [data, itemsPerPage]
+  const calculatedItemsPerPage = useMemo(() => {
+    if (typeof itemsPerPage === 'number') {
+      return itemsPerPage;
+    }
+
+    if (!containerWidth) {
+      return 1;
+    }
+
+    return Math.floor(containerWidth / itemWidth);
+  }, [itemsPerPage, itemWidth, containerWidth]);
+
+  const calculatedPeekSize = useMemo(
+    () => (itemsPerPage === 'auto' ? containerWidth % itemWidth : peekSize),
+    [itemsPerPage, peekSize, containerWidth, calculatedItemsPerPage]
   );
 
-  const itemWidth = useMemo(() => {
+  const numberOfPages = useMemo(
+    () => Math.ceil((data?.length ?? 0) / Math.floor(calculatedItemsPerPage)),
+    [data, calculatedItemsPerPage]
+  );
+
+  const calculatedItemWidth = useMemo(() => {
     if (peekSize && !Number.isInteger(peekSize * 2)) {
       console.error(
         `${MultiCarousel.name}: (peekSize * 2) must be an integer but got (${peekSize} * 2)`
       );
     }
 
-    return (containerWidth - peekSize * (centerMode ? 2 : 1)) / itemsPerPage;
-  }, [containerWidth, peekSize, centerMode, itemsPerPage]);
+    return itemsPerPage === 'auto'
+      ? itemWidth
+      : (containerWidth - calculatedPeekSize * (centerMode ? 2 : 1)) / calculatedItemsPerPage;
+  }, [itemWidth, containerWidth, calculatedPeekSize, centerMode, calculatedItemsPerPage]);
 
   const snapToInterval = useMemo(
-    () => itemWidth * Math.floor(itemsPerPage),
-    [itemWidth, itemsPerPage]
+    () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
+    [calculatedItemWidth, calculatedItemsPerPage]
   );
 
-  const pageWidth = useMemo(() => itemWidth * Math.floor(itemsPerPage), [itemWidth, itemsPerPage]);
+  const pageWidth = useMemo(
+    () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
+    [calculatedItemWidth, calculatedItemsPerPage]
+  );
 
   useLayoutEffect(() => {
     if (shouldAnimate) {
@@ -235,7 +257,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const index =
-        Math.round(e.nativeEvent.contentOffset.x + pageWidth + peekSize) >=
+        Math.round(e.nativeEvent.contentOffset.x + pageWidth + calculatedPeekSize) >=
         Math.round(e.nativeEvent.contentSize.width)
           ? numberOfPages - 1
           : Math.round(Math.round(e.nativeEvent.contentOffset.x) / snapToInterval);
@@ -250,7 +272,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
       setCurrentIndex(nextIndex);
     },
-    [currentIndex, snapToInterval, numberOfPages, setCurrentIndex]
+    [currentIndex, snapToInterval, calculatedPeekSize, numberOfPages, setCurrentIndex]
   );
 
   const handleScrollBeginDrag = useCallback(
