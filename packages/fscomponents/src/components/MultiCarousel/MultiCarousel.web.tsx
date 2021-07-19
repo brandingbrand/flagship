@@ -28,7 +28,8 @@ import { PageIndicator } from '../PageIndicator';
 import { MultiCarouselProps } from './MultiCarouselProps';
 
 const DEFAULT_PEEK_SIZE = 0;
-const DEFAULT_ITEMS_PER_PAGE = 2;
+const DEFAULT_ITEMS_PER_PAGE = 'auto';
+const DEFAULT_ITEM_WIDTH = 175;
 const DEFAULT_PAGE_INDICATOR_COMPONENT = PageIndicator;
 const DEFAULT_KEY_EXTRACTOR = <ItemT extends { key?: string; id?: string }>(
   item: ItemT,
@@ -95,6 +96,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
     keyExtractor = DEFAULT_KEY_EXTRACTOR,
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
+    itemWidth = DEFAULT_ITEM_WIDTH,
     peekSize = DEFAULT_PEEK_SIZE,
     centerMode,
     dotActiveStyle,
@@ -104,17 +106,17 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemsAreEqual,
     nextArrowContainerStyle,
     nextArrowStyle,
+    nextArrowOnBlur,
     onSlideChange,
     pageIndicatorStyle,
     prevArrowContainerStyle,
+    prevArrowOnBlur,
     prevArrowStyle,
     showArrow,
     style,
     itemUpdated,
     hidePageIndicator,
     hideOverflow,
-    nextArrowOnBlur,
-    prevArrowOnBlur,
     renderPageIndicator
   } = props;
 
@@ -133,27 +135,44 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
-  const numberOfPages = useMemo(
-    () => Math.ceil((data?.length ?? 0) / Math.floor(itemsPerPage)),
-    [data, itemsPerPage]
+  const calculatedItemsPerPage = useMemo(() => {
+    if (typeof itemsPerPage === 'number') {
+      return itemsPerPage;
+    }
+
+    if (!containerWidth) {
+      return 1;
+    }
+
+    return Math.floor(containerWidth / itemWidth);
+  }, [itemsPerPage, itemWidth, containerWidth]);
+
+  const calculatedPeekSize = useMemo(
+    () => (itemsPerPage === 'auto' ? containerWidth % itemWidth : peekSize),
+    [itemsPerPage, peekSize, containerWidth, calculatedItemsPerPage]
   );
 
-  const itemWidth = useMemo(() => {
+  const numberOfPages = useMemo(
+    () => Math.ceil((data?.length ?? 0) / Math.floor(calculatedItemsPerPage)),
+    [data, calculatedItemsPerPage]
+  );
+
+  const calculatedItemWidth = useMemo(() => {
     if (peekSize && !Number.isInteger(peekSize * 2)) {
       console.error(
         `${MultiCarousel.name}: (peekSize * 2) must be an integer but got (${peekSize} * 2)`
       );
     }
 
-    return (containerWidth - peekSize * (centerMode ? 2 : 1)) / itemsPerPage;
-  }, [containerWidth, peekSize, centerMode, itemsPerPage]);
+    return itemsPerPage === 'auto'
+      ? itemWidth
+      : (containerWidth - calculatedPeekSize * (centerMode ? 2 : 1)) / calculatedItemsPerPage;
+  }, [itemWidth, containerWidth, calculatedPeekSize, centerMode, calculatedItemsPerPage]);
 
-  const snapToInterval = useMemo(
-    () => itemWidth * Math.floor(itemsPerPage),
-    [itemWidth, itemsPerPage]
+  const pageWidth = useMemo(
+    () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
+    [calculatedItemWidth, calculatedItemsPerPage]
   );
-
-  const pageWidth = useMemo(() => itemWidth * Math.floor(itemsPerPage), [itemWidth, itemsPerPage]);
 
   useLayoutEffect(() => {
     if (shouldAnimate) {
@@ -206,12 +225,12 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     (info: ListRenderItemInfo<ItemT>) => (
       <View
         key={keyExtractor(info.item, info.index)}
-        style={[{ width: itemWidth, ...{ scrollSnapAlign: 'start' } }, itemStyle]}
+        style={[{ width: calculatedItemWidth, ...{ scrollSnapAlign: 'start' } }, itemStyle]}
       >
         {renderItem?.(info)}
       </View>
     ),
-    [renderItem, itemStyle, itemWidth, keyExtractor]
+    [renderItem, itemStyle, calculatedItemWidth, keyExtractor]
   );
 
   const handleLayout = useCallback(
@@ -255,9 +274,9 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const handleScroll = useCallback(
     (e: UIEvent<HTMLDivElement>) => {
       const index =
-        e.currentTarget.scrollLeft + pageWidth + peekSize >= e.currentTarget.scrollWidth
+        e.currentTarget.scrollLeft + pageWidth + calculatedPeekSize >= e.currentTarget.scrollWidth
           ? numberOfPages - 1
-          : Math.round(Math.round(e.currentTarget.scrollLeft) / snapToInterval);
+          : Math.round(Math.round(e.currentTarget.scrollLeft) / pageWidth);
       const nextIndex = Math.min(Math.max(0, index), numberOfPages - 1);
 
       if (currentIndex !== nextIndex) {
@@ -269,28 +288,37 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
       setCurrentIndex(nextIndex);
     },
-    [currentIndex, snapToInterval, numberOfPages, pageWidth, peekSize, setCurrentIndex]
+    [currentIndex, numberOfPages, pageWidth, calculatedPeekSize, setCurrentIndex]
   );
 
-  const handleStart = useCallback((pageX: number) => {
-    const scrollViewNode = findDOMNode(scrollView?.current);
-    if (scrollViewNode instanceof Element) {
-      setCurrentScrollX(scrollViewNode.scrollLeft);
-    }
-    setInitialScrollX(pageX);
-    setInitialScrollXTime(Date.now());
-    setMouseDown(true);
-  }, [scrollView, setCurrentScrollX, setInitialScrollX, setInitialScrollXTime, setMouseDown]);
+  const handleStart = useCallback(
+    (pageX: number) => {
+      const scrollViewNode = findDOMNode(scrollView?.current);
+      if (scrollViewNode instanceof Element) {
+        setCurrentScrollX(scrollViewNode.scrollLeft);
+      }
+      setInitialScrollX(pageX);
+      setInitialScrollXTime(Date.now());
+      setMouseDown(true);
+    },
+    [scrollView, setCurrentScrollX, setInitialScrollX, setInitialScrollXTime, setMouseDown]
+  );
 
-  const handleMouseDown = useCallback((e: MouseEvent) => {
-    handleStart(e.pageX);
-  }, [handleStart]);
+  const handleMouseDown = useCallback(
+    (e: MouseEvent) => {
+      handleStart(e.pageX);
+    },
+    [handleStart]
+  );
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    if (e.touches.length) {
-      handleStart(e.touches[0].pageX);
-    }
-  }, [handleStart]);
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => {
+      if (e.touches.length) {
+        handleStart(e.touches[0].pageX);
+      }
+    },
+    [handleStart]
+  );
 
   const handleEnd = useCallback(
     (pageX: number) => {
@@ -298,40 +326,54 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       const vx = dx / (initialScrollXTime - Date.now());
 
       if (dx > 80 || vx < -0.3) {
-        goToNext().then(() => setMouseDown(false)).catch();
+        goToNext()
+          .then(() => setMouseDown(false))
+          .catch();
       } else if (dx < -80 || vx > 0.3) {
-        goToPrev().then(() => setMouseDown(false)).catch();
+        goToPrev()
+          .then(() => setMouseDown(false))
+          .catch();
       } else {
-        goToOrigin().then(() => setMouseDown(false)).catch();
+        goToOrigin()
+          .then(() => setMouseDown(false))
+          .catch();
       }
     },
     [initialScrollX, initialScrollXTime, goToNext, goToPrev, goToOrigin, setMouseDown]
   );
 
-  const handleMouseUp = useCallback((e: MouseEvent) => {
-    handleEnd(e.pageX);
-  }, [handleEnd]);
+  const handleMouseUp = useCallback(
+    (e: MouseEvent) => {
+      handleEnd(e.pageX);
+    },
+    [handleEnd]
+  );
 
-  const handleTouchEnd = useCallback((e: TouchEvent) => {
-    if (e.touches.length) {
-      handleEnd(e.touches[0].pageX);
-    } else {
-      const pageX =
-        initialScrollX + currentScrollX - (scrollView?.current?.scrollLeft || 0);
-      handleEnd(pageX);
-    }
-  }, [handleEnd, initialScrollX, currentScrollX, scrollView]);
+  const handleTouchEnd = useCallback(
+    (e: TouchEvent) => {
+      if (e.touches.length) {
+        handleEnd(e.touches[0].pageX);
+      } else {
+        const pageX = initialScrollX + currentScrollX - (scrollView?.current?.scrollLeft || 0);
+        handleEnd(pageX);
+      }
+    },
+    [handleEnd, initialScrollX, currentScrollX, scrollView]
+  );
 
-  const handleMove = useCallback((pageX: number) => {
-    if (!animating && mouseDown && currentScrollX !== undefined) {
-      const dx = initialScrollX - pageX;
-      const scrollX = currentScrollX + dx;
-      scrollView?.current?.scrollTo({
-        left: scrollX,
-        top: 0
-      });
-    }
-  }, [animating, scrollView, mouseDown, initialScrollX, currentScrollX]);
+  const handleMove = useCallback(
+    (pageX: number) => {
+      if (!animating && mouseDown && currentScrollX !== undefined) {
+        const dx = initialScrollX - pageX;
+        const scrollX = currentScrollX + dx;
+        scrollView?.current?.scrollTo({
+          left: scrollX,
+          top: 0
+        });
+      }
+    },
+    [animating, scrollView, mouseDown, initialScrollX, currentScrollX]
+  );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -392,7 +434,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       >
         <View
           style={{
-            width: centerMode ? peekSize : 0
+            width: centerMode ? calculatedPeekSize : 0
           }}
         />
         {data?.map((item, index) =>
