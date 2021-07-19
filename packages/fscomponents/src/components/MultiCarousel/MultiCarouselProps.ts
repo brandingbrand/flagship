@@ -10,12 +10,19 @@ export interface SlideChangeEvent {
 export interface MultiCarouselProps<ItemT>
   extends Pick<FlatListProps<ItemT>, 'style' | 'renderItem' | 'data' | 'keyExtractor'> {
   /**
-   * The number of items to show per page
+   * The number of items to show per page, defaults to `auto`
    */
-  itemsPerPage?: number;
+  itemsPerPage?: 'auto' | number;
 
   /**
-   * How many pixels of the item from the next page to show
+   * The width to use for each item when `itemsPerPage`
+   * is set to auto, defaults to `175`
+   */
+  itemWidth?: number;
+
+  /**
+   * How many pixels of the item from the next page to show when
+   * `itemWidth` is set to auto
    */
   peekSize?: number;
 
