@@ -27,9 +27,12 @@ import { chunk } from 'lodash-es';
 const DEFAULT_COLUMNS = 2;
 const DEFAULT_MIN_COLUMNS = 175;
 const DEFAULT_BACK_TOP_BUTTON_SHOW_AT_HEIGHT = 100;
-const DEFAULT_KEY_EXTRACTOR = <ItemT, >(items: ItemT[], index: number): string => {
+const DEFAULT_KEY_EXTRACTOR = <ItemT extends { id?: string; key?: string }>(
+  items: ItemT[],
+  index: number
+): string => {
   const key = items
-    .map((item: ItemT & { id?: string; key?: string }) => item?.key ?? item?.id)
+    .map((item: ItemT) => item?.key ?? item?.id)
     .filter(Boolean)
     .join();
 
