@@ -213,11 +213,14 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
   const renderItemContainer = useCallback(
     (info: ListRenderItemInfo<ItemT>) => (
-      <View key={keyExtractor(info.item, info.index)} style={[{ width: itemWidth }, itemStyle]}>
+      <View
+        key={keyExtractor(info.item, info.index)}
+        style={[{ width: calculatedItemWidth }, itemStyle]}
+      >
         {renderItem?.(info)}
       </View>
     ),
-    [renderItem, itemStyle, itemWidth, keyExtractor]
+    [renderItem, itemStyle, calculatedItemWidth, keyExtractor]
   );
 
   const handleLayout = useCallback(
@@ -324,7 +327,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   if (data.length <= 1) {
     return (
       <View style={[{ alignItems: 'center' }, style]} onLayout={handleLayout}>
-        <View style={[{ width: itemWidth }, itemStyle]}>
+        <View style={[{ width: calculatedItemWidth }, itemStyle]}>
           {renderItem?.({
             item: data[0],
             index: 0,
