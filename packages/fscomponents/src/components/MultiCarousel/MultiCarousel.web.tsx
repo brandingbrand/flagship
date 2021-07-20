@@ -329,41 +329,38 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   );
 
   const handleEnd = useCallback(
-    (pageX: number) => {
+    async (pageX: number) => {
       const dx = initialScrollX - pageX;
       const vx = dx / (initialScrollXTime - Date.now());
 
       if (dx > 80 || vx < -0.3) {
-        goToNext()
-          .then(() => setMouseDown(false))
-          .catch();
+        await goToNext();
+        setMouseDown(false);
       } else if (dx < -80 || vx > 0.3) {
-        goToPrev()
-          .then(() => setMouseDown(false))
-          .catch();
+        await goToPrev();
+        setMouseDown(false);
       } else {
-        goToOrigin()
-          .then(() => setMouseDown(false))
-          .catch();
+        await goToOrigin();
+        setMouseDown(false);
       }
     },
     [initialScrollX, initialScrollXTime, goToNext, goToPrev, goToOrigin, setMouseDown]
   );
 
   const handleMouseUp = useCallback(
-    (e: MouseEvent) => {
-      handleEnd(e.pageX);
+    async (e: MouseEvent) => {
+      await handleEnd(e.pageX);
     },
     [handleEnd]
   );
 
   const handleTouchEnd = useCallback(
-    (e: TouchEvent) => {
+    async (e: TouchEvent) => {
       if (e.touches.length) {
-        handleEnd(e.touches[0].pageX);
+        await handleEnd(e.touches[0].pageX);
       } else {
         const pageX = initialScrollX + currentScrollX - (scrollView?.current?.scrollLeft || 0);
-        handleEnd(pageX);
+        await handleEnd(pageX);
       }
     },
     [handleEnd, initialScrollX, currentScrollX, scrollView]
