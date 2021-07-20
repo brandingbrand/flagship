@@ -136,6 +136,13 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
   const calculatedItemsPerPage = useMemo(() => {
     if (typeof itemsPerPage === 'number') {
+      if (itemsPerPage <= 0) {
+        console.error(
+          `${MultiCarousel.name}: itemsPerPage must be greater than 0, received ${itemsPerPage}`
+        );
+        return 1;
+      }
+
       return itemsPerPage;
     }
 
