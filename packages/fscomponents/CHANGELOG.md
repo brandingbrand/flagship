@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* **fscomponents:** multicarousel linting errors (fcc0a54)
+* **fscomponents:** proper size on items per page (63ec025)
+
+
+* fix(fscomponents)!: update zoom carousel with MultiCarousel updates (92d71ca)
+* refactor(fscomponents)!: multi carousel fs11 update (98b951d)
+* refactor(fscomponents)!: modernize grid component (f361367)
+
+
+### Features
+
+* **fscomponents:** dynamic carousel pages (4706801)
+* **fscomponents:** dynamic grid columns (cdba9b8)
+
+
+### BREAKING CHANGES
+
+* `MultiCarousel` no longer has `ref`, use `carouselController` instead
+* Deprecates a few `MultiCarouselProps` props and removes a few that were unused.
+* Deprecated several props in <Grid />
+
+
+
+
+
 ## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
