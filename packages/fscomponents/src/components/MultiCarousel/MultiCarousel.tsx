@@ -11,6 +11,7 @@ import {
   Animated,
   Easing,
   FlatList,
+  GestureResponderEvent,
   LayoutChangeEvent,
   ListRenderItemInfo,
   NativeScrollEvent,
@@ -23,6 +24,7 @@ import {
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { PageIndicator } from '../PageIndicator';
+import { GoToOptions } from './CarouselController';
 import { MultiCarouselProps } from './MultiCarouselProps';
 
 const DEFAULT_PEEK_SIZE = 0;
@@ -82,10 +84,6 @@ const styles = StyleSheet.create({
   }
 });
 
-interface GotoOptions {
-  animated?: boolean;
-}
-
 // tslint:disable-next-line: cyclomatic-complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
@@ -96,6 +94,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
     itemWidth = DEFAULT_ITEM_WIDTH,
     peekSize = DEFAULT_PEEK_SIZE,
+    carouselController,
     centerMode,
     contentContainerStyle,
     dotActiveStyle,
@@ -104,16 +103,16 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemsAreEqual,
     nextArrowContainerStyle,
     nextArrowStyle,
+    nextArrowOnBlur,
     onSlideChange,
     pageIndicatorStyle,
     prevArrowContainerStyle,
     prevArrowStyle,
+    prevArrowOnBlur,
     showArrow,
     style,
     itemUpdated,
     hidePageIndicator,
-    nextArrowOnBlur,
-    prevArrowOnBlur,
     renderPageIndicator
   } = props;
 
@@ -227,7 +226,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   );
 
   const goTo = useCallback(
-    (nextIndex: number, { animated = true }: GotoOptions = {}) => {
+    async (nextIndex: number, { animated = true }: GoToOptions = {}) => {
       if (scrollView.current) {
         scrollView.current.scrollToOffset({
           offset: nextIndex * pageWidth,
@@ -238,21 +237,30 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     [currentIndex, pageWidth, setCurrentIndex, onSlideChange]
   );
 
-  const goToNext = useCallback(() => {
+  const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
 
-    goTo(nextIndex);
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
   }, [goTo, currentIndex, numberOfPages]);
 
-  const goToPrev = useCallback(() => {
+  const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
 
-    goTo(nextIndex);
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
   }, [goTo, currentIndex]);
 
-  const goToOrigin = useCallback(() => {
-    goTo(currentIndex);
+  const goToOrigin = useCallback(async (options?: GoToOptions) => {
+    await goTo(currentIndex, options);
   }, [goTo, currentIndex]);
+
+  useEffect(() => {
+    carouselController?.({
+      goTo,
+      goToNext,
+      goToPrev,
+      goToOrigin
+    });
+  }, [carouselController, goTo, goToNext, goToPrev, goToOrigin]);
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {

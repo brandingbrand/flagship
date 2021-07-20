@@ -14,6 +14,7 @@ import { findDOMNode } from 'react-dom';
 import {
   Animated,
   Easing,
+  GestureResponderEvent,
   LayoutChangeEvent,
   ListRenderItemInfo,
   StyleSheet,
@@ -25,6 +26,7 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 import { animatedScrollTo } from '../../lib/helpers';
 
 import { PageIndicator } from '../PageIndicator';
+import { GoToOptions } from './CarouselController';
 import { MultiCarouselProps } from './MultiCarouselProps';
 
 const DEFAULT_PEEK_SIZE = 0;
@@ -84,10 +86,6 @@ const styles = StyleSheet.create({
   }
 });
 
-interface GotoOptions {
-  animated?: boolean;
-}
-
 // tslint:disable-next-line: cyclomatic-complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
@@ -98,6 +96,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
     itemWidth = DEFAULT_ITEM_WIDTH,
     peekSize = DEFAULT_PEEK_SIZE,
+    carouselController,
     centerMode,
     dotActiveStyle,
     dotStyle,
@@ -239,7 +238,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   );
 
   const goTo = useCallback(
-    async (nextIndex: number, { animated = true }: GotoOptions = {}) => {
+    async (nextIndex: number, { animated = true }: GoToOptions = {}) => {
       const scrollViewElement = findDOMNode(scrollView?.current);
 
       if (scrollViewElement instanceof HTMLElement && !animating) {
@@ -255,21 +254,30 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     [animating, currentIndex, pageWidth, setAnimating, onSlideChange]
   );
 
-  const goToNext = useCallback(async () => {
+  const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
 
-    await goTo(nextIndex);
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
   }, [goTo, currentIndex, numberOfPages]);
 
-  const goToPrev = useCallback(async () => {
+  const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
 
-    await goTo(nextIndex);
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
   }, [goTo, currentIndex]);
 
-  const goToOrigin = useCallback(async () => {
-    await goTo(currentIndex);
+  const goToOrigin = useCallback(async (options?: GoToOptions) => {
+    await goTo(currentIndex, options);
   }, [goTo, currentIndex]);
+
+  useEffect(() => {
+    carouselController?.({
+      goTo,
+      goToNext,
+      goToPrev,
+      goToOrigin
+    });
+  }, [carouselController, goTo, goToNext, goToPrev, goToOrigin]);
 
   const handleScroll = useCallback(
     (e: UIEvent<HTMLDivElement>) => {
