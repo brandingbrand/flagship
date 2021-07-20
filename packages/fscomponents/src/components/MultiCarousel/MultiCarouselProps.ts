@@ -1,6 +1,7 @@
 import { ComponentType, ReactElement, ReactNode } from 'react';
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 import { PageIndicatorProps } from '../PageIndicator';
+import { CarouselController } from './CarouselController';
 
 export interface SlideChangeEvent {
   currentIndex: number;
@@ -9,6 +10,12 @@ export interface SlideChangeEvent {
 
 export interface MultiCarouselProps<ItemT>
   extends Pick<FlatListProps<ItemT>, 'style' | 'renderItem' | 'data' | 'keyExtractor'> {
+  /**
+   * Similar to `ref`, used to get ahold of the control functions for the
+   * carousel
+   */
+  carouselController?: (controller: CarouselController) => void;
+
   /**
    * The number of items to show per page, defaults to `auto`
    */
@@ -145,3 +152,4 @@ export interface MultiCarouselProps<ItemT>
    */
   onSlideChange?: (data: SlideChangeEvent) => void;
 }
+
