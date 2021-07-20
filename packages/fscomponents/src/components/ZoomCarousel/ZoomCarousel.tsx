@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { PageIndicator } from '../PageIndicator';
-import { MultiCarousel, CarouselController } from '../MultiCarousel';
+import { CarouselController, MultiCarousel } from '../MultiCarousel';
 import { ZoomImages } from './ZoomImages';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 

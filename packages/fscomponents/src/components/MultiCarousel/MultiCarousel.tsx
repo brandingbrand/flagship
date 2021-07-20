@@ -295,7 +295,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   );
 
   const handleScrollEndDrag = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       if (
         Platform.OS !== 'android' ||
         typeof initialScrollX !== 'number' ||
@@ -307,11 +307,11 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       const diffX = e.nativeEvent.contentOffset.x - initialScrollX;
 
       if (diffX > 80 || e.nativeEvent.velocity.x < -0.5) {
-        goToNext();
+        await goToNext();
       } else if (diffX < -80 || e.nativeEvent.velocity.x > 0.5) {
-        goToPrev();
+        await goToPrev();
       } else {
-        goToOrigin();
+        await goToOrigin();
       }
     },
     [initialScrollX, goToNext, goToPrev, goToOrigin]
