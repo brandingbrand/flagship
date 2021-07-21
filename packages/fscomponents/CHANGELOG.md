@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** prevent crashing when `itemsPerPage` is invalid ([fe8be36](https://github.com/brandingbrand/flagship/commit/fe8be365f4916eb15316043fd6e13f8bcd516673))
+
+
+
+
+
 ## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
 
 
