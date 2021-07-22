@@ -8,9 +8,9 @@
   integrity sha512-O3QKdJjlNy465ShL25SPW5RiHmj1rQ08q8gCr6gUNpRpw91qhUcmEPE7dGusc85jFXe0Sj1vMno8HDJP/T0aog==
 
 "@adobe/react-native-acpcore@^1.2.5":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@adobe/react-native-acpcore/-/react-native-acpcore-1.4.0.tgz#bdae162f5c25f1009e3dd2ea7004759a1b56476d"
-  integrity sha512-6+8XjdyGgW0eIUdau9hS7y7WoxWlFl5rV4GXH3IOxSvS18v16mYZGedRWRP68AhgiKtGTb0hKMxA92hm0YHicg==
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@adobe/react-native-acpcore/-/react-native-acpcore-1.5.1.tgz#4d337d9bc515d21035716f9e99f48bfa1ba239e7"
+  integrity sha512-ldpdanpYL0cFJ4pTYM46ke3AAamuoX6R8aJeAZFX7tKFzTzTry3XUVkY1JVLVJaotX2tet+qq9HFW6L8HhIdUg==
 
 "@babel/code-frame@7.10.4", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.5.5":
   version "7.10.4"
