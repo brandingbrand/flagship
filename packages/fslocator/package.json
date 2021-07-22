@@ -17,7 +17,7 @@
     "@brandingbrand/fsi18n": "^11.0.1-alpha.8",
     "@brandingbrand/fsnetwork": "^11.0.1-alpha.8",
     "@react-native-community/geolocation": "^2.0.2",
-    "google-map-react": "^1.0.4",
+    "google-map-react": "^2.1.10",
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
     "react": "^16.13.1",
