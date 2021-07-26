@@ -1,39 +1,26 @@
 import React from 'react';
 import {
   DeviceEventEmitter,
-  StyleProp,
-  TextStyle,
   TouchableOpacity
 } from 'react-native';
-
 import {
+  Action,
   CardProps,
-  JSON,
-  StoryGradient
+  JSON
 } from '../types';
 
-import { CardContext } from '../lib/contexts';
-import { TextBlock, TextBlockProps } from './TextBlock';
-import { CTABlock, CTABlockProps } from './CTABlock';
-import { ImageBlock, ImageBlockProps } from './ImageBlock';
-
-export interface FeaturedTopCardContents {
-  Image: ImageBlockProps;
-  Text: TextBlockProps;
-  CTA: CTABlockProps;
-}
-
+import { TextBlock } from './TextBlock';
+import { CTABlock } from './CTABlock';
+import { ImageBlock } from './ImageBlock';
+import { CardContext, EngagementContext } from '../lib/contexts';
 
 export interface ComponentProps extends CardProps {
-  containerStyle?: StyleProp<TextStyle>;
-  story?: JSON;
-  contents: FeaturedTopCardContents;
-  api?: any;
-  storyGradient?: StoryGradient;
-
+  contents: any;
+  actions?: Action;
 }
 
-export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+export const ImageCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+  const { handleAction } = React.useContext(EngagementContext);
   const { containerStyle, contents } = props;
 
   const handleStoryAction = async (json: JSON) => {
@@ -61,17 +48,40 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
   };
 
   const onCardPress = async (): Promise<void> => {
-    const { story, storyGradient } = props;
+    const { actions, story, storyGradient } = props;
+
+    // if there is a story attached and either
+    //    1) no actions object (legacy engagement)
+    //    2) actions.type is null or 'story' (new default tappable cards)
+
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    return handleStoryAction(actionPayload);
+
+    if (story &&
+      (!actions || (actions && (actions.type === null || actions.type === 'story')))
+    ) {
+      if (story.html) {
+        handleAction({
+          type: 'blog-url',
+          value: story.html.link
+        });
+      } else {
+        return handleStoryAction(actionPayload);
+      }
+    } else if (actions && actions.type) {
+      handleAction(actions);
+    }
   };
 
   return (
     <CardContext.Provider
       value={{
         story: props.story,
-        handleStoryAction
+        handleStoryAction,
+        cardActions: props.actions,
+        id: props.id,
+        name: props.name,
+        isCard: true
       }}
     >
       <TouchableOpacity
@@ -81,14 +91,15 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
       >
         <ImageBlock
           {...contents.Image}
+          {...{ ...contents.Image, outerContainerStyle: containerStyle}}
         />
         <TextBlock
           {...contents.Text}
         />
         <CTABlock
           {...contents.CTA}
+          story={props.story}
         />
-
       </TouchableOpacity>
     </CardContext.Provider>
   );

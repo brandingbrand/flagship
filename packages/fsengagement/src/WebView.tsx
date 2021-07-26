@@ -41,7 +41,7 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
   constructor(props: WebViewProps) {
     super(props);
     this.navigator = new Navigator({
-      componentId: props.componentId,
+      componentId: props.componentId || '',
       tabs: []
     });
   }

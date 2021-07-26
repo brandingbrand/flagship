@@ -1,5 +1,4 @@
-import { ComponentClass } from 'react';
-import { Notification } from 'react-native-fcm';
+import { ComponentClass, FunctionComponent } from 'react';
 import {
   ImageStyle,
   ImageURISource,
@@ -11,7 +10,7 @@ import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 
 export interface ScreenProps {
-  componentId: string;
+  componentId?: string;
 }
 
 export interface EmitterProps {
@@ -28,7 +27,10 @@ export interface Action extends EmitterProps {
 }
 
 export interface ComponentList {
-  [key: string]: ComponentClass<any>;
+  [key: string]: ComponentClass<any> | FunctionComponent<any>;
+}
+export interface AppSettings {
+  [key: string]: any;
 }
 
 export interface Icon {
@@ -78,6 +80,8 @@ export interface JSON extends EmitterProps {
   headerTitleStyle?: StyleProp<TextStyle>;
   navBarTitleStyle?: StyleProp<TextStyle>;
   pageCounterStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  id?: string;
   key?: string;
   storyType?: string;
   tabbedItems?: any[];
@@ -141,14 +145,6 @@ export interface EngagementMessage {
   title: string;
   inbox: string;
   attributes: any;
-}
-
-export interface EngagmentNotification extends Notification {
-  messageId?: string;
-  future?: boolean;
-  on?: string;
-  body?: string;
-  title?: string;
 }
 
 export interface EngagementProfile {
