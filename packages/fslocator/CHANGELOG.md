@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.4...v11.0.1-alpha.5) (2021-07-12)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.3...v11.0.1-alpha.4) (2021-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.2...v11.0.1-alpha.3) (2021-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.2](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.1...v11.0.1-alpha.2) (2021-07-07)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.0...v11.0.1-alpha.1) (2021-07-07)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [11.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.61...v11.0.1-alpha.0) (2021-07-06)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
 # [11.0.0-alpha.61](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.60...v11.0.0-alpha.61) (2021-07-06)
 
 **Note:** Version bump only for package @brandingbrand/fslocator

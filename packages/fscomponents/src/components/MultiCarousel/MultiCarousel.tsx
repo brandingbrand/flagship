@@ -1,9 +1,21 @@
-import React, { Component, RefObject } from 'react';
+import React, {
+  isValidElement,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {
   Animated,
   Easing,
   FlatList,
+  GestureResponderEvent,
+  LayoutChangeEvent,
   ListRenderItemInfo,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -11,17 +23,25 @@ import {
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-import { MultiCarouselProps } from './MultiCarouselProps';
 import { PageIndicator } from '../PageIndicator';
+import { GoToOptions } from './CarouselController';
+import { MultiCarouselProps } from './MultiCarouselProps';
 
-export interface MultiCarouselState {
-  containerWidth: number;
-  currentIndex: number;
-  itemWidth: number;
-  opacity: Animated.Value;
-}
+const DEFAULT_PEEK_SIZE = 0;
+const DEFAULT_ITEMS_PER_PAGE = 'auto';
+const DEFAULT_ITEM_WIDTH = 175;
+const DEFAULT_PAGE_INDICATOR_COMPONENT = PageIndicator;
+const DEFAULT_KEY_EXTRACTOR = <ItemT extends { key?: string; id?: string }>(
+  item: ItemT,
+  index: number
+) => {
+  return item?.key ?? item?.id ?? `${index}`;
+};
 
-const S = StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden'
+  },
   goToNext: {
     position: 'absolute',
     top: '50%',
@@ -64,218 +84,259 @@ const S = StyleSheet.create({
   }
 });
 
-export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, MultiCarouselState> {
-  currentScrollX: number = 0;
-  initialScrollX: number = 0;
-  defaultPeekSize: number = 0;
-  defaultItemsPerPage: number = 2;
+// tslint:disable-next-line: cyclomatic-complexity
+export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
+  const {
+    data,
+    renderItem,
+    PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
+    keyExtractor = DEFAULT_KEY_EXTRACTOR,
+    itemsPerPage = DEFAULT_ITEMS_PER_PAGE,
+    itemWidth = DEFAULT_ITEM_WIDTH,
+    peekSize = DEFAULT_PEEK_SIZE,
+    carouselController,
+    centerMode,
+    contentContainerStyle,
+    dotActiveStyle,
+    dotStyle,
+    itemStyle,
+    itemsAreEqual,
+    nextArrowContainerStyle,
+    nextArrowStyle,
+    nextArrowOnBlur,
+    onSlideChange,
+    pageIndicatorStyle,
+    prevArrowContainerStyle,
+    prevArrowStyle,
+    prevArrowOnBlur,
+    showArrow,
+    style,
+    itemUpdated,
+    hidePageIndicator,
+    renderPageIndicator
+  } = props;
 
-  private scrollView: RefObject<FlatList<ItemT>>;
+  const scrollView = useRef<FlatList<ItemT>>(null);
 
-  constructor(props: MultiCarouselProps<ItemT>) {
-    super(props);
+  const shouldAnimate = !!itemUpdated || !!itemsAreEqual;
+  const [opacity] = useState(() => new Animated.Value(shouldAnimate ? 0 : 1));
 
-    if (props.peekSize && !Number.isInteger(props.peekSize * 2)) {
+  const [prevData, setPrevData] = useState(data);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [initialScrollX, setInitialScrollX] = useState<number>();
+
+  const calculatedItemsPerPage = useMemo(() => {
+    if (typeof itemsPerPage === 'number') {
+      if (itemsPerPage <= 0) {
+        console.error(
+          `${MultiCarousel.name}: itemsPerPage must be greater than 0, received ${itemsPerPage}`
+        );
+        return 1;
+      }
+
+      return itemsPerPage;
+    }
+
+    if (!containerWidth) {
+      return 1;
+    }
+
+    return Math.floor(containerWidth / itemWidth);
+  }, [itemsPerPage, itemWidth, containerWidth]);
+
+  const calculatedPeekSize = useMemo(
+    () => (itemsPerPage === 'auto' ? containerWidth % itemWidth : peekSize),
+    [itemsPerPage, peekSize, containerWidth, calculatedItemsPerPage]
+  );
+
+  const numberOfPages = useMemo(
+    () => Math.ceil((data?.length ?? 0) / Math.floor(calculatedItemsPerPage)),
+    [data, calculatedItemsPerPage]
+  );
+
+  const calculatedItemWidth = useMemo(() => {
+    if (peekSize && !Number.isInteger(peekSize * 2)) {
       console.error(
-        `MultiCarousel: (peekSize * 2) must be an integer but got (${props.peekSize} * 2)`
+        `${MultiCarousel.name}: (peekSize * 2) must be an integer but got (${peekSize} * 2)`
       );
     }
 
-    this.scrollView = React.createRef<FlatList<ItemT>>();
+    return itemsPerPage === 'auto'
+      ? itemWidth
+      : (containerWidth - calculatedPeekSize * (centerMode ? 2 : 1)) / calculatedItemsPerPage;
+  }, [itemWidth, containerWidth, calculatedPeekSize, centerMode, calculatedItemsPerPage]);
 
-    this.state = {
-      currentIndex: 0,
-      containerWidth: 0,
-      itemWidth: 0,
-      opacity: new Animated.Value(this.props.itemUpdated ? 0 : 1)
-    };
-  }
+  const snapToInterval = useMemo(
+    () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
+    [calculatedItemWidth, calculatedItemsPerPage]
+  );
 
-  componentDidMount(): void {
-    if (this.props.itemUpdated) {
-      Animated.timing(this.state.opacity, {
+  const pageWidth = useMemo(
+    () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
+    [calculatedItemWidth, calculatedItemsPerPage]
+  );
+
+  useLayoutEffect(() => {
+    if (shouldAnimate) {
+      Animated.timing(opacity, {
         toValue: 1,
         easing: Easing.in(Easing.cubic),
         useNativeDriver: true
       }).start();
     }
-  }
+  }, [opacity, shouldAnimate]);
 
-  componentDidUpdate(
-    prevProps: MultiCarouselProps<ItemT>,
-    prevState: MultiCarouselState,
-    snapshot: any
-  ): void {
-    const animateItemChange = () => {
-      this.state.opacity.setValue(0);
-      Animated.timing(this.state.opacity, {
-        toValue: 1,
-        useNativeDriver: true
-      }).start();
-    };
-    if (this.props.itemsPerPage !== prevProps.itemsPerPage) {
-      this.setState({
-        itemWidth: this.getItemWidth(this.state.containerWidth)
-      });
+  useLayoutEffect(() => {
+    if (data && data.length <= currentIndex) {
+      setCurrentIndex(data.length);
     }
-    if (this.props.data.length <= this.state.currentIndex) {
-      if (this.props.data.length) {
-        this.setState({
-          currentIndex: this.props.data.length - 1
-        });
-      } else if (this.state.currentIndex !== 0) {
-        this.setState({
-          currentIndex: 0
+  }, [data, currentIndex, setCurrentIndex]);
+
+  useEffect(() => {
+    const prevItem = prevData?.[currentIndex];
+    const nextItem = data?.[currentIndex];
+
+    if (prevItem !== nextItem) {
+      const runAnimation = () => {
+        opacity.setValue(0);
+        Animated.timing(opacity, {
+          toValue: 1,
+          useNativeDriver: true
+        }).start();
+      };
+
+      if (itemsAreEqual) {
+        if (itemsAreEqual(prevItem, nextItem)) {
+          runAnimation();
+        }
+      } else {
+        itemUpdated?.(prevItem, nextItem, currentIndex, runAnimation);
+      }
+    }
+
+    setPrevData(data);
+  }, [data, prevData, currentIndex, itemUpdated, setPrevData]);
+
+  const renderItemContainer = useCallback(
+    (info: ListRenderItemInfo<ItemT>) => (
+      <View
+        key={keyExtractor(info.item, info.index)}
+        style={[{ width: calculatedItemWidth }, itemStyle]}
+      >
+        {renderItem?.(info)}
+      </View>
+    ),
+    [renderItem, itemStyle, calculatedItemWidth, keyExtractor]
+  );
+
+  const handleLayout = useCallback(
+    (e: LayoutChangeEvent) => setContainerWidth(e.nativeEvent.layout.width),
+    [containerWidth, setContainerWidth]
+  );
+
+  const goTo = useCallback(
+    async (nextIndex: number, { animated = true }: GoToOptions = {}) => {
+      if (scrollView.current) {
+        scrollView.current.scrollToOffset({
+          offset: nextIndex * pageWidth,
+          animated
         });
       }
-    } else if (prevProps.renderItem !== this.props.renderItem) {
-      animateItemChange();
-    } else if (this.props.itemUpdated) {
-      this.props.itemUpdated(
-        prevProps.data[this.state.currentIndex],
-        this.props.data[this.state.currentIndex],
-        this.state.currentIndex,
-        animateItemChange
-      );
-    }
-  }
+    },
+    [currentIndex, pageWidth, setCurrentIndex, onSlideChange]
+  );
 
-  handleContainerSizeChange = (e: any) => {
-    const containerWidth = e.nativeEvent.layout.width;
+  const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
+    const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
 
-    if (containerWidth === this.state.containerWidth) {
-      return;
-    }
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
+  }, [goTo, currentIndex, numberOfPages]);
 
-    this.setState({
-      containerWidth,
-      itemWidth: this.getItemWidth(containerWidth)
-    });
-  }
-
-  goToNext = (options?: any) => {
-    options = options || { animated: true };
-    const { currentIndex } = this.state;
-    const nextIndex =
-      currentIndex + 1 > this.getPageNum() - 1 ? this.getPageNum() - 1 : currentIndex + 1;
-
-    this.goTo(nextIndex, options);
-  }
-
-  goToPrev = (options?: any) => {
-    options = options || { animated: true };
-
-    const { currentIndex } = this.state;
+  const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
-    this.goTo(nextIndex, options);
-  }
 
-  goTo = (index: number, options?: any) => {
-    options = options || { animated: true };
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
+  }, [goTo, currentIndex]);
 
-    // No scrollView when there is only one image
-    if (!this.scrollView) {
-      return;
-    }
+  const goToOrigin = useCallback(async (options?: GoToOptions) => {
+    await goTo(currentIndex, options);
+  }, [goTo, currentIndex]);
 
-    if (this.scrollView.current) {
-      this.scrollView.current.scrollToOffset({
-        offset: index * this.getPageWidth(),
-        animated: options.animated
-      });
-    }
-
-    if (this.props.onSlideChange && this.state.currentIndex !== index) {
-      this.props.onSlideChange({
-        currentIndex: this.state.currentIndex,
-        nextIndex: index
-      });
-    }
-
-    this.setState({
-      currentIndex: index
+  useEffect(() => {
+    carouselController?.({
+      goTo,
+      goToNext,
+      goToPrev,
+      goToOrigin
     });
+  }, [carouselController, goTo, goToNext, goToPrev, goToOrigin]);
+
+  const handleScroll = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const index =
+        Math.round(e.nativeEvent.contentOffset.x + pageWidth + calculatedPeekSize) >=
+        Math.round(e.nativeEvent.contentSize.width)
+          ? numberOfPages - 1
+          : Math.round(Math.round(e.nativeEvent.contentOffset.x) / snapToInterval);
+      const nextIndex = Math.min(Math.max(0, index), numberOfPages - 1);
+
+      if (currentIndex !== nextIndex) {
+        onSlideChange?.({
+          currentIndex,
+          nextIndex
+        });
+      }
+
+      setCurrentIndex(nextIndex);
+    },
+    [currentIndex, snapToInterval, calculatedPeekSize, numberOfPages, setCurrentIndex]
+  );
+
+  const handleScrollBeginDrag = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (Platform.OS !== 'android') {
+        return;
+      }
+
+      setInitialScrollX(e.nativeEvent.contentOffset.x);
+    },
+    [setInitialScrollX]
+  );
+
+  const handleScrollEndDrag = useCallback(
+    async (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (
+        Platform.OS !== 'android' ||
+        typeof initialScrollX !== 'number' ||
+        !e.nativeEvent.velocity
+      ) {
+        return;
+      }
+
+      const diffX = e.nativeEvent.contentOffset.x - initialScrollX;
+
+      if (diffX > 80 || e.nativeEvent.velocity.x < -0.5) {
+        await goToNext();
+      } else if (diffX < -80 || e.nativeEvent.velocity.x > 0.5) {
+        await goToPrev();
+      } else {
+        await goToOrigin();
+      }
+    },
+    [initialScrollX, goToNext, goToPrev, goToOrigin]
+  );
+
+  if (!data) {
+    return null;
   }
 
-  goToOrigin = () => {
-    const { currentIndex } = this.state;
-    this.goTo(currentIndex);
-  }
-
-  handleScrollRelease = (e: any) => {
-    if (Platform.OS !== 'android') {
-      return;
-    }
-
-    const diffX = e.nativeEvent.contentOffset.x - this.initialScrollX;
-
-    if (diffX > 80 || e.nativeEvent.velocity.x < -0.5) {
-      this.goToNext();
-    } else if (diffX < -80 || e.nativeEvent.velocity.x > 0.5) {
-      this.goToPrev();
-    } else {
-      this.goToOrigin();
-    }
-  }
-
-  handleScrollBegin = (e: any) => {
-    if (Platform.OS !== 'android') {
-      return;
-    }
-    this.initialScrollX = e.nativeEvent.contentOffset.x;
-  }
-
-  handleMomentumScrollEnd = (e: any) => {
-    if (Platform.OS !== 'ios') {
-      return;
-    }
-    const offset = e.nativeEvent.contentOffset.x < 0 ? 0 : e.nativeEvent.contentOffset.x;
-
-    const pageWidth = this.getPageWidth();
-    const pageNum = this.getPageNum();
-
-    const nextIndex =
-      offset > pageWidth * (pageNum - 2) ? pageNum - 1 : Math.floor(offset / pageWidth);
-    this.setState({ currentIndex: nextIndex });
-
-    if (this.props.onSlideChange) {
-      this.props.onSlideChange({
-        currentIndex: this.state.currentIndex,
-        nextIndex
-      });
-    }
-  }
-
-  getPageNum = () => {
-    return Math.ceil(
-      this.props.data.length / Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage)
-    );
-  }
-
-  getPageWidth = () => {
-    return this.state.itemWidth * Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
-  }
-
-  getItemWidth = (containerWidth: number) => {
-    const peekSize = this.props.peekSize || this.defaultPeekSize;
-    const itemPerPage = this.props.itemsPerPage || this.defaultItemsPerPage;
-
-    return (containerWidth - peekSize * (this.props.centerMode ? 2 : 1)) / itemPerPage;
-  }
-
-  renderSingle = () => {
-    if (!this.props.data || !this.props.data.length) {
-      return null;
-    }
-
+  if (data.length <= 1) {
     return (
-      <View
-        style={[{ alignItems: 'center' }, this.props.style]}
-        onLayout={this.handleContainerSizeChange}
-      >
-        <View style={[{ width: this.state.itemWidth }, this.props.itemStyle]}>
-          {this.props.renderItem({
-            item: this.props.data[0],
+      <View style={[{ alignItems: 'center' }, style]} onLayout={handleLayout}>
+        <View style={[{ width: calculatedItemWidth }, itemStyle]}>
+          {renderItem?.({
+            item: data[0],
             index: 0,
             separators: {
               highlight: () => undefined,
@@ -288,89 +349,62 @@ export class MultiCarousel<ItemT> extends Component<MultiCarouselProps<ItemT>, M
     );
   }
 
-  renderItem = (info: ListRenderItemInfo<ItemT>) => {
-    return (
-      <View key={info.index} style={[{ width: this.state.itemWidth }, this.props.itemStyle]}>
-        {this.props.renderItem(info)}
-      </View>
-    );
-  }
+  return (
+    <Animated.View style={[styles.container, style, { opacity }]}>
+      <FlatList
+        ref={scrollView}
+        data={data}
+        renderItem={renderItemContainer}
+        keyExtractor={keyExtractor}
+        horizontal={true}
+        decelerationRate={0}
+        snapToAlignment='start'
+        snapToInterval={snapToInterval}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={contentContainerStyle}
+        onLayout={handleLayout}
+        onScroll={handleScroll}
+        onScrollEndDrag={handleScrollEndDrag}
+        onScrollBeginDrag={handleScrollBeginDrag}
+      />
 
-  keyExtractor = (item: ItemT, index: number): string => {
-    if (this.props.keyExtractor) {
-      return this.props.keyExtractor(item, index);
-    }
-
-    const testItem = item as any;
-
-    return testItem.key || testItem.id || '' + index;
-  }
-
-  render(): React.ReactNode {
-    const snapToInterval =
-      this.state.itemWidth * Math.floor(this.props.itemsPerPage || this.defaultItemsPerPage);
-
-    const pageNum = this.getPageNum();
-
-    if (this.props.data.length <= 1) {
-      return this.renderSingle();
-    }
-
-    return (
-      <Animated.View
-        style={[this.props.style, { opacity: this.state.opacity, overflow: 'hidden' }]}
-      >
-        <FlatList
-          onLayout={this.handleContainerSizeChange}
-          horizontal={true}
-          ref={this.scrollView}
-          decelerationRate={0}
-          snapToAlignment={'start'}
-          snapToInterval={snapToInterval}
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={this.handleMomentumScrollEnd}
-          onScrollEndDrag={this.handleScrollRelease}
-          onScrollBeginDrag={this.handleScrollBegin}
-          data={this.props.data}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-          contentContainerStyle={this.props.contentContainerStyle}
+      {hidePageIndicator ? null : renderPageIndicator ? (
+        renderPageIndicator(currentIndex, data.length)
+      ) : isValidElement(PageIndicatorComponent) ? (
+        PageIndicatorComponent
+      ) : (
+        <PageIndicatorComponent
+          style={pageIndicatorStyle}
+          currentIndex={currentIndex}
+          itemsCount={numberOfPages}
+          dotStyle={dotStyle}
+          dotActiveStyle={dotActiveStyle}
         />
+      )}
 
-        {this.props.renderPageIndicator ? (
-          this.props.renderPageIndicator(this.state.currentIndex, this.props.data.length)
-        ) : this.props.hidePageIndicator ? null : (
-          <PageIndicator
-            style={this.props.pageIndicatorStyle}
-            currentIndex={this.state.currentIndex}
-            itemsCount={pageNum}
-            dotStyle={this.props.dotStyle}
-            dotActiveStyle={this.props.dotActiveStyle}
-          />
-        )}
+      {currentIndex !== 0 && !!showArrow && (
+        <TouchableOpacity
+          accessibilityRole='button'
+          accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
+          style={[styles.goToPrev, prevArrowContainerStyle]}
+          onPress={goToPrev}
+          onBlur={prevArrowOnBlur}
+        >
+          <View style={[styles.buttonPrevIcon, prevArrowStyle]} />
+        </TouchableOpacity>
+      )}
 
-        {this.state.currentIndex !== 0 && !!this.props.showArrow && (
-          <TouchableOpacity
-            accessibilityRole='button'
-            accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
-            style={[S.goToPrev, this.props.prevArrowContainerStyle]}
-            onPress={this.goToPrev}
-          >
-            <View style={[S.buttonPrevIcon, this.props.prevArrowStyle]} />
-          </TouchableOpacity>
-        )}
-
-        {this.state.currentIndex !== pageNum - 1 && !!this.props.showArrow && (
-          <TouchableOpacity
-            accessibilityRole='button'
-            accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
-            style={[S.goToNext, this.props.nextArrowContainerStyle]}
-            onPress={this.goToNext}
-          >
-            <View style={[S.buttonNextIcon, this.props.nextArrowStyle]} />
-          </TouchableOpacity>
-        )}
-      </Animated.View>
-    );
-  }
-}
+      {currentIndex !== numberOfPages - 1 && !!showArrow && (
+        <TouchableOpacity
+          accessibilityRole='button'
+          accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
+          style={[styles.goToNext, nextArrowContainerStyle]}
+          onPress={goToNext}
+          onBlur={nextArrowOnBlur}
+        >
+          <View style={[styles.buttonNextIcon, nextArrowStyle]} />
+        </TouchableOpacity>
+      )}
+    </Animated.View>
+  );
+};

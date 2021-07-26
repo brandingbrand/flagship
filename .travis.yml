@@ -3,7 +3,7 @@ stages:
   - name: test
     if: type = pull_request AND tag IS blank
   - name: canary
-    if: type = push AND branch = develop AND tag IS blank
+    if: type = push AND branch = DONOTRUN AND tag IS blank # disable auto-publish -BW
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
@@ -20,6 +20,7 @@ jobs:
     node_js: '12'
     script:
       - yarn prepare || travis_terminate 1
+      - yarn ship:init-web # needed to populate project_env_index for fsapp (depended upon by some components)
       - yarn prepare:fscodestyle || travis_terminate 1
       - yarn lint || travis_terminate 1
       - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
