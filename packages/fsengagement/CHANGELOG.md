@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.14.0](https://github.com/brandingbrand/flagship/compare/v10.13.0...v10.14.0) (2021-07-27)
+
+
+### Features
+
+* **fsengagement:** add new components to fs10 ([3da03a7](https://github.com/brandingbrand/flagship/commit/3da03a78b5d946cd36d43d2b8092c0d9582c4251))
+
+
+
+
+
 # [10.13.0](https://github.com/brandingbrand/flagship/compare/v10.12.0...v10.13.0) (2021-06-17)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
