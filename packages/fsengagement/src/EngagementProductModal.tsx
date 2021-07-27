@@ -255,7 +255,7 @@ export default class EngagementProductModal extends
       scrollEnabled: true
     };
     this.navigator = new Navigator({
-      componentId: props.componentId,
+      componentId: props.componentId || '',
       tabs: []
     });
   }

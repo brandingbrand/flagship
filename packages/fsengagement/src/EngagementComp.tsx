@@ -1,5 +1,5 @@
 // tslint:disable:jsx-use-translation-function
-import React, { Component, ComponentClass, Fragment } from 'react';
+import React, { Component, ComponentClass } from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -23,7 +23,6 @@ import {
 import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
-import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import {
   Action,
@@ -34,18 +33,19 @@ import {
   ScreenProps
 } from './types';
 import EngagementWebView from './WebView';
-import EngagementProductModal from './EngagementProductModal';
+import { BackButton } from './components/BackButton';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
 import { debounce } from 'lodash-es';
+import { EngagementContext } from './lib/contexts';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
-Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
 
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
 const WHITE_INBOX_WRAPPER = 'WhiteInboxWrapper';
 const INBOX_WRAPPER = 'InboxWrapper';
+
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
@@ -191,7 +191,6 @@ const styles = StyleSheet.create({
 });
 
 const gradientImage = require('../assets/images/gradient.png');
-const backArrow = require('../assets/images/backArrow.png');
 const appleCloseIcon = require('../assets/images/apple-close-icn.png');
 const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
 const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
@@ -216,7 +215,6 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   animateScroll?: boolean;
   onBack?: () => void;
   language?: string;
-  AnimatedImage?: any;
   welcomeHeader?: boolean;
   headerName?: string;
   animate?: boolean;
@@ -240,12 +238,6 @@ export default function(
   layoutComponents: ComponentList
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
-    static childContextTypes: any = {
-      handleAction: PropTypes.func,
-      story: PropTypes.object,
-      language: PropTypes.string,
-      cardPosition: PropTypes.number
-    };
 
     state: any = {};
     AnimatedStory: any;
@@ -333,6 +325,7 @@ export default function(
         }, 500);
       }
     }
+
     scrollToTop = () => {
       this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     }
@@ -350,13 +343,6 @@ export default function(
         }
       }
     }
-
-    getChildContext = () => ({
-      handleAction: this.handleAction,
-      story: this.props.backButton ? this.props.json : null,
-      language: this.props.language,
-      cardPosition: this.props.cardPosition || 0
-    })
 
     // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
     handleAction = debounce(async (actions: Action) => {
@@ -444,10 +430,6 @@ export default function(
       }
       return;
     }, 300);
-
-    onBackPress = async (): Promise<void> => {
-      return this.props.navigator.pop();
-    }
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
@@ -575,6 +557,21 @@ export default function(
         this.renderBlock(item)
       );
     }
+    addParentCardProps = (
+      type: string,
+      blocks: BlockItem[],
+      parentStyle: StyleProp<ViewStyle>
+    ): any => {
+      if (type === 'Card') {
+        return (blocks || []).map(b => {
+          return {
+            ...b,
+            cardContainerStyle: parentStyle
+          };
+        });
+      }
+      return blocks;
+    }
     renderBlock = (item: BlockItem): React.ReactElement | null => {
       const {
         private_blocks,
@@ -622,9 +619,14 @@ export default function(
           api,
           key: this.dataKeyExtractor(item)
         },
-        private_blocks && private_blocks.map(this.renderBlock)
+        private_blocks && this.addParentCardProps(
+          private_type,
+          private_blocks,
+          item.containerStyle
+        ).map(this.renderBlock)
       );
     }
+
     onAnimatedClose = (): void => {
       if (this.state.isClosingAnimation) { return; }
       this.setState({
@@ -684,13 +686,13 @@ export default function(
       const { json } = this.props;
       const empty: any = json && json.empty || {};
       return (
-        <Fragment>
+        <>
           {(json && json.private_blocks || []).map(this.renderBlock)}
           {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
               {empty.message || 'No content found.'}</Text>
           )}
-        </Fragment>
+        </>
       );
     }
     // tslint:disable-next-line:cyclomatic-complexity
@@ -734,7 +736,7 @@ export default function(
         );
       }
       return (
-        <Fragment>
+        <>
           <FlatList
             data={this.props.json.private_blocks || []}
             renderItem={this.renderBlockItem}
@@ -757,7 +759,7 @@ export default function(
               resizeMode={'cover'}
             />
           </Animated.View>
-        </Fragment>
+        </>
       );
     }
     onTabbedCardPress = () => {
@@ -776,7 +778,7 @@ export default function(
       const { animate, animateScroll, backButton, containerStyle, json } = this.props;
       if (animateScroll) {
         return (
-          <Fragment>
+          <>
             <Animatable.View
               ref={this.handleAnimatedRef}
               useNativeDriver={false}
@@ -799,12 +801,12 @@ export default function(
                 </TouchableOpacity>
               </Animatable.View>
             )}
-          </Fragment>
+          </>
         );
       }
       if (animate) {
         return (
-          <Fragment>
+          <>
             <Animatable.View
               ref={this.handleAnimatedRef}
               useNativeDriver={false}
@@ -843,21 +845,18 @@ export default function(
                 />
               </TouchableOpacity>
               )}
-          </Fragment>
+          </>
         );
       }
       return (
-        <View style={[styles.container, containerStyle]}>
+        <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
           {backButton &&
             (
-            <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
-              <Image
-                resizeMode='contain'
-                source={backArrow}
-                style={[styles.backIcon, json.backArrow]}
+              <BackButton
+                navigator={this.props.navigator}
+                style={json.backArrow}
               />
-            </TouchableOpacity>
             )}
         </View>
       );
@@ -901,7 +900,7 @@ export default function(
         const autoplayDelay = this.props.autoplayDelay || 1000;
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
-          <Fragment>
+          <>
             {empty && !(json && json.private_blocks && json.private_blocks.length) && (
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
                 {empty && empty.message || 'No content found.'}</Text>
@@ -924,11 +923,11 @@ export default function(
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-          </Fragment>
+          </>
         );
       } else if (fullScreenCardImage) {
         return (
-          <Fragment>
+          <>
             <ImageBackground
               source={fullScreenCardImage}
               imageStyle={styles.imageStyle}
@@ -955,14 +954,14 @@ export default function(
             >
               {this.renderBlocks()}
             </FlatList>
-          </Fragment>
+          </>
         );
 
       } else if (this.props.noScrollView) {
         return (
-          <Fragment>
+          <>
             {this.renderBlocks()}
-          </Fragment>
+          </>
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
@@ -976,7 +975,7 @@ export default function(
         );
       } else if (this.props.welcomeHeader) {
         return (
-          <Fragment>
+          <>
             <Animated.FlatList
               data={this.props.json && this.props.json.private_blocks || []}
               keyExtractor={this.dataKeyExtractor}
@@ -1002,11 +1001,11 @@ export default function(
             >
               {this.renderBlocks()}
             </Animated.FlatList>
-          </Fragment>
+          </>
         );
       }
       return (
-        <Fragment>
+        <>
           <FlatList
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
@@ -1029,7 +1028,7 @@ export default function(
           >
             {this.renderBlocks()}
           </FlatList>
-        </Fragment>
+        </>
 
       );
     }
@@ -1044,7 +1043,15 @@ export default function(
       const navBarTitleStyle = json && json.navBarTitleStyle || {};
 
       return (
-        <Fragment>
+        <EngagementContext.Provider
+          value={{
+            handleAction: this.handleAction,
+            story: this.props.backButton ? this.props.json : null,
+            language: this.props.language,
+            cardPosition: this.props.cardPosition || 0
+          }}
+        >
+        <>
           {this.props.renderHeader && this.props.renderHeader()}
           {this.renderContent()}
           {(this.props.renderType && this.props.renderType === 'carousel' &&
@@ -1072,7 +1079,8 @@ export default function(
               {navBarTitle}
             </Animatable.Text>
           )}
-        </Fragment>
+        </>
+        </EngagementContext.Provider>
       );
     }
 
