@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
+  SafeAreaView,
   ScrollView,
   StyleProp,
   Text,
@@ -30,11 +31,40 @@ export interface HighlightResultAccumulator {
 
 export interface SearchScreenResult {
   title: string;
-  query: string;
   [key: string]: any;
 }
 
-export interface SearchScreenProps {
+export interface SerializableSearchScreenProps {
+  style?: ViewStyle;
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+  searchResultsScrollViewStyle?: ViewStyle;
+  searchBarContainerStyle?: ViewStyle;
+  /**
+   * Whether or not the search bar should automatically focus when the component mounts.
+   * Defaults to true.
+   */
+  searchBarShouldFocus?: boolean;
+  clearButtonText?: string;
+  clearButtonStyle?: TextStyle;
+  clearButtonWrap?: ViewStyle;
+  recentTitle?: string;
+  recentTitleStyle?: TextStyle;
+  recentTitleWrap?: ViewStyle;
+}
+
+export interface SearchScreenProps extends Omit<
+  SerializableSearchScreenProps,
+  'style' |
+  'itemStyle' |
+  'itemTextStyle' |
+  'searchResultsScrollViewStyle' |
+  'searchBarContainerStyle' |
+  'clearButtonStyle' |
+  'clearButtonWrap' |
+  'recentTitleStyle' |
+  'recentTitleWrap'
+  > {
   onClose: () => void;
   onResultPress?: (result: SearchScreenResult) => void;
   onInputChange?: (value: string) => void;
@@ -45,18 +75,19 @@ export interface SearchScreenProps {
     inputValue: string
   ) => React.ReactNode;
   renderResultsHeader?: () => React.ReactNode;
+  renderNoResults?: () => React.ReactNode;
   searchBarProps?: SearchBarProps;
   results?: SearchScreenResult[];
+  style?: StyleProp<ViewStyle>;
   itemStyle?: StyleProp<ViewStyle>;
   itemTextStyle?: StyleProp<TextStyle>;
   renderContentUnderSearchBar?: () => React.ReactNode;
   searchResultsScrollViewStyle?: StyleProp<ViewStyle>;
   searchBarContainerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Whether or not the search bar should automatically focus when the component mounts.
-   * Defaults to true.
-   */
-  searchBarShouldFocus?: boolean;
+  clearButtonStyle?: StyleProp<TextStyle>;
+  clearButtonWrap?: StyleProp<ViewStyle>;
+  recentTitleStyle?: StyleProp<TextStyle>;
+  recentTitleWrap?: StyleProp<ViewStyle>;
 }
 
 export interface SearchScreenState {
@@ -65,11 +96,12 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: any;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);
 
+    this.searchBar = null;
     this.state = {
       history: [],
       inputValue: ''
@@ -88,14 +120,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (searchBarShouldFocus === undefined || searchBarShouldFocus) {
+    if (searchBarShouldFocus !== false && this.searchBar) {
       this.searchBar.focusInput();
     }
 
     this.loadHistoryToState();
   }
 
-  getSearchBarRef = (ref: any) => {
+  getSearchBarRef = (ref: SearchBar | null) => {
     this.searchBar = ref;
   }
 
@@ -128,6 +160,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
       SEARCH_MODAL_HISTORY_KEY,
       JSON.stringify(history)
     );
+    this.setState({ history });
     return history;
   }
 
@@ -155,44 +188,46 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
   }
 
   renderHistory = () => {
-    if (!this.state.history || !this.state.history.length) {
-      return null;
-    }
-
     return (
       <ScrollView
         style={[S.resultsContainer, this.props.searchResultsScrollViewStyle]}
         keyboardShouldPersistTaps='always'
         keyboardDismissMode='on-drag'
       >
-        <View style={S.recentSearchContainer}>
-          <Text style={S.recentSearch}>
-            {FSI18n.string(translationKeys.flagship.search.recentSearches)}:
-          </Text>
+        {(this.state.history && this.state.history.length) ? (
+          <>
+            <View style={[S.recentSearchContainer, this.props.recentTitleWrap]}>
+              <Text style={[S.recentSearch, this.props.recentTitleStyle]}>
+                {this.props.recentTitle ||
+                  (FSI18n.string(translationKeys.flagship.search.recentSearches) + ':')}
+              </Text>
 
-          <TouchableOpacity
-            onPress={this.clearHistory}
-            accessibilityLabel={
-              FSI18n.string(translationKeys.flagship.search.actions.clear.accessibility)
-            }
-          >
-            <Text style={S.recentSearchClearText}>
-              {FSI18n.string(translationKeys.flagship.search.actions.clear.actionBtn)}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {this.state.history.map(this.renderItem)}
+              <TouchableOpacity
+                onPress={this.clearHistory}
+                accessibilityLabel={
+                  FSI18n.string(translationKeys.flagship.search.actions.clear.accessibility)
+                }
+                style={this.props.clearButtonWrap}
+              >
+                <Text style={[S.recentSearchClearText, this.props.clearButtonStyle]}>
+                  {this.props.clearButtonText ||
+                    FSI18n.string(translationKeys.flagship.search.actions.clear.actionBtn)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {this.state.history.map(this.renderItem)}
+          </>
+        ) : null}
+        {this.props.renderNoResults && this.props.renderNoResults()}
       </ScrollView>
     );
   }
 
   renderResult = () => {
-    if (!this.props.results || !this.props.results.length) {
-      if (this.props.results === null) {
-        return this.renderHistory();
-      } else {
-        return null;
-      }
+    if (!this.props.results) {
+      return this.renderHistory();
+    } else if (!this.props.results.length) {
+      return null;
     }
 
     return (
@@ -223,17 +258,17 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         onPress={this.handleResultPress(item)}
         accessibilityLabel={`Search ${item.title}`}
       >
-        {this.renderTextWithHighLighs(item.title, this.state.inputValue)}
+        {this.renderTextWithHighLights(item.title, this.state.inputValue)}
       </TouchableHighlight>
     );
   }
 
-  renderTextWithHighLighs = (name: string = '', query: string) => {
+  renderTextWithHighLights = (name: string = '', query: string) => {
     const strArr = highlightStr(name, query);
 
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
-        {strArr.map((str: any, i: number) => {
+        {strArr.map((str: HighlightResult, i: number) => {
           return (
             <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
               {str.str}
@@ -279,16 +314,16 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
 
   render(): JSX.Element {
     return (
-      <View style={S.modalContainer}>
+      <SafeAreaView style={[S.modalContainer, this.props.style]}>
         {this.renderSearchBar()}
         {this.renderContentUnderSearchBar()}
         {this.renderResult()}
-      </View>
+      </SafeAreaView>
     );
   }
 }
 
-function highlightStr(name: string, query: string): any {
+function highlightStr(name: string, query: string): HighlightResult[] {
   let queryRegx;
 
   try {

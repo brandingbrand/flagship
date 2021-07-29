@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react';
 import { EngagementService, EngagementServiceConfig } from './EngagementService';
 import EngagementComp, { EngagementScreenProps } from './EngagementComp';
-import { ComponentList, InboxBlock, InjectedProps } from './types';
+import { ComponentList, EngagementMessage, InboxBlock, InjectedProps, JSON } from './types';
 import layoutComponents from './inboxblocks';
 
 export interface EngagementSettings extends EngagementServiceConfig {
@@ -13,7 +13,14 @@ export interface EngagementUtilities {
   EngagementComp: ComponentClass<EngagementScreenProps>;
 }
 
-export { InboxBlock, InjectedProps };
+export {
+  EngagementMessage,
+  EngagementScreenProps,
+  InboxBlock,
+  InjectedProps,
+  JSON as EngagementJSON
+};
+export * from './EngagementCompGhost';
 
 export default function(params: EngagementSettings): EngagementUtilities {
   const api = new EngagementService(params);

@@ -1,52 +1,60 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   DeviceEventEmitter,
   StyleProp,
   TextStyle,
   TouchableOpacity
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 import {
-  EmitterProps,
+  CardProps,
   JSON,
-  ScreenProps,
   StoryGradient
 } from '../types';
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { CardContext } from '../lib/contexts';
+import { TextBlock, TextBlockProps } from './TextBlock';
+import { CTABlock, CTABlockProps } from './CTABlock';
+import { ImageBlock, ImageBlockProps } from './ImageBlock';
 
-import TextBlock from './TextBlock';
-import CTABlock from './CTABlock';
-import ImageBlock from './ImageBlock';
-
-export interface ComponentProps extends ScreenProps, EmitterProps {
-  containerStyle?: StyleProp<TextStyle>;
-  story?: JSON;
-  contents: any;
-  api?: any;
-  storyGradient?: StoryGradient;
+export interface FeaturedTopCardContents {
+  Image: ImageBlockProps;
+  Text: TextBlockProps;
+  CTA: CTABlockProps;
 }
 
-export default class Card extends Component<ComponentProps> {
 
-  static childContextTypes: any = {
-    story: PropTypes.object,
-    handleStoryAction: PropTypes.func
-  };
+export interface ComponentProps extends CardProps {
+  containerStyle?: StyleProp<TextStyle>;
+  story?: JSON;
+  contents: FeaturedTopCardContents;
+  api?: any;
+  storyGradient?: StoryGradient;
 
-  getChildContext = () => ({
-    story: this.props.story,
-    handleStoryAction: this.handleStoryAction
-  })
+}
 
-  handleStoryAction = async (json: JSON) => {
+export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
+  const { containerStyle, contents } = props;
+
+  const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
-      title: this.props.name,
-      id: this.props.id
+      title: props.name,
+      id: props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
-    return this.props.navigator.push({
+
+    if (!navigator) {
+      return;
+    }
+    if (props.discoverPath && !(navigator instanceof Navigator)) {
+      return navigator.open(`${props.discoverPath}/${props.id}`, {
+        json,
+        backButton: true,
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
+    }
+    return navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
@@ -57,31 +65,31 @@ export default class Card extends Component<ComponentProps> {
         passProps: {
           json,
           backButton: true,
-          name: this.props.name,
-          id: this.props.id
+          name: props.name,
+          id: props.id
         }
       }
     });
-  }
+  };
 
-  onCardPress = async (): Promise<void> => {
-    const { story, storyGradient } = this.props;
+  const onCardPress = async (): Promise<void> => {
+    const { story, storyGradient } = props;
     const actionPayload: any = storyGradient ?
       { ...story, storyGradient } : { ...story };
-    return this.handleStoryAction(actionPayload);
-  }
+    return handleStoryAction(actionPayload);
+  };
 
-  render(): JSX.Element {
-    const {
-      containerStyle,
-      contents
-    } = this.props;
-
-    return (
+  return (
+    <CardContext.Provider
+      value={{
+        story: props.story,
+        handleStoryAction
+      }}
+    >
       <TouchableOpacity
         style={containerStyle}
         activeOpacity={0.9}
-        onPress={this.onCardPress}
+        onPress={onCardPress}
       >
         <ImageBlock
           {...contents.Image}
@@ -91,10 +99,9 @@ export default class Card extends Component<ComponentProps> {
         />
         <CTABlock
           {...contents.CTA}
-          story={this.props.story}
         />
 
       </TouchableOpacity>
-    );
-  }
-}
+    </CardContext.Provider>
+  );
+});

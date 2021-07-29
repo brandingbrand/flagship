@@ -38,8 +38,11 @@ import {
   CardProps,
   JSON
 } from '../types';
-import TextBlock from './TextBlock';
-import { OptionsModalPresentationStyle } from 'react-native-navigation';
+import { TextBlock } from './TextBlock';
+import {
+  OptionsModalPresentationStyle
+// tslint:disable-next-line: no-submodule-imports
+} from 'react-native-navigation/lib/dist/interfaces/Options';
 const { width: viewportWidth } = Dimensions.get('window');
 
 export interface ImageProp {
@@ -124,10 +127,8 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
       title: this.props.name,
       id: this.props.id
     });
-    this.props.api.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
-    return this.props.navigator.showModal({
+
+    return this.props.navigator?.showModal({
       component: {
         name: 'EngagementComp',
         options: {
@@ -263,7 +264,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
           <Animatable.Image
             source={contents.Image.source}
             ref={this.handleImageRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={[StyleSheet.absoluteFill, styles.fullScreen]}
           />
           <View
@@ -274,7 +275,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
           >
             <Animatable.View
               ref={this.handleContentRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.bottom, textContainerStyle]}
             >
               <TextBlock

@@ -13,49 +13,126 @@ import { findIndex } from 'lodash-es';
 
 import { style as S } from '../styles/Swatches';
 
-import { Swatch, SwatchStyle } from './Swatch';
+import { Swatch, SwatchProps, SwatchStyle } from './Swatch';
 
 export interface SwatchItemType extends CommerceTypes.OptionValue {
-  color?: string;
-  image?: ImageURISource;
+  color?: string; // deprecated
+  image?: ImageURISource; // deprecated
 }
 
-export interface SwatchesProps extends SwatchStyle {
-  title?: string;
+export interface SerializableSwatchesProps {
   items: SwatchItemType[];
+  title?: string;
   defaultValue?: string;
-  style?: StyleProp<ViewStyle>;
-  renderSwatch?: (swatch: any) => React.ReactNode;
-
+  style?: ViewStyle;
   label?: boolean;
-  labelContainerStyle?: StyleProp<ViewStyle>;
-  labelTitleStyle?: StyleProp<TextStyle>;
-  labelValueStyle?: StyleProp<TextStyle>;
-  showingMoreStyle?: StyleProp<ViewStyle>;
-  showingLessStyle?: StyleProp<ViewStyle>;
-  renderLabel?: (swatch: any) => void;
-
-  onChangeSwatch?: (swatch: any) => void;
+  labelContainerStyle?: ViewStyle;
+  labelTitleStyle?: TextStyle;
+  labelValueStyle?: TextStyle;
+  showingMoreStyle?: ViewStyle;
+  showingLessStyle?: ViewStyle;
+  separateMoreButton?: boolean;
 
   // Can you select swatches
   disabled?: boolean;
 
   // More/Less
   maxSwatches?: number;
+  moreLessStyle?: ViewStyle;
+}
+
+export interface SwatchesProps extends SwatchStyle, Omit<
+  SerializableSwatchesProps,
+  'style' |
+  'labelContainerStyle' |
+  'labelTitleStyle' |
+  'labelValueStyle' |
+  'showingMoreStyle' |
+  'showingLessStyle' |
+  'moreLessStyle'
+> {
+  style?: StyleProp<ViewStyle>;
+  renderSwatch?: (swatch: SwatchProps) => React.ReactNode;
+
+  labelContainerStyle?: StyleProp<ViewStyle>;
+  labelTitleStyle?: StyleProp<TextStyle>;
+  labelValueStyle?: StyleProp<TextStyle>;
+  showingMoreStyle?: StyleProp<ViewStyle>;
+  showingLessStyle?: StyleProp<ViewStyle>;
+  renderLabel?: (swatch: SelectedSwatchItem) => void;
+
+  onChangeSwatch?: (swatch: string) => void;
+  onColorPress?: (elem: CommerceTypes.OptionValue) => void;
+
+  // More/Less
   renderMoreLess?: (showMore: boolean) => React.ReactNode;
   moreLessStyle?: StyleProp<ViewStyle>;
+  onClickPlus?: () => void;
+}
+
+export interface SelectedSwatchItem {
+  value: string;
+  name: string;
 }
 
 export interface SwatchesState {
-  selected: any;
-
+  selected: {
+    index: number | null;
+    swatch: SelectedSwatchItem;
+  };
   shouldShowMoreLess: boolean;
   showMore: boolean;
 }
 
 export class Swatches extends Component<SwatchesProps, SwatchesState> {
-  static getDerivedStateFromProps(nextProps: SwatchesProps): Partial<SwatchesState> | null {
-    const { defaultValue, items } = nextProps;
+  constructor(props: SwatchesProps) {
+    super(props);
+
+    let hasColor = false;
+    let hasImage = false;
+    props.items.forEach(item => {
+      hasColor = hasColor || !!item.color;
+      hasImage = hasImage || !!item.image;
+    });
+
+    if (hasColor) {
+      console.error('Swatch "color" is deprecated. Please use "swatch" instead.');
+    }
+
+    if (hasImage) {
+      console.error('Swatch "image" is deprecated. Please use "swatch" instead.');
+    }
+
+    const selectedSwatch: SwatchesState['selected'] = this.getSelectedSwatch(props) || {
+      index: null,
+      swatch: {
+        value: '',
+        name: ''
+      }
+    };
+
+    // Default State
+    this.state = {
+      selected: selectedSwatch,
+      shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
+      showMore: false
+    };
+  }
+
+  componentDidUpdate(prevProps: SwatchesProps, prevState: SwatchesState): void {
+    if (prevProps.defaultValue !== this.props.defaultValue ||
+      prevProps.items !== this.props.items) {
+      const selected = this.getSelectedSwatch(this.props);
+      if (selected !== null) {
+        this.setState({
+          selected
+        });
+      }
+    }
+  }
+
+  getSelectedSwatch(props: SwatchesProps): SwatchesState['selected'] | null {
+    const { defaultValue, items } = props;
 
     // Default swatch selection
     if (defaultValue) {
@@ -63,41 +140,21 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       if (defaultIndex > -1) {
         const defaultSwatch = items[defaultIndex];
         return {
-          selected: {
-            index: defaultIndex,
-            swatch: {
-              value: defaultSwatch.value,
-              name: defaultSwatch.name
-            }
+          index: defaultIndex,
+          swatch: {
+            value: defaultSwatch.value,
+            name: defaultSwatch.name
           }
         };
       }
     }
-
     return null;
   }
 
-  constructor(props: SwatchesProps) {
-    super(props);
-
-    // Default State
-    this.state = {
-      selected: {
-        index: null,
-        swatch: {
-          value: null,
-          name: null
-        }
-      },
-      shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
-      showMore: false
-    };
-  }
-
-  onSelect = (swatch: any) => {
+  onSelect = (swatch: SwatchProps) => {
     const option = {
-      value: swatch.value,
-      name: swatch.name
+      value: swatch.value || '',
+      name: swatch.name || ''
     };
 
     this.setState({
@@ -107,9 +164,20 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       }
     });
 
-    const { onChangeSwatch } = this.props;
+    const { onColorPress, onChangeSwatch } = this.props;
+    if (onColorPress) {
+      try {
+        onColorPress(swatch);
+      } catch (e) {
+        console.error(e);
+      }
+    }
     if (onChangeSwatch) {
-      onChangeSwatch(swatch.value);
+      try {
+        onChangeSwatch(swatch.value || '');
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -170,7 +238,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     );
   }
 
-  _renderLabel = (swatch: any) => {
+  _renderLabel = (swatch: SelectedSwatchItem) => {
     const {
       title,
       labelContainerStyle,
@@ -200,22 +268,22 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
   _renderMoreLess = () => {
     const { shouldShowMoreLess, showMore } = this.state;
-    const { textStyle, moreLessStyle, renderMoreLess } = this.props;
-
-    let moreLess;
-    if (renderMoreLess) {
-      moreLess = renderMoreLess(showMore);
-    } else {
-      // Default Render: + or - text
-      moreLess = <Text style={[S.textItem, textStyle]}>{showMore ? '-' : '+'}</Text>;
-    }
+    const { textStyle, moreLessStyle, onClickPlus, renderMoreLess } = this.props;
 
     if (shouldShowMoreLess) {
+      let moreLess;
+      if (renderMoreLess) {
+        moreLess = renderMoreLess(showMore);
+      } else {
+        // Default Render: + or - text
+        moreLess = <Text style={[S.textItem, textStyle]}>{showMore ? '-' : '+'}</Text>;
+      }
+
       return (
         <TouchableOpacity
           accessibilityLabel='Toggle More/Less Swatches'
           activeOpacity={0.8}
-          onPress={this.toggleMoreLess}
+          onPress={onClickPlus || this.toggleMoreLess}
           style={moreLessStyle}
         >
           {moreLess}
@@ -255,8 +323,9 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
             className={'swatch-scroll ' + (showMore ? 'showing-more' : 'showing-less')}
           >
             {displayItems.map(this._renderSwatch)}
+            {this.props.separateMoreButton ? null : this._renderMoreLess()}
           </View>
-          {this._renderMoreLess()}
+          {this.props.separateMoreButton ? this._renderMoreLess() : null}
         </View>
       </View>
     );

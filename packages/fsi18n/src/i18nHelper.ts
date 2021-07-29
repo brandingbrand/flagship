@@ -16,10 +16,12 @@ const INVALID_DATE_ERROR = new Error(`Provided argument is not a valid date`);
 
 export default class I18nHelper {
   protected readonly i18n: I18n;
+  protected localeListeners: ((locale: string) => void)[];
 
   constructor(i18n: I18n) {
     this.i18n = i18n;
     this.i18n.fallbacks = true;
+    this.localeListeners = [];
   }
 
   /**
@@ -40,6 +42,30 @@ export default class I18nHelper {
     }
 
     return this.getAvailableStringTranslations();
+  }
+
+  /**
+   * Change language
+   *
+   * @param {string} locale - Set locale
+   */
+  public setLocale(locale: string): void {
+    this.i18n.locale = locale;
+    this.localeListeners.forEach((func: (locale: string) => void) => {
+      func(locale);
+    });
+  }
+
+  // @ts-ignore
+  public addLocaleListener(func: (locale: string) => void): void {
+    this.localeListeners.push(func);
+  }
+
+  // @ts-ignore
+  public removeLocaleListener(func: (locale: string) => void): void {
+    this.localeListeners = this.localeListeners.filter((testFunc: (locale: string) => void) => {
+      return func !== testFunc;
+    });
   }
 
   /**

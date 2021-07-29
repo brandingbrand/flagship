@@ -19,19 +19,6 @@ export default class Home extends Component<any, any> {
           onPress={this.goTo('CommerceProvider', 'CommerceProvider', 'Back')}
         />
         <Row
-          text='Demandware'
-          onPress={this.goTo('Demandware', 'Demandware', 'Back')}
-        />
-        <Row text='Shopify' onPress={this.goTo('Shopify', 'Shopify', 'Back')} />
-        <Row
-          text='DemandwareAccount'
-          onPress={this.goTo('DemandwareAccount', 'DemandwareAccount', 'Back')}
-        />
-        <Row
-          text='DemandwareCart'
-          onPress={this.goTo('DemandwareCart', 'DemandwareCart', 'Back')}
-        />
-        <Row
           text='Mock Commerce Data Source'
           onPress={this.goTo('MockCommerceDataSource', 'MockCommerceDataSource', 'Back')}
         />

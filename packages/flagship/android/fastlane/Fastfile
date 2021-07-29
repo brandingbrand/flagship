@@ -1,36 +1,11 @@
 default_platform :android
 
-lane :beta do
-
-  # build the release variant
-  gradle(task: "assembleRelease")
-
-  # upload to HockeyApp
-  hockey(
-    api_token: "ENJECTED_FROM_ENV" #PROJECT_MODIFY_FLAG_hockey_api_token
-  )
-
-end
-
 lane :appcenter do
   # build the release variant
   gradle(task: "assembleRelease")
 
   appcenter_upload(
     #PROJECT_MODIFY_FLAG_appcenter_api_token
-    owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
-    app_name: "INJECTED_FROM_CONFIG" #PROJECT_MODIFY_FLAG_appcenter_app_name_android
-  )
-end
-
-# Use this lane if you want to generate app bundle: https://developer.android.com/guide/app-bundle
-lane :appcenter_app_bundle do
-  # build the release variant
-  gradle(task: "assembleBundle")
-
-  appcenter_upload(
-    #PROJECT_MODIFY_FLAG_appcenter_api_token
-    destination_type: "store",
     owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
     app_name: "INJECTED_FROM_CONFIG" #PROJECT_MODIFY_FLAG_appcenter_app_name_android
   )

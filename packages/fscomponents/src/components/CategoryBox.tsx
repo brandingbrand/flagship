@@ -12,16 +12,25 @@ import {
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { style as S } from '../styles/CategoryBox';
 
-export interface CategoryBoxProps extends CommerceTypes.Category {
-  imageStyle?: StyleProp<ImageStyle>;
-  onPress?: (item: CommerceTypes.Category) => void;
+export interface SerializableCategoryBoxProps extends CommerceTypes.Category {
+  imageStyle?: ImageStyle;
   showImage?: boolean;
-  style?: StyleProp<ViewStyle>;
-  titleStyle?: StyleProp<TextStyle>;
+  style?: ViewStyle;
+  titleStyle?: TextStyle;
   underlayColor?: string;
 }
 
-export const CategoryBox = React.memo((props: CategoryBoxProps): JSX.Element => {
+export interface CategoryBoxProps extends Omit<SerializableCategoryBoxProps,
+  'imageStyle' |
+  'style' |
+  'titleStyle'> {
+  imageStyle?: StyleProp<ImageStyle>;
+  onPress?: (item: CommerceTypes.Category) => void;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+}
+
+const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
   const {
     image,
     showImage,
@@ -48,15 +57,13 @@ export const CategoryBox = React.memo((props: CategoryBoxProps): JSX.Element => 
       accessibilityRole='imagebutton'
     >
       <View style={S.boxInner}>
-        {showImage && image && <Image source={image} style={imageStyle} />}
+        {showImage !== false && image && <Image source={image} style={imageStyle} />}
         <Text style={[S.boxText, titleStyle]}>
           {title}
         </Text>
       </View>
     </TouchableHighlight>
   );
-}) as any;
-
-CategoryBox.defaultProps = {
-  showImage: true
 };
+
+export const CategoryBox = React.memo(CategoryBoxInner);

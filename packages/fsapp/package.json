@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsapp",
   "sideEffects": false,
-  "version": "9.0.1",
+  "version": "11.0.1-alpha.9",
   "description": "Flagship app base",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,27 +12,44 @@
     "tsc:watch": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@brandingbrand/fsengage": "^9.0.1",
-    "@brandingbrand/fsfoundation": "^9.0.1",
-    "@brandingbrand/fsnetwork": "^9.0.1",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@brandingbrand/fscommerce": "^11.0.1-alpha.9",
+    "@brandingbrand/fsengage": "^11.0.1-alpha.9",
+    "@brandingbrand/fsfoundation": "^11.0.1-alpha.9",
+    "@brandingbrand/fsnetwork": "^11.0.1-alpha.9",
+    "@loadable/component": "^5.14.1",
+    "@react-native-community/async-storage": "^1.9.0",
+    "@types/qs": "^6.9.5",
+    "autobind-decorator": "^2.4.0",
+    "fs-extra": "^8.0.0",
+    "history": "^4.10.1",
+    "lodash-es": "^4.17.10",
     "path-to-regexp": "^1.7.0",
     "qs": "^6.7.0",
-    "react": "^16.11.0",
+    "react": "^16.13.1",
     "react-dom": "^16.9.0",
-    "react-native": "^0.61.0",
+    "react-native": "^0.63.2",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^5.0.0",
-    "react-native-navigation": "^4.0.0",
-    "react-native-restart": "^0.0.13",
+    "react-native-navigation": "^6.0.0",
     "react-native-sensitive-info": "^5.5.0",
     "react-native-web-modal": "^1.0.1",
     "react-redux": "^7.0.0",
+    "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.0",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "react-helmet": "^6.1.0"
+  },
+  "peerDependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "react-helmet": "^6.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

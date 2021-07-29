@@ -10,21 +10,6 @@
   A tool for building your best shopping app
 </p>
 
-<p align="center">
-  <a href="https://travis-ci.org/brandingbrand/flagship">
-    <img alt="Travis Status"
-      src="https://travis-ci.org/brandingbrand/flagship.svg?branch=master">
-  </a>
-  <a href="https://greenkeeper.io/">
-    <img alt="Greenkeeper"
-      src="https://badges.greenkeeper.io/brandingbrand/flagship.svg?ts=1523929763709">
-  </a>
-  <a href="https://lernajs.io/">
-    <img alt="Lerna"
-      src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg">
-  </a>
-</p>
-
 # Flagship
 
 * [About](#about)
@@ -187,22 +172,6 @@ you ran `flagship init`. See [Environments](#environments).
 * [fscommerce](packages/fscommerce): product catalog, search, order and user account management, and
   reviews
 
-#### Reviews Packages
-
-* [fsbazaarvoice](packages/fsbazaarvoice): Bazaarvoice reviews provider
-* [fspowerreviews](packages/fspowerreviews): PowerReviews reviews provider
-* [fsturnto](packages/fsturnto): TurnTo reviews provider
-
-#### Product Catalog Pacakges
-
-* [fsbrandcmsproductcatalog](packages/fsbrandcmsproductcatalog): BrandCMS product catalog provider
-* [fssalesforce](packages/fssalesforce): Salesforce Commerce Cloud product catalog provider
-* [fsshopify](packages/fsshopify): Shopify product catalog provider
-
-#### Address Validation Packages
-
-* [fsups](packages/fsups): UPS address validation provider
-
 ### User Interface Packages
 
 * [fscomponents](packages/fscomponents): reusable, cross-platform frontend components
@@ -216,8 +185,6 @@ you ran `flagship init`. See [Environments](#environments).
 ### Utility Packages
 
 * [fscodestyle](packages/fscodestyle): a coding style used throughout Flagship
-* [fscontinuousdeployment](packages/fscontinuousdeployment): tools for continous deployment with
-  Travis and CodePush
 
 ### Example Projects
 

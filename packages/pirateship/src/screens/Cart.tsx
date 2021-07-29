@@ -217,7 +217,7 @@ class Cart extends Component<CartScreenProps> {
   static options: Options = navBarFullBleed;
 
   componentDidMount(): void {
-    if (!this.props.recentlyViewed.items.length) {
+    if (!this.props.recentlyViewed?.items?.length) {
       this.props.loadRecentlyViewed();
     }
   }
@@ -240,9 +240,17 @@ class Cart extends Component<CartScreenProps> {
     } else if (cartData && cartData.items) {
       const cartCount = this.props.cart.cartCount;
       const badge = !!cartCount && cartCount.toString() || undefined;
-      this.props.navigator.mergeOptions({
+
+      badge ? this.props.navigator.mergeOptions({
         bottomTab: {
           badge,
+          badgeColor: palette.primary,
+          icon: cartTabIcon
+        }
+      }) :
+      this.props.navigator.mergeOptions({
+        bottomTab: {
+          badge: '',
           badgeColor: palette.primary,
           icon: cartTabIcon
         }
@@ -300,6 +308,12 @@ class Cart extends Component<CartScreenProps> {
           name: item.title
         });
       }
+    };
+  }
+
+  removeItem = (item: CommerceTypes.CartItem) => {
+    return () => {
+      this.props.removeFromCart(item);
     };
   }
 
@@ -438,6 +452,7 @@ class Cart extends Component<CartScreenProps> {
         navigateToProduct={this.goToProduct}
         item={item}
         updateQty={this.updateQuantity(item)}
+        removeItem={this.removeItem(item)}
         containerStyle={CartStyle.cartItemContainer}
       />
     );

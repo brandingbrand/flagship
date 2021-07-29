@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import {
   Image,
-  ImageURISource,
+  ImageSourcePropType,
+  ImageStyle,
   StyleProp,
   Text,
   TextStyle,
@@ -13,35 +14,78 @@ import {
 import { TextInputMask } from 'react-native-masked-text';
 import { style as S } from '../styles/Stepper';
 
-const icons: {[key: string]: ImageURISource} = {
+const icons: {[key: string]: ImageSourcePropType} = {
   increase: require('../../assets/images/increaseImage.png'),
   decrease: require('../../assets/images/decreaseImage.png')
 };
 
-export interface StepperProps {
+export interface SerializableStepperProps {
   format?: 'horizontalCenter' | 'horizontalLeft' | 'vertical';
+
+  // Stepper style
+  stepperStyle?: ViewStyle;
+
+  // Counter
+  count?: number;
+  countUpperLimit?: number;
+  countLowerLimit?: number;
+  editable?: boolean;
+  prefix?: string;
+
+  // Text style that applies to both the prefix and quantity text
+  counterStyle?: TextStyle;
+
+  // Text style that only applies to the prefix text
+  prefixStyle?: TextStyle;
+
+  // Text style that only applies to the quantity text
+  qtyStyle?: TextStyle;
+
+  // Decrease button
+  decreaseButtonImage?: ImageSourcePropType;
+
+  // Increase button
+  increaseButtonImage?: ImageSourcePropType;
+
+  // Remove button image that will replace the decrease button image if count is one.
+  removeButtonImage?: ImageSourcePropType;
+
+  // Styles that will apply to the Touchable wrapping the quantity steppers
+  qtyChangeButtonStyle?: ViewStyle;
+
+  // Styles that will apply to the quantity stepper images
+  qtyChangeImageStyle?: ImageStyle;
+}
+
+export interface StepperProps extends Omit<
+  SerializableStepperProps,
+  'counterStyle' |
+  'stepperStyle' |
+  'qtyChangeButtonStyle' |
+  'qtyChangeImageStyle'
+  > {
   onChange?: (count: number) => void;
 
   // Stepper style
   stepperStyle?: StyleProp<ViewStyle>;
 
   // Counter
-  count?: number;
-  countUpperLimit?: number;
   counterStyle?: StyleProp<TextStyle>;
-  editable?: boolean;
-  prefix?: string;
   renderText?: (text: string, style: StyleProp<TextStyle>, value: number) => React.ReactNode;
 
   // Decrease button
   onDecreaseButtonPress: (count: number) => void;
-  decreaseButtonImage?: ImageURISource;
   renderDecreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
 
   // Increase button
   onIncreaseButtonPress: (count: number) => void;
-  increaseButtonImage?: ImageURISource;
   renderIncreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
+
+  // Styles that will apply to the Touchable wrapping the quantity steppers
+  qtyChangeButtonStyle?: StyleProp<ViewStyle>;
+
+  // Styles that will apply to the quantity stepper images
+  qtyChangeImageStyle?: StyleProp<ImageStyle>;
 }
 
 export interface StepperState {
@@ -91,24 +135,33 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
   renderDecreaseButton = (style: {} = {}) => {
     const {
       decreaseButtonImage = icons.decrease,
-      renderDecreaseButton
+      removeButtonImage,
+      renderDecreaseButton,
+      qtyChangeButtonStyle,
+      qtyChangeImageStyle,
+      countLowerLimit = 0
     } = this.props;
+    const { count } = this.state;
+    const icon = count <= countLowerLimit + 1 && !!removeButtonImage ?
+      removeButtonImage :
+      decreaseButtonImage;
 
     if (renderDecreaseButton) {
-      return renderDecreaseButton(this.state.count, this.handleDecreasePress);
+      return renderDecreaseButton(count, this.handleDecreasePress);
     }
 
     return (
       <TouchableOpacity
         accessibilityLabel='Decrease'
         activeOpacity={this.kButtonTouchabilityOpacity}
-        disabled={this.state.count <= 0}
+        disabled={count <= countLowerLimit}
         onPress={this.handleDecreasePress}
+        style={qtyChangeButtonStyle}
       >
         <Image
           resizeMode='contain'
-          source={decreaseButtonImage}
-          style={[S.buttonImage, style]}
+          source={icon}
+          style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
@@ -118,7 +171,9 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const {
       countUpperLimit,
       increaseButtonImage = icons.increase,
-      renderIncreaseButton
+      renderIncreaseButton,
+      qtyChangeButtonStyle,
+      qtyChangeImageStyle
     } = this.props;
 
     if (renderIncreaseButton) {
@@ -131,34 +186,37 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         activeOpacity={this.kButtonTouchabilityOpacity}
         disabled={!countUpperLimit || this.state.count >= countUpperLimit}
         onPress={this.handleIncreasePress}
+        style={qtyChangeButtonStyle}
       >
         <Image
           resizeMode='contain'
           source={increaseButtonImage}
-          style={[S.buttonImage, style]}
+          style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
   }
 
   renderHorizontalCenter = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
         {this.renderDecreaseButton()}
-        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalCenter, counterText)}
+        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalCenter)}
         {this.renderIncreaseButton()}
       </View>
     );
   }
 
   renderHorizontalLeft = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
-        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalLeft, counterText)}
+        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalLeft)}
         {this.renderDecreaseButton()}
         {this.renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
       </View>
@@ -166,12 +224,13 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
   }
 
   renderVertical = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
         {this.renderIncreaseButton()}
-        {this.renderText(counterStyle ? counterStyle : S.counterVertical, counterText)}
+        {this.renderText(counterStyle ? counterStyle : S.counterVertical)}
         {this.renderDecreaseButton()}
       </View>
     );
@@ -181,25 +240,25 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const {
       counterStyle,
       format,
-      prefix,
       stepperStyle
     } = this.props;
-    const { count } = this.state;
-    const counterText = prefix ? `${prefix} ${count}` : `${count}`;
-
     switch (format) {
       case 'horizontalCenter':
-        return this.renderHorizontalCenter(counterText, counterStyle, stepperStyle);
+        return this.renderHorizontalCenter(counterStyle, stepperStyle);
       case 'horizontalLeft':
-        return this.renderHorizontalLeft(counterText, counterStyle, stepperStyle);
+        return this.renderHorizontalLeft(counterStyle, stepperStyle);
       case 'vertical':
-        return this.renderVertical(counterText, counterStyle, stepperStyle);
+        return this.renderVertical(counterStyle, stepperStyle);
       default:
-        return this.renderHorizontalCenter(counterText, counterStyle, stepperStyle);
+        return this.renderHorizontalCenter(counterStyle, stepperStyle);
     }
   }
 
-  private renderText = (counterStyle: StyleProp<TextStyle>, counterText: string) => {
+  private renderText = (counterStyle: StyleProp<TextStyle>) => {
+    const { count } = this.state;
+    const { prefix, prefixStyle, qtyStyle } = this.props;
+    const counterText = prefix ? `${prefix} ${count}` : `${count}`;
+
     if (this.props.renderText) {
       return this.props.renderText(counterText, counterStyle, this.state.count);
     }
@@ -215,7 +274,10 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
       );
     }
     return (
-      <Text style={counterStyle}>{counterText}</Text>
+      <Text style={counterStyle}>
+        {!!prefix && <Text style={prefixStyle}>{prefix}</Text>}
+        <Text style={qtyStyle}>{count}</Text>
+      </Text>
     );
   }
 

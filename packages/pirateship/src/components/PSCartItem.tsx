@@ -105,7 +105,7 @@ export interface ItemDetails {
 }
 
 export interface PSCartItemProps {
-  navigateToProduct?: (item: any) => void;
+  navigateToProduct?: (item: CommerceTypes.CartItem) => void;
   containerStyle?: StyleProp<ViewStyle>;
   itemHeaderStyle?: StyleProp<ViewStyle>;
   itemTextHeaderStyle?: StyleProp<TextStyle>;
@@ -113,6 +113,7 @@ export interface PSCartItemProps {
   item: CommerceTypes.CartItem & { [key: string]: any };
   defaultItemImage?: ImageURISource;
   updateQty?: (newQty: number) => void;
+  removeItem?: () => void;
   maxQty?: number;
   addToFavorites?: () => void;
   addToFavoritesImage?: ImageURISource | ImageRequireSource;
@@ -288,7 +289,7 @@ const PSCartItem: FunctionComponent<PSCartItemProps> = (props): JSX.Element => {
   };
 
   const renderStepper = () => {
-    const { item, updateQty, maxQty } = props;
+    const { item, updateQty, removeItem, maxQty } = props;
 
     return (
       <View style={styles.stepperRow}>
@@ -297,6 +298,7 @@ const PSCartItem: FunctionComponent<PSCartItemProps> = (props): JSX.Element => {
             <PSStepper
               initialQuantity={item.quantity}
               onChange={updateQty}
+              removeItem={removeItem}
               upperLimit={maxQty}
               stepperStyle={styles.stepper}
             />

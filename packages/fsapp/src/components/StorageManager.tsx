@@ -28,19 +28,26 @@ const styles = StyleSheet.create({
 // @ts-ignore no type definition file
 import * as CookieManager from 'react-native-cookies';
 // @ts-ignore no type definition file
-import SInfo from 'react-native-sensitive-info';
+import SInfo, { RNSensitiveInfoOptions, SensitiveInfoEntry } from 'react-native-sensitive-info';
 import TouchableRow from './TouchableRow';
 
 export interface CookieMangerState {
-  data: any;
+  data: string | null;
 }
 
-export default class CookieManger extends Component<{}, CookieMangerState> {
-  state: CookieMangerState = {
-    data: null
-  };
+export interface CookieMangerProps {
+  sInfoKeys?: RNSensitiveInfoOptions;
+}
 
-  showData = (data: any) => {
+export default class CookieManger extends Component<CookieMangerProps, CookieMangerState> {
+  constructor(props: CookieMangerProps) {
+    super(props);
+    this.state = {
+      data: null
+    };
+  }
+
+  showData = (data: string) => {
     this.setState({ data });
   }
 
@@ -77,7 +84,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
       .then(() => {
         alert('Cookie cleared.');
       })
-      .catch((err: any) => {
+      .catch((err: object) => {
         return alert(`Cookie clear failed. Error: ${err}`);
       });
   }
@@ -88,10 +95,10 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
     }
 
     CookieManager.getAll()
-      .then((res: any) => {
+      .then((res: object) => {
         this.showData(JSON.stringify(res, null, '  '));
       })
-      .catch((err: any) => {
+      .catch((err: object) => {
         return alert(`Cookie View failed. Error: ${err}`);
       });
   }
@@ -119,26 +126,26 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   clearSensitiveInfo = () => {
-    SInfo.getAllItems({})
-      .then((values: any) => {
+    SInfo.getAllItems(this.props.sInfoKeys || {})
+      .then((values: [SensitiveInfoEntry[]]) => {
         if (!values || !values[0]) {
           return alert('Nothing to be cleared.');
         }
 
-        const keys = values[0].map((item: any) => item.key);
+        const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
-        Promise.all(keys.map(async (k: any) => SInfo.deleteItem(k, {})))
+        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, this.props.sInfoKeys || {})))
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
-          .catch((e: any) => console.log('cannot delete item from react-native-sensitive-info', e));
+          .catch(e => console.log('cannot delete item from react-native-sensitive-info', e));
       })
-      .catch((e: any) => console.log('cannot get all items from react-native-sensitive-info', e));
+      .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
   }
 
   viewSensitiveInfo = () => {
     SInfo.getAllItems({})
-      .then((values: any) => {
+      .then((values: [SensitiveInfoEntry[]]) => {
         this.showData(JSON.stringify(values, null, '  '));
       })
       .catch(e => console.warn('cannot view sensitive info', e));

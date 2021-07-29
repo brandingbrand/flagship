@@ -1,5 +1,5 @@
 // tslint:disable:jsx-use-translation-function
-import React, { Component, ComponentClass, Fragment } from 'react';
+import React, { Component, ComponentClass } from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -20,10 +20,10 @@ import {
   View,
   ViewStyle
 } from 'react-native';
+import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
-import PropTypes from 'prop-types';
-import { Navigation, OptionsTopBarBackground } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 import {
   Action,
   BlockItem,
@@ -33,12 +33,13 @@ import {
   ScreenProps
 } from './types';
 import EngagementWebView from './WebView';
-import EngagementProductModal from './EngagementProductModal';
+import { BackButton } from './components/BackButton';
 import Carousel from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
+import { debounce } from 'lodash-es';
+import { EngagementContext } from './lib/contexts';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
-Navigation.registerComponent('EngagementProductModal', () => EngagementProductModal);
 
 const win = Dimensions.get('window');
 const imageAspectRatio = 0.344;
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
+    textTransform: 'uppercase',
     fontWeight: 'bold',
     color: '#000',
     fontSize: 26,
@@ -188,7 +190,6 @@ const styles = StyleSheet.create({
 });
 
 const gradientImage = require('../assets/images/gradient.png');
-const backArrow = require('../assets/images/backArrow.png');
 const appleCloseIcon = require('../assets/images/apple-close-icn.png');
 const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
 const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
@@ -218,6 +219,9 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   headerName?: string;
   animate?: boolean;
   cardPosition?: number;
+  navigator?: Navigator;
+  renderHeader?: () => void;
+  discoverPath?: string;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -235,12 +239,6 @@ export default function(
   layoutComponents: ComponentList
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
-    static childContextTypes: any = {
-      handleAction: PropTypes.func,
-      story: PropTypes.object,
-      language: PropTypes.string,
-      cardPosition: PropTypes.number
-    };
 
     state: any = {};
     AnimatedStory: any;
@@ -254,6 +252,8 @@ export default function(
     scrollPosition: number = 0;
     AnimatedAppleClose: any;
     AnimatedWelcome: any;
+    componentIsMounted: boolean = false;
+
     constructor(props: EngagementScreenProps) {
       super(props);
       this.state = {
@@ -275,7 +275,20 @@ export default function(
     handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
     handleWelcomeRef = (ref: any) => this.AnimatedWelcome = ref;
     handleAppleCloseRef = (ref: any) => this.AnimatedAppleClose = ref;
+    componentWillUnmount(): void {
+      // Check if closing because of navigation change or ui
+      if (!this.state.isClosingAnimation) {
+        // If navigation change also try to return back out of the story
+        if (this.props.onBack) {
+          this.props.onBack();
+        }
+      }
+
+      this.componentIsMounted = false;
+    }
     componentDidMount(): void {
+      this.componentIsMounted = true;
+
       if (this.props.animate) {
         if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
           this.setState({ showDarkX: true });
@@ -307,7 +320,9 @@ export default function(
       }
       if (!(this.props.json && this.props.json.private_type === 'story')) {
         setTimeout(() => {
-          this.setState({ showCarousel: true });
+          if (this.componentIsMounted) {
+            this.setState({ showCarousel: true });
+          }
         }, 500);
       }
     }
@@ -329,15 +344,8 @@ export default function(
       }
     }
 
-    getChildContext = () => ({
-      handleAction: this.handleAction,
-      story: this.props.backButton ? this.props.json : null,
-      language: this.props.language,
-      cardPosition: this.props.cardPosition || 0
-    })
-
-    // tslint:disable-next-line:cyclomatic-complexity
-    handleAction = async (actions: Action) => {
+    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
+    handleAction = debounce(async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -350,7 +358,7 @@ export default function(
       });
       switch (actions.type) {
         case 'blog-url':
-          await this.props.navigator.push({
+          await this.props.navigator?.push({
             component: {
               name: 'EngagementWebView',
               options: {
@@ -367,7 +375,7 @@ export default function(
           });
           break;
         case 'web-url':
-          await this.props.navigator.showModal({
+          await this.props.navigator?.showModal({
             component: {
               name: 'EngagementWebView',
               passProps: { actions },
@@ -376,7 +384,7 @@ export default function(
                   style: 'dark' as 'dark'
                 },
                 topBar: {
-                  background: '#f5f2ee' as OptionsTopBarBackground,
+                  background: { color: '#f5f2ee'},
                   rightButtons: [{
                     color: '#866d4b',
                     icon: require('../assets/images/closeBronze.png'),
@@ -421,11 +429,7 @@ export default function(
           break;
       }
       return;
-    }
-
-    onBackPress = async (): Promise<void> => {
-      return this.props.navigator.pop();
-    }
+    }, 300);
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
@@ -443,11 +447,13 @@ export default function(
       return this.renderBlock(item);
     }
     renderHeaderName = () => {
-      const name = this.props.headerName || '';
+      const { json, headerName } = this.props;
+      const name = headerName || '';
+      const headerTitleStyle = json && json.headerTitleStyle || {};
       const comma = name ? ', ' : '';
       return (
-        <Text style={styles.headerName}>
-          HELLO{comma}{name.toUpperCase()}
+        <Text style={[styles.headerName, headerTitleStyle]}>
+          Hello{comma}{name}
         </Text>
       );
     }
@@ -476,7 +482,7 @@ export default function(
     }
     // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
-      if (!(this.props.animateScroll || this.props.welcomeHeader)) {
+      if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
       }
 
@@ -505,7 +511,7 @@ export default function(
         return (
           <Animatable.View
             ref={this.handleWelcomeRef}
-            useNativeDriver
+            useNativeDriver={false}
             style={{
               transform: [
                 { translateY: -100 }
@@ -537,28 +543,35 @@ export default function(
       );
     }
     renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
-      const {
-        private_blocks,
-        private_type,
-        ...restProps } = item;
-      const { id, name } = this.props;
-      const props = {
-        id,
-        name,
-        ...restProps
-      };
+      const { private_type } = item;
       if (!layoutComponents[private_type]) {
         return null;
       }
 
-      props.navigator = this.props.navigator;
       return React.createElement(
         layoutComponents[WHITE_INBOX_WRAPPER],
         {
-          key: this.dataKeyExtractor(item)
+          key: this.dataKeyExtractor(item),
+          navigator: this.props.navigator,
+          discoverPath: this.props.discoverPath
         },
         this.renderBlock(item)
       );
+    }
+    addParentCardProps = (
+      type: string,
+      blocks: BlockItem[],
+      parentStyle: StyleProp<ViewStyle>
+    ): any => {
+      if (type === 'Card') {
+        return (blocks || []).map(b => {
+          return {
+            ...b,
+            cardContainerStyle: parentStyle
+          };
+        });
+      }
+      return blocks;
     }
     renderBlock = (item: BlockItem): React.ReactElement | null => {
       const {
@@ -574,7 +587,6 @@ export default function(
       if (!layoutComponents[private_type]) {
         return null;
       }
-      props.navigator = this.props.navigator;
       if (item.fullScreenCard) {
         delete item.fullScreenCard;
         props.AnimatedPageCounter = this.AnimatedPageCounter;
@@ -592,23 +604,33 @@ export default function(
           {
             key: this.dataKeyExtractor(item),
             animateIndex: item.animateIndex,
+            navigator: this.props.navigator,
+            discoverPath: this.props.discoverPath,
             slideBackground: item.animateIndex && item.animateIndex <= 2 ?
               this.state.slideBackground : false
           },
           this.renderBlock(item)
         );
       }
+
       return React.createElement(
         layoutComponents[private_type],
         {
           ...props,
+          navigator: this.props.navigator,
+          discoverPath: this.props.discoverPath,
           storyGradient: props.story ? json.storyGradient : null,
           api,
           key: this.dataKeyExtractor(item)
         },
-        private_blocks && private_blocks.map(this.renderBlock)
+        private_blocks && this.addParentCardProps(
+          private_type,
+          private_blocks,
+          item.containerStyle
+        ).map(this.renderBlock)
       );
     }
+
     onAnimatedClose = (): void => {
       if (this.state.isClosingAnimation) { return; }
       this.setState({
@@ -655,9 +677,9 @@ export default function(
           this.props.onBack();
         }
       }, timeout);
-      setTimeout(async () => {
-        return this.props.navigator.dismissModal();
-      }, 550);
+      // setTimeout(async () => {
+      //   return this.props.navigator.dismissModal();
+      // }, 550);
     }
     setScrollEnabled = (enabled: boolean): void => {
       this.setState({
@@ -668,13 +690,13 @@ export default function(
       const { json } = this.props;
       const empty: any = json && json.empty || {};
       return (
-        <Fragment>
+        <>
           {(json && json.private_blocks || []).map(this.renderBlock)}
           {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
               {empty.message || 'No content found.'}</Text>
           )}
-        </Fragment>
+        </>
       );
     }
     // tslint:disable-next-line:cyclomatic-complexity
@@ -718,7 +740,7 @@ export default function(
         );
       }
       return (
-        <Fragment>
+        <>
           <FlatList
             data={this.props.json.private_blocks || []}
             renderItem={this.renderBlockItem}
@@ -741,7 +763,7 @@ export default function(
               resizeMode={'cover'}
             />
           </Animated.View>
-        </Fragment>
+        </>
       );
     }
     onTabbedCardPress = () => {
@@ -760,10 +782,10 @@ export default function(
       const { animate, animateScroll, backButton, containerStyle, json } = this.props;
       if (animateScroll) {
         return (
-          <Fragment>
+          <>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -771,7 +793,7 @@ export default function(
             {backButton && (
               <Animatable.View
                 ref={this.handleAppleCloseRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={styles.closeModalButton}
               >
                 <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
@@ -783,15 +805,15 @@ export default function(
                 </TouchableOpacity>
               </Animatable.View>
             )}
-          </Fragment>
+          </>
         );
       }
       if (animate) {
         return (
-          <Fragment>
+          <>
             <Animatable.View
               ref={this.handleAnimatedRef}
-              useNativeDriver
+              useNativeDriver={false}
               style={[styles.animatedContainer]}
             >
               {this.renderScrollView()}
@@ -827,21 +849,19 @@ export default function(
                 />
               </TouchableOpacity>
               )}
-          </Fragment>
+          </>
         );
       }
       return (
-        <View style={[styles.container, containerStyle]}>
+        <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
           {backButton &&
             (
-            <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
-              <Image
-                resizeMode='contain'
-                source={backArrow}
-                style={[styles.backIcon, json.backArrow]}
+              <BackButton
+                navigator={this.props.navigator}
+                discoverPath={this.props.discoverPath}
+                style={json.backArrow}
               />
-            </TouchableOpacity>
             )}
         </View>
       );
@@ -867,6 +887,7 @@ export default function(
         pageNum
       });
     }
+
     renderFlatlistFooterPadding = (): JSX.Element => {
       return (
         <View style={styles.storyFooter} />
@@ -885,7 +906,7 @@ export default function(
         const autoplayDelay = this.props.autoplayDelay || 1000;
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
-          <Fragment>
+          <>
             {empty && !(json && json.private_blocks && json.private_blocks.length) && (
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
                 {empty && empty.message || 'No content found.'}</Text>
@@ -908,20 +929,11 @@ export default function(
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
-            {(json && json.private_blocks && json.private_blocks.length > 0) && (
-              <View style={[styles.pageCounter, json.pageCounterStyle]}>
-                <Text
-                  style={[styles.pageNum, json.pageNumberStyle]}
-                >
-                  {this.state.pageNum} / {json.private_blocks.length}
-                </Text>
-              </View>
-            )}
-          </Fragment>
+          </>
         );
       } else if (fullScreenCardImage) {
         return (
-          <Fragment>
+          <>
             <ImageBackground
               source={fullScreenCardImage}
               imageStyle={styles.imageStyle}
@@ -948,14 +960,14 @@ export default function(
             >
               {this.renderBlocks()}
             </FlatList>
-          </Fragment>
+          </>
         );
 
       } else if (this.props.noScrollView) {
         return (
-          <Fragment>
+          <>
             {this.renderBlocks()}
-          </Fragment>
+          </>
         );
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
@@ -969,7 +981,7 @@ export default function(
         );
       } else if (this.props.welcomeHeader) {
         return (
-          <Fragment>
+          <>
             <Animated.FlatList
               data={this.props.json && this.props.json.private_blocks || []}
               keyExtractor={this.dataKeyExtractor}
@@ -977,7 +989,7 @@ export default function(
               scrollEventThrottle={16}
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-                { useNativeDriver: true }
+                { useNativeDriver: false }
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
@@ -995,11 +1007,11 @@ export default function(
             >
               {this.renderBlocks()}
             </Animated.FlatList>
-          </Fragment>
+          </>
         );
       }
       return (
-        <Fragment>
+        <>
           <FlatList
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
@@ -1022,7 +1034,7 @@ export default function(
           >
             {this.renderBlocks()}
           </FlatList>
-        </Fragment>
+        </>
 
       );
     }
@@ -1037,14 +1049,23 @@ export default function(
       const navBarTitleStyle = json && json.navBarTitleStyle || {};
 
       return (
-        <Fragment>
+        <EngagementContext.Provider
+          value={{
+            handleAction: this.handleAction,
+            story: this.props.backButton ? this.props.json : null,
+            language: this.props.language,
+            cardPosition: this.props.cardPosition || 0
+          }}
+        >
+        <>
+          {this.props.renderHeader && this.props.renderHeader()}
           {this.renderContent()}
           {(this.props.renderType && this.props.renderType === 'carousel' &&
             json && json.private_blocks && json.private_blocks.length > 0) &&
             (
               <Animatable.View
                 ref={this.handlePageCounterRef}
-                useNativeDriver
+                useNativeDriver={false}
                 style={[styles.pageCounter, this.pageCounterStyle]}
               >
                 <Text
@@ -1059,12 +1080,13 @@ export default function(
             <Animatable.Text
               style={[styles.navBarTitle, navBarTitleStyle]}
               ref={this.handleNavTitleRef}
-              useNativeDriver
+              useNativeDriver={false}
             >
               {navBarTitle}
             </Animatable.Text>
           )}
-        </Fragment>
+        </>
+        </EngagementContext.Provider>
       );
     }
 

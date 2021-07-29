@@ -15,34 +15,18 @@ export default class Home extends Component<any> {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Row
-          text='Category Grid BrandCMS'
+          text='Category List'
           onPress={this.goTo(
-            'CategoryGridBrandCMS',
-            'CategoryGridBrandCMS',
+            'CategoryList',
+            'CategoryList',
             'Back'
           )}
         />
         <Row
-          text='Category List BrandCMS'
+          text='Category Grid (3 Col)'
           onPress={this.goTo(
-            'CategoryListBrandCMS',
-            'CategoryListBrandCMS',
-            'Back'
-          )}
-        />
-        <Row
-          text='Category List Demandware'
-          onPress={this.goTo(
-            'CategoryListDemandware',
-            'CategoryListDemandware',
-            'Back'
-          )}
-        />
-        <Row
-          text='Category Grid Demandware (3 Col)'
-          onPress={this.goTo(
-            'CategoryGridDemandware',
-            'CategoryGridDemandware',
+            'CategoryGrid',
+            'CategoryGrid',
             'Back'
           )}
         />

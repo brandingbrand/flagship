@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import FSI18n from '@brandingbrand/fsi18n';
+import { Price } from './Price';
 
 export interface ProductMetadataProps extends CommerceTypes.Product {
   style?: StyleProp<ViewStyle>;
@@ -70,6 +70,7 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
     );
   };
+  // tslint:disable-next-line: cyclomatic-complexity
   const renderPrice = (): JSX.Element => {
     const {
       originalPriceStyle,
@@ -78,29 +79,17 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       originalPrice,
       price
     } = props;
-    const priceStyleGenerated = [
-      styles.price,
-      priceStyle || null,
-      originalPrice && styles.salePrice || null,
-      originalPrice && salePriceStyle || null
-    ];
 
     return (
       <View style={styles.priceContainer}>
-        {originalPrice && (
-          <Text style={[styles.originalPrice, originalPriceStyle]}>
-            {FSI18n.currency(originalPrice)}
-          </Text>
-        )}
-        {price && (
-          <View style={styles.priceContainer}>
-            <Text
-              style={priceStyleGenerated}
-            >
-              {FSI18n.currency(price)}
-            </Text>
-          </View>
-        )}
+        <Price
+          originalPriceFirst={true}
+          originalPrice={originalPrice}
+          price={price}
+          originalPriceStyle={StyleSheet.flatten([styles.originalPrice, originalPriceStyle])}
+          priceStyle={StyleSheet.flatten([styles.price, priceStyle])}
+          salePriceStyle={StyleSheet.flatten([styles.salePrice, salePriceStyle])}
+        />
       </View>
     );
   };
@@ -110,7 +99,9 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       reviewCountStyle,
       reviewIndicatorProps
     } = props;
-    const stats = review && review.statistics || {} as any;
+
+    const statsType: {[p: string ]: number } = {};
+    const stats = review && review.statistics || statsType;
     const { averageRating, reviewCount } = stats;
 
     return (

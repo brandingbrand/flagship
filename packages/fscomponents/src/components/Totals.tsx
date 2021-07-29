@@ -1,11 +1,16 @@
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { Total, TotalProps } from './Total';
+import { SerializableTotalProps, Total, TotalProps } from './Total';
 
 export interface TotalsProps {
   totals: TotalProps[];
   style?: StyleProp<ViewStyle>;
+}
+
+export interface SerializableTotalsProps extends TotalsProps {
+  totals: SerializableTotalProps[];
+  style?: ViewStyle;
 }
 
 export const Totals: React.FunctionComponent<TotalsProps> = props => {

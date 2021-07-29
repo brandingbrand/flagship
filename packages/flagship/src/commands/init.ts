@@ -142,6 +142,7 @@ function initAndroid(
   rename.source('FLAGSHIP', configuration.name, 'android');
   rename.source('CONFIG_BUNDLE_ID', pkgId, 'android');
   rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
+  rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.debugPath(), 'java');
 
   fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
 
@@ -214,7 +215,9 @@ function initIOS(
   ios.usageDescription(configuration); // Add usage descriptions
   ios.backgroundModes(configuration); // Add background modes
   ios.sentryProperties(configuration);
+  ios.iosExtensions(configuration, version); // Add extension targets
   ios.setEnvSwitcherInitialEnv(configuration, environmentIdentifier);
+
   if (configuration.ios) {
     if (configuration.ios.pods) {
       if (configuration.ios.pods.sources) {
@@ -251,7 +254,10 @@ function initWeb(
 
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
-    path.project.resolve('web')
+    path.project.resolve('web'),
+    {
+      dereference: true
+    }
   );
 
   // create config for web version

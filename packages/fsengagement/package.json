@@ -1,31 +1,31 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "9.0.1",
+  "version": "11.0.1-alpha.9",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsapp": "^9.0.1",
-    "@brandingbrand/fsnetwork": "^9.0.1",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@brandingbrand/fsapp": "^11.0.1-alpha.9",
+    "@brandingbrand/fsnetwork": "^11.0.1-alpha.9",
+    "@react-native-community/async-storage": "^1.9.0",
     "@types/prop-types": "^15.0.0",
     "@types/react-native-snap-carousel": "^3.7.3",
     "@types/react-native-video": "^5.0.0",
     "lodash-es": "^4.17.10",
     "prop-types": "^15.6.2",
-    "react": "^16.11.0",
-    "react-native": "^0.61.0",
+    "react": "^16.13.1",
+    "react-content-loader": "^5.1.2",
+    "react-native": "^0.63.2",
     "react-native-animatable": "^1.3.2",
     "react-native-device-info": "^5.0.0",
-    "react-native-fcm": "^16.0.0",
     "react-native-localize": "^1.3.0",
-    "react-native-navigation": "^4.0.0",
+    "react-native-navigation": "^6.0.0",
     "react-native-snap-carousel": "^3.8.0",
+    "react-native-svg": "^10.0.0",
     "react-native-video": "^5.0.0",
-    "react-native-webview": "^8.0.0",
-    "uuid-js": "0.7.5"
+    "react-native-webview": "^11.6.4"
   },
   "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }

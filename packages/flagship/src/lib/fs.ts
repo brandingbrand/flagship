@@ -52,6 +52,11 @@ export function clone(...resource: string[]): void {
  */
 export function update(path: string, oldText: string | RegExp, newText: string): void {
   // TODO: This should use a streaming buffer
+
+  if (!doesKeywordExist(path, oldText)) {
+    return helpers.logError(`Couldn't find ${oldText} in ${path}`);
+  }
+
   const fileContent = readFileSync(path, { encoding: 'utf8' });
 
   helpers.logInfo(`updating ${helpers.colors.Dim}${path}${helpers.colors.Reset}`);
@@ -65,8 +70,12 @@ export function update(path: string, oldText: string | RegExp, newText: string):
  * @param {string} keyword The keyword to search for in the file
  * @returns {boolean} True if the keyword exists in the file.
  */
-export function doesKeywordExist(path: string, keyword: string): boolean {
+export function doesKeywordExist(path: string, keyword: string | RegExp): boolean {
   // TODO: This should use a streaming buffer
   const fileContent = readFileSync(path, { encoding: 'utf8' });
-  return fileContent.indexOf(keyword) > -1;
+  if (typeof keyword === 'string') {
+    return fileContent.indexOf(keyword) > -1;
+  } else {
+    return keyword.test(fileContent);
+  }
 }

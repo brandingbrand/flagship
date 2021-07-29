@@ -15,18 +15,6 @@ export default class Home extends Component<any, any> {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Row
-          text='Bazaarvoice'
-          onPress={this.goTo('Bazaarvoice', 'Bazaarvoice', 'Back')}
-        />
-        <Row
-          text='PowerReviews'
-          onPress={this.goTo('PowerReviews', 'PowerReviews', 'Back')}
-        />
-        <Row
-          text='TurnTo'
-          onPress={this.goTo('TurnTo', 'TurnTo', 'Back')}
-        />
-        <Row
           text='Mock Review Data Source'
           onPress={this.goTo('MockReviewDataSource', 'MockReviewDataSource', 'Back')}
         />

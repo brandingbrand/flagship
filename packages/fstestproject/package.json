@@ -2,7 +2,7 @@
   "name": "@brandingbrand/fstestproject",
   "sideEffects": false,
   "private": true,
-  "version": "9.0.1",
+  "version": "11.0.1-alpha.9",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -17,34 +17,35 @@
     "prepare": "tsc",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "tsc:watch": "tsc -w --preserveWatchOutput",
-    "lint": "fscodestyle"
+    "start:server-dev": "cd web && yarn server-dev",
+    "start:server-prod": "cd web && yarn server-prod",
+    "lint": "fscodestyle",
+    "build-web": "./scripts/buildWeb.sh"
   },
   "dependencies": {
-    "@babel/runtime": "7.4.5",
-    "@brandingbrand/flagship": "^9.0.1",
-    "@brandingbrand/fsapp": "^9.0.1",
-    "@brandingbrand/fsbazaarvoice": "^9.0.1",
-    "@brandingbrand/fsbrandcmsproductcatalog": "^9.0.1",
-    "@brandingbrand/fscart": "^9.0.1",
-    "@brandingbrand/fscategory": "^9.0.1",
-    "@brandingbrand/fscheckout": "^9.0.1",
-    "@brandingbrand/fscodestyle": "^9.0.1",
-    "@brandingbrand/fscommerce": "^9.0.1",
-    "@brandingbrand/fsengage": "^9.0.1",
-    "@brandingbrand/fsi18n": "^9.0.1",
-    "@brandingbrand/fsmockdatasources": "^9.0.1",
-    "@brandingbrand/fsnetwork": "^9.0.1",
-    "@brandingbrand/fspowerreviews": "^9.0.1",
-    "@brandingbrand/fsproductdetail": "^9.0.1",
-    "@brandingbrand/fsproductindex": "^9.0.1",
-    "@brandingbrand/fssalesforce": "^9.0.1",
-    "@brandingbrand/fsturnto": "^9.0.1",
-    "@brandingbrand/fsups": "^9.0.1",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@brandingbrand/flagship": "^11.0.1-alpha.9",
+    "@brandingbrand/fsapp": "^11.0.1-alpha.9",
+    "@brandingbrand/fscart": "^11.0.1-alpha.9",
+    "@brandingbrand/fscategory": "^11.0.1-alpha.9",
+    "@brandingbrand/fscheckout": "^11.0.1-alpha.9",
+    "@brandingbrand/fscodestyle": "^11.0.1-alpha.9",
+    "@brandingbrand/fscommerce": "^11.0.1-alpha.9",
+    "@brandingbrand/fsengage": "^11.0.1-alpha.9",
+    "@brandingbrand/fsi18n": "^11.0.1-alpha.9",
+    "@brandingbrand/fsmockdatasources": "^11.0.1-alpha.9",
+    "@brandingbrand/fsnetwork": "^11.0.1-alpha.9",
+    "@brandingbrand/fsproductdetail": "^11.0.1-alpha.9",
+    "@brandingbrand/fsproductindex": "^11.0.1-alpha.9",
+    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-community/cli-platform-android": "^4.7.0",
+    "@react-native-community/cli-platform-ios": "^4.7.0",
+    "@react-native-community/push-notification-ios": "^1.0.0",
     "jsc-android": "241213.x.x",
-    "react": "^16.11.0",
-    "react-native": "^0.61.0",
-    "react-native-navigation": "^4.0.0"
+    "react": "^16.13.1",
+    "react-native": "^0.63.2",
+    "react-native-cookies": "^3.3.0",
+    "react-native-device-info": "^5.0.0",
+    "react-native-navigation": "^6.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -56,7 +57,10 @@
       "**/fsapp/react-native*",
       "**/fsapp/react-native*/**",
       "jsc-android",
-      "@react-native-community/async-storage"
+      "@react-native-community/async-storage",
+      "@react-native-community/cli-platform-android",
+      "@react-native-community/cli-platform-ios",
+      "@react-native-community/push-notification-ios"
     ]
   }
 }
