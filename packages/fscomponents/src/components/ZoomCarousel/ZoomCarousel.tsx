@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { PageIndicator } from '../PageIndicator';
-import { MultiCarousel } from '../MultiCarousel';
+import { CarouselController, MultiCarousel } from '../MultiCarousel';
 import { ZoomImages } from './ZoomImages';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -157,7 +157,6 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   modalRef: any;
   initialScrollX: number = 0;
   panResponder: any;
-  multiCarousel: any;
 
   zoomContainerWidth: number;
   itemWidth: number;
@@ -167,6 +166,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   openScale: Animated.Value;
   scrollViewSize: Animated.Value;
   scrollViewPosition: Animated.ValueXY;
+  multiCarousel?: CarouselController;
 
   constructor(props: ZoomCarouselProps) {
     super(props);
@@ -259,7 +259,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
 
-    this.multiCarousel.goToNext({ animated: false });
+    this.multiCarousel?.goToNext({ animated: false });
 
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
@@ -278,7 +278,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
 
-    this.multiCarousel.goToPrev({ animated: false });
+    this.multiCarousel?.goToPrev({ animated: false });
 
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
@@ -560,15 +560,22 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
   }
 
   handleThumbPress = (i: number) => {
-    this.multiCarousel.goTo(i);
+    this.multiCarousel?.goTo(i);
   }
 
   makeHandleThumbPress = (i: number) => () => {
-    this.multiCarousel.goTo(i);
+    this.multiCarousel?.goTo(i);
   }
 
-  itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
+  itemUpdated = (
+    oldItem: ImageData | undefined | null,
+    newItem: ImageData | undefined | null,
+    index: number,
+    changed: () => void
+  ) => {
     if (
+      newItem &&
+      oldItem &&
       newItem.src &&
       (newItem.src.uri ? newItem.src.uri !== oldItem.src.uri : newItem.src !== oldItem.src)
     ) {
@@ -624,8 +631,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     });
   }
 
-  extractMultiCarousel = (ref: any) => {
-    this.multiCarousel = ref;
+  handleCarouselController = (controller: CarouselController) => {
+    this.multiCarousel = controller;
   }
 
   renderCarousel = () => {
@@ -633,7 +640,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     const gapSize = this.props.gapSize || defaultGapSize;
     return (
       <MultiCarousel
-        ref={this.extractMultiCarousel}
+        carouselController={this.handleCarouselController}
         onSlideChange={this.handleSlideChange}
         peekSize={peekSize + (this.props.centerMode ? gapSize / 2 : 0)}
         itemsPerPage={1}
@@ -644,7 +651,6 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         dotStyle={this.props.dotStyle}
         dotActiveStyle={this.props.dotActiveStyle}
         pageIndicatorStyle={this.props.pageIndicatorStyle}
-        zoomButtonStyle={this.props.zoomButtonStyle}
         renderPageIndicator={this.props.renderPageIndicator}
         centerMode={this.props.centerMode}
         style={this.props.fillContainer ? S.fullHeight : null}

@@ -61,8 +61,6 @@ export default class PSProductCarousel extends Component<PSProductCarouselProps>
   render(): JSX.Element {
     return (
       <MultiCarousel
-        brandStyle={styles.brandText}
-        buttonProps={{ palette }}
         itemsPerPage={2}
         peekSize={50}
         style={[styles.container, this.props.style]}

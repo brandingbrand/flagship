@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.8...v11.0.1-alpha.9) (2021-07-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** prevent crashing when `itemsPerPage` is invalid ([fe8be36](https://github.com/brandingbrand/flagship/commit/fe8be365f4916eb15316043fd6e13f8bcd516673))
+
+
+
+
+
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* **fscomponents:** multicarousel linting errors ([fcc0a54](https://github.com/brandingbrand/flagship/commit/fcc0a545d42bcd07cd05d7d690533dc652a18976))
+* **fscomponents:** proper size on items per page ([63ec025](https://github.com/brandingbrand/flagship/commit/63ec02572c7951d4626b02f61c50aa5a19c5ea91))
+
+
+* fix(fscomponents)!: update zoom carousel with MultiCarousel updates ([92d71ca](https://github.com/brandingbrand/flagship/commit/92d71caff4361a55c814a40329300dc42a1441f3))
+* refactor(fscomponents)!: multi carousel fs11 update ([98b951d](https://github.com/brandingbrand/flagship/commit/98b951dfdb3bacd148d71ebf699174e638442159))
+* refactor(fscomponents)!: modernize grid component ([f361367](https://github.com/brandingbrand/flagship/commit/f361367ba43497963ad8ab9a5b1ae9032b6fde28))
+
+
+### Features
+
+* **fscomponents:** dynamic carousel pages ([4706801](https://github.com/brandingbrand/flagship/commit/47068016ce56e11b91481c84e492368eb89e79ac))
+* **fscomponents:** dynamic grid columns ([cdba9b8](https://github.com/brandingbrand/flagship/commit/cdba9b8d14c30738cbb8e681ca2b8e8398e7c67c))
+
+
+### BREAKING CHANGES
+
+* `MultiCarousel` no longer has `ref`, use `carouselController` instead
+* Deprecates a few `MultiCarouselProps` props and removes a few that were unused.
+* Deprecated several props in <Grid />
+
+
+
+
+
 ## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
