@@ -14,9 +14,11 @@ import { Router } from 'react-router';
 import { Redirect, Route as Screen, Switch } from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
 
+import { Injector } from '@brandingbrand/fslinker';
+
 import { buildPath, lazyComponent, StaticImplements } from '../utils';
 import { VersionOverlay } from '../development';
-import { WebShellProvider } from '../shell.web';
+import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
 import { ModalProvider } from '../modal';
 
 import { ActivatedRouteProvider, defaultActivatedRoute, NavigatorProvider } from './context';
@@ -28,6 +30,7 @@ import { trackView } from './utils';
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
     super(routes, new History(routes));
+    Injector.provide({ provide: WEB_SHELL_CONTEXT_TOKEN, useValue: WebShellContext });
     this.registerRoutes();
   }
 

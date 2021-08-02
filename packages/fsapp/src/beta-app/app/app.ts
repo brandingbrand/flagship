@@ -7,6 +7,8 @@ import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { StaticImplements } from '../utils';
 import { FSAppBase } from './app.base';
 
+export { APP_CONFIG_TOKEN, APP_VERSION_TOKEN } from './app.base';
+
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
