@@ -5,21 +5,16 @@ import type {
   ModalService
 } from './types';
 
-import React, {
-  createContext,
-  FC,
-  Fragment,
-  useCallback,
-  useContext,
-  useMemo,
-  useState
-} from 'react';
+import React, { createContext, FC, Fragment, useCallback, useMemo, useState } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { uniqueId } from 'lodash-es';
 
+import { InjectionToken } from '@brandingbrand/fslinker';
+
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
 import { MODALS_STACK, NO_MODAL_CONTEXT_ERROR } from './constants';
 
-const ModalContext = createContext<ModalService>({
+const DEFAULT_MODAL_SERVICE: ModalService = {
   showModal: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
   },
@@ -29,9 +24,11 @@ const ModalContext = createContext<ModalService>({
   dismissAllModals: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
   }
-});
+};
 
-export const useModals = () => useContext(ModalContext);
+export const ModalContext = createContext<ModalService>(DEFAULT_MODAL_SERVICE);
+export const MODAL_CONTEXT_TOKEN = new InjectionToken<typeof ModalContext>('MODAL_CONTEXT_TOKEN');
+export const useModals = () => useDependencyContext(MODAL_CONTEXT_TOKEN) ?? DEFAULT_MODAL_SERVICE;
 
 export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) => {
   const [registeredModals, setRegisteredModals] = useState(new Set<string>());
@@ -109,8 +106,10 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
   );
 
   return (
-    <ModalContext.Provider value={{ showModal, dismissModal, dismissAllModals }}>
-      {children}
-    </ModalContext.Provider>
+    <InjectedContextProvider
+      token={MODAL_CONTEXT_TOKEN}
+      value={{ showModal, dismissModal, dismissAllModals }}
+      children={children}
+    />
   );
 };

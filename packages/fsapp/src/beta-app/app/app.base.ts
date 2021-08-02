@@ -2,12 +2,25 @@ import type { Action, Store } from 'redux';
 import type { AppConfig, AppConstructor, IApp } from './types';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
+import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { boundMethod } from 'autobind-decorator';
+import { ReactReduxContext } from 'react-redux';
 
+import {
+  API_CONTEXT_TOKEN,
+  APIContext,
+  APP_CONTEXT_TOKEN,
+  AppContext,
+  REDUX_CONTEXT_TOKEN,
+  REDUX_STORE_TOKEN
+} from './context';
 import { FSRouter, Routes } from '../router';
 import { GenericState, StoreManager } from '../store';
 import { makeScreenWrapper } from './screen.wrapper';
 import { getVersion } from './utils';
+
+export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN');
+export const APP_CONFIG_TOKEN = new InjectionToken<AppConfig>('APP_CONFIG_TOKEN');
 
 export abstract class FSAppBase implements IApp {
   public static async bootstrap<S extends GenericState, A extends Action, T extends FSAppBase>(
@@ -52,7 +65,14 @@ export abstract class FSAppBase implements IApp {
     public readonly config: AppConfig,
     protected readonly router: FSRouter,
     public readonly store?: Store
-  ) {}
+  ) {
+    Injector.provide({ provide: APP_VERSION_TOKEN, useValue: version });
+    Injector.provide({ provide: APP_CONFIG_TOKEN, useValue: config });
+    Injector.provide({ provide: API_CONTEXT_TOKEN, useValue: APIContext });
+    Injector.provide({ provide: APP_CONTEXT_TOKEN, useValue: AppContext });
+    Injector.provide({ provide: REDUX_CONTEXT_TOKEN, useValue: ReactReduxContext });
+    Injector.provide({ provide: REDUX_STORE_TOKEN, useValue: store });
+  }
 
   @boundMethod
   public async openUrl(url: string): Promise<void> {
