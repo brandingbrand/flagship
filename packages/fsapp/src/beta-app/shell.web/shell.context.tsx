@@ -1,20 +1,15 @@
 import type { DrawerComponentType, ShellConfig, WebShell } from './types';
 
-import React, {
-  createContext,
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { createContext, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+
+import { InjectionToken } from '@brandingbrand/fslinker';
 
 import { useNavigator } from '../router';
 import { CreateWebStyles, lockScroll, unlockScroll } from '../utils';
 
 import { dummyShell } from './shell.dummy';
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
 import { DrawerContainer } from './drawer-container.component';
 import {
   DEFAULT_DRAWER_ANIMATION,
@@ -23,7 +18,11 @@ import {
 } from './constants';
 
 export const WebShellContext = createContext<WebShell>(dummyShell);
-export const useWebShell = () => useContext(WebShellContext);
+export const WEB_SHELL_CONTEXT_TOKEN = new InjectionToken<typeof WebShellContext>(
+  'WEB_SHELL_CONTEXT_TOKEN'
+);
+
+export const useWebShell = () => useDependencyContext(WEB_SHELL_CONTEXT_TOKEN) ?? dummyShell;
 
 const useDrawerOptions = (LeftDrawer?: DrawerComponentType) => {
   const width = useMemo(() => LeftDrawer?.options?.width ?? DEFAULT_DRAWER_WIDTH, [LeftDrawer]);
@@ -31,9 +30,10 @@ const useDrawerOptions = (LeftDrawer?: DrawerComponentType) => {
     () => LeftDrawer?.options?.animationDuration ?? DEFAULT_DRAWER_ANIMATION,
     [LeftDrawer]
   );
-  const opacity = useMemo(() => LeftDrawer?.options?.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY, [
-    LeftDrawer
-  ]);
+  const opacity = useMemo(
+    () => LeftDrawer?.options?.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY,
+    [LeftDrawer]
+  );
   return [width, duration, opacity] as const;
 };
 
@@ -86,10 +86,10 @@ export const WebShellProvider: FC<ShellConfig> = ({
   const LeftDrawer = leftDrawer;
   const RightDrawer = rightDrawer;
 
-  const toggleLeftDrawer = useCallback((open?: boolean) => setLeftDrawer(open ?? !leftDrawerOpen), [
-    setLeftDrawer,
-    leftDrawerOpen
-  ]);
+  const toggleLeftDrawer = useCallback(
+    (open?: boolean) => setLeftDrawer(open ?? !leftDrawerOpen),
+    [setLeftDrawer, leftDrawerOpen]
+  );
 
   const toggleRightDrawer = useCallback(
     (open?: boolean) => setRightDrawer(open ?? !rightDrawerOpen),
@@ -121,7 +121,10 @@ export const WebShellProvider: FC<ShellConfig> = ({
   const activateLeft = leftDrawerOpen || leftActive;
   const activateRight = rightDrawerOpen || rightActive;
   return (
-    <WebShellContext.Provider value={{ toggleLeftDrawer, toggleRightDrawer }}>
+    <InjectedContextProvider
+      token={WEB_SHELL_CONTEXT_TOKEN}
+      value={{ toggleLeftDrawer, toggleRightDrawer }}
+    >
       <View
         style={[styles.appDrawerDefault, (activateLeft || activateRight) && styles.appDrawerOpen]}
       >
@@ -131,8 +134,8 @@ export const WebShellProvider: FC<ShellConfig> = ({
             leftDrawerOpen && LeftDrawer?.options?.slideShell && { marginLeft: leftWidth },
             rightDrawerOpen &&
               RightDrawer?.options?.slideShell && { marginLeft: `calc(-1 * ${rightWidth})` },
-            activateLeft && (({ transitionDuration: leftDuration } as unknown) as ViewStyle),
-            activateRight && (({ transitionDuration: rightDuration } as unknown) as ViewStyle)
+            activateLeft && ({ transitionDuration: leftDuration } as unknown as ViewStyle),
+            activateRight && ({ transitionDuration: rightDuration } as unknown as ViewStyle)
           ]}
         >
           <Header />
@@ -147,13 +150,13 @@ export const WebShellProvider: FC<ShellConfig> = ({
                 rightDrawerOpen && { opacity: rightOpacity },
                 (activateLeft || activateRight) && styles.containerOverlayActive,
                 activateLeft &&
-                  (({
+                  ({
                     transitionDuration: leftDuration
-                  } as unknown) as ViewStyle),
+                  } as unknown as ViewStyle),
                 activateRight &&
-                  (({
+                  ({
                     transitionDuration: rightDuration
-                  } as unknown) as ViewStyle)
+                  } as unknown as ViewStyle)
               ]}
             />
           </TouchableWithoutFeedback>
@@ -185,6 +188,6 @@ export const WebShellProvider: FC<ShellConfig> = ({
           </DrawerContainer>
         )}
       </View>
-    </WebShellContext.Provider>
+    </InjectedContextProvider>
   );
 };
