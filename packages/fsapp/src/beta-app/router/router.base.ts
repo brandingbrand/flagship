@@ -9,7 +9,7 @@ import type {
 
 import { Linking } from 'react-native';
 
-import { Injector } from '@brandingbrand/fslinker';
+import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 
 import { MODAL_CONTEXT_TOKEN, ModalContext } from '../modal';
 import {
@@ -32,6 +32,8 @@ import {
 } from './context';
 import { getPath, resolveRoutes } from './utils';
 
+export const NAVIGATOR_TOKEN = new InjectionToken<FSRouterHistory>('NAVIGATOR');
+
 export abstract class FSRouterBase implements FSRouter {
   public static async register<T extends FSRouterBase>(
     this: FSRouterConstructor<T>,
@@ -51,6 +53,7 @@ export abstract class FSRouterBase implements FSRouter {
     Injector.provide({ provide: NAVIGATOR_CONTEXT_TOKEN, useValue: NavigatorContext });
     Injector.provide({ provide: MODAL_CONTEXT_TOKEN, useValue: ModalContext });
     Injector.provide({ provide: BUTTON_CONTEXT_TOKEN, useValue: ButtonContext });
+    Injector.provide({ provide: NAVIGATOR_TOKEN, useValue: history });
   }
 
   public async open(url: string): Promise<void> {

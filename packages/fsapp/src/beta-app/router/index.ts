@@ -1,4 +1,4 @@
-export { FSRouter } from './router';
+export { FSRouter, NAVIGATOR_TOKEN } from './router';
 export {
   NavigatorContext,
   useNavigator,
