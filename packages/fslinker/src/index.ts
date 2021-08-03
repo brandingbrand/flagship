@@ -5,8 +5,11 @@ export { InjectorCache, GlobalInjectorCache, LocalInjectorCache } from './cache'
 export {
   InjectionToken,
   ValueProvider,
-  ClassProvider,
-  FactoryProvider,
+  InjectedClassProvider,
+  InjectedFactoryProvider,
   Provider,
-  StaticFactoryProvider
+  BasicFactoryProvider,
+  BasicClassProvider,
+  ClassProvider,
+  FactoryProvider
 } from './providers';
