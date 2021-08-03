@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig/tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [{ "path": "./tsconfig.lib.json" }, { "path": "./tsconfig.spec.json" }]
+}
