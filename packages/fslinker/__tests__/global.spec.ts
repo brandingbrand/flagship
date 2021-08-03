@@ -12,4 +12,14 @@ describe('global cache', () => {
     const value = Injector.get(token);
     expect(value).toBe(9);
   });
+
+  it('should throw in an invalid provider is provided', () => {
+    const token = new InjectionToken<number>('some_token');
+
+    // @ts-expect-error
+    expect(() => Injector.provide({ provide: token })).toThrow(TypeError);
+
+    // @ts-expect-error
+    expect(() => Injector.provide({ useValue: 9 })).toThrow(TypeError);
+  });
 });
