@@ -1,4 +1,4 @@
-export { FSAppBeta, APP_CONFIG_TOKEN, APP_VERSION_TOKEN } from './app';
+export { FSAppBeta, APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN } from './app';
 export {
   useAPI,
   useApp,
