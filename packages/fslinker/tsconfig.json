@@ -1,12 +1,7 @@
 {
   "extends": "../../tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist"
+    "composite": true
   },
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "dist/"
-  ]
+  "references": [{ "path": "./tsconfig.lib.json" }, { "path": "./tsconfig.spec.json" }]
 }
