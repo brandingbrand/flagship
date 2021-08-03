@@ -1,11 +1,14 @@
 {
-  "extends": "../../tsconfig/tsconfig.jest.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "__tests__",
-    "outDir": "dist"
+    "rootDir": ".",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "lib": ["esnext"],
+    "types": ["jest"]
   },
+  "include": ["**/*.spec.ts", "**/*.test.ts", "src/**/*.ts"],
   "exclude": [
-    "**/*.test.ts",
     "dist/"
   ]
 }
