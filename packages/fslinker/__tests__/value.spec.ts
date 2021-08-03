@@ -53,4 +53,10 @@ describe('injected value', () => {
 
     expect(value).toBeUndefined();
   });
+
+  it('should throw if a required dependency is missing', () => {
+    const token = new InjectionToken<number>('NUMBER_TOKEN');
+
+    expect(() => injector.require(token)).toThrow(TypeError);
+  });
 });

@@ -4,11 +4,11 @@ export class InjectionToken<T = unknown> {
 }
 
 export type OfToken<A extends any[]> = {
-  [K in keyof A]: InjectionToken<A[K]>
+  [K in keyof A]: InjectionToken<A[K]>;
 };
 
 export type OrToken<A extends any[]> = {
-  [K in keyof A]: A[K] | InjectionToken<A[K]>
+  [K in keyof A]: A[K] | InjectionToken<A[K]>;
 };
 
 export interface ValueProvider<T = unknown> {
@@ -16,31 +16,37 @@ export interface ValueProvider<T = unknown> {
   useValue: T;
 }
 
-export interface StaticClassProvider<D extends unknown[], T = undefined> {
+export interface BasicClassProvider<D extends unknown[], T = undefined> {
   provide: InjectionToken<T>;
   useClass: new (...dependencies: D) => T;
 }
 
-export interface ClassProvider<D extends unknown[], T = undefined> {
+export interface InjectedClassProvider<D extends unknown[], T = undefined> {
   provide: InjectionToken<T>;
   useClass: new (...dependencies: D) => T;
   deps: OrToken<D>;
 }
 
-export interface StaticFactoryProvider<T = unknown> {
+export type ClassProvider<D extends unknown[], T = unknown> =
+  | BasicClassProvider<D, T>
+  | InjectedClassProvider<D, T>;
+
+export interface BasicFactoryProvider<T = unknown> {
   provide: InjectionToken<T>;
   useFactory: () => T;
 }
 
-export interface FactoryProvider<D extends unknown[], T = unknown> {
+export interface InjectedFactoryProvider<D extends unknown[], T = unknown> {
   provide: InjectionToken<T>;
   useFactory: (...dependencies: D) => T;
   deps: OrToken<D>;
 }
 
+export type FactoryProvider<D extends unknown[], T = unknown> =
+  | BasicFactoryProvider<T>
+  | InjectedFactoryProvider<D, T>;
+
 export type Provider<D extends unknown[], T = unknown> =
   | ValueProvider<T>
-  | StaticClassProvider<D, T>
   | ClassProvider<D, T>
-  | StaticFactoryProvider<T>
   | FactoryProvider<D, T>;
