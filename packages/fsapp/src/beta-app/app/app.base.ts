@@ -21,6 +21,7 @@ import { getVersion } from './utils';
 
 export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN');
 export const APP_CONFIG_TOKEN = new InjectionToken<AppConfig>('APP_CONFIG_TOKEN');
+export const API_TOKEN = new InjectionToken<FSNetwork>('API_TOKEN');
 
 export abstract class FSAppBase implements IApp {
   public static async bootstrap<S extends GenericState, A extends Action, T extends FSAppBase>(
@@ -50,6 +51,7 @@ export abstract class FSAppBase implements IApp {
       version,
       config,
       router,
+      api,
       store as S extends GenericState ? (A extends Action ? Store<S, A> : undefined) : undefined
     );
     if (!config.serverSide) {
@@ -64,14 +66,16 @@ export abstract class FSAppBase implements IApp {
     public readonly version: string,
     public readonly config: AppConfig,
     protected readonly router: FSRouter,
+    public readonly api?: FSNetwork,
     public readonly store?: Store
   ) {
-    Injector.provide({ provide: APP_VERSION_TOKEN, useValue: version });
+    Injector.provide({ provide: API_TOKEN, useValue: api });
+    Injector.provide({ provide: REDUX_STORE_TOKEN, useValue: store });
     Injector.provide({ provide: APP_CONFIG_TOKEN, useValue: config });
+    Injector.provide({ provide: APP_VERSION_TOKEN, useValue: version });
     Injector.provide({ provide: API_CONTEXT_TOKEN, useValue: APIContext });
     Injector.provide({ provide: APP_CONTEXT_TOKEN, useValue: AppContext });
     Injector.provide({ provide: REDUX_CONTEXT_TOKEN, useValue: ReactReduxContext });
-    Injector.provide({ provide: REDUX_STORE_TOKEN, useValue: store });
   }
 
   @boundMethod
