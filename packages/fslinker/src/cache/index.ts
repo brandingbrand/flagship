@@ -1,3 +1,3 @@
-export * from './cache';
-export * from './global-cache';
-export * from './local-cache';
+export { InjectorCache, FallbackCache } from './cache';
+export { GlobalInjectorCache } from './global-cache';
+export { LocalInjectorCache } from './local-cache';
