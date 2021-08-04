@@ -9,10 +9,10 @@ import {
   Provider,
   ValueProvider
 } from './providers';
-import { GlobalInjectorCache, InjectorCache } from './cache';
+import { FallbackCache, GlobalInjectorCache, InjectorCache } from './cache';
 import { getDependencies } from './inject';
 
-export class Injector {
+export class Injector implements FallbackCache {
   public static get<T>(token: InjectionToken<T>): T | undefined {
     return this.injector.get(token);
   }
@@ -25,11 +25,15 @@ export class Injector {
     this.injector.provide(provider);
   }
 
+  public static remove(token: InjectionToken): void {
+    this.injector.remove(token);
+  }
+
   public static reset(): void {
     this.injector.reset();
   }
 
-  private static injector: Injector = new Injector(new GlobalInjectorCache());
+  private static injector: Injector = new Injector(GlobalInjectorCache);
 
   constructor(private readonly cache: InjectorCache) {}
 
@@ -40,7 +44,7 @@ export class Injector {
   public require<T>(token: InjectionToken<T>): T extends undefined ? never : T {
     const dependency = this.cache.get(token);
     if (dependency === undefined) {
-      throw new TypeError(`${Injector.name}: Required ${token.uniqueKey} is undefined`);
+      throw new ReferenceError(`${Injector.name}: Required ${token.uniqueKey} is undefined`);
     }
 
     return dependency as T extends undefined ? never : T;
@@ -68,13 +72,17 @@ export class Injector {
     }
   }
 
+  public remove(token: InjectionToken): void {
+    this.cache.remove(token);
+  }
+
   public reset(): void {
     this.cache.reset();
   }
 
   private verifyDeps(target: Function, deps: unknown[]): void | never {
     if (deps.length !== target.length) {
-      throw new TypeError(
+      throw new ReferenceError(
         // tslint:disable-next-line: ter-max-len
         `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies`
       );
