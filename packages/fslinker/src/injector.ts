@@ -49,18 +49,7 @@ export class Injector implements FallbackCache {
     const dependency = this.get(token);
     if (dependency === undefined) {
       throw new ReferenceError(
-        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined.
-If you are a developer seeing this message there can be a few causes:
-- You are requiring a token that is never provided
-- You are requiring a token that is not *yet* provided
-- One of your dependencies is requiring a token that is not provided
-
-In the event that your token is not provided, you will need to provide it via a
-\`Injector.provide()\`
-In the event that your token is not *yet* provided you will need to change your execution order.
-This error is common when working with module side effects.
-It may be necessary to use a factory to defer your dependency to after your token has been provided.
-`
+        `${Injector.name}: Required ${(token as InjectionToken<T>).key.toString()} is undefined`
       );
     }
 
@@ -70,9 +59,8 @@ It may be necessary to use a factory to defer your dependency to after your toke
   public provide<D extends unknown[], T>(provider: Provider<D, T>): void {
     if (!('provide' in provider)) {
       throw new TypeError(
-        `${Injector.name}: Expected provider to specify a provide token, but none was provided.
-If you are a developer seeing this message then make sure that your parameter to
-\`Injector.provide()\` is of the correct type.`
+        // tslint:disable-next-line: ter-max-len
+        `${Injector.name}: Expected provider to specify a provide token, but none was provided`
       );
     }
 
@@ -85,7 +73,7 @@ If you are a developer seeing this message then make sure that your parameter to
     } else {
       throw new TypeError(
         // tslint:disable-next-line: ter-max-len
-        `${Injector.name}: Expected provider to provide either a value, factory or class, but none was provided.`
+        `${Injector.name}: Expected provider to provide either a value, factory or class, but none was provided`
       );
     }
   }
@@ -102,8 +90,7 @@ If you are a developer seeing this message then make sure that your parameter to
     if (deps.length !== target.length) {
       throw new ReferenceError(
         // tslint:disable-next-line: ter-max-len
-        `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies.
-Check that your dependency array matches your factory or classes required dependencies.`
+        `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies`
       );
     }
   }

@@ -1,6 +1,9 @@
 export class InjectionToken<T = unknown> {
+  public readonly key: symbol;
   protected readonly brand: T | undefined;
-  constructor(public readonly uniqueKey: string) {}
+  constructor(uniqueKey: string) {
+    this.key = Symbol.for(uniqueKey);
+  }
 }
 
 export type OfToken<A extends any[]> = {
