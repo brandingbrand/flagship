@@ -49,7 +49,7 @@ export class Injector implements FallbackCache {
     const dependency = this.get(token);
     if (dependency === undefined) {
       throw new ReferenceError(
-        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined`
+        `${Injector.name}: Required ${(token as InjectionToken<T>).key.toString()} is undefined`
       );
     }
 

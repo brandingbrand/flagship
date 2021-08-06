@@ -15,7 +15,7 @@ export const Injectable =
     Object.assign(target, new InjectionToken(target.name));
     const prevDependencies = (target)[DEPENDENCIES_SYMBOL] ?? [];
     paramTypes.forEach((type, i) => {
-      if (typeof type === 'function' && 'uniqueKey' in type && prevDependencies[i] === undefined) {
+      if (typeof type === 'function' && 'key' in type && prevDependencies[i] === undefined) {
         prevDependencies[i] = type;
       }
     });

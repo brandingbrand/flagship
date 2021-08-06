@@ -13,30 +13,32 @@ export interface FallbackCache {
 
 export class InMemoryCache {
   constructor(
-    private readonly providers: Map<string, unknown>,
+    private readonly providers: Map<symbol, unknown>,
     private readonly fallback?: FallbackCache
   ) {}
 
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
-    return (this.providers.get(token.uniqueKey) as T) ?? this.fallback?.get(token);
+    return (this.providers.get(token.key) as T) ?? this.fallback?.get(token);
   }
 
   public provide<T>(token: InjectionToken<T>, value: T): void {
     this.verifyToken(token);
 
-    if (this.providers.has(token.uniqueKey)) {
+    if (this.providers.has(token.key)) {
       throw new TypeError(
-        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided`
+        `${
+          InMemoryCache.name
+        }: Duplicate provider, token ${token.key.toString()} is already provided`
       );
     }
 
-    this.providers.set(token.uniqueKey, value);
+    this.providers.set(token.key, value);
   }
 
   public remove(token: InjectionToken): void {
     this.verifyToken(token);
-    this.providers.delete(token.uniqueKey);
+    this.providers.delete(token.key);
   }
 
   public reset(): void {
@@ -47,7 +49,7 @@ export class InMemoryCache {
     if (
       !token ||
       (typeof token !== 'object' && typeof token !== 'function') ||
-      !('uniqueKey' in token)
+      !('key' in token)
     ) {
       const actualType =
         token !== null && typeof token === 'object'

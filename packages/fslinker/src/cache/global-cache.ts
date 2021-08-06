@@ -4,17 +4,17 @@ import { InjectorCache, InMemoryCache } from './cache';
 // In order for the linker to be deterministic and used
 // across bundles the key needs to be a statically known
 // value that can be referenced in each bundle independently
-// as such a private symbol would not be suitable.
-const GLOBAL_CACHE_KEY = '__FLAGSHIP_LINKER_GLOBAL_CACHE__';
+// as such a unique symbol would not be suitable.
+const GLOBAL_CACHE_KEY = Symbol.for('__FLAGSHIP_LINKER_GLOBAL_CACHE__');
 
 declare global {
   interface Window {
-    [GLOBAL_CACHE_KEY]: Map<string, unknown>;
+    [GLOBAL_CACHE_KEY]: Map<symbol, unknown>;
   }
 
   namespace NodeJS {
     interface Global {
-      [GLOBAL_CACHE_KEY]: Map<string, unknown>;
+      [GLOBAL_CACHE_KEY]: Map<symbol, unknown>;
     }
   }
 }
