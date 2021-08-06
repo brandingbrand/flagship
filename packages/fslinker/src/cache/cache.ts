@@ -13,38 +13,32 @@ export interface FallbackCache {
 
 export class InMemoryCache {
   constructor(
-    private readonly providers: Map<string, unknown>,
+    private readonly providers: Map<symbol, unknown>,
     private readonly fallback?: FallbackCache
   ) {}
 
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
-    return (this.providers.get(token.uniqueKey) as T) ?? this.fallback?.get(token);
+    return (this.providers.get(token.key) as T) ?? this.fallback?.get(token);
   }
 
   public provide<T>(token: InjectionToken<T>, value: T): void {
     this.verifyToken(token);
 
-    if (this.providers.has(token.uniqueKey)) {
+    if (this.providers.has(token.key)) {
       throw new TypeError(
-        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided.
-If you are a developer seeing this message there can be a few causes:
-- You have explicitly reused the same token when providing dependencies
-- You have given two tokens the same name
-- You have a versioning issue resulting a side effect unexpectedly running more than once
-
-Check your tokens to make sure that the keys are unique.
-Check your dependencies version lock to make sure that those with side effects do not have
-more than a single version`
+        `${
+          InMemoryCache.name
+        }: Duplicate provider, token ${token.key.toString()} is already provided`
       );
     }
 
-    this.providers.set(token.uniqueKey, value);
+    this.providers.set(token.key, value);
   }
 
   public remove(token: InjectionToken): void {
     this.verifyToken(token);
-    this.providers.delete(token.uniqueKey);
+    this.providers.delete(token.key);
   }
 
   public reset(): void {
@@ -55,7 +49,7 @@ more than a single version`
     if (
       !token ||
       (typeof token !== 'object' && typeof token !== 'function') ||
-      !('uniqueKey' in token)
+      !('key' in token)
     ) {
       const actualType =
         token !== null && typeof token === 'object'
