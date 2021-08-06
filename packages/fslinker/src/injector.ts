@@ -10,14 +10,16 @@ import {
   ValueProvider
 } from './providers';
 import { FallbackCache, GlobalInjectorCache, InjectorCache } from './cache';
-import { getDependencies } from './inject';
+import { getDependencies, InjectedClass } from './inject';
 
 export class Injector implements FallbackCache {
-  public static get<T>(token: InjectionToken<T>): T | undefined {
+  public static get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
     return this.injector.get(token);
   }
 
-  public static require<T>(token: InjectionToken<T>): T extends undefined ? never : T {
+  public static require<T>(
+    token: InjectionToken<T> | InjectedClass<T>
+  ): T extends undefined ? never : T {
     return this.injector.require(token);
   }
 
@@ -37,14 +39,18 @@ export class Injector implements FallbackCache {
 
   constructor(private readonly cache: InjectorCache) {}
 
-  public get<T>(token: InjectionToken<T>): T | undefined {
-    return this.cache.get(token);
+  public get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
+    return this.cache.get(token as InjectionToken<T>);
   }
 
-  public require<T>(token: InjectionToken<T>): T extends undefined ? never : T {
-    const dependency = this.cache.get(token);
+  public require<T>(
+    token: InjectionToken<T> | InjectedClass<T>
+  ): T extends undefined ? never : T {
+    const dependency = this.get(token);
     if (dependency === undefined) {
-      throw new ReferenceError(`${Injector.name}: Required ${token.uniqueKey} is undefined`);
+      throw new ReferenceError(
+        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined`
+      );
     }
 
     return dependency as T extends undefined ? never : T;
