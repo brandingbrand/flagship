@@ -1,19 +1,15 @@
 import { InjectionToken, OfToken } from './providers';
 
-const DEPENDENCIES_SYMBOL = Symbol('DEPENDENCIES_SYMBOL');
+export const DEPENDENCIES_SYMBOL = Symbol('DEPENDENCIES_SYMBOL');
 
-interface InjectedClass<D extends unknown[], T = unknown> {
+export interface InjectedClass<T = unknown, D extends unknown[] = any[]> {
   [DEPENDENCIES_SYMBOL]?: InjectionToken[];
   new (...deps: D): T;
 }
 
 export const Inject =
-  (token: InjectionToken) =>
-  <D extends unknown[], T = unknown>(
-    target: InjectedClass<D, T>,
-    _key: string | symbol,
-    index: number
-  ) => {
+  <T>(token: InjectionToken<T>) =>
+  (target: InjectedClass<T>, _key: string | symbol, index: number) => {
     const prevDependencies = target[DEPENDENCIES_SYMBOL] ?? [];
 
     prevDependencies[index] = token;
@@ -21,6 +17,6 @@ export const Inject =
     target[DEPENDENCIES_SYMBOL] = prevDependencies;
   };
 
-export const getDependencies = <D extends unknown[], T = unknown>(target: InjectedClass<D, T>) => {
+export const getDependencies = <T, D extends unknown[]>(target: InjectedClass<T, D>) => {
   return (target[DEPENDENCIES_SYMBOL] ?? []) as OfToken<D>;
 };

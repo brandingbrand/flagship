@@ -1,3 +1,5 @@
+// tslint:disable: max-classes-per-file
+
 import { GlobalInjectorCache, Injectable, InjectionToken, Injector } from '../src';
 
 describe('global cache', () => {
@@ -43,6 +45,20 @@ describe('global cache', () => {
 
     const instance = Injector.get(token);
     expect(instance).toBeInstanceOf(Example);
+  });
+
+  it('should inject injectable classes without tokens', () => {
+    @Injectable()
+    class SomeService {}
+
+    @Injectable()
+    class SomeOtherService {
+      constructor(public readonly service: SomeService) {}
+    }
+
+    const instance = Injector.get(SomeOtherService);
+    expect(instance).toBeInstanceOf(SomeOtherService);
+    expect(instance?.service).toBeInstanceOf(SomeService);
   });
 
   it('should provide undefined for removed tokens', () => {
