@@ -60,6 +60,17 @@ describe('injected value', () => {
     expect(() => injector.require(token)).toThrow(ReferenceError);
   });
 
+  it('should throw in the injection token is invalid', () => {
+    // @ts-expect-error
+    expect(() => injector.provide({ provide: 9, useValue: 9 })).toThrow(TypeError);
+
+    // @ts-expect-error
+    expect(() => injector.provide({ provide: {}, useValue: 9 })).toThrow(TypeError);
+
+    // @ts-expect-error
+    expect(() => injector.provide({ provide: null, useValue: 9 })).toThrow(TypeError);
+  });
+
   it('should provide undefined for removed tokens', () => {
     const token = new InjectionToken<number>('NUMBER_TOKEN');
     injector.provide({ provide: token, useValue: 9 });

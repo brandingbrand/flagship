@@ -119,6 +119,54 @@ describe('injected class', () => {
     expect(instance).toBeInstanceOf(Example);
   });
 
+
+  it('should inject injectable classes without tokens', () => {
+    class Dependency1 {}
+    const dependencyToken1 = new InjectionToken<Dependency1>('DEPENDENCY_TOKEN_1');
+    Injector.provide({ provide: dependencyToken1, useClass: Dependency1 });
+
+    @Injectable(injector)
+    class SomeService {}
+
+    @Injectable(injector)
+    class SomeOtherService {
+      constructor(
+        public readonly service: SomeService,
+        @Inject(dependencyToken1) public readonly dep1: Dependency1
+      ) {}
+    }
+
+    const instance = injector.get(SomeOtherService);
+    expect(instance).toBeInstanceOf(SomeOtherService);
+    expect(instance?.service).toBeInstanceOf(SomeService);
+    expect(instance?.dep1).toBeInstanceOf(Dependency1);
+  });
+
+  it('should allow mixed decorated parameters and injectables', () => {
+    @Injectable(injector)
+    class SomeService {}
+
+    @Injectable(injector)
+    class SomeOtherService {
+      constructor(public readonly service: SomeService) {}
+    }
+
+    const instance = injector.get(SomeOtherService);
+    expect(instance).toBeInstanceOf(SomeOtherService);
+    expect(instance?.service).toBeInstanceOf(SomeService);
+  });
+
+  it('should throw in a parameter is not an injectable or decorated', () => {
+    expect(() => {
+      @Injectable(injector)
+      class A {
+        constructor(public readonly service: number) {}
+      }
+
+      return A;
+    }).toThrow(ReferenceError);
+  });
+
   it('should report dependencies with getDependencies()', () => {
     const dependencyToken1 = new InjectionToken<Dependency1>('DEPENDENCY_TOKEN_1');
     const dependencyToken2 = new InjectionToken<Dependency2>('DEPENDENCY_TOKEN_2');
