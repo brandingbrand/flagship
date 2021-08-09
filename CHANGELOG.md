@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
+
+
+### Features
+
+* **fslinker:** class tokens ([1149279](https://github.com/brandingbrand/flagship/commit/1149279c3f74931778dd9d5dda6f994aa5c2aa86))
+
+
+
+
+
 ## [11.0.1-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.9...v11.0.1-alpha.10) (2021-08-03)
 
 
