@@ -31,12 +31,25 @@ describe('injected factory', () => {
     });
     injector.provide({
       provide: token,
-      useFactory: (dependency: number) => dependency * 10,
+      useFactory: dependency => dependency * 10,
       deps: [dependencyToken]
     });
 
     const value = injector.get(token);
     expect(value).toBe(200);
+  });
+
+  it('should provide values that are not injection tokens', () => {
+    const token = new InjectionToken<number>('NUMBER_TOKEN');
+
+    injector.provide({
+      provide: token,
+      useFactory: dependency => dependency * 10,
+      deps: [30]
+    });
+
+    const value = injector.get(token);
+    expect(value).toBe(300);
   });
 
   it('should throw if the incorrect number of dependencies is provided', () => {
@@ -49,7 +62,7 @@ describe('injected factory', () => {
         // @ts-expect-error
         deps: []
       })
-    ).toThrowError(TypeError);
+    ).toThrow(ReferenceError);
   });
 
   it('should throw if a dependency is not provided', () => {
@@ -59,10 +72,10 @@ describe('injected factory', () => {
     expect(() =>
       injector.provide({
         provide: token,
-        useFactory: (dependency: number) => dependency * 10,
+        useFactory: dependency => dependency * 10,
         deps: [dependencyToken]
       })
-    ).toThrowError(TypeError);
+    ).toThrow(ReferenceError);
   });
 });
 

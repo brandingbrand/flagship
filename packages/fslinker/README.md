@@ -82,6 +82,16 @@ const theValue = Injector.get(SOME_TOKEN); // 120
 
 ### Class Usage
 
+Before using classes make sure that decorators are enabled in your TypeScript configuration
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
+```
+
 With classes there are some decorators which take care of a lot of the work for you.
 
 ```ts
@@ -111,6 +121,51 @@ export class SomeService {
 
 // Getting a provided service will give you the singleton instance
 // that was constructed when the dependency was provided.
+const someService = Injector.get(SOME_TOKEN);
+someService.init();
+```
+
+or if you prefer you can enable the following in your TypeScript configuration
+
+```json
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true
+  }
+}
+```
+
+and then you can use the classes themselves as tokens.
+
+```ts
+export const SOME_TOKEN = new InjectionToken<number>('SOME_TOKEN');
+Injector.provide({ provide: SOME_TOKEN, useValue: 9 });
+
+// `@Injectable()` will mark OtherService as a token with the unique id of OtherService.
+@Injectable()
+export class OtherService {
+  public doSomething(): void {
+    return;
+  }
+}
+
+
+@Injectable(SOME_TOKEN)
+export class SomeService {
+  constructor(
+    // @Injectable() with mark `SomeService` as having a first dependency
+    protected readonly other: OtherService,
+    // And the second dependency is marked by the @Inject() which will override
+    // anything assumed from the metadata.
+    @Inject(SOME_TOKEN) public readonly version: number;
+  ) {}
+
+  public init(): void {
+    this.other.doSomething();
+  }
+}
+
+
 const someService = Injector.get(SOME_TOKEN);
 someService.init();
 ```

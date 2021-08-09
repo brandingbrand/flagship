@@ -10,6 +10,9 @@
     "prepare": "tsc -p ./tsconfig.lib.json",
     "tsc:watch": "tsc -p ./tsconfig.lib.json -w --preserveWatchOutput"
   },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
