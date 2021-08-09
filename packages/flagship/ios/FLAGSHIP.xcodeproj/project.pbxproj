@@ -13,6 +13,7 @@
 		1484123C2315883E00E8D031 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1484123B2315883E00E8D031 /* LaunchScreen.storyboard */; };
 		14A6AB6E2179BAEF0096DB28 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */; };
 		289DAC84207E9B9F00DFFECC /* EnvSwitcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */; };
+		290DF4D326BDCE9900DCB434 /* fix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290DF4D226BDCE9900DCB434 /* fix.swift */; };
 		7441E75E72EAB0F64FB0E330 /* libPods-FLAGSHIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35269AFEFAACE147946929 /* libPods-FLAGSHIP.a */; };
 		7B111B4422F24AFE9CF3DE82 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B84D886876084ED9BA4BA9BF /* libz.tbd */; };
 		8B147E1A212DDF8F0053B1A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */; };
@@ -34,6 +35,8 @@
 		14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = FLAGSHIP/ADBMobileConfig.json; sourceTree = "<group>"; };
 		289DAC83207E9B9F00DFFECC /* EnvSwitcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EnvSwitcher.m; path = FLAGSHIP/EnvSwitcher.m; sourceTree = "<group>"; };
 		28AB2B671F9176780083673A /* FLAGSHIP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FLAGSHIP.entitlements; path = FLAGSHIP/FLAGSHIP.entitlements; sourceTree = "<group>"; };
+		290DF4D226BDCE9900DCB434 /* fix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fix.swift; sourceTree = "<group>"; };
+		299BC64126BDC0C0006720FC /* FLAGSHIP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FLAGSHIP-Bridging-Header.h"; sourceTree = "<group>"; };
 		2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLAGSHIP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLAGSHIP/Pods-FLAGSHIP.debug.xcconfig"; sourceTree = "<group>"; };
 		8B147E19212DDF8F0053B1A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "FLAGSHIP/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B48111A22B00C440025490E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -76,6 +79,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				F9F84A291FBBA294006783F0 /* LaunchImages.xcassets */,
 				14A6AB6D2179BAEF0096DB28 /* ADBMobileConfig.json */,
+				299BC64126BDC0C0006720FC /* FLAGSHIP-Bridging-Header.h */,
+				290DF4D226BDCE9900DCB434 /* fix.swift */,
 			);
 			name = FLAGSHIP;
 			sourceTree = "<group>";
@@ -168,9 +173,7 @@
 				ORGANIZATIONNAME = "Branding Brand";
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
-					};
-					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
@@ -336,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290DF4D326BDCE9900DCB434 /* fix.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				289DAC84207E9B9F00DFFECC /* EnvSwitcher.m in Sources */,
@@ -351,6 +355,7 @@
 			baseConfigurationReference = 2B05F7F5FCA846144EA80B62 /* Pods-FLAGSHIP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FLAGSHIP/FLAGSHIP.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -359,23 +364,22 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**"
+					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 				);
 				INFOPLIST_FILE = FLAGSHIP/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = FLAGSHIP;
-				TARGETED_DEVICE_FAMILY = "1";
+				SWIFT_OBJC_BRIDGING_HEADER = "FLAGSHIP-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -385,6 +389,7 @@
 			baseConfigurationReference = E1986D12E0A22E2A8AEABF74 /* Pods-FLAGSHIP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FLAGSHIP/FLAGSHIP.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
@@ -393,23 +398,21 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**"
+					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 				);
 				INFOPLIST_FILE = FLAGSHIP/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = FLAGSHIP;
-				TARGETED_DEVICE_FAMILY = "1";
+				SWIFT_OBJC_BRIDGING_HEADER = "FLAGSHIP-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -448,7 +451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -484,7 +487,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
