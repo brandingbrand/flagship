@@ -2,6 +2,7 @@ import { InjectionToken } from '../providers';
 
 export interface InjectorCache {
   get<T>(token: InjectionToken<T>): T | undefined;
+  has(token: InjectionToken): boolean;
   provide<T>(token: InjectionToken<T>, value: T): void;
   remove(token: InjectionToken): void;
   reset(): void;
@@ -9,6 +10,7 @@ export interface InjectorCache {
 
 export interface FallbackCache {
   get<T>(token: InjectionToken<T>): T | undefined;
+  has(token: InjectionToken): boolean;
 }
 
 export class InMemoryCache {
@@ -20,6 +22,11 @@ export class InMemoryCache {
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
     return (this.providers.get(token.key) as T) ?? this.fallback?.get(token);
+  }
+
+  public has<T>(token: InjectionToken<T>): boolean {
+    this.verifyToken(token);
+    return (this.providers.has(token.key) || this.fallback?.has(token)) ?? false;
   }
 
   public provide<T>(token: InjectionToken<T>, value: T): void {
