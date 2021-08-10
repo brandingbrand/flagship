@@ -24,6 +24,10 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
     return this.cache.get(token);
   }
 
+  public static has(token: InjectionToken): boolean {
+    return this.cache.has(token);
+  }
+
   public static provide<T>(token: InjectionToken<T>, value: T): void {
     this.cache.provide(token, value);
   }
