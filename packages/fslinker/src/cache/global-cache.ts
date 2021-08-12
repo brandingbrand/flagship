@@ -1,5 +1,5 @@
 import { InjectionToken } from '../providers';
-import { InjectorCache } from './cache';
+import { InjectorCache, InMemoryCache } from './cache';
 
 // In order for the linker to be deterministic and used
 // across bundles the key needs to be a statically known
@@ -19,16 +19,30 @@ declare global {
   }
 }
 
-export class GlobalInjectorCache extends InjectorCache {
-  private readonly globalMap: Map<string, unknown>;
+export class GlobalInjectorCache extends InMemoryCache implements InjectorCache {
+  public static get<T>(token: InjectionToken<T>): T | undefined {
+    return this.cache.get(token);
+  }
+
+  public static provide<T>(token: InjectionToken<T>, value: T): void {
+    this.cache.provide(token, value);
+  }
+
+  public static remove(token: InjectionToken): void {
+    this.cache.remove(token);
+  }
+
+  public static reset(): void {
+    this.cache.reset();
+  }
+
+  private static cache: GlobalInjectorCache = new GlobalInjectorCache();
 
   constructor() {
-    super();
-
     const globalObject = typeof global !== undefined ? global : window;
 
     if (globalObject === undefined) {
-      throw new TypeError(
+      throw new ReferenceError(
         `${GlobalInjectorCache.name}: Unsupported environment, the global object could not be found`
       );
     }
@@ -37,25 +51,6 @@ export class GlobalInjectorCache extends InjectorCache {
       globalObject[GLOBAL_CACHE_KEY] = new Map();
     }
 
-    this.globalMap = globalObject[GLOBAL_CACHE_KEY];
-  }
-
-  public get<T>(token: InjectionToken<T>): T | undefined {
-    return this.globalMap.get(token.uniqueKey) as T;
-  }
-
-  public provide<T>(token: InjectionToken<T>, value: T): void {
-    if (this.globalMap.has(token.uniqueKey)) {
-      throw new Error(
-        // tslint:disable-next-line: ter-max-len
-        `${GlobalInjectorCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided`
-      );
-    }
-
-    this.globalMap.set(token.uniqueKey, value);
-  }
-
-  public reset(): void {
-    this.globalMap.clear();
+    super(globalObject[GLOBAL_CACHE_KEY]);
   }
 }

@@ -9,15 +9,17 @@ import {
   Provider,
   ValueProvider
 } from './providers';
-import { GlobalInjectorCache, InjectorCache } from './cache';
-import { getDependencies } from './inject';
+import { FallbackCache, GlobalInjectorCache, InjectorCache } from './cache';
+import { getDependencies, InjectedClass } from './inject';
 
-export class Injector {
-  public static get<T>(token: InjectionToken<T>): T | undefined {
+export class Injector implements FallbackCache {
+  public static get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
     return this.injector.get(token);
   }
 
-  public static require<T>(token: InjectionToken<T>): T extends undefined ? never : T {
+  public static require<T>(
+    token: InjectionToken<T> | InjectedClass<T>
+  ): T extends undefined ? never : T {
     return this.injector.require(token);
   }
 
@@ -25,22 +27,30 @@ export class Injector {
     this.injector.provide(provider);
   }
 
+  public static remove(token: InjectionToken): void {
+    this.injector.remove(token);
+  }
+
   public static reset(): void {
     this.injector.reset();
   }
 
-  private static injector: Injector = new Injector(new GlobalInjectorCache());
+  private static injector: Injector = new Injector(GlobalInjectorCache);
 
   constructor(private readonly cache: InjectorCache) {}
 
-  public get<T>(token: InjectionToken<T>): T | undefined {
-    return this.cache.get(token);
+  public get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
+    return this.cache.get(token as InjectionToken<T>);
   }
 
-  public require<T>(token: InjectionToken<T>): T extends undefined ? never : T {
-    const dependency = this.cache.get(token);
+  public require<T>(
+    token: InjectionToken<T> | InjectedClass<T>
+  ): T extends undefined ? never : T {
+    const dependency = this.get(token);
     if (dependency === undefined) {
-      throw new TypeError(`${Injector.name}: Required ${token.uniqueKey} is undefined`);
+      throw new ReferenceError(
+        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined`
+      );
     }
 
     return dependency as T extends undefined ? never : T;
@@ -68,13 +78,17 @@ export class Injector {
     }
   }
 
+  public remove(token: InjectionToken): void {
+    this.cache.remove(token);
+  }
+
   public reset(): void {
     this.cache.reset();
   }
 
   private verifyDeps(target: Function, deps: unknown[]): void | never {
     if (deps.length !== target.length) {
-      throw new TypeError(
+      throw new ReferenceError(
         // tslint:disable-next-line: ter-max-len
         `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies`
       );

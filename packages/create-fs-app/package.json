@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/create-fs-app",
   "sideEffects": false,
-  "version": "11.0.1-alpha.10",
+  "version": "11.0.1-alpha.11",
   "license": "MIT",
   "scripts": {
     "watch": "tsc --watch",
@@ -15,7 +15,7 @@
     "fs-extra": "^8.0.0",
     "inquirer": "^7.0.0",
     "node-fetch": "^2.6.0",
-    "tar": "^5.0.0"
+    "tar": "^5.0.7"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
