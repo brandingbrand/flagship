@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { ModalProps, StyleProp, ViewStyle } from 'react-native';
-import type { ModalOptions as RNModalOptions } from 'react-native-navigation';
+import type { ModalOptions as RNModalOptions, Options } from 'react-native-navigation';
 import type { TopBarStyle } from '../router/types';
 
 export interface ModalService {
@@ -10,7 +10,7 @@ export interface ModalService {
   dismissAllModals(): Promise<void>;
 }
 
-export interface ModalOptions extends RNModalOptions, ModalProps {
+export interface ModalOptions extends RNModalOptions, ModalProps, Options {
   readonly backdropStyle?: StyleProp<ViewStyle>;
   readonly title?: string;
 }
