@@ -15,7 +15,7 @@
     "fs-extra": "^8.0.0",
     "inquirer": "^7.0.0",
     "node-fetch": "^2.6.0",
-    "tar": "^5.0.7"
+    "tar": "^6.1.8"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
