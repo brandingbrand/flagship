@@ -89,6 +89,10 @@ const styles = StyleSheet.create({
 // tslint:disable-next-line: cyclomatic-complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
+    accessible,
+    accessibilityHint,
+    accessibilityLabel,
+    accessibilityRole,
     data,
     renderItem,
     PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
@@ -445,6 +449,10 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
         onScroll={handleScroll}
       >
         <View
+          accessible={accessible}
+          accessibilityHint={accessibilityHint}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole={accessibilityRole}
           style={{
             width: centerMode ? calculatedPeekSize : 0
           }}
