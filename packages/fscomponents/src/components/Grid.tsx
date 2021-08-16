@@ -83,6 +83,10 @@ export interface BackToTopComponentProps {
 export interface GridProps<ItemT>
   extends Pick<
     FlatListProps<ItemT>,
+    | 'accessible'
+    | 'accessibilityHint'
+    | 'accessibilityLabel'
+    | 'accessibilityRole'
     | 'style'
     | 'data'
     | 'renderItem'
@@ -237,6 +241,10 @@ export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
 // TODO: wSedlacek remove deprecated props in fs12
 export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
   const {
+    accessible,
+    accessibilityHint,
+    accessibilityLabel,
+    accessibilityRole,
     data,
     renderItem,
     BackToTopComponent,
@@ -391,6 +399,10 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     <View style={gridContainerStyle}>
       <FlatList
         ref={listView}
+        accessible={accessible}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
         data={chunkedData}
         renderItem={renderRow}
         keyExtractor={DEFAULT_KEY_EXTRACTOR}
