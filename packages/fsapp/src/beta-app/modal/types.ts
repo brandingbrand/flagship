@@ -10,9 +10,10 @@ export interface ModalService {
   dismissAllModals(): Promise<void>;
 }
 
-export interface ModalOptions extends RNModalOptions, ModalProps, Options {
+export interface ModalOptions extends RNModalOptions, ModalProps {
   readonly backdropStyle?: StyleProp<ViewStyle>;
   readonly title?: string;
+  navigationOptions?: Options;
 }
 
 export interface ModalComponentProps<T = void> {
