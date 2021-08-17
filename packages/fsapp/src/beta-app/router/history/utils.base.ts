@@ -23,6 +23,10 @@ import { buildPath } from '../../utils';
 import { guardRoute } from '../utils';
 import { fromPairs } from 'lodash-es';
 
+export const createKey = () => {
+  return Math.random().toString(36).substr(2, 8);
+};
+
 export const stringifyLocation = (location: LocationDescriptor) => {
   return typeof location === 'string' ? location : createPath(location);
 };
