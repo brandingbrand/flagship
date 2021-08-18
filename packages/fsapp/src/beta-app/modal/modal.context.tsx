@@ -87,8 +87,15 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
                   id,
                   name: modal.definitionId,
                   options: {
-                    modal: modal.options,
-                    topBar: modal.topBarOptions
+                    ...modal.options?.navigationOptions,
+                    modal: {
+                      ...modal.options?.navigationOptions?.modal,
+                      ...modal.options
+                    },
+                    topBar: {
+                      ...modal.options?.navigationOptions?.topBar,
+                      ...modal.topBarOptions
+                    }
                   },
                   passProps: {
                     resolve,

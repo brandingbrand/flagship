@@ -16,10 +16,24 @@ export const resolveRoutes = async ({
   routes,
   externalRoutes: externalRoutesFactory
 }: RouterConfig & InternalRouterConfig) => {
-  const externalRoutes =
-    (await (typeof externalRoutesFactory === 'function'
-      ? externalRoutesFactory(api)
-      : externalRoutesFactory)) ?? [];
+  const externalRoutes = await (async () => {
+    try {
+      if (typeof externalRoutesFactory === 'function') {
+        return await externalRoutesFactory(api);
+      }
+
+      return await externalRoutesFactory ?? [];
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.warn(`Failed to load external routes with the following error ${e.message}`);
+      } else {
+        console.warn('Failed to load external routes');
+      }
+
+      return [];
+    }
+  })();
+
 
   const normalizePath = (route: Route | RouteCollection) => (
     'initialPath' in route ? route.initialPath : route.path
