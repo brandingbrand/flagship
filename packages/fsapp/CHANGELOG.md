@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+
+### Bug Fixes
+
+* **fsapp:** catch external route promises (240c766)
+* **fsapp:** fix modal options for navigation (49e4e70)
+* **fsapp:** fix modal options typing (423a895)
+
+
+
+
+
 ## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
