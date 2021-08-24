@@ -9,7 +9,7 @@ import type {
 
 import { Linking } from 'react-native';
 
-import { InjectionToken, Injector } from '@brandingbrand/fslinker';
+import { Injector } from '@brandingbrand/fslinker';
 
 import { MODAL_CONTEXT_TOKEN, ModalContext } from '../modal';
 import {
@@ -28,11 +28,10 @@ import {
   PATH_CONTEXT_TOKEN,
   PathContext,
   QUERY_CONTEXT_TOKEN,
-  QueryContext
+  QueryContext,
+  NAVIGATOR_TOKEN
 } from './context';
 import { getPath, resolveRoutes } from './utils';
-
-export const NAVIGATOR_TOKEN = new InjectionToken<FSRouterHistory>('NAVIGATOR');
 
 export abstract class FSRouterBase implements FSRouter {
   public static async register<T extends FSRouterBase>(
