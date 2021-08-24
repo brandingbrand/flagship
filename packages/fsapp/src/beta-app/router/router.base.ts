@@ -22,14 +22,14 @@ import {
   LOADING_CONTEXT_TOKEN,
   LoadingContext,
   NAVIGATOR_CONTEXT_TOKEN,
+  NAVIGATOR_TOKEN,
   NavigatorContext,
   PARAM_CONTEXT_TOKEN,
   ParamContext,
   PATH_CONTEXT_TOKEN,
   PathContext,
   QUERY_CONTEXT_TOKEN,
-  QueryContext,
-  NAVIGATOR_TOKEN
+  QueryContext
 } from './context';
 import { getPath, resolveRoutes } from './utils';
 
