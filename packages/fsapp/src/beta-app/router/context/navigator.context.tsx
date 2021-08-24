@@ -14,7 +14,7 @@ export const NAVIGATOR_CONTEXT_TOKEN = new InjectionToken<typeof NavigatorContex
 );
 
 export const useNavigator = () => {
-  const ref = React.useRef<FSRouterHistory>(dummyHistory)
+  const ref = React.useRef<FSRouterHistory>();
 
   if (!ref.current) {
     ref.current = Injector.require(NAVIGATOR_TOKEN);

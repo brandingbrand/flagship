@@ -26,7 +26,7 @@ import { FSRouterBase } from './router.base';
 import { History } from './history';
 import { trackView } from './utils';
 
-export { NAVIGATOR_TOKEN } from './router.base';
+export { NAVIGATOR_TOKEN } from './context/navigator.context';
 
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
