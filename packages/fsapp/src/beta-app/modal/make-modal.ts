@@ -5,7 +5,7 @@ import type { TopBarStyle } from '../router/types';
 
 import { uniqueId } from 'lodash-es';
 
-export const makeModal = <T = void, P = void>(
+export const makeModal = <T = void, P = {}>(
   component: ComponentType<ModalComponentProps<T> & P>,
   options?: ModalOptions,
   topBarOptions?: TopBarStyle
