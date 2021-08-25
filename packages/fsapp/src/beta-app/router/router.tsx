@@ -28,7 +28,7 @@ import {
 import { FSRouterBase } from './router.base';
 import { trackView } from './utils';
 
-export { NAVIGATOR_TOKEN } from './router.base';
+export { NAVIGATOR_TOKEN } from './context/navigator.context';
 
 // This is a hack. I am not happy about having to do this hack.
 // But it is required for Android. If no components are registered
