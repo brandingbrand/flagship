@@ -13,8 +13,8 @@
   "dependencies": {
     "@adobe/react-native-acpanalytics": "^1.2.6",
     "@adobe/react-native-acpcore": "^1.2.5",
-    "@brandingbrand/fsfoundation": "^11.0.1-alpha.15",
-    "@brandingbrand/fsnetwork": "^11.0.1-alpha.15",
+    "@brandingbrand/fsfoundation": "11.0.1-alpha.15",
+    "@brandingbrand/fsnetwork": "11.0.1-alpha.15",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
     "@brandingbrand/react-native-google-analytics": "^2.2.0",
     "@brandingbrand/react-native-leanplum": "^5.0.0",
