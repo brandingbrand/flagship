@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Bug Fixes
+
+* **fsapp:** default modal type ([85f51ec](https://github.com/brandingbrand/flagship/commit/85f51ec62096cb6466fb8155b42eada26f92090f))
+* stroy book configuration ([d1d2b1a](https://github.com/brandingbrand/flagship/commit/d1d2b1af0780f9a0860b88e8c7921d2add32de22))
+
+
+### Features
+
+* **fscomponents:** enhanced grid component ([c5015f5](https://github.com/brandingbrand/flagship/commit/c5015f55321ee3f58cf7c275c3ae25f3fd1e9d86))
+
+
+
+
+
 ## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
 
 
