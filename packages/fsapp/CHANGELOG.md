@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Bug Fixes
+
+* **fsapp:** default modal type (85f51ec)
+
+
+
+
+
 ## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
 
 
