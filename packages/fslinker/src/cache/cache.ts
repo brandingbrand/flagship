@@ -27,7 +27,15 @@ export class InMemoryCache {
 
     if (this.providers.has(token.uniqueKey)) {
       throw new TypeError(
-        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided`
+        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided.
+If you are a developer seeing this message there can be a few causes:
+- You have explicitly reused the same token when providing dependencies
+- You have given two tokens the same name
+- You have a versioning issue resulting a side effect unexpectedly running more than once
+
+Check your tokens to make sure that the keys are unique.
+Check your dependencies version lock to make sure that those with side effects do not have
+more than a single version`
       );
     }
 
