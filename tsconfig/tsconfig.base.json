@@ -5,7 +5,7 @@
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "jsx": "react-native",
+    "jsx": "react",
     "module": "es2015",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
