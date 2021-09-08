@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   DeviceEventEmitter,
   TouchableOpacity,
@@ -11,42 +10,22 @@ import {
   CardProps,
   JSON
 } from '../types';
+import { CardContext, EngagementContext } from '../lib/contexts';
 
 export interface ActionsCard extends CardProps {
   actions?: Action;
 }
 
-export default class Card extends Component<ActionsCard> {
-  static childContextTypes: any = {
-    story: PropTypes.object,
-    handleStoryAction: PropTypes.func,
-    cardActions: PropTypes.object,
-    id: PropTypes.string,
-    name: PropTypes.string,
-    isCard: PropTypes.bool
-  };
-  static contextTypes: any = {
-    handleAction: PropTypes.func
-  };
+export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
+  const { handleAction } = React.useContext(EngagementContext);
 
-  getChildContext = () => ({
-    story: this.props.story,
-    handleStoryAction: this.handleStoryAction,
-    cardActions: this.props.actions,
-    id: this.props.id,
-    name: this.props.name,
-    isCard: true
-  })
-
-  handleStoryAction = async (json: JSON) => {
+  const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
-      title: this.props.name,
-      id: this.props.id
+      title: props.name,
+      id: props.id
     });
-    this.props.api?.logEvent('viewInboxStory', {
-      messageId: this.props.id
-    });
-    return this.props.navigator.push({
+
+    return props.navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
@@ -57,16 +36,15 @@ export default class Card extends Component<ActionsCard> {
         passProps: {
           json,
           backButton: true,
-          name: this.props.name,
-          id: this.props.id
+          name: props.name,
+          id: props.id
         }
       }
     });
-  }
+  };
 
-  onCardPress = async (): Promise<void> => {
-    const { handleAction } = this.context;
-    const { actions, story, storyGradient } = this.props;
+  const onCardPress = async (): Promise<void> => {
+    const { actions, story, storyGradient } = props;
 
     // if there is a story attached and either
     //    1) no actions object (Related)
@@ -80,7 +58,7 @@ export default class Card extends Component<ActionsCard> {
           value: story.html.link
         });
       } else {
-        return this.handleStoryAction({
+        return handleStoryAction({
           ...story,
           storyGradient
         });
@@ -88,30 +66,45 @@ export default class Card extends Component<ActionsCard> {
     } else if (actions && actions.type) {
       handleAction(actions);
     }
-  }
+  };
 
-  render(): JSX.Element {
-    const {
-      containerStyle,
-      plainCard,
-      children
-    } = this.props;
-
-    if (plainCard) {
-      return (
-        <View style={containerStyle}>
-          {children}
-        </View>
-      );
-    }
+  if (props.plainCard) {
     return (
-      <TouchableOpacity
-        style={containerStyle}
-        activeOpacity={0.9}
-        onPress={this.onCardPress}
+      <CardContext.Provider
+        value={{
+          story: props.story,
+          handleStoryAction,
+          cardActions: props.actions,
+          id: props.id,
+          name: props.name,
+          isCard: true
+        }}
       >
-        {children}
-      </TouchableOpacity>
+        <View style={props.containerStyle}>
+          {props.children}
+        </View>
+      </CardContext.Provider>
     );
   }
-}
+
+  return (
+    <CardContext.Provider
+      value={{
+        story: props.story,
+        handleStoryAction,
+        cardActions: props.actions,
+        id: props.id,
+        name: props.name,
+        isCard: true
+      }}
+    >
+      <TouchableOpacity
+        style={props.containerStyle}
+        activeOpacity={0.9}
+        onPress={onCardPress}
+      >
+        {props.children}
+      </TouchableOpacity>
+    </CardContext.Provider>
+  );
+});

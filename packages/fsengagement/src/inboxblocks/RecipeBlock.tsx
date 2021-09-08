@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   ImageStyle,
   StyleProp,
@@ -15,8 +14,9 @@ import {
   ScreenProps
 } from '../types';
 
-import TextBlock from './TextBlock';
-import ImageBlock from './ImageBlock';
+import { TextBlock } from './TextBlock';
+import { ImageBlock } from './ImageBlock';
+import { EngagementContext } from '../lib/contexts';
 
 export interface RecipeBlockProps extends ScreenProps {
   items: any;
@@ -62,79 +62,76 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class RecipeBlock extends Component<RecipeBlockProps> {
-  static contextTypes: any = {
-    handleAction: PropTypes.func
-  };
+export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
+  const {
+    items,
+    containerStyle,
+    textStyle
+  } = props;
 
-  onButtonPress = (actions: Action) => (): void => {
-    const { handleAction } = this.context;
+  const { handleAction } = React.useContext(EngagementContext);
+
+  const onButtonPress = (actions: Action) => (): void => {
     if (actions && actions.type) {
       return handleAction({
         ...actions
       });
     }
-  }
-  render(): JSX.Element {
-    const {
-      items,
-      containerStyle,
-      textStyle
-    } = this.props;
-    const recipeItems = (items || []).map((item: any, index: number) => {
-      return (
+  };
 
-        <View key={index}>
-          {item.link ? (
-            <TouchableOpacity
-              onPress={this.onButtonPress(item.link.actions)}
-              activeOpacity={0.8}
-              style={[styles.linkContainer, styles.recipeContainer]}
-            >
-              {(item.thumbnail && item.thumbnail.source) && (
-                <ImageBlock
-                  source={item.thumbnail.source}
-                  containerStyle={styles.imageContainer}
-                  imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
-                />
-              )}
-              <View style={styles.eventText}>
-                <TextBlock
-                  text={item.text}
-                  textStyle={[styles.recipeTitle, textStyle, { textDecorationLine: 'underline' }]}
-                />
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <View style={styles.recipeContainer}>
-              {(item.thumbnail && item.thumbnail.source) && (
-                <ImageBlock
-                  source={item.thumbnail.source}
-                  containerStyle={styles.imageContainer}
-                  imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
-                />
-              )}
-              <View
-                style={[
-                  styles.eventText,
-                  !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 }
-                ]}
-              >
-                <TextBlock
-                  text={item.text}
-                  textStyle={[styles.recipeTitle, textStyle]}
-                />
-              </View>
-            </View>
-          )}
-        </View>
-      );
-    });
-
+  const recipeItems = (items || []).map((item: any, index: number) => {
     return (
-      <View style={[styles.container, containerStyle]}>
-        {recipeItems}
+
+      <View key={index}>
+        {item.link ? (
+          <TouchableOpacity
+            onPress={onButtonPress(item.link.actions)}
+            activeOpacity={0.8}
+            style={[styles.linkContainer, styles.recipeContainer]}
+          >
+            {(item.thumbnail && item.thumbnail.source) && (
+              <ImageBlock
+                source={item.thumbnail.source}
+                containerStyle={styles.imageContainer}
+                imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
+              />
+            )}
+            <View style={styles.eventText}>
+              <TextBlock
+                text={item.text}
+                textStyle={[styles.recipeTitle, textStyle, { textDecorationLine: 'underline' }]}
+              />
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.recipeContainer}>
+            {(item.thumbnail && item.thumbnail.source) && (
+              <ImageBlock
+                source={item.thumbnail.source}
+                containerStyle={styles.imageContainer}
+                imageStyle={[styles.whenIcon, item.thumbnail.customSize]}
+              />
+            )}
+            <View
+              style={[
+                styles.eventText,
+                !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 }
+              ]}
+            >
+              <TextBlock
+                text={item.text}
+                textStyle={[styles.recipeTitle, textStyle]}
+              />
+            </View>
+          </View>
+        )}
       </View>
     );
-  }
-}
+  });
+
+  return (
+    <View style={[styles.container, containerStyle]}>
+      {recipeItems}
+    </View>
+  );
+});

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.14.0](https://github.com/brandingbrand/flagship/compare/v10.13.0...v10.14.0) (2021-07-27)
+
+**Note:** Version bump only for package @brandingbrand/fsfoundation
+
+
+
+
+
+# [10.13.0](https://github.com/brandingbrand/flagship/compare/v10.12.0...v10.13.0) (2021-06-17)
+
+**Note:** Version bump only for package @brandingbrand/fsfoundation
+
+
+
+
+
+# [10.12.0](https://github.com/brandingbrand/flagship/compare/v10.11.2...v10.12.0) (2021-04-14)
+
+**Note:** Version bump only for package @brandingbrand/fsfoundation
+
+
+
+
+
 ## [10.11.2](https://github.com/brandingbrand/flagship/compare/v10.11.1...v10.11.2) (2021-03-17)
 
 **Note:** Version bump only for package @brandingbrand/fsfoundation

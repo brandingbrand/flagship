@@ -36,4 +36,5 @@ export interface MultiCarouselProps<ItemT> {
   keyExtractor?: (item: ItemT, index: number) => string;
   hideZoomButton?: boolean;
   contentContainerStyle?: StyleProp<ViewStyle>;
+  hideOverflow?: boolean;
 }
