@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+
+### Bug Fixes
+
+* **fsapp:** stuck blockers ([b35bb5a](https://github.com/brandingbrand/flagship/commit/b35bb5aec5d90fb1170cedbc046d4a703332c63c))
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Bug Fixes
+
+* **fsapp:** default modal type ([85f51ec](https://github.com/brandingbrand/flagship/commit/85f51ec62096cb6466fb8155b42eada26f92090f))
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+
+### Bug Fixes
+
+* **fsapp:** navigator context ([4150056](https://github.com/brandingbrand/flagship/commit/41500564d4bee08543a7b90e8ee9d9d3f4e34a0e))
+
+
+
+
+
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+
+### Bug Fixes
+
+* **fsapp:** catch external route promises ([240c766](https://github.com/brandingbrand/flagship/commit/240c7665f08bf11d512dc67e3550445b11a1faa9))
+* **fsapp:** fix modal options for navigation ([49e4e70](https://github.com/brandingbrand/flagship/commit/49e4e701dc35002e5da99cd90b3cbfcda54eb7a7))
+* **fsapp:** fix modal options typing ([423a895](https://github.com/brandingbrand/flagship/commit/423a89595e17036e586957d254b87cc71e5fa5d2))
+
+
+
+
+
+## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 ## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

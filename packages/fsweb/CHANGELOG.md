@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fsweb:** babel warnings about private properties in object ([5b259f0](https://github.com/brandingbrand/flagship/commit/5b259f01842629a456f0d1dc2f68305b37514b0c))
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
+## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
+
+**Note:** Version bump only for package @brandingbrand/fsweb
+
+
+
+
+
 ## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
 
 **Note:** Version bump only for package @brandingbrand/fsweb

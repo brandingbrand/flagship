@@ -11,8 +11,9 @@ import {
   View
 } from 'react-native';
 import { Options } from 'react-native-navigation';
+import { fromPairs } from 'lodash-es';
 
-import { SearchBar } from '@brandingbrand/fscomponents';
+import { Grid, GridRenderItem, makeGridItem, SearchBar } from '@brandingbrand/fscomponents';
 import { env as projectEnv } from '@brandingbrand/fsapp';
 
 import PSScreenWrapper from '../components/PSScreenWrapper';
@@ -125,6 +126,12 @@ const ShopStyle = StyleSheet.create({
   }
 });
 
+const mockProducts = Array.from({ length: 100 }, (_, i) => `Product ${i}`);
+const specialProducts = mockProducts.map((_, i) => i).filter(i => i !== 0 && i % 7 === 0);
+const mockWidthTable = fromPairs(specialProducts.map(i => [i, 'fill' as const]));
+
+const mockAds = Array.from({ length: 5 }, (_, i) => makeGridItem(`Ad ${i}`, 2));
+
 export interface ShopProps
   extends ScreenProps,
   Pick<CombinedStore, 'account' | 'topCategory' | 'promoProducts'>,
@@ -199,6 +206,23 @@ export class UnwrappedShop extends Component<ShopProps> {
     }).catch(e => console.warn(`${screen} PUSH error: `, e));
   }
 
+  renderGridItem: GridRenderItem<string> = ({ item, columns, totalColumns }) => {
+    const fill = columns === totalColumns;
+    return (
+      <View
+        style={[
+          { backgroundColor: 'lightgrey' },
+          { justifyContent: 'center', alignItems: 'center' },
+          { margin: 10 },
+          { height: 175 },
+          fill && { height: 175 * 2 }
+        ]}
+      >
+        <Text>{item}</Text>
+      </View>
+    );
+  }
+
   render(): JSX.Element {
     const { account, topCategory } = this.props;
     return (
@@ -263,6 +287,13 @@ export class UnwrappedShop extends Component<ShopProps> {
             categories={topCategory && topCategory.categories}
             style={ShopStyle.shopLandingCategories}
             onItemPress={this.handleCategoryItemPress}
+          />
+          <Grid
+            data={mockProducts}
+            insertEveryValues={mockAds}
+            insertEveryFrequency={3}
+            columnWidthTable={mockWidthTable}
+            renderItem={this.renderGridItem}
           />
         </View>
       </PSScreenWrapper>

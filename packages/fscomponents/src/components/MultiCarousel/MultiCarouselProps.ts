@@ -9,7 +9,17 @@ export interface SlideChangeEvent {
 }
 
 export interface MultiCarouselProps<ItemT>
-  extends Pick<FlatListProps<ItemT>, 'style' | 'renderItem' | 'data' | 'keyExtractor'> {
+  extends Pick<
+    FlatListProps<ItemT>,
+    | 'accessible'
+    | 'accessibilityHint'
+    | 'accessibilityLabel'
+    | 'accessibilityRole'
+    | 'style'
+    | 'renderItem'
+    | 'data'
+    | 'keyExtractor'
+  > {
   /**
    * Similar to `ref`, used to get ahold of the control functions for the
    * carousel

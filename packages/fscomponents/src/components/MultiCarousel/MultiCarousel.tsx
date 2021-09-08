@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
 // tslint:disable-next-line: cyclomatic-complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
+    accessible,
+    accessibilityHint,
+    accessibilityLabel,
+    accessibilityRole,
     data,
     renderItem,
     PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
@@ -353,6 +357,10 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     <Animated.View style={[styles.container, style, { opacity }]}>
       <FlatList
         ref={scrollView}
+        accessible={accessible}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
         data={data}
         renderItem={renderItemContainer}
         keyExtractor={keyExtractor}
