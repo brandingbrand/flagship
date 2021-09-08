@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
 
 const styles = StyleSheet.create({
   closeBtn: {
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
 // @ts-ignore no type definition file
 import * as CookieManager from 'react-native-cookies';
 // @ts-ignore no type definition file
-import SInfo, { SensitiveInfoEntry } from 'react-native-sensitive-info';
+import SInfo, { RNSensitiveInfoOptions, SensitiveInfoEntry } from 'react-native-sensitive-info';
 
 import { TouchableRow } from './touchable-row.component';
 
@@ -134,7 +133,7 @@ export default class CookieManger extends Component<CookieManagerProps, CookieMa
         const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
         Promise.all(
-          values[0].map((entry) =>
+          values[0].map(entry =>
             SInfo.deleteItem(
               entry.key,
               this.props.sInfoOptions ?? { keychainService: entry.service }
@@ -144,14 +143,14 @@ export default class CookieManger extends Component<CookieManagerProps, CookieMa
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
-          .catch((e) =>
+          .catch(e =>
             console.log(
               'cannot delete item from react-native-sensitive-info',
               e
             )
           );
       })
-      .catch((e) =>
+      .catch(e =>
         console.log('cannot get all items from react-native-sensitive-info', e)
       );
   }
