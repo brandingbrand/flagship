@@ -82,7 +82,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
   const [devView, setDevView] = useState('menu');
   const [selectedEnv, setSelectedEnv] = useState('');
   const [devKeepPage, setDevKeepPage] = useState(false);
-  const app: IApp = useApp();
+  const app: IApp | undefined = useApp();
 
   useEffect(() => {
     AsyncStorage.getItem('devKeepPage')
@@ -164,7 +164,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
   const renderStorageManager = () => {
     return (
       <View style={styles.devViewContainer}>
-        <StorageManager sInfoOptions={app.config.sInfoOptions} />
+        <StorageManager sInfoOptions={app?.config?.sInfoOptions} />
       </View>
     );
   };
