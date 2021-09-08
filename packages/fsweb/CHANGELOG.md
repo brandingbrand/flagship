@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fsweb:** babel warnings about private properties in object ([5b259f0](https://github.com/brandingbrand/flagship/commit/5b259f01842629a456f0d1dc2f68305b37514b0c))
+
+
+
+
+
 ## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
 
 **Note:** Version bump only for package @brandingbrand/fsweb
