@@ -13,6 +13,8 @@ import { envs } from '../env';
 import { makeModal } from '../modal';
 import { EnvSwitcher } from '../lib/env-switcher';
 import { NativeConstants } from '../lib/native-constants';
+import { useApp } from '../app/context';
+import type { IApp } from '../app/types';
 
 import CodePushDevMenu from './code-push.component';
 import StorageManager from './storage-manager.component';
@@ -88,6 +90,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
   const [devView, setDevView] = useState('menu');
   const [selectedEnv, setSelectedEnv] = useState('');
   const [devKeepPage, setDevKeepPage] = useState(false);
+  const app: IApp = useApp();
 
   useEffect(() => {
     AsyncStorage.getItem('devKeepPage')
@@ -169,7 +172,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
   const renderStorageManager = () => {
     return (
       <View style={styles.devViewContainer}>
-        <StorageManager />
+        <StorageManager sInfoOptions={app.config.sInfoOptions} />
       </View>
     );
   };
