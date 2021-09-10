@@ -18,7 +18,7 @@ import ImageCarouselBlock from './ImageCarouselBlock';
 import SimpleCard from './SimpleCard';
 import RoundedImageCard from './RoundedImageCard';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
-import { FullScreenImageCard } from './FullScreenImageCard';
+import FullScreenImageCard from './FullScreenImageCard';
 import { RecipeBlock } from './RecipeBlock';
 import InboxWrapper from './InboxWrapper';
 import ImageGrid from './ImageGrid';

@@ -1,24 +1,22 @@
 import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { AccessibilityRole, StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
-export interface SerializableReviewIndicatorProps {
+export interface ReviewIndicatorProps {
+  accessible?: boolean;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
+  accessibilityHint?: string;
+
   value: number;
   base?: number;
-  style?: ViewStyle;
   itemSize?: number;
   itemColor?: string;
   emptyColor?: string;
-  accessibilityLabel?: string;
   emptyStar?: boolean;
-}
-
-export interface ReviewIndicatorProps extends Omit<SerializableReviewIndicatorProps,
-  'style'
-  > {
   style?: StyleProp<ViewStyle>;
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
@@ -146,6 +144,9 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
   return (
     <View
       style={[S.container, style]}
+      accessible={props.accessible}
+      accessibilityHint={props.accessibilityHint}
+      accessibilityRole={props.accessibilityRole}
       accessibilityLabel={label}
     >
       {newArray(itemData.full).map(v => (

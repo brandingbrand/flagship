@@ -1,4 +1,4 @@
-import { ImageProperties, ImageURISource, StyleProp, ViewStyle } from 'react-native';
+import { ImageProps, ImageURISource, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageData {
   src: ImageURISource;
@@ -22,23 +22,20 @@ export interface ZoomCarouselProps {
   renderImage?: (
     item: ImageData,
     index: number,
-    originalImgs: React.Component<ImageProperties, React.ComponentState>[],
+    originalImgs: React.Component<ImageProps, React.ComponentState>[],
     imageWidth: number,
     imageHeight: number,
     openZoom: () => void
-  ) => React.ReactNode;
-  renderImageWeb?: (data: any, i: number) => React.ReactNode;
-  renderCloseButton?: (closeZoom: () => void) => React.ReactNode;
-  renderModalContent?: (closeModal: () => void) => React.ReactNode;
-  renderPageIndicator?: (
-    currentIndex: number,
-    itemsCount: number
-  ) => React.ReactNode;
-  renderZoomButton?: (openZoom: () => void) => React.ReactNode;
+  ) => JSX.Element;
+  renderImageWeb?: (data: any, i: number) => JSX.Element;
+  renderCloseButton?: (closeZoom: () => void) => JSX.Element;
+  renderModalContent?: (closeModal: () => void) => JSX.Element;
+  renderPageIndicator?: (currentIndex: number, itemsCount: number) => JSX.Element;
+  renderZoomButton?: (openZoom: () => void) => JSX.Element;
   renderThumbnails?: (
     currentIndex: number,
     goTo: (index: number, options: any) => void
-  ) => React.ReactNode;
+  ) => JSX.Element;
   nextArrowOnBlur?: () => void;
   showThumbnails?: boolean;
   thumbnailStyle?: any;
@@ -67,7 +64,7 @@ export interface ZoomCarouselProps {
   imageContainerStyle?: StyleProp<ViewStyle>;
 
   /**
-   * Dicates whether the default image counter displays
+   * Dictates whether the default image counter displays
    *
    * @example true
    */
@@ -85,7 +82,5 @@ export interface ZoomCarouselProps {
    *
    * @example const renderImageCounter = (currentIndex: number) => (<View>1/2</View>)
    */
-  renderImageCounter?: (
-    currentIndex: number
-  ) => React.ReactNode;
+  renderImageCounter?: (currentIndex: number) => JSX.Element;
 }

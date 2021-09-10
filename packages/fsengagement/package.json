@@ -1,14 +1,14 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "10.14.0",
+  "version": "11.0.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsapp": "^10.14.0",
-    "@brandingbrand/fsnetwork": "^10.14.0",
+    "@brandingbrand/fsapp": "^11.0.0",
+    "@brandingbrand/fsnetwork": "^11.0.0",
     "@react-native-community/async-storage": "^1.9.0",
     "@types/prop-types": "^15.0.0",
     "@types/react-native-snap-carousel": "^3.7.3",
@@ -25,7 +25,7 @@
     "react-native-snap-carousel": "^3.8.0",
     "react-native-svg": "^10.0.0",
     "react-native-video": "^5.0.0",
-    "react-native-webview": "^10.9.0"
+    "react-native-webview": "^11.6.4"
   },
   "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }

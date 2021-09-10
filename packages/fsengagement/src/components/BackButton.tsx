@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
 const styles = StyleSheet.create({
   backButton: {
@@ -19,12 +19,16 @@ const styles = StyleSheet.create({
 const backArrow = require('../../assets/images/backArrow.png');
 
 export interface BackButtonProps {
-  navigator: Navigator;
+  navigator?: Navigator;
+  discoverPath?: string;
   style?: StyleProp<ImageStyle>;
 }
 
 export const BackButton: React.FunctionComponent<BackButtonProps> = React.memo(props => {
-  const onBackPress = async (): Promise<void> => props.navigator.pop();
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
+  const onBackPress = async (): Promise<void> => {
+    return navigator?.pop();
+  };
   return (
     <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
       <Image

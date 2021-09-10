@@ -219,8 +219,9 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   headerName?: string;
   animate?: boolean;
   cardPosition?: number;
-  navigator: Navigator;
+  navigator?: Navigator;
   renderHeader?: () => void;
+  discoverPath?: string;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -358,7 +359,7 @@ export default function(
       });
       switch (actions.type) {
         case 'blog-url':
-          await this.props.navigator.push({
+          await this.props.navigator?.push({
             component: {
               name: 'EngagementWebView',
               options: {
@@ -375,7 +376,7 @@ export default function(
           });
           break;
         case 'web-url':
-          await this.props.navigator.showModal({
+          await this.props.navigator?.showModal({
             component: {
               name: 'EngagementWebView',
               passProps: { actions },
@@ -552,7 +553,8 @@ export default function(
         layoutComponents[WHITE_INBOX_WRAPPER],
         {
           key: this.dataKeyExtractor(item),
-          navigator: this.props.navigator
+          navigator: this.props.navigator,
+          discoverPath: this.props.discoverPath
         },
         this.renderBlock(item)
       );
@@ -604,17 +606,20 @@ export default function(
             key: this.dataKeyExtractor(item),
             animateIndex: item.animateIndex,
             navigator: this.props.navigator,
+            discoverPath: this.props.discoverPath,
             slideBackground: item.animateIndex && item.animateIndex <= 2 ?
               this.state.slideBackground : false
           },
           this.renderBlock(item)
         );
       }
+
       return React.createElement(
         layoutComponents[private_type],
         {
           ...props,
           navigator: this.props.navigator,
+          discoverPath: this.props.discoverPath,
           storyGradient: props.story ? json.storyGradient : null,
           api,
           key: this.dataKeyExtractor(item)
@@ -673,9 +678,9 @@ export default function(
           this.props.onBack();
         }
       }, timeout);
-      setTimeout(async () => {
-        return this.props.navigator.dismissModal();
-      }, 550);
+      // setTimeout(async () => {
+      //   return this.props.navigator.dismissModal();
+      // }, 550);
     }
     setScrollEnabled = (enabled: boolean): void => {
       this.setState({
@@ -855,6 +860,7 @@ export default function(
             (
               <BackButton
                 navigator={this.props.navigator}
+                discoverPath={this.props.discoverPath}
                 style={json.backArrow}
               />
             )}
@@ -882,6 +888,7 @@ export default function(
         pageNum
       });
     }
+
     renderFlatlistFooterPadding = (): JSX.Element => {
       return (
         <View style={styles.storyFooter} />

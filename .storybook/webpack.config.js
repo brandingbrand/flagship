@@ -59,6 +59,9 @@ module.exports = ({ config, env }) => {
   config.resolve.alias['react-native-web/dist/exports/SegmentedControlIOS'] = 'react-native-web/dist/modules/UnimplementedView';
   config.resolve.alias['react-native-web/dist/exports/WebView'] = 'react-native-web-webview';
 
+  config.resolve.alias['../../project_env_index'] = path.join(__dirname, './env.js');
+  config.resolve.alias['../project_env_index'] = path.join(__dirname, './env.js');
+
   // Disable __DEV__ mode (this is traditionally set by react-native)
   config.plugins.push(new webpack.DefinePlugin({
     __DEV__: false

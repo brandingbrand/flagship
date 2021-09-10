@@ -46,7 +46,8 @@ export interface CardProps extends EmitterProps {
   api?: EngagementService;
   plainCard?: boolean;
   storyGradient?: StoryGradient;
-  navigator: Navigator;
+  navigator?: Navigator;
+  discoverPath?: string;
 }
 
 export interface Empty {
