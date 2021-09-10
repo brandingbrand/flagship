@@ -18,6 +18,7 @@ import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
 import { VideoBlock } from './VideoBlock';
 import { CardContext, EngagementContext } from '../lib/contexts';
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
 export interface ComponentProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<TextStyle>;
@@ -33,6 +34,7 @@ export interface ComponentProps extends CardProps {
 }
 
 export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
   const { containerStyle, contents } = props;
 
@@ -42,7 +44,18 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(pro
       id: props.id
     });
 
-    return props.navigator.push({
+    if (!navigator) {
+      return;
+    }
+    if (props.discoverPath && !(navigator instanceof Navigator)) {
+      return navigator.open(`${props.discoverPath}/${props.id}`, {
+        json,
+        backButton: true,
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
+    }
+    return navigator.push({
       component: {
         name: 'EngagementComp',
         options: {

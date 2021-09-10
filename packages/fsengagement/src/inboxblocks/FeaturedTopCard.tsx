@@ -11,7 +11,7 @@ import {
   JSON,
   StoryGradient
 } from '../types';
-
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import { CardContext } from '../lib/contexts';
 import { TextBlock, TextBlockProps } from './TextBlock';
 import { CTABlock, CTABlockProps } from './CTABlock';
@@ -34,6 +34,7 @@ export interface ComponentProps extends CardProps {
 }
 
 export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { containerStyle, contents } = props;
 
   const handleStoryAction = async (json: JSON) => {
@@ -42,7 +43,18 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
       id: props.id
     });
 
-    return props.navigator.push({
+    if (!navigator) {
+      return;
+    }
+    if (props.discoverPath && !(navigator instanceof Navigator)) {
+      return navigator.open(`${props.discoverPath}/${props.id}`, {
+        json,
+        backButton: true,
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
+    }
+    return navigator.push({
       component: {
         name: 'EngagementComp',
         options: {

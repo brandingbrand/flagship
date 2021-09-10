@@ -15,6 +15,7 @@ import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
 import { ImageBlock } from './ImageBlock';
 import { CardContext } from '../lib/contexts';
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
 const styles = StyleSheet.create({
   whenIcon: {
@@ -60,6 +61,7 @@ const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 
 export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { contents } = props;
 
   const handleStoryAction = async (json: JSON) => {
@@ -68,7 +70,18 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
       id: props.id
     });
 
-    return props.navigator.push({
+    if (!navigator) {
+      return;
+    }
+    if (props.discoverPath && !(navigator instanceof Navigator)) {
+      return navigator.open(`${props.discoverPath}/${props.id}`, {
+        json,
+        backButton: true,
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
+    }
+    return navigator.push({
       component: {
         name: 'EngagementComp',
         options: {

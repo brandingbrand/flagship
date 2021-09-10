@@ -11,6 +11,7 @@ import {
   OptionsModalPresentationStyle
 // tslint:disable-next-line: no-submodule-imports
 } from 'react-native-navigation/lib/dist/interfaces/Options';
+// import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import * as Animatable from 'react-native-animatable';
 import { CardContext, EngagementContext } from '../lib/contexts';
 import GestureHandler from '../GestureHandler';
@@ -65,62 +66,79 @@ export interface FullScreenCardProps extends CardProps {
   position?: number;
   setScrollEnabled: (enabled: boolean) => void;
 }
-
-export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
-  props => {
-    const { containerStyle, contents } = props;
-    const { handleAction, language } = React.useContext(EngagementContext);
-    const imageRef = useRef<Animatable.Image & Image>(null);
-    const textRef = useRef<Animatable.Text & Text>(null);
-
-    const onBack = () => {
-      props.setScrollEnabled(true);
-      if (imageRef) {
-        imageRef.current?.transitionTo({
-          scale: 1,
-          opacity: 1
-        }, 600, 'ease-out');
-      }
-      if (props.AnimatedPageCounter) {
-        props.AnimatedPageCounter.transitionTo(
-          { opacity: 1 },
-          400, 'linear');
-      }
-      if (props.AnimatedNavTitle) {
-        props.AnimatedNavTitle.transitionTo(
-          { opacity: 1, translateY: 0 },
-          400, 'linear');
-      }
-      if (textRef) {
-        textRef.current?.transitionTo(
-          { opacity: 1 },
-          400, 'linear');
-      }
+export default class FullScreenImageCard extends Component<FullScreenCardProps> {
+// export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
+//   (props) => {
+//   const navigator = props.discoverPath ? useNavigator() : props.navigator;
+//   const { handleAction } = React.useContext(EngagementContext);
+  static childContextTypes: any = {
+    story: PropTypes.object,
+    handleStoryAction: PropTypes.func,
+    cardActions: PropTypes.object,
+    id: PropTypes.string,
+    name: PropTypes.string
+  };
+  static contextTypes: any = {
+    handleAction: PropTypes.func,
+    language: PropTypes.string
+  };
+  state: any = {};
+  AnimatedImage: any;
+  AnimatedText: any;
+  constructor(props: FullScreenCardProps) {
+    super(props);
+    this.state = {
+      swipedUp: false
     };
 
-    const handleStoryAction = async (json: JSON) => {
-      DeviceEventEmitter.emit('viewStory', {
-        title: props.name,
-        id: props.id,
-        position: props.position
-      });
-      return props.navigator.showModal({
-        stack: {
-          children: [{
-            component: {
-              name: 'EngagementComp',
-              options: {
-                layout: {
-                  backgroundColor: 'transparent'
-                },
-                modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-                topBar: {
-                  visible: false,
-                  drawBehind: true
-                },
-                bottomTabs: {
-                  visible: false
-                }
+  handleImageRef = (ref: any) => this.AnimatedImage = ref;
+  handleTextRef = (ref: any) => this.AnimatedText = ref;
+
+  getChildContext = () => ({
+    story: this.props.story,
+    handleStoryAction: this.handleStoryAction,
+    cardActions: this.props.actions,
+    id: this.props.id,
+    name: this.props.name
+  })
+
+  onBack = () => {
+    this.props.setScrollEnabled(true);
+    this.AnimatedImage.transitionTo({
+      scale: 1,
+      opacity: 1
+    }, 600, 'ease-out');
+    this.props.AnimatedPageCounter.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+    this.props.AnimatedNavTitle.transitionTo(
+      { opacity: 1, translateY: 0 },
+      400, 'linear');
+
+    this.AnimatedText.transitionTo(
+      { opacity: 1 },
+      400, 'linear');
+  }
+
+  handleStoryAction = async (json: JSON) => {
+    DeviceEventEmitter.emit('viewStory', {
+      title: this.props.name,
+      id: this.props.id,
+      position: this.props.position
+    });
+    return this.props.navigator?.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'EngagementComp',
+            options: {
+              layout: {
+                backgroundColor: 'transparent'
+              },
+              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+              topBar: {
+                visible: false,
+                drawBehind: true
               },
               passProps: {
                 json,

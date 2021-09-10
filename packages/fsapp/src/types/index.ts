@@ -10,9 +10,11 @@ import {
   Options,
   OptionsTopBarButton
 } from 'react-native-navigation';
+import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
 import { PathFunction } from 'path-to-regexp';
 import type { Request } from 'express';
+import { Middleware } from 'redux';
 
 export interface DrawerType {
   screen: string;
@@ -108,6 +110,8 @@ export interface AppConfigType {
   defaultOptions?: Options;
   bottomTabsId?: string;
   bottomTabsOptions?: Options;
+  routerConfig?: RouterConfig;
+  storeMiddleware?: Middleware[];
   notFoundRedirect?: RoutableComponentClass | NavLayout | true;
   uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
   cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
@@ -180,3 +184,50 @@ export interface NavLayout extends Layout {
 export interface NavModal {
   layout: NavLayout;
 }
+
+export interface PublishedPage {
+  id: string;
+  path: string | null;
+  content: string;
+  pageId: string;
+  title: string;
+  dataInputs: string[];
+  defaultInputs: string[];
+}
+
+export interface PropValue {
+  [key: string]: PropValue | boolean | string | number | string[];
+}
+
+export interface LayoutBuilderObject {
+  type: string;
+  childObjects?: LayoutBuilderObject[];
+  props?: PropValue;
+  publishedPages?: PublishedPage[];
+}
+
+export interface RouteProps {
+  id?: string;
+  query?: CommerceTypes.ProductQuery;
+  // I don't exactly know how this will work yet, we will probably end up changing the way
+  // we pass props anyway
+}
+
+export interface Route {
+  screen: string;
+  passProps?: RouteProps;
+  tabIndex?: number;
+}
+
+export interface RouterConfig {
+  [key: string]: Route;
+}
+
+export interface CMSRoutesConfig {
+  [key: string]: PublishedPage;
+}
+
+export interface CombinedRouter {
+  [key: string]: PublishedPage | Route;
+}
+

@@ -1,28 +1,13 @@
 <p align="center">
   <a href="https://brandingbrand.github.io/flagship/">
     <img alt="Flagship"
-      src="https://user-images.githubusercontent.com/556070/39432976-bd8520f4-4c62-11e8-863b-fe7ee694a4a0.png"
-      height="250">
+      src="https://user-images.githubusercontent.com/2915629/127563134-be64905e-d429-446d-9a53-a657c9613f6f.png"
+      height="100">
   </a>
 </p>
 
 <p align="center">
   A tool for building your best shopping app
-</p>
-
-<p align="center">
-  <a href="https://travis-ci.org/brandingbrand/flagship">
-    <img alt="Travis Status"
-      src="https://travis-ci.org/brandingbrand/flagship.svg?branch=master">
-  </a>
-  <a href="https://greenkeeper.io/">
-    <img alt="Greenkeeper"
-      src="https://badges.greenkeeper.io/brandingbrand/flagship.svg?ts=1523929763709">
-  </a>
-  <a href="https://lernajs.io/">
-    <img alt="Lerna"
-      src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg">
-  </a>
 </p>
 
 # Flagship

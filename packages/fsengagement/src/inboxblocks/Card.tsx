@@ -11,12 +11,14 @@ import {
   JSON
 } from '../types';
 import { CardContext, EngagementContext } from '../lib/contexts';
+import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
 export interface ActionsCard extends CardProps {
   actions?: Action;
 }
 
 export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
+  const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
 
   const handleStoryAction = async (json: JSON) => {
@@ -25,7 +27,18 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
       id: props.id
     });
 
-    return props.navigator.push({
+    if (!navigator) {
+      return;
+    }
+    if (props.discoverPath && !(navigator instanceof Navigator)) {
+      return navigator.open(`${props.discoverPath}/${props.id}`, {
+        json,
+        backButton: true,
+        name: props.name,
+        discoverPath: props.discoverPath
+      });
+    }
+    return navigator.push({
       component: {
         name: 'EngagementComp',
         options: {
