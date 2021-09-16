@@ -2,16 +2,17 @@ import type {
   ActivatedRoute,
   FSRouterConstructor,
   InternalRouterConfig,
+  RedirectRoute,
   Route,
   RouterConfig,
   Routes
 } from './types';
 
 import { AppRegistry } from 'react-native';
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import { Router } from 'react-router';
-import { Redirect, Route as Screen, Switch } from 'react-router-dom';
+import { Route as Screen, Switch } from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
 
 import { Injector } from '@brandingbrand/fslinker';
@@ -21,12 +22,34 @@ import { VersionOverlay } from '../development';
 import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
 import { ModalProvider } from '../modal';
 
-import { ActivatedRouteProvider, defaultActivatedRoute, NavigatorProvider } from './context';
+import {
+  ActivatedRouteProvider,
+  defaultActivatedRoute,
+  NavigatorProvider,
+  useActivatedRoute,
+  useNavigator
+} from './context';
 import { FSRouterBase } from './router.base';
 import { History } from './history';
 import { trackView } from './utils';
 
 export { NAVIGATOR_TOKEN } from './context/navigator.context';
+
+interface RedirectProps {
+  to: Pick<RedirectRoute, 'redirect'>['redirect'];
+}
+
+const Redirect = ({ to }: RedirectProps) => {
+  const navigator = useNavigator();
+  const { loading, data, ...activatedRoute } = useActivatedRoute();
+
+  useLayoutEffect(() => {
+    const redirect = typeof to === 'string' ? to : to(activatedRoute);
+    navigator.open(`/${redirect}`);
+  }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
+
+  return null;
+};
 
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
@@ -103,7 +126,11 @@ export class FSRouter extends FSRouterBase {
         </Screen>
       );
     } else if ('redirect' in route) {
-      return <Redirect key={id} path={path} to={route.redirect} exact={route.exact} />;
+      return (
+        <Screen key={id} path={path} exact={route.exact}>
+          <Redirect to={route.redirect} />
+        </Screen>
+      );
     } else if ('children' in route) {
       return route.children
         .map(child => this.constructScreen(child, loading, routeDetails, path))

@@ -162,7 +162,15 @@ export const matchRoute = async (
   for (const [matcher, route] of await matchers) {
     const matched = matcher(path);
     if (matched && 'redirect' in route) {
-      return matchRoute(matchers, `/${route.redirect}`);
+      const redirect =
+        typeof route.redirect === 'string'
+          ? route.redirect
+          : route.redirect({
+            params: matched.params,
+            query: parse(search.substr(1)),
+            path
+          });
+      return matchRoute(matchers, `/${redirect}`);
     }
     if (matched && 'id' in route) {
       return {

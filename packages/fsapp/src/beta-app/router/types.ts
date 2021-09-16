@@ -127,7 +127,9 @@ export interface RouteCollection {
 }
 
 export interface RedirectRoute extends BaseRoute {
-  readonly redirect: string;
+  readonly redirect:
+    | ((route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => string)
+    | string;
 }
 
 /**
