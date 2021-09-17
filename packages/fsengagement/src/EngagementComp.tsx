@@ -221,6 +221,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   cardPosition?: number;
   navigator: Navigator;
   renderHeader?: () => void;
+  renderBackButton?: (navigation?: Navigator) => void;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -851,13 +852,14 @@ export default function(
       return (
         <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
-          {backButton &&
-            (
+          {backButton && (this.props.renderBackButton ?
+           this.props.renderBackButton(this.props.navigator)
+            : (
               <BackButton
                 navigator={this.props.navigator}
                 style={json.backArrow}
               />
-            )}
+            ))}
         </View>
       );
     }
