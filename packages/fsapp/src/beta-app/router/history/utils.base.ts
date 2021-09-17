@@ -19,6 +19,7 @@ import { parse } from 'qs';
 import pathToRegexp, { Key } from 'path-to-regexp';
 
 import { buildPath } from '../../utils';
+import { guardRoute } from '../utils';
 import { fromPairs } from 'lodash-es';
 
 export const stringifyLocation = (location: LocationDescriptor) => {
@@ -161,24 +162,31 @@ export const matchRoute = async (
   const { search } = parsePath(path);
   for (const [matcher, route] of await matchers) {
     const matched = matcher(path);
-    if (matched && 'redirect' in route) {
-      const redirect =
-        typeof route.redirect === 'string'
-          ? route.redirect
-          : route.redirect({
-            params: matched.params,
-            query: parse(search.substr(1)),
-            path
-          });
-      return matchRoute(matchers, `/${redirect}`);
-    }
-    if (matched && 'id' in route) {
-      return {
-        ...route,
+
+
+    if (matched) {
+      const routeInfo = {
         params: matched.params,
         query: parse(search.substr(1)),
-        matchedPath: path
+        path
       };
+      if (await guardRoute(route, routeInfo)) {
+        if ('redirect' in route) {
+          const redirect =
+            typeof route.redirect === 'string'
+              ? route.redirect
+              : route.redirect(routeInfo);
+          return matchRoute(matchers, `/${redirect}`);
+        }
+        if ('id' in route) {
+          return {
+            ...route,
+            params: matched.params,
+            query: parse(search.substr(1)),
+            matchedPath: path
+          };
+        }
+      }
     }
   }
 

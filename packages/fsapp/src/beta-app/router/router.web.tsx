@@ -9,11 +9,12 @@ import type {
 } from './types';
 
 import { AppRegistry } from 'react-native';
-import React, { Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { FC, Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import { Router } from 'react-router';
 import { Route as Screen, Switch } from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
+import { noop } from 'lodash-es';
 
 import { Injector } from '@brandingbrand/fslinker';
 
@@ -31,21 +32,42 @@ import {
 } from './context';
 import { FSRouterBase } from './router.base';
 import { History } from './history';
-import { trackView } from './utils';
+import { guardRoute, trackView } from './utils';
 
 export { NAVIGATOR_TOKEN } from './context/navigator.context';
 
-interface RedirectProps {
-  to: Pick<RedirectRoute, 'redirect'>['redirect'];
+interface ScreenMixinProps {
+  route: Route;
 }
 
-const Redirect = ({ to }: RedirectProps) => {
+const Guarded: FC<ScreenMixinProps> = ({ route, children }) => {
+  const { loading, data, ...activatedRoute } = useActivatedRoute();
+  const [show, setShow] = useState(false);
+
+  useLayoutEffect(() => {
+    guardRoute(route, activatedRoute).then(setShow).catch(noop);
+  }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
+
+  return show ? <>{children}</> : null;
+};
+
+interface RedirectProps {
+  route: RedirectRoute;
+}
+
+const Redirect: FC<RedirectProps> = ({ route }) => {
   const navigator = useNavigator();
   const { loading, data, ...activatedRoute } = useActivatedRoute();
 
   useLayoutEffect(() => {
-    const redirect = typeof to === 'string' ? to : to(activatedRoute);
-    navigator.open(`/${redirect}`);
+    const redirect =
+      typeof route.redirect === 'string' ? route.redirect : route.redirect(activatedRoute);
+
+    guardRoute(route, activatedRoute).then(allowed => {
+      if (allowed) {
+        navigator.open(`/${redirect}`);
+      }
+    }).catch(noop);
   }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
 
   return null;
@@ -75,25 +97,26 @@ export class FSRouter extends FSRouterBase {
     prefix?: string
   ): JSX.Element | JSX.Element[] => {
     const { id, path } = useMemo(() => buildPath(route, prefix), []);
+    const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
+
+    useEffect(() => {
+      const isMatch = () => {
+        if (!path) {
+          return path === routeDetails?.path;
+        } else if (!routeDetails?.path) {
+          return false;
+        }
+
+        return !!pathToRegexp(path).exec(routeDetails.path.split('?')[0]);
+      };
+
+      if (isMatch()) {
+        setFilteredRoute(routeDetails);
+      }
+    }, [routeDetails]);
+
 
     if ('loadComponent' in route || 'component' in route) {
-      const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
-      useEffect(() => {
-        const isMatch = () => {
-          if (!path) {
-            return path === routeDetails?.path;
-          } else if (!routeDetails?.path) {
-            return false;
-          }
-
-          return !!pathToRegexp(path).exec(routeDetails.path.split('?')[0]);
-        };
-
-        if (isMatch()) {
-          setFilteredRoute(routeDetails);
-        }
-      }, [routeDetails]);
-
       const LazyComponent = useMemo(
         () =>
           lazyComponent<{ componentId: string }>(
@@ -119,16 +142,20 @@ export class FSRouter extends FSRouterBase {
       return (
         <Screen key={id} path={path} exact={route.exact}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
-            <ModalProvider screenWrap={this.options.screenWrap}>
-              <LazyComponent componentId={id} />
-            </ModalProvider>
+            <Guarded route={route}>
+              <ModalProvider screenWrap={this.options.screenWrap}>
+                <LazyComponent componentId={id} />
+              </ModalProvider>
+            </Guarded>
           </ActivatedRouteProvider>
         </Screen>
       );
     } else if ('redirect' in route) {
       return (
         <Screen key={id} path={path} exact={route.exact}>
-          <Redirect to={route.redirect} />
+          <ActivatedRouteProvider {...filteredRoute} loading={loading}>
+            <Redirect route={route} />
+          </ActivatedRouteProvider>
         </Screen>
       );
     } else if ('children' in route) {
