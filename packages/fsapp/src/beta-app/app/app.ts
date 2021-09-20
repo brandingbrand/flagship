@@ -19,13 +19,17 @@ export class FSAppBeta extends FSAppBase {
     );
 
     if (url) {
-      await this.router.open(url);
+      setTimeout(() => {
+        void this.router.open(url);
+      });
     } else {
       const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
       if (keepLastScreen === 'true') {
         const url = await AsyncStorage.getItem(LAST_SCREEN_KEY);
         if (url) {
-          await this.router.open(url);
+          setTimeout(() => {
+            void this.router.open(url);
+          });
         }
       }
     }
