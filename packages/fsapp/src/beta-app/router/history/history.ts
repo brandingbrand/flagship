@@ -8,7 +8,7 @@ import type {
   StackedLocation
 } from './types';
 
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -274,16 +274,29 @@ export class History implements FSRouterHistory {
     }
   }
 
-  private get nextLoad(): Promise<void> {
+  private async waitForNextLoadOf(location: Location): Promise<void> {
+    if (this.location.pathname === location.pathname) {
+      return Promise.resolve();
+    }
+
     return new Promise(resolve => {
-      const remove = this.listen(() => {
-        // For whatever reason the Navigation
-        // is not ready for further navigations
-        // for a small delay
-        setTimeout(() => {
-          resolve();
-        }, 10);
-        remove();
+      const remove = this.listen(update => {
+        if (update.pathname === location.pathname) {
+          if (Platform.OS === 'ios') {
+            // For whatever reason the Navigation
+            // is not ready for further navigations
+            // for a small delay
+            setTimeout(() => {
+              resolve();
+              remove();
+            }, 10);
+          } else {
+            setTimeout(() => {
+              resolve();
+              remove();
+            });
+          }
+        }
       });
     });
   }
@@ -291,8 +304,10 @@ export class History implements FSRouterHistory {
   private observeNavigation(): void {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
-      this.activeIndex = index;
-      this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      if (index !== -1) {
+        this.activeIndex = index;
+        this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      }
     });
 
     Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex }) => {
@@ -353,6 +368,7 @@ export class History implements FSRouterHistory {
       this.store.unshift();
     }
 
+    const nextLoad = this.waitForNextLoadOf(location);
     try {
       if (this.activeStack !== location.stack) {
         await this.switchStack(location.stack);
@@ -415,14 +431,19 @@ export class History implements FSRouterHistory {
             location.key &&
             (!this.location || stringifyLocation(this.location) !== stringifyLocation(location))
           ) {
+            const indexInStack = this.getPathIndexInStack(
+              location.stack,
+              stringifyLocation(location)
+            );
+            this.stacks[location.stack].children.splice(indexInStack + 1);
             await Navigation.popTo(location.key);
           }
           break;
 
         default:
       }
+      await nextLoad;
     } finally {
-      await this.nextLoad;
       this.setLoading(false);
     }
   }
