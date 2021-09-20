@@ -279,9 +279,20 @@ export class History implements FSRouterHistory {
       return Promise.resolve();
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
+      let timeout: NodeJS.Timeout | undefined;
+      if (Platform.OS === 'ios') {
+        timeout = setTimeout(() => {
+          reject();
+        }, 3000);
+      }
+
       const remove = this.listen(update => {
         if (update.pathname === location.pathname) {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+
           if (Platform.OS === 'ios') {
             // For whatever reason the Navigation
             // is not ready for further navigations
@@ -404,7 +415,7 @@ export class History implements FSRouterHistory {
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
-              await Navigation.push(this.stack?.id ?? ROOT_STACK, {
+              const options = {
                 component: {
                   name: matchingRoute.id,
                   id: location.key,
@@ -421,7 +432,13 @@ export class History implements FSRouterHistory {
                     }
                   }
                 }
-              });
+              };
+
+              if (Platform.OS === 'ios') {
+                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              } else {
+                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              }
             }
           }
 
@@ -436,7 +453,12 @@ export class History implements FSRouterHistory {
               stringifyLocation(location)
             );
             this.stacks[location.stack].children.splice(indexInStack + 1);
-            await Navigation.popTo(location.key);
+
+            if (Platform.OS === 'ios') {
+              void Navigation.popTo(location.key);
+            } else {
+              await Navigation.popTo(location.key);
+            }
           }
           break;
 
