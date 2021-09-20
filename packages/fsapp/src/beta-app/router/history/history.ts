@@ -41,7 +41,7 @@ import {
   resolveRoute,
   stringifyLocation
 } from './utils.native';
-import { Matchers } from './utils.base';
+import { Matchers, normalizeLocationDescriptor } from './utils.base';
 import { ROOT_STACK } from './constants';
 
 export class History implements FSRouterHistory {
@@ -136,7 +136,8 @@ export class History implements FSRouterHistory {
   @boundMethod
   @queueMethod
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
-    const path = stringifyLocation(to);
+    const normalized = normalizeLocationDescriptor(to);
+    const path = stringifyLocation(normalized);
     const index = this.getPathIndexInHistory(path);
     const indexInStack = this.getPathIndexInStack(
       (await this.getStackAffinity(path)) ?? this.activeStack,
@@ -159,12 +160,11 @@ export class History implements FSRouterHistory {
     state?: unknown,
     _internal?: typeof INTERNAL
   ): Promise<void> {
-    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
-      await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
-      await Linking.openURL(to.pathname);
+    const normalized = normalizeLocationDescriptor(to);
+    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
     } else {
-      const newLocation = await this.getNextLocation(to, state);
+      const newLocation = await this.getNextLocation(normalized, state);
       await this.updateLocation(newLocation, 'PUSH');
     }
   }
