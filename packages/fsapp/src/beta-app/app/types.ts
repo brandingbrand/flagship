@@ -33,6 +33,7 @@ export interface AppConfig<
       ? StoreConfig<S, A>
       : undefined
     : undefined;
+  readonly getInitialURL?: () => Promise<string | null>;
 }
 
 export interface IApp {

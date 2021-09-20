@@ -20,10 +20,15 @@ export function addDeeplinkHosts(associatedDomains: string[]): void {
     }
 
     return `
+    <intent-filter android:autoVerify="true">
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
       <data android:scheme="http"
         android:host="${hostname}" />
       <data android:scheme="https"
-        android:host="${hostname}" />`;
+        android:host="${hostname}" />
+    </intent-filter>`;
   });
 
   // update android's manifest
