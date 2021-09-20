@@ -13,11 +13,12 @@ import type {
   Tab
 } from '../types';
 
-import { createPath, LocationDescriptor, parsePath } from 'history';
+import { createPath, LocationDescriptor, LocationDescriptorObject, parsePath } from 'history';
 import { parse } from 'qs';
 
 import pathToRegexp, { Key } from 'path-to-regexp';
 
+import { env } from '../../env';
 import { buildPath } from '../../utils';
 import { guardRoute } from '../utils';
 import { fromPairs } from 'lodash-es';
@@ -192,3 +193,33 @@ export const matchRoute = async (
 
   return;
 };
+
+export const normalizeLocationDescriptor = (
+  to: LocationDescriptor<unknown>
+): LocationDescriptorObject<unknown> => {
+  if (typeof to === 'string') {
+    return normalizeLocationDescriptor(parsePath(to));
+  }
+
+  let pathname = to.pathname;
+
+  for (const url of env?.associatedDomains ?? []) {
+    const regex = new RegExp(`^(https?:\\/\\/)?${url}`);
+    pathname = pathname?.replace(regex, '');
+  }
+
+  if (typeof env?.urlScheme === 'string') {
+    const regex = new RegExp(`^${env.urlScheme}:\\/\\/`);
+    pathname = pathname?.replace(regex, '/');
+  }
+
+  if (pathname === '') {
+    pathname = '/';
+  }
+
+  return {
+    ...to,
+    pathname
+  };
+};
+
