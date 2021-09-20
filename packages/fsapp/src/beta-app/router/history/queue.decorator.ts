@@ -27,7 +27,7 @@ class LazyPromise<T> implements PromiseLike<T> {
       });
     }
 
-    return this.hotPromise.then(onfulfilled, onrejected);
+    return this.hotPromise.then(onfulfilled).catch(onrejected);
   }
 }
 
@@ -53,9 +53,14 @@ class QueueRunner {
     this.promises.set(id, promise);
 
     for (const promise of existing) {
-      // Promise Like
-      // tslint:disable-next-line: await-promise
-      await promise;
+      try {
+        // Promise Like
+        // tslint:disable-next-line: await-promise
+        await promise;
+      } catch {
+        this.promises.clear();
+        throw new Error('Error in queue, Try Again');
+      }
     }
 
     return promise;
