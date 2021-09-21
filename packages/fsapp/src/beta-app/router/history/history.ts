@@ -353,6 +353,7 @@ export class History implements FSRouterHistory {
       this.store.unshift();
     }
 
+    const nextLoad = this.nextLoad;
     try {
       if (this.activeStack !== location.stack) {
         await this.switchStack(location.stack);
@@ -422,7 +423,7 @@ export class History implements FSRouterHistory {
         default:
       }
     } finally {
-      await this.nextLoad;
+      await nextLoad;
       this.setLoading(false);
     }
   }
