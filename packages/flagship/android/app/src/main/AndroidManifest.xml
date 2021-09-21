@@ -25,9 +25,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="default-bb-rn-url-scheme" android:host="__URL_HOST_PATH__" />
-                <!-- deep link intents -->
             </intent-filter>
 
+            <!-- deep link intents -->
         </activity>
 
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
