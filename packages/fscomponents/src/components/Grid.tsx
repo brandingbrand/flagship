@@ -459,6 +459,10 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     ]
   );
 
+  const rerenderTrigger = useMemo(() => {
+    return Symbol('This is used to mark a change that requires a rerender');
+  }, [listViewProps?.extraData, renderRow]);
+
   return (
     <View style={gridContainerStyle}>
       <FlatList
@@ -484,6 +488,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
         onEndReachedThreshold={onEndReachedThreshold}
         onLayout={onLayout}
         onContentSizeChange={setWidth}
+        extraData={rerenderTrigger}
         {...listViewProps}
       />
       {(showBackToTop || BackToTopComponent) && (

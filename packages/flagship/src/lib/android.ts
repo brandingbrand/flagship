@@ -364,9 +364,13 @@ export function urlScheme(configuration: FlagshipTypes.Config): void {
  */
 export function urlSchemeHost(config: FlagshipTypes.AndroidConfig): void {
   if (config.manifest) {
-    const host = config.manifest.urlSchemeHost || '';
-    helpers.logInfo(`setting Android URL scheme host path to ${host}`);
-    fs.update(path.android.manifestPath(), '__URL_HOST_PATH__', host);
+    if (config.manifest.urlSchemeHost !== null) {
+      const host = config.manifest.urlSchemeHost ?? '';
+      helpers.logInfo(`setting Android URL scheme host path to ${host}`);
+      fs.update(path.android.manifestPath(), '__URL_HOST_PATH__', host);
+    } else {
+      fs.update(path.android.manifestPath(), 'android:host="__URL_HOST_PATH__"', '');
+    }
   }
 }
 
