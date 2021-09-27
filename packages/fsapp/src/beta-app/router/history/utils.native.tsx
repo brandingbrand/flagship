@@ -196,4 +196,10 @@ export const activateStacks = async (
   return { root };
 };
 
-export { matchRoute, stringifyLocation, buildMatchers, resolveRoute } from './utils.base';
+export {
+  matchRoute,
+  stringifyLocation,
+  buildMatchers,
+  resolveRoute,
+  normalizeLocationDescriptor
+} from './utils.base';
