@@ -280,7 +280,7 @@ export class History implements FSRouterHistory {
     }
 
     return new Promise((resolve, reject) => {
-      let timeout: NodeJS.Timeout | undefined;
+      let timeout: Parameters<typeof clearTimeout>[0] | undefined;
       if (Platform.OS === 'ios') {
         timeout = setTimeout(() => {
           reject();
