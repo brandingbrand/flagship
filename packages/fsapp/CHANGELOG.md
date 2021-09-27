@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **fsapp:** initial navigation tab disappearing (2be6344)
+* **fsapp:** platform agnostic timeout type (43c1f99)
+* **fsapp:** route activation race condition (aeb2ada)
+* **fsapp:** timout navigations stuck for over 3 seconds (f84977e)
+
+
+### Features
+
+* **fsapp:** activation guards (63a42b3)
+* **fsapp:** associated domain linking (cb85e54)
+* **fsapp:** dynamic redirect (c96bfca)
+* **fsapp:** get initial url (7624600)
+
+
+
+
+
 # [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
