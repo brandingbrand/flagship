@@ -8,7 +8,7 @@ import type {
   StackedLocation
 } from './types';
 
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -27,6 +27,7 @@ import { findLastIndex, isString, uniqueId } from 'lodash-es';
 import { ActivatedRoute, MatchingRoute, Routes } from '../types';
 import { isDefined, promisedEntries } from '../../utils';
 
+import { INTERNAL, queueMethod } from './queue.decorator';
 import {
   activateStacks,
   buildMatchers,
@@ -40,7 +41,7 @@ import {
   resolveRoute,
   stringifyLocation
 } from './utils.native';
-import { Matchers } from './utils.base';
+import { Matchers, normalizeLocationDescriptor } from './utils.base';
 import { ROOT_STACK } from './constants';
 
 export class History implements FSRouterHistory {
@@ -133,8 +134,10 @@ export class History implements FSRouterHistory {
   public open(path: string, state?: unknown): Promise<void>;
   public open(location: LocationDescriptor): Promise<void>;
   @boundMethod
+  @queueMethod
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
-    const path = stringifyLocation(to);
+    const normalized = normalizeLocationDescriptor(to);
+    const path = stringifyLocation(normalized);
     const index = this.getPathIndexInHistory(path);
     const indexInStack = this.getPathIndexInStack(
       (await this.getStackAffinity(path)) ?? this.activeStack,
@@ -142,22 +145,26 @@ export class History implements FSRouterHistory {
     );
 
     if (indexInStack !== -1) {
-      await this.go(index - this.activeIndex);
+      await this.go(index - this.activeIndex, INTERNAL);
     } else {
-      await this.push(path, state);
+      await this.push(path, state, INTERNAL);
     }
   }
 
-  public push(path: string, state?: unknown): Promise<void>;
+  public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
   public push(location: LocationDescriptor): Promise<void>;
   @boundMethod
-  public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
-    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
-      await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
-      await Linking.openURL(to.pathname);
+  @queueMethod
+  public async push(
+    to: LocationDescriptor,
+    state?: unknown,
+    _internal?: typeof INTERNAL
+  ): Promise<void> {
+    const normalized = normalizeLocationDescriptor(to);
+    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
     } else {
-      const newLocation = await this.getNextLocation(to, state);
+      const newLocation = await this.getNextLocation(normalized, state);
       await this.updateLocation(newLocation, 'PUSH');
     }
   }
@@ -165,11 +172,13 @@ export class History implements FSRouterHistory {
   public replace(path: string, state?: unknown): Promise<void>;
   public replace(location: LocationDescriptor): Promise<void>;
   @boundMethod
+  @queueMethod
   public async replace(_to: LocationDescriptor, _state?: unknown): Promise<void> {
     throw new Error('Native routes cannot be replaced.');
   }
 
   @boundMethod
+  @queueMethod
   public async pop(): Promise<void> {
     const stack = this.stack?.children ?? [];
     const newLocation = {
@@ -181,7 +190,8 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public async go(n: number): Promise<void> {
+  @queueMethod
+  public async go(n: number, _internal?: typeof INTERNAL): Promise<void> {
     if (n === 0) {
       return;
     }
@@ -194,13 +204,15 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
+  @queueMethod
   public async goBack(): Promise<void> {
-    return this.go(-1);
+    return this.go(-1, INTERNAL);
   }
 
   @boundMethod
+  @queueMethod
   public async goForward(): Promise<void> {
-    return this.go(1);
+    return this.go(1, INTERNAL);
   }
 
   @boundMethod
@@ -245,8 +257,8 @@ export class History implements FSRouterHistory {
     return stringifyLocation(location);
   }
 
-  @boundMethod
-  public updateTitle(title: RequiredTitle, componentId?: string): void {
+  @queueMethod
+  public async updateTitle(title: RequiredTitle, componentId?: string): Promise<void> {
     const key = componentId ?? this.location.key;
     if (key) {
       Navigation.mergeOptions(key, {
@@ -262,11 +274,51 @@ export class History implements FSRouterHistory {
     }
   }
 
+  private async waitForNextLoadOf(location: Location): Promise<void> {
+    if (this.location.pathname === location.pathname) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      let timeout: Parameters<typeof clearTimeout>[0] | undefined;
+      if (Platform.OS === 'ios') {
+        timeout = setTimeout(() => {
+          reject();
+        }, 3000);
+      }
+
+      const remove = this.listen(update => {
+        if (update.pathname === location.pathname) {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+
+          if (Platform.OS === 'ios') {
+            // For whatever reason the Navigation
+            // is not ready for further navigations
+            // for a small delay
+            setTimeout(() => {
+              resolve();
+              remove();
+            }, 10);
+          } else {
+            setTimeout(() => {
+              resolve();
+              remove();
+            });
+          }
+        }
+      });
+    });
+  }
+
   private observeNavigation(): void {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
-      this.activeIndex = index;
-      this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      if (index !== -1) {
+        this.activeIndex = index;
+        this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      }
     });
 
     Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex }) => {
@@ -315,10 +367,9 @@ export class History implements FSRouterHistory {
 
   // tslint:disable-next-line: cyclomatic-complexity
   private async updateLocation(location: StackedLocation, action: Action): Promise<void> {
-    if (this.checkBlockers(location, 'PUSH')) {
+    if (this.checkBlockers(location, action)) {
       return;
     }
-    const unblock = this.block();
 
     if (this.actions.length >= this.length) {
       this.actions.shift();
@@ -328,6 +379,7 @@ export class History implements FSRouterHistory {
       this.store.unshift();
     }
 
+    const nextLoad = this.waitForNextLoadOf(location);
     try {
       if (this.activeStack !== location.stack) {
         await this.switchStack(location.stack);
@@ -363,7 +415,7 @@ export class History implements FSRouterHistory {
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
-              await Navigation.push(this.stack?.id ?? ROOT_STACK, {
+              const options = {
                 component: {
                   name: matchingRoute.id,
                   id: location.key,
@@ -380,7 +432,13 @@ export class History implements FSRouterHistory {
                     }
                   }
                 }
-              });
+              };
+
+              if (Platform.OS === 'ios') {
+                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              } else {
+                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              }
             }
           }
 
@@ -390,15 +448,25 @@ export class History implements FSRouterHistory {
             location.key &&
             (!this.location || stringifyLocation(this.location) !== stringifyLocation(location))
           ) {
-            await Navigation.popTo(location.key);
+            const indexInStack = this.getPathIndexInStack(
+              location.stack,
+              stringifyLocation(location)
+            );
+            this.stacks[location.stack].children.splice(indexInStack + 1);
+
+            if (Platform.OS === 'ios') {
+              void Navigation.popTo(location.key);
+            } else {
+              await Navigation.popTo(location.key);
+            }
           }
           break;
 
         default:
       }
+      await nextLoad;
     } finally {
       this.setLoading(false);
-      unblock();
     }
   }
 

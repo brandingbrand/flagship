@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **fsapp:** initial navigation tab disappearing ([2be6344](https://github.com/brandingbrand/flagship/commit/2be6344463e0b579536c93ab42523df716cf7a50))
+* **fsapp:** platform agnostic timeout type ([43c1f99](https://github.com/brandingbrand/flagship/commit/43c1f99589491c8aa37b058022f5db937cad0bc6))
+* **fsapp:** route activation race condition ([aeb2ada](https://github.com/brandingbrand/flagship/commit/aeb2adabf2a08c10783d7a4e7374408bb57af2fb))
+* **fsapp:** timout navigations stuck for over 3 seconds ([f84977e](https://github.com/brandingbrand/flagship/commit/f84977e77acb24703be89e16a718e3104229a079))
+
+
+### Features
+
+* **fsapp:** activation guards ([63a42b3](https://github.com/brandingbrand/flagship/commit/63a42b336704edabb01474491e0f454826b80908))
+* **fsapp:** associated domain linking ([cb85e54](https://github.com/brandingbrand/flagship/commit/cb85e54acff0dffd716441ce19bbcd30f8059e60))
+* **fsapp:** dynamic redirect ([c96bfca](https://github.com/brandingbrand/flagship/commit/c96bfca06406560003bbdefd4c8983b6a4b25121))
+* **fsapp:** get initial url ([7624600](https://github.com/brandingbrand/flagship/commit/76246002b8e0d66baff2b7c2c82f5e0ccc9798a8))
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+
+### Bug Fixes
+
+* **fsapp:** stuck blockers ([b35bb5a](https://github.com/brandingbrand/flagship/commit/b35bb5aec5d90fb1170cedbc046d4a703332c63c))
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 ## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
 
 
