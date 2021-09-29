@@ -1,6 +1,8 @@
 import type { Analytics } from '@brandingbrand/fsengage';
 import type {
   ActivatedRoute,
+  ActivatorConstructor,
+  ActivatorFunction,
   ComponentRoute,
   ExternalRoute,
   InternalRouterConfig,
@@ -142,4 +144,24 @@ export const getPath = (url: string) => {
   return schema.includes('http')
     ? `/${domainAndPath.join('/').split('/').slice(1).join('/') ?? ''}`
     : `/${domainAndPath.join('/') ?? ''}`;
+};
+
+export const guardRoute = async (
+  route: Route,
+  routeInfo: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+) => {
+  if (!route.canActivate) {
+    return true;
+  }
+
+  const isClass = (
+    classOrFunction: ActivatorConstructor | ActivatorFunction
+  ): classOrFunction is ActivatorConstructor =>
+    classOrFunction.prototype && 'activate' in classOrFunction.prototype;
+
+  if (isClass(route.canActivate)) {
+    return new route.canActivate(routeInfo).activate();
+  } else {
+    return route.canActivate(routeInfo);
+  }
 };

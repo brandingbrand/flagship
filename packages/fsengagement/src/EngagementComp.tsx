@@ -222,6 +222,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   navigator?: Navigator;
   renderHeader?: () => void;
   discoverPath?: string;
+  renderBackButton?: (navigation?: Navigator) => void;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -855,14 +856,15 @@ export default function(
       return (
         <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
-          {backButton &&
-            (
+          {backButton && (this.props.renderBackButton ?
+           this.props.renderBackButton(this.props.navigator)
+            : (
               <BackButton
                 navigator={this.props.navigator}
                 discoverPath={this.props.discoverPath}
                 style={json.backArrow}
               />
-            )}
+            ))}
         </View>
       );
     }
