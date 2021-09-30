@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.15.0](https://github.com/brandingbrand/flagship/compare/v10.14.0...v10.15.0) (2021-09-30)
+
+
+### Features
+
+* **fsengagement:** added renderBackButton prop ([2d22550](https://github.com/brandingbrand/flagship/commit/2d2255035e75021c4651fb4da0d15edcabf1a250))
+
+
+
+
+
 # [10.14.0](https://github.com/brandingbrand/flagship/compare/v10.13.0...v10.14.0) (2021-07-27)
 
 
