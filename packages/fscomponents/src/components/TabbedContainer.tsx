@@ -28,16 +28,16 @@ export interface SerializableTabbedContainerProps {
   tabTouchableStyle?: ViewStyle;
 }
 
-export interface TabbedContainerProps extends Omit<
-  SerializableTabbedContainerProps,
-  'style' |
-  'tabContainerStyle' |
-  'tabTouchableStyle'
+export interface TabbedContainerProps
+  extends Omit<
+    SerializableTabbedContainerProps,
+    'style' | 'tabContainerStyle' | 'tabTouchableStyle'
   > {
   style?: StyleProp<ViewStyle>;
   tabs: Tab[];
   tabContainerStyle?: StyleProp<ViewStyle>;
   tabTouchableStyle?: StyleProp<ViewStyle>;
+  onTabSwitch?: (index: number) => void;
 }
 
 const styles = StyleSheet.create({
@@ -49,11 +49,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = props => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(props.initialIndex || 0);
+export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = (
+  props
+) => {
+  const [selectedIndex, setSelectedIndex] = useState<number>(
+    props.initialIndex || 0
+  );
 
   const selectTab = (index: number) => () => {
     setSelectedIndex(index);
+    if (!!props.onTabSwitch) {
+      props.onTabSwitch(index);
+    }
   };
 
   const renderTabs = (): JSX.Element => {
@@ -78,8 +85,8 @@ export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = pr
 
   return (
     <View style={props.style}>
-        {renderTabs()}
-        {props.tabs[selectedIndex].renderContent()}
+      {renderTabs()}
+      {props.tabs[selectedIndex].renderContent()}
     </View>
   );
 };
