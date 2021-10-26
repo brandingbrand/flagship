@@ -20,7 +20,9 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
+import { Injector } from '@brandingbrand/fslinker';
+import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
+
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import { Navigation } from 'react-native-navigation';
@@ -196,6 +198,7 @@ const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
 
 const topOffset = Platform.OS === 'ios' ? -40 : 1;
 
+type DeeplinkMethod = 'open' | 'push';
 export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   json: JSON;
   backButton?: boolean;
@@ -222,6 +225,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   navigator?: Navigator;
   renderHeader?: () => void;
   discoverPath?: string;
+  deepLinkMethod?: DeeplinkMethod;
   renderBackButton?: (navigation?: Navigator) => void;
 }
 export interface EngagementState {
@@ -397,6 +401,12 @@ export default function(
           });
           break;
         case 'deep-link':
+          if (this.props.discoverPath && actions.value) {
+            const navigator = Injector.require(NAVIGATOR_TOKEN);
+            const method = this.props.deepLinkMethod || 'open';
+            navigator[method](actions.value);
+            break;
+          }
           const separator = ~actions.value.indexOf('?') ? '&' : '?';
           const query = separator + 'engagementDeeplink=true';
           const url = actions.value + query;
