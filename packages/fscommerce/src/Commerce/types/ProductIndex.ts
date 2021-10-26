@@ -88,7 +88,7 @@ export interface ProductIndex<T extends Product = Product> extends Partial<Pagea
    *
    * @example 'Shoes'
    */
-  title: string;
+  title?: string;
   /**
    * A unique identifier for the product index category, used for vehicle filter
    *
