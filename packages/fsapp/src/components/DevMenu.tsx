@@ -17,8 +17,8 @@ import projectEnvs from '../../project_env_index';
 import NavWrapper from '../lib/nav-wrapper';
 import { omit } from 'lodash-es';
 
-const env = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
-const hiddenEnvs: string[] = env.hiddenEnvs || [];
+const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
 
 const envsToDisplay: {
   [key: string]: string;

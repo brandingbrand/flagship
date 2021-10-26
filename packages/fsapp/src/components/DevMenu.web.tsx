@@ -12,8 +12,8 @@ import { LayoutComponent } from 'react-native-navigation';
 import Navigator from '../lib/nav-wrapper.web';
 import { omit } from 'lodash-es';
 
-const env = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
-const hiddenEnvs: string[] = env.hiddenEnvs || [];
+const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
 
 const envsToDisplay: {
   [key: string]: string;
