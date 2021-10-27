@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+
+### Bug Fixes
+
+* bundle without jsx ([32affcc](https://github.com/brandingbrand/flagship/commit/32affcc20592999316898743492533655946702a))
+* deep link navigator and context issues ([0668b4f](https://github.com/brandingbrand/flagship/commit/0668b4faf9f5470a8830b04268def82438968aa5))
+
+
+### Features
+
+* **title:** no-ticket - added title to product index type ([9e4870b](https://github.com/brandingbrand/flagship/commit/9e4870bd16268f4f4eaa5e7688520cdd758189b2))
+* **title:** no-ticket - made title optional ([44e508b](https://github.com/brandingbrand/flagship/commit/44e508b149894a46c42c738636b31cdfa6265c51))
+
+
+
+
+
 # [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
 
 
