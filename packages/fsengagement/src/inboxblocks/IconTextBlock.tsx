@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import {
   Image,
   ImageStyle,
@@ -13,6 +13,7 @@ import { TextBlock } from './TextBlock';
 import { ImageBlock } from './ImageBlock';
 import { CTABlock } from './CTABlock';
 import DividerBlock from './DividerBlock';
+import { EngagementContext } from '../lib/contexts';
 
 const images = {
   rightArrow: require('../../assets/images/rightArrow.png'),
@@ -65,7 +66,7 @@ export interface IconTextProps {
 }
 export type ArrowTypes = 'rightArrow' | 'rightBlockArrow' | 'rightCategoryArrow';
 
-export default class IconTextBlock extends Component<IconTextProps> {
+class IconTextBlock extends Component<IconTextProps & { context: any }> {
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
@@ -158,3 +159,8 @@ export default class IconTextBlock extends Component<IconTextProps> {
     );
   }
 }
+
+export default (props: IconTextProps) => {
+  const context = useContext(EngagementContext);
+  return <IconTextBlock {...props} context={context} />;
+};
