@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+
+### Features
+
+* add option to hide envs from switcher ([dfab35c](https://github.com/brandingbrand/flagship/commit/dfab35cdd1de27d3f5b5e5aa11d43374957b5390))
+
+
+
+
+
 # [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
