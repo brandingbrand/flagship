@@ -10,6 +10,14 @@ import projectEnvs from '../../project_env_index';
 import EnvSwitcher from '../lib/env-switcher';
 import { LayoutComponent } from 'react-native-navigation';
 import Navigator from '../lib/nav-wrapper.web';
+import { omit } from 'lodash-es';
+
+const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
+
+const envsToDisplay: {
+  [key: string]: string;
+} = omit(projectEnvs, hiddenEnvs);
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -153,7 +161,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
 
     return (
       <View style={styles.configView}>
-        {Object.keys(projectEnvs).map((env, i) => {
+        {Object.keys(envsToDisplay).map((env, i) => {
           return (
             <TouchableRow
               key={env}
