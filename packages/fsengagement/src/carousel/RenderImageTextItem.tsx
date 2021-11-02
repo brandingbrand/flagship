@@ -85,7 +85,7 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
     if (!link) {
       return;
     }
-    const { handleAction } = this.context;
+    const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
       value: link
