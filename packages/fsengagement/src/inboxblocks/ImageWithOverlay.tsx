@@ -106,7 +106,7 @@ class ImageWithOverlay extends Component<ImageBlockProps & { context: any }, Ima
     return result;
   }
   onPress = (link: string) => () => {
-    const { handleAction } = this.context;
+    const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
       value: link
