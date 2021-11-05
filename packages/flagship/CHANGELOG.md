@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.16.0](https://github.com/brandingbrand/flagship/compare/v10.15.0...v10.16.0) (2021-11-05)
+
+
+### Features
+
+* target android api 30 and add aab support [v10.x] ([8c50329](https://github.com/brandingbrand/flagship/commit/8c50329f5cb98747641e88d16020c6984e75bee1))
+
+
+### BREAKING CHANGES
+
+* This updates the Android base project to target API level 30. Per Google's documentation, app updates will no longer be accepted unless they target level 30 as of November 2021. As such, this is being included as a feature release instead of a new breaking version.
+
+This PR also introduces a new Fastlane lane to build Android App Bundles (AABs) called appcenter_bundle.
+
+
+
+
+
 # [10.15.0](https://github.com/brandingbrand/flagship/compare/v10.14.0...v10.15.0) (2021-09-30)
 
 **Note:** Version bump only for package @brandingbrand/flagship

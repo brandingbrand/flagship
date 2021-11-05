@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.16.0](https://github.com/brandingbrand/flagship/compare/v10.15.0...v10.16.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fscheckout
+
+
+
+
+
 # [10.15.0](https://github.com/brandingbrand/flagship/compare/v10.14.0...v10.15.0) (2021-09-30)
 
 **Note:** Version bump only for package @brandingbrand/fscheckout
