@@ -49,9 +49,11 @@ export function preLink(configuration: Config): void {
     bottomTabsAppearancePresenterPath,
     'childViewController.tabBarItem.standardAppearance.backgroundColor = backgroundColor;',
     `childViewController.tabBarItem.standardAppearance.backgroundColor = backgroundColor;
-        if (@available(iOS 15.0, *)) {
-            childViewController.tabBarItem.scrollEdgeAppearance.backgroundColor = backgroundColor;
-        }
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+            if (@available(iOS 15.0, *)) {
+                childViewController.tabBarItem.scrollEdgeAppearance.backgroundColor = backgroundColor;
+            }
+        #endif
     }`
   );
 
@@ -59,9 +61,11 @@ export function preLink(configuration: Config): void {
     bottomTabsAppearancePresenterPath,
     '[childViewController.tabBarItem.standardAppearance configureWithDefaultBackground];',
     `[childViewController.tabBarItem.standardAppearance configureWithDefaultBackground];
-        if (@available(iOS 15.0, *)) {
-            [childViewController.tabBarItem.scrollEdgeAppearance configureWithDefaultBackground];
-        }
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+            if (@available(iOS 15.0, *)) {
+                [childViewController.tabBarItem.scrollEdgeAppearance configureWithDefaultBackground];
+            }
+        #endif
     }`
   );
 
@@ -69,9 +73,11 @@ export function preLink(configuration: Config): void {
     bottomTabsAppearancePresenterPath,
     '[childViewController.tabBarItem.standardAppearance configureWithTransparentBackground];',
     `[childViewController.tabBarItem.standardAppearance configureWithTransparentBackground];
-        if (@available(iOS 15.0, *)) {
-            [childViewController.tabBarItem.scrollEdgeAppearance configureWithTransparentBackground];
-        }
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+            if (@available(iOS 15.0, *)) {
+                [childViewController.tabBarItem.scrollEdgeAppearance configureWithTransparentBackground];
+            }
+        #endif
     }`
   );
 
@@ -79,9 +85,11 @@ export function preLink(configuration: Config): void {
     bottomTabsAppearancePresenterPath,
     '[childViewController.tabBarItem.standardAppearance configureWithOpaqueBackground];',
     `[childViewController.tabBarItem.standardAppearance configureWithOpaqueBackground];
-        if (@available(iOS 15.0, *)) {
-            [childViewController.tabBarItem.scrollEdgeAppearance configureWithOpaqueBackground];
-        }
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+            if (@available(iOS 15.0, *)) {
+                [childViewController.tabBarItem.scrollEdgeAppearance configureWithOpaqueBackground];
+            }
+        #endif
     }`
   );
 
@@ -98,9 +106,11 @@ export function preLink(configuration: Config): void {
   fs.update(
     rnnBottomTabsControllerPath,
     'self.longPressRecognizer =',
-    `if (@available(iOS 15.0, *)) {
-        self.tabBar.scrollEdgeAppearance = [UITabBarAppearance new];
-    }
+    `#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+        if (@available(iOS 15.0, *)) {
+            self.tabBar.scrollEdgeAppearance = [UITabBarAppearance new];
+        }
+    #endif
 
     self.longPressRecognizer =`
   );
@@ -118,10 +128,12 @@ export function preLink(configuration: Config): void {
   fs.update(
     tabBarItemApperanceCreatorPath,
     'tabBarItem.standardAppearance =',
-    `if (@available(iOS 15.0, *)) {
-        tabBarItem.scrollEdgeAppearance =
-            mergeItem.scrollEdgeAppearance ?: [[UITabBarAppearance alloc] init];
-    }
+    `#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+        if (@available(iOS 15.0, *)) {
+            tabBarItem.scrollEdgeAppearance =
+                mergeItem.scrollEdgeAppearance ?: [[UITabBarAppearance alloc] init];
+        }
+    #endif
 
     tabBarItem.standardAppearance =`
   );
@@ -131,12 +143,14 @@ export function preLink(configuration: Config): void {
     'tabItem.standardAppearance.inlineLayoutAppearance.normal.titleTextAttributes = titleAttributes;',
     `tabItem.standardAppearance.inlineLayoutAppearance.normal.titleTextAttributes = titleAttributes;
 
-    if (@available(iOS 15.0, *)) {
-        tabItem.scrollEdgeAppearance.stackedLayoutAppearance.normal.titleTextAttributes = titleAttributes;
-        tabItem.scrollEdgeAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes =
-            titleAttributes;
-        tabItem.scrollEdgeAppearance.inlineLayoutAppearance.normal.titleTextAttributes = titleAttributes;
-    }`
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+        if (@available(iOS 15.0, *)) {
+            tabItem.scrollEdgeAppearance.stackedLayoutAppearance.normal.titleTextAttributes = titleAttributes;
+            tabItem.scrollEdgeAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes =
+                titleAttributes;
+            tabItem.scrollEdgeAppearance.inlineLayoutAppearance.normal.titleTextAttributes = titleAttributes;
+        }
+    #endif`
   );
 
   fs.update(
@@ -144,14 +158,16 @@ export function preLink(configuration: Config): void {
     'tabItem.standardAppearance.inlineLayoutAppearance.selected.titleTextAttributes = selectedTitleAttributes;',
     `tabItem.standardAppearance.inlineLayoutAppearance.selected.titleTextAttributes = selectedTitleAttributes;
 
-    if (@available(iOS 15.0, *)) {
-      tabItem.scrollEdgeAppearance.stackedLayoutAppearance.selected.titleTextAttributes =
-          selectedTitleAttributes;
-      tabItem.scrollEdgeAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes =
-          selectedTitleAttributes;
-      tabItem.scrollEdgeAppearance.inlineLayoutAppearance.selected.titleTextAttributes =
-          selectedTitleAttributes;
-    }`
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+        if (@available(iOS 15.0, *)) {
+          tabItem.scrollEdgeAppearance.stackedLayoutAppearance.selected.titleTextAttributes =
+              selectedTitleAttributes;
+          tabItem.scrollEdgeAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes =
+              selectedTitleAttributes;
+          tabItem.scrollEdgeAppearance.inlineLayoutAppearance.selected.titleTextAttributes =
+              selectedTitleAttributes;
+        }
+    #endif`
   );
 
   // Patch UIViewController+RNNOptions.m
@@ -169,10 +185,12 @@ export function preLink(configuration: Config): void {
     'self.tabBarItem.standardAppearance.stackedLayoutAppearance.normal.badgeBackgroundColor = badgeColor;',
     `self.tabBarItem.standardAppearance.stackedLayoutAppearance.normal.badgeBackgroundColor = badgeColor;
 
-        if (@available(iOS 15.0, *)) {
-            self.tabBarItem.scrollEdgeAppearance.stackedLayoutAppearance.normal.badgeBackgroundColor =
-                badgeColor;
-        }`
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+            if (@available(iOS 15.0, *)) {
+                self.tabBarItem.scrollEdgeAppearance.stackedLayoutAppearance.normal.badgeBackgroundColor =
+                    badgeColor;
+            }
+        #endif`
   );
 
   logInfo('Successfully patched iOS for react-native-navigation');
