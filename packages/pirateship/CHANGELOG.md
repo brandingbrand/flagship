@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.17.0](https://github.com/brandingbrand/flagship/compare/v10.16.0...v10.17.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
 # [10.16.0](https://github.com/brandingbrand/flagship/compare/v10.15.0...v10.16.0) (2021-11-05)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.17.0](https://github.com/brandingbrand/flagship/compare/v10.16.0...v10.17.0) (2021-11-09)
+
+
+### Features
+
+* **flagship:** add navigation patch to support ios 15 [v10 cherry pick] ([3da0e61](https://github.com/brandingbrand/flagship/commit/3da0e61743818c9da468f4a78eebbd4ff06811bd))
+
+
+
+
+
 # [10.16.0](https://github.com/brandingbrand/flagship/compare/v10.15.0...v10.16.0) (2021-11-05)
 
 
