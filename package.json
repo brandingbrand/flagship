@@ -111,7 +111,7 @@
     "marked": "^0.7.0",
     "websocket-extensions": "^0.1.4",
     "react-dev-utils": "^11.0.0",
-    "immer": "^8.0.1"
+    "immer": "^9.0.6"
   },
   "workspaces": [
     "packages/*"
