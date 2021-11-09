@@ -13,6 +13,7 @@
     "flagship": "flagship.js"
   },
   "dependencies": {
+    "@brandingbrand/fsfoundation": "^11.5.0",
     "fs-extra": "^8.0.0",
     "glob": "^7.1.2",
     "jsc-android": "241213.x.x",

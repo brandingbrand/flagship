@@ -30,19 +30,27 @@ test(`update`, () => {
   fs.update(nodePath.join(tempRootDir, `ios/Podfile`),
     `target 'MOCKAPP' do`, `target 'TESTAPP' do`);
 
-  const body = fsExtra.readFileSync(nodePath.join(tempRootDir, `ios/Podfile`)).toString();
+  const body = fs.readFileSync(nodePath.join(tempRootDir, `ios/Podfile`)).toString();
 
   expect(body).toMatch(`target 'TESTAPP' do`);
 });
 
 test(`keyword does exist`, () => {
-  expect(fs.doesKeywordExist(nodePath.join(tempRootDir, `ios/Podfile`), `target 'MOCKAPP' do`))
-    .toBeTruthy();
+  expect(
+    fs.doesKeywordExist(
+      nodePath.join(tempRootDir, 'ios/Podfile'),
+      'Add new pods below this line'
+    )
+  ).toBeTruthy();
 });
 
 test(`keyword doesn't exist`, () => {
-  expect(fs.doesKeywordExist(nodePath.join(tempRootDir, `ios/Podfile`), `target 'TESTAPP' do`))
-    .toBeFalsy();
+  expect(
+    fs.doesKeywordExist(
+      nodePath.join(tempRootDir, 'ios/Podfile'),
+      'this string has no business in our podfile'
+    )
+  ).toBeFalsy();
 });
 
 // Force to be treated as a module

@@ -1,5 +1,5 @@
 const fastlane = require(`../fastlane`);
-const fs = require(`fs-extra`);
+const fs = require('../fs');
 const nodePath = require(`path`);
 
 const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);

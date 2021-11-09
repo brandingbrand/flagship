@@ -1,5 +1,5 @@
 import * as env from '../env';
-const fs = require(`fs-extra`);
+const fs = require('../fs');
 const nodePath = require(`path`);
 const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
 const tempRootDir = nodePath.join(__dirname, `__env_test`);

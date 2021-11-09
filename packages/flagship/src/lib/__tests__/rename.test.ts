@@ -1,5 +1,5 @@
 const rename = require('../rename');
-const fs = require('fs-extra');
+const fs = require('../fs');
 const path = require('path');
 const { trueCasePathSync } =
   require('true-case-path'); // tslint:disable-line:no-implicit-dependencies

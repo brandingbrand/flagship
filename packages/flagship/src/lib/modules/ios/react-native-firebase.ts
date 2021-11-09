@@ -24,10 +24,7 @@ export function preLink(configuration: Config): void {
   );
   logInfo('copied GoogleService-Info.plist to ./ios/');
 
-  let appDelegate = fs.readFileSync(
-    path.ios.appDelegatePath(configuration),
-    { encoding: 'utf-8' }
-  );
+  let appDelegate = fs.readFileSync(path.ios.appDelegatePath(configuration));
 
   // Update AppDelegate.m with Firebase import and initialization
   const firebaseImport = '#import <Firebase.h>';
@@ -44,7 +41,7 @@ export function preLink(configuration: Config): void {
   }
 
   // Add Firebase pod to Podfile
-  const podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
+  const podfile = fs.readFileSync(path.ios.podfilePath());
   const firebasePod = `pod 'Firebase/Core', '6.13.0'`;
 
   if (podfile.indexOf(firebasePod) === -1) {

@@ -1,6 +1,6 @@
 const childProcess = require('child_process');
 const cocoapods = require(`../cocoapods`);
-const fs = require(`fs-extra`);
+const fs = require('../fs');
 const nodePath = require(`path`);
 const os = require(`../os`);
 

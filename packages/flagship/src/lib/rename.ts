@@ -18,6 +18,10 @@ import {
 export function source(oldName: string, newName: string, ...pathComponents: string[]): void {
   const directory = path.project.resolve(...pathComponents);
 
+  // Since we're using a 3rd party library to do the replace glob, ensure our disc is in sync
+  // with our in-memory cache.
+  fs.flushSync();
+
   try {
     replace.sync({
       files: directory + '/**/*',
@@ -106,7 +110,7 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
         .replace(oldName.toLocaleLowerCase(), newName.toLocaleLowerCase());
       newPath = newPath.join('/');
 
-      fs.renameSync(oldPath, newPath);
+      fs.moveSync(oldPath, newPath);
     });
   } catch (err) {
     logError('renaming project files', err);
