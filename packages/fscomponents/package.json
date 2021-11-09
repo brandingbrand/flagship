@@ -42,6 +42,7 @@
     "react-native-webview": "^11.6.4",
     "react-player": "^1.15.2",
     "sweetalert": "^2.1.0",
+    "swiper": "^6.5.1",
     "yup": "^0.29.0"
   },
   "devDependencies": {
