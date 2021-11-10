@@ -47,7 +47,6 @@
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/cli-platform-android": "^4.7.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
-    "@react-native-community/push-notification-ios": "^1.0.0",
     "credit-card-type": "^8.3.0",
     "jsc-android": "241213.x.x",
     "lodash-es": "^4.17.10",
