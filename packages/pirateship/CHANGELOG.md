@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Features
+
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
 # [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
