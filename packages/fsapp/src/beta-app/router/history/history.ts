@@ -164,7 +164,7 @@ export class History implements FSRouterHistory {
     if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
       await Linking.openURL(normalized.pathname);
     } else {
-      const newLocation = await this.getNextLocation(normalized, state);
+      const newLocation = await this.getNextLocation(normalized, state, _internal !== undefined);
       await this.updateLocation(newLocation, 'PUSH');
     }
   }
@@ -351,15 +351,17 @@ export class History implements FSRouterHistory {
 
   private async getNextLocation(
     to: LocationDescriptor | StackedLocation,
-    state: unknown = null
+    state: unknown = null,
+    stackAffinity: boolean = false
   ): Promise<StackedLocation> {
     return Object.freeze({
       ...this.location,
       ...(typeof to === 'string' ? parsePath(to) : to),
-      stack:
-        (typeof to === 'object' && 'stack' in to
-          ? to.stack
-          : await this.getStackAffinity(stringifyLocation(to))) ?? this.activeStack,
+      stack: stackAffinity
+        ? (typeof to === 'object' && 'stack' in to
+            ? to.stack
+            : await this.getStackAffinity(stringifyLocation(to))) ?? this.activeStack
+        : this.activeStack,
       state,
       key: createKey()
     });
