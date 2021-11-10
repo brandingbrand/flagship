@@ -74,7 +74,7 @@ export function configure(path: string, configuration: Config): void {
       fs.update(
         path,
         /.+#PROJECT_MODIFY_FLAG_appcenter_app_name_android/g,
-        `app_name: "${distribute.appNameAndroid}" #PROJECT_MODIFY_FLAG_appcenter_app_name_android`
+        `app_name: "${distribute.appNameAndroid}", #PROJECT_MODIFY_FLAG_appcenter_app_name_android`
       );
     }
   }

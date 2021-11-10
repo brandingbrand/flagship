@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+
+### Bug Fixes
+
+* context fix for engagement components ([8a27d27](https://github.com/brandingbrand/flagship/commit/8a27d27c97c8bce05a5c8a22180ef596a40bd98a))
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+
+### Bug Fixes
+
+* deep link navigator and context issues ([0668b4f](https://github.com/brandingbrand/flagship/commit/0668b4faf9f5470a8830b04268def82438968aa5))
+
+
+
+
+
 # [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
 
 
