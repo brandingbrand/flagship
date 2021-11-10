@@ -52,7 +52,7 @@
     "@commitlint/config-conventional": "^8.3.1",
     "@commitlint/config-lerna-scopes": "^8.3.1",
     "@commitlint/travis-cli": "^8.3.1",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-async-storage/async-storage": "^1.9.0",
     "@react-native-community/cli": "^4.7.0",
     "@storybook/addon-actions": "^6.1.14",
     "@storybook/addon-knobs": "^6.1.14",

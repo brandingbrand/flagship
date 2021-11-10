@@ -36,7 +36,7 @@
     "@brandingbrand/fsnetwork": "^11.6.0",
     "@brandingbrand/fsproductdetail": "^11.6.0",
     "@brandingbrand/fsproductindex": "^11.6.0",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-async-storage/async-storage": "^1.9.0",
     "@react-native-community/cli-platform-android": "^4.7.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/push-notification-ios": "^1.0.0",
@@ -57,7 +57,7 @@
       "**/fsapp/react-native*",
       "**/fsapp/react-native*/**",
       "jsc-android",
-      "@react-native-community/async-storage",
+      "@react-native-async-storage/async-storage",
       "@react-native-community/cli-platform-android",
       "@react-native-community/cli-platform-ios",
       "@react-native-community/push-notification-ios"

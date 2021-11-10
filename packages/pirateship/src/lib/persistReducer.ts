@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function persistReducer(
   key: string, reducer: <T>(store: T, action: {type: string}) => void
 ): object {

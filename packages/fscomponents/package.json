@@ -17,7 +17,7 @@
     "@brandingbrand/fsi18n": "^11.6.0",
     "@brandingbrand/fsnetwork": "^11.6.0",
     "@brandingbrand/tcomb-form-native": "^0.6.20",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-async-storage/async-storage": "^1.9.0",
     "@types/yup": "^0.28.1",
     "credit-card": "^3.0.1",
     "decimal.js": "^10.0.1",

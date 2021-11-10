@@ -18,7 +18,7 @@
     "@brandingbrand/fslinker": "^11.6.0",
     "@brandingbrand/fsnetwork": "^11.6.0",
     "@loadable/component": "^5.14.1",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-async-storage/async-storage": "^1.9.0",
     "@types/qs": "^6.9.5",
     "autobind-decorator": "^2.4.0",
     "fs-extra": "^10.0.0",

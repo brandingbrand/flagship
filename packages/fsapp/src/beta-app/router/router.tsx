@@ -10,7 +10,7 @@ import type {
 } from './types';
 
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Navigation, NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
 
 import { History, stringifyLocation } from './history';

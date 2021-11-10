@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
