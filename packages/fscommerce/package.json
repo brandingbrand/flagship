@@ -16,7 +16,7 @@
     "@brandingbrand/fsnetwork": "^11.5.0",
     "decimal.js": "^10.0.1",
     "lodash-es": "^4.17.10",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-cookies": "^3.3.0",
