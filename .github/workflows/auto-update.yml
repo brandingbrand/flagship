@@ -1,0 +1,14 @@
+on:
+  # Run on every push on every branch, except dependabot
+  push:
+    branches-ignore:
+      - dependabot**
+jobs:
+  Auto:
+    name: Auto-update
+    if: github.repository_owner == 'brandingbrand'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tibdex/auto-update@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
