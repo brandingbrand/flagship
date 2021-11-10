@@ -52,7 +52,7 @@ export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: 
 
     // Rename matching paths
     results.forEach(oldPath => {
-      const newPath = oldPath.replace(oldPathPart, newPathPart).toLowerCase();
+      const newPath = oldPath.replace(oldPathPart, newPathPart);
       fs.moveSync(oldPath, newPath);
     });
 
