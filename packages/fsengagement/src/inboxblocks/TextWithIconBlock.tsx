@@ -7,8 +7,8 @@ import {
   ViewStyle
 } from 'react-native';
 
-import TextBlock from './TextBlock';
-import ImageBlock from './ImageBlock';
+import { TextBlock } from './TextBlock';
+import { ImageBlock } from './ImageBlock';
 
 const styles = StyleSheet.create({
   iconContainer: {

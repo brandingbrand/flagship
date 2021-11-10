@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  AccessibilityRole,
   Animated,
   LayoutChangeEvent,
   StyleProp,
@@ -11,6 +12,11 @@ import {
 import { palette } from '../styles/variables';
 
 export interface SerializableToggleButtonProps {
+  accessible?: boolean;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
+  accessibilityHint?: string;
+
   state?: boolean;
   disableAnimation?: boolean;
 
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
 });
 
 
-class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
+export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
   constructor(props: ToggleButtonProps) {
     super(props);
 
@@ -110,7 +116,10 @@ class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
       <View style={this.props.wrapperStyle}>
         <TouchableWithoutFeedback
           onPress={this.toggleAccordion}
-          accessibilityRole={'button'}
+          accessible={this.props.accessible}
+          accessibilityHint={this.props.accessibilityHint}
+          accessibilityLabel={this.props.accessibilityLabel}
+          accessibilityRole={this.props.accessibilityRole ?? 'button'}
         >
           <Animated.View
             onLayout={this.containerOnLayout}
@@ -201,5 +210,3 @@ class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
     }
   }
 }
-
-export default ToggleButton;

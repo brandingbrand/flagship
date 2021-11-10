@@ -53,7 +53,8 @@ export abstract class FSAppBase {
   getReduxStore = async (initialState?: any) => {
     return configureStore(
       initialState || this.appConfig.initialState,
-      this.appConfig.reducers
+      this.appConfig.reducers,
+      this.appConfig.storeMiddleware || []
     );
   }
 

@@ -7,7 +7,7 @@ import {
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
-import Card from '../inboxblocks/Card';
+import { Card } from '../inboxblocks/Card';
 import { Text } from 'react-native';
 import { Navigator } from '@brandingbrand/fsapp';
 import { Action } from '../types';

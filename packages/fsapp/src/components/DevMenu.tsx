@@ -15,6 +15,14 @@ import { LayoutComponent } from 'react-native-navigation';
 // @ts-ignore project_env_index ignore and will be changed by init
 import projectEnvs from '../../project_env_index';
 import NavWrapper from '../lib/nav-wrapper';
+import { omit } from 'lodash-es';
+
+const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
+
+const envsToDisplay: {
+  [key: string]: string;
+} = omit(projectEnvs, hiddenEnvs);
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -184,9 +192,10 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   }
 
   renderStorageManager = () => {
+    const sInfoKeys = this.props.appConfig.env?.sInfoKeys || {};
     return (
       <View style={styles.devViewcontainer}>
-        <StorageManager />
+        <StorageManager sInfoKeys={sInfoKeys} />
       </View>
     );
   }
@@ -196,7 +205,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
 
     return (
       <View style={styles.configView}>
-        {Object.keys(projectEnvs).map((env, i) => {
+        {Object.keys(envsToDisplay).map((env, i) => {
           return (
             <TouchableRow
               key={env}

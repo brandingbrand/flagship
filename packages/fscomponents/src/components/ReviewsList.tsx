@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { ImageURISource, ScrollView, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import { ReviewIndicatorProps, SerializableReviewIndicatorProps } from './ReviewIndicator';
-import { MoreTextProps, SerializableMoreTextProps } from './MoreText';
-import { ReviewItem, ReviewItemProps, SerializableReviewItemProps } from './ReviewItem';
+import { ReviewIndicatorProps } from './ReviewIndicator';
+import { MoreTextProps } from './MoreText';
+import { ReviewItem, ReviewItemProps } from './ReviewItem';
 
 export interface ReviewsListProps {
   reviews: import ('@brandingbrand/fscommerce').ReviewTypes.Review[];
@@ -20,16 +20,6 @@ export interface ReviewsListProps {
   // actions
   onHelpful?: (props: ReviewItemProps) => void;
   onNotHelpful?: (props: ReviewItemProps) => void;
-}
-
-export interface SerializableReviewsListProps extends Omit<
-  ReviewsListProps,
-  'onHelpful' | 'onNotHelpful'
-> {
-  reviewStyle?: Dictionary<TextStyle | ViewStyle>;
-  reviewItemProps?: Partial<SerializableReviewItemProps>;
-  reviewIndicatorProps?: Partial<SerializableReviewIndicatorProps>;
-  moreTextProps?: SerializableMoreTextProps;
 }
 
 export class ReviewsList extends Component<ReviewsListProps> {

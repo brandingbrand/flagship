@@ -112,7 +112,7 @@ export function formatAddress(address: Address) {
  * @param target number of position x
  * @param duration number of duration in ms
  */
-export function animatedScrollTo(element: Element, target: number, duration: number) {
+export function animatedScrollTo(element: HTMLElement, target: number, duration: number) {
   target = Math.round(target);
   duration = Math.round(duration);
   if (duration < 0) {
@@ -142,7 +142,10 @@ export function animatedScrollTo(element: Element, target: number, duration: num
   };
 
   return new Promise<void>(function(resolve, reject) {
+    let previous_scroll_snap = (element.style as any).scrollSnapType;
     let previous_top = element.scrollLeft;
+
+    (element.style as any).scrollSnapType = "";
     let scroll_frame = function() {
       if (element.scrollLeft != previous_top) {
         return;
@@ -154,6 +157,7 @@ export function animatedScrollTo(element: Element, target: number, duration: num
       element.scrollLeft = frameTop;
 
       if (now >= end_time) {
+        (element.style as any).scrollSnapType = previous_scroll_snap;
         resolve();
         return;
       }
@@ -162,6 +166,7 @@ export function animatedScrollTo(element: Element, target: number, duration: num
         element.scrollLeft === previous_top &&
         element.scrollLeft !== frameTop
       ) {
+        (element.style as any).scrollSnapType = previous_scroll_snap;
         resolve();
         return;
       }

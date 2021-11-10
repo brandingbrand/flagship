@@ -11,7 +11,7 @@ import {
   ScreenProps
 } from '../types';
 
-import CTABlock from './CTABlock';
+import { CTABlock } from './CTABlock';
 
 export interface CTABlockProps extends ScreenProps {
   story?: JSON;

@@ -32,6 +32,8 @@ import ActionBarSample from './screens/ActionBarSample';
 import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
 import CartCountSample from './screens/CartCountSample';
 import { EngagementComp } from './lib/engagement';
+import WebviewSample from './screens/WebviewSample';
+import CarouselSample from './screens/CarouselSample';
 
 export default {
   Shop,
@@ -64,5 +66,7 @@ export default {
   ActionBarSample,
   ImageWithOverlaySample,
   CartCountSample,
-  EngagementComp
+  EngagementComp,
+  WebviewSample,
+  CarouselSample
 } as any;
