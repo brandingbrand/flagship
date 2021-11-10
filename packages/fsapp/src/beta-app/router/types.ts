@@ -65,6 +65,17 @@ export type ResolverConstructor<Data = unknown> = new (route: ActivatedRoute) =>
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
 export type ResolverFunction<Data = unknown> = (route: ActivatedRoute) => Data | Promise<Data>;
 
+export interface Activator {
+  activate(): boolean | Promise<boolean>;
+}
+
+export type ActivatorConstructor =
+  new (route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => Activator;
+
+// Guaranteed to be in the context of a React Function, so hooks will work as expected.
+export type ActivatorFunction =
+  (route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => boolean | Promise<boolean>;
+
 // Uses a similar pattern to that of the Angular and Vue
 // Routers, this should make it familiar to those who have
 // dabbled at all in those ecosystems and should make migrations
@@ -73,10 +84,12 @@ export interface BaseRoute {
   readonly path?: string;
   readonly exact?: true;
   readonly quickDevMenu?: true;
+  readonly canActivate?: ActivatorConstructor | ActivatorFunction;
 }
 
 export type TopBarStyle = Omit<OptionsTopBar, 'title'> & {
   title?: Omit<OptionsTopBarTitle, 'text'>;
+  leftButtons?: never;
   rightButtons?: never;
 };
 
@@ -126,7 +139,9 @@ export interface RouteCollection {
 }
 
 export interface RedirectRoute extends BaseRoute {
-  readonly redirect: string;
+  readonly redirect:
+    | ((route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => string)
+    | string;
 }
 
 /**

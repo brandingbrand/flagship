@@ -17,7 +17,9 @@ const screens: LayoutComponent[] = [
   { options: { topBar: { title: { text: 'BreadCrumbs' }}}, name: 'BreadCrumbsSample' },
   { options: { topBar: { title: { text: 'Image With Overlay' }}}, name: 'ImageWithOverlaySample' },
   { options: { topBar: { title: { text: 'Cart Count' }}}, name: 'CartCountSample'},
-  { options: { topBar: { title: { text: 'PS Half Modal' }}}, name: 'EmailSignUp' }
+  { options: { topBar: { title: { text: 'PS Half Modal' }}}, name: 'EmailSignUp' },
+  { options: { topBar: { title: { text: 'Webview' }}}, name: 'WebviewSample' },
+  { options: { topBar: { title: { text: 'Carousel' }}}, name: 'CarouselSample' }
 ];
 
 export interface DevelopmentScreenState {

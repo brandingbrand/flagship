@@ -3,6 +3,541 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fscomponents:** rerender when render changes ([8e6328d](https://github.com/brandingbrand/flagship/commit/8e6328d9d8b8418bc867954d89ac7392bfd835e8))
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Features
+
+* **fscomponents:** enhanced grid component ([c5015f5](https://github.com/brandingbrand/flagship/commit/c5015f55321ee3f58cf7c275c3ae25f3fd1e9d86))
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
+
+
+### Features
+
+* **fscomponents:** expose some accessibility props ([0a5202e](https://github.com/brandingbrand/flagship/commit/0a5202e8d9faea1b2424ad66aa84b8d35414b1c6))
+
+
+
+
+
+## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.9...v11.0.1-alpha.10) (2021-08-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.8...v11.0.1-alpha.9) (2021-07-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** prevent crashing when `itemsPerPage` is invalid ([fe8be36](https://github.com/brandingbrand/flagship/commit/fe8be365f4916eb15316043fd6e13f8bcd516673))
+
+
+
+
+
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* **fscomponents:** multicarousel linting errors ([fcc0a54](https://github.com/brandingbrand/flagship/commit/fcc0a545d42bcd07cd05d7d690533dc652a18976))
+* **fscomponents:** proper size on items per page ([63ec025](https://github.com/brandingbrand/flagship/commit/63ec02572c7951d4626b02f61c50aa5a19c5ea91))
+
+
+* fix(fscomponents)!: update zoom carousel with MultiCarousel updates ([92d71ca](https://github.com/brandingbrand/flagship/commit/92d71caff4361a55c814a40329300dc42a1441f3))
+* refactor(fscomponents)!: multi carousel fs11 update ([98b951d](https://github.com/brandingbrand/flagship/commit/98b951dfdb3bacd148d71ebf699174e638442159))
+* refactor(fscomponents)!: modernize grid component ([f361367](https://github.com/brandingbrand/flagship/commit/f361367ba43497963ad8ab9a5b1ae9032b6fde28))
+
+
+### Features
+
+* **fscomponents:** dynamic carousel pages ([4706801](https://github.com/brandingbrand/flagship/commit/47068016ce56e11b91481c84e492368eb89e79ac))
+* **fscomponents:** dynamic grid columns ([cdba9b8](https://github.com/brandingbrand/flagship/commit/cdba9b8d14c30738cbb8e681ca2b8e8398e7c67c))
+
+
+### BREAKING CHANGES
+
+* `MultiCarousel` no longer has `ref`, use `carouselController` instead
+* Deprecates a few `MultiCarouselProps` props and removes a few that were unused.
+* Deprecated several props in <Grid />
+
+
+
+
+
+## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.4...v11.0.1-alpha.5) (2021-07-12)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.4](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.3...v11.0.1-alpha.4) (2021-07-09)
+
+
+### Bug Fixes
+
+* **fscomponents:** Added V4 to exports ([793fc27](https://github.com/brandingbrand/flagship/commit/793fc27f9d4511e2cd8834cdb27a373cb0f3bb3e))
+
+
+
+
+
+## [11.0.1-alpha.3](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.2...v11.0.1-alpha.3) (2021-07-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.2](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.1...v11.0.1-alpha.2) (2021-07-07)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.1](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.0...v11.0.1-alpha.1) (2021-07-07)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.0](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.61...v11.0.1-alpha.0) (2021-07-06)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.61](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.60...v11.0.0-alpha.61) (2021-07-06)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.60](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.59...v11.0.0-alpha.60) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.59](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.58...v11.0.0-alpha.59) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.58](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.57...v11.0.0-alpha.58) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.57](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.56...v11.0.0-alpha.57) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.56](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.55...v11.0.0-alpha.56) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.55](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.54...v11.0.0-alpha.55) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.54](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.53...v11.0.0-alpha.54) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.53](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.52...v11.0.0-alpha.53) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.52](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.51...v11.0.0-alpha.52) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.51](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.50...v11.0.0-alpha.51) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.50](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.49...v11.0.0-alpha.50) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.49](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.48...v11.0.0-alpha.49) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.48](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.47...v11.0.0-alpha.48) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.47](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.46...v11.0.0-alpha.47) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.46](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.45...v11.0.0-alpha.46) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.45](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.44...v11.0.0-alpha.45) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.44](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.43...v11.0.0-alpha.44) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.43](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.42...v11.0.0-alpha.43) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.42](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.41...v11.0.0-alpha.42) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.41](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.40...v11.0.0-alpha.41) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.40](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.39...v11.0.0-alpha.40) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.39](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.38...v11.0.0-alpha.39) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.38](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.37...v11.0.0-alpha.38) (2021-07-01)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.37](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.36...v11.0.0-alpha.37) (2021-06-28)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.36](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.35...v11.0.0-alpha.36) (2021-06-25)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.35](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.34...v11.0.0-alpha.35) (2021-06-24)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.34](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.33...v11.0.0-alpha.34) (2021-06-23)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.33](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.32...v11.0.0-alpha.33) (2021-06-23)
+
+
+### Features
+
+* **fscomponents:** add ability to hide oveflow on carousel ([379ccb0](https://github.com/brandingbrand/flagship/commit/379ccb080f6f4d3b416dbc017ecd9ee33f35d209))
+
+
+
+
+
+# [11.0.0-alpha.32](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.31...v11.0.0-alpha.32) (2021-06-11)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0-alpha.31](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.30...v11.0.0-alpha.31) (2021-06-08)
+
+
+### Bug Fixes
+
+* extract image styles for preview ([a9d3fe4](https://github.com/brandingbrand/flagship/commit/a9d3fe420b25742ffa91e460c08dde16b6cbd3c8))
+
+
+### Features
+
+* **fscomponents:** FS-2435 add serializable review indicator ([1e1d886](https://github.com/brandingbrand/flagship/commit/1e1d886439e23106f2ab6f4583c66ace17ebeb6d))
+
+
+
+
+
+# [11.0.0-alpha.30](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.29...v11.0.0-alpha.30) (2021-06-03)
+
+
+### Bug Fixes
+
+* use standardized container ([15c5cf5](https://github.com/brandingbrand/flagship/commit/15c5cf50b1f251a9fe324e1e96cca3d613e0568d))
+* use styles appropriately ([579e672](https://github.com/brandingbrand/flagship/commit/579e67249da007298c9d8c9d438e532765a07a30))
+* use styles appropriately ([5ec12e5](https://github.com/brandingbrand/flagship/commit/5ec12e573ccee67ae63443d0a8e5e3a1bcc7a316))
+
+
+### Features
+
+* **fscomponents:** FS-2308 - allow serializableImage to have children ([43e16a3](https://github.com/brandingbrand/flagship/commit/43e16a31e845522910dbad0001ace465408fc7c6))
+* **fscomponents:** serializable v2 component ([af105be](https://github.com/brandingbrand/flagship/commit/af105be4a998b37c5e8504c2216e15f2093a02b2))
+
+
+
+
+
+# [11.0.0-alpha.29](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.28...v11.0.0-alpha.29) (2021-05-26)
+
+
+### Features
+
+* FS-2381 ([3a6721d](https://github.com/brandingbrand/flagship/commit/3a6721dffc87f069af322350bc21eb64dd36c98a))
+* vNext versioning ([803b64d](https://github.com/brandingbrand/flagship/commit/803b64d0e1798c5f846d9c21996bf65ea656a823))
+
+
+
+
+
+# [11.0.0-alpha.28](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.27...v11.0.0-alpha.28) (2021-05-26)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
 # [11.0.0-alpha.27](https://github.com/brandingbrand/flagship/compare/v11.0.0-alpha.26...v11.0.0-alpha.27) (2021-05-18)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

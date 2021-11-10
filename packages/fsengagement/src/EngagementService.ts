@@ -1,15 +1,13 @@
-import FCM, { FCMEvent } from 'react-native-fcm';
 import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import {
+  AppSettings,
   EngagementMessage,
   EngagementProfile,
-  EngagmentEvent,
-  EngagmentNotification
+  EngagmentEvent
 } from './types';
-const uuid = require('uuid-js');
 
 export interface EngagementServiceConfig {
   appId: string;
@@ -37,6 +35,7 @@ export class EngagementService {
   profileId?: string;
   profileData?: EngagementProfile;
   messages: EngagementMessage[] = [];
+  environment?: string;
   messageCache: number = 0;
   cacheTTL: number = 1000 * 60 * 10;
 
@@ -45,7 +44,7 @@ export class EngagementService {
     if (typeof config.cacheTTL === 'number') {
       this.cacheTTL = config.cacheTTL;
     }
-
+    this.environment = ~config.baseURL.indexOf('uat') ? 'UAT' : 'PROD';
     this.networkClient = new FSNetwork({
       baseURL: config.baseURL,
       headers: {
@@ -53,31 +52,6 @@ export class EngagementService {
         'Content-Type': 'application/json'
       }
     });
-  }
-
-  logEvent(type: string, data: any): void {
-    const event = {
-      type,
-      id: uuid.create().toString(),
-      data: JSON.stringify(data),
-      fired: new Date()
-    };
-    this.events.push(event);
-
-    if (this.profileId) {
-      // @TODO: can throttle here to save up events and send all at a threshold
-
-      this.networkClient.post(`/Profiles/${this.profileId}/trackEvents`, {
-        events: this.events
-      })
-        .then((response: any) => {
-          // clear the event queue on successful submit
-          if (response.status === 204) {
-            this.events = [];
-          }
-        })
-        .catch((e: any) => console.warn('Unable to log events', e));
-    }
   }
 
   async setProfileAttributes(attributes: Attribute[]): Promise<boolean> {
@@ -116,38 +90,15 @@ export class EngagementService {
       });
   }
 
-  setNotification(): void {
-    // debugging local notifications
-    // FCM.cancelAllLocalNotifications()
-    // FCM.getScheduledLocalNotifications()
-    //  .then(notif => console.log('scheduled local push notifications', notif));
-
-    // get and store push token if available
-    FCM.getFCMToken()
-      .then(token => this.setPushToken(token))
-      .catch(e => console.log('getFCMToken error: ', e));
-
-    FCM.on(FCMEvent.RefreshToken, token => this.setPushToken(token));
-    // listen to notifications and handle them
-    FCM.on(FCMEvent.Notification, this.onNotification.bind(this));
-    // check if the app was opened from a notification and log it
-    // @TODO: follow the notifications link?
-    FCM.getInitialNotification()
-      .then(notif => {
-        if (notif && notif.messageId) {
-          this.logEvent('pushopen', { message: notif.messageId });
-        }
-      })
-      .catch();
-  }
-
   // @TODO: does the profile need to be resynced anytime during a session?
   async getProfile(accountId?: string, forceProfileSync?: boolean): Promise<string> {
     if (this.profileId && this.profileData && !forceProfileSync) {
       return Promise.resolve(this.profileId);
     }
 
-    const savedProfileId = await AsyncStorage.getItem('ENGAGEMENT_PROFILE_ID');
+    const savedProfileId =
+      await AsyncStorage.getItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`);
+
     if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
       this.profileId = savedProfileId;
       return Promise.resolve(savedProfileId);
@@ -173,7 +124,8 @@ export class EngagementService {
         this.profileId = data.id;
         this.profileData = data;
 
-        AsyncStorage.setItem('ENGAGEMENT_PROFILE_ID', data.id).catch();
+        AsyncStorage
+          .setItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`, data.id).catch();
 
         return data.id;
       })
@@ -208,10 +160,6 @@ export class EngagementService {
           .catch((e: any) => console.log('failed to set push token', e));
       }
     }
-  }
-
-  async requestPushPermissions(): Promise<void> {
-    return FCM.requestPermissions();
   }
 
   /**
@@ -312,6 +260,73 @@ export class EngagementService {
       });
   }
 
+  /**
+   * Accepts array of inbox messages
+   * Fetches sort order array (stored in app settings)
+   * @param {EngagementMessage[]} messages inbox messages to sort
+   * @returns {EngagementMessage[]} sorted inbox messages
+   */
+  async sortInbox(
+    messages: EngagementMessage[]
+  ): Promise<EngagementMessage[]> {
+
+    const order =
+      await this.networkClient.get(`/App/${this.appId}/getAppSettings`)
+    .then((r: any) => r.data)
+    .then((settings: AppSettings) => settings && settings.sort);
+
+    if (!order || !Array.isArray(order)) {
+      return messages;
+    }
+
+    // recently live - not yet sorted messages (they go at the top)
+    const liveNew = messages.filter((msg: EngagementMessage) => order.indexOf(msg.id) === -1);
+    const liveSort = messages.filter((msg: EngagementMessage) => order.indexOf(msg.id) > -1);
+    // sort the rest based on the sort array from `getAppSettings` (new core feature)
+    const sortedLive = liveSort.sort((a: EngagementMessage, b: EngagementMessage) => {
+      const A = a.id;
+      const B = b.id;
+      if (
+        order.indexOf(A) < order.indexOf(B) ||
+        order.indexOf(A) === -1 ||
+        order.indexOf(B) === -1
+      ) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    const sortedAll = [...liveNew, ...sortedLive];
+
+    const pinnedTopIndexes: number[] = [];
+    const pinnedBottomIndexes: number[] = [];
+
+    const pinnedTop = sortedAll.filter((msg, idx) => {
+      if (msg.message && msg.message.content && msg.message.content.pin &&
+        msg.message.content.pin === 'top') {
+        pinnedTopIndexes.push(idx);
+        return true;
+      }
+      return false;
+    });
+    for (let i = pinnedTopIndexes.length - 1; i >= 0; i--) {
+      sortedAll.splice(pinnedTopIndexes[i], 1);
+    }
+
+    const pinnedBottom = sortedAll.filter((msg, idx) => {
+      if (msg.message && msg.message.content && msg.message.content.pin &&
+        msg.message.content.pin === 'bottom') {
+        pinnedBottomIndexes.push(idx);
+        return true;
+      }
+      return false;
+    });
+    for (let idx = pinnedBottomIndexes.length - 1; idx >= 0; idx--) {
+      sortedAll.splice(pinnedBottomIndexes[idx], 1);
+    }
+
+    return [...pinnedTop, ...sortedAll, ...pinnedBottom];
+  }
 
   async getInboxBySegment(
     segmentId: number | string,
@@ -346,51 +361,4 @@ export class EngagementService {
         return Promise.resolve(ret);
       });
   }
-
-  async onNotification(notif: EngagmentNotification): Promise<void> {
-    console.log('onNotification', notif);
-
-    if (notif.local_notification) {
-      // this is a local notification
-      console.log('got local notification', notif);
-    }
-
-    if (notif.opened_from_tray) {
-      console.log('notif.opened_from_tray: true');
-
-      // app resumed from push
-      if (notif.id) {
-        this.logEvent('pushopen', {
-          notificationId: notif.id,
-          messageId: notif.messageId
-        });
-      }
-
-      // app was backgrounded and now foregrounded
-    } else {
-      console.log('notif.opened_from_tray: false');
-      // app was open while the message came in
-
-      if (notif.future && notif.on && notif.title && notif.body && notif.messageId) {
-        const fireDate = new Date(parseInt(notif.on, 10));
-        FCM.scheduleLocalNotification({
-          fire_date: fireDate.getTime(),
-          id: notif.messageId,
-          body: notif.body,
-          title: notif.title,
-          messageId: notif.messageId,
-          show_in_foreground: true
-        });
-        console.log('schedule local notif', fireDate);
-      } else {
-        if (notif.id) {
-          this.logEvent('pushreceive', {
-            notificationId: notif.id,
-            messageId: notif.messageId
-          });
-        }
-      }
-    }
-  }
 }
-
