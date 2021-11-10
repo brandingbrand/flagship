@@ -1,9 +1,10 @@
 import type { Action, AnyAction, Store } from 'redux';
 import type { Analytics } from '@brandingbrand/fsengage';
-import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 import type { FSRouter, RouterConfig, Routes } from '../router';
 import type { GenericState, StoreConfig } from '../store';
 import type { ShellConfig } from '../shell.web';
+
+import FSNetwork, { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 
 export interface WebApplication {
   readonly element: JSX.Element;
@@ -17,6 +18,12 @@ export interface AppConfig<
   readonly version: string;
   readonly root?: Element | string;
   readonly serverSide?: true;
+  /**
+   * Only affects Web.
+   *
+   * If the client should hydrate server-rendered HTML.
+   */
+  readonly hydrate?: boolean;
   readonly analytics?: Analytics;
   readonly router: RouterConfig;
   readonly webShell?: ShellConfig;
@@ -26,6 +33,7 @@ export interface AppConfig<
       ? StoreConfig<S, A>
       : undefined
     : undefined;
+  readonly getInitialURL?: () => Promise<string | null>;
 }
 
 export interface IApp {
@@ -39,6 +47,6 @@ export interface IApp {
 }
 
 export interface AppConstructor<T extends IApp = IApp> {
-  new (version: string, config: AppConfig, router: FSRouter, store?: Store): T;
+  new (version: string, config: AppConfig, router: FSRouter, api?: FSNetwork, store?: Store): T;
   bootstrap(options: AppConfig): Promise<T>;
 }

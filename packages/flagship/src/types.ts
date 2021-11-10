@@ -169,6 +169,13 @@ export interface Config {
 
   targetedDevices?: TargetedDevices;
 
+  /**
+   * Array of environment names to hide from the Environment Switcher
+   *
+   * @example ['store']
+   */
+  hiddenEnvs?: string[];
+
   webPath?: string;
   webTitle?: string;
   webScriptInjectHeader?: string;

@@ -257,7 +257,10 @@ function initWeb(
 
   fs.copySync(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
-    path.project.resolve('web')
+    path.project.resolve('web'),
+    {
+      dereference: true
+    }
   );
 
   // create config for web version

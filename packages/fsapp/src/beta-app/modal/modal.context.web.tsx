@@ -1,22 +1,31 @@
 import type { Dictionary } from '@brandingbrand/fsfoundation';
-import type { ModalComponentType, ModalService } from './types';
+import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
 
-import React, { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { uniqueId } from 'lodash-es';
 
 // @ts-ignore TODO: Update `react-native-web` and replace this
 import Modal from 'react-native-web-modal';
 
+import { InjectionToken } from '@brandingbrand/fslinker';
+
 import { useNavigator } from '../router';
 import { lockScroll, unlockScroll } from '../utils.web';
 
 import { NO_MODAL_CONTEXT_ERROR } from './constants';
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
 import { ActivatedRouteProvider, NavigatorProvider, useActivatedRoute } from '../router/context';
-import { APIContext, AppContext, useAPI, useApp } from '../app/context';
-import { Provider, useStore } from 'react-redux';
+import {
+  API_CONTEXT_TOKEN,
+  APP_CONTEXT_TOKEN,
+  InjectedReduxProvider,
+  useAPI,
+  useApp,
+  useStore
+} from '../app/context';
 
-const ModalContext = createContext<ModalService>({
+const DEFAULT_MODAL_SERVICE = {
   showModal: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
   },
@@ -26,9 +35,11 @@ const ModalContext = createContext<ModalService>({
   dismissAllModals: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
   }
-});
+};
 
-export const useModals = () => useContext(ModalContext);
+export const ModalContext = createContext<ModalService>(DEFAULT_MODAL_SERVICE);
+export const MODAL_CONTEXT_TOKEN = new InjectionToken<typeof ModalContext>('MODAL_CONTEXT_TOKEN');
+export const useModals = () => useDependencyContext(MODAL_CONTEXT_TOKEN) ?? DEFAULT_MODAL_SERVICE;
 
 const navStyle = StyleSheet.create({
   backdrop: {
@@ -44,7 +55,7 @@ const navStyle = StyleSheet.create({
   }
 });
 
-export const ModalProvider: FC = ({ children }) => {
+export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const app = useApp();
   const api = useAPI();
   const store = useStore();
@@ -132,10 +143,10 @@ export const ModalProvider: FC = ({ children }) => {
                 onRequestClose={handleReject}
                 {...modal.options}
               >
-                <AppContext.Provider value={getApp}>
-                  <APIContext.Provider value={api}>
+                <InjectedContextProvider token={APP_CONTEXT_TOKEN} value={getApp}>
+                  <InjectedContextProvider token={API_CONTEXT_TOKEN} value={api}>
                     <NavigatorProvider value={navigator}>
-                      <Provider store={store}>
+                      <InjectedReduxProvider store={store}>
                         <ActivatedRouteProvider {...route}>
                           <TouchableWithoutFeedback onPress={handleReject}>
                             <View style={[navStyle.backdrop, modal.options?.backdropStyle]} />
@@ -149,10 +160,10 @@ export const ModalProvider: FC = ({ children }) => {
                             />
                           </View>
                         </ActivatedRouteProvider>
-                      </Provider>
+                      </InjectedReduxProvider>
                     </NavigatorProvider>
-                  </APIContext.Provider>
-                </AppContext.Provider>
+                  </InjectedContextProvider>
+                </InjectedContextProvider>
               </Modal>
             );
           }
@@ -163,11 +174,14 @@ export const ModalProvider: FC = ({ children }) => {
   );
 
   return (
-    <ModalContext.Provider value={{ showModal, dismissModal, dismissAllModals }}>
+    <InjectedContextProvider
+      token={MODAL_CONTEXT_TOKEN}
+      value={{ showModal, dismissModal, dismissAllModals }}
+    >
       {children}
       {Object.entries(modals).map(([id, Modal]) => (
         <Modal key={id} />
       ))}
-    </ModalContext.Provider>
+    </InjectedContextProvider>
   );
 };

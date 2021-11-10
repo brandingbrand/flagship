@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react-native",
+    "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,

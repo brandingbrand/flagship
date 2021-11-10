@@ -5,6 +5,8 @@ import { AppRegistry } from 'react-native';
 import { StaticImplements } from '../utils';
 import { FSAppBase } from './app.base';
 
+export { APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN } from './app.base';
+
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
   private root: Element | null =
@@ -15,6 +17,7 @@ export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
     AppRegistry.runApplication('Flagship', {
       rootTag: this.root,
+      hydrate: this.config.hydrate,
       initialProps: {}
     });
   }

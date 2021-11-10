@@ -23,6 +23,11 @@ healthCheck(app, env);
 
 addProxy(app, env);
 
+app.all('*', (req, res) => {
+  // Send the react bundle to all requests that haven't been handled by the above middleware.
+  res.sendFile(path.resolve(__dirname, rootDir, buildPath, 'index.html'));
+});
+
 app.listen(port, () => {
   console.info(`Proxy listening on port ${port}`);
 }).on('error', err => {
