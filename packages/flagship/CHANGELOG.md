@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Bug Fixes
+
+* **flagship:** stop forcing lowercasing when renaming packages ([e787037](https://github.com/brandingbrand/flagship/commit/e787037cb45eedb9d4e58930a009e4f0eddb490e)), closes [#1778](https://github.com/brandingbrand/flagship/issues/1778)
+
+
+
+
+
 # [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
 
 
