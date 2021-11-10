@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Bug Fixes
+
+* **flagship:** stop forcing lowercasing when renaming packages ([e787037](https://github.com/brandingbrand/flagship/commit/e787037cb45eedb9d4e58930a009e4f0eddb490e)), closes [#1778](https://github.com/brandingbrand/flagship/issues/1778)
+* **fsapp:** only use tab affinity for open() ([f7fb0ce](https://github.com/brandingbrand/flagship/commit/f7fb0cefdfa4b746766509b64cd14442accbdfad))
+* **fslinker:** update global typing to support node 16 ([46e1ced](https://github.com/brandingbrand/flagship/commit/46e1ced3feafa58160aeafd2733393575238eff4))
+
+
+### Features
+
+* update tar version to fix security ([312edc0](https://github.com/brandingbrand/flagship/commit/312edc030001ff6e4852ba28acde6d97da575828))
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
 # [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
 
 
