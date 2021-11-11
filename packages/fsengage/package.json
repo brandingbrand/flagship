@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@adobe/react-native-acpanalytics": "^1.2.6",
-    "@adobe/react-native-acpcore": "^1.2.5",
+    "@adobe/react-native-acpcore": "^2.0.0",
     "@brandingbrand/fsfoundation": "^11.6.0",
     "@brandingbrand/fsnetwork": "^11.6.0",
     "@brandingbrand/react-native-adobe-marketing-cloud": "^0.1.1",
