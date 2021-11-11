@@ -17,8 +17,6 @@ export * from './CartItem';
 export * from './CategoryBox';
 export * from './CategoryLine';
 export * from './ChangePasswordComponent';
-export * from './CreditCardForm';
-export * from './CreditCardNumber';
 export * from './DigitalWalletProvider';
 export * from './EmailForm';
 export * from './FadeInImage';
