@@ -51,7 +51,7 @@ const clearDirectory = async () => {
 const populateRepo = async () => {
   // Fetch the gzipped tarball of the template repo from github
   const response = await fetch(TEMPLATE_URL);
-  if (!response.ok) {
+  if (!response.ok || !response.body) {
     throw new Error('bad response');
   }
 
@@ -120,8 +120,17 @@ const getLatestDependency = async (pkg: string): Promise<{[key: string]: string}
   // Finds the latest release version of a given packages
   const res = await fetch(`https://registry.npmjs.com/${pkg}`);
   const json = await res.json();
-  const { latest } = json['dist-tags'];
-  return { [pkg]: `^${latest}` };
+
+  if (json && typeof json === 'object') {
+    const distTags = (json as { [key: string]: unknown })['dist-tags'];
+
+    if (distTags && typeof distTags === 'object') {
+      const { latest } = distTags as { [key: string]: unknown };
+      return { [pkg]: `^${latest}` };
+    }
+  }
+
+  throw new Error(`Unable to find latest version number for package ${pkg}`);
 };
 
 const getPackageJson = async (config: Config) => {
