@@ -82,11 +82,14 @@ jobs:
     language: objective-c
     os: osx
     osx_image: xcode12
+    before_script:
+      - yarn prepare
+      - pod repo update
+      - yarn ship:init
     script:
-    - yarn prepare
-    - pod repo update
-    - yarn ship:init
-    - yarn ship:compile-ios
+      - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
+      - yarn ship:compile-ios
+      - kill %1
   - stage: canary
     git:
       depth: false
