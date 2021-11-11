@@ -43,7 +43,6 @@
     "@brandingbrand/fsproductindex": "^11.6.0",
     "@brandingbrand/fsweb": "^11.6.0",
     "@brandingbrand/react-native-leanplum": "^5.0.0",
-    "@brandingbrand/react-native-payments": "^0.10.0",
     "@brandingbrand/tcomb-form-native": "^0.6.20",
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/cli-platform-android": "^4.7.0",
@@ -77,8 +76,7 @@
       "@brandingbrand/fsproductdetail",
       "react-native-sensitive-info",
       "react-native-safe-area",
-      "react-native-svg",
-      "react-native-payments"
+      "react-native-svg"
     ],
     "webTitle": "PirateShip"
   },
@@ -95,8 +93,7 @@
       "@react-native-community/async-storage",
       "@react-native-community/cli-platform-android",
       "@react-native-community/cli-platform-ios",
-      "@react-native-community/push-notification-ios",
-      "@brandingbrand/react-native-payments"
+      "@react-native-community/push-notification-ios"
     ]
   }
 }
