@@ -1,7 +1,7 @@
 {
   "default": true,
   "no-inline-html": {
-    "allowed_elements": ["a", "img", "p"]
+    "allowed_elements": ["a", "h1", "img", "p"]
   },
   "line-length": {
     "line_length": 100,
