@@ -86,15 +86,16 @@ export class History implements FSRouterHistory {
         window.location.href = to;
       } else {
         this.browserHistory.push(to, state);
+        await this.nextLoad;
       }
     } else {
       if (to?.pathname && /^\w+:\/\//.exec(to.pathname)) {
         window.location.href = to.pathname;
       } else if (to) {
         this.browserHistory.push(to);
+        await this.nextLoad;
       }
     }
-    await this.nextLoad;
   }
 
   public replace(path: string, state?: unknown): Promise<void>;
