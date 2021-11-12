@@ -49,9 +49,9 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@commitlint/cli": "^14.1.0",
-    "@commitlint/config-conventional": "^8.3.1",
-    "@commitlint/config-lerna-scopes": "^8.3.1",
-    "@commitlint/travis-cli": "^8.3.1",
+    "@commitlint/config-conventional": "^14.1.0",
+    "@commitlint/config-lerna-scopes": "^14.0.0",
+    "@commitlint/travis-cli": "^14.1.0",
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/cli": "^4.7.0",
     "@storybook/addon-actions": "^6.1.14",
