@@ -10,11 +10,15 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
-#import <RNCPushNotificationIOS.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
+
+#if __has_include(<RNCPushNotificationIOS.h>)
+#import <RNCPushNotificationIOS.h>
+#endif
+
 
 #ifdef DEBUG
 #import <React/RCTBundleURLProvider.h>
@@ -73,6 +77,7 @@ NSURL *jsCodeLocation;
   return YES;
 }
 
+#if __has_include(<RNCPushNotificationIOS.h>)
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
@@ -99,6 +104,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   [RNCPushNotificationIOS didReceiveLocalNotification:notification];
 }
+#endif
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
