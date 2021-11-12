@@ -34,7 +34,7 @@ describe('Content Management System Provider', () => {
   });
 
   describe('Core', () => {
-    test('Slot Content', async done => {
+    test('Slot Content', done => {
       proxy = stub(CoreContentManagementSystemProvider.prototype, 'pullContent')
         .callsFake(async () => {
           return Promise.resolve(fixture.payload);
@@ -49,7 +49,7 @@ describe('Content Management System Provider', () => {
         }
       };
 
-      return core.contentForSlot(
+      core.contentForSlot(
         'Homepage',
         'Hero-Carousel',
         undefined,
@@ -69,10 +69,10 @@ describe('Content Management System Provider', () => {
         );
 
         return done();
-      });
+      }).catch(done);
     });
 
-    test('Slot Content Missing', async done => {
+    test('Slot Content Missing', done => {
       proxy = stub(CoreContentManagementSystemProvider.prototype, 'pullContent')
         .callsFake(async () => {
           return Promise.resolve(fixture2);
@@ -87,7 +87,7 @@ describe('Content Management System Provider', () => {
         }
       };
 
-      return core.contentForSlot(
+      core.contentForSlot(
         'home',
         'header-text',
         undefined,
@@ -102,7 +102,7 @@ describe('Content Management System Provider', () => {
         );
 
         return done();
-      });
+      }).catch(done);
     });
   });
 });
