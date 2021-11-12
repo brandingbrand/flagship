@@ -84,7 +84,7 @@
     "coveralls": "^3.0.2",
     "husky": "^7.0.1",
     "jest": "^25.1.0",
-    "jetifier": "^1.6.4",
+    "jetifier": "^2.0.0",
     "lerna": "^3.18.5",
     "markdownlint-cli": "^0.29.0",
     "metro-react-native-babel-preset": "^0.59.0",
