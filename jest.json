@@ -1,18 +1,18 @@
 {
   "globals": {
     "ts-jest": {
-      "babelConfig": true,
-      "tsConfig": "tsconfig/tsconfig.jest.json"
+      "tsconfig": "tsconfig/tsconfig.jest.json",
+      "babelConfig": true
     }
   },
   "preset": "react-native",
   "moduleFileExtensions": [
-    "ts",
-    "tsx",
     "js",
-    "jsx",
     "json",
-    "node"
+    "jsx",
+    "node",
+    "ts",
+    "tsx"
   ],
   "moduleNameMapper": {
     "@brandingbrand/f(.*)": "<rootDir>/packages/f$1/src/index.ts"
