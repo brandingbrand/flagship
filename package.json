@@ -112,7 +112,8 @@
     "websocket-extensions": "^0.1.4",
     "react-dev-utils": "^11.0.0",
     "immer": "^9.0.6",
-    "prismjs": "^1.25.0"
+    "prismjs": "^1.25.0",
+    "trim-newlines": "^4.0.2"
   },
   "workspaces": [
     "packages/*"
