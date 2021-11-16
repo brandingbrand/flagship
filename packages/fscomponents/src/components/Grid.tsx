@@ -12,6 +12,7 @@ import {
   FlatList,
   FlatListProps,
   ListRenderItem,
+  ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleProp,
@@ -22,17 +23,25 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import { chunk } from 'lodash-es';
+import {
+  ChunkOptions,
+  getAbsoluteWidth,
+  GridItem,
+  InsertAfterTable,
+  InsertRowTable,
+  useGridChunks,
+  WidthTable
+} from '../hooks/grid-chunks.hook';
 
 const DEFAULT_COLUMNS = 2;
 const DEFAULT_MIN_COLUMNS = 175;
 const DEFAULT_BACK_TOP_BUTTON_SHOW_AT_HEIGHT = 100;
-const DEFAULT_KEY_EXTRACTOR = <ItemT extends { id?: string; key?: string }>(
+const DEFAULT_KEY_EXTRACTOR = <ItemT extends GridItem<{ id?: string; key?: string } | null>>(
   items: ItemT[],
   index: number
 ): string => {
   const key = items
-    .map((item: ItemT) => item?.key ?? item?.id)
+    .map(item => item.value?.key ?? item.value?.id)
     .filter(Boolean)
     .join();
 
@@ -80,12 +89,23 @@ export interface BackToTopComponentProps {
   backToTop: GridScrollToTopFunc;
 }
 
+export interface GridRenderItemInfo<ItemT> extends ListRenderItemInfo<ItemT> {
+  totalColumns: number;
+  columns: number;
+}
+
+export type GridRenderItem<ItemT> = (info: GridRenderItemInfo<ItemT>) => React.ReactElement | null;
+export type GridRow<ItemT> = GridItem<ItemT | null>[];
+
 export interface GridProps<ItemT>
   extends Pick<
     FlatListProps<ItemT>,
+    | 'accessible'
+    | 'accessibilityHint'
+    | 'accessibilityLabel'
+    | 'accessibilityRole'
     | 'style'
     | 'data'
-    | 'renderItem'
     | 'refreshing'
     | 'refreshControl'
     | 'onRefresh'
@@ -98,6 +118,21 @@ export interface GridProps<ItemT>
     | 'ListHeaderComponent'
     | 'ListHeaderComponentStyle'
   > {
+  /**
+   * Takes an item from data and renders it into the list. Typical usage:
+   * ```
+   * _renderItem = ({item}) => (
+   *   <TouchableOpacity onPress={() => this._onPress(item)}>
+   *     <Text>{item.title}</Text>
+   *   <TouchableOpacity/>
+   * );
+   * ...
+   * <FlatList data={[{title: 'Title Text', key: 'item1'}]} renderItem={this._renderItem} />
+   * ```
+   * Provides additional metadata like `index` if you need it.
+   */
+  renderItem: GridRenderItem<ItemT>;
+
   /**
    * The number of columns to display in the grid.
    * @deprecated to be removed in fs12, use numColumns instead
@@ -167,7 +202,7 @@ export interface GridProps<ItemT>
    * Props to pass to the underlying FlatList.
    * @deprecated to be removed in fs12
    */
-  listViewProps?: Partial<FlatListProps<ItemT[]>>;
+  listViewProps?: Partial<FlatListProps<GridRow<ItemT>>>;
 
   /**
    * Whether or not to show a separator between columns in the grid.
@@ -225,6 +260,16 @@ export interface GridProps<ItemT>
    * Defaults to 175
    */
   minColumnWidth?: number;
+
+  /**
+   * A map of index with the preferred columns of the item at that index.
+   */
+  columnWidthTable?: WidthTable;
+
+  insertRows?: InsertRowTable<ItemT>;
+  insertAfter?: InsertAfterTable<ItemT>;
+  insertEveryFrequency?: number;
+  insertEveryValues?: ItemT | GridItem<ItemT> | (ItemT | GridItem<ItemT>)[];
 }
 
 export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
@@ -237,6 +282,10 @@ export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
 // TODO: wSedlacek remove deprecated props in fs12
 export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
   const {
+    accessible,
+    accessibilityHint,
+    accessibilityLabel,
+    accessibilityRole,
     data,
     renderItem,
     BackToTopComponent,
@@ -247,8 +296,13 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     ListFooterComponentStyle,
     ListHeaderComponent,
     ListHeaderComponentStyle,
+    columnWidthTable,
     columnSeparatorStyle,
     gridContainerStyle,
+    insertRows,
+    insertAfter,
+    insertEveryFrequency,
+    insertEveryValues,
     minColumnWidth,
     numColumns,
     onEndReached,
@@ -274,7 +328,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     showRowSeparators
   } = props;
 
-  const listView = useRef<FlatList<ItemT[]>>(null);
+  const listView = useRef<FlatList<GridRow<ItemT>>>(null);
   const [width, setWidth] = useState<number | undefined>(() => {
     const containerWidth = StyleSheet.flatten([gridContainerStyle]).width;
     if (typeof containerWidth === 'number') {
@@ -306,13 +360,21 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     }
   }, [columns, numColumns, minColumnWidth, width]);
 
-  const chunkedData = useMemo(() => {
-    if (totalColumns === 0) {
-      return [];
-    }
-
-    return chunk(data, totalColumns);
-  }, [data, totalColumns]);
+  const chunkOptions = useMemo<ChunkOptions<ItemT, null>>(
+    () => ({
+      widthTable: columnWidthTable,
+      insertRows,
+      insertAfter,
+      insertEvery:
+        insertEveryFrequency && insertEveryValues
+          ? { frequency: insertEveryFrequency, values: insertEveryValues }
+          : undefined,
+      emptyValue: null
+    }),
+    [columnWidthTable, insertRows, insertAfter, insertEveryFrequency, insertEveryValues]
+  );
+  const chunkedData = useGridChunks(data ?? [], totalColumns, chunkOptions);
+  const chunkedArray = useMemo(() => Array.from(chunkedData), [chunkedData]);
 
   const handleBackToTop = useCallback(() => {
     listView.current?.scrollToOffset({ offset: 0 });
@@ -349,20 +411,30 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     ]
   );
 
-  const renderRow = useCallback<ListRenderItem<ItemT[]>>(
+  const renderRow = useCallback<ListRenderItem<GridRow<ItemT>>>(
     ({ index, item, separators }) => {
-      const showRowSeparator = chunkedData?.length > index + 1;
-      const columnWidth = Math.floor((100 / totalColumns) * 100) / 100;
+      const showRowSeparator = chunkedArray?.length > index + 1;
+      const columnWidth = (100 / totalColumns);
 
       return (
         <View style={gridStyle.row}>
           {item.map((item, index) => {
+            const columns = getAbsoluteWidth(item.width, totalColumns);
+            const widthPercent = Math.floor((columnWidth * columns) * 100) / 100;
             const showColumnSeparator = (index + 1) % totalColumns !== 0;
 
             return (
-              <View key={index} style={[gridStyle.item, { width: columnWidth + '%' }]}>
+              <View key={index} style={[gridStyle.item, { width: widthPercent + '%' }]}>
                 <View style={gridStyle.itemRow}>
-                  {renderItem && renderItem({ item, index, separators })}
+                  {item.value &&
+                    renderItem &&
+                    renderItem({
+                      item: item.value,
+                      index,
+                      separators,
+                      totalColumns,
+                      columns
+                    })}
                   {(showRowSeparators || rowSeparatorStyle) && showRowSeparator && (
                     <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
                   )}
@@ -377,7 +449,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
       );
     },
     [
-      chunkedData,
+      chunkedArray,
       totalColumns,
       renderItem,
       showRowSeparators,
@@ -387,11 +459,19 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     ]
   );
 
+  const rerenderTrigger = useMemo(() => {
+    return Symbol('This is used to mark a change that requires a rerender');
+  }, [listViewProps?.extraData, renderRow]);
+
   return (
     <View style={gridContainerStyle}>
       <FlatList
         ref={listView}
-        data={chunkedData}
+        accessible={accessible}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
+        data={chunkedArray}
         renderItem={renderRow}
         keyExtractor={DEFAULT_KEY_EXTRACTOR}
         ListEmptyComponent={ListEmptyComponent}
@@ -408,6 +488,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
         onEndReachedThreshold={onEndReachedThreshold}
         onLayout={onLayout}
         onContentSizeChange={setWidth}
+        extraData={rerenderTrigger}
         {...listViewProps}
       />
       {(showBackToTop || BackToTopComponent) && (

@@ -1,16 +1,26 @@
-import React, { createContext, FC, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, FC, useCallback, useEffect, useMemo } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { uniqueId } from 'lodash-es';
 
-export interface IButtonContext {
+import { InjectionToken } from '@brandingbrand/fslinker';
+
+import { InjectedContextProvider, useDependencyContext } from '../../lib/use-dependency';
+
+export interface ButtonService {
   onPress(buttonId: string, callback: () => void): () => void;
   onPress(buttonId: string, componentId: string, callback: () => void): () => void;
 }
 
-export const ButtonContext = createContext<IButtonContext>({
+const DEFAULT_BUTTON_SERVICE: ButtonService = {
   onPress: () => () => undefined
-});
-export const useButtons = () => useContext(ButtonContext);
+};
+
+export const ButtonContext = createContext<ButtonService>(DEFAULT_BUTTON_SERVICE);
+export const BUTTON_CONTEXT_TOKEN = new InjectionToken<typeof ButtonContext>(
+  'BUTTON_CONTEXT_TOKEN'
+);
+export const useButtons = () =>
+  useDependencyContext(BUTTON_CONTEXT_TOKEN) ?? DEFAULT_BUTTON_SERVICE;
 
 export const ButtonProvider: FC = ({ children }) => {
   const listenerRepo = useMemo(() => new Map<string, Map<string, () => void>>(), []);
@@ -31,7 +41,7 @@ export const ButtonProvider: FC = ({ children }) => {
       return () => {
         listeners?.delete(listenerId);
       };
-    }) as IButtonContext['onPress'],
+    }) as ButtonService['onPress'],
     []
   );
 
@@ -46,7 +56,11 @@ export const ButtonProvider: FC = ({ children }) => {
     return () => subscription.remove();
   }, []);
 
-  return <ButtonContext.Provider value={{ onPress }}>{children}</ButtonContext.Provider>;
+  return (
+    <InjectedContextProvider token={BUTTON_CONTEXT_TOKEN} value={{ onPress }}>
+      {children}
+    </InjectedContextProvider>
+  );
 };
 
 export const useButtonEffect = (

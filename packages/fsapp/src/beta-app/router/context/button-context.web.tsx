@@ -1,14 +1,22 @@
-import { createContext, Fragment, useContext } from 'react';
+import { createContext, Fragment } from 'react';
+import { InjectionToken } from '@brandingbrand/fslinker';
+import { useDependencyContext } from '../../lib/use-dependency';
 
-export interface IButtonContext {
+export interface ButtonService {
   onPress(buttonId: string, callback: () => void): () => void;
   onPress(buttonId: string, componentId: string, callback: () => void): () => void;
 }
 
-export const ButtonContext = createContext<IButtonContext>({
+const DEFAULT_BUTTON_SERVICE: ButtonService = {
   onPress: () => () => undefined
-});
-export const useButtons = () => useContext(ButtonContext);
+};
+
+export const ButtonContext = createContext<ButtonService>(DEFAULT_BUTTON_SERVICE);
+export const BUTTON_CONTEXT_TOKEN = new InjectionToken<typeof ButtonContext>(
+  'BUTTON_CONTEXT_TOKEN'
+);
+export const useButtons = () =>
+  useDependencyContext(BUTTON_CONTEXT_TOKEN) ?? DEFAULT_BUTTON_SERVICE;
 
 export const ButtonProvider = Fragment;
 

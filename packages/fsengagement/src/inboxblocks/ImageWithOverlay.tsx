@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dimensions,
@@ -12,6 +12,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { TextBlock } from './TextBlock';
+import { EngagementContext } from '../lib/contexts';
 export interface ImageBlockProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -31,7 +32,7 @@ export interface ImageBlockState {
   height?: number;
 }
 
-export default class ImageWithOverlay extends Component<ImageBlockProps, ImageBlockState> {
+class ImageWithOverlay extends Component<ImageBlockProps & { context: any }, ImageBlockState> {
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
@@ -105,7 +106,7 @@ export default class ImageWithOverlay extends Component<ImageBlockProps, ImageBl
     return result;
   }
   onPress = (link: string) => () => {
-    const { handleAction } = this.context;
+    const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
       value: link
@@ -232,3 +233,8 @@ export default class ImageWithOverlay extends Component<ImageBlockProps, ImageBl
     );
   }
 }
+
+export default (props: ImageBlockProps) => {
+  const context = useContext(EngagementContext);
+  return <ImageWithOverlay {...props} context={context} />;
+};

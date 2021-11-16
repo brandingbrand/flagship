@@ -1,0 +1,20 @@
+{
+  "name": "@brandingbrand/fslinker",
+  "sideEffects": false,
+  "version": "11.6.0",
+  "description": "Dependency Injection",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "tsc -p ./tsconfig.lib.json",
+    "tsc:watch": "tsc -p ./tsconfig.lib.json -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
+}

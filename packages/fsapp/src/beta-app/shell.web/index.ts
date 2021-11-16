@@ -1,4 +1,9 @@
-export { WebShellContext, WebShellProvider, useWebShell } from './shell.context';
+export {
+  WebShellContext,
+  WEB_SHELL_CONTEXT_TOKEN,
+  WebShellProvider,
+  useWebShell
+} from './shell.context';
 export { makeDrawer } from './make-drawer';
 export type {
   WebShell,

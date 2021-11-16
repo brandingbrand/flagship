@@ -83,8 +83,12 @@ export interface ProductIndex<T extends Product = Product> extends Partial<Pagea
    * An array of products comprising the index.
    */
   products: T[];
-
-
+  /**
+   * A human-readable title for the product index.
+   *
+   * @example 'Shoes'
+   */
+  title?: string;
   /**
    * A unique identifier for the product index category, used for vehicle filter
    *
