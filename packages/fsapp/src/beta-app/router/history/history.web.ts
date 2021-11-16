@@ -19,6 +19,7 @@ import { promisedEntries } from '../../utils';
 
 import { buildMatchers, matchRoute, resolveRoute, stringifyLocation } from './utils.web';
 import { createKey, Matchers } from './utils.base';
+import { INTERNAL, queueMethod } from './queue.decorator';
 
 export class History implements FSRouterHistory {
   private get nextLoad(): Promise<void> {
@@ -68,37 +69,45 @@ export class History implements FSRouterHistory {
   public open(path: string, state?: unknown): Promise<void>;
   public open(location: LocationDescriptor<unknown>): Promise<void>;
   @boundMethod
+  @queueMethod
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
     if (typeof to === 'string') {
-      return this.push(to, state);
+      return this.push(to, state, INTERNAL);
     } else {
-      return this.push(to);
+      return this.push(to, INTERNAL);
     }
   }
 
-  public push(path: string, state?: unknown): Promise<void>;
-  public push(location: LocationDescriptor): Promise<void>;
+  public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
+  public push(location: LocationDescriptor, _internal?: typeof INTERNAL): Promise<void>;
   @boundMethod
-  public async push(to: LocationDescriptor, state?: unknown): Promise<void> {
+  @queueMethod
+  public async push(
+    to: LocationDescriptor,
+    state?: unknown,
+    _internal?: typeof INTERNAL
+  ): Promise<void> {
     if (typeof to === 'string') {
       if (/^\w+:\/\//.exec(to)) {
         window.location.href = to;
       } else {
         this.browserHistory.push(to, state);
+        await this.nextLoad;
       }
     } else {
       if (to?.pathname && /^\w+:\/\//.exec(to.pathname)) {
         window.location.href = to.pathname;
       } else if (to) {
         this.browserHistory.push(to);
+        await this.nextLoad;
       }
     }
-    await this.nextLoad;
   }
 
   public replace(path: string, state?: unknown): Promise<void>;
   public replace(location: LocationDescriptor): Promise<void>;
   @boundMethod
+  @queueMethod
   public async replace(
     pathOrLocation: string | LocationDescriptor,
     state?: unknown
@@ -112,24 +121,28 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
+  @queueMethod
   public async go(n: number): Promise<void> {
     this.browserHistory.go(n);
     await this.nextLoad;
   }
 
   @boundMethod
+  @queueMethod
   public async pop(): Promise<void> {
     this.browserHistory.goBack();
     await this.nextLoad;
   }
 
   @boundMethod
+  @queueMethod
   public async goBack(): Promise<void> {
     this.browserHistory.goBack();
     await this.nextLoad;
   }
 
   @boundMethod
+  @queueMethod
   public async goForward(): Promise<void> {
     this.browserHistory.goForward();
     await this.nextLoad;
@@ -172,7 +185,8 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public updateTitle(title: RequiredTitle): void {
+  @queueMethod
+  public async updateTitle(title: RequiredTitle): Promise<void> {
     document.title = typeof title === 'string' ? title : title.text;
   }
 

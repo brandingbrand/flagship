@@ -197,5 +197,6 @@ export {
   stringifyLocation,
   buildMatchers,
   resolveRoute,
-  createKey
+  createKey,
+  normalizeLocationDescriptor
 } from './utils.base';

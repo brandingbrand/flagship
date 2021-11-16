@@ -3,6 +3,179 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Bug Fixes
+
+* **flagship:** stop forcing lowercasing when renaming packages ([e787037](https://github.com/brandingbrand/flagship/commit/e787037cb45eedb9d4e58930a009e4f0eddb490e)), closes [#1778](https://github.com/brandingbrand/flagship/issues/1778)
+* **fsapp:** only use tab affinity for open() ([f7fb0ce](https://github.com/brandingbrand/flagship/commit/f7fb0cefdfa4b746766509b64cd14442accbdfad))
+* **fslinker:** update global typing to support node 16 ([46e1ced](https://github.com/brandingbrand/flagship/commit/46e1ced3feafa58160aeafd2733393575238eff4))
+
+
+### Features
+
+* update tar version to fix security ([312edc0](https://github.com/brandingbrand/flagship/commit/312edc030001ff6e4852ba28acde6d97da575828))
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+
+### Features
+
+* **flagship:** add navigation patch to support ios 15 ([8fa5b50](https://github.com/brandingbrand/flagship/commit/8fa5b509d636aef4416e9fa1a471fca5279da35b))
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+
+### Features
+
+* target android api 30 and add aab support ([413b299](https://github.com/brandingbrand/flagship/commit/413b29909bfbd55a213d72279466dd069261bebc))
+
+
+### BREAKING CHANGES
+
+* This updates the Android base project to target API level 30. Per Google's documentation, app updates will no longer be accepted unless they target level 30 as of November 2021. As such, this is being included as a feature release instead of a new breaking version.
+
+This PR also introduces a new Fastlane lane to build Android App Bundles (AABs) called appcenter_bundle.
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+
+### Bug Fixes
+
+* context fix for engagement components ([8a27d27](https://github.com/brandingbrand/flagship/commit/8a27d27c97c8bce05a5c8a22180ef596a40bd98a))
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+
+### Features
+
+* add option to hide envs from switcher ([dfab35c](https://github.com/brandingbrand/flagship/commit/dfab35cdd1de27d3f5b5e5aa11d43374957b5390))
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+
+### Bug Fixes
+
+* bundle without jsx ([32affcc](https://github.com/brandingbrand/flagship/commit/32affcc20592999316898743492533655946702a))
+* deep link navigator and context issues ([0668b4f](https://github.com/brandingbrand/flagship/commit/0668b4faf9f5470a8830b04268def82438968aa5))
+
+
+### Features
+
+* **title:** no-ticket - added title to product index type ([9e4870b](https://github.com/brandingbrand/flagship/commit/9e4870bd16268f4f4eaa5e7688520cdd758189b2))
+* **title:** no-ticket - made title optional ([44e508b](https://github.com/brandingbrand/flagship/commit/44e508b149894a46c42c738636b31cdfa6265c51))
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **flagship:** deep linking on android ([24f0a39](https://github.com/brandingbrand/flagship/commit/24f0a3904e1745dcfd4082b6b3826cb6cbd637e0))
+* **fsapp:** initial navigation tab disappearing ([2be6344](https://github.com/brandingbrand/flagship/commit/2be6344463e0b579536c93ab42523df716cf7a50))
+* **fsapp:** platform agnostic timeout type ([43c1f99](https://github.com/brandingbrand/flagship/commit/43c1f99589491c8aa37b058022f5db937cad0bc6))
+* **fsapp:** route activation race condition ([aeb2ada](https://github.com/brandingbrand/flagship/commit/aeb2adabf2a08c10783d7a4e7374408bb57af2fb))
+* **fsapp:** timout navigations stuck for over 3 seconds ([f84977e](https://github.com/brandingbrand/flagship/commit/f84977e77acb24703be89e16a718e3104229a079))
+* issue with promises resolving before heard ([18d88be](https://github.com/brandingbrand/flagship/commit/18d88be7747a6757ffebc5c60180a35baed91e7a))
+
+
+### Features
+
+* **fsapp:** activation guards ([63a42b3](https://github.com/brandingbrand/flagship/commit/63a42b336704edabb01474491e0f454826b80908))
+* **fsapp:** associated domain linking ([cb85e54](https://github.com/brandingbrand/flagship/commit/cb85e54acff0dffd716441ce19bbcd30f8059e60))
+* **fsapp:** dynamic redirect ([c96bfca](https://github.com/brandingbrand/flagship/commit/c96bfca06406560003bbdefd4c8983b6a4b25121))
+* **fsapp:** get initial url ([7624600](https://github.com/brandingbrand/flagship/commit/76246002b8e0d66baff2b7c2c82f5e0ccc9798a8))
+* **fsengagement:** added renderBackButton prop ([49c9744](https://github.com/brandingbrand/flagship/commit/49c9744488527526e0d349dc995c5386cde89457))
+* **fslinker:** improved error messages ([bce072f](https://github.com/brandingbrand/flagship/commit/bce072ffcc0c7839f98cb19f6584df27aff04cbd))
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package bb-flagship
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+
+### Bug Fixes
+
+* **fsapp:** stuck blockers ([b35bb5a](https://github.com/brandingbrand/flagship/commit/b35bb5aec5d90fb1170cedbc046d4a703332c63c))
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fscomponents:** rerender when render changes ([8e6328d](https://github.com/brandingbrand/flagship/commit/8e6328d9d8b8418bc867954d89ac7392bfd835e8))
+* **fsweb:** babel warnings about private properties in object ([5b259f0](https://github.com/brandingbrand/flagship/commit/5b259f01842629a456f0d1dc2f68305b37514b0c))
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Bug Fixes
+
+* **fsapp:** default modal type ([85f51ec](https://github.com/brandingbrand/flagship/commit/85f51ec62096cb6466fb8155b42eada26f92090f))
+* stroy book configuration ([d1d2b1a](https://github.com/brandingbrand/flagship/commit/d1d2b1af0780f9a0860b88e8c7921d2add32de22))
+
+
+### Features
+
+* **fscomponents:** enhanced grid component ([c5015f5](https://github.com/brandingbrand/flagship/commit/c5015f55321ee3f58cf7c275c3ae25f3fd1e9d86))
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+
+### Bug Fixes
+
+* **fsapp:** navigator context ([4150056](https://github.com/brandingbrand/flagship/commit/41500564d4bee08543a7b90e8ee9d9d3f4e34a0e))
+
+
+
+
+
 ## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
 
 

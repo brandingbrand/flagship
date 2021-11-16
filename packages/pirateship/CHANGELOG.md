@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Features
+
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+
+### Features
+
+* target android api 30 and add aab support ([413b299](https://github.com/brandingbrand/flagship/commit/413b29909bfbd55a213d72279466dd069261bebc))
+
+
+### BREAKING CHANGES
+
+* This updates the Android base project to target API level 30. Per Google's documentation, app updates will no longer be accepted unless they target level 30 as of November 2021. As such, this is being included as a feature release instead of a new breaking version.
+
+This PR also introduces a new Fastlane lane to build Android App Bundles (AABs) called appcenter_bundle.
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+
+### Bug Fixes
+
+* bundle without jsx ([32affcc](https://github.com/brandingbrand/flagship/commit/32affcc20592999316898743492533655946702a))
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Features
+
+* **fscomponents:** enhanced grid component ([c5015f5](https://github.com/brandingbrand/flagship/commit/c5015f55321ee3f58cf7c275c3ae25f3fd1e9d86))
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+**Note:** Version bump only for package @brandingbrand/pirateship
+
+
+
+
+
 ## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
 
 **Note:** Version bump only for package @brandingbrand/pirateship
