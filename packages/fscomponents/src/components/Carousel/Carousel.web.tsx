@@ -1,10 +1,13 @@
+// tslint:disable no-submodule-imports
+
 import React, { Component } from 'react';
 
-// @ts-ignore TODO: Update react-id-swiper to support typing
-import Swiper from 'react-id-swiper';
-import 'swiper/css/swiper.css' // tslint:disable-line
+// TODO: Update react-id-swiper to support typing
+import ReactIdSwiper from 'react-id-swiper/lib/ReactIdSwiper.custom';
+import 'swiper/swiper-bundle.css'; // tslint:disable-line
 import { View } from 'react-native';
 import { CarouselProps } from './CarouselProps';
+import { Navigation, Pagination, Swiper } from 'swiper/swiper.esm';
 
 let SWIPER_ID = 0;
 
@@ -37,8 +40,10 @@ export class Carousel extends Component<CarouselProps> {
     return (
       <View style={style}>
         <div id={`web-swiper-${this.id}`}>
-          <Swiper
+          <ReactIdSwiper
             loop={loop}
+            Swiper={Swiper}
+            modules={[Navigation, Pagination]}
             pagination={_showsPagination ? {
               el: `.swiper-pagination`,
               clickable: true
@@ -52,7 +57,7 @@ export class Carousel extends Component<CarouselProps> {
                 </div>
               );
             })}
-          </Swiper>
+          </ReactIdSwiper>
         </div>
         {/* swiper library doesn't have style props that let use to
           style inner component like dots and pagination, it's expecting

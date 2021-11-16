@@ -7,6 +7,7 @@ module.exports = {
   ],
   rules: {
     'subject-case': [0],
+    'body-max-line-length': [0],
     // greenkeeper-lockfile doesn't support customization of commit messages and always uses the
     // commit message "chore(package)..."
     'scope-enum': ctx => getPackages(ctx).then(packages => [2, 'always', [

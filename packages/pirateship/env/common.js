@@ -31,6 +31,13 @@ module.exports = {
   apiHost: 'https://api.example.com',
   publicVersionNumber: '1.0.0',
   require: [],
+  appCenter: {
+    organization: 'branding-brand',
+    distribute: {
+      appNameIOS: 'test-ios',
+      appNameAndroid: 'test-android'
+    }
+  },
   appIds: {
     android: 'com.brandingbrand.reactnative.and.pirateship',
     ios: 'com.brandingbrand.reactnative.pirateship',
