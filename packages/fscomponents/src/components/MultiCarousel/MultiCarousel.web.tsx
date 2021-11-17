@@ -107,6 +107,8 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     hideScrollbar,
     itemStyle,
     itemsAreEqual,
+    autoplay = true,
+    autoplayTimeoutDuration = 5000,
     nextArrowContainerStyle,
     nextArrowStyle,
     nextArrowOnBlur,
@@ -124,6 +126,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   } = props;
 
   const scrollView = useRef<HTMLDivElement>(null);
+  const autoplayTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   const shouldAnimate = !!itemUpdated || !!itemsAreEqual;
   const [opacity] = useState(() => new Animated.Value(shouldAnimate ? 0 : 1));
@@ -137,7 +140,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const [prevData, setPrevData] = useState(data);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-
+  const [shouldPlay, setShouldPlay] = useState(true);
   const calculatedItemsPerPage = useMemo(() => {
     if (typeof itemsPerPage === 'number') {
       if (itemsPerPage <= 0) {
@@ -205,6 +208,13 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       scrollView.current.scrollTo({ left: 0 });
     }
   }, [scrollView.current, containerWidth]);
+
+  const stopCarouselLooping = () => {
+    if (autoplayTimeout.current) {
+      clearTimeout(autoplayTimeout.current);
+    }
+    setShouldPlay(false);
+  };
 
   useEffect(() => {
     const prevItem = prevData?.[currentIndex];
@@ -286,6 +296,43 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     await goTo(currentIndex, options);
   }, [goTo, currentIndex]);
 
+  const goToNextCancelCarousel = async () => {
+    stopCarouselLooping();
+    await goToNext();
+  };
+
+  const goToPrevCancelCarousel = async () => {
+    stopCarouselLooping();
+    await goToPrev();
+  };
+
+  useEffect(() => {
+    if (autoplay && numberOfPages > 0 && !animating && shouldPlay) {
+      autoplayTimeout.current = setTimeout(async () => {
+        const nextIndex = currentIndex + 1;
+        const options = {
+          animated: true
+        };
+        // Animation is hardcoded at 200ms; stop animation to avoid glitch.
+        if (autoplayTimeoutDuration >= 300) {
+          options.animated = false;
+        }
+
+        if (nextIndex < numberOfPages) {
+          await goToNext(options);
+        } else {
+          await goToPrev(options);
+        }
+      }, autoplayTimeoutDuration);
+      return () => {
+        if (autoplayTimeout.current) {
+          clearTimeout(autoplayTimeout.current);
+        }
+      };
+    }
+    return undefined;
+  }, [numberOfPages, currentIndex, autoplay, animating]);
+
   useEffect(() => {
     carouselController?.({
       goTo,
@@ -330,6 +377,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
   const handleMouseDown = useCallback(
     (e: MouseEvent) => {
+      stopCarouselLooping();
       handleStart(e.pageX);
     },
     [handleStart]
@@ -338,6 +386,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const handleTouchStart = useCallback(
     (e: TouchEvent) => {
       if (e.touches.length) {
+        stopCarouselLooping();
         handleStart(e.touches[0].pageX);
       }
     },
@@ -494,7 +543,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           accessibilityRole='button'
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
           style={[styles.goToPrev, prevArrowContainerStyle]}
-          onPress={goToPrev}
+          onPress={goToPrevCancelCarousel}
           onBlur={prevArrowOnBlur}
         >
           <View style={[styles.buttonPrevIcon, prevArrowStyle]} />
@@ -506,7 +555,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           accessibilityRole='button'
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
           style={[styles.goToNext, nextArrowContainerStyle]}
-          onPress={goToNext}
+          onPress={goToNextCancelCarousel}
           onBlur={nextArrowOnBlur}
         >
           <View style={[styles.buttonNextIcon, nextArrowStyle]} />
