@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** less than 300ms ([1b6642c](https://github.com/brandingbrand/flagship/commit/1b6642cd7b7fd086df901b64e87927c2de8bf589))
+
+
+### Features
+
+* **fscomponents:** Add Autoplay to Carousel ([bc1df18](https://github.com/brandingbrand/flagship/commit/bc1df183533f47fcf7b0ec3c6bc4493c27f4f8f2))
+
+
+
+
+
 # [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
 
 
