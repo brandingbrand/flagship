@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **flagship:** fix improperly escaped regex to build env ([458c08b](https://github.com/brandingbrand/flagship/commit/458c08bb660269c3b80613dbffea0c11fc3725a6))
+* **fsapp:** stuck router after external navigation ([e82c03c](https://github.com/brandingbrand/flagship/commit/e82c03c36988d5fe8b5dad76d4af01dff006d288))
+* **fscomponents:** Fix Safari Scroll Issue ([fefccd0](https://github.com/brandingbrand/flagship/commit/fefccd06c64fb19c9d20f703164fa659d9626c27))
+
+
+### Features
+
+* FS-2178 iOS config to add system and custom frameworks ([0303844](https://github.com/brandingbrand/flagship/commit/0303844105351b698db40b04643f29c7a04a3195))
+* remove react-native-text-input-mask and dependent components ([3329784](https://github.com/brandingbrand/flagship/commit/332978484492af7c37a7ab2c9aef070f7a4fbebb))
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 
