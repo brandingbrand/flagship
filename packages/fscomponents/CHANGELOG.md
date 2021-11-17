@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix Safari Scroll Issue (fefccd0)
+
+
+### Features
+
+* remove react-native-text-input-mask and dependent components (3329784)
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 
