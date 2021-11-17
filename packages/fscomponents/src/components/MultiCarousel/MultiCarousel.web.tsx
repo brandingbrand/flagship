@@ -107,7 +107,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     hideScrollbar,
     itemStyle,
     itemsAreEqual,
-    autoplay = true,
+    autoplay,
     autoplayTimeoutDuration = 5000,
     nextArrowContainerStyle,
     nextArrowStyle,
