@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/flagship",
   "sideEffects": false,
-  "version": "11.0.0",
+  "version": "11.7.0",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "flagship": "flagship.js"
   },
   "dependencies": {
-    "fs-extra": "^8.0.0",
+    "fs-extra": "^10.0.0",
     "glob": "^7.1.2",
     "jsc-android": "241213.x.x",
     "react": "^16.13.1",
@@ -23,7 +23,7 @@
     "yargs": "^15.0.1"
   },
   "devDependencies": {
-    "@brandingbrand/fsengage": "^11.0.0",
+    "@brandingbrand/fsengage": "^11.7.0",
     "@types/yargs": "^15.0.0",
     "true-case-path": "^2.0.0"
   },

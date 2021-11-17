@@ -8,7 +8,7 @@ import type {
   StackedLocation
 } from './types';
 
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
@@ -41,7 +41,7 @@ import {
   resolveRoute,
   stringifyLocation
 } from './utils.native';
-import { Matchers } from './utils.base';
+import { Matchers, normalizeLocationDescriptor } from './utils.base';
 import { ROOT_STACK } from './constants';
 
 export class History implements FSRouterHistory {
@@ -136,7 +136,8 @@ export class History implements FSRouterHistory {
   @boundMethod
   @queueMethod
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
-    const path = stringifyLocation(to);
+    const normalized = normalizeLocationDescriptor(to);
+    const path = stringifyLocation(normalized);
     const index = this.getPathIndexInHistory(path);
     const indexInStack = this.getPathIndexInStack(
       (await this.getStackAffinity(path)) ?? this.activeStack,
@@ -159,12 +160,11 @@ export class History implements FSRouterHistory {
     state?: unknown,
     _internal?: typeof INTERNAL
   ): Promise<void> {
-    if (typeof to === 'string' && /^\w+:\/\//.exec(to)) {
-      await Linking.openURL(to);
-    } else if (typeof to !== 'string' && to.pathname && /^\w+:\/\//.exec(to.pathname)) {
-      await Linking.openURL(to.pathname);
+    const normalized = normalizeLocationDescriptor(to);
+    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
     } else {
-      const newLocation = await this.getNextLocation(to, state);
+      const newLocation = await this.getNextLocation(normalized, state, _internal !== undefined);
       await this.updateLocation(newLocation, 'PUSH');
     }
   }
@@ -274,16 +274,40 @@ export class History implements FSRouterHistory {
     }
   }
 
-  private get nextLoad(): Promise<void> {
-    return new Promise(resolve => {
-      const remove = this.listen(() => {
-        // For whatever reason the Navigation
-        // is not ready for further navigations
-        // for a small delay
-        setTimeout(() => {
-          resolve();
-        }, 10);
-        remove();
+  private async waitForNextLoadOf(location: Location): Promise<void> {
+    if (this.location.pathname === location.pathname) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      let timeout: Parameters<typeof clearTimeout>[0] | undefined;
+      if (Platform.OS === 'ios') {
+        timeout = setTimeout(() => {
+          reject();
+        }, 3000);
+      }
+
+      const remove = this.listen(update => {
+        if (update.pathname === location.pathname) {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+
+          if (Platform.OS === 'ios') {
+            // For whatever reason the Navigation
+            // is not ready for further navigations
+            // for a small delay
+            setTimeout(() => {
+              resolve();
+              remove();
+            }, 10);
+          } else {
+            setTimeout(() => {
+              resolve();
+              remove();
+            });
+          }
+        }
       });
     });
   }
@@ -291,8 +315,10 @@ export class History implements FSRouterHistory {
   private observeNavigation(): void {
     Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
-      this.activeIndex = index;
-      this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      if (index !== -1) {
+        this.activeIndex = index;
+        this.lactationObservers.forEach(callback => callback(this.location, this.action));
+      }
     });
 
     Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex }) => {
@@ -325,15 +351,17 @@ export class History implements FSRouterHistory {
 
   private async getNextLocation(
     to: LocationDescriptor | StackedLocation,
-    state: unknown = null
+    state: unknown = null,
+    stackAffinity: boolean = false
   ): Promise<StackedLocation> {
     return Object.freeze({
       ...this.location,
       ...(typeof to === 'string' ? parsePath(to) : to),
-      stack:
-        (typeof to === 'object' && 'stack' in to
-          ? to.stack
-          : await this.getStackAffinity(stringifyLocation(to))) ?? this.activeStack,
+      stack: stackAffinity
+        ? (typeof to === 'object' && 'stack' in to
+            ? to.stack
+            : await this.getStackAffinity(stringifyLocation(to))) ?? this.activeStack
+        : this.activeStack,
       state,
       key: createKey()
     });
@@ -353,6 +381,7 @@ export class History implements FSRouterHistory {
       this.store.unshift();
     }
 
+    const nextLoad = this.waitForNextLoadOf(location);
     try {
       if (this.activeStack !== location.stack) {
         await this.switchStack(location.stack);
@@ -388,7 +417,7 @@ export class History implements FSRouterHistory {
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
-              await Navigation.push(this.stack?.id ?? ROOT_STACK, {
+              const options = {
                 component: {
                   name: matchingRoute.id,
                   id: location.key,
@@ -405,7 +434,13 @@ export class History implements FSRouterHistory {
                     }
                   }
                 }
-              });
+              };
+
+              if (Platform.OS === 'ios') {
+                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              } else {
+                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+              }
             }
           }
 
@@ -415,14 +450,24 @@ export class History implements FSRouterHistory {
             location.key &&
             (!this.location || stringifyLocation(this.location) !== stringifyLocation(location))
           ) {
-            await Navigation.popTo(location.key);
+            const indexInStack = this.getPathIndexInStack(
+              location.stack,
+              stringifyLocation(location)
+            );
+            this.stacks[location.stack].children.splice(indexInStack + 1);
+
+            if (Platform.OS === 'ios') {
+              void Navigation.popTo(location.key);
+            } else {
+              await Navigation.popTo(location.key);
+            }
           }
           break;
 
         default:
       }
+      await nextLoad;
     } finally {
-      await this.nextLoad;
       this.setLoading(false);
     }
   }

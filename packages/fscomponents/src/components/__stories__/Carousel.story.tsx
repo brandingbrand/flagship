@@ -36,7 +36,7 @@ const style = StyleSheet.create({
 
 const imageSlide = (
   <Image
-    source={{ uri: 'https://placehold.it/375x150' }}
+    source={{ uri: 'https://via.placeholder.com/375x150' }}
     style={object('slideImageStyle', style.slideImage)}
   />
 );

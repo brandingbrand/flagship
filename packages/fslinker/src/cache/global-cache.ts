@@ -8,15 +8,8 @@ import { InjectorCache, InMemoryCache } from './cache';
 const GLOBAL_CACHE_KEY = '__FLAGSHIP_LINKER_GLOBAL_CACHE__';
 
 declare global {
-  interface Window {
-    [GLOBAL_CACHE_KEY]: Map<string, unknown>;
-  }
-
-  namespace NodeJS {
-    interface Global {
-      [GLOBAL_CACHE_KEY]: Map<string, unknown>;
-    }
-  }
+  // tslint:disable-next-line: no-var-keyword
+  export var __FLAGSHIP_LINKER_GLOBAL_CACHE__: Map<string, unknown>;
 }
 
 export class GlobalInjectorCache extends InMemoryCache implements InjectorCache {
