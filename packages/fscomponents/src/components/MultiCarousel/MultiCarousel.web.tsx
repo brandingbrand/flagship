@@ -314,7 +314,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           animated: true
         };
         // Animation is hardcoded at 200ms; stop animation to avoid glitch.
-        if (autoplayTimeoutDuration >= 300) {
+        if (autoplayTimeoutDuration <= 300) {
           options.animated = false;
         }
 
