@@ -161,5 +161,13 @@ export interface MultiCarouselProps<ItemT>
    * A callback fired whenever the slide changes
    */
   onSlideChange?: (data: SlideChangeEvent) => void;
+  /**
+   * Boolean to determine rather the carousel should autoplay
+   */
+  autoplay?: boolean;
+  /**
+   * Number in miliseconds that defines the delay between transitions
+   */
+  autoplayTimeoutDuration?: number;
 }
 
