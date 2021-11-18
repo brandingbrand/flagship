@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fsapp:** stuck router after external navigation ([e82c03c](https://github.com/brandingbrand/flagship/commit/e82c03c36988d5fe8b5dad76d4af01dff006d288))
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 
