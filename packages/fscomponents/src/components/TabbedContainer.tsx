@@ -49,9 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = (
-  props
-) => {
+export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = props => {
   const [selectedIndex, setSelectedIndex] = useState<number>(
     props.initialIndex || 0
   );
