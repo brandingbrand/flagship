@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.17.1](https://github.com/brandingbrand/flagship/compare/v10.17.0...v10.17.1) (2021-11-18)
+
+
+### Bug Fixes
+
+* **fsengagement:** context fix for class components in v10 ([109c7b9](https://github.com/brandingbrand/flagship/commit/109c7b9dde0caaa70e1756e2a312bc3ea12a46c2))
+
+
+
+
+
 # [10.17.0](https://github.com/brandingbrand/flagship/compare/v10.16.0...v10.17.0) (2021-11-09)
 
 
