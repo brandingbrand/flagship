@@ -39,7 +39,7 @@
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/cli-platform-android": "^4.7.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
-    "jsc-android": "241213.x.x",
+    "jsc-android": "250230.x.x",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-cookies": "^3.3.0",
