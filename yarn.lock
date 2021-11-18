@@ -4872,18 +4872,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-touch-id/-/react-native-touch-id-4.0.1.tgz#f4c784281d3c53f3473078f292c30edc3dd7d525"
   integrity sha512-qHbSMjWCmcPp1b3wZ+uGK08pwKANmWMboxFYHS9vbXK2qZfXz1INemoHuuD7lo/rma7iJJoJFDtXdzVerfyXNQ==
 
-"@types/react-native-video@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-2.0.8.tgz#cbb9fe015f6573d2bd2aef2090803dde76fb8e4c"
-  integrity sha512-Dutf20ph/mxMNgt7TLSyN0v49SiG7YZH3WwU+SxoE8IGBbn/MhBqyfzU+09cbmZ1OG0nQg9rEJXNIowwQOVXLw==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
-"@types/react-native-video@^5.0.0":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.3.tgz#21aef3c087d498d75cb4631e8197d2b4b913170c"
-  integrity sha512-5GbhErfUvilPsZNaSCj6+fOM1UyBMN4QYi8Yb0E4tGzXdnGN4B9ILGe7tivys+EXUmgiWWcXlxQdpaDcKZzlqg==
+"@types/react-native-video@^5.0.0", "@types/react-native-video@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.10.tgz#bd1ecc6fade0b8d37dad711599144942af2e987d"
+  integrity sha512-PmF5h6Co0eM8NaPlQ/MHYeauP6fvroheb6dkAvQ+Lm5hbpCGxRxLNxhrTwG3vRaUd9guj9SpYlriWpY/5rBIJw==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -5857,7 +5849,7 @@ autobind-decorator@^2.4.0:
   resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-2.4.0.tgz#ea9e1c98708cf3b5b356f7cf9f10f265ff18239c"
   integrity sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==
 
-autoprefixer@^9.8.6:
+autoprefixer@^9.1.5, autoprefixer@^9.8.6:
   version "9.8.8"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.8.8.tgz#fd4bd4595385fa6f06599de749a4d5f7a474957a"
   integrity sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==

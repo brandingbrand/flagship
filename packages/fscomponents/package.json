@@ -44,7 +44,7 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "@types/react-native-video": "^2.0.8"
+    "@types/react-native-video": "^5.0.10"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
