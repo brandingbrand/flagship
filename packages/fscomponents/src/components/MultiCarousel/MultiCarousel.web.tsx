@@ -268,7 +268,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           .catch(e => {
             console.warn('animatedScrollTo error', e);
           })
-          .finally(() => setAnimating(false))
+          .finally(() => setAnimating(false));
         // Hacky fix for a hacky Safari release. This fixes a scroll issue
         // on iOS 14.
         setTimeout(() => {
