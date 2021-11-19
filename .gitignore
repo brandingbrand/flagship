@@ -80,3 +80,7 @@ packages/pirateship/env/env.js
 
 # Incremental Builds
 **/*.tsbuildinfo
+
+# Vim
+*.swp
+*.swo
