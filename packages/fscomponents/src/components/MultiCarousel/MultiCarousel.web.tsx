@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
   }
 });
 
+interface LoopDirectionState {
+  direction: 'forward' | 'backward';
+}
 // tslint:disable-next-line: cyclomatic-complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
@@ -141,6 +144,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const [shouldPlay, setShouldPlay] = useState(true);
+  const [loopDirection, setLoopDirection] = useState<LoopDirectionState>({direction: 'forward'});
   const calculatedItemsPerPage = useMemo(() => {
     if (typeof itemsPerPage === 'number') {
       if (itemsPerPage <= 0) {
@@ -308,8 +312,17 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
   useEffect(() => {
     if (autoplay && numberOfPages > 0 && !animating && shouldPlay) {
+      // currentIndex is zero based and numberOfPages is not,
+      // so we need to increment and decrement, respectively, by 1 to set
+      // the proper direction before the next function call.
+      if ((currentIndex + 1) === (numberOfPages - 1)) {
+        setLoopDirection({direction: 'backward'});
+      }
+
+      if (currentIndex === 1 && loopDirection.direction !== 'forward') {
+        setLoopDirection({direction: 'forward'});
+      }
       autoplayTimeout.current = setTimeout(async () => {
-        const nextIndex = currentIndex + 1;
         const options = {
           animated: true
         };
@@ -317,8 +330,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
         if (autoplayTimeoutDuration <= 300) {
           options.animated = false;
         }
-
-        if (nextIndex < numberOfPages) {
+        if (loopDirection.direction === 'forward') {
           await goToNext(options);
         } else {
           await goToPrev(options);
