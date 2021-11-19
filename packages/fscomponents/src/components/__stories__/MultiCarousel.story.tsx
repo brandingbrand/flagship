@@ -8,13 +8,31 @@ import {
   boolean, number, object
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import { ListRenderItem, StyleSheet } from 'react-native';
+import {
+  Image,
+  ListRenderItem,
+  StyleSheet
+} from 'react-native';
 
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,
   title: `Product ${i + 1}`,
   image: 'https://placehold.it/100x100'
 }));
+
+const imageItems = [...Array(3)].map((a, i) => ({
+  id: i,
+  title: '',
+  image: 'https://placehold.it/300x300'
+}));
+
+
+const imageStyle = StyleSheet.create({
+  styles: {
+    width: 300,
+    height: 300
+  }
+});
 
 const style = StyleSheet.create({
   imageStyle: {
@@ -45,6 +63,15 @@ const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
   );
 };
 
+const renderImage: ListRenderItem<typeof imageItems[number]> = ({ item }) => {
+  return (
+    <Image
+      source={{uri: item.image}}
+      style={imageStyle.styles}
+    />
+  );
+};
+
 // TODO: Update MultiCarousel to support prop switching
 storiesOf('MultiCarousel', module)
   .add('basic usage', () => (
@@ -52,6 +79,16 @@ storiesOf('MultiCarousel', module)
       data={productItems}
       renderItem={renderItem}
       itemsPerPage={number('itemsPerPage', 3)}
+      showArrow={boolean('arrow?', true)}
+    />
+  ))
+  .add('Image Carousel', () => (
+    <MultiCarousel
+      data={imageItems}
+      renderItem={renderImage}
+      itemsPerPage={number('itemsPerPage', 1)}
+      autoplay={true}
+      autoplayTimeoutDuration={1000}
       showArrow={boolean('arrow?', true)}
     />
   ));
