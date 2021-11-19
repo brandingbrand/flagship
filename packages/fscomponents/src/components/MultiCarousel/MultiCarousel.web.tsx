@@ -281,9 +281,13 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   );
 
   const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
-    const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
+    const nextIndex = currentIndex + 1 > numberOfPages - 1 ? 0 : currentIndex + 1;
+    const animationOptions =
+      nextIndex !== 0 &&
+      options &&
+      'animated' in options ? options : {animated: false};
 
-    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
+    await goTo(nextIndex, animationOptions);
   }, [goTo, currentIndex, numberOfPages]);
 
   const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
@@ -309,7 +313,6 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   useEffect(() => {
     if (autoplay && numberOfPages > 0 && !animating && shouldPlay) {
       autoplayTimeout.current = setTimeout(async () => {
-        const nextIndex = currentIndex + 1;
         const options = {
           animated: true
         };
@@ -317,12 +320,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
         if (autoplayTimeoutDuration <= 300) {
           options.animated = false;
         }
-
-        if (nextIndex < numberOfPages) {
-          await goToNext(options);
-        } else {
-          await goToPrev(options);
-        }
+        await goToNext(options);
       }, autoplayTimeoutDuration);
       return () => {
         if (autoplayTimeout.current) {
