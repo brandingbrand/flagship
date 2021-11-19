@@ -281,12 +281,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
   const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
     const nextIndex = currentIndex + 1 > numberOfPages - 1 ? 0 : currentIndex + 1;
-    const animationOptions =
-      nextIndex !== 0 &&
-      options &&
-      'animated' in options ? options : {animated: true};
-
-    await goTo(nextIndex, animationOptions);
+    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
   }, [goTo, currentIndex, numberOfPages]);
 
   const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
