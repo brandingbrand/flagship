@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+
+### Bug Fixes
+
+* linting ([9a2d863](https://github.com/brandingbrand/flagship/commit/9a2d8638db2ee1a3adf96c9b5fd1adb6474d200d))
+* re-enables animation for scroll to 0 ([f20f707](https://github.com/brandingbrand/flagship/commit/f20f707cc2317ec0b01ebe82c16ebbd086fc51d3))
+* removes unneccesary logic from autoscroll reset ([dba9e84](https://github.com/brandingbrand/flagship/commit/dba9e841ddfe598056e02cb5dd69a6f7b7b0e729))
+* snaps carousel back to first image when autoscrolling and reaches the end ([8411bd2](https://github.com/brandingbrand/flagship/commit/8411bd259df6dd21472a8863e66b8c9f4aeef272))
+
+
+
+
+
 # [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
 
 
