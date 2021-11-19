@@ -88,13 +88,23 @@ storiesOf('MultiCarousel', module)
       showArrow={boolean('arrow?', true)}
     />
   ))
-  .add('Image Carousel', () => (
+  .add('Image Carousel Autoplay', () => (
     <MultiCarousel
       data={imageItems}
       renderItem={renderImage}
       itemsPerPage={number('itemsPerPage', 1)}
       autoplay={true}
-      autoplayTimeoutDuration={3000}
+      autoplayTimeoutDuration={1000}
+      showArrow={boolean('arrow?', true)}
+    />
+  ))
+  .add('Image Carousel No Autoplay', () => (
+    <MultiCarousel
+      data={imageItems}
+      renderItem={renderImage}
+      itemsPerPage={number('itemsPerPage', 1)}
+      autoplay={false}
+      autoplayTimeoutDuration={1000}
       showArrow={boolean('arrow?', true)}
     />
   ));
