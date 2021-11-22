@@ -1,8 +1,3 @@
-import { Decimal } from 'decimal.js';
-export interface CurrencyValue {
-  value: Decimal;
-  currencyCode: string;
-}
 
 export * from './types/Address';
 export * from './types/ApplicablePayment';
@@ -11,6 +6,7 @@ export * from './types/Cart';
 export * from './types/CartQuery';
 export * from './types/Category';
 export * from './types/CategoryQuery';
+export * from './types/CurrencyValue'
 export * from './types/CustomerAccount';
 export * from './types/CustomerAddress';
 export * from './types/CustomerInfoOptions';
