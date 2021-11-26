@@ -1,10 +1,6 @@
 import { CreateWebStyles } from '../utils';
 
 export const styles = CreateWebStyles({
-  screenContainer: {
-    flex: 1,
-    flexBasis: 'auto'
-  },
   devNoteContainer: {
     position: 'fixed',
     bottom: 0,
