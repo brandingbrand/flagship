@@ -189,15 +189,15 @@ export class FSRouter extends FSRouterBase {
     return (
       <NavigatorProvider value={this.history}>
         <ModalProvider>
-          <VersionOverlay>
-            <WebShellProvider {...this.options.shell}>
+          <WebShellProvider {...this.options.shell}>
+            <VersionOverlay>
               <Router history={this.history}>
                 <Switch>
                   {this.routes.map(route => this.constructScreen(route, loading, routeDetails))}
                 </Switch>
               </Router>
-            </WebShellProvider>
-          </VersionOverlay>
+            </VersionOverlay>
+          </WebShellProvider>
         </ModalProvider>
       </NavigatorProvider>
     );

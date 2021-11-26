@@ -1,7 +1,7 @@
 import type { DrawerComponentType, ShellConfig, WebShell } from './types';
 
 import React, { createContext, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 
 import { InjectionToken } from '@brandingbrand/fslinker';
 
@@ -43,25 +43,23 @@ const styles = CreateWebStyles({
     overflowX: 'hidden'
   },
   appDrawerDefault: {
-    flex: 1,
+    flexGrow: 1,
     flexBasis: 'auto'
   },
   container: {
     width: '100%',
-    flex: 1,
+    flexGrow: 1,
     flexBasis: 'auto',
     transitionProperty: 'margin-left'
   },
   containerOverlay: {
     backgroundColor: 'black',
     opacity: 0,
-    position: 'fixed',
-    height: '100%',
-    width: 0,
+    position: 'absolute',
     transitionProperty: 'opacity'
   },
   containerOverlayActive: {
-    width: '100%'
+    inset: 0
   }
 });
 
@@ -128,8 +126,8 @@ export const WebShellProvider: FC<ShellConfig> = ({
       <View
         style={[styles.appDrawerDefault, (activateLeft || activateRight) && styles.appDrawerOpen]}
       >
-        <ScrollView
-          contentContainerStyle={[
+        <View
+          style={[
             styles.container,
             leftDrawerOpen && LeftDrawer?.options?.slideShell && { marginLeft: leftWidth },
             rightDrawerOpen &&
@@ -160,7 +158,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
               ]}
             />
           </TouchableWithoutFeedback>
-        </ScrollView>
+        </View>
 
         {LeftDrawer && (
           <DrawerContainer
