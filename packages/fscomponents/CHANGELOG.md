@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+
+### Bug Fixes
+
+* linting ([9a2d863](https://github.com/brandingbrand/flagship/commit/9a2d8638db2ee1a3adf96c9b5fd1adb6474d200d))
+* re-enables animation for scroll to 0 ([f20f707](https://github.com/brandingbrand/flagship/commit/f20f707cc2317ec0b01ebe82c16ebbd086fc51d3))
+* removes unneccesary logic from autoscroll reset ([dba9e84](https://github.com/brandingbrand/flagship/commit/dba9e841ddfe598056e02cb5dd69a6f7b7b0e729))
+* snaps carousel back to first image when autoscrolling and reaches the end ([8411bd2](https://github.com/brandingbrand/flagship/commit/8411bd259df6dd21472a8863e66b8c9f4aeef272))
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** less than 300ms ([1b6642c](https://github.com/brandingbrand/flagship/commit/1b6642cd7b7fd086df901b64e87927c2de8bf589))
+
+
+### Features
+
+* **fscomponents:** Add Autoplay to Carousel ([bc1df18](https://github.com/brandingbrand/flagship/commit/bc1df183533f47fcf7b0ec3c6bc4493c27f4f8f2))
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix Safari Scroll Issue ([fefccd0](https://github.com/brandingbrand/flagship/commit/fefccd06c64fb19c9d20f703164fa659d9626c27))
+
+
+### Features
+
+* remove react-native-text-input-mask and dependent components ([3329784](https://github.com/brandingbrand/flagship/commit/332978484492af7c37a7ab2c9aef070f7a4fbebb))
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 

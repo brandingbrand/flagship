@@ -495,3 +495,28 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
     `@"${env}"; // [EnvSwitcher initialEnvName]`
   );
 }
+
+/**
+ * Adds iOS system and custom frameworks to project
+ * @param {object} configuration The project configuration.
+ */
+export function frameworks(configuration: Config): void {
+  const projectPath = path.ios.pbxprojFilePath(configuration);
+  const project = xcode.project(projectPath);
+  project.parseSync();
+
+  configuration.ios?.frameworks?.forEach(obj => {
+    const { framework, frameworkPath } = obj;
+    if (frameworkPath) {
+      const source = path.resolve(path.project.path(), frameworkPath, framework);
+      const destination = path.resolve(path.project.path(), 'ios', framework);
+      fs.copySync(source, destination);
+
+      project.addFramework(destination, { customFramework: true });
+    } else {
+      project.addFramework(framework, {});
+    }
+  });
+
+  fs.writeFileSync(projectPath, project.writeSync());
+}
