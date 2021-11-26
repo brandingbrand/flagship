@@ -23,7 +23,7 @@
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-geocoder": "^0.5.0",
-    "react-native-maps": "^0.26.0",
+    "react-native-maps": "^0.29.4",
     "react-native-open-settings": "^1.0.1",
     "react-native-permissions": "^2.2.0"
   },
