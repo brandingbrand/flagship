@@ -3,6 +3,249 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+
+### Bug Fixes
+
+* linting ([9a2d863](https://github.com/brandingbrand/flagship/commit/9a2d8638db2ee1a3adf96c9b5fd1adb6474d200d))
+* re-enables animation for scroll to 0 ([f20f707](https://github.com/brandingbrand/flagship/commit/f20f707cc2317ec0b01ebe82c16ebbd086fc51d3))
+* removes unneccesary logic from autoscroll reset ([dba9e84](https://github.com/brandingbrand/flagship/commit/dba9e841ddfe598056e02cb5dd69a6f7b7b0e729))
+* snaps carousel back to first image when autoscrolling and reaches the end ([8411bd2](https://github.com/brandingbrand/flagship/commit/8411bd259df6dd21472a8863e66b8c9f4aeef272))
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** less than 300ms ([1b6642c](https://github.com/brandingbrand/flagship/commit/1b6642cd7b7fd086df901b64e87927c2de8bf589))
+
+
+### Features
+
+* **fscomponents:** Add Autoplay to Carousel ([bc1df18](https://github.com/brandingbrand/flagship/commit/bc1df183533f47fcf7b0ec3c6bc4493c27f4f8f2))
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix Safari Scroll Issue ([fefccd0](https://github.com/brandingbrand/flagship/commit/fefccd06c64fb19c9d20f703164fa659d9626c27))
+
+
+### Features
+
+* remove react-native-text-input-mask and dependent components ([3329784](https://github.com/brandingbrand/flagship/commit/332978484492af7c37a7ab2c9aef070f7a4fbebb))
+
+
+
+
+
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Features
+
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fscomponents:** rerender when render changes ([8e6328d](https://github.com/brandingbrand/flagship/commit/8e6328d9d8b8418bc867954d89ac7392bfd835e8))
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+
+### Features
+
+* **fscomponents:** enhanced grid component ([c5015f5](https://github.com/brandingbrand/flagship/commit/c5015f55321ee3f58cf7c275c3ae25f3fd1e9d86))
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
+
+
+### Features
+
+* **fscomponents:** expose some accessibility props ([0a5202e](https://github.com/brandingbrand/flagship/commit/0a5202e8d9faea1b2424ad66aa84b8d35414b1c6))
+
+
+
+
+
+## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.9...v11.0.1-alpha.10) (2021-08-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.8...v11.0.1-alpha.9) (2021-07-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+
+### Bug Fixes
+
+* **fscomponents:** prevent crashing when `itemsPerPage` is invalid ([fe8be36](https://github.com/brandingbrand/flagship/commit/fe8be365f4916eb15316043fd6e13f8bcd516673))
+
+
+
+
+
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* **fscomponents:** multicarousel linting errors ([fcc0a54](https://github.com/brandingbrand/flagship/commit/fcc0a545d42bcd07cd05d7d690533dc652a18976))
+* **fscomponents:** proper size on items per page ([63ec025](https://github.com/brandingbrand/flagship/commit/63ec02572c7951d4626b02f61c50aa5a19c5ea91))
+
+
+* fix(fscomponents)!: update zoom carousel with MultiCarousel updates ([92d71ca](https://github.com/brandingbrand/flagship/commit/92d71caff4361a55c814a40329300dc42a1441f3))
+* refactor(fscomponents)!: multi carousel fs11 update ([98b951d](https://github.com/brandingbrand/flagship/commit/98b951dfdb3bacd148d71ebf699174e638442159))
+* refactor(fscomponents)!: modernize grid component ([f361367](https://github.com/brandingbrand/flagship/commit/f361367ba43497963ad8ab9a5b1ae9032b6fde28))
+
+
+### Features
+
+* **fscomponents:** dynamic carousel pages ([4706801](https://github.com/brandingbrand/flagship/commit/47068016ce56e11b91481c84e492368eb89e79ac))
+* **fscomponents:** dynamic grid columns ([cdba9b8](https://github.com/brandingbrand/flagship/commit/cdba9b8d14c30738cbb8e681ca2b8e8398e7c67c))
+
+
+### BREAKING CHANGES
+
+* `MultiCarousel` no longer has `ref`, use `carouselController` instead
+* Deprecates a few `MultiCarouselProps` props and removes a few that were unused.
+* Deprecated several props in <Grid />
+
+
+
+
+
+## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
 ## [11.0.1-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.4...v11.0.1-alpha.5) (2021-07-12)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

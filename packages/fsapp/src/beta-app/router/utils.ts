@@ -1,6 +1,8 @@
 import type { Analytics } from '@brandingbrand/fsengage';
 import type {
   ActivatedRoute,
+  ActivatorConstructor,
+  ActivatorFunction,
   ComponentRoute,
   ExternalRoute,
   InternalRouterConfig,
@@ -16,10 +18,24 @@ export const resolveRoutes = async ({
   routes,
   externalRoutes: externalRoutesFactory
 }: RouterConfig & InternalRouterConfig) => {
-  const externalRoutes =
-    (await (typeof externalRoutesFactory === 'function'
-      ? externalRoutesFactory(api)
-      : externalRoutesFactory)) ?? [];
+  const externalRoutes = await (async () => {
+    try {
+      if (typeof externalRoutesFactory === 'function') {
+        return await externalRoutesFactory(api);
+      }
+
+      return await externalRoutesFactory ?? [];
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.warn(`Failed to load external routes with the following error ${e.message}`);
+      } else {
+        console.warn('Failed to load external routes');
+      }
+
+      return [];
+    }
+  })();
+
 
   const normalizePath = (route: Route | RouteCollection) => (
     'initialPath' in route ? route.initialPath : route.path
@@ -128,4 +144,24 @@ export const getPath = (url: string) => {
   return schema.includes('http')
     ? `/${domainAndPath.join('/').split('/').slice(1).join('/') ?? ''}`
     : `/${domainAndPath.join('/') ?? ''}`;
+};
+
+export const guardRoute = async (
+  route: Route,
+  routeInfo: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+) => {
+  if (!route.canActivate) {
+    return true;
+  }
+
+  const isClass = (
+    classOrFunction: ActivatorConstructor | ActivatorFunction
+  ): classOrFunction is ActivatorConstructor =>
+    classOrFunction.prototype && 'activate' in classOrFunction.prototype;
+
+  if (isClass(route.canActivate)) {
+    return new route.canActivate(routeInfo).activate();
+  } else {
+    return route.canActivate(routeInfo);
+  }
 };

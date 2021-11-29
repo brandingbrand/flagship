@@ -3,6 +3,220 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **flagship:** fix improperly escaped regex to build env ([458c08b](https://github.com/brandingbrand/flagship/commit/458c08bb660269c3b80613dbffea0c11fc3725a6))
+
+
+### Features
+
+* FS-2178 iOS config to add system and custom frameworks ([0303844](https://github.com/brandingbrand/flagship/commit/0303844105351b698db40b04643f29c7a04a3195))
+
+
+
+
+
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Bug Fixes
+
+* **flagship:** stop forcing lowercasing when renaming packages ([e787037](https://github.com/brandingbrand/flagship/commit/e787037cb45eedb9d4e58930a009e4f0eddb490e)), closes [#1778](https://github.com/brandingbrand/flagship/issues/1778)
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+
+### Features
+
+* **flagship:** add navigation patch to support ios 15 ([8fa5b50](https://github.com/brandingbrand/flagship/commit/8fa5b509d636aef4416e9fa1a471fca5279da35b))
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+
+### Features
+
+* target android api 30 and add aab support ([413b299](https://github.com/brandingbrand/flagship/commit/413b29909bfbd55a213d72279466dd069261bebc))
+
+
+### BREAKING CHANGES
+
+* This updates the Android base project to target API level 30. Per Google's documentation, app updates will no longer be accepted unless they target level 30 as of November 2021. As such, this is being included as a feature release instead of a new breaking version.
+
+This PR also introduces a new Fastlane lane to build Android App Bundles (AABs) called appcenter_bundle.
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+
+### Features
+
+* add option to hide envs from switcher ([dfab35c](https://github.com/brandingbrand/flagship/commit/dfab35cdd1de27d3f5b5e5aa11d43374957b5390))
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **flagship:** deep linking on android ([24f0a39](https://github.com/brandingbrand/flagship/commit/24f0a3904e1745dcfd4082b6b3826cb6cbd637e0))
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.15](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.14...v11.0.1-alpha.15) (2021-08-27)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.14](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.13...v11.0.1-alpha.14) (2021-08-25)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.13](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.12...v11.0.1-alpha.13) (2021-08-19)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.12](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.11...v11.0.1-alpha.12) (2021-08-16)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.11](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.10...v11.0.1-alpha.11) (2021-08-09)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.10](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.9...v11.0.1-alpha.10) (2021-08-03)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.9](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.8...v11.0.1-alpha.9) (2021-07-27)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.8](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.7...v11.0.1-alpha.8) (2021-07-21)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.7](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.6...v11.0.1-alpha.7) (2021-07-20)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.0.1-alpha.6](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.5...v11.0.1-alpha.6) (2021-07-13)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
 ## [11.0.1-alpha.5](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.4...v11.0.1-alpha.5) (2021-07-12)
 
 **Note:** Version bump only for package @brandingbrand/flagship

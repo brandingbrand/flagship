@@ -1,10 +1,10 @@
-<p align="center">
+<h1 align="center">
   <a href="https://brandingbrand.github.io/flagship/">
     <img alt="Flagship"
-      src="https://user-images.githubusercontent.com/556070/39432976-bd8520f4-4c62-11e8-863b-fe7ee694a4a0.png"
-      height="250">
+      src="https://user-images.githubusercontent.com/2915629/127563134-be64905e-d429-446d-9a53-a657c9613f6f.png"
+      height="100">
   </a>
-</p>
+</h1>
 
 <p align="center">
   A tool for building your best shopping app

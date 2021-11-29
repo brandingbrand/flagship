@@ -13,13 +13,19 @@ import type {
   Tab
 } from '../types';
 
-import { createPath, LocationDescriptor, parsePath } from 'history';
+import { createPath, LocationDescriptor, LocationDescriptorObject, parsePath } from 'history';
 import { parse } from 'qs';
 
 import pathToRegexp, { Key } from 'path-to-regexp';
 
+import { env } from '../../env';
 import { buildPath } from '../../utils';
+import { guardRoute } from '../utils';
 import { fromPairs } from 'lodash-es';
+
+export const createKey = () => {
+  return Math.random().toString(36).substr(2, 8);
+};
 
 export const stringifyLocation = (location: LocationDescriptor) => {
   return typeof location === 'string' ? location : createPath(location);
@@ -161,18 +167,63 @@ export const matchRoute = async (
   const { search } = parsePath(path);
   for (const [matcher, route] of await matchers) {
     const matched = matcher(path);
-    if (matched && 'redirect' in route) {
-      return matchRoute(matchers, `/${route.redirect}`);
-    }
-    if (matched && 'id' in route) {
-      return {
-        ...route,
+
+
+    if (matched) {
+      const routeInfo = {
         params: matched.params,
         query: parse(search.substr(1)),
-        matchedPath: path
+        path
       };
+      if (await guardRoute(route, routeInfo)) {
+        if ('redirect' in route) {
+          const redirect =
+            typeof route.redirect === 'string'
+              ? route.redirect
+              : route.redirect(routeInfo);
+          return matchRoute(matchers, `/${redirect}`);
+        }
+        if ('id' in route) {
+          return {
+            ...route,
+            params: matched.params,
+            query: parse(search.substr(1)),
+            matchedPath: path
+          };
+        }
+      }
     }
   }
 
   return;
 };
+
+export const normalizeLocationDescriptor = (
+  to: LocationDescriptor<unknown>
+): LocationDescriptorObject<unknown> => {
+  if (typeof to === 'string') {
+    return normalizeLocationDescriptor(parsePath(to));
+  }
+
+  let pathname = to.pathname;
+
+  for (const url of env?.associatedDomains ?? []) {
+    const regex = new RegExp(`^(https?:\\/\\/)?${url}`);
+    pathname = pathname?.replace(regex, '');
+  }
+
+  if (typeof env?.urlScheme === 'string') {
+    const regex = new RegExp(`^${env.urlScheme}:\\/\\/`);
+    pathname = pathname?.replace(regex, '/');
+  }
+
+  if (pathname === '') {
+    pathname = '/';
+  }
+
+  return {
+    ...to,
+    pathname
+  };
+};
+

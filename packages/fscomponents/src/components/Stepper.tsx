@@ -5,19 +5,21 @@ import {
   ImageStyle,
   StyleProp,
   Text,
+  TextInput,
   TextStyle,
   TouchableOpacity,
   View,
   ViewStyle
 } from 'react-native';
-// @ts-ignore TODO: Update react-native-masked-text to support typing
-import { TextInputMask } from 'react-native-masked-text';
+
 import { style as S } from '../styles/Stepper';
 
 const icons: {[key: string]: ImageSourcePropType} = {
   increase: require('../../assets/images/increaseImage.png'),
   decrease: require('../../assets/images/decreaseImage.png')
 };
+
+const nonNumericRegex = /\D/g;
 
 export interface SerializableStepperProps {
   format?: 'horizontalCenter' | 'horizontalLeft' | 'vertical';
@@ -264,11 +266,10 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     }
     if (this.props.editable) {
       return (
-        <TextInputMask
+        <TextInput
           keyboardType={'phone-pad'}
           onChangeText={this.onTextChange}
           style={counterStyle}
-          type='only-numbers'
           value={counterText}
         />
       );
@@ -282,6 +283,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
   }
 
   private onTextChange = (text: string) => {
+    text = text.replace(nonNumericRegex, '');
     let value = parseInt(text, 10);
     if (!isNaN(value)) {
       if (this.props.countUpperLimit && value > this.props.countUpperLimit) {

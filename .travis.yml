@@ -20,6 +20,7 @@ jobs:
     node_js: '12'
     script:
       - yarn prepare || travis_terminate 1
+      - yarn ship:init-web # needed to populate project_env_index for fsapp (depended upon by some components)
       - yarn prepare:fscodestyle || travis_terminate 1
       - yarn lint || travis_terminate 1
       - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
@@ -81,11 +82,14 @@ jobs:
     language: objective-c
     os: osx
     osx_image: xcode12
+    before_script:
+      - yarn prepare
+      - pod repo update
+      - yarn ship:init
     script:
-    - yarn prepare
-    - pod repo update
-    - yarn ship:init
-    - yarn ship:compile-ios
+      - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
+      - yarn ship:compile-ios
+      - kill %1
   - stage: canary
     git:
       depth: false
