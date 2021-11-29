@@ -2,6 +2,8 @@ cache: yarn
 stages:
   - name: test
     if: type = pull_request AND tag IS blank
+  - name: canary
+    if: type = push AND branch = DONOTRUN AND tag IS blank # disable auto-publish -BW
   - name: deploy
     if: branch = master AND head_branch IS blank
 install:
@@ -18,6 +20,7 @@ jobs:
     node_js: '12'
     script:
       - yarn prepare || travis_terminate 1
+      - yarn ship:init-web # needed to populate project_env_index for fsapp (depended upon by some components)
       - yarn prepare:fscodestyle || travis_terminate 1
       - yarn lint || travis_terminate 1
       - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
@@ -79,11 +82,25 @@ jobs:
     language: objective-c
     os: osx
     osx_image: xcode12
+    before_script:
+      - yarn prepare
+      - pod repo update
+      - yarn ship:init
     script:
-    - yarn prepare
-    - pod repo update
-    - yarn ship:init
-    - yarn ship:compile-ios
+      - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
+      - yarn ship:compile-ios
+      - kill %1
+  - stage: canary
+    git:
+      depth: false
+    before_install:
+      - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+      - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
+      - git checkout develop
+    before_script:
+      - yarn global add typescript@4.0.3
+    script:
+      - lerna publish --dist-tag=canary --allow-branch=develop --yes
   - stage: deploy
     git:
       depth: false

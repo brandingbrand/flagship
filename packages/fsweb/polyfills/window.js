@@ -12,3 +12,5 @@ export const screen = {
   width: 1024,
   height: 1024
 }
+
+export const RegExp = () => {};

@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
   Dimensions,
-  StyleProp,
   StyleSheet,
-  TextStyle,
   TouchableOpacity,
   View
 } from 'react-native';
 import WebView from 'react-native-webview';
 import VideoPlayer, { VideoProperties } from 'react-native-video';
 import * as _ from 'lodash-es';
+import { CardContext } from '../lib/contexts';
 
 export interface VideoSource {
   src: string;
@@ -24,12 +22,8 @@ export interface VideoBlockProps {
   style?: any;
   muted?: VideoProperties['muted'];
   fullscreen?: boolean;
-  containerStyle?: StyleProp<TextStyle>;
-}
-
-export interface StateType {
-  videoPaused: boolean;
-  facebookSrc: string;
+  containerStyle?: any;
+  outerContainerStyle?: any;
 }
 
 const styles = StyleSheet.create({
@@ -62,73 +56,89 @@ const styles = StyleSheet.create({
 
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
-export default class VideoBlock extends Component<VideoBlockProps, StateType> {
-  static contextTypes: any = {
-    isCard: PropTypes.bool
-  };
-  player: any | null = null;
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      videoPaused: false,
-      facebookSrc: ''
-    };
-  }
+export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
+  const [videoPaused, setVideoPaused] = useState(false);
+  const { isCard } = React.useContext(CardContext);
 
-  renderVideo = (src: string, size: any) => {
-    if (~src.indexOf('youtube://') || ~src.indexOf('facebook://')) {
-      const type = ~src.indexOf('youtube://') ? 'youtube' : 'facebook';
-      return this.renderSocial(src, size, type);
-    } else if (~src.indexOf('http://') || ~src.indexOf('https://')) {
-      return this.renderHttp(src, size);
+  let player: any | null = null;
+
+  const {
+    source,
+    style = {},
+    containerStyle,
+    outerContainerStyle
+  } = props;
+
+  if (!source) {
+    return <View />;
+  }
+  const height = style.height || 200;
+  const width = DEFAULT_WIDTH;
+
+  const blockStyle = _.cloneDeep(style);
+  blockStyle.width = width;
+
+  const onFullscreenPlayerWillDismiss = () => {
+    if (props.fullscreen) {
+      setVideoPaused(true);
     }
-    return false;
-  }
+  };
+  const fullScreenPlayerDidPresent = () => {
+    if (props.fullscreen) {
+      setVideoPaused(false);
+    }
+  };
+  const toggleVideo = () => {
+    if (props.fullscreen) {
+      player.presentFullscreenPlayer();
+    } else {
+      setVideoPaused(!videoPaused);
+    }
+  };
 
-  renderSocial = (src: string, { width, height }: any, type: string) => {
+  const renderSocial = (src: string, { width, height }: any, type: string) => {
     const socialID = src.replace(`${type}://`, '');
     const iframeUri = type === 'youtube' ?
       `https://www.youtube.com/embed/${socialID}` :
       `https://www.facebook.com/video/embed?video_id=${socialID}`;
 
     return <WebView style={{ flex: 1 }} source={{ uri: iframeUri }} />;
-  }
+  };
 
-  checkAutoPlay = (autoPlay: boolean) => () => {
-    this.setState({ videoPaused: !autoPlay });
-  }
+  const checkAutoPlay = (autoPlay: boolean) => () => {
+    setVideoPaused(!autoPlay);
+  };
 
-  renderHttp = (src: string, { width, height }: any) => {
+  const renderHttp = (src: string, { width, height }: any) => {
     const {
       resizeMode = 'cover',
       autoPlay = false,
       repeat = false,
       muted = false
-    } = this.props;
-    const { isCard } = this.context;
+    } = props;
 
     return (
       <View>
         <VideoPlayer
           resizeMode={resizeMode}
           ref={ref => {
-            this.player = ref;
+            player = ref;
           }}
           repeat={repeat}
           muted={muted}
-          onLoad={this.checkAutoPlay(autoPlay)}
-          onFullscreenPlayerDidPresent={this.fullScreenPlayerDidPresent}
-          onFullscreenPlayerWillDismiss={this.onFullscreenPlayerWillDismiss}
+          onLoad={checkAutoPlay(autoPlay)}
+          onFullscreenPlayerDidPresent={fullScreenPlayerDidPresent}
+          onFullscreenPlayerWillDismiss={onFullscreenPlayerWillDismiss}
           source={{ uri: src }}
-          paused={this.state.videoPaused}
+          paused={videoPaused}
           style={{ width, height }}
         />
         {!isCard && (
         <TouchableOpacity
-          onPress={this.toggleVideo}
+          onPress={toggleVideo}
           style={[styles.VideoButton, { width, height }]}
         >
-          {this.state.videoPaused && (
+          {videoPaused && (
             <View style={styles.VideoButtonWrapper}>
               <View style={styles.VideoButtonInner} />
             </View>
@@ -137,56 +147,62 @@ export default class VideoBlock extends Component<VideoBlockProps, StateType> {
         )}
       </View>
     );
-  }
-  onFullscreenPlayerWillDismiss = () => {
-    if (this.props.fullscreen) {
-      this.setState({
-        videoPaused: true
-      });
+  };
+
+  const renderVideo = (src: string, size: any) => {
+    if (~src.indexOf('youtube://') || ~src.indexOf('facebook://')) {
+      const type = ~src.indexOf('youtube://') ? 'youtube' : 'facebook';
+      return renderSocial(src, size, type);
+    } else if (~src.indexOf('http://') || ~src.indexOf('https://')) {
+      return renderHttp(src, size);
+    }
+    return false;
+  };
+
+  // tslint:disable cyclomatic-complexity
+  if (containerStyle) {
+    if (containerStyle.paddingLeft) {
+      blockStyle.width = blockStyle.width - +containerStyle.paddingLeft;
+    }
+    if (containerStyle.marginLeft) {
+      blockStyle.width = blockStyle.width - +containerStyle.marginLeft;
+    }
+    if (containerStyle.paddingRight) {
+      blockStyle.width = blockStyle.width - +containerStyle.paddingRight;
+    }
+    if (containerStyle.marginRight) {
+      blockStyle.width = blockStyle.width - +containerStyle.marginRight;
     }
   }
-  fullScreenPlayerDidPresent = () => {
-    if (this.props.fullscreen) {
-      this.setState({
-        videoPaused: false
-      });
+  if (outerContainerStyle) {
+    if (outerContainerStyle.paddingLeft) {
+      blockStyle.width = blockStyle.width - outerContainerStyle.paddingLeft;
     }
-  }
-  toggleVideo = () => {
-    if (this.props.fullscreen) {
-      this.player.presentFullscreenPlayer();
-    } else {
-      this.setState({
-        videoPaused: !this.state.videoPaused
-      });
+    if (outerContainerStyle.marginLeft) {
+      blockStyle.width = blockStyle.width - outerContainerStyle.marginLeft;
+    }
+    if (outerContainerStyle.paddingRight) {
+      blockStyle.width = blockStyle.width - outerContainerStyle.paddingRight;
+    }
+    if (outerContainerStyle.marginRight) {
+      blockStyle.width = blockStyle.width - outerContainerStyle.marginRight;
     }
   }
 
-  render(): JSX.Element {
-    const {
-      source,
-      style = {},
-      containerStyle
-    } = this.props;
-
-    if (!source) {
-      return <View />;
-    }
-    let height = style.height || 200;
-    const width = DEFAULT_WIDTH;
-
-    if (source.ratio) {
-      height = width / source.ratio;
-    }
-
-    const blockStyle = _.cloneDeep(style);
+  if (source && source.ratio) {
+    blockStyle.height = blockStyle.width / source.ratio;
+  } else {
     blockStyle.height = height;
-    blockStyle.width = width;
-
-    return (
-      <View style={[containerStyle, blockStyle]}>
-        {height > 0 ? this.renderVideo(source.src, { width, height }) : null}
-      </View>
-    );
   }
-}
+
+  return (
+    <View style={containerStyle}>
+      <View style={blockStyle}>
+      {height > 0 ? renderVideo(source.src.replace(/ /g, '%20'), {
+        width: blockStyle.width,
+        height: blockStyle.height
+      }) : null}
+      </View>
+    </View>
+  );
+});

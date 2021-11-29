@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "00:00"
+    timezone: America/New_York
+  open-pull-requests-limit: 20
+  ignore:
+  - dependency-name: "@babel/core"
+  - dependency-name: "@babel/runtime"
+  - dependency-name: "@react-native-community/cli-platform-android"
+  - dependency-name: "@react-native-community/cli-platform-ios"
+  - dependency-name: "@types/react"
+  - dependency-name: "@types/react-dom"
+  - dependency-name: "@types/react-native"
+  - dependency-name: "metro-react-native-babel-preset"
+  - dependency-name: "react"
+  - dependency-name: "react-dom"
+  - dependency-name: "react-native"
+  - dependency-name: "react-native-navigation"
+  - dependency-name: "react-native-web"
+  - dependency-name: "typescript"
+  commit-message:
+    prefix: chore

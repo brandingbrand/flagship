@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { ListRenderItem, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import {
   MultiCarousel,
   ProductItem,
@@ -57,18 +57,14 @@ export interface PSProductCarouselProps {
   items: ProductItemProps[];
 }
 
-export default class PSProductCarousel extends Component<
-  PSProductCarouselProps
-  > {
+export default class PSProductCarousel extends Component<PSProductCarouselProps> {
   render(): JSX.Element {
     return (
       <MultiCarousel
-        brandStyle={styles.brandText}
-        buttonProps={{ palette }}
         itemsPerPage={2}
         peekSize={50}
         style={[styles.container, this.props.style]}
-        items={this.props.items}
+        data={this.props.items}
         pageIndicatorStyle={styles.pageIndicator}
         dotStyle={styles.dotStyle}
         renderItem={this.renderItem}
@@ -76,7 +72,7 @@ export default class PSProductCarousel extends Component<
     );
   }
 
-  renderItem = (item: ProductItemProps) => {
+  renderItem: ListRenderItem<ProductItemProps> = ({ item }) => {
     return (
       <View style={styles.item}>
         <ProductItem

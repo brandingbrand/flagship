@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Dimensions,
-  Image,
   ImageURISource,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from 'react-native';
 
 
 const { width: viewportWidth } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  imageContainerNoCard: {
-    flex: 1,
-    backgroundColor: 'white'
-  },
-  image: {
-    resizeMode: 'cover',
-    ...StyleSheet.absoluteFillObject
-  }
-});
+import RenderImageTextItem from '../carousel/RenderImageTextItem';
 
 const sliderWidth = viewportWidth;
-let renderItemWidth: number = 0;
-const { height: viewportHeight } = Dimensions.get('window');
 
 export interface GridItem {
   link: string;
@@ -37,7 +21,9 @@ export interface GridItem {
   text: any;
 }
 
-
+export interface ImageGridState {
+  tallestTextHeight: number;
+}
 export interface ImageGridProps {
   link: string;
   ratio?: string;
@@ -45,71 +31,82 @@ export interface ImageGridProps {
   source: ImageURISource;
   size: any;
   text: any;
-  textStyle: any;
+  headerStyle?: any;
+  cardContainerStyle?: ViewStyle;
+  textStyle?: any;
+  eyebrowStyle?: any;
   items: GridItem[];
   options: any;
   containerStyle?: any;
 }
 
 export default class ImageGrid
-  extends Component<ImageGridProps> {
-
-  static contextTypes: any = {
-    handleAction: PropTypes.func
-  };
+  extends Component<ImageGridProps, ImageGridState> {
 
   constructor(props: ImageGridProps) {
     super(props);
+    this.state = {
+      tallestTextHeight: 0
+    };
   }
-
+  shouldComponentUpdate(nextProps: ImageGridProps, nextState: ImageGridState): boolean {
+    return this.props.containerStyle !== nextProps.containerStyle ||
+      this.props.items !== nextProps.items ||
+      this.props.ratio !== nextProps.ratio ||
+      this.props.options !== nextProps.options ||
+      this.props.resizeMode !== nextProps.resizeMode ||
+      this.props.source !== nextProps.source ||
+      this.props.headerStyle !== nextProps.headerStyle ||
+      this.props.textStyle !== nextProps.textStyle ||
+      this.props.eyebrowStyle !== nextProps.eyebrowStyle ||
+      this.state.tallestTextHeight !== nextState.tallestTextHeight;
+  }
   wp(percentage: any): any {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
   }
-
   _renderItem(item: any, index: number): JSX.Element {
-    const { ratio, source, text } = item;
-    const { options } = this.props;
-    const even = (index + 1) % 2 === 0;
-
-    const itemWidth = renderItemWidth;
+    const { options, eyebrowStyle, headerStyle, textStyle } = this.props;
+    const { numColumns = 2 } = options;
+    const totalItemWidth =
+      this.calculateGridWidth() - (options.spaceBetweenHorizontal * (numColumns - 1));
+    const itemWidth = Math.round(totalItemWidth / numColumns);
     const spaceBetweenHorizontal = options.spaceBetweenHorizontal;
     const spaceBetweenVertical = options.spaceBetweenVertical;
 
-    let itemStyle;
-
-    if (ratio && itemWidth) {
-      itemStyle = {
-        width: even ? itemWidth - 1 : itemWidth,
-        height: (itemWidth / parseFloat(ratio)) + (text && 30 || 0),
-        paddingHorizontal: 0,
-        marginLeft: even ? spaceBetweenHorizontal : 0,
-        marginBottom: spaceBetweenVertical
-      };
-    } else {
-      itemStyle = {
-        width: itemWidth,
-        height: viewportHeight * 0.36
-      };
-    }
-
     return (
-      <TouchableOpacity
+      <RenderImageTextItem
+        data={item}
         key={index}
-        style={itemStyle}
-        onPress={this.onGridPress(item.link)}
-      >
-        <View style={styles.imageContainerNoCard}>
-          <Image
-            style={styles.image}
-            source={source}
-            resizeMode={'cover'}
-          />
-        </View>
-        {text &&
-          <Text style={[{ height: 30, marginTop: 7 }, this.props.textStyle]}>{text.value}</Text>}
-      </TouchableOpacity>
+        itemWidth={itemWidth}
+        numColumns={numColumns}
+        totalItemWidth={totalItemWidth}
+        verticalSpacing={spaceBetweenVertical}
+        horizPadding={spaceBetweenHorizontal}
+        options={options}
+        eyebrowStyle={eyebrowStyle}
+        headerStyle={headerStyle}
+        textStyle={textStyle}
+        grid={true}
+        noMargin={(index + 1) % numColumns === 0}
+        even={(index + 1) % 2 === 0}
+      />
     );
+  }
+
+  parentCardStyles(): number {
+    const {
+      cardContainerStyle
+    } = this.props;
+
+    if (!cardContainerStyle) {
+      return 0;
+    }
+    const ml = +(cardContainerStyle.marginLeft || 0);
+    const mr = +(cardContainerStyle.marginRight || 0);
+    const pr = +(cardContainerStyle.paddingRight || 0);
+    const pl = +(cardContainerStyle.paddingLeft || 0);
+    return ml + mr + pr + pl;
   }
 
   horizontalMarginPadding(): number {
@@ -123,20 +120,11 @@ export default class ImageGrid
     return ml + mr + pr + pl;
   }
 
-  calculateSliderWidth(): number {
-    return sliderWidth - this.horizontalMarginPadding();
-  }
-
-  calculateItemWidth(): number {
-    const {
-      options
-    } = this.props;
-    const slideWidth = this.wp(50);
-    return slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding() / 2);
+  calculateGridWidth(): number {
+    return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
 
   createGrid(): JSX.Element {
-    renderItemWidth = this.calculateItemWidth();
     return (
       <View
         style={{
@@ -152,19 +140,13 @@ export default class ImageGrid
     );
   }
 
-  onGridPress = (link: string) => () => {
-    const { handleAction } = this.context;
-    handleAction({
-      type: 'deep-link',
-      value: link
-    });
-  }
-
   render(): JSX.Element {
-
+    const {
+      containerStyle
+    } = this.props;
     const grid = this.createGrid();
     return (
-      <View>
+      <View style={containerStyle}>
         {grid}
       </View>
     );

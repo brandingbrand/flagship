@@ -69,8 +69,18 @@ dist/
 # Documentation build directories
 docs/
 
+# Flagship build directories
+**/xcuserdata/
+
 # Pirateship build directories
 packages/pirateship/android
 packages/pirateship/ios
 packages/pirateship/web
 packages/pirateship/env/env.js
+
+# Incremental Builds
+**/*.tsbuildinfo
+
+# Vim
+*.swp
+*.swo
