@@ -181,9 +181,13 @@ export class History implements FSRouterHistory {
   @queueMethod
   public async pop(): Promise<void> {
     const stack = this.stack?.children ?? [];
+    const previousStack = stack[stack.length - 2];
+    if (!previousStack) {
+      return;
+    }
     const newLocation = {
       stack: this.activeStack,
-      ...stack[stack.length - 2]
+      ...previousStack
     };
 
     await this.updateLocation(newLocation, 'POP');
