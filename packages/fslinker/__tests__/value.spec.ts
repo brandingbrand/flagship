@@ -89,4 +89,15 @@ describe('injected value', () => {
     const value = injector.get(token);
     expect(value).toBeUndefined();
   });
+
+  it('should denote if a value is included in the injector', () => {
+    const token = new InjectionToken<number>('NUMBER_TOKEN');
+
+    const beforeInjected = injector.has(token);
+    injector.provide({ provide: token, useValue: 9 });
+    const afterInjected = injector.has(token);
+
+    expect(beforeInjected).toBe(false);
+    expect(afterInjected).toBe(true);
+  });
 });
