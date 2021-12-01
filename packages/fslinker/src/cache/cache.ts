@@ -34,6 +34,7 @@ export class InMemoryCache {
 
     if (this.providers.has(token.key)) {
       throw new TypeError(
+        // tslint:disable-next-line: ter-max-len
         `${InMemoryCache.name}: Duplicate provider, token ${token.key.toString()} is already provided.
 If you are a developer seeing this message there can be a few causes:
 - You have explicitly reused the same token when providing dependencies
