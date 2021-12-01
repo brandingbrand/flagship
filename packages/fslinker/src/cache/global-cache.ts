@@ -7,17 +7,16 @@ import { InjectorCache, InMemoryCache } from './cache';
 // as such a unique symbol would not be suitable.
 const GLOBAL_CACHE_KEY = Symbol.for('__FLAGSHIP_LINKER_GLOBAL_CACHE__');
 
-declare global {
-  interface Window {
-    [GLOBAL_CACHE_KEY]: Map<symbol, unknown>;
-  }
-
-  namespace NodeJS {
-    interface Global {
-      [GLOBAL_CACHE_KEY]: Map<symbol, unknown>;
-    }
-  }
+interface GlobalObject {
+  readonly [GLOBAL_CACHE_KEY]: Map<symbol, unknown>;
 }
+
+type Writable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
+const isGlobal = (object: unknown): object is Writable<GlobalObject> =>
+  typeof object === 'object' && object !== null;
 
 export class GlobalInjectorCache extends InMemoryCache implements InjectorCache {
   public static get<T>(token: InjectionToken<T>): T | undefined {
@@ -45,7 +44,7 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
   constructor() {
     const globalObject = typeof global !== undefined ? global : window;
 
-    if (globalObject === undefined) {
+    if (!isGlobal(globalObject)) {
       throw new ReferenceError(
         `${GlobalInjectorCache.name}: Unsupported environment, the global object could not be found`
       );
