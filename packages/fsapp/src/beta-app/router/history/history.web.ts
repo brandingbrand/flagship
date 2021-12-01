@@ -13,12 +13,12 @@ import {
   TransitionPromptHook,
   UnregisterCallback
 } from 'history';
-import { cloneDeep, uniqueId } from 'lodash-es';
+import { uniqueId } from 'lodash-es';
 
 import { promisedEntries } from '../../utils';
 
 import { buildMatchers, matchRoute, resolveRoute, stringifyLocation } from './utils.web';
-import { Matchers } from './utils.base';
+import { createKey, Matchers } from './utils.base';
 import { INTERNAL, queueMethod } from './queue.decorator';
 
 export class History implements FSRouterHistory {
@@ -51,7 +51,13 @@ export class History implements FSRouterHistory {
 
   private _action: Action = this.browserHistory.action;
 
-  private _location: Location = Object.freeze(cloneDeep(this.browserHistory.location));
+  private _location: Location = Object.freeze({
+    pathname: '__SPLASH__',
+    hash: '',
+    search: '',
+    state: {},
+    key: createKey()
+  });
   constructor(private readonly routes: Routes) {
     this.initialNavigation()
       .then(() => {

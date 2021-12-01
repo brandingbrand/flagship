@@ -79,12 +79,12 @@
     "@types/redux-logger": "^3.0.6",
     "@types/url-parse": "^1.4.1",
     "babel-jest": "^27.3.1",
-    "babel-loader": "~8.0.6",
+    "babel-loader": "~8.2.3",
     "core-js": "^3.0.0",
     "coveralls": "^3.0.2",
     "husky": "^7.0.1",
     "jest": "^27.3.1",
-    "jetifier": "^1.6.4",
+    "jetifier": "^2.0.0",
     "lerna": "^3.18.5",
     "markdownlint-cli": "^0.29.0",
     "metro-react-native-babel-preset": "^0.59.0",
@@ -115,7 +115,9 @@
     "prismjs": "^1.25.0",
     "trim-newlines": "^4.0.2",
     "glob-parent": "^6.0.2",
-    "trim": "^1.0.1"
+    "trim": "^1.0.1",
+    "browserslist": "^4.18.1",
+    "json-schema": "^0.4.0"
   },
   "workspaces": [
     "packages/*"
