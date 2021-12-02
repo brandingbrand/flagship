@@ -8,7 +8,7 @@ import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit
 import { TabbedContainer } from '../TabbedContainer';
 import {
   number
-// tslint:disable-next-line no-implicit-dependencies
+  // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
@@ -31,30 +31,31 @@ const styles = StyleSheet.create({
   }
 });
 
-storiesOf('TabbedContainer', module)
-  .add('basic usage', () => {
-    const tabs = [...Array(number('itemsCount', 2))].map((x, i) => ({
-      tab: (
-        <View style={styles.tab}>
-          <Text style={styles.tabText}>{`Tab ${i + 1}`}</Text>
+storiesOf('TabbedContainer', module).add('basic usage', () => {
+  const displaySwitchedTab = (index: number) => {
+    console.log(index);
+  };
+
+  const tabs = [...Array(number('itemsCount', 2))].map((x, i) => ({
+    tab: (
+      <View style={styles.tab}>
+        <Text style={styles.tabText}>{`Tab ${i + 1}`}</Text>
+      </View>
+    ),
+    activeTab: (
+      <View style={[styles.tab, styles.activeTab]}>
+        <Text style={[styles.tabText, styles.activeTabText]}>{`Tab ${
+          i + 1
+        }`}</Text>
+      </View>
+    ),
+    renderContent: () => {
+      return (
+        <View style={styles.content}>
+          <Text>{`Tab ${i + 1} Content`}</Text>
         </View>
-      ),
-      activeTab: (
-        <View style={[styles.tab, styles.activeTab]}>
-          <Text style={[styles.tabText, styles.activeTabText]}>{`Tab ${i + 1}`}</Text>
-        </View>
-      ),
-      renderContent: () => {
-        return (
-          <View style={styles.content}>
-            <Text>{`Tab ${i + 1} Content`}</Text>
-          </View>
-        );
-      }
-    }));
-    return (
-      <TabbedContainer
-        tabs={tabs}
-      />
-    );
-  });
+      );
+    }
+  }));
+  return <TabbedContainer tabs={tabs} onTabSwitch={displaySwitchedTab} />;
+});
