@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* return if out of range (423211b)
+* **fsapp:** nested scrolling causing unpainted divs (a25bf30)
+* FS-2842 react-native-sensitive-info namespacing (dc6bf0e)
+* FS-2842 sInfoOptions optional parameter (9b0a611)
+* **fsapp:** web location initialization (49c51c7)
+
+
+
+
+
 ## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
 
 **Note:** Version bump only for package @brandingbrand/fsapp

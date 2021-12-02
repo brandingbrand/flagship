@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **fslinker:** node 16 compatible global sybmol (5e0d288)
+* **fslinker:** test naming (f567cb3)
+
+
+### Features
+
+* **fslinker:** expose has method (3c29605)
+
+
+
+
+
 ## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
 
 **Note:** Version bump only for package @brandingbrand/fslinker
