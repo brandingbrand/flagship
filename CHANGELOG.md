@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **fslinker:** node 16 compatible global sybmol ([5e0d288](https://github.com/brandingbrand/flagship/commit/5e0d288188abf27fc7eba5bf9fd2dd829e94168f))
+* return if out of range ([423211b](https://github.com/brandingbrand/flagship/commit/423211bdf6f5baed8c01b7214400b072e76c9efa))
+* **fsapp:** nested scrolling causing unpainted divs ([a25bf30](https://github.com/brandingbrand/flagship/commit/a25bf30a63c87f468f0d69494a735785a9e90193))
+* exported currency value from it's own type file instead of index ([6cf02be](https://github.com/brandingbrand/flagship/commit/6cf02bee091623a342a516aaf31c02a94503f3e5))
+* FS-2842 react-native-sensitive-info namespacing ([dc6bf0e](https://github.com/brandingbrand/flagship/commit/dc6bf0efc4952ad6ce3fe6c3693f9e2578778bae))
+* FS-2842 sInfoOptions optional parameter ([9b0a611](https://github.com/brandingbrand/flagship/commit/9b0a6113c3bb2ccef64f1b3fbbcc2064ca95308e))
+* **fsapp:** web location initialization ([49c51c7](https://github.com/brandingbrand/flagship/commit/49c51c7cfe04358b8edcf1b22100b25bca8e178d))
+* **fslinker:** test naming ([f567cb3](https://github.com/brandingbrand/flagship/commit/f567cb37bb6b1c1eda697c83225332d7fbccaac8))
+
+
+### Features
+
+* **fscomponents:** adds function prop to TabbedContainer ([09c9579](https://github.com/brandingbrand/flagship/commit/09c95795742315f0e4ed7bef63fc4776059c39de))
+* **fslinker:** expose has method ([3c29605](https://github.com/brandingbrand/flagship/commit/3c2960536ca9da72eddba56b476091c8f010e236))
+
+
+
+
+
 ## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
 
 
