@@ -3,6 +3,111 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+
+### Bug Fixes
+
+* context fix for engagement components ([8a27d27](https://github.com/brandingbrand/flagship/commit/8a27d27c97c8bce05a5c8a22180ef596a40bd98a))
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+
+### Bug Fixes
+
+* deep link navigator and context issues ([0668b4f](https://github.com/brandingbrand/flagship/commit/0668b4faf9f5470a8830b04268def82438968aa5))
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Features
+
+* **fsengagement:** added renderBackButton prop ([49c9744](https://github.com/brandingbrand/flagship/commit/49c9744488527526e0d349dc995c5386cde89457))
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
+## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fsengagement
+
+
+
+
+
 ## [11.0.1-alpha.16](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.15...v11.0.1-alpha.16) (2021-09-01)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement

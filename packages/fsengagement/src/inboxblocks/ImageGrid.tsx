@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Dimensions,
   ImageURISource,
@@ -44,9 +43,6 @@ export interface ImageGridProps {
 export default class ImageGrid
   extends Component<ImageGridProps, ImageGridState> {
 
-  static contextTypes: any = {
-    handleAction: PropTypes.func
-  };
   constructor(props: ImageGridProps) {
     super(props);
     this.state = {
@@ -142,14 +138,6 @@ export default class ImageGrid
         })}
       </View>
     );
-  }
-
-  onGridPress = (link: string) => () => {
-    const { handleAction } = this.context;
-    handleAction({
-      type: 'deep-link',
-      value: link
-    });
   }
 
   render(): JSX.Element {

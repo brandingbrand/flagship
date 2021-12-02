@@ -35,6 +35,7 @@ export interface AppConfig<
       : undefined
     : undefined;
   readonly sInfoOptions?: RNSensitiveInfoOptions;
+  readonly getInitialURL?: () => Promise<string | null>;
 }
 
 export interface IApp {

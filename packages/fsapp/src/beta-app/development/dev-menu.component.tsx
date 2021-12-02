@@ -7,6 +7,7 @@ import type { LayoutComponent } from 'react-native-navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { omit } from 'lodash-es';
 
 import { envs } from '../env';
 import { makeModal } from '../modal';
@@ -18,6 +19,13 @@ import type { IApp } from '../app/types';
 import CodePushDevMenu from './code-push.component';
 import StorageManager from './storage-manager.component';
 import { TouchableRow } from './touchable-row.component';
+
+const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
+const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
+
+const envsToDisplay: {
+  [key: string]: string;
+} = omit(envs, hiddenEnvs);
 
 const styles = StyleSheet.create({
   devViewContainer: {
@@ -174,7 +182,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
 
     return (
       <View style={styles.configView}>
-        {Object.keys(envs).map((env, i) => (
+        {Object.keys(envsToDisplay).map((env, i) => (
           <TouchableRow key={env} onPress={updateSelectedEnv(env)}>
             {`${env} ${currentEnv === env ? '[active]' : ''}`}
           </TouchableRow>
