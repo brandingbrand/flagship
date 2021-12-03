@@ -17,10 +17,6 @@ export class Injector implements FallbackCache {
     return this.injector.get(token);
   }
 
-  public static has(token: InjectionToken | InjectedClass): boolean {
-    return this.injector.has(token);
-  }
-
   public static require<T>(
     token: InjectionToken<T> | InjectedClass<T>
   ): T extends undefined ? never : T {
@@ -47,17 +43,13 @@ export class Injector implements FallbackCache {
     return this.cache.get(token as InjectionToken<T>);
   }
 
-  public has(token: InjectionToken | InjectedClass): boolean {
-    return this.cache.has(token as InjectionToken);
-  }
-
   public require<T>(
     token: InjectionToken<T> | InjectedClass<T>
   ): T extends undefined ? never : T {
     const dependency = this.get(token);
     if (dependency === undefined) {
       throw new ReferenceError(
-        `${Injector.name}: Required ${(token as InjectionToken<T>).key.toString()} is undefined.
+        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined.
 If you are a developer seeing this message there can be a few causes:
 - You are requiring a token that is never provided
 - You are requiring a token that is not *yet* provided
