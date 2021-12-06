@@ -2,7 +2,6 @@ import { InjectionToken } from '../providers';
 
 export interface InjectorCache {
   get<T>(token: InjectionToken<T>): T | undefined;
-  has(token: InjectionToken): boolean;
   provide<T>(token: InjectionToken<T>, value: T): void;
   remove(token: InjectionToken): void;
   reset(): void;
@@ -10,32 +9,25 @@ export interface InjectorCache {
 
 export interface FallbackCache {
   get<T>(token: InjectionToken<T>): T | undefined;
-  has(token: InjectionToken): boolean;
 }
 
 export class InMemoryCache {
   constructor(
-    private readonly providers: Map<symbol, unknown>,
+    private readonly providers: Map<string, unknown>,
     private readonly fallback?: FallbackCache
   ) {}
 
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
-    return (this.providers.get(token.key) as T) ?? this.fallback?.get(token);
-  }
-
-  public has<T>(token: InjectionToken<T>): boolean {
-    this.verifyToken(token);
-    return (this.providers.has(token.key) || this.fallback?.has(token)) ?? false;
+    return (this.providers.get(token.uniqueKey) as T) ?? this.fallback?.get(token);
   }
 
   public provide<T>(token: InjectionToken<T>, value: T): void {
     this.verifyToken(token);
 
-    if (this.providers.has(token.key)) {
+    if (this.providers.has(token.uniqueKey)) {
       throw new TypeError(
-        // tslint:disable-next-line: ter-max-len
-        `${InMemoryCache.name}: Duplicate provider, token ${token.key.toString()} is already provided.
+        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided.
 If you are a developer seeing this message there can be a few causes:
 - You have explicitly reused the same token when providing dependencies
 - You have given two tokens the same name
@@ -47,12 +39,12 @@ more than a single version`
       );
     }
 
-    this.providers.set(token.key, value);
+    this.providers.set(token.uniqueKey, value);
   }
 
   public remove(token: InjectionToken): void {
     this.verifyToken(token);
-    this.providers.delete(token.key);
+    this.providers.delete(token.uniqueKey);
   }
 
   public reset(): void {
@@ -63,7 +55,7 @@ more than a single version`
     if (
       !token ||
       (typeof token !== 'object' && typeof token !== 'function') ||
-      !('key' in token)
+      !('uniqueKey' in token)
     ) {
       const actualType =
         token !== null && typeof token === 'object'
