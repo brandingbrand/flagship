@@ -102,15 +102,4 @@ describe('global cache', () => {
     // @ts-expect-error
     expect(() => Injector.provide({ useValue: 9 })).toThrow(TypeError);
   });
-
-  it('should denote if a value is included in the injector', () => {
-    const token = new InjectionToken<number>('NUMBER_TOKEN');
-
-    const beforeInjected = Injector.has(token);
-    Injector.provide({ provide: token, useValue: 9 });
-    const afterInjected = Injector.has(token);
-
-    expect(beforeInjected).toBe(false);
-    expect(afterInjected).toBe(true);
-  });
 });
