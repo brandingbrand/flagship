@@ -2,7 +2,7 @@
   "name": "@brandingbrand/fsweb",
   "sideEffects": false,
   "license": "MIT",
-  "version": "11.9.0",
+  "version": "11.9.1",
   "scripts": {
     "clean": "rm -rf ./build/static && rm -f ./build/index.html && rm -f ./build/service-worker.js && rm -f ./build/asset-manifest.json",
     "build": "webpack --mode production",
