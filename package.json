@@ -84,7 +84,7 @@
     "coveralls": "^3.0.2",
     "husky": "^7.0.1",
     "jest": "^27.3.1",
-    "jetifier": "^1.6.4",
+    "jetifier": "^2.0.0",
     "lerna": "^3.18.5",
     "markdownlint-cli": "^0.29.0",
     "metro-react-native-babel-preset": "^0.59.0",
@@ -100,7 +100,7 @@
     "rimraf": "^3.0.0",
     "ts-jest": "^27.0.7",
     "ts-loader": "^6.0.0",
-    "typedoc": "^0.15.0",
+    "typedoc": "^0.22.10",
     "typescript": "~4.2.2",
     "webpack": "^4.41.2"
   },
@@ -116,7 +116,8 @@
     "trim-newlines": "^4.0.2",
     "glob-parent": "^6.0.2",
     "trim": "^1.0.1",
-    "browserslist": "^4.18.1"
+    "browserslist": "^4.18.1",
+    "json-schema": "^0.4.0"
   },
   "workspaces": [
     "packages/*"
