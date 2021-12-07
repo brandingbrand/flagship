@@ -58,7 +58,9 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
 
   const onCardPress = async (): Promise<void> => {
     const { actions, story, storyGradient } = props;
-
+    if (!handleAction) {
+      return;
+    }
     // if there is a story attached and either
     //    1) no actions object (Related)
     //    2) actions.type is null or 'story' (new default tappable cards)
