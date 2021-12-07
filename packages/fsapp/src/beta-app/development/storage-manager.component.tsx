@@ -28,15 +28,19 @@ const styles = StyleSheet.create({
 // @ts-ignore no type definition file
 import * as CookieManager from 'react-native-cookies';
 // @ts-ignore no type definition file
-import SInfo, { SensitiveInfoEntry } from 'react-native-sensitive-info';
+import SInfo, { RNSensitiveInfoOptions, SensitiveInfoEntry } from 'react-native-sensitive-info';
 
 import { TouchableRow } from './touchable-row.component';
+
+export interface CookieManagerProps {
+  sInfoOptions?: RNSensitiveInfoOptions;
+}
 
 export interface CookieMangerState {
   data: string | null;
 }
 
-export default class CookieManger extends Component<{}, CookieMangerState> {
+export default class CookieManger extends Component<CookieManagerProps, CookieMangerState> {
   state: CookieMangerState = {
     data: null
   };
@@ -120,7 +124,7 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
   }
 
   clearSensitiveInfo = () => {
-    SInfo.getAllItems({})
+    SInfo.getAllItems(this.props.sInfoOptions ?? {})
       .then((values: [SensitiveInfoEntry[]]) => {
         if (!values || !values[0]) {
           return alert('Nothing to be cleared.');
@@ -128,13 +132,27 @@ export default class CookieManger extends Component<{}, CookieMangerState> {
 
         const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
-        Promise.all(keys.map(async (k: string) => SInfo.deleteItem(k, {})))
+        Promise.all(
+          values[0].map(entry =>
+            SInfo.deleteItem(
+              entry.key,
+              this.props.sInfoOptions ?? { keychainService: entry.service }
+            )
+          )
+        )
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
-          .catch(e => console.log('cannot delete item from react-native-sensitive-info', e));
+          .catch(e =>
+            console.log(
+              'cannot delete item from react-native-sensitive-info',
+              e
+            )
+          );
       })
-      .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
+      .catch(e =>
+        console.log('cannot get all items from react-native-sensitive-info', e)
+      );
   }
 
   viewSensitiveInfo = () => {

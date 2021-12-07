@@ -70,10 +70,6 @@ export const resolveStack = async (
   });
 };
 
-export const createKey = () => {
-  return Math.random().toString(36).substr(2, 8);
-};
-
 export const applyMatcher = async (matchers: Matchers, route: RouteCollection | ParentRoute) => {
   const component =
     await matchRoute(
@@ -196,4 +192,11 @@ export const activateStacks = async (
   return { root };
 };
 
-export { matchRoute, stringifyLocation, buildMatchers, resolveRoute } from './utils.base';
+export {
+  matchRoute,
+  stringifyLocation,
+  buildMatchers,
+  resolveRoute,
+  createKey,
+  normalizeLocationDescriptor
+} from './utils.base';

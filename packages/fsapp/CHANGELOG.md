@@ -3,6 +3,140 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* return if out of range ([423211b](https://github.com/brandingbrand/flagship/commit/423211bdf6f5baed8c01b7214400b072e76c9efa))
+* **fsapp:** nested scrolling causing unpainted divs ([a25bf30](https://github.com/brandingbrand/flagship/commit/a25bf30a63c87f468f0d69494a735785a9e90193))
+* FS-2842 react-native-sensitive-info namespacing ([dc6bf0e](https://github.com/brandingbrand/flagship/commit/dc6bf0efc4952ad6ce3fe6c3693f9e2578778bae))
+* FS-2842 sInfoOptions optional parameter ([9b0a611](https://github.com/brandingbrand/flagship/commit/9b0a6113c3bb2ccef64f1b3fbbcc2064ca95308e))
+* **fsapp:** web location initialization ([49c51c7](https://github.com/brandingbrand/flagship/commit/49c51c7cfe04358b8edcf1b22100b25bca8e178d))
+
+
+
+
+
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fsapp:** stuck router after external navigation ([e82c03c](https://github.com/brandingbrand/flagship/commit/e82c03c36988d5fe8b5dad76d4af01dff006d288))
+
+
+
+
+
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Bug Fixes
+
+* **fsapp:** only use tab affinity for open() ([f7fb0ce](https://github.com/brandingbrand/flagship/commit/f7fb0cefdfa4b746766509b64cd14442accbdfad))
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+
+### Features
+
+* add option to hide envs from switcher ([dfab35c](https://github.com/brandingbrand/flagship/commit/dfab35cdd1de27d3f5b5e5aa11d43374957b5390))
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **fsapp:** initial navigation tab disappearing ([2be6344](https://github.com/brandingbrand/flagship/commit/2be6344463e0b579536c93ab42523df716cf7a50))
+* **fsapp:** platform agnostic timeout type ([43c1f99](https://github.com/brandingbrand/flagship/commit/43c1f99589491c8aa37b058022f5db937cad0bc6))
+* **fsapp:** route activation race condition ([aeb2ada](https://github.com/brandingbrand/flagship/commit/aeb2adabf2a08c10783d7a4e7374408bb57af2fb))
+* **fsapp:** timout navigations stuck for over 3 seconds ([f84977e](https://github.com/brandingbrand/flagship/commit/f84977e77acb24703be89e16a718e3104229a079))
+
+
+### Features
+
+* **fsapp:** activation guards ([63a42b3](https://github.com/brandingbrand/flagship/commit/63a42b336704edabb01474491e0f454826b80908))
+* **fsapp:** associated domain linking ([cb85e54](https://github.com/brandingbrand/flagship/commit/cb85e54acff0dffd716441ce19bbcd30f8059e60))
+* **fsapp:** dynamic redirect ([c96bfca](https://github.com/brandingbrand/flagship/commit/c96bfca06406560003bbdefd4c8983b6a4b25121))
+* **fsapp:** get initial url ([7624600](https://github.com/brandingbrand/flagship/commit/76246002b8e0d66baff2b7c2c82f5e0ccc9798a8))
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
 ## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
 
 

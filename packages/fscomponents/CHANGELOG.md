@@ -3,6 +3,138 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Features
+
+* **fscomponents:** adds function prop to TabbedContainer ([09c9579](https://github.com/brandingbrand/flagship/commit/09c95795742315f0e4ed7bef63fc4776059c39de))
+
+
+
+
+
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+
+### Bug Fixes
+
+* linting ([9a2d863](https://github.com/brandingbrand/flagship/commit/9a2d8638db2ee1a3adf96c9b5fd1adb6474d200d))
+* re-enables animation for scroll to 0 ([f20f707](https://github.com/brandingbrand/flagship/commit/f20f707cc2317ec0b01ebe82c16ebbd086fc51d3))
+* removes unneccesary logic from autoscroll reset ([dba9e84](https://github.com/brandingbrand/flagship/commit/dba9e841ddfe598056e02cb5dd69a6f7b7b0e729))
+* snaps carousel back to first image when autoscrolling and reaches the end ([8411bd2](https://github.com/brandingbrand/flagship/commit/8411bd259df6dd21472a8863e66b8c9f4aeef272))
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** less than 300ms ([1b6642c](https://github.com/brandingbrand/flagship/commit/1b6642cd7b7fd086df901b64e87927c2de8bf589))
+
+
+### Features
+
+* **fscomponents:** Add Autoplay to Carousel ([bc1df18](https://github.com/brandingbrand/flagship/commit/bc1df183533f47fcf7b0ec3c6bc4493c27f4f8f2))
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **fscomponents:** Fix Safari Scroll Issue ([fefccd0](https://github.com/brandingbrand/flagship/commit/fefccd06c64fb19c9d20f703164fa659d9626c27))
+
+
+### Features
+
+* remove react-native-text-input-mask and dependent components ([3329784](https://github.com/brandingbrand/flagship/commit/332978484492af7c37a7ab2c9aef070f7a4fbebb))
+
+
+
+
+
+# [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
+
+
+### Features
+
+* update web carousel dependencies ([098ee2a](https://github.com/brandingbrand/flagship/commit/098ee2ae1ccd9f92d6d9c5565a8c4738586d8f45))
+
+
+
+
+
+# [11.5.0](https://github.com/brandingbrand/flagship/compare/v11.4.0...v11.5.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.4.0](https://github.com/brandingbrand/flagship/compare/v11.3.1...v11.4.0) (2021-11-05)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+## [11.3.1](https://github.com/brandingbrand/flagship/compare/v11.3.0...v11.3.1) (2021-11-03)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.3.0](https://github.com/brandingbrand/flagship/compare/v11.2.0...v11.3.0) (2021-10-29)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.2.0](https://github.com/brandingbrand/flagship/compare/v11.1.0...v11.2.0) (2021-10-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.1.0](https://github.com/brandingbrand/flagship/compare/v11.0.0...v11.1.0) (2021-09-27)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
+# [11.0.0](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.17...v11.0.0) (2021-09-08)
+
+**Note:** Version bump only for package @brandingbrand/fscomponents
+
+
+
+
+
 ## [11.0.1-alpha.17](https://github.com/brandingbrand/flagship/compare/v11.0.1-alpha.16...v11.0.1-alpha.17) (2021-09-08)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents

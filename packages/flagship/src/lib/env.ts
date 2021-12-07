@@ -117,7 +117,7 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
 export function createEnvIndex(singleEnv?: string): void {
   let envMatch = /env.[\w]+.js/;
   if (singleEnv) {
-    envMatch = new RegExp('env\.' + singleEnv + '\.js');
+    envMatch = new RegExp('env\\.' + singleEnv + '\\.js');
     helpers.logInfo('Creating index file for default env');
   } else {
     helpers.logInfo('Creating index file for project envs');

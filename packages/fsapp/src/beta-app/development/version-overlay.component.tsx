@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { useApp } from '../app/context';
 import { useModals } from '../modal';
@@ -36,9 +36,9 @@ export const VersionOverlay: FC = ({ children }) => {
   }
 
   return (
-    <View style={styles.screenContainer}>
+    <>
       {children}
       <Version />
-    </View>
+    </>
   );
 };
