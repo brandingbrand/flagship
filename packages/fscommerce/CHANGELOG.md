@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/fscommerce
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* exported currency value from it's own type file instead of index ([6cf02be](https://github.com/brandingbrand/flagship/commit/6cf02bee091623a342a516aaf31c02a94503f3e5))
+
+
+
+
+
 ## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
 
 **Note:** Version bump only for package @brandingbrand/fscommerce

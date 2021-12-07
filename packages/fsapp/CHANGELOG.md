@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/fsapp
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* return if out of range ([423211b](https://github.com/brandingbrand/flagship/commit/423211bdf6f5baed8c01b7214400b072e76c9efa))
+* **fsapp:** nested scrolling causing unpainted divs ([a25bf30](https://github.com/brandingbrand/flagship/commit/a25bf30a63c87f468f0d69494a735785a9e90193))
+* FS-2842 react-native-sensitive-info namespacing ([dc6bf0e](https://github.com/brandingbrand/flagship/commit/dc6bf0efc4952ad6ce3fe6c3693f9e2578778bae))
+* FS-2842 sInfoOptions optional parameter ([9b0a611](https://github.com/brandingbrand/flagship/commit/9b0a6113c3bb2ccef64f1b3fbbcc2064ca95308e))
+* **fsapp:** web location initialization ([49c51c7](https://github.com/brandingbrand/flagship/commit/49c51c7cfe04358b8edcf1b22100b25bca8e178d))
+
+
+
+
+
 ## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
 
 **Note:** Version bump only for package @brandingbrand/fsapp
