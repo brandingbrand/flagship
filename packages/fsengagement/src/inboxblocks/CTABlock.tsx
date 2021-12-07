@@ -70,7 +70,7 @@ export default class CTABlock extends Component<CTABlockProps> {
     cardPosition: PropTypes.number
   };
 
-  // // tslint:disable-next-line:cyclomatic-complexity
+  // tslint:disable-next-line:cyclomatic-complexity
   handleActionWithStory = (action: string, actions: Action, story: JSON) => {
     const { handleAction, handleStoryAction, cardPosition } = this.context;
     if (story.html) {
