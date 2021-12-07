@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Image,
@@ -18,6 +18,7 @@ import {
   Icon,
   ScreenProps
 } from '../types';
+import { EngagementContext } from '../lib/contexts';
 
 const images: any = {
   rightArrow: require('../../assets/images/rightArrow.png')
@@ -51,7 +52,7 @@ export interface ShopIngredientsBlockProps extends ScreenProps, EmitterProps {
   actions: Action;
 }
 
-export default class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps> {
+class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { context: any }> {
   static contextTypes: any = {
     story: PropTypes.object,
     cardActions: PropTypes.object,
@@ -62,7 +63,7 @@ export default class ShopIngredientsBlock extends Component<ShopIngredientsBlock
   };
 
   takeAction = (action: string, actions: Action): void => {
-    const { handleAction, story } = this.context;
+    const { handleAction, story } = this.props.context;
     const { private_blocks } = story;
     const PRIVATE_TYPE = 'private_type';
     const recipeList = (private_blocks || []).find((block: BlockItem) => {
@@ -123,3 +124,9 @@ export default class ShopIngredientsBlock extends Component<ShopIngredientsBlock
 
   }
 }
+
+export default (props: ShopIngredientsBlockProps) => {
+  const context = useContext(EngagementContext);
+  return <ShopIngredientsBlock {...props} context={context} />;
+};
+
