@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/flagship
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+
+### Bug Fixes
+
+* **flagship:** fix improperly escaped regex to build env ([458c08b](https://github.com/brandingbrand/flagship/commit/458c08bb660269c3b80613dbffea0c11fc3725a6))
+
+
+### Features
+
+* FS-2178 iOS config to add system and custom frameworks ([0303844](https://github.com/brandingbrand/flagship/commit/0303844105351b698db40b04643f29c7a04a3195))
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 

@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
+
+**Note:** Version bump only for package @brandingbrand/fslinker
+
+
+
+
+
+# [11.9.0](https://github.com/brandingbrand/flagship/compare/v11.8.1...v11.9.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **fslinker:** node 16 compatible global sybmol ([5e0d288](https://github.com/brandingbrand/flagship/commit/5e0d288188abf27fc7eba5bf9fd2dd829e94168f))
+* **fslinker:** test naming ([f567cb3](https://github.com/brandingbrand/flagship/commit/f567cb37bb6b1c1eda697c83225332d7fbccaac8))
+
+
+### Features
+
+* **fslinker:** expose has method ([3c29605](https://github.com/brandingbrand/flagship/commit/3c2960536ca9da72eddba56b476091c8f010e236))
+
+
+
+
+
+## [11.8.1](https://github.com/brandingbrand/flagship/compare/v11.8.0...v11.8.1) (2021-11-19)
+
+**Note:** Version bump only for package @brandingbrand/fslinker
+
+
+
+
+
+# [11.8.0](https://github.com/brandingbrand/flagship/compare/v11.7.0...v11.8.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fslinker
+
+
+
+
+
+# [11.7.0](https://github.com/brandingbrand/flagship/compare/v11.6.0...v11.7.0) (2021-11-17)
+
+**Note:** Version bump only for package @brandingbrand/fslinker
+
+
+
+
+
 # [11.6.0](https://github.com/brandingbrand/flagship/compare/v11.5.0...v11.6.0) (2021-11-10)
 
 
