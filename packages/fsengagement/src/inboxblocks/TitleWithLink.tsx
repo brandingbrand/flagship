@@ -36,10 +36,12 @@ export const TitleWithLink: React.FC<TitleWithLinkProps> = React.memo(props => {
   const { handleAction } = React.useContext(EngagementContext);
 
   const onPress = (link: string) => () => {
-    handleAction({
-      type: 'deep-link',
-      value: link
-    });
+    if (handleAction) {
+      handleAction({
+        type: 'deep-link',
+        value: link
+      });
+    }
   };
 
   return (
