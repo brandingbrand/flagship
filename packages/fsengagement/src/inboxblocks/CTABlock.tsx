@@ -73,7 +73,7 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
   }
 
   const handleActionNoStory = (actions: Action) => {
-    if (actions && !actions.value) {
+    if (actions && !actions.value || !handleAction) {
       return;
     }
     if (actions && actions.type) {
@@ -92,9 +92,9 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
       position: cardPosition
     });
   };
-
+  // tslint:disable-next-line:cyclomatic-complexity
   const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
-    if (story.html) {
+    if (story.html && handleAction) {
       return handleAction({
         type: 'blog-url',
         value: story.html.link,
