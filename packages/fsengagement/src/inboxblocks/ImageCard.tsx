@@ -59,10 +59,12 @@ export const ImageCard: React.FunctionComponent<ComponentProps> = React.memo(pro
       }
     });
   };
-
+  // tslint:disable-next-line:cyclomatic-complexity
   const onCardPress = async (): Promise<void> => {
     const { actions, story, storyGradient } = props;
-
+    if (!handleAction) {
+      return;
+    }
     // if there is a story attached and either
     //    1) no actions object (legacy engagement)
     //    2) actions.type is null or 'story' (new default tappable cards)
