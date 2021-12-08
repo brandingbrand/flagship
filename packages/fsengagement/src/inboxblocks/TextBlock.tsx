@@ -64,10 +64,12 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(({
   }, [animateIndex]);
 
   const onPress = (link: string) => () => {
-    handleAction({
-      type: 'deep-link',
-      value: link
-    });
+    if (handleAction) {
+      handleAction({
+        type: 'deep-link',
+        value: link
+      });
+    }
   };
 
   if (animateIndex && animateIndex <= 3) {
