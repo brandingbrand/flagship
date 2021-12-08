@@ -32,7 +32,8 @@ export interface ImageDimensions {
 }
 
 export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
-  const { handleAction } = React.useContext(EngagementContext);
+  const { handleAction, windowWidth } = React.useContext(EngagementContext);
+
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
     height: 0,
     width: 0
@@ -68,7 +69,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
 
     const win = Dimensions.get('window');
     const result: ImageDimensions = { height: undefined, width: undefined };
-    result.width = parentWidth || win.width;
+    result.width = parentWidth || windowWidth || win.width;
 
     if (containerStyle) {
       if (containerStyle.paddingLeft) {
@@ -134,7 +135,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
   };
 
   const onPress = (link?: string) => () => {
-    if (!link) {
+    if (!link || !handleAction) {
       return;
     }
     handleAction({

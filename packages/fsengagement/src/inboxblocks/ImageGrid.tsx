@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import {
   Dimensions,
   ImageURISource,
   View,
   ViewStyle
 } from 'react-native';
-
+import { EngagementContext } from '../lib/contexts';
 
 const { width: viewportWidth } = Dimensions.get('window');
 import RenderImageTextItem from '../carousel/RenderImageTextItem';
-
-const sliderWidth = viewportWidth;
 
 export interface GridItem {
   link: string;
@@ -39,17 +37,18 @@ export interface ImageGridProps {
   options: any;
   containerStyle?: any;
 }
+type ImageGridContextProps = ImageGridProps & { context: any };
+class ImageGrid
+  extends Component<ImageGridContextProps, ImageGridState> {
 
-export default class ImageGrid
-  extends Component<ImageGridProps, ImageGridState> {
-
-  constructor(props: ImageGridProps) {
+  constructor(props: ImageGridContextProps) {
     super(props);
     this.state = {
       tallestTextHeight: 0
     };
   }
-  shouldComponentUpdate(nextProps: ImageGridProps, nextState: ImageGridState): boolean {
+  // tslint:disable-next-line:cyclomatic-complexity
+  shouldComponentUpdate(nextProps: ImageGridContextProps, nextState: ImageGridState): boolean {
     return this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||
       this.props.ratio !== nextProps.ratio ||
@@ -59,10 +58,12 @@ export default class ImageGrid
       this.props.headerStyle !== nextProps.headerStyle ||
       this.props.textStyle !== nextProps.textStyle ||
       this.props.eyebrowStyle !== nextProps.eyebrowStyle ||
+      this.props.context !== nextProps.context ||
       this.state.tallestTextHeight !== nextState.tallestTextHeight;
   }
   wp(percentage: any): any {
-    const value = (percentage * viewportWidth) / 100;
+    const { windowWidth } = this.props.context;
+    const value = (percentage * (windowWidth || viewportWidth)) / 100;
     return Math.round(value);
   }
   _renderItem(item: any, index: number): JSX.Element {
@@ -121,6 +122,8 @@ export default class ImageGrid
   }
 
   calculateGridWidth(): number {
+    const { windowWidth } = this.props.context;
+    const sliderWidth = windowWidth || viewportWidth;
     return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
 
@@ -152,3 +155,8 @@ export default class ImageGrid
     );
   }
 }
+
+export default (props: ImageGridProps) => {
+  const context = useContext(EngagementContext);
+  return <ImageGrid {...props} context={context} />;
+};
