@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.10.0](https://github.com/brandingbrand/flagship/compare/v11.9.1...v11.10.0) (2021-12-08)
+
+
+### Bug Fixes
+
+* **fsengagement:** no-ticket - fix ShopIngredients context ([e83f9b3](https://github.com/brandingbrand/flagship/commit/e83f9b34f51b6f48aa0f491678d60c9a446bd5e0))
+
+
+
+
+
 ## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
 
 **Note:** Version bump only for package @brandingbrand/fsengagement
