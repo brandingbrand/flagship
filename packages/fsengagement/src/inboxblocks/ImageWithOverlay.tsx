@@ -12,7 +12,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { TextBlock } from './TextBlock';
-import { EngagementContext } from '../lib/contexts';
+import { EngagementContext, EngContext } from '../lib/contexts';
 export interface ImageBlockProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -26,13 +26,16 @@ export interface ImageBlockProps {
   link?: string;
   parentWidth?: number;
 }
+interface ContextProps {
+  context: EngContext;
+}
 
 export interface ImageBlockState {
   width?: number;
   height?: number;
 }
 
-class ImageWithOverlay extends Component<ImageBlockProps & { context: any }, ImageBlockState> {
+class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBlockState> {
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
@@ -64,12 +67,13 @@ class ImageWithOverlay extends Component<ImageBlockProps & { context: any }, Ima
   // tslint:disable-next-line:cyclomatic-complexity
   findImageRatio = (): ImageBlockState => {
     const { parentWidth, containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
+    const { windowWidth } = this.props.context;
     if (!useRatio) {
       return {};
     }
     const win = Dimensions.get('window');
     const result: ImageBlockState = { height: undefined, width: undefined };
-    result.width = parentWidth || win.width;
+    result.width = parentWidth || windowWidth || win.width;
     if (containerStyle) {
       if (containerStyle.paddingLeft) {
         result.width = result.width - +containerStyle.paddingLeft;
@@ -107,10 +111,12 @@ class ImageWithOverlay extends Component<ImageBlockProps & { context: any }, Ima
   }
   onPress = (link: string) => () => {
     const { handleAction } = this.props.context;
-    handleAction({
-      type: 'deep-link',
-      value: link
-    });
+    if (handleAction) {
+      handleAction({
+        type: 'deep-link',
+        value: link
+      });
+    }
   }
   _renderItem(item: any, index: number): JSX.Element {
     return (
