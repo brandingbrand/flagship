@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.10.0](https://github.com/brandingbrand/flagship/compare/v11.9.1...v11.10.0) (2021-12-08)
+
+
+### Features
+
+* Replace all occurrences of "any" in fscomponents/ChangePasswordComponent ([6b932f0](https://github.com/brandingbrand/flagship/commit/6b932f0665af877c73d41b9a8a97a60e2dd0b0d6))
+
+
+
+
+
 ## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
 
 **Note:** Version bump only for package @brandingbrand/fscomponents
