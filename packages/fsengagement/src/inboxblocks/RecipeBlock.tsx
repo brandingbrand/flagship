@@ -72,7 +72,7 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
   const { handleAction } = React.useContext(EngagementContext);
 
   const onButtonPress = (actions: Action) => (): void => {
-    if (actions && actions.type) {
+    if (actions && actions.type && handleAction) {
       return handleAction({
         ...actions
       });
