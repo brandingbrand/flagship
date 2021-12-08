@@ -1064,7 +1064,7 @@ export default function(
         <EngagementContext.Provider
           value={{
             handleAction: this.handleAction,
-            story: this.props.backButton ? this.props.json : null,
+            story: this.props.backButton ? this.props.json : undefined,
             language: this.props.language,
             cardPosition: this.props.cardPosition || 0
           }}
