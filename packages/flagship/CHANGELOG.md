@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [11.10.0](https://github.com/brandingbrand/flagship/compare/v11.9.1...v11.10.0) (2021-12-08)
+
+
+### Features
+
+* **flagship:** stripe lib support ([3de77e4](https://github.com/brandingbrand/flagship/commit/3de77e473a864fb28b9a81625336a319f11adc1a))
+* **flagship:** stripe lib support ([225144a](https://github.com/brandingbrand/flagship/commit/225144a0d862c2f8ee8772a98de25b57a195d9df))
+
+
+### BREAKING CHANGES
+
+* **flagship:** - upgrade build target from 10.3 to 11.0 for iOS
+- added a fix for Swift configuration: bridging header, fix.swift, updates to project file.
+
+
+
+
+
 ## [11.9.1](https://github.com/brandingbrand/flagship/compare/v11.9.0...v11.9.1) (2021-12-06)
 
 **Note:** Version bump only for package @brandingbrand/flagship

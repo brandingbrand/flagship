@@ -1,15 +1,15 @@
 {
   "name": "@brandingbrand/fsengagement",
   "sideEffects": false,
-  "version": "11.9.1",
+  "version": "11.10.0",
   "scripts": {
     "prepare": "tsc"
   },
   "main": "dist/index",
   "dependencies": {
-    "@brandingbrand/fsapp": "^11.9.1",
-    "@brandingbrand/fslinker": "^11.9.1",
-    "@brandingbrand/fsnetwork": "^11.9.1",
+    "@brandingbrand/fsapp": "^11.10.0",
+    "@brandingbrand/fslinker": "^11.10.0",
+    "@brandingbrand/fsnetwork": "^11.10.0",
     "@react-native-community/async-storage": "^1.9.0",
     "@types/prop-types": "^15.0.0",
     "@types/react-native-snap-carousel": "^3.7.3",
@@ -19,7 +19,6 @@
     "pure-react-carousel": "^1.27.8",
     "react": "^16.13.1",
     "react-content-loader": "^5.1.2",
-    "react-player": "^1.15.2",
     "react-native": "^0.63.2",
     "react-native-animatable": "^1.3.2",
     "react-native-device-info": "^5.0.0",
@@ -28,7 +27,8 @@
     "react-native-snap-carousel": "^3.8.0",
     "react-native-svg": "^12.1.1",
     "react-native-video": "^5.0.0",
-    "react-native-webview": "^11.6.4"
+    "react-native-webview": "^11.6.4",
+    "react-player": "^1.15.2"
   },
   "gitHead": "6261ffc8c139f8986f531ccca430900d75570ccc"
 }
