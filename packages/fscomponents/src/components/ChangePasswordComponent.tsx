@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.changePassword;
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface ChangePasswordState {
   value: any;
 }
 
+export interface FormValues {
+  currentPassword: string;
+  confirmPassword: string;
+  newPassword: string;
+}
+
 export interface ChangePasswordProps {
-  fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any; // Text to override the submit button
-  style?: any;
-  fieldsOptions?: any; // any extra desired behaviour, like placeholders
+  // the custom stylesheet we want to merge with the default stylesheet
+  fieldsStyleConfig?: Dictionary;
+  onSubmit?: (values: FormValues) => void; // the behaviour we want onpress of submit button
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  submitText?: string; // Text to override the submit button
+  style?: StyleProp<ViewStyle>;
+  fieldsOptions?: Dictionary; // any extra desired behaviour, like placeholders
   value?: any;
 }
 
@@ -28,12 +36,12 @@ const PasswordType = t.refinement(t.String, (str: string) => {
 });
 
 export class ChangePassword extends Component<ChangePasswordProps, ChangePasswordState> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
+  form?: Form | null;
+  fieldsStyleConfig: Dictionary;
+  fieldsTypes: Dictionary;
+  fieldsOptions: Dictionary;
 
-  constructor(props: any) {
+  constructor(props: ChangePasswordProps) {
     super(props);
 
     this.state = { value: props.value };
@@ -78,7 +86,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('confirmPassword'),
         secureTextEntry: true,
-        onChange: (e: any) => {
+        onChange: (e: { nativeEvent: { text: string } }) => {
           const currentVal = this.state.value;
           const newVal = { ...currentVal, password: e.nativeEvent.text };
           this.setState({
@@ -126,14 +134,14 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
   }
 
   handleSubmit = () => {
-    const value = this.form.getValue();
+    const value = this.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   }
 
   focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -141,7 +149,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     }
   }
 
-  handleChange = (value: any) => {
+  handleChange = (value: string) => {
     this.setState({
       value
     });
