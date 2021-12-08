@@ -19,7 +19,7 @@
     "react": "^16.13.1",
     "react-content-loader": "^5.1.2",
     "react-native": "^0.63.2",
-    "react-native-svg": "^10.0.0",
+    "react-native-svg": "^12.1.1",
     "redux": "^4.0.0"
   },
   "publishConfig": {
