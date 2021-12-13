@@ -11,7 +11,7 @@ import {
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '../Form/Form';
-import { FormLabelPosition } from '../Form';
+import { FormLabelPosition } from '../Form/Templates/fieldTemplates';
 import { Button } from '../Button';
 import { emailRegex } from '../../lib/email';
 

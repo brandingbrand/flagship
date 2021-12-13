@@ -78,10 +78,10 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
   };
 
   const renderHalf = (): JSX.Element => {
-    const { itemSize, itemColor } = props;
     const customStarStyle: StyleProp<TextStyle> = {};
     const containerStarStyle: StyleProp<ViewStyle> = {};
     const starHalfRightStyle: StyleProp<TextStyle> = {};
+    const { emptyStar, itemSize, itemColor } = props;
 
     if (itemSize) {
       customStarStyle.fontSize = itemSize;

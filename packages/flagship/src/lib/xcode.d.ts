@@ -1,10 +1,14 @@
 declare module 'xcode' {
   function project(pathToProject: string): XCodeproject;
 
+  interface WriterOptions {
+    omitEmptyValues?: boolean;
+  }
+
   interface XCodeproject {
 
-    parseSync: () => void;
-    writeSync: () => void;
+    parseSync: () => XCodeproject;
+    writeSync: (options?: WriterOptions) => string;
     allUUids: () => string[];
     generateUuid: () => string;
     addPluginFile: (path: string, opt: Options) => PBXFile;

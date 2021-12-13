@@ -24,5 +24,5 @@ export default interface CommerceDataSource extends AccountDataSource,
    * @param {Array.<string>} ids - An array of product identifiers to query
    * @returns {Promise.<Array.<Product>>} A Promise representing an array of product metadata
    */
-  fetchProducts(ids: string[]): Promise<Product[]>;
+  fetchProducts?: (ids: string[]) => Promise<Product[]>;
 }
