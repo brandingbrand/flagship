@@ -6,13 +6,7 @@ import {
   defaultTextboxStyle,
   getColor
 } from './formStyles';
-
-export enum FormLabelPosition {
-  Above,
-  Floating,
-  Hidden,
-  Inline
-}
+import { FormLabelPosition } from './fieldTemplates';
 
 export const successIcon = require('../../../../assets/images/checkmarkValidation.png');
 export const errorIcon = require('../../../../assets/images/alert.png');

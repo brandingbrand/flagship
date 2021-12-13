@@ -96,7 +96,7 @@ export interface SearchScreenState {
 }
 
 export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenState> {
-  searchBar: SearchBar | null;
+  searchBar: SearchBar | null = null;
 
   constructor(props: SearchScreenProps) {
     super(props);
@@ -120,7 +120,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     const { searchBarShouldFocus } = this.props;
 
     // Focus on the search bar by default
-    if (this.searchBar !== null && (searchBarShouldFocus === undefined || searchBarShouldFocus)) {
+    if (searchBarShouldFocus !== false && this.searchBar) {
       this.searchBar.focusInput();
     }
 
