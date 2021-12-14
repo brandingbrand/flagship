@@ -1,0 +1,41 @@
+{
+  "root": "libs/fscomponents",
+  "sourceRoot": "libs/fscomponents/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fscomponents",
+        "tsConfig": "libs/fscomponents/tsconfig.lib.json",
+        "packageJson": "libs/fscomponents/package.json",
+        "main": "libs/fscomponents/src/index.ts",
+        "assets": [
+          "libs/fscomponents/*.md",
+          {
+            "glob": "**/*",
+            "input": "libs/fscomponents/assets",
+            "output": "assets"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fscomponents/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fscomponents"],
+      "options": {
+        "jestConfig": "libs/fscomponents/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
