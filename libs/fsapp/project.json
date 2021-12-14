@@ -1,0 +1,34 @@
+{
+  "root": "libs/fsapp",
+  "sourceRoot": "libs/fsapp/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsapp",
+        "tsConfig": "libs/fsapp/tsconfig.lib.json",
+        "packageJson": "libs/fsapp/package.json",
+        "main": "libs/fsapp/src/index.ts",
+        "assets": ["libs/fsapp/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsapp/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsapp"],
+      "options": {
+        "jestConfig": "libs/fsapp/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
