@@ -1,0 +1,34 @@
+{
+  "root": "libs/fscommerce",
+  "sourceRoot": "libs/fscommerce/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fscommerce",
+        "tsConfig": "libs/fscommerce/tsconfig.lib.json",
+        "packageJson": "libs/fscommerce/package.json",
+        "main": "libs/fscommerce/src/index.ts",
+        "assets": ["libs/fscommerce/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fscommerce/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fscommerce"],
+      "options": {
+        "jestConfig": "libs/fscommerce/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
