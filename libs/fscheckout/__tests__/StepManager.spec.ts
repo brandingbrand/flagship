@@ -1,5 +1,5 @@
-import { Step } from '../types';
-import StepManager from '../StepManager';
+import { Step } from '../src/types';
+import StepManager from '../src/StepManager';
 
 test('get active step', () => {
   const stepManager = new StepManager([

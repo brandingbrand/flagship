@@ -1,0 +1,34 @@
+{
+  "root": "libs/fscheckout",
+  "sourceRoot": "libs/fscheckout/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fscheckout",
+        "tsConfig": "libs/fscheckout/tsconfig.lib.json",
+        "packageJson": "libs/fscheckout/package.json",
+        "main": "libs/fscheckout/src/index.ts",
+        "assets": ["libs/fscheckout/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fscheckout/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fscheckout"],
+      "options": {
+        "jestConfig": "libs/fscheckout/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
