@@ -14,6 +14,11 @@ const MISSING_CURRENCY_ERROR = new Error('You must provide a currency');
 const INVALID_NUMBER_ERROR = new Error(`Provided argument is not a valid number`);
 const INVALID_DATE_ERROR = new Error(`Provided argument is not a valid date`);
 
+export interface ICurrencyValue {
+  value: Decimal;
+  currencyCode: string;
+};
+
 export default class I18nHelper {
   protected readonly i18n: I18n;
   protected localeListeners: ((locale: string) => void)[];
@@ -122,7 +127,7 @@ export default class I18nHelper {
    * @returns {string} - Formatted number
    */
   public currency(
-    num: NumberLike | import ('@brandingbrand/fscommerce').CommerceTypes.CurrencyValue,
+    num: NumberLike | ICurrencyValue,
     currency?: string,
     options?: Intl.NumberFormatOptions
   ): string {
