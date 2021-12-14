@@ -1,0 +1,34 @@
+{
+  "root": "libs/fsmockdatasources",
+  "sourceRoot": "libs/fsmockdatasources/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsmockdatasources",
+        "tsConfig": "libs/fsmockdatasources/tsconfig.lib.json",
+        "packageJson": "libs/fsmockdatasources/package.json",
+        "main": "libs/fsmockdatasources/src/index.ts",
+        "assets": ["libs/fsmockdatasources/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsmockdatasources/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsmockdatasources"],
+      "options": {
+        "jestConfig": "libs/fsmockdatasources/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
