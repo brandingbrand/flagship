@@ -1,0 +1,35 @@
+{
+  "root": "libs/fsnetwork",
+  "sourceRoot": "libs/fsnetwork/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsnetwork",
+        "tsConfig": "libs/fsnetwork/tsconfig.lib.json",
+        "packageJson": "libs/fsnetwork/package.json",
+        "main": "libs/fsnetwork/src/index.ts",
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "assets": ["libs/fsnetwork/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsnetwork/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsnetwork"],
+      "options": {
+        "jestConfig": "libs/fsnetwork/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
