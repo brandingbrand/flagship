@@ -1,6 +1,9 @@
 {
-    "recommendations": [
-      "DavidAnson.vscode-markdownlint",
-      "eg2.tslint"
-    ]
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "DavidAnson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "nrwl.angular-console",
+    "firsttris.vscode-jest-runner"
+  ]
 }

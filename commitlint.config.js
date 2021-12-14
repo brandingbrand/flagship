@@ -1,19 +1,32 @@
-const { getPackages } = require('@commitlint/config-lerna-scopes').utils;
+#!/usr/bin/env node
 
-module.exports = {
-  extends: [
-    '@commitlint/config-lerna-scopes',
-    '@commitlint/config-conventional'
-  ],
+const { types, scopes, ticketNumberPrefix } = require('./.cz-config.js');
+
+const typeValues = types.map(({ value }) => value);
+const scopeNames = scopes.map(({ name }) => name);
+
+const Configuration = {
+  extends: ['@commitlint/config-conventional'],
+  formatter: '@commitlint/format',
+
+  parserPreset: {
+    parserOpts: {
+      issuePrefixes: ticketNumberPrefix,
+    },
+  },
+
   rules: {
-    'subject-case': [0],
-    'body-max-line-length': [0],
-    // greenkeeper-lockfile doesn't support customization of commit messages and always uses the
-    // commit message "chore(package)..."
-    'scope-enum': ctx => getPackages(ctx).then(packages => [2, 'always', [
-      ...packages,
-      'package',
-      'release'
-    ]])
-  }
+    'type-enum': [2, 'always', typeValues],
+    'scope-enum': [2, 'always', scopeNames],
+    'scope-empty': [2, 'never'],
+    'subject-max-length': [2, 'always', 72],
+    'body-empty': [1, 'never'],
+    'body-full-stop': [1, 'never'],
+    'footer-leading-blank': [2, 'always'],
+  },
+
+  defaultIgnores: true,
+  helpUrl: 'https://www.conventionalcommits.org/en/v1.0.0/',
 };
+
+module.exports = Configuration;
