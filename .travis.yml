@@ -2,116 +2,17 @@ cache: yarn
 stages:
   - name: test
     if: type = pull_request AND tag IS blank
-  - name: canary
-    if: type = push AND branch = DONOTRUN AND tag IS blank # disable auto-publish -BW
-  - name: deploy
-    if: branch = master AND head_branch IS blank
 install:
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-  - nvm install 12
-  - npm install -g yarn
-  - yarn install
-  - yarn global add lerna
-  - yarn --silent --non-interactive --ignore-scripts
+  - nvm install 14
+  - npm i -g npm@8
+  - npm i
 jobs:
   include:
-  - stage: test
-    language: node_js
-    node_js: '12'
-    script:
-      - yarn prepare || travis_terminate 1
-      - yarn ship:init-web # needed to populate project_env_index for fsapp (depended upon by some components)
-      - yarn prepare:fscodestyle || travis_terminate 1
-      - yarn lint || travis_terminate 1
-      - yarn test --coverage --ci && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || travis_terminate 1
-      - yarn build:storybook || travis_terminate 1
-      - commitlint-travis
-  - stage: test
-    language: generic
-    sudo: true
-    dist: trusty
-    os: linux
-    # android emulator setup based on https://github.com/brianegan/flutter_architecture_samples
-    # from comment in https://github.com/googlemaps/android-maps-utils/issues/371#issuecomment-498921876
-    before_install:
-      - ANDROID_SDK_TOOLS=4333796 # android-28
-      - ANDROID_PLATFORM_SDK=28
-      - ANDROID_BUILD_TOOLS=28.0.3
-      - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
-      # Install the Android SDK Dependency.
-      - export ANDROID_HOME=/opt/android-sdk-linux
-      - cd /opt
-      - wget -q https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_SDK_TOOLS.zip -O android-sdk-tools.zip
-      - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-      - rm android-sdk-tools.zip
-      - cd -
-      - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-      # Silence warning.
-      - mkdir -p ~/.android
-      - touch ~/.android/repositories.cfg
-      # Accept licenses before installing components, no need to echo y for each component
-      - yes | sdkmanager --licenses
-      # Platform and build tools (including flutter requirements)
-      - sdkmanager "emulator" "tools" "platform-tools" "platforms;android-${ANDROID_PLATFORM_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
-      - sdkmanager --list | head -15
-
-      # Download a pinned version of the emulator since upgrades can cause issues
-      - ${ANDROID_HOME}/emulator/emulator -version
-      - emulator_version=5264690 #29.0.9.0 (build_id 5537588) ==> 28.0.23.0 (build_id 5264690)
-      - curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-linux-$emulator_version.zip"
-      - rm -rf "${ANDROID_HOME}/emulator"
-      - unzip -q emulator.zip -d "${ANDROID_HOME}"
-      - rm -f emulator.zip
-      - ${ANDROID_HOME}/emulator/emulator -version
-
-      # install older platform and build tools (for emulator)
-      - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
-      # Create and start emulator.
-      - EMULATOR_API_LEVEL=22
-      - ANDROID_ABI="default;armeabi-v7a"
-      - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
-      - sdkmanager --list | head -15
-      - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
-      - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
-      - ./scripts/android-wait-for-emulator.sh
-    script:
-      - yarn prepare
-      - yarn ship:init
-      - yarn ship:compile-android
-  - stage: test
-    language: objective-c
-    os: osx
-    osx_image: xcode12
-    before_script:
-      - yarn prepare
-      - pod repo update
-      - yarn ship:init
-    script:
-      - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-      - yarn ship:compile-ios
-      - kill %1
-  - stage: canary
-    git:
-      depth: false
-    before_install:
-      - npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
-      - git remote set-url origin https://${GH_TOKEN}@github.com/brandingbrand/flagship
-      - git checkout develop
-    before_script:
-      - yarn global add typescript@4.0.3
-    script:
-      - lerna publish --dist-tag=canary --allow-branch=develop --yes
-  - stage: deploy
-    git:
-      depth: false
-    before_install: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
-    script:
-      - yarn prepare
-      - yarn docs
-    deploy:
-      provider: pages
-      skip-cleanup: true
-      github-token: "$GITHUB_TOKEN"
-      local-dir: docs/
-      on:
-        branch: master
+    - stage: test
+      language: node_js
+      node_js: '14'
+      script:
+        - nx run-many --target lint --all
+        - nx run-many --target test --all
+        - commitlint-travis
