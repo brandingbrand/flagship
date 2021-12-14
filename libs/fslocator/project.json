@@ -1,0 +1,41 @@
+{
+  "root": "libs/fslocator",
+  "sourceRoot": "libs/fslocator/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fslocator",
+        "tsConfig": "libs/fslocator/tsconfig.lib.json",
+        "packageJson": "libs/fslocator/package.json",
+        "main": "libs/fslocator/src/index.ts",
+        "assets": [
+          "libs/fslocator/*.md",
+          {
+            "glob": "**/*",
+            "input": "libs/fslocator/assets",
+            "output": "assets"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fslocator/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fslocator"],
+      "options": {
+        "jestConfig": "libs/fslocator/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
