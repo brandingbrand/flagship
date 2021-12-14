@@ -1,0 +1,34 @@
+{
+  "root": "libs/fslinker",
+  "sourceRoot": "libs/fslinker/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fslinker",
+        "tsConfig": "libs/fslinker/tsconfig.lib.json",
+        "packageJson": "libs/fslinker/package.json",
+        "main": "libs/fslinker/src/index.ts",
+        "assets": ["libs/fslinker/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fslinker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fslinker"],
+      "options": {
+        "jestConfig": "libs/fslinker/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
