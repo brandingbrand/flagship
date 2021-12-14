@@ -1,4 +1,6 @@
-import i18nHelper from '../i18nHelper';
+import 'i18n-js';
+
+import i18nHelper from '../src/i18nHelper';
 import Decimal from 'decimal.js';
 let i18n: i18nHelper;
 

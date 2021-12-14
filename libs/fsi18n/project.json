@@ -1,0 +1,34 @@
+{
+  "root": "libs/fsi18n",
+  "sourceRoot": "libs/fsi18n/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsi18n",
+        "tsConfig": "libs/fsi18n/tsconfig.lib.json",
+        "packageJson": "libs/fsi18n/package.json",
+        "main": "libs/fsi18n/src/index.ts",
+        "assets": ["libs/fsi18n/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsi18n/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsi18n"],
+      "options": {
+        "jestConfig": "libs/fsi18n/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
