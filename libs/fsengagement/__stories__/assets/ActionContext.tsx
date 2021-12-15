@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Action } from '../../types';
+import { Action } from '../../src/types';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 

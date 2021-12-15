@@ -1,0 +1,41 @@
+{
+  "root": "libs/fsengagement",
+  "sourceRoot": "libs/fsengagement/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsengagement",
+        "tsConfig": "libs/fsengagement/tsconfig.lib.json",
+        "packageJson": "libs/fsengagement/package.json",
+        "main": "libs/fsengagement/src/index.ts",
+        "assets": [
+          "libs/fsengagement/*.md",
+          {
+            "glob": "**/*",
+            "input": "libs/fsengagement/assets",
+            "output": "assets"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsengagement/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsengagement"],
+      "options": {
+        "jestConfig": "libs/fsengagement/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
