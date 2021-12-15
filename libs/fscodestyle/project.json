@@ -1,0 +1,38 @@
+{
+  "root": "libs/fscodestyle",
+  "sourceRoot": "libs/fscodestyle/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fscodestyle",
+        "tsConfig": "libs/fscodestyle/tsconfig.lib.json",
+        "packageJson": "libs/fscodestyle/package.json",
+        "main": "libs/fscodestyle/src/index.ts",
+        "assets": [
+          "libs/fscodestyle/*.md",
+          "libs/fscodestyle/tslint.json",
+          "libs/fscodestyle/index.js"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fscodestyle/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fscodestyle"],
+      "options": {
+        "jestConfig": "libs/fscodestyle/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
