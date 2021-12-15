@@ -2,8 +2,8 @@
 import { assert, stub } from 'sinon'; // tslint:disable-line:no-implicit-dependencies
 import { Component } from 'react';
 
-import Analytics from '../../../Analytics';
-import GoogleAnalyticsProvider from '../GoogleAnalyticsProvider';
+import Analytics from '../src/modules/analytics/Analytics';
+import GoogleAnalyticsProvider from '../src/modules/analytics/providers/google/GoogleAnalyticsProvider';
 
 const fixture = require('./GoogleAnalyticsProvider.fixture.json');
 

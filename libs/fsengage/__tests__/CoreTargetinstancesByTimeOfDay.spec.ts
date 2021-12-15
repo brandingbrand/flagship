@@ -1,6 +1,6 @@
-import targetInstancesByTimeOfDay from '../targetInstancesByTimeOfDay';
+import targetInstancesByTimeOfDay from '../src/modules/cms/providers/core/targets/targetInstancesByTimeOfDay';
 
-const fixture = require('../../__tests__/ContentManagementSystem.fixture.json');
+const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - TimeOfDay Target', () => {
   test('Valid Location', done => {

@@ -1,13 +1,13 @@
-import targetInstancesByState from '../targetInstancesByState';
+import targetInstancesByRegion from '../src/modules/cms/providers/core/targets/targetInstancesByRegion';
 
-const fixture = require('../../__tests__/ContentManagementSystem.fixture.json');
+const fixture = require('./ContentManagementSystem.fixture.json');
 
-describe('Core Content Management System Provider - State Target', () => {
+describe('Core Content Management System Provider - Region Target', () => {
   test('Valid Location', done => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.inside;
-    const result = targetInstancesByState(instances, targets, location);
+    const result = targetInstancesByRegion(instances, targets, location);
 
     expect(result).toEqual(true);
 
@@ -18,7 +18,7 @@ describe('Core Content Management System Provider - State Target', () => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.outside;
-    const result = targetInstancesByState(instances, targets, location);
+    const result = targetInstancesByRegion(instances, targets, location);
 
     expect(result).toEqual(false);
 

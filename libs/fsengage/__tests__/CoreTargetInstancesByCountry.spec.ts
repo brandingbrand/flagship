@@ -1,13 +1,13 @@
-import targetInstancesByPostalCode from '../targetInstancesByPostalCode';
+import targetInstancesByCountry from '../src/modules/cms/providers/core/targets/targetInstancesByCountry';
 
-const fixture = require('../../__tests__/ContentManagementSystem.fixture.json');
+const fixture = require('./ContentManagementSystem.fixture.json');
 
-describe('Core Content Management System Provider - PostalCode Target', () => {
+describe('Core Content Management System Provider - Country Target', () => {
   test('Valid Location', done => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.inside;
-    const result = targetInstancesByPostalCode(instances, targets, location);
+    const result = targetInstancesByCountry(instances, targets, location);
 
     expect(result).toEqual(true);
 
@@ -18,7 +18,7 @@ describe('Core Content Management System Provider - PostalCode Target', () => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.outside;
-    const result = targetInstancesByPostalCode(instances, targets, location);
+    const result = targetInstancesByCountry(instances, targets, location);
 
     expect(result).toEqual(false);
 

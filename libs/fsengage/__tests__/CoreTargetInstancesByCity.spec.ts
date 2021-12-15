@@ -1,6 +1,6 @@
-import targetInstancesByCity from '../targetInstancesByCity';
+import targetInstancesByCity from '../src/modules/cms/providers/core/targets/targetInstancesByCity';
 
-const fixture = require('../../__tests__/ContentManagementSystem.fixture.json');
+const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - City Target', () => {
   test('Valid Location', done => {

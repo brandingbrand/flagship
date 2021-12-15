@@ -1,0 +1,34 @@
+{
+  "root": "libs/fsengage",
+  "sourceRoot": "libs/fsengage/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsengage",
+        "tsConfig": "libs/fsengage/tsconfig.lib.json",
+        "packageJson": "libs/fsengage/package.json",
+        "main": "libs/fsengage/src/index.ts",
+        "assets": ["libs/fsengage/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsengage/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsengage"],
+      "options": {
+        "jestConfig": "libs/fsengage/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

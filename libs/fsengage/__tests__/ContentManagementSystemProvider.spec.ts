@@ -1,8 +1,8 @@
 // @ts-ignore using ts-sinon instead of sinon causes a conflict between @types/node and @types/react
 import { assert, stub } from 'sinon'; // tslint:disable-line:no-implicit-dependencies
 
-import CoreContentManagementSystemProvider from '../CoreContentManagementSystemProvider';
-import { ContentManagementSystemContext } from '../../ContentManagementSystemProvider';
+import CoreContentManagementSystemProvider from '../src/modules/cms/providers/core/CoreContentManagementSystemProvider';
+import { ContentManagementSystemContext } from '../src/modules/cms/providers/ContentManagementSystemProvider';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
 const fixture = require('./ContentManagementSystem.fixture.json');
