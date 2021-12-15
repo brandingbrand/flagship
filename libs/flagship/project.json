@@ -1,0 +1,48 @@
+{
+  "root": "libs/flagship",
+  "sourceRoot": "libs/flagship/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/flagship",
+        "tsConfig": "libs/flagship/tsconfig.lib.json",
+        "packageJson": "libs/flagship/package.json",
+        "main": "libs/flagship/src/index.ts",
+        "assets": [
+          "libs/flagship/*.md",
+          "libs/flagship/flagship.js",
+          "libs/flagship/react-native.config.js",
+          {
+            "glob": "**/*",
+            "input": "libs/flagship/ios",
+            "output": "ios"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/flagship/android",
+            "output": "android"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/flagship/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/flagship"],
+      "options": {
+        "jestConfig": "libs/flagship/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
