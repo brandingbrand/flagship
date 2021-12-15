@@ -1,0 +1,13 @@
+{
+  "name": "@brandingbrand/fscodestyle",
+  "version": "11.10.0",
+  "license": "MIT",
+  "bin": {
+    "fscodestyle": "index.js"
+  },
+  "dependencies": {
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.0.0"
+  }
+}
