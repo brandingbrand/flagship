@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore using ts-sinon instead of sinon causes a conflict between @types/node and @types/react
-import { assert, stub } from 'sinon'; // tslint:disable-line:no-implicit-dependencies
+import { assert, stub } from 'sinon';
 
 import CoreContentManagementSystemProvider from '../src/modules/cms/providers/core/CoreContentManagementSystemProvider';
 import { ContentManagementSystemContext } from '../src/modules/cms/providers/ContentManagementSystemProvider';
@@ -64,7 +67,6 @@ describe('Content Management System Provider', () => {
 
         assert.calledOnce(
           // @ts-ignore use of private method
-          // tslint:disable-next-line no-unbound-method
           CoreContentManagementSystemProvider.prototype.pullContent
         );
 
@@ -97,7 +99,6 @@ describe('Content Management System Provider', () => {
 
         assert.calledOnce(
           // @ts-ignore use of private method
-          // tslint:disable-next-line no-unbound-method
           CoreContentManagementSystemProvider.prototype.pullContent
         );
 

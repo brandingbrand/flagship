@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 
@@ -73,6 +72,7 @@ const styles = StyleSheet.create({
 const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
   return (
     routes?.reduce<string[]>(
+      // eslint-disable-next-line complexity
       (prev, route) => [
         ...prev,
         ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu) ||

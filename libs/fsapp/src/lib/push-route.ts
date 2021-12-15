@@ -14,7 +14,7 @@ export function overwrite(
   for (const screenName in appConfig.screens) {
     if (appConfig.screens.hasOwnProperty(screenName)) {
       const screen = appConfig.screens[screenName];
-      let pathReg = new RegExp('^\/_s\/' + screenName + '/?$');
+      let pathReg = new RegExp('^/_s/' + screenName + '/?$');
 
       if (screen.path) {
         pathReg = pathToRegexp(screen.path);

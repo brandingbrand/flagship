@@ -331,7 +331,7 @@ test('targeted device should default to ios only', () => {
     ))
     .toString();
 
-  const targetMatches = realPbxprojFile.match(/TARGETED_DEVICE_FAMILY = "[1-9\,]+"/g);
+  const targetMatches = realPbxprojFile.match(/TARGETED_DEVICE_FAMILY = "[1-9,]+"/g);
 
   expect((targetMatches || []).length).toEqual(2);
 

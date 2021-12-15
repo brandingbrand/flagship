@@ -1,5 +1,3 @@
-// tslint:disable ter-max-len max-line-length
-
 import { logInfo } from '../../../helpers';
 import { Config } from '../../../types';
 import * as path from '../../path';

@@ -13,7 +13,8 @@ export interface AlertOptions {
 
 
 export const Alert = {
-  setDefaults: swal.setDefaults, // tslint:disable-line:no-unbound-method
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  setDefaults: swal.setDefaults,
   alert: async (options: string | AlertOptions): Promise<void> => {
     if (typeof options === 'string') {
       return swal(options);

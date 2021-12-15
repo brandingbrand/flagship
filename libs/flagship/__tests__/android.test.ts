@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as android from '../src/lib/android';
 
 import * as fs from 'fs-extra';

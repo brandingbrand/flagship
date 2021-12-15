@@ -172,6 +172,7 @@ export function title(title?: string): void {
 
 /**
  * Returns the path to the package.json
+ *
  * @returns {string} The path to package.json
  */
 export function packageJSONPath(): string {
@@ -180,6 +181,7 @@ export function packageJSONPath(): string {
 
 /**
  * Returns the path to the index.html
+ *
  * @returns {string} The path to index.html
  */
 export function indexHTMLPath(): string {

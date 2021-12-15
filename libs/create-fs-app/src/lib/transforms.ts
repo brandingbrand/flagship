@@ -1,5 +1,6 @@
 /**
  * Splits a newline-delimited values into a array while removing extra whitespace
+ *
  * @param {string} input string of newline-delimited values
  * @returns {string[]} array of string values
  */

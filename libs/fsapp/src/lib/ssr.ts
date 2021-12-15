@@ -6,7 +6,6 @@ import type { default as cookieParserRoot } from 'cookie-parser';
 import fs from 'fs-extra';
 import path from 'path';
 import pathToRegexp, { Key } from 'path-to-regexp';
-// tslint:disable:no-submodule-imports - submodule import is required here
 import ReactDOMServer from 'react-dom/server';
 import { inspect } from 'util';
 import { pathForScreen } from './helpers';
@@ -140,7 +139,7 @@ async function renderApp(
           var initialState = ${state};
           var variables = ${variables};
         </script>
-      `).replace(/\<div id="root"\>/, `<div id="root">
+      `).replace(/<div id="root">/, `<div id="root">
         ${html}
       `);
 

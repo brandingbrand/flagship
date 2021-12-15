@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {

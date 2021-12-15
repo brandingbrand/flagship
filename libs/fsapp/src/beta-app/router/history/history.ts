@@ -77,16 +77,16 @@ export class History implements FSRouterHistory {
     this.observeNavigation();
     const tabRoutes = this.routes.filter(isTabRoute);
     const universalRoutes = this.routes.filter(isNotTabRoute);
-    const stackMatchers = tabRoutes.map(({ children, tab }) =>
+    const stackMatchers = tabRoutes.map(async ({ children, tab }) =>
       buildMatchers(children, tab)
     );
 
-    const promisedStacks = tabRoutes.map((route, i) => matchStack(route, stackMatchers[i]));
+    const promisedStacks = tabRoutes.map(async (route, i) => matchStack(route, stackMatchers[i]));
 
-    Promise.all(promisedStacks)
+    void Promise.all(promisedStacks)
       .then(async awaitedStacks => {
         const resolvedStacks = awaitedStacks.filter(isDefined);
-        const root = await makeRootLayout(resolvedStacks, () =>
+        const root = await makeRootLayout(resolvedStacks, async () =>
           matchStack({ children: universalRoutes }, this.matchers)
         );
 
@@ -332,7 +332,7 @@ export class History implements FSRouterHistory {
     Navigation.events().registerBottomTabPressedListener(({ tabIndex }) => {
       if (tabIndex === this.activeStack) {
         if (this.stack) {
-          Navigation.popToRoot(this.stack.id)
+          void Navigation.popToRoot(this.stack.id)
             .then(() => {
               this.stack?.children.splice(1);
             })
@@ -371,7 +371,7 @@ export class History implements FSRouterHistory {
     });
   }
 
-  // tslint:disable-next-line: cyclomatic-complexity
+  // eslint-disable-next-line complexity
   private async updateLocation(location: StackedLocation, action: Action): Promise<void> {
     if (this.checkBlockers(location, action)) {
       return;

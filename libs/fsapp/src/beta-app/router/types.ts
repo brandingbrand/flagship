@@ -126,6 +126,7 @@ export interface ParentRoute extends BaseRoute {
 
 /**
  * RouteCollection - tabbed collection of routes *
+ *
  * @param {Exclude<string, ''>} initialPath Must match a child route
  * @param {Tab} tab Tab used for tabAffinity
  * @param {Route[]} children Child routes in collection
@@ -186,6 +187,7 @@ export type Route =
 
 /**
  * A list of routes
+ *
  * @see Route
  */
 export type Routes = readonly (Route | RouteCollection)[];

@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 import React, { Component } from 'react';

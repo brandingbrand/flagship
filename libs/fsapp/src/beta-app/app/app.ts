@@ -12,7 +12,7 @@ export { APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN } from './app.base';
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
-    Linking.addEventListener('url', ({ url }) => this.router.open(url));
+    Linking.addEventListener('url', async ({ url }) => this.router.open(url));
 
     const url = await(
       this.config.getInitialURL ? this.config.getInitialURL() : Linking.getInitialURL()

@@ -21,6 +21,7 @@ export const PaymentMethods: ApplicablePayments = [
   }
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ShippingMethods: ShippingMethods = [
   {
     id: 'ground',

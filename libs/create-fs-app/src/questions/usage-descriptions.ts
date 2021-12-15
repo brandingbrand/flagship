@@ -1,4 +1,3 @@
-// tslint:disable: ter-max-len max-line-length
 import { DistinctQuestion } from 'inquirer';
 import * as formatters from '../lib/formatters';
 type UsageDescriptions = keyof import('../assets/base-config').BaseConfig['usageDescriptionIOS'];

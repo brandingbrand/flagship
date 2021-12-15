@@ -12,7 +12,7 @@ const kTestContents = 'this is in FOO\n';
 const testDirName = '__rename_test';
 const tempRootDir = path.join(__dirname, testDirName);
 
-function createFile(filePath: string, body = ''): void {
+function createFile(filePath: string, body: string = ''): void {
   fs.ensureFileSync(path.join(tempRootDir, filePath));
   fs.writeFileSync(path.join(tempRootDir, filePath), body);
 }

@@ -1,4 +1,3 @@
-// tslint:disable: ter-max-len
 
 import * as path from '../../path';
 import * as fs from '../../fs';
@@ -32,7 +31,7 @@ export function preLink(configuration: Config): void {
  *
  * @param {object} configuration The project configuration.
  */
-// tslint:disable:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
 

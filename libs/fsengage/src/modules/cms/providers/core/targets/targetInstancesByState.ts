@@ -1,6 +1,6 @@
 import { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByState(
   instance: any, targets: { [index: string]: any }, location: Location
 ): boolean {
@@ -26,12 +26,10 @@ export default function targetInstancesByState(
                            targets[campaign]['US-States'] &&
                            targets[campaign]['US-States'].selected_states;
 
-  // tslint:disable-next-line:no-magic-numbers
   if (instanceUSStates && instanceUSStates.indexOf(location.stateCode) === -1) {
     return false;
   }
 
-  // tslint:disable-next-line:no-magic-numbers
   if (campaignUSStates && campaignUSStates.indexOf(location.stateCode) === -1) {
     return false;
   }

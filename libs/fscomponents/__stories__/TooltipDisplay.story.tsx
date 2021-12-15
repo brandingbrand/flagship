@@ -1,10 +1,9 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   boolean,
   select
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { TooltipDisplay } from '../src/components/TooltipDisplay';
 
@@ -12,7 +11,6 @@ storiesOf('TooltipDisplay', module)
   .add('basic usage', () => (
     <View>
       <View>
-        {/* tslint:disable-next-line: jsx-use-translation-function */}
         <Text>Attached Text</Text>
       </View>
       <View>
@@ -24,7 +22,6 @@ storiesOf('TooltipDisplay', module)
             marginTop: 10
           }}
         >
-          {/* tslint:disable-next-line: jsx-use-translation-function */}
           Tooltip Text
         </TooltipDisplay>
       </View>

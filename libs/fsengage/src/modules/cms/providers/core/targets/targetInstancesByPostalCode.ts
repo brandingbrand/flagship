@@ -2,7 +2,7 @@ import { Location } from '../../../requesters/ContentManagementSystemLocator';
 
 const kUSZipCodeKey = 'US-Zipcodes';
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByPostalCode(
   instance: any, targets: { [index: string]: any }, location: Location
 ): boolean {
@@ -28,12 +28,10 @@ export default function targetInstancesByPostalCode(
                             targets[campaign][kUSZipCodeKey] &&
                             targets[campaign][kUSZipCodeKey].zipcodes;
 
-  // tslint:disable-next-line:no-magic-numbers
   if (instancePostalCodes && instancePostalCodes.indexOf(location.postalCode) === -1) {
     return false;
   }
 
-  // tslint:disable-next-line:no-magic-numbers
   if (campaignPostalCodes && campaignPostalCodes.indexOf(location.postalCode) === -1) {
     return false;
   }

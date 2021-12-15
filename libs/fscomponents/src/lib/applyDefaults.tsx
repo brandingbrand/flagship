@@ -1,4 +1,3 @@
-/* tslint:disable */
 // TODO: add proper types
 import React, { Component, ComponentType } from 'react';
 import { Dictionary } from '@brandingbrand/fsfoundation';

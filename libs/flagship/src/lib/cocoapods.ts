@@ -61,6 +61,7 @@ export function add(pods: string[], podfilePath: string = path.ios.podfilePath()
 
 /**
  * Add additional sources to the Podfile
+ *
  * @param {string[]} sources - list of sources to add
  */
 export function sources(sources: string[]): void {

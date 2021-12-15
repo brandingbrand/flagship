@@ -10,7 +10,7 @@ import {
   View
 } from 'react-native';
 import { Modal } from './Modal';
-import { AccessibilityComponentType, AccessibilityTraits } from '../types/Store';
+import { AccessibilityComponentType } from '../types/Store';
 
 const styles = StyleSheet.create({
   content: {

@@ -31,7 +31,7 @@ export const stringifyLocation = (location: LocationDescriptor) => {
   return typeof location === 'string' ? location : createPath(location);
 };
 
-export const mapPromisedChildren = async <T extends any>(
+export const mapPromisedChildren = async <T>(
   route: Route,
   callback: (route: Route) => T[] | Promise<T[]>
 ) => {
@@ -98,7 +98,7 @@ const buildMatcher = async (
 
   const children =
     !matchingRoute && !matchingRedirect
-      ? await mapPromisedChildren(route, childRoute =>
+      ? await mapPromisedChildren(route, async childRoute =>
           buildMatcher(childRoute, tab, 'initialPath' in route ? '' : path)
         )
       : [];
@@ -116,7 +116,7 @@ export const buildMatchers = async (
 ) => {
   try {
     return routes
-      .map(route => buildMatcher(route, 'tab' in route ? route.tab : tab))
+      .map(async route => buildMatcher(route, 'tab' in route ? route.tab : tab))
       .reduce(async (prev, next) => [...(await prev), ...(await next)], Promise.resolve([]));
   } catch (e) {
     return [];

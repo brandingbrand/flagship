@@ -6,14 +6,14 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 import {Dictionary} from '@brandingbrand/fsfoundation';
+
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.updateNameOrEmail;
 
 export interface UpdateNameOrEmailState {

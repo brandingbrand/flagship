@@ -66,6 +66,7 @@ export interface MultiCarouselProps<ItemT>
 
   /**
    * Wether the scrollbar should be hidden, defaults to `true`
+   *
    * @platform web
    */
   hideScrollbar?: boolean;
@@ -82,6 +83,7 @@ export interface MultiCarouselProps<ItemT>
 
   /**
    * Wether the `PageIndicatorComponent` should be hidden
+   *
    * @deprecated to be removed in fs12, use `PageIndicatorComponent`
    */
   hidePageIndicator?: boolean;

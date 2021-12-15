@@ -1,10 +1,8 @@
-// tslint:disable no-submodule-imports
-
 import React, { Component } from 'react';
 
 // TODO: Update react-id-swiper to support typing
 import ReactIdSwiper from 'react-id-swiper/lib/ReactIdSwiper.custom';
-import 'swiper/swiper-bundle.css'; // tslint:disable-line
+import 'swiper/swiper-bundle.css';
 import { View } from 'react-native';
 import { CarouselProps } from './CarouselProps';
 import { Navigation, Pagination, Swiper } from 'swiper/swiper.esm';

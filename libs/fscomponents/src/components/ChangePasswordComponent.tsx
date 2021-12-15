@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-const componentTranslationKeys = translationKeys.flagship.changePassword;
 import { Dictionary } from '@brandingbrand/fsfoundation';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
+const componentTranslationKeys = translationKeys.flagship.changePassword;
 
 export interface ChangePasswordState {
   value: any;
@@ -129,7 +129,6 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
   } // end constructor
 
   componentDidMount(): void {
-    // tslint:disable-next-line:ter-max-len
     console.warn('ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.');
   }
 

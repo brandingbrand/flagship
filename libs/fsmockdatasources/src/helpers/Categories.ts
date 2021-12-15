@@ -1,5 +1,3 @@
-// tslint:disable:ter-max-len max-line-length
-
 export const Categories: import ('@brandingbrand/fscommerce').CommerceTypes.Category = {
   id: 'root',
   title: 'Storefront Catalog - EN',

@@ -80,7 +80,7 @@ class IconTextBlock extends Component<IconTextProps & { context: any }> {
       value: link
     });
   }
-  // tslint:disable cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const {
       containerStyle,

@@ -59,7 +59,7 @@ export class History implements FSRouterHistory {
     key: createKey()
   });
   constructor(private readonly routes: Routes) {
-    this.initialNavigation()
+    void this.initialNavigation()
       .then(() => {
         this.observeNavigation();
       })

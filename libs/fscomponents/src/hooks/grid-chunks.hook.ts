@@ -80,7 +80,7 @@ const makeInserter = <T>(
   const insertedIndexes = new Set<number>();
   const insertedIntervals = new Set<number>();
 
-  // tslint:disable-next-line: cyclomatic-complexity
+  // eslint-disable-next-line complexity
   return (
     itIndex: number,
     columnIndex: number,
@@ -155,7 +155,6 @@ export function* chunkGrid<T, E = undefined>(
   const createEmptyRow = (size: number) =>
     new Array<GridItem<E>>(size).fill(makeGridItem(emptyValue as E));
 
-  // tslint:disable-next-line: no-constant-condition -- This loop ends at the break marked with !!!
   while (true) {
     const insertedItem = inserter(itIndex, columnIndex, row);
     const itemWidth = sizer(itIndex, insertedItem?.value);

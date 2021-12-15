@@ -1,4 +1,3 @@
-/* tslint:disable:max-line-length ter-max-len */
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { logInfo } from '../../../helpers';

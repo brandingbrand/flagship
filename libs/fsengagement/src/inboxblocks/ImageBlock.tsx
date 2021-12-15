@@ -58,7 +58,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
     imageRatioStyle.width = imageDimensions.width;
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   const findImageRatio = (): ImageDimensions => {
     const {
       parentWidth, containerStyle, ratio, useRatio, outerContainerStyle, cardContainerStyle

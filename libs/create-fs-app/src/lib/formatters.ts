@@ -6,7 +6,6 @@ export const compose = (...fns: QuestionFormatter[]): QuestionFormatter => {
   return question => fns.reduceRight((formatters, fn) => fn(formatters), question);
 };
 
-// tslint:disable-next-line: ter-max-len
 export type QuestionFormatter<T extends Answers = Answers> = (question: DistinctQuestion<T>) => DistinctQuestion<T>;
 
 /**

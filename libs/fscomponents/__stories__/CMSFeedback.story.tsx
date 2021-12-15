@@ -1,15 +1,13 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element
 // strings in this file since this is mainly a demo
 
 import React from 'react';
 import { Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { CMSFeedback } from '../src/components/CMSFeedback';
 import {
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 const bodyTextStyle = {

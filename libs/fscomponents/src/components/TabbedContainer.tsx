@@ -56,7 +56,7 @@ export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = pr
 
   const selectTab = (index: number) => () => {
     setSelectedIndex(index);
-    if (!!props.onTabSwitch) {
+    if (props.onTabSwitch) {
       props.onTabSwitch(index);
     }
   };

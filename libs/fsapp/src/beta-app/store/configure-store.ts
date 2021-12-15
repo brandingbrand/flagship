@@ -11,6 +11,7 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
 declare global {
+  // eslint-disable-next-line no-var
   var __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: typeof compose | undefined;
 }
 

@@ -92,7 +92,7 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
       position: cardPosition
     });
   };
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
     if (story.html && handleAction) {
       return handleAction({

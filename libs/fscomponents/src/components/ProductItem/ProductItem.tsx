@@ -109,7 +109,7 @@ export interface ProductItemProps extends CommerceTypes.Product {
 
 export class ProductItem extends Component<ProductItemProps> {
 
-  // tslint:disable cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const {
       style,

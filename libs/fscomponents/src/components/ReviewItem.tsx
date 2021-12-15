@@ -1,4 +1,4 @@
-/* tslint:disable:cyclomatic-complexity */
+/* eslint-disable complexity */
 
 import React, { Component } from 'react';
 import {

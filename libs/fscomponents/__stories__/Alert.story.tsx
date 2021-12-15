@@ -1,14 +1,12 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element
 // strings in this file since this is mainly a demo
 
 import React from 'react';
 
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 import { Button } from '../src/components/Button';
 import { Alert } from '../src/components/Alert';
-// tslint:disable-next-line:no-implicit-dependencies
 import { boolean, text } from '@storybook/addon-knobs';
 
 const simpleAlert = () => {

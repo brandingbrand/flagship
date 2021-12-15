@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import React, { Component } from 'react';
 import { Action } from '../../src/types';
 import { View } from 'react-native';
@@ -19,7 +20,6 @@ class ActionContext extends Component {
 }
 
 export default function(handleAction: (actions: Action) => void, story?: any): any {
-  // tslint:disable-next-line: max-classes-per-file
   return class extends ActionContext {
     getChildContext = () => ({
       handleAction,

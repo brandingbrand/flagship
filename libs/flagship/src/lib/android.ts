@@ -46,6 +46,7 @@ const DEFAULT_ANDROID_CONFIG = {
 
 /**
  * generates android config merging defaults with overrides
+ *
  * @param {FlagshipTypes.AndroidConfig | undefined} config - android config override
  * @returns {FlagshipTypes.AndroidConfig} android config
  */
@@ -74,6 +75,7 @@ export function androidConfigWithDefault(
 
 /**
  * add additional dependencies to the app/build.gradle
+ *
  * @param {FlagshipTypes.AndroidConfig} config - android config
  */
 export function additionalDependencies(config: FlagshipTypes.AndroidConfig): void {
@@ -97,6 +99,7 @@ export function additionalDependencies(config: FlagshipTypes.AndroidConfig): voi
 
 /**
  * add additional dependencies to the AndroidManifest
+ *
  * @param {FlagshipTypes.AndroidConfig} config - android config
  */
 export function additionalPermissions(config: FlagshipTypes.AndroidConfig): void {
@@ -213,6 +216,7 @@ export function launchScreen(configuration: FlagshipTypes.Config): void {
 
 /**
  * update android manifest .MainActivity activity attributes
+ *
  * @param {FlagshipTypes.AndroidConfig} config - android config
  */
 export function mainActivityAttributes(config: FlagshipTypes.AndroidConfig): void {
@@ -236,6 +240,7 @@ export function mainActivityAttributes(config: FlagshipTypes.AndroidConfig): voi
 
 /**
  * update android manifest .MainApplication application attributes
+ *
  * @param {FlagshipTypes.AndroidConfig} config - android config
  */
 export function mainApplicationAttributes(config: FlagshipTypes.AndroidConfig): void {
@@ -259,6 +264,7 @@ export function mainApplicationAttributes(config: FlagshipTypes.AndroidConfig): 
 
 /**
  * update android manifest with additional application elements
+ *
  * @param {FlagshipTypes.AndroidConfig} config - android configuration
  */
 export function mainApplicationElements(config: FlagshipTypes.AndroidConfig): void {
@@ -401,6 +407,7 @@ export function sentryProperties(configuration: FlagshipTypes.Config): void {
 
 /**
  * Adds ShowDevMenu:"true" to NativeConstants for showing the dev menu
+ *
  * @param {object} configuration The project configuration.
  */
 export function addDevMenuFlag(configuration: FlagshipTypes.Config): void {
@@ -409,6 +416,7 @@ export function addDevMenuFlag(configuration: FlagshipTypes.Config): void {
 
 /**
  * Sets initial env in EnvSwitcher
+ *
  * @param {object} configuration The project environment configuration.
  * @param {string} env The identifier for the environment for which to return the configuration.
  */

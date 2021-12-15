@@ -4,7 +4,6 @@ import styles from './SliderEntry.style';
 import { Navigator } from '@brandingbrand/fsapp';
 import {
   OptionsModalPresentationStyle
-// tslint:disable-next-line: no-submodule-imports
 } from 'react-native-navigation/lib/dist/interfaces/Options';
 
 export interface RenderDemoProductData {

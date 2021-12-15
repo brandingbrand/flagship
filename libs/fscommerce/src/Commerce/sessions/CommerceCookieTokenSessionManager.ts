@@ -29,7 +29,7 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
       return Promise.resolve(this.token);
     }
     return SInfo.getItem(CommerceSessionManager.COMMERCE_TOKEN, {})
-      .then((tokenString: string) => {
+      .then(async (tokenString: string) => {
         if (!tokenString) {
           return Promise.resolve(null);
         }

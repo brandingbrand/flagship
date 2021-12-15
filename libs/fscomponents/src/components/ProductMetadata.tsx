@@ -70,7 +70,6 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo((pr
       <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
     );
   };
-  // tslint:disable-next-line: cyclomatic-complexity
   const renderPrice = (): JSX.Element => {
     const {
       originalPriceStyle,

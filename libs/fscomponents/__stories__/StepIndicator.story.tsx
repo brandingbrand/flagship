@@ -1,11 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   boolean,
   number,
   object
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { IdStep, StepIndicator } from '../src/components/StepIndicator';
 

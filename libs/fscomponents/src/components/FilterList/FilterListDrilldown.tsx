@@ -315,7 +315,7 @@ export class FilterListDrilldown extends PureComponent<
     );
   }
 
-  // tslint:disable cyclomatic-complexity
+  // eslint-disable-next-line complexity
   renderFilterItem = (
     { item, index }: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
     skipCustomRender: boolean = false
@@ -414,6 +414,7 @@ export class FilterListDrilldown extends PureComponent<
     );
   }
 
+  // eslint-disable-next-line complexity
   renderSecondLevel = (item: FilterItem, skipCustomRender?: boolean): JSX.Element => {
     if (this.props.renderSecondLevel && !skipCustomRender) {
       return this.props.renderSecondLevel(

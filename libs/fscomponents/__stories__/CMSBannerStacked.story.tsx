@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { CMSBannerStacked } from '../src/components/CMSBannerStacked';
 
 import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';

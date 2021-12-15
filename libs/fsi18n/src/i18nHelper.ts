@@ -61,12 +61,12 @@ export default class I18nHelper {
     });
   }
 
-  // @ts-ignore
+    // @ts-ignore
   public addLocaleListener(func: (locale: string) => void): void {
     this.localeListeners.push(func);
   }
 
-  // @ts-ignore
+    // @ts-ignore
   public removeLocaleListener(func: (locale: string) => void): void {
     this.localeListeners = this.localeListeners.filter((testFunc: (locale: string) => void) => {
       return func !== testFunc;
@@ -267,6 +267,7 @@ export default class I18nHelper {
 
   /**
    * Determines if a given value is a translation key
+   *
    * @param {string|object} translationKey - Value to check if it is a translation key
    * @returns {boolean} - Whether or not the value is a translation key
    */

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { uniqueId } from 'lodash-es';
 
 export const INTERNAL = Symbol('Internal Method');
@@ -31,7 +32,6 @@ class LazyPromise<T> implements PromiseLike<T> {
   }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 class QueueRunner {
   private readonly promises: Map<string, PromiseLike<void>> = new Map();
 
@@ -40,7 +40,7 @@ class QueueRunner {
     args: A
   ): Promise<void> {
     const id = uniqueId(QueueRunner.name);
-    const promise = new LazyPromise<void>((resolve, reject) =>
+    const promise = new LazyPromise<void>(async (resolve, reject) =>
       method(...args)
         .then(resolve)
         .catch(reject)
@@ -55,7 +55,6 @@ class QueueRunner {
     for (const promise of existing) {
       try {
         // Promise Like
-        // tslint:disable-next-line: await-promise
         await promise;
       } catch {
         this.promises.clear();
@@ -76,10 +75,9 @@ export const queueMethod = (
 ) => {
   const originalMethod = obj[propertyKey as keyof typeof obj] as Function;
   descriptor.value = async function(...args: any[]): Promise<void> {
-    /* tslint:disable: no-this-assignment no-invalid-this */
     // Bound to instance
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
-    /* tslint:enable: no-this-assignment no-invalid-this */
 
     const runner = (() => {
       const existingRunner = runners.get(obj);

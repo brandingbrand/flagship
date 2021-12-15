@@ -1,4 +1,3 @@
-// tslint:disable ter-max-len
 const exec = require('child_process').execSync;
 import { project } from './lib/path';
 

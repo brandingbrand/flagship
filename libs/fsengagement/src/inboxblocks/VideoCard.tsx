@@ -72,7 +72,7 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo(pro
       }
     });
   };
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   const onCardPress = async (): Promise<void> => {
     const { actions, story, storyGradient } = props;
     if (!handleAction) {

@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 import { Distance, DistanceUnit } from '@brandingbrand/fsfoundation';
 import { Address, Hour } from '../types/Store';
 
@@ -112,7 +112,7 @@ export function formatAddress(address: Address) {
  * @param target number of position x
  * @param duration number of duration in ms
  */
-export function animatedScrollTo(element: HTMLElement, target: number, duration: number) {
+export async function animatedScrollTo(element: HTMLElement, target: number, duration: number) {
   target = Math.round(target);
   duration = Math.round(duration);
   if (duration < 0) {
@@ -123,37 +123,37 @@ export function animatedScrollTo(element: HTMLElement, target: number, duration:
     return Promise.resolve();
   }
 
-  let start_time = Date.now();
-  let end_time = start_time + duration;
+  const start_time = Date.now();
+  const end_time = start_time + duration;
 
-  let start_top = element.scrollLeft;
-  let distance = target - start_top;
+  const start_top = element.scrollLeft;
+  const distance = target - start_top;
 
   // based on http://en.wikipedia.org/wiki/Smoothstep
-  let smooth_step = function(start: number, end: number, point: number) {
+  const smooth_step = function(start: number, end: number, point: number) {
     if (point <= start) {
       return 0;
     }
     if (point >= end) {
       return 1;
     }
-    let x = (point - start) / (end - start);
+    const x = (point - start) / (end - start);
     return x * x * (3 - 2 * x);
   };
 
   return new Promise<void>(function(resolve, reject) {
-    let previous_scroll_snap = (element.style as any).scrollSnapType;
+    const previous_scroll_snap = (element.style as any).scrollSnapType;
     let previous_top = element.scrollLeft;
 
     (element.style as any).scrollSnapType = "";
-    let scroll_frame = function() {
-      if (element.scrollLeft != previous_top) {
+    const scroll_frame = function() {
+      if (element.scrollLeft !== previous_top) {
         return;
       }
 
-      let now = Date.now();
-      let point = smooth_step(start_time, end_time, now);
-      let frameTop = Math.round(start_top + distance * point);
+      const now = Date.now();
+      const point = smooth_step(start_time, end_time, now);
+      const frameTop = Math.round(start_top + distance * point);
       element.scrollLeft = frameTop;
 
       if (now >= end_time) {

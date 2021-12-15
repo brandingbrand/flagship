@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import {
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { TouchableOpacityLink } from '../src/components/TouchableOpacityLink';
 

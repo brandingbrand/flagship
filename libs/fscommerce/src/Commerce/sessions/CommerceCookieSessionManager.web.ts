@@ -47,9 +47,9 @@ export default class CommerceCookieSessionManager extends CommerceSessionManager
    *
    * @returns {Promise.<SessionToken | null>} A Promise representing token
    */
-  // tslint:disable:cyclomatic-complexity
   async get(): Promise<SessionToken | null> {
     // allow no more than one invocation at a time
+    // eslint-disable-next-line complexity
     this.getPromise = (this.getPromise || Promise.resolve()).then(async () => {
       let token: SessionToken | null | undefined = this.token;
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { ReviewTypes } from '@brandingbrand/fscommerce';
 import { ProductMetadata } from '../src/components/ProductMetadata';

@@ -1,8 +1,10 @@
+/* eslint-disable prefer-rest-params */
+/* eslint-disable @typescript-eslint/unbound-method */
 import {
   Actions as GAActions,
   Analytics as GAClient,
   Hits as GAHits
-  // @ts-ignore TODO: Update react-native-google-analytics to support typing
+    // @ts-ignore TODO: Update react-native-google-analytics to support typing
 } from '@brandingbrand/react-native-google-analytics';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import parseURL from 'url-parse';
@@ -189,7 +191,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Add());
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.addProduct,
         params: arguments
       });
@@ -206,7 +207,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.checkout,
         params: arguments
       });
@@ -218,7 +218,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.CheckoutOption(action.step, action.option));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.checkoutOption,
         params: arguments
       });
@@ -231,7 +230,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Click(action && action.list));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.clickProduct,
         params: arguments
       });
@@ -250,7 +248,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.PromoClick());
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.clickPromotion,
         params: arguments
       });
@@ -271,7 +268,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.impressionProduct,
         params: arguments
       });
@@ -288,7 +284,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.impressionPromotion,
         params: arguments
       });
@@ -301,7 +296,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Detail(action && action.list));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.detailProduct,
         params: arguments
       });
@@ -322,7 +316,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.purchase,
         params: arguments
       });
@@ -334,7 +327,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Refund(action.identifier));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.refundAll,
         params: arguments
       });
@@ -360,7 +352,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Refund(action.identifier));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.refundPartial,
         params: arguments
       });
@@ -373,7 +364,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.set(new GAActions.Remove());
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.removeProduct,
         params: arguments
       });
@@ -404,7 +394,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       }));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this.setTrafficSource,
         params: arguments
       });
@@ -428,7 +417,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       ));
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this._addProduct,
         params: arguments
       });
@@ -451,7 +439,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.send(hit);
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this._sendEvent,
         params: arguments
       });
@@ -473,7 +460,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.send(hit);
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this._sendPageView,
         params: arguments
       });
@@ -500,7 +486,6 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
       this.client.send(hit);
     } else {
       this.queue.unshift({
-        // tslint:disable-next-line: no-unbound-method
         func: this._sendScreenView,
         params: arguments
       });

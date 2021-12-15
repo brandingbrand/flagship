@@ -84,7 +84,6 @@ If you are a developer seeing this message then make sure that your parameter to
       this.provideClass(provider);
     } else {
       throw new TypeError(
-        // tslint:disable-next-line: ter-max-len
         `${Injector.name}: Expected provider to provide either a value, factory or class, but none was provided.`
       );
     }
@@ -101,7 +100,6 @@ If you are a developer seeing this message then make sure that your parameter to
   private verifyDeps(target: Function, deps: unknown[]): void | never {
     if (deps.length !== target.length) {
       throw new ReferenceError(
-        // tslint:disable-next-line: ter-max-len
         `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies.
 Check that your dependency array matches your factory or classes required dependencies.`
       );

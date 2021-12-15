@@ -1,10 +1,9 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   // boolean,
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { LinkCard } from '../src/components/LinkCard';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';

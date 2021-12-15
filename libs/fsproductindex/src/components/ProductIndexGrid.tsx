@@ -468,7 +468,7 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   renderSortModal = () => {
     if (this.props.hideActionBar) {
       return null;
@@ -576,7 +576,7 @@ export default class ProductIndexGrid extends Component<
     };
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   renderFilterModal = () => {
     if (this.props.hideActionBar) {
       return null;
@@ -858,7 +858,7 @@ export default class ProductIndexGrid extends Component<
     );
   }
 
-  // tslint:disable-next-line: cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): React.ReactNode {
     const {
       commerceData,

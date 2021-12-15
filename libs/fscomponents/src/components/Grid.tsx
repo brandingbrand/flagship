@@ -135,6 +135,7 @@ export interface GridProps<ItemT>
 
   /**
    * The number of columns to display in the grid.
+   *
    * @deprecated to be removed in fs12, use numColumns instead
    */
   columns?: number;
@@ -142,24 +143,28 @@ export interface GridProps<ItemT>
   /**
    * Whether or not a back to top button should appear after the user scrolls down. Defaults to
    * false.
+   *
    * @deprecated to be removed in fs12, use BackToTopButton instead
    */
   showBackToTop?: boolean;
 
   /**
    * An optional function to render a header component displayed at the top of the grid.
+   *
    * @deprecated to be removed in fs12, use ListHeaderComponent instead
    */
   renderHeader?: () => JSX.Element | null;
 
   /**
    * An optional function to render a footer component, displayed at the bottom of the grid.
+   *
    * @deprecated to be removed in fs12, use ListFooterComponent instead
    */
   renderFooter?: () => JSX.Element | null;
 
   /**
    * Styles to apply to the container around the back to top button
+   *
    * @deprecated to be removed in fs12, use BackToTopStyle instead
    */
   backToTopContainerStyle?: StyleProp<ViewStyle>;
@@ -167,6 +172,7 @@ export interface GridProps<ItemT>
   /**
    * Styles to apply to the back to top button. Does not apply if a custom back to top render
    * function is used.
+   *
    * @deprecated to be removed in fs12, use BackToTopButton instead
    */
   backToTopButtonStyle?: StyleProp<ViewStyle>;
@@ -174,6 +180,7 @@ export interface GridProps<ItemT>
   /**
    * Styles to apply to the default back to top text. Does not apply if a custom back to top render
    * function is used.
+   *
    * @deprecated to be removed in fs12, use BackToTopButton instead
    */
   backToTopTextStyle?: StyleProp<TextStyle>;
@@ -181,6 +188,7 @@ export interface GridProps<ItemT>
   /**
    * Copy to show inside the back to top button. Defaults to "Top". Does not apply if a custom back
    * to top render function is used.
+   *
    * @deprecated to be removed in fs12, use BackToTopButton instead
    */
   backToTopText?: string;
@@ -188,24 +196,28 @@ export interface GridProps<ItemT>
   /**
    * The distance the user needs to scroll down before the back to top button appears. Defaults to
    * 100.
+   *
    * @deprecated to be removed in fs12, use BackToTopShowAtHeight instead
    */
   backToTopShowAtHeight?: number;
 
   /**
    * An optional custom render function to render a back to top button.
+   *
    * @deprecated use BackToTopButton instead
    */
   renderBackToTopButton?: (scrollToTop: GridScrollToTopFunc) => JSX.Element;
 
   /**
    * Props to pass to the underlying FlatList.
+   *
    * @deprecated to be removed in fs12
    */
   listViewProps?: Partial<FlatListProps<GridRow<ItemT>>>;
 
   /**
    * Whether or not to show a separator between columns in the grid.
+   *
    * @deprecated to be removed in fs12
    */
   showColumnSeparators?: boolean;
@@ -217,6 +229,7 @@ export interface GridProps<ItemT>
 
   /**
    * Whether or not to show a separator between rows in the grid.
+   *
    * @deprecated to be removed in fs12
    */
   showRowSeparators?: boolean;
@@ -280,6 +293,7 @@ export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
 }
 
 // TODO: wSedlacek remove deprecated props in fs12
+// eslint-disable-next-line complexity
 export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
   const {
     accessible,

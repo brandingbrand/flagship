@@ -21,10 +21,8 @@ export default class ContentManagementSystemLocator {
 
   private readonly kStorcIPEndpoint: string = 'https://api.brandingbrand.com/storc/v2/geoip/';
 
-  // tslint:disable-next-line:no-magic-numbers
   private readonly kLocationTimeout: number = 20 * 1000; // Milliseconds
 
-  // tslint:disable-next-line:no-magic-numbers
   private readonly kMaximumAge: number = 1 * 1000; // Milliseconds
 
   private network: FSNetwork;
@@ -63,7 +61,7 @@ export default class ContentManagementSystemLocator {
   private async getGeoIPlocation(): Promise<Location> {
     return this.network
       .get(this.kStorcIPEndpoint)
-      // tslint:disable-next-line:cyclomatic-complexity
+      // eslint-disable-next-line complexity
       .then(response => {
         const data = response.data;
 

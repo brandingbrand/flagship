@@ -1,11 +1,10 @@
 import React from 'react';
 import { FieldOption, FormValues, LoginFormFK } from '../src/components/LoginFormFK';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import {
   object,
   text
-  // tslint:disable-next-line:no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 

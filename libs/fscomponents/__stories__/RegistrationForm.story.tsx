@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { RegistrationForm } from '../src/components/RegistrationForm';
 
 const onSubmit = (values: any) => {

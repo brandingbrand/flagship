@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {
   OptionsModalPresentationStyle
-// tslint:disable-next-line: no-submodule-imports
 } from 'react-native-navigation/lib/dist/interfaces/Options';
 // import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import * as Animatable from 'react-native-animatable';
@@ -160,7 +159,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     }).catch(err => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient, storyType } = this.props;

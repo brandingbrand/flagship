@@ -120,7 +120,7 @@ interface RenderOption {
 export const LocationItem: React.FunctionComponent<LocationItemProps> = props => {
   const { format, style } = props;
 
-  /* tslint:disable */
+  // eslint-disable-next-line complexity
   const renderByFormat = (format: string) => {
     switch (format) {
       case '1':

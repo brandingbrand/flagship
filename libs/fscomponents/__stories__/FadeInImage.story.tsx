@@ -4,11 +4,10 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { FadeInImage } from '../src/components/FadeInImage';
 import {
   files, text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
@@ -22,8 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 const deepLink = (deepLinkText: any) => () => {
-  // tslint:disable-next-line
-  Linking.openURL(deepLinkText);
+  void Linking.openURL(deepLinkText);
 };
 
 storiesOf('FadeInImage', module)

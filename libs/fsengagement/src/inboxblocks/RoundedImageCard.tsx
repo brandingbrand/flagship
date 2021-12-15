@@ -41,7 +41,6 @@ import {
 import { TextBlock } from './TextBlock';
 import {
   OptionsModalPresentationStyle
-// tslint:disable-next-line: no-submodule-imports
 } from 'react-native-navigation/lib/dist/interfaces/Options';
 const { width: viewportWidth } = Dimensions.get('window');
 

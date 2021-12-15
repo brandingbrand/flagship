@@ -57,7 +57,6 @@ export class SingleLineForm extends PureComponent<SingleLineFormProps> {
   }
 
   componentDidMount(): void {
-    // tslint:disable-next-line:ter-max-len
     console.warn('SingleLineForm is deprecated and will be removed in the next version of Flagship.');
   }
 
