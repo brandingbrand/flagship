@@ -1,0 +1,34 @@
+{
+  "root": "libs/create-fs-app",
+  "sourceRoot": "libs/create-fs-app/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/create-fs-app",
+        "tsConfig": "libs/create-fs-app/tsconfig.lib.json",
+        "packageJson": "libs/create-fs-app/package.json",
+        "main": "libs/create-fs-app/src/index.ts",
+        "assets": ["libs/create-fs-app/*.md", "libs/create-fs-app/index.js"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/create-fs-app/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/create-fs-app"],
+      "options": {
+        "jestConfig": "libs/create-fs-app/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

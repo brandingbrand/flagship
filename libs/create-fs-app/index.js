@@ -7,4 +7,4 @@ if (currentNodeMajorVersion < 10) {
   process.exit(1);
 }
 
-require('./dist/index');
+require('./src/index');
