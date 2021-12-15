@@ -1,10 +1,11 @@
-const fs = require(`../fs`);
-const fsExtra = require(`fs-extra`);
-const nodePath = require(`path`);
-const path = require('../path');
+import * as path from '../src/lib/path';
+import * as fs from '../src/lib/fs';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__fs_test`);
+import * as fsExtra from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__fs_test');
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 

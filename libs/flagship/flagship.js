@@ -2,6 +2,6 @@
 
 require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .commandDir('dist/commands')
+  .commandDir('src/commands')
   .help()
   .argv;

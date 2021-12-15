@@ -1,0 +1,9 @@
+{
+  "name": "@brandingbrand/flagship",
+  "sideEffects": false,
+  "version": "11.10.0",
+  "license": "MIT",
+  "bin": {
+    "flagship": "flagship.js"
+  }
+}

@@ -1,10 +1,11 @@
-const ios = require(`../ios`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as ios from '../src/lib/ios';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__ios_test`);
-const appName = `MOCKAPP`;
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__ios_test');
+const appName = 'MOCKAPP';
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -23,7 +24,7 @@ test(`update bundle id`, () => {
     bundleIds: {
       ios: `test.bundle.id`
     }
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -36,7 +37,7 @@ test(`enable capabilities`, () => {
   ios.capabilities({
     name: appName,
     enabledCapabilitiesIOS: [`Push`, `HomeKit`]
-  });
+  } as any);
 
   const pbxprojFile = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, `${appName}.xcodeproj`, `project.pbxproj`))
@@ -50,7 +51,7 @@ test(`enable entitlements`, () => {
   ios.entitlements({
     name: appName,
     entitlementsFileIOS: `${appName}.entitlements`
-  });
+  } as any);
 
   const entitlementsFileSource = fs
     .readFileSync(nodePath.join(tempRootDir, `env`, `${appName}.entitlements`))
@@ -72,7 +73,7 @@ test(`update display name`, () => {
   ios.displayName({
     name: appName,
     displayName: `Mock App`
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -87,7 +88,7 @@ test(`update icon`, () => {
     appIconDir: {
       ios: nodePath.join(tempRootDir, 'assets', 'appIcons', 'ios')
     }
-  });
+  } as any);
 
   const iconFilesSource = fs
     .readdirSync(nodePath.join(tempRootDir, 'assets', 'appIcons' , 'ios'))
@@ -109,7 +110,7 @@ test(`update launch screen`, () => {
           tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`)
       }
     }
-  });
+  } as any);
 
   const launchScreenImagesSource = fs
     .readdirSync(nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `images`))
@@ -135,7 +136,7 @@ test(`add exception domains by string`, () => {
   ios.exceptionDomains({
     name: appName,
     exceptionDomains: [`some-domain.com`]
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -150,7 +151,7 @@ test(`add exception domains by object`, () => {
   ios.exceptionDomains({
     name: appName,
     exceptionDomains: [{ domain: `some-domain.com`, value: `SOMEVALUE` }]
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -162,7 +163,7 @@ test(`add exception domains by object`, () => {
 test(`add exception domains with disableDevFeature turned off`, () => {
   ios.exceptionDomains({
     name: appName
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -177,7 +178,7 @@ test(`add exception domains with disableDevFeature turned on`, () => {
   ios.exceptionDomains({
     name: appName,
     disableDevFeature: true
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -190,7 +191,7 @@ test(`add usage description`, () => {
   ios.usageDescription({
     name: appName,
     usageDescriptionIOS: [{ key: `Camera`, string: `Camera is needed for ${appName}` }]
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -202,7 +203,7 @@ test(`add usage description`, () => {
 test(`set url scheme without specifying urlScheme`, () => {
   ios.urlScheme({
     name: appName
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -218,7 +219,7 @@ test(`set url scheme by specifying urlScheme`, () => {
   ios.urlScheme({
     name: appName,
     urlScheme: 'mockapp-app-url'
-  });
+  } as any);
 
   const infoPlist = fs
     .readFileSync(nodePath.join(tempRootDir, `ios`, appName, `Info.plist`))
@@ -236,7 +237,7 @@ test(`update version number`, () => {
   ios.version(
     {
       name: appName
-    },
+    } as any,
     version
   );
 
@@ -256,7 +257,7 @@ test('provide custom bundle version number', () => {
       ios: {
         buildVersion: '1.3.3'
       }
-    },
+    } as any,
     version
   );
 
@@ -276,7 +277,7 @@ test('provide custom short version number', () => {
       ios: {
         shortVersion: '1.3.3'
       }
-    },
+    } as any,
     version
   );
 
@@ -292,7 +293,7 @@ test(`set env switcher initial env`, () => {
   ios.setEnvSwitcherInitialEnv(
     {
       name: appName
-    },
+    } as any,
     'stage2stage'
   );
 
@@ -311,7 +312,7 @@ test(`copy sentry properties`, () => {
     sentry: {
       propertiesPath: nodePath.join(tempRootDir, `assets`, `sentry.properties`)
     }
-  });
+  } as any);
 
   const sentryPropertiesPathSource = fs
     .readFileSync(nodePath.join(tempRootDir, `assets`, `sentry.properties`))
@@ -326,7 +327,7 @@ test(`copy sentry properties`, () => {
 test('targeted device should default to ios only', () => {
   const realPbxprojFile: string = fs
     .readFileSync(nodePath.join(
-      __dirname, '..', '..', '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'
+      __dirname, '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'
     ))
     .toString();
 

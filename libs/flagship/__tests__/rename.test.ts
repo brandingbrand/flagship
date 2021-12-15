@@ -1,8 +1,9 @@
-const rename = require('../rename');
-const fs = require('fs-extra');
-const path = require('path');
-const { trueCasePathSync } =
-  require('true-case-path'); // tslint:disable-line:no-implicit-dependencies
+import * as rename from '../src/lib/rename';
+
+import * as fs from 'fs-extra';
+import * as path from 'path';
+
+import { trueCasePathSync } from 'true-case-path';
 
 const kFileNameOld = 'OldName/test_file_OldName.js';
 const kFileNameTest = 'lib/test_file.js';
@@ -11,7 +12,7 @@ const kTestContents = 'this is in FOO\n';
 const testDirName = '__rename_test';
 const tempRootDir = path.join(__dirname, testDirName);
 
-function createFile(filePath: string, body: string = ''): void {
+function createFile(filePath: string, body = ''): void {
   fs.ensureFileSync(path.join(tempRootDir, filePath));
   fs.writeFileSync(path.join(tempRootDir, filePath), body);
 }

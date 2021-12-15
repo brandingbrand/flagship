@@ -1,10 +1,11 @@
-const nativeConstants = require(`../native-constants`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as nativeConstants from '../src/lib/native-constants';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__native_constants_test`);
-const appName = `MOCKAPP`;
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__native_constants_test');
+const appName = 'MOCKAPP';
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -18,7 +19,7 @@ afterEach(() => {
 });
 
 test(`add native constants to android`, () => {
-  nativeConstants.addAndroid({ name: appName }, 'TEST_KEY', 'TEST_VALUE');
+  nativeConstants.addAndroid({ name: appName } as any, 'TEST_KEY', 'TEST_VALUE');
 
   const NativeConstantsFile = fs
     .readFileSync(
@@ -33,7 +34,7 @@ test(`add native constants to android`, () => {
 });
 
 test(`add native constants to ios`, () => {
-  nativeConstants.addIOS({ name: appName }, 'TEST_KEY', 'TEST_VALUE');
+  nativeConstants.addIOS({ name: appName } as any, 'TEST_KEY', 'TEST_VALUE');
 
   const NativeConstantsFile = fs
     .readFileSync(nodePath.join(tempRootDir, `ios/${appName}/NativeConstants.m`))

@@ -1,10 +1,11 @@
-const android = require(`../android`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as android from '../src/lib/android';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__android_test`);
-const appName = `MOCKAPP`;
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__android_test');
+const appName = 'MOCKAPP';
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -211,7 +212,7 @@ test('set url scheme host', () => {
 });
 
 test(`update version number`, () => {
-  const androidConfig = android.androidConfigWithDefault();
+  const androidConfig = android.androidConfigWithDefault(undefined);
   const version = '1.3.2';
   android.version(version, androidConfig);
 
@@ -259,7 +260,7 @@ test(`set env switcher initial env`, () => {
   android.setEnvSwitcherInitialEnv(
     {
       name: appName
-    },
+    } as any,
     'stage2stage'
   );
 
@@ -284,7 +285,7 @@ test('android exception domains', () => {
       android: `test.bundle.id`
     },
     exceptionDomains: ['brandingbrand.com']
-  });
+  } as any);
 
   expect(getNetworkSecurityConfig()).toMatch('<domain includeSubdomains="true">localhost</domain>');
   expect(getNetworkSecurityConfig()).toMatch('<domain includeSubdomains="true">10.0.2.2</domain>');

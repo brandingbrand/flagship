@@ -1,17 +1,18 @@
-const childProcess = require('child_process');
-const cocoapods = require(`../cocoapods`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
-const os = require(`../os`);
+import * as cocoapods from '../src/lib/cocoapods';
+import * as os from '../src/lib/os';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__cocoapods_test`);
+import * as childProcess from 'child_process';
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__cocoapods_test');
 
 jest.mock('child_process');
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
 beforeEach(() => {
-  os.linux = false;
+  (os as any).linux = false;
   fs.removeSync(tempRootDir);
   fs.copySync(mockProjectDir, tempRootDir);
 });
@@ -23,7 +24,7 @@ afterEach(() => {
 test(`pod install`, () => {
   let stashedCmd = '';
 
-  childProcess.execSync.mockImplementation((cmd: string) => stashedCmd = cmd);
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => stashedCmd = cmd);
   cocoapods.install();
 
   expect(stashedCmd).toMatch(`cd "${nodePath.join(tempRootDir, 'ios')}" && pod install`);
@@ -34,7 +35,7 @@ test(`pod install failing`, () => {
 
   // @ts-ignore Allow function to return
   global.process.exit = (code?: number): never => { stashedCode = code; };
-  childProcess.execSync.mockImplementation((cmd: string) => { throw new Error(''); });
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => { throw new Error(''); });
 
   cocoapods.install();
 
@@ -47,9 +48,9 @@ test(`pod install on linux`, () => {
 
   // @ts-ignore Allow function to return
   global.process.exit = (code?: number): never => { stashedCode = code; };
-  childProcess.execSync.mockImplementation((cmd: string) => stashedCmd = cmd);
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => stashedCmd = cmd);
 
-  os.linux = true;
+  (os as any).linux = true;
   cocoapods.install();
 
   expect(stashedCode).toEqual(null);

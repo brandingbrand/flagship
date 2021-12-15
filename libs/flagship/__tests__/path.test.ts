@@ -1,10 +1,11 @@
-const path = require(`../path`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as path from '../src/lib/path';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__path_test`);
-const appName = `MOCKAPP`;
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__path_test');
+const appName = 'MOCKAPP';
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -22,7 +23,7 @@ test(`get ios fastfile path`, () => {
 });
 
 test(`get info plist path`, () => {
-  expect(path.ios.infoPlistPath({ name: appName })).toEqual(
+  expect(path.ios.infoPlistPath({ name: appName } as any)).toEqual(
     nodePath.join(tempRootDir, `ios/${appName}/Info.plist`)
   );
 });
@@ -32,13 +33,13 @@ test(`get podfile path`, () => {
 });
 
 test(`get pbxproj file path`, () => {
-  expect(path.ios.pbxprojFilePath({ name: appName })).toEqual(
+  expect(path.ios.pbxprojFilePath({ name: appName } as any)).toEqual(
     nodePath.join(tempRootDir, `ios/${appName}.xcodeproj/project.pbxproj`)
   );
 });
 
 test(`get ios native project path`, () => {
-  expect(path.ios.nativeProjectPath({ name: appName })).toEqual(
+  expect(path.ios.nativeProjectPath({ name: appName } as any)).toEqual(
     nodePath.join(tempRootDir, `ios/${appName}`)
   );
 });
@@ -47,7 +48,7 @@ test(`get main activity path`, () => {
   expect(
     path.android.mainActivityPath({
       name: appName
-    })
+    } as any)
   ).toEqual(
     nodePath.join(
       tempRootDir,
@@ -60,7 +61,7 @@ test(`get main application path`, () => {
   expect(
     path.android.mainApplicationPath({
       name: appName
-    })
+    } as any)
   ).toEqual(
     nodePath.join(
       tempRootDir,
@@ -73,7 +74,7 @@ test(`get android native project path`, () => {
   expect(
     path.android.nativeProjectPath({
       name: appName
-    })
+    } as any)
   ).toEqual(
     nodePath.join(
       tempRootDir,

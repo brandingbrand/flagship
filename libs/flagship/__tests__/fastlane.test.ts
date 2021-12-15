@@ -1,9 +1,10 @@
-const fastlane = require(`../fastlane`);
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as fastlane from '../src/lib/fastlane';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__fastlane_test`);
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__fastlane_test');
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
@@ -29,7 +30,7 @@ test(`add deeplink hosts`, () => {
         provisioningProfileName
       }
     }
-  });
+  } as any);
 
   const fastfileBody = fs.readFileSync(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`))
     .toString();

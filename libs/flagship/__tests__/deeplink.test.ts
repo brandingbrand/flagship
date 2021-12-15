@@ -1,9 +1,10 @@
-import * as deeplink from '../deeplinking';
-const fs = require(`fs-extra`);
-const nodePath = require(`path`);
+import * as deeplink from '../src/lib/deeplinking';
 
-const mockProjectDir = nodePath.join(__dirname, '..', '..', '..', '__tests__', `mock_project`);
-const tempRootDir = nodePath.join(__dirname, `__deeplink_test`);
+import * as fs from 'fs-extra';
+import * as nodePath from 'path';
+
+const mockProjectDir = nodePath.join(__dirname, 'mock_project');
+const tempRootDir = nodePath.join(__dirname, '__deeplink_test');
 
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
