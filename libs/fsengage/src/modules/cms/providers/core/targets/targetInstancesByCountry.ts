@@ -2,7 +2,9 @@ import { Location } from '../../../requesters/ContentManagementSystemLocator';
 
 // eslint-disable-next-line complexity
 export default function targetInstancesByCountry(
-  instance: any, targets: { [index: string]: any }, location: Location
+  instance: any,
+  targets: { [index: string]: any },
+  location: Location
 ): boolean {
   if (!instance) {
     return false;
@@ -17,14 +19,12 @@ export default function targetInstancesByCountry(
     return false;
   }
 
-  const instanceCountries = instance.targets &&
-                            instance.targets.Country &&
-                            instance.targets.Country.countries;
+  const instanceCountries =
+    instance.targets && instance.targets.Country && instance.targets.Country.countries;
 
   const campaign = instance.campaign;
-  const campaignCountries: any = targets[campaign] &&
-    targets[campaign].Country &&
-    targets[campaign].Country.countries;
+  const campaignCountries: any =
+    targets[campaign] && targets[campaign].Country && targets[campaign].Country.countries;
 
   if (instanceCountries && Object.keys(instanceCountries).indexOf(location.countryCode) === -1) {
     return false;
@@ -36,4 +36,3 @@ export default function targetInstancesByCountry(
 
   return true;
 }
-

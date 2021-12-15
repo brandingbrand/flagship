@@ -5,7 +5,7 @@ import {
   ReviewStatistics,
   ReviewSummary,
   WriteReviewCommand,
-  WriteReviewSubmission
+  WriteReviewSubmission,
 } from './ReviewTypes';
 
 import { Product } from '../Commerce/CommerceTypes';
@@ -38,8 +38,8 @@ export abstract class AbstractReviewDataSource implements ReviewDataSource, Writ
 
   mergeReviewDetails(...detailsArray: ReviewDetails[][]): ReviewDetails[] {
     return detailsArray.reduce((merged, details) => {
-      return details.map(detail => {
-        const detailInMerged = merged.find(mergedDetail => mergedDetail.id === detail.id);
+      return details.map((detail) => {
+        const detailInMerged = merged.find((mergedDetail) => mergedDetail.id === detail.id);
         if (detailInMerged) {
           detail.reviews = [...detailInMerged.reviews, ...detail.reviews];
         }

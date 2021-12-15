@@ -6,7 +6,7 @@ import {
   NumberLike,
   TranslationKey,
   TranslationKeys,
-  Translations
+  Translations,
 } from './types';
 
 const MISSING_TRANSLATIONS_ERROR = new Error('You must provide translations before translating.');
@@ -17,7 +17,7 @@ const INVALID_DATE_ERROR = new Error(`Provided argument is not a valid date`);
 export interface ICurrencyValue {
   value: Decimal;
   currencyCode: string;
-};
+}
 
 export default class I18nHelper {
   protected readonly i18n: I18n;
@@ -61,12 +61,12 @@ export default class I18nHelper {
     });
   }
 
-    // @ts-ignore
+  // @ts-ignore
   public addLocaleListener(func: (locale: string) => void): void {
     this.localeListeners.push(func);
   }
 
-    // @ts-ignore
+  // @ts-ignore
   public removeLocaleListener(func: (locale: string) => void): void {
     this.localeListeners = this.localeListeners.filter((testFunc: (locale: string) => void) => {
       return func !== testFunc;
@@ -87,8 +87,9 @@ export default class I18nHelper {
     }
 
     const translations = this.i18n.translations;
-    const availableTranslations = Object.keys(translations)
-      .map(locale => this.flatten(translations[locale]));
+    const availableTranslations = Object.keys(translations).map((locale) =>
+      this.flatten(translations[locale])
+    );
 
     return merge({}, ...availableTranslations);
   }
@@ -147,7 +148,7 @@ export default class I18nHelper {
     const currencyOptions: Intl.NumberFormatOptions = {
       style: 'currency',
       currency,
-      ...options
+      ...options,
     };
 
     return this.number(num, currencyOptions);
@@ -166,7 +167,7 @@ export default class I18nHelper {
   public percent(num: NumberLike, options?: Intl.NumberFormatOptions): string {
     const percentOptions: Intl.NumberFormatOptions = {
       style: 'percent',
-      ...options
+      ...options,
     };
 
     return this.number(num, percentOptions);
@@ -271,15 +272,14 @@ export default class I18nHelper {
    * @param {string|object} translationKey - Value to check if it is a translation key
    * @returns {boolean} - Whether or not the value is a translation key
    */
-  protected isTranslationKey(
-    translationKey: any
-  ): translationKey is TranslationKey {
+  protected isTranslationKey(translationKey: any): translationKey is TranslationKey {
     const isString = typeof translationKey === 'string';
-    const hasPluralizationKeys = translationKey && typeof translationKey === 'object' && (
-      typeof translationKey.zero === 'string' ||
-      typeof translationKey.one === 'string' ||
-      typeof translationKey.other === 'string'
-    );
+    const hasPluralizationKeys =
+      translationKey &&
+      typeof translationKey === 'object' &&
+      (typeof translationKey.zero === 'string' ||
+        typeof translationKey.one === 'string' ||
+        typeof translationKey.other === 'string');
 
     return isString || hasPluralizationKeys;
   }

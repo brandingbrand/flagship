@@ -1,20 +1,15 @@
 import React from 'react';
-import {
-  TouchableWithoutFeedback,
-  TouchableWithoutFeedbackProperties
-} from 'react-native';
+import { TouchableWithoutFeedback, TouchableWithoutFeedbackProperties } from 'react-native';
 import { TouchableDelay } from './TouchableDelay';
 
-const TouchableWithoutFeedbackWithHref:
-  React.ComponentClass<TouchableWithoutFeedbackLinkProps> = TouchableWithoutFeedback;
+const TouchableWithoutFeedbackWithHref: React.ComponentClass<TouchableWithoutFeedbackLinkProps> =
+  TouchableWithoutFeedback;
 
 export interface TouchableWithoutFeedbackLinkProps extends TouchableWithoutFeedbackProperties {
   href?: string;
 }
 
-export class TouchableWithoutFeedbackLink extends TouchableDelay<
-  TouchableWithoutFeedbackLinkProps
-> {
+export class TouchableWithoutFeedbackLink extends TouchableDelay<TouchableWithoutFeedbackLinkProps> {
   render(): JSX.Element {
     const { href, onPress, ...props } = this.props;
 
@@ -22,7 +17,7 @@ export class TouchableWithoutFeedbackLink extends TouchableDelay<
       <TouchableWithoutFeedbackWithHref
         {...props}
         href={href}
-        accessibilityRole='link'
+        accessibilityRole="link"
         onPress={this.handleOnPress}
       >
         {this.props.children}

@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  View
-} from 'react-native';
+import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 
-import {
-  InboxBlock
-} from '../types';
+import { InboxBlock } from '../types';
 
 import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
@@ -18,36 +11,36 @@ import ShareBlock from './ShareBlock';
 const styles = StyleSheet.create({
   eventContainer: {
     flexDirection: 'row',
-    marginLeft: -50
+    marginLeft: -50,
   },
   eventType: {
     flexDirection: 'row',
-    marginVertical: 5
+    marginVertical: 5,
   },
   eventText: {
     flex: 1,
-    marginLeft: 15
+    marginLeft: 15,
   },
   imageContainer: {
     width: 12,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   dateRow: {
     width: 12,
     paddingTop: 2,
     alignItems: 'center',
-    marginRight: 5
+    marginRight: 5,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   headerInfo: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   buttonRow: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });
 
 export interface ComponentProps {
@@ -58,42 +51,26 @@ export interface ComponentProps {
 
 export default class SimpleCard extends Component<ComponentProps> {
   render(): JSX.Element {
-    const {
-      containerStyle,
-      contents
-    } = this.props;
+    const { containerStyle, contents } = this.props;
 
     return (
       <View style={containerStyle}>
         <View style={styles.header}>
-          <ImageBlock
-            {...contents.Avatar}
-          />
+          <ImageBlock {...contents.Avatar} />
           <View style={styles.headerInfo}>
-            <TextBlock
-              {...contents.Username}
-            />
-            <TextBlock
-              {...contents.Date}
-            />
+            <TextBlock {...contents.Username} />
+            <TextBlock {...contents.Date} />
           </View>
         </View>
         <View>
-          <TextBlock
-            {...contents.Text}
-          />
+          <TextBlock {...contents.Text} />
         </View>
         <View>
-          <ImageBlock
-            {...contents.Image}
-          />
+          <ImageBlock {...contents.Image} />
         </View>
         <View style={styles.buttonRow}>
           <ShareBlock {...contents.Share} />
-          <CTABlock
-            {...contents.CTA}
-            story={this.props.story}
-          />
+          <CTABlock {...contents.CTA} story={this.props.story} />
         </View>
       </View>
     );

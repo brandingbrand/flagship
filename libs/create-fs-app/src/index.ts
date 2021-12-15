@@ -16,13 +16,13 @@ const TEMPLATE_URL = 'https://github.com/brandingbrand/flagship-template/archive
 const pipeline = promisify(stream.pipeline);
 
 type Answers = questions.AssociatedDomainsAnswers &
-    questions.BundleIdsAnswers &
-    questions.CodePushAnswers &
-    questions.DoExtendedConfigAnswers &
-    questions.ExceptionDomainsAnswers &
-    questions.NamesAnswers &
-    questions.UsageDescriptionsAnswers &
-    questions.ZendeskChatAnswers;
+  questions.BundleIdsAnswers &
+  questions.CodePushAnswers &
+  questions.DoExtendedConfigAnswers &
+  questions.ExceptionDomainsAnswers &
+  questions.NamesAnswers &
+  questions.UsageDescriptionsAnswers &
+  questions.ZendeskChatAnswers;
 
 type UserConfig = Answers['config'];
 type Config = UserConfig & BaseConfig;
@@ -33,11 +33,8 @@ const clearDirectory = async () => {
   // If the current directory is not empty or only contains git files,
   // ask the user if it's ok to delete them all.
   if (contents.length !== 0 && !(contents.length === 1 && contents[0] === '.git')) {
-
-    const {
-      clearContents,
-      clearContentsConfirm
-    } = await inquirer.prompt<questions.ClearContentsAnswers>(questions.clearContents);
+    const { clearContents, clearContentsConfirm } =
+      await inquirer.prompt<questions.ClearContentsAnswers>(questions.clearContents);
 
     if (!clearContents || !clearContentsConfirm) {
       console.error('Aborting...');
@@ -70,7 +67,7 @@ const populateConfigs = async (): Promise<Answers> => {
     names,
     usageDescriptions,
     zendeskChat,
-    onlyWhenExtendedConfig
+    onlyWhenExtendedConfig,
   } = questions;
 
   // Questions will be asked in the order that they are defined in this array
@@ -82,7 +79,7 @@ const populateConfigs = async (): Promise<Answers> => {
     ...doExtendedConfig,
     ...associatedDomains.map(onlyWhenExtendedConfig),
     ...codepush.map(onlyWhenExtendedConfig),
-    ...zendeskChat.map(onlyWhenExtendedConfig)
+    ...zendeskChat.map(onlyWhenExtendedConfig),
   ];
 
   const answers = await inquirer.prompt<Answers>(orderedQuestions.map(newLineSuffix));
@@ -95,15 +92,14 @@ const formatConfig = (config: Config) => {
   if (config.usageDescriptionIOS) {
     return {
       ...config,
-      usageDescriptionIOS: Object
-        .keys(config.usageDescriptionIOS)
-        .filter((key): key is keyof typeof config.usageDescriptionIOS => (
+      usageDescriptionIOS: Object.keys(config.usageDescriptionIOS)
+        .filter((key): key is keyof typeof config.usageDescriptionIOS =>
           config.usageDescriptionIOS.hasOwnProperty(key)
-        ))
-        .map(key => ({
+        )
+        .map((key) => ({
           key,
-          string: config.usageDescriptionIOS[key]
-        }))
+          string: config.usageDescriptionIOS[key],
+        })),
     };
   }
 
@@ -116,7 +112,7 @@ const replaceConfig = async (config: Config) => {
   await fsExtra.remove('./env/common.js');
 };
 
-const getLatestDependency = async (pkg: string): Promise<{[key: string]: string}> => {
+const getLatestDependency = async (pkg: string): Promise<{ [key: string]: string }> => {
   // Finds the latest release version of a given packages
   const res = await fetch(`https://registry.npmjs.com/${pkg}`);
   const json = await res.json();
@@ -151,17 +147,16 @@ const getPackageJson = async (config: Config) => {
   // Add packages based on config options
   // ie. if the user configures code-push, react-native-code-push
   // should be added to package.json so they don't have to
-  const promises = Object
-    .keys(configDependencyPackageMap)
+  const promises = Object.keys(configDependencyPackageMap)
     .filter((key): key is keyof typeof configDependencyPackageMap => {
       return config.hasOwnProperty(key) && configDependencyPackageMap.hasOwnProperty(key);
     })
-    .map(async key => getLatestDependency(configDependencyPackageMap[key]));
+    .map(async (key) => getLatestDependency(configDependencyPackageMap[key]));
 
   const newDeps = await Promise.all(promises);
   packageJson.dependencies = {
     ...packageJson.dependencies,
-    ...newDeps.reduce((deps, dep) => ({...deps, ...dep}), {})
+    ...newDeps.reduce((deps, dep) => ({ ...deps, ...dep }), {}),
   };
 
   return packageJson;
@@ -172,11 +167,17 @@ const showPostInstallMsg = () => {
   console.log(`
 You're almost done! There's a couple more steps you may want to complete.
 
-To add an icon for your app, follow the instructions at ${callout('https://github.com/brandingbrand/flagship/wiki/Creating-App-Icons')}.
+To add an icon for your app, follow the instructions at ${callout(
+    'https://github.com/brandingbrand/flagship/wiki/Creating-App-Icons'
+  )}.
 
-To add splash/launch screens, follow the instructions at ${callout('https://github.com/brandingbrand/flagship/wiki/Creating-Launch-Screens')}.
+To add splash/launch screens, follow the instructions at ${callout(
+    'https://github.com/brandingbrand/flagship/wiki/Creating-Launch-Screens'
+  )}.
 
-You'll need to sign your apps in order to publish to an app store or a distribution service such as Hockeyapp. For more info on how to do that, see ${callout('https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps')}.
+You'll need to sign your apps in order to publish to an app store or a distribution service such as Hockeyapp. For more info on how to do that, see ${callout(
+    'https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps'
+  )}.
 
 Once you've finished making another other changes to your configs, you need to install dependencies and initialize the project by running:
 "${callout('yarn install && yarn run init')}"
@@ -212,4 +213,4 @@ const main = async () => {
   showPostInstallMsg();
 };
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

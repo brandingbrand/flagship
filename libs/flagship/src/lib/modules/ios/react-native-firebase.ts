@@ -2,16 +2,16 @@ import * as path from '../../path';
 import * as fs from '../../fs';
 import * as pods from '../../cocoapods';
 import { Config } from '../../../types';
-import {
-  logError,
-  logInfo
-} from '../../../helpers';
+import { logError, logInfo } from '../../../helpers';
 
 export function preLink(configuration: Config): void {
-  if (!(configuration.firebase
-      && configuration.firebase.ios
-      && configuration.firebase.ios.googleServicesPlistFile)
-   ) {
+  if (
+    !(
+      configuration.firebase &&
+      configuration.firebase.ios &&
+      configuration.firebase.ios.googleServicesPlistFile
+    )
+  ) {
     logError('firebase.ios.googleServicesPlistFile must be specified in project config');
 
     return process.exit(1);
@@ -24,10 +24,7 @@ export function preLink(configuration: Config): void {
   );
   logInfo('copied GoogleService-Info.plist to ./ios/');
 
-  let appDelegate = fs.readFileSync(
-    path.ios.appDelegatePath(configuration),
-    { encoding: 'utf-8' }
-  );
+  let appDelegate = fs.readFileSync(path.ios.appDelegatePath(configuration), { encoding: 'utf-8' });
 
   // Update AppDelegate.m with Firebase import and initialization
   const firebaseImport = '#import <Firebase.h>';

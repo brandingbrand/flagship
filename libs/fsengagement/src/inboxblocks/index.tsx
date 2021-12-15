@@ -1,4 +1,3 @@
-
 import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
 import { ImageBlock } from './ImageBlock';
@@ -66,5 +65,5 @@ export default {
   StackedButtons,
   TitleWithLink,
   CustomCarousel: CustomCarouselBlock,
-  IconText
+  IconText,
 };

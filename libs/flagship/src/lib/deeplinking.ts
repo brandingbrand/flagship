@@ -14,7 +14,7 @@ export function addDeeplinkHosts(associatedDomains: string[]): void {
     return;
   }
 
-  const androidIntents = associatedDomains.map(hostname => {
+  const androidIntents = associatedDomains.map((hostname) => {
     if (hostname.includes('http://') || hostname.includes('https://')) {
       throw new Error(`Deep Link Hostnames cannot include a protocol.`);
     }

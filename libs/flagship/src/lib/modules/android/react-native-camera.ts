@@ -1,9 +1,7 @@
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { Config } from '../../../types';
-import {
-  logInfo
-} from '../../../helpers';
+import { logInfo } from '../../../helpers';
 
 export function postLink(configuration: Config): void {
   // Add dependencies to /android/app/build.gradle and replace compile command with implementation

@@ -12,7 +12,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { PageIndicator } from '../PageIndicator';
@@ -44,24 +44,24 @@ const defaultGapSize = 1;
 const S = StyleSheet.create({
   zoomModal: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     padding: 15,
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
   activeImageStyle: {
-    zIndex: 100
+    zIndex: 100,
   },
   fullHeight: {
-    height: '100%'
+    height: '100%',
   },
   goToZoomButtons: {
     position: 'absolute',
     flexDirection: 'row',
     bottom: 0,
     left: 0,
-    zIndex: 100
+    zIndex: 100,
   },
   goToNext: {
     position: 'absolute',
@@ -69,7 +69,7 @@ const S = StyleSheet.create({
     right: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   goToPrev: {
     position: 'absolute',
@@ -77,42 +77,42 @@ const S = StyleSheet.create({
     left: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   pageIndicatorZoom: {
     position: 'absolute',
     bottom: 20,
     width: '100%',
-    zIndex: 100
+    zIndex: 100,
   },
   searchIcon: {
     width: 25,
-    height: 25
+    height: 25,
   },
   zoomButtonContainer: {
     position: 'absolute',
     right: 50,
     bottom: 30,
-    zIndex: 101
+    zIndex: 101,
   },
   zoomButton: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   thumbnailImg: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   thumbnail: {
     marginRight: 10,
     width: 50,
-    height: 50
+    height: 50,
   },
   thumbnailContainer: {
-    margin: 10
+    margin: 10,
   },
   thumbnailSelected: {
     borderWidth: 3,
-    borderColor: 'red'
+    borderColor: 'red',
   },
   buttonPrevIcon: {
     width: 25,
@@ -122,9 +122,9 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '-45deg'
-      }
-    ]
+        rotate: '-45deg',
+      },
+    ],
   },
   buttonNextIcon: {
     width: 25,
@@ -134,10 +134,10 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '45deg'
-      }
-    ]
-  }
+        rotate: '45deg',
+      },
+    ],
+  },
 });
 
 export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselStateType> {
@@ -145,7 +145,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     images: [],
     peekSize: 0,
     // for unknown reason(related to useNativeDriver), zoomed image doesn't show if it 0
-    gapSize: 1
+    gapSize: 1,
   };
 
   originalImgs: React.Component<ImageProperties, React.ComponentState>[] = [];
@@ -202,7 +202,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       originalImageX: 0,
       originalImageY: 0,
       currentIndex: 0,
-      currentZoomIndex: 0
+      currentZoomIndex: 0,
     };
   }
 
@@ -242,9 +242,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           }
         }
       },
-      onShouldBlockNativeResponder: (evt, gestureState) => true
+      onShouldBlockNativeResponder: (evt, gestureState) => true,
     });
-  }
+  };
 
   goToZoomNext = (vx: number) => {
     const { currentZoomIndex } = this.state;
@@ -254,7 +254,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         : currentZoomIndex + 1;
 
     this.setState({
-      currentZoomIndex: nextIndex
+      currentZoomIndex: nextIndex,
     });
 
     const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
@@ -264,16 +264,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
       easing: APPLE_EASING,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   goToZoomPrev = (vx: number) => {
     const { currentZoomIndex } = this.state;
     const nextIndex = currentZoomIndex - 1 < 0 ? 0 : currentZoomIndex - 1;
 
     this.setState({
-      currentZoomIndex: nextIndex
+      currentZoomIndex: nextIndex,
     });
 
     const nextOffsetX = -nextIndex * SCREEN_WIDTH - nextIndex * this.gapSizeScaled;
@@ -283,9 +283,9 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     Animated.timing(this.scrollViewPosition, {
       toValue: { x: nextOffsetX, y: 0 },
       easing: APPLE_EASING,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   goToZoomOrigin = () => {
     const { currentZoomIndex } = this.state;
@@ -295,15 +295,15 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       Animated.timing(this.openScale, {
         toValue: 1,
         easing: APPLE_EASING,
-        useNativeDriver: false
+        useNativeDriver: false,
       }),
       Animated.timing(this.scrollViewPosition, {
         toValue: { x: nextOffsetX, y: 0 },
         easing: APPLE_EASING,
-        useNativeDriver: false
-      })
+        useNativeDriver: false,
+      }),
     ]).start();
-  }
+  };
 
   openZoom = () => {
     const image: any = this.originalImgs[this.state.currentIndex];
@@ -319,7 +319,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             originalImageHeight: height,
             originalImageX: px,
             originalImageY: py,
-            currentZoomIndex: this.state.currentIndex
+            currentZoomIndex: this.state.currentIndex,
           },
           () => {
             const andjustForContainer =
@@ -334,17 +334,17 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
               : SCREEN_WIDTH - peekSize;
             this.scrollViewPosition.setValue({
               x: -this.state.currentIndex * offsetWidth - andjustForContainer + px,
-              y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + py
+              y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + py,
             });
 
             Animated.parallel([
               Animated.spring(this.openScale, {
                 toValue: 1,
-                useNativeDriver: false
+                useNativeDriver: false,
               }),
               Animated.spring(this.scrollViewSize, {
                 toValue: SCREEN_WIDTH,
-                useNativeDriver: false
+                useNativeDriver: false,
               }),
               Animated.spring(this.scrollViewPosition, {
                 useNativeDriver: false,
@@ -352,19 +352,19 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                   x:
                     -this.state.currentIndex * SCREEN_WIDTH -
                     this.state.currentIndex * this.gapSizeScaled,
-                  y: 0
-                }
-              })
+                  y: 0,
+                },
+              }),
             ]).start(() => {
               this.setState({
-                isOpeningZoom: false
+                isOpeningZoom: false,
               });
             });
           }
         );
       }
     );
-  }
+  };
 
   closeZoom = () => {
     const andjustForContainer =
@@ -378,7 +378,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     this.setState(
       {
-        isOpeningZoom: true
+        isOpeningZoom: true,
       },
       () => {
         Animated.parallel([
@@ -386,12 +386,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
             toValue: 0,
             duration: 250,
             easing: APPLE_EASING,
-            useNativeDriver: false
+            useNativeDriver: false,
           }),
           Animated.timing(this.scrollViewSize, {
             toValue: this.imageWidth,
             duration: 250,
-            useNativeDriver: false
+            useNativeDriver: false,
           }),
           Animated.timing(this.scrollViewPosition, {
             duration: 250,
@@ -401,27 +401,27 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 -this.state.currentIndex * offsetWidth -
                 andjustForContainer +
                 this.state.originalImageX,
-              y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + this.state.originalImageY
-            }
-          })
+              y: (this.imageHeight - SCREEN_HEIGHT) / 2 + HEADER_HEIGHT + this.state.originalImageY,
+            },
+          }),
         ]).start(() => {
           // workaround for blinking by using nativeDriver
           // more: https://github.com/facebook/react-native/issues/10174
           this.setState(
             {
               isZoomVisible: false,
-              isOpeningZoom: false
+              isOpeningZoom: false,
             },
             () => {
               this.setState({
-                isZooming: false
+                isZooming: false,
               });
             }
           );
         });
       }
     );
-  }
+  };
 
   handleItemMoveOutY = (offsetY: number) => {
     const itemSnapX =
@@ -431,10 +431,10 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     this.scrollViewPosition.setValue({
       x: -itemSnapX,
-      y: offsetY
+      y: offsetY,
     });
     this.openScale.setValue((halfScreenHeight - Math.abs(offsetY)) / halfScreenHeight);
-  }
+  };
 
   handleItemMoveOutX = (offsetX: any) => {
     const itemSnapX =
@@ -455,20 +455,20 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     this.scrollViewPosition.setValue({
       x: scrollViewOffsetX,
-      y: 0
+      y: 0,
     });
 
     if (this.lastScrollXStart === null) {
       this.lastScrollXStart = offsetX;
     }
     this.lastScrollX = offsetX;
-  }
+  };
 
   handleZoomRelease = (distance: any) => {
     if (distance < -50) {
       this.closeZoom();
     }
-  }
+  };
 
   handleMoveRelease = (evt: any, gestureState: any, justMoveX: boolean) => {
     if (justMoveX) {
@@ -490,11 +490,11 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         this.goToZoomOrigin();
       }
     }
-  }
+  };
 
   renderModal = () => {
     const opacityStyle = {
-      opacity: this.openScale
+      opacity: this.openScale,
     };
 
     const sizeStyle = {
@@ -504,10 +504,10 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         {
           scale: this.scrollViewSize.interpolate({
             inputRange: [this.imageWidth, SCREEN_WIDTH],
-            outputRange: [this.imageWidth / SCREEN_WIDTH, 1]
-          })
-        }
-      ]
+            outputRange: [this.imageWidth / SCREEN_WIDTH, 1],
+          }),
+        },
+      ],
     };
 
     if (this.props.renderModalContent) {
@@ -557,15 +557,15 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         </Modal>
       );
     }
-  }
+  };
 
   handleThumbPress = (i: number) => {
     this.multiCarousel?.goTo(i);
-  }
+  };
 
   makeHandleThumbPress = (i: number) => () => {
     this.multiCarousel?.goTo(i);
-  }
+  };
 
   itemUpdated = (
     oldItem: ImageData | undefined | null,
@@ -581,7 +581,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     ) {
       changed();
     }
-  }
+  };
 
   renderImage: ListRenderItem<ImageData> = ({ item, index }) => {
     const gapSize = this.props.gapSize || defaultGapSize;
@@ -601,12 +601,12 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
       <View
         style={{
           paddingRight: this.props.centerMode ? gapSize / 2 : gapSize,
-          paddingLeft: this.props.centerMode ? gapSize / 2 : 0
+          paddingLeft: this.props.centerMode ? gapSize / 2 : 0,
         }}
         key={index}
       >
         <Image
-          ref={img => {
+          ref={(img) => {
             const image: any = img;
 
             this.originalImgs[index] = image;
@@ -614,26 +614,26 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           style={[
             {
               width: this.imageWidth,
-              height: this.imageHeight
+              height: this.imageHeight,
             },
-            this.props.fillContainer ? S.fullHeight : null
+            this.props.fillContainer ? S.fullHeight : null,
           ]}
           source={item.src}
-          resizeMode='contain'
+          resizeMode="contain"
         />
       </View>
     );
-  }
+  };
 
   handleSlideChange = ({ currentIndex, nextIndex }: any) => {
     this.setState({
-      currentIndex: nextIndex
+      currentIndex: nextIndex,
     });
-  }
+  };
 
   handleCarouselController = (controller: CarouselController) => {
     this.multiCarousel = controller;
-  }
+  };
 
   renderCarousel = () => {
     const peekSize = this.props.peekSize || 0;
@@ -658,7 +658,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
         contentContainerStyle={this.props.contentContainerStyle}
       />
     );
-  }
+  };
 
   render(): JSX.Element {
     return (
@@ -704,13 +704,13 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                   style={[
                     S.thumbnail,
                     this.props.thumbnailStyle,
-                    this.state.currentIndex === i && S.thumbnailSelected
+                    this.state.currentIndex === i && S.thumbnailSelected,
                   ]}
                   onPress={this.makeHandleThumbPress(i)}
                   accessibilityRole={'button'}
                   accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
                 >
-                  <Image resizeMode='cover' source={img.src} style={S.thumbnailImg} />
+                  <Image resizeMode="cover" source={img.src} style={S.thumbnailImg} />
                 </TouchableOpacity>
               ))}
             </ScrollView>

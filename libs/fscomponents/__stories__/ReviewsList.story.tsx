@@ -2,11 +2,7 @@ import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  number,
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { number, object, text } from '@storybook/addon-knobs';
 import { ReviewsList } from '../src/components/ReviewsList';
 
 const props = {
@@ -14,14 +10,14 @@ const props = {
     {
       rating: number('Rating', 5.2),
       title: text('Title', 'Review Title'),
-      text: text('Text', 'Review Text')
+      text: text('Text', 'Review Text'),
     },
     {
       rating: 1.5,
       title: 'This blender is a Powerful Machine at 1200 Watts',
       text: 'Makes no sense to spend megabucks on a Ninja or NutriBullet Rx. This machine will do \
 the job for much less. There is a difference in this machine in that the base of the jar is \
-larger than its predecessors.'
+larger than its predecessors.',
     },
     {
       rating: 3.4,
@@ -37,33 +33,33 @@ height and fits well under my kitchen cabinets. Crushes ice perfectly, and makes
 smoothies.',
       user: {
         name: 'SenseSeeker',
-        isVerifiedBuyer: true
+        isVerifiedBuyer: true,
       },
       feedback: {
         total: 189,
         positive: 189,
-        negative: 0
-      }
-    }
+        negative: 0,
+      },
+    },
   ],
-  reviewStyle: ():
-    import('@brandingbrand/fsfoundation').Dictionary<StyleProp<TextStyle | ViewStyle>> => (
-      object('Style', {
-        titleStyle: { color: 'black' },
-        moreTextStyle: { color: 'blue' },
-        verifiedStyle: { color: 'green' },
-        buttonStyle: {
-          backgroundColor: 'white'
-        }
-      }))
+  reviewStyle: (): import('@brandingbrand/fsfoundation').Dictionary<
+    StyleProp<TextStyle | ViewStyle>
+  > =>
+    object('Style', {
+      titleStyle: { color: 'black' },
+      moreTextStyle: { color: 'blue' },
+      verifiedStyle: { color: 'green' },
+      buttonStyle: {
+        backgroundColor: 'white',
+      },
+    }),
 };
 
-storiesOf('ReviewsList', module)
-  .add('basic usage', () => (
-    <ReviewsList
-      reviews={props.reviews()}
-      reviewStyle={props.reviewStyle()}
-      onHelpful={action('ReviewsList onHelpful')}
-      onNotHelpful={action('ReviewsList onNotHelpful')}
-    />
-  ));
+storiesOf('ReviewsList', module).add('basic usage', () => (
+  <ReviewsList
+    reviews={props.reviews()}
+    reviewStyle={props.reviewStyle()}
+    onHelpful={action('ReviewsList onHelpful')}
+    onNotHelpful={action('ReviewsList onNotHelpful')}
+  />
+));

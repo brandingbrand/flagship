@@ -7,15 +7,9 @@ const onSubmit = (values: any) => {
     Values submitted: First Name: ${values.firstName}
     Last Name: ${values.lastName}
     Email Address: ${values.emailAddress}
-    Password: ${values.password}`
-  );
+    Password: ${values.password}`);
 };
 
-storiesOf('RegistrationForm', module)
-  .add('basic usage', () => {
-    return (
-      <RegistrationForm
-        onSubmit={onSubmit}
-      />
-    );
-  });
+storiesOf('RegistrationForm', module).add('basic usage', () => {
+  return <RegistrationForm onSubmit={onSubmit} />;
+});

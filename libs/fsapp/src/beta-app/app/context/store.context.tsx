@@ -13,7 +13,7 @@ export const REDUX_STORE_TOKEN = new InjectionToken<Store>('REDUX_STORE_TOKEN');
 
 export const InjectedReduxProvider: FC<Partial<Omit<ProviderProps, 'context'>>> = ({
   store,
-  children
+  children,
 }) => {
   const context = useDependency(REDUX_CONTEXT_TOKEN);
   return context && store ? (

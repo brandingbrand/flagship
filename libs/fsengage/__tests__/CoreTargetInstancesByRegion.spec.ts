@@ -3,7 +3,7 @@ import targetInstancesByRegion from '../src/modules/cms/providers/core/targets/t
 const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - Region Target', () => {
-  test('Valid Location', done => {
+  test('Valid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.inside;
@@ -14,7 +14,7 @@ describe('Core Content Management System Provider - Region Target', () => {
     return done();
   });
 
-  test('Invalid Location', done => {
+  test('Invalid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
     const location = fixture.location.outside;

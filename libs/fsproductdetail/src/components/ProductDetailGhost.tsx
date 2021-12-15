@@ -8,7 +8,7 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import ContentLoader, { Rect } from '../lib/RNContentLoader';
 import { PageIndicator } from '@brandingbrand/fscomponents';
@@ -16,13 +16,13 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const baseStyles = StyleSheet.create({
   imageContainer: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   pagination: {
-    marginTop: 15
+    marginTop: 15,
   },
   paginationActive: {
-    marginTop: 15
+    marginTop: 15,
   },
   ghostContentWrapper: {
     flexDirection: 'row',
@@ -31,16 +31,16 @@ const baseStyles = StyleSheet.create({
     marginTop: 22,
     paddingBottom: 24,
     marginBottom: 20,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   starsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 24,
-    marginRight: 27
+    marginRight: 27,
   },
   buttonWrapper: {
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   button: {
     justifyContent: 'center',
@@ -48,18 +48,18 @@ const baseStyles = StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 100,
     height: 55,
-    width: '100%'
+    width: '100%',
   },
   buttonText: {
     fontWeight: '500',
     color: '#fff',
     fontSize: 18,
-    letterSpacing: 1
-  }
+    letterSpacing: 1,
+  },
 });
 
 const icons = {
-  ghostStar: require('../../assets/images/ghostStar.png')
+  ghostStar: require('../../assets/images/ghostStar.png'),
 };
 
 export interface SerializableProductDetailGhostProps {
@@ -124,20 +124,21 @@ export interface SerializableProductDetailGhostProps {
   titleWidth?: number;
 }
 
-export interface ProductDetailGhostProps extends Omit<
-  SerializableProductDetailGhostProps,
-  'containerStyle' |
-  'paginationStyle' |
-  'paginationActiveStyle' |
-  'ghostContentWrapperStyle' |
-  'starsWrapperStyle' |
-  'buttonWrapperStyle' |
-  'buttonStyle' |
-  'buttonTextStyle' |
-  'screenWidth' |
-  'countPages' |
-  'imageHeight' |
-  'titleWidth'
+export interface ProductDetailGhostProps
+  extends Omit<
+    SerializableProductDetailGhostProps,
+    | 'containerStyle'
+    | 'paginationStyle'
+    | 'paginationActiveStyle'
+    | 'ghostContentWrapperStyle'
+    | 'starsWrapperStyle'
+    | 'buttonWrapperStyle'
+    | 'buttonStyle'
+    | 'buttonTextStyle'
+    | 'screenWidth'
+    | 'countPages'
+    | 'imageHeight'
+    | 'titleWidth'
   > {
   containerStyle?: StyleProp<ViewStyle>;
   paginationStyle?: StyleProp<ViewStyle>;
@@ -168,7 +169,7 @@ const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGho
     screenWidth = dimmensionWidth,
     imageHeight,
     titleWidth,
-    countPages
+    countPages,
   } = props;
 
   const mainImageHeight = !!imageHeight ? imageHeight : 443;
@@ -183,7 +184,7 @@ const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGho
           height={mainImageHeight}
           viewBox={`0 0 ${screenWidth} ${mainImageHeight}`}
         >
-          <Rect x='0' y='0' rx='4' ry='4' width={screenWidth} height={mainImageHeight}/>
+          <Rect x="0" y="0" rx="4" ry="4" width={screenWidth} height={mainImageHeight} />
         </ContentLoader>
       </View>
       <PageIndicator
@@ -198,23 +199,16 @@ const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGho
           height={24}
           viewBox={`0 0 ${titleWidthSection} 24`}
         >
-          <Rect x='0' y='0' rx='4' ry='4' width={titleWidthSection} height='24'/>
+          <Rect x="0" y="0" rx="4" ry="4" width={titleWidthSection} height="24" />
         </ContentLoader>
         <View style={[baseStyles.starsWrapper, starsWrapperStyle]}>
           {starArray.map((elem, i: number) => {
-            return (
-              <Image
-                key={i}
-                source={icons.ghostStar}
-              />
-            );
+            return <Image key={i} source={icons.ghostStar} />;
           })}
         </View>
       </View>
       <View style={[baseStyles.buttonWrapper, buttonWrapperStyle]}>
-        <View
-          style={[baseStyles.button, buttonStyle]}
-        >
+        <View style={[baseStyles.button, buttonStyle]}>
           <Text style={[baseStyles.buttonText, buttonTextStyle]}>
             {FSI18n.string(translationKeys.flagship.productIndex.addToBag)}
           </Text>

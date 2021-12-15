@@ -5,31 +5,25 @@ import { ProductItemProps } from '../ProductItem';
 
 export type ProductItemButtonProps = Pick<
   ProductItemProps,
-  'buttonText' |
-  'buttonStyle' |
-  'buttonTextStyle' |
-  'buttonProps' |
-  'onButtonPress' |
-  'renderButton'
+  | 'buttonText'
+  | 'buttonStyle'
+  | 'buttonTextStyle'
+  | 'buttonProps'
+  | 'onButtonPress'
+  | 'renderButton'
 >;
 
 const style = StyleSheet.create({
   button: {
     marginTop: 7,
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 
 export class ProductItemButton extends Component<ProductItemButtonProps> {
   render(): React.ReactNode {
-    const {
-      buttonText,
-      buttonStyle,
-      buttonTextStyle,
-      buttonProps,
-      onButtonPress,
-      renderButton
-    } = this.props;
+    const { buttonText, buttonStyle, buttonTextStyle, buttonProps, onButtonPress, renderButton } =
+      this.props;
 
     if (renderButton) {
       return renderButton();

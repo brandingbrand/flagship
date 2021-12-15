@@ -9,7 +9,7 @@ import {
   TextStyle,
   View,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import styles from '../carousel/index.style';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
@@ -18,8 +18,8 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    minHeight: 200
-  }
+    minHeight: 200,
+  },
 });
 
 const { width: viewportWidth } = Dimensions.get('window');
@@ -31,9 +31,7 @@ interface Autoplay {
   autoplayDelay: string;
   autoplayInterval: string;
 }
-import {
-  CardProps
-} from '../types';
+import { CardProps } from '../types';
 export interface ImageCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -63,21 +61,25 @@ export interface ImageCarouselBlockState {
   overallHeight: number;
 }
 // extends CardProps
-export default class ImageCarouselBlock
-  extends Component<ImageCarouselBlockProps, ImageCarouselBlockState> {
+export default class ImageCarouselBlock extends Component<
+  ImageCarouselBlockProps,
+  ImageCarouselBlockState
+> {
   // readonly state: ImageCarouselBlockState = {};
   _slider1Ref: any | null = null;
   constructor(props: ImageCarouselBlockProps) {
     super(props);
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM,
-      overallHeight: 0
+      overallHeight: 0,
     };
   }
   shouldComponentUpdate(
-    nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState
+    nextProps: ImageCarouselBlockProps,
+    nextState: ImageCarouselBlockState
   ): boolean {
-    return this.props.containerStyle !== nextProps.containerStyle ||
+    return (
+      this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||
       this.props.ratio !== nextProps.ratio ||
       this.props.options !== nextProps.options ||
@@ -87,36 +89,30 @@ export default class ImageCarouselBlock
       this.props.textStyle !== nextProps.textStyle ||
       this.props.additionalStyle !== nextProps.additionalStyle ||
       this.state.sliderActiveSlide !== nextState.sliderActiveSlide ||
-      this.state.overallHeight !== nextState.overallHeight;
+      this.state.overallHeight !== nextState.overallHeight
+    );
   }
 
   _renderItem(data: any, index: number): JSX.Element {
-    const {
-      headerStyle,
-      textStyle,
-      additionalStyle,
-      options
-    } = this.props;
+    const { headerStyle, textStyle, additionalStyle, options } = this.props;
     const renderItemWidth = this.calculateItemWidth();
     return (
       <Slide key={index} index={index}>
         <RenderWebCarouselItem
-            data={data}
-            itemWidth={renderItemWidth}
-            horizPadding={options.itemHorizontalPaddingPercent}
-            options={options}
-            headerStyle={headerStyle}
-            textStyle={textStyle}
-            additionalStyle={additionalStyle}
-          />
+          data={data}
+          itemWidth={renderItemWidth}
+          horizPadding={options.itemHorizontalPaddingPercent}
+          options={options}
+          headerStyle={headerStyle}
+          textStyle={textStyle}
+          additionalStyle={additionalStyle}
+        />
       </Slide>
     );
   }
 
   parentCardStyles(): number {
-    const {
-      cardContainerStyle
-    } = this.props;
+    const { cardContainerStyle } = this.props;
 
     if (!cardContainerStyle) {
       return 0;
@@ -129,9 +125,7 @@ export default class ImageCarouselBlock
   }
 
   horizontalMarginPadding(): number {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
@@ -142,62 +136,52 @@ export default class ImageCarouselBlock
     return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
   calculateItemWidth(): number {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
 
     const slideWidth = Math.round((this.calculateSliderWidth() * options.itemWidthPercent) / 100);
     return slideWidth + options.itemHorizontalPaddingPercent;
   }
 
   createCarousel(): JSX.Element {
-    const {
-     items,
-     options = {},
-     autoplay,
-     loop
-    } = this.props;
+    const { items, options = {}, autoplay, loop } = this.props;
 
     const { itemWidthPercent = 0 } = options;
-    const autoplayProps = autoplay ? {
-      isPlaying: true,
-      interval: parseFloat(autoplay.autoplayInterval) * 1000
-    } : {};
+    const autoplayProps = autoplay
+      ? {
+          isPlaying: true,
+          interval: parseFloat(autoplay.autoplayInterval) * 1000,
+        }
+      : {};
 
-    const loopProps = loop ? {
-      infinite: true
-    } : {};
+    const loopProps = loop
+      ? {
+          infinite: true,
+        }
+      : {};
 
     // const renderItemWidth = this.calculateItemWidth();
-   return (
-    <View style={style.container}>
-      <CarouselProvider
-        naturalSlideWidth={1}
-        naturalSlideHeight={1}
-        isIntrinsicHeight={true}
-        totalSlides={items.length}
-        visibleSlides={1}
-        {...autoplayProps}
-        {...loopProps}
-      >
-        <Slider style={{ paddingRight: (100 - itemWidthPercent)+ '%' }}>
-          {(items || []).map((item: any, index: number) => {
-            return this._renderItem(item, index);
-          })}
-        </Slider>
-      </CarouselProvider>
-    </View>
-
-   )
+    return (
+      <View style={style.container}>
+        <CarouselProvider
+          naturalSlideWidth={1}
+          naturalSlideHeight={1}
+          isIntrinsicHeight={true}
+          totalSlides={items.length}
+          visibleSlides={1}
+          {...autoplayProps}
+          {...loopProps}
+        >
+          <Slider style={{ paddingRight: 100 - itemWidthPercent + '%' }}>
+            {(items || []).map((item: any, index: number) => {
+              return this._renderItem(item, index);
+            })}
+          </Slider>
+        </CarouselProvider>
+      </View>
+    );
   }
   render(): JSX.Element {
-    const {
-      containerStyle,
-      items,
-      pageCounter,
-      pageCounterStyle,
-      pageNumberStyle
-    } = this.props;
+    const { containerStyle, items, pageCounter, pageCounterStyle, pageNumberStyle } = this.props;
 
     const carousel = this.createCarousel();
 
@@ -206,9 +190,7 @@ export default class ImageCarouselBlock
         {carousel}
         {pageCounter && (
           <View style={[styles.pageCounter, pageCounterStyle]}>
-            <Text
-              style={[styles.pageNum, pageNumberStyle]}
-            >
+            <Text style={[styles.pageNum, pageNumberStyle]}>
               {this.state.sliderActiveSlide} / {items.length}
             </Text>
           </View>

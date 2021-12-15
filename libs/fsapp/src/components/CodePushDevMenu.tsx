@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { AppConfigType } from '../types';
 import FSNetwork from '@brandingbrand/fsnetwork';
@@ -66,32 +66,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+    borderBottomColor: '#ccc',
   },
   item: {
     paddingLeft: 10,
     fontSize: 15,
     paddingVertical: 15,
     borderTopWidth: 1,
-    borderTopColor: '#ccc'
+    borderTopColor: '#ccc',
   },
   pageTitle: {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   rowContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   column: {
-    flex: 1
+    flex: 1,
   },
   currentRelease: {
     textAlign: 'center',
-    marginTop: -20
-  }
+    marginTop: -20,
+  },
 });
 
 export default class CodePushDevMenu extends Component<
@@ -109,14 +109,14 @@ export default class CodePushDevMenu extends Component<
 
     this.client = new FSNetwork({
       headers: {
-        'X-API-Token': NativeConstants.AppCenterToken
-      }
+        'X-API-Token': NativeConstants.AppCenterToken,
+      },
     });
 
     this.state = {
       view: '',
       config: this.props.appConfig.env && this.props.appConfig.env.codepush[Platform.OS],
-      version: ''
+      version: '',
     };
 
     this.client
@@ -124,14 +124,13 @@ export default class CodePushDevMenu extends Component<
       .then((result: any) => {
         this.setState({
           view: 'swimLanes',
-          swimLanes: result.data
+          swimLanes: result.data,
         });
       })
       .catch((e: any) => console.warn(e, e.response));
 
     if (CodePush) {
-      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning)
-      .then((version: string) => {
+      CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then((version: string) => {
         this.setState({ currentVersion: version });
       });
     }
@@ -139,7 +138,7 @@ export default class CodePushDevMenu extends Component<
 
   async componentDidMount(): Promise<void> {
     this.setState({
-      version: DeviceInfo.getVersion()
+      version: DeviceInfo.getVersion(),
     });
   }
 
@@ -166,11 +165,7 @@ export default class CodePushDevMenu extends Component<
         view = <Text>Loading...</Text>;
     }
 
-    return (
-      <View>
-        {view}
-      </View>
-    );
+    return <View>{view}</View>;
   }
 
   renderSwimLanes = () => {
@@ -184,7 +179,9 @@ export default class CodePushDevMenu extends Component<
             data={this.state.swimLanes}
             renderItem={this.renderSwimLaneItem}
           />
-        ) : <Text>No lanes setup for app</Text>}
+        ) : (
+          <Text>No lanes setup for app</Text>
+        )}
 
         <Text style={styles.pageTitle}>Current Release</Text>
         <Text style={styles.currentRelease}>
@@ -195,46 +192,50 @@ export default class CodePushDevMenu extends Component<
         <Text style={styles.currentRelease}>{this.state.version}</Text>
       </View>
     );
-  }
+  };
 
   renderCurrentRelease = () => {
-    const currentLane = this.state.swimLanes && this.state.swimLanes.find(lane => {
-      return lane.key === this.state.currentVersion.deploymentKey;
-    });
+    const currentLane =
+      this.state.swimLanes &&
+      this.state.swimLanes.find((lane) => {
+        return lane.key === this.state.currentVersion.deploymentKey;
+      });
 
     if (currentLane) {
       return currentLane.name + ' ' + this.state.currentVersion.label;
     } else {
       return '';
     }
-  }
+  };
 
   renderSwimLaneItem = ({ item }: { item: SwimLane }): JSX.Element => {
-    const { config: { deploymentKey } } = this.state;
+    const {
+      config: { deploymentKey },
+    } = this.state;
 
     return (
-      <TouchableOpacity
-        key={item.name as any}
-        onPress={this.viewLane(item)}
-      >
+      <TouchableOpacity key={item.name as any} onPress={this.viewLane(item)}>
         <Text style={[styles.item, item.key === deploymentKey && { fontWeight: 'bold' }]}>
           {item.name}
         </Text>
       </TouchableOpacity>
     );
-  }
+  };
 
-  viewLane = (item: SwimLane): () => void => {
+  viewLane = (item: SwimLane): (() => void) => {
     return () => {
       if (!this.client) {
         return;
       }
 
-      const { config: { name }, version } = this.state;
+      const {
+        config: { name },
+        version,
+      } = this.state;
 
       this.setState({
         swimLane: item,
-        view: ''
+        view: '',
       });
 
       this.client
@@ -247,16 +248,16 @@ export default class CodePushDevMenu extends Component<
 
           this.setState({
             view: 'swimLane',
-            releases
+            releases,
           });
         })
         .catch((e: any) => console.warn(e));
     };
-  }
+  };
 
   swimLaneKeyExtractor = (item: Release, index: number): string => {
     return index.toString();
-  }
+  };
 
   renderSwimLane = () => {
     if (!this.state.swimLane) {
@@ -276,10 +277,12 @@ export default class CodePushDevMenu extends Component<
             keyExtractor={this.swimLaneKeyExtractor}
             renderItem={this.renderReleaseItem}
           />
-        ) : <Text>No release in this lane</Text>}
+        ) : (
+          <Text>No release in this lane</Text>
+        )}
       </View>
     );
-  }
+  };
 
   renderReleaseItem = ({ item }: { item: Release }): JSX.Element => {
     let promotionLabel;
@@ -291,27 +294,24 @@ export default class CodePushDevMenu extends Component<
     }
 
     return (
-      <TouchableOpacity
-        key={item.label}
-        onPress={this.viewRelease(item)}
-      >
+      <TouchableOpacity key={item.label} onPress={this.viewRelease(item)}>
         <Text style={styles.item}>
           <Text style={{ fontWeight: 'bold' }}>{item.label}</Text>
           <Text>{promotionLabel}</Text>
-          <Text>{(new Date(item.upload_time)).toLocaleString()}</Text>
+          <Text>{new Date(item.upload_time).toLocaleString()}</Text>
         </Text>
       </TouchableOpacity>
     );
-  }
+  };
 
   viewRelease = (item: Release) => {
     return () => {
       this.setState({
         release: item,
-        view: 'release'
+        view: 'release',
       });
     };
-  }
+  };
 
   renderRelease = () => {
     if (!this.state.release) {
@@ -335,7 +335,7 @@ export default class CodePushDevMenu extends Component<
         <View style={styles.rowContainer}>
           <Text style={styles.column}>Release Date</Text>
           <Text style={styles.column}>
-            {(new Date(this.state.release.upload_time)).toLocaleTimeString()}
+            {new Date(this.state.release.upload_time).toLocaleTimeString()}
           </Text>
         </View>
 
@@ -368,17 +368,12 @@ export default class CodePushDevMenu extends Component<
           </View>
         ) : null}
 
-
         <View style={{ marginTop: 50 }}>
-          <Button
-            title={'Use this release'}
-            onPress={this.updateTo(this.state.release)}
-          />
+          <Button title={'Use this release'} onPress={this.updateTo(this.state.release)} />
         </View>
-
       </View>
     );
-  }
+  };
 
   updateTo = (release: Release) => {
     return () => {
@@ -391,11 +386,10 @@ export default class CodePushDevMenu extends Component<
         failedInstall: false,
         isMandatory: false,
         isPending: false,
-        packageSize: release.size
+        packageSize: release.size,
       };
 
-      CodePush
-        .downloadUpdate(update, false)
+      CodePush.downloadUpdate(update, false)
         .then((r: any) => {
           console.log('Downloaded, installing...', r);
 
@@ -418,13 +412,13 @@ export default class CodePushDevMenu extends Component<
           console.error('codepush error catch', e);
         });
     };
-  }
+  };
 
   gotoSwimLanes = () => {
     this.setState({ view: 'swimLanes' });
-  }
+  };
 
   gotoSwimLane = () => {
     this.setState({ view: 'swimLane' });
-  }
+  };
 }

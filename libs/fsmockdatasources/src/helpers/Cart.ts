@@ -30,7 +30,7 @@ export class Cart {
       subtotal,
       total,
       shipping,
-      tax
+      tax,
     };
   }
 
@@ -40,8 +40,8 @@ export class Cart {
       this.getTotal(),
       this.billingAddress,
       this.payment,
-      this.shipment
-    ].every(val => val !== undefined);
+      this.shipment,
+    ].every((val) => val !== undefined);
 
     return hasItems && hasRequiredFields;
   }
@@ -75,7 +75,7 @@ export class Cart {
   public getItems(): CommerceTypes.CartItem[] {
     return [...this.itemStore.entries()]
       .map(([sku, qty]): CommerceTypes.CartItem | undefined => {
-        const product = Products.find(product => product.id === sku);
+        const product = Products.find((product) => product.id === sku);
         if (product === undefined) {
           return;
         }
@@ -96,16 +96,19 @@ export class Cart {
           itemId: product.id,
           productId: product.id,
           quantity: qty,
-          totalPrice: product.price === undefined ? undefined : {
-            currencyCode: product.price.currencyCode,
-            value: new Decimal(product.price.value.times(qty))
-          }
+          totalPrice:
+            product.price === undefined
+              ? undefined
+              : {
+                  currencyCode: product.price.currencyCode,
+                  value: new Decimal(product.price.value.times(qty)),
+                },
         };
       })
       .filter((item): item is CommerceTypes.CartItem => item !== undefined);
   }
 
-  public getSubtotal() : CommerceTypes.CurrencyValue | undefined {
+  public getSubtotal(): CommerceTypes.CurrencyValue | undefined {
     const items = this.getItems();
     if (!Array.isArray(items) || items.length === 0) {
       return;
@@ -135,7 +138,7 @@ export class Cart {
   }
 
   public getPromoTotal(): CommerceTypes.CurrencyValue | undefined {
-    const promos = (this.promos || []).filter(promo => promo.value);
+    const promos = (this.promos || []).filter((promo) => promo.value);
     if (promos.length === 0) {
       return;
     }
@@ -159,7 +162,7 @@ export class Cart {
   protected calculateSubtotal(items: CommerceTypes.CartItem[]): CommerceTypes.CurrencyValue {
     const subtotal = {
       currencyCode: DefaultCurrencyCode,
-      value: new Decimal(0)
+      value: new Decimal(0),
     };
 
     return items.reduce((subtotal, item) => {
@@ -176,7 +179,7 @@ export class Cart {
     if (!method || !method.price) {
       return {
         currencyCode: DefaultCurrencyCode,
-        value: new Decimal(0)
+        value: new Decimal(0),
       };
     }
 
@@ -191,19 +194,19 @@ export class Cart {
 
     return {
       currencyCode: subtotal.currencyCode,
-      value: subtotal.value.minus(discounts).times(0.07)
+      value: subtotal.value.minus(discounts).times(0.07),
     };
   }
 
   protected calculatePromos(promos: CommerceTypes.Promo[]): CommerceTypes.CurrencyValue {
     const promoTotal = promos.reduce(
-      (total, promo) => promo.value ? total.add(promo.value.value) : total,
+      (total, promo) => (promo.value ? total.add(promo.value.value) : total),
       new Decimal(0)
     );
 
     return {
       currencyCode: DefaultCurrencyCode,
-      value: promoTotal
+      value: promoTotal,
     };
   }
 
@@ -215,14 +218,11 @@ export class Cart {
   ): CommerceTypes.CurrencyValue {
     const discounts = promos ? promos.value : new Decimal(0);
 
-    const totalValue = subtotal.value
-      .add(tax.value)
-      .add(shipping.value)
-      .minus(discounts);
+    const totalValue = subtotal.value.add(tax.value).add(shipping.value).minus(discounts);
 
     return {
       currencyCode: subtotal.currencyCode,
-      value: totalValue.lessThan(0) ? new Decimal(0) : totalValue
+      value: totalValue.lessThan(0) ? new Decimal(0) : totalValue,
     };
   }
 }

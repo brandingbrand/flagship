@@ -1,10 +1,7 @@
 import { NPMPackageConfig } from '../types';
 import * as fs from './fs';
 import * as helpers from '../helpers';
-import {
-  app,
-  project
-} from './path';
+import { app, project } from './path';
 
 const kEnvReplacementRegex = /\{ENV\.([^}]+)\}/g;
 
@@ -21,7 +18,7 @@ function toAppName(projectName: string): string {
   return moduleName
     .replace(/-/g, '_')
     .split('_')
-    .map(w => `${w[0].toUpperCase()}${w.substring(1)}`)
+    .map((w) => `${w[0].toUpperCase()}${w.substring(1)}`)
     .join('');
 }
 
@@ -55,30 +52,27 @@ export function write(configuration: any): void {
  * @returns {object} The project environment configuration with ENV variables replaced.
  */
 function overwriteEnv(configuration: any): any {
-  return Object
-    .keys(configuration)
-    .reduce((accumulator: any, key: string) => {
-      let value = configuration[key];
+  return Object.keys(configuration).reduce((accumulator: any, key: string) => {
+    let value = configuration[key];
 
-      if (value && !Array.isArray(value)) {
-        switch (typeof value) {
-          case 'object':
-            value = overwriteEnv(value);
-            break;
+    if (value && !Array.isArray(value)) {
+      switch (typeof value) {
+        case 'object':
+          value = overwriteEnv(value);
+          break;
 
-          case 'string':
-            value = value.replace(kEnvReplacementRegex,
-              (a: any, b: string) => process.env[b] || '');
-            break;
+        case 'string':
+          value = value.replace(kEnvReplacementRegex, (a: any, b: string) => process.env[b] || '');
+          break;
 
-          default:
-        }
+        default:
       }
+    }
 
-      accumulator[key] = value;
+    accumulator[key] = value;
 
-      return accumulator;
-    }, {});
+    return accumulator;
+  }, {});
 }
 
 /**
@@ -97,7 +91,7 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
     helpers.logWarn('Environment configuration not found, fallback to default.');
 
     projectEnv = {
-      name: toAppName(projectPackageJson.name)
+      name: toAppName(projectPackageJson.name),
     };
   }
 
@@ -105,7 +99,7 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
 
   return {
     ...overwriteEnv(projectEnv),
-    version: projectPackageJson.version
+    version: projectPackageJson.version,
   };
 }
 
@@ -123,15 +117,14 @@ export function createEnvIndex(singleEnv?: string): void {
     helpers.logInfo('Creating index file for project envs');
   }
 
-  const envs = fs
-    .readdirSync(project.resolve('env'))
-    .filter((f: string) => f.match(envMatch));
+  const envs = fs.readdirSync(project.resolve('env')).filter((f: string) => f.match(envMatch));
 
   const envIndexFile = `module.exports = {\n${envs
     .map((env: string) => {
       const envName = env.match(/env.([\w]+).js/);
-      return envName &&
-        `"${envName.pop()}": require(${JSON.stringify(project.resolve('env', env))})`;
+      return (
+        envName && `"${envName.pop()}": require(${JSON.stringify(project.resolve('env', env))})`
+      );
     })
     .join(',\n')}\n}`;
 

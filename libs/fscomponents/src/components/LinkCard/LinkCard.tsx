@@ -9,7 +9,7 @@ import {
   Text,
   TextStyle,
   TouchableOpacity,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { LinkCardGhost } from './LinkCardGhost';
 
@@ -20,25 +20,25 @@ const styles = StyleSheet.create({
     paddingBottom: 41,
     paddingTop: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#DBDBDB'
+    borderBottomColor: '#DBDBDB',
   },
   image: {
     marginBottom: 10,
     width: 300,
     height: 130,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 20,
     lineHeight: 23,
-    letterSpacing: 0.5
+    letterSpacing: 0.5,
   },
   subtitle: {
     fontSize: 15,
     lineHeight: 22,
-    letterSpacing: 0.5
-  }
+    letterSpacing: 0.5,
+  },
 });
 
 export interface SerializableLinkCardProps {
@@ -54,14 +54,11 @@ export interface SerializableLinkCardProps {
   arrowImageStyle?: ImageStyle;
 }
 
-export interface LinkCardProps extends Omit<
-  SerializableLinkCardProps,
-  'imageStyle' |
-  'titleStyle' |
-  'subtitleStyle' |
-  'style' |
-  'arrowImageStyle'
-> {
+export interface LinkCardProps
+  extends Omit<
+    SerializableLinkCardProps,
+    'imageStyle' | 'titleStyle' | 'subtitleStyle' | 'style' | 'arrowImageStyle'
+  > {
   imageStyle?: StyleProp<ImageStyle>;
   titleStyle?: StyleProp<TextStyle>;
   subtitleStyle?: StyleProp<TextStyle>;
@@ -70,43 +67,33 @@ export interface LinkCardProps extends Omit<
   onPress?: () => void;
 }
 
-export const LinkCard: React.FunctionComponent<LinkCardProps> = React.memo(({
-  loading,
-  image,
-  imageStyle,
-  title,
-  titleStyle,
-  subtitle,
-  subtitleStyle,
-  style,
-  arrowImage = arrow,
-  arrowImageStyle,
-  onPress
-}) => {
-  if (loading) {
-    return <LinkCardGhost style={styles.container} />;
-  }
+export const LinkCard: React.FunctionComponent<LinkCardProps> = React.memo(
+  ({
+    loading,
+    image,
+    imageStyle,
+    title,
+    titleStyle,
+    subtitle,
+    subtitleStyle,
+    style,
+    arrowImage = arrow,
+    arrowImageStyle,
+    onPress,
+  }) => {
+    if (loading) {
+      return <LinkCardGhost style={styles.container} />;
+    }
 
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      disabled={!onPress}
-      style={[styles.container, style]}
-    >
-      <Image
-        source={image}
-        style={[styles.image, imageStyle]}
-      />
-      <Text style={[styles.title, titleStyle]}>
-        {title}
-      </Text>
-      <Text style={[styles.subtitle, subtitleStyle]}>
-        {subtitle}
-        <Image
-          source={arrowImage}
-          style={arrowImageStyle}
-        />
-      </Text>
-    </TouchableOpacity>
-  );
-});
+    return (
+      <TouchableOpacity onPress={onPress} disabled={!onPress} style={[styles.container, style]}>
+        <Image source={image} style={[styles.image, imageStyle]} />
+        <Text style={[styles.title, titleStyle]}>{title}</Text>
+        <Text style={[styles.subtitle, subtitleStyle]}>
+          {subtitle}
+          <Image source={arrowImage} style={arrowImageStyle} />
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+);

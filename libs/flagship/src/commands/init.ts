@@ -12,10 +12,7 @@ import * as path from '../lib/path';
 import * as rename from '../lib/rename';
 import * as web from '../lib/web';
 import * as os from '../lib/os';
-import {
-  Config,
-  NPMPackageConfig
-} from '../types';
+import { Config, NPMPackageConfig } from '../types';
 
 export interface BuilderArgs {
   option: (
@@ -23,7 +20,8 @@ export interface BuilderArgs {
     b: {
       alias: string;
       default: string;
-    }) => void;
+    }
+  ) => void;
 }
 
 export interface HandlerArgs {
@@ -41,7 +39,7 @@ export const describe = 'initialize FLAGSHIP for [platform]';
 export function builder(yargs: BuilderArgs): void {
   yargs.option('env', {
     alias: 'e',
-    default: 'prod'
+    default: 'prod',
   });
 }
 
@@ -75,7 +73,8 @@ export function handler(argv: HandlerArgs): void {
   }
 
   // Run react-native link
-  link.link(projectPackageJSON.flagship && projectPackageJSON.flagship.forceLink)
+  link
+    .link(projectPackageJSON.flagship && projectPackageJSON.flagship.forceLink)
     .then(() => {
       if (doAndroid) {
         modules.android(projectPackageJSON, configuration, 'postLink');
@@ -85,7 +84,7 @@ export function handler(argv: HandlerArgs): void {
         cocoapods.install();
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       process.exit(1);
     });
@@ -134,9 +133,10 @@ function initAndroid(
   const androidConfig = android.androidConfigWithDefault(configuration.android);
 
   // The id should be defined, but set it to a default if it's not for compatibility reasons
-  const pkgId = configuration.bundleIds && configuration.bundleIds.android ?
-    configuration.bundleIds.android.toLowerCase() :
-    `com.brandingbrand.reactnative.and.${configuration.name.toLowerCase()}`;
+  const pkgId =
+    configuration.bundleIds && configuration.bundleIds.android
+      ? configuration.bundleIds.android.toLowerCase()
+      : `com.brandingbrand.reactnative.and.${configuration.name.toLowerCase()}`;
 
   // Rename the boilerplate project with the app name
   rename.source('FLAGSHIP', configuration.name, 'android');
@@ -259,7 +259,7 @@ function initWeb(
     path.flagship.resolve('../fsweb'), // only works in the monorepo
     path.project.resolve('web'),
     {
-      dereference: true
+      dereference: true,
     }
   );
 
@@ -267,7 +267,7 @@ function initWeb(
   fs.writeFileSync(
     path.project.resolve('web', 'config.web.json'),
     JSON.stringify({
-      defaultEnvName: environmentIdentifier
+      defaultEnvName: environmentIdentifier,
     })
   );
 

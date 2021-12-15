@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ApplePayButtonBase } from './ApplePayButtonBase';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -17,14 +12,14 @@ const PLACEHOLDER_APPLE_PAY_IMAGE = require('../../../assets/images/applePayWhit
 const styles = StyleSheet.create({
   touchable: {
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export class ApplePayButton extends ApplePayButtonBase {
   componentDidMount(): void {
     this.setState({
-      showPayButton: true
+      showPayButton: true,
     });
   }
 

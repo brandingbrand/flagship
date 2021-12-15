@@ -5,8 +5,8 @@ import FSI18n from '@brandingbrand/fsi18n';
 
 const styles = StyleSheet.create({
   originalPrice: {
-    textDecorationLine: 'line-through'
-  }
+    textDecorationLine: 'line-through',
+  },
 });
 
 export interface PriceProps {
@@ -28,14 +28,8 @@ export interface SerializablePriceProps extends PriceProps {
   salePriceStyle?: TextStyle;
 }
 
-export const Price: React.FC<PriceProps> = React.memo(props => {
-  const {
-    price,
-    priceStyle,
-    originalPrice,
-    originalPriceStyle,
-    originalPriceFirst
-  } = props;
+export const Price: React.FC<PriceProps> = React.memo((props) => {
+  const { price, priceStyle, originalPrice, originalPriceStyle, originalPriceFirst } = props;
   let salePriceStyle;
 
   if (!price || !price.value) {
@@ -68,29 +62,20 @@ export const Price: React.FC<PriceProps> = React.memo(props => {
       <Text>
         {convertedOriginalPrice && (
           <>
-            <Text style={[styles.originalPrice, originalPriceStyle]}>
-              {convertedOriginalPrice}
-            </Text>
-            {' '}
+            <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>{' '}
           </>
         )}
-        <Text style={[priceStyle, salePriceStyle]}>
-          {convertedPrice}
-        </Text>
+        <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
       </Text>
     );
   } else {
     return (
       <Text>
-        <Text style={[priceStyle, salePriceStyle]}>
-          {convertedPrice}
-        </Text>
+        <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
         {convertedOriginalPrice && (
           <>
             {' '}
-            <Text style={[styles.originalPrice, originalPriceStyle]}>
-              {convertedOriginalPrice}
-            </Text>
+            <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>
           </>
         )}
       </Text>

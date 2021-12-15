@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import {
   NativeSyntheticEvent,
   StyleProp,
-  TextInputFocusEventData, TextStyle,
+  TextInputFocusEventData,
+  TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import {Dictionary} from '@brandingbrand/fsfoundation';
+import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
@@ -74,7 +75,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
       firstName: t.String,
       lastName: t.String,
       emailAddress: EmailType,
-      password: PasswordType
+      password: PasswordType,
     });
 
     this.fieldsOptions = {
@@ -84,7 +85,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         autoCorrect: false,
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('lastName'),
-        error: FSI18n.string(componentTranslationKeys.form.firstName.error)
+        error: FSI18n.string(componentTranslationKeys.form.firstName.error),
       },
       lastName: {
         label: FSI18n.string(componentTranslationKeys.form.lastName.label),
@@ -92,7 +93,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         autoCorrect: false,
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('emailAddress'),
-        error: FSI18n.string(componentTranslationKeys.form.lastName.error)
+        error: FSI18n.string(componentTranslationKeys.form.lastName.error),
       },
       emailAddress: {
         label: FSI18n.string(componentTranslationKeys.form.emailAddress.label),
@@ -101,7 +102,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid)
+        error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid),
       },
       password: {
         label: FSI18n.string(componentTranslationKeys.form.password.label),
@@ -112,37 +113,36 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         secureTextEntry: true,
         onChange: (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
           const currentVal = this.state.value;
-          const newVal = { ...currentVal, password:  e.nativeEvent.text };
+          const newVal = { ...currentVal, password: e.nativeEvent.text };
           this.setState({
-            value: newVal
+            value: newVal,
           });
-        }
+        },
       },
-      ...props.fieldsOptions
+      ...props.fieldsOptions,
     };
 
     // configure default styles
     this.fieldsStyleConfig = {
       textbox: {
         normal: {
-          borderRadius:  15,
+          borderRadius: 15,
           fontSize: 12,
           // color for text inside box - default is black
-          color: '#000'
+          color: '#000',
         },
         error: {
           borderRadius: 15,
           fontSize: 12,
           // color for text inside box - default is red
-          color: '#7f0000'
-        }
+          color: '#7f0000',
+        },
       },
       errorBlock: {
-        fontSize: 11
+        fontSize: 11,
       },
-      ...props.fieldsStyleConfig
+      ...props.fieldsStyleConfig,
     };
-
   } // end constructor
 
   componentDidMount(): void {
@@ -154,7 +154,7 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
-  }
+  };
 
   focusField = (fieldName: string) => {
     const field = this?.form?.getComponent(fieldName);
@@ -163,19 +163,19 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
     if (ref.focus) {
       ref.focus();
     }
-  }
+  };
 
   handleChange = (value: string) => {
     this.setState({
-      value
+      value,
     });
-  }
+  };
 
   render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={ref => (this.form = ref)}
+          ref={(ref) => (this.form = ref)}
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}

@@ -11,10 +11,8 @@ export interface SerializableTooltipDisplayProps {
   show?: boolean;
 }
 
-export interface TooltipDisplayProps extends Omit<
-  SerializableTooltipDisplayProps,
-  'style' | 'innerStyle' | 'tooltipArrowStyle'
-> {
+export interface TooltipDisplayProps
+  extends Omit<SerializableTooltipDisplayProps, 'style' | 'innerStyle' | 'tooltipArrowStyle'> {
   style?: StyleProp<ViewStyle>;
   innerStyle?: StyleProp<ViewStyle>;
   tooltipArrowStyle?: StyleProp<ViewStyle>;
@@ -32,19 +30,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: {
       width: 0,
-      height: 19
-    }
+      height: 19,
+    },
   },
   innerContainer: {
     paddingHorizontal: 20,
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   arrowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    width: '100%'
+    width: '100%',
   },
   tooltipArrow: {
     width: 14,
@@ -55,38 +53,42 @@ const styles = StyleSheet.create({
     borderLeftColor: palette.secondary,
     borderTopWidth: 1,
     borderLeftWidth: 1,
-    borderTopLeftRadius: 4
+    borderTopLeftRadius: 4,
   },
   arrowTop: {
-    transform: [{
-      rotate: '45deg'
-    }]
+    transform: [
+      {
+        rotate: '45deg',
+      },
+    ],
   },
   arrowBottom: {
-    transform: [{
-      rotate: '-135deg'
-    }]
+    transform: [
+      {
+        rotate: '-135deg',
+      },
+    ],
   },
   arrowContainerTop: {
-    top: -7
+    top: -7,
   },
   arrowContainerBottom: {
-    bottom: -7
+    bottom: -7,
   },
   arrowLeft: {
     justifyContent: 'flex-start',
-    left: 14
+    left: 14,
   },
   arrowCenter: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   arrowRight: {
     justifyContent: 'flex-end',
-    right: 14
-  }
+    right: 14,
+  },
 });
 
-export const TooltipDisplay: FunctionComponent<TooltipDisplayProps> = props => {
+export const TooltipDisplay: FunctionComponent<TooltipDisplayProps> = (props) => {
   const renderTooltipArrow = () => {
     const { positionY, positionX, tooltipArrowStyle } = props;
 
@@ -95,66 +97,36 @@ export const TooltipDisplay: FunctionComponent<TooltipDisplayProps> = props => {
 
     switch (positionY) {
       case 'top': {
-        mergeTooltipStyle = [
-          styles.arrowTop,
-          tooltipArrowStyle
-        ];
-        mergeContainerStyle = [
-          styles.arrowContainer,
-          styles.arrowContainerTop
-        ];
+        mergeTooltipStyle = [styles.arrowTop, tooltipArrowStyle];
+        mergeContainerStyle = [styles.arrowContainer, styles.arrowContainerTop];
         break;
       }
       case 'bottom': {
-        mergeTooltipStyle = [
-          styles.arrowBottom,
-          tooltipArrowStyle
-        ];
-        mergeContainerStyle = [
-          styles.arrowContainer,
-          styles.arrowContainerBottom
-        ];
+        mergeTooltipStyle = [styles.arrowBottom, tooltipArrowStyle];
+        mergeContainerStyle = [styles.arrowContainer, styles.arrowContainerBottom];
         break;
       }
       default: {
-        mergeTooltipStyle = [
-          styles.arrowTop,
-          tooltipArrowStyle
-        ];
-        mergeContainerStyle = [
-          styles.arrowContainer,
-          styles.arrowContainerTop
-        ];
+        mergeTooltipStyle = [styles.arrowTop, tooltipArrowStyle];
+        mergeContainerStyle = [styles.arrowContainer, styles.arrowContainerTop];
       }
     }
 
     switch (positionX) {
       case 'left': {
-        mergeContainerStyle = [
-          ...mergeContainerStyle,
-          styles.arrowLeft
-        ];
+        mergeContainerStyle = [...mergeContainerStyle, styles.arrowLeft];
         break;
       }
       case 'right': {
-        mergeContainerStyle = [
-          ...mergeContainerStyle,
-          styles.arrowRight
-        ];
+        mergeContainerStyle = [...mergeContainerStyle, styles.arrowRight];
         break;
       }
       case 'center': {
-        mergeContainerStyle = [
-          ...mergeContainerStyle,
-          styles.arrowCenter
-        ];
+        mergeContainerStyle = [...mergeContainerStyle, styles.arrowCenter];
         break;
       }
       default: {
-        mergeContainerStyle = [
-          ...mergeContainerStyle,
-          styles.arrowCenter
-        ];
+        mergeContainerStyle = [...mergeContainerStyle, styles.arrowCenter];
       }
     }
 
@@ -172,9 +144,7 @@ export const TooltipDisplay: FunctionComponent<TooltipDisplayProps> = props => {
   return (
     <View style={[styles.container, props.style]}>
       {renderTooltipArrow()}
-      <View style={[styles.innerContainer, props.innerStyle]}>
-        {props.children}
-      </View>
+      <View style={[styles.innerContainer, props.innerStyle]}>{props.children}</View>
     </View>
   );
 };

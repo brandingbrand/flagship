@@ -42,7 +42,7 @@ const HOST_STYLES = [
   /height/,
   /maxHeight/,
   /width/,
-  /maxWidth/
+  /maxWidth/,
 ];
 
 /**
@@ -92,13 +92,13 @@ export const extractHostStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
   }
 
   const [hostStylePairs, nonHostStylePairs] = partition(Object.entries(styleSheet), ([style]) =>
-    HOST_STYLES.some(hostStyle => hostStyle.test(style))
+    HOST_STYLES.some((hostStyle) => hostStyle.test(style))
   );
   const hostStyles = fromPairs(hostStylePairs) as T;
   const nonHostStyles: T | { height?: '100%' } | { width?: '100%' } = {
     ...fromPairs(nonHostStylePairs),
     ...conditionalStyle('height' in hostStyles, { height: '100%' }),
-    ...conditionalStyle('width' in hostStyles, { width: '100%' })
+    ...conditionalStyle('width' in hostStyles, { width: '100%' }),
   };
 
   return [hostStyles as Partial<T>, nonHostStyles as Partial<T>] as const;
@@ -159,7 +159,7 @@ export const extractContainerStyles = <T extends ViewStyle | ImageStyle | TextSt
   }
 
   const [nestedStyles, nonNestedStyles] = partition(Object.entries(styleSheet), ([style]) =>
-    CONTAINER_STYLES.some(nestedStyle => nestedStyle.test(style))
+    CONTAINER_STYLES.some((nestedStyle) => nestedStyle.test(style))
   );
 
   return [fromPairs(nestedStyles), fromPairs(nonNestedStyles)] as [Partial<T>, Partial<T>];
@@ -173,15 +173,15 @@ export const extractSandwichedStyles = <T extends ViewStyle | ImageStyle | TextS
   return [host, self, container] as [Partial<T>, Partial<T>, Partial<T>];
 };
 
-export const extractFont = memoize((textStyles: TextStyle | StyleProp<TextStyle>):
-  | string
-  | undefined => {
-  const styles = StyleSheet.flatten(textStyles);
+export const extractFont = memoize(
+  (textStyles: TextStyle | StyleProp<TextStyle>): string | undefined => {
+    const styles = StyleSheet.flatten(textStyles);
 
-  return `${styles?.fontWeight ?? '400'} ${
-    (styles?.fontSize ?? 16) + (styles?.letterSpacing ?? 0) * 4 + 'px'
-  }/${(styles?.lineHeight ?? 1.2 * (styles?.fontSize ?? 16)) + 'px'} ${
-    styles?.fontFamily ??
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
-  }`;
-});
+    return `${styles?.fontWeight ?? '400'} ${
+      (styles?.fontSize ?? 16) + (styles?.letterSpacing ?? 0) * 4 + 'px'
+    }/${(styles?.lineHeight ?? 1.2 * (styles?.fontSize ?? 16)) + 'px'} ${
+      styles?.fontFamily ??
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+    }`;
+  }
+);

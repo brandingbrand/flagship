@@ -6,7 +6,6 @@ declare module 'xcode' {
   }
 
   interface XCodeproject {
-
     parseSync: () => XCodeproject;
     writeSync: (options?: WriterOptions) => string;
     allUUids: () => string[];
@@ -67,11 +66,9 @@ declare module 'xcode' {
      */
     removeResourceFile: (path: string, opt: Options, group: string) => PBXFile;
 
-
     addFramework: (fpath: string, opt: Options) => PBXFile;
 
     removeFramework: (fpath: string, opt: Options) => PBXFile;
-
 
     addCopyfile: (fpath: string, opt: Options) => PBXFile;
 
@@ -90,8 +87,14 @@ declare module 'xcode' {
 
     removeFromPbxBuildFileSection: (file: unknown) => void;
 
-    addPbxGroup: (filePathsArray: string[], name: string, path: string, sourceTree?: unknown) => {
-      uuid: string; pbxGroup: string;
+    addPbxGroup: (
+      filePathsArray: string[],
+      name: string,
+      path: string,
+      sourceTree?: unknown
+    ) => {
+      uuid: string;
+      pbxGroup: string;
     };
 
     removePbxGroup: (groupName: string) => void;
@@ -124,13 +127,16 @@ declare module 'xcode' {
     pbxGroupByName: (name: string) => Group | null;
 
     addTarget: (
-      name: string, type: 'app_extension', subfolder: string, bundleId: string
-    ) => {uuid: string};
+      name: string,
+      type: 'app_extension',
+      subfolder: string,
+      bundleId: string
+    ) => { uuid: string };
 
     addBuildPhase: (files: string[], type: string, name: string, uuid: string) => void;
 
     addToPbxGroup: (uuid: string, key: string) => void;
 
-    hash: {project: {objects: {[key: string]: {[key: string]: {name: string}}}}};
+    hash: { project: { objects: { [key: string]: { [key: string]: { name: string } } } } };
   }
 }

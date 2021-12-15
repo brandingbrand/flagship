@@ -4,9 +4,7 @@
 
 import React from 'react';
 
-import {
-  View
-} from 'react-native';
+import { View } from 'react-native';
 
 import { CMSProviderProps, withCMSProvider } from './CMSProvider';
 
@@ -28,9 +26,7 @@ class CMSBannerStacked extends CMSBanner<CMSBannerStackedProps> {
 
     return (
       <View style={this.props.style}>
-        {cmsData.instances.map((instance: any, i: number) =>
-          this.renderInstance(instance, i)
-        )}
+        {cmsData.instances.map((instance: any, i: number) => this.renderInstance(instance, i))}
       </View>
     );
   }

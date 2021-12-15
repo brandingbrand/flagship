@@ -1,9 +1,7 @@
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { Config } from '../../../types';
-import {
-  logInfo
-} from '../../../helpers';
+import { logInfo } from '../../../helpers';
 
 /**
  * This script patches react-native-navigation to fix tab bar styling breakages introduced when

@@ -2,9 +2,7 @@ import * as fs from './fs';
 import * as path from './path';
 import { logInfo } from '../helpers';
 
-import {
-  Config
-} from '../types';
+import { Config } from '../types';
 
 const kNativeConstantsPlaceholder = '// [NativeConstants Inject]';
 

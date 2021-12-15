@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  DeviceEventEmitter,
-  StyleProp,
-  TextStyle,
-  TouchableOpacity
-} from 'react-native';
+import { DeviceEventEmitter, StyleProp, TextStyle, TouchableOpacity } from 'react-native';
 
-import {
-  CardProps,
-  JSON,
-  StoryGradient
-} from '../types';
+import { CardProps, JSON, StoryGradient } from '../types';
 import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import { CardContext } from '../lib/contexts';
 import { TextBlock, TextBlockProps } from './TextBlock';
@@ -23,24 +14,22 @@ export interface FeaturedTopCardContents {
   CTA: CTABlockProps;
 }
 
-
 export interface ComponentProps extends CardProps {
   containerStyle?: StyleProp<TextStyle>;
   story?: JSON;
   contents: FeaturedTopCardContents;
   api?: any;
   storyGradient?: StoryGradient;
-
 }
 
-export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { containerStyle, contents } = props;
 
   const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: props.name,
-      id: props.id
+      id: props.id,
     });
 
     if (!navigator) {
@@ -51,7 +40,7 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
         json,
         backButton: true,
         name: props.name,
-        discoverPath: props.discoverPath
+        discoverPath: props.discoverPath,
       });
     }
     return navigator.push({
@@ -59,23 +48,22 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
         name: 'EngagementComp',
         options: {
           topBar: {
-            visible: false
-          }
+            visible: false,
+          },
         },
         passProps: {
           json,
           backButton: true,
           name: props.name,
-          id: props.id
-        }
-      }
+          id: props.id,
+        },
+      },
     });
   };
 
   const onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = props;
-    const actionPayload: any = storyGradient ?
-      { ...story, storyGradient } : { ...story };
+    const actionPayload: any = storyGradient ? { ...story, storyGradient } : { ...story };
     return handleStoryAction(actionPayload);
   };
 
@@ -83,24 +71,13 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
     <CardContext.Provider
       value={{
         story: props.story,
-        handleStoryAction
+        handleStoryAction,
       }}
     >
-      <TouchableOpacity
-        style={containerStyle}
-        activeOpacity={0.9}
-        onPress={onCardPress}
-      >
-        <ImageBlock
-          {...contents.Image}
-        />
-        <TextBlock
-          {...contents.Text}
-        />
-        <CTABlock
-          {...contents.CTA}
-        />
-
+      <TouchableOpacity style={containerStyle} activeOpacity={0.9} onPress={onCardPress}>
+        <ImageBlock {...contents.Image} />
+        <TextBlock {...contents.Text} />
+        <CTABlock {...contents.CTA} />
       </TouchableOpacity>
     </CardContext.Provider>
   );

@@ -186,7 +186,6 @@ export interface ContentQuery {
    */
   sort: string;
 
-
   /**
    * The result set index to return the first instance for. Default value is 0.
    * minIntegerValue=0

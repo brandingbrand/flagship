@@ -16,23 +16,23 @@ import { useApp } from '../app';
 const styles = StyleSheet.create({
   devViewContainer: {
     backgroundColor: 'white',
-    height: '100vh'
+    height: '100vh',
   },
   configView: { padding: 10 },
   configViewItem: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   configViewTitle: {
     fontSize: 12,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   configViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   bottomBtns: {
     flexDirection: 'row',
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   closeBtn: {
     justifyContent: 'center',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   reloadBtn: {
     justifyContent: 'center',
@@ -48,28 +48,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#555',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   closeBtnText: {
-    color: '#333'
+    color: '#333',
   },
   reloadBtnText: {
-    color: 'white'
+    color: 'white',
   },
   switchBtns: {
     flexDirection: 'row',
-    margin: 10
+    margin: 10,
   },
   envView: {
     padding: 10,
-    flex: 1
+    flex: 1,
   },
   envViewText: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });
 
-const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
+const extractDevRoutes = (routes?: Routes, prefix: string = ''): string[] => {
   return (
     routes?.reduce<string[]>(
       // eslint-disable-next-line complexity
@@ -78,17 +78,17 @@ const extractDevRoutes = (routes?: Routes, prefix: string= ''): string[] => {
         ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu) ||
         'children' in route
           ? [
-            ...((('component' in route || 'loadComponent' in route) && route.quickDevMenu)
-              ? [`${prefix}/${route.path ?? ''}`]
-              : []),
-            ...('children' in route
+              ...(('component' in route || 'loadComponent' in route) && route.quickDevMenu
+                ? [`${prefix}/${route.path ?? ''}`]
+                : []),
+              ...('children' in route
                 ? extractDevRoutes(
                     route.children,
                     'initialPath' in route ? '' : `${prefix}/${route.path ?? ''}`
                   )
-                : [])
-          ]
-          : [])
+                : []),
+            ]
+          : []),
       ],
       []
     ) ?? []
@@ -123,16 +123,20 @@ export const DevMenu = makeModal(({ reject }) => {
   };
 
   const renderCustomDevScreen = (path: string, i: number) => {
-    return <TouchableRow key={i} onPress={pushToScreen(path)}>{path}</TouchableRow>;
+    return (
+      <TouchableRow key={i} onPress={pushToScreen(path)}>
+        {path}
+      </TouchableRow>
+    );
   };
 
   const renderDevMenu = () => {
     return (
-        <View>
-          <TouchableRow onPress={updateDevView('app-config')}>View App Config</TouchableRow>
-          <TouchableRow onPress={updateDevView('envSwitcher')}>Env Switcher</TouchableRow>
-          {devRoutes.map(renderCustomDevScreen)}
-        </View>
+      <View>
+        <TouchableRow onPress={updateDevView('app-config')}>View App Config</TouchableRow>
+        <TouchableRow onPress={updateDevView('envSwitcher')}>Env Switcher</TouchableRow>
+        {devRoutes.map(renderCustomDevScreen)}
+      </View>
     );
   };
 

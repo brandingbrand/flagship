@@ -11,21 +11,21 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     position: 'relative',
-    marginBottom: 30
+    marginBottom: 30,
   },
   title: {
     color: palette.primary,
     letterSpacing: 0.5,
     fontSize: 13,
     lineHeight: 13,
-    marginBottom: 3
+    marginBottom: 3,
   },
   textInput: {
     width: '100%',
@@ -35,36 +35,36 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: palette.secondary,
     backgroundColor: palette.background,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   arrowIcon: {
-    right: 20
+    right: 20,
   },
   inputValueText: {
     fontWeight: '500',
     fontSize: 17,
     letterSpacing: 0.5,
-    color: palette.primary
+    color: palette.primary,
   },
   placeholder: {
     fontWeight: '500',
     fontSize: 17,
     letterSpacing: 0.5,
-    color: palette.primary
+    color: palette.primary,
   },
   errorMessage: {
-    color: palette.error
+    color: palette.error,
   },
   errorIconStyle: {
     width: 12,
     height: 11,
-    marginRight: 5
+    marginRight: 5,
   },
   errorWrapper: {
     marginTop: 3,
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 interface SerializeableFormPickerProps {
@@ -90,12 +90,21 @@ interface SerializeableFormPickerProps {
   errorIconStyle?: ImageStyle;
 }
 
-interface FormPickerProps extends Omit<
-  SerializeableFormPickerProps,
-  'containerStyles' | 'textInputViewStyles' | 'titleStyles' | 'placeholderStyles' |
-  'errorMessageStyle' | 'textInputTextStyles' | 'activeInputStyles' | 'imageWrapperStyle' |
-  'errorContainerStyles' | 'imageStyles' | 'errorIconStyle'
-> {
+interface FormPickerProps
+  extends Omit<
+    SerializeableFormPickerProps,
+    | 'containerStyles'
+    | 'textInputViewStyles'
+    | 'titleStyles'
+    | 'placeholderStyles'
+    | 'errorMessageStyle'
+    | 'textInputTextStyles'
+    | 'activeInputStyles'
+    | 'imageWrapperStyle'
+    | 'errorContainerStyles'
+    | 'imageStyles'
+    | 'errorIconStyle'
+  > {
   onBlur?: () => void;
   onFocus?: () => void;
   setFormikField?: (field: string, value: any, shouldValidate?: boolean) => void;
@@ -114,10 +123,10 @@ interface FormPickerProps extends Omit<
 
 const icons = {
   arrowDown: require('../../../../assets/images/ArrowDown.png'),
-  warning: require('../../../../assets/images/warning.png')
+  warning: require('../../../../assets/images/warning.png'),
 };
 
-const FormPicker: FC<FormPickerProps> = props => {
+const FormPicker: FC<FormPickerProps> = (props) => {
   const {
     title,
     containerStyles,
@@ -134,7 +143,7 @@ const FormPicker: FC<FormPickerProps> = props => {
     requiredSymbol,
     errorIcon,
     errorIconStyle,
-    errorContainerStyles
+    errorContainerStyles,
   } = props;
 
   const [pickerValue, setValue] = useState<string>('');
@@ -148,47 +157,23 @@ const FormPicker: FC<FormPickerProps> = props => {
     }
   };
 
-  const renderPickerIcon = (
-    icon: ImageSourcePropType,
-    iconStyle?: StyleProp<ImageStyle>
-  ) => (): ReactNode => {
-    return (
-      <Image
-          source={icon}
-          style={[
-            styles.arrowIcon,
-            iconStyle
-          ]}
-        />
-    );
-  };
+  const renderPickerIcon =
+    (icon: ImageSourcePropType, iconStyle?: StyleProp<ImageStyle>) => (): ReactNode => {
+      return <Image source={icon} style={[styles.arrowIcon, iconStyle]} />;
+    };
 
   const pickerStyle = {
-    inputIOSContainer: {...styles.textInput, textInputViewStyles},
-    inputIOS: {...styles.inputValueText, textInputTextStyles},
-    inputAndroidContainer: {...styles.textInput, textInputViewStyles},
-    inputAndroid: {...styles.inputValueText, textInputTextStyles},
-    placeholder: {...styles.placeholder, placeholderStyles}
+    inputIOSContainer: { ...styles.textInput, textInputViewStyles },
+    inputIOS: { ...styles.inputValueText, textInputTextStyles },
+    inputAndroidContainer: { ...styles.textInput, textInputViewStyles },
+    inputAndroid: { ...styles.inputValueText, textInputTextStyles },
+    placeholder: { ...styles.placeholder, placeholderStyles },
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        containerStyles
-      ]}
-    >
-      <Text
-        style={[
-          styles.title,
-          titleStyles
-        ]}
-      >
-        {
-          required ?
-            requiredSymbol || '*' + title :
-            title
-        }
+    <View style={[styles.container, containerStyles]}>
+      <Text style={[styles.title, titleStyles]}>
+        {required ? requiredSymbol || '*' + title : title}
       </Text>
       <RNPickerSelect
         style={pickerStyle}
@@ -200,27 +185,12 @@ const FormPicker: FC<FormPickerProps> = props => {
         {...props}
       />
       {!!errorsMessage && (
-        <View
-          style={[
-            styles.errorWrapper,
-            errorContainerStyles
-          ]}
-        >
+        <View style={[styles.errorWrapper, errorContainerStyles]}>
           <Image
             source={errorIcon || icons.warning}
-            style={[
-              styles.errorIconStyle,
-              errorIconStyle
-            ]}
+            style={[styles.errorIconStyle, errorIconStyle]}
           />
-          <Text
-            style={[
-              styles.errorMessage,
-              errorMessageStyle
-            ]}
-          >
-            {errorsMessage}
-          </Text>
+          <Text style={[styles.errorMessage, errorMessageStyle]}>{errorsMessage}</Text>
         </View>
       )}
     </View>

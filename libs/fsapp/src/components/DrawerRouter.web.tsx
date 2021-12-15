@@ -2,13 +2,7 @@ import React, { Component, ComponentClass } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Provider } from 'react-redux';
 import screenWrapper, { GenericScreenProp } from '../components/screenWrapper.web';
-import {
-  BrowserRouter,
-  HashRouter,
-  Route,
-  StaticRouter,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, StaticRouter, Switch } from 'react-router-dom';
 import pathToRegexp, { compile, Key } from 'path-to-regexp';
 import { AppConfigType, DrawerConfig } from '../types';
 import Drawer from '../components/Drawer.web';
@@ -18,7 +12,7 @@ import { NotFound } from './NotFound';
 import AppRouter from '../lib/app-router';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
+const StyleSheetCreate: (obj: any) => StyleSheet.NamedStyles<any> = StyleSheet.create;
 const DEFAULT_DRAWER_WIDTH = '60%';
 const DEFAULT_DRAWER_DURATION = '0.3s';
 const DEFAULT_DRAWER_OVERLAY_OPACITY = 0.5;
@@ -62,7 +56,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
 
     this.state = {
       leftDrawerOpen: false,
-      rightDrawerOpen: false
+      rightDrawerOpen: false,
     };
   }
 
@@ -74,27 +68,17 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     if (drawer && drawer.left && drawer.left.screen) {
       const lScreenName = drawer.left.screen;
       const leftDrawerComponent = appConfig.screens[lScreenName];
-      leftDrawer = screenWrapper(
-        leftDrawerComponent,
-        appConfig,
-        api,
-        this.toggleDrawer
-      );
+      leftDrawer = screenWrapper(leftDrawerComponent, appConfig, api, this.toggleDrawer);
     }
 
     if (drawer && drawer.right && drawer.right.screen) {
       const rScreenName = drawer.right.screen;
       const rightDrawerComponent = appConfig.screens[rScreenName];
-      rightDrawer = screenWrapper(
-        rightDrawerComponent,
-        appConfig,
-        api,
-        this.toggleDrawer
-      );
+      rightDrawer = screenWrapper(rightDrawerComponent, appConfig, api, this.toggleDrawer);
     }
 
     return { leftDrawer, rightDrawer };
-  }
+  };
 
   generateRoutes = (appConfig: AppConfigType, api: FSNetwork, appRouter: AppRouter) => {
     const { screens, screen, routerConfig } = appConfig;
@@ -105,9 +89,9 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       // in a format/order that will correctly create the routing for web
       // this means no duplicate paths and if the route has a handle (:productId) the app version
       // takes precedence, if its a static route the NA defined route takes precedence
-      const config = appRouter && appRouter.getWebRouterConfig() || { ...routerConfig };
+      const config = (appRouter && appRouter.getWebRouterConfig()) || { ...routerConfig };
 
-      Object.keys(config).forEach(path => {
+      Object.keys(config).forEach((path) => {
         // NA defined routes go to the CMS screen
         const s = config[path].screen || 'CMS';
         if (!routes[s]) {
@@ -119,7 +103,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
 
     // per-inject parsed path to screen object,
     // so it can be filled with passProps efficiently
-    Object.keys(screens).forEach(key => {
+    Object.keys(screens).forEach((key) => {
       const path = screens[key].path || routes[key];
       // pathToRegexp is supposed to be able to take a string or array of string
       // however it throws an error if its an array of ONE string (multiple works)
@@ -147,12 +131,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         key={-1}
         path={'/'}
         render={this._renderDrawerWrapper(
-          screenWrapper(
-            screens[screen.name],
-            appConfig,
-            api,
-            this.toggleDrawer
-          )
+          screenWrapper(screens[screen.name], appConfig, api, this.toggleDrawer)
         )}
       />
     );
@@ -175,7 +154,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
 
     if (appConfig.notFoundRedirect) {
       if (typeof appConfig.notFoundRedirect === 'function') {
-        screensRoutes.push((
+        screensRoutes.push(
           <Route
             key={'not-found'}
             path={'*'}
@@ -183,9 +162,9 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
               screenWrapper(appConfig.notFoundRedirect, appConfig, api, this.toggleDrawer)
             )}
           />
-        ));
+        );
       } else {
-        screensRoutes.push((
+        screensRoutes.push(
           <Route
             key={'not-found'}
             path={'*'}
@@ -193,12 +172,12 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
               screenWrapper(NotFound(appConfig.notFoundRedirect), appConfig, api, this.toggleDrawer)
             )}
           />
-        ));
+        );
       }
     }
 
     return [rootComponent, ...screensRoutes];
-  }
+  };
 
   generateAppStyles = (appConfig: AppConfigType) => {
     const { drawer = {} } = appConfig;
@@ -209,37 +188,37 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     const drawerRightBackgroundColor = drawer.webRightBackgroundColor;
     const appStyle = StyleSheetCreate({
       appDrawerOpen: {
-        overflowX: 'hidden'
+        overflowX: 'hidden',
       },
       appDrawerDefault: {
         flex: 1,
-        flexBasis: 'auto'
+        flexBasis: 'auto',
       },
       container: {
         transitionDuration: drawerDuration,
         width: '100%',
         flex: 1,
-        flexBasis: 'auto'
+        flexBasis: 'auto',
       },
       containerDrawerLeftOpen: {
-        marginLeft: drawer.webSlideContainer === false ? undefined : drawerWidth
+        marginLeft: drawer.webSlideContainer === false ? undefined : drawerWidth,
       },
       containerDrawerRightOpen: {
-        marginLeft: drawer.webSlideContainer === false ? undefined : ('-' + drawerWidth)
+        marginLeft: drawer.webSlideContainer === false ? undefined : '-' + drawerWidth,
       },
       containerOverlay: {
         backgroundColor: 'black',
         opacity: 0,
         position: 'fixed',
         height: '100%',
-        width: 0
+        width: 0,
       },
       containerOverlayActive: {
         width: '100%',
         opacity: drawerOverlayOpacity,
         transitionProperty: 'opacity',
-        transitionDuration: drawerDuration
-      }
+        transitionDuration: drawerDuration,
+      },
     });
 
     return {
@@ -248,9 +227,9 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       drawerOverlayOpacity,
       drawerLeftBackgroundColor,
       drawerRightBackgroundColor,
-      appStyle
+      appStyle,
     };
-  }
+  };
 
   toggleDrawer = (config: DrawerConfig): void => {
     const side = config.side;
@@ -259,32 +238,27 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     // The following code assumes that only one drawer can be open at a time.
     if (side === 'left') {
       this.setState({
-        leftDrawerOpen: to === 'toggle' ? !this.state.leftDrawerOpen : (to === 'open'),
-        rightDrawerOpen: false
+        leftDrawerOpen: to === 'toggle' ? !this.state.leftDrawerOpen : to === 'open',
+        rightDrawerOpen: false,
       });
     } else {
       this.setState({
         leftDrawerOpen: false,
-        rightDrawerOpen: to === 'toggle' ? !this.state.rightDrawerOpen : (to === 'open')
+        rightDrawerOpen: to === 'toggle' ? !this.state.rightDrawerOpen : to === 'open',
       });
     }
-  }
+  };
 
   closeDrawers = () => {
     this.setState({
       leftDrawerOpen: false,
-      rightDrawerOpen: false
+      rightDrawerOpen: false,
     });
-  }
+  };
 
   render(): JSX.Element {
     const { appConfig, store } = this.props;
-    const {
-      packageJson,
-      webBasename,
-      webRouterType,
-      webRouterProps
-    } = appConfig;
+    const { packageJson, webBasename, webRouterType, webRouterProps } = appConfig;
 
     let Router: typeof React.Component;
 
@@ -300,17 +274,15 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         break;
     }
     const routerProps = {
-      basename: webBasename
-        || (packageJson && packageJson.flagship && packageJson.flagship.webPath) || '/',
-      ...webRouterProps
+      basename:
+        webBasename || (packageJson && packageJson.flagship && packageJson.flagship.webPath) || '/',
+      ...webRouterProps,
     };
 
     return (
       <Provider store={store}>
         <Router {...routerProps}>
-          <Switch location={appConfig.location}>
-            {this.screensRoutes}
-          </Switch>
+          <Switch location={appConfig.location}>{this.screensRoutes}</Switch>
         </Router>
       </Provider>
     );
@@ -322,7 +294,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
       drawerDuration,
       drawerLeftBackgroundColor,
       drawerRightBackgroundColor,
-      appStyle
+      appStyle,
     } = this.drawerConfig;
 
     return (props: any) => {
@@ -330,7 +302,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
         <View
           style={[
             (this.state.leftDrawerOpen || this.state.rightDrawerOpen) && appStyle.appDrawerOpen,
-            appStyle.appDrawerDefault
+            appStyle.appDrawerDefault,
           ]}
         >
           {this.leftDrawerComponent && (
@@ -338,7 +310,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
               width={drawerWidth}
               duration={drawerDuration}
               isOpen={this.state.leftDrawerOpen}
-              orientation='left'
+              orientation="left"
               component={this.leftDrawerComponent}
               backgroundColor={drawerLeftBackgroundColor}
               {...props}
@@ -349,7 +321,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
               width={drawerWidth}
               duration={drawerDuration}
               isOpen={this.state.rightDrawerOpen}
-              orientation='right'
+              orientation="right"
               component={this.rightDrawerComponent}
               backgroundColor={drawerRightBackgroundColor}
               {...props}
@@ -359,7 +331,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
             style={[
               appStyle.container,
               this.state.leftDrawerOpen && appStyle.containerDrawerLeftOpen,
-              this.state.rightDrawerOpen && appStyle.containerDrawerRightOpen
+              this.state.rightDrawerOpen && appStyle.containerDrawerRightOpen,
             ]}
           >
             {React.createElement(component, props)}
@@ -369,12 +341,12 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
               style={[
                 appStyle.containerOverlay,
                 (this.state.leftDrawerOpen || this.state.rightDrawerOpen) &&
-                  appStyle.containerOverlayActive
+                  appStyle.containerOverlayActive,
               ]}
             />
           </TouchableWithoutFeedback>
         </View>
       );
     };
-  }
+  };
 }

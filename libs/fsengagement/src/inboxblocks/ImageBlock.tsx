@@ -8,7 +8,7 @@ import {
   StyleProp,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { EngagementContext } from '../lib/contexts';
 
@@ -31,12 +31,12 @@ export interface ImageDimensions {
   height?: number;
 }
 
-export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
+export const ImageBlock: React.FC<ImageBlockProps> = React.memo((props) => {
   const { handleAction, windowWidth } = React.useContext(EngagementContext);
 
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
     height: 0,
-    width: 0
+    width: 0,
   });
 
   const {
@@ -45,7 +45,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
     resizeMode = 'cover',
     resizeMethod = 'resize',
     source,
-    link
+    link,
   } = props;
   if (!source) {
     return <View />;
@@ -61,7 +61,12 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
   // eslint-disable-next-line complexity
   const findImageRatio = (): ImageDimensions => {
     const {
-      parentWidth, containerStyle, ratio, useRatio, outerContainerStyle, cardContainerStyle
+      parentWidth,
+      containerStyle,
+      ratio,
+      useRatio,
+      outerContainerStyle,
+      cardContainerStyle,
     } = props;
     if (!useRatio) {
       return {};
@@ -130,7 +135,6 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
     const { ratio, useRatio } = props;
     if (useRatio && ratio) {
       setImageDimensions(findImageRatio());
-
     }
   };
 
@@ -140,16 +144,13 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
     }
     handleAction({
       type: 'deep-link',
-      value: link
+      value: link,
     });
   };
 
   if (link) {
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={onPress(link)}
-      >
+      <TouchableOpacity activeOpacity={1} onPress={onPress(link)}>
         <View onLayout={_onLayout} style={containerStyle}>
           <Image
             source={source}
@@ -171,5 +172,4 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo(props => {
       />
     </View>
   );
-
 });

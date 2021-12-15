@@ -2,10 +2,7 @@
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "parserOptions": {
-    "project": [
-      "./libs/fslocator/tsconfig.lib.json",
-      "./libs/fslocator/tsconfig.spec.json"
-    ]
+    "project": ["./libs/fslocator/tsconfig.lib.json", "./libs/fslocator/tsconfig.spec.json"]
   },
   "overrides": [
     {

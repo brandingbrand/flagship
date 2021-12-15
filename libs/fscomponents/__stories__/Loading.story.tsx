@@ -1,15 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import {
-  object
-} from '@storybook/addon-knobs';
+import { object } from '@storybook/addon-knobs';
 import { Loading } from '../src/components/Loading';
 
 const defaultStyle = {
-  padding: 20
+  padding: 20,
 };
 
-storiesOf('Loading', module)
-  .add('basic usage', () => (
-    <Loading style={object('style', defaultStyle)}/>
-  ));
+storiesOf('Loading', module).add('basic usage', () => (
+  <Loading style={object('style', defaultStyle)} />
+));

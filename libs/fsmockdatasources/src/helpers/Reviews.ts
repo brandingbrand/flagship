@@ -1,11 +1,11 @@
 import faker from 'faker';
 import { Products } from './Products';
 
-type ReviewUser = import ('@brandingbrand/fscommerce').ReviewTypes.ReviewUser;
-type ReviewQuestion = import ('@brandingbrand/fscommerce').ReviewTypes.ReviewQuestion;
-type Review = import ('@brandingbrand/fscommerce').ReviewTypes.Review;
-type ReviewsMap = import ('@brandingbrand/fsfoundation').Dictionary<Review[]>;
-type ReviewQuestionsMap = import ('@brandingbrand/fsfoundation').Dictionary<ReviewQuestion[]>;
+type ReviewUser = import('@brandingbrand/fscommerce').ReviewTypes.ReviewUser;
+type ReviewQuestion = import('@brandingbrand/fscommerce').ReviewTypes.ReviewQuestion;
+type Review = import('@brandingbrand/fscommerce').ReviewTypes.Review;
+type ReviewsMap = import('@brandingbrand/fsfoundation').Dictionary<Review[]>;
+type ReviewQuestionsMap = import('@brandingbrand/fsfoundation').Dictionary<ReviewQuestion[]>;
 
 function generateReviewUser(): ReviewUser {
   return {
@@ -13,7 +13,7 @@ function generateReviewUser(): ReviewUser {
     isVerifiedBuyer: faker.random.boolean(),
     isVerifiedReviewer: faker.random.boolean(),
     location: `${faker.address.city()}, ${faker.address.stateAbbr()}`,
-    name: faker.name.findName()
+    name: faker.name.findName(),
   };
 }
 
@@ -24,16 +24,18 @@ function generateReview(): Review {
     text: faker.lorem.paragraphs(),
     rating,
     isRecommended: rating > 3,
-    user: generateReviewUser()
+    user: generateReviewUser(),
   };
 }
 
 function generateQuestion(): ReviewQuestion {
   return {
     text: faker.lorem.sentence().replace('.', '?'),
-    answers: Array(faker.random.number(10)).fill(null).map(() => ({
-      text: faker.random.boolean() ? faker.lorem.sentence() : faker.lorem.paragraphs()
-    }))
+    answers: Array(faker.random.number(10))
+      .fill(null)
+      .map(() => ({
+        text: faker.random.boolean() ? faker.lorem.sentence() : faker.lorem.paragraphs(),
+      })),
   };
 }
 

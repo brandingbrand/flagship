@@ -8,7 +8,7 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { Step } from './Step';
 import { palette } from '../styles/variables';
@@ -37,15 +37,17 @@ export interface SerializableStepIndicatorProps {
   line?: boolean;
 }
 
-export interface StepIndicatorProps extends Omit<SerializableStepIndicatorProps,
-  'completedStyle' |
-  'completedTextStyle' |
-  'completedIconStyle' |
-  'currentStyle' |
-  'currentTextStyle' |
-  'defaultStyle' |
-  'defaultTextStyle' |
-  'style'
+export interface StepIndicatorProps
+  extends Omit<
+    SerializableStepIndicatorProps,
+    | 'completedStyle'
+    | 'completedTextStyle'
+    | 'completedIconStyle'
+    | 'currentStyle'
+    | 'currentTextStyle'
+    | 'defaultStyle'
+    | 'defaultTextStyle'
+    | 'style'
   > {
   completedStyle?: StyleProp<ViewStyle>;
   completedTextStyle?: StyleProp<TextStyle>;
@@ -69,18 +71,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 40,
     paddingBottom: 45,
-    paddingTop: 10
+    paddingTop: 10,
   },
   stepIndicatorContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   indicatorWrap: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   indicatorTitle: {
     position: 'absolute',
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: palette.secondary,
     fontSize: 13,
-    letterSpacing: 0.5
+    letterSpacing: 0.5,
   },
   complete: {
     display: 'flex',
@@ -100,19 +102,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: palette.primary,
-    backgroundColor: palette.background
+    backgroundColor: palette.background,
   },
   completeImage: {
     width: 16,
-    height: 16
+    height: 16,
   },
   line: {
     height: 1,
     flex: 1,
-    backgroundColor: palette.secondary
+    backgroundColor: palette.secondary,
   },
   lineActive: {
-    backgroundColor: palette.secondary
+    backgroundColor: palette.secondary,
   },
   active: {
     display: 'flex',
@@ -122,19 +124,19 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     backgroundColor: palette.secondary,
-    borderRadius: 50
+    borderRadius: 50,
   },
   activeNumber: {
     fontWeight: 'bold',
     fontSize: 15,
     letterSpacing: 0.5,
-    color: palette.onPrimary
+    color: palette.onPrimary,
   },
   incompleteCircle: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 30
+    height: 30,
   },
   incomplete: {
     width: 11,
@@ -144,35 +146,32 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   wrap: {
     position: 'relative',
-    display: 'flex'
+    display: 'flex',
   },
   activeTitleStyles: {
     fontWeight: '600',
-    color: palette.secondary
+    color: palette.secondary,
   },
   container: {
     alignSelf: 'stretch',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   stepContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 /**
  * StepIndicator component for displaying a series of steps in their completed state
  */
 export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props): JSX.Element => {
-  const {
-    stepTitles,
-    currentStep
-  } = props;
+  const { stepTitles, currentStep } = props;
 
-  const stepPressed = (index: number, title: string): () => void => {
+  const stepPressed = (index: number, title: string): (() => void) => {
     return () => {
       if (props.onStepPressed) {
         props.onStepPressed(index, title);
@@ -217,11 +216,7 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
 
     return (
       <View style={[styles.complete, props.completedStyle]}>
-        <Image
-          style={styles.completeImage}
-          source={checkIcon}
-          resizeMode={'contain'}
-        />
+        <Image style={styles.completeImage} source={checkIcon} resizeMode={'contain'} />
       </View>
     );
   };
@@ -233,9 +228,7 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
 
     return (
       <View style={[styles.active, props.currentStyle]}>
-        <Text style={styles.activeNumber}>
-          {typeof step === 'string' ? step : step.id}
-        </Text>
+        <Text style={styles.activeNumber}>{typeof step === 'string' ? step : step.id}</Text>
       </View>
     );
   };
@@ -252,10 +245,7 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
     );
   };
 
-  const renderStepIndicator = (
-    step: string | IdStep,
-    index: number
-  ): JSX.Element => {
+  const renderStepIndicator = (step: string | IdStep, index: number): JSX.Element => {
     const isActive = index === currentStep;
     const isComplete = index < currentStep;
     const isIncomplete = index > currentStep;
@@ -274,15 +264,13 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
               styles.indicatorTitle,
               props.defaultTextStyle,
               isActive && styles.activeTitleStyles,
-              isActive && props.currentTextStyle
+              isActive && props.currentTextStyle,
             ]}
           >
             {typeof step === 'string' ? step : step.name}
           </Text>
         </View>
-        {!isLast && (
-          <View style={[styles.line, isComplete && styles.lineActive]} />
-        )}
+        {!isLast && <View style={[styles.line, isComplete && styles.lineActive]} />}
       </>
     );
   };
@@ -297,9 +285,5 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
     );
   }
 
-  return (
-    <View style={[styles.container, props.style]}>
-      {props.stepTitles.map(renderStep)}
-    </View>
-  );
+  return <View style={[styles.container, props.style]}>{props.stepTitles.map(renderStep)}</View>;
 });

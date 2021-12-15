@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import {
-  JSON,
-  ScreenProps
-} from '../types';
+import { JSON, ScreenProps } from '../types';
 
 import { CTABlock } from './CTABlock';
 
@@ -22,34 +14,22 @@ export interface StackedButtonsProps extends ScreenProps {
 
 const styles = StyleSheet.create({
   item: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 export default class StackedButtons extends Component<StackedButtonsProps> {
   render(): JSX.Element {
-    const {
-      containerStyle,
-      contents,
-      buttonSpacing,
-      story
-    } = this.props;
+    const { containerStyle, contents, buttonSpacing, story } = this.props;
 
     return (
       <View style={containerStyle}>
         <View style={[styles.item, buttonSpacing]}>
-          <CTABlock
-            {...contents.topCTA}
-            story={story}
-          />
+          <CTABlock {...contents.topCTA} story={story} />
         </View>
         <View style={styles.item}>
-          <CTABlock
-            {...contents.bottomCTA}
-            story={story}
-          />
+          <CTABlock {...contents.bottomCTA} story={story} />
         </View>
       </View>
     );
-
   }
 }

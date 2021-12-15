@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { cloneDeep, merge, pickBy } from 'lodash-es';
@@ -42,10 +42,9 @@ const S = StyleSheet.create({
     flex: 1,
     backgroundColor: '#EEE',
     padding: 10,
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
-
 
 export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Element => {
   let form: Form | null;
@@ -58,14 +57,14 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
     textbox: {
       normal: {
         borderRadius: 0,
-        fontSize: 14
+        fontSize: 14,
       },
       error: {
         borderRadius: 0,
-        fontSize: 14
-      }
+        fontSize: 14,
+      },
     },
-    ...props.fieldsStyleConfig
+    ...props.fieldsStyleConfig,
   };
 
   const fieldsTypes = t.struct(
@@ -81,9 +80,9 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         stateCode: t.String,
         phone: t.Number,
         email: EmailType,
-        ...props.fieldsTypes
+        ...props.fieldsTypes,
       },
-      v => !!v
+      (v) => !!v
     )
   );
 
@@ -108,78 +107,81 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
     }
   };
 
-  const fieldsOptions = merge({}, {
-    firstName: {
-      placeholder: FSI18n.string(componentTranslationKeys.firstName),
-      returnKeyType: 'next',
-      autoCorrect: false,
-      onSubmitEditing: () => focusField('lastName'),
-      error: FSI18n.string(componentTranslationKeys.firstNameError)
+  const fieldsOptions = merge(
+    {},
+    {
+      firstName: {
+        placeholder: FSI18n.string(componentTranslationKeys.firstName),
+        returnKeyType: 'next',
+        autoCorrect: false,
+        onSubmitEditing: () => focusField('lastName'),
+        error: FSI18n.string(componentTranslationKeys.firstNameError),
+      },
+      lastName: {
+        placeholder: FSI18n.string(componentTranslationKeys.lastName),
+        returnKeyType: 'next',
+        autoCorrect: false,
+        onSubmitEditing: () => focusField('address1'),
+        error: FSI18n.string(componentTranslationKeys.lastNameError),
+      },
+      address1: {
+        placeholder: FSI18n.string(componentTranslationKeys.address1),
+        returnKeyType: 'next',
+        onSubmitEditing: () => focusField('address2'),
+        error: FSI18n.string(componentTranslationKeys.address1Error),
+      },
+      address2: {
+        placeholder: FSI18n.string(componentTranslationKeys.address2),
+        returnKeyType: 'next',
+        onSubmitEditing: () => focusField('city'),
+      },
+      city: {
+        placeholder: FSI18n.string(componentTranslationKeys.city),
+        returnKeyType: 'next',
+        onSubmitEditing: () => focusField('postalCode'),
+        error: FSI18n.string(componentTranslationKeys.cityError),
+      },
+      postalCode: {
+        placeholder: FSI18n.string(componentTranslationKeys.postal),
+        keyboardType: 'number-pad',
+        autoCorrect: false,
+        returnKeyType: 'next',
+        onSubmitEditing: () => focusField('stateCode'),
+        error: FSI18n.string(componentTranslationKeys.postalError),
+      },
+      stateCode: {
+        placeholder: FSI18n.string(componentTranslationKeys.state),
+        onSubmitEditing: () => focusField('phone'),
+        error: FSI18n.string(componentTranslationKeys.stateError),
+      },
+      phone: {
+        placeholder: FSI18n.string(componentTranslationKeys.phone),
+        keyboardType: 'number-pad',
+        autoCorrect: false,
+        autoCapitalize: 'none',
+        returnKeyType: 'next',
+        onSubmitEditing: () => focusField('email'),
+        error: FSI18n.string(componentTranslationKeys.phoneError),
+      },
+      email: {
+        placeholder: FSI18n.string(componentTranslationKeys.email),
+        returnKeyType: 'next',
+        autoCorrect: false,
+        autoCapitalize: 'none',
+        keyboardType: 'email-address',
+        error: FSI18n.string(componentTranslationKeys.emailError),
+      },
+      isPoBox: {
+        label: FSI18n.string(componentTranslationKeys.poBox),
+        stylesheet: checkboxStyleConfig,
+      },
     },
-    lastName: {
-      placeholder: FSI18n.string(componentTranslationKeys.lastName),
-      returnKeyType: 'next',
-      autoCorrect: false,
-      onSubmitEditing: () => focusField('address1'),
-      error: FSI18n.string(componentTranslationKeys.lastNameError)
-    },
-    address1: {
-      placeholder: FSI18n.string(componentTranslationKeys.address1),
-      returnKeyType: 'next',
-      onSubmitEditing: () => focusField('address2'),
-      error: FSI18n.string(componentTranslationKeys.address1Error)
-    },
-    address2: {
-      placeholder: FSI18n.string(componentTranslationKeys.address2),
-      returnKeyType: 'next',
-      onSubmitEditing: () => focusField('city')
-    },
-    city: {
-      placeholder: FSI18n.string(componentTranslationKeys.city),
-      returnKeyType: 'next',
-      onSubmitEditing: () => focusField('postalCode'),
-      error: FSI18n.string(componentTranslationKeys.cityError)
-    },
-    postalCode: {
-      placeholder: FSI18n.string(componentTranslationKeys.postal),
-      keyboardType: 'number-pad',
-      autoCorrect: false,
-      returnKeyType: 'next',
-      onSubmitEditing: () => focusField('stateCode'),
-      error: FSI18n.string(componentTranslationKeys.postalError)
-    },
-    stateCode: {
-      placeholder: FSI18n.string(componentTranslationKeys.state),
-      onSubmitEditing: () => focusField('phone'),
-      error: FSI18n.string(componentTranslationKeys.stateError)
-    },
-    phone: {
-      placeholder: FSI18n.string(componentTranslationKeys.phone),
-      keyboardType: 'number-pad',
-      autoCorrect: false,
-      autoCapitalize: 'none',
-      returnKeyType: 'next',
-      onSubmitEditing: () => focusField('email'),
-      error: FSI18n.string(componentTranslationKeys.phoneError)
-    },
-    email: {
-      placeholder: FSI18n.string(componentTranslationKeys.email),
-      returnKeyType: 'next',
-      autoCorrect: false,
-      autoCapitalize: 'none',
-      keyboardType: 'email-address',
-      error: FSI18n.string(componentTranslationKeys.emailError)
-    },
-    isPoBox: {
-      label: FSI18n.string(componentTranslationKeys.poBox),
-      stylesheet: checkboxStyleConfig
-    }
-  }, props.fieldsOptions);
+    props.fieldsOptions
+  );
 
   // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
-  const labelPosition = (typeof props.labelPosition === 'number') ?
-  props.labelPosition : FormLabelPosition.Inline;
-
+  const labelPosition =
+    typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
 
   const handleSubmit = () => {
     const { onSubmit } = props;
@@ -192,7 +194,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
   return (
     <View style={props.style}>
       <Form
-        ref={ref => (form = ref)}
+        ref={(ref) => (form = ref)}
         fieldsTypes={fieldsTypes}
         fieldsOptions={fieldsOptions}
         fieldsStyleConfig={fieldsStyleConfig}

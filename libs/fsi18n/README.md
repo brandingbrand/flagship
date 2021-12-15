@@ -26,15 +26,15 @@ Assume the user's language preference is set to French (fr-FR).
 import FSI18n from '@brandingbrand/fsi18n';
 const translations = {
   en: {
-    greeting: 'Hello'
+    greeting: 'Hello',
   },
   fr: {
-    greeting: 'Bonjour'
+    greeting: 'Bonjour',
   },
   es: {
-    greeting: 'Hola'
-  }
-}
+    greeting: 'Hola',
+  },
+};
 
 FSI18n.addTranslations(translations);
 FSI18n.string('greeting'); // Bonjour
@@ -50,13 +50,13 @@ import FSI18n from '@brandingbrand/fsi18n';
 FSI18n.currency(1234.56, 'EUR'); // 1 234,56 €
 FSI18n.currency(1234.56, undefined, {
   currency: 'USD',
-  currencyDisplay: 'code'
+  currencyDisplay: 'code',
 }); // 1 234,56 USD
 ```
 
 ```js
 import FSI18n from '@brandingbrand/fsi18n';
-FSI18n.percent(.123456); // 12 %
+FSI18n.percent(0.123456); // 12 %
 ```
 
 ```js

@@ -1,13 +1,7 @@
-import {
-  execSync as exec
-} from 'child_process';
+import { execSync as exec } from 'child_process';
 import * as fs from './fs';
 import * as path from './path';
-import {
-  logError,
-  logInfo,
-  logWarn
-} from '../helpers';
+import { logError, logInfo, logWarn } from '../helpers';
 import { NPMPackageConfig } from '../types';
 
 /**
@@ -31,13 +25,12 @@ export function install(): void {
 
   try {
     exec(`cd ${webPath} && yarn`, {
-      stdio: [0, 1, 2]
+      stdio: [0, 1, 2],
     });
 
     // Remove react dependency in web, the bundler will automatically pick up the one
     // from react-native
     fs.removeSync(path.project.resolve('web', 'node_modules', 'react'));
-
   } catch (err) {
     logError(`yarn for Web`, err);
 
@@ -58,7 +51,7 @@ export function link(packageJSON: NPMPackageConfig): void {
   const mainNodeModules = path.project.resolve('node_modules');
   const webNodeModules = path.project.resolve('web', 'node_modules');
 
-  Object.keys(packageJSON.dependencies || {}).forEach(dependency => {
+  Object.keys(packageJSON.dependencies || {}).forEach((dependency) => {
     // Replace the `/` with the platform path separator
     // e.g. @brandingbrand/pirate-network to @brandingbrand\pirate-network
     const dependencyPath = dependency.split('/').join(path.sep);
@@ -117,7 +110,6 @@ export function headerScripts(fragmentPath?: string): void {
       /<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->`
     );
-
   } catch (err) {
     logError(`injecting web header scripts from ${fragmentPath}`, err);
 
@@ -145,7 +137,6 @@ export function footerScripts(fragmentPath?: string): void {
       /<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->`
     );
-
   } catch (err) {
     logError(`injecting web footer scripts from ${fragmentPath}`, err);
 

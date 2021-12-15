@@ -11,7 +11,7 @@ export const grays = {
   six: '#6c6c6c',
   seven: '#494949',
   eight: '#343434',
-  nine: '#212121'
+  nine: '#212121',
 };
 
 export const color = {
@@ -22,7 +22,7 @@ export const color = {
   green: '#227d74',
   yellow: '#dab10e',
   white: '#ffffff',
-  red: '#d0021b'
+  red: '#d0021b',
 };
 
 export const palette = {
@@ -37,52 +37,52 @@ export const palette = {
   onAccent: color.white,
   onBackground: color.black,
   onSurface: color.black,
-  onError: color.white
+  onError: color.white,
 };
 
 export const padding = {
   base: 10,
   wide: 15,
-  narrow: 5
+  narrow: 5,
 };
 
 export const border = {
   color: color.lightGray,
   width: StyleSheet.hairlineWidth,
-  radius: 3
+  radius: 3,
 };
 
 export const types = StyleSheet.create({
   title1: {
     fontSize: 44,
-    lineHeight: 56
+    lineHeight: 56,
   },
   title2: {
     fontSize: 32,
-    lineHeight: 36
+    lineHeight: 36,
   },
   title3: {
     fontSize: 24,
-    lineHeight: 28
+    lineHeight: 28,
   },
   large: {
     fontSize: 19,
-    lineHeight: 24
+    lineHeight: 24,
   },
   regular: {
     fontSize: 16,
-    lineHeight: 22
+    lineHeight: 22,
   },
   small: {
     fontSize: 14,
-    lineHeight: 18
+    lineHeight: 18,
   },
   caption: {
     fontSize: 12,
-    lineHeight: 16
+    lineHeight: 16,
   },
   micro: {
     fontSize: 10,
-    lineHeight: 12
-  }
+    lineHeight: 12,
+  },
 });

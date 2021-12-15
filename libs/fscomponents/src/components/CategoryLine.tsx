@@ -8,7 +8,7 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { TouchableHighlightLink } from './TouchableHighlightLink';
@@ -29,11 +29,10 @@ export interface SerializableCategoryLineProps extends CommerceTypes.Category {
   accessibilityRole?: AccessibilityRole;
 }
 
-export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
-  'accessoryStyle' |
-  'imageStyle' |
-  'style' |
-  'titleStyle'
+export interface CategoryLineProps
+  extends Omit<
+    SerializableCategoryLineProps,
+    'accessoryStyle' | 'imageStyle' | 'style' | 'titleStyle'
   > {
   accessoryStyle?: StyleProp<ImageStyle>;
   imageStyle?: StyleProp<ImageStyle>;
@@ -45,7 +44,6 @@ export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
 
 // eslint-disable-next-line complexity
 export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): JSX.Element => {
-
   const {
     renderAccessory,
     showAccessory,
@@ -60,7 +58,7 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
     style,
     title,
     titleStyle,
-    underlayColor
+    underlayColor,
   } = props;
 
   /**
@@ -90,15 +88,12 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
     >
       <View style={S.rowInner}>
         {showImageValue && image && <Image source={image} style={imageStyle} />}
-        <Text style={[S.buttonText, titleStyle]}>
-          {title}
-        </Text>
-        {showAccessoryValue && accessorySrc &&
-          <Image source={accessorySrc} style={accessoryStyle} resizeMode='contain' />
-        }
+        <Text style={[S.buttonText, titleStyle]}>{title}</Text>
+        {showAccessoryValue && accessorySrc && (
+          <Image source={accessorySrc} style={accessoryStyle} resizeMode="contain" />
+        )}
         {renderAccessory && renderAccessory()}
       </View>
     </TouchableHighlightLink>
   );
 });
-

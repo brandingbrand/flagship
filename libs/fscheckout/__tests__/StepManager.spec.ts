@@ -4,7 +4,7 @@ import StepManager from '../src/StepManager';
 test('get active step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' }
+    { name: 'step2', displayName: 'step 2', status: 'pending' },
   ]);
 
   const activeStep = stepManager.getActive();
@@ -14,7 +14,7 @@ test('get active step', () => {
 test('get active step if no active step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'pending' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' }
+    { name: 'step2', displayName: 'step 2', status: 'pending' },
   ]);
 
   const activeStep = stepManager.getActive();
@@ -24,7 +24,7 @@ test('get active step if no active step', () => {
 test('get next active step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' }
+    { name: 'step2', displayName: 'step 2', status: 'pending' },
   ]);
 
   const nextActiveStep = stepManager.getNextActive();
@@ -35,7 +35,7 @@ test('get next active step when next step is done', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   const nextActiveStep = stepManager.getNextActive();
@@ -46,7 +46,7 @@ test('get next active step when all step are done', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'done' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'done' }
+    { name: 'step3', displayName: 'step 3', status: 'done' },
   ]);
 
   const nextActiveStep = stepManager.getNextActive();
@@ -57,7 +57,7 @@ test('continue step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.continue();
@@ -69,7 +69,7 @@ test('continue step when next step is done', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.continue();
@@ -82,7 +82,7 @@ test('continue step when all step are done', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'done' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'done' }
+    { name: 'step3', displayName: 'step 3', status: 'done' },
   ]);
 
   try {
@@ -96,7 +96,7 @@ test('goTo step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.goTo('step2');
@@ -109,7 +109,7 @@ test('goTo step when the step is not done', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   try {
@@ -123,7 +123,7 @@ test('back step', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.continue();
@@ -136,7 +136,7 @@ test('back step once after continue twice', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.continue();
@@ -151,7 +151,7 @@ test('back step when there is no history', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.back();
@@ -164,23 +164,23 @@ test('set steps', () => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.setSteps({
     done: ['step1', 'step2'],
-    active: ['step3']
+    active: ['step3'],
   });
   expect(stepManager.steps[0].status).toBe('done');
   expect(stepManager.steps[1].status).toBe('done');
   expect(stepManager.steps[2].status).toBe('active');
 });
 
-test('onChange on continue', done => {
+test('onChange on continue', (done) => {
   const stepManager = new StepManager([
     { name: 'step1', displayName: 'step 1', status: 'active' },
     { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' }
+    { name: 'step3', displayName: 'step 3', status: 'pending' },
   ]);
 
   stepManager.onChange((nextSteps: Step[]) => {

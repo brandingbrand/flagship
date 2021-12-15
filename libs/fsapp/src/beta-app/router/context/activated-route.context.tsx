@@ -12,7 +12,7 @@ export const defaultActivatedRoute: ActivatedRoute = {
   loading: false,
   data: {},
   query: {},
-  params: {}
+  params: {},
 };
 
 export const LoadingContext = createContext<boolean>(defaultActivatedRoute.loading);

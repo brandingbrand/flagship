@@ -10,14 +10,10 @@ import {
   CommerceTypes,
   withCommerceData,
   WithCommerceProps,
-  WithCommerceProviderProps
+  WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
 
-import {
-  CategoryBoxProps,
-  GridProps,
-  Loading
-} from '@brandingbrand/fscomponents';
+import { CategoryBoxProps, GridProps, Loading } from '@brandingbrand/fscomponents';
 
 export interface UnwrappedCategoryProps {
   categoryId?: string;

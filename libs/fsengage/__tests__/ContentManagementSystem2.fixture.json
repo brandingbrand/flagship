@@ -1,648 +1,562 @@
 {
-   "data":{
-      "home":{
-         "banner":{
-            "name":"banner",
-            "identifier":"banner",
-            "instantiable":false,
-            "template":"Image-Link-and-Title",
-            "instances":[
-               {
-                  "Link":"https:\/\/m.example.com\/categories\/category1\/bundles",
-                  "Title":"example-title-1",
-                  "Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":750,
-                     "height":560,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Link":"https:\/\/m.example.com\/categories\/category2\/products",
-                  "Title":"example-title-2",
-                  "Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":750,
-                     "height":560,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Link":"https:\/\/m.example.com\/categories\/category3\/products",
-                  "Title":"example-title-3",
-                  "Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":750,
-                     "height":560,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               }
-            ]
-         },
-         "footer-text":{
-            "name":"footer text",
-            "identifier":"footer-text",
-            "instantiable":false,
-            "template":"Title-and-Body",
-            "instances":[
-               {
-                  "Title":"Example title",
-                  "body":"Example body",
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               }
-            ]
-         },
-         "nav-links":{
-            "name":"nav links",
-            "identifier":"nav-links",
-            "instantiable":false,
-            "template":"Text-Link-with-Bar-Color",
-            "instances":[
-               {
-                  "Active-Color":"",
-                  "Link":"https:\/\/m.example.com\/categories\/category4?new",
-                  "Title":"Example Title",
-                  "CSS-Selector":"",
-                  "Value":"#000000",
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Link":[
-                     "https:\/\/m.example.com\/categories\/category4?new",
-                     "https:\/\/m.example.com\/categories\/category4?new"
-                  ],
-                  "Title":[
-                     "Example Title",
-                     "Example Title"
-                  ],
-                  "CSS-Selector":[
-                     "",
-                     ""
-                  ],
-                  "Value":[
-                     "#000000",
-                     "#000000"
-                  ],
-                  "Active-Color":[
-                     "",
-                     ""
-                  ],
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Active-Color":[
-                     "",
-                     ""
-                  ],
-                  "Link":[
-                     "https:\/\/m.example.com\/categories\/category4?new",
-                     "https:\/\/m.example.com\/categories\/category4?new"
-                  ],
-                  "Title":[
-                     "Example Title",
-                     "Example Title"
-                  ],
-                  "CSS-Selector":[
-                     "",
-                     ""
-                  ],
-                  "Value":[
-                     "#000000",
-                     "#000000"
-                  ],
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               }
-            ]
-         },
-         "categories":{
-            "name":"categories",
-            "identifier":"categories",
-            "instantiable":false,
-            "template":"Image-with-Title-and-Description",
-            "instances":[
-
-            ]
-         },
-         "home-category-grid":{
-            "name":"home category grid",
-            "identifier":"home-category-grid",
-            "instantiable":false,
-            "template":"Commerce-Category",
-            "instances":[
-               {
-                  "Title":"Example Title",
-                  "Identifier":"example-title",
-                  "DataSourceType":"demandware",
-                  "Description":"",
-                  "Retina-Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":206,
-                     "height":301,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Title":"Example Title 2",
-                  "Identifier":"example-title-2",
-                  "DataSourceType":"demandware",
-                  "Description":"",
-                  "Retina-Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":206,
-                     "height":301,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Title":"Example Title 3",
-                  "Identifier":"example-title-3",
-                  "DataSourceType":"demandware",
-                  "Description":"",
-                  "Retina-Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":206,
-                     "height":301,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "Title":"Example Title 4",
-                  "Identifier":"example-title-4",
-                  "DataSourceType":"demandware",
-                  "Description":"",
-                  "Retina-Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                     "width":206,
-                     "height":301,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               },
-               {
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               }
-            ]
-         }
+  "data": {
+    "home": {
+      "banner": {
+        "name": "banner",
+        "identifier": "banner",
+        "instantiable": false,
+        "template": "Image-Link-and-Title",
+        "instances": [
+          {
+            "Link": "https://m.example.com/categories/category1/bundles",
+            "Title": "example-title-1",
+            "Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 750,
+              "height": 560,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Link": "https://m.example.com/categories/category2/products",
+            "Title": "example-title-2",
+            "Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 750,
+              "height": 560,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Link": "https://m.example.com/categories/category3/products",
+            "Title": "example-title-3",
+            "Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 750,
+              "height": 560,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          }
+        ]
       },
-      "l1-category":{
-         "hero":{
-            "name":"hero",
-            "identifier":"hero",
-            "instantiable":true,
-            "template":"Image-Link-and-Title",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Link":"https:\/\/m.example.com\/categories\/category5",
-                     "Title":"Example Title",
-                     "Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":750,
-                        "height":560,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "footer-text":{
-            "name":"footer text",
-            "identifier":"footer-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "header-text":{
-            "name":"header text",
-            "identifier":"header-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "feature-products":{
-            "name":"feature products",
-            "identifier":"feature-products",
-            "instantiable":true,
-            "template":"Image-with-Title-and-Description",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "Link":"example-link",
-                     "Text":"Example Text",
-                     "Retina-Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":206,
-                        "height":301,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  },
-                  {
-                     "Title":[
-                        "Example Title",
-                        "Example Title"
-                     ],
-                     "Link":[
-                        "https:\/\/m.example.com\/categories\/category5",
-                        "https:\/\/m.example.com\/categories\/category5"
-                     ],
-                     "Text":[
-                        "Example Text",
-                        "Example Text"
-                     ],
-                     "Retina-Image":[
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        },
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        }
-                     ],
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ],
-               "example-instance-2":[
-                  {
-                     "Title":"Example Title",
-                     "Link":"https:\/\/m.example.com\/categories\/category5",
-                     "Text":"Example Text",
-                     "Retina-Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":206,
-                        "height":301,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         }
+      "footer-text": {
+        "name": "footer text",
+        "identifier": "footer-text",
+        "instantiable": false,
+        "template": "Title-and-Body",
+        "instances": [
+          {
+            "Title": "Example title",
+            "body": "Example body",
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          }
+        ]
       },
-      "l2-category":{
-         "header-text":{
-            "name":"header text",
-            "identifier":"header-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "footer-text":{
-            "name":"footer text",
-            "identifier":"footer-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "hero":{
-            "name":"hero",
-            "identifier":"hero",
-            "instantiable":true,
-            "template":"Image-Link-and-Title",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Link":"https:\/\/m.example.com\/categories\/category1\/bundles",
-                     "Title":"Example Title",
-                     "Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":750,
-                        "height":560,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "feature-products":{
-            "name":"feature products",
-            "identifier":"feature-products",
-            "instantiable":true,
-            "template":"Image-with-Title-and-Description",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "Link":"https:\/\/m.example.com\/categories\/category5",
-                     "Text":"Example Text",
-                     "Retina-Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":206,
-                        "height":301,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  },
-                  {
-                     "Title":[
-                        "Example Title",
-                        "Example Title"
-                     ],
-                     "Link":[
-                        "https:\/\/m.example.com\/categories\/category5",
-                        "https:\/\/m.example.com\/categories\/category5"
-                     ],
-                     "Text":[
-                        "Example Text",
-                        "Example Text"
-                     ],
-                     "Retina-Image":[
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        },
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        }
-                     ],
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  },
-                  {
-                     "Title":[
-                        "Example Title",
-                        "Example Title"
-                     ],
-                     "Link":[
-                        "https:\/\/m.example.com\/categories\/category5",
-                        "https:\/\/m.example.com\/categories\/category5"
-                     ],
-                     "Text":[
-                        "Example Text",
-                        "Example Text"
-                     ],
-                     "Retina-Image":[
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        },
-                        {
-                           "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                           "width":206,
-                           "height":301,
-                           "maps":[
-
-                           ]
-                        }
-                     ],
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         }
+      "nav-links": {
+        "name": "nav links",
+        "identifier": "nav-links",
+        "instantiable": false,
+        "template": "Text-Link-with-Bar-Color",
+        "instances": [
+          {
+            "Active-Color": "",
+            "Link": "https://m.example.com/categories/category4?new",
+            "Title": "Example Title",
+            "CSS-Selector": "",
+            "Value": "#000000",
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Link": [
+              "https://m.example.com/categories/category4?new",
+              "https://m.example.com/categories/category4?new"
+            ],
+            "Title": ["Example Title", "Example Title"],
+            "CSS-Selector": ["", ""],
+            "Value": ["#000000", "#000000"],
+            "Active-Color": ["", ""],
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Active-Color": ["", ""],
+            "Link": [
+              "https://m.example.com/categories/category4?new",
+              "https://m.example.com/categories/category4?new"
+            ],
+            "Title": ["Example Title", "Example Title"],
+            "CSS-Selector": ["", ""],
+            "Value": ["#000000", "#000000"],
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          }
+        ]
       },
-      "product-index":{
-         "header-text":{
-            "name":"header text",
-            "identifier":"header-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "footer-text":{
-            "name":"footer text",
-            "identifier":"footer-text",
-            "instantiable":true,
-            "template":"Title-and-Body",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Title":"Example Title",
-                     "body":"Example Body",
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         },
-         "hero":{
-            "name":"hero",
-            "identifier":"hero",
-            "instantiable":true,
-            "template":"Image-Link-and-Title",
-            "instances":{
-               "example-instance":[
-                  {
-                     "Link":"https:\/\/m.example.com\/categories\/category1\/bundles",
-                     "Title":"Example Title",
-                     "Image":{
-                        "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.jpg",
-                        "width":750,
-                        "height":560,
-                        "maps":[
-
-                        ]
-                     },
-                     "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                     "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                     "overwrite":false,
-                     "campaign":123
-                  }
-               ]
-            }
-         }
+      "categories": {
+        "name": "categories",
+        "identifier": "categories",
+        "instantiable": false,
+        "template": "Image-with-Title-and-Description",
+        "instances": []
       },
-      "global":{
-         "banner":{
-            "name":"banner",
-            "identifier":"banner",
-            "instantiable":false,
-            "template":"Image-with-Link",
-            "instances":[
-               {
-                  "Link":"https:\/\/m.example.com\/offers",
-                  "Title":"",
-                  "Modal":"0",
-                  "New-Tab":"0",
-                  "Retina-Image":{
-                     "path":"https:\/\/cdn.brandingbrand.com\/prod\/id\/image.gif",
-                     "width":640,
-                     "height":125,
-                     "maps":[
-
-                     ]
-                  },
-                  "start":"Thu, 01 Jan 1970 00:00:00 +0000",
-                  "end":"Fri, 01 Jan 2100 00:00:00 +0000",
-                  "overwrite":false,
-                  "campaign":123
-               }
-            ]
-         }
+      "home-category-grid": {
+        "name": "home category grid",
+        "identifier": "home-category-grid",
+        "instantiable": false,
+        "template": "Commerce-Category",
+        "instances": [
+          {
+            "Title": "Example Title",
+            "Identifier": "example-title",
+            "DataSourceType": "demandware",
+            "Description": "",
+            "Retina-Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 206,
+              "height": 301,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Title": "Example Title 2",
+            "Identifier": "example-title-2",
+            "DataSourceType": "demandware",
+            "Description": "",
+            "Retina-Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 206,
+              "height": 301,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Title": "Example Title 3",
+            "Identifier": "example-title-3",
+            "DataSourceType": "demandware",
+            "Description": "",
+            "Retina-Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 206,
+              "height": 301,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "Title": "Example Title 4",
+            "Identifier": "example-title-4",
+            "DataSourceType": "demandware",
+            "Description": "",
+            "Retina-Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+              "width": 206,
+              "height": 301,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          },
+          {
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          }
+        ]
+      }
+    },
+    "l1-category": {
+      "hero": {
+        "name": "hero",
+        "identifier": "hero",
+        "instantiable": true,
+        "template": "Image-Link-and-Title",
+        "instances": {
+          "example-instance": [
+            {
+              "Link": "https://m.example.com/categories/category5",
+              "Title": "Example Title",
+              "Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 750,
+                "height": 560,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
       },
-      "_Targets":[
-
-      ]
-   }
+      "footer-text": {
+        "name": "footer text",
+        "identifier": "footer-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "header-text": {
+        "name": "header text",
+        "identifier": "header-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "feature-products": {
+        "name": "feature products",
+        "identifier": "feature-products",
+        "instantiable": true,
+        "template": "Image-with-Title-and-Description",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "Link": "example-link",
+              "Text": "Example Text",
+              "Retina-Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 206,
+                "height": 301,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            },
+            {
+              "Title": ["Example Title", "Example Title"],
+              "Link": [
+                "https://m.example.com/categories/category5",
+                "https://m.example.com/categories/category5"
+              ],
+              "Text": ["Example Text", "Example Text"],
+              "Retina-Image": [
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                },
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                }
+              ],
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ],
+          "example-instance-2": [
+            {
+              "Title": "Example Title",
+              "Link": "https://m.example.com/categories/category5",
+              "Text": "Example Text",
+              "Retina-Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 206,
+                "height": 301,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      }
+    },
+    "l2-category": {
+      "header-text": {
+        "name": "header text",
+        "identifier": "header-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "footer-text": {
+        "name": "footer text",
+        "identifier": "footer-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "hero": {
+        "name": "hero",
+        "identifier": "hero",
+        "instantiable": true,
+        "template": "Image-Link-and-Title",
+        "instances": {
+          "example-instance": [
+            {
+              "Link": "https://m.example.com/categories/category1/bundles",
+              "Title": "Example Title",
+              "Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 750,
+                "height": 560,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "feature-products": {
+        "name": "feature products",
+        "identifier": "feature-products",
+        "instantiable": true,
+        "template": "Image-with-Title-and-Description",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "Link": "https://m.example.com/categories/category5",
+              "Text": "Example Text",
+              "Retina-Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 206,
+                "height": 301,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            },
+            {
+              "Title": ["Example Title", "Example Title"],
+              "Link": [
+                "https://m.example.com/categories/category5",
+                "https://m.example.com/categories/category5"
+              ],
+              "Text": ["Example Text", "Example Text"],
+              "Retina-Image": [
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                },
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                }
+              ],
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            },
+            {
+              "Title": ["Example Title", "Example Title"],
+              "Link": [
+                "https://m.example.com/categories/category5",
+                "https://m.example.com/categories/category5"
+              ],
+              "Text": ["Example Text", "Example Text"],
+              "Retina-Image": [
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                },
+                {
+                  "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                  "width": 206,
+                  "height": 301,
+                  "maps": []
+                }
+              ],
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      }
+    },
+    "product-index": {
+      "header-text": {
+        "name": "header text",
+        "identifier": "header-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "footer-text": {
+        "name": "footer text",
+        "identifier": "footer-text",
+        "instantiable": true,
+        "template": "Title-and-Body",
+        "instances": {
+          "example-instance": [
+            {
+              "Title": "Example Title",
+              "body": "Example Body",
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      },
+      "hero": {
+        "name": "hero",
+        "identifier": "hero",
+        "instantiable": true,
+        "template": "Image-Link-and-Title",
+        "instances": {
+          "example-instance": [
+            {
+              "Link": "https://m.example.com/categories/category1/bundles",
+              "Title": "Example Title",
+              "Image": {
+                "path": "https://cdn.brandingbrand.com/prod/id/image.jpg",
+                "width": 750,
+                "height": 560,
+                "maps": []
+              },
+              "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+              "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+              "overwrite": false,
+              "campaign": 123
+            }
+          ]
+        }
+      }
+    },
+    "global": {
+      "banner": {
+        "name": "banner",
+        "identifier": "banner",
+        "instantiable": false,
+        "template": "Image-with-Link",
+        "instances": [
+          {
+            "Link": "https://m.example.com/offers",
+            "Title": "",
+            "Modal": "0",
+            "New-Tab": "0",
+            "Retina-Image": {
+              "path": "https://cdn.brandingbrand.com/prod/id/image.gif",
+              "width": 640,
+              "height": 125,
+              "maps": []
+            },
+            "start": "Thu, 01 Jan 1970 00:00:00 +0000",
+            "end": "Fri, 01 Jan 2100 00:00:00 +0000",
+            "overwrite": false,
+            "campaign": 123
+          }
+        ]
+      }
+    },
+    "_Targets": []
+  }
 }

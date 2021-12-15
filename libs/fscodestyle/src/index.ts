@@ -5,20 +5,21 @@ import { cwd, exit, platform } from 'process';
 // npm/yarn set the working directory to the project root
 const kProjectRoot = cwd();
 const kTSLintArguments = [
-  '--config', resolve(__dirname, '..', 'tslint.json'),
-  '--exclude', join(kProjectRoot, '**', 'node_modules', '**', '*'),
-  '--exclude', join(kProjectRoot, '**', 'dist', '**', '*'),
-  '--project', join(kProjectRoot, 'tsconfig.json'),
-  join(kProjectRoot, '**', '*.{ts,tsx}')
+  '--config',
+  resolve(__dirname, '..', 'tslint.json'),
+  '--exclude',
+  join(kProjectRoot, '**', 'node_modules', '**', '*'),
+  '--exclude',
+  join(kProjectRoot, '**', 'dist', '**', '*'),
+  '--project',
+  join(kProjectRoot, 'tsconfig.json'),
+  join(kProjectRoot, '**', '*.{ts,tsx}'),
 ];
 const kSpawnOptions: SpawnOptions = {
   stdio: 'inherit',
-  shell: /^win/.test(platform)
+  shell: /^win/.test(platform),
 };
-const kPaths = [
-  resolve(__dirname, '..', 'node_modules', '.bin', 'tslint'),
-  'tslint'
-];
+const kPaths = [resolve(__dirname, '..', 'node_modules', '.bin', 'tslint'), 'tslint'];
 
 /**
  * Attempts to run the tslint executable at the given path.
@@ -31,12 +32,12 @@ async function runTSLint(path: string): Promise<number> {
     let didFailToSpawn = false;
 
     return spawn(path, kTSLintArguments, kSpawnOptions)
-      .on('error', err => {
+      .on('error', (err) => {
         didFailToSpawn = true;
 
         return reject(err);
       })
-      .on('exit', code => {
+      .on('exit', (code) => {
         if (!didFailToSpawn) {
           return resolve(code || 0);
         }
@@ -66,4 +67,3 @@ async function runTSLint(path: string): Promise<number> {
   // Execution should only get to this point if we couldn't find tslint in any of the paths
   return exit(-1);
 })(kPaths).catch(() => exit(-1));
-

@@ -12,7 +12,7 @@ export function postLink(configuration: Config): void {
 
   let manifestPermissions = '';
 
-  configuration?.permissions?.android?.forEach(permission => {
+  configuration?.permissions?.android?.forEach((permission) => {
     if (permission === 'ADD_VOICEMAIL') {
       manifestPermissions += `\n    <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />`;
     } else {

@@ -3,8 +3,8 @@
 import {
   Actions as GAActions,
   Analytics as GAClient,
-  Hits as GAHits
-    // @ts-ignore TODO: Update react-native-google-analytics to support typing
+  Hits as GAHits,
+  // @ts-ignore TODO: Update react-native-google-analytics to support typing
 } from '@brandingbrand/react-native-google-analytics';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import parseURL from 'url-parse';
@@ -26,7 +26,7 @@ import AnalyticsProvider, {
   SearchGeneric,
   Transaction,
   TransactionAction,
-  TransactionRefund
+  TransactionRefund,
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
@@ -70,8 +70,10 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   configuration: GoogleAnalyticsProviderConfiguration;
   queue: QueuedFunction[];
 
-  constructor(commonConfiguration: AnalyticsProviderConfiguration,
-              configuration: GoogleAnalyticsProviderConfiguration) {
+  constructor(
+    commonConfiguration: AnalyticsProviderConfiguration,
+    configuration: GoogleAnalyticsProviderConfiguration
+  ) {
     super(commonConfiguration);
     this.configuration = configuration;
     this.queue = [];
@@ -106,32 +108,41 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   contactCall(properties: ContactCall): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: properties.eventAction,
-      category: properties.eventCategory,
-      label: properties.number
-    }, extraData);
+    this._sendEvent(
+      {
+        action: properties.eventAction,
+        category: properties.eventCategory,
+        label: properties.number,
+      },
+      extraData
+    );
   }
 
   contactEmail(properties: ContactEmail): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: properties.eventAction,
-      category: properties.eventCategory,
-      label: properties.to
-    }, extraData);
+    this._sendEvent(
+      {
+        action: properties.eventAction,
+        category: properties.eventCategory,
+        label: properties.to,
+      },
+      extraData
+    );
   }
 
   clickGeneric(properties: ClickGeneric): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: properties.eventAction,
-      category: properties.eventCategory,
-      label: properties.identifier || properties.name,
-      value: properties.index
-    }, extraData);
+    this._sendEvent(
+      {
+        action: properties.eventAction,
+        category: properties.eventCategory,
+        label: properties.identifier || properties.name,
+        value: properties.index,
+      },
+      extraData
+    );
   }
 
   impressionGeneric(properties: ImpressionGeneric): void {
@@ -142,45 +153,57 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   locationDirections(properties: LocationDirections): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: properties.eventAction,
-      category: properties.eventCategory,
-      label: properties.identifier || properties.address
-    }, extraData);
+    this._sendEvent(
+      {
+        action: properties.eventAction,
+        category: properties.eventCategory,
+        label: properties.identifier || properties.address,
+      },
+      extraData
+    );
   }
 
   pageview(properties: Screenview): void {
     const parser = properties.url && parseURL(properties.url);
     const extraData = this.extractExtraData(properties);
 
-    this._sendPageView({
-      hostname: parser && parser.host,
-      page: parser && parser.pathname,
-      title: properties.eventCategory
-    }, extraData);
+    this._sendPageView(
+      {
+        hostname: parser && parser.host,
+        page: parser && parser.pathname,
+        title: properties.eventCategory,
+      },
+      extraData
+    );
   }
 
   screenview(properties: Screenview): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendScreenView({
-      appId: this.appId,
-      appInstallerId: this.appInstallerId,
-      appName: this.appName,
-      appVersion: this.appVersion,
-      screenName: properties.eventCategory
-    }, extraData);
+    this._sendScreenView(
+      {
+        appId: this.appId,
+        appInstallerId: this.appInstallerId,
+        appName: this.appName,
+        appVersion: this.appVersion,
+        screenName: properties.eventCategory,
+      },
+      extraData
+    );
   }
 
   searchGeneric(properties: SearchGeneric): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: properties.eventAction,
-      category: properties.eventCategory,
-      label: properties.term,
-      value: properties.count
-    }, extraData);
+    this._sendEvent(
+      {
+        action: properties.eventAction,
+        category: properties.eventCategory,
+        label: properties.term,
+        value: properties.count,
+      },
+      extraData
+    );
   }
 
   // Enhanced Commerce Functions
@@ -192,23 +215,20 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.addProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   checkout(properties: Checkout, action: CheckoutAction): void {
-    properties.products.forEach(product => this._addProduct(product));
+    properties.products.forEach((product) => this._addProduct(product));
 
     if (this.client) {
-      this.client.set(new GAActions.Checkout(
-        action.step,
-        action.option
-      ));
+      this.client.set(new GAActions.Checkout(action.step, action.option));
     } else {
       this.queue.unshift({
         func: this.checkout,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -219,7 +239,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.checkoutOption,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -231,61 +251,67 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.clickProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   clickPromotion(properties: Promotion): void {
     if (this.client) {
-      this.client.add(new GAHits.Promo(
-        properties.identifier,
-        properties.name,
-        properties.creative,
-        properties.slot
-      ));
+      this.client.add(
+        new GAHits.Promo(
+          properties.identifier,
+          properties.name,
+          properties.creative,
+          properties.slot
+        )
+      );
 
       this.client.set(new GAActions.PromoClick());
     } else {
       this.queue.unshift({
         func: this.clickPromotion,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   impressionProduct(properties: ImpressionProduct): void {
     if (this.client) {
-      this.client.add(new GAHits.Impression(
-        properties.identifier,
-        properties.name,
-        properties.list,
-        properties.brand,
-        properties.category,
-        properties.variant,
-        properties.index,
-        properties.price
-      ));
+      this.client.add(
+        new GAHits.Impression(
+          properties.identifier,
+          properties.name,
+          properties.list,
+          properties.brand,
+          properties.category,
+          properties.variant,
+          properties.index,
+          properties.price
+        )
+      );
     } else {
       this.queue.unshift({
         func: this.impressionProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   impressionPromotion(properties: Promotion): void {
     if (this.client) {
-      this.client.add(new GAHits.Promo(
-        properties.identifier,
-        properties.name,
-        properties.creative,
-        properties.slot
-      ));
+      this.client.add(
+        new GAHits.Promo(
+          properties.identifier,
+          properties.name,
+          properties.creative,
+          properties.slot
+        )
+      );
     } else {
       this.queue.unshift({
         func: this.impressionPromotion,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -297,27 +323,29 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.detailProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   purchase(properties: Transaction, action: TransactionAction): void {
-    properties.products.forEach(product => this._addProduct(product));
+    properties.products.forEach((product) => this._addProduct(product));
 
     if (this.client) {
-      this.client.set(new GAActions.Purchase(
-        action.identifier,
-        action.affiliation,
-        action.revenue,
-        action.tax,
-        action.shippingCost,
-        action.coupons && action.coupons[0] // GA only supports one coupon
-      ));
+      this.client.set(
+        new GAActions.Purchase(
+          action.identifier,
+          action.affiliation,
+          action.revenue,
+          action.tax,
+          action.shippingCost,
+          action.coupons && action.coupons[0] // GA only supports one coupon
+        )
+      );
     } else {
       this.queue.unshift({
         func: this.purchase,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -328,32 +356,34 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.refundAll,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   refundPartial(properties: TransactionRefund, action: TransactionAction): void {
     if (this.client) {
-      properties.products.forEach(product => {
-        this.client.add(new GAHits.Product(
-          product.identifier,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          product.quantity,
-          null
-        ));
+      properties.products.forEach((product) => {
+        this.client.add(
+          new GAHits.Product(
+            product.identifier,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            product.quantity,
+            null
+          )
+        );
       });
 
       this.client.set(new GAActions.Refund(action.identifier));
     } else {
       this.queue.unshift({
         func: this.refundPartial,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -365,7 +395,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this.removeProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -375,27 +405,32 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
   lifecycle(properties: App): void {
     const extraData = this.extractExtraData(properties);
 
-    this._sendEvent({
-      action: this.appId,
-      category: properties.eventAction,
-      label: properties.lifecycle
-    }, extraData);
+    this._sendEvent(
+      {
+        action: this.appId,
+        category: properties.eventAction,
+        label: properties.lifecycle,
+      },
+      extraData
+    );
   }
 
   setTrafficSource(properties: Campaign): void {
     if (this.client) {
-      this.client.set(new GAHits.TrafficSource({
-        utm_id: properties.id,
-        utm_source: properties.source,
-        utm_medium: properties.medium,
-        utm_campaign: properties.campaign,
-        utm_term: properties.term,
-        utm_content: properties.content
-      }));
+      this.client.set(
+        new GAHits.TrafficSource({
+          utm_id: properties.id,
+          utm_source: properties.source,
+          utm_medium: properties.medium,
+          utm_campaign: properties.campaign,
+          utm_term: properties.term,
+          utm_content: properties.content,
+        })
+      );
     } else {
       this.queue.unshift({
         func: this.setTrafficSource,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -404,21 +439,23 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
 
   private _addProduct(properties: any): void {
     if (this.client) {
-      this.client.add(new GAHits.Product(
-        properties.identifier,
-        properties.name,
-        properties.brand,
-        properties.category,
-        properties.variant,
-        properties.coupons && properties.coupons[0], // GA only supports one coupon
-        properties.price,
-        properties.quantity,
-        properties.index
-      ));
+      this.client.add(
+        new GAHits.Product(
+          properties.identifier,
+          properties.name,
+          properties.brand,
+          properties.category,
+          properties.variant,
+          properties.coupons && properties.coupons[0], // GA only supports one coupon
+          properties.price,
+          properties.quantity,
+          properties.index
+        )
+      );
     } else {
       this.queue.unshift({
         func: this._addProduct,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -440,18 +477,14 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this._sendEvent,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
   private _sendPageView(properties: GoogleAnalyticsPageViewProperties, extraProps?: object): void {
     if (this.client) {
-      const hit = new GAHits.PageView(
-        properties.hostname,
-        properties.page,
-        properties.title
-      );
+      const hit = new GAHits.PageView(properties.hostname, properties.page, properties.title);
 
       if (extraProps) {
         hit.set(extraProps);
@@ -461,7 +494,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this._sendPageView,
-        params: arguments
+        params: arguments,
       });
     }
   }
@@ -487,14 +520,12 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
     } else {
       this.queue.unshift({
         func: this._sendScreenView,
-        params: arguments
+        params: arguments,
       });
     }
   }
 
-  private extractExtraData(
-    properties: import ('../../Analytics').BaseEvent
-  ): object | undefined {
+  private extractExtraData(properties: import('../../Analytics').BaseEvent): object | undefined {
     // TODO: Add warning/errors for invalid query string parameters
 
     return properties.gaQueryParams;

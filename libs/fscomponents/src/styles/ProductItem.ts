@@ -1,24 +1,18 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
   label: {
-    marginTop: 10
+    marginTop: 10,
   },
   horizontalListContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   horizontalLeft: {
-    width: 100
+    width: 100,
   },
   horizontalRight: {
     flex: 1,
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });

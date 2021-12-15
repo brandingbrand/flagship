@@ -17,7 +17,7 @@ const generateUsageDescription = (key: string): DistinctQuestion => ({
   type: 'input',
   name: `config.usageDescriptionIOS.${key}`,
   message: key,
-  when: answers => answers.options.usageDescriptions
+  when: (answers) => answers.options.usageDescriptions,
   // TODO: Add better messaging
 });
 
@@ -31,19 +31,19 @@ const usageDescriptionQuestions = [
   'NSPhotoLibraryAddUsageDescription',
   'NSPhotoLibraryUsageDescription',
   'NSSpeechRecognitionUsageDescription',
-  'NSFaceIDUsageDescription'
-]
-  .map(generateUsageDescription);
+  'NSFaceIDUsageDescription',
+].map(generateUsageDescription);
 
 const questions: DistinctQuestion[] = [
   {
     type: 'confirm',
     name: 'options.usageDescriptions',
     message: 'Do you want to add usage descriptions?',
-    suffix: 'Text to be displayed to users when requesting access to features such as the camera or calendar. Please note that due to software restrictions, you must provide usage descriptions for every grant type even if your app does not implement all of them.',
-    default: false
+    suffix:
+      'Text to be displayed to users when requesting access to features such as the camera or calendar. Please note that due to software restrictions, you must provide usage descriptions for every grant type even if your app does not implement all of them.',
+    default: false,
   },
-  ...usageDescriptionQuestions
+  ...usageDescriptionQuestions,
 ];
 
 export const usageDescriptions = questions.map(formatters.ios);

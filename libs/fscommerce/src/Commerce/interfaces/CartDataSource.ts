@@ -10,7 +10,7 @@ import {
   Product,
   ShipmentAddressOptions,
   ShipmentMethodOptions,
-  ShippingMethodResponse
+  ShippingMethodResponse,
 } from '../CommerceTypes';
 
 /**
@@ -64,10 +64,7 @@ export default interface CartDataSource {
    * @param {string} shipmentId - The id of the shipment for which to query shipping methods
    * @returns {Promise.<ShippingMethodResponse>} Promise representing applicable shipping methods
    */
-  fetchShippingMethods(
-    cartId: string,
-    shipmentId: string
-  ): Promise<ShippingMethodResponse>;
+  fetchShippingMethods(cartId: string, shipmentId: string): Promise<ShippingMethodResponse>;
 
   /**
    * Remove an item from the cart specified by item id.
@@ -152,11 +149,7 @@ export default interface CartDataSource {
    * @param {Payment} payment - Metadata about the payment to be updated
    * @returns {Promise.<Cart>} A Promise representing metadata about the updated cart
    */
-  updatePayment(
-    cartId: string,
-    paymentId: string,
-    payment: Payment
-  ): Promise<Cart>;
+  updatePayment(cartId: string, paymentId: string, payment: Payment): Promise<Cart>;
 
   /**
    * Update the gift options on the current cart

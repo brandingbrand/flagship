@@ -14,7 +14,7 @@ export enum AuthType {
   /**
    * A customer who has previously created an account.
    */
-  Registered
+  Registered,
 }
 
 /**

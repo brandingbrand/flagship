@@ -14,21 +14,11 @@ export default class CategoryGrid extends Component<
       return renderCategoryItem(item);
     }
 
-    return (
-      <CategoryBox
-        onPress={onNavigate}
-        {...item}
-        {...categoryItemProps}
-      />
-    );
-  }
+    return <CategoryBox onPress={onNavigate} {...item} {...categoryItemProps} />;
+  };
 
   render(): React.ReactNode {
-    const {
-      commerceData,
-      columns,
-      categoryGridProps
-    } = this.props;
+    const { commerceData, columns, categoryGridProps } = this.props;
 
     if (commerceData && commerceData.categories) {
       return (

@@ -15,5 +15,5 @@ addParameters({
 });
 
 configureActions({
-  depth: 1
+  depth: 1,
 });

@@ -4,9 +4,11 @@ import type { Route, RouteCollection } from './router';
 import loadable from '@loadable/component';
 import { fromPairs } from 'lodash-es';
 
-export const StaticImplements = <T extends any>() => <U extends T>(_constructor: U) => {
-  return;
-};
+export const StaticImplements =
+  <T extends any>() =>
+  <U extends T>(_constructor: U) => {
+    return;
+  };
 
 export const isDefined = <T extends any>(value: T | undefined): value is T => value !== undefined;
 

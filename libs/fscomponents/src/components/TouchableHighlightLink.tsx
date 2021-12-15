@@ -12,7 +12,7 @@ export const TouchableHighlightLink: FunctionComponent<TouchableHighlightLinkPro
   const { href, ...rest } = props;
 
   return (
-    <TouchableHighlight accessibilityRole='link' {...rest}>
+    <TouchableHighlight accessibilityRole="link" {...rest}>
       {children}
     </TouchableHighlight>
   );

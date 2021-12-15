@@ -6,7 +6,7 @@ import {
   Navigation,
   NavigationButtonPressedEvent,
   Options,
-  OptionsTopBar
+  OptionsTopBar,
 } from 'react-native-navigation';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { setGlobalData } from '../actions/globalDataAction';
@@ -18,20 +18,20 @@ import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
   },
   devNoteContainer: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: 'rgba(0,0,0,0.36)'
+    backgroundColor: 'rgba(0,0,0,0.36)',
   },
   devNote: {
     paddingLeft: 5,
     paddingRight: 5,
     color: 'white',
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
 
 export interface GenericScreenStateProp {
@@ -42,8 +42,10 @@ export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp,
-  GenericScreenDispatchProp, GenericNavProp {
+export interface GenericScreenProp
+  extends GenericScreenStateProp,
+    GenericScreenDispatchProp,
+    GenericNavProp {
   appConfig: AppConfigType;
   api: FSNetwork;
   testID: string;
@@ -62,15 +64,16 @@ export default function wrapScreen(
   const pageTopBar: OptionsTopBar = PageComponent.options && PageComponent.options.topBar;
   class GenericScreen extends Component<GenericScreenProp> {
     static options: Options =
-      typeof PageComponent.options === 'function' ?
-        PageComponent.options : {
-          ...pageOptions,
-          topBar: {
-            ...pageTopBar,
-            rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
-            leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button)
-          }
-        };
+      typeof PageComponent.options === 'function'
+        ? PageComponent.options
+        : {
+            ...pageOptions,
+            topBar: {
+              ...pageTopBar,
+              rightButtons: (PageComponent.rightButtons || []).map((b: NavButton) => b.button),
+              leftButtons: (PageComponent.leftButtons || []).map((b: NavButton) => b.button),
+            },
+          };
 
     navigator: Navigator;
     navigationEventListener: EventSubscription | null;
@@ -89,22 +92,22 @@ export default function wrapScreen(
         (appConfig.env && appConfig.env.isFLAGSHIP);
       this.navigator = new Navigator({
         componentId: props.componentId,
-        tabs: (props.appConfig || appConfig).tabs || []
+        tabs: (props.appConfig || appConfig).tabs || [],
       });
     }
 
     navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
       const navButtons = [
         ...(PageComponent.rightButtons || []),
-        ...(PageComponent.leftButtons || [])
+        ...(PageComponent.leftButtons || []),
       ];
 
-      navButtons.forEach(btn => {
+      navButtons.forEach((btn) => {
         if (event.buttonId === btn.button.id) {
           btn.action(this.navigator);
         }
       });
-    }
+    };
 
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
@@ -113,7 +116,7 @@ export default function wrapScreen(
 
       if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
         appConfig.analytics.screenview(component, {
-          url: component.name
+          url: component.name,
         });
       }
     }
@@ -127,25 +130,26 @@ export default function wrapScreen(
     openDevMenu = () => {
       Navigation.showModal({
         stack: {
-          children: [{
-            component: {
-              name: 'devMenu',
-              passProps: {
-                hideDevMenu: this.props.hideDevMenu
+          children: [
+            {
+              component: {
+                name: 'devMenu',
+                passProps: {
+                  hideDevMenu: this.props.hideDevMenu,
+                },
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'FLAGSHIP Dev Menu',
+                    },
+                  },
+                },
               },
-              options: {
-                topBar: {
-                  title: {
-                    text: 'FLAGSHIP Dev Menu'
-                  }
-                }
-              }
-            }
-          }]
-        }
-      })
-        .catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
-    }
+            },
+          ],
+        },
+      }).catch((err) => console.warn('openDevMenu SHOWMODAL error: ', err));
+    };
 
     render(): JSX.Element {
       return (
@@ -163,7 +167,7 @@ export default function wrapScreen(
       }
 
       const versionlabel =
-        appConfig.version || appConfig.packageJson && appConfig.packageJson.version || '';
+        appConfig.version || (appConfig.packageJson && appConfig.packageJson.version) || '';
 
       return (
         <TouchableOpacity
@@ -179,29 +183,24 @@ export default function wrapScreen(
           </Text>
         </TouchableOpacity>
       );
-    }
+    };
 
     renderPage = () => {
       return (
-        <PageComponent
-          {...this.props}
-          appConfig={appConfig}
-          api={api}
-          navigator={this.navigator}
-        />
+        <PageComponent {...this.props} appConfig={appConfig} api={api} navigator={this.navigator} />
       );
-    }
+    };
   }
 
   function mapStateToProps(state: any, ownProps: GenericScreenProp): GenericScreenStateProp {
     return {
-      devMenuHidden: state.global.devMenuHidden
+      devMenuHidden: state.global.devMenuHidden,
     };
   }
 
   function mapDispatchToProps(dispatch: any): GenericScreenDispatchProp {
     return {
-      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true }))
+      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
     };
   }
 

@@ -12,15 +12,15 @@
 
 # Flagship
 
-* [About](#about)
-* [How It Works](#how-it-works)
-  * [Platforms](#platforms)
-* [Troubleshooting](#troubleshooting)
-* [Commands](#commands)
-  * [`flagship init`](#init)
-  * [`flagship clean`](#clean)
-  * [`flagship env`](#env)
-* [Packages](#packages)
+- [About](#about)
+- [How It Works](#how-it-works)
+  - [Platforms](#platforms)
+- [Troubleshooting](#troubleshooting)
+- [Commands](#commands)
+  - [`flagship init`](#init)
+  - [`flagship clean`](#clean)
+  - [`flagship env`](#env)
+- [Packages](#packages)
 
 **:computer: Check out our [Wiki](https://github.com/brandingbrand/flagship/wiki) for developer documentation!**
 
@@ -35,9 +35,9 @@ of pre-built components and integrations. That way, you can focus more on innova
 
 Flagship helps you to:
 
-* Build sites _and_ apps in a singular codebase using components based on proven best practices
-* Connect commerce APIs automatically using our API adapters
-* Manage personalized engagement campaigns using the tools you already use or ours
+- Build sites _and_ apps in a singular codebase using components based on proven best practices
+- Connect commerce APIs automatically using our API adapters
+- Manage personalized engagement campaigns using the tools you already use or ours
 
 It's written in React Native and developed by [Branding Brand](https://www.brandingbrand.com/).
 
@@ -83,22 +83,22 @@ These foundation packages are built on top of one another. For example,
 
 Flagship's foundation is comprised of:
 
-| Name | Responsibility |
-| ---- | ---- |
-| [`fscomponents`](packages/fscomponents) | reusable, cross-platform frontend components |
-| [`fscommerce`](packages/fscommerce) | product catalog, search, order and user account management, and reviews |
-| [`fsengage`](packages/fsengage) | analytics, content management, and A/B testing |
-| [`fsnetwork`](packages/fsnetwork) | networking and caching |
-| [`fsfoundation`](packages/fsfoundation) | baseline types used by other Flagship packages |
+| Name                                    | Responsibility                                                          |
+| --------------------------------------- | ----------------------------------------------------------------------- |
+| [`fscomponents`](packages/fscomponents) | reusable, cross-platform frontend components                            |
+| [`fscommerce`](packages/fscommerce)     | product catalog, search, order and user account management, and reviews |
+| [`fsengage`](packages/fsengage)         | analytics, content management, and A/B testing                          |
+| [`fsnetwork`](packages/fsnetwork)       | networking and caching                                                  |
+| [`fsfoundation`](packages/fsfoundation) | baseline types used by other Flagship packages                          |
 
 ### Platforms
 
 Supported platforms are:
 
-* `android`
-* `ios`
-* `native` (both iOS and Android)
-* `web`
+- `android`
+- `ios`
+- `native` (both iOS and Android)
+- `web`
 
 ## Troubleshooting
 
@@ -129,9 +129,9 @@ _all_ platforms will be initialized. See [Platforms](#platforms).
 
 #### Options
 
-| Option | Alias | Description |
-| ---- | ---- | ---- |
-| `--env` | `-e` | The name of the environment to build. Defaults to `prod`. See [Environments](#environments) |
+| Option  | Alias | Description                                                                                 |
+| ------- | ----- | ------------------------------------------------------------------------------------------- |
+| `--env` | `-e`  | The name of the environment to build. Defaults to `prod`. See [Environments](#environments) |
 
 ### clean
 
@@ -140,7 +140,7 @@ flagship clean [platform]
 ```
 
 Removes build and installation artifacts for the given platform. If you don't specify a platform,
-build artifacts for _all_ platforms will be removed.  See [Platforms](#platforms).
+build artifacts for _all_ platforms will be removed. See [Platforms](#platforms).
 
 ### env
 
@@ -153,40 +153,40 @@ you ran `flagship init`. See [Environments](#environments).
 
 ## Packages
 
-* [flagship](packages/flagship): a toolchain for Android, iOS, and web apps
-* [fsapp](packages/fsapp): a management utility for [react-native-navigation](https://github.com/wix/react-native-navigation)
-* [fsweb](packages/fsweb): a bootstrap package to run Flagship on the web
+- [flagship](packages/flagship): a toolchain for Android, iOS, and web apps
+- [fsapp](packages/fsapp): a management utility for [react-native-navigation](https://github.com/wix/react-native-navigation)
+- [fsweb](packages/fsweb): a bootstrap package to run Flagship on the web
 
 ### Foundation Packages
 
-* [fsfoundation](packages/fsfoundation): baseline types used by other Flagship packages
-* [fsi18n](packages/fsi18n): internationalization and localizaiton
-* [fsnetwork](packages/fsnetwork): networking and caching
+- [fsfoundation](packages/fsfoundation): baseline types used by other Flagship packages
+- [fsi18n](packages/fsi18n): internationalization and localizaiton
+- [fsnetwork](packages/fsnetwork): networking and caching
 
 ### Engagement Packages
 
-* [fsengage](packages/fsengage): analytics, content management, and A/B testing
+- [fsengage](packages/fsengage): analytics, content management, and A/B testing
 
 ### Commerce Packages
 
-* [fscommerce](packages/fscommerce): product catalog, search, order and user account management, and
+- [fscommerce](packages/fscommerce): product catalog, search, order and user account management, and
   reviews
 
 ### User Interface Packages
 
-* [fscomponents](packages/fscomponents): reusable, cross-platform frontend components
-* [fscart](packages/fscart): components for a cart
-* [fscategory](packages/fscategory): components for a category index
-* [fscheckout](packages/fscheckout): a state machine for managing checkout flow
-* [fslocator](packages/fslocator): a configurable point of interest locator
-* [fsproductdetail](packages/fsproductdetail): components for product detail pages
-* [fsproductindex](packages/fsproductindex): components for a product index
+- [fscomponents](packages/fscomponents): reusable, cross-platform frontend components
+- [fscart](packages/fscart): components for a cart
+- [fscategory](packages/fscategory): components for a category index
+- [fscheckout](packages/fscheckout): a state machine for managing checkout flow
+- [fslocator](packages/fslocator): a configurable point of interest locator
+- [fsproductdetail](packages/fsproductdetail): components for product detail pages
+- [fsproductindex](packages/fsproductindex): components for a product index
 
 ### Utility Packages
 
-* [fscodestyle](packages/fscodestyle): a coding style used throughout Flagship
+- [fscodestyle](packages/fscodestyle): a coding style used throughout Flagship
 
 ### Example Projects
 
-* [fstestproject](packages/fstestproject): a test project built using Flagship
-* [pirateship](packages/pirateship): an example app built using Flagship
+- [fstestproject](packages/fstestproject): a test project built using Flagship
+- [pirateship](packages/pirateship): an example app built using Flagship

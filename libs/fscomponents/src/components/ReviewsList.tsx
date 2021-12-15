@@ -6,7 +6,7 @@ import { MoreTextProps } from './MoreText';
 import { ReviewItem, ReviewItemProps } from './ReviewItem';
 
 export interface ReviewsListProps {
-  reviews: import ('@brandingbrand/fscommerce').ReviewTypes.Review[];
+  reviews: import('@brandingbrand/fscommerce').ReviewTypes.Review[];
   reviewStyle?: Dictionary<StyleProp<TextStyle | ViewStyle>>;
   reviewItemProps?: Partial<ReviewItemProps>;
 
@@ -33,13 +33,13 @@ export class ReviewsList extends Component<ReviewsListProps> {
       moreTextProps,
       recommendedImage,
       verifiedImage,
-      reviewItemProps
+      reviewItemProps,
     } = this.props;
 
     return (
       <ScrollView
         style={{
-          flexBasis: 'auto'
+          flexBasis: 'auto',
         }}
       >
         {reviews.map((review, key) => {

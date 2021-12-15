@@ -4,49 +4,40 @@ import { action } from '@storybook/addon-actions';
 import { MultiCarousel } from '../src/components/MultiCarousel';
 import { ProductItem } from '../src/components/ProductItem';
 import Decimal from 'decimal.js';
-import {
-  boolean, number, object
-} from '@storybook/addon-knobs';
-import {
-  Image,
-  ListRenderItem,
-  StyleSheet,
-  View
-} from 'react-native';
+import { boolean, number, object } from '@storybook/addon-knobs';
+import { Image, ListRenderItem, StyleSheet, View } from 'react-native';
 
 const productItems = [...Array(9)].map((a, i) => ({
   id: i,
   title: `Product ${i + 1}`,
-  image: `https://via.placeholder.com/100/${i}F${i}F${i}F`
+  image: `https://via.placeholder.com/100/${i}F${i}F${i}F`,
 }));
 
 const imageItems = [...Array(3)].map((a, i) => ({
   id: i,
   title: '',
-  image: `https://via.placeholder.com/300/${i}F${i}F${i}F`
+  image: `https://via.placeholder.com/300/${i}F${i}F${i}F`,
 }));
-
 
 const imageStyle = StyleSheet.create({
   image: {
     width: 300,
-    height: 300
+    height: 300,
   },
   container: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 const style = StyleSheet.create({
   imageStyle: {
     width: 100,
-    height: 100
+    height: 100,
   },
   contentStyle: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
-
 
 const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
   return (
@@ -59,7 +50,7 @@ const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
       contentStyle={object('contentStyle', style.contentStyle)}
       price={{
         value: new Decimal('5.95'),
-        currencyCode: 'USD'
+        currencyCode: 'USD',
       }}
       onPress={action('MultiCarousel ProductItem onPress')}
     />
@@ -69,10 +60,7 @@ const renderItem: ListRenderItem<typeof productItems[number]> = ({ item }) => {
 const renderImage: ListRenderItem<typeof imageItems[number]> = ({ item }) => {
   return (
     <View style={imageStyle.container}>
-      <Image
-        source={{uri: item.image}}
-        style={imageStyle.image}
-      />
+      <Image source={{ uri: item.image }} style={imageStyle.image} />
     </View>
   );
 };

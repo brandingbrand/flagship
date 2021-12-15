@@ -5,8 +5,8 @@ import { types, weights } from '../../../styles/variables';
 
 const styles = StyleSheet.create({
   title: {
-    marginBottom: 7
-  }
+    marginBottom: 7,
+  },
 });
 
 export type ProductItemTitleProps = Pick<ProductItemProps, 'title' | 'titleStyle' | 'renderTitle'>;

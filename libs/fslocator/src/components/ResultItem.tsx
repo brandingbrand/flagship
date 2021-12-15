@@ -10,11 +10,7 @@ export interface PropType {
   locationItemProps?: LocationItemProps;
   currentLocation?: any;
   index?: number;
-  handleNavPress: (
-    location: Location,
-    locationId?: number,
-    index?: number
-  ) => () => void;
+  handleNavPress: (location: Location, locationId?: number, index?: number) => () => void;
   handlePhonePress: (phone: string, locationId?: number, index?: number) => () => void;
   selectLocation: (location: Location) => void;
   renderLocationItem?: (data: any) => JSX.Element;
@@ -32,7 +28,7 @@ export default class ResultItem extends Component<PropType> {
       handlePhonePress,
       selectLocation,
       renderLocationItem,
-      selected
+      selected,
     } = this.props;
 
     // render custom location if provided
@@ -43,24 +39,24 @@ export default class ResultItem extends Component<PropType> {
         selectLocation,
         handleNavPress,
         handlePhonePress,
-        selected
+        selected,
       });
     }
 
-    const primaryService = location.services.find(s => s.service === 'Store') || {} as any;
+    const primaryService = location.services.find((s) => s.service === 'Store') || ({} as any);
     const hours = primaryService.hours;
     const phone = primaryService.contact.phones.find((p: any) => p.name === 'main').number;
 
     const distance = currentLocation
       ? {
-        value: getDistance(
+          value: getDistance(
             currentLocation.latitude,
             currentLocation.longitude,
             location.address.latlng.lat,
             location.address.latlng.lng
           ),
-        unit: DistanceUnit.Mile
-      }
+          unit: DistanceUnit.Mile,
+        }
       : undefined;
 
     return (
@@ -68,7 +64,7 @@ export default class ResultItem extends Component<PropType> {
         locationName={location.title}
         address={location.address}
         hours={hours}
-        format='1'
+        format="1"
         phone={phone}
         buttonTitle={phone}
         distance={distance}

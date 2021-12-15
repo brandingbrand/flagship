@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleProp,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { style as S } from '../styles/ReviewsSummary';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -27,14 +21,16 @@ export interface SerializableReviewsSummaryProps {
   reviewIndicatorTitleTextStyle?: TextStyle;
 }
 
-export interface ReviewsSummaryProps extends Omit<SerializableReviewsSummaryProps,
-  'style' |
-  'countStyle' |
-  'averageStyle' |
-  'recommendStyle' |
-  'rowStyle' |
-  'reviewIndicatorRowStyle' |
-  'reviewIndicatorTitleTextStyle'
+export interface ReviewsSummaryProps
+  extends Omit<
+    SerializableReviewsSummaryProps,
+    | 'style'
+    | 'countStyle'
+    | 'averageStyle'
+    | 'recommendStyle'
+    | 'rowStyle'
+    | 'reviewIndicatorRowStyle'
+    | 'reviewIndicatorTitleTextStyle'
   > {
   style?: StyleProp<ViewStyle>;
   countStyle?: StyleProp<TextStyle>;
@@ -46,7 +42,7 @@ export interface ReviewsSummaryProps extends Omit<SerializableReviewsSummaryProp
   reviewIndicatorTitleTextStyle?: StyleProp<TextStyle>;
 }
 
-export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = props => {
+export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = (props) => {
   const {
     value,
     count,
@@ -62,12 +58,13 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = prop
     reviewIndicatorSubtitle,
     reviewIndicatorRowStyle,
     reviewIndicatorTitleText,
-    reviewIndicatorTitleTextStyle
+    reviewIndicatorTitleTextStyle,
   } = props;
 
   const numberFormatting = { maximumFractionDigits: 1 };
-  const reviewIndicatorCopy = reviewIndicatorSubtitle ? reviewIndicatorSubtitle :
-                  'based on ' + count + ' reviews';
+  const reviewIndicatorCopy = reviewIndicatorSubtitle
+    ? reviewIndicatorSubtitle
+    : 'based on ' + count + ' reviews';
 
   return (
     <View style={[S.container, style]}>
@@ -86,13 +83,13 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = prop
         </View>
       )}
       {recommend && (
-      <View style={[S.row, rowStyle]}>
-        <Text style={[S.recommendStyle, recommendStyle]}>
-          {FSI18n.string(translationKeys.flagship.reviews.recommendCount, {
-            recommendPercent: recommend
-          })}
-        </Text>
-      </View>
+        <View style={[S.row, rowStyle]}>
+          <Text style={[S.recommendStyle, recommendStyle]}>
+            {FSI18n.string(translationKeys.flagship.reviews.recommendCount, {
+              recommendPercent: recommend,
+            })}
+          </Text>
+        </View>
       )}
     </View>
   );

@@ -12,21 +12,14 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { Injector } from '@brandingbrand/fslinker';
 import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 
 import { EngagementService } from './EngagementService';
 import { Navigation } from 'react-native-navigation';
-import {
-  Action,
-  BlockItem,
-  ComponentList,
-  EmitterProps,
-  JSON,
-  ScreenProps
-} from './types';
+import { Action, BlockItem, ComponentList, EmitterProps, JSON, ScreenProps } from './types';
 import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
 import { debounce } from 'lodash-es';
@@ -44,15 +37,15 @@ const styles = StyleSheet.create({
     zIndex: 10,
     top: 50,
     left: 8,
-    padding: 12
+    padding: 12,
   },
   fullScreen: {
     width: Dimensions.get('screen').width + 45,
-    height: Dimensions.get('screen').height + 60
+    height: Dimensions.get('screen').height + 60,
   },
   backIconCloseX: {
     width: 44,
-    height: 44
+    height: 44,
   },
   progressBar: {
     position: 'absolute',
@@ -60,45 +53,45 @@ const styles = StyleSheet.create({
     top: 67,
     flex: 1,
     marginLeft: 65,
-    marginRight: 33
+    marginRight: 33,
   },
   progressItem: {
     flex: 1,
     marginHorizontal: 3,
     backgroundColor: 'rgba(79, 79, 79, .3)',
-    height: 2
+    height: 2,
   },
   activeProgress: {
-    backgroundColor: 'rgba(79, 79, 79, .8)'
+    backgroundColor: 'rgba(79, 79, 79, .8)',
   },
   closeModalButton: {
     position: 'absolute',
     zIndex: 10,
     bottom: -60,
-    left: (win.width / 2) - 35,
-    padding: 0
+    left: win.width / 2 - 35,
+    padding: 0,
   },
   growAndCenter: {
     flexGrow: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   editorial: {
     marginTop: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   backIcon: {
     width: 14,
-    height: 25
+    height: 25,
   },
   appleCloseIcon: {
     width: 60,
-    height: 60
+    height: 60,
   },
   fullScreenDeeplink: {
     width: Dimensions.get('screen').width + 45,
     height: Dimensions.get('screen').height + 60,
     backgroundColor: '#000',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
@@ -108,16 +101,16 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 0,
     marginTop: 70,
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
   },
   pageCounter: {
     position: 'absolute',
     top: 70,
-    left: 20
+    left: 20,
   },
   pageNum: {
     color: '#ffffff',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   navBarTitle: {
     color: '#000000',
@@ -125,19 +118,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'absolute',
     top: 60,
-    width: '100%'
+    width: '100%',
   },
   emptyMessage: {
     textAlign: 'center',
-    padding: 20
+    padding: 20,
   },
   container: {
     backgroundColor: '#ffffff',
-    flex: 1
+    flex: 1,
   },
   growStretch: {
     alignSelf: 'stretch',
-    flexGrow: 1
+    flexGrow: 1,
   },
   header: {
     position: 'absolute',
@@ -145,25 +138,25 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     overflow: 'hidden',
-    zIndex: 10
+    zIndex: 10,
   },
   headerImage: {
     width: win.width,
-    height: win.width * imageAspectRatio
+    height: win.width * imageAspectRatio,
   },
   imageStyle: {
     transform: [{ scale: 1.06 }],
     opacity: 0.8,
-    marginTop: 20
+    marginTop: 20,
   },
   deeplinkStory: {
-    marginTop: -(Dimensions.get('screen').height + 60)
+    marginTop: -(Dimensions.get('screen').height + 60),
   },
   storyFooter: {
     marginBottom: -35,
     height: 40,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 });
 
 type DeeplinkMethod = 'open' | 'push';
@@ -204,12 +197,11 @@ export interface EngagementState {
   scrollEnabled: boolean;
 }
 
-export default function(
+export default function (
   api: EngagementService,
   layoutComponents: ComponentList
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
-
     state: any = {};
     flatListRef: any;
     pageCounterStyle: StyleProp<ViewStyle>;
@@ -227,120 +219,127 @@ export default function(
         showDarkX: false,
         slideBackground: false,
         activeProgressBarIndex: 0,
-        scrollEnabled: true
+        scrollEnabled: true,
       };
     }
-
 
     handleAction =
       // eslint-disable-next-line complexity
       debounce(async (actions: Action) => {
-      if (!(actions && actions.type && actions.value)) {
-        return false;
-      }
-      DeviceEventEmitter.emit('viewLink', {
-        title: actions.name,
-        id: actions.id,
-        type: actions.type,
-        value: actions.value,
-        position: actions.position
-      });
-      switch (actions.type) {
-        case 'blog-url':
-          await this.props.navigator?.push({
-            component: {
-              name: 'EngagementWebView',
-              options: {
-                topBar: {
-                  visible: false
-                }
-              },
-              passProps: {
-                actions,
-                isBlog: true,
-                backButton: true
-              }
-            }
-          });
-          break;
-        case 'web-url':
-          await this.props.navigator?.showModal({
-            component: {
-              name: 'EngagementWebView',
-              passProps: { actions },
-              options: {
-                statusBar: {
-                  style: 'dark' as const
+        if (!(actions && actions.type && actions.value)) {
+          return false;
+        }
+        DeviceEventEmitter.emit('viewLink', {
+          title: actions.name,
+          id: actions.id,
+          type: actions.type,
+          value: actions.value,
+          position: actions.position,
+        });
+        switch (actions.type) {
+          case 'blog-url':
+            await this.props.navigator?.push({
+              component: {
+                name: 'EngagementWebView',
+                options: {
+                  topBar: {
+                    visible: false,
+                  },
                 },
-                topBar: {
-                  background: { color: '#f5f2ee'},
-                  rightButtons: [{
-                    color: '#866d4b',
-                    icon: require('../assets/images/closeBronze.png'),
-                    id: 'close'
-                  }]
-                }
-              }
-            }
-          });
-          break;
-        case 'deep-link':
-          if (this.props.discoverPath && actions.value) {
-            const navigator = Injector.require(NAVIGATOR_TOKEN);
-            const method = this.props.deepLinkMethod || 'open';
-            navigator[method](actions.value);
+                passProps: {
+                  actions,
+                  isBlog: true,
+                  backButton: true,
+                },
+              },
+            });
             break;
-          }
-          const separator = ~actions.value.indexOf('?') ? '&' : '?';
-          const query = separator + 'engagementDeeplink=true';
-          const url = actions.value + query;
-          Linking.canOpenURL(actions.value).then(supported => {
-            if (!supported) {
-              alert('An error occurred: can\'t handle url ' + url);
-              return false;
-            } else {
-              return Linking.openURL(url);
+          case 'web-url':
+            await this.props.navigator?.showModal({
+              component: {
+                name: 'EngagementWebView',
+                passProps: { actions },
+                options: {
+                  statusBar: {
+                    style: 'dark' as const,
+                  },
+                  topBar: {
+                    background: { color: '#f5f2ee' },
+                    rightButtons: [
+                      {
+                        color: '#866d4b',
+                        icon: require('../assets/images/closeBronze.png'),
+                        id: 'close',
+                      },
+                    ],
+                  },
+                },
+              },
+            });
+            break;
+          case 'deep-link':
+            if (this.props.discoverPath && actions.value) {
+              const navigator = Injector.require(NAVIGATOR_TOKEN);
+              const method = this.props.deepLinkMethod || 'open';
+              navigator[method](actions.value);
+              break;
             }
-          }).catch(err => alert('An error occurred: ' + err));
-          break;
-        case 'phone':
-          Linking.openURL('tel:' + actions.value).catch(err => alert('An error occurred: ' + err));
-          break;
-        case 'email':
-          let mailUrl = 'mailto:' + actions.value;
-          if (actions.subject) {
-            const subject = actions.subject.replace(/ /g, '%20');
-            mailUrl += '?subject=' + subject;
-          }
-          if (actions.body) {
-            const separator = ~mailUrl.indexOf('?') ? '&' : '?';
-            const body = actions.body.replace(/ /g, '%20');
-            mailUrl += separator + 'body=' + body;
-          }
-          Linking.openURL(mailUrl).catch(err =>
-            alert('An error occurred when trying to send email to ' + actions.value + ': ' + err));
-          break;
-        default:
-          break;
-      }
-      return;
-    }, 300);
+            const separator = ~actions.value.indexOf('?') ? '&' : '?';
+            const query = separator + 'engagementDeeplink=true';
+            const url = actions.value + query;
+            Linking.canOpenURL(actions.value)
+              .then((supported) => {
+                if (!supported) {
+                  alert("An error occurred: can't handle url " + url);
+                  return false;
+                } else {
+                  return Linking.openURL(url);
+                }
+              })
+              .catch((err) => alert('An error occurred: ' + err));
+            break;
+          case 'phone':
+            Linking.openURL('tel:' + actions.value).catch((err) =>
+              alert('An error occurred: ' + err)
+            );
+            break;
+          case 'email':
+            let mailUrl = 'mailto:' + actions.value;
+            if (actions.subject) {
+              const subject = actions.subject.replace(/ /g, '%20');
+              mailUrl += '?subject=' + subject;
+            }
+            if (actions.body) {
+              const separator = ~mailUrl.indexOf('?') ? '&' : '?';
+              const body = actions.body.replace(/ /g, '%20');
+              mailUrl += separator + 'body=' + body;
+            }
+            Linking.openURL(mailUrl).catch((err) =>
+              alert('An error occurred when trying to send email to ' + actions.value + ': ' + err)
+            );
+            break;
+          default:
+            break;
+        }
+        return;
+      }, 300);
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
       return this.renderBlock(item);
-    }
+    };
     renderHeaderName = () => {
       const { json, headerName } = this.props;
       const name = headerName || '';
-      const headerTitleStyle = json && json.headerTitleStyle || {};
+      const headerTitleStyle = (json && json.headerTitleStyle) || {};
       const comma = name ? ', ' : '';
       return (
         <Text style={[styles.headerName, headerTitleStyle]}>
-          Hello{comma}{name}
+          Hello{comma}
+          {name}
         </Text>
       );
-    }
+    };
 
     renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
       const { private_type } = item;
@@ -353,36 +352,33 @@ export default function(
         {
           key: this.dataKeyExtractor(item),
           navigator: this.props.navigator,
-          discoverPath: this.props.discoverPath
+          discoverPath: this.props.discoverPath,
         },
         this.renderBlock(item)
       );
-    }
+    };
     addParentCardProps = (
       type: string,
       blocks: BlockItem[],
       parentStyle: StyleProp<ViewStyle>
     ): any => {
       if (type === 'Card') {
-        return (blocks || []).map(b => {
+        return (blocks || []).map((b) => {
           return {
             ...b,
-            cardContainerStyle: parentStyle
+            cardContainerStyle: parentStyle,
           };
         });
       }
       return blocks;
-    }
+    };
     renderBlock = (item: BlockItem): React.ReactElement | null => {
-      const {
-        private_blocks,
-        private_type,
-        ...restProps } = item;
+      const { private_blocks, private_type, ...restProps } = item;
       const { id, name } = this.props;
       const props = {
         id,
         name,
-        ...restProps
+        ...restProps,
       };
       if (!layoutComponents[private_type]) {
         return null;
@@ -395,7 +391,7 @@ export default function(
           {
             key: this.dataKeyExtractor(item),
             navigator: this.props.navigator,
-            discoverPath: this.props.discoverPath
+            discoverPath: this.props.discoverPath,
           },
           this.renderBlock(item)
         );
@@ -408,30 +404,30 @@ export default function(
           navigator: this.props.navigator,
           discoverPath: this.props.discoverPath,
           api,
-          key: this.dataKeyExtractor(item)
+          key: this.dataKeyExtractor(item),
         },
-        private_blocks && this.addParentCardProps(
-          private_type,
-          private_blocks,
-          item.containerStyle
-        ).map(this.renderBlock)
+        private_blocks &&
+          this.addParentCardProps(private_type, private_blocks, item.containerStyle).map(
+            this.renderBlock
+          )
       );
-    }
+    };
 
     setScrollEnabled = (enabled: boolean): void => {
       this.setState({
-        scrollEnabled: enabled
+        scrollEnabled: enabled,
       });
-    }
+    };
     renderBlocks(): JSX.Element {
       const { json } = this.props;
-      const empty: any = json && json.empty || {};
+      const empty: any = (json && json.empty) || {};
       return (
         <>
-          {(json && json.private_blocks || []).map(this.renderBlock)}
+          {((json && json.private_blocks) || []).map(this.renderBlock)}
           {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>
+              {empty.message || 'No content found.'}
+            </Text>
           )}
         </>
       );
@@ -442,9 +438,10 @@ export default function(
       return (
         <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
-          {backButton && (this.props.renderBackButton ?
-           this.props.renderBackButton(this.props.navigator)
-            : (
+          {backButton &&
+            (this.props.renderBackButton ? (
+              this.props.renderBackButton(this.props.navigator)
+            ) : (
               <BackButton
                 navigator={this.props.navigator}
                 discoverPath={this.props.discoverPath}
@@ -457,14 +454,10 @@ export default function(
 
     renderScrollView(): JSX.Element {
       const { json } = this.props;
-      const empty: any = json && json.empty || {};
+      const empty: any = (json && json.empty) || {};
 
       if (this.props.noScrollView) {
-        return (
-          <>
-            {this.renderBlocks()}
-          </>
-        );
+        return <>{this.renderBlocks()}</>;
       }
       return (
         <>
@@ -472,23 +465,26 @@ export default function(
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
             renderItem={this.renderBlockItem}
-            ref={(ref: any) => { this.flatListRef = ref; }}
-            ListEmptyComponent={(
+            ref={(ref: any) => {
+              this.flatListRef = ref;
+            }}
+            ListEmptyComponent={
               <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>
-            )}
+                {empty.message || 'No content found.'}
+              </Text>
+            }
             refreshControl={
               this.props.refreshControl && (
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={this.props.refreshControl}
-              />
-            )}
+                <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.refreshControl}
+                />
+              )
+            }
           >
             {this.renderBlocks()}
           </FlatList>
         </>
-
       );
     }
 
@@ -499,7 +495,7 @@ export default function(
         json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
       this.pageNumberStyle =
         json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
-      const navBarTitleStyle = json && json.navBarTitleStyle || {};
+      const navBarTitleStyle = (json && json.navBarTitleStyle) || {};
 
       return (
         <EngagementContext.Provider
@@ -508,24 +504,22 @@ export default function(
             story: this.props.backButton ? this.props.json : undefined,
             language: this.props.language,
             cardPosition: this.props.cardPosition || 0,
-            windowWidth: this.props.windowWidth
+            windowWidth: this.props.windowWidth,
           }}
         >
-        <>
-          {this.props.renderHeader && this.props.renderHeader()}
-          {this.renderContent()}
-          {navBarTitle && (
-            <Text style={[styles.navBarTitle, navBarTitleStyle]}>
-              {navBarTitle}
-            </Text>
-          )}
-        </>
+          <>
+            {this.props.renderHeader && this.props.renderHeader()}
+            {this.renderContent()}
+            {navBarTitle && (
+              <Text style={[styles.navBarTitle, navBarTitleStyle]}>{navBarTitle}</Text>
+            )}
+          </>
         </EngagementContext.Provider>
       );
     }
 
     dataKeyExtractor = (item: BlockItem): string => {
       return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
-    }
+    };
   };
 }

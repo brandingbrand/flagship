@@ -50,17 +50,14 @@ export default class Navigator {
     console.error('handleDeepLink is no longer part of react-native-navigation');
   }
   setOnNavigatorEvent(): void {
-    console.error('setOnNavigatorEvent is no longer part of react-native-navigation. ' +
-      'Please use navigator.bindNavigation(this) to bind events, then reference ' +
-      'https://wix.github.io/react-native-navigation/#/docs/events');
+    console.error(
+      'setOnNavigatorEvent is no longer part of react-native-navigation. ' +
+        'Please use navigator.bindNavigation(this) to bind events, then reference ' +
+        'https://wix.github.io/react-native-navigation/#/docs/events'
+    );
   }
-  resetTo(options: {
-    screen: string;
-    title: string;
-    animated: boolean;
-  }): void {
-    console.warn('resetTo has been deprecated. ' +
-      'Please use setStackRoot');
+  resetTo(options: { screen: string; title: string; animated: boolean }): void {
+    console.warn('resetTo has been deprecated. ' + 'Please use setStackRoot');
 
     this.setStackRoot({
       component: {
@@ -68,25 +65,27 @@ export default class Navigator {
         options: {
           topBar: {
             title: {
-              text: options.title
-            }
-          }
-        }
-      }
-    }).catch(e => {
+              text: options.title,
+            },
+          },
+        },
+      },
+    }).catch((e) => {
       console.error(e);
     });
   }
   setStyle(options: { navBarTitleTextCentered: boolean }): void {
-    console.warn('setStyle has been deprecated. ' +
-      'Please use mergeOptions({\n  topBar: {\n    alignment: \'center\'\n  }\n}) instead');
+    console.warn(
+      'setStyle has been deprecated. ' +
+        "Please use mergeOptions({\n  topBar: {\n    alignment: 'center'\n  }\n}) instead"
+    );
 
     this.mergeOptions({
       topBar: {
         title: {
-          alignment: options.navBarTitleTextCentered ? 'center' : 'fill'
-        }
-      }
+          alignment: options.navBarTitleTextCentered ? 'center' : 'fill',
+        },
+      },
     });
   }
   setTabBadge(options: {
@@ -94,42 +93,51 @@ export default class Navigator {
     badge: string | number | null;
     badgeColor?: string;
   }): void {
-    console.warn('setTabBadge has been deprecated. ' +
-      'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +
-      'badgeColor: \'rgb(255, 255, 255)\',\n    ' +
-      'icon: iconImageSource\n  }\n}, componentIdOfTab) instead');
-    const icon = this.tabs[options.tabIndex].icon ||
-    this.tabs[options.tabIndex].options?.bottomTab?.icon;
+    console.warn(
+      'setTabBadge has been deprecated. ' +
+        "Please use mergeOptions({\n  bottomTab: {\n    badge: '1',\n    " +
+        "badgeColor: 'rgb(255, 255, 255)',\n    " +
+        'icon: iconImageSource\n  }\n}, componentIdOfTab) instead'
+    );
+    const icon =
+      this.tabs[options.tabIndex].icon || this.tabs[options.tabIndex].options?.bottomTab?.icon;
     if (icon) {
-      this.mergeOptions({
-        bottomTab: {
-          badge: options.badge !== null ? options.badge.toString() : undefined,
-          badgeColor: options.badgeColor,
-          icon
-        }
-      }, this.tabs[options.tabIndex].id);
+      this.mergeOptions(
+        {
+          bottomTab: {
+            badge: options.badge !== null ? options.badge.toString() : undefined,
+            badgeColor: options.badgeColor,
+            icon,
+          },
+        },
+        this.tabs[options.tabIndex].id
+      );
     }
   }
-  setTitle(options: { title: string}): void {
-    console.warn('setTitle has been deprecated. ' +
-      'Please use mergeOptions({\n  topBar: {\n    title: \'title\\n  }\n}) instead');
+  setTitle(options: { title: string }): void {
+    console.warn(
+      'setTitle has been deprecated. ' +
+        "Please use mergeOptions({\n  topBar: {\n    title: 'title\\n  }\n}) instead"
+    );
 
     this.mergeOptions({
       topBar: {
         title: {
-          text: options.title
-        }
-      }
+          text: options.title,
+        },
+      },
     });
   }
-  switchToTab(options: { tabIndex: number}): void {
-    console.warn('switchToTab has been deprecated. ' +
-      'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead');
+  switchToTab(options: { tabIndex: number }): void {
+    console.warn(
+      'switchToTab has been deprecated. ' +
+        'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead'
+    );
 
     this.mergeOptions({
       bottomTabs: {
-        currentTabIndex: options.tabIndex
-      }
+        currentTabIndex: options.tabIndex,
+      },
     });
   }
 }

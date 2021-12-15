@@ -1,8 +1,4 @@
-import {
-  ContentQuery,
-  ContentResource,
-  ContentSearchResult
-} from '../CommerceTypes';
+import { ContentQuery, ContentResource, ContentSearchResult } from '../CommerceTypes';
 
 /**
  * Methods to request content resource from a data source.
@@ -17,7 +13,6 @@ export default interface ContentDataSource {
    * @returns {Promise.<Array.<ContentResource>>} A Promise representing the content resources
    */
   fetchContentResources?(ids: string[], locale?: string): Promise<ContentResource[]>;
-
 
   /**
    * Query the data source for content resources matching a specified keyword or query.

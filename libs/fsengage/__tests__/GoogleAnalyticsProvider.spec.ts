@@ -13,7 +13,7 @@ describe('Analytics', () => {
   let analytics: Analytics;
   let stubbed: any;
 
-  beforeAll(done => {
+  beforeAll((done) => {
     const commonConfiguration = fixture.commonConfiguration;
     const configuration = fixture.configuration;
     const providers = [new GoogleAnalyticsProvider(commonConfiguration, configuration)];
@@ -22,7 +22,7 @@ describe('Analytics', () => {
     setTimeout(done, 0);
   });
 
-  afterEach(done => {
+  afterEach((done) => {
     stubbed.restore();
 
     return done();
@@ -32,12 +32,13 @@ describe('Analytics', () => {
     describe('Commerce', () => {
       // Contact
 
-      test('Contact Call & Component', done => {
+      test('Contact Call & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.call.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.contact.call(component, fixture.contact.call.request);
@@ -50,12 +51,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Contact Call & Component Property', done => {
+      test('Contact Call & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.call.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.call.module;
@@ -71,12 +73,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Contact Call & Component Custom', done => {
+      test('Contact Call & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.call.response.custom);
-          });
+          }
+        );
 
         analytics.contact.call(
           fixture.contact.call.module.contact.call,
@@ -91,12 +94,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Contact Email & Component', done => {
+      test('Contact Email & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.email.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.contact.email(component, fixture.contact.email.request);
@@ -109,12 +113,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Contact Email & Component Property', done => {
+      test('Contact Email & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.email.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.email.module;
@@ -130,12 +135,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Contact Email & Component Custom', done => {
+      test('Contact Email & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.contact.email.response.custom);
-          });
+          }
+        );
 
         analytics.contact.email(
           fixture.contact.email.module.contact.email,
@@ -152,12 +158,13 @@ describe('Analytics', () => {
 
       // Click
 
-      test('Click Generic & Component', done => {
+      test('Click Generic & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.click.generic.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.click.generic(component, fixture.click.generic.request);
@@ -170,12 +177,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Click Generic & Component Property', done => {
+      test('Click Generic & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.click.generic.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.click.generic.module;
@@ -191,12 +199,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Click Generic & Component Custom', done => {
+      test('Click Generic & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.click.generic.response.custom);
-          });
+          }
+        );
 
         analytics.click.generic(
           fixture.click.generic.module.click.generic,
@@ -213,12 +222,13 @@ describe('Analytics', () => {
 
       // Location
 
-      test('Location Directions & Component', done => {
+      test('Location Directions & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.location.directions.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.location.directions(component, fixture.location.directions.request);
@@ -231,12 +241,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Location Directions & Component Property', done => {
+      test('Location Directions & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.location.directions.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.location.directions.module;
@@ -252,12 +263,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Location Directions & Component Custom', done => {
+      test('Location Directions & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.location.directions.response.custom);
-          });
+          }
+        );
 
         analytics.location.directions(
           fixture.location.directions.module.location.directions,
@@ -274,12 +286,13 @@ describe('Analytics', () => {
 
       // Search
 
-      test('Search Generic & Component', done => {
+      test('Search Generic & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.search.generic.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.search.generic(component, fixture.search.generic.request);
@@ -292,12 +305,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Search Generic & Component Property', done => {
+      test('Search Generic & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.search.generic.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.search.generic.module;
@@ -313,12 +327,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Search Generic & Component Custom', done => {
+      test('Search Generic & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.search.generic.response.custom);
-          });
+          }
+        );
 
         analytics.search.generic(
           fixture.search.generic.module.search.generic,
@@ -335,12 +350,13 @@ describe('Analytics', () => {
 
       // Impression
 
-      test('Impression Generic & Component', done => {
+      test('Impression Generic & Component', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.impression.generic.response.default);
-          });
+          }
+        );
 
         const component = new Component({});
         analytics.impression.generic(component, fixture.impression.generic.request);
@@ -353,12 +369,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Impression Generic & Component Property', done => {
+      test('Impression Generic & Component Property', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.impression.generic.response.custom);
-          });
+          }
+        );
 
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.impression.generic.module;
@@ -374,12 +391,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Impression Generic & Component Custom', done => {
+      test('Impression Generic & Component Custom', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.impression.generic.response.custom);
-          });
+          }
+        );
 
         analytics.impression.generic(
           fixture.impression.generic.module.impression.generic,
@@ -396,12 +414,13 @@ describe('Analytics', () => {
     });
 
     describe('App Lifecycle', () => {
-      test('Active App', done => {
+      test('Active App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.active.response);
-          });
+          }
+        );
 
         analytics.lifecycle.active();
 
@@ -413,12 +432,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Background App', done => {
+      test('Background App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.background.response);
-          });
+          }
+        );
 
         analytics.lifecycle.background();
 
@@ -430,12 +450,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Close App', done => {
+      test('Close App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.close.response);
-          });
+          }
+        );
 
         analytics.lifecycle.close();
 
@@ -447,12 +468,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Create App', done => {
+      test('Create App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.create.response);
-          });
+          }
+        );
 
         analytics.lifecycle.create();
 
@@ -464,12 +486,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Inactive App', done => {
+      test('Inactive App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.inactive.response);
-          });
+          }
+        );
 
         analytics.lifecycle.inactive();
 
@@ -481,12 +504,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Start App', done => {
+      test('Start App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.start.response);
-          });
+          }
+        );
 
         analytics.lifecycle.start();
 
@@ -498,12 +522,13 @@ describe('Analytics', () => {
         return done();
       });
 
-      test('Suspend App', done => {
+      test('Suspend App', (done) => {
         // @ts-ignore ts-sinon does not define these types
-        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent')
-          .callsFake((properties: any) => {
+        stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
+          (properties: any) => {
             expect(properties).toEqual(fixture.lifecycle.suspend.response);
-          });
+          }
+        );
 
         analytics.lifecycle.suspend();
 

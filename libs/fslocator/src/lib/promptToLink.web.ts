@@ -4,7 +4,7 @@ export default async function promptToLink({
   title,
   subTitle,
   buttonText,
-  link
+  link,
 }: any): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     Alert.alert({
@@ -15,7 +15,7 @@ export default async function promptToLink({
       onConfirm: async () => {
         window.location.href = link;
         resolve();
-      }
+      },
     });
   });
 }

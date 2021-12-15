@@ -6,13 +6,13 @@ export enum FormLabelPosition {
   Above,
   Floating,
   Hidden,
-  Inline
+  Inline,
 }
 
 export function labelAboveFieldTemplate(
   locals: Dictionary,
   componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
- ): React.ReactNode {
+): React.ReactNode {
   return (
     <StatefulTextbox
       locals={locals}
@@ -22,9 +22,10 @@ export function labelAboveFieldTemplate(
   );
 }
 
-export function labelFloatingFieldTemplate(locals: Dictionary, componentFactory: (
+export function labelFloatingFieldTemplate(
   locals: Dictionary,
-  textboxStyle: Dictionary, color: string) => JSX.Element): React.ReactNode {
+  componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
+): React.ReactNode {
   return (
     <StatefulTextbox
       locals={locals}
@@ -37,7 +38,7 @@ export function labelFloatingFieldTemplate(locals: Dictionary, componentFactory:
 export function labelHiddenFieldTemplate(
   locals: Dictionary,
   componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
- ): React.ReactNode {
+): React.ReactNode {
   return (
     <StatefulTextbox
       locals={locals}
@@ -50,7 +51,7 @@ export function labelHiddenFieldTemplate(
 export function labelInlineFieldTemplate(
   locals: Dictionary,
   componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
- ): React.ReactNode {
+): React.ReactNode {
   return (
     <StatefulTextbox
       locals={locals}

@@ -172,4 +172,3 @@ export interface MultiCarouselProps<ItemT>
    */
   autoplayTimeoutDuration?: number;
 }
-

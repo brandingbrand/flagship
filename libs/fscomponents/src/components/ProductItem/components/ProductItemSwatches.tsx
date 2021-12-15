@@ -5,8 +5,8 @@ import { ProductItemProps } from '../ProductItem';
 
 const styles = StyleSheet.create({
   swatches: {
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 
 export type ProductItemSwatchesProps = Pick<
@@ -16,12 +16,7 @@ export type ProductItemSwatchesProps = Pick<
 
 export class ProductItemSwatches extends Component<ProductItemSwatchesProps> {
   render(): React.ReactNode {
-    const {
-      swatchItems,
-      swatchStyle,
-      swatchesProps,
-      renderSwatches
-    } = this.props;
+    const { swatchItems, swatchStyle, swatchesProps, renderSwatches } = this.props;
 
     if (renderSwatches) {
       return renderSwatches();

@@ -8,7 +8,7 @@ import {
   StyleProp,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import styles from '../carousel/index.style';
 
@@ -47,8 +47,7 @@ export interface GridWallBlockState {
   loading: boolean;
 }
 
-export default class GridWallBlock
-  extends Component<GridWallBlockProps, GridWallBlockState> {
+export default class GridWallBlock extends Component<GridWallBlockProps, GridWallBlockState> {
   _slider1Ref: any | null = null;
 
   private network: FSNetwork;
@@ -57,10 +56,10 @@ export default class GridWallBlock
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM,
       products: [],
-      loading: true
+      loading: true,
     };
     this.network = new FSNetwork({
-      baseURL: props.baseUrl
+      baseURL: props.baseUrl,
     });
   }
 
@@ -69,13 +68,14 @@ export default class GridWallBlock
     const products = await this.fetchProducts(items);
     this.setState({
       products: products.filter((item: any) => !item.error),
-      loading: false
+      loading: false,
     });
   }
 
   async fetchProduct(id: string): Promise<any> {
     const imageFormat = this.props.imageFormat || 'Regular_Mobile';
-    return this.network.get(id)
+    return this.network
+      .get(id)
       .then((r: any) => r.data)
       .then((item: any) => {
         return {
@@ -86,18 +86,18 @@ export default class GridWallBlock
           deepLinkUrl: this.props.deepLinkUrl,
           image: (item.galleryImageList.galleryImage || []).find((img: any) => {
             return img.format === imageFormat;
-          })
+          }),
         };
       })
       .catch(async (e: any) => {
         return Promise.resolve({
-          error: e
+          error: e,
         });
       });
   }
 
   async fetchProducts(items: any[]): Promise<any> {
-    const promises = items.map(async item => {
+    const promises = items.map(async (item) => {
       return this.fetchProduct(item.productId);
     });
     return Promise.all(promises);
@@ -118,9 +118,7 @@ export default class GridWallBlock
   }
 
   horizontalMarginPadding(): number {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
@@ -131,16 +129,12 @@ export default class GridWallBlock
     return sliderWidth - this.horizontalMarginPadding();
   }
   calculateItemWidth(): number {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
     const slideWidth = wp(50);
-    return slideWidth - (options.spaceBetweenHorizontal / 2) - (this.horizontalMarginPadding() / 2);
+    return slideWidth - options.spaceBetweenHorizontal / 2 - this.horizontalMarginPadding() / 2;
   }
   createGrid(): JSX.Element {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
     renderItemOptions = options;
     renderItemWidth = this.calculateItemWidth();
     return (
@@ -148,7 +142,7 @@ export default class GridWallBlock
         style={{
           flex: 1,
           flexDirection: 'row',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
         }}
       >
         {(this.state.products || []).map((product: any, index: number) => {
@@ -158,9 +152,7 @@ export default class GridWallBlock
     );
   }
   render(): JSX.Element {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     if (this.props.onBack) {
       onBackPress = this.props.onBack;
     }
@@ -168,14 +160,10 @@ export default class GridWallBlock
     if (this.state.loading) {
       return (
         <View style={styles.loadingInner}>
-          <ActivityIndicator color='rgba(0,0,0,0.5)' />
+          <ActivityIndicator color="rgba(0,0,0,0.5)" />
         </View>
       );
     }
-    return (
-      <View style={containerStyle}>
-        {grid}
-      </View>
-    );
+    return <View style={containerStyle}>{grid}</View>;
   }
 }

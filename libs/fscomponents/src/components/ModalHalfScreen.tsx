@@ -7,22 +7,22 @@ import {
   ScaledSize,
   StyleSheet,
   TouchableWithoutFeedback,
-  View
+  View,
 } from 'react-native';
 import { Modal } from './Modal';
 import { AccessibilityComponentType } from '../types/Store';
 
 const styles = StyleSheet.create({
   content: {
-    flex: 1
+    flex: 1,
   },
   animatedContent: {
     height: 400,
     position: 'absolute',
     backgroundColor: 'white',
     width: '100%',
-    bottom: -400
-  }
+    bottom: -400,
+  },
 });
 
 interface ModalHalfScreenAnimationConfig {
@@ -31,17 +31,19 @@ interface ModalHalfScreenAnimationConfig {
     outputRange: number[];
   };
 
-  heightFromProps: {
-    height: number;
-    top?: number;
-    bottom?: number;
-  } | {};
+  heightFromProps:
+    | {
+        height: number;
+        top?: number;
+        bottom?: number;
+      }
+    | {};
 }
 
 export enum ModalHalfScreenPosition {
   Top = 'top',
   Center = 'center',
-  Bottom = 'bottom'
+  Bottom = 'bottom',
 }
 
 export interface ModalHalfScreenProps {
@@ -51,11 +53,10 @@ export interface ModalHalfScreenProps {
   backgroundAccessibilityComponentType?: AccessibilityComponentType;
   backgroundAccessibilityLabel?: string;
   onRequestClose: () => void;
-  position?: (
-    ModalHalfScreenPosition.Top |
-    ModalHalfScreenPosition.Center |
-    ModalHalfScreenPosition.Bottom
-  );
+  position?:
+    | ModalHalfScreenPosition.Top
+    | ModalHalfScreenPosition.Center
+    | ModalHalfScreenPosition.Bottom;
 }
 
 export interface ModalHalfScreenState {
@@ -72,7 +73,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       visible: false,
       contentOffset: new Animated.Value(0),
       height: props.height || 0,
-      statusBarHeight: 0
+      statusBarHeight: 0,
     };
   }
 
@@ -83,10 +84,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
 
     try {
       this.setState({
-        height: (
-          this.props.height ||
-          (Dimensions.get('window').height / 2)
-        )
+        height: this.props.height || Dimensions.get('window').height / 2,
       });
 
       Dimensions.addEventListener('change', this.dimensionsListener);
@@ -126,7 +124,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     if (halfWindowHeight !== this.state.height) {
       this.setState({ height: halfWindowHeight });
     }
-  }
+  };
 
   showContent = () => {
     this.setState({ visible: true }, () => {
@@ -134,24 +132,24 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       Animated.spring(this.state.contentOffset, {
         toValue: 1,
         useNativeDriver: false,
-        bounciness: 0
+        bounciness: 0,
       }).start();
     });
-  }
+  };
 
   hideContent = () => {
     // Close the drawer
     Animated.spring(this.state.contentOffset, {
       toValue: 0,
       useNativeDriver: false,
-      bounciness: 0
+      bounciness: 0,
     }).start();
 
     // Start the modal fade animation slightly after the drawer starts closing
     setTimeout(() => {
       this.setState({ visible: false });
     }, 100);
-  }
+  };
 
   renderBackground = () => {
     return (
@@ -163,12 +161,12 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
         <View
           style={{
             flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.5)'
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}
         />
       </TouchableWithoutFeedback>
     );
-  }
+  };
 
   render(): JSX.Element {
     const config: ModalHalfScreenAnimationConfig = this.getAnimationConfig();
@@ -178,10 +176,10 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
       {
         transform: [
           {
-            translateY: this.state.contentOffset.interpolate(config.contentOffsetY)
-          }
-        ]
-      }
+            translateY: this.state.contentOffset.interpolate(config.contentOffsetY),
+          },
+        ],
+      },
     ];
 
     return (
@@ -223,13 +221,14 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     return {
       contentOffsetY: {
         inputRange: [0, 1],
-        outputRange
+        outputRange,
       },
-      heightFromProps: height ? {
-        height,
-        ...props
-      } : {}
+      heightFromProps: height
+        ? {
+            height,
+            ...props,
+          }
+        : {},
     };
   }
-
 }

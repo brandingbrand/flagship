@@ -1,10 +1,4 @@
-import type {
-  ActivatedRoute,
-  MatchingRoute,
-  ParentRoute,
-  Route,
-  RouteCollection
-} from '../types';
+import type { ActivatedRoute, MatchingRoute, ParentRoute, Route, RouteCollection } from '../types';
 
 import React from 'react';
 import { Text } from 'react-native';
@@ -38,14 +32,14 @@ export const createStack = ([route, title]: readonly [
                 ...route?.topBarStyle,
                 title: {
                   ...route?.topBarStyle?.title,
-                  text: title ?? route.tabAffinity
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
+                  text: title ?? route.tabAffinity,
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   };
 };
 
@@ -62,32 +56,29 @@ export const resolveStack = async (
       children: [
         {
           component: {
-            options: { topBar: componentDetails.buttons }
-          }
-        }
-      ]
-    }
+            options: { topBar: componentDetails.buttons },
+          },
+        },
+      ],
+    },
   });
 };
 
 export const applyMatcher = async (matchers: Matchers, route: RouteCollection | ParentRoute) => {
-  const component =
-    await matchRoute(
-      matchers,
-      'initialPath' in route
-        ? `/${route.initialPath}`
-        : route.path ? `/${route.path}` : '/'
-      );
+  const component = await matchRoute(
+    matchers,
+    'initialPath' in route ? `/${route.initialPath}` : route.path ? `/${route.path}` : '/'
+  );
   if (component) {
     const title =
       typeof component.title === 'function'
         ? await component.title({
-          data: component.data ?? {},
-          query: component.query,
-          params: component.params,
-          path: component.matchedPath,
-          loading: true
-        })
+            data: component.data ?? {},
+            query: component.query,
+            params: component.params,
+            path: component.matchedPath,
+            loading: true,
+          })
         : component.title;
     return [component, title] as const;
   }
@@ -113,14 +104,14 @@ const makeErrorComponent = (error: string): Layout => {
             options: {
               topBar: {
                 title: {
-                  text: 'Error'
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
+                  text: 'Error',
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   };
 };
 
@@ -132,8 +123,8 @@ export const makeRootLayout = async (
     return {
       bottomTabs: {
         id: ROOT_STACK,
-        children: tabs
-      }
+        children: tabs,
+      },
     };
   }
 
@@ -152,7 +143,7 @@ export const makeRootLayout = async (
 export const extractPagePaths = (root: Layout) => {
   return (
     root.bottomTabs?.children?.map(({ stack }) => stack?.children?.[0].component?.id) ?? [
-      root.stack?.children?.[0]?.component?.id
+      root.stack?.children?.[0]?.component?.id,
     ]
   );
 };
@@ -176,15 +167,15 @@ export const activateStacks = async (
 
               return resolveStack(route, activated, layout);
             })
-          )
-        }
-      }
+          ),
+        },
+      },
     };
   }
 
   if (root.stack && activated[0]?.[1] && activated[0]?.[0]) {
     return {
-      root: await resolveStack(activated[0][0], activated[0][1], root)
+      root: await resolveStack(activated[0][0], activated[0][1], root),
     };
   }
 
@@ -197,5 +188,5 @@ export {
   buildMatchers,
   resolveRoute,
   createKey,
-  normalizeLocationDescriptor
+  normalizeLocationDescriptor,
 } from './utils.base';

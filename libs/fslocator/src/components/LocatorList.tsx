@@ -5,14 +5,12 @@ import { style as S } from '../styles/Locator';
 import { Location, Region } from '../types/Location';
 import {
   PropType as LocatorContainerPropType,
-  StateType as LocatorContainerStateType
+  StateType as LocatorContainerStateType,
 } from './LocatorContainer';
 import ResultList from './ResultList';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-export interface PropType
-  extends LocatorContainerPropType,
-    LocatorContainerStateType {
+export interface PropType extends LocatorContainerPropType, LocatorContainerStateType {
   submitSearch: (searchValue: string) => void;
   useCurrentLocation: () => void;
   selectLocation: (location: Location) => void;
@@ -21,16 +19,8 @@ export interface PropType
   handleRegionChangeComplete: (e: any) => void;
   searchArea: () => void;
   defaultRegion?: Region;
-  handleNavPress: (
-    location: Location,
-    locationId?: number,
-    index?: number
-  ) => () => void;
-  handlePhonePress: (
-    phone: string,
-    locationId?: number,
-    index?: number
-  ) => () => void;
+  handleNavPress: (location: Location, locationId?: number, index?: number) => () => void;
+  handlePhonePress: (phone: string, locationId?: number, index?: number) => () => void;
 }
 
 export default class LocatorList extends Component<PropType> {
@@ -39,7 +29,7 @@ export default class LocatorList extends Component<PropType> {
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
-        useCurrentLocation: this.props.useCurrentLocation
+        useCurrentLocation: this.props.useCurrentLocation,
       })
     ) : (
       <SearchBar
@@ -48,7 +38,7 @@ export default class LocatorList extends Component<PropType> {
         {...searchBarProps}
       />
     );
-  }
+  };
 
   render(): JSX.Element {
     const { listStyle } = this.props;

@@ -2,24 +2,20 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  number,
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { number, object, text } from '@storybook/addon-knobs';
 import { ActionBar } from '../src/components/ActionBar';
 import { Button } from '../src/components/Button';
 
 const defaultStyle = {
   width: 250,
-  margin: 5
+  margin: 5,
 };
 
 const styles = StyleSheet.create({
   twoButtonViewStyle: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
-  }
+    flexWrap: 'wrap',
+  },
 });
 
 const renderButton = (): JSX.Element => {
@@ -43,9 +39,7 @@ storiesOf('Button', module)
     );
   })
   .add('two buttons in action bar', () => (
-    <ActionBar
-      separatorWidth={number('Separator Width', 10)}
-    >
+    <ActionBar separatorWidth={number('Separator Width', 10)}>
       {renderButton()}
       {renderButton()}
     </ActionBar>

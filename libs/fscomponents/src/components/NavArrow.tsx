@@ -21,7 +21,7 @@ export const NavArrow: FunctionComponent<NavArrowProps> = memo((props): JSX.Elem
     height = kDefaultHeight,
     width = kDefaultWidth,
     color = kDefaultColor,
-    strokeWidth = kDefaultStrokeWidth
+    strokeWidth = kDefaultStrokeWidth,
   } = props;
 
   if (height % 2 !== 0) {
@@ -33,14 +33,7 @@ export const NavArrow: FunctionComponent<NavArrowProps> = memo((props): JSX.Elem
   return (
     <View style={props.style}>
       <Svg height={height} width={width}>
-        <Line
-          x1={0}
-          x2={width}
-          y1={0}
-          y2={intersectY}
-          stroke={color}
-          strokeWidth={strokeWidth}
-        />
+        <Line x1={0} x2={width} y1={0} y2={intersectY} stroke={color} strokeWidth={strokeWidth} />
         <Line
           x1={0}
           x2={width}

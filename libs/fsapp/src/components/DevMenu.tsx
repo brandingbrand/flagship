@@ -26,30 +26,30 @@ const envsToDisplay: {
 const styles = StyleSheet.create({
   devViewcontainer: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   configView: { padding: 10 },
   configViewItem: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   configViewTitle: {
     fontSize: 12,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   configViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   envView: {
     padding: 10,
-    flex: 1
+    flex: 1,
   },
   envViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   bottomBtns: {
     flexDirection: 'row',
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   closeBtn: {
     justifyContent: 'center',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   reloadBtn: {
     justifyContent: 'center',
@@ -65,18 +65,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#555',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   closeBtnText: {
-    color: '#333'
+    color: '#333',
   },
   reloadBtnText: {
-    color: 'white'
+    color: 'white',
   },
   switchBtns: {
     flexDirection: 'row',
-    margin: 10
-  }
+    margin: 10,
+  },
 });
 
 export interface DevMenuProp extends GenericScreenProp {
@@ -93,7 +93,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   state: DevMenuState = {
     devView: 'menu',
     selectedEnv: '',
-    devKeepPage: false
+    devKeepPage: false,
   };
 
   render(): JSX.Element {
@@ -133,12 +133,12 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
 
   componentDidMount(): void {
     AsyncStorage.getItem('devKeepPage')
-      .then(devKeepPage => {
+      .then((devKeepPage) => {
         this.setState({
-          devKeepPage: !!devKeepPage
+          devKeepPage: !!devKeepPage,
         });
       })
-      .catch(e => console.log('cannot get devKeepPage flag from AsyncStorage', e));
+      .catch((e) => console.log('cannot get devKeepPage flag from AsyncStorage', e));
   }
 
   renderDevMenu = () => {
@@ -165,30 +165,31 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         {devMenuScreens.map(this.renderCustomDevScreen)}
       </View>
     );
-  }
+  };
 
   renderCustomDevScreen = (item: LayoutComponent, i: number) => {
     const name = item.name;
-    const title = item.options && item.options.topBar &&
-      item.options.topBar.title && item.options.topBar.title.text;
-    return (
-      <TouchableRow key={i} text={title || name} onPress={this.pushToScreen(item)} />
-    );
-  }
+    const title =
+      item.options &&
+      item.options.topBar &&
+      item.options.topBar.title &&
+      item.options.topBar.title.text;
+    return <TouchableRow key={i} text={title || name} onPress={this.pushToScreen(item)} />;
+  };
 
   keepLastPage = () => {
     if (this.state.devKeepPage) {
       this.setState({ devKeepPage: false });
-      AsyncStorage.setItem('devKeepPage', '').catch(e =>
+      AsyncStorage.setItem('devKeepPage', '').catch((e) =>
         console.log('cannot set devKeepPage flag in AsyncStorage', e)
       );
     } else {
       this.setState({ devKeepPage: true });
-      AsyncStorage.setItem('devKeepPage', 'true').catch(e =>
+      AsyncStorage.setItem('devKeepPage', 'true').catch((e) =>
         console.log('cannot set devKeepPage flag in AsyncStorage', e)
       );
     }
-  }
+  };
 
   renderStorageManager = () => {
     const sInfoKeys = this.props.appConfig.env?.sInfoKeys || {};
@@ -197,7 +198,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         <StorageManager sInfoKeys={sInfoKeys} />
       </View>
     );
-  }
+  };
 
   renderEnvSwitcher = () => {
     const currentEnv = EnvSwitcher.envName || 'prod';
@@ -215,7 +216,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         })}
       </View>
     );
-  }
+  };
 
   renderEnvDetail = () => {
     const env = projectEnvs[this.state.selectedEnv];
@@ -236,51 +237,55 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         </View>
       </View>
     );
-  }
+  };
 
   renderCodepush = () => {
     return <CodePushDevMenu appConfig={this.props.appConfig} />;
-  }
+  };
 
   handleHideDevMenu = () => {
     this.props.hideDevMenu();
-    this.props.navigator.dismissModal()
-      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
-  }
+    this.props.navigator
+      .dismissModal()
+      .catch((err) => console.warn('DevMenu DISMISSMODAL error: ', err));
+  };
 
   restart = () => {
     this.props.hideDevMenu();
-    this.props.navigator.dismissModal()
+    this.props.navigator
+      .dismissModal()
       .then(() => {
         DevSettings.reload();
       })
-      .catch(err => console.warn('DevMenu DISMISSMODAL error: ', err));
-  }
+      .catch((err) => console.warn('DevMenu DISMISSMODAL error: ', err));
+  };
 
   dismissModal = () => {
-    this.props.navigator.dismissModal()
-      .catch(err => console.log('DevMenu DISMISSMODAL error: ', err));
-  }
+    this.props.navigator
+      .dismissModal()
+      .catch((err) => console.log('DevMenu DISMISSMODAL error: ', err));
+  };
 
   updateSelectedEnv = (env: string) => () => {
     this.setState({
       devView: 'envDetail',
-      selectedEnv: env
+      selectedEnv: env,
     });
-  }
+  };
 
   switchToSelectedEnv = () => {
     EnvSwitcher.setEnv(this.state.selectedEnv).then(() => {
       this.restart();
     });
-  }
+  };
 
   pushToScreen = (item: LayoutComponent) => () => {
-    this.props.navigator.push({ component: item })
-      .catch(err => console.log('DevMenu PUSH error: ', err));
-  }
+    this.props.navigator
+      .push({ component: item })
+      .catch((err) => console.log('DevMenu PUSH error: ', err));
+  };
 
   showDevView = (devView: string) => () => {
     this.setState({ devView });
-  }
+  };
 }

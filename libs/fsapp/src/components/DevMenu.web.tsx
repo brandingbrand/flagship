@@ -21,23 +21,23 @@ const envsToDisplay: {
 const styles = StyleSheet.create({
   devViewcontainer: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   configView: { padding: 10 },
   configViewItem: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   configViewTitle: {
     fontSize: 12,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   configViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   bottomBtns: {
     flexDirection: 'row',
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   closeBtn: {
     justifyContent: 'center',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   reloadBtn: {
     justifyContent: 'center',
@@ -53,25 +53,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#555',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   closeBtnText: {
-    color: '#333'
+    color: '#333',
   },
   reloadBtnText: {
-    color: 'white'
+    color: 'white',
   },
   switchBtns: {
     flexDirection: 'row',
-    margin: 10
+    margin: 10,
   },
   envView: {
     padding: 10,
-    flex: 1
+    flex: 1,
   },
   envViewText: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });
 
 export interface DevMenuProp extends GenericScreenProp {
@@ -86,7 +86,7 @@ export interface DevMenuState {
 export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   state: DevMenuState = {
     devView: 'menu',
-    selectedEnv: 'prod'
+    selectedEnv: 'prod',
   };
 
   render(): JSX.Element {
@@ -127,13 +127,11 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         {devMenuScreens.map(this.renderCustomDevScreen)}
       </View>
     );
-  }
+  };
 
   renderCustomDevScreen = (item: LayoutComponent, i: number) => {
-    return (
-      <TouchableRow key={i} text={item.name} onPress={this.pushToScreen(item)} />
-    );
-  }
+    return <TouchableRow key={i} text={item.name} onPress={this.pushToScreen(item)} />;
+  };
 
   renderAppConfig = () => {
     const { env } = this.props.appConfig;
@@ -153,7 +151,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         })}
       </View>
     );
-  }
+  };
 
   renderEnvSwitcher = () => {
     const currentEnv = EnvSwitcher.envName;
@@ -171,7 +169,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         })}
       </View>
     );
-  }
+  };
 
   renderEnvDetail = () => {
     const env = projectEnvs[this.state.selectedEnv];
@@ -192,14 +190,14 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         </View>
       </View>
     );
-  }
+  };
 
   updateSelectedEnv = (env: string) => () => {
     this.setState({
       devView: 'envDetail',
-      selectedEnv: env
+      selectedEnv: env,
     });
-  }
+  };
 
   switchToSelectedEnv = () => {
     EnvSwitcher.envName = this.state.selectedEnv;
@@ -209,21 +207,25 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         window.location.reload();
       }, 0);
     }
-  }
+  };
 
   dismissModal = () => {
-    this.props.navigator.pop().catch(e => { console.error(e); });
-  }
+    this.props.navigator.pop().catch((e) => {
+      console.error(e);
+    });
+  };
 
   showDevView = (devView: string) => () => {
     this.setState({ devView });
-  }
+  };
 
   pushToScreen = (component: LayoutComponent) => () => {
-    this.props.navigator.push({
-      component
-    }).catch(e => {
-      console.error('pushToScreen error', e);
-    });
-  }
+    this.props.navigator
+      .push({
+        component,
+      })
+      .catch((e) => {
+        console.error('pushToScreen error', e);
+      });
+  };
 }

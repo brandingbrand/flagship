@@ -3,20 +3,20 @@ import { EmailErrors, FSTranslationKeys, PasswordFormErrors } from '../types';
 export const passwordErrors: PasswordFormErrors = {
   tooShort: 'Password should have at least {{minCharacters}} characters',
   invalid: 'Password is missing or invalid',
-  mismatch: 'Passwords must match'
+  mismatch: 'Passwords must match',
 };
 
 export const emailErrors: EmailErrors = {
   missing: 'Email is required',
   mismatch: 'Email addresses do not match',
-  invalid: 'Please enter a valid email address'
+  invalid: 'Please enter a valid email address',
 };
 
 export const keys: FSTranslationKeys = {
   flagship: {
     alertDefaults: {
       ok: 'OK',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
     },
     addressForm: {
       firstName: 'First Name',
@@ -37,7 +37,7 @@ export const keys: FSTranslationKeys = {
       email: 'Email',
       emailError: 'Please enter a valid email address',
       poBox: 'Check if this is P.O Box',
-      submit: 'Submit'
+      submit: 'Submit',
     },
     cart: {
       isEmpty: 'Empty Cart',
@@ -47,37 +47,37 @@ export const keys: FSTranslationKeys = {
       outOfStock: 'Out of Stock',
       actions: {
         add: {
-          actionBtn: 'Add to Cart'
+          actionBtn: 'Add to Cart',
         },
         remove: {
-          actionBtn: 'Remove'
-        }
+          actionBtn: 'Remove',
+        },
       },
       digitalWallet: {
-        appleError: 'Apple Pay was unable to complete your request.'
+        appleError: 'Apple Pay was unable to complete your request.',
       },
       item: {
         unitPrice: 'Unit Price',
-        totalPrice: 'Total Price'
+        totalPrice: 'Total Price',
       },
       summary: {
         subtotal: {
           defaultValue: 'TBD',
-          text: 'Subtotal'
+          text: 'Subtotal',
         },
         tax: {
           defaultValue: 'TBD',
-          text: 'Estimated Tax'
+          text: 'Estimated Tax',
         },
         shipping: {
           defaultValue: 'TBD',
-          text: 'Estimated Shipping'
+          text: 'Estimated Shipping',
         },
         total: {
           defaultValue: 'TBD',
-          text: 'Estimated Total'
-        }
-      }
+          text: 'Estimated Total',
+        },
+      },
     },
     filterListDefaults: {
       clearAll: 'Clear All',
@@ -86,7 +86,7 @@ export const keys: FSTranslationKeys = {
       reset: 'RESET',
       apply: 'APPLY',
       hintToggle: 'Toggles Filter',
-      hintBack: 'Go back one filter level'
+      hintBack: 'Go back one filter level',
     },
     feedback: {
       actions: {
@@ -94,55 +94,55 @@ export const keys: FSTranslationKeys = {
           actionBtn: 'Submit Feedback',
           success: 'Thank you for your feedback.',
           failure: 'An error has occurred. Please try again later.',
-          cancelBtn: 'Close'
-        }
+          cancelBtn: 'Close',
+        },
       },
       title: 'Report a Site Issue',
       form: {
         email: {
           label: 'Email',
           placeholder: 'john.doe@example.com',
-          error: 'Please provide a valid email address'
+          error: 'Please provide a valid email address',
         },
         feedback: {
           label: 'How can we improve your experience on this site?',
-          error: 'Please provide feedback about your visit'
-        }
-      }
+          error: 'Please provide feedback about your visit',
+        },
+      },
     },
     changePassword: {
       actions: {
         submit: {
-          actionBtn: 'Submit'
-        }
+          actionBtn: 'Submit',
+        },
       },
       form: {
         errors: {
-          password: passwordErrors
+          password: passwordErrors,
         },
         currentPassword: {
-          label: '*Current Password'
+          label: '*Current Password',
         },
         newPassword: {
-          label: '*New Password'
+          label: '*New Password',
         },
         confirmPassword: {
-          label: '*Confirm Password'
-        }
-      }
+          label: '*Confirm Password',
+        },
+      },
     },
     sort: {
       actions: {
         refine: {
-          actionBtn: 'Refine'
+          actionBtn: 'Refine',
         },
         filter: {
-          actionBtn: 'Filter'
+          actionBtn: 'Filter',
         },
         sort: {
-          actionBtn: 'Sort'
-        }
-      }
+          actionBtn: 'Sort',
+        },
+      },
     },
     reviews: {
       indicatorDefault: 'out of 5 stars',
@@ -152,123 +152,123 @@ export const keys: FSTranslationKeys = {
       helpfulCount: {
         zero: '',
         one: 'One person found this helpful',
-        other: '{{count}} people found this helpful'
+        other: '{{count}} people found this helpful',
       },
       recommendCount: '{{recommendPercent}}% of respondents would recommend this to a friend',
       recommended: 'Yes, I recommend this product.',
       notRecommended: 'No, I do not reccommend this product.',
-      syndicatedLabel: 'Originally posted on {{site}}'
+      syndicatedLabel: 'Originally posted on {{site}}',
     },
     search: {
       recentSearches: 'RECENT SEARCHES',
       actions: {
         clear: {
           actionBtn: 'Clear',
-          accessibility: 'Clear Recent Search'
+          accessibility: 'Clear Recent Search',
         },
         search: {
-          accessibilityLabel: 'Search and return results for {{value}}'
-        }
-      }
+          accessibilityLabel: 'Search and return results for {{value}}',
+        },
+      },
     },
     updateNameOrEmail: {
       actions: {
         submit: {
-          actionBtn: 'Submit'
-        }
+          actionBtn: 'Submit',
+        },
       },
       form: {
         firstName: {
           label: '*First Name',
-          error: 'Please enter your first name'
+          error: 'Please enter your first name',
         },
         lastName: {
           label: '*Last Name',
-          error: 'Please enter your last name'
+          error: 'Please enter your last name',
         },
         emailAddress: {
           label: '*Email Address',
-          error: emailErrors
+          error: emailErrors,
         },
         password: {
           label: '*Password',
-          error: passwordErrors
-        }
-      }
+          error: passwordErrors,
+        },
+      },
     },
     zoomCarousel: {
       actions: {
         close: {
-          actionBtn: 'Close (Esc)'
+          actionBtn: 'Close (Esc)',
         },
         share: {
-          actionBtn: 'Share'
+          actionBtn: 'Share',
         },
         fullscreen: {
-          actionBtn: 'Toggle fullscreen'
+          actionBtn: 'Toggle fullscreen',
         },
         zoom: {
-          actionBtn: 'Zoom in/out'
+          actionBtn: 'Zoom in/out',
         },
         prev: {
-          actionBtn: 'Previous (arrow left)'
+          actionBtn: 'Previous (arrow left)',
         },
         next: {
-          actionBtn: 'Next (arrow right)'
+          actionBtn: 'Next (arrow right)',
         },
         focus: {
-          actionBtn: 'Focus item in carousel'
-        }
-      }
+          actionBtn: 'Focus item in carousel',
+        },
+      },
     },
     promoForm: {
       enterPromo: 'Enter Promo Code',
-      error: 'Please enter a valid promo code'
+      error: 'Please enter a valid promo code',
     },
     registration: {
       actions: {
         submit: {
-          actionBtn: 'Submit'
-        }
+          actionBtn: 'Submit',
+        },
       },
       errors: {
-        password: passwordErrors
+        password: passwordErrors,
       },
       form: {
         firstName: {
           label: '*First Name',
-          error: 'Please enter your first name'
+          error: 'Please enter your first name',
         },
         lastName: {
           label: '*Last Name',
-          error: 'Please enter your last name'
+          error: 'Please enter your last name',
         },
         emailAddress: {
           label: '*Email Address',
-          error: emailErrors
+          error: emailErrors,
         },
         password: {
-          label: '*Password'
+          label: '*Password',
         },
         confirmPassword: {
-          label: '*Confirm Password'
-        }
-      }
+          label: '*Confirm Password',
+        },
+      },
     },
     storeLocator: {
       searchPlaceholder: 'Search by City, State, or Zip',
       actions: {
         showList: {
-          actionBtn: 'Show List'
+          actionBtn: 'Show List',
         },
         searchArea: {
-          actionBtn: 'Search This Area'
-        }
-      }
+          actionBtn: 'Search This Area',
+        },
+      },
     },
     moreText: {
       readMore: 'Read More',
-      readLess: 'Read Less'
+      readLess: 'Read Less',
     },
     productIndex: {
       cancel: 'Cancel',
@@ -276,15 +276,15 @@ export const keys: FSTranslationKeys = {
       noResults: 'Sorry, no items matched your search.',
       resetFilters: 'RESET FILTER',
       loadMore: 'Load More',
-      addToBag: 'Add To Bag'
+      addToBag: 'Add To Bag',
     },
     checkout: {
       continue: 'Continue',
       shipping: {
-        select: 'Select a Shipping Method'
+        select: 'Select a Shipping Method',
       },
       summary: {
-        total: 'Total'
+        total: 'Total',
       },
       creditCardForm: {
         name: 'Name',
@@ -296,34 +296,34 @@ export const keys: FSTranslationKeys = {
         cscError: 'Invalid CSC',
         expirationLabel: 'Exp. Date',
         expirationPlaceholder: 'Exp. Date (MM/YY)',
-        expirationError: 'Invalid MM/YY'
-      }
+        expirationError: 'Invalid MM/YY',
+      },
     },
     applePayButton: {
-      text: 'Pay With Apple Pay'
+      text: 'Pay With Apple Pay',
     },
     payPalButton: {
       defaultTitle: 'Checkout',
-      defaultTagLine: 'The safer, easier way to pay'
+      defaultTagLine: 'The safer, easier way to pay',
     },
     step: {
       announcements: {
-        stepCompleted: 'Step Completed.'
-      }
+        stepCompleted: 'Step Completed.',
+      },
     },
     selector: {
       close: 'Close',
-      select: 'Select'
+      select: 'Select',
     },
     multiCarousel: {
       prevBtn: 'Show previous',
-      nextBtn: 'Show next'
+      nextBtn: 'Show next',
     },
     shareButton: {
       text: 'Click To Share',
       copied: 'URL copied to clipboard',
       notCopied: 'Unable to copy the URL to the clipboard',
-      notSupported: 'Message sharing is not supported by your browser.'
+      notSupported: 'Message sharing is not supported by your browser.',
     },
     loginForm: {
       email: 'Email',
@@ -332,14 +332,14 @@ export const keys: FSTranslationKeys = {
       emailError: 'Please enter a valid email',
       password: 'Password',
       passwordError: 'Please enter your password',
-      submit: 'Submit'
+      submit: 'Submit',
     },
     emailForm: {
       placeholder: 'Email',
-      error: 'Required Field'
+      error: 'Required Field',
     },
     button: {
-      apply: 'Apply'
-    }
-  }
+      apply: 'Apply',
+    },
+  },
 };

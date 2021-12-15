@@ -1,10 +1,4 @@
-import {
-  Category,
-  CategoryQuery,
-  Product,
-  ProductIndex,
-  ProductQuery
-} from '../CommerceTypes';
+import { Category, CategoryQuery, Product, ProductIndex, ProductQuery } from '../CommerceTypes';
 import { ProductPromotion } from '../types/ProductPromotion';
 
 /**

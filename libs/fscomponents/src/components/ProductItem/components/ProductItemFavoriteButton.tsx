@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { ProductItemProps } from '../ProductItem';
 
@@ -13,12 +9,12 @@ const style = StyleSheet.create({
   favButtonContainer: {
     position: 'absolute',
     top: 5,
-    right: 5
+    right: 5,
   },
   favButton: {
     width: 30,
-    height: 30
-  }
+    height: 30,
+  },
 });
 
 export type ProductItemFavoriteButtonProps = Pick<
@@ -40,15 +36,11 @@ export class ProductItemFavoriteButton extends Component<ProductItemFavoriteButt
 
     return (
       <TouchableOpacity
-        accessibilityLabel='Toggle Favorite'
+        accessibilityLabel="Toggle Favorite"
         onPress={onFavButtonPress}
         style={style.favButtonContainer}
       >
-        <Image
-          resizeMode='contain'
-          source={favButtonImage || heartIcon}
-          style={style.favButton}
-        />
+        <Image resizeMode="contain" source={favButtonImage || heartIcon} style={style.favButton} />
       </TouchableOpacity>
     );
   }

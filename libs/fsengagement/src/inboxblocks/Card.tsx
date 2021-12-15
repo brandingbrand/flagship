@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  DeviceEventEmitter,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
 
-import {
-  Action,
-  CardProps,
-  JSON
-} from '../types';
+import { Action, CardProps, JSON } from '../types';
 import { CardContext, EngagementContext } from '../lib/contexts';
 import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
@@ -17,14 +9,14 @@ export interface ActionsCard extends CardProps {
   actions?: Action;
 }
 
-export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
+export const Card: React.FunctionComponent<ActionsCard> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { handleAction } = React.useContext(EngagementContext);
 
   const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: props.name,
-      id: props.id
+      id: props.id,
     });
 
     if (!navigator) {
@@ -35,7 +27,7 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
         json,
         backButton: true,
         name: props.name,
-        discoverPath: props.discoverPath
+        discoverPath: props.discoverPath,
       });
     }
     return navigator.push({
@@ -43,16 +35,16 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
         name: 'EngagementComp',
         options: {
           topBar: {
-            visible: false
-          }
+            visible: false,
+          },
         },
         passProps: {
           json,
           backButton: true,
           name: props.name,
-          id: props.id
-        }
-      }
+          id: props.id,
+        },
+      },
     });
   };
 
@@ -64,18 +56,16 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
     // if there is a story attached and either
     //    1) no actions object (Related)
     //    2) actions.type is null or 'story' (new default tappable cards)
-    if (story &&
-      (!actions || (actions && (actions.type === null || actions.type === 'story')))
-    ) {
+    if (story && (!actions || (actions && (actions.type === null || actions.type === 'story')))) {
       if (story.html) {
         handleAction({
           type: 'blog-url',
-          value: story.html.link
+          value: story.html.link,
         });
       } else {
         return handleStoryAction({
           ...story,
-          storyGradient
+          storyGradient,
         });
       }
     } else if (actions && actions.type) {
@@ -92,12 +82,10 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
           cardActions: props.actions,
           id: props.id,
           name: props.name,
-          isCard: true
+          isCard: true,
         }}
       >
-        <View style={props.containerStyle}>
-          {props.children}
-        </View>
+        <View style={props.containerStyle}>{props.children}</View>
       </CardContext.Provider>
     );
   }
@@ -110,14 +98,10 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo(props => {
         cardActions: props.actions,
         id: props.id,
         name: props.name,
-        isCard: true
+        isCard: true,
       }}
     >
-      <TouchableOpacity
-        style={props.containerStyle}
-        activeOpacity={0.9}
-        onPress={onCardPress}
-      >
+      <TouchableOpacity style={props.containerStyle} activeOpacity={0.9} onPress={onCardPress}>
         {props.children}
       </TouchableOpacity>
     </CardContext.Provider>

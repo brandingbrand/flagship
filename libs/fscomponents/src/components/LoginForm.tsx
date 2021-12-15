@@ -88,7 +88,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
     this.fieldsTypes = t.struct({
       emailAddress: EmailType,
-      password: t.String
+      password: t.String,
     });
 
     this.fieldsOptions = {
@@ -100,7 +100,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: FSI18n.string(componentTranslationKeys.emailError)
+        error: FSI18n.string(componentTranslationKeys.emailError),
       },
       password: {
         label: FSI18n.string(componentTranslationKeys.password),
@@ -109,18 +109,18 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
         autoCorrect: false,
         autoCapitalize: 'none',
         secureTextEntry: true,
-        error: FSI18n.string(componentTranslationKeys.passwordError)
+        error: FSI18n.string(componentTranslationKeys.passwordError),
       },
-      ...props.fieldsOptions
+      ...props.fieldsOptions,
     };
 
     this.fieldsStyleConfig = {
-      ...props.fieldsStyleConfig
+      ...props.fieldsStyleConfig,
     };
 
     // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
-    this.labelPosition = (typeof props.labelPosition === 'number') ?
-      props.labelPosition : FormLabelPosition.Inline;
+    this.labelPosition =
+      typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
   }
 
   componentDidMount(): void {
@@ -132,7 +132,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
-  }
+  };
 
   focusField = (fieldName: string) => {
     const field = this.form.getComponent(fieldName);
@@ -141,13 +141,13 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     if (ref.focus) {
       ref.focus();
     }
-  }
+  };
 
   handleChange = (value: any) => {
     this.setState({
-      value
+      value,
     });
-  }
+  };
 
   render(): JSX.Element {
     const { style, submitButtonStyle, submitText } = this.props;
@@ -155,7 +155,7 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     return (
       <View style={style}>
         <Form
-          ref={ref => (this.form = ref)}
+          ref={(ref) => (this.form = ref)}
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}

@@ -12,7 +12,7 @@ export interface ButtonService {
 }
 
 const DEFAULT_BUTTON_SERVICE: ButtonService = {
-  onPress: () => () => undefined
+  onPress: () => () => undefined,
 };
 
 export const ButtonContext = createContext<ButtonService>(DEFAULT_BUTTON_SERVICE);
@@ -48,8 +48,8 @@ export const ButtonProvider: FC = ({ children }) => {
   useEffect(() => {
     const subscription = Navigation.events().registerNavigationButtonPressedListener(
       ({ buttonId, componentId }) => {
-        listenerRepo.get(buttonId)?.forEach(callback => callback());
-        listenerRepo.get(`${buttonId}-${componentId}`)?.forEach(callback => callback());
+        listenerRepo.get(buttonId)?.forEach((callback) => callback());
+        listenerRepo.get(`${buttonId}-${componentId}`)?.forEach((callback) => callback());
       }
     );
 

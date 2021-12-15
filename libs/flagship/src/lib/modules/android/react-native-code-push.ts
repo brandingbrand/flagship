@@ -1,12 +1,8 @@
-
 import * as path from '../../path';
 import * as fs from '../../fs';
 import * as nativeConstants from '../../native-constants';
 import { Config } from '../../../types';
-import {
-  logError,
-  logInfo
-} from '../../../helpers';
+import { logError, logInfo } from '../../../helpers';
 
 export function preLink(configuration: Config): void {
   // Stick the Code Push deployment key into strings.xml so it's picked up by react-native-code-
@@ -22,7 +18,9 @@ export function preLink(configuration: Config): void {
   fs.update(
     path.android.stringsPath(),
     '</resources>',
-    '    <string name="reactNativeCodePush_androidDeploymentKey">' + deploymentKey + '</string>\n</resources>'
+    '    <string name="reactNativeCodePush_androidDeploymentKey">' +
+      deploymentKey +
+      '</string>\n</resources>'
   );
 }
 
@@ -35,9 +33,7 @@ export function preLink(configuration: Config): void {
 export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
 
-  if (!(configuration.codepush
-        && configuration.codepush.appCenterToken)
-  ) {
+  if (!(configuration.codepush && configuration.codepush.appCenterToken)) {
     logError('codepush.appCenterToken must be specified in project config');
   }
 
@@ -83,7 +79,7 @@ export function postLink(configuration: Config): void {
     appCenterConfigPath,
     JSON.stringify(
       {
-        app_secret: codepush.android.appKey
+        app_secret: codepush.android.appKey,
       },
       null,
       2
@@ -92,7 +88,8 @@ export function postLink(configuration: Config): void {
 
   // Include the readonly Branding Brand app center token ONLY in development
   // builds
-  if (!configuration.disableDevFeature &&
+  if (
+    !configuration.disableDevFeature &&
     configuration.codepush &&
     configuration.codepush.appCenterToken
   ) {

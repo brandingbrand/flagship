@@ -15,21 +15,21 @@ export default StyleSheet.create({
   imageContainerNoCard: {
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   imageContainer: {
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
     backgroundColor: 'white',
     borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
+    borderTopRightRadius: entryBorderRadius,
   },
   imageContainerEven: {
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   radiusMask: {
     position: 'absolute',
@@ -37,37 +37,37 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     height: entryBorderRadius,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   radiusMaskEven: {
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
   },
   textContainer: {
     justifyContent: 'flex-start',
     paddingTop: 10,
     paddingBottom: 0,
     paddingHorizontal: 16,
-    height: 65
+    height: 65,
   },
   productContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 0,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   price: {
     marginTop: 2,
     color: '#000',
     fontSize: 15,
-    fontFamily: 'Arial-BoldMT'
+    fontFamily: 'Arial-BoldMT',
   },
   stars: {
     width: 100,
-    height: 22
+    height: 22,
   },
   textContainerEven: {
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
   },
   prodTitle: {
     color: colors.black,
@@ -75,21 +75,21 @@ export default StyleSheet.create({
     marginBottom: 2,
     textAlign: 'center',
     fontFamily: 'Helvetica',
-    fontWeight: '400'
+    fontWeight: '400',
   },
   title: {
     color: colors.black,
     fontSize: 12,
     fontWeight: 'normal',
-    letterSpacing: 0.5
+    letterSpacing: 0.5,
   },
   titleEven: {
-    color: 'white'
+    color: 'white',
   },
   subtitle: {
     marginTop: 6,
     color: colors.black,
     fontSize: 12,
-    fontFamily: 'Arial-BoldMT'
-  }
+    fontFamily: 'Arial-BoldMT',
+  },
 });

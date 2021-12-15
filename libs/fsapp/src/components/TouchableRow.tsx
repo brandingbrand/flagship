@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee'
-  }
+    borderBottomColor: '#eee',
+  },
 });
 
 export interface TouchableRowProps {
@@ -17,7 +17,7 @@ export interface TouchableRowProps {
 
 const TouchableRow: React.StatelessComponent<TouchableRowProps> = ({ text, onPress }) => {
   return (
-    <TouchableHighlight style={styles.row} underlayColor='#eee' onPress={onPress}>
+    <TouchableHighlight style={styles.row} underlayColor="#eee" onPress={onPress}>
       <Text>{text}</Text>
     </TouchableHighlight>
   );

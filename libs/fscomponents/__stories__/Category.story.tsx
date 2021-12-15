@@ -2,12 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  boolean,
-  object,
-  select,
-  text
-} from '@storybook/addon-knobs';
+import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { CategoryBox } from '../src/components/CategoryBox';
 import { CategoryLine } from '../src/components/CategoryLine';
 import { Grid } from '../src/components/Grid';
@@ -16,16 +11,16 @@ const arrowRight = require('./assets/images/arrow-right.png');
 
 const boxImageStyle = {
   width: 60,
-  height: 60
+  height: 60,
 };
 
 const defaultAccessoryStyle = {
   width: 30,
-  height: 30
+  height: 30,
 };
 
 const defaultStyle = {
-  padding: 15
+  padding: 15,
 };
 
 const greyBox = require('./assets/images/greyBox.png');
@@ -34,7 +29,7 @@ const kActionOnPress = 'CategoryLine onPress';
 
 const lineImageStyle = {
   width: 50,
-  height: 50
+  height: 50,
 };
 
 const renderCategoryBox = (): JSX.Element => {
@@ -78,8 +73,5 @@ storiesOf('Category', module)
   ))
   .add('Category Line', renderCategoryLine)
   .add('Category Line in FlatList', () => (
-    <FlatList
-      renderItem={renderCategoryLine}
-      data={[1, 2, 3]}
-    />
+    <FlatList renderItem={renderCategoryLine} data={[1, 2, 3]} />
   ));

@@ -1,10 +1,4 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 const kFlexStart = 'flex-start';
@@ -15,42 +9,42 @@ export const style = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    top: 0
+    top: 0,
   },
   bottomLeft: {
     justifyContent: 'flex-end',
-    alignItems: kFlexStart
+    alignItems: kFlexStart,
   },
   bottomCenter: {
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bottomRight: {
     justifyContent: 'flex-end',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   centerLeft: {
     justifyContent: 'center',
-    alignItems: kFlexStart
+    alignItems: kFlexStart,
   },
   center: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   centerRight: {
     justifyContent: 'center',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   topLeft: {
     justifyContent: kFlexStart,
-    alignItems: kFlexStart
+    alignItems: kFlexStart,
   },
   topCenter: {
     justifyContent: kFlexStart,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   topRight: {
     justifyContent: kFlexStart,
-    alignItems: 'flex-end'
-  }
+    alignItems: 'flex-end',
+  },
 });

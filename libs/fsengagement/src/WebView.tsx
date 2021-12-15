@@ -2,28 +2,25 @@ import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Navigator } from '@brandingbrand/fsapp';
 
-import {
-  Action,
-  ScreenProps
-} from './types';
+import { Action, ScreenProps } from './types';
 import WebView from 'react-native-webview';
 
 const styles = StyleSheet.create({
   growStretch: {
     alignSelf: 'stretch',
-    flexGrow: 1
+    flexGrow: 1,
   },
   backButton: {
     position: 'absolute',
     zIndex: 10,
     top: 50,
     left: 8,
-    padding: 12
+    padding: 12,
   },
   backIcon: {
     width: 14,
-    height: 25
-  }
+    height: 25,
+  },
 });
 
 const backArrow = require('../assets/images/backArrow.png');
@@ -42,7 +39,7 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
     super(props);
     this.navigator = new Navigator({
       componentId: props.componentId || '',
-      tabs: []
+      tabs: [],
     });
   }
 
@@ -64,29 +61,26 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
 
   onBackPress = async (): Promise<void> => {
     return this.navigator.pop();
-  }
+  };
 
   injectBlogJS(): string {
-    return this.props.isBlog ? `var els = document.querySelectorAll(
+    return this.props.isBlog
+      ? `var els = document.querySelectorAll(
       ".site-header, .notice-bar, .site-footer, .site-footer__navigation");
-      for (i=0;i<els.length;i++) { els[i].style.display = 'none'; }` : ``;
+      for (i=0;i<els.length;i++) { els[i].style.display = 'none'; }`
+      : ``;
   }
 
   render(): JSX.Element {
-    const { actions: { value } } = this.props;
+    const {
+      actions: { value },
+    } = this.props;
     return (
       <View style={styles.growStretch}>
-        <WebView
-          source={{ uri: value }}
-          injectedJavaScript={this.injectBlogJS()}
-        />
+        <WebView source={{ uri: value }} injectedJavaScript={this.injectBlogJS()} />
         {this.props.backButton && (
           <TouchableOpacity onPress={this.onBackPress} style={styles.backButton}>
-            <Image
-              resizeMode='contain'
-              source={backArrow}
-              style={styles.backIcon}
-            />
+            <Image resizeMode="contain" source={backArrow} style={styles.backIcon} />
           </TouchableOpacity>
         )}
       </View>

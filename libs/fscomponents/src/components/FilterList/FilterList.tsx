@@ -8,7 +8,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { Accordion, AccordionProps } from '../Accordion';
 import { SelectableRow, SelectableRowProps } from '../SelectableRow';
@@ -57,10 +57,10 @@ export interface FilterListState {
 const S = StyleSheet.create({
   titleStyle: {
     fontWeight: 'bold',
-    fontSize: 15
+    fontSize: 15,
   },
   valueButton: {
-    height: 40
+    height: 40,
   },
   applyButton: {
     marginLeft: 10,
@@ -69,46 +69,45 @@ const S = StyleSheet.create({
     flex: 1,
     backgroundColor: '#eee',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   container: {
-    flex: 1
+    flex: 1,
   },
   buttonsContainer: {
     flexDirection: 'row',
-    marginRight: 10
+    marginRight: 10,
   },
   accordionheader: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   selectedValueStyle: {
     color: '#999',
     fontSize: 13,
     marginHorizontal: 10,
     textAlign: 'right',
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export class FilterList extends PureComponent<FilterListProps, FilterListState> {
   static getDerivedStateFromProps(nextProps: FilterListProps): Partial<FilterListState> {
     return {
-      selectedItems: nextProps.selectedItems || {}
+      selectedItems: nextProps.selectedItems || {},
     };
   }
 
   constructor(props: FilterListProps) {
     super(props);
     this.state = {
-      selectedItems: props.selectedItems || {}
+      selectedItems: props.selectedItems || {},
     };
   }
 
   handleSelect = (id: string, value: string) => () => {
     const { selectedItems } = this.state;
-    const singleFilterIds =
-      this.props.singleFilterIds || defaultSingleFilterIds;
+    const singleFilterIds = this.props.singleFilterIds || defaultSingleFilterIds;
 
     // if already selected, and it's not in the list of single filter
     if (selectedItems[id] && singleFilterIds.indexOf(id) === -1) {
@@ -120,18 +119,18 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
       }
       this.setState({
         selectedItems: {
-          ...selectedItems
-        }
+          ...selectedItems,
+        },
       });
     } else {
       this.setState({
         selectedItems: {
           ...selectedItems,
-          [id]: [value]
-        }
+          [id]: [value],
+        },
       });
     }
-  }
+  };
 
   renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number) => {
     const selected =
@@ -156,7 +155,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
         {...this.props.selectableRowProps}
       />
     );
-  }
+  };
 
   renderFilterItem = ({ item }: ListRenderItemInfo<FilterItem>) => {
     const selectedValues = this.state.selectedItems[item.id] || [];
@@ -164,19 +163,13 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
       .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
       .map((v: FilterItemValue) => v.title);
 
-    let accordionTitle: JSX.Element | undefined = this.props.renderFilterTitle &&
-      this.props.renderFilterTitle(item, selectedValues);
+    let accordionTitle: JSX.Element | undefined =
+      this.props.renderFilterTitle && this.props.renderFilterTitle(item, selectedValues);
     if (!accordionTitle) {
       accordionTitle = (
         <View style={[S.accordionheader, this.props.itemStyle]}>
-          <Text style={[S.titleStyle, this.props.itemTextStyle]}>
-            {item.title}
-          </Text>
-          <Text
-            style={S.selectedValueStyle}
-            numberOfLines={1}
-            ellipsizeMode='tail'
-          >
+          <Text style={[S.titleStyle, this.props.itemTextStyle]}>{item.title}</Text>
+          <Text style={S.selectedValueStyle} numberOfLines={1} ellipsizeMode="tail">
             {selectedValueTitle.join(', ')}
           </Text>
         </View>
@@ -186,24 +179,20 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     return (
       <Accordion
         title={accordionTitle}
-        content={(
-          <>
-            {(item.values || []).map(this.renderFilterItemValue(item))}
-          </>
-        )}
+        content={<>{(item.values || []).map(this.renderFilterItemValue(item))}</>}
         {...this.props.accordionProps}
       />
     );
-  }
+  };
 
   handleApply = () => {
     this.props.onApply(this.state.selectedItems);
-  }
+  };
 
   handleRest = () => {
     this.setState({ selectedItems: {} });
     this.props.onReset();
-  }
+  };
 
   render(): JSX.Element {
     // If we don't make a new copy, item in the
@@ -213,10 +202,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     const _items = [...this.props.items];
     return (
       <View style={[S.container, this.props.style]}>
-        <FlatList
-          data={_items}
-          renderItem={this.renderFilterItem}
-        />
+        <FlatList data={_items} renderItem={this.renderFilterItem} />
         <View style={[S.buttonsContainer, this.props.buttonContainerStyle]}>
           <TouchableOpacity
             style={[S.applyButton, this.props.resetButtonStyle]}

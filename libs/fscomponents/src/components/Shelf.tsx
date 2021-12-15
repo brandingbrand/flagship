@@ -18,8 +18,7 @@ export interface ShelfProps {
   bottomCarouselProps?: CarouselProps;
 }
 
-export const Shelf: FunctionComponent<ShelfProps> = memo((props):
-JSX.Element => {
+export const Shelf: FunctionComponent<ShelfProps> = memo((props): JSX.Element => {
   const {
     children,
     provider,
@@ -27,17 +26,17 @@ JSX.Element => {
     identifier,
     carouselHeight,
     topCarouselProps,
-    bottomCarouselProps
+    bottomCarouselProps,
   } = props;
 
   const tCarouselProps = topCarouselProps || {
     height: carouselHeight,
-    showsPagination: false
+    showsPagination: false,
   };
 
   const bCarouselProps = bottomCarouselProps || {
     height: carouselHeight,
-    showsPagination: false
+    showsPagination: false,
   };
 
   return (
@@ -45,7 +44,7 @@ JSX.Element => {
       <CMSBannerCarousel
         cmsProviderManagementConfig={provider}
         cmsProviderGroup={group}
-        cmsProviderSlot='Banner-Top'
+        cmsProviderSlot="Banner-Top"
         cmsProviderIdentifier={identifier}
         carouselProps={tCarouselProps}
       />
@@ -53,11 +52,10 @@ JSX.Element => {
       <CMSBannerCarousel
         cmsProviderManagementConfig={provider}
         cmsProviderGroup={group}
-        cmsProviderSlot='Banner-Bottom'
+        cmsProviderSlot="Banner-Bottom"
         cmsProviderIdentifier={identifier}
         carouselProps={bCarouselProps}
       />
     </View>
   );
-
 });

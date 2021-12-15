@@ -9,13 +9,13 @@ import {
   ReviewTypes,
   withCommerceData,
   WithCommerceProps,
-  WithCommerceProviderProps
+  WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
 
 // TODO: This should move into fscommerce
-export type CommerceToReviewMapFunction<
-  T extends CommerceTypes.Product = CommerceTypes.Product
-> = (product: T) => string;
+export type CommerceToReviewMapFunction<T extends CommerceTypes.Product = CommerceTypes.Product> = (
+  product: T
+) => string;
 
 /**
  * Additional props that are consumed by the high order component.
@@ -34,9 +34,8 @@ export interface WithProductDetailProviderProps<
  *
  * @template T The type of product data that will be provided. Defaults to `Product`
  */
-export type WithProductDetailProps<
-  T extends CommerceTypes.Product = CommerceTypes.Product
-> = WithCommerceProps<T> & { reviewsData?: ReviewTypes.ReviewDetails[] };
+export type WithProductDetailProps<T extends CommerceTypes.Product = CommerceTypes.Product> =
+  WithCommerceProps<T> & { reviewsData?: ReviewTypes.ReviewDetails[] };
 
 /**
  * The state of the ProductDetailProvider component which is passed to the wrapped component as a
@@ -44,9 +43,10 @@ export type WithProductDetailProps<
  *
  * @template T The type of product data that will be provided. Defaults to `Product`
  */
-export type WithProductDetailState<
-  T extends CommerceTypes.Product = CommerceTypes.Product
-> = Pick<WithCommerceProps<T>, 'commerceData'> & { reviewsData?: ReviewTypes.ReviewDetails[] };
+export type WithProductDetailState<T extends CommerceTypes.Product = CommerceTypes.Product> = Pick<
+  WithCommerceProps<T>,
+  'commerceData'
+> & { reviewsData?: ReviewTypes.ReviewDetails[] };
 
 /**
  * A function that wraps a a component and returns a new high order component. The wrapped
@@ -77,9 +77,7 @@ export default function withProductDetailData<
   P,
   T extends CommerceTypes.Product = CommerceTypes.Product
 >(fetchProduct: FetchDataFunction<P, T>): ProductDetailWrapper<P, T> {
-  type ResultProps = P &
-    WithProductDetailProviderProps<T> &
-    WithCommerceProps<T>;
+  type ResultProps = P & WithProductDetailProviderProps<T> & WithCommerceProps<T>;
 
   /**
    * A function that wraps a a component and returns a new high order component. The wrapped
@@ -104,10 +102,7 @@ export default function withProductDetailData<
         if (!isEqual(prevProps.commerceData, commerceData)) {
           // CommerceData has changed, update review data
 
-          const ids = reviewDataSource.productIdMapper<T>(
-            [commerceData],
-            commerceToReviewMap
-          );
+          const ids = reviewDataSource.productIdMapper<T>([commerceData], commerceToReviewMap);
 
           const reviewsData = await reviewDataSource.fetchReviewDetails({ ids });
 
@@ -116,22 +111,19 @@ export default function withProductDetailData<
           set(newCommerceData, 'review', reviewsData[0]);
           this.setState({
             commerceData: newCommerceData,
-            reviewsData
+            reviewsData,
           });
         }
       }
 
       render(): JSX.Element {
-        const {
-          commerceToReviewMap,
-          ...props
-        } = this.props as any; // TypeScript does not support rest parameters for generics :(
+        const { commerceToReviewMap, ...props } = this.props as any; // TypeScript does not support rest parameters for generics :(
 
         return (
           <WrappedComponent
             {...props}
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
-            reviewsData={(this.state && this.state.reviewsData)}
+            reviewsData={this.state && this.state.reviewsData}
           />
         );
       }

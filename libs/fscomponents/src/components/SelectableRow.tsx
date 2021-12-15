@@ -7,7 +7,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 export interface SelectableRowProps {
@@ -30,16 +30,16 @@ const S = StyleSheet.create({
     paddingLeft: 10,
     justifyContent: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+    borderBottomColor: '#eee',
   },
   rowText: {
-    fontSize: 16
+    fontSize: 16,
   },
   marker: {
     position: 'absolute',
     right: 15,
     height: 50,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   markerIcon: {
     width: 17,
@@ -49,14 +49,13 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '-45deg'
-      }
-    ]
-  }
+        rotate: '-45deg',
+      },
+    ],
+  },
 });
 
-export const SelectableRow: FunctionComponent<SelectableRowProps> =
-memo((props): JSX.Element => {
+export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props): JSX.Element => {
   const renderCheckMark = () => {
     if (props.renderCheckMark) {
       return props.renderCheckMark();
@@ -84,17 +83,11 @@ memo((props): JSX.Element => {
       accessibilityRole={props.accessibilityRole || 'button'}
     >
       <Text
-        style={[
-          S.rowText,
-          props.textStyle,
-          props.selected ? props.selectedTextStyle : undefined
-        ]}
+        style={[S.rowText, props.textStyle, props.selected ? props.selectedTextStyle : undefined]}
       >
         {props.title}
       </Text>
-      {props.selected
-        ? renderCheckMark()
-        : renderUncheckMark()}
+      {props.selected ? renderCheckMark() : renderUncheckMark()}
     </TouchableOpacity>
   );
 });

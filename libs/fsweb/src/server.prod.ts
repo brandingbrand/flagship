@@ -9,15 +9,11 @@ const envFile = process.env.ENV || 'env';
 const buildPath = process.env.BUILD_PATH || 'web-compiled';
 const rootDir = '../../';
 
-const env = require(
-  path.resolve(__dirname, rootDir, envPath, envFile)
-);
+const env = require(path.resolve(__dirname, rootDir, envPath, envFile));
 
 const app = express();
 
-app.use(
-  express.static(path.resolve(__dirname, rootDir, buildPath))
-);
+app.use(express.static(path.resolve(__dirname, rootDir, buildPath)));
 
 healthCheck(app, env);
 
@@ -28,8 +24,10 @@ app.all('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, rootDir, buildPath, 'index.html'));
 });
 
-app.listen(port, () => {
-  console.info(`Proxy listening on port ${port}`);
-}).on('error', err => {
-  console.error(err);
-});
+app
+  .listen(port, () => {
+    console.info(`Proxy listening on port ${port}`);
+  })
+  .on('error', (err) => {
+    console.error(err);
+  });

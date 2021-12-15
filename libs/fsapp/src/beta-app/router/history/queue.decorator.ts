@@ -68,13 +68,9 @@ class QueueRunner {
 
 const runners = new WeakMap<Object, QueueRunner>();
 // Binds method to a class wide queue so that calls will always execute in order received
-export const queueMethod = (
-  obj: object,
-  propertyKey: string,
-  descriptor: PropertyDescriptor
-) => {
+export const queueMethod = (obj: object, propertyKey: string, descriptor: PropertyDescriptor) => {
   const originalMethod = obj[propertyKey as keyof typeof obj] as Function;
-  descriptor.value = async function(...args: any[]): Promise<void> {
+  descriptor.value = async function (...args: any[]): Promise<void> {
     // Bound to instance
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;

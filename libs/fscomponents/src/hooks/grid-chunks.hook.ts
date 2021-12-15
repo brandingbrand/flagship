@@ -40,7 +40,7 @@ const minMaxWidth = (width: Width, maxWidth: number) => {
 
 const minMaxGridItemWidth = <T>(item: GridItem<T>, maxWidth: number = Infinity): GridItem<T> => ({
   ...item,
-  width: minMaxWidth(item.width, maxWidth)
+  width: minMaxWidth(item.width, maxWidth),
 });
 
 export const makeGridItem = <T>(
@@ -55,7 +55,7 @@ export const makeGridItem = <T>(
   return {
     [GridItemTag]: GridItemTag,
     value,
-    width: minMaxWidth(width, maxWidth)
+    width: minMaxWidth(width, maxWidth),
   };
 };
 
@@ -110,7 +110,7 @@ const makeInserter = <T>(
 
           return {
             value,
-            hasInserted
+            hasInserted,
           };
         }
 

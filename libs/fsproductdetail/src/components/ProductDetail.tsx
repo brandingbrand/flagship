@@ -4,13 +4,10 @@ import { Platform, Text, View } from 'react-native';
 import {
   default as withProductDetailData,
   WithProductDetailProps,
-  WithProductDetailProviderProps
+  WithProductDetailProviderProps,
 } from './ProductDetailProvider';
 
-import {
-  CommerceDataSource,
-  CommerceTypes
-} from '@brandingbrand/fscommerce';
+import { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
 
 export interface UnwrappedProductDetailProps {
   id: string;

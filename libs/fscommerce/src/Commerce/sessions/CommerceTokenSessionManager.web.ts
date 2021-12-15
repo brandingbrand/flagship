@@ -18,9 +18,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
   async get(): Promise<SessionToken> {
     // load the token from local storage and store it in memory
     if (!this.token) {
-      const tokenString = localStorage.getItem(
-        CommerceSessionManager.COMMERCE_TOKEN
-      ) || '';
+      const tokenString = localStorage.getItem(CommerceSessionManager.COMMERCE_TOKEN) || '';
       try {
         this.token = JSON.parse(tokenString);
         // JSON stringify/parse doesn't handle dates
@@ -44,10 +42,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
   // set the token
   async set(token: SessionToken): Promise<boolean> {
     this.token = token;
-    localStorage.setItem(
-      CommerceSessionManager.COMMERCE_TOKEN,
-      JSON.stringify(token)
-    );
+    localStorage.setItem(CommerceSessionManager.COMMERCE_TOKEN, JSON.stringify(token));
     this.setupRefreshTimeout(token);
     return Promise.resolve(true);
   }

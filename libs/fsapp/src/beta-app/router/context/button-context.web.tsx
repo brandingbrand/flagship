@@ -8,7 +8,7 @@ export interface ButtonService {
 }
 
 const DEFAULT_BUTTON_SERVICE: ButtonService = {
-  onPress: () => () => undefined
+  onPress: () => () => undefined,
 };
 
 export const ButtonContext = createContext<ButtonService>(DEFAULT_BUTTON_SERVICE);

@@ -1,6 +1,4 @@
-import {
-  ContentManagementSystemProviderConfiguration
-} from './types/ContentManagementSystemProviderConfiguration';
+import { ContentManagementSystemProviderConfiguration } from './types/ContentManagementSystemProviderConfiguration';
 
 import ContentManagementSystemLocator from '../requesters/ContentManagementSystemLocator';
 
@@ -20,12 +18,13 @@ export default abstract class ContentManagementSystemProvider {
   }
 
   abstract contentForSlot(
-    group: string, slot: string, identifier?: string, context?: ContentManagementSystemContext
+    group: string,
+    slot: string,
+    identifier?: string,
+    context?: ContentManagementSystemContext
   ): Promise<{}>;
 
-  abstract contentForGroup(
-    group: string
-  ): Promise<{}>;
+  abstract contentForGroup(group: string): Promise<{}>;
 
   abstract identifiersForSlot(group: string, slot: string): Promise<string[] | null>;
 }

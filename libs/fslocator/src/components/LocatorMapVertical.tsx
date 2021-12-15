@@ -6,7 +6,7 @@ import {
   LayoutChangeEvent,
   Platform,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { style as S } from '../styles/LocatorMapVertical';
 import { PropType as LocatorPropType } from './LocatorList';
@@ -24,17 +24,14 @@ export interface LocatorStateType {
   orientation?: string;
 }
 
-export default class Locator extends Component<
-  LocatorPropType,
-  LocatorStateType
-> {
+export default class Locator extends Component<LocatorPropType, LocatorStateType> {
   map: any;
 
   constructor(props: LocatorPropType) {
     super(props);
 
     this.state = {
-      orientation: undefined
+      orientation: undefined,
     };
   }
 
@@ -44,9 +41,9 @@ export default class Locator extends Component<
     const { width, height } = e.nativeEvent.layout;
 
     this.setState({
-      orientation: width > height ? 'horizontal' : 'vertical'
+      orientation: width > height ? 'horizontal' : 'vertical',
     });
-  }
+  };
 
   componentDidUpdate(): void {
     if (Platform.OS !== 'web') {
@@ -63,7 +60,7 @@ export default class Locator extends Component<
       selectedLocation,
       deselectLocation,
       renderLocationItem,
-      renderLocationItemWithBack
+      renderLocationItemWithBack,
     } = this.props;
 
     if (selectedLocation) {
@@ -86,14 +83,14 @@ export default class Locator extends Component<
         </View>
       );
     }
-  }
+  };
 
   renderSearchBar = () => {
     const { searchBarProps, renderSearchBar } = this.props;
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
-        useCurrentLocation: this.props.useCurrentLocation
+        useCurrentLocation: this.props.useCurrentLocation,
       })
     ) : (
       <SearchBar
@@ -104,7 +101,7 @@ export default class Locator extends Component<
         {...searchBarProps}
       />
     );
-  }
+  };
 
   render(): JSX.Element {
     const {
@@ -124,13 +121,13 @@ export default class Locator extends Component<
       mapMarkerIcon,
       showLocateMe,
       defaultRegion,
-      mapStyle
+      mapStyle,
     } = this.props;
 
     const shouldMapCollapsed = !selectedLocation;
     const center = selectedLocation && {
       latitude: selectedLocation.address.latlng.lat,
-      longitude: selectedLocation.address.latlng.lng
+      longitude: selectedLocation.address.latlng.lng,
     };
     const shouldShowList = locationsNotFound || !!locations.length;
 
@@ -158,18 +155,11 @@ export default class Locator extends Component<
           )}
         </View>
         <View style={S.resultListAndLocateMe}>
-          {(this.state.orientation === 'vertical' || !shouldShowList) &&
-            showLocateMe && (
-              <TouchableOpacity
-                style={S.locateMeButton}
-                onPress={useCurrentLocation}
-              >
-                <Image
-                  source={locateMeIcon || defaultLocateMeIcon}
-                  style={S.locateMeIcon}
-                />
-              </TouchableOpacity>
-            )}
+          {(this.state.orientation === 'vertical' || !shouldShowList) && showLocateMe && (
+            <TouchableOpacity style={S.locateMeButton} onPress={useCurrentLocation}>
+              <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
+            </TouchableOpacity>
+          )}
 
           {shouldShowList && this.renderList()}
         </View>

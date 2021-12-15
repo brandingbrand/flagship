@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { cloneDeep } from 'lodash-es';
@@ -32,8 +25,8 @@ const network = new FSNetwork();
 
 const REQUEST_CONFIG = {
   headers: {
-    'content-type': 'application/x-www-form-urlencoded'
-  }
+    'content-type': 'application/x-www-form-urlencoded',
+  },
 };
 
 // To customize the style of a single field you have to extend the default
@@ -44,7 +37,7 @@ MultilineStyle.textbox.error.height = 100;
 
 const FIELD_TYPES = TcForm.struct({
   email: TcForm.String,
-  feedback: TcForm.String
+  feedback: TcForm.String,
 });
 
 export interface CMSFeedbackType {
@@ -94,32 +87,32 @@ export interface CMSFeedbackState {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    padding: 10
+    padding: 10,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
   headerLeftCol: {
-    flex: 1
+    flex: 1,
   },
   headerRightCol: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   statusContainer: {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   errorMessage: {
-    color: 'red'
-  }
+    color: 'red',
+  },
 });
 
 export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
@@ -129,7 +122,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     modalVisible: false,
     formVisible: true,
     successVisible: false,
-    errorVisible: false
+    errorVisible: false,
   };
 
   componentDidMount(): void {
@@ -147,7 +140,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
         const feedbackData: CMSFeedbackType = {
           vid: this.props.vid,
           referrer: this.props.referrer,
-          feedback
+          feedback,
         };
 
         if (this.props.onSubmit) {
@@ -158,29 +151,30 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
           'Feedback[property_id]': this.props.propertyId,
           'Feedback[vid]': feedbackData.vid,
           'Feedback[referrer]': feedbackData.referrer,
-          'Feedback[feedback]': feedbackData.feedback
+          'Feedback[feedback]': feedbackData.feedback,
         };
 
-        network.post(REQUEST_URL, stringify(requestData), REQUEST_CONFIG)
-          .then(response => {
+        network
+          .post(REQUEST_URL, stringify(requestData), REQUEST_CONFIG)
+          .then((response) => {
             this.showSuccess();
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
 
             this.showError();
           });
       }
     }
-  }
+  };
 
   showSuccess = () => {
     this.setState({
       formVisible: false,
       successVisible: true,
-      errorVisible: false
+      errorVisible: false,
     });
-  }
+  };
 
   renderSuccessMessage(): React.ReactNode {
     if (!this.state.successVisible) {
@@ -203,9 +197,9 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
   showError = () => {
     this.setState({
       successVisible: false,
-      errorVisible: true
+      errorVisible: true,
     });
-  }
+  };
 
   renderErrorMessage(): React.ReactNode {
     if (!this.state.errorVisible) {
@@ -230,24 +224,24 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
       modalVisible: true,
       formVisible: true,
       successVisible: false,
-      errorVisible: false
+      errorVisible: false,
     });
 
     if (this.form) {
       // Reset field errors when user closes then reopens the modal
       this.form.getComponent('email').setState({
-        hasError: false
+        hasError: false,
       });
 
       this.form.getComponent('feedback').setState({
-        hasError: false
+        hasError: false,
       });
     }
-  }
+  };
 
   closeModal = () => {
     this.setState({ modalVisible: false });
-  }
+  };
 
   renderModalHeader(): React.ReactNode {
     let title: React.ReactNode;
@@ -264,12 +258,8 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
 
     return (
       <View style={styles.header}>
-        <View style={styles.headerLeftCol}>
-          {title}
-        </View>
-        <View style={styles.headerRightCol}>
-          {this.renderCloseButton()}
-        </View>
+        <View style={styles.headerLeftCol}>{title}</View>
+        <View style={styles.headerRightCol}>{this.renderCloseButton()}</View>
       </View>
     );
   }
@@ -290,21 +280,21 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
         keyboardType: 'email-address',
         error: FSI18n.string(componentTranslationKeys.form.email.error),
         autoCorrect: false,
-        autoCapitalize: 'none'
+        autoCapitalize: 'none',
       },
       feedback: {
         label: FSI18n.string(componentTranslationKeys.form.feedback.label),
         error: FSI18n.string(componentTranslationKeys.form.feedback.error),
-        multiline: true
-      }
+        multiline: true,
+      },
     };
 
     return { ...defaultOptions, ...this.props.fieldOptions };
-  }
+  };
 
   setForm = (ref: Form) => {
     this.form = ref;
-  }
+  };
 
   renderModalForm(): React.ReactNode {
     if (!this.state.formVisible) {
@@ -313,11 +303,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
 
     return (
       <View>
-        <Form
-          fieldsOptions={this.fieldOptions()}
-          fieldsTypes={FIELD_TYPES}
-          ref={this.setForm}
-        />
+        <Form fieldsOptions={this.fieldOptions()} fieldsTypes={FIELD_TYPES} ref={this.setForm} />
       </View>
     );
   }

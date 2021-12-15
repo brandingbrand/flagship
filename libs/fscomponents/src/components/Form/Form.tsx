@@ -10,7 +10,7 @@ import {
   hiddenLabels,
   inlineLabels,
   // styles returns a modified version of t-comb default stylesheet to suit templating needs
-  styles
+  styles,
 } from './Templates';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
@@ -27,7 +27,7 @@ const LabelMap = {
   [FormLabelPosition.Inline]: inlineLabels,
   [FormLabelPosition.Hidden]: hiddenLabels,
   [FormLabelPosition.Floating]: floatingLabels,
-  [FormLabelPosition.Above]: aboveLabels
+  [FormLabelPosition.Above]: aboveLabels,
 };
 
 export interface FormProps {
@@ -54,8 +54,11 @@ export interface FormTemplates {
   textbox?: (locals: any) => React.ReactNode;
 }
 
-type CalculateStylesType =
-  (activeColor: string, errorColor: string, inactiveColor: string) => Dictionary;
+type CalculateStylesType = (
+  activeColor: string,
+  errorColor: string,
+  inactiveColor: string
+) => Dictionary;
 
 type CalculateBlursType = (fieldsOptions: Dictionary) => void;
 
@@ -64,29 +67,28 @@ export class Form extends PureComponent<FormProps> {
     errorColor: '#d0021b',
     activeColor: '#000000',
     inactiveColor: '#cccccc',
-    labelPosition: FormLabelPosition.Inline
+    labelPosition: FormLabelPosition.Inline,
   };
 
   // dynamically generates stylesheet w/ correct active, error, inactive colors
   calculateStyles: CalculateStylesType = memoize(
-  (activeColor: string, errorColor: string, inactiveColor: string) => {
-    return styles({activeColor, errorColor, inactiveColor});
-  });
-
-  // memoized function that ensures the user's onBlur function is retained
-  calculateBlurs: CalculateBlursType = memoize(
-    (fieldsOptions: Dictionary) => {
-      Object.keys(fieldsOptions).forEach(path => {
-        const prevOnBlur = fieldsOptions[path].onBlur;
-        fieldsOptions[path].onBlur = () => {
-          if (prevOnBlur instanceof Function) {
-            prevOnBlur();
-          }
-          this.validateField(path);
-        };
-      });
+    (activeColor: string, errorColor: string, inactiveColor: string) => {
+      return styles({ activeColor, errorColor, inactiveColor });
     }
   );
+
+  // memoized function that ensures the user's onBlur function is retained
+  calculateBlurs: CalculateBlursType = memoize((fieldsOptions: Dictionary) => {
+    Object.keys(fieldsOptions).forEach((path) => {
+      const prevOnBlur = fieldsOptions[path].onBlur;
+      fieldsOptions[path].onBlur = () => {
+        if (prevOnBlur instanceof Function) {
+          prevOnBlur();
+        }
+        this.validateField(path);
+      };
+    });
+  });
 
   private form: RefObject<TcombForm>;
 
@@ -104,27 +106,26 @@ export class Form extends PureComponent<FormProps> {
     if (this.form.current) {
       return this.form.current.getValue();
     }
-  }
+  };
 
   validate = () => {
     if (this.form.current) {
       return this.form.current.validate();
     }
-  }
+  };
 
   // for individual field validation
   validateField = (path: any) => {
     if (this.form.current) {
       return this.form.current.getComponent(path).validate();
     }
-  }
+  };
 
   getComponent = (...args: any[]) => {
     if (this.form.current) {
       return this.form.current.getComponent.apply(this.form.current, args);
     }
-  }
-
+  };
 
   render(): JSX.Element {
     const {
@@ -139,9 +140,8 @@ export class Form extends PureComponent<FormProps> {
       value,
       onChange,
       templates,
-      validateOnBlur
+      validateOnBlur,
     } = this.props;
-
 
     // returns a new version stylesheet customized with new or changed color props, if any
     const stylesheet = this.calculateStyles(activeColor, errorColor, inactiveColor);
@@ -153,7 +153,7 @@ export class Form extends PureComponent<FormProps> {
     const _options = {
       stylesheet: { ...stylesheet, ...fieldsStyleConfig },
       fields: fieldsOptions,
-      templates: { ...defaultTemplates, ...LabelMap[labelPosition], ...templates }
+      templates: { ...defaultTemplates, ...LabelMap[labelPosition], ...templates },
     };
 
     return (

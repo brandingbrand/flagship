@@ -53,8 +53,8 @@ test(`update bundle id`, () => {
     name: appName,
     // @ts-ignore only include needed values
     bundleIds: {
-      android: `test.bundle.id`
-    }
+      android: `test.bundle.id`,
+    },
   });
 
   expect(getAppGradle()).toMatch(`applicationId "test.bundle.id"`);
@@ -64,7 +64,7 @@ test(`update display name`, () => {
   // @ts-ignore only include needed values
   android.displayName({
     name: appName,
-    displayName: `Mock App`
+    displayName: `Mock App`,
   });
 
   expect(getstringXML()).toMatch(`<string name="app_name">Mock App</string>`);
@@ -74,7 +74,7 @@ test(`update google map api key`, () => {
   // @ts-ignore only include needed values
   android.googleMaps({
     name: appName,
-    googleMapApiKey: `1231231231abc`
+    googleMapApiKey: `1231231231abc`,
   });
 
   expect(getManifest()).toMatch(`1231231231abc`);
@@ -86,8 +86,8 @@ test(`update icon`, () => {
     name: appName,
     // @ts-ignore only include needed values
     appIconDir: {
-      android: nodePath.join(tempRootDir, `assets/appIcons/android`)
-    }
+      android: nodePath.join(tempRootDir, `assets/appIcons/android`),
+    },
   });
 
   const iconFilesSource = fs
@@ -106,8 +106,8 @@ test(`update launch screen`, () => {
     name: appName,
     // @ts-ignore only include needed values
     launchScreen: {
-      android: nodePath.join(tempRootDir, `assets/launchScreen/android`)
-    }
+      android: nodePath.join(tempRootDir, `assets/launchScreen/android`),
+    },
   });
 
   const launchScreenFilesSource = fs
@@ -124,9 +124,9 @@ test('update activity attributes', () => {
   android.mainActivityAttributes({
     manifest: {
       activityAttributes: {
-        'android:resizeableActivity': 'false'
-      }
-    }
+        'android:resizeableActivity': 'false',
+      },
+    },
   });
   expect(getManifest()).toContain('android:resizeableActivity');
 });
@@ -135,24 +135,21 @@ test('add additional dependencies', () => {
   const firebaseDependency = 'implementation "com.google.firebase:firebase-messaging:17.3.4"';
   android.additionalDependencies({
     build: {
-      additionalDependencies: [
-        firebaseDependency
-      ]
-    }
+      additionalDependencies: [firebaseDependency],
+    },
   });
   expect(getAppGradle()).toContain(firebaseDependency);
 });
 
 test('add additional permissions', () => {
-  const externalWritePermission = '<uses-permission ' +
+  const externalWritePermission =
+    '<uses-permission ' +
     'android:name="android.permission.WRITE_EXTERNAL_STORAGE" ' +
     'android:maxSdkVersion="18" />';
   android.additionalPermissions({
     manifest: {
-      additionalPermissions: [
-        externalWritePermission
-      ]
-    }
+      additionalPermissions: [externalWritePermission],
+    },
   });
   expect(getManifest()).toContain(externalWritePermission);
 });
@@ -161,22 +158,20 @@ test('update application attributes', () => {
   android.mainApplicationAttributes({
     manifest: {
       applicationAttributes: {
-        'android:resizeableActivity': 'false'
-      }
-    }
+        'android:resizeableActivity': 'false',
+      },
+    },
   });
   expect(getManifest()).toContain('android:resizeableActivity');
 });
 
 test('add application elements', () => {
-  const rnPushActivity = '<activity ' +
-    'android:name="com.reactnativenavigation.controllers.NavigationActivity" />';
+  const rnPushActivity =
+    '<activity ' + 'android:name="com.reactnativenavigation.controllers.NavigationActivity" />';
   android.mainApplicationElements({
     manifest: {
-      additionalElements: [
-        rnPushActivity
-      ]
-    }
+      additionalElements: [rnPushActivity],
+    },
   });
   expect(getManifest()).toContain(rnPushActivity);
 });
@@ -184,7 +179,7 @@ test('add application elements', () => {
 test(`set url scheme without specifying urlScheme`, () => {
   // @ts-ignore only include needed values
   android.urlScheme({
-    name: appName
+    name: appName,
   });
 
   expect(getManifest()).toMatch(`<data android:scheme="${appName.toLowerCase()}"`);
@@ -195,7 +190,7 @@ test(`set url scheme by specifying urlScheme`, () => {
   // @ts-ignore only include needed values
   android.urlScheme({
     name: appName,
-    urlScheme: 'mockapp-app-url'
+    urlScheme: 'mockapp-app-url',
   });
 
   expect(getManifest()).toMatch(`<data android:scheme="mockapp-app-url"`);
@@ -206,8 +201,8 @@ test('set url scheme host', () => {
   const newURLHost = 'app/app/app/app';
   android.urlSchemeHost({
     manifest: {
-      urlSchemeHost: newURLHost
-    }
+      urlSchemeHost: newURLHost,
+    },
   });
   expect(getManifest()).toMatch(`android:host="${newURLHost}"`);
 });
@@ -226,8 +221,8 @@ test(`update version number with function`, () => {
     build: {
       versionName: () => '1.4.2',
       versionShortCode: () => '10004002',
-      versionCode: '1610004002'
-    }
+      versionCode: '1610004002',
+    },
   });
   const version = '1.3.2';
   android.version(version, androidConfig);
@@ -242,8 +237,8 @@ test(`copy sentry properties`, () => {
   android.sentryProperties({
     name: appName,
     sentry: {
-      propertiesPath: nodePath.join(tempRootDir, `assets/sentry.properties`)
-    }
+      propertiesPath: nodePath.join(tempRootDir, `assets/sentry.properties`),
+    },
   });
 
   const sentryPropertiesPathSource = fs
@@ -260,7 +255,7 @@ test(`set env switcher initial env`, () => {
   // @ts-ignore only include needed values
   android.setEnvSwitcherInitialEnv(
     {
-      name: appName
+      name: appName,
     } as any,
     'stage2stage'
   );
@@ -283,9 +278,9 @@ test('android exception domains', () => {
   android.exceptionDomains({
     name: appName,
     bundleIds: {
-      android: `test.bundle.id`
+      android: `test.bundle.id`,
     },
-    exceptionDomains: ['brandingbrand.com']
+    exceptionDomains: ['brandingbrand.com'],
   } as any);
 
   expect(getNetworkSecurityConfig()).toMatch('<domain includeSubdomains="true">localhost</domain>');

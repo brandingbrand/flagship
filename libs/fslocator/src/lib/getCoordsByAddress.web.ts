@@ -12,19 +12,17 @@ export default async function getCoordsByAddress(
     throw new Error('googleMapsAPIKey is required.');
   }
 
-  return client.get(
-    `${GOOGLE_GEOCODER_URL}?key=${googleMapsAPIKey}&address=${encodeURIComponent(
-      address
-    )}`
-  ).then(({ data }) => {
-    if (data && data.results && data.results.length) {
-      const loc = data.results[0].geometry.location;
-      return {
-        latitude: loc.lat,
-        longitude: loc.lng
-      };
-    } else {
-      return undefined;
-    }
-  });
+  return client
+    .get(`${GOOGLE_GEOCODER_URL}?key=${googleMapsAPIKey}&address=${encodeURIComponent(address)}`)
+    .then(({ data }) => {
+      if (data && data.results && data.results.length) {
+        const loc = data.results[0].geometry.location;
+        return {
+          latitude: loc.lat,
+          longitude: loc.lng,
+        };
+      } else {
+        return undefined;
+      }
+    });
 }

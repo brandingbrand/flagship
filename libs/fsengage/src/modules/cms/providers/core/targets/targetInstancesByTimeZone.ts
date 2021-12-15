@@ -11,14 +11,12 @@ export default function targetInstancesByTimeZone(
     return true;
   }
 
-  const instanceTimeZone = instance.targets &&
-                            instance.targets.Timezone &&
-                            instance.targets.Timezone.timezone;
+  const instanceTimeZone =
+    instance.targets && instance.targets.Timezone && instance.targets.Timezone.timezone;
 
   const campaign = instance.campaign;
-  const campaignTimeZone = targets[campaign] &&
-                            targets[campaign].Timezone &&
-                            targets[campaign].Timezone.timezone;
+  const campaignTimeZone =
+    targets[campaign] && targets[campaign].Timezone && targets[campaign].Timezone.timezone;
 
   const currentDate = new Date();
 
@@ -32,4 +30,3 @@ export default function targetInstancesByTimeZone(
 
   return true;
 }
-

@@ -2,25 +2,14 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
-import {
-  Image,
-  ImageURISource,
-  Text,
-  View
-} from 'react-native';
-import {
-  boolean,
-  number,
-  object,
-  select,
-  text
-} from '@storybook/addon-knobs';
+import { Image, ImageURISource, Text, View } from 'react-native';
+import { boolean, number, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { Accordion } from '../src/components/Accordion';
 
 const icons: Record<string, ImageURISource> = {
   closed: require('../../../assets/images/alert.png'),
-  open: require('../../../assets/images/checkmarkValidation.png')
+  open: require('../../../assets/images/checkmarkValidation.png'),
 };
 
 const content = (
@@ -47,7 +36,7 @@ storiesOf('Accordion', module)
   .add('basic usage', () => (
     <Accordion
       title={text('title', 'Menu Item')}
-      style={object('style', {padding: 10})}
+      style={object('style', { padding: 10 })}
       paddingHorizontal={number('paddingHorizontal?', 15)}
       titleUnderlayColor={text('titleUnderlayColor?', 'transparent')}
       disableAnimation={boolean('disableAnimation?', false)}
@@ -57,7 +46,7 @@ storiesOf('Accordion', module)
   .add('w/ image', () => (
     <Accordion
       title={text('title', 'Menu Item')}
-      style={object('style', {padding: 10})}
+      style={object('style', { padding: 10 })}
       paddingHorizontal={number('paddingHorizontal?', 15)}
       titleUnderlayColor={text('titleUnderlayColor?', 'transparent')}
       disableAnimation={boolean('disableAnimation?', false)}
@@ -67,7 +56,7 @@ storiesOf('Accordion', module)
   .add('w/ arrow or plusminus disclosure icon', () => (
     <Accordion
       title={text('title', 'Menu Item')}
-      style={object('style', {padding: 10})}
+      style={object('style', { padding: 10 })}
       paddingHorizontal={number('paddingHorizontal?', 15)}
       titleUnderlayColor={text('titleUnderlayColor?', 'transparent')}
       content={content}
@@ -78,7 +67,7 @@ storiesOf('Accordion', module)
   .add('w/ custom disclosure icon', () => (
     <Accordion
       title={text('title', 'Menu Item')}
-      style={object('style', {padding: 10})}
+      style={object('style', { padding: 10 })}
       paddingHorizontal={number('paddingHorizontal?', 15)}
       titleUnderlayColor={text('titleUnderlayColor?', 'transparent')}
       content={content}
@@ -91,14 +80,14 @@ storiesOf('Accordion', module)
   .add('nested as a child with a string title', () => (
     <Accordion
       title={text('Parent title', 'Parent')}
-      style={object('Parent style', {padding: 5})}
+      style={object('Parent style', { padding: 5 })}
       paddingHorizontal={number('Parent paddingHorizontal?', 0)}
       titleUnderlayColor={text('Parent titleUnderlayColor?', 'transparent')}
       state={'open'}
     >
       <Accordion
         title={text('Child title', 'Menu Item')}
-        style={object('Child style', {padding: 5})}
+        style={object('Child style', { padding: 5 })}
         paddingHorizontal={number('Child paddingHorizontal?', 0)}
         titleUnderlayColor={text('Child titleUnderlayColor?', 'transparent')}
         content={content}

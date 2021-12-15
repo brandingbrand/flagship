@@ -13,15 +13,7 @@ export interface ProductListProps {
 }
 
 const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {
-  const {
-    items,
-    style,
-    columns,
-    gridProps,
-    renderItem,
-    renderHeader,
-    renderFooter
-  } = props;
+  const { items, style, columns, gridProps, renderItem, renderHeader, renderFooter } = props;
 
   return (
     <Grid

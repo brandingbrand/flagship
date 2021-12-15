@@ -25,7 +25,7 @@ afterEach(() => {
 test(`pod install`, () => {
   let stashedCmd = '';
 
-  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => stashedCmd = cmd);
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => (stashedCmd = cmd));
   cocoapods.install();
 
   expect(stashedCmd).toMatch(`cd "${nodePath.join(tempRootDir, 'ios')}" && pod install`);
@@ -35,8 +35,12 @@ test(`pod install failing`, () => {
   let stashedCode = null;
 
   // @ts-ignore Allow function to return
-  global.process.exit = (code?: number): never => { stashedCode = code; };
-  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => { throw new Error(''); });
+  global.process.exit = (code?: number): never => {
+    stashedCode = code;
+  };
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => {
+    throw new Error('');
+  });
 
   cocoapods.install();
 
@@ -48,8 +52,10 @@ test(`pod install on linux`, () => {
   let stashedCmd: string | null = null;
 
   // @ts-ignore Allow function to return
-  global.process.exit = (code?: number): never => { stashedCode = code; };
-  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => stashedCmd = cmd);
+  global.process.exit = (code?: number): never => {
+    stashedCode = code;
+  };
+  (childProcess.execSync as jest.Mock).mockImplementation((cmd: string) => (stashedCmd = cmd));
 
   (os as any).linux = true;
   cocoapods.install();
@@ -59,14 +65,9 @@ test(`pod install on linux`, () => {
 });
 
 test(`add pod to podfile`, () => {
-  cocoapods.add([
-    'PODTEST1',
-    'PODTEST2'
-  ], nodePath.join(tempRootDir, `ios/Podfile`));
+  cocoapods.add(['PODTEST1', 'PODTEST2'], nodePath.join(tempRootDir, `ios/Podfile`));
 
-  const Podfile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/Podfile`))
-    .toString();
+  const Podfile = fs.readFileSync(nodePath.join(tempRootDir, `ios/Podfile`)).toString();
 
   expect(Podfile).toMatch('PODTEST1');
   expect(Podfile).toMatch('PODTEST2');
@@ -74,9 +75,7 @@ test(`add pod to podfile`, () => {
 
 test('add pod sources to podfile', () => {
   cocoapods.sources(['POD_SOURCE_1', 'POD_SOURCE_2']);
-  const Podfile = fs
-    .readFileSync(nodePath.join(tempRootDir, `ios/Podfile`))
-    .toString();
+  const Podfile = fs.readFileSync(nodePath.join(tempRootDir, `ios/Podfile`)).toString();
   expect(Podfile).toMatch('POD_SOURCE_1');
   expect(Podfile).toMatch('POD_SOURCE_2');
 });

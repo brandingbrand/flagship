@@ -8,21 +8,23 @@ export interface DoExtendedConfigAnswers {
   };
 }
 
-export const doExtendedConfig: DistinctQuestion[] = [{
-  type: 'confirm',
-  name: 'options.doExtended',
-  prefix: success('Basic settings complete!\n'),
-  message: 'Do you want to configure additional options right now?',
-  suffix: 'Includes configurations for features like universal links, additional modules, etc.',
-  default: false
-}];
+export const doExtendedConfig: DistinctQuestion[] = [
+  {
+    type: 'confirm',
+    name: 'options.doExtended',
+    prefix: success('Basic settings complete!\n'),
+    message: 'Do you want to configure additional options right now?',
+    suffix: 'Includes configurations for features like universal links, additional modules, etc.',
+    default: false,
+  },
+];
 
-export const onlyWhenExtendedConfig: QuestionFormatter = question => {
+export const onlyWhenExtendedConfig: QuestionFormatter = (question) => {
   const oldWhen = question.when;
 
   return {
     ...question,
-    when: answers => {
+    when: (answers) => {
       // if doExtended is falsy, it doesn't matter what the value of the old conditional was
       if (!answers.options.doExtended) {
         return false;
@@ -34,6 +36,6 @@ export const onlyWhenExtendedConfig: QuestionFormatter = question => {
       }
 
       return typeof oldWhen === 'function' ? oldWhen(answers) : oldWhen;
-    }
+    },
   };
 };

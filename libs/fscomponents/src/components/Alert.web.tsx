@@ -11,7 +11,6 @@ export interface AlertOptions {
   onCancel?: () => void;
 }
 
-
 export const Alert = {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   setDefaults: swal.setDefaults,
@@ -21,32 +20,28 @@ export const Alert = {
     } else {
       const args: Dictionary = {
         title: options.title,
-        text: options.text
+        text: options.text,
       };
 
       if (options.showCancelButton) {
-        args.buttons = [
-          options.cancelButtonText || true,
-          options.confirmButtonText || true
-        ];
+        args.buttons = [options.cancelButtonText || true, options.confirmButtonText || true];
       } else {
         if (options.confirmButtonText) {
           args.button = options.confirmButtonText;
         }
       }
 
-      return swal(args)
-        .then((isConfirm: boolean) => {
-          if (isConfirm) {
-            if (options.onConfirm) {
-              options.onConfirm();
-            }
-          } else {
-            if (options.onCancel) {
-              options.onCancel();
-            }
+      return swal(args).then((isConfirm: boolean) => {
+        if (isConfirm) {
+          if (options.onConfirm) {
+            options.onConfirm();
           }
-        });
+        } else {
+          if (options.onCancel) {
+            options.onCancel();
+          }
+        }
+      });
     }
-  }
+  },
 };

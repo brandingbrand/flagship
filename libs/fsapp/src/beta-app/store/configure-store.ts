@@ -5,7 +5,7 @@ import {
   compose,
   createStore,
   PreloadedState,
-  ReducersMapObject
+  ReducersMapObject,
 } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
@@ -17,10 +17,10 @@ declare global {
 
 const middleware = __DEV__
   ? (() => {
-    const reduxImmutableStateInvariant = require('redux-immutable-state-invariant').default();
-    const logger = createLogger({ collapsed: true });
-    return [thunk, reduxImmutableStateInvariant, logger];
-  })()
+      const reduxImmutableStateInvariant = require('redux-immutable-state-invariant').default();
+      const logger = createLogger({ collapsed: true });
+      return [thunk, reduxImmutableStateInvariant, logger];
+    })()
   : [thunk];
 
 const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose;

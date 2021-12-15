@@ -14,37 +14,36 @@ export const CarouselPagination = React.memo((props: any) => {
     inactiveDotOpacity,
     inactiveDotScale,
     position,
-    positionOffset
+    positionOffset,
   } = pagination;
 
   const containerOffset = -(containerStyle?.paddingLeft ?? 0 + containerStyle?.marginLeft ?? 0);
-  const defaultPosition = position === 'default' ? 0 : -(dotSize);
+  const defaultPosition = position === 'default' ? 0 : -dotSize;
   const paginationContainerStyle = {
     paddingVertical: 10,
     paddingHorizontal: 10,
     marginLeft: containerOffset,
-    marginTop: position === 'default' ?
-        defaultPosition + positionOffset :
-        defaultPosition - positionOffset
+    marginTop:
+      position === 'default' ? defaultPosition + positionOffset : defaultPosition - positionOffset,
   };
   return (
-      <Pagination
-        dotsLength={items.length}
-        dotColor={dotColor}
-        inactiveDotColor={inactiveDotColor}
-        activeDotIndex={activeIndex - 1}
-        dotContainerStyle={{
-          marginHorizontal: dotSpacing
-        }}
-        containerStyle={paginationContainerStyle}
-        dotStyle={{
-          width: dotSize,
-          height: dotSize,
-          borderRadius: Math.round(dotSize / 2),
-          marginHorizontal: 0
-        }}
-        inactiveDotOpacity={inactiveDotOpacity}
-        inactiveDotScale={inactiveDotScale}
-      />
+    <Pagination
+      dotsLength={items.length}
+      dotColor={dotColor}
+      inactiveDotColor={inactiveDotColor}
+      activeDotIndex={activeIndex - 1}
+      dotContainerStyle={{
+        marginHorizontal: dotSpacing,
+      }}
+      containerStyle={paginationContainerStyle}
+      dotStyle={{
+        width: dotSize,
+        height: dotSize,
+        borderRadius: Math.round(dotSize / 2),
+        marginHorizontal: 0,
+      }}
+      inactiveDotOpacity={inactiveDotOpacity}
+      inactiveDotScale={inactiveDotScale}
+    />
   );
 });

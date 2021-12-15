@@ -9,14 +9,14 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { style as S } from '../styles/Stepper';
 
-const icons: {[key: string]: ImageSourcePropType} = {
+const icons: { [key: string]: ImageSourcePropType } = {
   increase: require('../../assets/images/increaseImage.png'),
-  decrease: require('../../assets/images/decreaseImage.png')
+  decrease: require('../../assets/images/decreaseImage.png'),
 };
 
 const nonNumericRegex = /\D/g;
@@ -59,12 +59,10 @@ export interface SerializableStepperProps {
   qtyChangeImageStyle?: ImageStyle;
 }
 
-export interface StepperProps extends Omit<
-  SerializableStepperProps,
-  'counterStyle' |
-  'stepperStyle' |
-  'qtyChangeButtonStyle' |
-  'qtyChangeImageStyle'
+export interface StepperProps
+  extends Omit<
+    SerializableStepperProps,
+    'counterStyle' | 'stepperStyle' | 'qtyChangeButtonStyle' | 'qtyChangeImageStyle'
   > {
   onChange?: (count: number) => void;
 
@@ -97,7 +95,7 @@ export interface StepperState {
 export class Stepper extends PureComponent<StepperProps, StepperState> {
   static defaultProps: Partial<StepperProps> = {
     increaseButtonImage: icons.increase,
-    decreaseButtonImage: icons.decrease
+    decreaseButtonImage: icons.decrease,
   };
 
   private readonly kButtonTouchabilityOpacity: number = 0.5;
@@ -106,7 +104,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     super(props);
 
     this.state = {
-      count: props.count || 0
+      count: props.count || 0,
     };
   }
 
@@ -120,7 +118,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     if (this.props.onChange) {
       this.props.onChange(newCount);
     }
-  }
+  };
 
   handleIncreasePress = () => {
     const newCount = this.state.count + 1;
@@ -132,7 +130,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     if (this.props.onChange) {
       this.props.onChange(newCount);
     }
-  }
+  };
 
   renderDecreaseButton = (style: {} = {}) => {
     const {
@@ -141,12 +139,11 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
       renderDecreaseButton,
       qtyChangeButtonStyle,
       qtyChangeImageStyle,
-      countLowerLimit = 0
+      countLowerLimit = 0,
     } = this.props;
     const { count } = this.state;
-    const icon = count <= countLowerLimit + 1 && !!removeButtonImage ?
-      removeButtonImage :
-      decreaseButtonImage;
+    const icon =
+      count <= countLowerLimit + 1 && !!removeButtonImage ? removeButtonImage : decreaseButtonImage;
 
     if (renderDecreaseButton) {
       return renderDecreaseButton(count, this.handleDecreasePress);
@@ -154,20 +151,20 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
 
     return (
       <TouchableOpacity
-        accessibilityLabel='Decrease'
+        accessibilityLabel="Decrease"
         activeOpacity={this.kButtonTouchabilityOpacity}
         disabled={count <= countLowerLimit}
         onPress={this.handleDecreasePress}
         style={qtyChangeButtonStyle}
       >
         <Image
-          resizeMode='contain'
+          resizeMode="contain"
           source={icon}
           style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
-  }
+  };
 
   renderIncreaseButton = (style: {} = {}) => {
     const {
@@ -175,7 +172,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
       increaseButtonImage = icons.increase,
       renderIncreaseButton,
       qtyChangeButtonStyle,
-      qtyChangeImageStyle
+      qtyChangeImageStyle,
     } = this.props;
 
     if (renderIncreaseButton) {
@@ -184,20 +181,20 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
 
     return (
       <TouchableOpacity
-        accessibilityLabel='Increase'
+        accessibilityLabel="Increase"
         activeOpacity={this.kButtonTouchabilityOpacity}
         disabled={!countUpperLimit || this.state.count >= countUpperLimit}
         onPress={this.handleIncreasePress}
         style={qtyChangeButtonStyle}
       >
         <Image
-          resizeMode='contain'
+          resizeMode="contain"
           source={increaseButtonImage}
           style={[S.buttonImage, style, qtyChangeImageStyle]}
         />
       </TouchableOpacity>
     );
-  }
+  };
 
   renderHorizontalCenter = (
     counterStyle: StyleProp<TextStyle>,
@@ -210,7 +207,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         {this.renderIncreaseButton()}
       </View>
     );
-  }
+  };
 
   renderHorizontalLeft = (
     counterStyle: StyleProp<TextStyle>,
@@ -223,12 +220,9 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         {this.renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
       </View>
     );
-  }
+  };
 
-  renderVertical = (
-    counterStyle: StyleProp<TextStyle>,
-    stepperStyle: StyleProp<ViewStyle>
-  ) => {
+  renderVertical = (counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
         {this.renderIncreaseButton()}
@@ -236,14 +230,10 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         {this.renderDecreaseButton()}
       </View>
     );
-  }
+  };
 
   render(): JSX.Element {
-    const {
-      counterStyle,
-      format,
-      stepperStyle
-    } = this.props;
+    const { counterStyle, format, stepperStyle } = this.props;
     switch (format) {
       case 'horizontalCenter':
         return this.renderHorizontalCenter(counterStyle, stepperStyle);
@@ -280,7 +270,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         <Text style={qtyStyle}>{count}</Text>
       </Text>
     );
-  }
+  };
 
   private onTextChange = (text: string) => {
     text = text.replace(nonNumericRegex, '');
@@ -294,5 +284,5 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         this.props.onChange(value);
       }
     }
-  }
+  };
 }

@@ -14,7 +14,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { ClearButtonMode } from '../types/Store';
 import { style as S } from '../styles/SearchBar';
@@ -91,13 +91,13 @@ export interface SearchBarState {
 
 const styles = StyleSheet.create({
   rightIcon: {
-    width: 25
-  }
+    width: 25,
+  },
 });
 
 export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
   static defaultProps: Partial<SearchBarProps> = {
-    shouldClearOnSubmit: true
+    shouldClearOnSubmit: true,
   };
   input: any;
   container: any;
@@ -116,21 +116,17 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     this.state = {
       value: props.initialValue || '',
       cancelButtonWidth,
-      isFocused: false
+      isFocused: false,
     };
   }
 
   render(): JSX.Element {
-    const {
-      showCancel,
-      style,
-      showLocator
-    } = this.props;
+    const { showCancel, style, showLocator } = this.props;
 
     return (
       <View ref={this.saveContainerRef} style={[S.container, style]}>
         <View style={S.searchBarContainer}>
-          {(showCancel === 'left') && this.renderCancelButton()}
+          {showCancel === 'left' && this.renderCancelButton()}
           {showLocator && this.renderLocateButton()}
           {this.renderInput()}
           {(showCancel === true || showCancel === 'right') && this.renderCancelButton()}
@@ -152,21 +148,21 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       inputTextStyle,
       searchIconStyle,
       containerStyle,
-      showSearchIcon
+      showSearchIcon,
     } = this.props;
 
     const { isFocused } = this.state;
     const imageStyle: StyleProp<ImageStyle> = [
       S.searchIcon,
       isFocused && S.searchIconFocused,
-      searchIconStyle
+      searchIconStyle,
     ];
 
     return (
       <View style={[S.inputContainer, containerStyle]}>
-        {showSearchIcon && searchIcon &&
-          <Image source={searchIcon} style={imageStyle} resizeMode='contain' />
-        }
+        {showSearchIcon && searchIcon && (
+          <Image source={searchIcon} style={imageStyle} resizeMode="contain" />
+        )}
         <TextInput
           style={[S.input, inputTextStyle]}
           ref={this.saveInputRef}
@@ -177,16 +173,16 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
           clearButtonMode={clearButtonMode || 'never'}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          returnKeyType='search'
+          returnKeyType="search"
           accessibilityLabel={accessibilityLabel || 'search bar'}
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           {...inputProps}
         />
         {this.renderAndroidClearButton()}
         {this.renderRightBtnIcon()}
       </View>
     );
-  }
+  };
 
   renderAndroidClearButton = () => {
     if (
@@ -203,20 +199,20 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <Image
         source={this.props.clearIcon || clearIcon}
         style={[styles.rightIcon, this.props.clearIconStyle]}
-        resizeMode='contain'
+        resizeMode="contain"
       />
     );
 
     return (
       <TouchableOpacity
         onPress={this.handleClear}
-        accessibilityRole='button'
+        accessibilityRole="button"
         style={[S.clearIconWrapper, this.props.clearIconWrapper]}
       >
         {icon}
       </TouchableOpacity>
     );
-  }
+  };
 
   renderRightBtnIcon = () => {
     const {
@@ -225,14 +221,14 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       onRightBtnPress,
       onSubmit,
       rightBtnIconStyle,
-      rightBtnStyle
+      rightBtnStyle,
     } = this.props;
 
     if (!showRightBtnIcon || !rightBtnIcon) {
       return null;
     }
 
-    const icon = <Image source={rightBtnIcon} style={rightBtnIconStyle} resizeMode='contain' />;
+    const icon = <Image source={rightBtnIcon} style={rightBtnIconStyle} resizeMode="contain" />;
 
     if (!onRightBtnPress && !onSubmit) {
       return icon;
@@ -242,23 +238,25 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <TouchableOpacity
         style={rightBtnStyle}
         onPress={onRightBtnPress || this.handleSubmit}
-        accessibilityLabel={this.props.rightBtnAccessibilityLabel ||
-          tr.string(
-            trKeys.flagship.search.actions.search.accessibilityLabel, {value: this.state.value}
-          )}
-        accessibilityRole='button'
+        accessibilityLabel={
+          this.props.rightBtnAccessibilityLabel ||
+          tr.string(trKeys.flagship.search.actions.search.accessibilityLabel, {
+            value: this.state.value,
+          })
+        }
+        accessibilityRole="button"
       >
         {icon}
       </TouchableOpacity>
     );
-  }
+  };
 
   handleChangeText = (value: string) => {
     this.setState({ value });
     if (this.props.onChange) {
       this.props.onChange(value);
     }
-  }
+  };
 
   handleSubmit = () => {
     const { onSubmit, shouldClearOnSubmit } = this.props;
@@ -271,7 +269,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     if (shouldClearOnSubmit) {
       this.setState({ value: '' });
     }
-  }
+  };
 
   handleCancel = () => {
     this.setState({ value: '' });
@@ -279,7 +277,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     if (this.props.onCancel) {
       this.props.onCancel();
     }
-  }
+  };
 
   handleClear = () => {
     this.input.blur();
@@ -288,7 +286,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
     if (this.props.onChange) {
       this.props.onChange('');
     }
-  }
+  };
 
   handleFocus = () => {
     const { cancelButtonAlwaysVisible, cancelButtonWidth, onFocus } = this.props;
@@ -304,10 +302,10 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: cancelButtonWidth || kCancelButtonWidthDefault,
         duration: kCancelButtonAnimationDuration,
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start();
     }
-  }
+  };
 
   handleBlur = () => {
     const { cancelButtonAlwaysVisible, onBlur } = this.props;
@@ -323,21 +321,21 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       Animated.timing(this.state.cancelButtonWidth, {
         toValue: 0,
         duration: kCancelButtonAnimationDuration,
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start();
     }
-  }
+  };
 
   handleLocate = () => {
     const { onLocateButtonPress } = this.props;
     if (onLocateButtonPress) {
       onLocateButtonPress();
     }
-  }
+  };
 
   focusInput = () => {
     this.input.focus();
-  }
+  };
 
   renderCancelButton = () => {
     const {
@@ -347,7 +345,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       cancelImageStyle,
       cancelTitle,
       cancelTitleStyle,
-      renderCancelButton
+      renderCancelButton,
     } = this.props;
 
     const { cancelButtonWidth } = this.state;
@@ -367,23 +365,18 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
         <TouchableOpacity
           style={touchableStyle}
           onPress={this.handleCancel}
-          accessibilityLabel='Cancel search'
-          accessibilityRole='button'
+          accessibilityLabel="Cancel search"
+          accessibilityRole="button"
         >
           {cancelImage ? (
-            <Image
-              source={cancelImage}
-              style={cancelImageStyle}
-            />
+            <Image source={cancelImage} style={cancelImageStyle} />
           ) : (
-            <Text style={cancelTitleStyle}>
-              {cancelTitle || 'Cancel'}
-            </Text>
+            <Text style={cancelTitleStyle}>{cancelTitle || 'Cancel'}</Text>
           )}
         </TouchableOpacity>
       </Animated.View>
     );
-  }
+  };
 
   renderLocateButton = () => {
     const { locateIcon, locateIconStyle } = this.props;
@@ -397,11 +390,11 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <TouchableOpacity
         style={S.locateButton}
         onPress={this.handleLocate}
-        accessibilityLabel='Locate me'
-        accessibilityRole='button'
+        accessibilityLabel="Locate me"
+        accessibilityRole="button"
       >
-        <Image source={locateIcon} style={[S.locateIcon, locateIconStyle]} resizeMode='contain' />
+        <Image source={locateIcon} style={[S.locateIcon, locateIconStyle]} resizeMode="contain" />
       </TouchableOpacity>
     );
-  }
+  };
 }

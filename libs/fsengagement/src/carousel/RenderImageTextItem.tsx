@@ -9,7 +9,7 @@ import {
   Text,
   TextStyle,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import styles from './SliderEntry.style';
 import { EngagementContext } from '../lib/contexts';
@@ -45,62 +45,57 @@ const { height: viewportHeight } = Dimensions.get('window');
 
 class RenderImageTextItem extends Component<RenderItemProps & { context: any }, RenderItemState> {
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
   };
   constructor(props: RenderItemProps & { context: any }) {
     super(props);
     this.state = {
       viewHeight: 0,
-      viewHeightChanged: false
+      viewHeightChanged: false,
     };
   }
   get image(): any {
-    const { data: { source }, options } = this.props;
+    const {
+      data: { source },
+      options,
+    } = this.props;
     const imagePadding = {
-      margin: options.imagePadding || 0
+      margin: options.imagePadding || 0,
     };
 
-    return (
-      <Image
-        source={source}
-        style={[styles.image, imagePadding]}
-      />
-    );
+    return <Image source={source} style={[styles.image, imagePadding]} />;
   }
 
   _onLayout = (event: LayoutChangeEvent) => {
     var { height } = event.nativeEvent.layout;
 
-    if (!this.state.viewHeightChanged &&
+    if (
+      !this.state.viewHeightChanged &&
       this.state.viewHeight !== height &&
-      Math.abs(this.state.viewHeight - height) > 1) {
+      Math.abs(this.state.viewHeight - height) > 1
+    ) {
       this.setState({
         viewHeight: height,
-        viewHeightChanged: true
-      })
+        viewHeightChanged: true,
+      });
     }
-  }
+  };
   onPress = () => {
-    const { data: { link } } = this.props;
+    const {
+      data: { link },
+    } = this.props;
     if (!link) {
       return;
     }
     const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
-      value: link
+      value: link,
     });
-  }
+  };
   render() {
     const {
-      data: {
-        ratio,
-        showText,
-        text,
-        header,
-        additional,
-        eyebrow
-      },
+      data: { ratio, showText, text, header, additional, eyebrow },
       even,
       grid,
       itemWidth,
@@ -114,7 +109,7 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
       headerStyle,
       textStyle,
       additionalStyle,
-      noMargin
+      noMargin,
     } = this.props;
 
     let itemStyle: any = {};
@@ -123,39 +118,40 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
     if (grid) {
       if (ratio && itemWidth) {
         itemStyle = {
-          width: noMargin ? totalItemWidth - (itemWidth * (numColumns - 1)) : itemWidth,
+          width: noMargin ? totalItemWidth - itemWidth * (numColumns - 1) : itemWidth,
           marginRight: noMargin ? 0 : horizPadding,
           paddingHorizontal: 0,
-          marginBottom: verticalSpacing
+          marginBottom: verticalSpacing,
         };
       } else {
         itemStyle = {
           width: itemWidth,
-          height: viewportHeight * .36,
+          height: viewportHeight * 0.36,
           marginRight: even ? horizPadding : 0,
-          marginBottom: verticalSpacing
+          marginBottom: verticalSpacing,
         };
       }
 
       imageStyle = {
         width: '100%',
-        height: (itemWidth / parseFloat(ratio))
+        height: itemWidth / parseFloat(ratio),
       };
     } else {
       if (ratio && itemWidth) {
         itemStyle = {
           width: itemWidth,
-          paddingRight: horizPadding
+          paddingRight: horizPadding,
         };
       } else {
         itemStyle = {
           width: itemWidth,
-          height: viewportHeight * .36
+          height: viewportHeight * 0.36,
         };
       }
       imageStyle = {
         width: '100%',
-        height: ((itemWidth - parseInt(options.itemHorizontalPaddingPercent,10)) / parseFloat(ratio))
+        height:
+          (itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) / parseFloat(ratio),
       };
     }
 
@@ -167,64 +163,78 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
     if (grid) {
       return (
         <TouchableOpacity
-          activeOpacity={.8}
+          activeOpacity={0.8}
           onPress={this.onPress}
           style={itemStyle}
           onLayout={this._onLayout}
         >
           <View style={imageStyle}>
-            <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
-              {this.image}
-            </View>
+            <View style={[styles.imageContainerNoCard, even ? {} : {}]}>{this.image}</View>
           </View>
 
-          {showText &&
+          {showText && (
             <View
-            style={[{ height: this.state.viewHeight - ((itemWidth) / parseFloat(ratio)) }, textbg]}
+              style={[{ height: this.state.viewHeight - itemWidth / parseFloat(ratio) }, textbg]}
             >
               <View style={[textPadding, { justifyContent: 'center' }]}>
-                {!!(eyebrow && eyebrow.value) &&
-                  <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>{eyebrow.value}</Text>}
-                {!!(header && header.value) &&
-                  <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>}
-                {!!(text && text.value) &&
-                  <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>}
+                {!!(eyebrow && eyebrow.value) && (
+                  <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>
+                    {eyebrow.value}
+                  </Text>
+                )}
+                {!!(header && header.value) && (
+                  <Text style={[headerStyle, { textAlign: options.textAlign }]}>
+                    {header.value}
+                  </Text>
+                )}
+                {!!(text && text.value) && (
+                  <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>
+                )}
               </View>
-            </View>}
-
+            </View>
+          )}
         </TouchableOpacity>
       );
     }
 
     return (
-      <TouchableOpacity
-        activeOpacity={.8}
-        onPress={this.onPress}
-        style={itemStyle}
-
-      >
+      <TouchableOpacity activeOpacity={0.8} onPress={this.onPress} style={itemStyle}>
         <View style={imageStyle}>
-          <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
-            {this.image}
-          </View>
+          <View style={[styles.imageContainerNoCard, even ? {} : {}]}>{this.image}</View>
         </View>
 
-        {showText &&
+        {showText && (
           <View
-          style={[{ height: overallHeight - ((itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) / parseFloat(ratio)) }, textbg]}
+            style={[
+              {
+                height:
+                  overallHeight -
+                  (itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) /
+                    parseFloat(ratio),
+              },
+              textbg,
+            ]}
           >
             <View style={[textPadding, { justifyContent: 'center' }]}>
-              {!!(eyebrow && eyebrow.value) &&
-                <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>{eyebrow.value}</Text>}
-              {!!(header && header.value) &&
-                <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>}
-              {!!(text && text.value) &&
-                <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>}
-              {!!(additional && additional.value) &&
-                <Text style={[additionalStyle, { textAlign: options.textAlign }]}>{additional.value}</Text>}
+              {!!(eyebrow && eyebrow.value) && (
+                <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>
+                  {eyebrow.value}
+                </Text>
+              )}
+              {!!(header && header.value) && (
+                <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>
+              )}
+              {!!(text && text.value) && (
+                <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>
+              )}
+              {!!(additional && additional.value) && (
+                <Text style={[additionalStyle, { textAlign: options.textAlign }]}>
+                  {additional.value}
+                </Text>
+              )}
             </View>
-          </View>}
-
+          </View>
+        )}
       </TouchableOpacity>
     );
   }

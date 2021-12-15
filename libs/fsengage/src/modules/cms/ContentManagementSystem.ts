@@ -24,7 +24,7 @@ export default class ContentManagementSystem {
     }
 
     return this.provider.contentForSlot(group, slot, identifier, {
-      locator: this.locator
+      locator: this.locator,
     });
   }
 

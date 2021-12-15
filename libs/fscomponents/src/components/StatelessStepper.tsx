@@ -8,14 +8,14 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { style as S } from '../styles/Stepper';
 
-const icons: {[key: string]: ImageURISource} = {
+const icons: { [key: string]: ImageURISource } = {
   increase: require('../../assets/images/increaseImage.png'),
-  decrease: require('../../assets/images/decreaseImage.png')
+  decrease: require('../../assets/images/decreaseImage.png'),
 };
 
 const nonNumericRegex = /\D/g;
@@ -34,10 +34,8 @@ export interface SerializableStatelessStepperProps {
   prefix?: string;
 }
 
-export interface StatelessStepperProps extends Omit<SerializableStatelessStepperProps,
-  'stepperStyle' |
-  'counterStyle'
-  > {
+export interface StatelessStepperProps
+  extends Omit<SerializableStatelessStepperProps, 'stepperStyle' | 'counterStyle'> {
   onChange?: (count: number) => void;
 
   // Stepper style
@@ -60,11 +58,10 @@ export interface StatelessStepperProps extends Omit<SerializableStatelessStepper
 
 const defaultProps: Partial<StatelessStepperProps> = {
   increaseButtonImage: icons.increase,
-  decreaseButtonImage: icons.decrease
+  decreaseButtonImage: icons.decrease,
 };
 
 export const StatelessStepper = (props = defaultProps): JSX.Element => {
-
   const kButtonTouchabilityOpacity: number = 0.5;
   const handleDecreasePress = () => {
     const oldCount = props.count;
@@ -92,11 +89,7 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
   };
 
   const renderDecreaseButton = (style: {} = {}) => {
-    const {
-      decreaseButtonImage = icons.decrease,
-      renderDecreaseButton,
-      count
-    } = props;
+    const { decreaseButtonImage = icons.decrease, renderDecreaseButton, count } = props;
 
     if (renderDecreaseButton && count) {
       return renderDecreaseButton(count, handleDecreasePress);
@@ -104,26 +97,18 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
 
     return (
       <TouchableOpacity
-        accessibilityLabel='Decrease'
+        accessibilityLabel="Decrease"
         activeOpacity={kButtonTouchabilityOpacity}
-        disabled={props.count && props.count <= 0 || true}
+        disabled={(props.count && props.count <= 0) || true}
         onPress={handleDecreasePress}
       >
-        <Image
-          resizeMode='contain'
-          source={decreaseButtonImage}
-          style={[S.buttonImage, style]}
-        />
+        <Image resizeMode="contain" source={decreaseButtonImage} style={[S.buttonImage, style]} />
       </TouchableOpacity>
     );
   };
 
   const renderIncreaseButton = (style: {} = {}) => {
-    const {
-      countUpperLimit,
-      increaseButtonImage = icons.increase,
-      renderIncreaseButton
-    } = props;
+    const { countUpperLimit, increaseButtonImage = icons.increase, renderIncreaseButton } = props;
 
     if (renderIncreaseButton && props.count) {
       return renderIncreaseButton(props.count, handleIncreasePress);
@@ -131,16 +116,12 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
 
     return (
       <TouchableOpacity
-        accessibilityLabel='Increase'
+        accessibilityLabel="Increase"
         activeOpacity={kButtonTouchabilityOpacity}
-        disabled={!countUpperLimit || props.count && props.count >= countUpperLimit || true}
+        disabled={!countUpperLimit || (props.count && props.count >= countUpperLimit) || true}
         onPress={handleIncreasePress}
       >
-        <Image
-          resizeMode='contain'
-          source={increaseButtonImage}
-          style={[S.buttonImage, style]}
-        />
+        <Image resizeMode="contain" source={increaseButtonImage} style={[S.buttonImage, style]} />
       </TouchableOpacity>
     );
   };
@@ -176,14 +157,13 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
       );
     }
 
-    return (
-      <Text style={counterStyle}>{counterText}</Text>
-    );
+    return <Text style={counterStyle}>{counterText}</Text>;
   };
 
-
   const renderHorizontalCenter = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterText: string,
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
@@ -195,7 +175,9 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
   };
 
   const renderHorizontalLeft = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterText: string,
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
@@ -207,7 +189,9 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
   };
 
   const renderVertical = (
-    counterText: string, counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>
+    counterText: string,
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
   ) => {
     return (
       <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
@@ -218,12 +202,7 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
     );
   };
 
-  const {
-      counterStyle,
-      format,
-      prefix,
-      stepperStyle
-    } = props;
+  const { counterStyle, format, prefix, stepperStyle } = props;
   const { count } = props;
   const counterText = prefix ? `${prefix} ${count}` : `${count}`;
 
@@ -237,6 +216,4 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
     default:
       return renderHorizontalCenter(counterText, counterStyle, stepperStyle);
   }
-
 };
-

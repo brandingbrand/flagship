@@ -3,10 +3,7 @@ export {
   Step,
   StepManager,
   FSCheckoutProps,
-  FSCheckoutStepProps
+  FSCheckoutStepProps,
 } from './FSCheckout';
 
-export {
-  default as StepTracker,
-  StepTrackerProps
-} from './components/StepTracker';
+export { default as StepTracker, StepTrackerProps } from './components/StepTracker';

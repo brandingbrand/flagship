@@ -9,7 +9,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   completedIcon: {
     height: 32,
     flex: 0,
-    width: 32
+    width: 32,
   },
   container: {
     alignItems: 'center',
@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     flex: 1,
-    padding: 5
+    padding: 5,
   },
   titleText: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 export interface SerializableStepProps {
@@ -43,11 +43,8 @@ export interface SerializableStepProps {
   style?: ViewStyle;
 }
 
-export interface StepProps extends Omit<SerializableStepProps,
-  'completedIconStyle' |
-  'titleStyle' |
-  'style'
-  > {
+export interface StepProps
+  extends Omit<SerializableStepProps, 'completedIconStyle' | 'titleStyle' | 'style'> {
   completedIcon?: ImageURISource;
   completedIconStyle?: StyleProp<ImageStyle>;
   onPress?: () => void;
@@ -60,7 +57,6 @@ export interface StepProps extends Omit<SerializableStepProps,
  *  is a touchable element if step is completed
  */
 export const Step: FunctionComponent<StepProps> = memo((props): JSX.Element => {
-
   const renderDoneIcon = () => {
     if (!props.completed || !props.completedIcon) {
       return null;
@@ -75,23 +71,18 @@ export const Step: FunctionComponent<StepProps> = memo((props): JSX.Element => {
   };
 
   const renderTitle = () => {
-    return (
-      <Text style={[styles.titleText, props.titleStyle]}>
-        {props.title}
-      </Text>
-    );
+    return <Text style={[styles.titleText, props.titleStyle]}>{props.title}</Text>;
   };
 
   if (props.completed) {
-    const stepCompletedLabel =
-      FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
+    const stepCompletedLabel = FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
     const accessibilityLabel = `${props.title}, ${stepCompletedLabel}`;
 
     return (
       <TouchableOpacity
         onPress={props.onPress}
         style={[styles.container, props.style]}
-        accessibilityRole='button'
+        accessibilityRole="button"
         accessibilityLabel={accessibilityLabel}
       >
         {renderTitle()}

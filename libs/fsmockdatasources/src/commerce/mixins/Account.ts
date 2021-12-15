@@ -95,10 +95,7 @@ export const AccountMixin = <T extends Constructor>(superclass: T) => {
       throw new Error('Not implemented yet');
     }
 
-    async deleteItemFromProductList(
-      listId: string,
-      itemId: string
-    ): Promise<void> {
+    async deleteItemFromProductList(listId: string, itemId: string): Promise<void> {
       throw new Error('Not implemented yet');
     }
   };

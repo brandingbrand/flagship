@@ -2,7 +2,7 @@ export {
   WebShellContext,
   WEB_SHELL_CONTEXT_TOKEN,
   WebShellProvider,
-  useWebShell
+  useWebShell,
 } from './shell.context';
 export { makeDrawer } from './make-drawer';
 export type {
@@ -10,5 +10,5 @@ export type {
   DrawerComponentProps,
   DrawerComponentType,
   DrawerOptions,
-  ShellConfig
+  ShellConfig,
 } from './types';

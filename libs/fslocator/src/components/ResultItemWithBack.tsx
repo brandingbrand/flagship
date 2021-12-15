@@ -9,20 +9,20 @@ const arrowLeft = require('../../assets/images/arrow-left.png');
 const S = StyleSheet.create({
   selectedLocationContainer: {
     flexDirection: 'row',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   backButton: {
     backgroundColor: 'white',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   backButtonImage: {
     marginLeft: 10,
     width: 30,
-    height: 30
+    height: 30,
   },
   itemContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export interface PropType {
@@ -46,7 +46,7 @@ export default class ResultItemWithBack extends Component<PropType> {
       locationItemProps,
       selectLocation,
       renderLocationItem,
-      renderLocationItemWithBack
+      renderLocationItemWithBack,
     } = this.props;
 
     if (renderLocationItemWithBack) {
@@ -55,7 +55,7 @@ export default class ResultItemWithBack extends Component<PropType> {
         location: selectedLocation,
         handleNavPress,
         handlePhonePress,
-        selectLocation
+        selectLocation,
       });
     }
 

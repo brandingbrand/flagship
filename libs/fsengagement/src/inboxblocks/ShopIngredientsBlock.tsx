@@ -8,20 +8,14 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
-import {
-  Action,
-  BlockItem,
-  EmitterProps,
-  Icon,
-  ScreenProps
-} from '../types';
+import { Action, BlockItem, EmitterProps, Icon, ScreenProps } from '../types';
 import { EngagementContext } from '../lib/contexts';
 
 const images: any = {
-  rightArrow: require('../../assets/images/rightArrow.png')
+  rightArrow: require('../../assets/images/rightArrow.png'),
 };
 
 const styles = StyleSheet.create({
@@ -29,17 +23,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   backIcon: {
     width: 8,
     height: 13,
-    marginLeft: 10
+    marginLeft: 10,
   },
   buttonContents: {
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export interface ShopIngredientsBlockProps extends ScreenProps, EmitterProps {
@@ -59,7 +53,7 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
     handleAction: PropTypes.func,
     handleStoryAction: PropTypes.func,
     name: PropTypes.string,
-    id: PropTypes.string
+    id: PropTypes.string,
   };
 
   takeAction = (action: string, actions: Action): void => {
@@ -81,47 +75,37 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
       type: 'deep-link',
       value: actions.value + productIDs,
       name: this.props.name,
-      id: this.props.id
+      id: this.props.id,
     });
-  }
+  };
 
   onButtonPress = () => {
     this.takeAction(this.props.action, this.props.actions);
-  }
+  };
 
   shouldComponentUpdate(nextProps: ShopIngredientsBlockProps): boolean {
-    return nextProps.buttonStyle !== this.props.buttonStyle ||
+    return (
+      nextProps.buttonStyle !== this.props.buttonStyle ||
       nextProps.textStyle !== this.props.textStyle ||
       nextProps.containerStyle !== this.props.containerStyle ||
       nextProps.text !== this.props.text ||
-      nextProps.icon !== this.props.icon;
+      nextProps.icon !== this.props.icon
+    );
   }
 
   render(): JSX.Element {
-    const {
-      buttonStyle,
-      textStyle,
-      containerStyle,
-      text,
-      icon
-    } = this.props;
+    const { buttonStyle, textStyle, containerStyle, text, icon } = this.props;
 
     return (
       <View style={[styles.buttonContainer, containerStyle]}>
-        <TouchableOpacity
-          style={buttonStyle}
-          onPress={this.onButtonPress}
-          activeOpacity={1}
-        >
+        <TouchableOpacity style={buttonStyle} onPress={this.onButtonPress} activeOpacity={1}>
           <View style={styles.buttonContents}>
             <Text style={textStyle}>{text}</Text>
             {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
           </View>
-
         </TouchableOpacity>
       </View>
     );
-
   }
 }
 
@@ -129,4 +113,3 @@ export default (props: ShopIngredientsBlockProps) => {
   const context = useContext(EngagementContext);
   return <ShopIngredientsBlock {...props} context={context} />;
 };
-

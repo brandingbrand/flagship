@@ -5,16 +5,8 @@
 
 import React, { Component } from 'react';
 
-import {
-  Image,
-  LayoutRectangle,
-  Linking,
-  StyleProp,
-  View,
-  ViewStyle
-} from 'react-native';
+import { Image, LayoutRectangle, Linking, StyleProp, View, ViewStyle } from 'react-native';
 import { TouchableOpacityLink } from './TouchableOpacityLink';
-
 
 export interface CMSBannerProps {
   imageContainerStyle?: StyleProp<ViewStyle>;
@@ -31,11 +23,12 @@ export interface CMSBannerState {
   containerWidth: number;
 }
 
-export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
-  extends Component<P, CMSBannerState> {
-
+export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Component<
+  P,
+  CMSBannerState
+> {
   state: CMSBannerState = {
-    containerWidth: 0
+    containerWidth: 0,
   };
 
   // Invoked on mount and whenever the layout changes. The code to render
@@ -44,18 +37,19 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
   // whenever the view is resized.
   handleOnLayout = (e: { nativeEvent: { layout: LayoutRectangle } }) => {
     this.setState({
-      containerWidth: e.nativeEvent.layout.width
+      containerWidth: e.nativeEvent.layout.width,
     });
-  }
+  };
 
   handlePress = (instance: any) => () => {
     if (this.props.onPress) {
       this.props.onPress(instance);
     } else {
-      Linking.openURL(instance.Link)
-        .catch(e => console.log('Unable to open link', instance.Link));
+      Linking.openURL(instance.Link).catch((e) =>
+        console.log('Unable to open link', instance.Link)
+      );
     }
-  }
+  };
 
   renderInstance = (instance: any, i: number) => {
     const image = instance['Retina-Image'] || instance.Image;
@@ -65,7 +59,7 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
     if (typeof this.props.imageHeight === 'number') {
       imageHeight = this.props.imageHeight;
     } else if (imageWidth && image.height && image.width) {
-      imageHeight = imageWidth * image.height / image.width;
+      imageHeight = (imageWidth * image.height) / image.width;
     } else {
       imageHeight = this.state.containerWidth;
     }
@@ -84,10 +78,10 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
         source={{ uri: image.path }}
         accessible={accessible}
         accessibilityLabel={accessibilityLabel}
-        resizeMode='contain'
+        resizeMode="contain"
         style={{
           width: imageWidth,
-          height: imageHeight
+          height: imageHeight,
         }}
       />
     );
@@ -95,10 +89,7 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
     if (instance.Link) {
       return (
         <View key={i} style={this.props.imageContainerStyle} onLayout={this.handleOnLayout}>
-          <TouchableOpacityLink
-            onPress={this.handlePress(instance)}
-            href={instance.Link}
-          >
+          <TouchableOpacityLink onPress={this.handlePress(instance)} href={instance.Link}>
             {ImageJsx}
           </TouchableOpacityLink>
         </View>
@@ -110,7 +101,7 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}>
         {ImageJsx}
       </View>
     );
-  }
+  };
 
   abstract render(): React.ReactNode;
 }

@@ -1,6 +1,4 @@
-import {
-  execSync as exec
-} from 'child_process';
+import { execSync as exec } from 'child_process';
 import * as fs from './fs';
 import * as helpers from '../helpers';
 import * as os from './os';
@@ -18,7 +16,7 @@ export function install(): void {
 
   try {
     exec(`cd "${path.project.resolve('ios')}" && pod install`, {
-      stdio: [0, 1, 2]
+      stdio: [0, 1, 2],
     });
   } catch (err) {
     helpers.logError(
@@ -45,8 +43,8 @@ export function add(pods: string[], podfilePath: string = path.ios.podfilePath()
 
   // Filter out any pods that are already declared in the podfile
   // TODO: This should support a version check
-  pods = pods.filter(pod => podfileContents.indexOf(pod) === -1);
-  pods = pods.map(pod => `\t${pod}`);
+  pods = pods.filter((pod) => podfileContents.indexOf(pod) === -1);
+  pods = pods.map((pod) => `\t${pod}`);
 
   fs.writeFileSync(
     podfilePath,
@@ -68,8 +66,10 @@ export function sources(sources: string[]): void {
   if (sources.length > 0) {
     helpers.logInfo('adding additional pod sources: ' + sources.join(', '));
     let podfileContents = fs.readFileSync(path.ios.podfilePath(), 'utf8');
-    podfileContents = podfileContents.replace('# ADDITIONAL_POD_SOURCES',
-      sources.map(s => `source '${s}'`).join('\n'));
+    podfileContents = podfileContents.replace(
+      '# ADDITIONAL_POD_SOURCES',
+      sources.map((s) => `source '${s}'`).join('\n')
+    );
     fs.writeFileSync(path.ios.podfilePath(), podfileContents);
   }
 }

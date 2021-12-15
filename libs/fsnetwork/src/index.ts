@@ -4,7 +4,7 @@ import axios, {
   AxiosInstance,
   AxiosPromise,
   AxiosRequestConfig,
-  AxiosResponse
+  AxiosResponse,
 } from 'axios';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 
@@ -49,11 +49,11 @@ export type FSNetworkResponse<T = any> = AxiosResponse<T>;
  * The body of a network equest.
  */
 export type FSNetworkRequestData =
-  ArrayBuffer |
-  ArrayBufferView |
-  Dictionary |
-  string |
-  URLSearchParams;
+  | ArrayBuffer
+  | ArrayBufferView
+  | Dictionary
+  | string
+  | URLSearchParams;
 
 /**
  * Manages network requests, optionally adding a set of default configuration to each request.
@@ -69,11 +69,7 @@ export default class FSNetwork {
    */
   constructor(config?: FSNetworkRequestConfig) {
     if (config) {
-      const {
-        responseIntercept,
-        responseError,
-        ...axiosConfig
-      } = config;
+      const { responseIntercept, responseError, ...axiosConfig } = config;
       this.instance = axios.create(axiosConfig);
       this.setInterceptor(config);
     } else {

@@ -18,7 +18,7 @@ import AnalyticsProvider, {
   SearchGeneric,
   Transaction,
   TransactionAction,
-  TransactionRefund
+  TransactionRefund,
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
@@ -42,14 +42,14 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   contactCall(properties: ContactCall): void {
     this.client.trackAction(properties.eventAction, {
       component: properties.eventCategory,
-      number: properties.number
+      number: properties.number,
     });
   }
 
   contactEmail(properties: ContactEmail): void {
     this.client.trackAction(properties.eventAction, {
       component: properties.eventCategory,
-      to: properties.to
+      to: properties.to,
     });
   }
 
@@ -58,7 +58,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      index: properties.index
+      index: properties.index,
     });
   }
 
@@ -71,7 +71,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
     this.client.trackAction(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
-      address: properties.address
+      address: properties.address,
     });
   }
 
@@ -85,7 +85,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
-      appVersion: this.appVersion
+      appVersion: this.appVersion,
     });
   }
 
@@ -93,7 +93,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
     this.client.trackAction(properties.eventAction, {
       component: properties.eventCategory,
       term: properties.term,
-      count: properties.count
+      count: properties.count,
     });
   }
 
@@ -152,7 +152,7 @@ export default class AdobeMarketingCloudProvider extends AnalyticsProvider {
   lifecycle(properties: App): void {
     this.client.trackAction(properties.eventAction, {
       appId: this.appId,
-      lifecycle: properties.lifecycle
+      lifecycle: properties.lifecycle,
     });
   }
 }

@@ -27,25 +27,32 @@ test(`add deeplink hosts`, () => {
       ios: {
         exportMethod,
         exportTeamId,
-        provisioningProfileName
-      }
-    }
+        provisioningProfileName,
+      },
+    },
   } as any);
 
-  const fastfileBody = fs.readFileSync(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`))
+  const fastfileBody = fs
+    .readFileSync(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`))
     .toString();
 
-  expect(fastfileBody)
-    .toMatch(`export_method: "${exportMethod}", #PROJECT_MODIFY_FLAG_export_method`);
-  expect(fastfileBody)
-    .toMatch(`export_team_id: "${exportTeamId}", #PROJECT_MODIFY_FLAG_export_team_id`);
-  expect(fastfileBody).toMatch(`"${provisioningProfileName}" ` +
-    '#PROJECT_MODIFY_FLAG_export_options_provisioning_profile');
-  expect(fastfileBody).toMatch(`xcargs: "` + [
-    `DEVELOPMENT_TEAM='${exportTeamId}'`,
-    `PROVISIONING_PROFILE_SPECIFIER='${provisioningProfileName}'`
-  ].join(` `) + `" #PROJECT_MODIFY_FLAG_export_team_id`);
-
+  expect(fastfileBody).toMatch(
+    `export_method: "${exportMethod}", #PROJECT_MODIFY_FLAG_export_method`
+  );
+  expect(fastfileBody).toMatch(
+    `export_team_id: "${exportTeamId}", #PROJECT_MODIFY_FLAG_export_team_id`
+  );
+  expect(fastfileBody).toMatch(
+    `"${provisioningProfileName}" ` + '#PROJECT_MODIFY_FLAG_export_options_provisioning_profile'
+  );
+  expect(fastfileBody).toMatch(
+    `xcargs: "` +
+      [
+        `DEVELOPMENT_TEAM='${exportTeamId}'`,
+        `PROVISIONING_PROFILE_SPECIFIER='${provisioningProfileName}'`,
+      ].join(` `) +
+      `" #PROJECT_MODIFY_FLAG_export_team_id`
+  );
 });
 
 // Force to be treated as a module

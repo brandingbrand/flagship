@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  Dimensions,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Animated, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ZoomCarouselItem } from './ZoomCarouselItem';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -38,33 +31,33 @@ const S = StyleSheet.create({
     position: 'absolute',
     top: 30,
     left: 10,
-    zIndex: 100
+    zIndex: 100,
   },
   scrollViewContainer: {
-    flex: 1
+    flex: 1,
   },
   customScrollView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   scrollViewZoomBG: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   goToZoomNext: {
     position: 'absolute',
     bottom: SCREEN_HEIGHT / 2 - 15,
     right: 0,
     zIndex: 100,
-    padding: 10
+    padding: 10,
   },
   goToZoomPrev: {
     position: 'absolute',
     bottom: SCREEN_HEIGHT / 2 - 15,
     left: 0,
     zIndex: 100,
-    padding: 10
+    padding: 10,
   },
   buttonPrevIcon: {
     width: 25,
@@ -74,9 +67,9 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '-45deg'
-      }
-    ]
+        rotate: '-45deg',
+      },
+    ],
   },
   buttonNextIcon: {
     width: 25,
@@ -86,27 +79,27 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '45deg'
-      }
-    ]
+        rotate: '45deg',
+      },
+    ],
   },
   closeButtonIcon: {
     width: 35,
     height: 35,
-    paddingTop: 15
+    paddingTop: 15,
   },
   closeButtonLeft: {
     width: 35,
     height: 1,
     transform: [{ rotate: '45deg' }],
-    backgroundColor: '#555'
+    backgroundColor: '#555',
   },
   closeButtonRight: {
     width: 35,
     height: 1,
     transform: [{ rotate: '135deg' }],
-    backgroundColor: '#555'
-  }
+    backgroundColor: '#555',
+  },
 });
 
 export class ZoomImages extends Component<ZoomImagesProps> {
@@ -129,27 +122,21 @@ export class ZoomImages extends Component<ZoomImagesProps> {
       showArrow,
       isOpeningZoom,
       renderCloseButton,
-      closeButtonStyle
+      closeButtonStyle,
     } = this.props;
 
     return (
       <View style={[{ flex: 1 }, style]}>
         <Animated.View style={[S.scrollViewZoomBG, opacityStyle]} />
         <View style={S.scrollViewContainer}>
-          <Animated.View
-            style={[
-              S.customScrollView,
-              { width: zoomContainerWidth },
-              sizeStyle
-            ]}
-          >
+          <Animated.View style={[S.customScrollView, { width: zoomContainerWidth }, sizeStyle]}>
             {images.map((item: any, i: number) => {
               return (
                 <ZoomCarouselItem
                   key={i}
                   style={{
                     marginRight: i !== images.length ? gapSizeScaled : 0,
-                    opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1
+                    opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1,
                   }}
                   onItemMoveOutX={handleItemMoveOutX}
                   onItemMoveOutY={handleItemMoveOutY}
@@ -159,10 +146,10 @@ export class ZoomImages extends Component<ZoomImagesProps> {
                   <Image
                     style={{
                       width: SCREEN_WIDTH,
-                      height: SCREEN_WIDTH
+                      height: SCREEN_WIDTH,
                     }}
                     source={item.zoomSrc || item.src}
-                    resizeMode='contain'
+                    resizeMode="contain"
                   />
                 </ZoomCarouselItem>
               );
@@ -182,22 +169,20 @@ export class ZoomImages extends Component<ZoomImagesProps> {
             )}
           </Animated.View>
 
-          {currentZoomIndex !== 0 &&
-            !!showArrow && (
-              <Animated.View style={opacityStyle}>
-                <TouchableOpacity style={S.goToZoomPrev} onPress={goToZoomPrev}>
-                  <View style={S.buttonPrevIcon} />
-                </TouchableOpacity>
-              </Animated.View>
-            )}
-          {currentZoomIndex !== images.length - 1 &&
-            !!showArrow && (
-              <Animated.View style={opacityStyle}>
-                <TouchableOpacity style={S.goToZoomNext} onPress={goToZoomNext}>
-                  <View style={S.buttonNextIcon} />
-                </TouchableOpacity>
-              </Animated.View>
-            )}
+          {currentZoomIndex !== 0 && !!showArrow && (
+            <Animated.View style={opacityStyle}>
+              <TouchableOpacity style={S.goToZoomPrev} onPress={goToZoomPrev}>
+                <View style={S.buttonPrevIcon} />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
+          {currentZoomIndex !== images.length - 1 && !!showArrow && (
+            <Animated.View style={opacityStyle}>
+              <TouchableOpacity style={S.goToZoomNext} onPress={goToZoomNext}>
+                <View style={S.buttonNextIcon} />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
         </View>
       </View>
     );

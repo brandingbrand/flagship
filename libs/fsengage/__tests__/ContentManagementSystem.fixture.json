@@ -1,4 +1,4 @@
- {
+{
   "location": {
     "inside": {
       "latitude": 10,
@@ -66,10 +66,10 @@
           "Region": {
             "coordinates": [
               [
-                [ 40, 40 ],
-                [ 40, -40 ],
-                [ -40, -40 ],
-                [ -40, 40 ]
+                [40, 40],
+                [40, -40],
+                [-40, -40],
+                [-40, 40]
               ]
             ]
           },
@@ -80,19 +80,13 @@
             }
           },
           "US-Zipcodes": {
-            "zipcodes": [
-              "15222"
-            ]
+            "zipcodes": ["15222"]
           },
           "US-States": {
-            "selected_states": [
-              "PA"
-            ]
+            "selected_states": ["PA"]
           },
           "US-Cities": {
-            "cities": [
-              "Pittsburgh"
-            ]
+            "cities": ["Pittsburgh"]
           }
         }
       }

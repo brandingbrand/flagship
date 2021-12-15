@@ -1,22 +1,16 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
   boxOuter: {
     padding: 10,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   boxInner: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   boxText: {
     fontSize: 15,
-    fontWeight: '500'
-  }
+    fontWeight: '500',
+  },
 });

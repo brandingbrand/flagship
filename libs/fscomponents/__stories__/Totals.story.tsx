@@ -11,59 +11,53 @@ import { object } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
   style: {
-    padding: 20
+    padding: 20,
   },
   zipCode: {
     textDecorationLine: 'underline',
-    textAlign: 'right'
-  }
+    textAlign: 'right',
+  },
 });
 
 const valueContent = (
   <TouchableOpacity onPress={action('Totals Shipping onPress')}>
-    <Text style={styles.zipCode}>
-      Enter Zip Code
-    </Text>
+    <Text style={styles.zipCode}>Enter Zip Code</Text>
   </TouchableOpacity>
 );
 
 const totals: TotalProps[] = [
   {
     keyName: 'Subtotal',
-    value: '$19.05'
+    value: '$19.05',
   },
   {
     keyName: 'Tax (7%)',
-    value: '$1.33'
+    value: '$1.33',
   },
   {
     keyName: 'Shipping',
-    value: valueContent
+    value: valueContent,
   },
   {
     keyName: 'Total',
     keyStyle: {
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     value: '$20.38',
     valueStyle: {
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     style: {
-      borderTopWidth: StyleSheet.hairlineWidth
-    }
-  }
+      borderTopWidth: StyleSheet.hairlineWidth,
+    },
+  },
 ];
 
 const style = {
   padding: 20,
-  borderWidth: 1
+  borderWidth: 1,
 };
 
-storiesOf('Totals', module)
-  .add('basic usage', () => (
-    <Totals
-      totals={totals}
-      style={object('containerStyle', style)}
-    />
-  ));
+storiesOf('Totals', module).add('basic usage', () => (
+  <Totals totals={totals} style={object('containerStyle', style)} />
+));

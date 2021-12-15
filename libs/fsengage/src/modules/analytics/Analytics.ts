@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Platform } from 'react-native';
 
 import AnalyticsProvider from './providers/AnalyticsProvider';
-type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
+type Dictionary<T = any> = import('@brandingbrand/fsfoundation').Dictionary<T>;
 
 export type BaseEvent<T = any> = Dictionary<T> & {
   gaQueryParams?: object;
@@ -166,7 +166,7 @@ export default class Analytics {
     refundPartial: 'refundPartial',
     removeProduct: 'removeProduct',
     screenview: 'screenview',
-    searchGeneric: 'searchGeneric'
+    searchGeneric: 'searchGeneric',
   };
 
   private readonly kFunctionsEventAction: { [key: string]: string } = {
@@ -195,7 +195,7 @@ export default class Analytics {
     refundPartial: 'refundPartial',
     removeProduct: 'remove',
     screenview: 'screenview',
-    searchGeneric: 'search'
+    searchGeneric: 'search',
   };
 
   private readonly kFunctionsEventCategoryKey: { [key: string]: string } = {
@@ -213,7 +213,7 @@ export default class Analytics {
     searchGeneric: 'generic',
     impressionGeneric: 'generic',
     impressionProduct: 'product',
-    impressionPromotion: 'promotion'
+    impressionPromotion: 'promotion',
   };
 
   private readonly kFunctionsLifecycle: { [key: string]: string } = {
@@ -223,7 +223,7 @@ export default class Analytics {
     lifecycleClose: 'close',
     lifecycleInactive: 'inactive',
     lifecycleStart: 'start',
-    lifecycleSuspend: 'suspend'
+    lifecycleSuspend: 'suspend',
   };
 
   private providers: AnalyticsProvider[];
@@ -237,286 +237,351 @@ export default class Analytics {
   private clickGeneric = (component: Component | string, properties: ClickGeneric): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickGeneric];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickGeneric]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickGeneric]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.clickGeneric({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.clickGeneric({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private contactCall = (component: Component | string, properties: ContactCall): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactCall];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.contactCall]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.contactCall]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.contactCall({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.contactCall({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private contactEmail = (component: Component | string, properties: ContactEmail): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactEmail];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.contactEmail]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.contactEmail]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.contactEmail({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.contactEmail({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private impressionGeneric = (
-    component: Component | string, properties: ImpressionGeneric
+    component: Component | string,
+    properties: ImpressionGeneric
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionGeneric];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionGeneric]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionGeneric]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.impressionGeneric({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.impressionGeneric({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private locationDirections = (
-    component: Component | string, properties: LocationDirections
+    component: Component | string,
+    properties: LocationDirections
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.locationDirections];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[
-        this.kFunctionsName.locationDirections
-      ]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.locationDirections]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.locationDirections({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.locationDirections({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private searchGeneric = (component: Component | string, properties: SearchGeneric): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.searchGeneric];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.searchGeneric]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.searchGeneric]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.searchGeneric({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.searchGeneric({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   // Private Enhanced Commerce Properties
 
   private impressionPromotion = (component: Component | string, properties: Promotion): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionPromotion];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[
-        this.kFunctionsName.impressionPromotion
-      ]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionPromotion]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.impressionPromotion({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.impressionPromotion({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private impressionProduct = (
-    component: Component | string, properties: ImpressionProduct
+    component: Component | string,
+    properties: ImpressionProduct
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionProduct];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionProduct]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionProduct]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.impressionProduct({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.impressionProduct({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private clickPromotion = (component: Component | string, properties: Promotion): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickPromotion];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickPromotion]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickPromotion]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.clickPromotion({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.clickPromotion({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private clickProduct = (
-    component: Component | string, properties: Product, action?: ProductAction
+    component: Component | string,
+    properties: Product,
+    action?: ProductAction
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickProduct];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.clickProduct]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickProduct]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties, action);
     }
 
-    this.triggerTask(provider => provider.clickProduct(
-      {
-        eventAction,
-        eventCategory,
-        ...properties
-      },
-      action
-    ));
-  }
+    this.triggerTask((provider) =>
+      provider.clickProduct(
+        {
+          eventAction,
+          eventCategory,
+          ...properties,
+        },
+        action
+      )
+    );
+  };
 
   private detailProduct = (
-    component: Component | string, properties: Product, action?: ProductAction
+    component: Component | string,
+    properties: Product,
+    action?: ProductAction
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.detailProduct];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.detailProduct]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.detailProduct]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.detailProduct(
-      {
-        eventAction,
-        eventCategory,
-        ...properties
-      },
-      action
-    ));
-  }
+    this.triggerTask((provider) =>
+      provider.detailProduct(
+        {
+          eventAction,
+          eventCategory,
+          ...properties,
+        },
+        action
+      )
+    );
+  };
 
   private addProduct = (component: Component | string, properties: Product): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.addProduct];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.addProduct]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.addProduct]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.addProduct({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.addProduct({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private removeProduct = (component: Component | string, properties: Product): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.removeProduct];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.removeProduct]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.removeProduct]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
     }
 
-    this.triggerTask(provider => provider.removeProduct({
-      eventAction,
-      eventCategory,
-      ...properties
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.removeProduct({
+        eventAction,
+        eventCategory,
+        ...properties,
+      })
+    );
+  };
 
   private refundPartial = (
-    component: Component | string, products: RefundProduct[], action: TransactionAction
+    component: Component | string,
+    products: RefundProduct[],
+    action: TransactionAction
   ): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundPartial];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.refundPartial]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.refundPartial]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, products, action);
     }
 
-    this.triggerTask(provider => provider.refundPartial(
-      {
-        eventAction,
-        eventCategory,
-        products
-      },
-      action
-    ));
-  }
+    this.triggerTask((provider) =>
+      provider.refundPartial(
+        {
+          eventAction,
+          eventCategory,
+          products,
+        },
+        action
+      )
+    );
+  };
 
   private refundAll = (component: Component | string, action: TransactionAction): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundAll];
     const eventCategory = this.geteventCategoryFromComponent(
-      component, eventAction, this.kFunctionsEventCategoryKey[this.kFunctionsName.refundAll]
+      component,
+      eventAction,
+      this.kFunctionsEventCategoryKey[this.kFunctionsName.refundAll]
     );
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, undefined, action);
     }
 
-    this.triggerTask(provider => provider.refundAll(
-      {
-        eventAction,
-        eventCategory
-      },
-      action
-    ));
-  }
+    this.triggerTask((provider) =>
+      provider.refundAll(
+        {
+          eventAction,
+          eventCategory,
+        },
+        action
+      )
+    );
+  };
 
   // Private Apps Lifecyle Properties
 
@@ -528,11 +593,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleBackground = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleBackground];
@@ -542,11 +609,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleCreate = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleCreate];
@@ -556,11 +625,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleClose = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleClose];
@@ -570,11 +641,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleInactive = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleInactive];
@@ -584,11 +657,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleStart = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleStart];
@@ -598,11 +673,13 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   private lifecycleSuspend = (): void => {
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleSuspend];
@@ -612,16 +689,20 @@ export default class Analytics {
       this.log(eventAction, lifecycle);
     }
 
-    this.triggerTask(provider => provider.lifecycle({
-      eventAction,
-      lifecycle
-    }));
-  }
+    this.triggerTask((provider) =>
+      provider.lifecycle({
+        eventAction,
+        lifecycle,
+      })
+    );
+  };
 
   // Private Log & Trigger Functions
 
   private geteventCategoryFromComponent(
-    component: Component | string, eventActionKey: string, eventCategoryKey?: string
+    component: Component | string,
+    eventActionKey: string,
+    eventCategoryKey?: string
   ): string {
     let eventCategory: string;
 
@@ -632,14 +713,15 @@ export default class Analytics {
       eventCategoryKey = eventCategoryKey && eventCategoryKey.toLowerCase();
 
       if (eventCategoryKey) {
-        eventCategory = (anyComponent.analytics &&
-                    anyComponent.analytics[eventActionKey] &&
-                    anyComponent.analytics[eventActionKey][eventCategoryKey]) ||
-                    anyComponent.constructor.name;
+        eventCategory =
+          (anyComponent.analytics &&
+            anyComponent.analytics[eventActionKey] &&
+            anyComponent.analytics[eventActionKey][eventCategoryKey]) ||
+          anyComponent.constructor.name;
       } else {
-        eventCategory = (anyComponent.analytics &&
-                    anyComponent.analytics[eventActionKey]) ||
-                    anyComponent.constructor.name;
+        eventCategory =
+          (anyComponent.analytics && anyComponent.analytics[eventActionKey]) ||
+          anyComponent.constructor.name;
       }
     } else if ('string' === typeof component) {
       eventCategory = component;
@@ -651,15 +733,20 @@ export default class Analytics {
   }
 
   private triggerTask(task: (provider: AnalyticsProvider) => void): void {
-    this.providers.forEach(provider => {
+    this.providers.forEach((provider) => {
       task(provider);
     });
   }
 
   private log(
-    eventAction: string, eventCategory?: string, properties?: {} | any[], action?: {}
+    eventAction: string,
+    eventCategory?: string,
+    properties?: {} | any[],
+    action?: {}
   ): void {
-    if (process.env.NODE_ENV === 'test') { return; }
+    if (process.env.NODE_ENV === 'test') {
+      return;
+    }
     console.log(
       `%cAnalytics\n%c eventAction: ${eventAction}\n eventCategory: ${eventCategory}\n
       Properties:\n`,
@@ -674,45 +761,45 @@ export default class Analytics {
   // Public Commerce Properties
 
   add = {
-    product: this.addProduct
+    product: this.addProduct,
   };
 
   click = {
     generic: this.clickGeneric,
     product: this.clickProduct,
-    promotion: this.clickPromotion
+    promotion: this.clickPromotion,
   };
 
   contact = {
     call: this.contactCall,
-    email: this.contactEmail
+    email: this.contactEmail,
   };
 
   detail = {
-    product: this.detailProduct
+    product: this.detailProduct,
   };
 
   location = {
-    directions: this.locationDirections
+    directions: this.locationDirections,
   };
 
   refund = {
     all: this.refundAll,
-    partial: this.refundPartial
+    partial: this.refundPartial,
   };
 
   remove = {
-    product: this.removeProduct
+    product: this.removeProduct,
   };
 
   search = {
-    generic: this.searchGeneric
+    generic: this.searchGeneric,
   };
 
   impression = {
     generic: this.impressionGeneric,
     product: this.impressionProduct,
-    promotion: this.impressionPromotion
+    promotion: this.impressionPromotion,
   };
 
   // Public Apps Lifecyle Properties
@@ -724,7 +811,7 @@ export default class Analytics {
     create: this.lifecycleCreate,
     inactive: this.lifecycleInactive,
     start: this.lifecycleStart,
-    suspend: this.lifecycleSuspend
+    suspend: this.lifecycleSuspend,
   };
 
   // tslint:enable:typedef
@@ -740,15 +827,19 @@ export default class Analytics {
     }
 
     if ('ios' === Platform.OS || 'android' === Platform.OS) {
-      this.triggerTask(provider => provider.screenview({
-        eventCategory,
-        ...properties
-      }));
+      this.triggerTask((provider) =>
+        provider.screenview({
+          eventCategory,
+          ...properties,
+        })
+      );
     } else {
-      this.triggerTask(provider => provider.pageview({
-        eventCategory,
-        ...properties
-      }));
+      this.triggerTask((provider) =>
+        provider.pageview({
+          eventCategory,
+          ...properties,
+        })
+      );
     }
   }
 
@@ -762,14 +853,16 @@ export default class Analytics {
       this.log(eventAction, eventCategory, products, action);
     }
 
-    this.triggerTask(provider => provider.checkout(
-      {
-        eventAction,
-        eventCategory,
-        products
-      },
-      action
-    ));
+    this.triggerTask((provider) =>
+      provider.checkout(
+        {
+          eventAction,
+          eventCategory,
+          products,
+        },
+        action
+      )
+    );
   }
 
   checkoutOption(component: Component | string, action: CheckoutAction): void {
@@ -780,13 +873,15 @@ export default class Analytics {
       this.log(eventAction, eventCategory, undefined, action);
     }
 
-    this.triggerTask(provider => provider.checkoutOption(
-      {
-        eventAction,
-        eventCategory
-      },
-      action
-    ));
+    this.triggerTask((provider) =>
+      provider.checkoutOption(
+        {
+          eventAction,
+          eventCategory,
+        },
+        action
+      )
+    );
   }
 
   purchase(component: Component | string, products: Product[], action: TransactionAction): void {
@@ -797,17 +892,19 @@ export default class Analytics {
       this.log(eventAction, eventCategory, products, action);
     }
 
-    this.triggerTask(provider => provider.purchase(
-      {
-        eventAction,
-        eventCategory,
-        products
-      },
-      action
-    ));
+    this.triggerTask((provider) =>
+      provider.purchase(
+        {
+          eventAction,
+          eventCategory,
+          products,
+        },
+        action
+      )
+    );
   }
 
   setTrafficSource(campaignData: Campaign): void {
-    this.triggerTask(provider => provider.setTrafficSource(campaignData));
+    this.triggerTask((provider) => provider.setTrafficSource(campaignData));
   }
 }

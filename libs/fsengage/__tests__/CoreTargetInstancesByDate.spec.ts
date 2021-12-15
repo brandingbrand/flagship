@@ -3,7 +3,7 @@ import targetInstancesByDate from '../src/modules/cms/providers/core/targets/tar
 const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - Date Target', () => {
-  test('Valid Date', done => {
+  test('Valid Date', (done) => {
     const instance = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const result = targetInstancesByDate([instance]);
 
@@ -12,7 +12,7 @@ describe('Core Content Management System Provider - Date Target', () => {
     return done();
   });
 
-  test('Invalid Date', done => {
+  test('Invalid Date', (done) => {
     const instance = fixture.payload.data.Homepage['Hero-Carousel'].instances[1];
     const result = targetInstancesByDate([instance]);
 

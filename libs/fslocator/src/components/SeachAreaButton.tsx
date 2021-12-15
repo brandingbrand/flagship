@@ -4,16 +4,16 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const S = StyleSheet.create({
   container: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     backgroundColor: 'white',
     padding: 10,
-    width: 150
+    width: 150,
   },
   buttonText: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export interface PropType {

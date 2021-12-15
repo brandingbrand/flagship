@@ -7,16 +7,14 @@ async function runLink(name?: string): Promise<void> {
   return new Promise<void>((packageResolve, packageReject) => {
     const spawned = spawn('react-native', name ? ['link', name] : ['link'], {
       cwd: path.project.path(),
-      shell: os.win
+      shell: os.win,
     });
 
     // Redirect child process output to process stdout/stderr so we can see script output
     spawned.stdout.pipe(process.stdout);
     spawned.stderr.pipe(process.stderr);
 
-    spawned.on('error', e => packageReject(
-      new Error('Error spawning react-native link' + e))
-    );
+    spawned.on('error', (e) => packageReject(new Error('Error spawning react-native link' + e)));
     spawned.on('close', packageResolve);
 
     spawned.stdin.end();

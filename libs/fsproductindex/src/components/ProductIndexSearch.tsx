@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {
-  CommerceDataSource,
-  CommerceTypes
-} from '@brandingbrand/fscommerce';
+import { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
 import { ProductIndex, UnwrappedProductIndexProps } from './ProductIndex';
 import {
   default as withProductIndexData,
   WithProductIndexProps,
-  WithProductIndexProviderProps
+  WithProductIndexProviderProps,
 } from './ProductIndexProvider';
 
 // TODO: This makes keyword required for searches. This should be done in fscommerce and the
@@ -37,12 +34,12 @@ export class ProductIndexSearch extends Component<
     } else {
       throw new Error('FSProductIndex: [this.props.commerceDataSource] is required.');
     }
-  }
+  };
 
   render(): JSX.Element {
     const searchProps = {
       ...this.props,
-      fetchProducts: this.fetchProducts
+      fetchProducts: this.fetchProducts,
     };
     return <ProductIndex {...searchProps} />;
   }

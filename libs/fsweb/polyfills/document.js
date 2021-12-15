@@ -1,24 +1,24 @@
 export function createElement() {
   return {
-    setAttribute: function() {},
+    setAttribute: function () {},
     pathname: '',
     style: {},
-    nodeType: 1
+    nodeType: 1,
   };
-};
+}
 
 export function querySelector() {
   return null;
-};
+}
 
 export function getElementById() {
   return {
-    setAttribute: function() {},
+    setAttribute: function () {},
     pathname: '',
-    style: {}
+    style: {},
   };
-};
+}
 
 export const body = document.body || {
-  appendChild: function() {}
+  appendChild: function () {},
 };

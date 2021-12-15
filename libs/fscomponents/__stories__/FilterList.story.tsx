@@ -10,14 +10,13 @@ const items = Array(10)
     title: `title-${i}`,
     values: Array(5)
       .fill(true)
-      .map((v, i) => ({ value: `value-${i}`, title: `value-title-${i}` }))
+      .map((v, i) => ({ value: `value-${i}`, title: `value-title-${i}` })),
   }));
 
-storiesOf('FilterList', module)
-  .add('basic usage', () => (
-    <FilterList
-      items={items}
-      onApply={action('FilterList onApply')}
-      onReset={action('FilterList onReset')}
-    />
-  ));
+storiesOf('FilterList', module).add('basic usage', () => (
+  <FilterList
+    items={items}
+    onApply={action('FilterList onApply')}
+    onReset={action('FilterList onReset')}
+  />
+));

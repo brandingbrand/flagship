@@ -9,7 +9,7 @@ export class FSApp extends FSAppBase {
   constructor(appConfig: AppConfigType) {
     super(appConfig);
     if (!appConfig.serverSide) {
-      this.startApp().catch(e => console.error(e));
+      this.startApp().catch((e) => console.error(e));
     }
   }
 
@@ -17,7 +17,7 @@ export class FSApp extends FSAppBase {
     if (this.shouldShowDevMenu()) {
       this.appConfig.screens = {
         devMenu: DevMenu,
-        ...this.appConfig.screens
+        ...this.appConfig.screens,
       };
       if (this.appConfig.devMenuPath) {
         this.appConfig.screens.devMenu.path = this.appConfig.devMenuPath;
@@ -54,8 +54,8 @@ export class FSApp extends FSAppBase {
           appConfig: this.appConfig,
           api: this.api,
           store: this.store,
-          appRouter: this.appRouter
-        }
+          appRouter: this.appRouter,
+        },
       });
     };
 
@@ -71,8 +71,8 @@ export class FSApp extends FSAppBase {
         initialProps: {
           appConfig: config,
           api: this.api,
-          store: store || this.store
-        }
+          store: store || this.store,
+        },
       });
     }
     return undefined;

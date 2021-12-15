@@ -2,15 +2,12 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { object, text } from '@storybook/addon-knobs';
 import { AddressForm } from '../src/components/AddressForm';
 import { FormLabelPosition } from '../src/components/Form';
 
 const defaultStyle = {
-  padding: 10
+  padding: 10,
 };
 
 const defaultValue = {
@@ -23,7 +20,7 @@ const defaultValue = {
   postalCode: 15203,
   stateCode: 'PA',
   phone: 4121231231,
-  email: 'test@bb.com'
+  email: 'test@bb.com',
 };
 
 const fieldsStyle = {
@@ -33,35 +30,33 @@ const fieldsStyle = {
       paddingVertical: 8,
       borderRadius: 5,
       fontSize: 15,
-      backgroundColor: '#f8f8f8'
+      backgroundColor: '#f8f8f8',
     },
     error: {
       borderRadius: 5,
-      fontSize: 15
-    }
+      fontSize: 15,
+    },
   },
   errorBlock: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 };
 
 const fieldType = {
-  email: null
+  email: null,
 };
 
 const renderAddressForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
-  return (
-    () => (
-      <AddressForm
-        style={object('Style', defaultStyle)}
-        value={object('Value', defaultValue)}
-        submitText={text('Submit Text', 'CONTINUE')}
-        onSubmit={action('Submit')}
-        fieldsStyleConfig={fieldsStyle}
-        fieldsTypes={fieldType}
-        labelPosition={labelPosition}
-      />
-    )
+  return () => (
+    <AddressForm
+      style={object('Style', defaultStyle)}
+      value={object('Value', defaultValue)}
+      submitText={text('Submit Text', 'CONTINUE')}
+      onSubmit={action('Submit')}
+      fieldsStyleConfig={fieldsStyle}
+      fieldsTypes={fieldType}
+      labelPosition={labelPosition}
+    />
   );
 };
 

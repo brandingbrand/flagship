@@ -6,7 +6,7 @@ import {
   LayoutStackChildren,
   LayoutTabsChildren,
   Navigation,
-  Options
+  Options,
 } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import screenWrapper from '../components/screenWrapper';
@@ -41,24 +41,24 @@ export class FSApp extends FSAppBase {
       );
     }
 
-    this.startApp().catch(e => console.error(e));
+    this.startApp().catch((e) => console.error(e));
   }
 
   registerScreens(): void {
     const { screens } = this.appConfig;
-    const enhancedScreens = Object.keys(screens).map(key => {
+    const enhancedScreens = Object.keys(screens).map((key) => {
       const component = screens[key];
 
       return {
         key,
-        Screen: screenWrapper(component, this.appConfig, this.api)
+        Screen: screenWrapper(component, this.appConfig, this.api),
       };
     });
 
     if (this.shouldShowDevMenu()) {
       enhancedScreens.unshift({
         key: 'devMenu',
-        Screen: screenWrapper(DevMenu, this.appConfig, this.api)
+        Screen: screenWrapper(DevMenu, this.appConfig, this.api),
       });
     }
 
@@ -66,27 +66,34 @@ export class FSApp extends FSAppBase {
       if (typeof this.appConfig.notFoundRedirect === 'function') {
         enhancedScreens.unshift({
           key: '*',
-          Screen: screenWrapper(this.appConfig.notFoundRedirect, this.appConfig, this.api)
+          Screen: screenWrapper(this.appConfig.notFoundRedirect, this.appConfig, this.api),
         });
       } else {
         enhancedScreens.unshift({
           key: '*',
-          Screen: screenWrapper(NotFound(this.appConfig.notFoundRedirect), this.appConfig, this.api)
+          Screen: screenWrapper(
+            NotFound(this.appConfig.notFoundRedirect),
+            this.appConfig,
+            this.api
+          ),
         });
       }
     }
 
     enhancedScreens.forEach(({ key, Screen }) => {
-      Navigation.registerComponent(key, () => props => {
-        return this.store ? (
-          <Provider store={this.store}>
+      Navigation.registerComponent(
+        key,
+        () => (props) => {
+          return this.store ? (
+            <Provider store={this.store}>
+              <Screen {...props} />
+            </Provider>
+          ) : (
             <Screen {...props} />
-          </Provider>
-        ) : (
-          <Screen {...props} />
-        );
-      }
-      , () => Screen);
+          );
+        },
+        () => Screen
+      );
     });
   }
 
@@ -105,9 +112,10 @@ export class FSApp extends FSAppBase {
     if (appType !== 'singleScreen' && Platform.OS === 'android' && popToRootOnTabPressAndroid) {
       Navigation.events().registerBottomTabSelectedListener((event: BottomTabSelectedEvent) => {
         if (event.selectedTabIndex === event.unselectedTabIndex && tabs) {
-          const tabId = tabs[event.selectedTabIndex].id ||
+          const tabId =
+            tabs[event.selectedTabIndex].id ||
             this.defaultIdFromName(tabs[event.selectedTabIndex].name);
-          Navigation.popToRoot(tabId).catch(e => console.warn(e));
+          Navigation.popToRoot(tabId).catch((e) => console.warn(e));
         }
       });
     }
@@ -123,7 +131,6 @@ export class FSApp extends FSAppBase {
         } else {
           await this.startTabApp();
         }
-
       } catch (e) {
         console.warn('FSApp setRoot error: ', e);
       }
@@ -140,9 +147,11 @@ export class FSApp extends FSAppBase {
       throw new Error('screen must be defined in the app config to start a singleScreen app');
     }
 
-    const children = [{
-      component: screen
-    }];
+    const children = [
+      {
+        component: screen,
+      },
+    ];
 
     if (this.shouldShowDevMenu()) {
       const restoredScreen = await this.getSavedScreen();
@@ -155,19 +164,15 @@ export class FSApp extends FSAppBase {
       return Navigation.setRoot({
         root: {
           stack: {
-            children
-          }
-        }
+            children,
+          },
+        },
       });
     });
   }
 
   protected async startTabApp(): Promise<void> {
-    const {
-      bottomTabsId,
-      bottomTabsOptions,
-      tabs
-    } = this.appConfig;
+    const { bottomTabsId, bottomTabsOptions, tabs } = this.appConfig;
 
     if (!Array.isArray(tabs) || tabs.length === 0) {
       throw new Error('One or more tabs must be defined in the app config to start a tabbed app');
@@ -182,9 +187,9 @@ export class FSApp extends FSAppBase {
           bottomTabs: {
             id: bottomTabsId || 'bottomTabsId',
             children,
-            options: bottomTabsOptions
-          }
-        }
+            options: bottomTabsOptions,
+          },
+        },
       });
     });
   }
@@ -196,8 +201,9 @@ export class FSApp extends FSAppBase {
   protected deprecatedOptions(tab: Tab): Options | undefined {
     let { options } = tab;
     if (tab.label) {
-      console.warn('Label for tab ' + tab.name +
-        ' has been deprecated. Please switch to topBar.title.text');
+      console.warn(
+        'Label for tab ' + tab.name + ' has been deprecated. Please switch to topBar.title.text'
+      );
       options = options || {};
       options.topBar = options.topBar || {};
       options.topBar.title = options.topBar.title || {};
@@ -205,26 +211,31 @@ export class FSApp extends FSAppBase {
     }
 
     if (tab.icon) {
-      console.warn('Icon for tab ' + tab.name +
-        ' has been deprecated. Please switch to bottomTab.icon');
+      console.warn(
+        'Icon for tab ' + tab.name + ' has been deprecated. Please switch to bottomTab.icon'
+      );
       options = options || {};
       if (options.bottomTab) {
         options.bottomTab.icon = tab.icon;
       } else {
         options.bottomTab = {
-          icon: tab.icon
+          icon: tab.icon,
         };
       }
       options.bottomTab.icon = tab.icon;
       if (tab.label) {
         options.bottomTab.text = tab.label;
-        console.warn('Label for tab ' + tab.name +
-        ' has been deprecated. Please switch to bottomTab.text');
+        console.warn(
+          'Label for tab ' + tab.name + ' has been deprecated. Please switch to bottomTab.text'
+        );
       }
       if (tab.selectedIcon) {
         options.bottomTab.selectedIcon = tab.selectedIcon;
-        console.warn('Selected Icon for tab ' + tab.name +
-        ' has been deprecated. Please switch to bottomTab.selectedIcon');
+        console.warn(
+          'Selected Icon for tab ' +
+            tab.name +
+            ' has been deprecated. Please switch to bottomTab.selectedIcon'
+        );
       }
     }
 
@@ -238,11 +249,13 @@ export class FSApp extends FSAppBase {
       console.warn('Please specify an id for the ' + tab.name + 'tab. Defaulting to ' + id);
     }
 
-    const children: LayoutStackChildren[] = [{
-      component: {
-        name: tab.name
-      }
-    }];
+    const children: LayoutStackChildren[] = [
+      {
+        component: {
+          name: tab.name,
+        },
+      },
+    ];
 
     // Push saved screen onto the first tab stack
     if (index === 0 && this.shouldShowDevMenu()) {
@@ -256,8 +269,8 @@ export class FSApp extends FSAppBase {
       stack: {
         id,
         children,
-        options: this.deprecatedOptions(tab)
-      }
+        options: this.deprecatedOptions(tab),
+      },
     };
   }
 
@@ -268,7 +281,6 @@ export class FSApp extends FSAppBase {
       if (keepLastScreen === 'true') {
         await AsyncStorage.setItem(LAST_SCREEN_KEY, JSON.stringify(event));
       }
-
     } catch (e) {
       console.log('Cannot get lastScreen from AsyncStorage', e);
     }
@@ -296,9 +308,8 @@ export class FSApp extends FSAppBase {
 
       return {
         name: componentName,
-        passProps
+        passProps,
       };
-
     } catch (e) {
       console.warn('Unable to restore screen', e);
       return;

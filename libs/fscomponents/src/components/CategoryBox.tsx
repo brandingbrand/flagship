@@ -7,7 +7,7 @@ import {
   TextStyle,
   TouchableHighlight,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { style as S } from '../styles/CategoryBox';
@@ -20,10 +20,8 @@ export interface SerializableCategoryBoxProps extends CommerceTypes.Category {
   underlayColor?: string;
 }
 
-export interface CategoryBoxProps extends Omit<SerializableCategoryBoxProps,
-  'imageStyle' |
-  'style' |
-  'titleStyle'> {
+export interface CategoryBoxProps
+  extends Omit<SerializableCategoryBoxProps, 'imageStyle' | 'style' | 'titleStyle'> {
   imageStyle?: StyleProp<ImageStyle>;
   onPress?: (item: CommerceTypes.Category) => void;
   style?: StyleProp<ViewStyle>;
@@ -31,15 +29,7 @@ export interface CategoryBoxProps extends Omit<SerializableCategoryBoxProps,
 }
 
 const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
-  const {
-    image,
-    showImage,
-    imageStyle,
-    style,
-    title,
-    titleStyle,
-    underlayColor
-  } = props;
+  const { image, showImage, imageStyle, style, title, titleStyle, underlayColor } = props;
 
   // Called when a user taps on the item.
   const handlePress = () => {
@@ -54,13 +44,11 @@ const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
       style={[S.boxOuter, style]}
       underlayColor={underlayColor || '#eee'}
       onPress={handlePress}
-      accessibilityRole='imagebutton'
+      accessibilityRole="imagebutton"
     >
       <View style={S.boxInner}>
         {showImage !== false && image && <Image source={image} style={imageStyle} />}
-        <Text style={[S.boxText, titleStyle]}>
-          {title}
-        </Text>
+        <Text style={[S.boxText, titleStyle]}>{title}</Text>
       </View>
     </TouchableHighlight>
   );

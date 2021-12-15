@@ -1,12 +1,5 @@
 import React, { PureComponent } from 'react';
-import {
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/MoreText';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -31,11 +24,8 @@ export interface SerializableMoreTextProps {
   textMoreLessStyle?: TextStyle;
 }
 
-export interface MoreTextProps extends Omit<SerializableMoreTextProps,
-  'containerStyle' |
-  'textStyle' |
-  'textMoreLessStyle'
-  > {
+export interface MoreTextProps
+  extends Omit<SerializableMoreTextProps, 'containerStyle' | 'textStyle' | 'textMoreLessStyle'> {
   // Container
   containerStyle?: StyleProp<ViewStyle>;
 
@@ -44,8 +34,10 @@ export interface MoreTextProps extends Omit<SerializableMoreTextProps,
 
   // More/Less Section
   textMoreLessStyle?: StyleProp<TextStyle>;
-  renderMoreLessOutwardSection?:
-    (shouldShowMore: boolean, handlePress: () => void) => React.ReactNode;
+  renderMoreLessOutwardSection?: (
+    shouldShowMore: boolean,
+    handlePress: () => void
+  ) => React.ReactNode;
 }
 
 export interface MoreTextState {
@@ -63,42 +55,34 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
 
     this.state = {
       shouldShowMore: props.text.length > props.numberOfCharacters,
-      visibleText: props.text.length > props.numberOfCharacters ?
-        props.text.substring(0, props.numberOfCharacters) : props.text
+      visibleText:
+        props.text.length > props.numberOfCharacters
+          ? props.text.substring(0, props.numberOfCharacters)
+          : props.text,
     };
   }
 
   handlePress = () => {
-    const {
-      text,
-      numberOfCharacters
-    } = this.props;
+    const { text, numberOfCharacters } = this.props;
 
     if (this.state.shouldShowMore) {
       this.setState({
         shouldShowMore: false,
-        visibleText: text
+        visibleText: text,
       });
     } else {
       this.setState({
         shouldShowMore: true,
-        visibleText: text.length > numberOfCharacters ?
-          text.substring(0, numberOfCharacters) : text
+        visibleText:
+          text.length > numberOfCharacters ? text.substring(0, numberOfCharacters) : text,
       });
     }
-  }
+  };
 
   renderMoreLessOutwardSection = () => {
-    const {
-      shouldShowMore
-    } = this.state;
+    const { shouldShowMore } = this.state;
 
-    const {
-      textMore,
-      textLess,
-      textMoreLessStyle,
-      renderMoreLessOutwardSection
-    } = this.props;
+    const { textMore, textLess, textMoreLessStyle, renderMoreLessOutwardSection } = this.props;
 
     if (renderMoreLessOutwardSection) {
       return renderMoreLessOutwardSection(shouldShowMore, this.handlePress);
@@ -118,47 +102,31 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
         </Text>
       </TouchableOpacity>
     );
-  }
+  };
 
   renderOutward = () => {
-    const {
-      visibleText
-    } = this.state;
+    const { visibleText } = this.state;
 
-    const {
-      containerStyle,
-      textStyle
-    } = this.props;
+    const { containerStyle, textStyle } = this.props;
 
-    return(
+    return (
       <View style={containerStyle ? containerStyle : S.container}>
-        <Text style={textStyle ? textStyle : S.text}>
-          {visibleText}
-        </Text>
+        <Text style={textStyle ? textStyle : S.text}>{visibleText}</Text>
 
         {this.renderMoreLessOutwardSection()}
       </View>
     );
-  }
+  };
 
   renderInward = () => {
-    const {
-      shouldShowMore,
-      visibleText
-    } = this.state;
+    const { shouldShowMore, visibleText } = this.state;
 
-    const {
-      containerStyle,
-      textLess,
-      textMore,
-      textMoreLessStyle,
-      textStyle
-    } = this.props;
+    const { containerStyle, textLess, textMore, textMoreLessStyle, textStyle } = this.props;
 
     const titleMore = textMore ? textMore : this.kTextMore;
     const titleLess = textLess ? textLess : this.kTextLess;
 
-    return(
+    return (
       <View style={containerStyle ? containerStyle : S.container}>
         <TouchableOpacity
           accessibilityLabel={shouldShowMore ? titleMore : titleLess}
@@ -166,8 +134,7 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
           onPress={this.handlePress}
         >
           <Text style={textStyle ? textStyle : S.text}>
-            {visibleText}
-            {' '}
+            {visibleText}{' '}
             <Text style={textMoreLessStyle ? textMoreLessStyle : S.textMoreLess}>
               {shouldShowMore ? titleMore : titleLess}
             </Text>
@@ -175,17 +142,13 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
         </TouchableOpacity>
       </View>
     );
-  }
+  };
 
   render(): JSX.Element {
     const { text, textStyle, numberOfCharacters } = this.props;
 
     if (text.length <= numberOfCharacters) {
-      return (
-      <Text style={textStyle ? textStyle : S.text}>
-        {text}
-      </Text>
-      );
+      return <Text style={textStyle ? textStyle : S.text}>{text}</Text>;
     }
 
     switch (this.props.format) {

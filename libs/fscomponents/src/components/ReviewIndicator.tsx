@@ -42,15 +42,15 @@ const Star = ({ renderStar, style, text }: StarProps): JSX.Element => {
 
   return <Text style={[S.star, style]}>{text}</Text>;
 };
-export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
-(props): JSX.Element => {
-
+export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> = (
+  props
+): JSX.Element => {
   const getItemData = (value: number, base: number = 5): NormalizedValue => {
     if (value >= base) {
       return {
         full: base,
         empty: 0,
-        hasHalf: false
+        hasHalf: false,
       };
     }
 
@@ -73,7 +73,7 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
     return {
       full,
       empty,
-      hasHalf
+      hasHalf,
     };
   };
 
@@ -98,15 +98,22 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
     return (
       <View style={[S.halfStarContainer, containerStarStyle]}>
         <View style={S.starHalfLeftWrap}>
-          <Star text='★' style={[S.starHalfLeft, customStarStyle]} />
+          <Star text="★" style={[S.starHalfLeft, customStarStyle]} />
         </View>
         <View style={S.starHalfRightWrap}>
           <Star
             text={emptyStar === true ? '☆' : '★'}
-            style={[customStarStyle, S.starHalfRight,
-              starHalfRightStyle, S.emptyStar, props.emptyColor ? {
-                color: props.emptyColor
-              } : undefined]}
+            style={[
+              customStarStyle,
+              S.starHalfRight,
+              starHalfRightStyle,
+              S.emptyStar,
+              props.emptyColor
+                ? {
+                    color: props.emptyColor,
+                  }
+                : undefined,
+            ]}
           />
         </View>
       </View>
@@ -122,7 +129,7 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
     style,
     renderFullStar,
     renderHalfStar,
-    renderEmptyStar
+    renderEmptyStar,
   } = props;
 
   const itemData = getItemData(value, base);
@@ -138,8 +145,9 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
     customStarStyle.color = itemColor;
   }
 
-  const label = props.accessibilityLabel ? props.accessibilityLabel :
-    props.value + FSI18n.string(componentTranslationKeys.indicatorDefault);
+  const label = props.accessibilityLabel
+    ? props.accessibilityLabel
+    : props.value + FSI18n.string(componentTranslationKeys.indicatorDefault);
 
   return (
     <View
@@ -149,23 +157,23 @@ export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> =
       accessibilityRole={props.accessibilityRole}
       accessibilityLabel={label}
     >
-      {newArray(itemData.full).map(v => (
-        <Star
-          text='★'
-          renderStar={renderFullStar}
-          style={customStarStyle}
-          key={v}
-        />
+      {newArray(itemData.full).map((v) => (
+        <Star text="★" renderStar={renderFullStar} style={customStarStyle} key={v} />
       ))}
-      {itemData.hasHalf &&
-        (renderHalfStar ? renderHalfStar() : renderHalf())}
-      {newArray(itemData.empty).map(v => (
+      {itemData.hasHalf && (renderHalfStar ? renderHalfStar() : renderHalf())}
+      {newArray(itemData.empty).map((v) => (
         <Star
           text={emptyStar === true ? '☆' : '★'}
           renderStar={renderEmptyStar}
-          style={[customStarStyle, S.emptyStar, props.emptyColor ? {
-            color: props.emptyColor
-          } : undefined]}
+          style={[
+            customStarStyle,
+            S.emptyStar,
+            props.emptyColor
+              ? {
+                  color: props.emptyColor,
+                }
+              : undefined,
+          ]}
           key={v}
         />
       ))}

@@ -29,5 +29,5 @@ export {
   path,
   rename,
   version,
-  web
+  web,
 };

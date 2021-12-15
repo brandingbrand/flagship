@@ -29,4 +29,3 @@ export interface ShellConfig {
   readonly leftDrawer?: DrawerComponentType;
   readonly rightDrawer?: DrawerComponentType;
 }
-

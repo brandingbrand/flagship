@@ -1,10 +1,7 @@
 import React from 'react';
 import { ChangePassword, FormValues } from '../src/components/ChangePasswordComponent';
 import { storiesOf } from '@storybook/react';
-import {
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { object, text } from '@storybook/addon-knobs';
 
 const fieldsOptions = {
   confirmPassword: {
@@ -12,8 +9,8 @@ const fieldsOptions = {
     returnKeyType: 'next',
     autoCorrect: false,
     autoCapitalize: 'none',
-    secureTextEntry: true
-  }
+    secureTextEntry: true,
+  },
 };
 
 const onSubmit = (values: FormValues) => {
@@ -26,26 +23,22 @@ const defaultStyle = {
   textbox: {
     normal: {
       borderRadius: 15,
-      fontSize:  15,
-      color: '#890'
+      fontSize: 15,
+      color: '#890',
     },
     error: {
       borderRadius: 30,
       fontSize: 15,
-      color: '#529'
-    }
+      color: '#529',
+    },
   },
   errorBlock: {
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 };
 
 const renderChangePasswordBox = (): JSX.Element => {
-  return (
-    <ChangePassword
-      onSubmit={onSubmit}
-    />
-  );
+  return <ChangePassword onSubmit={onSubmit} />;
 };
 
 const renderCustomChangePasswordBox = (): JSX.Element => {
@@ -58,6 +51,6 @@ const renderCustomChangePasswordBox = (): JSX.Element => {
   );
 };
 
-storiesOf('ChangePassword', module).
-add('custom styling', renderCustomChangePasswordBox).
-add('basic usage', renderChangePasswordBox);
+storiesOf('ChangePassword', module)
+  .add('custom styling', renderCustomChangePasswordBox)
+  .add('basic usage', renderChangePasswordBox);

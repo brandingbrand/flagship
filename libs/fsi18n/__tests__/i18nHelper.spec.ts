@@ -9,7 +9,7 @@ beforeEach(() => {
     currentLocale: () => 'en-US',
     translate: () => 'test',
     translations: {},
-    locale: 'en-US'
+    locale: 'en-US',
   });
 });
 
@@ -46,7 +46,7 @@ describe('fsi18n', () => {
 
       expect(spy).toBeCalledWith(testNumber, {
         style: 'currency',
-        currency: testCurrency
+        currency: testCurrency,
       });
     });
 
@@ -58,14 +58,14 @@ describe('fsi18n', () => {
       const spy = jest.spyOn(i18n, 'number');
       const testNumber = 1234.56;
       const options = {
-        currency: 'eur'
+        currency: 'eur',
       };
 
       i18n.currency(testNumber, undefined, options);
 
       expect(spy).toBeCalledWith(testNumber, {
         style: 'currency',
-        currency: 'eur'
+        currency: 'eur',
       });
     });
   });
@@ -78,7 +78,7 @@ describe('fsi18n', () => {
       i18n.percent(testNumber);
 
       expect(spy).toBeCalledWith(testNumber, {
-        style: 'percent'
+        style: 'percent',
       });
     });
   });
@@ -96,24 +96,30 @@ describe('fsi18n', () => {
   });
 
   describe('convertToNumber', () => {
-    const tests = [{
-      input: '1',
-      result: 1
-    }, {
-      input: '1.1',
-      result: 1.1
-    }, {
-      input: '-1.1',
-      result: -1.1
-    }, {
-      input: 'bad',
-      result: NaN
-    }, {
-      input: new Decimal(123),
-      result: 123
-    }];
+    const tests = [
+      {
+        input: '1',
+        result: 1,
+      },
+      {
+        input: '1.1',
+        result: 1.1,
+      },
+      {
+        input: '-1.1',
+        result: -1.1,
+      },
+      {
+        input: 'bad',
+        result: NaN,
+      },
+      {
+        input: new Decimal(123),
+        result: 123,
+      },
+    ];
 
-    tests.forEach(({input, result}) => {
+    tests.forEach(({ input, result }) => {
       test(`should convert "${input}" to a number`, () => {
         // @ts-ignore Testing protected function
         const num = i18n.convertToNumber(input);

@@ -25,7 +25,7 @@ export interface ReviewMetadata {
   /**
    * Creation date and time of the review
    */
-  created?: any;  // TODO: date interface
+  created?: any; // TODO: date interface
 }
 
 /**

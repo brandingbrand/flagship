@@ -9,7 +9,7 @@ import { FSTranslationKeys, I18n as I18nInterface } from './types';
 const FSI18n = new I18nHelper(I18n as unknown as I18nInterface);
 
 const translations = {
-  en: translationAssets.en.keys
+  en: translationAssets.en.keys,
 };
 
 const translationKeys = FSI18n.addTranslations<FSTranslationKeys<string>>(translations);

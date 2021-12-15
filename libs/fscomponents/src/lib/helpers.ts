@@ -10,13 +10,9 @@ import { Address, Hour } from '../types/Store';
  * @param currentDate date that we want to know if open or not, default to currect date
  * @param format format type: "1", "2" or "3", default is "1"
  */
-export function formatHours(
-  hours: Hour[],
-  currentDate?: Date,
-  format?: string
-) {
+export function formatHours(hours: Hour[], currentDate?: Date, format?: string) {
   const date = currentDate || new Date();
-  const hourOfDay = hours.find(h => h.dayOfWeek === date.getDay());
+  const hourOfDay = hours.find((h) => h.dayOfWeek === date.getDay());
   if (!hourOfDay) return ``;
 
   switch (format) {
@@ -130,7 +126,7 @@ export async function animatedScrollTo(element: HTMLElement, target: number, dur
   const distance = target - start_top;
 
   // based on http://en.wikipedia.org/wiki/Smoothstep
-  const smooth_step = function(start: number, end: number, point: number) {
+  const smooth_step = function (start: number, end: number, point: number) {
     if (point <= start) {
       return 0;
     }
@@ -141,12 +137,12 @@ export async function animatedScrollTo(element: HTMLElement, target: number, dur
     return x * x * (3 - 2 * x);
   };
 
-  return new Promise<void>(function(resolve, reject) {
+  return new Promise<void>(function (resolve, reject) {
     const previous_scroll_snap = (element.style as any).scrollSnapType;
     let previous_top = element.scrollLeft;
 
-    (element.style as any).scrollSnapType = "";
-    const scroll_frame = function() {
+    (element.style as any).scrollSnapType = '';
+    const scroll_frame = function () {
       if (element.scrollLeft !== previous_top) {
         return;
       }
@@ -162,10 +158,7 @@ export async function animatedScrollTo(element: HTMLElement, target: number, dur
         return;
       }
 
-      if (
-        element.scrollLeft === previous_top &&
-        element.scrollLeft !== frameTop
-      ) {
+      if (element.scrollLeft === previous_top && element.scrollLeft !== frameTop) {
         (element.style as any).scrollSnapType = previous_scroll_snap;
         resolve();
         return;

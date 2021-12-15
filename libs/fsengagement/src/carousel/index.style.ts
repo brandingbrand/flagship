@@ -4,32 +4,32 @@ export const colors = {
   black: '#1a1917',
   gray: '#888888',
   background1: '#B721FF',
-  background2: '#21D4FD'
+  background2: '#21D4FD',
 };
 
 export default StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
   },
   container: {
     flex: 1,
-    backgroundColor: colors.background1
+    backgroundColor: colors.background1,
   },
   gradient: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   scrollview: {
-    flex: 1
+    flex: 1,
   },
   exampleContainer: {
-    paddingVertical: 30
+    paddingVertical: 30,
   },
   exampleContainerDark: {
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
   },
   exampleContainerLight: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   title: {
     paddingHorizontal: 30,
@@ -37,10 +37,10 @@ export default StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   titleDark: {
-    color: colors.black
+    color: colors.black,
   },
   subtitle: {
     marginTop: 5,
@@ -49,34 +49,32 @@ export default StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.75)',
     fontSize: 13,
     fontStyle: 'italic',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   slider: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   loadingInner: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   sliderContentContainer: {},
   paginationContainer: {
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   paginationDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 8
+    marginHorizontal: 8,
   },
-  pageCounter: {
-
-  },
+  pageCounter: {},
   pageNum: {
     color: '#000',
     fontWeight: '500',
     fontFamily: 'Arial',
     fontSize: 17,
-    letterSpacing: 1
-  }
+    letterSpacing: 1,
+  },
 });

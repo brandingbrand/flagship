@@ -8,7 +8,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import type { SwatchItemType } from './Swatches';
 
@@ -59,7 +59,6 @@ export interface SwatchProps extends SwatchStyle, SerializableSwatchProps {
 }
 
 export class Swatch extends PureComponent<SwatchProps> {
-
   _renderTouchable(style: StyleProp<ViewStyle>, child: JSX.Element): JSX.Element {
     const { disabled, name, onSelect, value } = this.props;
 
@@ -68,7 +67,7 @@ export class Swatch extends PureComponent<SwatchProps> {
         style={style}
         onPress={onSelect.bind(this, this.props)}
         disabled={disabled}
-        accessibilityRole='button'
+        accessibilityRole="button"
         accessibilityLabel={name || value}
       >
         {child}
@@ -85,28 +84,26 @@ export class Swatch extends PureComponent<SwatchProps> {
       colorStyle,
       selectedColorStyle,
       disabledColorStyle,
-      disabled
+      disabled,
     } = this.props;
-
 
     const style: StyleProp<ViewStyle> = [
       [S.colorContainerItem, colorContainerStyle],
       selected && [S.selectedColorContainerItem, selectedColorContainerStyle],
-      disabled && disabledColorContainerStyle
+      disabled && disabledColorContainerStyle,
     ];
 
-    return this._renderTouchable(style,
-      (
-        <View
-          style={[
-            S.colorItem,
-            colorStyle,
-            selected ? selectedColorStyle : null,
-            disabled ? disabledColorStyle : null,
-            { backgroundColor: color }
-          ]}
-        />
-      )
+    return this._renderTouchable(
+      style,
+      <View
+        style={[
+          S.colorItem,
+          colorStyle,
+          selected ? selectedColorStyle : null,
+          disabled ? disabledColorStyle : null,
+          { backgroundColor: color },
+        ]}
+      />
     );
   }
 
@@ -119,7 +116,7 @@ export class Swatch extends PureComponent<SwatchProps> {
       imageStyle,
       selectedImageStyle,
       disabledImageStyle,
-      disabled
+      disabled,
     } = this.props;
 
     if (!image) {
@@ -129,22 +126,21 @@ export class Swatch extends PureComponent<SwatchProps> {
     const style: StyleProp<ViewStyle> = [
       [S.imageContainerItem, imageContainerStyle],
       selected && [S.selectedImageContainerItem, selectedImageContainerStyle],
-      disabled && disabledImageContainerStyle
+      disabled && disabledImageContainerStyle,
     ];
 
-    return this._renderTouchable(style,
-      (
-        <Image
-          style={[
-            S.imageItem,
-            selected ? S.selectedImageItem : [],
-            imageStyle,
-            selected ? selectedImageStyle : [],
-            disabled ? disabledImageStyle : []
-          ]}
-          source={image}
-        />
-      )
+    return this._renderTouchable(
+      style,
+      <Image
+        style={[
+          S.imageItem,
+          selected ? S.selectedImageItem : [],
+          imageStyle,
+          selected ? selectedImageStyle : [],
+          disabled ? disabledImageStyle : [],
+        ]}
+        source={image}
+      />
     );
   }
 
@@ -159,40 +155,32 @@ export class Swatch extends PureComponent<SwatchProps> {
       selectedTextStyle,
       disabledTextStyle,
       disabled,
-      name
+      name,
     } = this.props;
-
 
     const style: StyleProp<ViewStyle> = [
       [S.textContainerItem, textContainerStyle],
       selected && [S.selectedTextContainerItem, selectedTextContainerStyle],
-      disabled && disabledTextContainerStyle
+      disabled && disabledTextContainerStyle,
     ];
 
-    return this._renderTouchable(style,
-      (
-        <Text
-          style={[
-            S.textItem,
-            textStyle,
-            selected ? selectedTextStyle : [],
-            disabled ? disabledTextStyle : []
-          ]}
-        >
-          {name || value}
-        </Text>
-      )
+    return this._renderTouchable(
+      style,
+      <Text
+        style={[
+          S.textItem,
+          textStyle,
+          selected ? selectedTextStyle : [],
+          disabled ? disabledTextStyle : [],
+        ]}
+      >
+        {name || value}
+      </Text>
     );
   }
 
   render(): React.ReactNode {
-    const {
-      color,
-      image,
-      value,
-      render,
-      swatch
-    } = this.props;
+    const { color, image, value, render, swatch } = this.props;
 
     if (render) {
       return render(this.props);
@@ -212,5 +200,4 @@ export class Swatch extends PureComponent<SwatchProps> {
       return null;
     }
   }
-
 }

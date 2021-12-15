@@ -19,7 +19,7 @@ import AnalyticsProvider, {
   SearchGeneric,
   Transaction,
   TransactionAction,
-  TransactionRefund
+  TransactionRefund,
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
@@ -34,8 +34,10 @@ export default class LeanplumProvider extends AnalyticsProvider {
   client: typeof RNLeanplum;
   monetizationEventName: string;
 
-  constructor(commonConfiguration: AnalyticsProviderConfiguration,
-              configuration: LeanplumProviderConfiguration) {
+  constructor(
+    commonConfiguration: AnalyticsProviderConfiguration,
+    configuration: LeanplumProviderConfiguration
+  ) {
     super(commonConfiguration);
 
     // Leanplum accepts by default 'Purchase' as event name for revenue metrics. Confirm with
@@ -58,14 +60,14 @@ export default class LeanplumProvider extends AnalyticsProvider {
   contactCall(properties: ContactCall): void {
     this.client.track(properties.eventAction, undefined, undefined, {
       component: properties.eventCategory,
-      number: properties.number
+      number: properties.number,
     });
   }
 
   contactEmail(properties: ContactEmail): void {
     this.client.track(properties.eventAction, undefined, undefined, {
       component: properties.eventCategory,
-      to: properties.to
+      to: properties.to,
     });
   }
 
@@ -74,7 +76,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      index: properties.index
+      index: properties.index,
     });
   }
 
@@ -87,7 +89,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     this.client.track(properties.eventAction, undefined, undefined, {
       component: properties.eventCategory,
       identifier: properties.identifier,
-      address: properties.address
+      address: properties.address,
     });
   }
 
@@ -101,7 +103,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       appId: this.appId,
       appInstallerId: this.appInstallerId,
       appName: this.appName,
-      appVersion: this.appVersion
+      appVersion: this.appVersion,
     });
   }
 
@@ -109,7 +111,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     this.client.track(properties.eventAction, undefined, undefined, {
       component: properties.eventCategory,
       term: properties.term,
-      count: properties.count
+      count: properties.count,
     });
   }
 
@@ -126,7 +128,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       price: properties.price,
       quantity: properties.quantity,
       index: properties.index,
-      ...this._transformCouponsArray(properties.coupons)
+      ...this._transformCouponsArray(properties.coupons),
     });
   }
 
@@ -135,7 +137,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach(product => {
+    properties.products.forEach((product) => {
       this.client.track(properties.eventAction, undefined, undefined, {
         component: properties.eventCategory,
         identifier: product.identifier,
@@ -147,7 +149,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
         quantity: product.quantity,
         index: product.index,
         step: action.step, // Checkout step.
-        ...this._transformCouponsArray(product.coupons)
+        ...this._transformCouponsArray(product.coupons),
       });
     });
 
@@ -157,7 +159,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     this.client.track('checkoutOption', undefined, undefined, {
       component: properties.eventCategory,
       step: action.step,
-      option: action.option
+      option: action.option,
     });
   }
 
@@ -165,7 +167,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     this.client.track(properties.eventAction, undefined, undefined, {
       component: properties.eventCategory,
       step: action.step,
-      option: action.option
+      option: action.option,
     });
   }
 
@@ -181,7 +183,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       price: properties.price,
       quantity: properties.quantity,
       index: properties.index,
-      ...this._transformCouponsArray(properties.coupons)
+      ...this._transformCouponsArray(properties.coupons),
     });
   }
 
@@ -191,7 +193,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       identifier: properties.identifier,
       name: properties.name,
       creative: properties.creative,
-      slot: properties.slot
+      slot: properties.slot,
     });
   }
 
@@ -205,7 +207,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       list: properties.list,
       variant: properties.variant,
       price: properties.price,
-      index: properties.index
+      index: properties.index,
     });
   }
 
@@ -224,7 +226,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach(product => {
+    properties.products.forEach((product) => {
       this.client.track('purchaseDetail', undefined, undefined, {
         component: properties.eventCategory,
         identifier: product.identifier,
@@ -236,7 +238,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
         price: product.price,
         quantity: product.quantity,
         index: product.index,
-        ...this._transformCouponsArray(product.coupons)
+        ...this._transformCouponsArray(product.coupons),
       });
     });
 
@@ -248,7 +250,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       affiliation: action.affiliation,
       tax: action.tax,
       shippingCost: action.shippingCost,
-      ...this._transformCouponsArray(action.coupons)
+      ...this._transformCouponsArray(action.coupons),
     });
   }
 
@@ -261,7 +263,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       affiliation: action.affiliation,
       tax: action.tax,
       shippingCost: action.shippingCost,
-      ...this._transformCouponsArray(action.coupons)
+      ...this._transformCouponsArray(action.coupons),
     });
   }
 
@@ -270,14 +272,14 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach(product => {
+    properties.products.forEach((product) => {
       this.client.track('refundPartialDetail', undefined, undefined, {
         component: properties.eventCategory,
         identifier: product.identifier,
         transactionIdentifier: action.identifier, // Same as 'identifier' on 'refundPartial' event.
         price: product.price,
         quantity: product.quantity,
-        ...this._transformCouponsArray(product.coupons)
+        ...this._transformCouponsArray(product.coupons),
       });
     });
 
@@ -289,7 +291,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
       affiliation: action.affiliation,
       tax: action.tax,
       shippingCost: action.shippingCost,
-      ...this._transformCouponsArray(action.coupons)
+      ...this._transformCouponsArray(action.coupons),
     });
   }
 
@@ -303,7 +305,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
   lifecycle(properties: App): void {
     this.client.track(properties.eventAction, undefined, undefined, {
       appId: this.appId,
-      lifecycle: properties.lifecycle
+      lifecycle: properties.lifecycle,
     });
   }
 

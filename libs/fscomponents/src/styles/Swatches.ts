@@ -1,29 +1,23 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   borderBox: {
     flex: 1,
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   labelContainer: {
     flexDirection: 'row',
-    marginBottom: 6
+    marginBottom: 6,
   },
   labelTitle: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textContainerItem: {
     borderWidth: 1,
@@ -32,7 +26,7 @@ export const style = StyleSheet.create({
     paddingBottom: 5,
     paddingRight: 8,
     paddingLeft: 8,
-    margin: 3
+    margin: 3,
   },
   selectedTextContainerItem: {
     borderColor: 'black',
@@ -40,40 +34,40 @@ export const style = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     paddingRight: 7,
-    paddingLeft: 7
+    paddingLeft: 7,
   },
   textItem: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   colorContainerItem: {
     width: 25,
     height: 25,
     margin: 5,
-    borderRadius: 25
+    borderRadius: 25,
   },
   selectedColorContainerItem: {
     borderColor: 'black',
     borderWidth: 2,
-    padding: 1
+    padding: 1,
   },
   colorItem: {
     flex: 1,
-    borderRadius: 25
+    borderRadius: 25,
   },
   imageContainerItem: {
-    margin: 3
+    margin: 3,
   },
   selectedImageContainerItem: {
     borderColor: 'black',
     borderWidth: 2,
-    padding: 1
+    padding: 1,
   },
   imageItem: {
     width: 25,
-    height: 25
+    height: 25,
   },
   selectedImageItem: {
     width: 19,
-    height: 19
-  }
+    height: 19,
+  },
 });

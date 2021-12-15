@@ -9,7 +9,7 @@ import {
   CombinedRouter,
   LayoutBuilderObject,
   PublishedPage,
-  RouterConfig
+  RouterConfig,
 } from '../types';
 
 export default class AppRouter {
@@ -22,15 +22,18 @@ export default class AppRouter {
 
   constructor(appConfig: AppConfigType) {
     const { env = {}, routerConfig = {} } = appConfig;
-    const { cmsToken, engagement: { appId, baseURL } } = env;
+    const {
+      cmsToken,
+      engagement: { appId, baseURL },
+    } = env;
     this.appRoutes = routerConfig;
     this.cmsToken = cmsToken;
     this.appId = appId;
     this.networkClient = new FSNetwork({
       baseURL,
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
   }
 
@@ -42,7 +45,7 @@ export default class AppRouter {
   getConfig(): any {
     const config = {
       user: { ...this.pageRoutes },
-      app: { ...this.appRoutes }
+      app: { ...this.appRoutes },
     };
     return config;
   }
@@ -85,7 +88,7 @@ export default class AppRouter {
               type: 'cms-page',
               title: this.pageRoutes[path].title || '',
               pageId: this.pageRoutes[path].pageId,
-              content: this.pageRoutes[path].content
+              content: this.pageRoutes[path].content,
             };
             break;
           }
@@ -94,9 +97,10 @@ export default class AppRouter {
             memo[key.name] = values[index];
             return memo;
           }, {});
-          if (this.pageRoutes[path].defaultInputs.length &&
-            this.pageRoutes[path].dataInputs.length ===
-            this.pageRoutes[path].defaultInputs.length) {
+          if (
+            this.pageRoutes[path].defaultInputs.length &&
+            this.pageRoutes[path].dataInputs.length === this.pageRoutes[path].defaultInputs.length
+          ) {
             let valid = true;
             this.pageRoutes[path].dataInputs.forEach((inp: string, index: number) => {
               if (passProps[inp] !== this.pageRoutes[path].defaultInputs[index]) {
@@ -108,7 +112,7 @@ export default class AppRouter {
                 type: 'cms-page',
                 title: this.pageRoutes[path].title || '',
                 pageId: this.pageRoutes[path].pageId,
-                content: this.pageRoutes[path].content
+                content: this.pageRoutes[path].content,
               };
               break;
             }
@@ -120,22 +124,26 @@ export default class AppRouter {
     // TODO: finish card tab switch if tabindex set
 
     if (found && found.type && found.type === 'cms-page') {
-      return navigator.push({
-        component: {
-          name: 'CMS',
-          options: {
-            topBar: {
-              title: {
-                text: found.title
-              }
-            }
+      return navigator
+        .push(
+          {
+            component: {
+              name: 'CMS',
+              options: {
+                topBar: {
+                  title: {
+                    text: found.title,
+                  },
+                },
+              },
+              passProps: {
+                defaultLayout: found.content,
+              },
+            },
           },
-          passProps: {
-            defaultLayout: found.content
-          }
-        }
-      }, Platform.OS === 'web' ? href : undefined).catch(e =>
-          console.warn('CMS Navigator PUSH error: ', e));
+          Platform.OS === 'web' ? href : undefined
+        )
+        .catch((e) => console.warn('CMS Navigator PUSH error: ', e));
     }
 
     for (const path in this.appRoutes) {
@@ -148,7 +156,7 @@ export default class AppRouter {
             found = {
               type: 'app-page',
               screen: this.appRoutes[path].screen || null,
-              tabIndex: this.appRoutes[path].tabIndex || null
+              tabIndex: this.appRoutes[path].tabIndex || null,
             };
             if (this.appRoutes[path]) {
               found.passProps = { ...this.appRoutes[path].passProps } || {};
@@ -176,7 +184,7 @@ export default class AppRouter {
               screen: matchedRoute.screen || null,
               tabIndex: matchedRoute.tabIndex || null,
               passProps: { ...matchedRoute.passProps } || {},
-              params
+              params,
             };
           }
           if (found && found.type) {
@@ -190,17 +198,21 @@ export default class AppRouter {
       if (found.tabIndex) {
         return navigator.mergeOptions({
           bottomTabs: {
-            currentTabIndex: found.tabIndex
-          }
+            currentTabIndex: found.tabIndex,
+          },
         });
       } else if (found.screen) {
-        return navigator.push({
-          component: {
-            name: found.screen,
-            passProps: this.findPropKeys(found.passProps, found.params)
-          }
-        }, Platform.OS === 'web' ? href : undefined).catch(e =>
-          console.warn('ProductIndex PUSH error: ', e));
+        return navigator
+          .push(
+            {
+              component: {
+                name: found.screen,
+                passProps: this.findPropKeys(found.passProps, found.params),
+              },
+            },
+            Platform.OS === 'web' ? href : undefined
+          )
+          .catch((e) => console.warn('ProductIndex PUSH error: ', e));
       }
     }
 
@@ -210,31 +222,35 @@ export default class AppRouter {
         name: 'CMS',
         title: this.pageRoutes['/404'].title,
         props: {
-          defaultLayout: this.pageRoutes['/404'].content
-        }
+          defaultLayout: this.pageRoutes['/404'].content,
+        },
       };
     } else {
       notFoundPage = {
         name: 'NotFound',
         title: '404 Not Found',
-        props: {}
+        props: {},
       };
     }
 
-    return navigator.push({
-      component: {
-        name: notFoundPage.name,
-        options: {
-          topBar: {
-            title: {
-              text: notFoundPage.title
-            }
-          }
+    return navigator
+      .push(
+        {
+          component: {
+            name: notFoundPage.name,
+            options: {
+              topBar: {
+                title: {
+                  text: notFoundPage.title,
+                },
+              },
+            },
+            passProps: notFoundPage.props,
+          },
         },
-        passProps: notFoundPage.props
-      }
-    }, Platform.OS === 'web' ? href : undefined).catch(e =>
-        console.warn('CMS Navigator PUSH error: ', e));
+        Platform.OS === 'web' ? href : undefined
+      )
+      .catch((e) => console.warn('CMS Navigator PUSH error: ', e));
   }
 
   findPropKeys(props: any, params: any): LayoutComponent['passProps'] {
@@ -259,21 +275,27 @@ export default class AppRouter {
     return props;
   }
 
-
   async fetchPageRoutes(): Promise<any> {
-    return this.networkClient.get('PublishedPages?filter=' +
-      encodeURIComponent(JSON.stringify({
-        where: {
-          appId: this.appId,
-          deleted: 0,
-          active: 1
-        },
-        order: 'title'
-      })), {
-        headers: {
-          Authorization: `Bearer ${this.cmsToken}`
+    return this.networkClient
+      .get(
+        'PublishedPages?filter=' +
+          encodeURIComponent(
+            JSON.stringify({
+              where: {
+                appId: this.appId,
+                deleted: 0,
+                active: 1,
+              },
+              order: 'title',
+            })
+          ),
+        {
+          headers: {
+            Authorization: `Bearer ${this.cmsToken}`,
+          },
         }
-      }).then(async pageData => {
+      )
+      .then(async (pageData) => {
         let customRoutes;
         let parsedContent: LayoutBuilderObject | undefined;
 
@@ -291,36 +313,37 @@ export default class AppRouter {
               title: data.title,
               path: data.path || null,
               content: parsedContent,
-              dataInputs: parsedContent?.props?.dataInputs &&
-                Array.isArray(parsedContent.props.dataInputs) ?
-                parsedContent.props.dataInputs : [],
-              defaultInputs: parsedContent?.props?.defaultInputs &&
-                Array.isArray(parsedContent.props.defaultInputs) ?
-                parsedContent.props.defaultInputs : []
+              dataInputs:
+                parsedContent?.props?.dataInputs && Array.isArray(parsedContent.props.dataInputs)
+                  ? parsedContent.props.dataInputs
+                  : [],
+              defaultInputs:
+                parsedContent?.props?.defaultInputs &&
+                Array.isArray(parsedContent.props.defaultInputs)
+                  ? parsedContent.props.defaultInputs
+                  : [],
             };
           });
         }
 
-        return customRoutes.filter((page: PublishedPage) => page.path !== null)
-          .reduce((
-            ret: Record<string, Omit<PublishedPage, 'id' | 'path'>>,
-            page: PublishedPage
-          ) => {
-            if (!page.path) {
+        return customRoutes
+          .filter((page: PublishedPage) => page.path !== null)
+          .reduce(
+            (ret: Record<string, Omit<PublishedPage, 'id' | 'path'>>, page: PublishedPage) => {
+              if (!page.path) {
+                return ret;
+              }
+              ret[page.path] = {
+                pageId: page.id,
+                title: page.title,
+                content: page.content,
+                dataInputs: page.dataInputs,
+                defaultInputs: page.defaultInputs,
+              };
               return ret;
-            }
-            ret[page.path] = {
-              pageId: page.id,
-              title: page.title,
-              content: page.content,
-              dataInputs: page.dataInputs,
-              defaultInputs: page.defaultInputs
-            };
-            return ret;
-          }, {});
-
+            },
+            {}
+          );
       });
   }
-
-
 }

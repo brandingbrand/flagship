@@ -13,7 +13,7 @@ export class StoreManager<S extends GenericState, A extends Action> {
         await this.config.cachedData(
           {
             initialState: updatedState,
-            variables: {}
+            variables: {},
           },
           req
         )
@@ -25,7 +25,7 @@ export class StoreManager<S extends GenericState, A extends Action> {
         await this.config.uncachedData(
           {
             initialState: updatedState,
-            variables: {}
+            variables: {},
           },
           req
         )
@@ -33,12 +33,12 @@ export class StoreManager<S extends GenericState, A extends Action> {
     }
 
     return updatedState as S;
-  }
+  };
 
   public getReduxStore = async (initialState?: S) => {
     return configureStore(
       (initialState ?? this.config.initialState) as unknown as PreloadedState<S>,
       this.config.reducers
     );
-  }
+  };
 }

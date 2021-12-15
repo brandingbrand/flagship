@@ -6,7 +6,7 @@ import type {
   Route,
   RouteCollection,
   RouterConfig,
-  Routes
+  Routes,
 } from './types';
 
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
@@ -23,7 +23,7 @@ import {
   ActivatedRouteProvider,
   ButtonProvider,
   defaultActivatedRoute,
-  NavigatorProvider
+  NavigatorProvider,
 } from './context';
 import { FSRouterBase } from './router.base';
 import { trackView } from './utils';
@@ -44,7 +44,7 @@ export class FSRouter extends FSRouterBase {
   }
 
   private trackCurrentPage(): void {
-    this.history.listen(async location => {
+    this.history.listen(async (location) => {
       try {
         const keepLastScreen = await AsyncStorage.getItem(DEV_KEEP_SCREEN);
 
@@ -71,7 +71,7 @@ export class FSRouter extends FSRouterBase {
         const LoadingPlaceholder = () => <>{this.options.loading}</>;
         if ('component' in route || 'loadComponent' in route) {
           let routeDetails = defaultActivatedRoute;
-          this.history.registerResolver(id, details => {
+          this.history.registerResolver(id, (details) => {
             routeDetails = details;
           });
           const LazyComponent = lazyComponent<{ componentId: string }>(
@@ -113,7 +113,7 @@ export class FSRouter extends FSRouterBase {
             </Wrapper>
           );
           WrappedComponent.options = {
-            bottomTab: typeof tab === 'string' ? { text: tab } : tab
+            bottomTab: typeof tab === 'string' ? { text: tab } : tab,
           };
           Navigation.registerComponent(id, () => WrappedComponent);
           addedRoutes.add(id);

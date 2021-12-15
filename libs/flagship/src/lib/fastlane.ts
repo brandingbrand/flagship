@@ -42,10 +42,12 @@ export function configure(path: string, configuration: Config): void {
         fs.update(
           path,
           /.+#PROJECT_MODIFY_FLAG_xcargs/g,
-          'xcargs: "' + [
-            `DEVELOPMENT_TEAM='${buildConfig.exportTeamId}'`,
-            `PROVISIONING_PROFILE_SPECIFIER='${buildConfig.provisioningProfileName}'`
-          ].join(' ') + '" #PROJECT_MODIFY_FLAG_export_team_id'
+          'xcargs: "' +
+            [
+              `DEVELOPMENT_TEAM='${buildConfig.exportTeamId}'`,
+              `PROVISIONING_PROFILE_SPECIFIER='${buildConfig.provisioningProfileName}'`,
+            ].join(' ') +
+            '" #PROJECT_MODIFY_FLAG_export_team_id'
         );
       }
     }

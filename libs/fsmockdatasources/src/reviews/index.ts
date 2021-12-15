@@ -1,8 +1,4 @@
-import {
-  AbstractReviewDataSource,
-  ReviewDataSource,
-  ReviewTypes
-} from '@brandingbrand/fscommerce';
+import { AbstractReviewDataSource, ReviewDataSource, ReviewTypes } from '@brandingbrand/fscommerce';
 import { Questions, Reviews } from '../helpers';
 
 export class MockDataSource extends AbstractReviewDataSource implements ReviewDataSource {
@@ -16,18 +12,18 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
     const summaries = await this.fetchReviewSummary(query);
     const statistics = await this.fetchReviewStatistics(query);
 
-    return ids.map(id => {
+    return ids.map((id) => {
       const allReviews = Reviews[id] || [];
       const reviews = allReviews.slice(startIndex, endIndex);
 
       return {
         id,
         reviews,
-        statistics: statistics.find(stats => stats.id === id),
-        summaries: summaries.find(summary => summary.id === id),
+        statistics: statistics.find((stats) => stats.id === id),
+        summaries: summaries.find((summary) => summary.id === id),
         page,
         limit,
-        total: allReviews.length
+        total: allReviews.length,
       };
     });
   }
@@ -40,45 +36,42 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
   async fetchReviewStatistics(
     query: ReviewTypes.ReviewQuery
   ): Promise<ReviewTypes.ReviewStatistics[]> {
-
-    const initialDistribution: {[p: string]: number} = {};
+    const initialDistribution: { [p: string]: number } = {};
 
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
     const summaries = ids
-      .filter(id => Reviews[id] && Reviews[id].length)
-      .map(id => {
+      .filter((id) => Reviews[id] && Reviews[id].length)
+      .map((id) => {
         const count = Reviews[id].length;
-        const {
-          recommendations,
-          ratings,
-          distribution
-        } = Reviews[id].reduce((stats, review) => {
-          const { rating } = review;
-          if (stats.distribution[rating] === undefined) {
-            stats.distribution[rating] = 0;
+        const { recommendations, ratings, distribution } = Reviews[id].reduce(
+          (stats, review) => {
+            const { rating } = review;
+            if (stats.distribution[rating] === undefined) {
+              stats.distribution[rating] = 0;
+            }
+
+            stats.distribution[rating] += 1;
+            stats.recommendations += review.isRecommended ? 1 : 0;
+            stats.ratings += rating;
+
+            return stats;
+          },
+          {
+            recommendations: 0,
+            ratings: 0,
+            distribution: initialDistribution,
           }
-
-          stats.distribution[rating] += 1;
-          stats.recommendations += review.isRecommended ? 1 : 0;
-          stats.ratings += rating;
-
-          return stats;
-        }, {
-          recommendations: 0,
-          ratings: 0,
-          distribution: initialDistribution
-        });
-
+        );
 
         const stats: ReviewTypes.ReviewStatistics = {
           id,
           recommendedRatio: recommendations / count,
           averageRating: ratings / count,
           reviewCount: count,
-          ratingDistribution: Object.keys(distribution).map(key => ({
+          ratingDistribution: Object.keys(distribution).map((key) => ({
             value: key,
-            count: distribution[key]
-          }))
+            count: distribution[key],
+          })),
         };
 
         return stats;
@@ -90,7 +83,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
   async fetchQuestions(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewQuestion[]> {
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
 
-    return ids.map(id => Questions[id]).reduce((all, current) => [...all, ...current], []);
+    return ids.map((id) => Questions[id]).reduce((all, current) => [...all, ...current], []);
   }
 
   async writeReview(

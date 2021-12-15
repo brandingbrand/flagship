@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { palette } from '../styles/variables';
 
@@ -30,12 +30,15 @@ export interface SerializableToggleButtonProps {
   containerPinActiveStyle?: ViewStyle;
 }
 
-
-export interface ToggleButtonProps extends Omit<
-  SerializableToggleButtonProps,
-  'wrapperStyle' | 'containerStyle' | 'containerActiveStyle' |
-    'containerPinStyle' | 'containerPinActiveStyle'
-> {
+export interface ToggleButtonProps
+  extends Omit<
+    SerializableToggleButtonProps,
+    | 'wrapperStyle'
+    | 'containerStyle'
+    | 'containerActiveStyle'
+    | 'containerPinStyle'
+    | 'containerPinActiveStyle'
+  > {
   renderTogglePin?: () => React.ReactNode;
   onPress?: (state: boolean) => void;
 
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.surface,
     borderRadius: 16,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   containerPin: {
     width: TOGGLE_PIN_SIZE_DEFAULT,
@@ -74,10 +77,9 @@ const styles = StyleSheet.create({
     borderRadius: TOGGLE_PIN_SIZE_DEFAULT / 2,
     borderWidth: 2,
     borderColor: palette.surface,
-    backgroundColor: palette.background
-  }
+    backgroundColor: palette.background,
+  },
 });
-
 
 export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState> {
   constructor(props: ToggleButtonProps) {
@@ -88,9 +90,7 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
       containerWidth: TOGGLE_CONTAINER_WIDTH_DEFAULT,
       containerPinWidth: TOGGLE_PIN_SIZE_DEFAULT,
       containerPinWidthInitialized: false,
-      pinIndentAnimation: new Animated.Value(
-        this.props.state ? 1 : 0
-      )
+      pinIndentAnimation: new Animated.Value(this.props.state ? 1 : 0),
     };
   }
 
@@ -100,16 +100,16 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
     const indentation = {
       paddingLeft: pinIndentAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, containerWidth - containerPinWidth]
-      })
+        outputRange: [0, containerWidth - containerPinWidth],
+      }),
     };
 
     const animatedColor = pinIndentAnimation.interpolate({
       inputRange: [0, 1],
       outputRange: [
         this.props.containerInactiveColor || palette.surface,
-        this.props.containerActiveColor || palette.primary
-      ]
+        this.props.containerActiveColor || palette.primary,
+      ],
     });
 
     return (
@@ -124,22 +124,24 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
           <Animated.View
             onLayout={this.containerOnLayout}
             style={[
-              styles.container, this.props.containerStyle,
+              styles.container,
+              this.props.containerStyle,
               {
-                backgroundColor: animatedColor
+                backgroundColor: animatedColor,
               },
-              isSelected && this.props.containerActiveStyle
+              isSelected && this.props.containerActiveStyle,
             ]}
           >
             <Animated.View style={indentation}>
               <Animated.View
                 onLayout={this.pinOnLayout}
                 style={[
-                  styles.containerPin, this.props.containerPinStyle,
+                  styles.containerPin,
+                  this.props.containerPinStyle,
                   {
-                    borderColor: animatedColor
+                    borderColor: animatedColor,
                   },
-                  isSelected && this.props.containerPinActiveStyle
+                  isSelected && this.props.containerPinActiveStyle,
                 ]}
               >
                 {this.props.renderTogglePin && this.props.renderTogglePin()}
@@ -156,47 +158,47 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
       Animated.spring(this.state.pinIndentAnimation, {
         bounciness: 0,
         toValue: indent,
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start();
     } else {
       this.setState({
-        pinIndentAnimation: new Animated.Value(indent)
+        pinIndentAnimation: new Animated.Value(indent),
       });
     }
-  }
+  };
 
   private containerOnLayout = (event: LayoutChangeEvent) => {
     const { isSelected } = this.state;
     const width = event.nativeEvent.layout.width;
     this.setState({
-      containerWidth: width
+      containerWidth: width,
     });
     if (isSelected) {
       this.setState({
-        pinIndentAnimation: new Animated.Value(1)
+        pinIndentAnimation: new Animated.Value(1),
       });
     }
-  }
+  };
 
   private pinOnLayout = (event: LayoutChangeEvent) => {
-    const { containerPinWidthInitialized, isSelected} = this.state;
+    const { containerPinWidthInitialized, isSelected } = this.state;
     const width = event.nativeEvent.layout.width;
     this.setState({
       containerPinWidth: width,
-      containerPinWidthInitialized: true
+      containerPinWidthInitialized: true,
     });
     if (isSelected && !containerPinWidthInitialized) {
       this.setState({
-        pinIndentAnimation: new Animated.Value(1)
+        pinIndentAnimation: new Animated.Value(1),
       });
     }
-  }
+  };
 
   private toggleAccordion = () => {
     const { isSelected } = this.state;
 
     this.setState({
-      isSelected: !isSelected
+      isSelected: !isSelected,
     });
 
     if (this.props.onPress) {
@@ -208,5 +210,5 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
     } else {
       this.animateTogglePin(1);
     }
-  }
+  };
 }

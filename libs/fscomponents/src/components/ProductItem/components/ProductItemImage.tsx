@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import {
-  Image,
-  ImageStyle, LayoutChangeEvent,
-  StyleSheet,
-  View
-} from 'react-native';
+import { Image, ImageStyle, LayoutChangeEvent, StyleSheet, View } from 'react-native';
 
 import { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   image: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   imageContainer: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export type ProductItemImageProps = Pick<
@@ -28,22 +23,17 @@ export interface ProductItemImageState {
 
 export class ProductItemImage extends Component<ProductItemImageProps, ProductItemImageState> {
   state: ProductItemImageState = {
-    calculatedImageStyle: {}
+    calculatedImageStyle: {},
   };
 
   render(): React.ReactNode {
-    const {
-      images,
-      imageStyle,
-      imageContainerStyle,
-      renderImage
-    } = this.props;
+    const { images, imageStyle, imageContainerStyle, renderImage } = this.props;
 
     if (renderImage) {
       return renderImage();
     }
 
-    const image = images && images.find(img => !!img.uri) || this.props.image;
+    const image = (images && images.find((img) => !!img.uri)) || this.props.image;
 
     if (!image) {
       return null;
@@ -52,7 +42,7 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
     return (
       <View style={[style.imageContainer, imageContainerStyle]} onLayout={this.onLayout}>
         <Image
-          resizeMode='contain'
+          resizeMode="contain"
           source={image}
           style={[style.image, this.state.calculatedImageStyle, imageStyle]}
         />
@@ -70,21 +60,25 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
     }
 
     // Calcuate image width to fit container and height to maintain aspect ratio
-    const image = images && images.find(img => !!img.uri) || this.props.image;
+    const image = (images && images.find((img) => !!img.uri)) || this.props.image;
     if (image && image.uri) {
-      Image.getSize(image.uri, (width, height) => {
-        const calculatedHeight = Math.round((containerWidth * height) / width);
+      Image.getSize(
+        image.uri,
+        (width, height) => {
+          const calculatedHeight = Math.round((containerWidth * height) / width);
 
-        this.setState({
-          calculatedImageStyle: {
-            width: containerWidth,
-            height: calculatedHeight
-          }
-        });
-      }, () => {
-        // Do nothing on error
-        return null;
-      });
+          this.setState({
+            calculatedImageStyle: {
+              width: containerWidth,
+              height: calculatedHeight,
+            },
+          });
+        },
+        () => {
+          // Do nothing on error
+          return null;
+        }
+      );
     }
-  }
+  };
 }

@@ -12,15 +12,15 @@ try {
   rnPermissions = require('react-native-permissions');
 } catch (e) {
   console.warn(
-    'react-native-permissions must be added to your project'
-    + ' to enable granular geolocation in fsengage'
+    'react-native-permissions must be added to your project' +
+      ' to enable granular geolocation in fsengage'
   );
 }
 
 function getPermissionToCheck(rnPermissions: typeof RNPermissions): Permission {
-  return Platform.OS === 'ios' ?
-    rnPermissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-      : rnPermissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+  return Platform.OS === 'ios'
+    ? rnPermissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+    : rnPermissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 }
 
 export async function isGeolocationAllowed(): Promise<boolean> {
@@ -29,8 +29,9 @@ export async function isGeolocationAllowed(): Promise<boolean> {
   if (permissions) {
     const permissionToCheck = getPermissionToCheck(permissions);
 
-    return permissions.check(permissionToCheck)
-      .then(status => status === permissions.RESULTS.GRANTED)
+    return permissions
+      .check(permissionToCheck)
+      .then((status) => status === permissions.RESULTS.GRANTED)
       .catch((error: Error) => {
         if (__DEV__) {
           console.log(
@@ -54,8 +55,9 @@ export async function requestGeolocationPermission(): Promise<boolean> {
   if (permissions) {
     const permissionToCheck = getPermissionToCheck(permissions);
 
-    return permissions.request(permissionToCheck)
-      .then(status => status === permissions.RESULTS.GRANTED);
+    return permissions
+      .request(permissionToCheck)
+      .then((status) => status === permissions.RESULTS.GRANTED);
   }
 
   return Promise.resolve(false);

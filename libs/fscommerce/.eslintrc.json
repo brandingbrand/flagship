@@ -2,10 +2,7 @@
   "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
   "ignorePatterns": ["!**/*", "public", ".cache", "node_modules"],
   "parserOptions": {
-    "project": [
-      "./libs/fscommerce/tsconfig.lib.json",
-      "./libs/fscommerce/tsconfig.spec.json"
-    ]
+    "project": ["./libs/fscommerce/tsconfig.lib.json", "./libs/fscommerce/tsconfig.spec.json"]
   },
   "overrides": [
     {

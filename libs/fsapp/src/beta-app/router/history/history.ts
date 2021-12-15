@@ -5,7 +5,7 @@ import type {
   RequiredTitle,
   ResolverListener,
   Stack,
-  StackedLocation
+  StackedLocation,
 } from './types';
 
 import { Linking, Platform } from 'react-native';
@@ -20,7 +20,7 @@ import {
   LocationListener,
   parsePath,
   TransitionPromptHook,
-  UnregisterCallback
+  UnregisterCallback,
 } from 'history';
 import { findLastIndex, isString, uniqueId } from 'lodash-es';
 
@@ -39,7 +39,7 @@ import {
   matchRoute,
   matchStack,
   resolveRoute,
-  stringifyLocation
+  stringifyLocation,
 } from './utils.native';
 import { Matchers, normalizeLocationDescriptor } from './utils.base';
 import { ROOT_STACK } from './constants';
@@ -77,14 +77,12 @@ export class History implements FSRouterHistory {
     this.observeNavigation();
     const tabRoutes = this.routes.filter(isTabRoute);
     const universalRoutes = this.routes.filter(isNotTabRoute);
-    const stackMatchers = tabRoutes.map(async ({ children, tab }) =>
-      buildMatchers(children, tab)
-    );
+    const stackMatchers = tabRoutes.map(async ({ children, tab }) => buildMatchers(children, tab));
 
     const promisedStacks = tabRoutes.map(async (route, i) => matchStack(route, stackMatchers[i]));
 
     void Promise.all(promisedStacks)
-      .then(async awaitedStacks => {
+      .then(async (awaitedStacks) => {
         const resolvedStacks = awaitedStacks.filter(isDefined);
         const root = await makeRootLayout(resolvedStacks, async () =>
           matchStack({ children: universalRoutes }, this.matchers)
@@ -99,19 +97,19 @@ export class History implements FSRouterHistory {
         this.stacks.push(
           ...(stacks ?? []).filter(isDefined).map((id, i) => ({
             id,
-            children: [{ ...parsePath(activatedPaths[i]), key: activatedPaths[i] }]
+            children: [{ ...parsePath(activatedPaths[i]), key: activatedPaths[i] }],
           }))
         );
         this.store.push(
           ...this.stacks
-            .map((stack, i) => stack.children.map(location => ({ ...location, stack: i })))
+            .map((stack, i) => stack.children.map((location) => ({ ...location, stack: i })))
             .reduce((prev, next) => [...prev, ...next], [])
         );
 
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
         setTimeout(async () => {
-          const activations = activatedPaths.map(async path => {
+          const activations = activatedPaths.map(async (path) => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
               const activatedRoute = await this.resolveRouteDetails(matchingRoute);
@@ -187,7 +185,7 @@ export class History implements FSRouterHistory {
     }
     const newLocation = {
       stack: this.activeStack,
-      ...previousStack
+      ...previousStack,
     };
 
     await this.updateLocation(newLocation, 'POP');
@@ -270,10 +268,10 @@ export class History implements FSRouterHistory {
           title:
             typeof title === 'string'
               ? {
-                text: title
-              }
-              : title
-        }
+                  text: title,
+                }
+              : title,
+        },
       });
     }
   }
@@ -291,7 +289,7 @@ export class History implements FSRouterHistory {
         }, 3000);
       }
 
-      const remove = this.listen(update => {
+      const remove = this.listen((update) => {
         if (update.pathname === location.pathname) {
           if (timeout) {
             clearTimeout(timeout);
@@ -321,7 +319,7 @@ export class History implements FSRouterHistory {
       const index = this.getKeyIndexInHistory(componentId);
       if (index !== -1) {
         this.activeIndex = index;
-        this.lactationObservers.forEach(callback => callback(this.location, this.action));
+        this.lactationObservers.forEach((callback) => callback(this.location, this.action));
       }
     });
 
@@ -367,7 +365,7 @@ export class History implements FSRouterHistory {
             : await this.getStackAffinity(stringifyLocation(to))) ?? this.activeStack
         : this.activeStack,
       state,
-      key: createKey()
+      key: createKey(),
     });
   }
 
@@ -402,8 +400,8 @@ export class History implements FSRouterHistory {
                 ...matchingRoute,
                 data: {
                   ...matchingRoute.data,
-                  ...(typeof location.state === 'object' ? location.state : {})
-                }
+                  ...(typeof location.state === 'object' ? location.state : {}),
+                },
               });
               const observer = this.activationObservers.get(matchingRoute.id);
               observer?.(activatedRoute);
@@ -433,11 +431,11 @@ export class History implements FSRouterHistory {
                       ...componentOptions.buttons,
                       title: {
                         ...matchingRoute.topBarStyle?.title,
-                        text: title
-                      }
-                    }
-                  }
-                }
+                        text: title,
+                      },
+                    },
+                  },
+                },
               };
 
               if (Platform.OS === 'ios') {
@@ -483,7 +481,7 @@ export class History implements FSRouterHistory {
       query: matchingRoute.query,
       params: matchingRoute.params,
       path: matchingRoute.matchedPath,
-      loading: true
+      loading: true,
     };
   }
 
@@ -497,21 +495,22 @@ export class History implements FSRouterHistory {
   }
 
   private getKeyIndexInHistory(key: string): number {
-    return findLastIndex(this.store, pastLocation => key === pastLocation.key);
+    return findLastIndex(this.store, (pastLocation) => key === pastLocation.key);
   }
 
   private getPathIndexInHistory(path: string): number {
-    return findLastIndex(this.store, pastLocation => path === stringifyLocation(pastLocation));
+    return findLastIndex(this.store, (pastLocation) => path === stringifyLocation(pastLocation));
   }
 
   private getPathIndexInStack(stack: number, path: string): number {
     return findLastIndex(
-      this.stacks[stack].children, pastLocation => path === stringifyLocation(pastLocation)
+      this.stacks[stack].children,
+      (pastLocation) => path === stringifyLocation(pastLocation)
     );
   }
 
   private getKeyIndexInStack(stack: number, key: string): number {
-    return findLastIndex(this.stacks[stack].children, pastLocation => key === pastLocation.key);
+    return findLastIndex(this.stacks[stack].children, (pastLocation) => key === pastLocation.key);
   }
 
   private async switchStack(stack: number | string): Promise<void> {
@@ -519,11 +518,11 @@ export class History implements FSRouterHistory {
     const updatedTab = potentialTab !== -1 ? potentialTab : this.activeStack;
     Navigation.mergeOptions(ROOT_STACK, {
       bottomTabs: {
-        currentTabIndex: updatedTab
-      }
+        currentTabIndex: updatedTab,
+      },
     });
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (updatedTab === this.activeStack) {
         return resolve();
       }
@@ -537,7 +536,7 @@ export class History implements FSRouterHistory {
   }
 
   private checkBlockers(location: Location, action: Action): boolean {
-    return [...this.blockers.values()].some(blocker => () => {
+    return [...this.blockers.values()].some((blocker) => () => {
       if (typeof blocker === 'function') {
         return blocker(location, action);
       } else {
@@ -547,6 +546,6 @@ export class History implements FSRouterHistory {
   }
 
   private setLoading(loading: boolean): void {
-    this.loadingObservers.forEach(callback => callback(loading));
+    this.loadingObservers.forEach((callback) => callback(loading));
   }
 }

@@ -25,7 +25,7 @@ export const colors = {
   BgBlue: '\x1b[44m',
   BgMagenta: '\x1b[45m',
   BgCyan: '\x1b[46m',
-  BgWhite: '\x1b[47m'
+  BgWhite: '\x1b[47m',
 };
 
 export function addPod(file: string, podLine: string): void {
@@ -73,11 +73,9 @@ export function appendFile(file: string, text: string): void {
 
 export function getCmdOption(argv: string[]): (a: string) => string | undefined {
   return (optionName: string): string | undefined => {
-    const optionArgv = argv
-      .slice(0)
-      .find(arg => arg.indexOf(`--${optionName}=`) === 0);
+    const optionArgv = argv.slice(0).find((arg) => arg.indexOf(`--${optionName}=`) === 0);
 
-    return optionArgv && optionArgv.split('=')[1] || undefined;
+    return (optionArgv && optionArgv.split('=')[1]) || undefined;
   };
 }
 
@@ -87,7 +85,9 @@ export function doesKeywordExist(fileName: string, keyword: string): boolean {
 }
 
 function logWithType(type: string, args: string[]): void {
-  if (process.env.NODE_ENV === 'test') { return; }
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
 
   const _args = args.slice(0);
   switch (type) {
@@ -102,9 +102,7 @@ function logWithType(type: string, args: string[]): void {
       break;
 
     case 'warn':
-      _args.unshift(
-        `\n${colors.BgYellow}${colors.FgBlack} WARN ${colors.Reset}`
-      );
+      _args.unshift(`\n${colors.BgYellow}${colors.FgBlack} WARN ${colors.Reset}`);
       console.warn.call(null, ..._args);
       break;
 

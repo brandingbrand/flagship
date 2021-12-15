@@ -13,38 +13,32 @@ const S = StyleSheet.create({
   indicatorContainer: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   indicator: {
     width: 8,
     height: 8,
     borderRadius: 5,
     marginHorizontal: 10,
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
   },
   indicatorSelected: {
-    backgroundColor: '#777'
-  }
+    backgroundColor: '#777',
+  },
 });
 
 export const PageIndicator: FunctionComponent<PageIndicatorProps> = memo((props): JSX.Element => {
-  const {
-    currentIndex,
-    itemsCount,
-    style,
-    dotStyle,
-    dotActiveStyle
-  } = props;
+  const { currentIndex, itemsCount, style, dotStyle, dotActiveStyle } = props;
   return (
     <View style={[S.indicatorContainer, style]}>
-      {newArray(itemsCount).map(i => (
+      {newArray(itemsCount).map((i) => (
         <View
           key={i}
           style={[
             S.indicator,
             dotStyle,
             i === currentIndex && S.indicatorSelected,
-            i === currentIndex && dotActiveStyle
+            i === currentIndex && dotActiveStyle,
           ]}
         />
       ))}

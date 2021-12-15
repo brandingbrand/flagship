@@ -29,33 +29,33 @@ const envsToDisplay: {
 const styles = StyleSheet.create({
   devViewContainer: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   fullHeight: {
-    height: '100%'
+    height: '100%',
   },
   configView: { padding: 10 },
   configViewItem: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   configViewTitle: {
     fontSize: 12,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   configViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   envView: {
     padding: 10,
-    flex: 1
+    flex: 1,
   },
   envViewText: {
-    fontSize: 12
+    fontSize: 12,
   },
   bottomBtns: {
     flexDirection: 'row',
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   closeBtn: {
     justifyContent: 'center',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   reloadBtn: {
     justifyContent: 'center',
@@ -71,18 +71,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#555',
     height: 50,
     flex: 1,
-    marginRight: 5
+    marginRight: 5,
   },
   closeBtnText: {
-    color: '#333'
+    color: '#333',
   },
   reloadBtnText: {
-    color: 'white'
+    color: 'white',
   },
   switchBtns: {
     flexDirection: 'row',
-    margin: 10
-  }
+    margin: 10,
+  },
 });
 
 export const DevMenu = makeModal(({ reject, resolve }) => {
@@ -93,10 +93,10 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
 
   useEffect(() => {
     AsyncStorage.getItem('devKeepPage')
-      .then(value => {
+      .then((value) => {
         setDevKeepPage(value === 'true');
       })
-      .catch(e => console.log('cannot get devKeepPage flag from AsyncStorage', e));
+      .catch((e) => console.log('cannot get devKeepPage flag from AsyncStorage', e));
   }, []);
 
   const handleHideDevMenu = () => {
@@ -129,7 +129,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
 
   const keepLastPage = () => {
     setDevKeepPage(!devKeepPage);
-    AsyncStorage.setItem('devKeepPage', `${devKeepPage}`).catch(e =>
+    AsyncStorage.setItem('devKeepPage', `${devKeepPage}`).catch((e) =>
       console.log('cannot set devKeepPage flag in AsyncStorage', e)
     );
   };

@@ -2,24 +2,24 @@ import { StyleSheet } from 'react-native';
 
 export const weights = StyleSheet.create({
   thin: {
-    fontWeight: '100'
+    fontWeight: '100',
   },
   ultraLight: {
-    fontWeight: '200'
+    fontWeight: '200',
   },
   light: {
-    fontWeight: '300'
+    fontWeight: '300',
   },
   regular: {
-    fontWeight: '400'
+    fontWeight: '400',
   },
   medium: {
-    fontWeight: '500'
+    fontWeight: '500',
   },
   semibold: {
-    fontWeight: '600'
+    fontWeight: '600',
   },
   bold: {
-    fontWeight: '700'
-  }
+    fontWeight: '700',
+  },
 });

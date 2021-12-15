@@ -9,7 +9,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
   constructor(props: any) {
     super(props);
     this.state = {
-      scale: new Animated.Value(1)
+      scale: new Animated.Value(1),
     };
   }
 
@@ -21,7 +21,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
     Animated.timing(this.state.scale, {
       toValue: 2.5,
       duration: 1500,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start(() => {
       this.state.scale.setValue(1);
       this.startAnimation();
@@ -32,7 +32,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
     const { scale } = this.state;
     const opacity = scale.interpolate({
       inputRange: [1, 2.5],
-      outputRange: [0.6, 0]
+      outputRange: [0.6, 0],
     });
 
     return (
@@ -47,7 +47,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
             height: 14,
             borderRadius: 7,
             opacity,
-            transform: [{ scale }]
+            transform: [{ scale }],
           }}
         />
         <View
@@ -57,7 +57,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
             backgroundColor: '#08c',
             borderRadius: 7,
             borderWidth: 2,
-            borderColor: 'white'
+            borderColor: 'white',
           }}
         />
       </View>

@@ -6,7 +6,7 @@ import {
   PaymentMethods,
   Products,
   Promos,
-  ShippingMethods
+  ShippingMethods,
 } from '../../helpers';
 
 export const CartMixin = <T extends Constructor>(superclass: T) => {
@@ -24,7 +24,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       qty?: number,
       product?: CommerceTypes.Product
     ): Promise<CommerceTypes.Cart> {
-      const invalidProductId = !Products.find(product => product.id === productId);
+      const invalidProductId = !Products.find((product) => product.id === productId);
       if (invalidProductId) {
         throw new Error(`${productId} is not a valid product`);
       }
@@ -61,7 +61,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
     ): Promise<CommerceTypes.ShippingMethodResponse> {
       return {
         defaultMethodId: DefaultShippingMethod.id,
-        shippingMethods: ShippingMethods
+        shippingMethods: ShippingMethods,
       };
     }
 
@@ -87,7 +87,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
             id: 'me',
             address: options.address,
             shippingMethod: DefaultShippingMethod,
-            gift: false
+            gift: false,
           };
         }
       }
@@ -102,7 +102,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
         firstName: 'test',
         lastName: 'test',
         email,
-        login: email
+        login: email,
       };
 
       return this.cart.serialize();
@@ -118,10 +118,10 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       this.cart.shipment = {
         id: options.shipmentId,
         address: options.address,
-        shippingMethod: this.cart.shipment ?
-          this.cart.shipment.shippingMethod :
-          DefaultShippingMethod,
-        gift: false
+        shippingMethod: this.cart.shipment
+          ? this.cart.shipment.shippingMethod
+          : DefaultShippingMethod,
+        gift: false,
       };
 
       if (options.useAsBilling) {
@@ -138,7 +138,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
         throw new Error('You must set a shipping address before setting a shipping method');
       }
 
-      const newShippingMethod = ShippingMethods.find(({id}) => id === options.methodId);
+      const newShippingMethod = ShippingMethods.find(({ id }) => id === options.methodId);
       if (newShippingMethod === undefined) {
         throw new Error('Invalid shipping method id');
       }
@@ -156,19 +156,11 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
         throw new Error(`Unable to submit order.\n${errors.join('\n')}`);
       }
 
-      const {
-        billingAddress,
-        customerInfo,
-        tax,
-        total,
-        payments,
-        items,
-        shipments
-      } = this.cart.serialize();
+      const { billingAddress, customerInfo, tax, total, payments, items, shipments } =
+        this.cart.serialize();
 
-      const customerName = customerInfo !== undefined ?
-        `${customerInfo.firstName} ${customerInfo.lastName}` :
-        '';
+      const customerName =
+        customerInfo !== undefined ? `${customerInfo.firstName} ${customerInfo.lastName}` : '';
 
       const order: CommerceTypes.Order = {
         billingAddress,
@@ -180,12 +172,12 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
         orderTotal: total,
         payments: payments as CommerceTypes.Payment[],
         paymentStatus: 'PAID',
-        productItems: items.map(item => ({
+        productItems: items.map((item) => ({
           ...item,
-          gift: false
+          gift: false,
         })),
         shipments,
-        status: 'SHIPPED'
+        status: 'SHIPPED',
       };
 
       this.orders.set(orderId, order);
@@ -198,7 +190,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       const oldOrder = this.orders.get(order.orderId);
       const updatedOrder = {
         ...oldOrder,
-        ...order
+        ...order,
       };
 
       this.orders.set(order.orderId, updatedOrder);
@@ -218,7 +210,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
 
       return this.updateOrder({
         ...order,
-        payments: [payment]
+        payments: [payment],
       });
     }
 
@@ -240,7 +232,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
 
       this.cart.payment = {
         ...payment,
-        amount: total
+        amount: total,
       };
 
       return this.cart.serialize();
@@ -253,12 +245,12 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
     async applyPromo(promoCode: string): Promise<CommerceTypes.Cart> {
       this.cart.promos = this.cart.promos || [];
 
-      const promo = Promos.find(promo => promo.code === promoCode);
+      const promo = Promos.find((promo) => promo.code === promoCode);
       if (!promo || !promo.valid) {
         throw new Error('Invalid promo code');
       }
 
-      const existingPromo = this.cart.promos.find(promo => promo.code === promoCode);
+      const existingPromo = this.cart.promos.find((promo) => promo.code === promoCode);
       if (existingPromo) {
         throw new Error('Promo already applied');
       }
@@ -269,7 +261,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
 
     async removePromo(promoItemId: string): Promise<CommerceTypes.Cart> {
       if (Array.isArray(this.cart.promos)) {
-        this.cart.promos = this.cart.promos.filter(promo => promo.id !== promoItemId);
+        this.cart.promos = this.cart.promos.filter((promo) => promo.id !== promoItemId);
       }
 
       return this.cart.serialize();

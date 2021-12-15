@@ -18,7 +18,7 @@ import AnalyticsProvider, {
   SearchGeneric,
   Transaction,
   TransactionAction,
-  TransactionRefund
+  TransactionRefund,
 } from '../AnalyticsProvider';
 
 import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
@@ -38,8 +38,10 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
   private client: FSNetwork;
   private configuration: AdobeMarketingCloudWebProviderConfiguration;
 
-  constructor(commonConfiguration: AnalyticsProviderConfiguration,
-              configuration: AdobeMarketingCloudWebProviderConfiguration) {
+  constructor(
+    commonConfiguration: AnalyticsProviderConfiguration,
+    configuration: AdobeMarketingCloudWebProviderConfiguration
+  ) {
     super(commonConfiguration);
 
     this.client = new FSNetwork({ baseURL: this.kBaseEndpoint });
@@ -76,16 +78,18 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
 
   pageview(properties: Screenview): void {
     this.trackEvent({
-      elements: [{
-        page: {
-          id: properties.eventCategory
+      elements: [
+        {
+          page: {
+            id: properties.eventCategory,
+          },
+          metrics: [
+            {
+              id: 'pageviews',
+            },
+          ],
         },
-        metrics: [
-          {
-            id: 'pageviews'
-          }
-        ]
-      }]
+      ],
     });
   }
 
@@ -95,12 +99,14 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
 
   searchGeneric(properties: SearchGeneric): void {
     this.trackEvent({
-      elements: [{
-        search: {
-          id: properties.eventCategory,
-          keywords: properties.term.split(' ')
-        }
-      }]
+      elements: [
+        {
+          search: {
+            id: properties.eventCategory,
+            keywords: properties.term.split(' '),
+          },
+        },
+      ],
     });
   }
 
@@ -164,25 +170,25 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
 
   private trackEvent(description: {}): void {
     this.getToken()
-      .then(token => {
+      .then((token) => {
         const data = {
           access_token: token,
           reportDescription: {
-            reportSuiteID: this.configuration.reportSuiteId
-          }
+            reportSuiteID: this.configuration.reportSuiteId,
+          },
         };
 
         Object.assign(data.reportDescription, description);
 
         const config = {
           params: {
-            method: 'Report.Queue'
-          }
+            method: 'Report.Queue',
+          },
         };
 
         this.client.post(this.kAdminPath, data, config);
       })
-      .catch(error => {
+      .catch((error) => {
         if (__DEV__) {
           console.log(
             `%cAdobeMarketingCloudWebProvider\n%c Function: ${this.trackEvent.name}\n Error: `,
@@ -197,21 +203,23 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
   private async getToken(): Promise<any> {
     if (!this.token) {
       const parameters = {
-        grant_type: 'client_credentials'
+        grant_type: 'client_credentials',
       };
 
       const config = {
         auth: {
           username: this.configuration.clientId,
-          password: this.configuration.clientSecret
-        }
+          password: this.configuration.clientSecret,
+        },
       };
 
-      this.token = this.client.post(this.kCredentialPath, parameters, config)
-        .then(payload => {
+      this.token = this.client
+        .post(this.kCredentialPath, parameters, config)
+        .then((payload) => {
           // TODO: Expire token.
           return payload.data.access_token;
-        }).catch(error => {
+        })
+        .catch((error) => {
           this.token = undefined;
 
           throw error;

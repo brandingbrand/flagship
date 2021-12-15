@@ -11,7 +11,7 @@ export const TouchableOpacityLink: FunctionComponent<TouchableOpacityLinkProps> 
 }): JSX.Element => {
   const { href, ...properties } = props;
   return (
-    <TouchableOpacity accessibilityRole='link' {...properties}>
+    <TouchableOpacity accessibilityRole="link" {...properties}>
       {children}
     </TouchableOpacity>
   );

@@ -7,7 +7,7 @@ import {
   Text,
   TextStyle,
   TouchableHighlight,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { style as styles } from '../../styles/Selector';
 import { SelectorItem } from './Selector';
@@ -39,7 +39,7 @@ export class SelectorList extends Component<SelectorListProps> {
 
   scrollToSelected = (value?: string) => {
     value = value || this.props.selectedValue;
-    let index = this.props.items.findIndex(i => i.value === value);
+    let index = this.props.items.findIndex((i) => i.value === value);
     if (index >= this.props.items.length - 3) {
       index = this.props.items.length - 3;
     }
@@ -47,7 +47,7 @@ export class SelectorList extends Component<SelectorListProps> {
     if (this.listView.current && index > -1) {
       this.listView.current.scrollToIndex({ index, animated: true });
     }
-  }
+  };
 
   // this is called on native modal
   componentDidMount(): void {
@@ -74,10 +74,13 @@ export class SelectorList extends Component<SelectorListProps> {
 
     const itemsWithSelected = items.reduce<SelectorItem[]>((result, curr) => {
       if (curr.value === this.props.selectedValue) {
-        return [...result, {
-          ...curr,
-          selected: true
-        }];
+        return [
+          ...result,
+          {
+            ...curr,
+            selected: true,
+          },
+        ];
       }
 
       return [...result, curr];
@@ -97,18 +100,18 @@ export class SelectorList extends Component<SelectorListProps> {
 
   private keyExtractor = (item: SelectorItem): string => {
     return item.value;
-  }
+  };
 
   private getItemLayout = (data: SelectorItem[] | null | undefined, index: number) => ({
     length: this.props.itemHeight || ITEM_HEIGHT,
     offset: (this.props.itemHeight || ITEM_HEIGHT) * index,
-    index
-  })
+    index,
+  });
 
   private renderItem = ({ item, index }: ListRenderItemInfo<SelectorItem>) => {
     return (
       <TouchableHighlight
-        underlayColor='#D0D0D0'
+        underlayColor="#D0D0D0"
         disabled={item.disabled}
         style={[
           { height: this.props.itemHeight || ITEM_HEIGHT },
@@ -117,7 +120,7 @@ export class SelectorList extends Component<SelectorListProps> {
           item.selected && styles.selectedItem,
           item.selected && this.props.selectedItemStyle,
           item.disabled && styles.disabledItem,
-          item.disabled && this.props.disabledItemStyle
+          item.disabled && this.props.disabledItemStyle,
         ]}
         onPress={this.props.onSelectChange(item.value)}
       >
@@ -126,12 +129,12 @@ export class SelectorList extends Component<SelectorListProps> {
             styles.itemText,
             this.props.itemTextStyle,
             item.selected && styles.selectedItemText,
-            item.selected && this.props.selectedItemTextStyle
+            item.selected && this.props.selectedItemTextStyle,
           ]}
         >
           {item.label}
         </Text>
       </TouchableHighlight>
     );
-  }
+  };
 }

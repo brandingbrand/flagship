@@ -12,29 +12,29 @@ import { ProductItem } from '../src/components/ProductItem';
 const productItems = [...Array(10)].map((a, i) => ({
   id: i,
   title: `Product ${i + 1}`,
-  image: 'https://placehold.it/100x100'
+  image: 'https://placehold.it/100x100',
 }));
 
 const styles = StyleSheet.create({
   fill: {
     flexGrow: 1,
-    height: 150
+    height: 150,
   },
   gray: {
-    backgroundColor: '#bdbdbd'
+    backgroundColor: '#bdbdbd',
   },
   big: {
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 18,
   },
   spacing: {
     marginBottom: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   center: {
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 const makePromo = (key: string, title: string) => (
@@ -46,7 +46,7 @@ const makePromo = (key: string, title: string) => (
 const renderItem: GridRenderItem<typeof productItems[number] | React.ReactElement> = ({
   item,
   columns,
-  totalColumns
+  totalColumns,
 }) => {
   if (isValidElement(item)) {
     return item;
@@ -63,15 +63,15 @@ const renderItem: GridRenderItem<typeof productItems[number] | React.ReactElemen
       imageStyle={[
         {
           width: 100 * columns,
-          height: 100
+          height: 100,
         },
-        tall && { height: columns * 100 }
+        tall && { height: columns * 100 },
       ]}
       contentStyle={styles.center}
       style={[styles.center, tall && { height: columns * 180 }]}
       price={{
         value: new Decimal('5.95'),
-        currencyCode: 'USD'
+        currencyCode: 'USD',
       }}
       onPress={action('MultiCarousel ProductItem onPress')}
     />

@@ -4,12 +4,12 @@ export const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    width: '100%'
+    width: '100%',
   },
   list: {
-    flex: 1
+    flex: 1,
   },
   loading: {
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 });
