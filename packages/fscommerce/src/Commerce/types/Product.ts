@@ -218,5 +218,5 @@ export interface Product extends BaseProduct {
    *
    * @example ['NC17', 'NC68']
    */
-  extendedSizs?: string[];
+  extendedSizes?: string[];
 }
