@@ -1,6 +1,12 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
+  "parserOptions": {
+    "project": [
+      "./libs/fsi18n/tsconfig.lib.json",
+      "./libs/fsi18n/tsconfig.spec.json"
+    ]
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
