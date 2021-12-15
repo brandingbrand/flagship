@@ -7,10 +7,10 @@ import {
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
-import { Card } from '../inboxblocks/Card';
+import { FeaturedTopCard } from '../src/inboxblocks/FeaturedTopCard';
 import { Text } from 'react-native';
 import { Navigator } from '@brandingbrand/fsapp';
-import { Action } from '../types';
+import { Action } from '../src/types';
 import ActionContext from './assets/ActionContext';
 
 const submitAction = action('submit');
@@ -26,16 +26,30 @@ const navigator: Navigator = {
   }
 } as Navigator;
 
-storiesOf('Engagement Card', module)
+storiesOf('Engagement FeaturedTopCard', module)
   .add('basic usage', () => (
     <WrapperContext>
-      <Card
+      <FeaturedTopCard
         private_blocks={[]}
-        actions={{
-          type: boolean('Is Story', false) ? 'story' : 'click',
-          value: text('actionValue', 'click')
-        }}
         navigator={navigator}
+        contents={{
+          Image: {
+            source: {
+              uri: ''
+            }
+          },
+          Text: {
+            text: text('Card Text', 'TestText')
+          },
+          CTA: {
+            action: text('Card Action Event', 'Test'),
+            text: text('Card Action Text', 'Test'),
+            actions: {
+              type: boolean('Is Story', false) ? 'story' : 'click',
+              value: text('actionValue', 'click')
+            }
+          }
+        }}
         story={{
           html: {
             link: text('Story Link', 'test.html'),
@@ -52,6 +66,6 @@ storiesOf('Engagement Card', module)
         }}
       >
         <Text>{text('Card Text', 'Card Text')}</Text>
-      </Card>
+      </FeaturedTopCard>
     </WrapperContext>
   ));

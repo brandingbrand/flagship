@@ -7,8 +7,8 @@ import {
 // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
-import { CTABlock } from '../inboxblocks/CTABlock';
-import { Action } from '../types';
+import { CTABlock } from '../src/inboxblocks/CTABlock';
+import { Action } from '../src/types';
 import ActionContext from './assets/ActionContext';
 
 const submitAction = action('submit');
