@@ -1,5 +1,3 @@
-// tslint:disable ter-max-len max-line-length
-
 import { Config, IOSPermissionKeys, UsageDescriptionIOS } from '../../../types';
 import { logInfo } from '../../../helpers';
 import * as pods from '../../cocoapods';

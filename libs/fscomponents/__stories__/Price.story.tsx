@@ -1,13 +1,11 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   boolean,
   object
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { Price } from '../src/components/Price';
 import Decimal from 'decimal.js';
-// tslint:disable-next-line:no-submodule-imports
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 type SerializedPrice = Omit<CommerceTypes.CurrencyValue, 'value'> & { value: string };

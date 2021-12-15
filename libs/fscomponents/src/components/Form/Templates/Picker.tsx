@@ -153,15 +153,13 @@ const FormPicker: FC<FormPickerProps> = props => {
     iconStyle?: StyleProp<ImageStyle>
   ) => (): ReactNode => {
     return (
-      <>
-        <Image
+      <Image
           source={icon}
           style={[
             styles.arrowIcon,
             iconStyle
           ]}
         />
-      </>
     );
   };
 

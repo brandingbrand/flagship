@@ -143,8 +143,7 @@ async function resolvePromise<T>(value?: T | Promise<T>): Promise<T | undefined>
   }
   // @ts-ignore Check is needed to determine if it is a promise or not
   if ((value as Promise<T>).then) {
-    // tslint:disable-next-line: no-return-await
-    return await (value as Promise<T>);
+    return (value as Promise<T>);
   }
   return value;
 }

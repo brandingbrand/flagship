@@ -94,7 +94,7 @@ export default class MapViewNative extends Component<PropType> {
     }
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const { locations, style, currentLocation, mapMarkerIcon, defaultRegion } = this.props;
     const marker = mapMarkerIcon || googleMapMaker;

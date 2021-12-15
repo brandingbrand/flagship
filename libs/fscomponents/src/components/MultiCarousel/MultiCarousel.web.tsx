@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// tslint:disable-next-line: cyclomatic-complexity
+// eslint-disable-next-line complexity
 export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
   const {
     accessible,

@@ -1,4 +1,3 @@
-// tslint:disable:member-ordering
 import { Component } from 'react';
 import { Platform } from 'react-native';
 
@@ -671,10 +670,6 @@ export default class Analytics {
       action
     );
   }
-
-  // TSLint `typedef` rule is disable in the below properties
-  // to avoid opaquing the documentation of its internal functions when used.
-  // tslint:disable:typedef
 
   // Public Commerce Properties
 

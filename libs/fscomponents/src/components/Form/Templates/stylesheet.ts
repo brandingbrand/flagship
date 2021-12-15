@@ -3,7 +3,7 @@
   a bootstrap like style
 
 */
-'use strict';
+
 
 import { Platform } from 'react-native';
 import { Dictionary } from '@brandingbrand/fsfoundation';
@@ -18,7 +18,6 @@ export interface FieldsColors {
 // extra styles are to make label templates possible while allowing for user to overwrite speicfic
 // characteristics via fields style config
 
-// tslint:disable-next-line:cyclomatic-complexity
 export function styles(colors: FieldsColors): Dictionary {
   const LABEL_COLOR = colors.activeColor;
   const INPUT_COLOR = '#000000';

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import { emailRegex } from '../lib/email';
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import { SingleLineForm } from './SingleLineForm';
 import { FormLabelPosition } from './Form';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.emailForm;
 
 export interface EmailFormValue {

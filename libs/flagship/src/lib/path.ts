@@ -94,6 +94,7 @@ function getInfoPlistPath(configuration: Config): string {
 
 /**
  * Returns the path to AppDelegate.m file.
+ *
  * @param {object} configuration The project configuration.
  * @returns {string} The path
  */
@@ -103,6 +104,7 @@ function getAppDelegatePath(configuration: Config): string {
 
 /**
  * Returns the path to the Podfile.
+ *
  * @returns {string} The path to the Podfile.
  */
 function getPodfilePath(): string {
@@ -111,6 +113,7 @@ function getPodfilePath(): string {
 
 /**
  * Returns the path to project.pbxproj file.
+ *
  * @param {object} configuration The project configuration.
  * @returns {string} The path
  */
@@ -120,6 +123,7 @@ function getPbxprojFilePath(configuration: Config): string {
 
 /**
  * Returns the path to the native project.
+ *
  * @param {object} configuration The project configuration.
  * @returns {string} The path to the native project.
  */
@@ -129,6 +133,7 @@ function getNativeProjectPathIOS(configuration: Config): string {
 
 /**
  * Returns the path to the Fastfile
+ *
  * @returns {string} The path to Fastfile
  */
 function getFastfilePathIOS(): string {
@@ -157,6 +162,7 @@ function getMainApplicationPath(configuration: Config): string {
 
 /**
  * Returns the path to the Android manifest for the project.
+ *
  * @returns {string} The path to AndroidManifest.xml
  */
 function getManifestPath(): string {
@@ -165,6 +171,7 @@ function getManifestPath(): string {
 
 /**
  * Returns the path to the native project.
+ *
  * @param {object} configuration The project configuration.
  * @returns {string} The path to the native project.
  */
@@ -182,6 +189,7 @@ function getNativeProjectPathAndriod(configuration: Config): string {
 
 /**
  * Returns the path to build.gralde.
+ *
  * @returns {string} The path to build.gralde
  */
 function getGradlePath(): string {
@@ -190,6 +198,7 @@ function getGradlePath(): string {
 
 /**
  * Returns the path to gradle.properties.
+ *
  * @returns {string} The path to gradle.properties
  */
 function getGradlePropertiesPath(): string {
@@ -198,6 +207,7 @@ function getGradlePropertiesPath(): string {
 
 /**
  * Returns the path to the main directory.
+ *
  * @returns {string} The path to the main directory.
  */
 function getMainPath(): string {
@@ -206,6 +216,7 @@ function getMainPath(): string {
 
 /**
  * Returns the path to the main directory.
+ *
  * @returns {string} The path to the main directory.
  */
 function getDebugPath(): string {
@@ -214,6 +225,7 @@ function getDebugPath(): string {
 
 /**
  * Returns the path to the assets directory.
+ *
  * @returns {string} The path to the assets directory.
  */
 function getAssetsPath(): string {
@@ -222,6 +234,7 @@ function getAssetsPath(): string {
 
 /**
  * Returns the path to the resources directory.
+ *
  * @returns {string} The path to the resources directory.
  */
 function getResourcesPath(): string {
@@ -230,6 +243,7 @@ function getResourcesPath(): string {
 
 /**
  * Returns the path to strings.xml.
+ *
  * @returns {string} The path to strings.xml
  */
 function getStringsPath(): string {
@@ -238,6 +252,7 @@ function getStringsPath(): string {
 
 /**
  * Returns the path to styles.xml.
+ *
  * @returns {string} The path to strings.xml
  */
 function getStylesPath(): string {
@@ -246,6 +261,7 @@ function getStylesPath(): string {
 
 /**
  * Returns the path to the Fastfile
+ *
  * @returns {string} The path to Fastfile
  */
 function getFastfilePathAndroid(): string {

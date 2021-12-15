@@ -8,7 +8,7 @@ import { logInfo } from '../helpers';
  * @param {string} path The path to the project Fastfile
  * @param {object} configuration The project configuration.
  */
-// tslint:disable-next-line: cyclomatic-complexity
+// eslint-disable-next-line complexity
 export function configure(path: string, configuration: Config): void {
   const buildConfig = configuration && configuration.buildConfig && configuration.buildConfig.ios;
 
@@ -35,7 +35,6 @@ export function configure(path: string, configuration: Config): void {
       fs.update(
         path,
         /.+#PROJECT_MODIFY_FLAG_export_options_provisioning_profile/g,
-        // tslint:disable-next-line:ter-max-len
         `"${buildConfig.provisioningProfileName}" #PROJECT_MODIFY_FLAG_export_options_provisioning_profile`
       );
 

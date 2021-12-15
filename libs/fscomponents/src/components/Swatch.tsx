@@ -58,7 +58,6 @@ export interface SwatchProps extends SwatchStyle, SerializableSwatchProps {
   render?: (swatch: SwatchProps) => React.ReactNode;
 }
 
-// tslint:disable:no-boolean-literal-compare
 export class Swatch extends PureComponent<SwatchProps> {
 
   _renderTouchable(style: StyleProp<ViewStyle>, child: JSX.Element): JSX.Element {

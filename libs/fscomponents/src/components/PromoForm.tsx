@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
 import {Dictionary, Omit} from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.promoForm;
 
 

@@ -1,13 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   number,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { range } from 'lodash-es';
 import Picker from '../src/components/Form/Templates/Picker';
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { action } from '@storybook/addon-actions';
 
 const setFormikField = (field: string, value: any, shouldValidate?: boolean): void => {
   action('Set Formik Field')({

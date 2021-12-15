@@ -47,7 +47,7 @@ class ImageGrid
       tallestTextHeight: 0
     };
   }
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   shouldComponentUpdate(nextProps: ImageGridContextProps, nextState: ImageGridState): boolean {
     return this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||

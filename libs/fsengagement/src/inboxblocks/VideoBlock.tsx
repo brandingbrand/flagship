@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
+// eslint-disable-next-line complexity
 export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
   const [videoPaused, setVideoPaused] = useState(false);
   const { isCard } = React.useContext(CardContext);
@@ -159,7 +160,6 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
     return false;
   };
 
-  // tslint:disable cyclomatic-complexity
   if (containerStyle) {
     if (containerStyle.paddingLeft) {
       blockStyle.width = blockStyle.width - +containerStyle.paddingLeft;

@@ -45,7 +45,7 @@ export function builder(yargs: BuilderArgs): void {
   });
 }
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export function handler(argv: HandlerArgs): void {
   const platform = argv.platform;
   const doAndroid = !platform || platform === 'android' || platform === 'native';

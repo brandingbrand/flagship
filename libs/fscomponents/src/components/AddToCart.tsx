@@ -198,6 +198,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
                   title={option.name}
                   items={option.values}
                   defaultValue={defaultOption ? defaultOption.value : undefined}
+                  // eslint-disable-next-line react/jsx-no-bind
                   onChangeSwatch={this.updateOption.bind(this, option.id)}
                   {...swatchesProps}
                 />

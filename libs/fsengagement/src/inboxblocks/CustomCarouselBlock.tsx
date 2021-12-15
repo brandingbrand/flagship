@@ -1,4 +1,4 @@
-// tslint:disable
+/* eslint-disable */
 import React, { Component } from 'react';
 import {
   Dimensions,

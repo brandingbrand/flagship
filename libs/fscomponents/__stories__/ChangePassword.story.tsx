@@ -1,10 +1,9 @@
 import React from 'react';
 import { ChangePassword, FormValues } from '../src/components/ChangePasswordComponent';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 const fieldsOptions = {

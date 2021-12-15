@@ -10,6 +10,7 @@ const kNativeConstantsPlaceholder = '// [NativeConstants Inject]';
 
 /**
  * Adds a native constant to Android.
+ *
  * @param {object} configuration The project configuration.
  * @param {string} key The key for the constant to add.
  * @param {string} value The value of the constant to add.
@@ -31,6 +32,7 @@ export function addAndroid(configuration: Config, key: string, value: string): v
 
 /**
  * Adds a native constant to iOS.
+ *
  * @param {object} configuration The project configuration.
  * @param {string} key The key for the constant to add.
  * @param {string} value The value of the constant to add.

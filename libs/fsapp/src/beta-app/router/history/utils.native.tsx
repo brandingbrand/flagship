@@ -102,7 +102,6 @@ export const matchStack = async (route: RouteCollection | ParentRoute, matcher: 
 
 const makeErrorComponent = (error: string): Layout => {
   const id = uniqueId('error');
-  // tslint:disable-next-line: jsx-use-translation-function
   Navigation.registerComponent(id, () => () => <Text>Error: {error}</Text>);
   return {
     stack: {

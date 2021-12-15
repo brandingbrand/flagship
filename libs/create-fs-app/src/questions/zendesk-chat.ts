@@ -1,4 +1,3 @@
-// tslint:disable: ter-max-len max-line-length
 import * as inquirer from 'inquirer';
 import * as formatters from '../lib/formatters';
 import { requiredString } from '../lib/validation';

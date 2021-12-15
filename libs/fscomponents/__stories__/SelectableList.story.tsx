@@ -1,10 +1,9 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import {
   boolean,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { SelectableList } from '../src/components/SelectableList';
 import { CommerceTypes } from '@brandingbrand/fscommerce';

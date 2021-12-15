@@ -1,4 +1,4 @@
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByTimeZone(
   instance: any,
   targets: { [index: string]: any }

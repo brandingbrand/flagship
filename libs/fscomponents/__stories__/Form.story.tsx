@@ -1,19 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import {
   color,
   object,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import { Form } from '../src/components/Form/Form';
 import { FormLabelPosition } from '../src/components/Form/Templates/fieldTemplates';
 import { Button } from '../src/components/Button';
 import { emailRegex } from '../src/lib/email';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
 
 const EmailType = t.refinement(t.String, (str: string) => {
   return emailRegex.test((str || '').trim());

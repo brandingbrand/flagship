@@ -3,7 +3,6 @@ import GoogleMapReact from 'google-map-react';
 
 // @ts-ignore TODO: Add typing support for google-map-react/utils
 // The root GoogleMapReact module does not export its utils, so we have to disable that check too
-// tslint:disable-next-line:no-submodule-imports
 import { fitBounds } from 'google-map-react/utils';
 import { GeoLocation } from '@brandingbrand/fsfoundation';
 import React, { Component } from 'react';

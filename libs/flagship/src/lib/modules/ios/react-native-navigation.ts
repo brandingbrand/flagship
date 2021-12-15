@@ -1,5 +1,3 @@
-// tslint:disable: ter-max-len max-line-length
-
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { Config } from '../../../types';
@@ -17,6 +15,7 @@ import {
  * have already been applied to the dependency and thus should be safe for future Flagship versions.
  *
  * The changes are based on a patch suggested by a user in the RNN issue tracker.
+ *
  * @see https://github.com/wix/react-native-navigation/issues/7266#issuecomment-925706532
  *
  * @param {object} configuration The project configuration.

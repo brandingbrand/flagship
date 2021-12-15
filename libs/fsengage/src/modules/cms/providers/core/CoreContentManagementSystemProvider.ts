@@ -46,7 +46,6 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
     let baseURL;
 
-    // tslint:disable-next-line
     if (configuration.environment === ContentManagementSystemEnvironment.PROD) {
       baseURL = this.productionBaseEndpoint;
     } else {

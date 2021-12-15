@@ -1,6 +1,6 @@
 import { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByCountry(
   instance: any, targets: { [index: string]: any }, location: Location
 ): boolean {
@@ -26,12 +26,10 @@ export default function targetInstancesByCountry(
     targets[campaign].Country &&
     targets[campaign].Country.countries;
 
-  // tslint:disable-next-line:no-magic-numbers
   if (instanceCountries && Object.keys(instanceCountries).indexOf(location.countryCode) === -1) {
     return false;
   }
 
-  // tslint:disable-next-line:no-magic-numbers
   if (campaignCountries && Object.keys(campaignCountries).indexOf(location.countryCode) === -1) {
     return false;
   }

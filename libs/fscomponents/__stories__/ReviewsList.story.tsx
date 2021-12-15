@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import {
   number,
   object,
   text
-  // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 import { ReviewsList } from '../src/components/ReviewsList';
 

@@ -1,4 +1,3 @@
-// tslint:disable:jsx-use-translation-function
 import React, { Component, ComponentClass } from 'react';
 import {
   Animated,
@@ -233,8 +232,9 @@ export default function(
     }
 
 
-    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
-    handleAction = debounce(async (actions: Action) => {
+    handleAction =
+      // eslint-disable-next-line complexity
+      debounce(async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -270,7 +270,7 @@ export default function(
               passProps: { actions },
               options: {
                 statusBar: {
-                  style: 'dark' as 'dark'
+                  style: 'dark' as const
                 },
                 topBar: {
                   background: { color: '#f5f2ee'},
@@ -437,7 +437,6 @@ export default function(
       );
     }
 
-    // tslint:disable-next-line:cyclomatic-complexity
     renderContent(): JSX.Element {
       const { backButton, containerStyle, json } = this.props;
       return (
@@ -456,7 +455,6 @@ export default function(
       );
     }
 
-    // tslint:disable-next-line:cyclomatic-complexity
     renderScrollView(): JSX.Element {
       const { json } = this.props;
       const empty: any = json && json.empty || {};
@@ -494,7 +492,7 @@ export default function(
       );
     }
 
-    // tslint:disable-next-line:cyclomatic-complexity
+    // eslint-disable-next-line complexity
     render(): JSX.Element {
       const { json, navBarTitle } = this.props;
       this.pageCounterStyle =

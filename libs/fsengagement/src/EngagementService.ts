@@ -164,6 +164,7 @@ export class EngagementService {
 
   /**
    * Get inbox messages for the current user
+   *
    * @returns {EngagementMessage[]} inbox messages
    */
   async getMessages(): Promise<EngagementMessage[]> {
@@ -263,6 +264,7 @@ export class EngagementService {
   /**
    * Accepts array of inbox messages
    * Fetches sort order array (stored in app settings)
+   *
    * @param {EngagementMessage[]} messages inbox messages to sort
    * @returns {EngagementMessage[]} sorted inbox messages
    */

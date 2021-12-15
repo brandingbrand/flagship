@@ -49,6 +49,7 @@ export const resolveRoutes = async ({
     'initialPath' in route ? routeCollectionValue : routeValue
   );
 
+  // eslint-disable-next-line complexity
   const findRoute = (
     search: ExternalRoute,
     children = routes,
@@ -125,7 +126,7 @@ export const trackView = (
   path: string | undefined
 ) => {
   if (!__DEV__ && filteredRoute && !route.disableTracking) {
-    Promise.resolve(typeof route.title === 'string' ? route.title : route.title?.(filteredRoute))
+    void Promise.resolve(typeof route.title === 'string' ? route.title : route.title?.(filteredRoute))
       .then(title => {
         analytics?.screenview(title ?? path ?? '', {
           url: path ?? ''

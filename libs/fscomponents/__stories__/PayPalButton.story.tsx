@@ -1,6 +1,6 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { PayPalCheckoutButton } from '../src/components/PayPalCheckoutButton';
 import { withDigitalWallet } from '../src/components/DigitalWalletProvider';
 const emptyOnPress: () => void = () => {

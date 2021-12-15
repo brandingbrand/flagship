@@ -43,7 +43,7 @@ export interface CategoryLineProps extends Omit<SerializableCategoryLineProps,
   titleStyle?: StyleProp<TextStyle>;
 }
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): JSX.Element => {
 
   const {
@@ -65,6 +65,7 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
 
   /**
    * Called when a user taps on the item.
+   *
    * @returns {void}
    */
   const handlePress = () => {

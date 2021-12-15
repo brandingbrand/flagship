@@ -345,7 +345,7 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
      </ScrollView>
    )
 
-  // tslint:disable-next-line: cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
     return (

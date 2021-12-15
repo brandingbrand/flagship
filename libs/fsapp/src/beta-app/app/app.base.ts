@@ -35,6 +35,7 @@ export abstract class FSAppBase implements IApp {
       ? await storeManager?.getReduxStore(await storeManager.updatedInitialState())
       : undefined;
 
+    // eslint-disable-next-line prefer-const
     let app: T | undefined;
     const router = await FSRouter.register({
       api,

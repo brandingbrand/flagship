@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 
 import { SearchScreen } from '../src/components/SearchScreen';
 import { Text, View } from 'react-native';
-import { text } from '@storybook/addon-knobs'; // tslint:disable-line:no-implicit-dependencies
+import { text } from '@storybook/addon-knobs';
 
 
 const onClose = () => {

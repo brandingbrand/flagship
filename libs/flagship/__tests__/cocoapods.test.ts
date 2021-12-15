@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as cocoapods from '../src/lib/cocoapods';
 import * as os from '../src/lib/os';
 

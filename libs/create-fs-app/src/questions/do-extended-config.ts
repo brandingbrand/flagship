@@ -1,4 +1,3 @@
-// tslint:disable: ter-max-len max-line-length
 import { DistinctQuestion } from 'inquirer';
 import { QuestionFormatter } from '../lib/formatters';
 import { success } from '../lib/colors';

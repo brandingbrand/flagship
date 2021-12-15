@@ -63,7 +63,7 @@ const styles = CreateWebStyles({
   }
 });
 
-// tslint:disable-next-line: cyclomatic-complexity
+// eslint-disable-next-line complexity
 export const WebShellProvider: FC<ShellConfig> = ({
   header,
   footer,

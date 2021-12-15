@@ -3,9 +3,6 @@ import { View } from 'react-native';
 import memoize from 'memoize-one';
 // dynamically generates stylesheet w/ correct active, error, inactive colors
 import { Dictionary } from '@brandingbrand/fsfoundation';
-
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const t = require('@brandingbrand/tcomb-form-native');
 import {
   aboveLabels,
   floatingLabels,
@@ -16,9 +13,13 @@ import {
   styles
 } from './Templates';
 
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const t = require('@brandingbrand/tcomb-form-native');
+
 // TODO: Update tcomb-form-native to support typing
 type TcombForm = any;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 const TcombForm = t.form.Form;
 const defaultTemplates = t.form.Form.templates;
 

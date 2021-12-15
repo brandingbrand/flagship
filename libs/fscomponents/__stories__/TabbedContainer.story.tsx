@@ -1,14 +1,12 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element
 // strings in this file since this is mainly a demo
 
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { TabbedContainer } from '../src/components/TabbedContainer';
 import {
   number
-  // tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({

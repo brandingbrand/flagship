@@ -89,7 +89,7 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
       containerPinWidth: TOGGLE_PIN_SIZE_DEFAULT,
       containerPinWidthInitialized: false,
       pinIndentAnimation: new Animated.Value(
-        !!this.props.state ? 1 : 0
+        this.props.state ? 1 : 0
       )
     };
   }
@@ -199,7 +199,7 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
       isSelected: !isSelected
     });
 
-    if (!!this.props.onPress) {
+    if (this.props.onPress) {
       this.props.onPress(!isSelected);
     }
 

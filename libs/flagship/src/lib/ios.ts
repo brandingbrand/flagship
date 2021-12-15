@@ -211,7 +211,6 @@ export function exceptionDomains(configuration: Config): void {
     // remove localhost exception when dev feature is disabled
     fs.update(
       path.ios.infoPlistPath(configuration),
-      // tslint:disable-next-line:ter-max-len
       /<!-- {NSExceptionDomains-localhost-start} -->[.\s\S]+<!-- {NSExceptionDomains-localhost-end} -->/,
       ''
     );
@@ -325,7 +324,7 @@ export function version(configuration: Config, newVersion: string): void {
   );
 }
 
-// tslint:disable:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export function iosExtensions(configuration: Config, version: string): void {
   if (!configuration?.ios?.extensions) {
     return;
@@ -473,6 +472,7 @@ export function sentryProperties(configuration: Config): void {
 
 /**
  * Adds ShowDevMenu:"true" to NativeConstants for showing the dev menu
+ *
  * @param {object} configuration The project configuration.
  */
 export function addDevMenuFlag(configuration: Config): void {
@@ -481,6 +481,7 @@ export function addDevMenuFlag(configuration: Config): void {
 
 /**
  * Sets initial env in EnvSwitcher
+ *
  * @param {object} configuration The project configuration.
  * @param {string} env The identifier for the environment for which to return the configuration.
  */
@@ -498,6 +499,7 @@ export function setEnvSwitcherInitialEnv(configuration: Config, env: string): vo
 
 /**
  * Adds iOS system and custom frameworks to project
+ *
  * @param {object} configuration The project configuration.
  */
 export function frameworks(configuration: Config): void {

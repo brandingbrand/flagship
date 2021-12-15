@@ -1,6 +1,6 @@
 const kTimeOfDayKey = 'Time-of-Day';
 
-// tslint:disable:no-magic-numbers cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByTimeOfDay(
   instance: any,
   targets: { [index: string]: any }

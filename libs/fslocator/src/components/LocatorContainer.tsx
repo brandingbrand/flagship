@@ -367,7 +367,6 @@ export default class LocatorContainer extends Component<PropType, StateType> {
             }
           }
         },
-        // tslint:disable-next-line
         error => {
           if (this.props.handleLocationNotFound) {
             this.props.handleLocationNotFound();
@@ -375,7 +374,6 @@ export default class LocatorContainer extends Component<PropType, StateType> {
             this.handleLocationNotFound();
           }
         },
-        // tslint:disable-next-line: no-object-literal-type-assertion
         ({
           enableHighAccuracy: true,
           timeout: 10000,

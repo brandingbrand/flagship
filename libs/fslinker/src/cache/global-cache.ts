@@ -8,7 +8,7 @@ import { InjectorCache, InMemoryCache } from './cache';
 const GLOBAL_CACHE_KEY = '__FLAGSHIP_LINKER_GLOBAL_CACHE__';
 
 declare global {
-  // tslint:disable-next-line: no-var-keyword
+  // eslint-disable-next-line no-var
   export var __FLAGSHIP_LINKER_GLOBAL_CACHE__: Map<string, unknown>;
 }
 

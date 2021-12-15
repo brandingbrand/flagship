@@ -46,6 +46,7 @@ export interface AccordionProps {
   iconFormat?: 'image' | 'plusminus' | 'arrow';
   /**
    * Bottom padding
+   *
    * @deprecated Put the padding on the accordion contents instead
    */
   padding?: number;
@@ -77,6 +78,7 @@ export interface AccordionProps {
   closedIconStyle?: StyleProp<ImageStyle>;
   /**
    * Content of the accordion
+   *
    * @deprecated Make the contents a child instead
    */
   content?: JSX.Element | JSX.Element[];
@@ -205,7 +207,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     };
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     let computedContentStyle = {};
     let layoutStyle;

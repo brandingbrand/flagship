@@ -1,9 +1,8 @@
 import React from 'react';
 import {
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { ShareButton } from '../src/components/ShareButton/ShareButton';
 
 storiesOf('ShareButton', module)

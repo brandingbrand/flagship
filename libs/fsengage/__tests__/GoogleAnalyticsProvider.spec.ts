@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/unbound-method */
 // @ts-ignore using ts-sinon instead of sinon causes a conflict between @types/node and @types/react
-import { assert, stub } from 'sinon'; // tslint:disable-line:no-implicit-dependencies
+import { assert, stub } from 'sinon';
 import { Component } from 'react';
 
 import Analytics from '../src/modules/analytics/Analytics';
@@ -37,12 +39,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.contact.call.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.contact.call(component, fixture.contact.call.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -58,12 +60,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.call.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.contact.call(component, fixture.contact.call.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -83,7 +85,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -96,12 +98,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.contact.email.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.contact.email(component, fixture.contact.email.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -117,12 +119,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.email.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.contact.email(component, fixture.contact.email.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -142,7 +144,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -157,12 +159,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.click.generic.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.click.generic(component, fixture.click.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -178,12 +180,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.click.generic.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.click.generic(component, fixture.click.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -203,7 +205,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -218,12 +220,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.location.directions.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.location.directions(component, fixture.location.directions.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -239,12 +241,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.location.directions.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.location.directions(component, fixture.location.directions.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -264,7 +266,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -279,12 +281,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.search.generic.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.search.generic(component, fixture.search.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -300,12 +302,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.search.generic.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.search.generic(component, fixture.search.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -325,7 +327,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -340,12 +342,12 @@ describe('Analytics', () => {
             expect(properties).toEqual(fixture.impression.generic.response.default);
           });
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.impression.generic(component, fixture.impression.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -361,12 +363,12 @@ describe('Analytics', () => {
         // @ts-ignore we add an .analytics property to components
         Component.prototype.analytics = fixture.impression.generic.module;
 
-        const component = new Component({}); // tslint:disable-line no-inferred-empty-object-type
+        const component = new Component({});
         analytics.impression.generic(component, fixture.impression.generic.request);
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -386,7 +388,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -405,7 +407,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -422,7 +424,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -439,7 +441,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -456,7 +458,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -473,7 +475,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -490,7 +492,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
@@ -507,7 +509,7 @@ describe('Analytics', () => {
 
         assert.calledOnce(
           // @ts-ignore accessing private function
-          GoogleAnalyticsProvider.prototype._sendEvent  // tslint:disable-line no-unbound-method
+          GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();

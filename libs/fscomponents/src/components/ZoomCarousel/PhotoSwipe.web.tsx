@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 // @ts-ignore TODO: Update photoswipe to support typing
 import Photoswipe from 'photoswipe';
-// tslint:disable
 // @ts-ignore TODO: Update photoswipe to support typing
 import PhotoswipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 import 'photoswipe/dist/photoswipe.css';
@@ -93,10 +92,12 @@ export class PhotoSwipe extends PureComponent<PhotoSwipeProps> {
     events.forEach((event: any) => {
       const callback = get(props, event);
       if (callback || event === 'destroy') {
-        const self = this; // tslint:disable-line
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const self = this;
         this.photoSwipe.listen(event, function(...args: any[]): void {
           if (callback) {
             // @ts-ignore: TODO how to handle this in typescript
+            // eslint-disable-next-line no-invalid-this
             args.unshift(this);
             callback(...args);
           }

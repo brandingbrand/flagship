@@ -1,6 +1,6 @@
 import { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// tslint:disable-next-line:cyclomatic-complexity
+// eslint-disable-next-line complexity
 export default function targetInstancesByRegion(
   instance: any, targets: { [index: string]: any }, location: Location
 ): boolean {
@@ -53,7 +53,6 @@ function isLocationInsideCoordinates(location: Location, coordinates: any[]): bo
     let isLocationInside = false;
 
     for (
-      // tslint:disable-next-line:one-variable-per-declaration
       let index1 = 0, index2 = region.length - 1;
       index1 < region.length;
       index2 = index1++

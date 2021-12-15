@@ -1,4 +1,3 @@
-// tslint:disable:cyclomatic-complexity
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { LayoutComponent } from 'react-native-navigation';
 import Navigator from './nav-wrapper';
@@ -68,6 +67,7 @@ export default class AppRouter {
     return config;
   }
 
+  // eslint-disable-next-line complexity
   async url(navigator: Navigator, href: string, props?: any): Promise<void> {
     let found: any = {};
     if (!href) {
@@ -273,7 +273,6 @@ export default class AppRouter {
         headers: {
           Authorization: `Bearer ${this.cmsToken}`
         }
-        // tslint:disable-next-line: cyclomatic-complexity
       }).then(async pageData => {
         let customRoutes;
         let parsedContent: LayoutBuilderObject | undefined;

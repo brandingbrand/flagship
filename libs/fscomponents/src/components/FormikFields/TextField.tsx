@@ -12,7 +12,6 @@ interface FormFieldProps extends TextInputProps {
 }
 
 export const TextField: React.FC<FormFieldProps> = (
-  // tslint:disable-next-line:handle-callback-err
   {label, name, labelStyle, errStyle, ...props}) => {
   const [field, meta] = useField(name);
   const { handleChange, setFieldTouched } = useFormikContext();

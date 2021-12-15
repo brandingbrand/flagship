@@ -110,10 +110,10 @@ StatefulTextboxState> {
   }
 
   componentDidMount(): void {
-    // tslint:disable-next-line:ter-max-len
     console.warn('StatefulTextbox is deprecated and will be removed in the next version of Flagship.');
   }
 
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
 
     const {locals, componentFactory, labelPosition} = this.props;
@@ -129,6 +129,7 @@ StatefulTextboxState> {
     let label: JSX.Element;
     let error: JSX.Element;
 
+    // eslint-disable-next-line prefer-const
     error = locals.error ? (
       <Text accessibilityLiveRegion='polite' style={this.errorBlockStyle}>
         {locals.error}
@@ -141,13 +142,9 @@ StatefulTextboxState> {
     }
 
     if (labelPosition === FormLabelPosition.Floating) {
-      locals.value ?
-      label = (
+      label = locals.value ?
         <Text style={[this.controlLabelStyle, {color}]}>{locals.label}</Text>
-      ) :
-      label = (
-        <Text style={this.controlLabelStyle}>&nbsp;</Text>
-      );
+        : <Text style={this.controlLabelStyle}>&nbsp;</Text>;
     } else {
       label = (
         <Text style={[this.controlLabelStyle, {color}]}>{locals.label}</Text>
@@ -178,7 +175,6 @@ StatefulTextboxState> {
               (
                 <TextInput
                   accessibilityLabel={locals.label}
-                  /* tslint:disable-next-line */
                   ref={this.input}
                   onChangeText={locals.onChange}
                   onChange={locals.onChangeNative}

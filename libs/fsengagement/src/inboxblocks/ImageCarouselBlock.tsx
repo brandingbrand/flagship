@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 import React, { Component } from 'react';
 import {
   Dimensions,
@@ -67,7 +67,6 @@ export default class ImageCarouselBlock
       overallHeight: 0
     };
   }
-  // tslint:disable-next-line:cyclomatic-complexity
   shouldComponentUpdate(
     nextProps: ImageCarouselBlockProps, nextState: ImageCarouselBlockState
   ): boolean {

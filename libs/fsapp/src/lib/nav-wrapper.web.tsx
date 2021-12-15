@@ -66,7 +66,7 @@ export default class Navigator {
 
   async showModal(layout: NavLayout): Promise<any> {
     if (layout.stack && layout.stack.children) {
-      // tslint:disable-next-line: prefer-for-of
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let loop = 0; loop < layout.stack.children.length; loop++) {
         await this.showModal(layout.stack.children[loop]);
       }

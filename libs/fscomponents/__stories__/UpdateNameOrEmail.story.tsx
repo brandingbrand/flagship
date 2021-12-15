@@ -1,11 +1,11 @@
 import React from 'react';
 import { UpdateNameOrEmail } from '../src/components/UpdateNameOrEmail';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import {
   boolean,
   object,
   text
-} from '@storybook/addon-knobs'; // tslint:disable-line:no-implicit-dependencies
+} from '@storybook/addon-knobs';
 
 const onSubmit = (values: any) => {
   alert(`

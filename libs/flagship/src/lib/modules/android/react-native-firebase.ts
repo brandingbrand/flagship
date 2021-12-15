@@ -43,7 +43,6 @@ export function postLink(configuration: Config): void {
   );
 
   gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'';
-  // tslint:disable-next-line:ter-max-len
   gradleAppBuild += '\ncom.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true\n';
   gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
   gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');

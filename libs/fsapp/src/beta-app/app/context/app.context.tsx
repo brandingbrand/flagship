@@ -11,6 +11,5 @@ export const APP_CONTEXT_TOKEN = new InjectionToken<typeof AppContext>('APP_CONT
 export const useApp = () => {
   const context = useDependencyContext(APP_CONTEXT_TOKEN);
 
-  // tslint:disable-next-line: no-unnecessary-callback-wrapper -- Optional Chaining
   return useMemo(() => context?.(), [context]);
 };

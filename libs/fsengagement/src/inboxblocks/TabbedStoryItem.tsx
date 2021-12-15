@@ -90,7 +90,7 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
   loaded = (loaded: boolean) => () => {
     this.setState({ loaded });
   }
-// tslint:disable-next-line: cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const {
       item

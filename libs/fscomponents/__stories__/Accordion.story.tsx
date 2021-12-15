@@ -1,4 +1,3 @@
-/* tslint:disable:jsx-use-translation-function */
 // We don't need to worry about translating the element
 // strings in this file since this is mainly a demo
 
@@ -15,9 +14,8 @@ import {
   object,
   select,
   text
-// tslint:disable-next-line no-implicit-dependencies
 } from '@storybook/addon-knobs';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { Accordion } from '../src/components/Accordion';
 
 const icons: Record<string, ImageURISource> = {

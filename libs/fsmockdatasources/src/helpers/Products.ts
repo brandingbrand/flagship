@@ -1,4 +1,3 @@
-// tslint:disable:ter-max-len max-line-length
 import Decimal from 'decimal.js';
 import { DefaultCurrencyCode } from './Misc';
 

@@ -286,6 +286,7 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
 
   /**
    * Renders the cart item image.
+   *
    * @returns {React.ReactNode} The cart item image or null if there is no image.
    */
   private renderImage(): React.ReactNode {

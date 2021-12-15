@@ -1,4 +1,3 @@
-// tslint:disable:jsx-use-translation-function
 import React, { Component, ComponentClass } from 'react';
 import {
   ActivityIndicator,
@@ -349,8 +348,9 @@ export default function(
       }
     }
 
-    // tslint:disable-next-line:cyclomatic-complexity member-ordering typedef
-    handleAction = debounce(async (actions: Action) => {
+    handleAction =
+    // eslint-disable-next-line complexity
+      debounce(async (actions: Action) => {
       if (!(actions && actions.type && actions.value)) {
         return false;
       }
@@ -386,7 +386,7 @@ export default function(
               passProps: { actions },
               options: {
                 statusBar: {
-                  style: 'dark' as 'dark'
+                  style: 'dark' as const
                 },
                 topBar: {
                   background: { color: '#f5f2ee'},
@@ -491,7 +491,6 @@ export default function(
         />
       );
     }
-    // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
       if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
@@ -710,7 +709,7 @@ export default function(
         </>
       );
     }
-    // tslint:disable-next-line:cyclomatic-complexity
+    // eslint-disable-next-line complexity
     renderStoryGradient(): JSX.Element {
       const { json: { storyGradient, tabbedItems } } = this.props;
       const { scrollY } = this.state;
@@ -788,7 +787,7 @@ export default function(
         });
       }
     }
-    // tslint:disable-next-line:cyclomatic-complexity
+    // eslint-disable-next-line complexity
     renderContent(): JSX.Element {
       const { animate, animateScroll, backButton, containerStyle, json } = this.props;
       if (animateScroll) {
@@ -905,7 +904,7 @@ export default function(
         <View style={styles.storyFooter} />
       );
     }
-    // tslint:disable-next-line:cyclomatic-complexity
+    // eslint-disable-next-line complexity
     renderScrollView(): JSX.Element {
       const { json } = this.props;
       const storyGradient = json && json.storyGradient;
@@ -1051,7 +1050,7 @@ export default function(
       );
     }
 
-    // tslint:disable-next-line:cyclomatic-complexity
+    // eslint-disable-next-line complexity
     render(): JSX.Element {
       const { json, navBarTitle } = this.props;
       this.pageCounterStyle =

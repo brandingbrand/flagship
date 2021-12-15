@@ -156,7 +156,7 @@ const getPackageJson = async (config: Config) => {
     .filter((key): key is keyof typeof configDependencyPackageMap => {
       return config.hasOwnProperty(key) && configDependencyPackageMap.hasOwnProperty(key);
     })
-    .map(key => getLatestDependency(configDependencyPackageMap[key]));
+    .map(async key => getLatestDependency(configDependencyPackageMap[key]));
 
   const newDeps = await Promise.all(promises);
   packageJson.dependencies = {
@@ -169,7 +169,6 @@ const getPackageJson = async (config: Config) => {
 
 const showPostInstallMsg = () => {
   // Show some post-install instructions/hints
-  // tslint:disable: ter-max-len max-line-length
   console.log(`
 You're almost done! There's a couple more steps you may want to complete.
 

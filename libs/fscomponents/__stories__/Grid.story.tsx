@@ -2,9 +2,8 @@ import React, { isValidElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Decimal from 'decimal.js';
 
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
-import { action } from '@storybook/addon-actions'; // tslint:disable-line:no-implicit-dependencies
-// tslint:disable-next-line no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { boolean, number, object } from '@storybook/addon-knobs';
 
 import { Grid, GridRenderItem } from '../src/components/Grid';

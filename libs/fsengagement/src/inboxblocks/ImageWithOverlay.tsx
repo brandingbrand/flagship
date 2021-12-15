@@ -64,7 +64,7 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
 
     }
   }
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   findImageRatio = (): ImageBlockState => {
     const { parentWidth, containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
     const { windowWidth } = this.props.context;
@@ -123,7 +123,7 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
       <TextBlock {...item} />
     );
   }
-  // tslint:disable-next-line:cyclomatic-complexity
+  // eslint-disable-next-line complexity
   render(): JSX.Element {
     const {
       imageStyle = {},

@@ -1,7 +1,6 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react'; // tslint:disable-line:no-implicit-dependencies
+import { storiesOf } from '@storybook/react';
 import { ZoomCarousel } from '../src/components/ZoomCarousel/ZoomCarousel';
-// tslint:disable-next-line:no-implicit-dependencies
 import { boolean, number, object } from '@storybook/addon-knobs';
 
 const defaultImages = [

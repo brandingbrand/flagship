@@ -21,11 +21,9 @@ if (__DEV__) {
   standardMiddleware = [...standardMiddleware, reduxImmutableStateInvariant, logger];
 }
 const composeEnhancers =
-  // tslint:disable-next-line
-  (typeof anyWindow !== 'undefined' && anyWindow['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']) || compose;
+  (typeof anyWindow !== 'undefined' && anyWindow.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 export default function configureStore<S, A extends Action, Ext, StateExt>(
-  // tslint:disable-next-line: no-object-literal-type-assertion
   initialState: PreloadedState<S> = {} as PreloadedState<S>,
   reducers: ReducersMapObject<S, A>,
   middleware: Middleware[]

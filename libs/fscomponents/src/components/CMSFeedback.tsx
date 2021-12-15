@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 
 import FSNetwork from '@brandingbrand/fsnetwork';
-// Using import with tcomb-form-native seems to cause issues with the object being undefined.
-const TcForm = require('@brandingbrand/tcomb-form-native');
 import { cloneDeep } from 'lodash-es';
 import { stringify } from 'qs';
 import { Dictionary } from '@brandingbrand/fsfoundation';
@@ -20,6 +18,8 @@ import { Button, ButtonProps } from './Button';
 import { Modal } from './Modal';
 import { Form } from './Form';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+// Using import with tcomb-form-native seems to cause issues with the object being undefined.
+const TcForm = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.feedback;
 
 const DEFAULT_BUTTON_TEXT = FSI18n.string(componentTranslationKeys.title);
