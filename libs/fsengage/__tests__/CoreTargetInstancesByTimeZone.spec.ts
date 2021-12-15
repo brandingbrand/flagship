@@ -1,6 +1,6 @@
-import targetInstancesByTimeZone from '../targetInstancesByTimeZone';
+import targetInstancesByTimeZone from '../src/modules/cms/providers/core/targets/targetInstancesByTimeZone';
 
-const fixture = require('../../__tests__/ContentManagementSystem.fixture.json');
+const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - TimeZone Target', () => {
   test('Valid Location', done => {
