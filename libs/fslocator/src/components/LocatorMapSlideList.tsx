@@ -7,7 +7,7 @@ import {
   PanResponder,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { style as S } from '../styles/LocatorSlideList';
 import { Location } from '../types/Location';
@@ -33,10 +33,7 @@ export interface StateType {
 
 export type ListPosition = 'top' | 'middle' | 'bottom';
 
-export default class LocatorMapSlideList extends Component<
-  LocatorPropType,
-  StateType
-> {
+export default class LocatorMapSlideList extends Component<LocatorPropType, StateType> {
   map: any;
   panResponder: any;
   listPosition: ListPosition = 'middle';
@@ -48,7 +45,7 @@ export default class LocatorMapSlideList extends Component<
       listY: new Animated.Value(MAP_HEIGHT),
       listButtonY: new Animated.Value(0),
       scrollable: false,
-      isMapCollapsed: true
+      isMapCollapsed: true,
     };
   }
 
@@ -66,57 +63,57 @@ export default class LocatorMapSlideList extends Component<
     this.listPosition = 'middle';
     this.setState({
       isMapCollapsed: true,
-      scrollable: false
+      scrollable: false,
     });
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: MAP_HEIGHT,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   moveToBottom = () => {
     this.listPosition = 'bottom';
     this.setState({
       isMapCollapsed: false,
-      scrollable: false
+      scrollable: false,
     });
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('bottom'),
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   moveToTop = () => {
     this.listPosition = 'top';
     this.setState({
-      scrollable: true
+      scrollable: true,
     });
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('top'),
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   componentDidMount(): void {
     this.panResponder = PanResponder.create({
@@ -147,10 +144,7 @@ export default class LocatorMapSlideList extends Component<
           this.state.listY.setValue(-LIST_HEIGHT);
           return;
         }
-        if (
-          this.listPosition === 'top' &&
-          gestureState.dy < SEARCH_BAR_HEIGHT
-        ) {
+        if (this.listPosition === 'top' && gestureState.dy < SEARCH_BAR_HEIGHT) {
           this.state.listY.setValue(0);
           return;
         }
@@ -158,20 +152,15 @@ export default class LocatorMapSlideList extends Component<
       },
       onPanResponderTerminationRequest: (evt, gestureState) => false,
       onPanResponderRelease: this.handleMoveRease,
-      onShouldBlockNativeResponder: (evt, gestureState) => true
+      onShouldBlockNativeResponder: (evt, gestureState) => true,
     });
   }
 
   handleMoveRease = (evt: any, gestureState: any): void => {
     this.state.listY.flattenOffset();
     const isUp = gestureState.dy < 0;
-    const shouldMove =
-      Math.abs(gestureState.dy) > 40 || Math.abs(gestureState.vy) > 1;
-    const nextPostion = this.getNextPosition(
-      isUp,
-      shouldMove,
-      this.listPosition
-    );
+    const shouldMove = Math.abs(gestureState.dy) > 40 || Math.abs(gestureState.vy) > 1;
+    const nextPostion = this.getNextPosition(isUp, shouldMove, this.listPosition);
 
     this.listPosition = nextPostion;
 
@@ -179,7 +168,7 @@ export default class LocatorMapSlideList extends Component<
       setTimeout(() => {
         Animated.spring(this.state.listButtonY, {
           toValue: -SHOW_LIST_BUTTON_HEIGHT,
-          useNativeDriver: false
+          useNativeDriver: false,
         }).start();
         this.expandMap();
       }, 200);
@@ -188,11 +177,11 @@ export default class LocatorMapSlideList extends Component<
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY(nextPostion),
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start(() => {
       this.setState({ scrollable: true });
     });
-  }
+  };
 
   getPositionY = (listPosition: ListPosition): number => {
     switch (listPosition) {
@@ -205,7 +194,7 @@ export default class LocatorMapSlideList extends Component<
       default:
         return 0;
     }
-  }
+  };
 
   getNextPosition = (
     isUp: boolean,
@@ -216,48 +205,48 @@ export default class LocatorMapSlideList extends Component<
       return listPosition;
     }
     return isUp ? 'top' : 'bottom';
-  }
+  };
 
   extractMapRef = (map: any) => (this.map = map);
 
   handleScroll = (e: any) => {
     this.scrollY = e.nativeEvent.contentOffset.y;
-  }
+  };
 
   expandMap = () => {
     this.setState({
-      isMapCollapsed: false
+      isMapCollapsed: false,
     });
-  }
+  };
 
   handleShowList = () => {
     this.listPosition = 'top';
 
     Animated.spring(this.state.listButtonY, {
       toValue: 0,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
 
     Animated.spring(this.state.listY, {
       bounciness: 0,
       toValue: this.getPositionY('top'),
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
   handleItemPress = (location: Location) => {
     const { selectLocation } = this.props;
 
     this.moveToBottom();
     selectLocation(location);
-  }
+  };
 
   renderSearchBar = () => {
     const { searchBarProps, renderSearchBar } = this.props;
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
-        useCurrentLocation: this.props.useCurrentLocation
+        useCurrentLocation: this.props.useCurrentLocation,
       })
     ) : (
       <SearchBar
@@ -268,7 +257,7 @@ export default class LocatorMapSlideList extends Component<
         {...searchBarProps}
       />
     );
-  }
+  };
 
   render(): JSX.Element {
     const {
@@ -291,20 +280,20 @@ export default class LocatorMapSlideList extends Component<
       selectLocation,
       renderLocationItem,
       renderLocationItemWithBack,
-      mapStyle
+      mapStyle,
     } = this.props;
 
     const listAniamtedStyle = {
       transform: [{ translateY: this.state.listY }],
-      paddingBottom: SEARCH_BAR_HEIGHT
+      paddingBottom: SEARCH_BAR_HEIGHT,
     };
     const showListButtonAniamtedStyle = {
-      transform: [{ translateY: this.state.listButtonY }]
+      transform: [{ translateY: this.state.listButtonY }],
     };
     const shouldShowList = locationsNotFound || !!locations.length;
     const center = selectedLocation && {
       latitude: selectedLocation.address.latlng.lat,
-      longitude: selectedLocation.address.latlng.lng
+      longitude: selectedLocation.address.latlng.lng,
     };
 
     return (
@@ -326,14 +315,8 @@ export default class LocatorMapSlideList extends Component<
               mapMarkerIcon={mapMarkerIcon}
             />
             {showLocateMe && (
-              <TouchableOpacity
-                style={S.locateMeButton}
-                onPress={useCurrentLocation}
-              >
-                <Image
-                  source={locateMeIcon || defaultLocateMeIcon}
-                  style={S.locateMeIcon}
-                />
+              <TouchableOpacity style={S.locateMeButton} onPress={useCurrentLocation}>
+                <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
               </TouchableOpacity>
             )}
             {this.renderSearchBar()}
@@ -373,20 +356,20 @@ export default class LocatorMapSlideList extends Component<
             {
               position: 'absolute',
               bottom: -100,
-              width
-            }
+              width,
+            },
           ]}
         >
           <TouchableOpacity
             onPress={this.handleShowList}
             style={{
               padding: 20,
-              backgroundColor: '#eee'
+              backgroundColor: '#eee',
             }}
           >
             <Text
               style={{
-                textAlign: 'center'
+                textAlign: 'center',
               }}
             >
               {FSI18n.string(translationKeys.flagship.storeLocator.actions.showList.actionBtn)}

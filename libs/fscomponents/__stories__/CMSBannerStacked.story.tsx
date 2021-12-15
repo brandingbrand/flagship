@@ -6,14 +6,13 @@ import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
 
 const provider = new CoreContentManagementSystemProvider({
   propertyId: '443',
-  environment: 1
+  environment: 1,
 });
 
-storiesOf('CMSBannerStacked', module)
-  .add('basic usage', () => (
-    <CMSBannerStacked
-      cmsProviderManagementConfig={provider}
-      cmsProviderGroup='Shop'
-      cmsProviderSlot='Banner-Carousel'
-    />
-  ));
+storiesOf('CMSBannerStacked', module).add('basic usage', () => (
+  <CMSBannerStacked
+    cmsProviderManagementConfig={provider}
+    cmsProviderGroup="Shop"
+    cmsProviderSlot="Banner-Carousel"
+  />
+));

@@ -11,7 +11,7 @@ import {
   LocationDescriptorObject,
   LocationListener,
   TransitionPromptHook,
-  UnregisterCallback
+  UnregisterCallback,
 } from 'history';
 import { uniqueId } from 'lodash-es';
 
@@ -23,7 +23,7 @@ import { INTERNAL, queueMethod } from './queue.decorator';
 
 export class History implements FSRouterHistory {
   private get nextLoad(): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const remove = this.observeLoading(() => {
         resolve();
         remove();
@@ -56,7 +56,7 @@ export class History implements FSRouterHistory {
     hash: '',
     search: '',
     state: {},
-    key: createKey()
+    key: createKey(),
   });
   constructor(private readonly routes: Routes) {
     void this.initialNavigation()
@@ -197,7 +197,7 @@ export class History implements FSRouterHistory {
       await this.activateRoute(matchingRoute, this.browserHistory.location.state);
       this._action = this.browserHistory.action;
       this._location = this.browserHistory.location;
-      this.locationObservers.forEach(listener => {
+      this.locationObservers.forEach((listener) => {
         listener(this.browserHistory.location, this.browserHistory.action);
       });
     }
@@ -232,7 +232,7 @@ export class History implements FSRouterHistory {
         await this.activateRoute(matchingRoute, location.state);
         this._action = action;
         this._location = location;
-        this.locationObservers.forEach(listener => {
+        this.locationObservers.forEach((listener) => {
           listener(location, action);
         });
         window.scrollTo(0, 0);
@@ -245,7 +245,7 @@ export class History implements FSRouterHistory {
   }
 
   private setLoading(loading: boolean): void {
-    this.loadingObservers.forEach(callback => callback(loading));
+    this.loadingObservers.forEach((callback) => callback(loading));
   }
 
   private async resolveRouteDetails(
@@ -258,7 +258,7 @@ export class History implements FSRouterHistory {
       query: matchingRoute.query,
       params: matchingRoute.params,
       path: matchingRoute.matchedPath,
-      loading: true
+      loading: true,
     };
   }
 }

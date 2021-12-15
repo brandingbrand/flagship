@@ -10,7 +10,7 @@ import type {
   RouteData,
   RouteParams,
   Routes,
-  Tab
+  Tab,
 } from '../types';
 
 import { createPath, LocationDescriptor, LocationDescriptorObject, parsePath } from 'history';
@@ -37,7 +37,7 @@ export const mapPromisedChildren = async <T>(
 ) => {
   const childRoutes = 'children' in route ? route.children : [];
   const mappedChildren = await Promise.all(
-    childRoutes.map(async childRoute => callback(childRoute))
+    childRoutes.map(async (childRoute) => callback(childRoute))
   );
 
   return mappedChildren.reduce((prev, next) => [...prev, ...next], []);
@@ -59,13 +59,13 @@ const matchPath = (path: string | undefined, route: Route) => {
     const [url, ...params] = regex.exec(checkPath.split('?')[0]) ?? [];
     return url
       ? {
-        params: keys.reduce<Dictionary<string>>((memo, key, index) => {
-          return {
-            ...memo,
-            [key.name]: params[index]
-          };
-        }, {})
-      }
+          params: keys.reduce<Dictionary<string>>((memo, key, index) => {
+            return {
+              ...memo,
+              [key.name]: params[index],
+            };
+          }, {}),
+        }
       : undefined;
   };
 };
@@ -84,13 +84,13 @@ const buildMatcher = async (
   const matchingRoute =
     'component' in route || 'loadComponent' in route
       ? ([
-        matchPath(path, route),
-        {
-          id,
-          tabAffinity: tab?.id,
-          ...route
-        }
-      ] as const)
+          matchPath(path, route),
+          {
+            id,
+            tabAffinity: tab?.id,
+            ...route,
+          },
+        ] as const)
       : undefined;
 
   const matchingRedirect =
@@ -98,7 +98,7 @@ const buildMatcher = async (
 
   const children =
     !matchingRoute && !matchingRedirect
-      ? await mapPromisedChildren(route, async childRoute =>
+      ? await mapPromisedChildren(route, async (childRoute) =>
           buildMatcher(childRoute, tab, 'initialPath' in route ? '' : path)
         )
       : [];
@@ -106,17 +106,14 @@ const buildMatcher = async (
   return [
     ...(matchingRoute ? [matchingRoute] : []),
     ...(matchingRedirect ? [matchingRedirect] : []),
-    ...children
+    ...children,
   ];
 };
 
-export const buildMatchers = async (
-  routes: Routes,
-  tab?: Tab
-) => {
+export const buildMatchers = async (routes: Routes, tab?: Tab) => {
   try {
     return routes
-      .map(async route => buildMatcher(route, 'tab' in route ? route.tab : tab))
+      .map(async (route) => buildMatcher(route, 'tab' in route ? route.tab : tab))
       .reduce(async (prev, next) => [...(await prev), ...(await next)], Promise.resolve([]));
   } catch (e) {
     return [];
@@ -150,13 +147,13 @@ export const resolveRoute = (route: MatchingRoute): RouteData => {
         query: route.query,
         params: route.params,
         path: route.matchedPath,
-        loading: true
-      })
+        loading: true,
+      }),
     ])
   );
   return {
     ...route.data,
-    ...resolved
+    ...resolved,
   };
 };
 
@@ -168,19 +165,16 @@ export const matchRoute = async (
   for (const [matcher, route] of await matchers) {
     const matched = matcher(path);
 
-
     if (matched) {
       const routeInfo = {
         params: matched.params,
         query: parse(search.substr(1)),
-        path
+        path,
       };
       if (await guardRoute(route, routeInfo)) {
         if ('redirect' in route) {
           const redirect =
-            typeof route.redirect === 'string'
-              ? route.redirect
-              : route.redirect(routeInfo);
+            typeof route.redirect === 'string' ? route.redirect : route.redirect(routeInfo);
           return matchRoute(matchers, `/${redirect}`);
         }
         if ('id' in route) {
@@ -188,7 +182,7 @@ export const matchRoute = async (
             ...route,
             params: matched.params,
             query: parse(search.substr(1)),
-            matchedPath: path
+            matchedPath: path,
           };
         }
       }
@@ -223,7 +217,6 @@ export const normalizeLocationDescriptor = (
 
   return {
     ...to,
-    pathname
+    pathname,
   };
 };
-

@@ -1,12 +1,5 @@
 import React, { PureComponent } from 'react';
-import {
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { style as styles } from '../../styles/Selector';
 import { Modal } from '../Modal';
 import { SelectorList } from './SelectorList';
@@ -51,17 +44,14 @@ export interface SelectorStateType {
   selectedValue?: string;
 }
 
-export class Selector extends PureComponent<
-  SelectorProps,
-  SelectorStateType
-> {
+export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
   static getDerivedStateFromProps(
     nextProps: SelectorProps,
     prevState: SelectorStateType
   ): Partial<SelectorStateType> | null {
     if (nextProps.selectedValue !== prevState.selectedValue) {
       return {
-        selectedValue: nextProps.selectedValue
+        selectedValue: nextProps.selectedValue,
       };
     }
 
@@ -72,24 +62,18 @@ export class Selector extends PureComponent<
     super(props);
     this.state = {
       modalVisible: false,
-      selectedValue: props.selectedValue
+      selectedValue: props.selectedValue,
     };
   }
 
   renderSelector = () => {
-    const {
-      title,
-      items,
-      selectButtonStyle,
-      labelStyle,
-      placeholder,
-      placeholderStyle
-    } = this.props;
+    const { title, items, selectButtonStyle, labelStyle, placeholder, placeholderStyle } =
+      this.props;
 
     const { selectedValue } = this.state;
     const selectorLabel = (
-      items.find(it => it.value === selectedValue) || {
-        label: undefined
+      items.find((it) => it.value === selectedValue) || {
+        label: undefined,
       }
     ).label;
 
@@ -97,21 +81,19 @@ export class Selector extends PureComponent<
       <TouchableOpacity
         style={[styles.selector, selectButtonStyle]}
         onPress={this.openModal}
-        accessibilityRole='button'
+        accessibilityRole="button"
       >
         {!selectorLabel && placeholder ? (
-          <Text style={[styles.placeholderStyle, placeholderStyle]}>
-            {placeholder}
-          </Text>
+          <Text style={[styles.placeholderStyle, placeholderStyle]}>{placeholder}</Text>
         ) : (
           <Text style={[styles.selectorLabel, labelStyle]}>
-            {selectorLabel || placeholder || title || items[0] && items[0].label || null}
+            {selectorLabel || placeholder || title || (items[0] && items[0].label) || null}
           </Text>
         )}
         {this.renderDropdownArrow()}
       </TouchableOpacity>
     );
-  }
+  };
 
   renderDropdownArrow = () => {
     if (this.props.renderDropdownArrow) {
@@ -119,7 +101,7 @@ export class Selector extends PureComponent<
     } else {
       return <View style={styles.dropdownArrow} />;
     }
-  }
+  };
 
   renderCloseButton = () => {
     if (this.props.renderCloseButton) {
@@ -129,20 +111,20 @@ export class Selector extends PureComponent<
         <TouchableOpacity
           style={styles.closeButtonContainer}
           onPress={this.closeModal}
-          accessibilityRole='button'
+          accessibilityRole="button"
           accessibilityLabel={FSI18n.string(componentTranslationKeys.close)}
         >
           <Text style={styles.closeButton}>×</Text>
         </TouchableOpacity>
       );
     }
-  }
+  };
 
   renderModal = () => {
     const title = this.props.title || FSI18n.string(componentTranslationKeys.select);
     return (
       <Modal
-        animationType='fade'
+        animationType="fade"
         transparent={true}
         visible={this.state.modalVisible}
         onRequestClose={this.closeModal}
@@ -152,7 +134,7 @@ export class Selector extends PureComponent<
             <View style={[styles.modalHeader, this.props.modalHeaderStyle]}>
               <Text
                 style={[styles.title, this.props.modalHeaderTextStyle]}
-                accessibilityRole='header'
+                accessibilityRole="header"
                 accessibilityLabel={this.props.titleAccessibilityLabel || title}
               >
                 {title}
@@ -177,7 +159,7 @@ export class Selector extends PureComponent<
         </View>
       </Modal>
     );
-  }
+  };
 
   render(): JSX.Element {
     return (
@@ -190,25 +172,25 @@ export class Selector extends PureComponent<
 
   openModal = () => {
     this.setState({
-      modalVisible: true
+      modalVisible: true,
     });
-  }
+  };
 
   closeModal = () => {
     this.setState({
-      modalVisible: false
+      modalVisible: false,
     });
-  }
+  };
 
   chooseItem = (value: string) => {
     return () => {
       this.setState({
-        selectedValue: value
+        selectedValue: value,
       });
       this.closeModal();
       if (this.props.onValueChange) {
         this.props.onValueChange(value);
       }
     };
-  }
+  };
 }

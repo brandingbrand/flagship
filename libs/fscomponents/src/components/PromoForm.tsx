@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
-import {Dictionary, Omit} from '@brandingbrand/fsfoundation';
+import { Dictionary, Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.promoForm;
-
 
 export interface PromoFormValue {
   promoCode: string;
@@ -25,7 +24,7 @@ export class PromoForm extends Component<PromoFormProps> {
     super(props);
 
     this.fieldsTypes = t.struct({
-      promoCode: t.String
+      promoCode: t.String,
     });
 
     this.fieldsOptions = {
@@ -37,8 +36,8 @@ export class PromoForm extends Component<PromoFormProps> {
         autoCorrect: false,
         autoCapitalize: 'none',
         error: FSI18n.string(componentTranslationKeys.error),
-        ...props.fieldsOptions.promoCode
-      }
+        ...props.fieldsOptions.promoCode,
+      },
     };
   }
 

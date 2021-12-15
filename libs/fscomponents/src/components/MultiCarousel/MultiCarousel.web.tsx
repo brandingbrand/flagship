@@ -8,7 +8,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState
+  useState,
 } from 'react';
 import { findDOMNode } from 'react-dom';
 import {
@@ -19,7 +19,7 @@ import {
   ListRenderItemInfo,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -42,7 +42,7 @@ const DEFAULT_KEY_EXTRACTOR = <ItemT extends { key?: string; id?: string }>(
 
 const styles = StyleSheet.create({
   container: {
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   goToNext: {
     position: 'absolute',
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   goToPrev: {
     position: 'absolute',
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   buttonPrevIcon: {
     width: 25,
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '-45deg'
-      }
-    ]
+        rotate: '-45deg',
+      },
+    ],
   },
   buttonNextIcon: {
     width: 25,
@@ -80,14 +80,14 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '45deg'
-      }
-    ]
-  }
+        rotate: '45deg',
+      },
+    ],
+  },
 });
 
 // eslint-disable-next-line complexity
-export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
+export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   const {
     accessible,
     accessibilityHint,
@@ -122,7 +122,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     itemUpdated,
     hidePageIndicator,
     hideOverflow,
-    renderPageIndicator
+    renderPageIndicator,
   } = props;
 
   const scrollView = useRef<HTMLDivElement>(null);
@@ -192,7 +192,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       Animated.timing(opacity, {
         toValue: 1,
         easing: Easing.in(Easing.cubic),
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start();
     }
   }, [opacity, shouldAnimate]);
@@ -225,7 +225,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
         opacity.setValue(0);
         Animated.timing(opacity, {
           toValue: 1,
-          useNativeDriver: true
+          useNativeDriver: true,
         }).start();
       };
 
@@ -265,7 +265,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       if (scrollViewElement instanceof HTMLElement && !animating) {
         setAnimating(true);
         await animatedScrollTo(scrollViewElement, nextIndex * pageWidth, animated ? 200 : 0)
-          .catch(e => {
+          .catch((e) => {
             console.warn('animatedScrollTo error', e);
           })
           .finally(() => setAnimating(false));
@@ -279,20 +279,29 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     [animating, currentIndex, pageWidth, setAnimating, onSlideChange]
   );
 
-  const goToNext = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
-    const nextIndex = currentIndex + 1 > numberOfPages - 1 ? 0 : currentIndex + 1;
-    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
-  }, [goTo, currentIndex, numberOfPages]);
+  const goToNext = useCallback(
+    async (options?: GoToOptions | GestureResponderEvent) => {
+      const nextIndex = currentIndex + 1 > numberOfPages - 1 ? 0 : currentIndex + 1;
+      await goTo(nextIndex, options && 'animated' in options ? options : undefined);
+    },
+    [goTo, currentIndex, numberOfPages]
+  );
 
-  const goToPrev = useCallback(async (options?: GoToOptions | GestureResponderEvent) => {
-    const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
+  const goToPrev = useCallback(
+    async (options?: GoToOptions | GestureResponderEvent) => {
+      const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
 
-    await goTo(nextIndex, options && 'animated' in options ? options : undefined);
-  }, [goTo, currentIndex]);
+      await goTo(nextIndex, options && 'animated' in options ? options : undefined);
+    },
+    [goTo, currentIndex]
+  );
 
-  const goToOrigin = useCallback(async (options?: GoToOptions) => {
-    await goTo(currentIndex, options);
-  }, [goTo, currentIndex]);
+  const goToOrigin = useCallback(
+    async (options?: GoToOptions) => {
+      await goTo(currentIndex, options);
+    },
+    [goTo, currentIndex]
+  );
 
   const goToNextCancelCarousel = async () => {
     stopCarouselLooping();
@@ -308,7 +317,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
     if (autoplay && numberOfPages > 0 && !animating && shouldPlay) {
       autoplayTimeout.current = setTimeout(async () => {
         const options = {
-          animated: true
+          animated: true,
         };
         // Animation is hardcoded at 200ms; stop animation to avoid glitch.
         if (autoplayTimeoutDuration <= 300) {
@@ -330,7 +339,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       goTo,
       goToNext,
       goToPrev,
-      goToOrigin
+      goToOrigin,
     });
   }, [carouselController, goTo, goToNext, goToPrev, goToOrigin]);
 
@@ -345,7 +354,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
       if (currentIndex !== nextIndex) {
         onSlideChange?.({
           currentIndex,
-          nextIndex
+          nextIndex,
         });
       }
 
@@ -430,7 +439,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
         const scrollX = currentScrollX + dx;
         scrollView?.current?.scrollTo({
           left: scrollX,
-          top: 0
+          top: 0,
         });
       }
     },
@@ -466,8 +475,8 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           separators: {
             highlight: () => undefined,
             unhighlight: () => undefined,
-            updateProps: () => undefined
-          }
+            updateProps: () => undefined,
+          },
         })}
       </View>
     );
@@ -484,7 +493,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           overflowY: 'hidden',
           scrollbarWidth: 'none',
           overflowX: hideOverflow ?? hideScrollbar ?? true ? 'hidden' : 'scroll',
-          scrollSnapType: mouseDown ? undefined : 'x mandatory'
+          scrollSnapType: mouseDown ? undefined : 'x mandatory',
         }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -500,7 +509,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
           accessibilityLabel={accessibilityLabel}
           accessibilityRole={accessibilityRole}
           style={{
-            width: centerMode ? calculatedPeekSize : 0
+            width: centerMode ? calculatedPeekSize : 0,
           }}
         />
         {data?.map((item, index) =>
@@ -510,8 +519,8 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
             separators: {
               highlight: () => undefined,
               unhighlight: () => undefined,
-              updateProps: () => undefined
-            }
+              updateProps: () => undefined,
+            },
           })
         )}
       </div>
@@ -532,7 +541,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
       {currentIndex !== 0 && !!showArrow && (
         <TouchableOpacity
-          accessibilityRole='button'
+          accessibilityRole="button"
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
           style={[styles.goToPrev, prevArrowContainerStyle]}
           onPress={goToPrevCancelCarousel}
@@ -544,7 +553,7 @@ export const MultiCarousel = <ItemT, >(props: MultiCarouselProps<ItemT>) => {
 
       {currentIndex !== numberOfPages - 1 && !!showArrow && (
         <TouchableOpacity
-          accessibilityRole='button'
+          accessibilityRole="button"
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
           style={[styles.goToNext, nextArrowContainerStyle]}
           onPress={goToNextCancelCarousel}

@@ -5,7 +5,7 @@ import {
   CommerceTypes,
   withCommerceData,
   WithCommerceProps,
-  WithCommerceProviderProps
+  WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
 import { CartItem, CartItemProps, Loading } from '@brandingbrand/fscomponents';
 
@@ -16,8 +16,8 @@ const kErrorMessageDataSourceMissing = 'FSCart: commerceDataSource is required';
 
 const defaultStyles = StyleSheet.create({
   loading: {
-    padding: 20
-  }
+    padding: 20,
+  },
 });
 
 export interface UnwrappedCartProps {
@@ -74,7 +74,7 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
       renderEmptyCart,
       renderLoading,
       renderPromoForm,
-      renderSummary
+      renderSummary,
     } = this.props;
 
     if (!commerceData) {
@@ -95,22 +95,24 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
 
     return (
       <View>
-        {renderCartItem ? commerceData.items.map(renderCartItem) :
-          commerceData.items.map((item: CommerceTypes.CartItem) => {
-            return (
-              <CartItem
-                key={item.itemId}
-                removeItem={this.removeItem}
-                updateQty={this.updateQty}
-                onImagePress={onImagePress}
-                {...item}
-                {...cartItemProps}
-              />
-            );
-          })
-        }
+        {renderCartItem
+          ? commerceData.items.map(renderCartItem)
+          : commerceData.items.map((item: CommerceTypes.CartItem) => {
+              return (
+                <CartItem
+                  key={item.itemId}
+                  removeItem={this.removeItem}
+                  updateQty={this.updateQty}
+                  onImagePress={onImagePress}
+                  {...item}
+                  {...cartItemProps}
+                />
+              );
+            })}
         {renderPromoForm && renderPromoForm(commerceData)}
-        {renderSummary ? renderSummary(commerceData) : (
+        {renderSummary ? (
+          renderSummary(commerceData)
+        ) : (
           <CartSummary
             shipping={commerceData.shipping}
             subtotal={commerceData.subtotal}
@@ -132,10 +134,8 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
 
     // TODO: We should debounce this to avoid sending multiple calls in rapid succession if the
     // user uses the stepper.
-    return this.props.commerceDataSource
-      .updateCartItemQty(item.itemId, qty)
-      .then(this.updateData);
-  }
+    return this.props.commerceDataSource.updateCartItemQty(item.itemId, qty).then(this.updateData);
+  };
 
   /**
    * Removes an item from cart.
@@ -145,10 +145,8 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
       throw new Error(kErrorMessageDataSourceMissing);
     }
 
-    return this.props.commerceDataSource
-      .removeCartItem(item.itemId)
-      .then(this.updateData);
-  }
+    return this.props.commerceDataSource.removeCartItem(item.itemId).then(this.updateData);
+  };
 
   /**
    * Replaces the current cart data with the newly provided data and invokes the change
@@ -164,7 +162,7 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
     if (this.props.onChange) {
       this.props.onChange(data);
     }
-  }
+  };
 }
 
 export default withCommerceData<UnwrappedCartProps, CommerceTypes.Cart>(

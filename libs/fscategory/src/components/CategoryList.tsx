@@ -34,14 +34,8 @@ export default class CategoryList extends Component<
       return renderCategoryItem(item);
     }
 
-    return (
-      <CategoryLine
-        onPress={onNavigate}
-        {...item}
-        {...categoryItemProps}
-      />
-    );
-  }
+    return <CategoryLine onPress={onNavigate} {...item} {...categoryItemProps} />;
+  };
 
   private keyExtractor = (item: CommerceTypes.Category, index: number): string => {
     if (this.props.listViewProps && this.props.listViewProps.keyExtractor) {
@@ -49,5 +43,5 @@ export default class CategoryList extends Component<
     }
 
     return item.id;
-  }
+  };
 }

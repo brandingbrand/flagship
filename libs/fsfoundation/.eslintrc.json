@@ -2,10 +2,7 @@
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "parserOptions": {
-    "project": [
-      "./libs/fsfoundation/tsconfig.lib.json",
-      "./libs/fsfoundation/tsconfig.spec.json"
-    ]
+    "project": ["./libs/fsfoundation/tsconfig.lib.json", "./libs/fsfoundation/tsconfig.spec.json"]
   },
   "overrides": [
     {

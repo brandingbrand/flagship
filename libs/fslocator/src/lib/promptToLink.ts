@@ -5,7 +5,7 @@ export default async function promptToLink({
   title,
   subTitle,
   buttonText,
-  link
+  link,
 }: any): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     Alert.alert({
@@ -14,10 +14,8 @@ export default async function promptToLink({
       confirmButtonText: buttonText,
       showCancelButton: true,
       onConfirm: async () => {
-        return Linking.openURL(link)
-          .then(resolve)
-          .catch(reject);
-      }
+        return Linking.openURL(link).then(resolve).catch(reject);
+      },
     });
   });
 }

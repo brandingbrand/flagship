@@ -5,5 +5,4 @@ export interface NavigatorProp extends GenericNavProp {
   navigator: Navigator;
 }
 
-export default class NavRender extends Component<NavigatorProp> {
-}
+export default class NavRender extends Component<NavigatorProp> {}

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import VideoPlayer, { VideoProperties } from 'react-native-video';
 import * as _ from 'lodash-es';
@@ -31,7 +26,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   VideoButtonWrapper: {
     width: 60,
@@ -39,7 +34,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: 'rgba(0, 0, 0, 0.66)',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   VideoButtonInner: {
     borderTopWidth: 12,
@@ -50,25 +45,20 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: 'white',
-    marginLeft: 3
-  }
+    marginLeft: 3,
+  },
 });
 
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 // eslint-disable-next-line complexity
-export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
+export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
   const [videoPaused, setVideoPaused] = useState(false);
   const { isCard } = React.useContext(CardContext);
 
   let player: any | null = null;
 
-  const {
-    source,
-    style = {},
-    containerStyle,
-    outerContainerStyle
-  } = props;
+  const { source, style = {}, containerStyle, outerContainerStyle } = props;
 
   if (!source) {
     return <View />;
@@ -99,9 +89,10 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
 
   const renderSocial = (src: string, { width, height }: any, type: string) => {
     const socialID = src.replace(`${type}://`, '');
-    const iframeUri = type === 'youtube' ?
-      `https://www.youtube.com/embed/${socialID}` :
-      `https://www.facebook.com/video/embed?video_id=${socialID}`;
+    const iframeUri =
+      type === 'youtube'
+        ? `https://www.youtube.com/embed/${socialID}`
+        : `https://www.facebook.com/video/embed?video_id=${socialID}`;
 
     return <WebView style={{ flex: 1 }} source={{ uri: iframeUri }} />;
   };
@@ -111,18 +102,13 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
   };
 
   const renderHttp = (src: string, { width, height }: any) => {
-    const {
-      resizeMode = 'cover',
-      autoPlay = false,
-      repeat = false,
-      muted = false
-    } = props;
+    const { resizeMode = 'cover', autoPlay = false, repeat = false, muted = false } = props;
 
     return (
       <View>
         <VideoPlayer
           resizeMode={resizeMode}
-          ref={ref => {
+          ref={(ref) => {
             player = ref;
           }}
           repeat={repeat}
@@ -135,16 +121,13 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
           style={{ width, height }}
         />
         {!isCard && (
-        <TouchableOpacity
-          onPress={toggleVideo}
-          style={[styles.VideoButton, { width, height }]}
-        >
-          {videoPaused && (
-            <View style={styles.VideoButtonWrapper}>
-              <View style={styles.VideoButtonInner} />
-            </View>
-          )}
-        </TouchableOpacity>
+          <TouchableOpacity onPress={toggleVideo} style={[styles.VideoButton, { width, height }]}>
+            {videoPaused && (
+              <View style={styles.VideoButtonWrapper}>
+                <View style={styles.VideoButtonInner} />
+              </View>
+            )}
+          </TouchableOpacity>
         )}
       </View>
     );
@@ -198,10 +181,12 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo(props => {
   return (
     <View style={containerStyle}>
       <View style={blockStyle}>
-      {height > 0 ? renderVideo(source.src.replace(/ /g, '%20'), {
-        width: blockStyle.width,
-        height: blockStyle.height
-      }) : null}
+        {height > 0
+          ? renderVideo(source.src.replace(/ /g, '%20'), {
+              width: blockStyle.width,
+              height: blockStyle.height,
+            })
+          : null}
       </View>
     </View>
   );

@@ -11,7 +11,7 @@ export default function setupReducers<S, A extends Action>(
   }
 
   return combineReducers<S, A>({
-    ...reducers as any, // spread types may only be created from object types
-    global: globalDataReducer
+    ...(reducers as any), // spread types may only be created from object types
+    global: globalDataReducer,
   });
 }

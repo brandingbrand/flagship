@@ -12,7 +12,7 @@ import {
   APP_CONTEXT_TOKEN,
   AppContext,
   REDUX_CONTEXT_TOKEN,
-  REDUX_STORE_TOKEN
+  REDUX_STORE_TOKEN,
 } from './context';
 import { FSRouter, Routes } from '../router';
 import { GenericState, StoreManager } from '../store';
@@ -43,9 +43,9 @@ export abstract class FSAppBase implements IApp {
       analytics: config.analytics,
       screenWrap: makeScreenWrapper({
         store,
-        app: () => app
+        app: () => app,
       }),
-      ...config.router
+      ...config.router,
     });
 
     app = new this(

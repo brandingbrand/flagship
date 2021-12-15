@@ -18,7 +18,7 @@ import {
   ProductItem,
   RefineActionBar,
   SelectableList,
-  SelectableRow
+  SelectableRow,
 } from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
@@ -31,20 +31,20 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const images = {
-  close: require('../../assets/images/iconClose.png')
+  close: require('../../assets/images/iconClose.png'),
 };
 
 const styles = StyleSheet.create({
   cancelButton: {
     position: 'absolute',
     top: 16,
-    right: 21.5
-  }
+    right: 21.5,
+  },
 });
 
 const componentTranslationKeys = translationKeys.flagship.productIndex;
@@ -82,12 +82,16 @@ export default class ProductIndexGrid extends Component<
       if (commerceData.page) {
         maxPageLoaded = commerceData.page;
         if (commerceData.limit && commerceData.products) {
-          maxCount = (commerceData.limit * (commerceData.page - 1)) + commerceData.products.length;
+          maxCount = commerceData.limit * (commerceData.page - 1) + commerceData.products.length;
         }
       }
       if (onLoadComplete) {
-        onLoadComplete(this.loadMore, maxPageLoaded < this.maxPage(commerceData),
-          maxCount, maxCount);
+        onLoadComplete(
+          this.loadMore,
+          maxPageLoaded < this.maxPage(commerceData),
+          maxCount,
+          maxCount
+        );
       }
     }
 
@@ -96,9 +100,8 @@ export default class ProductIndexGrid extends Component<
       filterModalVisible: false,
       isLoading: false,
       isMoreLoading: false,
-      hasFetchError: false
+      hasFetchError: false,
     };
-
   }
 
   maxCount = (commerceData?: CommerceTypes.ProductIndex): number => {
@@ -112,14 +115,14 @@ export default class ProductIndexGrid extends Component<
     } else {
       return 0;
     }
-  }
+  };
 
   maxPage = (commerceData?: CommerceTypes.ProductIndex) => {
     if (commerceData && commerceData.total && commerceData.limit) {
       return Math.ceil(commerceData.total / commerceData.limit);
     }
     return 1;
-  }
+  };
 
   renderItem = ({ item }: ListRenderItemInfo<CommerceTypes.Product>): JSX.Element => {
     const { productItemProps, onPress, renderProductItem } = this.props;
@@ -133,7 +136,7 @@ export default class ProductIndexGrid extends Component<
         id={item.id}
         title={item.title}
         brand={item.brand}
-        image={item.images && item.images.find(img => !!img.uri)}
+        image={item.images && item.images.find((img) => !!img.uri)}
         imageStyle={S.productImage}
         price={item.price}
         originalPrice={item.originalPrice}
@@ -145,7 +148,7 @@ export default class ProductIndexGrid extends Component<
         {...productItemProps}
       />
     );
-  }
+  };
 
   renderActionBar = () => {
     const {
@@ -153,7 +156,7 @@ export default class ProductIndexGrid extends Component<
       hideActionBar,
       mergeSortToFilter,
       refineActionBarProps,
-      renderRefineActionBar
+      renderRefineActionBar,
     } = this.props;
 
     if (hideActionBar || !commerceData) {
@@ -179,7 +182,7 @@ export default class ProductIndexGrid extends Component<
         {...refineActionBarProps}
       />
     );
-  }
+  };
 
   renderHeader = () => {
     const { commerceData } = this.props;
@@ -194,13 +197,7 @@ export default class ProductIndexGrid extends Component<
         loadPrev = this.props.renderLoading ? (
           this.props.renderLoading()
         ) : (
-          <Loading
-            style={[
-              S.loading,
-              S.loadingLoadMore,
-              this.props.loadMoreLoadingStyle
-            ]}
-          />
+          <Loading style={[S.loading, S.loadingLoadMore, this.props.loadMoreLoadingStyle]} />
         );
       } else {
         loadPrev = this.props.renderLoadPrev(
@@ -216,23 +213,23 @@ export default class ProductIndexGrid extends Component<
         {this.renderActionBar()}
       </View>
     );
-  }
+  };
 
   showFilterModal = () => {
     this.setState({ filterModalVisible: true });
-  }
+  };
 
   closeFilterModal = () => {
     this.setState({ filterModalVisible: false });
-  }
+  };
 
   showSortModal = () => {
     this.setState({ sortModalVisible: true });
-  }
+  };
 
   closeSortModal = () => {
     this.setState({ sortModalVisible: false });
-  }
+  };
 
   handleFilterApply = (selectedItems: any, info?: { isButtonPress: boolean }) => {
     if (!this.props.filterInBackground) {
@@ -260,10 +257,10 @@ export default class ProductIndexGrid extends Component<
     } else {
       this.reloadByQuery({
         ...refinementsQuery,
-        ...sortQuery
+        ...sortQuery,
       });
     }
-  }
+  };
 
   handleFilterReset = () => {
     if (!this.props.filterInBackground) {
@@ -274,32 +271,31 @@ export default class ProductIndexGrid extends Component<
     } else {
       this.reloadWithReset();
     }
-  }
+  };
 
-  handleSortChange = (selectedItems?: Record<string, string[]>) => (
-    sortItem: CommerceTypes.SortingOption
-  ) => {
-    let refinementsQuery: CommerceTypes.ProductQuery = {};
+  handleSortChange =
+    (selectedItems?: Record<string, string[]>) => (sortItem: CommerceTypes.SortingOption) => {
+      let refinementsQuery: CommerceTypes.ProductQuery = {};
 
-    if (selectedItems && Object.keys(selectedItems).length > 0) {
-      refinementsQuery = {refinements: selectedItems};
-    }
+      if (selectedItems && Object.keys(selectedItems).length > 0) {
+        refinementsQuery = { refinements: selectedItems };
+      }
 
-    this.closeSortModal();
-    if (this.props.handleSortChange) {
-      this.props.handleSortChange(sortItem.id);
-    } else if (sortItem.id === 'default') {
-      this.reloadByQuery({
-        sortBy: undefined,
-        ...refinementsQuery
-      });
-    } else {
-      this.reloadByQuery({
-        sortBy: sortItem.id,
-        ...refinementsQuery
-      });
-    }
-  }
+      this.closeSortModal();
+      if (this.props.handleSortChange) {
+        this.props.handleSortChange(sortItem.id);
+      } else if (sortItem.id === 'default') {
+        this.reloadByQuery({
+          sortBy: undefined,
+          ...refinementsQuery,
+        });
+      } else {
+        this.reloadByQuery({
+          sortBy: sortItem.id,
+          ...refinementsQuery,
+        });
+      }
+    };
 
   reloadByQuery = (query: CommerceTypes.ProductQuery) => {
     this.setState({ isLoading: true, hasFetchError: false });
@@ -307,16 +303,16 @@ export default class ProductIndexGrid extends Component<
       .then((data: CommerceTypes.ProductIndex) => {
         this.handleNewData(data);
         this.setState({
-          isLoading: false
+          isLoading: false,
         });
       })
       .catch(() => {
         this.setState({
           isLoading: false,
-          hasFetchError: true
+          hasFetchError: true,
         });
       });
-  }
+  };
 
   reloadWithReset = () => {
     this.setState({ isLoading: true, hasFetchError: false });
@@ -331,27 +327,29 @@ export default class ProductIndexGrid extends Component<
     } else if (this.props.commerceDataSource && this.props.commerceDataSource.fetchProductIndex) {
       fetchProducts = this.props.commerceDataSource.fetchProductIndex(productQuery);
     } else {
-      throw new Error('FSProductIndex: [props.fetchProducts] '
-        + 'or [props.commerceDataSource.fetchProductIndex] is required');
+      throw new Error(
+        'FSProductIndex: [props.fetchProducts] ' +
+          'or [props.commerceDataSource.fetchProductIndex] is required'
+      );
     }
 
     fetchProducts
-      .then(data => {
+      .then((data) => {
         if (this.props.filterInBackground) {
           this.closeFilterModal();
         }
         this.handleNewData(data);
         this.setState({
-          isLoading: false
+          isLoading: false,
         });
       })
       .catch(() => {
         this.setState({
           isLoading: false,
-          hasFetchError: true
+          hasFetchError: true,
         });
       });
-  }
+  };
 
   handleNewData = (data: CommerceTypes.ProductIndex) => {
     const newState: any = {};
@@ -359,15 +357,19 @@ export default class ProductIndexGrid extends Component<
     const maxCount = this.maxCount(data);
 
     if (this.props.onLoadComplete) {
-      this.props.onLoadComplete(this.loadMore, maxPageLoaded < this.maxPage(data),
-        maxCount, maxCount);
+      this.props.onLoadComplete(
+        this.loadMore,
+        maxPageLoaded < this.maxPage(data),
+        maxCount,
+        maxCount
+      );
     }
     this.setState(newState);
 
     if (this.props.commerceLoadData) {
       this.props.commerceLoadData(data);
     }
-  }
+  };
 
   /**
    * refetch commerce data and preserve existing sort/filter
@@ -375,9 +377,7 @@ export default class ProductIndexGrid extends Component<
   fetchByExtraQuery = async (
     query: CommerceTypes.ProductQuery
   ): Promise<CommerceTypes.ProductIndex> => {
-    const {
-      commerceDataSource
-    } = this.props;
+    const { commerceDataSource } = this.props;
 
     const newQuery = this.newProductQuery(query);
 
@@ -386,20 +386,18 @@ export default class ProductIndexGrid extends Component<
     } else if (commerceDataSource) {
       return commerceDataSource.fetchProductIndex(newQuery);
     } else {
-      throw new Error('FSProductIndex: [props.fetchProducts] '
-        + 'or [props.commerceDataSource.fetchProductIndex] is required');
+      throw new Error(
+        'FSProductIndex: [props.fetchProducts] ' +
+          'or [props.commerceDataSource.fetchProductIndex] is required'
+      );
     }
-  }
+  };
 
   newProductQuery = (query: CommerceTypes.ProductQuery) => {
-    const {
-      commerceDataSource,
-      productQuery,
-      commerceData
-    } = this.props;
+    const { commerceDataSource, productQuery, commerceData } = this.props;
 
     const newQuery: CommerceTypes.ProductQuery = {
-      ...productQuery
+      ...productQuery,
     };
 
     if (commerceData) {
@@ -407,9 +405,10 @@ export default class ProductIndexGrid extends Component<
         newQuery.sortBy = commerceData.selectedSortingOption;
       }
 
-      if (commerceData.selectedRefinements &&
+      if (
+        commerceData.selectedRefinements &&
         Object.keys(commerceData.selectedRefinements).length >
-        ((commerceDataSource && commerceDataSource.minRefinements) || 0)
+          ((commerceDataSource && commerceDataSource.minRefinements) || 0)
       ) {
         newQuery.refinements = commerceData.selectedRefinements;
       }
@@ -417,56 +416,38 @@ export default class ProductIndexGrid extends Component<
       Object.assign(newQuery, query);
     }
 
-
     return newQuery;
-  }
+  };
 
   renderCancelButton = (onPress: () => void) => {
     return (
-      <TouchableOpacity
-        style={styles.cancelButton}
-        onPress={onPress}
-        activeOpacity={0.7}
-      >
+      <TouchableOpacity style={styles.cancelButton} onPress={onPress} activeOpacity={0.7}>
         <Image source={images.close} />
       </TouchableOpacity>
     );
-  }
+  };
 
   renderCancelText = (onPress: () => void) => {
     return (
-      <TouchableOpacity
-        style={[S.modalHeaderClose, this.props.modalCancelStyle]}
-        onPress={onPress}
-      >
-        <Text style={S.modalHeaderCloseText}>
-          {FSI18n.string(componentTranslationKeys.cancel)}
-        </Text>
+      <TouchableOpacity style={[S.modalHeaderClose, this.props.modalCancelStyle]} onPress={onPress}>
+        <Text style={S.modalHeaderCloseText}>{FSI18n.string(componentTranslationKeys.cancel)}</Text>
       </TouchableOpacity>
     );
-  }
+  };
 
   renderModalHeader = ({ title, onPress }: any) => {
     const drilldownStyle =
-      this.props.filterType === 'drilldown'
-        ? { height: 50, paddingTop: 0 }
-        : null;
+      this.props.filterType === 'drilldown' ? { height: 50, paddingTop: 0 } : null;
 
     return (
-      <View
-        style={[S.modalHeader, drilldownStyle, this.props.modalHeaderStyle]}
-      >
-        {
-          this.props.headerWithCancelButton
-            ? this.renderCancelButton(onPress)
-            : this.renderCancelText(onPress)
-        }
-        <Text style={[S.modalHeaderText, this.props.modalHeaderTextStyle]}>
-          {title}
-        </Text>
+      <View style={[S.modalHeader, drilldownStyle, this.props.modalHeaderStyle]}>
+        {this.props.headerWithCancelButton
+          ? this.renderCancelButton(onPress)
+          : this.renderCancelText(onPress)}
+        <Text style={[S.modalHeaderText, this.props.modalHeaderTextStyle]}>{title}</Text>
       </View>
     );
-  }
+  };
 
   // eslint-disable-next-line complexity
   renderSortModal = () => {
@@ -482,20 +463,21 @@ export default class ProductIndexGrid extends Component<
     if (defaultSortOption) {
       sortOptions.unshift({
         id: 'default',
-        title: defaultSortOption
+        title: defaultSortOption,
       });
     }
 
-    const selectedOption = commerceData?.selectedSortingOption ?
-      commerceData?.selectedSortingOption : 'default';
+    const selectedOption = commerceData?.selectedSortingOption
+      ? commerceData?.selectedSortingOption
+      : 'default';
 
-    const selectedItems: Record<string, string[]> | undefined = this.props.mergeSortToFilter &&
-      commerceData?.selectedSortingOption
-      ? this.mergeSelectedRefinementsAndSort(
-        commerceData.selectedRefinements,
-        commerceData.selectedSortingOption
-      )
-      : commerceData?.selectedRefinements;
+    const selectedItems: Record<string, string[]> | undefined =
+      this.props.mergeSortToFilter && commerceData?.selectedSortingOption
+        ? this.mergeSelectedRefinementsAndSort(
+            commerceData.selectedRefinements,
+            commerceData.selectedSortingOption
+          )
+        : commerceData?.selectedRefinements;
 
     if (commerceData) {
       if (this.props.renderSort) {
@@ -505,7 +487,7 @@ export default class ProductIndexGrid extends Component<
           <SafeAreaView style={S.modalContainer}>
             {this.renderModalHeader({
               title: this.props.sortHeaderStyle || 'Sort By',
-              onPress: this.closeSortModal
+              onPress: this.closeSortModal,
             })}
             <SelectableList
               items={sortOptions}
@@ -521,13 +503,12 @@ export default class ProductIndexGrid extends Component<
     return this.renderModal({
       content,
       visible: this.state.sortModalVisible,
-      closeModal: this.closeSortModal
+      closeModal: this.closeSortModal,
     });
-  }
+  };
 
   renderModal = ({ content, visible, closeModal }: any) => {
-    const SelectedModal: any =
-      this.props.modalType === 'half-screen' ? ModalHalfScreen : Modal;
+    const SelectedModal: any = this.props.modalType === 'half-screen' ? ModalHalfScreen : Modal;
     return (
       <SelectedModal
         animationType={this.props.modalAnimationType || 'slide'}
@@ -546,7 +527,7 @@ export default class ProductIndexGrid extends Component<
           ))}
       </SelectedModal>
     );
-  }
+  };
 
   mergeRefinementsAndSort = (
     refinementsData?: CommerceTypes.Refinement[],
@@ -556,15 +537,17 @@ export default class ProductIndexGrid extends Component<
     refinements.unshift({
       id: SORT_ITEM_KEY,
       title: 'Sort By',
-      values: sortingData ? sortingData.map((item: CommerceTypes.SortingOption) => ({
-        id: item.id,
-        value: item.id,
-        title: item.title
-      })) : []
+      values: sortingData
+        ? sortingData.map((item: CommerceTypes.SortingOption) => ({
+            id: item.id,
+            value: item.id,
+            title: item.title,
+          }))
+        : [],
     });
 
     return refinements;
-  }
+  };
 
   mergeSelectedRefinementsAndSort = (
     selectedRefinements: Record<string, string[]> | undefined,
@@ -572,9 +555,9 @@ export default class ProductIndexGrid extends Component<
   ): Record<string, string[]> => {
     return {
       ...selectedRefinements,
-      [SORT_ITEM_KEY]: [selectedSortId]
+      [SORT_ITEM_KEY]: [selectedSortId],
     };
-  }
+  };
 
   // eslint-disable-next-line complexity
   renderFilterModal = () => {
@@ -598,18 +581,16 @@ export default class ProductIndexGrid extends Component<
       );
     } else if (this.props.filterType === 'drilldown') {
       const items = this.props.mergeSortToFilter
-        ? this.mergeRefinementsAndSort(
-            commerceData.refinements,
-            commerceData.sortingOptions
-          )
+        ? this.mergeRefinementsAndSort(commerceData.refinements, commerceData.sortingOptions)
         : commerceData.refinements;
 
-      const selectedItems = this.props.mergeSortToFilter && commerceData.selectedSortingOption
-        ? this.mergeSelectedRefinementsAndSort(
-            commerceData.selectedRefinements,
-            commerceData.selectedSortingOption
-          )
-        : commerceData.selectedRefinements;
+      const selectedItems =
+        this.props.mergeSortToFilter && commerceData.selectedSortingOption
+          ? this.mergeSelectedRefinementsAndSort(
+              commerceData.selectedRefinements,
+              commerceData.selectedSortingOption
+            )
+          : commerceData.selectedRefinements;
 
       content = (
         <SafeAreaView style={S.modalContainer}>
@@ -622,9 +603,7 @@ export default class ProductIndexGrid extends Component<
             renderFilterItem={this.renderItemForCombinedFilterAndSort}
             renderFilterItemValue={this.renderItemValueForCombinedFilterAndSort}
             applyOnSelect={this.props.filterInBackground}
-            singleFilterIds={
-              this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : undefined
-            }
+            singleFilterIds={this.props.mergeSortToFilter ? [SORT_ITEM_KEY] : undefined}
             {...this.props.FilterListDrilldownProps}
           />
         </SafeAreaView>
@@ -634,7 +613,7 @@ export default class ProductIndexGrid extends Component<
         <View style={S.modalContainer}>
           {this.renderModalHeader({
             title: this.props.filterHeaderTitle || 'Filter By',
-            onPress: this.closeFilterModal
+            onPress: this.closeFilterModal,
           })}
 
           <FilterList
@@ -651,9 +630,9 @@ export default class ProductIndexGrid extends Component<
     return this.renderModal({
       content,
       visible: this.state.filterModalVisible,
-      closeModal: this.closeFilterModal
+      closeModal: this.closeFilterModal,
     });
-  }
+  };
 
   renderItemForCombinedFilterAndSort = (
     item: FilterItem,
@@ -668,18 +647,16 @@ export default class ProductIndexGrid extends Component<
     if (item.id === SORT_ITEM_KEY) {
       return (
         <View>
-          {renderFilterItem({item, index}, true)}
+          {renderFilterItem({ item, index }, true)}
           <View style={{ padding: 15, backgroundColor: '#eee' }}>
-            <Text>
-              {FSI18n.string(componentTranslationKeys.filterBy)}
-            </Text>
+            <Text>{FSI18n.string(componentTranslationKeys.filterBy)}</Text>
           </View>
         </View>
       );
     } else {
-      return renderFilterItem({item, index}, true);
+      return renderFilterItem({ item, index }, true);
     }
-  }
+  };
 
   renderItemValueForCombinedFilterAndSort = (
     item: FilterItem,
@@ -706,15 +683,15 @@ export default class ProductIndexGrid extends Component<
         />
       );
     } else {
-      return renderFilterItemValue(item, true)({item: value, index});
+      return renderFilterItemValue(item, true)({ item: value, index });
     }
-  }
+  };
 
   handleSortSelectedInRefine = (value: any, selected: any) => () => {
     this.closeFilterModal();
     // TODO: Test is needed.
     this.handleSortChange(selected)(value);
-  }
+  };
 
   renderNoResult = () => {
     const { commerceDataSource, commerceData } = this.props;
@@ -724,10 +701,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     if (this.props.renderNoResult) {
-      return this.props.renderNoResult(
-        commerceData,
-        this.handleFilterReset
-      );
+      return this.props.renderNoResult(commerceData, this.handleFilterReset);
     }
 
     const shouldShowReset =
@@ -737,28 +711,18 @@ export default class ProductIndexGrid extends Component<
 
     return (
       <View style={S.noResultContainer}>
-        <Text style={S.noResultText}>
-          {FSI18n.string(componentTranslationKeys.noResults)}
-        </Text>
+        <Text style={S.noResultText}>{FSI18n.string(componentTranslationKeys.noResults)}</Text>
         {shouldShowReset && (
-          <TouchableOpacity
-            style={S.resetButton}
-            onPress={this.handleFilterReset}
-          >
-            <Text>
-              {FSI18n.string(componentTranslationKeys.resetFilters)}
-            </Text>
+          <TouchableOpacity style={S.resetButton} onPress={this.handleFilterReset}>
+            <Text>{FSI18n.string(componentTranslationKeys.resetFilters)}</Text>
           </TouchableOpacity>
         )}
       </View>
     );
-  }
+  };
 
   loadPage = (page: number) => {
-    const {
-      commerceData,
-      commerceProviderLoadMore
-    } = this.props;
+    const { commerceData, commerceProviderLoadMore } = this.props;
 
     if (!commerceData) {
       // Cannot load more
@@ -766,44 +730,44 @@ export default class ProductIndexGrid extends Component<
     }
 
     this.setState({
-      isMoreLoading: true
+      isMoreLoading: true,
     });
 
     const currentPage = commerceData.page || -1;
     const newQuery = this.newProductQuery({
       page,
       prevCursor: page < currentPage ? commerceData.prevCursor : undefined,
-      nextCursor: page > currentPage ? commerceData.nextCursor : undefined
+      nextCursor: page > currentPage ? commerceData.nextCursor : undefined,
     });
     if (commerceProviderLoadMore) {
       commerceProviderLoadMore(newQuery)
         .then((data: CommerceTypes.ProductIndex) => {
           this.handleNewData(data);
           this.setState({
-            isMoreLoading: false
+            isMoreLoading: false,
           });
         })
         .catch(() => {
           this.setState({
-            isMoreLoading: false
+            isMoreLoading: false,
           });
         });
     }
-  }
+  };
 
   loadPrev = () => {
     const { commerceData } = this.props;
     if (commerceData) {
       this.loadPage((commerceData.minPage || commerceData.page || 1) - 1);
     }
-  }
+  };
 
   loadMore = () => {
     const { commerceData } = this.props;
     if (commerceData) {
       this.loadPage((commerceData.page || 1) + 1);
     }
-  }
+  };
 
   renderFooter = () => {
     const { commerceData } = this.props;
@@ -813,31 +777,20 @@ export default class ProductIndexGrid extends Component<
     if (commerceData?.hasNextPage !== undefined) {
       hasAnotherPage = commerceData?.hasNextPage;
     } else {
-      hasAnotherPage = (
-        commerceData?.page !== undefined &&
-        commerceData.page < this.maxPage(commerceData)
-      );
+      hasAnotherPage =
+        commerceData?.page !== undefined && commerceData.page < this.maxPage(commerceData);
     }
 
     if (this.state.isMoreLoading) {
       return this.props.renderLoading ? (
         this.props.renderLoading()
       ) : (
-        <Loading
-          style={[
-            S.loading,
-            S.loadingLoadMore,
-            this.props.loadMoreLoadingStyle
-          ]}
-        />
+        <Loading style={[S.loading, S.loadingLoadMore, this.props.loadMoreLoadingStyle]} />
       );
     }
 
     if (this.props.renderLoadMore) {
-      return this.props.renderLoadMore(
-        this.loadMore,
-        hasAnotherPage
-      );
+      return this.props.renderLoadMore(this.loadMore, hasAnotherPage);
     }
 
     if (!hasAnotherPage) {
@@ -856,7 +809,7 @@ export default class ProductIndexGrid extends Component<
         </TouchableOpacity>
       </View>
     );
-  }
+  };
 
   // eslint-disable-next-line complexity
   render(): React.ReactNode {
@@ -868,7 +821,7 @@ export default class ProductIndexGrid extends Component<
       loadingStyle,
       errorText,
       errorTextStyle,
-      containerStyle
+      containerStyle,
     } = this.props;
 
     if (this.state.isLoading && !this.props.filterInBackground) {
@@ -879,11 +832,7 @@ export default class ProductIndexGrid extends Component<
     }
 
     if (this.state.hasFetchError) {
-      return (
-        <Text style={[S.error, errorTextStyle]}>
-          {errorText || defaultErrorMessage}
-        </Text>
-      );
+      return <Text style={[S.error, errorTextStyle]}>{errorText || defaultErrorMessage}</Text>;
     }
 
     if (!commerceData || !commerceData.products || !commerceData.products.length) {
@@ -910,7 +859,7 @@ export default class ProductIndexGrid extends Component<
 
 function getVariantText(item: CommerceTypes.Product): string {
   return (item.options || [])
-    .map(option => {
+    .map((option) => {
       if (option.values && option.values.length > 1) {
         return pluralize(option.name, option.values.length, true);
       } else {

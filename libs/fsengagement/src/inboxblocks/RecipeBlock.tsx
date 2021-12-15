@@ -6,13 +6,10 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
-import {
-  Action,
-  ScreenProps
-} from '../types';
+import { Action, ScreenProps } from '../types';
 
 import { TextBlock } from './TextBlock';
 import { ImageBlock } from './ImageBlock';
@@ -26,62 +23,55 @@ export interface RecipeBlockProps extends ScreenProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
   recipeContainer: {
     flexDirection: 'row',
-    marginBottom: 10
+    marginBottom: 10,
   },
   linkContainer: {
-    width: '100%'
+    width: '100%',
   },
   imageStyle: {
     width: 19,
     height: 23,
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   whenIcon: {
     width: 20,
-    height: 20
+    height: 20,
   },
   imageContainer: {
     width: 20,
     alignItems: 'center',
     paddingTop: 2,
-    marginRight: 7
+    marginRight: 7,
   },
   recipeTitle: {
     fontSize: 13,
     color: '#000',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   eventText: {
     flex: 1,
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
-export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
-  const {
-    items,
-    containerStyle,
-    textStyle
-  } = props;
+export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo((props) => {
+  const { items, containerStyle, textStyle } = props;
 
   const { handleAction } = React.useContext(EngagementContext);
 
   const onButtonPress = (actions: Action) => (): void => {
     if (actions && actions.type && handleAction) {
       return handleAction({
-        ...actions
+        ...actions,
       });
     }
   };
 
   const recipeItems = (items || []).map((item: any, index: number) => {
     return (
-
       <View key={index}>
         {item.link ? (
           <TouchableOpacity
@@ -89,7 +79,7 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
             activeOpacity={0.8}
             style={[styles.linkContainer, styles.recipeContainer]}
           >
-            {(item.thumbnail && item.thumbnail.source) && (
+            {item.thumbnail && item.thumbnail.source && (
               <ImageBlock
                 source={item.thumbnail.source}
                 containerStyle={styles.imageContainer}
@@ -105,7 +95,7 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
           </TouchableOpacity>
         ) : (
           <View style={styles.recipeContainer}>
-            {(item.thumbnail && item.thumbnail.source) && (
+            {item.thumbnail && item.thumbnail.source && (
               <ImageBlock
                 source={item.thumbnail.source}
                 containerStyle={styles.imageContainer}
@@ -115,13 +105,10 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
             <View
               style={[
                 styles.eventText,
-                !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 }
+                !(item.thumbnail && item.thumbnail.source) && { marginLeft: 27 },
               ]}
             >
-              <TextBlock
-                text={item.text}
-                textStyle={[styles.recipeTitle, textStyle]}
-              />
+              <TextBlock text={item.text} textStyle={[styles.recipeTitle, textStyle]} />
             </View>
           </View>
         )}
@@ -129,9 +116,5 @@ export const RecipeBlock: React.FC<RecipeBlockProps> = React.memo(props => {
     );
   });
 
-  return (
-    <View style={[styles.container, containerStyle]}>
-      {recipeItems}
-    </View>
-  );
+  return <View style={[styles.container, containerStyle]}>{recipeItems}</View>;
 });

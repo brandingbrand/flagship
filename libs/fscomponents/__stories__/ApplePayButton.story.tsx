@@ -29,10 +29,9 @@ const ApplePayButtonWrapper = (props: any) => {
 
 const ApplePayButtonWithWallet = withDigitalWallet(ApplePayButtonWrapper);
 
-storiesOf('ApplePayButton', module)
-  .add('basic usage', () => (
-    <ApplePayButtonWithWallet
-      applePayMerchantIdentifier='com.bb.test'
-      applePayOnPress={action('Pay')}
-    />
-  ));
+storiesOf('ApplePayButton', module).add('basic usage', () => (
+  <ApplePayButtonWithWallet
+    applePayMerchantIdentifier="com.bb.test"
+    applePayOnPress={action('Pay')}
+  />
+));

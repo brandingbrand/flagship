@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const path = require("path");
+const path = require('path');
 const autoprefixer = require('autoprefixer');
 const TerserJsPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -17,20 +17,20 @@ const escapedSep = '\\' + path.sep;
 let webConfig;
 
 try {
-  webConfig = require('./config.web.json')
+  webConfig = require('./config.web.json');
 } catch (exception) {
   console.warn('Cannot find web config');
 }
 
 const globalConfig = {
   optimization: {
-    concatenateModules: false
+    concatenateModules: false,
   },
   bail: true,
   cache: true,
   devtool: 'none',
   entry: {
-    bundle: '../src/index.web.ts'
+    bundle: '../src/index.web.ts',
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -39,8 +39,8 @@ const globalConfig = {
     chunkFilename: 'static/js/[name].chunk.js',
     library: 'flagship',
     publicPath: '/',
-    devtoolModuleFilenameTemplate:
-      info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+    devtoolModuleFilenameTemplate: (info) =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     extensions: [
@@ -54,23 +54,26 @@ const globalConfig = {
       '.web.ts',
       '.ts',
       '.web.tsx',
-      '.tsx'
+      '.tsx',
     ],
     alias: {
       'react-native': 'react-native-web',
       'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
       'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
-      'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
-      'react-native-web/dist/exports/ProgressViewIOS': 'react-native-web/dist/modules/UnimplementedView',
-      'react-native-web/dist/exports/SegmentedControlIOS': 'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/ProgressBarAndroid':
+        'react-native-web/dist/exports/ProgressBar',
+      'react-native-web/dist/exports/ProgressViewIOS':
+        'react-native-web/dist/modules/UnimplementedView',
+      'react-native-web/dist/exports/SegmentedControlIOS':
+        'react-native-web/dist/modules/UnimplementedView',
       'react-native-web/dist/exports/WebView': 'react-native-web-webview',
-      'react-native-linear-gradient': 'react-native-web-linear-gradient'
+      'react-native-linear-gradient': 'react-native-web-linear-gradient',
     },
     modules: [
       path.resolve('./node_modules'),
       path.resolve('../node_modules'),
-      path.resolve('../../../packages/../node_modules')
-    ]
+      path.resolve('../../../packages/../node_modules'),
+    ],
   },
   module: {
     rules: [
@@ -81,84 +84,112 @@ const globalConfig = {
             loader: require.resolve('react-native-web-image-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
-              scalings: { '@2x': 2, '@3x': 3 }
-            }
+              scalings: { '@2x': 2, '@3x': 3 },
+            },
           },
           {
             test: /\.(ts|tsx)$/,
             use: [
               {
-                loader: require.resolve("babel-loader"),
+                loader: require.resolve('babel-loader'),
                 options: {
                   cacheDirectory: true,
                   presets: [
-                    ["@babel/preset-env", {
-                        modules: false
-                    }]
+                    [
+                      '@babel/preset-env',
+                      {
+                        modules: false,
+                      },
+                    ],
                   ],
                   plugins: [
-                    [BabelPluginTransformImports, {
-                      'lodash-es': {
-                        transform: 'lodash-es/${member}',
-                        preventFullImport: true
-                      }
-                    }],
-                    [BabelPluginReactNativeWeb, {
-                      commonjs: false
-                    }],
+                    [
+                      BabelPluginTransformImports,
+                      {
+                        'lodash-es': {
+                          transform: 'lodash-es/${member}',
+                          preventFullImport: true,
+                        },
+                      },
+                    ],
+                    [
+                      BabelPluginReactNativeWeb,
+                      {
+                        commonjs: false,
+                      },
+                    ],
                     [BabelPluginProposalPrivatePropertyInObject, { loose: true }],
                     [BabelPluginProposalClassProperties, { loose: true }],
-                    [BabelPluginProposalPrivateMethods, { loose: true }]
-                  ]
-                }
+                    [BabelPluginProposalPrivateMethods, { loose: true }],
+                  ],
+                },
               },
               {
-                loader: require.resolve("ts-loader")
-              }
-            ]
+                loader: require.resolve('ts-loader'),
+              },
+            ],
           },
           {
             test: /\.m?jsx?$/,
             include: [
               new RegExp('node_modules' + escapedSep + 'react-native-'),
-              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'tcomb-form-native'),
-              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep + 'picker'),
+              new RegExp(
+                'node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'tcomb-form-native'
+              ),
+              new RegExp(
+                'node_modules' + escapedSep + '@react-native-community' + escapedSep + 'picker'
+              ),
               new RegExp('packages' + escapedSep + 'fs'),
               new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
-              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'),
+              new RegExp(
+                'node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'
+              ),
               new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep),
-              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'),
-              new RegExp('node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics')
+              new RegExp(
+                'node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'
+              ),
+              new RegExp(
+                'node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics'
+              ),
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
               'cache-loader',
               {
-                loader: require.resolve("babel-loader"),
+                loader: require.resolve('babel-loader'),
                 options: {
                   cacheDirectory: true,
                   presets: [
-                    ["@babel/preset-env", {
-                        modules: false
-                    }]
+                    [
+                      '@babel/preset-env',
+                      {
+                        modules: false,
+                      },
+                    ],
                   ],
                   plugins: [
-                    [BabelPluginTransformImports, {
-                      'lodash-es': {
-                        transform: 'lodash-es/${member}',
-                        preventFullImport: true
-                      }
-                    }],
-                    [BabelPluginReactNativeWeb, {
-                      commonjs: false
-                    }],
+                    [
+                      BabelPluginTransformImports,
+                      {
+                        'lodash-es': {
+                          transform: 'lodash-es/${member}',
+                          preventFullImport: true,
+                        },
+                      },
+                    ],
+                    [
+                      BabelPluginReactNativeWeb,
+                      {
+                        commonjs: false,
+                      },
+                    ],
                     [BabelPluginProposalPrivatePropertyInObject, { loose: true }],
                     [BabelPluginProposalClassProperties, { loose: true }],
-                    [BabelPluginProposalPrivateMethods, { loose: true }]
-                  ]
-                }
-              }
-            ]
+                    [BabelPluginProposalPrivateMethods, { loose: true }],
+                  ],
+                },
+              },
+            ],
           },
           {
             test: /\.css$/,
@@ -170,8 +201,8 @@ const globalConfig = {
                   loader: require.resolve('css-loader'),
                   options: {
                     importLoaders: 1,
-                    sourceMap: true
-                  }
+                    sourceMap: true,
+                  },
                 },
                 {
                   loader: require.resolve('postcss-loader'),
@@ -187,23 +218,26 @@ const globalConfig = {
                             '>1%',
                             'last 4 versions',
                             'Firefox ESR',
-                            'not ie < 9' // React doesn't support IE8 anyway
+                            'not ie < 9', // React doesn't support IE8 anyway
                           ],
-                          flexbox: 'no-2009'
+                          flexbox: 'no-2009',
                         }),
                         require('cssnano')({
-                          preset: ['default', {
-                            discardComments: {
-                              removeAll: true,
+                          preset: [
+                            'default',
+                            {
+                              discardComments: {
+                                removeAll: true,
+                              },
                             },
-                          }]
-                        })
-                      ]
-                    }
-                  }
-                }
-              ]
-            })
+                          ],
+                        }),
+                      ],
+                    },
+                  },
+                },
+              ],
+            }),
           },
           {
             loader: require.resolve('file-loader'),
@@ -213,25 +247,19 @@ const globalConfig = {
             // by webpacks internal loaders.
             exclude: [/\.m?js$/, /\.html$/, /\.json$/],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]'
-            }
-          }
-        ]
-      }
-    ]
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
-  plugins: [
-    new CopyPlugin([
-      {from: './build', to: '.'}
-    ])
-  ]
+  plugins: [new CopyPlugin([{ from: './build', to: '.' }])],
 };
 
-module.exports = function(env, options) {
+module.exports = function (env, options) {
   const defaultEnv = JSON.stringify(
-    (env && env.defaultEnvName) ||
-    (webConfig && webConfig.defaultEnvName) ||
-    'prod'
+    (env && env.defaultEnvName) || (webConfig && webConfig.defaultEnvName) || 'prod'
   );
 
   // add our environment specific config to the webpack config based on mode
@@ -252,20 +280,20 @@ module.exports = function(env, options) {
             compress: true,
             output: {
               beautify: false,
-              comments: false
-            }
-          }
-        })
-      ]
+              comments: false,
+            },
+          },
+        }),
+      ],
     };
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
-        filename: 'static/css/[name].css'
+        filename: 'static/css/[name].css',
       }),
       new webpack.DefinePlugin({
         __DEV__: env && env.enableDev ? true : false,
         __DEFAULT_ENV__: defaultEnv,
-        BUNDLE_TIMESTAMP: timestamp.toString()
+        BUNDLE_TIMESTAMP: timestamp.toString(),
       }),
       new HtmlWebpackPlugin({
         chunks: ['bundle'],
@@ -281,11 +309,11 @@ module.exports = function(env, options) {
           keepClosingSlash: true,
           minifyJS: true,
           minifyCSS: true,
-          minifyURLs: true
-        }
+          minifyURLs: true,
+        },
       }),
       new ManifestPlugin({
-        fileName: 'asset-manifest.json'
+        fileName: 'asset-manifest.json',
       }),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
@@ -305,8 +333,8 @@ module.exports = function(env, options) {
           '/favicon.ico',
           '/manifest.json',
           '/web-icon.png',
-          '/web-icon@512.png'
-        ]
+          '/web-icon@512.png',
+        ],
       }),
     ]);
   } else {
@@ -314,19 +342,19 @@ module.exports = function(env, options) {
     globalConfig.devServer = {
       contentBase: path.join(__dirname, 'dev-server'),
       historyApiFallback: true,
-      port: 8080
+      port: 8080,
     };
     globalConfig.mode = 'development';
     globalConfig.plugins = globalConfig.plugins.concat([
       new ExtractTextPlugin({
-        filename: 'static/css/bundle.css'
+        filename: 'static/css/bundle.css',
       }),
       new webpack.DefinePlugin({
         __DEV__: true,
-        __DEFAULT_ENV__: defaultEnv
-      })
+        __DEFAULT_ENV__: defaultEnv,
+      }),
     ]);
   }
 
   return globalConfig;
-}
+};

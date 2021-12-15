@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  PanResponder,
-  View
-} from 'react-native';
+import { PanResponder, View } from 'react-native';
 
 export interface GestureHandlerProps {
   onSwipe: () => void;
@@ -20,21 +17,18 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
   constructor(props: GestureHandlerProps) {
     super(props);
     this.state = {
-      stateSet: false
+      stateSet: false,
     };
     this.panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: this.onMoveShouldSetPanResponder,
       onPanResponderMove: this.onPanResponderMove,
-      onPanResponderRelease: this.onPanResponderRelease
+      onPanResponderRelease: this.onPanResponderRelease,
     });
   }
 
   render(): JSX.Element {
     return (
-      <View
-        {...this.panResponder.panHandlers}
-        collapsable={false}
-      >
+      <View {...this.panResponder.panHandlers} collapsable={false}>
         {this.props.children}
       </View>
     );
@@ -42,7 +36,7 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
   private onMoveShouldSetPanResponder = (event: any, gestureState: GestureState): boolean => {
     // don't set panresponder if we are tapping the card
     return !(gestureState.dx === 0 && gestureState.dy === 0);
-  }
+  };
 
   private onPanResponderMove = (event: any, gestureState: GestureState): void => {
     // if we make an initial gesture UP, we assume were attempting
@@ -50,10 +44,10 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
     if (!this.state.stateSet && gestureState.dy <= -7 && Math.abs(gestureState.dx) < 7) {
       this.props.setScrollEnabled(false);
       this.setState({
-        stateSet: true
+        stateSet: true,
       });
     }
-  }
+  };
 
   private onPanResponderRelease = (event: any, gestureState: GestureState): void => {
     // if we have swiped up 50 pixels or more, swipe the story up into view
@@ -64,7 +58,7 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
       this.props.setScrollEnabled(true);
     }
     this.setState({
-      stateSet: false
+      stateSet: false,
     });
-  }
+  };
 }

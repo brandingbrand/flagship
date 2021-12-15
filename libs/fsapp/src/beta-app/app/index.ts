@@ -7,7 +7,7 @@ export {
   REDUX_CONTEXT_TOKEN,
   REDUX_STORE_TOKEN,
   useDispatch,
-  useStore
+  useStore,
 } from './context';
 
 export type { AppConfig, IApp as AppType, AppConstructor, WebApplication } from './types';

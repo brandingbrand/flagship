@@ -7,9 +7,9 @@ const componentTranslationKeys = translationKeys.flagship.shareButton;
 
 const shareImage = require('../../../assets/images/share.png');
 
-export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
+export const ShareButton: FunctionComponent<ShareButtonProps> = memo((props) => {
   const onSharePress = () => {
-    Share.share(props.content, props.options).catch(e => {
+    Share.share(props.content, props.options).catch((e) => {
       // Check for the message in react-native-web, because cancelling saving a file also throws
       if (e.message === 'Share is not supported in this browser') {
         // navigator.share isn't support by the web browser
@@ -39,14 +39,16 @@ export const ShareButton: FunctionComponent<ShareButtonProps> = memo(props => {
     return (
       <Image
         source={shareImage}
-        style={[{
-          width: 19,
-          height: 23
-        }, props.style]}
+        style={[
+          {
+            width: 19,
+            height: 23,
+          },
+          props.style,
+        ]}
       />
     );
   };
-
 
   return (
     <TouchableOpacity

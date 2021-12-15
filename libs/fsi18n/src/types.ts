@@ -16,11 +16,13 @@ export interface TranslationKeys {
   [key: string]: TranslationKeys | TranslationKey | object;
 }
 
-export type TranslationKey = string | {
-  zero?: string;
-  one?: string;
-  other?: string;
-};
+export type TranslationKey =
+  | string
+  | {
+      zero?: string;
+      one?: string;
+      other?: string;
+    };
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {

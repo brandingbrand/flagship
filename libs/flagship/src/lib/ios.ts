@@ -42,7 +42,7 @@ export function capabilities(configuration: Config): void {
   if (configuration.enabledCapabilitiesIOS) {
     helpers.logInfo(`enabling iOS capabilities [${configuration.enabledCapabilitiesIOS}]`);
 
-    configuration.enabledCapabilitiesIOS.forEach(capability => {
+    configuration.enabledCapabilitiesIOS.forEach((capability) => {
       fs.update(
         path.ios.pbxprojFilePath(configuration),
         new RegExp(`com.apple.${capability}\\s*=\\s*{\\s*enabled = 0;`),
@@ -65,7 +65,7 @@ export function targetedDevice(configuration: Config): void {
     const devices: { [key: string]: any } = {
       iPhone: 1,
       iPad: 2,
-      Universal: `"1,2"`
+      Universal: `"1,2"`,
     };
 
     const targetedDeviceRegex = new RegExp(`TARGETED_DEVICE_FAMILY = "1"`, 'g');
@@ -172,8 +172,10 @@ export function launchScreen(configuration: Config): void {
 
   const sourceLaunchScreen = configuration.launchScreen.ios.storyboard;
   if (!sourceLaunchScreen) {
-    helpers.logError('xib support has been removed. Please include a storyboard file.' +
-      ' Using the default Flagship storyboard.');
+    helpers.logError(
+      'xib support has been removed. Please include a storyboard file.' +
+        ' Using the default Flagship storyboard.'
+    );
     return;
   }
   const destinationLaunchScreen = path.resolve(
@@ -221,11 +223,11 @@ export function exceptionDomains(configuration: Config): void {
       path.ios.infoPlistPath(configuration),
       '<!-- {NSExceptionDomains} -->',
       exceptionDomains
-        .map(item => {
+        .map((item) => {
           if (typeof item === 'string') {
             return [
               `<key>${item}</key>`,
-              '<dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>'
+              '<dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>',
             ].join('');
           } else {
             return `<key>${item.domain}</key><dict>${item.value}</dict>`;
@@ -247,7 +249,7 @@ export function usageDescription(configuration: Config): void {
   }
 
   helpers.logInfo(
-    `updating iOS usage description: [${configuration.usageDescriptionIOS.map(u => u.key)}]`
+    `updating iOS usage description: [${configuration.usageDescriptionIOS.map((u) => u.key)}]`
   );
 
   usageDescriptions.add(configuration, configuration.usageDescriptionIOS);
@@ -264,7 +266,7 @@ export function backgroundModes(configuration: Config): void {
   }
 
   helpers.logInfo(
-    `updating iOS background modes: [${configuration.UIBackgroundModes.map(u => u.string)}]`
+    `updating iOS background modes: [${configuration.UIBackgroundModes.map((u) => u.string)}]`
   );
 
   const infoPlist = path.ios.infoPlistPath(configuration);
@@ -274,7 +276,7 @@ export function backgroundModes(configuration: Config): void {
     '<key>UIRequiredDeviceCapabilities</key>',
     `<key>UIBackgroundModes</key>
       <array>
-      ${configuration.UIBackgroundModes.map(mode => {
+      ${configuration.UIBackgroundModes.map((mode) => {
         return `<string>${mode.string}</string>`;
       })}
       </array>
@@ -302,11 +304,10 @@ export function urlScheme(configuration: Config): void {
  * @param {string} newVersion The version number to set.
  */
 export function version(configuration: Config, newVersion: string): void {
-  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
-  || newVersion;
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion) || newVersion;
 
-  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
-    || versionLib.normalize(newVersion);
+  const bundleVersion =
+    (configuration.ios && configuration.ios.buildVersion) || versionLib.normalize(newVersion);
 
   helpers.logInfo(`setting iOS version number to ${newVersion}`);
   helpers.logInfo(`setting iOS bundle version to ${bundleVersion}`);
@@ -330,42 +331,33 @@ export function iosExtensions(configuration: Config, version: string): void {
     return;
   }
   helpers.logInfo(`Adding iOS App Extensions`);
-  const shortVersion = (configuration.ios && configuration.ios.shortVersion)
-    || version;
-  const bundleVersion = (configuration.ios && configuration.ios.buildVersion)
-  || versionLib.normalize(version);
+  const shortVersion = (configuration.ios && configuration.ios.shortVersion) || version;
+  const bundleVersion =
+    (configuration.ios && configuration.ios.buildVersion) || versionLib.normalize(version);
   const extensions = configuration?.ios?.extensions;
   const projectPath = path.ios.pbxprojFilePath(configuration);
   const fastFilePath = path.ios.fastfilePath();
   const teamId = configuration.buildConfig.ios.exportTeamId;
   const appBundleId = configuration.bundleIds.ios;
   for (const extension of extensions) {
-    const {
-      extensionPath,
-      bundleExtensionId,
-      provisioningProfileName,
-      frameworks,
-      entitlements
-    } = extension;
+    const { extensionPath, bundleExtensionId, provisioningProfileName, frameworks, entitlements } =
+      extension;
 
     const iosExtensionPath = path.project.resolve('ios', extensionPath);
     const extPlistPath = path.resolve(iosExtensionPath, extension.plistName || 'Info.plist');
 
-    fs.copySync(
-      path.project.resolve(extensionPath),
-      path.resolve(iosExtensionPath)
-    );
+    fs.copySync(path.project.resolve(extensionPath), path.resolve(iosExtensionPath));
 
     const project = xcode.project(projectPath);
     project.parseSync();
 
     // Add Groups to projects
-    const files = fs.readdirSync(iosExtensionPath).map(file => file);
+    const files = fs.readdirSync(iosExtensionPath).map((file) => file);
 
     const extGroup = project.addPbxGroup(files, extensionPath, iosExtensionPath);
     const groups = project.hash.project.objects.PBXGroup;
 
-    Object.keys(groups).forEach(key => {
+    Object.keys(groups).forEach((key) => {
       if (groups[key].name === 'CustomTemplate') {
         project.addToPbxGroup(extGroup.uuid, key);
       }
@@ -403,8 +395,7 @@ export function iosExtensions(configuration: Config, version: string): void {
     );
 
     // Fastfile code
-    const oldProvisioning =
-    `"${appBundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`;
+    const oldProvisioning = `"${appBundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`;
     const oldProvisioningRegex = new RegExp(oldProvisioning, 'g');
     fs.update(
       fastFilePath,
@@ -443,7 +434,7 @@ export function iosExtensions(configuration: Config, version: string): void {
  */
 function addFrameworks(project: xcode.XCodeproject, frameworks: string[], uuid: string): void {
   for (const framework of frameworks || []) {
-    project.addFramework(framework, { target: uuid, customFramework: true, embed: true});
+    project.addFramework(framework, { target: uuid, customFramework: true, embed: true });
   }
 }
 
@@ -507,7 +498,7 @@ export function frameworks(configuration: Config): void {
   const project = xcode.project(projectPath);
   project.parseSync();
 
-  configuration.ios?.frameworks?.forEach(obj => {
+  configuration.ios?.frameworks?.forEach((obj) => {
     const { framework, frameworkPath } = obj;
     if (frameworkPath) {
       const source = path.resolve(path.project.path(), frameworkPath, framework);

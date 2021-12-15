@@ -92,7 +92,7 @@ export class ApplePayButton extends ApplePayButtonBase {
         accessibilityRole={'button'}
         accessibilityLabel={FSI18n.string(componentTranslation)}
       >
-        <div className={`apple-pay-button ${className}`}/>
+        <div className={`apple-pay-button ${className}`} />
       </TouchableOpacity>
     );
   }
@@ -104,9 +104,7 @@ export class ApplePayButton extends ApplePayButtonBase {
 
     return (
       <View style={this.props.style}>
-        <style>
-          {css}
-        </style>
+        <style>{css}</style>
         {this.props.showApplePaySetupButton && this.renderSetupButton()}
         {this.props.showApplePayButton && this.renderPayButton()}
       </View>

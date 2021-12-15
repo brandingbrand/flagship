@@ -6,7 +6,7 @@ import type {
   OptionsStatusBar,
   OptionsTopBar,
   OptionsTopBarButton,
-  OptionsTopBarTitle
+  OptionsTopBarTitle,
 } from 'react-native-navigation';
 import type { ParsedQs } from 'qs';
 import type { ShellConfig } from '../shell.web';
@@ -37,12 +37,14 @@ export interface ScreenOptions {
  * @see useRouteData - hook into the the data context
  */
 export type ScreenFC = FC<{ componentId: string }> & ScreenOptions;
-export abstract class ScreenComponent<State = {}> extends
-Component<{ componentId: string }, State> {
+export abstract class ScreenComponent<State = {}> extends Component<
+  { componentId: string },
+  State
+> {
   static buttons?: ScreenOptions['buttons'];
 }
 export type ScreenComponentType = ScreenFC | typeof ScreenComponent;
-export type Tab = (OptionsBottomTab & { id: string });
+export type Tab = OptionsBottomTab & { id: string };
 
 export type RouteData = Dictionary<unknown | undefined>;
 export type RouteParams = Dictionary<string | undefined>;
@@ -69,12 +71,14 @@ export interface Activator {
   activate(): boolean | Promise<boolean>;
 }
 
-export type ActivatorConstructor =
-  new (route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => Activator;
+export type ActivatorConstructor = new (
+  route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+) => Activator;
 
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
-export type ActivatorFunction =
-  (route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => boolean | Promise<boolean>;
+export type ActivatorFunction = (
+  route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+) => boolean | Promise<boolean>;
 
 // Uses a similar pattern to that of the Angular and Vue
 // Routers, this should make it familiar to those who have
@@ -179,11 +183,7 @@ export interface RedirectRoute extends BaseRoute {
  * This typing will be more explicit when this issue is resolved:
  * https://github.com/Microsoft/TypeScript/issues/12936
  */
-export type Route =
-  | ComponentRoute
-  | LazyComponentRoute
-  | RedirectRoute
-  | ParentRoute;
+export type Route = ComponentRoute | LazyComponentRoute | RedirectRoute | ParentRoute;
 
 /**
  * A list of routes
@@ -205,11 +205,11 @@ export type ExternalRouteFactory =
 
 export type IndexedComponentRoute =
   | (ComponentRoute & {
-    readonly id: string;
-  })
+      readonly id: string;
+    })
   | (LazyComponentRoute & {
-    readonly id: string;
-  });
+      readonly id: string;
+    });
 
 export type MatchingRoute = IndexedComponentRoute & {
   readonly params: RouteParams;

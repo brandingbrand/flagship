@@ -2,7 +2,6 @@ import { Alert as NativeAlert, AlertButton } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 const componentTranslationKeys = translationKeys.flagship.alertDefaults;
 
-
 export interface SerializedAlertOptions {
   title: string;
   text?: string;
@@ -28,8 +27,8 @@ export const Alert = {
             if (options.onConfirm) {
               options.onConfirm();
             }
-          }
-        }
+          },
+        },
       ];
 
       if (options.showCancelButton) {
@@ -40,11 +39,11 @@ export const Alert = {
             if (options.onCancel) {
               options.onCancel();
             }
-          }
+          },
         });
       }
 
       NativeAlert.alert(options.title, options.text, buttons);
     }
-  }
+  },
 };

@@ -11,7 +11,7 @@ import {
   TextStyle,
   TouchableHighlight,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 export interface AccordionProps {
@@ -139,38 +139,38 @@ const ACCORDION_TITLE_HEIGHT_DEFAULT = 50;
 const AccordionStyles = StyleSheet.create({
   container: {
     borderBottomColor: '#ccc',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   content: {
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   contentLayout: {
     // Need to do this so that heights are still calculated inside overflow: hidden
     left: 0,
     right: 0,
-    position: 'absolute'
+    position: 'absolute',
   },
   titleContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
-    flex: 1
+    flex: 1,
   },
   arrowImage: {
     width: 12,
-    height: 20
+    height: 20,
   },
   plusMinus: {
     fontSize: 20,
     lineHeight: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   iconImage: {
     width: 15,
-    height: 15
-  }
+    height: 15,
+  },
 });
 
 /**
@@ -187,13 +187,12 @@ const AccordionStyles = StyleSheet.create({
  * web the height is the padding + height of the children.)
  */
 export class Accordion extends Component<AccordionProps, AccordionState> {
-
   static defaultProps: Partial<AccordionProps> = {
     titleUnderlayColor: 'transparent',
     paddingHorizontal: ACCORDION_PADDING_DEFAULT,
     titleTouchStyle: {
-      height: ACCORDION_TITLE_HEIGHT_DEFAULT
-    }
+      height: ACCORDION_TITLE_HEIGHT_DEFAULT,
+    },
   };
 
   constructor(props: AccordionProps) {
@@ -203,7 +202,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       arrowTranslateAnimation: new Animated.Value(props.state === 'open' ? -90 : 90),
       contentHeightAnimation: new Animated.Value(0),
       contentHeight: 0,
-      isOpen: (props.state === 'open')
+      isOpen: props.state === 'open',
     };
   }
 
@@ -212,12 +211,14 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     let computedContentStyle = {};
     let layoutStyle;
 
-    if (this.shouldEnableAnimation() &&
+    if (
+      this.shouldEnableAnimation() &&
       // If the content height hasn't been calculated yet
       // and the accordion starts open just let it autosize
-      (this.state.contentHeight || this.props.state !== 'open')) {
+      (this.state.contentHeight || this.props.state !== 'open')
+    ) {
       computedContentStyle = {
-        height: this.state.contentHeightAnimation
+        height: this.state.contentHeightAnimation,
       };
       layoutStyle = AccordionStyles.contentLayout;
     } else if (!this.state.isOpen) {
@@ -229,7 +230,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
         style={[
           AccordionStyles.container,
           this.props.style,
-          this.state.isOpen && this.props.openStyle
+          this.state.isOpen && this.props.openStyle,
         ]}
       >
         <TouchableHighlight
@@ -241,36 +242,33 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
           <View
             style={[
               AccordionStyles.titleContainer,
-              {paddingHorizontal: this.props.paddingHorizontal},
-              this.props.titleContainerStyle
+              { paddingHorizontal: this.props.paddingHorizontal },
+              this.props.titleContainerStyle,
             ]}
           >
             <View
               style={[
                 AccordionStyles.title,
                 this.props.titleStyle,
-                this.state.isOpen && this.props.openTitleStyle
+                this.state.isOpen && this.props.openTitleStyle,
               ]}
             >
               {typeof this.props.title === 'string' ? (
                 <Text>{this.props.title}</Text>
-              ) : this.props.title}
+              ) : (
+                this.props.title
+              )}
             </View>
             {this.renderIcon()}
           </View>
         </TouchableHighlight>
-        <Animated.View
-          style={[
-            AccordionStyles.content,
-            computedContentStyle
-          ]}
-        >
+        <Animated.View style={[AccordionStyles.content, computedContentStyle]}>
           <View
             onLayout={this.contentOnLayout}
             style={[
-              {paddingHorizontal: this.props.paddingHorizontal},
+              { paddingHorizontal: this.props.paddingHorizontal },
               this.props.contentStyle,
-              layoutStyle
+              layoutStyle,
             ]}
           >
             {this.props.content || this.props.children}
@@ -292,7 +290,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       Animated.spring(this.state.contentHeightAnimation, {
         bounciness: 0,
         toValue: height,
-        useNativeDriver: false
+        useNativeDriver: false,
       }).start();
     } else {
       this.state.contentHeightAnimation.setValue(height);
@@ -302,9 +300,9 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     Animated.timing(this.state.arrowTranslateAnimation, {
       toValue: shouldOpen ? -90 : 90,
       duration: this.props.animationDuration || ACCORDION_ANIMATION_DURATION_DEFAULT,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-  }
+  };
 
   /**
    * On first layout, get the height of the contents so we can determine how high we should expand
@@ -317,13 +315,13 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     const height = event.nativeEvent.layout.height + padding;
     if (height !== this.state.contentHeight) {
       this.setState({
-        contentHeight: height
+        contentHeight: height,
       });
     }
     if (this.state.isOpen) {
       this.state.contentHeightAnimation.setValue(height);
     }
-  }
+  };
 
   /**
    * Returns whether or not the accordion should animate opening.
@@ -332,7 +330,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
    */
   private shouldEnableAnimation = (): boolean => {
     return !this.props.disableAnimation && !this.props.renderContent;
-  }
+  };
 
   /**
    * Renders the accordion disclosure icon as an arrow.
@@ -340,28 +338,22 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
    * @returns {React.ReactNode} The accordion disclosure icon.
    */
   private renderArrowIcon(): React.ReactNode {
-    const {
-      arrowIconImage
-    } = this.props;
+    const { arrowIconImage } = this.props;
     const computedArrowStyle = {
       transform: [
         {
           rotate: this.state.arrowTranslateAnimation.interpolate({
             inputRange: [-90, 90],
-            outputRange: this.props.arrowRange || ['-90deg', '90deg']
-          })
-        }
-      ]
+            outputRange: this.props.arrowRange || ['-90deg', '90deg'],
+          }),
+        },
+      ],
     };
 
     return (
       <Animated.Image
         source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
-        style={[
-          AccordionStyles.arrowImage,
-          this.props.arrowIconStyle,
-          computedArrowStyle
-        ]}
+        style={[AccordionStyles.arrowImage, this.props.arrowIconStyle, computedArrowStyle]}
       />
     );
   }
@@ -372,34 +364,19 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
    * @returns {React.ReactNode} The accordion disclosure icon.
    */
   private renderIcon(): React.ReactNode {
-
-    const {
-      closedIconImage,
-      closedIconStyle,
-      iconFormat,
-      openIconImage,
-      openIconStyle
-    } = this.props;
+    const { closedIconImage, closedIconStyle, iconFormat, openIconImage, openIconStyle } =
+      this.props;
 
     if (iconFormat === 'arrow') {
       return this.renderArrowIcon();
     }
 
-    if (iconFormat === 'image'
-    && (closedIconImage || openIconImage)) {
+    if (iconFormat === 'image' && (closedIconImage || openIconImage)) {
       const { isOpen } = this.state;
       const image = isOpen ? openIconImage : closedIconImage;
       const imageStyle = isOpen ? openIconStyle : closedIconStyle;
       if (image) {
-        return (
-          <Image
-            source={image}
-            style={[
-              AccordionStyles.iconImage,
-              imageStyle
-            ]}
-          />
-        );
+        return <Image source={image} style={[AccordionStyles.iconImage, imageStyle]} />;
       } else {
         return null;
       }
@@ -407,11 +384,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
 
     const icon = this.state.isOpen ? '–' : '+';
 
-    return (
-      <Text style={[AccordionStyles.plusMinus, this.props.plusMinusStyle]}>
-        {icon}
-      </Text>
-    );
+    return <Text style={[AccordionStyles.plusMinus, this.props.plusMinusStyle]}>{icon}</Text>;
   }
 
   /**
@@ -421,7 +394,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     const isCurrentlyOpen = this.state.isOpen;
 
     this.setState({
-      isOpen: !isCurrentlyOpen
+      isOpen: !isCurrentlyOpen,
     });
 
     if (isCurrentlyOpen) {
@@ -429,5 +402,5 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     } else {
       this.animateContent(this.state.contentHeight, true);
     }
-  }
+  };
 }

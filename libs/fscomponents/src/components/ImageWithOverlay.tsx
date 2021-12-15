@@ -21,22 +21,13 @@ export interface ImageWithOverlayProps {
 }
 
 const ImageWithOverlayInner = (props: ImageWithOverlayProps): JSX.Element => {
-  const {
-    overlay,
-    style,
-    imageProps,
-    overlayPosition
-  } = props;
+  const { overlay, style, imageProps, overlayPosition } = props;
   const overlayStyle = get(S, overlayPosition || 'bottomLeft');
 
   return (
     <View style={style}>
       <FadeInImage {...imageProps} />
-      {overlay && (
-        <View style={[S.overlayContainer, overlayStyle]}>
-          {overlay}
-        </View>
-      )}
+      {overlay && <View style={[S.overlayContainer, overlayStyle]}>{overlay}</View>}
     </View>
   );
 };

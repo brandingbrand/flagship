@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
   useRef,
-  useState
+  useState,
 } from 'react';
 import {
   Animated,
@@ -21,7 +21,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import {
   ChunkOptions,
@@ -30,7 +30,7 @@ import {
   InsertAfterTable,
   InsertRowTable,
   useGridChunks,
-  WidthTable
+  WidthTable,
 } from '../hooks/grid-chunks.hook';
 
 const DEFAULT_COLUMNS = 2;
@@ -41,7 +41,7 @@ const DEFAULT_KEY_EXTRACTOR = <ItemT extends GridItem<{ id?: string; key?: strin
   index: number
 ): string => {
   const key = items
-    .map(item => item.value?.key ?? item.value?.id)
+    .map((item) => item.value?.key ?? item.value?.id)
     .filter(Boolean)
     .join();
 
@@ -52,36 +52,36 @@ const gridStyle = StyleSheet.create({
   row: {
     flexGrow: 1,
     flexDirection: 'row',
-    flexWrap: 'nowrap'
+    flexWrap: 'nowrap',
   },
   item: {
     flexDirection: 'row',
-    flexWrap: 'nowrap'
+    flexWrap: 'nowrap',
   },
   itemRow: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   rowSeparator: {
     width: '100%',
     height: 1,
-    backgroundColor: '#8E8E8E'
+    backgroundColor: '#8E8E8E',
   },
   columnSeparator: {
     height: '100%',
     width: 1,
-    backgroundColor: '#8E8E8E'
+    backgroundColor: '#8E8E8E',
   },
   scrollTopButtonContainer: {
     position: 'absolute',
     bottom: 30,
     right: 30,
-    zIndex: 200
+    zIndex: 200,
   },
   scrollTopButton: {
     backgroundColor: '#eee',
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export type GridScrollToTopFunc = () => void;
@@ -294,7 +294,7 @@ export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
 
 // TODO: wSedlacek remove deprecated props in fs12
 // eslint-disable-next-line complexity
-export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
+export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   const {
     accessible,
     accessibilityHint,
@@ -339,7 +339,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
     renderHeader,
     showBackToTop,
     showColumnSeparators,
-    showRowSeparators
+    showRowSeparators,
   } = props;
 
   const listView = useRef<FlatList<GridRow<ItemT>>>(null);
@@ -368,7 +368,6 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
       } else {
         return 0;
       }
-
     } else {
       return columns ?? numColumns ?? DEFAULT_COLUMNS;
     }
@@ -383,7 +382,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
         insertEveryFrequency && insertEveryValues
           ? { frequency: insertEveryFrequency, values: insertEveryValues }
           : undefined,
-      emptyValue: null
+      emptyValue: null,
     }),
     [columnWidthTable, insertRows, insertAfter, insertEveryFrequency, insertEveryValues]
   );
@@ -405,13 +404,13 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
           setBackToTopVisible(true);
           Animated.timing(backTopOpacity, {
             toValue: 1,
-            useNativeDriver: true
+            useNativeDriver: true,
           }).start();
         } else if (scrollY < threshold && backToTopVisible) {
           setBackToTopVisible(false);
           Animated.timing(backTopOpacity, {
             toValue: 0,
-            useNativeDriver: true
+            useNativeDriver: true,
           }).start();
         }
       }
@@ -421,20 +420,20 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
       BackToTopShowAtHeight,
       backToTopShowAtHeight,
       backToTopVisible,
-      setBackToTopVisible
+      setBackToTopVisible,
     ]
   );
 
   const renderRow = useCallback<ListRenderItem<GridRow<ItemT>>>(
     ({ index, item, separators }) => {
       const showRowSeparator = chunkedArray?.length > index + 1;
-      const columnWidth = (100 / totalColumns);
+      const columnWidth = 100 / totalColumns;
 
       return (
         <View style={gridStyle.row}>
           {item.map((item, index) => {
             const columns = getAbsoluteWidth(item.width, totalColumns);
-            const widthPercent = Math.floor((columnWidth * columns) * 100) / 100;
+            const widthPercent = Math.floor(columnWidth * columns * 100) / 100;
             const showColumnSeparator = (index + 1) % totalColumns !== 0;
 
             return (
@@ -447,7 +446,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
                       index,
                       separators,
                       totalColumns,
-                      columns
+                      columns,
                     })}
                   {(showRowSeparators || rowSeparatorStyle) && showRowSeparator && (
                     <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
@@ -469,7 +468,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
       showRowSeparators,
       rowSeparatorStyle,
       showColumnSeparators,
-      columnSeparatorStyle
+      columnSeparatorStyle,
     ]
   );
 
@@ -510,7 +509,7 @@ export const Grid = <ItemT, >(props: GridProps<ItemT>) => {
           style={[
             gridStyle.scrollTopButtonContainer,
             { opacity: backTopOpacity },
-            BackToTopStyle ?? backToTopContainerStyle
+            BackToTopStyle ?? backToTopContainerStyle,
           ]}
         >
           {isValidElement(BackToTopComponent) ? (

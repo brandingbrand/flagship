@@ -2,10 +2,7 @@ const replace = require('replace-in-file');
 import { sync } from 'glob';
 import * as fs from './fs';
 import * as path from './path';
-import {
-  logError,
-  logInfo
-} from '../helpers';
+import { logError, logInfo } from '../helpers';
 
 /**
  * Replaces the project name within the boilerplate source files.
@@ -24,7 +21,7 @@ export function source(oldName: string, newName: string, ...pathComponents: stri
       ignore: directory + '/Pods/**/*',
       from: [new RegExp(oldName, 'g'), new RegExp(oldName.toLocaleLowerCase(), 'g')],
       to: [newName, newName.toLocaleLowerCase()],
-      glob: { dot: true }
+      glob: { dot: true },
     });
   } catch (err) {
     logError(`renaming project within source`, err);
@@ -51,7 +48,7 @@ export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: 
     const results = getMatchingFiles(directory, oldPathPart);
 
     // Rename matching paths
-    results.forEach(oldPath => {
+    results.forEach((oldPath) => {
       const newPath = oldPath.replace(oldPathPart, newPathPart);
       fs.moveSync(oldPath, newPath);
     });
@@ -66,13 +63,12 @@ export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: 
         return parts;
       }, [])
       .reverse()
-      .forEach(dir => {
+      .forEach((dir) => {
         const contents = fs.pathExistsSync(dir) && fs.readdirSync(dir);
         if (Array.isArray(contents) && contents.length === 0) {
           fs.removeSync(dir);
         }
       });
-
   } catch (err) {
     logError('renaming project files', err);
     process.exit(1);
@@ -80,7 +76,6 @@ export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: 
 
   logInfo(`renamed project files in ${directory}`);
 }
-
 
 /**
  * Replaces the project name within boilerplate file names.
@@ -97,7 +92,7 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
     const results = getMatchingFiles(directory, oldName);
 
     // Rename each path
-    results.forEach(oldPath => {
+    results.forEach((oldPath) => {
       // Only replace the final occurence in the path
       let newPath: any = oldPath.split('/');
       const n = newPath.length - 1;
@@ -119,13 +114,13 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
 function getMatchingFiles(directory: string, oldName: string): string[] {
   const globOptions = {
     nosort: true,
-    dot: true
+    dot: true,
   };
 
   // Find files/directories to be renamed
   const results = [
     ...sync(directory + '/**/*' + oldName + '*', globOptions),
-    ...sync(directory + '/**/*' + oldName.toLocaleLowerCase() + '*', globOptions)
+    ...sync(directory + '/**/*' + oldName.toLocaleLowerCase() + '*', globOptions),
   ];
 
   // Remove duplicate paths from the results array

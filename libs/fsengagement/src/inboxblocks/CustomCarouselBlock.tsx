@@ -8,15 +8,12 @@ import {
   StyleProp,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import styles from '../carousel/index.style';
 import Carousel from 'react-native-snap-carousel';
 
-import {
-  BlockItem,
-  ComponentList
-} from '../types';
+import { BlockItem, ComponentList } from '../types';
 import { CarouselPagination } from '../carousel/Pagination';
 
 import ImageWithOverlay from './ImageWithOverlay';
@@ -32,7 +29,7 @@ const components: ComponentList = {
   ImageWithOverlay,
   TextBanner,
   ImageWithText: ImageWithTextBlock,
-  Image: ImageBlock
+  Image: ImageBlock,
 };
 
 const { width: viewportWidth } = Dimensions.get('window');
@@ -44,9 +41,7 @@ interface Autoplay {
   autoplayInterval: string;
 }
 
-import {
-  CardProps
-} from '../types';
+import { CardProps } from '../types';
 export interface CustomCarouselBlockProps extends CardProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -75,20 +70,26 @@ export interface ImageCarouselBlockState {
   overallHeight: number;
 }
 // extends CardProps
-export default class CustomCarouselBlock
-  extends Component<CustomCarouselBlockProps, ImageCarouselBlockState> {
+export default class CustomCarouselBlock extends Component<
+  CustomCarouselBlockProps,
+  ImageCarouselBlockState
+> {
   // readonly state: ImageCarouselBlockState = {};
   _slider1Ref: any | null = null;
   constructor(props: CustomCarouselBlockProps) {
     super(props);
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM,
-      overallHeight: 0
+      overallHeight: 0,
     };
   }
 
-  shouldComponentUpdate(nextProps: CustomCarouselBlockProps, nextState: ImageCarouselBlockState): boolean {
-    return this.props.containerStyle !== nextProps.containerStyle ||
+  shouldComponentUpdate(
+    nextProps: CustomCarouselBlockProps,
+    nextState: ImageCarouselBlockState
+  ): boolean {
+    return (
+      this.props.containerStyle !== nextProps.containerStyle ||
       this.props.items !== nextProps.items ||
       this.props.ratio !== nextProps.ratio ||
       this.props.options !== nextProps.options ||
@@ -96,23 +97,21 @@ export default class CustomCarouselBlock
       this.props.source !== nextProps.source ||
       this.props.headerStyle !== nextProps.headerStyle ||
       this.props.textStyle !== nextProps.textStyle ||
-      this.state.overallHeight !== nextState.overallHeight;
+      this.state.overallHeight !== nextState.overallHeight
+    );
   }
   renderBlock = (item: BlockItem): React.ReactElement | null => {
-    const {
-      private_blocks,
-      private_type,
-      ...restProps } = item;
-    const {id, name, options } = this.props;
-    const renderItemWidth = this.calculateItemWidth()
+    const { private_blocks, private_type, ...restProps } = item;
+    const { id, name, options } = this.props;
+    const renderItemWidth = this.calculateItemWidth();
     const props = {
       id,
       name,
       parentWidth: renderItemWidth,
       outerContainerStyle: {
-        paddingRight: options.itemHorizontalPaddingPercent || 0
+        paddingRight: options.itemHorizontalPaddingPercent || 0,
       },
-      ...restProps
+      ...restProps,
     };
 
     if (!components?.[private_type]) {
@@ -122,25 +121,23 @@ export default class CustomCarouselBlock
       components[private_type],
       {
         ...props,
-        navigator: this.props.navigator
+        navigator: this.props.navigator,
       },
       private_blocks && private_blocks.map(this.renderBlock)
     );
-  }
+  };
   dataKeyExtractor = (item: BlockItem): string => {
     return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
-  }
+  };
   _renderItem(data: any): JSX.Element {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
     const renderItemWidth = this.calculateItemWidth();
     return (
       <View
         key={this.dataKeyExtractor(data.index)}
         style={{
           width: renderItemWidth,
-          paddingRight: options.itemHorizontalPaddingPercent
+          paddingRight: options.itemHorizontalPaddingPercent,
         }}
       >
         {this.renderBlock(data.item)}
@@ -149,9 +146,7 @@ export default class CustomCarouselBlock
   }
 
   parentCardStyles(): number {
-    const {
-      cardContainerStyle
-    } = this.props;
+    const { cardContainerStyle } = this.props;
 
     if (!cardContainerStyle) {
       return 0;
@@ -164,9 +159,7 @@ export default class CustomCarouselBlock
   }
 
   horizontalMarginPadding() {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
@@ -177,9 +170,7 @@ export default class CustomCarouselBlock
     return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
   calculateItemWidth() {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
 
     const slideWidth = Math.round((this.calculateSliderWidth() * options.itemWidthPercent) / 100);
     return slideWidth + options.itemHorizontalPaddingPercent;
@@ -188,36 +179,35 @@ export default class CustomCarouselBlock
     var { height } = event.nativeEvent.layout;
     if (height - this.state.overallHeight >= 1) {
       this.setState({
-        overallHeight: height
+        overallHeight: height,
       });
     }
-  }
+  };
 
   onSnapToItem = (index: number): void => {
     this.setState({
-      sliderActiveSlide: index + 1
+      sliderActiveSlide: index + 1,
     });
-  }
+  };
 
   createCarousel(): JSX.Element {
-    const {
-      items,
-      options,
-      autoplay,
-      loop
-    } = this.props;
+    const { items, options, autoplay, loop } = this.props;
 
-    const autoplayProps = autoplay ? {
-      autoplay: true,
-      autoplayDelay: parseFloat(autoplay.autoplayDelay) * 1000,
-      autoplayInterval: parseFloat(autoplay.autoplayInterval) * 1000,
-      lockScrollWhileSnapping: true
-    } : {};
+    const autoplayProps = autoplay
+      ? {
+          autoplay: true,
+          autoplayDelay: parseFloat(autoplay.autoplayDelay) * 1000,
+          autoplayInterval: parseFloat(autoplay.autoplayInterval) * 1000,
+          lockScrollWhileSnapping: true,
+        }
+      : {};
     const enableMomentum = !autoplay;
-    const loopProps = loop ? {
-      loop: true,
-      loopClonesPerSide: 3
-    } : {};
+    const loopProps = loop
+      ? {
+          loop: true,
+          loopClonesPerSide: 3,
+        }
+      : {};
     let renderItemWidth = this.calculateItemWidth();
     return (
       <View onLayout={this._onLayout}>
@@ -239,15 +229,10 @@ export default class CustomCarouselBlock
           {...loopProps}
         />
       </View>
-
     );
   }
   render(): JSX.Element {
-    const {
-      containerStyle,
-      pagination,
-      items
-    } = this.props;
+    const { containerStyle, pagination, items } = this.props;
 
     const carousel = this.createCarousel();
     return (

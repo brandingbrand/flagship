@@ -1,10 +1,6 @@
 import React, { Component, ComponentClass } from 'react';
 import { compose } from 'redux';
-import {
-  cloneDeep,
-  isEqual,
-  set
-} from 'lodash-es';
+import { cloneDeep, isEqual, set } from 'lodash-es';
 import {
   CommerceTypes,
   FetchDataFunction,
@@ -12,13 +8,13 @@ import {
   ReviewTypes,
   withCommerceData,
   WithCommerceProps,
-  WithCommerceProviderProps
+  WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
 
 // TODO: This should move into fscommerce
 export type CommerceToReviewMapFunction<
   ProductType extends CommerceTypes.Product = CommerceTypes.Product
-  > = (product: ProductType) => keyof ProductType;
+> = (product: ProductType) => keyof ProductType;
 
 /**
  * Additional props that are consumed by the high order component.
@@ -62,7 +58,7 @@ export type WithProductIndexProps<
  */
 export interface WithProductIndexState<
   ProductType extends CommerceTypes.Product = CommerceTypes.Product,
-  IdxType extends CommerceTypes.ProductIndex<ProductType> = CommerceTypes.ProductIndex<ProductType>,
+  IdxType extends CommerceTypes.ProductIndex<ProductType> = CommerceTypes.ProductIndex<ProductType>
 > extends Pick<WithCommerceProps<IdxType>, 'commerceData'> {
   /**
    * Indicates that we've received new commerce data but have not yet requested and merged reviews
@@ -113,9 +109,7 @@ function withProductIndexData<
   P,
   ProductType extends CommerceTypes.Product = CommerceTypes.Product,
   IdxType extends CommerceTypes.ProductIndex<ProductType> = CommerceTypes.ProductIndex<ProductType>
->(
-  fetchProducts: FetchDataFunction<P, IdxType>
-): ProductIndexWrapper<P, ProductType, IdxType> {
+>(fetchProducts: FetchDataFunction<P, IdxType>): ProductIndexWrapper<P, ProductType, IdxType> {
   /**
    * A function that wraps a a component and returns a new high order component. The wrapped
    * component will be given product index data as props.
@@ -138,7 +132,7 @@ function withProductIndexData<
       componentDidUpdate(prevProps: ResultProps): void {
         if (!isEqual(this.props.commerceData, prevProps.commerceData)) {
           if (!this.props.disableReviews) {
-            this.requestReviews().catch(err => console.warn('Could not get reviews', err));
+            this.requestReviews().catch((err) => console.warn('Could not get reviews', err));
           }
 
           if (this.props.onReceiveCommerceData && this.state.commerceData) {
@@ -148,18 +142,14 @@ function withProductIndexData<
       }
 
       render(): JSX.Element {
-        const {
-          commerceToReviewMap,
-          onReceiveCommerceData,
-          disableReviews,
-          ...props
-        } = this.props as any; // TypeScript does not support rest parameters for generics :(
+        const { commerceToReviewMap, onReceiveCommerceData, disableReviews, ...props } = this
+          .props as any; // TypeScript does not support rest parameters for generics :(
 
         return (
           <WrappedComponent
             {...props}
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
-            reviewsData={(this.state && this.state.reviewsData)}
+            reviewsData={this.state && this.state.reviewsData}
           />
         );
       }
@@ -171,7 +161,7 @@ function withProductIndexData<
         const {
           commerceData,
           commerceToReviewMap = 'id',
-          reviewDataSource
+          reviewDataSource,
         } = this.props as ResultProps;
 
         if (
@@ -181,12 +171,12 @@ function withProductIndexData<
           commerceData.products.length === 0
         ) {
           this.setState({
-            commerceData
+            commerceData,
           });
           return;
         }
 
-        const productsWithoutReviews = commerceData.products.filter(product => !product.review);
+        const productsWithoutReviews = commerceData.products.filter((product) => !product.review);
         const ids = reviewDataSource.productIdMapper<ProductType>(
           productsWithoutReviews,
           commerceToReviewMap as keyof ProductType
@@ -195,27 +185,27 @@ function withProductIndexData<
         const summaries = await reviewDataSource.fetchReviewSummary({ ids });
 
         const updatedCommerceData: IdxType = {
-          ...commerceData as any,
-          products: commerceData.products.map(product => {
+          ...(commerceData as any),
+          products: commerceData.products.map((product) => {
             const [id] = reviewDataSource.productIdMapper<ProductType>(
               [product],
               commerceToReviewMap as keyof ProductType
             );
 
-            const summary = summaries.find(summary => summary.id === id);
+            const summary = summaries.find((summary) => summary.id === id);
             if (summary) {
               return set(cloneDeep(product), 'review.summary', summary);
             }
 
             return product;
-          })
+          }),
         };
 
         this.setState({
           reviewsData: summaries,
-          commerceData: updatedCommerceData
+          commerceData: updatedCommerceData,
         });
-      }
+      };
     }
 
     return compose<ComponentClass<P & WithProductIndexProviderProps<ProductType, IdxType>>>(

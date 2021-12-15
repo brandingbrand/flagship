@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
   defaultButtonStyle: {
     backgroundColor: '#867CDD',
     borderRadius: 5,
-    borderColor: '#473BC7'
-  }
+    borderColor: '#473BC7',
+  },
 });
 
 export class RegistrationForm extends Component<RegistrationFormProps, RegistrationFormState> {
@@ -72,7 +72,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     PasswordType.getValidationErrorMessage = (s: string) => {
       if (s?.length < 6) {
         return FSI18n.string(componentTranslationKeys.errors.password.tooShort, {
-          characterCount: 6
+          characterCount: 6,
         });
       } else {
         return FSI18n.string(componentTranslationKeys.errors.password.invalid);
@@ -84,7 +84,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
       lastName: t.String,
       emailAddress: EmailType,
       password: PasswordType,
-      confirmPassword: ConfirmPasswordType
+      confirmPassword: ConfirmPasswordType,
     });
 
     this.fieldsOptions = {
@@ -94,7 +94,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         autoCorrect: false,
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('lastName'),
-        error: FSI18n.string(componentTranslationKeys.form.firstName.error)
+        error: FSI18n.string(componentTranslationKeys.form.firstName.error),
       },
       lastName: {
         label: FSI18n.string(componentTranslationKeys.form.lastName.label),
@@ -102,7 +102,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         autoCorrect: false,
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('emailAddress'),
-        error: FSI18n.string(componentTranslationKeys.form.lastName.error)
+        error: FSI18n.string(componentTranslationKeys.form.lastName.error),
       },
       emailAddress: {
         label: FSI18n.string(componentTranslationKeys.form.emailAddress.label),
@@ -111,7 +111,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         autoCapitalize: 'none',
         keyboardType: 'email-address',
         onSubmitEditing: () => this.focusField('password'),
-        error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid)
+        error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid),
       },
       password: {
         label: FSI18n.string(componentTranslationKeys.form.password.label),
@@ -124,18 +124,18 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
           const currentVal = this.state.value;
           const newVal = { ...currentVal, password: e.nativeEvent.text };
           this.setState({
-            value: newVal
+            value: newVal,
           });
-        }
+        },
       },
       confirmPassword: {
         label: FSI18n.string(componentTranslationKeys.form.confirmPassword.label),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        secureTextEntry: true
+        secureTextEntry: true,
       },
-      ...props.fieldsOptions
+      ...props.fieldsOptions,
     };
 
     // configure custom styles
@@ -145,25 +145,26 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
           borderRadius: 15,
           fontSize: 12,
           // color for text inside box - default is black
-          color: '#000'
+          color: '#000',
         },
         error: {
           borderRadius: 15,
           fontSize: 12,
           // color for text inside box - default is red
-          color: '#7f0000'
-        }
+          color: '#7f0000',
+        },
       },
       errorBlock: {
-        fontSize: 11
+        fontSize: 11,
       },
-      ...props.fieldsStyleConfig
+      ...props.fieldsStyleConfig,
     };
-
   } // end constructor
 
   componentDidMount(): void {
-    console.warn('RegistrationForm is deprecated and will be removed in the next version of Flagship.');
+    console.warn(
+      'RegistrationForm is deprecated and will be removed in the next version of Flagship.'
+    );
   }
 
   handleSubmit = () => {
@@ -171,7 +172,7 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
-  }
+  };
 
   focusField = (fieldName: string) => {
     const field = this.form.getComponent(fieldName);
@@ -180,19 +181,19 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     if (ref.focus) {
       ref.focus();
     }
-  }
+  };
 
   handleChange = (value: any) => {
     this.setState({
-      value
+      value,
     });
-  }
+  };
 
   render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={ref => (this.form = ref)}
+          ref={(ref) => (this.form = ref)}
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}

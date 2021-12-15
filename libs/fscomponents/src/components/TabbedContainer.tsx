@@ -7,13 +7,7 @@
 
 import React, { useState } from 'react';
 
-import {
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 export interface Tab {
   tab: JSX.Element;
@@ -42,17 +36,15 @@ export interface TabbedContainerProps
 
 const styles = StyleSheet.create({
   tabContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   tabTouchableOpacity: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
-export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = props => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(
-    props.initialIndex || 0
-  );
+export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = (props) => {
+  const [selectedIndex, setSelectedIndex] = useState<number>(props.initialIndex || 0);
 
   const selectTab = (index: number) => () => {
     setSelectedIndex(index);

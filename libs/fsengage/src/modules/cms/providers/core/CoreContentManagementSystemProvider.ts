@@ -2,11 +2,11 @@ import FSNetwork from '@brandingbrand/fsnetwork';
 
 import {
   ContentManagementSystemEnvironment,
-  ContentManagementSystemProviderConfiguration
+  ContentManagementSystemProviderConfiguration,
 } from '../types/ContentManagementSystemProviderConfiguration';
 
 import ContentManagementSystemProvider, {
-  ContentManagementSystemContext
+  ContentManagementSystemContext,
 } from '../ContentManagementSystemProvider';
 
 import {
@@ -17,7 +17,7 @@ import {
   targetInstancesByRegion,
   targetInstancesByState,
   targetInstancesByTimeOfDay,
-  targetInstancesByTimeZone
+  targetInstancesByTimeZone,
 } from './targets';
 
 import { Location } from '../../requesters/ContentManagementSystemLocator';
@@ -57,14 +57,15 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
   }
 
   async contentForSlot(
-    group: string, slot: string, identifier?: string, context?: ContentManagementSystemContext
+    group: string,
+    slot: string,
+    identifier?: string,
+    context?: ContentManagementSystemContext
   ): Promise<Dictionary> {
     return this.pullContent()
-      .then(content => {
-        const slotContent = content &&
-          content.data &&
-          content.data[group] &&
-          content.data[group][slot];
+      .then((content) => {
+        const slotContent =
+          content && content.data && content.data[group] && content.data[group][slot];
 
         if (slotContent) {
           // Copy slotContent to a new object so we don't mutate
@@ -79,13 +80,14 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
           const currentInstances = this.currentInstances(mutableContent);
 
-          return this.targetInstances(currentInstances, content.data._Targets, context)
-            .then(instances => {
+          return this.targetInstances(currentInstances, content.data._Targets, context).then(
+            (instances) => {
               // Overrides the original instances with the valid ones.
               mutableContent.instances = instances;
 
               return mutableContent;
-            });
+            }
+          );
         }
 
         // There is no content for this slot
@@ -97,10 +99,8 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
   async identifiersForSlot(group: string, slot: string): Promise<string[] | null> {
     return this.pullContent()
       .then((content: any): string[] | null => {
-        const slotContent = content &&
-          content.data &&
-          content.data[group] &&
-          content.data[group][slot];
+        const slotContent =
+          content && content.data && content.data[group] && content.data[group][slot];
 
         if (slotContent && slotContent.instantiable) {
           return Object.keys(slotContent.instances);
@@ -118,17 +118,15 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
   async contentForGroup(group: string): Promise<any | null> {
     return this.pullContent()
       .then((content: any): any | null => {
-        const groupContent = content &&
-          content.data &&
-          content.data[group];
+        const groupContent = content && content.data && content.data[group];
 
         return groupContent;
-      }).catch(logAndRethrowError);
+      })
+      .catch(logAndRethrowError);
   }
 
-
   private currentInstances(content: any): any[] {
-    let instances = content && content.instances || [];
+    let instances = (content && content.instances) || [];
 
     // filter by campaign start/end date first
     instances = targetInstancesByDate(instances);
@@ -158,7 +156,9 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
   }
 
   private async targetInstances(
-    instancesToTarget: any[], targets: any, context?: ContentManagementSystemContext
+    instancesToTarget: any[],
+    targets: any,
+    context?: ContentManagementSystemContext
   ): Promise<any[]> {
     if (!targets || !targets.length) {
       return Promise.resolve(instancesToTarget);
@@ -172,9 +172,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
       } catch (error) {
         if (__DEV__) {
           console.log(
-            `%CoreContentManagementSystemProvider\n%c Function: ${
-            this.targetInstances.name
-            }\n Error: `,
+            `%CoreContentManagementSystemProvider\n%c Function: ${this.targetInstances.name}\n Error: `,
             'color: blue',
             'color: grey',
             error
@@ -187,14 +185,16 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
     // Checks if instances meet campaigns and individual targets.
     instancesToTarget = instancesToTarget
-      .filter(instance => {
-        return targetInstancesByCity(instance, targets, location) &&
+      .filter((instance) => {
+        return (
+          targetInstancesByCity(instance, targets, location) &&
           targetInstancesByCountry(instance, targets, location) &&
           targetInstancesByPostalCode(instance, targets, location) &&
           targetInstancesByRegion(instance, targets, location) &&
           targetInstancesByState(instance, targets, location) &&
           targetInstancesByTimeOfDay(instance, targets) &&
-          targetInstancesByTimeZone(instance, targets);
+          targetInstancesByTimeZone(instance, targets)
+        );
       })
       .filter(Boolean);
 
@@ -206,7 +206,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
     const path = `/prod/property${propertyId}/cms/${this.environment}.json`;
 
     if (!this.cache[path]) {
-      this.cache[path] = this.network.get(path).catch(error => {
+      this.cache[path] = this.network.get(path).catch((error) => {
         delete this.cache[path];
 
         throw error;

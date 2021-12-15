@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text
-} from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { ProductItemProps } from '../ProductItem';
 import { types } from '../../../styles/variables';
@@ -11,8 +8,8 @@ export type ProductItemBrandProps = Pick<ProductItemProps, 'brand' | 'brandStyle
 
 const styles = StyleSheet.create({
   brand: {
-    marginBottom: 4
-  }
+    marginBottom: 4,
+  },
 });
 
 export class ProductItemBrand extends Component<ProductItemBrandProps> {

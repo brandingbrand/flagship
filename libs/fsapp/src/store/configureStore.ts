@@ -6,7 +6,7 @@ import {
   Middleware,
   PreloadedState,
   ReducersMapObject,
-  Store
+  Store,
 } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';

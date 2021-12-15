@@ -7,7 +7,7 @@ import {
   Text,
   TextStyle,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { EngagementContext } from '../lib/contexts';
 
@@ -41,26 +41,32 @@ export interface RenderItemState {
 
 class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }, RenderItemState> {
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
   };
   constructor(props: RenderItemProps & { context: any }) {
     super(props);
     this.state = {
       viewHeight: 0,
-      viewHeightChanged: false
+      viewHeightChanged: false,
     };
   }
   get image(): any {
-    const { data: { source }, options } = this.props;
+    const {
+      data: { source },
+      options,
+    } = this.props;
     const imagePadding = {
-      margin: options.imagePadding || 0
+      margin: options.imagePadding || 0,
     };
     return (
       <View style={imagePadding}>
-        <img style={{
-          width: '100%',
-          height: 'auto'
-        }} src={source.uri} />
+        <img
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+          src={source.uri}
+        />
       </View>
     );
   }
@@ -68,46 +74,44 @@ class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }
   _onLayout = (event: LayoutChangeEvent) => {
     var { height } = event.nativeEvent.layout;
 
-    if (!this.state.viewHeightChanged &&
+    if (
+      !this.state.viewHeightChanged &&
       this.state.viewHeight !== height &&
-      Math.abs(this.state.viewHeight - height) > 1) {
+      Math.abs(this.state.viewHeight - height) > 1
+    ) {
       this.setState({
         viewHeight: height,
-        viewHeightChanged: true
-      })
+        viewHeightChanged: true,
+      });
     }
-  }
+  };
   onPress = () => {
-    const { data: { link } } = this.props;
+    const {
+      data: { link },
+    } = this.props;
     if (!link) {
       return;
     }
     const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
-      value: link
+      value: link,
     });
-  }
+  };
   // eslint-disable-next-line complexity
   render() {
     const {
-      data: {
-        showText,
-        text,
-        header,
-        additional,
-        eyebrow
-      },
+      data: { showText, text, header, additional, eyebrow },
       horizPadding = 0,
       options,
       eyebrowStyle,
       headerStyle,
       textStyle,
-      additionalStyle
+      additionalStyle,
     } = this.props;
 
     let itemStyle: any = {
-      paddingRight: horizPadding
+      paddingRight: horizPadding,
     };
 
     const textPadding = options.textPadding || {};
@@ -118,30 +122,31 @@ class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }
     }
 
     return (
-      <TouchableOpacity
-        activeOpacity={.8}
-        onPress={this.onPress}
-        style={itemStyle}
+      <TouchableOpacity activeOpacity={0.8} onPress={this.onPress} style={itemStyle}>
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>{this.image}</View>
 
-      >
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
-          {this.image}
-        </View>
-
-        {showText &&
+        {showText && (
           <View style={textbg}>
             <View style={[textPadding, { justifyContent: 'center' }]}>
-              {!!(eyebrow && eyebrow.value) &&
-                <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>{eyebrow.value}</Text>}
-              {!!(header && header.value) &&
-                <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>}
-              {!!(text && text.value) &&
-                <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>}
-              {!!(additional && additional.value) &&
-                <Text style={[additionalStyle, { textAlign: options.textAlign }]}>{additional.value}</Text>}
+              {!!(eyebrow && eyebrow.value) && (
+                <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>
+                  {eyebrow.value}
+                </Text>
+              )}
+              {!!(header && header.value) && (
+                <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>
+              )}
+              {!!(text && text.value) && (
+                <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>
+              )}
+              {!!(additional && additional.value) && (
+                <Text style={[additionalStyle, { textAlign: options.textAlign }]}>
+                  {additional.value}
+                </Text>
+              )}
             </View>
-          </View>}
-
+          </View>
+        )}
       </TouchableOpacity>
     );
   }

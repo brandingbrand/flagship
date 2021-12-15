@@ -22,8 +22,8 @@ test(`update bundle id`, () => {
   ios.bundleId({
     name: appName,
     bundleIds: {
-      ios: `test.bundle.id`
-    }
+      ios: `test.bundle.id`,
+    },
   } as any);
 
   const infoPlist = fs
@@ -36,7 +36,7 @@ test(`update bundle id`, () => {
 test(`enable capabilities`, () => {
   ios.capabilities({
     name: appName,
-    enabledCapabilitiesIOS: [`Push`, `HomeKit`]
+    enabledCapabilitiesIOS: [`Push`, `HomeKit`],
   } as any);
 
   const pbxprojFile = fs
@@ -50,7 +50,7 @@ test(`enable capabilities`, () => {
 test(`enable entitlements`, () => {
   ios.entitlements({
     name: appName,
-    entitlementsFileIOS: `${appName}.entitlements`
+    entitlementsFileIOS: `${appName}.entitlements`,
   } as any);
 
   const entitlementsFileSource = fs
@@ -72,7 +72,7 @@ test(`enable entitlements`, () => {
 test(`update display name`, () => {
   ios.displayName({
     name: appName,
-    displayName: `Mock App`
+    displayName: `Mock App`,
   } as any);
 
   const infoPlist = fs
@@ -86,12 +86,12 @@ test(`update icon`, () => {
   ios.icon({
     name: appName,
     appIconDir: {
-      ios: nodePath.join(tempRootDir, 'assets', 'appIcons', 'ios')
-    }
+      ios: nodePath.join(tempRootDir, 'assets', 'appIcons', 'ios'),
+    },
   } as any);
 
   const iconFilesSource = fs
-    .readdirSync(nodePath.join(tempRootDir, 'assets', 'appIcons' , 'ios'))
+    .readdirSync(nodePath.join(tempRootDir, 'assets', 'appIcons', 'ios'))
     .toString();
   const iconFiles = fs
     .readdirSync(nodePath.join(tempRootDir, `ios`, appName, `Images.xcassets/AppIcon.appiconset`))
@@ -107,9 +107,14 @@ test(`update launch screen`, () => {
       ios: {
         images: nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `images`),
         storyboard: nodePath.join(
-          tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`)
-      }
-    }
+          tempRootDir,
+          `assets`,
+          `launchScreen`,
+          `ios`,
+          `launchScreen.storyboard`
+        ),
+      },
+    },
   } as any);
 
   const launchScreenImagesSource = fs
@@ -121,7 +126,8 @@ test(`update launch screen`, () => {
 
   const xibSource = fs
     .readFileSync(
-      nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`))
+      nodePath.join(tempRootDir, `assets`, `launchScreen`, `ios`, `launchScreen.storyboard`)
+    )
     .toString();
 
   const xib = fs
@@ -135,7 +141,7 @@ test(`update launch screen`, () => {
 test(`add exception domains by string`, () => {
   ios.exceptionDomains({
     name: appName,
-    exceptionDomains: [`some-domain.com`]
+    exceptionDomains: [`some-domain.com`],
   } as any);
 
   const infoPlist = fs
@@ -150,7 +156,7 @@ test(`add exception domains by string`, () => {
 test(`add exception domains by object`, () => {
   ios.exceptionDomains({
     name: appName,
-    exceptionDomains: [{ domain: `some-domain.com`, value: `SOMEVALUE` }]
+    exceptionDomains: [{ domain: `some-domain.com`, value: `SOMEVALUE` }],
   } as any);
 
   const infoPlist = fs
@@ -162,7 +168,7 @@ test(`add exception domains by object`, () => {
 
 test(`add exception domains with disableDevFeature turned off`, () => {
   ios.exceptionDomains({
-    name: appName
+    name: appName,
   } as any);
 
   const infoPlist = fs
@@ -177,7 +183,7 @@ test(`add exception domains with disableDevFeature turned off`, () => {
 test(`add exception domains with disableDevFeature turned on`, () => {
   ios.exceptionDomains({
     name: appName,
-    disableDevFeature: true
+    disableDevFeature: true,
   } as any);
 
   const infoPlist = fs
@@ -190,7 +196,7 @@ test(`add exception domains with disableDevFeature turned on`, () => {
 test(`add usage description`, () => {
   ios.usageDescription({
     name: appName,
-    usageDescriptionIOS: [{ key: `Camera`, string: `Camera is needed for ${appName}` }]
+    usageDescriptionIOS: [{ key: `Camera`, string: `Camera is needed for ${appName}` }],
   } as any);
 
   const infoPlist = fs
@@ -202,7 +208,7 @@ test(`add usage description`, () => {
 
 test(`set url scheme without specifying urlScheme`, () => {
   ios.urlScheme({
-    name: appName
+    name: appName,
   } as any);
 
   const infoPlist = fs
@@ -210,15 +216,17 @@ test(`set url scheme without specifying urlScheme`, () => {
     .toString();
 
   expect(infoPlist).toMatch(
-    new RegExp(`<key>CFBundleURLSchemes<\\/key>\\s+<array>\\s+<string>` +
-      `${appName.toLowerCase()}<\\/string>\\s+</array>`)
+    new RegExp(
+      `<key>CFBundleURLSchemes<\\/key>\\s+<array>\\s+<string>` +
+        `${appName.toLowerCase()}<\\/string>\\s+</array>`
+    )
   );
 });
 
 test(`set url scheme by specifying urlScheme`, () => {
   ios.urlScheme({
     name: appName,
-    urlScheme: 'mockapp-app-url'
+    urlScheme: 'mockapp-app-url',
   } as any);
 
   const infoPlist = fs
@@ -236,7 +244,7 @@ test(`update version number`, () => {
   const version = '1.3.2';
   ios.version(
     {
-      name: appName
+      name: appName,
     } as any,
     version
   );
@@ -255,8 +263,8 @@ test('provide custom bundle version number', () => {
     {
       name: appName,
       ios: {
-        buildVersion: '1.3.3'
-      }
+        buildVersion: '1.3.3',
+      },
     } as any,
     version
   );
@@ -275,8 +283,8 @@ test('provide custom short version number', () => {
     {
       name: appName,
       ios: {
-        shortVersion: '1.3.3'
-      }
+        shortVersion: '1.3.3',
+      },
     } as any,
     version
   );
@@ -292,7 +300,7 @@ test('provide custom short version number', () => {
 test(`set env switcher initial env`, () => {
   ios.setEnvSwitcherInitialEnv(
     {
-      name: appName
+      name: appName,
     } as any,
     'stage2stage'
   );
@@ -310,8 +318,8 @@ test(`copy sentry properties`, () => {
   ios.sentryProperties({
     name: appName,
     sentry: {
-      propertiesPath: nodePath.join(tempRootDir, `assets`, `sentry.properties`)
-    }
+      propertiesPath: nodePath.join(tempRootDir, `assets`, `sentry.properties`),
+    },
   } as any);
 
   const sentryPropertiesPathSource = fs
@@ -326,16 +334,14 @@ test(`copy sentry properties`, () => {
 
 test('targeted device should default to ios only', () => {
   const realPbxprojFile: string = fs
-    .readFileSync(nodePath.join(
-      __dirname, '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'
-    ))
+    .readFileSync(nodePath.join(__dirname, '..', 'ios', 'FLAGSHIP.xcodeproj', 'project.pbxproj'))
     .toString();
 
   const targetMatches = realPbxprojFile.match(/TARGETED_DEVICE_FAMILY = "[1-9,]+"/g);
 
   expect((targetMatches || []).length).toEqual(2);
 
-  (targetMatches || []).forEach(match => {
+  (targetMatches || []).forEach((match) => {
     expect(match).toEqual('TARGETED_DEVICE_FAMILY = "1"');
   });
 });

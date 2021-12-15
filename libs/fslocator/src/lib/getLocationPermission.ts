@@ -1,12 +1,14 @@
 import { Alert, Platform } from 'react-native';
-import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 // @ts-ignore TODO: Add typing support for react-native-open-settings
 import OpenSettings from 'react-native-open-settings';
 
 export default async function getLocationPermission(): Promise<boolean> {
-  const permissionToCheck = Platform.OS === 'ios' ?
-    PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+  const permissionToCheck =
+    Platform.OS === 'ios'
+      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
   const permStatus = await check(permissionToCheck);
 
@@ -20,10 +22,7 @@ export default async function getLocationPermission(): Promise<boolean> {
     Alert.alert(
       'Turn on Location Services To Allow Us to Determine Your Location',
       '',
-      [
-        { text: 'Settings', onPress: () => OpenSettings.openSettings() },
-        { text: 'Cancel' }
-      ],
+      [{ text: 'Settings', onPress: () => OpenSettings.openSettings() }, { text: 'Cancel' }],
       { cancelable: false }
     );
     return false;

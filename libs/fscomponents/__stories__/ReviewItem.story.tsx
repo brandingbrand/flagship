@@ -1,16 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  number,
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { number, object, text } from '@storybook/addon-knobs';
 import { ReviewItem } from '../src/components/ReviewItem';
 
-const review: import ('@brandingbrand/fscommerce').ReviewTypes.Review = {
+const review: import('@brandingbrand/fscommerce').ReviewTypes.Review = {
   user: {
-    name: 'SenseSeeker'
+    name: 'SenseSeeker',
   },
   rating: 2.4,
   created: 'October 17, 2017',
@@ -25,20 +21,19 @@ const review: import ('@brandingbrand/fscommerce').ReviewTypes.Review = {
   feedback: {
     total: 214,
     positive: 214,
-    negative: 0
-  }
+    negative: 0,
+  },
 };
 
-storiesOf('ReviewItem', module)
-  .add('basic usage', () => (
-    <ReviewItem
-      rating={number('value', review.rating)}
-      user={object('user', review.user)}
-      title={text('title', review.title)}
-      text={text('text', review.text || '')}
-      created={text('created', review.created)}
-      feedback={object('feedback', review.feedback)}
-      onHelpful={action('ReviewItem onHelpful')}
-      onNotHelpful={action('ReviewItem onNotHelpful')}
-    />
-  ));
+storiesOf('ReviewItem', module).add('basic usage', () => (
+  <ReviewItem
+    rating={number('value', review.rating)}
+    user={object('user', review.user)}
+    title={text('title', review.title)}
+    text={text('text', review.text || '')}
+    created={text('created', review.created)}
+    feedback={object('feedback', review.feedback)}
+    onHelpful={action('ReviewItem onHelpful')}
+    onNotHelpful={action('ReviewItem onNotHelpful')}
+  />
+));

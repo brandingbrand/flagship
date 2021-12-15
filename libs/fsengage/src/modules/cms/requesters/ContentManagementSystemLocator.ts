@@ -3,8 +3,8 @@ import { GeoLocation } from '@brandingbrand/fsfoundation';
 
 import {
   isGeolocationAllowed,
-  requestGeolocationPermission
- } from './contentManagementSystemLocatorPermission';
+  requestGeolocationPermission,
+} from './contentManagementSystemLocatorPermission';
 
 export interface Location extends GeoLocation {
   timezone?: string;
@@ -28,7 +28,8 @@ export default class ContentManagementSystemLocator {
   private network: FSNetwork;
 
   constructor(
-    shouldPromptForGelolocationPermission: boolean = false, shouldFallbackToGeoIP: boolean = false
+    shouldPromptForGelolocationPermission: boolean = false,
+    shouldFallbackToGeoIP: boolean = false
   ) {
     this.shouldPromptForGelolocationPermission = shouldPromptForGelolocationPermission;
     this.shouldFallbackToGeoIP = shouldFallbackToGeoIP;
@@ -44,7 +45,7 @@ export default class ContentManagementSystemLocator {
     }
 
     // Requests permission and retrieves geolocation details if we are allowed.
-    if (this.shouldPromptForGelolocationPermission && await requestGeolocationPermission()) {
+    if (this.shouldPromptForGelolocationPermission && (await requestGeolocationPermission())) {
       return this.getGeolocation();
     }
 
@@ -59,42 +60,48 @@ export default class ContentManagementSystemLocator {
   // Private functions
 
   private async getGeoIPlocation(): Promise<Location> {
-    return this.network
-      .get(this.kStorcIPEndpoint)
-      // eslint-disable-next-line complexity
-      .then(response => {
-        const data = response.data;
+    return (
+      this.network
+        .get(this.kStorcIPEndpoint)
+        // eslint-disable-next-line complexity
+        .then((response) => {
+          const data = response.data;
 
-        return {
-          latitude: data && data.location && data.location.latitude,
-          longitude: data && data.location && data.location.longitude,
-          timezone: data && data.location && data.location.time_zone,
-          postalCode: data && data.postal && data.postal.code,
-          city: data && data.city && data.city.names && data.city.names.en,
+          return {
+            latitude: data && data.location && data.location.latitude,
+            longitude: data && data.location && data.location.longitude,
+            timezone: data && data.location && data.location.time_zone,
+            postalCode: data && data.postal && data.postal.code,
+            city: data && data.city && data.city.names && data.city.names.en,
 
-          // TODO | BD: Check for other subdivisions.
-          stateCode: data && data.subdivisions && data.subdivisions[0] &&
-                     data.subdivisions[0].iso_code,
+            // TODO | BD: Check for other subdivisions.
+            stateCode:
+              data && data.subdivisions && data.subdivisions[0] && data.subdivisions[0].iso_code,
 
-          countryCode: data && data.country && data.country.iso_code,
-          continent: data && data.continent && data.continent.names && data.continent.names.en
-        };
-      });
+            countryCode: data && data.country && data.country.iso_code,
+            continent: data && data.continent && data.continent.names && data.continent.names.en,
+          };
+        })
+    );
   }
 
   private async getGeolocation(): Promise<Location> {
     return new Promise<Location>((resolve, reject) => {
-      return navigator.geolocation.getCurrentPosition(position => {
-        // TODO | BD: Retrieve more location details
-        return resolve({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        });
-      }, reject, {
-        enableHighAccuracy: true,
-        timeout: this.kLocationTimeout,
-        maximumAge: this.kMaximumAge
-      });
+      return navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // TODO | BD: Retrieve more location details
+          return resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        reject,
+        {
+          enableHighAccuracy: true,
+          timeout: this.kLocationTimeout,
+          maximumAge: this.kMaximumAge,
+        }
+      );
     });
   }
 }

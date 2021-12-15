@@ -3,8 +3,10 @@ import StatefulTextbox from './StatefulTextbox';
 import { Dictionary } from '@brandingbrand/fsfoundation';
 import { FormLabelPosition } from './fieldTemplates';
 
-export function labelAboveTextbox(locals: Dictionary, componentFactory?:
-  (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element): JSX.Element {
+export function labelAboveTextbox(
+  locals: Dictionary,
+  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+): JSX.Element {
   return (
     <StatefulTextbox
       locals={locals}
@@ -14,8 +16,10 @@ export function labelAboveTextbox(locals: Dictionary, componentFactory?:
   );
 }
 
-export function labelFloatingTextbox(locals: Dictionary, componentFactory?:
-  (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element): JSX.Element {
+export function labelFloatingTextbox(
+  locals: Dictionary,
+  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+): JSX.Element {
   return (
     <StatefulTextbox
       locals={locals}
@@ -25,9 +29,10 @@ export function labelFloatingTextbox(locals: Dictionary, componentFactory?:
   );
 }
 
-
-export function labelHiddenTextbox(locals: Dictionary, componentFactory?:
-  (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element): JSX.Element {
+export function labelHiddenTextbox(
+  locals: Dictionary,
+  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+): JSX.Element {
   return (
     <StatefulTextbox
       locals={locals}
@@ -37,9 +42,10 @@ export function labelHiddenTextbox(locals: Dictionary, componentFactory?:
   );
 }
 
-
-export function labelInlineTextbox(locals: Dictionary, componentFactory?:
-  (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element): JSX.Element {
+export function labelInlineTextbox(
+  locals: Dictionary,
+  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+): JSX.Element {
   return (
     <StatefulTextbox
       locals={locals}
@@ -48,4 +54,3 @@ export function labelInlineTextbox(locals: Dictionary, componentFactory?:
     />
   );
 }
-

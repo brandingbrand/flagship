@@ -1,10 +1,7 @@
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { Config } from '../../../types';
-import {
-  logError,
-  logInfo
-} from '../../../helpers';
+import { logError, logInfo } from '../../../helpers';
 
 const kRepository = `maven { url 'https://zendesk.artifactoryonline.com/zendesk/repo' }`;
 

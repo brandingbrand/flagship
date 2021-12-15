@@ -2,31 +2,31 @@
 
 FSEngage is Flagship's Engagement package. It Analytics library supports integrations for Google
 Analytics, Leanplum, and Adobe Cloud Marketing. Its CMS library supports our proprietary CMS and soon
- will support Demandware.
+will support Demandware.
 
-* [Analytics](#analytics)
-  * [Analytics Providers](#analytics-providers)
-  * [Analytics Providers Configuration](#analytics-configurations)
-    * [Analytics Provider Configuration](#AnalyticsProviderConfiguration)
-    * [Leanplum](#LeanplumProviderConfiguration)
-    * [Adobe Marketing Congfiguration](#AdobeMarketingCloudWebProviderConfiguration)
-    * [Google Analytics](#GoogleAnalyticsProviderConfiguration)
-  * [Analytics Constructors](#analytics-constructors)
-  * [Analytics Tracking](#tracking-functions)
-    * [Ecommerce Function Signatures](#ecommerce)
-    * [Enhanced Ecommerce Function Signatures](#enhanced-ecommerce)
-    * [App Lifecycle Function Signatures](#app-lifecycle)
-    * [Full List of Property Parameters for Tracking](#parameters)
-    * [Sending Custom Fields to Google Analytics](#sending-custom-fields-to-google-analytics)
-* [CMS](#cms)
-  * [CMS Providers](#cms-providers)
-    * [Core](#core)
-    * [Demandware](#demandware)
-  * [CMS API](#cms-api)
-    * [CMS Configurations](#cms-configurations)
-    * [CMS Constructors](#cms-constructors)
-    * [Functionality](#cms-constructors)
-* [Tests](#tests)
+- [Analytics](#analytics)
+  - [Analytics Providers](#analytics-providers)
+  - [Analytics Providers Configuration](#analytics-configurations)
+    - [Analytics Provider Configuration](#AnalyticsProviderConfiguration)
+    - [Leanplum](#LeanplumProviderConfiguration)
+    - [Adobe Marketing Congfiguration](#AdobeMarketingCloudWebProviderConfiguration)
+    - [Google Analytics](#GoogleAnalyticsProviderConfiguration)
+  - [Analytics Constructors](#analytics-constructors)
+  - [Analytics Tracking](#tracking-functions)
+    - [Ecommerce Function Signatures](#ecommerce)
+    - [Enhanced Ecommerce Function Signatures](#enhanced-ecommerce)
+    - [App Lifecycle Function Signatures](#app-lifecycle)
+    - [Full List of Property Parameters for Tracking](#parameters)
+    - [Sending Custom Fields to Google Analytics](#sending-custom-fields-to-google-analytics)
+- [CMS](#cms)
+  - [CMS Providers](#cms-providers)
+    - [Core](#core)
+    - [Demandware](#demandware)
+  - [CMS API](#cms-api)
+    - [CMS Configurations](#cms-configurations)
+    - [CMS Constructors](#cms-constructors)
+    - [Functionality](#cms-constructors)
+- [Tests](#tests)
 
 ## Analytics
 
@@ -47,7 +47,7 @@ Leanplum is only supported in native environments.
 Adobe is only supported in native environments at the moment. The plan is to also provide support
 for web environment down the road.
 
-__Warning__: Adobe native support has not been fully tested yet due to limited access to their
+**Warning**: Adobe native support has not been fully tested yet due to limited access to their
 platform at the time of development.
 
 #### # iOS
@@ -74,43 +74,43 @@ to the following configuration signatures.
 
 #### # AnalyticsProviderConfiguration
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | userAgent | string | **yes** |
-  | osType | string | **yes** |
-  | osVersion | string | **yes** |
-  | appName | string | **yes** |
-  | appId | string | **yes** |
-  | appVersion | string | **yes** |
-  | appInstallerId | string | no |
+| Property       |  Type  | Required |
+| -------------- | :----: | :------: |
+| userAgent      | string | **yes**  |
+| osType         | string | **yes**  |
+| osVersion      | string | **yes**  |
+| appName        | string | **yes**  |
+| appId          | string | **yes**  |
+| appVersion     | string | **yes**  |
+| appInstallerId | string |    no    |
 
 #### # AdobeMarketingCloudWebProviderConfiguration
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | clientId | string | **yes** |
-  | clientSecret | string | **yes** |
-  | reportSuiteId | string | **yes** |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| clientId      | string | **yes**  |
+| clientSecret  | string | **yes**  |
+| reportSuiteId | string | **yes**  |
 
-  __Note__: This configuration just applies for web environments. For native environment
-  configuration please see [here](https://github.com/brandingbrand/flagship/tree/master/packages/fsengage#-ios).
+**Note**: This configuration just applies for web environments. For native environment
+configuration please see [here](https://github.com/brandingbrand/flagship/tree/master/packages/fsengage#-ios).
 
 #### # GoogleAnalyticsProviderConfiguration
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | trackerId | string | **yes** |
-  | clientId | string | **yes** |
-  | trackerName | string | no |
-  | cookieDomain | string | no |
+| Property     |  Type  | Required |
+| ------------ | :----: | :------: |
+| trackerId    | string | **yes**  |
+| clientId     | string | **yes**  |
+| trackerName  | string |    no    |
+| cookieDomain | string |    no    |
 
 #### # LeanplumProviderConfiguration
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | appId | string | **yes** |
-  | key | string | **yes** |
-  | monetizationEventName | string | no |
+| Property              |  Type  | Required |
+| --------------------- | :----: | :------: |
+| appId                 | string | **yes**  |
+| key                   | string | **yes**  |
+| monetizationEventName | string |    no    |
 
 ### Analytics Constructors
 
@@ -119,30 +119,26 @@ order to output your own Analytics instance. Below you will find examples. The f
 to Google Analytics alone, the second has chosen to use all three providers.
 
 ```javascript
-
 const AnalyticsProviderConfiguration = {
   userAgent: DeviceInfo.getUserAgent(),
   osType: Platform.OS,
   osVersion: (Platform.Version && Platform.Version.toString()) || '',
   appName: DeviceInfo.getApplicationName(),
   appId: DeviceInfo.getBundleId(),
-  appVersion: version
+  appVersion: version,
 };
 
 const googleAnalyticsConfiguration = {
   trackerId: projectEnv.googleAnalytics[Platform.OS],
-  clientId: DeviceInfo.getUniqueID()
+  clientId: DeviceInfo.getUniqueID(),
 };
 
 const google = new GoogleAnalyticsProvider(
   AnalyticsProviderConfiguration,
   GoogleAnalyticsProviderConfiguration
-)
+);
 
-const analytics = new Analytics([
-  google
-])
-
+const analytics = new Analytics([google]);
 ```
 
 ```javascript
@@ -170,24 +166,24 @@ const analytics = new Analytics([
 ### Tracking Functions
 
 Once you have successfully configured your Analytics provider, you can import it into your components
- and begin tracking users' interactions with your app or site. For example, on a Product Detail Page,
- you might want to add a click tracker to your 'Add To Cart' button.  It's as simple as adding the
- following code to your success handler (assuming you only want to tracks successful adds):
+and begin tracking users' interactions with your app or site. For example, on a Product Detail Page,
+you might want to add a click tracker to your 'Add To Cart' button. It's as simple as adding the
+following code to your success handler (assuming you only want to tracks successful adds):
 
- ```javascript
-       Analytics.click.generic('Add to Bag', {
-        identifier: variantId,
-        name: 'PDP'
-      });
+```javascript
+Analytics.click.generic('Add to Bag', {
+  identifier: variantId,
+  name: 'PDP',
+});
 ```
 
 Or maybe you want to track a screenview of a product page. In that case you would want to add
 something like this into your render function:
 
 ```javascript
-     Analytics.screenview('ProductDetail', {
-        url: 'www.example.com/products/123'
-      });
+Analytics.screenview('ProductDetail', {
+  url: 'www.example.com/products/123',
+});
 ```
 
 The full list of function signatures for ecommerce, enhanced ecommerce, and lifecycle events can be
@@ -341,142 +337,142 @@ analytics.lifecycle.suspend(): void;
 
 #### # ClickGeneric
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | name | string | **yes*** |
-  | index | number | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required  |
+| ------------- | :----: | :-------: |
+| identifier    | string | **yes\*** |
+| name          | string | **yes\*** |
+| index         | number |    no     |
+| gaQueryParams | object |    no     |
 
-  \* Either **identifier** or **name** must be set.
+\* Either **identifier** or **name** must be set.
 
 #### # ContactCall
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | number | string | **yes** |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| number        | string | **yes**  |
+| gaQueryParams | object |    no    |
 
 #### # ContactEmail
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | to | string | **yes** |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| to            | string | **yes**  |
+| gaQueryParams | object |    no    |
 
 #### # ImpressionGeneric
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | name | string | **yes*** |
-  | index | number | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required  |
+| ------------- | :----: | :-------: |
+| identifier    | string | **yes\*** |
+| name          | string | **yes\*** |
+| index         | number |    no     |
+| gaQueryParams | object |    no     |
 
-  \* Either **identifier** or **name** must be set.
+\* Either **identifier** or **name** must be set.
 
 #### # ImpressionProduct
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | brand | string | no |
-  | category | string | no |
-  | list | string | no |
-  | variant | string | no |
-  | price | number | no |
-  | index | number | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| identifier    | string | **yes**  |
+| name          | string | **yes**  |
+| brand         | string |    no    |
+| category      | string |    no    |
+| list          | string |    no    |
+| variant       | string |    no    |
+| price         | number |    no    |
+| index         | number |    no    |
+| gaQueryParams | object |    no    |
 
 #### # LocationDirections
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes*** |
-  | address | string | **yes*** |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required  |
+| ------------- | :----: | :-------: |
+| identifier    | string | **yes\*** |
+| address       | string | **yes\*** |
+| gaQueryParams | object |    no     |
 
-  \* Either **identifier** or **address** must be set.
+\* Either **identifier** or **address** must be set.
 
 #### # Product
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | brand | string | no |
-  | category | string | no |
-  | variant | string | no |
-  | coupons | string[] | no |
-  | price | string | no |
-  | quantity | number | no |
-  | index | number | no |
-  | gaQueryParams | object | no |
+| Property      |   Type   | Required |
+| ------------- | :------: | :------: |
+| identifier    |  string  | **yes**  |
+| name          |  string  | **yes**  |
+| brand         |  string  |    no    |
+| category      |  string  |    no    |
+| variant       |  string  |    no    |
+| coupons       | string[] |    no    |
+| price         |  string  |    no    |
+| quantity      |  number  |    no    |
+| index         |  number  |    no    |
+| gaQueryParams |  object  |    no    |
 
 #### # Promotion
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | name | string | **yes** |
-  | creative | string | no |
-  | slot | string | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| identifier    | string | **yes**  |
+| name          | string | **yes**  |
+| creative      | string |    no    |
+| slot          | string |    no    |
+| gaQueryParams | object |    no    |
 
 #### # RefundProduct
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | quantity | number | **yes** |
-  | price | string | no |
-  | coupons | string[] | no |
-  | gaQueryParams | object | no |
+| Property      |   Type   | Required |
+| ------------- | :------: | :------: |
+| identifier    |  string  | **yes**  |
+| quantity      |  number  | **yes**  |
+| price         |  string  |    no    |
+| coupons       | string[] |    no    |
+| gaQueryParams |  object  |    no    |
 
 #### # SearchGeneric
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | term | string | **yes** |
-  | count | number | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| term          | string | **yes**  |
+| count         | number |    no    |
+| gaQueryParams | object |    no    |
 
 #### # Screenview
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | url | string | **yes** |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| url           | string | **yes**  |
+| gaQueryParams | object |    no    |
 
 ### Actions
 
 #### # ProductAction
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | list | string | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| list          | string |    no    |
+| gaQueryParams | object |    no    |
 
 #### # CheckoutAction
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | step | number | no |
-  | option | string | no |
-  | gaQueryParams | object | no |
+| Property      |  Type  | Required |
+| ------------- | :----: | :------: |
+| step          | number |    no    |
+| option        | string |    no    |
+| gaQueryParams | object |    no    |
 
 #### # TransactionAction
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | identifier | string | **yes** |
-  | affiliation | string | no |
-  | revenue | string | no |
-  | tax | string | no |
-  | shippingCost | string | no |
-  | coupons | string[] | no |
-  | gaQueryParams | object | no |
+| Property      |   Type   | Required |
+| ------------- | :------: | :------: |
+| identifier    |  string  | **yes**  |
+| affiliation   |  string  |    no    |
+| revenue       |  string  |    no    |
+| tax           |  string  |    no    |
+| shippingCost  |  string  |    no    |
+| coupons       | string[] |    no    |
+| gaQueryParams |  object  |    no    |
 
 ### Sending Custom Fields to Google Analytics
 
@@ -493,9 +489,9 @@ analytics.impression.product({
     identifier: 'abc123',
     name: 'Large Blue Pants',
     gaQueryParams: {
-      tcc: 'SALE45'
-    }
-  }
+      tcc: 'SALE45',
+    },
+  },
 });
 ```
 
@@ -508,14 +504,14 @@ analytics.impression.product({
 Branding Brand's content management system is supported with some targets limitations at the moment.
 The targets currently supported are:
 
-* City
-* Country
-* Date
-* Postal Code
-* Region
-* State
-* Time of Day
-* Time Zone
+- City
+- Country
+- Date
+- Postal Code
+- Region
+- State
+- Time of Day
+- Time Zone
 
 ### Demandware
 
@@ -529,10 +525,10 @@ Data API, instead of the Shop API.
 
 #### # ContentManagementSystemProviderConfiguration
 
-  | Property | Type | Required |
-  | - |:-:| :-:|
-  | propertyId | string | **yes** |
-  | environment | number | **yes** |
+| Property    |  Type  | Required |
+| ----------- | :----: | :------: |
+| propertyId  | string | **yes**  |
+| environment | number | **yes**  |
 
 ### CMS Constructors
 

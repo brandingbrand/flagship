@@ -37,7 +37,7 @@ export class EmailForm extends Component<EmailFormProps> {
     super(props);
 
     this.fieldsTypes = t.struct({
-      email: EmailType
+      email: EmailType,
     });
 
     this.fieldsOptions = {
@@ -47,14 +47,14 @@ export class EmailForm extends Component<EmailFormProps> {
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
-        error: FSI18n.string(componentTranslationKeys.error)
+        error: FSI18n.string(componentTranslationKeys.error),
       },
-      ...props.fieldsOptions
+      ...props.fieldsOptions,
     };
 
     // check for number because FormLabelPosition enum can evaluate to 0 & thus as 'false';
-    this.labelPosition = (typeof props.labelPosition === 'number') ?
-      props.labelPosition : FormLabelPosition.Inline;
+    this.labelPosition =
+      typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
   }
 
   componentDidMount(): void {

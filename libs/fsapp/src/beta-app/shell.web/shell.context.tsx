@@ -14,7 +14,7 @@ import { DrawerContainer } from './drawer-container.component';
 import {
   DEFAULT_DRAWER_ANIMATION,
   DEFAULT_DRAWER_WIDTH,
-  DEFAULT_OVERLAY_OPACITY
+  DEFAULT_OVERLAY_OPACITY,
 } from './constants';
 
 export const WebShellContext = createContext<WebShell>(dummyShell);
@@ -40,27 +40,27 @@ const useDrawerOptions = (LeftDrawer?: DrawerComponentType) => {
 // TODO Move to Drawer definition
 const styles = CreateWebStyles({
   appDrawerOpen: {
-    overflowX: 'hidden'
+    overflowX: 'hidden',
   },
   appDrawerDefault: {
     flexGrow: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
   },
   container: {
     width: '100%',
     flexGrow: 1,
     flexBasis: 'auto',
-    transitionProperty: 'margin-left'
+    transitionProperty: 'margin-left',
   },
   containerOverlay: {
     backgroundColor: 'black',
     opacity: 0,
     position: 'absolute',
-    transitionProperty: 'opacity'
+    transitionProperty: 'opacity',
   },
   containerOverlayActive: {
-    inset: 0
-  }
+    inset: 0,
+  },
 });
 
 // eslint-disable-next-line complexity
@@ -69,7 +69,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
   footer,
   leftDrawer,
   rightDrawer,
-  children
+  children,
 }) => {
   const navigator = useNavigator();
   const [leftDrawerOpen, setLeftDrawer] = useState(false);
@@ -133,7 +133,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
             rightDrawerOpen &&
               RightDrawer?.options?.slideShell && { marginLeft: `calc(-1 * ${rightWidth})` },
             activateLeft && ({ transitionDuration: leftDuration } as unknown as ViewStyle),
-            activateRight && ({ transitionDuration: rightDuration } as unknown as ViewStyle)
+            activateRight && ({ transitionDuration: rightDuration } as unknown as ViewStyle),
           ]}
         >
           <Header />
@@ -149,12 +149,12 @@ export const WebShellProvider: FC<ShellConfig> = ({
                 (activateLeft || activateRight) && styles.containerOverlayActive,
                 activateLeft &&
                   ({
-                    transitionDuration: leftDuration
+                    transitionDuration: leftDuration,
                   } as unknown as ViewStyle),
                 activateRight &&
                   ({
-                    transitionDuration: rightDuration
-                  } as unknown as ViewStyle)
+                    transitionDuration: rightDuration,
+                  } as unknown as ViewStyle),
               ]}
             />
           </TouchableWithoutFeedback>
@@ -162,7 +162,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
 
         {LeftDrawer && (
           <DrawerContainer
-            position='left'
+            position="left"
             width={leftWidth}
             open={leftDrawerOpen}
             style={LeftDrawer.options?.style}
@@ -175,7 +175,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
 
         {RightDrawer && (
           <DrawerContainer
-            position='right'
+            position="right"
             width={rightWidth}
             open={rightDrawerOpen}
             style={RightDrawer.options?.style}

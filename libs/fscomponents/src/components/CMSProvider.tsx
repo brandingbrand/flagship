@@ -1,7 +1,7 @@
 import React, { Component, ComponentClass } from 'react';
 import {
   ContentManagementSystem,
-  CoreContentManagementSystemProvider
+  CoreContentManagementSystemProvider,
 } from '@brandingbrand/fsengage';
 
 export interface CMSProviderState {
@@ -20,14 +20,11 @@ export function withCMSProvider<P extends {}>(
 ): ComponentClass<P & CMSProviderProps> {
   type ResultProps = P & CMSProviderProps;
 
-  return class CommerceProvider extends Component<
-    ResultProps,
-    CMSProviderState> {
-
+  return class CommerceProvider extends Component<ResultProps, CMSProviderState> {
     constructor(props: ResultProps) {
       super(props);
       this.state = {
-        cmsData: null
+        cmsData: null,
       };
     }
 
@@ -40,31 +37,28 @@ export function withCMSProvider<P extends {}>(
         cmsProviderManagementConfig,
         cmsProviderGroup,
         cmsProviderSlot,
-        cmsProviderIdentifier
+        cmsProviderIdentifier,
       } = this.props;
 
       const CMS = new ContentManagementSystem(cmsProviderManagementConfig);
 
       CMS.contentForSlot(cmsProviderGroup, cmsProviderSlot, cmsProviderIdentifier)
-        .then(data => {
+        .then((data) => {
           this.setState({
-            cmsData: data
+            cmsData: data,
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.warn(
             `Error fetching content for slot ${cmsProviderGroup}, ` +
-            `${cmsProviderSlot}, ${cmsProviderIdentifier}`, error);
+              `${cmsProviderSlot}, ${cmsProviderIdentifier}`,
+            error
+          );
         });
-    }
+    };
 
     render(): JSX.Element {
-      return (
-        <WrappedComponent
-          {...this.props}
-          {...this.state}
-        />
-      );
+      return <WrappedComponent {...this.props} {...this.state} />;
     }
   };
 }

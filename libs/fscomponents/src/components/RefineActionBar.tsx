@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
@@ -22,45 +22,45 @@ export interface RefineActionBarProps {
 
 const S = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   button: {
     flex: 1,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonText: {
-    fontSize: 16
+    fontSize: 16,
   },
   buttonLeft: {},
   buttonRight: {
-    marginLeft: 10
+    marginLeft: 10,
+  },
+});
+
+export const RefineActionBar: FunctionComponent<RefineActionBarProps> = memo(
+  (props): JSX.Element => {
+    return (
+      <View style={[S.container, props.style]}>
+        <TouchableOpacity
+          onPress={props.onFilterPress}
+          style={[S.button, S.buttonLeft, props.filterButtonStyle]}
+        >
+          <Text style={[S.buttonText, props.filterButtonTextStyle]}>
+            {FSI18n.string(translationKeys.flagship.sort.actions.filter.actionBtn)}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={props.onSortPress}
+          style={[S.button, S.buttonRight, props.sortButtonStyle]}
+        >
+          <Text style={[S.buttonText, props.sortButtonTextStyle]}>
+            {FSI18n.string(translationKeys.flagship.sort.actions.sort.actionBtn)}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
-});
-
-export const RefineActionBar: FunctionComponent<RefineActionBarProps> =
-memo((props): JSX.Element => {
-
-  return (
-    <View style={[S.container, props.style]}>
-      <TouchableOpacity
-        onPress={props.onFilterPress}
-        style={[S.button, S.buttonLeft, props.filterButtonStyle]}
-      >
-        <Text style={[S.buttonText, props.filterButtonTextStyle]}>
-          {FSI18n.string(translationKeys.flagship.sort.actions.filter.actionBtn)}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={props.onSortPress}
-        style={[S.button, S.buttonRight, props.sortButtonStyle]}
-      >
-        <Text style={[S.buttonText, props.sortButtonTextStyle]}>
-          {FSI18n.string(translationKeys.flagship.sort.actions.sort.actionBtn)}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-});
+);

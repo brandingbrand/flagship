@@ -25,7 +25,7 @@ export default class StepManager {
 
     if (nextStepsState) {
       this.steps = nextStepsState;
-      this.listeners.forEach(listener => listener(nextStepsState));
+      this.listeners.forEach((listener) => listener(nextStepsState));
     }
 
     return nextStepsState;
@@ -36,7 +36,7 @@ export default class StepManager {
   }
 
   getActive(): Step | undefined {
-    return this.steps.find(step => step.status === 'active');
+    return this.steps.find((step) => step.status === 'active');
   }
 
   getNextActive(): Step {
@@ -73,27 +73,29 @@ export default class StepManager {
 
     this.setSteps({
       done: [activeStep.name],
-      active: [nextActiveStep.name]
+      active: [nextActiveStep.name],
     });
   }
 
   goTo(stepName: string): void {
     const stepToBeActive = this.steps.find(
-      step => step.name === stepName && step.status === 'done'
+      (step) => step.name === stepName && step.status === 'done'
     );
 
     if (!stepToBeActive) {
-      throw new Error(`FSCheckout: you can only goTo step with status done.` +
-        ` ${stepName}'s status is not done or doesn't exist`);
+      throw new Error(
+        `FSCheckout: you can only goTo step with status done.` +
+          ` ${stepName}'s status is not done or doesn't exist`
+      );
     }
 
     const activeStepNames = this.steps
-      .filter(step => step.status === 'active')
-      .map(step => step.name);
+      .filter((step) => step.status === 'active')
+      .map((step) => step.name);
 
     this.setSteps({
       pending: activeStepNames,
-      active: [stepToBeActive.name]
+      active: [stepToBeActive.name],
     });
   }
 
@@ -101,15 +103,15 @@ export default class StepManager {
     const nextStepsState = [...this.steps];
 
     nextStepsState.forEach((step, i) => {
-      Object.keys(statusUpdates).forEach(status => {
+      Object.keys(statusUpdates).forEach((status) => {
         const _status = status as StepStatus;
         const updates = statusUpdates[_status] || [];
 
-        updates.forEach(_step => {
+        updates.forEach((_step) => {
           if (step.status !== _status && _step === step.name) {
             nextStepsState[i] = {
               ...step,
-              status: _status
+              status: _status,
             };
           }
         });
@@ -118,7 +120,7 @@ export default class StepManager {
 
     this.history.push(this.steps);
     this.steps = nextStepsState;
-    this.listeners.forEach(listener => listener(nextStepsState));
+    this.listeners.forEach((listener) => listener(nextStepsState));
 
     return nextStepsState;
   }

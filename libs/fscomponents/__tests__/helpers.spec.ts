@@ -6,50 +6,50 @@ const hours = [
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1408
+    id: 1408,
   },
   {
     dayOfWeek: 2,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1409
+    id: 1409,
   },
   {
     dayOfWeek: 3,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1410
+    id: 1410,
   },
   {
     dayOfWeek: 4,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1411
+    id: 1411,
   },
   {
     dayOfWeek: 6,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1412
+    id: 1412,
   },
   {
     dayOfWeek: 0,
     open: '6:30 AM',
     close: '7 PM',
     serviceId: 316,
-    id: 1413
+    id: 1413,
   },
   {
     dayOfWeek: 5,
     open: '6:30 AM',
     close: '9 PM',
     serviceId: 316,
-    id: 1415
-  }
+    id: 1415,
+  },
 ];
 
 describe('formatHours', () => {
@@ -70,15 +70,11 @@ describe('formatHours', () => {
   });
 
   test('format 3 before open', () => {
-    expect(formatHours(hours, beforeOpenDate, '3')).toBe(
-      'Closed | Closes 9 PM'
-    );
+    expect(formatHours(hours, beforeOpenDate, '3')).toBe('Closed | Closes 9 PM');
   });
 
   test('format 3 after closed', () => {
-    expect(formatHours(hours, afterClosedDate, '3')).toBe(
-      'Closed | Closes 9 PM'
-    );
+    expect(formatHours(hours, afterClosedDate, '3')).toBe('Closed | Closes 9 PM');
   });
 
   test('hour not exist for the day', () => {

@@ -1,6 +1,4 @@
-import CommerceSessionManager, {
-  CommerceSessionManagerOptions
-} from './CommerceSessionManager';
+import CommerceSessionManager, { CommerceSessionManagerOptions } from './CommerceSessionManager';
 import { SessionToken } from '../types/SessionToken';
 import { Platform } from 'react-native';
 // @ts-ignore: no type definition
@@ -42,8 +40,9 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
           return Promise.resolve(this.token);
         } catch (e) {
           console.log('invalid stored token', e);
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {})
-            .catch(e => console.warn('cannot delete token', e));
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch((e) =>
+            console.warn('cannot delete token', e)
+          );
           return Promise.resolve(null);
         }
       })
@@ -55,11 +54,7 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
   // set the token
   async set(token: SessionToken): Promise<boolean> {
     this.token = token;
-    await SInfo.setItem(
-      CommerceSessionManager.COMMERCE_TOKEN,
-      JSON.stringify(token),
-      {}
-    );
+    await SInfo.setItem(CommerceSessionManager.COMMERCE_TOKEN, JSON.stringify(token), {});
     this.setupRefreshTimeout(token);
     return true;
   }
@@ -73,9 +68,7 @@ export default class CommerceCookieTokenSessionManager extends CommerceSessionMa
 
     CookieManager.setFromResponse(
       token.token.url,
-      Platform.OS === 'ios'
-        ? { 'Set-Cookie': token.token.cookie }
-        : token.token.cookie
+      Platform.OS === 'ios' ? { 'Set-Cookie': token.token.cookie } : token.token.cookie
     )
       .then(() => true)
       .catch(() => true);

@@ -9,14 +9,11 @@ import {
   Text,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { ReviewTypes } from '@brandingbrand/fscommerce';
-import {
-  ReviewIndicator,
-  ReviewIndicatorProps
-} from './ReviewIndicator';
+import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
 import { MoreText, MoreTextProps } from './MoreText';
 import { Button } from './Button';
 import { style as S } from '../styles/ReviewItem';
@@ -28,7 +25,7 @@ export enum RecommendationDisplayTypes {
   Never,
   Always,
   PositiveOnly,
-  NegativeOnly
+  NegativeOnly,
 }
 
 export interface ReviewItemProps extends ReviewTypes.Review {
@@ -69,13 +66,12 @@ export interface ReviewItemState {
 }
 
 export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
-
   constructor(props: ReviewItemProps) {
     super(props);
 
     this.state = {
       syndicatedImageHeight: 0,
-      syndicatedImageWidth: 0
+      syndicatedImageWidth: 0,
     };
   }
 
@@ -84,14 +80,14 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     if (onHelpful) {
       onHelpful(this.props);
     }
-  }
+  };
 
   onNotHelpful = () => {
     const { onNotHelpful } = this.props;
     if (onNotHelpful) {
       onNotHelpful(this.props);
     }
-  }
+  };
 
   renderSyndicatedIndicator = (): JSX.Element | undefined => {
     if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
@@ -108,7 +104,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     } else {
       return;
     }
-  }
+  };
 
   /**
    * Display whether an item is recommended or not recommended for the user. This will only be
@@ -131,17 +127,15 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
       recommendedRowStyle,
       rowStyle,
       isRecommended,
-      showRecommendations
+      showRecommendations,
     } = this.props;
 
     const shouldDisplay =
-      (isRecommended === false || isRecommended === true)
-      && (
-        showRecommendations === undefined // Backwards compatibility: always display if not set
-        || showRecommendations === RecommendationDisplayTypes.Always
-        || (isRecommended && showRecommendations === RecommendationDisplayTypes.PositiveOnly)
-        || (!isRecommended && showRecommendations === RecommendationDisplayTypes.NegativeOnly)
-      );
+      (isRecommended === false || isRecommended === true) &&
+      (showRecommendations === undefined || // Backwards compatibility: always display if not set
+        showRecommendations === RecommendationDisplayTypes.Always ||
+        (isRecommended && showRecommendations === RecommendationDisplayTypes.PositiveOnly) ||
+        (!isRecommended && showRecommendations === RecommendationDisplayTypes.NegativeOnly));
 
     if (shouldDisplay) {
       return (
@@ -152,16 +146,16 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
             </View>
           )}
           <Text style={[S.recommended, recommendedStyle]}>
-            {isRecommended ?
-              FSI18n.string(componentTranslationKeys.recommended) :
-              FSI18n.string(componentTranslationKeys.notRecommended)}
+            {isRecommended
+              ? FSI18n.string(componentTranslationKeys.recommended)
+              : FSI18n.string(componentTranslationKeys.notRecommended)}
           </Text>
         </View>
       );
     }
 
     return null;
-  }
+  };
 
   render(): JSX.Element {
     const {
@@ -188,34 +182,26 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
       moreTextStyle,
       isSyndicated,
       indicateSyndicated,
-      syndicationSource
+      syndicationSource,
     } = this.props;
 
     return (
       <View style={[S.container, style]}>
         <View style={[S.row, rowStyle]}>
-          <ReviewIndicator
-            value={rating}
-            style={S.indicator}
-            {...reviewIndicatorProps}
-          />
-          {title && (
-            <Text style={[S.title, titleStyle]}>{title}</Text>
-          )}
+          <ReviewIndicator value={rating} style={S.indicator} {...reviewIndicatorProps} />
+          {title && <Text style={[S.title, titleStyle]}>{title}</Text>}
         </View>
         {(user || created) && (
-        <View style={[S.row, rowStyle]}>
-          <Text style={[S.user, userStyle]}>
-            {user && user.name && 'By ' + user.name}
-            {(created ? ' on ' + (new Date(created)).toLocaleDateString() : '')}
-          </Text>
-        </View>
+          <View style={[S.row, rowStyle]}>
+            <Text style={[S.user, userStyle]}>
+              {user && user.name && 'By ' + user.name}
+              {created ? ' on ' + new Date(created).toLocaleDateString() : ''}
+            </Text>
+          </View>
         )}
         {user && user.isVerifiedBuyer && (
           <View style={[S.row, { paddingBottom: 3 }, rowStyle, verifiedRowStyle]}>
-            {verifiedImage && (
-              <Image style={verifiedImageStyle} source={verifiedImage} />
-            )}
+            {verifiedImage && <Image style={verifiedImageStyle} source={verifiedImage} />}
             <Text style={[S.verified, verifiedStyle]}>
               {FSI18n.string(componentTranslationKeys.verified)}
             </Text>
@@ -232,33 +218,33 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
         )}
         {this.renderRecommendation()}
         {feedback && feedback.positive && (
-        <View style={[S.row, rowStyle]}>
-          <Text style={[S.helpful, helpfulStyle]}>
-            {FSI18n.string(componentTranslationKeys.helpfulCount, {
-              count: feedback.positive
-            })}
-          </Text>
-        </View>
+          <View style={[S.row, rowStyle]}>
+            <Text style={[S.helpful, helpfulStyle]}>
+              {FSI18n.string(componentTranslationKeys.helpfulCount, {
+                count: feedback.positive,
+              })}
+            </Text>
+          </View>
         )}
         {indicateSyndicated &&
           isSyndicated &&
           syndicationSource &&
           this.renderSyndicatedIndicator()}
         {onHelpful && onNotHelpful && (
-        <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
-          <Button
-            title={FSI18n.string(componentTranslationKeys.helpful)}
-            light
-            onPress={this.onHelpful}
-            style={[S.button, buttonStyle]}
-          />
-          <Button
-            title={FSI18n.string(componentTranslationKeys.notHelpful)}
-            light
-            onPress={this.onNotHelpful}
-            style={[S.button, buttonStyle]}
-          />
-        </View>
+          <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
+            <Button
+              title={FSI18n.string(componentTranslationKeys.helpful)}
+              light
+              onPress={this.onHelpful}
+              style={[S.button, buttonStyle]}
+            />
+            <Button
+              title={FSI18n.string(componentTranslationKeys.notHelpful)}
+              light
+              onPress={this.onNotHelpful}
+              style={[S.button, buttonStyle]}
+            />
+          </View>
         )}
       </View>
     );

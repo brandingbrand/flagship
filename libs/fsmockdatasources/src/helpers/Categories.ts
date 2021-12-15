@@ -1,50 +1,61 @@
-export const Categories: import ('@brandingbrand/fscommerce').CommerceTypes.Category = {
+export const Categories: import('@brandingbrand/fscommerce').CommerceTypes.Category = {
   id: 'root',
   title: 'Storefront Catalog - EN',
   handle: 'root',
-  categories: [{
-    id: 'mens',
-    title: 'Men\'s',
-    handle: 'mens',
-    pageTitle: 'Men\'s Footwear, Outerwear, Clothing & Accessories',
-    pageDescription: 'Men\'s range. Hard-wearing boots, jackets and clothing for unbeatable comfort day in, day out. Practical, easy-to-wear styles wherever you\'re headed.',
-    parentId: 'root',
-    image: {
-      uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwd488d6b4/images/slot/landing/cat-landing-slotbottom-mens-dressshirts.jpg'
-    },
-    categories: [{
-      id: 'mens-accessories',
-      title: 'Accessories',
-      handle: 'mens-accessories',
-      pageTitle: "Men's Accessories Belts, Wallets. Gloves, Hats, Watches, Luggage & More",
-      pageDescription: 'Shop mens accessories including belts, wallets. gloves, hats, watches, luggage & more at Salesforce Commerce Cloud.',
-      parentId: 'mens',
+  categories: [
+    {
+      id: 'mens',
+      title: "Men's",
+      handle: 'mens',
+      pageTitle: "Men's Footwear, Outerwear, Clothing & Accessories",
+      pageDescription:
+        "Men's range. Hard-wearing boots, jackets and clothing for unbeatable comfort day in, day out. Practical, easy-to-wear styles wherever you're headed.",
+      parentId: 'root',
       image: {
-        uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwc38f1ace/images/slot/landing/cat-landing-slotbottom-mens-accessories.jpg'
-      }
-    }]
-  }, {
-    id: 'electronics',
-    title: 'Electronics',
-    handle: 'electronics',
-    pageTitle: 'Shop Electronics Including Televisions, Digital Cameras, iPods & More',
-    pageDescription: 'Shop Electronics including the latest in televisions, digital cameras, camcorders, mp3, ipod, mobil phones, GPS & gaming at Salesforce Commerce Cloud',
-    parentId: 'root',
-    image: {
-      uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwa0034e19/images/slot/landing/cat-landing-slotbottom-electronics.jpg'
+        uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwd488d6b4/images/slot/landing/cat-landing-slotbottom-mens-dressshirts.jpg',
+      },
+      categories: [
+        {
+          id: 'mens-accessories',
+          title: 'Accessories',
+          handle: 'mens-accessories',
+          pageTitle: "Men's Accessories Belts, Wallets. Gloves, Hats, Watches, Luggage & More",
+          pageDescription:
+            'Shop mens accessories including belts, wallets. gloves, hats, watches, luggage & more at Salesforce Commerce Cloud.',
+          parentId: 'mens',
+          image: {
+            uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwc38f1ace/images/slot/landing/cat-landing-slotbottom-mens-accessories.jpg',
+          },
+        },
+      ],
     },
-    categories: [{
-      id: 'electronics-digital-cameras',
-      title: 'Digital Cameras',
-      handle: 'electronics-digital-cameras',
-      pageTitle: 'Digital Cameras',
-      pageDescription: 'Shop the latest digital cameras from all the top brands, makes and models at Salesforce Commerce Cloud.',
-      parentId: 'electronics',
+    {
+      id: 'electronics',
+      title: 'Electronics',
+      handle: 'electronics',
+      pageTitle: 'Shop Electronics Including Televisions, Digital Cameras, iPods & More',
+      pageDescription:
+        'Shop Electronics including the latest in televisions, digital cameras, camcorders, mp3, ipod, mobil phones, GPS & gaming at Salesforce Commerce Cloud',
+      parentId: 'root',
       image: {
-        uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dw1a543dc7/images/slot/landing/cat-landing-camera.jpg'
-      }
-    }]
-  }]
+        uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dwa0034e19/images/slot/landing/cat-landing-slotbottom-electronics.jpg',
+      },
+      categories: [
+        {
+          id: 'electronics-digital-cameras',
+          title: 'Digital Cameras',
+          handle: 'electronics-digital-cameras',
+          pageTitle: 'Digital Cameras',
+          pageDescription:
+            'Shop the latest digital cameras from all the top brands, makes and models at Salesforce Commerce Cloud.',
+          parentId: 'electronics',
+          image: {
+            uri: 'https://demo-ocapi.demandware.net/on/demandware.static/-/Sites-storefront-catalog-en/default/dw1a543dc7/images/slot/landing/cat-landing-camera.jpg',
+          },
+        },
+      ],
+    },
+  ],
 };
 
 const mensProducts = [
@@ -87,7 +98,7 @@ const mensProducts = [
   '793775064963',
   '061492216683',
   '061492216706',
-  '061492216690'
+  '061492216690',
 ];
 
 const electronicsProducts = [
@@ -114,12 +125,12 @@ const electronicsProducts = [
   'nikon-d60-wlens',
   'sony-alpha900-body',
   'kodak-z1015',
-  'kodak-c1013'
+  'kodak-c1013',
 ];
 
-export const CategoryProduct: import ('@brandingbrand/fsfoundation').Dictionary<string[]> = {
-  electronics: electronicsProducts,
+export const CategoryProduct: import('@brandingbrand/fsfoundation').Dictionary<string[]> = {
+  'electronics': electronicsProducts,
   'electronics-digital-cameras': electronicsProducts,
-  mens: mensProducts,
-  'mens-accessories': mensProducts
+  'mens': mensProducts,
+  'mens-accessories': mensProducts,
 };

@@ -14,10 +14,9 @@ export interface SelectableListProps {
   items: SelectableListItem[];
   selectedId?: string;
   selectableRow?: Partial<SelectableRowProps>;
-  applyButton?: boolean | ((
-    handleApply?: () => void,
-    selectedItem?: SelectableListItem
-  ) => JSX.Element);
+  applyButton?:
+    | boolean
+    | ((handleApply?: () => void, selectedItem?: SelectableListItem) => JSX.Element);
   applyButtonStyle?: StyleProp<ViewStyle>;
   applyDisabledStyle?: StyleProp<ViewStyle>;
   applyButtonTextStyle?: StyleProp<TextStyle>;
@@ -30,7 +29,7 @@ export interface SelectableListState {
 
 const S = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   applyButton: {
     position: 'absolute',
@@ -40,17 +39,17 @@ const S = StyleSheet.create({
     paddingVertical: 17,
     height: undefined,
     left: 20,
-    right: 20
+    right: 20,
   },
   applyDisabled: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   applyButtonText: {
     fontSize: 18,
     lineHeight: 21,
     letterSpacing: 1,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export class SelectableList extends Component<SelectableListProps, SelectableListState> {
@@ -65,7 +64,7 @@ export class SelectableList extends Component<SelectableListProps, SelectableLis
       });
     }
     this.state = {
-      selectedItem
+      selectedItem,
     };
   }
   renderItem = (item: SelectableListItem, index: number) => {
@@ -74,15 +73,15 @@ export class SelectableList extends Component<SelectableListProps, SelectableLis
         key={item.id || index}
         title={item.title}
         selected={
-          this.state.selectedItem ?
-          item.id === this.state.selectedItem.id :
-          item.id === this.props.selectedId
+          this.state.selectedItem
+            ? item.id === this.state.selectedItem.id
+            : item.id === this.props.selectedId
         }
         onPress={this.handlePress(item)}
         {...this.props.selectableRow}
       />
     );
-  }
+  };
 
   renderApply = (): JSX.Element | null => {
     if (this.props.applyButton) {
@@ -91,36 +90,40 @@ export class SelectableList extends Component<SelectableListProps, SelectableLis
       } else {
         return (
           <Button
-            title={this.props.applyButtonText ||
-              FSI18n.string(translationKeys.flagship.button.apply)}
+            title={
+              this.props.applyButtonText || FSI18n.string(translationKeys.flagship.button.apply)
+            }
             onPress={this.handleApply}
-            style={[S.applyButton, this.props.applyButtonStyle,
-              this.state.selectedItem ? undefined : [
-                S.applyDisabled, this.props.applyDisabledStyle
-              ]]}
+            style={[
+              S.applyButton,
+              this.props.applyButtonStyle,
+              this.state.selectedItem
+                ? undefined
+                : [S.applyDisabled, this.props.applyDisabledStyle],
+            ]}
             titleStyle={[S.applyButtonText, this.props.applyButtonTextStyle]}
           />
         );
       }
     }
     return null;
-  }
+  };
 
   handlePress = (selectedItem: SelectableListItem) => () => {
     if (this.props.applyButton) {
       this.setState({
-        selectedItem
+        selectedItem,
       });
     } else {
       this.props.onChange(selectedItem);
     }
-  }
+  };
 
   handleApply = (): void => {
     if (this.state.selectedItem) {
       this.props.onChange(this.state.selectedItem);
     }
-  }
+  };
 
   render(): JSX.Element {
     return (

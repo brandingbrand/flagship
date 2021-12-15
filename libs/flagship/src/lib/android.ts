@@ -9,21 +9,21 @@ const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
 const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
 
 const gifSupport = [
-  'implementation \'com.facebook.fresco:animated-base-support:1.3.0\'',
-  'implementation \'com.facebook.fresco:animated-gif:2.0.0\''
+  "implementation 'com.facebook.fresco:animated-base-support:1.3.0'",
+  "implementation 'com.facebook.fresco:animated-gif:2.0.0'",
 ];
 
 const webPSupport = [
-  'implementation \'com.facebook.fresco:animated-webp:2.1.0\'',
-  'implementation \'com.facebook.fresco:webpsupport:2.0.0\'',
-  'implementation \'com.facebook.fresco:webpsupport:2.0.0\''
+  "implementation 'com.facebook.fresco:animated-webp:2.1.0'",
+  "implementation 'com.facebook.fresco:webpsupport:2.0.0'",
+  "implementation 'com.facebook.fresco:webpsupport:2.0.0'",
 ];
 
 const DEFAULT_ANDROID_CONFIG = {
   build: {
     versionName: (version: string) => version,
     versionShortCode: versionLib.normalize,
-    versionCode: '"\${project.VERSION_CODE_SHORT}".toInteger()'
+    versionCode: '"${project.VERSION_CODE_SHORT}".toInteger()',
   },
   manifest: {
     activityAttributes: {
@@ -31,17 +31,17 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:launchMode': 'singleTask',
       'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
       'android:screenOrientation': 'fullSensor',
-      'android:windowSoftInputMode': 'adjustResize'
+      'android:windowSoftInputMode': 'adjustResize',
     },
     applicationAttributes: {
       'android:allowBackup': 'false',
       'android:label': '@string/app_name',
       'android:icon': '@mipmap/ic_launcher',
       'android:theme': '@style/AppTheme',
-      'android:networkSecurityConfig': '@xml/network_security_config'
+      'android:networkSecurityConfig': '@xml/network_security_config',
     },
-    urlSchemeHost: 'app'
-  }
+    urlSchemeHost: 'app',
+  },
 };
 
 /**
@@ -56,20 +56,20 @@ export function androidConfigWithDefault(
   return {
     build: {
       ...DEFAULT_ANDROID_CONFIG.build,
-      ...config && config.build
+      ...(config && config.build),
     },
     manifest: {
       ...DEFAULT_ANDROID_CONFIG.manifest,
-      ...config && config.manifest,
+      ...(config && config.manifest),
       activityAttributes: {
         ...DEFAULT_ANDROID_CONFIG.manifest.activityAttributes,
-        ...config && config.manifest && config.manifest.activityAttributes
+        ...(config && config.manifest && config.manifest.activityAttributes),
       },
       applicationAttributes: {
         ...DEFAULT_ANDROID_CONFIG.manifest.applicationAttributes,
-        ...config && config.manifest && config.manifest.applicationAttributes
-      }
-    }
+        ...(config && config.manifest && config.manifest.applicationAttributes),
+      },
+    },
   };
 }
 
@@ -301,10 +301,12 @@ export function version(newVersion: string, config: FlagshipTypes.AndroidConfig)
  * @param {FlagshipTypes.AndroidConfig} config - android configuration
  */
 function versionName(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
-  const newVersionName = config.build && config.build.versionName &&
-    (typeof config.build.versionName === 'function' ?
-      config.build.versionName(newVersion) :
-      config.build.versionName) ||
+  const newVersionName =
+    (config.build &&
+      config.build.versionName &&
+      (typeof config.build.versionName === 'function'
+        ? config.build.versionName(newVersion)
+        : config.build.versionName)) ||
     newVersion;
   fs.update(
     path.android.gradlePropertiesPath(),
@@ -319,10 +321,12 @@ function versionName(newVersion: string, config: FlagshipTypes.AndroidConfig): v
  * @param {FlagshipTypes.AndroidConfig} config - android configuration
  */
 function versionShortCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
-  const newVersionShortCode = config.build && config.build.versionShortCode &&
-    (typeof config.build.versionShortCode === 'function' ?
-      config.build.versionShortCode(newVersion) :
-      config.build.versionShortCode) ||
+  const newVersionShortCode =
+    (config.build &&
+      config.build.versionShortCode &&
+      (typeof config.build.versionShortCode === 'function'
+        ? config.build.versionShortCode(newVersion)
+        : config.build.versionShortCode)) ||
     versionLib.normalize(newVersion);
   fs.update(
     path.android.gradlePropertiesPath(),
@@ -338,16 +342,14 @@ function versionShortCode(newVersion: string, config: FlagshipTypes.AndroidConfi
  * @param {FlagshipTypes.AndroidConfig} config - android configuration
  */
 function versionCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
-  const newVersionCode = config.build && config.build.versionCode &&
-    (typeof config.build.versionCode === 'function' ?
-      config.build.versionCode(newVersion) :
-      config.build.versionCode) ||
-    '"\${project.VERSION_CODE_SHORT}".toInteger()';
-  fs.update(
-    path.android.gradlePath(),
-    /^(\s*versionCode ).*$/m,
-    `$1${newVersionCode}`
-  );
+  const newVersionCode =
+    (config.build &&
+      config.build.versionCode &&
+      (typeof config.build.versionCode === 'function'
+        ? config.build.versionCode(newVersion)
+        : config.build.versionCode)) ||
+    '"${project.VERSION_CODE_SHORT}".toInteger()';
+  fs.update(path.android.gradlePath(), /^(\s*versionCode ).*$/m, `$1${newVersionCode}`);
 }
 
 /**
@@ -467,7 +469,7 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
 
   if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
     const domainElements = exceptionDomains
-      .map(domain => {
+      .map((domain) => {
         const host = typeof domain === 'string' ? domain : domain.domain;
         return `<domain includeSubdomains="true">${host}</domain>`;
       })
@@ -490,7 +492,7 @@ function hasExceptionDomain(
   domains: FlagshipTypes.Config['exceptionDomains'],
   target: string
 ): boolean {
-  const domainIndex = domains.findIndex(domain => {
+  const domainIndex = domains.findIndex((domain) => {
     if (typeof domain === 'string') {
       return domain === target;
     } else {

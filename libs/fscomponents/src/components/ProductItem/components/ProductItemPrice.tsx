@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ProductItemProps } from '../ProductItem';
 import { types, weights } from '../../../styles/variables';
 import { Price } from '../../Price';
@@ -11,15 +8,15 @@ const style = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginBottom: 7
+    marginBottom: 7,
   },
   originalPrice: {
     textDecorationLine: 'line-through',
-    color: '#ccc'
+    color: '#ccc',
   },
   salePrice: {
-    marginLeft: 7
-  }
+    marginLeft: 7,
+  },
 });
 
 export type ProductItemPriceProps = Pick<
@@ -29,14 +26,8 @@ export type ProductItemPriceProps = Pick<
 
 export class ProductItemPrice extends Component<ProductItemPriceProps> {
   render(): React.ReactNode {
-    const {
-      price,
-      originalPrice,
-      priceStyle,
-      originalPriceStyle,
-      salePriceStyle,
-      renderPrice
-    } = this.props;
+    const { price, originalPrice, priceStyle, originalPriceStyle, salePriceStyle, renderPrice } =
+      this.props;
 
     if (renderPrice) {
       return renderPrice();
@@ -46,20 +37,16 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
       types.small,
       weights.regular,
       style.originalPrice,
-      originalPriceStyle
+      originalPriceStyle,
     ]);
 
-    const flattenedPriceStyle = StyleSheet.flatten([
-      types.small,
-      weights.medium,
-      priceStyle
-    ]);
+    const flattenedPriceStyle = StyleSheet.flatten([types.small, weights.medium, priceStyle]);
 
     const flattenedSalePriceStyle = StyleSheet.flatten([
       types.small,
       weights.medium,
       style.salePrice,
-      salePriceStyle
+      salePriceStyle,
     ]);
 
     return (

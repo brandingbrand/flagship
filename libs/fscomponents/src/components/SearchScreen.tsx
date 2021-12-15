@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { style as S } from '../styles/SearchScreen';
@@ -53,17 +53,18 @@ export interface SerializableSearchScreenProps {
   recentTitleWrap?: ViewStyle;
 }
 
-export interface SearchScreenProps extends Omit<
-  SerializableSearchScreenProps,
-  'style' |
-  'itemStyle' |
-  'itemTextStyle' |
-  'searchResultsScrollViewStyle' |
-  'searchBarContainerStyle' |
-  'clearButtonStyle' |
-  'clearButtonWrap' |
-  'recentTitleStyle' |
-  'recentTitleWrap'
+export interface SearchScreenProps
+  extends Omit<
+    SerializableSearchScreenProps,
+    | 'style'
+    | 'itemStyle'
+    | 'itemTextStyle'
+    | 'searchResultsScrollViewStyle'
+    | 'searchBarContainerStyle'
+    | 'clearButtonStyle'
+    | 'clearButtonWrap'
+    | 'recentTitleStyle'
+    | 'recentTitleWrap'
   > {
   onClose: () => void;
   onResultPress?: (result: SearchScreenResult) => void;
@@ -104,17 +105,17 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     this.searchBar = null;
     this.state = {
       history: [],
-      inputValue: ''
+      inputValue: '',
     };
   }
 
   loadHistoryToState = () => {
     this.getHistory()
-      .then(history => {
+      .then((history) => {
         this.setState({ history });
       })
-      .catch(e => console.warn(e));
-  }
+      .catch((e) => console.warn(e));
+  };
 
   componentDidMount(): void {
     const { searchBarShouldFocus } = this.props;
@@ -129,10 +130,10 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
 
   getSearchBarRef = (ref: SearchBar | null) => {
     this.searchBar = ref;
-  }
+  };
 
   getHistory = async (): Promise<SearchScreenResult[]> => {
-    const historyData = await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY) || '[]';
+    const historyData = (await AsyncStorage.getItem(SEARCH_MODAL_HISTORY_KEY)) || '[]';
     try {
       const history = JSON.parse(historyData);
       return history.slice(0, MAX_HISTORY_ITEM_NUM);
@@ -140,73 +141,68 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
       await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
       return [];
     }
-  }
+  };
 
   addToHistory = async (item: SearchScreenResult) => {
     let history = await this.getHistory();
-    const existIndex = history.findIndex(result => result.title === item.title);
+    const existIndex = history.findIndex((result) => result.title === item.title);
 
     if (existIndex > -1) {
-      history = history
-        .slice(0, existIndex)
-        .concat(history.slice(existIndex + 1));
+      history = history.slice(0, existIndex).concat(history.slice(existIndex + 1));
       history.unshift(item);
     } else {
       history.unshift(item);
       history = history.slice(0, MAX_HISTORY_ITEM_NUM);
     }
 
-    await AsyncStorage.setItem(
-      SEARCH_MODAL_HISTORY_KEY,
-      JSON.stringify(history)
-    );
+    await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, JSON.stringify(history));
     this.setState({ history });
     return history;
-  }
+  };
 
   handleResultPress = (result: SearchScreenResult) => () => {
-    this.addToHistory(result).catch(e => console.warn(e));
+    this.addToHistory(result).catch((e) => console.warn(e));
     if (this.props.onResultPress) {
       return this.props.onResultPress(result);
     }
-  }
+  };
 
   handleSubmit = (value: string) => {
     this.addToHistory({
       title: value,
-      query: value
-    }).catch(e => console.warn(e));
+      query: value,
+    }).catch((e) => console.warn(e));
 
     if (this.props.onInputSubmit) {
       return this.props.onInputSubmit(value);
     }
-  }
+  };
 
   clearHistory = async () => {
     await AsyncStorage.setItem(SEARCH_MODAL_HISTORY_KEY, '[]');
     this.setState({ history: [] });
-  }
+  };
 
   renderHistory = () => {
     return (
       <ScrollView
         style={[S.resultsContainer, this.props.searchResultsScrollViewStyle]}
-        keyboardShouldPersistTaps='always'
-        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="always"
+        keyboardDismissMode="on-drag"
       >
-        {(this.state.history && this.state.history.length) ? (
+        {this.state.history && this.state.history.length ? (
           <>
             <View style={[S.recentSearchContainer, this.props.recentTitleWrap]}>
               <Text style={[S.recentSearch, this.props.recentTitleStyle]}>
                 {this.props.recentTitle ||
-                  (FSI18n.string(translationKeys.flagship.search.recentSearches) + ':')}
+                  FSI18n.string(translationKeys.flagship.search.recentSearches) + ':'}
               </Text>
 
               <TouchableOpacity
                 onPress={this.clearHistory}
-                accessibilityLabel={
-                  FSI18n.string(translationKeys.flagship.search.actions.clear.accessibility)
-                }
+                accessibilityLabel={FSI18n.string(
+                  translationKeys.flagship.search.actions.clear.accessibility
+                )}
                 style={this.props.clearButtonWrap}
               >
                 <Text style={[S.recentSearchClearText, this.props.clearButtonStyle]}>
@@ -221,7 +217,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         {this.props.renderNoResults && this.props.renderNoResults()}
       </ScrollView>
     );
-  }
+  };
 
   renderResult = () => {
     if (!this.props.results) {
@@ -233,17 +229,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     return (
       <ScrollView
         style={[S.resultsContainer, this.props.searchResultsScrollViewStyle]}
-        keyboardShouldPersistTaps='always'
-        keyboardDismissMode='on-drag'
+        keyboardShouldPersistTaps="always"
+        keyboardDismissMode="on-drag"
       >
-        {this.props.renderResultsHeader
-          ? this.props.renderResultsHeader()
-          : null
-        }
+        {this.props.renderResultsHeader ? this.props.renderResultsHeader() : null}
         {this.props.results.map(this.renderItem)}
       </ScrollView>
     );
-  }
+  };
 
   renderItem = (item: SearchScreenResult, i: number) => {
     if (this.props.renderResultItem) {
@@ -253,7 +246,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     return (
       <TouchableHighlight
         key={i}
-        underlayColor='#f8f8f8'
+        underlayColor="#f8f8f8"
         style={[S.resultItem, this.props.itemStyle]}
         onPress={this.handleResultPress(item)}
         accessibilityLabel={`Search ${item.title}`}
@@ -261,7 +254,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         {this.renderTextWithHighLights(item.title, this.state.inputValue)}
       </TouchableHighlight>
     );
-  }
+  };
 
   renderTextWithHighLights = (name: string = '', query: string) => {
     const strArr = highlightStr(name, query);
@@ -277,14 +270,14 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         })}
       </Text>
     );
-  }
+  };
 
   handleChange = (value: string) => {
     this.setState({ inputValue: value });
     if (this.props.onInputChange) {
       return this.props.onInputChange(value);
     }
-  }
+  };
 
   renderSearchBar = () => {
     const { searchBarContainerStyle } = this.props;
@@ -302,7 +295,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
         />
       </View>
     );
-  }
+  };
 
   renderContentUnderSearchBar = () => {
     if (this.props.renderContentUnderSearchBar) {
@@ -310,7 +303,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     } else {
       return null;
     }
-  }
+  };
 
   render(): JSX.Element {
     return (
@@ -332,8 +325,8 @@ function highlightStr(name: string, query: string): HighlightResult[] {
     return [
       {
         str: name,
-        isHighlight: false
-      }
+        isHighlight: false,
+      },
     ];
   }
 
@@ -342,8 +335,8 @@ function highlightStr(name: string, query: string): HighlightResult[] {
     return [
       {
         str: name,
-        isHighlight: false
-      }
+        isHighlight: false,
+      },
     ];
   }
 
@@ -352,14 +345,14 @@ function highlightStr(name: string, query: string): HighlightResult[] {
       if (item) {
         acc.result.push({
           str: item,
-          isHighlight: false
+          isHighlight: false,
         });
       }
 
       if (matches[index]) {
         acc.result.push({
           str: matches[index],
-          isHighlight: true
+          isHighlight: true,
         });
       }
 

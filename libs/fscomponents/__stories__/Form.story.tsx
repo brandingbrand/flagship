@@ -2,11 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  color,
-  object,
-  text
-} from '@storybook/addon-knobs';
+import { color, object, text } from '@storybook/addon-knobs';
 import { Form } from '../src/components/Form/Form';
 import { FormLabelPosition } from '../src/components/Form/Templates/fieldTemplates';
 import { Button } from '../src/components/Button';
@@ -25,7 +21,7 @@ const PasswordType = t.refinement(t.String, (str: string) => {
 const fieldsTypes = t.struct({
   email: EmailType,
   password: PasswordType,
-  rememberMe: t.Boolean
+  rememberMe: t.Boolean,
 });
 
 const fieldsOptions = {
@@ -35,22 +31,22 @@ const fieldsOptions = {
     autoCorrect: false,
     keyboardType: 'email-address',
     autoCapitalize: 'none',
-    error: 'Please enter an email'
+    error: 'Please enter an email',
   },
   password: {
     placeholder: 'Password',
     returnKeyType: 'next',
     autoCorrect: false,
     secureTextEntry: true,
-    error: 'Must be six characters or more'
+    error: 'Must be six characters or more',
   },
   rememberMe: {
-    label: 'Remember Me'
-  }
+    label: 'Remember Me',
+  },
 };
 
 const defaultStyle = {
-  padding: 10
+  padding: 10,
 };
 
 const fieldsStyle = {
@@ -58,21 +54,19 @@ const fieldsStyle = {
     normal: {
       marginTop: 10,
       fontSize: 12,
-      fontWeight: 200
+      fontWeight: 200,
     },
     error: {
       marginTop: 10,
       fontSize: 12,
-      fontWeight: 200
-    }
-  }
+      fontWeight: 200,
+    },
+  },
 };
 
-
 const renderForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
-  return (
-   () => {
-     return (
+  return () => {
+    return (
       <View>
         <Form
           activeColor={color('Active Field Color', '#000000')}
@@ -84,15 +78,14 @@ const renderForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
           fieldsOptions={object('fieldsOptions', fieldsOptions)}
           labelPosition={labelPosition}
         />
-      <Button
-        title={text('submitText', 'Submit')}
-        onPress={action('FormOnSubmit')}
-        style={{marginHorizontal: 10}}
-      />
+        <Button
+          title={text('submitText', 'Submit')}
+          onPress={action('FormOnSubmit')}
+          style={{ marginHorizontal: 10 }}
+        />
       </View>
-     );
-   }
-  );
+    );
+  };
 };
 
 storiesOf('Form', module)

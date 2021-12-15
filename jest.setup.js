@@ -1,5 +1,5 @@
 const mockFn = jest.fn(() => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     return resolve();
   });
 });

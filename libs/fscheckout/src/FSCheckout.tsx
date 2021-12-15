@@ -6,7 +6,7 @@ import {
   StyleProp,
   StyleSheet,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import StepManager from './StepManager';
 import StepTracker, { StepTrackerProps } from './components/StepTracker';
@@ -15,12 +15,12 @@ import { Omit, Step } from './types';
 
 const styles = StyleSheet.create({
   constainer: {
-    flex: 1
+    flex: 1,
   },
   loadingContainer: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   loadingInner: {
     width: 50,
@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   hide: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 export interface FSCheckoutProps {
@@ -165,10 +165,10 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
   constructor(props: FSCheckoutProps) {
     super(props);
     this.stepManager = new StepManager(
-      props.steps.map(step => ({
+      props.steps.map((step) => ({
         name: step.name,
         displayName: step.displayName,
-        status: step.status
+        status: step.status,
       }))
     );
 
@@ -180,7 +180,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     });
 
     this.state = {
-      steps: this.stepManager.steps
+      steps: this.stepManager.steps,
     };
 
     if (props.stepManagerRef) {
@@ -203,7 +203,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     } else {
       return false;
     }
-  }
+  };
 
   render(): JSX.Element {
     const activeStep = this.stepManager.getActive() || this.props.steps[0];
@@ -232,7 +232,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
         />
       </CustomScrollView>
     );
-  }
+  };
 
   renderStepTracker = (activeStep: Step) => {
     if (this.props.renderStepTracker) {
@@ -242,7 +242,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     const stepsFoIndicators = this.props.filterStepTracker
       ? this.state.steps.filter(this.props.filterStepTracker)
       : this.state.steps;
-    const shouldShowStepTracker = stepsFoIndicators.find(step => step.name === activeStep.name);
+    const shouldShowStepTracker = stepsFoIndicators.find((step) => step.name === activeStep.name);
 
     if (!shouldShowStepTracker) {
       return null;
@@ -255,7 +255,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
         {...this.props.StepTrackerProps}
       />
     );
-  }
+  };
 
   renderLoading = ({ isLoading }: { isLoading: boolean }) => {
     if (this.props.renderLoading) {
@@ -265,10 +265,9 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     return (
       <View style={[styles.loadingContainer, !isLoading && styles.hide]}>
         <View style={[styles.loadingInner, !isLoading && styles.hide]}>
-          <ActivityIndicator color='white' />
+          <ActivityIndicator color="white" />
         </View>
       </View>
     );
-  }
+  };
 }
-

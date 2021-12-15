@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { findIndex } from 'lodash-es';
@@ -41,16 +41,18 @@ export interface SerializableSwatchesProps {
   moreLessStyle?: ViewStyle;
 }
 
-export interface SwatchesProps extends SwatchStyle, Omit<
-  SerializableSwatchesProps,
-  'style' |
-  'labelContainerStyle' |
-  'labelTitleStyle' |
-  'labelValueStyle' |
-  'showingMoreStyle' |
-  'showingLessStyle' |
-  'moreLessStyle'
-> {
+export interface SwatchesProps
+  extends SwatchStyle,
+    Omit<
+      SerializableSwatchesProps,
+      | 'style'
+      | 'labelContainerStyle'
+      | 'labelTitleStyle'
+      | 'labelValueStyle'
+      | 'showingMoreStyle'
+      | 'showingLessStyle'
+      | 'moreLessStyle'
+    > {
   style?: StyleProp<ViewStyle>;
   renderSwatch?: (swatch: SwatchProps) => React.ReactNode;
 
@@ -90,7 +92,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     let hasColor = false;
     let hasImage = false;
-    props.items.forEach(item => {
+    props.items.forEach((item) => {
       hasColor = hasColor || !!item.color;
       hasImage = hasImage || !!item.image;
     });
@@ -107,25 +109,27 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       index: null,
       swatch: {
         value: '',
-        name: ''
-      }
+        name: '',
+      },
     };
 
     // Default State
     this.state = {
       selected: selectedSwatch,
-      shouldShowMoreLess: props.maxSwatches ? (props.maxSwatches < props.items.length) : false,
-      showMore: false
+      shouldShowMoreLess: props.maxSwatches ? props.maxSwatches < props.items.length : false,
+      showMore: false,
     };
   }
 
   componentDidUpdate(prevProps: SwatchesProps, prevState: SwatchesState): void {
-    if (prevProps.defaultValue !== this.props.defaultValue ||
-      prevProps.items !== this.props.items) {
+    if (
+      prevProps.defaultValue !== this.props.defaultValue ||
+      prevProps.items !== this.props.items
+    ) {
       const selected = this.getSelectedSwatch(this.props);
       if (selected !== null) {
         this.setState({
-          selected
+          selected,
         });
       }
     }
@@ -143,8 +147,8 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
           index: defaultIndex,
           swatch: {
             value: defaultSwatch.value,
-            name: defaultSwatch.name
-          }
+            name: defaultSwatch.name,
+          },
         };
       }
     }
@@ -154,14 +158,14 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
   onSelect = (swatch: SwatchProps) => {
     const option = {
       value: swatch.value || '',
-      name: swatch.name || ''
+      name: swatch.name || '',
     };
 
     this.setState({
       selected: {
         index: swatch.index,
-        swatch: option
-      }
+        swatch: option,
+      },
     });
 
     const { onColorPress, onChangeSwatch } = this.props;
@@ -179,7 +183,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
         console.error(e);
       }
     }
-  }
+  };
 
   _renderSwatch = (item: SwatchItemType, i: number) => {
     const { selected } = this.state;
@@ -203,7 +207,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       selectedImageStyle,
       disabledImageStyle,
       renderSwatch,
-      disabled
+      disabled,
     } = this.props;
 
     return (
@@ -236,16 +240,11 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
         />
       </View>
     );
-  }
+  };
 
   _renderLabel = (swatch: SelectedSwatchItem) => {
-    const {
-      title,
-      labelContainerStyle,
-      labelTitleStyle,
-      labelValueStyle,
-      renderLabel
-    } = this.props;
+    const { title, labelContainerStyle, labelTitleStyle, labelValueStyle, renderLabel } =
+      this.props;
 
     const { selected } = this.state;
     const name = selected.swatch.name;
@@ -260,11 +259,11 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
         <Text style={labelValueStyle}>{name || ''}</Text>
       </View>
     );
-  }
+  };
 
   toggleMoreLess = () => {
     this.setState({ showMore: !this.state.showMore });
-  }
+  };
 
   _renderMoreLess = () => {
     const { shouldShowMoreLess, showMore } = this.state;
@@ -281,7 +280,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
       return (
         <TouchableOpacity
-          accessibilityLabel='Toggle More/Less Swatches'
+          accessibilityLabel="Toggle More/Less Swatches"
           activeOpacity={0.8}
           onPress={onClickPlus || this.toggleMoreLess}
           style={moreLessStyle}
@@ -292,17 +291,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     } else {
       return null;
     }
-  }
+  };
 
   render(): JSX.Element {
-    const {
-      items,
-      label,
-      maxSwatches,
-      showingLessStyle,
-      showingMoreStyle,
-      style
-    } = this.props;
+    const { items, label, maxSwatches, showingLessStyle, showingMoreStyle, style } = this.props;
 
     const { shouldShowMoreLess, showMore } = this.state;
     const { swatch } = this.state.selected;

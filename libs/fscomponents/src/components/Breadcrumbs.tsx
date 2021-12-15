@@ -1,12 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { TouchableOpacityLink } from './TouchableOpacityLink';
 
 export interface Breadcrumb {
@@ -59,33 +52,32 @@ const BREADCRUMBS_SEPARATOR_DEFAULT = '>';
 const BreadcrumbsStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   breadcrumbContainer: {
     paddingTop: 3,
     paddingRight: 10,
     paddingBottom: 3,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   separator: {
-    paddingLeft: 10
-  }
+    paddingLeft: 10,
+  },
 });
 
 export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Element => {
   const defaultProps: Partial<BreadcrumbsProps> = {
-    separator: BREADCRUMBS_SEPARATOR_DEFAULT
+    separator: BREADCRUMBS_SEPARATOR_DEFAULT,
   };
   const numItems = props.items.length;
 
   return (
     <View style={[BreadcrumbsStyles.container, props.style]}>
-      {props.items.map(
-        (item: Breadcrumb, index: number) => renderBreadcrumb(item, index, (index === numItems - 1))
+      {props.items.map((item: Breadcrumb, index: number) =>
+        renderBreadcrumb(item, index, index === numItems - 1)
       )}
     </View>
   );
-
 
   function renderBreadcrumb(item: Breadcrumb, index: number, isLast: boolean): JSX.Element {
     let title: JSX.Element;
@@ -97,18 +89,13 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Ele
         </TouchableOpacityLink>
       );
     } else {
-      title = (
-        <Text style={[props.titleStyle, props.titleDisabledStyle]}>{item.title}</Text>
-      );
+      title = <Text style={[props.titleStyle, props.titleDisabledStyle]}>{item.title}</Text>;
     }
 
     return (
       <View
         key={index}
-        style={[
-          BreadcrumbsStyles.breadcrumbContainer,
-          props.breadcrumbContainerStyle
-        ]}
+        style={[BreadcrumbsStyles.breadcrumbContainer, props.breadcrumbContainerStyle]}
       >
         {title}
         {(props.showTrailingSeparator || !isLast) && (

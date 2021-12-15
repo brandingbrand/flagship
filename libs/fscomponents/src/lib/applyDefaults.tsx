@@ -52,7 +52,7 @@ export function mergeProps(defaultProps: any, newProps: any) {
 
   const props = { ...defaultProps };
 
-  Object.keys(newProps).forEach(key => {
+  Object.keys(newProps).forEach((key) => {
     const val = newProps[key];
 
     if (props[key]) {
@@ -63,10 +63,7 @@ export function mergeProps(defaultProps: any, newProps: any) {
         } else {
           props[key] = [...props[key], val];
         }
-      } else if (
-        typeof props[key] === 'object' &&
-        !React.isValidElement(props[key])
-      ) {
+      } else if (typeof props[key] === 'object' && !React.isValidElement(props[key])) {
         // if default props is plan object (not react element), merge
         if (typeof val === 'object') {
           props[key] = { ...props[key], ...val };

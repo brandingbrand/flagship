@@ -57,7 +57,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     PasswordType.getValidationErrorMessage = (s: string) => {
       if (s.length < 6) {
         return FSI18n.string(componentTranslationKeys.form.errors.password.tooShort, {
-          minCharacters: 6
+          minCharacters: 6,
         });
       } else {
         return FSI18n.string(componentTranslationKeys.form.errors.password.invalid);
@@ -67,7 +67,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     this.fieldsTypes = t.struct({
       currentPassword: PasswordType,
       newPassword: PasswordType,
-      confirmPassword: ConfirmPasswordType
+      confirmPassword: ConfirmPasswordType,
     });
 
     this.fieldsOptions = {
@@ -77,7 +77,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
         autoCorrect: false,
         autoCapitalize: 'none',
         onSubmitEditing: () => this.focusField('newPassword'),
-        secureTextEntry: true
+        secureTextEntry: true,
       },
       newPassword: {
         label: FSI18n.string(componentTranslationKeys.form.newPassword.label),
@@ -90,18 +90,18 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
           const currentVal = this.state.value;
           const newVal = { ...currentVal, password: e.nativeEvent.text };
           this.setState({
-            value: newVal
+            value: newVal,
           });
-        }
+        },
       },
       confirmPassword: {
         label: FSI18n.string(componentTranslationKeys.form.confirmPassword.label),
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        secureTextEntry: true
+        secureTextEntry: true,
       },
-      ...props.fieldsOptions
+      ...props.fieldsOptions,
     };
 
     // configure custom styles
@@ -109,27 +109,28 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
       textbox: {
         normal: {
           borderRadius: 15,
-          fontSize:  12,
+          fontSize: 12,
           // color for text inside box - default is black
-          color: '#000'
+          color: '#000',
         },
         error: {
           borderRadius: 15,
           fontSize: 12,
           // color for text inside box - default is red
-          color: '#7f0000'
-        }
+          color: '#7f0000',
+        },
       },
       errorBlock: {
-        fontSize: 11
+        fontSize: 11,
       },
-      ...props.fieldsStyleConfig
+      ...props.fieldsStyleConfig,
     };
-
   } // end constructor
 
   componentDidMount(): void {
-    console.warn('ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.');
+    console.warn(
+      'ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.'
+    );
   }
 
   handleSubmit = () => {
@@ -137,7 +138,7 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
-  }
+  };
 
   focusField = (fieldName: string) => {
     const field = this.form?.getComponent(fieldName);
@@ -146,19 +147,19 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     if (ref.focus) {
       ref.focus();
     }
-  }
+  };
 
   handleChange = (value: string) => {
     this.setState({
-      value
+      value,
     });
-  }
+  };
 
   render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={ref => (this.form = ref)}
+          ref={(ref) => (this.form = ref)}
           fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}

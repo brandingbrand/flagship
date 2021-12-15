@@ -7,15 +7,15 @@
 
 import React, { Component } from 'react';
 import {
-   Dimensions,
-   Image,
-   ListRenderItem,
-   ScrollView,
-   StyleSheet,
-   Text,
-   TouchableOpacity,
-   View
- } from 'react-native';
+  Dimensions,
+  Image,
+  ListRenderItem,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ImageData, ZoomCarouselProps } from './types';
 import { CarouselController, MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
@@ -29,12 +29,12 @@ const searchIcon = require('../../../assets/images/search.png');
 let ZOOM_CAROUSEL_ID = 0;
 
 type ImageGetSize = (
-   uri: string,
-   success: (width: number, height: number) => void,
-   failure: (error: any) => void
- ) => any;
+  uri: string,
+  success: (width: number, height: number) => void,
+  failure: (error: any) => void
+) => any;
 
- // @ts-ignore @types/react-native does not correctly define Image.getSize as a static method.
+// @ts-ignore @types/react-native does not correctly define Image.getSize as a static method.
 const getSize: ImageGetSize = Image.getSize.bind(Image);
 
 export interface ImageSize {
@@ -55,20 +55,20 @@ export interface ZoomCarouselStateType {
 const S = StyleSheet.create({
   carouselContainer: {
     flex: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
   },
   searchIcon: {
     width: 25,
-    height: 25
+    height: 25,
   },
   zoomButtonContainer: {
     position: 'absolute',
     right: 50,
     bottom: 30,
-    zIndex: 101
+    zIndex: 101,
   },
   zoomButton: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   goToNext: {
     position: 'absolute',
@@ -76,7 +76,7 @@ const S = StyleSheet.create({
     right: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   goToPrev: {
     position: 'absolute',
@@ -84,7 +84,7 @@ const S = StyleSheet.create({
     left: 0,
     zIndex: 100,
     marginTop: -15,
-    padding: 10
+    padding: 10,
   },
   buttonPrevIcon: {
     width: 25,
@@ -94,9 +94,9 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '-45deg'
-      }
-    ]
+        rotate: '-45deg',
+      },
+    ],
   },
   buttonNextIcon: {
     width: 25,
@@ -106,41 +106,41 @@ const S = StyleSheet.create({
     borderColor: 'black',
     transform: [
       {
-        rotate: '45deg'
-      }
-    ]
+        rotate: '45deg',
+      },
+    ],
   },
   fullHeight: {
-    height: '100%'
+    height: '100%',
   },
   thumbnailImg: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   thumbnail: {
     marginRight: 10,
     width: 50,
-    height: 50
+    height: 50,
   },
   thumbnailContainer: {
-    margin: 10
+    margin: 10,
   },
   thumbnailSelected: {
     borderWidth: 3,
-    borderColor: 'red'
+    borderColor: 'red',
   },
   imageCounter: {
     position: 'absolute',
     right: 0,
-    top: 0
-  }
+    top: 0,
+  },
 });
 
 export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselStateType> {
   static defaultProps: ZoomCarouselProps = {
     images: [],
     peekSize: 0,
-    gapSize: 0
+    gapSize: 0,
   };
   multiCarousel?: CarouselController;
   id: number;
@@ -154,8 +154,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
     this.id = ZOOM_CAROUSEL_ID++;
     const itemWidth = props.centerMode
-       ? screenWidth - 2 * peekSize - gapSize
-       : screenWidth - peekSize;
+      ? screenWidth - 2 * peekSize - gapSize
+      : screenWidth - peekSize;
     const imageWidth = itemWidth - gapSize;
     const imageHeight = itemWidth - gapSize;
 
@@ -166,61 +166,62 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
 
       imageWidth,
       imageHeight,
-      screenWidth
+      screenWidth,
     };
 
-     // get the image ratio
+    // get the image ratio
     props.images.forEach((img, i) => {
       const uri = img.src.uri;
 
       if (uri) {
         getSize(
-           uri,
-           (width, height) => {
-             const imageSizes = this.state.imageSizes;
-             imageSizes[i] = { width, height };
-             this.setState({
-               imageSizes
-             });
-           }, err => {
-             console.warn('image getSize failed', err);
-           }
-         );
+          uri,
+          (width, height) => {
+            const imageSizes = this.state.imageSizes;
+            imageSizes[i] = { width, height };
+            this.setState({
+              imageSizes,
+            });
+          },
+          (err) => {
+            console.warn('image getSize failed', err);
+          }
+        );
       }
     });
   }
 
   goToNext = () => {
     this.multiCarousel?.goToNext();
-  }
+  };
 
   goToPrev = () => {
     this.multiCarousel?.goToPrev();
-  }
+  };
 
   openZoom = () => {
     this.setState({
-      isZooming: true
+      isZooming: true,
     });
-  }
+  };
 
   closeZoom = () => {
     this.setState({
-      isZooming: false
+      isZooming: false,
     });
-  }
+  };
 
   handleSlideChange = ({ currentIndex, nextIndex }: any) => {
     this.setState({
-      currentIndex: nextIndex
+      currentIndex: nextIndex,
     });
-  }
+  };
 
   handleZoomCarouselChange = (pswp: any) => {
     const currentIndex = pswp.getCurrentIndex();
     this.setState({ currentIndex });
     this.multiCarousel?.goTo(currentIndex);
-  }
+  };
 
   handleLayoutChange = (e: any) => {
     const { centerMode, peekSize = 0, gapSize = 0 } = this.props;
@@ -233,179 +234,179 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
     this.setState({
       imageWidth,
       imageHeight,
-      screenWidth
+      screenWidth,
     });
-  }
+  };
 
   goTo = (i: number) => {
     this.multiCarousel?.goTo(i);
-  }
+  };
 
   handleThumbPress = (i: number) => () => {
     this.goTo(i);
-  }
+  };
 
   extractMultiCarousel = (controller: CarouselController) => {
     this.multiCarousel = controller;
-  }
+  };
 
   itemUpdated = (oldItem: ImageData, newItem: ImageData, index: number, changed: () => void) => {
     if (
-       newItem.src &&
-       (newItem.src.uri ? newItem.src.uri !== oldItem.src.uri : newItem.src !== oldItem.src)
-     ) {
+      newItem.src &&
+      (newItem.src.uri ? newItem.src.uri !== oldItem.src.uri : newItem.src !== oldItem.src)
+    ) {
       changed();
     }
-  }
+  };
 
   renderImage: ListRenderItem<ImageData> = ({ item, index }) => {
     return (
-       <View style={this.props.fillContainer ? S.fullHeight : null}>
-         {(this.props.renderImageWeb && this.props.renderImageWeb(item, index)) || (
-           <Image
-             source={item.src}
-             resizeMode='contain'
-             style={{
-               width: this.state.imageWidth,
-               height: this.state.imageHeight
-             }}
-           />
-         )}
-       </View>
+      <View style={this.props.fillContainer ? S.fullHeight : null}>
+        {(this.props.renderImageWeb && this.props.renderImageWeb(item, index)) || (
+          <Image
+            source={item.src}
+            resizeMode="contain"
+            style={{
+              width: this.state.imageWidth,
+              height: this.state.imageHeight,
+            }}
+          />
+        )}
+      </View>
     );
-  }
+  };
 
   renderImageCounter = () => {
     const total: number = (this.props.images && this.props.images.length) || 0;
     const currentIndex = this.state.currentIndex + 1;
 
     return (
-       <View style={this.props.imageCounterStyle || S.imageCounter}>
-         <Text>{`${currentIndex}/${total}`}</Text>
-       </View>
+      <View style={this.props.imageCounterStyle || S.imageCounter}>
+        <Text>{`${currentIndex}/${total}`}</Text>
+      </View>
     );
-  }
+  };
 
   renderPhotoSwipe = () => (
-     <PhotoSwipe
-       isOpen={this.state.isZooming}
-       items={this.props.images
-         .map(img => img.zoomSrc || img.src)
-         .map((img, i) => ({
-           src: img.uri || img,
-           w: this.state.screenWidth,
-           h: this.state.imageSizes[i]
-             ? (this.state.screenWidth * this.state.imageSizes[i].height) /
-               this.state.imageSizes[i].width
-             : this.state.imageHeight
-         }))}
-       options={{
-         loop: false,
-         fullscreenEl: false,
-         shareEl: false,
-         captionEl: false,
-         history: false,
-         closeOnScroll: false,
-         index: this.state.currentIndex
-       }}
-       afterChange={this.handleZoomCarouselChange}
-       onClose={this.closeZoom}
-     />
-   )
+    <PhotoSwipe
+      isOpen={this.state.isZooming}
+      items={this.props.images
+        .map((img) => img.zoomSrc || img.src)
+        .map((img, i) => ({
+          src: img.uri || img,
+          w: this.state.screenWidth,
+          h: this.state.imageSizes[i]
+            ? (this.state.screenWidth * this.state.imageSizes[i].height) /
+              this.state.imageSizes[i].width
+            : this.state.imageHeight,
+        }))}
+      options={{
+        loop: false,
+        fullscreenEl: false,
+        shareEl: false,
+        captionEl: false,
+        history: false,
+        closeOnScroll: false,
+        index: this.state.currentIndex,
+      }}
+      afterChange={this.handleZoomCarouselChange}
+      onClose={this.closeZoom}
+    />
+  );
 
   renderCustomModal = () =>
-     this.props.renderModalContent ? (
-       <Modal visible={this.state.isZooming} transparent={true}>
-         {this.props.renderModalContent(this.closeZoom)}
-       </Modal>
-     ) : (
-       this.renderPhotoSwipe()
-     )
+    this.props.renderModalContent ? (
+      <Modal visible={this.state.isZooming} transparent={true}>
+        {this.props.renderModalContent(this.closeZoom)}
+      </Modal>
+    ) : (
+      this.renderPhotoSwipe()
+    );
 
   renderThumbnails = () => (
-     <ScrollView
-       horizontal={true}
-       contentContainerStyle={[S.thumbnailContainer, this.props.thumbnailContainerStyle]}
-     >
-       {this.props.images.map((img, i) => (
-         <TouchableOpacity
-           key={i}
-           style={[
-             S.thumbnail,
-             this.props.thumbnailStyle,
-             this.state.currentIndex === i && S.thumbnailSelected
-           ]}
-           onPress={this.handleThumbPress(i)}
-           accessibilityRole={'button'}
-           accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
-         >
-           <Image resizeMode='cover' source={img.src} style={S.thumbnailImg} />
-         </TouchableOpacity>
-       ))}
-     </ScrollView>
-   )
+    <ScrollView
+      horizontal={true}
+      contentContainerStyle={[S.thumbnailContainer, this.props.thumbnailContainerStyle]}
+    >
+      {this.props.images.map((img, i) => (
+        <TouchableOpacity
+          key={i}
+          style={[
+            S.thumbnail,
+            this.props.thumbnailStyle,
+            this.state.currentIndex === i && S.thumbnailSelected,
+          ]}
+          onPress={this.handleThumbPress(i)}
+          accessibilityRole={'button'}
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.focus.actionBtn)}
+        >
+          <Image resizeMode="cover" source={img.src} style={S.thumbnailImg} />
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
 
   // eslint-disable-next-line complexity
   render(): JSX.Element {
     const { peekSize = 0, gapSize = 0 } = this.props;
     return (
-       <View
-         style={this.props.contentContainerStyle || S.carouselContainer}
-         onLayout={this.handleLayoutChange}
-       >
-         <View style={this.props.imageContainerStyle || S.carouselContainer}>
-           <div
-             id={`zoom-carousel-${this.id}`}
-             style={this.props.fillContainer ? { height: '100%' } : undefined}
-           >
-             <MultiCarousel
-               carouselController={this.extractMultiCarousel}
-               onSlideChange={this.handleSlideChange}
-               peekSize={peekSize + (this.props.centerMode ? gapSize / 2 : 0)}
-               itemsPerPage={1}
-               data={this.props.images}
-               renderItem={this.renderImage}
-               showArrow={this.props.showArrow}
-               dotStyle={this.props.dotStyle}
-               dotActiveStyle={this.props.dotActiveStyle}
-               pageIndicatorStyle={this.props.pageIndicatorStyle}
-               renderPageIndicator={this.props.renderPageIndicator}
-               centerMode={this.props.centerMode}
-               style={this.props.fillContainer ? S.fullHeight : null}
-               nextArrowOnBlur={this.props.nextArrowOnBlur}
-               hidePageIndicator={this.props.hidePageIndicator}
-               hideOverflow={this.props.hideOverflow}
-             />
+      <View
+        style={this.props.contentContainerStyle || S.carouselContainer}
+        onLayout={this.handleLayoutChange}
+      >
+        <View style={this.props.imageContainerStyle || S.carouselContainer}>
+          <div
+            id={`zoom-carousel-${this.id}`}
+            style={this.props.fillContainer ? { height: '100%' } : undefined}
+          >
+            <MultiCarousel
+              carouselController={this.extractMultiCarousel}
+              onSlideChange={this.handleSlideChange}
+              peekSize={peekSize + (this.props.centerMode ? gapSize / 2 : 0)}
+              itemsPerPage={1}
+              data={this.props.images}
+              renderItem={this.renderImage}
+              showArrow={this.props.showArrow}
+              dotStyle={this.props.dotStyle}
+              dotActiveStyle={this.props.dotActiveStyle}
+              pageIndicatorStyle={this.props.pageIndicatorStyle}
+              renderPageIndicator={this.props.renderPageIndicator}
+              centerMode={this.props.centerMode}
+              style={this.props.fillContainer ? S.fullHeight : null}
+              nextArrowOnBlur={this.props.nextArrowOnBlur}
+              hidePageIndicator={this.props.hidePageIndicator}
+              hideOverflow={this.props.hideOverflow}
+            />
 
-             {!this.props.hideZoomButton && (
-               <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
-                 {this.props.renderZoomButton ? (
-                   this.props.renderZoomButton(this.openZoom)
-                 ) : (
-                   <TouchableOpacity
-                     style={S.zoomButton}
-                     onPress={this.openZoom}
-                     accessibilityRole={'button'}
-                     accessibilityLabel={zoomTranslationKey}
-                   >
-                     <Image style={S.searchIcon} source={searchIcon} />
-                   </TouchableOpacity>
-                 )}
-               </View>
-             )}
-             {this.renderCustomModal()}
-           </div>
-         </View>
+            {!this.props.hideZoomButton && (
+              <View style={[S.zoomButtonContainer, this.props.zoomButtonStyle]}>
+                {this.props.renderZoomButton ? (
+                  this.props.renderZoomButton(this.openZoom)
+                ) : (
+                  <TouchableOpacity
+                    style={S.zoomButton}
+                    onPress={this.openZoom}
+                    accessibilityRole={'button'}
+                    accessibilityLabel={zoomTranslationKey}
+                  >
+                    <Image style={S.searchIcon} source={searchIcon} />
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+            {this.renderCustomModal()}
+          </div>
+        </View>
 
-         {this.props.showThumbnails &&
-           (this.props.renderThumbnails
-             ? this.props.renderThumbnails(this.state.currentIndex, this.goTo)
-             : this.renderThumbnails())}
-         {this.props.showImageCounter &&
-           (this.props.renderImageCounter
-             ? this.props.renderImageCounter(this.state.currentIndex)
-             : this.renderImageCounter())}
-       </View>
+        {this.props.showThumbnails &&
+          (this.props.renderThumbnails
+            ? this.props.renderThumbnails(this.state.currentIndex, this.goTo)
+            : this.renderThumbnails())}
+        {this.props.showImageCounter &&
+          (this.props.renderImageCounter
+            ? this.props.renderImageCounter(this.state.currentIndex)
+            : this.renderImageCounter())}
+      </View>
     );
   }
 }

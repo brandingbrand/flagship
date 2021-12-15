@@ -10,13 +10,13 @@ import type {
   Route,
   RouteCollection,
   RouterConfig,
-  Tab
+  Tab,
 } from './types';
 
 export const resolveRoutes = async ({
   api,
   routes,
-  externalRoutes: externalRoutesFactory
+  externalRoutes: externalRoutesFactory,
 }: RouterConfig & InternalRouterConfig) => {
   const externalRoutes = await (async () => {
     try {
@@ -24,7 +24,7 @@ export const resolveRoutes = async ({
         return await externalRoutesFactory(api);
       }
 
-      return await externalRoutesFactory ?? [];
+      return (await externalRoutesFactory) ?? [];
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.warn(`Failed to load external routes with the following error ${e.message}`);
@@ -36,18 +36,14 @@ export const resolveRoutes = async ({
     }
   })();
 
-
-  const normalizePath = (route: Route | RouteCollection) => (
-    'initialPath' in route ? route.initialPath : route.path
-  );
+  const normalizePath = (route: Route | RouteCollection) =>
+    'initialPath' in route ? route.initialPath : route.path;
 
   const ifRouteCollection = <T, F>(
     route: Route | RouteCollection,
     routeCollectionValue: T,
     routeValue: F
-  ) => (
-    'initialPath' in route ? routeCollectionValue : routeValue
-  );
+  ) => ('initialPath' in route ? routeCollectionValue : routeValue);
 
   // eslint-disable-next-line complexity
   const findRoute = (
@@ -65,8 +61,7 @@ export const resolveRoutes = async ({
       const tab = 'tab' in child ? child.tab : tabAffinity;
 
       if (
-        tab &&
-        (search.exact && prefixedPath === `/${searchPath}`) ||
+        (tab && search.exact && prefixedPath === `/${searchPath}`) ||
         (!search.exact && prefixedPath?.startsWith(`/${searchPath}` ?? ''))
       ) {
         return tab;
@@ -96,23 +91,20 @@ export const resolveRoutes = async ({
 
   const tabbedExternalRoutes = externalRoutes.map(withTabAffinity);
   const universalRoutes = tabbedExternalRoutes.filter(({ tabAffinity }) => !tabAffinity);
-  const mergedRoutes = routes.map(route =>
+  const mergedRoutes = routes.map((route) =>
     'tab' in route
       ? {
-        ...route,
-        children: [
-          ...tabbedExternalRoutes
-              .filter(
-                ({ tabAffinity }) =>
-                  tabAffinity === route.tab?.id
-              )
-              .map(external => ({
+          ...route,
+          children: [
+            ...tabbedExternalRoutes
+              .filter(({ tabAffinity }) => tabAffinity === route.tab?.id)
+              .map((external) => ({
                 ...external,
-                path: external.path?.replace(/\/$/, '').replace(/^\//, '')
+                path: external.path?.replace(/\/$/, '').replace(/^\//, ''),
               })),
-          ...route.children
-        ]
-      }
+            ...route.children,
+          ],
+        }
       : route
   );
 
@@ -126,10 +118,12 @@ export const trackView = (
   path: string | undefined
 ) => {
   if (!__DEV__ && filteredRoute && !route.disableTracking) {
-    void Promise.resolve(typeof route.title === 'string' ? route.title : route.title?.(filteredRoute))
-      .then(title => {
+    void Promise.resolve(
+      typeof route.title === 'string' ? route.title : route.title?.(filteredRoute)
+    )
+      .then((title) => {
         analytics?.screenview(title ?? path ?? '', {
-          url: path ?? ''
+          url: path ?? '',
         });
       })
       .catch();

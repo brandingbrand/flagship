@@ -13,18 +13,13 @@ export interface SerializableTotalsProps extends TotalsProps {
   style?: ViewStyle;
 }
 
-export const Totals: React.FunctionComponent<TotalsProps> = props => {
+export const Totals: React.FunctionComponent<TotalsProps> = (props) => {
   const { style, totals } = props;
 
   return (
     <View style={style}>
       {totals.map((total: TotalProps, index: number) => {
-        return (
-          <Total
-            key={typeof total.keyName === 'string' ? total.keyName : index}
-            {...total}
-          />
-        );
+        return <Total key={typeof total.keyName === 'string' ? total.keyName : index} {...total} />;
       })}
     </View>
   );

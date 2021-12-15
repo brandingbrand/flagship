@@ -3,10 +3,12 @@ import * as colors from './colors';
 
 // Allows multiple question formatters to be compiled into a single formatting function
 export const compose = (...fns: QuestionFormatter[]): QuestionFormatter => {
-  return question => fns.reduceRight((formatters, fn) => fn(formatters), question);
+  return (question) => fns.reduceRight((formatters, fn) => fn(formatters), question);
 };
 
-export type QuestionFormatter<T extends Answers = Answers> = (question: DistinctQuestion<T>) => DistinctQuestion<T>;
+export type QuestionFormatter<T extends Answers = Answers> = (
+  question: DistinctQuestion<T>
+) => DistinctQuestion<T>;
 
 /**
  * Appends a given tag to the prefix of a question
@@ -19,10 +21,10 @@ export type QuestionFormatter<T extends Answers = Answers> = (question: Distinct
  * // Some Text -> [Required] Some Text
  */
 export const tagPrefix = (tag: string): QuestionFormatter => {
-  return question => {
+  return (question) => {
     return {
       ...question,
-      prefix: `[${tag}]${question.prefix || ''}`
+      prefix: `[${tag}]${question.prefix || ''}`,
     };
   };
 };
@@ -36,7 +38,7 @@ export const tagPrefix = (tag: string): QuestionFormatter => {
  * @example
  * // Some Text -> \nSome Text\n
  */
-export const newLineSuffix: QuestionFormatter = question => {
+export const newLineSuffix: QuestionFormatter = (question) => {
   let suffix = question.suffix || '\n';
 
   if (!suffix.startsWith('\n')) {
@@ -49,7 +51,7 @@ export const newLineSuffix: QuestionFormatter = question => {
 
   return {
     ...question,
-    suffix
+    suffix,
   };
 };
 

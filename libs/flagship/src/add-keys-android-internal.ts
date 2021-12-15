@@ -32,8 +32,10 @@ if (!KEY_PASSWORD) {
 const buildConfig = projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.android;
 
 if (!(buildConfig && buildConfig.storeFile && buildConfig.keyAlias)) {
-  console.error('buildConfig.android does not exist in the active environment. Please see '
-   + 'https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps for more information.');
+  console.error(
+    'buildConfig.android does not exist in the active environment. Please see ' +
+      'https://github.com/brandingbrand/flagship/wiki/Signing-Your-Apps for more information.'
+  );
 }
 
 const gradlePropertiesPath = project.resolve('android', 'gradle.properties');

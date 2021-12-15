@@ -8,7 +8,7 @@ import {
   readFileSync,
   removeSync,
   renameSync,
-  writeFileSync
+  writeFileSync,
 } from 'fs-extra';
 export {
   copySync,
@@ -20,7 +20,7 @@ export {
   renameSync,
   pathExistsSync,
   ensureSymlinkSync,
-  moveSync
+  moveSync,
 };
 
 import * as helpers from '../helpers';
@@ -37,7 +37,7 @@ export function clone(...resource: string[]): void {
 
   helpers.logInfo(
     `cloning ${helpers.colors.Dim}${source}${helpers.colors.Reset} => ` +
-    `${helpers.colors.Dim}${destination}${helpers.colors.Reset}`
+      `${helpers.colors.Dim}${destination}${helpers.colors.Reset}`
   );
 
   copySync(source, destination);

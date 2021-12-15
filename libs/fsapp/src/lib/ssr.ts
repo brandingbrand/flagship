@@ -19,10 +19,7 @@ let cookieParser: typeof cookieParserRoot | undefined;
 try {
   express = require('express');
 } catch (e) {
-  console.warn(
-    'express must be added to your project'
-    + ' to enable server-side rendering'
-  );
+  console.warn('express must be added to your project' + ' to enable server-side rendering');
 }
 
 try {
@@ -31,19 +28,13 @@ try {
     Helmet.canUseDOM = false;
   }
 } catch (e) {
-  console.warn(
-    'react-helmet must be added to your project'
-    + ' to enable server-side rendering'
-  );
+  console.warn('react-helmet must be added to your project' + ' to enable server-side rendering');
 }
 
 try {
   cookieParser = require('cookie-parser');
 } catch (e) {
-  console.warn(
-    'cookie-parser must be added to your project'
-    + ' to enable server-side rendering'
-  );
+  console.warn('cookie-parser must be added to your project' + ' to enable server-side rendering');
 }
 
 export interface SSROptions {
@@ -81,7 +72,7 @@ async function initApp(
 
   return {
     flagship,
-    config: cloneConfig
+    config: cloneConfig,
   };
 }
 
@@ -101,36 +92,41 @@ async function renderApp(
   const updatedConfig = {
     ...config,
     initialState: {
-      ...await flagship.updatedInitialState(cache),
-      ...config.initialState
-    }
+      ...(await flagship.updatedInitialState(cache)),
+      ...config.initialState,
+    },
   };
-  flagship.getReduxStore(updatedConfig.initialState).then((reduxStore: Store) => {
-    // prerender the app
-    const ssApp = flagship.getApp(updatedConfig, reduxStore);
-    if (ssApp) {
-      const { element, getStyleElement } = ssApp;
+  flagship
+    .getReduxStore(updatedConfig.initialState)
+    .then((reduxStore: Store) => {
+      // prerender the app
+      const ssApp = flagship.getApp(updatedConfig, reduxStore);
+      if (ssApp) {
+        const { element, getStyleElement } = ssApp;
 
-      // first the element
-      const html = ReactDOMServer.renderToString(element);
-      let helmet: HelmetData | Record<string, string> = {
-        title: '',
-        meta: '',
-        link: ''
-      };
+        // first the element
+        const html = ReactDOMServer.renderToString(element);
+        let helmet: HelmetData | Record<string, string> = {
+          title: '',
+          meta: '',
+          link: '',
+        };
 
-      if (Helmet) {
-        helmet = Helmet.renderStatic();
-      }
+        if (Helmet) {
+          helmet = Helmet.renderStatic();
+        }
 
-      // then the styles (optionally include a nonce if your CSP policy requires it)
-      const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
+        // then the styles (optionally include a nonce if your CSP policy requires it)
+        const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
 
-      const state = JSON.stringify(updatedConfig.initialState);
+        const state = JSON.stringify(updatedConfig.initialState);
 
-      const variables = JSON.stringify(updatedConfig.variables || {});
+        const variables = JSON.stringify(updatedConfig.variables || {});
 
-      const document = baseHTML.replace(/<head>/, `<head>
+        const document = baseHTML
+          .replace(
+            /<head>/,
+            `<head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${helmet.link.toString()}
@@ -139,18 +135,24 @@ async function renderApp(
           var initialState = ${state};
           var variables = ${variables};
         </script>
-      `).replace(/<div id="root">/, `<div id="root">
+      `
+          )
+          .replace(
+            /<div id="root">/,
+            `<div id="root">
         ${html}
-      `);
+      `
+          );
 
-      res.send(document);
-    } else {
-      res.status(500).send('There was an issue loading the React app.');
-    }
-  }).catch((e: Error) => {
-    console.error(e);
-    res.status(500).send(e.toString());
-  });
+        res.send(document);
+      } else {
+        res.status(500).send('There was an issue loading the React app.');
+      }
+    })
+    .catch((e: Error) => {
+      console.error(e);
+      res.status(500).send(e.toString());
+    });
 }
 
 async function flagshipPreinit(
@@ -160,9 +162,9 @@ async function flagshipPreinit(
 ): Promise<FSAppTypes.AppConfigType> {
   let ssrData: FSAppTypes.SSRData = {
     initialState: {
-      ...config.initialState
+      ...config.initialState,
     },
-    variables: {}
+    variables: {},
   };
 
   if (pageState) {
@@ -175,15 +177,15 @@ async function flagshipPreinit(
     ...config,
     webRouterProps: {
       ...config.webRouterProps,
-      location: req.url
+      location: req.url,
     },
     ...ssrData,
     location: {
       pathname: req.path,
       search: req.url.split('?')[1] || '',
       hash: '',
-      state: {}
-    }
+      state: {},
+    },
   };
 }
 
@@ -192,7 +194,8 @@ export const attachSSR = (
   appConfig: FSAppTypes.AppConfigType,
   options?: SSROptions
 ) => {
-  const baseHTML = options?.overrideHTML ||
+  const baseHTML =
+    options?.overrideHTML ||
     fs.readFileSync(path.resolve('..', 'web-compiled', 'index.html')).toString();
 
   if (cookieParser) {
@@ -210,17 +213,19 @@ export const attachSSR = (
         serverSide: true,
         webRouterType: 'static',
         webRouterProps: {
-          context: {}
-        }
+          context: {},
+        },
       };
-    }).then((flagshipApp: InitResponse) => {
+    }
+  )
+    .then((flagshipApp: InitResponse) => {
       const { flagship, config } = flagshipApp;
 
       if (express) {
         app.use('/static', express.static('./ssr-build/static'));
       }
 
-      Object.keys(config.screens).forEach(key => {
+      Object.keys(config.screens).forEach((key) => {
         const screen = config.screens[key];
         const path = pathForScreen(screen, key);
         const keys: Key[] = [];
@@ -233,10 +238,15 @@ export const attachSSR = (
           flagshipPreinit(req, config, screen.loadInitialData)
             .then(async (pageConfig: FSAppTypes.AppConfigType) => {
               if (screen.shouldNext) {
-                if (await screen.shouldNext({
-                  initialState: pageConfig.initialState,
-                  variables: pageConfig.variables
-                }, req)) {
+                if (
+                  await screen.shouldNext(
+                    {
+                      initialState: pageConfig.initialState,
+                      variables: pageConfig.variables,
+                    },
+                    req
+                  )
+                ) {
                   next();
                   return;
                 }
@@ -251,8 +261,8 @@ export const attachSSR = (
                   flagship,
                   config: {
                     ...pageConfig,
-                    uncachedData: screen.cache ? undefined : pageConfig.uncachedData
-                  }
+                    uncachedData: screen.cache ? undefined : pageConfig.uncachedData,
+                  },
                 },
                 !!screen.cache,
                 req
@@ -271,7 +281,7 @@ export const attachSSR = (
                 res,
                 {
                   flagship,
-                  config: pageConfig
+                  config: pageConfig,
                 },
                 false,
                 req
@@ -280,7 +290,8 @@ export const attachSSR = (
             .catch(handleRequestError(req, res));
         });
       }
-    }).catch((e: any) => {
+    })
+    .catch((e: any) => {
       // There was an error initializing the SSR React App
       console.error(e);
     });
@@ -298,7 +309,7 @@ function handleRequestError(req: Request, res: Response): (e: any) => void {
     } else {
       const statusCode = debugMode ? 200 : 500;
       let errorString = `<h2>We're sorry, an error has occurred.</h2><br />`;
-      const inspectError = inspect(e, {depth: 5});
+      const inspectError = inspect(e, { depth: 5 });
       const sanitizedError = sanitizeString(inspectError);
 
       errorString += `<pre> ${sanitizedError} </pre>`;

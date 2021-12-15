@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  DeviceEventEmitter,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { DeviceEventEmitter, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import {
-  CardProps,
-  JSON
-} from '../types';
+import { CardProps, JSON } from '../types';
 
 import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
@@ -20,36 +12,35 @@ import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 const styles = StyleSheet.create({
   whenIcon: {
     width: 13,
-    height: 13
+    height: 13,
   },
   timeIcon: {
     width: 14,
-    height: 14
+    height: 14,
   },
   whereIcon: {
     width: 10,
-    height: 14
+    height: 14,
   },
   eventContainer: {
     marginLeft: 50,
-    paddingLeft: 100
+    paddingLeft: 100,
   },
   eventType: {
     flexDirection: 'row',
-    marginVertical: 5
+    marginVertical: 5,
   },
   imageContainer: {
     position: 'absolute',
     left: 30,
-    top: 40
+    top: 40,
   },
   dateRow: {
     width: 12,
     paddingTop: 2,
     alignItems: 'center',
-    marginRight: 5
-  }
-
+    marginRight: 5,
+  },
 });
 
 export interface ComponentProps extends CardProps {
@@ -60,14 +51,14 @@ const timeIcon = require('../../assets/images/time.png');
 const whenIcon = require('../../assets/images/whenIcon.png');
 const whereIcon = require('../../assets/images/whereIcon.png');
 
-export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(props => {
+export const EventCard: React.FunctionComponent<ComponentProps> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
   const { contents } = props;
 
   const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: props.name,
-      id: props.id
+      id: props.id,
     });
 
     if (!navigator) {
@@ -78,7 +69,7 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
         json,
         backButton: true,
         name: props.name,
-        discoverPath: props.discoverPath
+        discoverPath: props.discoverPath,
       });
     }
     return navigator.push({
@@ -86,23 +77,22 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
         name: 'EngagementComp',
         options: {
           topBar: {
-            visible: false
-          }
+            visible: false,
+          },
         },
         passProps: {
           json,
           backButton: true,
           name: props.name,
-          id: props.id
-        }
-      }
+          id: props.id,
+        },
+      },
     });
   };
 
   const onCardPress = async (): Promise<void> => {
     const { story, storyGradient } = props;
-    const actionPayload: any = storyGradient ?
-      { ...story, storyGradient } : { ...story };
+    const actionPayload: any = storyGradient ? { ...story, storyGradient } : { ...story };
     return handleStoryAction(actionPayload);
   };
 
@@ -110,17 +100,12 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
     <CardContext.Provider
       value={{
         story: props.story,
-        handleStoryAction
+        handleStoryAction,
       }}
     >
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={onCardPress}
-      >
+      <TouchableOpacity activeOpacity={0.9} onPress={onCardPress}>
         <View style={[props.containerStyle, styles.eventContainer]}>
-          <TextBlock
-            {...contents.Title}
-          />
+          <TextBlock {...contents.Title} />
           {!contents.When.textDate && !contents.When.textTime && (
             <View style={styles.eventType}>
               <ImageBlock
@@ -128,9 +113,7 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
                 containerStyle={styles.dateRow}
                 imageStyle={styles.whenIcon}
               />
-              <TextBlock
-                {...contents.When}
-              />
+              <TextBlock {...contents.When} />
             </View>
           )}
           {contents.When.textDate && (
@@ -140,9 +123,7 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
                 containerStyle={styles.dateRow}
                 imageStyle={styles.whenIcon}
               />
-              <TextBlock
-                {...{ ...contents.When, text: contents.When.textDate }}
-              />
+              <TextBlock {...{ ...contents.When, text: contents.When.textDate }} />
             </View>
           )}
           {contents.When.textTime && (
@@ -152,9 +133,7 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
                 containerStyle={styles.dateRow}
                 imageStyle={styles.timeIcon}
               />
-              <TextBlock
-                {...{ ...contents.When, text: contents.When.textTime }}
-              />
+              <TextBlock {...{ ...contents.When, text: contents.When.textTime }} />
             </View>
           )}
 
@@ -164,19 +143,12 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo(pro
               containerStyle={styles.dateRow}
               imageStyle={styles.whereIcon}
             />
-            <TextBlock
-              {...contents.Where}
-            />
+            <TextBlock {...contents.Where} />
           </View>
-          <CTABlock
-            {...contents.CTA}
-            story={props.story}
-          />
+          <CTABlock {...contents.CTA} story={props.story} />
         </View>
         <View style={styles.imageContainer}>
-          <ImageBlock
-            {...contents.Image}
-          />
+          <ImageBlock {...contents.Image} />
         </View>
       </TouchableOpacity>
     </CardContext.Provider>

@@ -3,7 +3,7 @@ import type {
   Location,
   LocationDescriptor,
   TransitionPromptHook,
-  UnregisterCallback
+  UnregisterCallback,
 } from 'history';
 import type { OptionsTopBarTitle } from 'react-native-navigation';
 

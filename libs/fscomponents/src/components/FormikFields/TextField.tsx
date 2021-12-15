@@ -3,7 +3,6 @@ import { useField, useFormikContext } from 'formik';
 import { StyleProp, Text, TextInput, TextInputProps, TextStyle, View } from 'react-native';
 import { style as S } from '../../styles/FormFK';
 
-
 interface FormFieldProps extends TextInputProps {
   label?: string;
   name: string;
@@ -11,8 +10,13 @@ interface FormFieldProps extends TextInputProps {
   errStyle?: StyleProp<TextStyle>;
 }
 
-export const TextField: React.FC<FormFieldProps> = (
-  {label, name, labelStyle, errStyle, ...props}) => {
+export const TextField: React.FC<FormFieldProps> = ({
+  label,
+  name,
+  labelStyle,
+  errStyle,
+  ...props
+}) => {
   const [field, meta] = useField(name);
   const { handleChange, setFieldTouched } = useFormikContext();
   const fieldName = field.name;
@@ -20,15 +24,9 @@ export const TextField: React.FC<FormFieldProps> = (
   return (
     <View style={S.inputContainer}>
       {label && <Text style={[S.label, labelStyle]}>{label}</Text>}
-        <TextInput
-          {...props}
-          onChangeText={handleChange(fieldName)}
-          onBlur={setTouched}
-        />
+      <TextInput {...props} onChangeText={handleChange(fieldName)} onBlur={setTouched} />
       {meta.touched && meta.error ? (
-        <Text style={[S.errorMessageText, errStyle]}>
-          {meta.error}
-        </Text>
+        <Text style={[S.errorMessageText, errStyle]}>{meta.error}</Text>
       ) : null}
     </View>
   );

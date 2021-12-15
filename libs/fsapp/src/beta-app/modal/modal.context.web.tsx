@@ -22,7 +22,7 @@ import {
   InjectedReduxProvider,
   useAPI,
   useApp,
-  useStore
+  useStore,
 } from '../app/context';
 
 const DEFAULT_MODAL_SERVICE = {
@@ -34,7 +34,7 @@ const DEFAULT_MODAL_SERVICE = {
   },
   dismissAllModals: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
-  }
+  },
 };
 
 export const ModalContext = createContext<ModalService>(DEFAULT_MODAL_SERVICE);
@@ -51,8 +51,8 @@ const navStyle = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'black',
-    opacity: 0.7
-  }
+    opacity: 0.7,
+  },
 });
 
 export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
@@ -85,7 +85,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
   // TODO: Animations, Styles
   const dismissAllModals = useCallback(async () => {
-    Object.values(closers).forEach(close => close());
+    Object.values(closers).forEach((close) => close());
   }, [setModals]);
 
   // TODO: Animations, Styles
@@ -139,7 +139,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
                 key={id}
                 transparent
                 visible={visible}
-                animationType='fade'
+                animationType="fade"
                 onRequestClose={handleReject}
                 {...modal.options}
               >
@@ -166,7 +166,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
                 </InjectedContextProvider>
               </Modal>
             );
-          }
+          },
         });
       });
     },

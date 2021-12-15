@@ -12,7 +12,6 @@ export function getColor(state: Dictionary, locals: Dictionary): String {
 }
 
 export function defaultTextboxStyle(locals: Dictionary): Dictionary {
-
   const stylesheet = locals.stylesheet;
 
   let controlLabelStyle = stylesheet.controlLabel.normal;
@@ -58,10 +57,10 @@ export function defaultTextboxStyle(locals: Dictionary): Dictionary {
   }
 
   const activeErrorField = (
-    <Text accessibilityLiveRegion='polite' style={errorBlockStyle}>
+    <Text accessibilityLiveRegion="polite" style={errorBlockStyle}>
       &nbsp;
     </Text>
-    );
+  );
 
   return {
     alertStyle,
@@ -79,7 +78,6 @@ export function defaultTextboxStyle(locals: Dictionary): Dictionary {
     textboxFullBorderStyle,
     textboxInlineStyle,
     textboxUnderlineStyle,
-    textboxViewStyle
+    textboxViewStyle,
   };
 }
-

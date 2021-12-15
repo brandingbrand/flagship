@@ -8,7 +8,7 @@ import {
   TextStyle,
   TouchableHighlight,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { Button, ButtonProps, SerializableFSButtonProps } from '../Button';
@@ -20,51 +20,51 @@ import { palette } from '../../styles/variables';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   title: {
     fontSize: 17,
     lineHeight: 24,
     letterSpacing: 0.5,
     color: palette.onBackground,
-    marginBottom: 15
+    marginBottom: 15,
   },
   productImage: {
     resizeMode: 'contain',
     width: 132,
-    height: 155
+    height: 155,
   },
   wishlistButton: {
-    marginTop: 7
+    marginTop: 7,
   },
   wishlistButtonText: {
     fontWeight: '500',
     fontSize: 13,
     lineHeight: 15,
     letterSpacing: 0.5,
-    flexWrap: 'nowrap'
+    flexWrap: 'nowrap',
   },
   itemWrapper: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   itemWrapperLeft: {
     marginRight: 15,
-    minWidth: 135
+    minWidth: 135,
   },
   itemWrapperRight: {
     flex: 1,
     justifyContent: 'space-between',
-    paddingBottom: 45
+    paddingBottom: 45,
   },
   optionValue: {
-    fontWeight: '500'
+    fontWeight: '500',
   },
   outOfStockContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 5
+    marginTop: 5,
   },
   outOfStockText: {
     fontWeight: '500',
@@ -72,19 +72,19 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: 0.5,
     color: palette.error,
-    marginLeft: 5
+    marginLeft: 5,
   },
   priceWrapper: {
-    marginBottom: 7
+    marginBottom: 7,
   },
   detailLine: {
     lineHeight: 20,
-    marginBottom: 2
-  }
+    marginBottom: 2,
+  },
 });
 
 const icons = {
-  error: require('../../../assets/images/error.png')
+  error: require('../../../assets/images/error.png'),
 };
 
 interface BaseVariantCartItemProp extends CommerceTypes.CartItem {
@@ -183,7 +183,7 @@ const isOutOfStock = (item: CommerceTypes.CartItem): boolean => {
   return !!variant;
 };
 
-export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props => {
+export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props) => {
   const {
     onQtyChange,
     onMoveToWishlist,
@@ -205,33 +205,22 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
     ...item
   } = props;
   const onQtyChangeHandler = (qty: number) => {
-    return onQtyChange?.(item.itemId, qty).catch(e => console.log(e));
+    return onQtyChange?.(item.itemId, qty).catch((e) => console.log(e));
   };
   const onMoveToWishlistHandler = () => onMoveToWishlist?.(item);
   const onImagePressHandler = () => onImagePress?.(item);
-  const image = item.images?.find(img => !!img.uri);
+  const image = item.images?.find((img) => !!img.uri);
 
-  const details = [
-    ['SKU#', item.productId],
-    ...variantToSelectedOptions(item)
-  ];
+  const details = [['SKU#', item.productId], ...variantToSelectedOptions(item)];
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={[styles.title, titleStyle]}>
-        {item.title}
-      </Text>
+      <Text style={[styles.title, titleStyle]}>{item.title}</Text>
       <View style={styles.itemWrapper}>
         <View style={[styles.itemWrapperLeft, leftColumnStyle]}>
           {image && (
-            <TouchableHighlight
-              disabled={!!onImagePressHandler}
-              onPress={onImagePressHandler}
-            >
-              <Image
-                source={image}
-                style={[styles.productImage, productImageStyle]}
-              />
+            <TouchableHighlight disabled={!!onImagePressHandler} onPress={onImagePressHandler}>
+              <Image source={image} style={[styles.productImage, productImageStyle]} />
             </TouchableHighlight>
           )}
           {!!onMoveToWishlist && (
@@ -257,11 +246,11 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
               />
             </View>
             {details.map(([label, val]) => (
-              <Text
-                key={label}
-                style={styles.detailLine}
-              >
-                <Text style={itemDetailLabelStyle}>{label}{': '}</Text>
+              <Text key={label} style={styles.detailLine}>
+                <Text style={itemDetailLabelStyle}>
+                  {label}
+                  {': '}
+                </Text>
                 <Text style={[styles.optionValue, itemDetailValueStyle]}>{val}</Text>
               </Text>
             ))}
@@ -289,10 +278,10 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo(props 
 
 function variantToSelectedOptions(item: CommerceTypes.CartItem): string[][] {
   const variantOptions = item.variants?.find(({ id }) => id === item.productId)?.optionValues;
-  const variantDetails = variantOptions?.map(selected => {
-    const option = item.options?.find(option => option.id === selected.name);
+  const variantDetails = variantOptions?.map((selected) => {
+    const option = item.options?.find((option) => option.id === selected.name);
     const name = option?.name;
-    const val = option?.values.find(val => val.value === selected.value)?.name;
+    const val = option?.values.find((val) => val.value === selected.value)?.name;
     return !name || !val ? undefined : [name, val];
   });
   const details = variantDetails?.filter((detail): detail is string[] => Array.isArray(detail));

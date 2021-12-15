@@ -24,7 +24,7 @@ export {
   NAVIGATOR_CONTEXT_TOKEN,
   PARAM_CONTEXT_TOKEN,
   PATH_CONTEXT_TOKEN,
-  QUERY_CONTEXT_TOKEN
+  QUERY_CONTEXT_TOKEN,
 } from './context';
 export { ScreenProps, makeScreen } from './make-screen';
 
@@ -58,5 +58,5 @@ export type {
   ExternalRoute,
   ExternalRoutes,
   ActionButton,
-  ScreenOptions
+  ScreenOptions,
 } from './types';

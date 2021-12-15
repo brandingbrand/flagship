@@ -7,7 +7,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { Step, StepDetails } from '../types';
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   item: {
     flex: 1,
@@ -24,26 +24,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: 'rgba(0,0,0,0.3)'
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   title: {
     color: 'white',
-    fontSize: 12
+    fontSize: 12,
   },
   titleActive: {
-    color: '#333'
+    color: '#333',
   },
   check: {
     fontSize: 12,
-    marginHorizontal: 2
+    marginHorizontal: 2,
   },
   slider: {
     position: 'absolute',
     bottom: StyleSheet.hairlineWidth,
     left: 0,
     height: 2,
-    backgroundColor: 'grey'
-  }
+    backgroundColor: 'grey',
+  },
 });
 
 export interface StepTrackerProps {
@@ -72,24 +72,24 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     super(props);
     this.sliderPosition = new Animated.Value(0);
     this.state = {
-      itemWidth: 0
+      itemWidth: 0,
     };
   }
 
   calculateWidth = ({
     nativeEvent: {
-      layout: { width }
-    }
+      layout: { width },
+    },
   }: any) => {
     const itemWidth = width / this.props.steps.length;
     if (this.state.itemWidth !== itemWidth) {
       this.setState({ itemWidth });
     }
-  }
+  };
 
   componentDidUpdate(prevProps: StepTrackerProps, prevState: StepTrackerState): void {
-    const prevActiveStep = prevProps.steps.findIndex(step => step.status === 'active');
-    const currActiveStep = this.props.steps.findIndex(step => step.status === 'active');
+    const prevActiveStep = prevProps.steps.findIndex((step) => step.status === 'active');
+    const currActiveStep = this.props.steps.findIndex((step) => step.status === 'active');
 
     const prevItemWidth = prevState.itemWidth;
     const currItemWidth = this.state.itemWidth;
@@ -99,7 +99,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
         Animated.timing(this.sliderPosition, {
           useNativeDriver: false,
           duration: 300,
-          toValue: currActiveStep * this.state.itemWidth
+          toValue: currActiveStep * this.state.itemWidth,
         }).start();
       } else {
         this.sliderPosition.setValue(currActiveStep * this.state.itemWidth);
@@ -117,7 +117,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
       titleStyle,
       titleActiveStyle,
       titleDoneStyle,
-      steps
+      steps,
     } = this.props;
 
     return (
@@ -128,12 +128,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
           return (
             <Container
               onPress={onPress}
-              style={[
-                styles.item,
-                itemStyle,
-                isActive && itemActiveStyle,
-                isDone && itemDoneStyle
-              ]}
+              style={[styles.item, itemStyle, isActive && itemActiveStyle, isDone && itemDoneStyle]}
               key={step.name}
             >
               {isDone && <Text style={[styles.check, checkStyle]}>&#10004;</Text>}
@@ -143,7 +138,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
                   titleStyle,
                   isActive && styles.titleActive,
                   isActive && titleActiveStyle,
-                  isDone && titleDoneStyle
+                  isDone && titleDoneStyle,
                 ]}
               >
                 {stepName}
@@ -159,8 +154,8 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
               this.props.sliderStyle,
               {
                 width: this.state.itemWidth,
-                transform: [{ translateX: this.sliderPosition }]
-              }
+                transform: [{ translateX: this.sliderPosition }],
+              },
             ]}
           />
         )}
@@ -179,5 +174,5 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     const Container = isTouchable ? TouchableOpacity : View;
 
     return { isActive, isDone, stepName, onPress, Container };
-  }
+  };
 }

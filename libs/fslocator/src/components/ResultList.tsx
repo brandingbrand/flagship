@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewToken
+  ViewToken,
 } from 'react-native';
 import { style as S } from '../styles/Locator';
 import { Location } from '../types/Location';
@@ -30,31 +30,25 @@ export default class ResultList extends Component<PropType, StateType> {
     super(props);
 
     this.state = {
-      key: window.innerHeight > window.innerWidth ? 'portrait' : 'landscape'
+      key: window.innerHeight > window.innerWidth ? 'portrait' : 'landscape',
     };
   }
 
   handleOrientationChange = (): void => {
     this.setState({
-      key: window.innerHeight > window.innerWidth ? 'portrait' : 'landscape'
+      key: window.innerHeight > window.innerWidth ? 'portrait' : 'landscape',
     });
-  }
+  };
 
   componentDidMount(): void {
     if (Platform.OS === 'web') {
-      window.addEventListener(
-        'orientationchange',
-        this.handleOrientationChange
-      );
+      window.addEventListener('orientationchange', this.handleOrientationChange);
     }
   }
 
   componentWillUnmount(): void {
     if (Platform.OS === 'web') {
-      window.removeEventListener(
-        'orientationchange',
-        this.handleOrientationChange
-      );
+      window.removeEventListener('orientationchange', this.handleOrientationChange);
     }
   }
 
@@ -64,22 +58,24 @@ export default class ResultList extends Component<PropType, StateType> {
       return;
     }
 
-    changed.filter(item => item.isViewable).forEach(item => {
-      const key = item.key !== null ? item.key : undefined;
-      const index = item.index !== null ? item.index : undefined;
+    changed
+      .filter((item) => item.isViewable)
+      .forEach((item) => {
+        const key = item.key !== null ? item.key : undefined;
+        const index = item.index !== null ? item.index : undefined;
 
-      analytics.impression.generic('LocationItem', {
-        identifier: key,
-        index
+        analytics.impression.generic('LocationItem', {
+          identifier: key,
+          index,
+        });
       });
-    });
-  }
+  };
 
   handlItemPress = (location: Location, index: number) => () => {
     if (this.props.onItemPress) {
       this.props.onItemPress(location, index);
     }
-  }
+  };
 
   renderLocationItem = ({ item, index }: ListRenderItemInfo<Location>): JSX.Element => {
     return (
@@ -95,7 +91,7 @@ export default class ResultList extends Component<PropType, StateType> {
         />
       </TouchableOpacity>
     );
-  }
+  };
 
   render(): JSX.Element | null {
     const {
@@ -107,7 +103,7 @@ export default class ResultList extends Component<PropType, StateType> {
       noResultsTextStyle,
       scrollEnabled,
       onScroll,
-      bounces
+      bounces,
     } = this.props;
 
     let content = null;
@@ -115,11 +111,7 @@ export default class ResultList extends Component<PropType, StateType> {
     if (isLoading) {
       content = <ActivityIndicator style={S.loadingIndicator} />;
     } else if (locationsNotFound) {
-      content = (
-        <Text style={[S.noResultsText, noResultsTextStyle]}>
-          {noResultsText}
-        </Text>
-      );
+      content = <Text style={[S.noResultsText, noResultsTextStyle]}>{noResultsText}</Text>;
     } else if (locations.length > 0) {
       content = (
         <FlatList

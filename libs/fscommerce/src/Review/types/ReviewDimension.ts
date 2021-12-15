@@ -31,7 +31,6 @@ export interface ReviewDimensionMetadata {
   maxLabel?: string;
 }
 
-
 /**
  * Review Dimension
  */

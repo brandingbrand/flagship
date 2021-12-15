@@ -16,7 +16,7 @@ export class TouchableOpacityLink extends TouchableDelay<TouchableOpacityLinkPro
       <TouchableOpacityWithHref
         {...props}
         href={href}
-        accessibilityRole='link'
+        accessibilityRole="link"
         onPress={this.handleOnPress}
       >
         {this.props.children}

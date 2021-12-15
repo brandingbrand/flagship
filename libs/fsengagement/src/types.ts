@@ -1,11 +1,5 @@
 import { ComponentClass, FunctionComponent } from 'react';
-import {
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { Navigator } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 

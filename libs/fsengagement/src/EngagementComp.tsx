@@ -17,7 +17,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { Injector } from '@brandingbrand/fslinker';
 import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
@@ -25,14 +25,7 @@ import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';
 import { Navigation } from 'react-native-navigation';
-import {
-  Action,
-  BlockItem,
-  ComponentList,
-  EmitterProps,
-  JSON,
-  ScreenProps
-} from './types';
+import { Action, BlockItem, ComponentList, EmitterProps, JSON, ScreenProps } from './types';
 import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
 import Carousel from 'react-native-snap-carousel';
@@ -52,31 +45,31 @@ const styles = StyleSheet.create({
     zIndex: 10,
     top: 50,
     left: 8,
-    padding: 12
+    padding: 12,
   },
   animatedClose: {
     position: 'absolute',
     zIndex: 10,
     top: Platform.OS === 'ios' ? 44 : 64,
     left: 19,
-    padding: 0
+    padding: 0,
   },
   animatedList: {
     marginBottom: 100,
     marginTop: -100,
-    backgroundColor: 'rgba(255, 255, 255, 0)'
+    backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   fullScreen: {
     width: Dimensions.get('screen').width + 45,
-    height: Dimensions.get('screen').height + 60
+    height: Dimensions.get('screen').height + 60,
   },
   backIconCloseX: {
     width: 44,
-    height: 44
+    height: 44,
   },
   animatedContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0)',
-    flex: 1
+    flex: 1,
   },
   progressBar: {
     position: 'absolute',
@@ -84,45 +77,45 @@ const styles = StyleSheet.create({
     top: 67,
     flex: 1,
     marginLeft: 65,
-    marginRight: 33
+    marginRight: 33,
   },
   progressItem: {
     flex: 1,
     marginHorizontal: 3,
     backgroundColor: 'rgba(79, 79, 79, .3)',
-    height: 2
+    height: 2,
   },
   activeProgress: {
-    backgroundColor: 'rgba(79, 79, 79, .8)'
+    backgroundColor: 'rgba(79, 79, 79, .8)',
   },
   closeModalButton: {
     position: 'absolute',
     zIndex: 10,
     bottom: -60,
-    left: (win.width / 2) - 35,
-    padding: 0
+    left: win.width / 2 - 35,
+    padding: 0,
   },
   growAndCenter: {
     flexGrow: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   editorial: {
     marginTop: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   backIcon: {
     width: 14,
-    height: 25
+    height: 25,
   },
   appleCloseIcon: {
     width: 60,
-    height: 60
+    height: 60,
   },
   fullScreenDeeplink: {
     width: Dimensions.get('screen').width + 45,
     height: Dimensions.get('screen').height + 60,
     backgroundColor: '#000',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   headerName: {
     fontFamily: 'HelveticaNeue-Bold',
@@ -132,16 +125,16 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 0,
     marginTop: 70,
-    paddingHorizontal: 25
+    paddingHorizontal: 25,
   },
   pageCounter: {
     position: 'absolute',
     top: 70,
-    left: 20
+    left: 20,
   },
   pageNum: {
     color: '#ffffff',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   navBarTitle: {
     color: '#000000',
@@ -149,19 +142,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'absolute',
     top: 60,
-    width: '100%'
+    width: '100%',
   },
   emptyMessage: {
     textAlign: 'center',
-    padding: 20
+    padding: 20,
   },
   container: {
     backgroundColor: '#ffffff',
-    flex: 1
+    flex: 1,
   },
   growStretch: {
     alignSelf: 'stretch',
-    flexGrow: 1
+    flexGrow: 1,
   },
   header: {
     position: 'absolute',
@@ -169,25 +162,25 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     overflow: 'hidden',
-    zIndex: 10
+    zIndex: 10,
   },
   headerImage: {
     width: win.width,
-    height: win.width * imageAspectRatio
+    height: win.width * imageAspectRatio,
   },
   imageStyle: {
     transform: [{ scale: 1.06 }],
     opacity: 0.8,
-    marginTop: 20
+    marginTop: 20,
   },
   deeplinkStory: {
-    marginTop: -(Dimensions.get('screen').height + 60)
+    marginTop: -(Dimensions.get('screen').height + 60),
   },
   storyFooter: {
     marginBottom: -35,
     height: 40,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 });
 
 const gradientImage = require('../assets/images/gradient.png');
@@ -238,12 +231,11 @@ export interface EngagementState {
   scrollEnabled: boolean;
 }
 
-export default function(
+export default function (
   api: EngagementService,
   layoutComponents: ComponentList
 ): ComponentClass<EngagementScreenProps> {
   return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
-
     state: any = {};
     AnimatedStory: any;
     AnimatedCloseIcon: any;
@@ -269,16 +261,16 @@ export default function(
         slideBackground: false,
         isClosingAnimation: false,
         activeProgressBarIndex: 0,
-        scrollEnabled: true
+        scrollEnabled: true,
       };
     }
 
-    handleCloseIconRef = (ref: any) => this.AnimatedCloseIcon = ref;
-    handleAnimatedRef = (ref: any) => this.AnimatedStory = ref;
-    handlePageCounterRef = (ref: any) => this.AnimatedPageCounter = ref;
-    handleNavTitleRef = (ref: any) => this.AnimatedNavTitle = ref;
-    handleWelcomeRef = (ref: any) => this.AnimatedWelcome = ref;
-    handleAppleCloseRef = (ref: any) => this.AnimatedAppleClose = ref;
+    handleCloseIconRef = (ref: any) => (this.AnimatedCloseIcon = ref);
+    handleAnimatedRef = (ref: any) => (this.AnimatedStory = ref);
+    handlePageCounterRef = (ref: any) => (this.AnimatedPageCounter = ref);
+    handleNavTitleRef = (ref: any) => (this.AnimatedNavTitle = ref);
+    handleWelcomeRef = (ref: any) => (this.AnimatedWelcome = ref);
+    handleAppleCloseRef = (ref: any) => (this.AnimatedAppleClose = ref);
     componentWillUnmount(): void {
       // Check if closing because of navigation change or ui
       if (!this.state.isClosingAnimation) {
@@ -300,25 +292,28 @@ export default function(
         this.AnimatedStory.transition(
           { translateY: 700 },
           { translateY: 100 },
-          700, 'ease-out-cubic');
-        this.AnimatedCloseIcon.transition(
-          { opacity: 0 },
-          { opacity: 1 },
-          400, 'linear');
+          700,
+          'ease-out-cubic'
+        );
+        this.AnimatedCloseIcon.transition({ opacity: 0 }, { opacity: 1 }, 400, 'linear');
       }
       if (this.props.animateScroll) {
         if (this.AnimatedStory) {
           this.AnimatedStory.transition(
             { translateY: 700 },
             { translateY: 0 },
-            700, 'ease-out-cubic');
+            700,
+            'ease-out-cubic'
+          );
         }
         if (this.AnimatedAppleClose) {
           setTimeout(() => {
             this.AnimatedAppleClose.transition(
               { translateY: 0 },
               { translateY: -85 },
-              800, 'ease-in-out-back');
+              800,
+              'ease-in-out-back'
+            );
           }, 300);
         }
       }
@@ -332,115 +327,124 @@ export default function(
     }
     scrollToTop = () => {
       this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
-    }
+    };
     componentDidUpdate(prevProps: EngagementScreenProps): void {
       const PRIVATE_BLOCKS = 'private_blocks';
-      const prevBlocks = prevProps.json && prevProps.json[PRIVATE_BLOCKS] || [];
-      const blocks = this.props.json && this.props.json[PRIVATE_BLOCKS] || [];
+      const prevBlocks = (prevProps.json && prevProps.json[PRIVATE_BLOCKS]) || [];
+      const blocks = (this.props.json && this.props.json[PRIVATE_BLOCKS]) || [];
 
       if (!prevBlocks.length && blocks.length) {
         if (this.props.welcomeHeader && this.AnimatedWelcome) {
           this.AnimatedWelcome.transition(
             { translateY: -100 },
             { translateY: 0 },
-            600, 'ease-out-cubic');
+            600,
+            'ease-out-cubic'
+          );
         }
       }
     }
 
     handleAction =
-    // eslint-disable-next-line complexity
+      // eslint-disable-next-line complexity
       debounce(async (actions: Action) => {
-      if (!(actions && actions.type && actions.value)) {
-        return false;
-      }
-      DeviceEventEmitter.emit('viewLink', {
-        title: actions.name,
-        id: actions.id,
-        type: actions.type,
-        value: actions.value,
-        position: actions.position
-      });
-      switch (actions.type) {
-        case 'blog-url':
-          await this.props.navigator?.push({
-            component: {
-              name: 'EngagementWebView',
-              options: {
-                topBar: {
-                  visible: false
-                }
-              },
-              passProps: {
-                actions,
-                isBlog: true,
-                backButton: true
-              }
-            }
-          });
-          break;
-        case 'web-url':
-          await this.props.navigator?.showModal({
-            component: {
-              name: 'EngagementWebView',
-              passProps: { actions },
-              options: {
-                statusBar: {
-                  style: 'dark' as const
+        if (!(actions && actions.type && actions.value)) {
+          return false;
+        }
+        DeviceEventEmitter.emit('viewLink', {
+          title: actions.name,
+          id: actions.id,
+          type: actions.type,
+          value: actions.value,
+          position: actions.position,
+        });
+        switch (actions.type) {
+          case 'blog-url':
+            await this.props.navigator?.push({
+              component: {
+                name: 'EngagementWebView',
+                options: {
+                  topBar: {
+                    visible: false,
+                  },
                 },
-                topBar: {
-                  background: { color: '#f5f2ee'},
-                  rightButtons: [{
-                    color: '#866d4b',
-                    icon: require('../assets/images/closeBronze.png'),
-                    id: 'close'
-                  }]
-                }
-              }
-            }
-          });
-          break;
-        case 'deep-link':
-          if (this.props.discoverPath && actions.value) {
-            const navigator = Injector.require(NAVIGATOR_TOKEN);
-            const method = this.props.deepLinkMethod || 'open';
-            navigator[method](actions.value);
+                passProps: {
+                  actions,
+                  isBlog: true,
+                  backButton: true,
+                },
+              },
+            });
             break;
-          }
-          const separator = ~actions.value.indexOf('?') ? '&' : '?';
-          const query = separator + 'engagementDeeplink=true';
-          const url = actions.value + query;
-          Linking.canOpenURL(actions.value).then(supported => {
-            if (!supported) {
-              alert('An error occurred: can\'t handle url ' + url);
-              return false;
-            } else {
-              return Linking.openURL(url);
+          case 'web-url':
+            await this.props.navigator?.showModal({
+              component: {
+                name: 'EngagementWebView',
+                passProps: { actions },
+                options: {
+                  statusBar: {
+                    style: 'dark' as const,
+                  },
+                  topBar: {
+                    background: { color: '#f5f2ee' },
+                    rightButtons: [
+                      {
+                        color: '#866d4b',
+                        icon: require('../assets/images/closeBronze.png'),
+                        id: 'close',
+                      },
+                    ],
+                  },
+                },
+              },
+            });
+            break;
+          case 'deep-link':
+            if (this.props.discoverPath && actions.value) {
+              const navigator = Injector.require(NAVIGATOR_TOKEN);
+              const method = this.props.deepLinkMethod || 'open';
+              navigator[method](actions.value);
+              break;
             }
-          }).catch(err => alert('An error occurred: ' + err));
-          break;
-        case 'phone':
-          Linking.openURL('tel:' + actions.value).catch(err => alert('An error occurred: ' + err));
-          break;
-        case 'email':
-          let mailUrl = 'mailto:' + actions.value;
-          if (actions.subject) {
-            const subject = actions.subject.replace(/ /g, '%20');
-            mailUrl += '?subject=' + subject;
-          }
-          if (actions.body) {
-            const separator = ~mailUrl.indexOf('?') ? '&' : '?';
-            const body = actions.body.replace(/ /g, '%20');
-            mailUrl += separator + 'body=' + body;
-          }
-          Linking.openURL(mailUrl).catch(err =>
-            alert('An error occurred when trying to send email to ' + actions.value + ': ' + err));
-          break;
-        default:
-          break;
-      }
-      return;
-    }, 300);
+            const separator = ~actions.value.indexOf('?') ? '&' : '?';
+            const query = separator + 'engagementDeeplink=true';
+            const url = actions.value + query;
+            Linking.canOpenURL(actions.value)
+              .then((supported) => {
+                if (!supported) {
+                  alert("An error occurred: can't handle url " + url);
+                  return false;
+                } else {
+                  return Linking.openURL(url);
+                }
+              })
+              .catch((err) => alert('An error occurred: ' + err));
+            break;
+          case 'phone':
+            Linking.openURL('tel:' + actions.value).catch((err) =>
+              alert('An error occurred: ' + err)
+            );
+            break;
+          case 'email':
+            let mailUrl = 'mailto:' + actions.value;
+            if (actions.subject) {
+              const subject = actions.subject.replace(/ /g, '%20');
+              mailUrl += '?subject=' + subject;
+            }
+            if (actions.body) {
+              const separator = ~mailUrl.indexOf('?') ? '&' : '?';
+              const body = actions.body.replace(/ /g, '%20');
+              mailUrl += separator + 'body=' + body;
+            }
+            Linking.openURL(mailUrl).catch((err) =>
+              alert('An error occurred when trying to send email to ' + actions.value + ': ' + err)
+            );
+            break;
+          default:
+            break;
+        }
+        return;
+      }, 300);
 
     renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
       item.index = index;
@@ -456,41 +460,42 @@ export default function(
         return this.renderBlockWrapper(item);
       }
       return this.renderBlock(item);
-    }
+    };
     renderHeaderName = () => {
       const { json, headerName } = this.props;
       const name = headerName || '';
-      const headerTitleStyle = json && json.headerTitleStyle || {};
+      const headerTitleStyle = (json && json.headerTitleStyle) || {};
       const comma = name ? ', ' : '';
       return (
         <Text style={[styles.headerName, headerTitleStyle]}>
-          Hello{comma}{name}
+          Hello{comma}
+          {name}
         </Text>
       );
-    }
+    };
     renderFlatlistFooter = () => {
       if (this.props.welcomeHeader) {
         return (
           <View
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0)',
-              height: 20
+              height: 20,
             }}
           />
         );
       }
-      if (!(this.props.animateScroll)) {
+      if (!this.props.animateScroll) {
         return <View />;
       }
       return (
         <View
           style={{
             backgroundColor: '#fff',
-            height: 100
+            height: 100,
           }}
         />
       );
-    }
+    };
     renderFlatlistHeader = () => {
       if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
@@ -499,22 +504,22 @@ export default function(
       const welcomeOpacity = this.state.scrollY.interpolate({
         inputRange: [0, 70],
         outputRange: [1, 0],
-        extrapolate: 'clamp'
+        extrapolate: 'clamp',
       });
       const welcomeFont = this.state.scrollY.interpolate({
         inputRange: [-70, 70],
         outputRange: [1.2, 0.8],
-        extrapolate: 'clamp'
+        extrapolate: 'clamp',
       });
       const welcomeY = this.state.scrollY.interpolate({
         inputRange: [0, 70],
         outputRange: [0, 50],
-        extrapolate: 'clamp'
+        extrapolate: 'clamp',
       });
       const welcomeX = this.state.scrollY.interpolate({
         inputRange: [-70, 70],
         outputRange: [30, -30],
-        extrapolate: 'clamp'
+        extrapolate: 'clamp',
       });
 
       if (this.props.welcomeHeader) {
@@ -523,9 +528,7 @@ export default function(
             ref={this.handleWelcomeRef}
             useNativeDriver={false}
             style={{
-              transform: [
-                { translateY: -100 }
-              ]
+              transform: [{ translateY: -100 }],
             }}
           >
             <Animated.View
@@ -534,8 +537,8 @@ export default function(
                 transform: [
                   { translateY: welcomeY },
                   { translateX: welcomeX },
-                  { scale: welcomeFont }
-                ]
+                  { scale: welcomeFont },
+                ],
               }}
             >
               {this.renderHeaderName()}
@@ -547,11 +550,11 @@ export default function(
         <View
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0)',
-            height: 450
+            height: 450,
           }}
         />
       );
-    }
+    };
     renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
       const { private_type } = item;
       if (!layoutComponents[private_type]) {
@@ -563,36 +566,33 @@ export default function(
         {
           key: this.dataKeyExtractor(item),
           navigator: this.props.navigator,
-          discoverPath: this.props.discoverPath
+          discoverPath: this.props.discoverPath,
         },
         this.renderBlock(item)
       );
-    }
+    };
     addParentCardProps = (
       type: string,
       blocks: BlockItem[],
       parentStyle: StyleProp<ViewStyle>
     ): any => {
       if (type === 'Card') {
-        return (blocks || []).map(b => {
+        return (blocks || []).map((b) => {
           return {
             ...b,
-            cardContainerStyle: parentStyle
+            cardContainerStyle: parentStyle,
           };
         });
       }
       return blocks;
-    }
+    };
     renderBlock = (item: BlockItem): React.ReactElement | null => {
-      const {
-        private_blocks,
-        private_type,
-        ...restProps } = item;
+      const { private_blocks, private_type, ...restProps } = item;
       const { json, id, name } = this.props;
       const props = {
         id,
         name,
-        ...restProps
+        ...restProps,
       };
       if (!layoutComponents[private_type]) {
         return null;
@@ -616,8 +616,8 @@ export default function(
             animateIndex: item.animateIndex,
             navigator: this.props.navigator,
             discoverPath: this.props.discoverPath,
-            slideBackground: item.animateIndex && item.animateIndex <= 2 ?
-              this.state.slideBackground : false
+            slideBackground:
+              item.animateIndex && item.animateIndex <= 2 ? this.state.slideBackground : false,
           },
           this.renderBlock(item)
         );
@@ -631,35 +631,32 @@ export default function(
           discoverPath: this.props.discoverPath,
           storyGradient: props.story ? json.storyGradient : null,
           api,
-          key: this.dataKeyExtractor(item)
+          key: this.dataKeyExtractor(item),
         },
-        private_blocks && this.addParentCardProps(
-          private_type,
-          private_blocks,
-          item.containerStyle
-        ).map(this.renderBlock)
+        private_blocks &&
+          this.addParentCardProps(private_type, private_blocks, item.containerStyle).map(
+            this.renderBlock
+          )
       );
-    }
+    };
 
     onAnimatedClose = (): void => {
-      if (this.state.isClosingAnimation) { return; }
+      if (this.state.isClosingAnimation) {
+        return;
+      }
       this.setState({
-        isClosingAnimation: true
+        isClosingAnimation: true,
       });
       const { json } = this.props;
       const tabbedItems = json && json.tabbedItems;
-      const timeout = this.scrollPosition < 1400 ?
-        this.scrollPosition / 7 : 200;
+      const timeout = this.scrollPosition < 1400 ? this.scrollPosition / 7 : 200;
       const outYPositon = tabbedItems && tabbedItems.length ? 1020 : 700;
       if (this.scrollPosition > 0) {
         this.scrollToTop();
       }
       setTimeout(() => {
         if (this.AnimatedCloseIcon) {
-          this.AnimatedCloseIcon.transition(
-            { opacity: 1 },
-            { opacity: 0 },
-            400, 'linear');
+          this.AnimatedCloseIcon.transition({ opacity: 1 }, { opacity: 0 }, 400, 'linear');
         }
       }, 200);
 
@@ -667,7 +664,9 @@ export default function(
         this.AnimatedAppleClose.transition(
           { translateY: -85 },
           { translateY: 0 },
-          500, 'ease-in-out-back');
+          500,
+          'ease-in-out-back'
+        );
       }
 
       setTimeout(() => {
@@ -676,11 +675,11 @@ export default function(
             this.AnimatedStory.transition(
               { translateY: 100 },
               { translateY: outYPositon },
-              timeout + 550, 'ease-out');
+              timeout + 550,
+              'ease-out'
+            );
           } else {
-            this.AnimatedStory.transitionTo(
-              { translateY: outYPositon },
-              timeout + 550, 'ease-out');
+            this.AnimatedStory.transitionTo({ translateY: outYPositon }, timeout + 550, 'ease-out');
           }
         }
         if (this.props.onBack) {
@@ -690,38 +689,38 @@ export default function(
       // setTimeout(async () => {
       //   return this.props.navigator.dismissModal();
       // }, 550);
-    }
+    };
     setScrollEnabled = (enabled: boolean): void => {
       this.setState({
-        scrollEnabled: enabled
+        scrollEnabled: enabled,
       });
-    }
+    };
     renderBlocks(): JSX.Element {
       const { json } = this.props;
-      const empty: any = json && json.empty || {};
+      const empty: any = (json && json.empty) || {};
       return (
         <>
-          {(json && json.private_blocks || []).map(this.renderBlock)}
+          {((json && json.private_blocks) || []).map(this.renderBlock)}
           {empty && !(json && json.private_blocks && json.private_blocks.length) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
-              {empty.message || 'No content found.'}</Text>
+              {empty.message || 'No content found.'}
+            </Text>
           )}
         </>
       );
     }
     // eslint-disable-next-line complexity
     renderStoryGradient(): JSX.Element {
-      const { json: { storyGradient, tabbedItems } } = this.props;
+      const {
+        json: { storyGradient, tabbedItems },
+      } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
-      const {
-        startFadePosition = 0,
-        endFadePosition = 250
-      } = storyGradient || {};
+      const { startFadePosition = 0, endFadePosition = 250 } = storyGradient || {};
       const headerOpacity = scrollY.interpolate({
         inputRange: [startFadePosition, endFadePosition],
         outputRange: [0, 1],
-        extrapolate: 'clamp'
+        extrapolate: 'clamp',
       });
       if (tabbedItems && tabbedItems.length) {
         return (
@@ -734,16 +733,19 @@ export default function(
       } else if (this.props.animate) {
         return (
           <FlatList
-            data={this.props.json && this.props.json.private_blocks || []}
+            data={(this.props.json && this.props.json.private_blocks) || []}
             keyExtractor={this.dataKeyExtractor}
             renderItem={this.renderBlockItem}
-            ref={ref => { this.flatListRef = ref; }}
+            ref={(ref) => {
+              this.flatListRef = ref;
+            }}
             style={[styles.growStretch, styles.animatedList]}
             onScroll={this.onScrollFlatList}
-            ListEmptyComponent={(
+            ListEmptyComponent={
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
-                {empty && empty.message || 'No content found.'}</Text>
-            )}
+                {(empty && empty.message) || 'No content found.'}
+              </Text>
+            }
           >
             {this.renderBlocks()}
           </FlatList>
@@ -754,39 +756,33 @@ export default function(
           <FlatList
             data={this.props.json.private_blocks || []}
             renderItem={this.renderBlockItem}
-            ListEmptyComponent={(
+            ListEmptyComponent={
               <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>
-            )}
+                {empty.message || 'No content found.'}
+              </Text>
+            }
             style={styles.growStretch}
             scrollEventThrottle={16}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: scrollY } } }]
-            )}
+            onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }])}
           >
             {this.renderBlocks()}
           </FlatList>
           <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
-            <Image
-              style={styles.headerImage}
-              source={gradientImage}
-              resizeMode={'cover'}
-            />
+            <Image style={styles.headerImage} source={gradientImage} resizeMode={'cover'} />
           </Animated.View>
         </>
       );
     }
     onTabbedCardPress = () => {
       const { json } = this.props;
-      if (json.tabbedItems &&
-        (this.state.activeProgressBarIndex >= (json.tabbedItems.length - 1))) {
+      if (json.tabbedItems && this.state.activeProgressBarIndex >= json.tabbedItems.length - 1) {
         this.onAnimatedClose();
       } else {
         this.setState({
-          activeProgressBarIndex: this.state.activeProgressBarIndex + 1
+          activeProgressBarIndex: this.state.activeProgressBarIndex + 1,
         });
       }
-    }
+    };
     // eslint-disable-next-line complexity
     renderContent(): JSX.Element {
       const { animate, animateScroll, backButton, containerStyle, json } = this.props;
@@ -808,7 +804,7 @@ export default function(
               >
                 <TouchableOpacity activeOpacity={1} onPress={this.onAnimatedClose}>
                   <Image
-                    resizeMode='contain'
+                    resizeMode="contain"
                     source={appleCloseIcon}
                     style={styles.appleCloseIcon}
                   />
@@ -828,8 +824,7 @@ export default function(
             >
               {this.renderScrollView()}
             </Animatable.View>
-            {(json && json.tabbedItems && json.tabbedItems.length) &&
-              (
+            {json && json.tabbedItems && json.tabbedItems.length && (
               <View style={styles.progressBar}>
                 {(json.tabbedItems || []).map((item: any, index: number) => {
                   return (
@@ -837,37 +832,37 @@ export default function(
                       key={item.key}
                       style={[
                         styles.progressItem,
-                        (this.state.activeProgressBarIndex === index) && styles.activeProgress
+                        this.state.activeProgressBarIndex === index && styles.activeProgress,
                       ]}
                     />
                   );
                 })}
               </View>
-              )}
-            {backButton &&
-              (
+            )}
+            {backButton && (
               <TouchableOpacity
                 onPress={this.onAnimatedClose}
                 style={styles.animatedClose}
                 activeOpacity={1}
               >
                 <Animatable.Image
-                  resizeMode='contain'
+                  resizeMode="contain"
                   ref={this.handleCloseIconRef}
                   source={this.state.showDarkX ? iconCloseXDark : iconCloseXLight}
                   style={[styles.backIconCloseX]}
                 />
               </TouchableOpacity>
-              )}
+            )}
           </>
         );
       }
       return (
         <View style={[styles.container, containerStyle, json.containerStyle]}>
           {this.renderScrollView()}
-          {backButton && (this.props.renderBackButton ?
-           this.props.renderBackButton(this.props.navigator)
-            : (
+          {backButton &&
+            (this.props.renderBackButton ? (
+              this.props.renderBackButton(this.props.navigator)
+            ) : (
               <BackButton
                 navigator={this.props.navigator}
                 discoverPath={this.props.discoverPath}
@@ -883,33 +878,35 @@ export default function(
       if (this.scrollPosition < topOffset) {
         this.onAnimatedClose();
       }
-    }
+    };
     onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
-      if (this.props.json && this.props.json.private_blocks &&
-        this.props.json.private_blocks.length && this.props.json.private_blocks[index]) {
+      if (
+        this.props.json &&
+        this.props.json.private_blocks &&
+        this.props.json.private_blocks.length &&
+        this.props.json.private_blocks[index]
+      ) {
         DeviceEventEmitter.emit('swipeCard', {
           title: this.props.json.private_blocks[index].name,
           id: this.props.json.private_blocks[index].id,
-          position: pageNum
+          position: pageNum,
         });
       }
       this.setState({
-        pageNum
+        pageNum,
       });
-    }
+    };
 
     renderFlatlistFooterPadding = (): JSX.Element => {
-      return (
-        <View style={styles.storyFooter} />
-      );
-    }
+      return <View style={styles.storyFooter} />;
+    };
     // eslint-disable-next-line complexity
     renderScrollView(): JSX.Element {
       const { json } = this.props;
       const storyGradient = json && json.storyGradient;
       const tabbedItems = json && json.tabbedItems;
-      const empty: any = json && json.empty || {};
+      const empty: any = (json && json.empty) || {};
       const fullScreenCardImage = json && json.fullScreenCardImage;
 
       if (this.props.renderType && this.props.renderType === 'carousel') {
@@ -920,12 +917,13 @@ export default function(
           <>
             {empty && !(json && json.private_blocks && json.private_blocks.length) && (
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
-                {empty && empty.message || 'No content found.'}</Text>
+                {(empty && empty.message) || 'No content found.'}
+              </Text>
             )}
 
             {this.state.showCarousel && (
               <Carousel
-                data={json && json.private_blocks || []}
+                data={(json && json.private_blocks) || []}
                 layout={'default'}
                 autoplay={autoplay}
                 autoplayDelay={autoplayDelay}
@@ -951,15 +949,16 @@ export default function(
               style={styles.fullScreenDeeplink}
             />
             <FlatList
-              data={this.props.json && this.props.json.private_blocks || []}
+              data={(this.props.json && this.props.json.private_blocks) || []}
               keyExtractor={this.dataKeyExtractor}
               renderItem={this.renderBlockItem}
               style={[styles.growStretch, styles.deeplinkStory]}
               ListFooterComponent={this.renderFlatlistFooterPadding}
-              ListEmptyComponent={(
+              ListEmptyComponent={
                 <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
-                  {empty && empty.message || 'No content found.'}</Text>
-              )}
+                  {(empty && empty.message) || 'No content found.'}
+                </Text>
+              }
               refreshControl={
                 this.props.refreshControl && (
                   <RefreshControl
@@ -973,13 +972,8 @@ export default function(
             </FlatList>
           </>
         );
-
       } else if (this.props.noScrollView) {
-        return (
-          <>
-            {this.renderBlocks()}
-          </>
-        );
+        return <>{this.renderBlocks()}</>;
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
       } else if (tabbedItems && tabbedItems.length) {
@@ -994,7 +988,7 @@ export default function(
         return (
           <>
             <Animated.FlatList
-              data={this.props.json && this.props.json.private_blocks || []}
+              data={(this.props.json && this.props.json.private_blocks) || []}
               keyExtractor={this.dataKeyExtractor}
               renderItem={this.renderBlockItem}
               scrollEventThrottle={16}
@@ -1004,17 +998,19 @@ export default function(
               )}
               ListHeaderComponent={this.renderFlatlistHeader}
               ListFooterComponent={this.renderFlatlistFooter}
-              ListEmptyComponent={(
+              ListEmptyComponent={
                 <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
-                  {empty && empty.message || 'No content found.'}</Text>
-              )}
+                  {(empty && empty.message) || 'No content found.'}
+                </Text>
+              }
               refreshControl={
                 this.props.refreshControl && (
-                <RefreshControl
-                  refreshing={this.props.isLoading}
-                  onRefresh={this.props.refreshControl}
-                />
-              )}
+                  <RefreshControl
+                    refreshing={this.props.isLoading}
+                    onRefresh={this.props.refreshControl}
+                  />
+                )
+              }
             >
               {this.renderBlocks()}
             </Animated.FlatList>
@@ -1027,26 +1023,29 @@ export default function(
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
             renderItem={this.renderBlockItem}
-            ref={(ref: any) => { this.flatListRef = ref; }}
+            ref={(ref: any) => {
+              this.flatListRef = ref;
+            }}
             onScroll={this.onScrollFlatList}
             ListHeaderComponent={this.renderFlatlistHeader}
             ListFooterComponent={this.renderFlatlistFooter}
-            ListEmptyComponent={(
+            ListEmptyComponent={
               <Text style={[styles.emptyMessage, empty.textStyle]}>
-                {empty.message || 'No content found.'}</Text>
-            )}
+                {empty.message || 'No content found.'}
+              </Text>
+            }
             refreshControl={
               this.props.refreshControl && (
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={this.props.refreshControl}
-              />
-            )}
+                <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.refreshControl}
+                />
+              )
+            }
           >
             {this.renderBlocks()}
           </FlatList>
         </>
-
       );
     }
 
@@ -1057,7 +1056,7 @@ export default function(
         json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
       this.pageNumberStyle =
         json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
-      const navBarTitleStyle = json && json.navBarTitleStyle || {};
+      const navBarTitleStyle = (json && json.navBarTitleStyle) || {};
 
       return (
         <EngagementContext.Provider
@@ -1065,44 +1064,43 @@ export default function(
             handleAction: this.handleAction,
             story: this.props.backButton ? this.props.json : undefined,
             language: this.props.language,
-            cardPosition: this.props.cardPosition || 0
+            cardPosition: this.props.cardPosition || 0,
           }}
         >
-        <>
-          {this.props.renderHeader && this.props.renderHeader()}
-          {this.renderContent()}
-          {(this.props.renderType && this.props.renderType === 'carousel' &&
-            json && json.private_blocks && json.private_blocks.length > 0) &&
-            (
-              <Animatable.View
-                ref={this.handlePageCounterRef}
-                useNativeDriver={false}
-                style={[styles.pageCounter, this.pageCounterStyle]}
-              >
-                <Text
-                  style={[styles.pageNum, this.pageNumberStyle]}
+          <>
+            {this.props.renderHeader && this.props.renderHeader()}
+            {this.renderContent()}
+            {this.props.renderType &&
+              this.props.renderType === 'carousel' &&
+              json &&
+              json.private_blocks &&
+              json.private_blocks.length > 0 && (
+                <Animatable.View
+                  ref={this.handlePageCounterRef}
+                  useNativeDriver={false}
+                  style={[styles.pageCounter, this.pageCounterStyle]}
                 >
-                  {this.state.pageNum} / {json.private_blocks.length}
-                </Text>
-              </Animatable.View>
-            )
-          }
-          {navBarTitle && (
-            <Animatable.Text
-              style={[styles.navBarTitle, navBarTitleStyle]}
-              ref={this.handleNavTitleRef}
-              useNativeDriver={false}
-            >
-              {navBarTitle}
-            </Animatable.Text>
-          )}
-        </>
+                  <Text style={[styles.pageNum, this.pageNumberStyle]}>
+                    {this.state.pageNum} / {json.private_blocks.length}
+                  </Text>
+                </Animatable.View>
+              )}
+            {navBarTitle && (
+              <Animatable.Text
+                style={[styles.navBarTitle, navBarTitleStyle]}
+                ref={this.handleNavTitleRef}
+                useNativeDriver={false}
+              >
+                {navBarTitle}
+              </Animatable.Text>
+            )}
+          </>
         </EngagementContext.Provider>
       );
     }
 
     dataKeyExtractor = (item: BlockItem): string => {
       return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
-    }
+    };
   };
 }

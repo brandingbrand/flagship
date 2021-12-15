@@ -9,6 +9,6 @@ export interface GlobalDataAction extends Action {
 export function setGlobalData(data: any): GlobalDataAction {
   return {
     type: GlobalDataActionType,
-    data
+    data,
   };
 }

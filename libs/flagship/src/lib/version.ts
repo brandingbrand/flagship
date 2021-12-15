@@ -26,9 +26,5 @@ export function normalize(version: string): string {
   const versionAndLabel = version.split('-');
   const parts = versionAndLabel[0].split('.');
 
-  return [
-    padZeros(parts[0], 2),
-    padZeros(parts[1], 3),
-    padZeros(parts[2], 3)
-  ].join('');
+  return [padZeros(parts[0], 2), padZeros(parts[1], 3), padZeros(parts[2], 3)].join('');
 }

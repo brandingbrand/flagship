@@ -6,45 +6,28 @@ export {
   WithCommerceProviderProps,
   WithCommerceState,
   FetchDataFunction,
-  InitialDataFunction
+  InitialDataFunction,
 } from './Commerce/CommerceProvider';
 export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
-export {
-  default as CommerceCookieSessionManager
-} from './Commerce/sessions/CommerceCookieSessionManager';
+export { default as CommerceCookieSessionManager } from './Commerce/sessions/CommerceCookieSessionManager';
 
 export * as ReviewTypes from './Review/ReviewTypes';
 export {
   ReviewDataSource,
   AbstractReviewDataSource,
-  WriteReviewDataSource
+  WriteReviewDataSource,
 } from './Review/ReviewDataSource';
 
 export { AddressType, AddressTypeValidation } from './Address/AddressTypes';
 export { default as AddressDataSource } from './Address/AddressDataSource';
 
-export {
-  default as AccountDataSource
-} from './Commerce/interfaces/AccountDataSource';
-export {
-  default as CartDataSource
-} from './Commerce/interfaces/CartDataSource';
-export {
-  default as ProductCatalogDataSource
-} from './Commerce/interfaces/ProductCatalogDataSource';
-export {
-  default as ProductRecommendationDataSource
-} from './Commerce/interfaces/ProductRecommendationDataSource';
-export {
-  default as ProductSearchDataSource
-} from './Commerce/interfaces/ProductSearchDataSource';
-export {
-  default as ContentDataSource
-} from './Commerce/interfaces/ContentDataSource';
+export { default as AccountDataSource } from './Commerce/interfaces/AccountDataSource';
+export { default as CartDataSource } from './Commerce/interfaces/CartDataSource';
+export { default as ProductCatalogDataSource } from './Commerce/interfaces/ProductCatalogDataSource';
+export { default as ProductRecommendationDataSource } from './Commerce/interfaces/ProductRecommendationDataSource';
+export { default as ProductSearchDataSource } from './Commerce/interfaces/ProductSearchDataSource';
+export { default as ContentDataSource } from './Commerce/interfaces/ContentDataSource';
 
-export {
-  default as runMiddleware,
-  MiddlewareFunction
-} from './lib/runMiddleware';
+export { default as runMiddleware, MiddlewareFunction } from './lib/runMiddleware';
 
 export { AuthType } from './Commerce/types/CustomerAccount';

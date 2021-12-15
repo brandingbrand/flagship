@@ -29,7 +29,7 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
 
     this.state = {
       zoomImageSize: new Animated.Value(SCREEN_WIDTH),
-      zoomImagePosition: new Animated.ValueXY({ x: 0, y: 0 })
+      zoomImagePosition: new Animated.ValueXY({ x: 0, y: 0 }),
     };
   }
 
@@ -49,16 +49,12 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
         if (evt.nativeEvent.changedTouches.length > 1) {
           this.isZooming = true;
           const distanceX = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageX -
-              evt.nativeEvent.changedTouches[1].pageX
+            evt.nativeEvent.changedTouches[0].pageX - evt.nativeEvent.changedTouches[1].pageX
           );
           const distanceY = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageY -
-              evt.nativeEvent.changedTouches[1].pageY
+            evt.nativeEvent.changedTouches[0].pageY - evt.nativeEvent.changedTouches[1].pageY
           );
-          const distance = Math.sqrt(
-            distanceX * distanceX + distanceY * distanceY
-          );
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
           if (this.initialZoomDistance === undefined) {
             this.initialZoomDistance = distance;
@@ -66,18 +62,11 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
             this.distanceDiff = distance - this.initialZoomDistance;
             this.state.zoomImageSize.setValue(SCREEN_WIDTH + this.distanceDiff);
             this.state.zoomImagePosition.setValue({
-              x:
-                gestureState.dx *
-                (SCREEN_WIDTH / (SCREEN_WIDTH + this.distanceDiff)),
-              y:
-                gestureState.dy *
-                (SCREEN_WIDTH / (SCREEN_WIDTH + this.distanceDiff))
+              x: gestureState.dx * (SCREEN_WIDTH / (SCREEN_WIDTH + this.distanceDiff)),
+              y: gestureState.dy * (SCREEN_WIDTH / (SCREEN_WIDTH + this.distanceDiff)),
             });
           }
-        } else if (
-          evt.nativeEvent.changedTouches.length === 1 &&
-          !this.isZooming
-        ) {
+        } else if (evt.nativeEvent.changedTouches.length === 1 && !this.isZooming) {
           if (this.justMoveX === undefined) {
             if (Math.abs(gestureState.dx) >= Math.abs(gestureState.dy)) {
               this.justMoveX = true;
@@ -102,20 +91,20 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
           Animated.parallel([
             Animated.spring(this.state.zoomImageSize, {
               toValue: SCREEN_WIDTH,
-              useNativeDriver: false
+              useNativeDriver: false,
             }),
             Animated.spring(this.state.zoomImagePosition, {
               toValue: { x: 0, y: 0 },
-              useNativeDriver: false
-            })
+              useNativeDriver: false,
+            }),
           ]).start();
           this.props.onZoomRelease(this.distanceDiff);
         } else {
           this.props.onMoveRelease(evt, gestureState, this.justMoveX || false);
         }
-      }
+      },
     });
-  }
+  };
 
   render(): JSX.Element {
     const { zoomImagePosition, zoomImageSize } = this.state;
@@ -124,16 +113,16 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
         {
           scale: zoomImageSize.interpolate({
             inputRange: [SCREEN_WIDTH, SCREEN_WIDTH * 2],
-            outputRange: [1, 2]
-          })
+            outputRange: [1, 2],
+          }),
         },
         {
-          translateY: zoomImagePosition.y
+          translateY: zoomImagePosition.y,
         },
         {
-          translateX: zoomImagePosition.x
-        }
-      ]
+          translateX: zoomImagePosition.x,
+        },
+      ],
     };
     return (
       <View {...this.panResponder.panHandlers} style={this.props.style}>

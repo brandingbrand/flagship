@@ -5,12 +5,7 @@
 
 import React, { FunctionComponent, ReactNode } from 'react';
 
-import {
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle
-} from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ActionBarProps {
   style?: StyleProp<ViewStyle>;
@@ -23,11 +18,11 @@ const DEFAULT_SEPARATOR_WIDTH = 15;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   item: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export const ActionBar: FunctionComponent<ActionBarProps> = (props): JSX.Element => {
@@ -36,27 +31,19 @@ export const ActionBar: FunctionComponent<ActionBarProps> = (props): JSX.Element
 
   return (
     <View style={[styles.container, props.style]}>
-      { React.Children.map(props.children, (child: React.ReactNode, index) => {
+      {React.Children.map(props.children, (child: React.ReactNode, index) => {
         let returnElem: React.ReactNode;
 
         if (React.isValidElement(child)) {
           // If child is a React Element, add default style prop of flex:1
           returnElem = React.cloneElement(child, {
-            style: [
-              styles.item,
-              child.props.style
-            ]
+            style: [styles.item, child.props.style],
           });
         } else {
           returnElem = child;
         }
 
-        return [
-          returnElem,
-          index !== numChildren - 1 && (
-            <View style={separatorStyle} />
-          )
-        ];
+        return [returnElem, index !== numChildren - 1 && <View style={separatorStyle} />];
       })}
     </View>
   );

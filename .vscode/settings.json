@@ -1,9 +1,7 @@
 {
   "editor.tabSize": 2,
   "editor.trimAutoWhitespace": true,
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,

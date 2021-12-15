@@ -14,7 +14,7 @@ import { CMSBanner, CMSBannerProps } from './CMSBanner';
 import { MultiCarousel } from './MultiCarousel';
 
 const DEFAULT_CAROUSEL_PROPS = {
-  height: 200
+  height: 200,
 };
 
 export interface CMSBannerCarouselProps extends CMSBannerProps, CMSProviderProps {

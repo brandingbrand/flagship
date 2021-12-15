@@ -176,15 +176,12 @@ function getManifestPath(): string {
  * @returns {string} The path to the native project.
  */
 function getNativeProjectPathAndriod(configuration: Config): string {
-  const pkgId = configuration.bundleIds && configuration.bundleIds.android ?
-    configuration.bundleIds.android :
-    `com.brandingbrand.reactnative.and.${configuration.name}`;
+  const pkgId =
+    configuration.bundleIds && configuration.bundleIds.android
+      ? configuration.bundleIds.android
+      : `com.brandingbrand.reactnative.and.${configuration.name}`;
 
-  return resolvePathFromProject(
-    getMainPath(),
-    'java',
-    ...pkgId.toLowerCase().split('.')
-  );
+  return resolvePathFromProject(getMainPath(), 'java', ...pkgId.toLowerCase().split('.'));
 }
 
 /**
@@ -276,17 +273,17 @@ export const normalize = path.normalize;
 
 export const flagship = {
   path: getPathToFLAGSHIP,
-  resolve: resolvePathFromFLAGSHIP
+  resolve: resolvePathFromFLAGSHIP,
 };
 
 export const app = {
   path: getPathToApp,
-  resolve: resolvePathFromApp
+  resolve: resolvePathFromApp,
 };
 
 export const project = {
   path: getPathToProject,
-  resolve: resolvePathFromProject
+  resolve: resolvePathFromProject,
 };
 
 export const ios = {
@@ -295,7 +292,7 @@ export const ios = {
   infoPlistPath: getInfoPlistPath,
   podfilePath: getPodfilePath,
   pbxprojFilePath: getPbxprojFilePath,
-  nativeProjectPath: getNativeProjectPathIOS
+  nativeProjectPath: getNativeProjectPathIOS,
 };
 
 export const android = {
@@ -311,5 +308,5 @@ export const android = {
   resourcesPath: getResourcesPath,
   stringsPath: getStringsPath,
   stylesPath: getStylesPath,
-  fastfilePath: getFastfilePathAndroid
+  fastfilePath: getFastfilePathAndroid,
 };

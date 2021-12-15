@@ -8,7 +8,7 @@ import {
   StyleProp,
   TextStyle,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import styles from '../carousel/index.style';
 import Carousel from 'react-native-snap-carousel';
@@ -52,8 +52,10 @@ export interface ProductCarouselBlockState {
   loading: boolean;
 }
 
-export default class ProductCarouselBlock
-  extends Component<ProductCarouselBlockProps, ProductCarouselBlockState> {
+export default class ProductCarouselBlock extends Component<
+  ProductCarouselBlockProps,
+  ProductCarouselBlockState
+> {
   _slider1Ref: any | null = null;
 
   private network: FSNetwork;
@@ -62,10 +64,10 @@ export default class ProductCarouselBlock
     this.state = {
       sliderActiveSlide: SLIDER_1_FIRST_ITEM,
       products: [],
-      loading: true
+      loading: true,
     };
     this.network = new FSNetwork({
-      baseURL: props.baseUrl
+      baseURL: props.baseUrl,
     });
   }
 
@@ -74,13 +76,14 @@ export default class ProductCarouselBlock
     const products = await this.fetchProducts(items);
     this.setState({
       products: products.filter((item: any) => !item.error),
-      loading: false
+      loading: false,
     });
   }
 
   async fetchProduct(id: string): Promise<any> {
     const imageFormat = this.props.imageFormat || 'Regular_Mobile';
-    return this.network.get(id)
+    return this.network
+      .get(id)
       .then((r: any) => r.data)
       .then((item: any) => {
         return {
@@ -91,18 +94,18 @@ export default class ProductCarouselBlock
           deepLinkUrl: this.props.deepLinkUrl,
           image: (item.galleryImageList.galleryImage || []).find((img: any) => {
             return img.format === imageFormat;
-          })
+          }),
         };
       })
       .catch(async (e: any) => {
         return Promise.resolve({
-          error: e
+          error: e,
         });
       });
   }
 
   async fetchProducts(items: any[]): Promise<any> {
-    const promises = items.map(async item => {
+    const promises = items.map(async (item) => {
       return this.fetchProduct(item.productId);
     });
     return Promise.all(promises);
@@ -119,12 +122,10 @@ export default class ProductCarouselBlock
         priceStyle={renderItemPriceStyle}
       />
     );
-  }
+  };
 
   horizontalMarginPadding(): number {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
     const pr = containerStyle.paddingRight || 0;
@@ -135,9 +136,7 @@ export default class ProductCarouselBlock
     return sliderWidth - this.horizontalMarginPadding();
   }
   calculateItemWidth(): number {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
     const slideWidth = wp(options.itemWidthPercent);
     const itemHorizontalMargin = wp(options.itemHorizontalPaddingPercent);
     return slideWidth + itemHorizontalMargin * 2 - this.horizontalMarginPadding();
@@ -146,11 +145,7 @@ export default class ProductCarouselBlock
   onSnapToItem = (index: number) => this.setState({ sliderActiveSlide: index + 1 });
 
   createCarousel(): JSX.Element {
-    const {
-      options,
-      titleStyle,
-      priceStyle
-    } = this.props;
+    const { options, titleStyle, priceStyle } = this.props;
     renderItemTitleStyle = titleStyle;
     renderItemPriceStyle = priceStyle;
     renderItemOptions = options;
@@ -174,9 +169,7 @@ export default class ProductCarouselBlock
     );
   }
   render(): JSX.Element {
-    const {
-      containerStyle
-    } = this.props;
+    const { containerStyle } = this.props;
     if (this.props.onBack) {
       onBackPress = this.props.onBack;
     }
@@ -186,7 +179,7 @@ export default class ProductCarouselBlock
       <View style={containerStyle}>
         {this.state.loading && (
           <View style={styles.loadingInner}>
-            <ActivityIndicator color='rgba(0,0,0,0.5)' />
+            <ActivityIndicator color="rgba(0,0,0,0.5)" />
           </View>
         )}
         {carousel}

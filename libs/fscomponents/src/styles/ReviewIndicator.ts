@@ -4,13 +4,13 @@ import {
   RegisteredStyle,
   StyleSheet,
   TextStyle,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   star: {
     fontSize: 18,
@@ -20,34 +20,34 @@ export const style = StyleSheet.create({
     // includeFontPadding is not a valid property for web/ios
     ...Platform.select({
       android: {
-        includeFontPadding: false
-      }
-    })
+        includeFontPadding: false,
+      },
+    }),
   },
   emptyStar: {
-    color: '#e0e1e2'
+    color: '#e0e1e2',
   },
   halfStarContainer: {
     width: 18,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   starHalfLeft: {
     position: 'absolute',
-    left: 0
+    left: 0,
   },
   starHalfRight: {
     position: 'absolute',
     left: 0,
-    marginLeft: -10
+    marginLeft: -10,
   },
   starHalfLeftWrap: {
     flex: 1,
     overflow: 'hidden',
-    zIndex: 1
+    zIndex: 1,
   },
   starHalfRightWrap: {
     flex: 1,
     overflow: 'hidden',
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 });

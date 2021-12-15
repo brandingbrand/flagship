@@ -4,19 +4,19 @@ export { ViewStyle, TextStyle, ImageStyle };
 export const style = StyleSheet.create({
   container: {
     flex: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
   },
   loading: {
-    paddingTop: 20
+    paddingTop: 20,
   },
   list: {
     flex: 1,
     backgroundColor: '#eee',
-    paddingRight: 10
+    paddingRight: 10,
   },
   productImage: {
     width: 100,
-    height: 100
+    height: 100,
   },
   productItem: {
     margin: 10,
@@ -24,11 +24,11 @@ export const style = StyleSheet.create({
     marginRight: 0,
     padding: 10,
     backgroundColor: 'white',
-    flex: 1
+    flex: 1,
   },
   actionBar: {
     paddingLeft: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
   modalHeader: {
     height: 70,
@@ -36,11 +36,11 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: '#eee'
+    borderBottomColor: '#eee',
   },
   modalHeaderText: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   modalHeaderCloseText: {},
   modalHeaderClose: {
@@ -51,29 +51,29 @@ export const style = StyleSheet.create({
     left: 0,
     bottom: 0,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   resetButton: {
     width: 150,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
   noResultContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   noResultText: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   modalContainer: {
-    flex: 1
+    flex: 1,
   },
   footer: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loadMoreButton: {
     height: 40,
@@ -83,21 +83,21 @@ export const style = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#ccc',
     borderWidth: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   loadingLoadMore: {
     height: 40,
     paddingTop: 0,
-    marginVertical: 10
+    marginVertical: 10,
   },
   error: {
     textAlign: 'center',
-    margin: 20
+    margin: 20,
   },
   modelLoadingContainer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });

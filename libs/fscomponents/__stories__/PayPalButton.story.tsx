@@ -20,10 +20,6 @@ const PayPalButtonWrapper = (props: any) => {
 
 const PayPalButtonWithWallet = withDigitalWallet(PayPalButtonWrapper);
 
-storiesOf('PayPalButton', module)
-  .add('basic usage', () => (
-    <PayPalButtonWithWallet
-      payPalMerchantIdentifier='com.bb.test'
-      payPalOnPress={action('Pay')}
-    />
-  ));
+storiesOf('PayPalButton', module).add('basic usage', () => (
+  <PayPalButtonWithWallet payPalMerchantIdentifier="com.bb.test" payPalOnPress={action('Pay')} />
+));

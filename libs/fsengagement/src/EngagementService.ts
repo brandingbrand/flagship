@@ -2,12 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
-import {
-  AppSettings,
-  EngagementMessage,
-  EngagementProfile,
-  EngagmentEvent
-} from './types';
+import { AppSettings, EngagementMessage, EngagementProfile, EngagmentEvent } from './types';
 
 export interface EngagementServiceConfig {
   appId: string;
@@ -48,9 +43,9 @@ export class EngagementService {
     this.networkClient = new FSNetwork({
       baseURL: config.baseURL,
       headers: {
-        apikey: config.apiKey,
-        'Content-Type': 'application/json'
-      }
+        'apikey': config.apiKey,
+        'Content-Type': 'application/json',
+      },
     });
   }
 
@@ -73,7 +68,7 @@ export class EngagementService {
     const data = {
       key,
       value,
-      appId: this.appId
+      appId: this.appId,
     };
 
     return this.networkClient
@@ -96,8 +91,9 @@ export class EngagementService {
       return Promise.resolve(this.profileId);
     }
 
-    const savedProfileId =
-      await AsyncStorage.getItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`);
+    const savedProfileId = await AsyncStorage.getItem(
+      `ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`
+    );
 
     if (savedProfileId && typeof savedProfileId === 'string' && !forceProfileSync) {
       this.profileId = savedProfileId;
@@ -105,7 +101,9 @@ export class EngagementService {
     }
     const profileInfo: any = {
       accountId,
-      locale: RNLocalize.getLocales() && RNLocalize.getLocales().length &&
+      locale:
+        RNLocalize.getLocales() &&
+        RNLocalize.getLocales().length &&
         RNLocalize.getLocales()[0].languageTag,
       country: RNLocalize.getCountry(),
       timezone: RNLocalize.getTimeZone(),
@@ -115,17 +113,20 @@ export class EngagementService {
         appName: DeviceInfo.getBundleId(),
         appVersion: DeviceInfo.getReadableVersion(),
         osName: DeviceInfo.getSystemName(),
-        osVersion: DeviceInfo.getSystemVersion()
-      })
+        osVersion: DeviceInfo.getSystemVersion(),
+      }),
     };
-    return this.networkClient.post(`/App/${this.appId}/getProfile`, profileInfo)
+    return this.networkClient
+      .post(`/App/${this.appId}/getProfile`, profileInfo)
       .then((r: any) => r.data)
       .then((data: any) => {
         this.profileId = data.id;
         this.profileData = data;
 
-        AsyncStorage
-          .setItem(`ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`, data.id).catch();
+        AsyncStorage.setItem(
+          `ENGAGEMENT_PROFILE_ID_${this.environment}_${this.appId}`,
+          data.id
+        ).catch();
 
         return data.id;
       })
@@ -136,23 +137,23 @@ export class EngagementService {
   }
 
   async getSegments(attribute?: string): Promise<Segment[]> {
-    return this.networkClient.get(`/App/${this.appId}/getSegments`, {
-      params: {
-        attribute
-      }
-    })
-      .then(r => r.data)
+    return this.networkClient
+      .get(`/App/${this.appId}/getSegments`, {
+        params: {
+          attribute,
+        },
+      })
+      .then((r) => r.data)
       .catch((e: any) => {
         console.log(e.response);
         console.error(e);
       });
   }
 
-
   async setPushToken(pushToken: string): Promise<any> {
     const uniqueId = DeviceInfo.getUniqueId();
-    const device = this.profileData && this.profileData.devices &&
-      this.profileData.devices[uniqueId];
+    const device =
+      this.profileData && this.profileData.devices && this.profileData.devices[uniqueId];
     if (device) {
       if (!device.pushToken || device.pushToken !== pushToken) {
         this.networkClient
@@ -176,21 +177,23 @@ export class EngagementService {
     // cache
     if (this.messages.length) {
       if (+new Date() - this.messageCache < this.cacheTTL) {
-
         return Promise.resolve(this.messages);
       }
     }
 
-    return this.networkClient.get(`/PublishedMessages/getForProfile/${this.profileId}`)
+    return this.networkClient
+      .get(`/PublishedMessages/getForProfile/${this.profileId}`)
       .then((r: any) => r.data)
-      .then((list: any) => list.map((data: any) => ({
-        id: data.id,
-        published: new Date(data.published),
-        message: JSON.parse(data.message),
-        title: data.title,
-        inbox: data.inbox,
-        attributes: data.attributes
-      })))
+      .then((list: any) =>
+        list.map((data: any) => ({
+          id: data.id,
+          published: new Date(data.published),
+          message: JSON.parse(data.message),
+          title: data.title,
+          inbox: data.inbox,
+          attributes: data.attributes,
+        }))
+      )
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
@@ -219,32 +222,33 @@ export class EngagementService {
     // cache
     if (this.messages.length) {
       if (+new Date() - this.messageCache < this.cacheTTL) {
-
         return Promise.resolve(this.messages);
       }
     }
 
     const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
-    return this.networkClient.post(`/PublishedMessages/getInboxForProfile/${this.profileId}`,
-      JSON.stringify(attributes))
+    return this.networkClient
+      .post(`/PublishedMessages/getInboxForProfile/${this.profileId}`, JSON.stringify(attributes))
       .then((r: any) => r.data)
-      .then((list: any) => list.map((data: any) => {
-        return {
-          id: data.id,
-          published: new Date(data.published),
-          isNew: lastEngagementFetch ?
-            Date.parse(data.published) > parseInt(lastEngagementFetch, 10) : false,
-          message: JSON.parse(data.message),
-          title: data.title,
-          inbox: data.inbox,
-          attributes: data.attributes
-        };
-      }))
+      .then((list: any) =>
+        list.map((data: any) => {
+          return {
+            id: data.id,
+            published: new Date(data.published),
+            isNew: lastEngagementFetch
+              ? Date.parse(data.published) > parseInt(lastEngagementFetch, 10)
+              : false,
+            message: JSON.parse(data.message),
+            title: data.title,
+            inbox: data.inbox,
+            attributes: data.attributes,
+          };
+        })
+      )
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();
-        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString())
-          .catch();
+        AsyncStorage.setItem('LAST_ENGAGEMENT_FETCH', Date.now().toString()).catch();
         return messages;
       })
       .catch(async (e: any) => {
@@ -268,14 +272,11 @@ export class EngagementService {
    * @param {EngagementMessage[]} messages inbox messages to sort
    * @returns {EngagementMessage[]} sorted inbox messages
    */
-  async sortInbox(
-    messages: EngagementMessage[]
-  ): Promise<EngagementMessage[]> {
-
-    const order =
-      await this.networkClient.get(`/App/${this.appId}/getAppSettings`)
-    .then((r: any) => r.data)
-    .then((settings: AppSettings) => settings && settings.sort);
+  async sortInbox(messages: EngagementMessage[]): Promise<EngagementMessage[]> {
+    const order = await this.networkClient
+      .get(`/App/${this.appId}/getAppSettings`)
+      .then((r: any) => r.data)
+      .then((settings: AppSettings) => settings && settings.sort);
 
     if (!order || !Array.isArray(order)) {
       return messages;
@@ -304,8 +305,12 @@ export class EngagementService {
     const pinnedBottomIndexes: number[] = [];
 
     const pinnedTop = sortedAll.filter((msg, idx) => {
-      if (msg.message && msg.message.content && msg.message.content.pin &&
-        msg.message.content.pin === 'top') {
+      if (
+        msg.message &&
+        msg.message.content &&
+        msg.message.content.pin &&
+        msg.message.content.pin === 'top'
+      ) {
         pinnedTopIndexes.push(idx);
         return true;
       }
@@ -316,8 +321,12 @@ export class EngagementService {
     }
 
     const pinnedBottom = sortedAll.filter((msg, idx) => {
-      if (msg.message && msg.message.content && msg.message.content.pin &&
-        msg.message.content.pin === 'bottom') {
+      if (
+        msg.message &&
+        msg.message.content &&
+        msg.message.content.pin &&
+        msg.message.content.pin === 'bottom'
+      ) {
         pinnedBottomIndexes.push(idx);
         return true;
       }
@@ -334,20 +343,23 @@ export class EngagementService {
     segmentId: number | string,
     segmentOnly?: boolean
   ): Promise<EngagementMessage[]> {
-    return this.networkClient.post(`/App/${this.appId}/getInboxBySegment/${segmentId}`, {
-      segmentOnly
-    })
+    return this.networkClient
+      .post(`/App/${this.appId}/getInboxBySegment/${segmentId}`, {
+        segmentOnly,
+      })
       .then((r: any) => r.data)
-      .then((list: any) => list.map((data: any) => {
-        return {
-          id: data.id,
-          published: new Date(data.published),
-          message: JSON.parse(data.message),
-          title: data.title,
-          inbox: data.inbox,
-          attributes: data.attributes
-        };
-      }))
+      .then((list: any) =>
+        list.map((data: any) => {
+          return {
+            id: data.id,
+            published: new Date(data.published),
+            message: JSON.parse(data.message),
+            title: data.title,
+            inbox: data.inbox,
+            attributes: data.attributes,
+          };
+        })
+      )
       .then((messages: EngagementMessage[]) => {
         this.messages = messages;
         this.messageCache = +new Date();

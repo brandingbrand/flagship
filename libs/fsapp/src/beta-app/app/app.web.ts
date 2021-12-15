@@ -18,7 +18,7 @@ export class FSAppBeta extends FSAppBase {
     AppRegistry.runApplication('Flagship', {
       rootTag: this.root,
       hydrate: this.config.hydrate,
-      initialProps: {}
+      initialProps: {},
     });
   }
 
@@ -26,7 +26,7 @@ export class FSAppBeta extends FSAppBase {
     if (this.root) {
       // React Native Web hack due to unmatched Type Definitions
       // React Native Web aliases `unmountComponentAtNode` from `react-dom`
-      AppRegistry.unmountApplicationComponentAtRootTag((this.root as unknown) as number);
+      AppRegistry.unmountApplicationComponentAtRootTag(this.root as unknown as number);
     }
   }
 }

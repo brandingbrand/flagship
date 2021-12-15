@@ -26,19 +26,29 @@ export abstract class FSAppBase {
   updatedInitialState = async (excludeUncached?: boolean, req?: Request) => {
     let updatedState = this.appConfig.initialState || {};
     if (this.appConfig.cachedData) {
-      updatedState = (await this.appConfig.cachedData({
-        initialState: updatedState,
-        variables: {}
-      }, req)).initialState;
+      updatedState = (
+        await this.appConfig.cachedData(
+          {
+            initialState: updatedState,
+            variables: {},
+          },
+          req
+        )
+      ).initialState;
     }
     if (this.appConfig.uncachedData && excludeUncached !== false) {
-      updatedState = (await this.appConfig.uncachedData({
-        initialState: updatedState,
-        variables: {}
-      }, req)).initialState;
+      updatedState = (
+        await this.appConfig.uncachedData(
+          {
+            initialState: updatedState,
+            variables: {},
+          },
+          req
+        )
+      ).initialState;
     }
     return updatedState;
-  }
+  };
 
   initApp = async () => {
     if (!this.appConfig.serverSide) {
@@ -48,7 +58,7 @@ export abstract class FSAppBase {
       await this.appRouter.loadRoutes();
     }
     this.registerScreens();
-  }
+  };
 
   getReduxStore = async (initialState?: any) => {
     return configureStore(
@@ -56,7 +66,7 @@ export abstract class FSAppBase {
       this.appConfig.reducers,
       this.appConfig.storeMiddleware || []
     );
-  }
+  };
 
   abstract getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined;
   abstract registerScreens(): void;

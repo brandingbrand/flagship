@@ -5,7 +5,7 @@ import type {
   RedirectRoute,
   Route,
   RouterConfig,
-  Routes
+  Routes,
 } from './types';
 
 import { AppRegistry } from 'react-native';
@@ -28,7 +28,7 @@ import {
   defaultActivatedRoute,
   NavigatorProvider,
   useActivatedRoute,
-  useNavigator
+  useNavigator,
 } from './context';
 import { FSRouterBase } from './router.base';
 import { History } from './history';
@@ -63,11 +63,13 @@ const Redirect: FC<RedirectProps> = ({ route }) => {
     const redirect =
       typeof route.redirect === 'string' ? route.redirect : route.redirect(activatedRoute);
 
-    guardRoute(route, activatedRoute).then(allowed => {
-      if (allowed) {
-        navigator.open(`/${redirect}`);
-      }
-    }).catch(noop);
+    guardRoute(route, activatedRoute)
+      .then((allowed) => {
+        if (allowed) {
+          navigator.open(`/${redirect}`);
+        }
+      })
+      .catch(noop);
   }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
 
   return null;
@@ -115,7 +117,6 @@ export class FSRouter extends FSRouterBase {
       }
     }, [routeDetails]);
 
-
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(
         () =>
@@ -160,7 +161,7 @@ export class FSRouter extends FSRouterBase {
       );
     } else if ('children' in route) {
       return route.children
-        .map(child => this.constructScreen(child, loading, routeDetails, path))
+        .map((child) => this.constructScreen(child, loading, routeDetails, path))
         .reduce<JSX.Element[]>(
           (prev, next) => [...prev, ...(Array.isArray(next) ? next : [next])],
           []
@@ -168,7 +169,7 @@ export class FSRouter extends FSRouterBase {
     }
 
     return <></>;
-  }
+  };
 
   private readonly Outlet = () => {
     const [loading, setLoading] = useState(false);
@@ -193,7 +194,7 @@ export class FSRouter extends FSRouterBase {
             <VersionOverlay>
               <Router history={this.history}>
                 <Switch>
-                  {this.routes.map(route => this.constructScreen(route, loading, routeDetails))}
+                  {this.routes.map((route) => this.constructScreen(route, loading, routeDetails))}
                 </Switch>
               </Router>
             </VersionOverlay>
@@ -201,5 +202,5 @@ export class FSRouter extends FSRouterBase {
         </ModalProvider>
       </NavigatorProvider>
     );
-  }
+  };
 }

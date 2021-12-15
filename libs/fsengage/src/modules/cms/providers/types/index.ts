@@ -1,4 +1,4 @@
 export {
   ContentManagementSystemProviderConfiguration,
-  ContentManagementSystemEnvironment
+  ContentManagementSystemEnvironment,
 } from './ContentManagementSystemProviderConfiguration';

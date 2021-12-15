@@ -11,8 +11,7 @@ export interface NavigatorProp extends GenericNavProp {
 }
 
 const navStyle = StyleSheet.create({
-  modal: {
-  },
+  modal: {},
   backdrop: {
     position: 'absolute',
     top: 0,
@@ -22,8 +21,8 @@ const navStyle = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'black',
-    opacity: 0.7
-  }
+    opacity: 0.7,
+  },
 });
 
 export default class NavRender extends Component<NavigatorProp> {
@@ -50,34 +49,27 @@ export default class NavRender extends Component<NavigatorProp> {
 
   renderModal = (modal: NavModal, index: number): JSX.Element | null => {
     if (modal.layout.component) {
-      const modalOptions = (modal.layout.component.options &&
-        modal.layout.component.options.modal) || {};
+      const modalOptions =
+        (modal.layout.component.options && modal.layout.component.options.modal) || {};
       return (
         <Modal
           key={modal.layout.component.name + 'modal' + index}
           transparent={true}
           visible={true}
-          animationType='fade'
+          animationType="fade"
           onDismiss={this.onDismiss(index)}
           {...modalOptions.modalProps}
         >
           <TouchableWithoutFeedback onPress={this.onDismiss(index)}>
-            <View
-              style={[
-                navStyle.backdrop,
-                modalOptions.backdropStyle
-              ]}
-            />
+            <View style={[navStyle.backdrop, modalOptions.backdropStyle]} />
           </TouchableWithoutFeedback>
-          <View
-            style={[navStyle.modal, modalOptions.style]}
-          >
+          <View style={[navStyle.modal, modalOptions.style]}>
             {modal.layout.component.options &&
-              modal.layout.component.options.topBar &&
-              modal.layout.component.options.topBar.title &&
-              modal.layout.component.options.topBar.title.text ? (
-                <Text>{modal.layout.component.options.topBar.title.text}</Text>
-              ) : null}
+            modal.layout.component.options.topBar &&
+            modal.layout.component.options.topBar.title &&
+            modal.layout.component.options.topBar.title.text ? (
+              <Text>{modal.layout.component.options.topBar.title.text}</Text>
+            ) : null}
             {this.renderComponent(modal.layout.component)}
           </View>
         </Modal>
@@ -85,13 +77,9 @@ export default class NavRender extends Component<NavigatorProp> {
     } else {
       return null;
     }
-  }
+  };
 
   render(): JSX.Element {
-    return (
-      <View>
-        {this.props.modals.map(this.renderModal)}
-      </View>
-    );
+    return <View>{this.props.modals.map(this.renderModal)}</View>;
   }
 }

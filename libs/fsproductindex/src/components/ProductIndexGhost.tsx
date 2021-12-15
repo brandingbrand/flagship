@@ -8,11 +8,13 @@ const styles = StyleSheet.create({
   row: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between'
-  }
+    justifyContent: 'space-between',
+  },
 });
 
-const noop = () => { /** noop */};
+const noop = () => {
+  /** noop */
+};
 const renderGhostTile = (props?: ProductTileGhostProps) => () => <ProductTileGhost {...props} />;
 
 export interface SerializableProductIndexGhostProps {
@@ -20,10 +22,7 @@ export interface SerializableProductIndexGhostProps {
   tileProps?: ProductTileGhostProps;
 }
 
-export interface ProductIndexGhostProps extends Omit<
-  SerializableProductIndexGhostProps,
-  'style'
-> {
+export interface ProductIndexGhostProps extends Omit<SerializableProductIndexGhostProps, 'style'> {
   style?: StyleProp<ViewStyle>;
   renderRefineActionBar?: ProductIndexProps['renderRefineActionBar'];
 }
@@ -31,19 +30,13 @@ export interface ProductIndexGhostProps extends Omit<
 export const ProductIndexGhost: FC<ProductIndexGhostProps> = ({
   style,
   renderRefineActionBar,
-  tileProps
+  tileProps,
 }) => {
   const ghostTile = renderGhostTile(tileProps);
   return (
     <View style={style}>
-      {renderRefineActionBar?.(
-        noop,
-        noop,
-        { products: [] }
-      )}
-      <View style={styles.row}>
-        {times(4, ghostTile)}
-      </View>
+      {renderRefineActionBar?.(noop, noop, { products: [] })}
+      <View style={styles.row}>{times(4, ghostTile)}</View>
     </View>
   );
 };

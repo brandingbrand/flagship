@@ -35,19 +35,11 @@ export default class MapViewNative extends Component<PropType> {
   map: any;
 
   componentDidMount(): void {
-    this.moveToLocation(
-      this.props.locations,
-      this.props.isCollapsed,
-      this.props.center
-    );
+    this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
   }
 
   componentDidUpdate(prevProps: PropType): void {
-    this.moveToLocation(
-      this.props.locations,
-      this.props.isCollapsed,
-      this.props.center
-    );
+    this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
   }
 
   shouldComponentUpdate(nextProps: PropType): boolean {
@@ -62,11 +54,7 @@ export default class MapViewNative extends Component<PropType> {
     }
   }
 
-  moveToLocation(
-    locations: Location[],
-    isCollapsed?: boolean,
-    newCenter?: GeoLocation
-  ): void {
+  moveToLocation(locations: Location[], isCollapsed?: boolean, newCenter?: GeoLocation): void {
     if (!locations.length) {
       return;
     }
@@ -80,9 +68,9 @@ export default class MapViewNative extends Component<PropType> {
     }
     const region = locations.length
       ? {
-        ...center,
-        ...delta
-      }
+          ...center,
+          ...delta,
+        }
       : null;
 
     this.map.animateToRegion(region);
@@ -92,7 +80,7 @@ export default class MapViewNative extends Component<PropType> {
     if (this.props.onMakerPress) {
       this.props.onMakerPress(location);
     }
-  }
+  };
 
   // eslint-disable-next-line complexity
   render(): JSX.Element {
@@ -105,21 +93,17 @@ export default class MapViewNative extends Component<PropType> {
         latitude: defaultRegion.latitude || 0,
         longitude: defaultRegion.longitude || 0,
         latitudeDelta: defaultRegion.latitudeDelta || 0,
-        longitudeDelta: defaultRegion.longitudeDelta || 0
+        longitudeDelta: defaultRegion.longitudeDelta || 0,
       };
 
       return (
-         <MapView
-           ref={map => (this.map = map)}
-           style={style}
-           initialRegion={initialRegion}
-         />
+        <MapView ref={(map) => (this.map = map)} style={style} initialRegion={initialRegion} />
       );
     }
 
     return (
       <MapView
-        ref={map => (this.map = map)}
+        ref={(map) => (this.map = map)}
         style={style}
         onRegionChange={this.props.handleRegionChange}
         onRegionChangeComplete={this.props.handleRegionChangeComplete}
@@ -131,7 +115,7 @@ export default class MapViewNative extends Component<PropType> {
         )}
 
         {locations
-          .filter(location => !!location.address.latlng.lat)
+          .filter((location) => !!location.address.latlng.lat)
           .map((location, i) => {
             let image = null;
 
@@ -146,22 +130,18 @@ export default class MapViewNative extends Component<PropType> {
                 image={image}
                 centerOffset={{
                   x: 0,
-                  y: location.selected
-                    ? IOS_MARKER_OFFSET_Y_SELECTED
-                    : IOS_MARKER_OFFSET_Y
+                  y: location.selected ? IOS_MARKER_OFFSET_Y_SELECTED : IOS_MARKER_OFFSET_Y,
                 }}
                 coordinate={{
                   latitude: location.address.latlng.lat,
-                  longitude: location.address.latlng.lng
+                  longitude: location.address.latlng.lng,
                 }}
               >
                 {Platform.OS === 'ios' && (
                   <Image
                     source={marker}
-                    resizeMode='contain'
-                    style={
-                      location.selected ? S.markerImageSelected : S.markerImage
-                    }
+                    resizeMode="contain"
+                    style={location.selected ? S.markerImageSelected : S.markerImage}
                   />
                 )}
               </Marker>

@@ -5,7 +5,7 @@ import {
   Injectable,
   InjectionToken,
   Injector,
-  LocalInjectorCache
+  LocalInjectorCache,
 } from '../src';
 
 describe('injected class', () => {
@@ -63,7 +63,7 @@ describe('injected class', () => {
         provide: token,
         useClass: Example,
         // @ts-expect-error
-        deps: [dependencyToken, dependencyToken]
+        deps: [dependencyToken, dependencyToken],
       })
     ).toThrow(ReferenceError);
   });
@@ -81,7 +81,7 @@ describe('injected class', () => {
       injector.provide({
         provide: token,
         useClass: Example,
-        deps: [dependencyToken]
+        deps: [dependencyToken],
       })
     ).toThrow(ReferenceError);
   });
@@ -118,7 +118,6 @@ describe('injected class', () => {
     const instance = injector.get(token);
     expect(instance).toBeInstanceOf(Example);
   });
-
 
   it('should inject injectable classes without tokens', () => {
     class Dependency1 {}

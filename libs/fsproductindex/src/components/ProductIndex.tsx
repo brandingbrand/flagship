@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { isEqual, omit } from 'lodash-es';
-import {
-  CommerceDataSource,
-  CommerceTypes
-} from '@brandingbrand/fscommerce';
+import { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
 import {
   FilterListDrilldownProps,
   FilterListProps,
@@ -12,7 +9,7 @@ import {
   Loading,
   ProductItemProps,
   RefineActionBarProps,
-  SelectableListProps
+  SelectableListProps,
 } from '@brandingbrand/fscomponents';
 
 import { style as S } from '../styles/ProductIndex';
@@ -20,7 +17,7 @@ import ProductIndexGrid from './ProductIndexGrid';
 import {
   default as withProductIndexData,
   WithProductIndexProps,
-  WithProductIndexProviderProps
+  WithProductIndexProviderProps,
 } from './ProductIndexProvider';
 
 export interface UnwrappedProductIndexProps {
@@ -109,7 +106,7 @@ export class ProductIndex extends Component<UnwrappedProductIndexProps & WithPro
         this.props.onNavigate(data);
       }
     };
-  }
+  };
 
   componentDidUpdate(prevProps: UnwrappedProductIndexProps & WithProductIndexProps): void {
     if (this.props.commerceLoadData && !isEqual(prevProps.productQuery, this.props.productQuery)) {
@@ -121,7 +118,7 @@ export class ProductIndex extends Component<UnwrappedProductIndexProps & WithPro
     const { format, loadingStyle, style, commerceData, modalCancelButton } = this.props;
     const productIndexProps = {
       ...this.props,
-      onPress: this.onPress
+      onPress: this.onPress,
     };
 
     if (!commerceData) {
@@ -168,23 +165,29 @@ export class ProductIndex extends Component<UnwrappedProductIndexProps & WithPro
     commerceData: CommerceTypes.ProductIndex,
     selectedRefinementBlacklist?: string[]
   ) => {
-    const filteredCommerceData = selectedRefinementBlacklist &&
-    commerceData.selectedRefinements ? {
-      ...commerceData,
-      selectedRefinements: commerceData.selectedRefinements &&
-        omit(commerceData.selectedRefinements, selectedRefinementBlacklist),
-      refinements: commerceData.refinements && (this.props.refinementBlacklist ?
-        commerceData.refinements.filter(refinement => {
-          return this.props.refinementBlacklist?.indexOf(refinement.id) === -1;
-        }) : commerceData.refinements)
-    } : commerceData;
+    const filteredCommerceData =
+      selectedRefinementBlacklist && commerceData.selectedRefinements
+        ? {
+            ...commerceData,
+            selectedRefinements:
+              commerceData.selectedRefinements &&
+              omit(commerceData.selectedRefinements, selectedRefinementBlacklist),
+            refinements:
+              commerceData.refinements &&
+              (this.props.refinementBlacklist
+                ? commerceData.refinements.filter((refinement) => {
+                    return this.props.refinementBlacklist?.indexOf(refinement.id) === -1;
+                  })
+                : commerceData.refinements),
+          }
+        : commerceData;
 
     if (!!filteredCommerceData.total && !!this.props.setTitleTotalItem) {
       this.props.setTitleTotalItem(filteredCommerceData.total);
     }
 
     return filteredCommerceData;
-  }
+  };
 }
 
 export default withProductIndexData<UnwrappedProductIndexProps>(

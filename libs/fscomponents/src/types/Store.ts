@@ -8,12 +8,12 @@ export interface Address {
 }
 
 export type CreditCardType =
-  'VISA' |
-  'MASTERCARD' |
-  'AMERICANEXPRESS' |
-  'DINERSCLUB' |
-  'DISCOVER' |
-  'JCB';
+  | 'VISA'
+  | 'MASTERCARD'
+  | 'AMERICANEXPRESS'
+  | 'DINERSCLUB'
+  | 'DISCOVER'
+  | 'JCB';
 
 export interface Hour {
   dayOfWeek: number;
@@ -22,33 +22,29 @@ export interface Hour {
   close: string;
 }
 
-export type ClearButtonMode =
-  'never' |
-  'while-editing' |
-  'unless-editing' |
-  'always';
+export type ClearButtonMode = 'never' | 'while-editing' | 'unless-editing' | 'always';
 
 export type AccessibilityTraits =
-  'none' |
-  'button' |
-  'link' |
-  'header' |
-  'search' |
-  'image' |
-  'selected' |
-  'plays' |
-  'key' |
-  'text' |
-  'summary' |
-  'disabled' |
-  'frequentUpdates' |
-  'startsMedia' |
-  'adjustable' |
-  'allowsDirectInteraction' |
-  'pageTurn';
+  | 'none'
+  | 'button'
+  | 'link'
+  | 'header'
+  | 'search'
+  | 'image'
+  | 'selected'
+  | 'plays'
+  | 'key'
+  | 'text'
+  | 'summary'
+  | 'disabled'
+  | 'frequentUpdates'
+  | 'startsMedia'
+  | 'adjustable'
+  | 'allowsDirectInteraction'
+  | 'pageTurn';
 
 export type AccessibilityComponentType =
-  'none' |
-  'button' |
-  'radiobutton_checked' |
-  'radiobutton_unchecked';
+  | 'none'
+  | 'button'
+  | 'radiobutton_checked'
+  | 'radiobutton_unchecked';

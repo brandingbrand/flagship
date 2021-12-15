@@ -51,8 +51,9 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
           return this.token;
         } catch (e) {
           console.log('invalid stored token', e);
-          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {})
-            .catch(e => console.warn('cannot delete token', e));
+          SInfo.deleteItem(CommerceSessionManager.COMMERCE_TOKEN, {}).catch((e) =>
+            console.warn('cannot delete token', e)
+          );
           return null;
         }
       })
@@ -65,11 +66,7 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
   // set the token
   async set(token: SessionToken): Promise<boolean> {
     this.token = token;
-    await SInfo.setItem(
-      CommerceSessionManager.COMMERCE_TOKEN,
-      JSON.stringify(token),
-      {}
-    );
+    await SInfo.setItem(CommerceSessionManager.COMMERCE_TOKEN, JSON.stringify(token), {});
     return true;
   }
 
@@ -77,5 +74,4 @@ export default class CommerceTokenSessionManager extends CommerceSessionManager 
     // no extra steps to restore token, just return back currently stored token
     return this.get();
   }
-
 }

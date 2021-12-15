@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableWithoutFeedback,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { CommerceTypes } from '@brandingbrand/fscommerce';
@@ -23,7 +23,7 @@ import {
   ProductItemReviews,
   ProductItemSwatches,
   ProductItemTitle,
-  ProductItemVariant
+  ProductItemVariant,
 } from './components';
 
 import { style as S } from '../../styles/ProductItem';
@@ -108,7 +108,6 @@ export interface ProductItemProps extends CommerceTypes.Product {
 }
 
 export class ProductItem extends Component<ProductItemProps> {
-
   // eslint-disable-next-line complexity
   render(): JSX.Element {
     const {
@@ -165,13 +164,13 @@ export class ProductItem extends Component<ProductItemProps> {
       buttonProps,
       onButtonPress,
       renderButton,
-      orientation = 'vertical'
+      orientation = 'vertical',
     } = this.props;
 
-    const isHorizontal = (orientation === 'horizontal');
+    const isHorizontal = orientation === 'horizontal';
     let {
       reviewCount, // deprecated
-      reviewValue // deprecated
+      reviewValue, // deprecated
     } = this.props;
 
     if (review) {
@@ -185,10 +184,7 @@ export class ProductItem extends Component<ProductItemProps> {
     }
 
     return (
-      <TouchableWithoutFeedback
-        accessibilityLabel={title}
-        onPress={onPress}
-      >
+      <TouchableWithoutFeedback accessibilityLabel={title} onPress={onPress}>
         <View style={style}>
           <View style={isHorizontal ? S.horizontalListContainer : null}>
             <View style={isHorizontal ? S.horizontalLeft : null}>
@@ -219,18 +215,10 @@ export class ProductItem extends Component<ProductItemProps> {
                 />
               )}
               {!hideBrand && (
-                <ProductItemBrand
-                  brand={brand}
-                  brandStyle={brandStyle}
-                  renderBrand={renderBrand}
-                />
+                <ProductItemBrand brand={brand} brandStyle={brandStyle} renderBrand={renderBrand} />
               )}
               {!hideTitle && (
-                <ProductItemTitle
-                  title={title}
-                  titleStyle={titleStyle}
-                  renderTitle={renderTitle}
-                />
+                <ProductItemTitle title={title} titleStyle={titleStyle} renderTitle={renderTitle} />
               )}
               {!hidePrice && (
                 <ProductItemPrice

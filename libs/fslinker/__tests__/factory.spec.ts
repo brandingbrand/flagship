@@ -1,6 +1,5 @@
 import { InjectionToken, Injector, LocalInjectorCache } from '../src';
 
-
 describe('injected factory', () => {
   let injector: Injector;
 
@@ -27,12 +26,12 @@ describe('injected factory', () => {
 
     injector.provide({
       provide: dependencyToken,
-      useValue: 20
+      useValue: 20,
     });
     injector.provide({
       provide: token,
-      useFactory: dependency => dependency * 10,
-      deps: [dependencyToken]
+      useFactory: (dependency) => dependency * 10,
+      deps: [dependencyToken],
     });
 
     const value = injector.get(token);
@@ -44,8 +43,8 @@ describe('injected factory', () => {
 
     injector.provide({
       provide: token,
-      useFactory: dependency => dependency * 10,
-      deps: [30]
+      useFactory: (dependency) => dependency * 10,
+      deps: [30],
     });
 
     const value = injector.get(token);
@@ -60,7 +59,7 @@ describe('injected factory', () => {
         provide: token,
         useFactory: (dependency: number) => dependency * 10,
         // @ts-expect-error
-        deps: []
+        deps: [],
       })
     ).toThrow(ReferenceError);
   });
@@ -72,10 +71,9 @@ describe('injected factory', () => {
     expect(() =>
       injector.provide({
         provide: token,
-        useFactory: dependency => dependency * 10,
-        deps: [dependencyToken]
+        useFactory: (dependency) => dependency * 10,
+        deps: [dependencyToken],
       })
     ).toThrow(ReferenceError);
   });
 });
-

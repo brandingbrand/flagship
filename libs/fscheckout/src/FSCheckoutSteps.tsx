@@ -33,30 +33,31 @@ export default class FSCheckoutSteps extends Component<FSCheckoutStepsProps> {
         Animated.timing(this.animatedOpacity, {
           useNativeDriver: true,
           duration: 300,
-          toValue: 1
+          toValue: 1,
         }),
         Animated.timing(this.animatedTranslateX, {
           useNativeDriver: true,
           duration: 300,
-          toValue: 0
-        })
+          toValue: 0,
+        }),
       ]).start();
     }
   }
 
   getAnimatedDirection = (prevStep: Step, currStep: Step) => {
-    const prevStepIndex = this.props.steps.findIndex(step => step.name === prevStep.name);
-    const currStepIndex = this.props.steps.findIndex(step => step.name === currStep.name);
+    const prevStepIndex = this.props.steps.findIndex((step) => step.name === prevStep.name);
+    const currStepIndex = this.props.steps.findIndex((step) => step.name === currStep.name);
     return currStepIndex > prevStepIndex ? 'left' : 'right';
-  }
+  };
 
   render(): JSX.Element | null {
     if (!this.props.activeStep) {
       return null;
     }
 
-    const activeStepObject = this.props.steps.find(step =>
-       step.name === this.props.activeStep.name);
+    const activeStepObject = this.props.steps.find(
+      (step) => step.name === this.props.activeStep.name
+    );
 
     if (!activeStepObject) {
       return null;
@@ -64,15 +65,13 @@ export default class FSCheckoutSteps extends Component<FSCheckoutStepsProps> {
 
     const animatedStyle = this.props.animated
       ? {
-        opacity: this.animatedOpacity,
-        transform: [{ translateX: this.animatedTranslateX }]
-      }
+          opacity: this.animatedOpacity,
+          transform: [{ translateX: this.animatedTranslateX }],
+        }
       : null;
 
     return (
-      <Animated.View
-        style={animatedStyle}
-      >
+      <Animated.View style={animatedStyle}>
         <activeStepObject.component
           checkoutState={this.props.checkoutState}
           checkoutActions={this.props.checkoutActions}

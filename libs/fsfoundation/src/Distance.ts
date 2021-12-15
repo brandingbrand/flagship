@@ -10,7 +10,7 @@ export enum DistanceUnit {
   /**
    * A distance in SI kilometers.
    */
-  Kilometer
+  Kilometer,
 }
 
 /**

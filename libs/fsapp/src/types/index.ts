@@ -8,7 +8,7 @@ import {
   LayoutStackChildren,
   ModalOptions,
   Options,
-  OptionsTopBarButton
+  OptionsTopBarButton,
 } from 'react-native-navigation';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
@@ -230,4 +230,3 @@ export interface CMSRoutesConfig {
 export interface CombinedRouter {
   [key: string]: PublishedPage | Route;
 }
-

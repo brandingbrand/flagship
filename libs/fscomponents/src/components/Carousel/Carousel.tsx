@@ -7,7 +7,7 @@ export class Carousel extends Component<CarouselProps> {
 
   scrollBy = (index: number, animated?: boolean) => {
     this.swiper?.scrollBy(index, animated);
-  }
+  };
 
   render(): JSX.Element {
     const {
@@ -21,12 +21,12 @@ export class Carousel extends Component<CarouselProps> {
       loop,
       currentPageIndicatorColor,
       pageIndicatorColor,
-      prevButton
+      prevButton,
     } = this.props;
 
     return (
       <Swiper
-        ref={swiper => (this.swiper = swiper)}
+        ref={(swiper) => (this.swiper = swiper)}
         showsPagination={showsPagination}
         activeDotColor={currentPageIndicatorColor}
         dotColor={pageIndicatorColor}

@@ -9,16 +9,12 @@ import {
   TouchableHighlight,
   TouchableHighlightProperties,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 
 import { darken } from '../lib/color';
 import { border, palette } from '../styles/variables';
-import {
-  style as S,
-  stylesSize,
-  stylesTextSize
-} from '../styles/Button';
+import { style as S, stylesSize, stylesTextSize } from '../styles/Button';
 import { Loading } from './Loading';
 
 const DEFAULT_TINT_PERC = 15;
@@ -69,7 +65,7 @@ export interface ButtonState {
 export class Button extends PureComponent<ButtonProps, ButtonState> {
   state: ButtonState = {
     palette: this.props.palette || palette,
-    title: this.titleState
+    title: this.titleState,
   };
 
   componentDidUpdate(): void {
@@ -94,7 +90,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       color = 'primary',
       light,
       link,
-      disabled
+      disabled,
     } = this.props;
 
     const { palette } = this.state;
@@ -102,12 +98,10 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     return (
       <TouchableHighlight
         accessibilityLabel={accessibilityLabel || title}
-        accessibilityRole='button'
+        accessibilityRole="button"
         onPress={onPress}
         onLongPress={onLongPress}
-        underlayColor={
-          underlayColor || darken(palette[color], DEFAULT_TINT_PERC)
-        }
+        underlayColor={underlayColor || darken(palette[color], DEFAULT_TINT_PERC)}
         disabled={disabled}
         hitSlop={hitSlop}
         style={[
@@ -115,16 +109,14 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
           {
             backgroundColor: light || link ? 'transparent' : palette[color],
             borderColor: light ? palette[color] : undefined,
-            borderWidth: light ? border.width : 0
+            borderWidth: light ? border.width : 0,
           },
           stylesSize[size],
           full && S.full,
-          style
+          style,
         ]}
       >
-        <View style={S.buttonInner}>
-          {this.renderButtonInner()}
-        </View>
+        <View style={S.buttonInner}>{this.renderButtonInner()}</View>
       </TouchableHighlight>
     );
   }
@@ -139,7 +131,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       size = 'medium',
       color = 'primary',
       light,
-      link
+      link,
     } = this.props;
 
     const { palette, title } = this.state;
@@ -156,7 +148,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
               S.text,
               { color: light || link ? palette[color] : palette[onColor] },
               stylesTextSize[size],
-              titleStyle
+              titleStyle,
             ]}
           >
             {title}
@@ -164,17 +156,16 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
         </View>
       );
     }
-  }
+  };
 
   get titleState(): string {
-    const {
-      title,
-      selectedTitleState,
-      dynamicTitleStates
-     } = this.props;
+    const { title, selectedTitleState, dynamicTitleStates } = this.props;
 
-    if (selectedTitleState === undefined || !dynamicTitleStates ||
-      selectedTitleState >= dynamicTitleStates.length) {
+    if (
+      selectedTitleState === undefined ||
+      !dynamicTitleStates ||
+      selectedTitleState >= dynamicTitleStates.length
+    ) {
       return title;
     }
 

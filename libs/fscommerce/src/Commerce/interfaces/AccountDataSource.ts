@@ -8,7 +8,7 @@ import {
   PaymentMethod,
   ProductListAddItemOptions,
   ProductListsOptions,
-  SessionToken
+  SessionToken,
 } from '../CommerceTypes';
 
 /**
@@ -23,9 +23,7 @@ export default interface AccountDataSource {
    * @returns {Promise.<Array.<CustomerProductList>>} A Promise representing an array of product
    * lists
    */
-  fetchProductLists?: (
-    options?: ProductListsOptions
-  ) => Promise<CustomerProductList[]>;
+  fetchProductLists?: (options?: ProductListsOptions) => Promise<CustomerProductList[]>;
 
   /**
    * Add item to the logged-in user's product list. Requires a valid session token
@@ -50,10 +48,7 @@ export default interface AccountDataSource {
    * @returns {Promise.<Array.<CustomerProductList>>} A Promise representing an array of product
    * lists
    */
-  deleteItemFromProductList?: (
-    listId: string,
-    itemId: string
-  ) => Promise<void>;
+  deleteItemFromProductList?: (listId: string, itemId: string) => Promise<void>;
 
   /**
    * Log a user in via their username and password.
@@ -81,10 +76,7 @@ export default interface AccountDataSource {
    * @param {string} password - The password by which the user will log in
    * @returns {Promise.<CustomerAccount>} A Promise representing a new user's account
    */
-  register(
-    account: CustomerAccount,
-    password: string
-  ): Promise<CustomerAccount>;
+  register(account: CustomerAccount, password: string): Promise<CustomerAccount>;
 
   /**
    * Fetch saved addresses for the active user's account.

@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  ActivityIndicator,
-  Dimensions,
-  ImageBackground,
-  StyleSheet,
-  View
-} from 'react-native';
+import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
 import VideoPlayer from 'react-native-video';
 import { TextBlock } from './TextBlock';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -15,15 +9,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 40,
-    marginHorizontal: 25
+    marginHorizontal: 25,
   },
   fullScreen: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   header: {
     width: '100%',
-    backgroundColor: 'yellow'
+    backgroundColor: 'yellow',
   },
   loadingInner: {
     flex: 1,
@@ -31,28 +25,28 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   fullScreenDimensions: {
     width: viewportWidth,
-    height: viewportHeight
+    height: viewportHeight,
   },
   progressBar: {
     position: 'absolute',
     flexDirection: 'row',
     top: 50,
     flex: 1,
-    marginHorizontal: 50
+    marginHorizontal: 50,
   },
   progressItem: {
     flex: 1,
     marginHorizontal: 2,
     backgroundColor: '#cacaca',
-    height: 2
+    height: 2,
   },
   activeProgress: {
-    backgroundColor: '#4f4f4f'
-  }
+    backgroundColor: '#4f4f4f',
+  },
 });
 const PRIVATE_TYPE = 'private_type';
 
@@ -68,12 +62,14 @@ export interface TabbedItemState {
   activeIndex?: number;
 }
 export default class TabbedStoryItem extends Component<TabbedStoryItemProps, TabbedItemState> {
-  static getDerivedStateFromProps(props: TabbedStoryItemProps, prevState: TabbedItemState):
-    Partial<TabbedItemState> {
+  static getDerivedStateFromProps(
+    props: TabbedStoryItemProps,
+    prevState: TabbedItemState
+  ): Partial<TabbedItemState> {
     if (props.activeIndex !== prevState.activeIndex) {
       return {
         loaded: false,
-        activeIndex: props.activeIndex
+        activeIndex: props.activeIndex,
       };
     }
     return {};
@@ -83,28 +79,26 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
     super(props);
     this.state = {
       loaded: false,
-      activeIndex: 0
+      activeIndex: 0,
     };
   }
 
   loaded = (loaded: boolean) => () => {
     this.setState({ loaded });
-  }
+  };
   // eslint-disable-next-line complexity
   render(): JSX.Element {
-    const {
-      item
-    } = this.props;
+    const { item } = this.props;
 
     const horizontalMap: any = {
       left: 'flex-start',
       center: 'center',
-      right: 'flex-end'
+      right: 'flex-end',
     };
     const verticalMap: any = {
       top: 'flex-start',
       center: 'center',
-      bottom: 'flex-end'
+      bottom: 'flex-end',
     };
     let textContainerStyle = {};
     if (item && item.textOverlay) {
@@ -112,14 +106,16 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
         flex: 1,
         justifyContent: verticalMap[item.textOverlay.options.verticalAlignment],
         alignItems: horizontalMap[item.textOverlay.options.horizontalAlignment],
-        marginBottom: item.textOverlay.options &&
-          item.textOverlay.options.verticalAlignment === 'bottom' ?
-          item.textOverlay.options.verticalDistanceFromEdge : 0,
-        marginTop: item.textOverlay.options &&
-          item.textOverlay.options.verticalAlignment !== 'bottom' ?
-          item.textOverlay.options.verticalDistanceFromEdge : 0,
-        marginHorizontal: item.textOverlay.options &&
-          item.textOverlay.options.horizontalDistanceFromEdge
+        marginBottom:
+          item.textOverlay.options && item.textOverlay.options.verticalAlignment === 'bottom'
+            ? item.textOverlay.options.verticalDistanceFromEdge
+            : 0,
+        marginTop:
+          item.textOverlay.options && item.textOverlay.options.verticalAlignment !== 'bottom'
+            ? item.textOverlay.options.verticalDistanceFromEdge
+            : 0,
+        marginHorizontal:
+          item.textOverlay.options && item.textOverlay.options.horizontalDistanceFromEdge,
       };
     }
     if (item[PRIVATE_TYPE] === 'Image') {
@@ -127,20 +123,10 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
         <View>
           <ImageBackground source={item.source} style={styles.fullScreen}>
             {item.textOverlay && item.textOverlay.enabled && (
-            <View
-              style={textContainerStyle}
-            >
-              {!!item.textOverlay && (
-              <TextBlock
-                {...item.textOverlay.Title}
-              />
-              )}
-              {!!item.textOverlay.Subtitle.text && (
-              <TextBlock
-                {...item.textOverlay.Subtitle}
-              />
-              )}
-            </View>
+              <View style={textContainerStyle}>
+                {!!item.textOverlay && <TextBlock {...item.textOverlay.Title} />}
+                {!!item.textOverlay.Subtitle.text && <TextBlock {...item.textOverlay.Subtitle} />}
+              </View>
             )}
           </ImageBackground>
         </View>
@@ -157,35 +143,23 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
             source={{ uri: item.source.src }}
             style={{
               width: '100%',
-              height: '100%'
+              height: '100%',
             }}
           />
           {item.textOverlay && item.textOverlay.enabled && (
-          <View
-              style={[textContainerStyle, StyleSheet.absoluteFillObject]}
-          >
-            {!!item.textOverlay.Title.text && (
-            <TextBlock
-              {...item.textOverlay.Title}
-            />
-            )}
-            {!!item.textOverlay.Subtitle.text && (
-            <TextBlock
-              {...item.textOverlay.Subtitle}
-            />
-            )}
-          </View>
+            <View style={[textContainerStyle, StyleSheet.absoluteFillObject]}>
+              {!!item.textOverlay.Title.text && <TextBlock {...item.textOverlay.Title} />}
+              {!!item.textOverlay.Subtitle.text && <TextBlock {...item.textOverlay.Subtitle} />}
+            </View>
           )}
           {!this.state.loaded && (
-          <View style={styles.loadingInner}>
-            <ActivityIndicator color='rgba(0,0,0,0.5)' />
-          </View>
+            <View style={styles.loadingInner}>
+              <ActivityIndicator color="rgba(0,0,0,0.5)" />
+            </View>
           )}
         </View>
       );
     }
-    return (
-      <View key={item.key} />
-    );
+    return <View key={item.key} />;
   }
 }

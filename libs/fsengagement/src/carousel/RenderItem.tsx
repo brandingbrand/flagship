@@ -20,7 +20,12 @@ const { height: viewportHeight } = Dimensions.get('window');
 
 export default class RenderItem extends Component<RenderItemProps> {
   get image(): any {
-    const { data: { source }, parallax, parallaxProps, even } = this.props;
+    const {
+      data: { source },
+      parallax,
+      parallaxProps,
+      even,
+    } = this.props;
 
     return parallax ? (
       <ParallaxImage
@@ -33,25 +38,18 @@ export default class RenderItem extends Component<RenderItemProps> {
         {...parallaxProps}
       />
     ) : (
-        <Image
-          source={source}
-          style={styles.image}
-        />
-      );
+      <Image source={source} style={styles.image} />
+    );
   }
   onPress = () => {
     return false;
-  }
+  };
   render(): JSX.Element {
     const {
-      data: {
-        ratio,
-        title,
-        subtitle
-      },
+      data: { ratio, title, subtitle },
       even,
       itemWidth,
-      horizPadding = 0
+      horizPadding = 0,
     } = this.props;
 
     let itemStyle: any = {};
@@ -59,40 +57,30 @@ export default class RenderItem extends Component<RenderItemProps> {
       itemStyle = {
         width: itemWidth,
         height: itemWidth / parseFloat(ratio),
-        paddingHorizontal: horizPadding
+        paddingHorizontal: horizPadding,
       };
     } else {
       itemStyle = {
         width: itemWidth,
         height: viewportHeight * 0.36,
-        paddingHorizontal: horizPadding
+        paddingHorizontal: horizPadding,
       };
     }
     const uppercaseTitle = title ? (
-      <Text
-        style={[styles.title, even ? styles.titleEven : {}]}
-        numberOfLines={2}
-      >
+      <Text style={[styles.title, even ? styles.titleEven : {}]} numberOfLines={2}>
         {title.toUpperCase()}
       </Text>
-    ) : false;
+    ) : (
+      false
+    );
 
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        style={itemStyle}
-        onPress={this.onPress}
-      >
-        <View style={[styles.imageContainerNoCard, even ? {} : {}]}>
-          {this.image}
-        </View>
+      <TouchableOpacity activeOpacity={1} style={itemStyle} onPress={this.onPress}>
+        <View style={[styles.imageContainerNoCard, even ? {} : {}]}>{this.image}</View>
         {title && (
           <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
             {uppercaseTitle}
-            <Text
-              style={styles.subtitle}
-              numberOfLines={2}
-            >
+            <Text style={styles.subtitle} numberOfLines={2}>
               {subtitle}
             </Text>
           </View>

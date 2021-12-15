@@ -12,20 +12,20 @@ const styles = CreateWebStyles({
     top: 0,
     bottom: 0,
     overflowX: 'hidden',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   containerLeft: {
     left: 0,
     paddingRight: 5,
     transitionProperty: 'margin-left',
-    boxShadow: 'inset -7px 0 9px -7px rgba(0,0,0,0.7)'
+    boxShadow: 'inset -7px 0 9px -7px rgba(0,0,0,0.7)',
   },
   containerRight: {
     right: 0,
     paddingLeft: 5,
     transitionProperty: 'margin-right',
-    boxShadow: 'inset 7px 0 9px -7px rgba(0,0,0,0.7)'
-  }
+    boxShadow: 'inset 7px 0 9px -7px rgba(0,0,0,0.7)',
+  },
 });
 
 export interface DrawerProps {
@@ -44,7 +44,7 @@ export const DrawerContainer: FC<DrawerProps> = ({
   children,
   animationDuration,
   style,
-  onChange
+  onChange,
 }) => {
   const view = useRef<View>(null);
   const [listener, setListener] = useState<EventListener>();
@@ -84,8 +84,8 @@ export const DrawerContainer: FC<DrawerProps> = ({
         {
           width,
           [positionProp]: open ? 0 : `calc(-1 * ${width})`,
-          ...{ transitionDuration: animationDuration }
-        }
+          ...{ transitionDuration: animationDuration },
+        },
       ]}
     >
       {children}

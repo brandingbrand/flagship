@@ -16,7 +16,7 @@ const simpleAlert = () => {
 const titleAlert = () => {
   Alert.alert({
     title: text('title', 'Test Title'),
-    text: text('text?', 'test text, test text.')
+    text: text('text?', 'test text, test text.'),
   });
 };
 
@@ -28,17 +28,11 @@ const confirmAlert = () => {
     cancelButtonText: text('cancelButtonText?', 'Cancel'),
     confirmButtonText: text('confirmButtonText?', 'Confirm'),
     onConfirm: action('Confirm'),
-    onCancel: action('Cancel')
+    onCancel: action('Cancel'),
   });
 };
 
 storiesOf('Alert', module)
-  .add('simple', () => (
-    <Button onPress={simpleAlert} title='Preview Simple Alert'/>
-  ))
-  .add('w/ title', () => (
-    <Button onPress={titleAlert} title='Preview Title Alert'/>
-  ))
-  .add('w/ confirm', () => (
-    <Button onPress={confirmAlert} title='Preview Confirm Alert'/>
-  ));
+  .add('simple', () => <Button onPress={simpleAlert} title="Preview Simple Alert" />)
+  .add('w/ title', () => <Button onPress={titleAlert} title="Preview Title Alert" />)
+  .add('w/ confirm', () => <Button onPress={confirmAlert} title="Preview Confirm Alert" />);

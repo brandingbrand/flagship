@@ -2,10 +2,7 @@ import React, { Component, RefObject } from 'react';
 import { Image, Text, TextInput, View } from 'react-native';
 import { memoize } from 'lodash-es';
 import { Dictionary } from '@brandingbrand/fsfoundation';
-import {
-  defaultTextboxStyle,
-  getColor
-} from './formStyles';
+import { defaultTextboxStyle, getColor } from './formStyles';
 import { FormLabelPosition } from './fieldTemplates';
 
 export const successIcon = require('../../../../assets/images/checkmarkValidation.png');
@@ -25,9 +22,7 @@ export interface StatefulTextboxState {
 
 export type ComputeFieldType = (prevField: any) => () => void;
 
-export default class StatefulTextbox extends Component<StatefulTextboxProps,
-StatefulTextboxState> {
-
+export default class StatefulTextbox extends Component<StatefulTextboxProps, StatefulTextboxState> {
   activeErrorField: JSX.Element;
   alertStyle: Dictionary;
   checkStyle: Dictionary;
@@ -43,11 +38,11 @@ StatefulTextboxState> {
 
   state: StatefulTextboxState = {
     active: false,
-    validated: false
+    validated: false,
   };
 
   // memoizes returned function so as not to recompute on each rerender
-  private computeBlur: ComputeFieldType = memoize(prevOnBlur => () => {
+  private computeBlur: ComputeFieldType = memoize((prevOnBlur) => () => {
     this.onBlur();
 
     if (typeof prevOnBlur === 'function') {
@@ -55,7 +50,7 @@ StatefulTextboxState> {
     }
   });
 
-  private computeFocus: ComputeFieldType = memoize(prevOnFocus => () => {
+  private computeFocus: ComputeFieldType = memoize((prevOnFocus) => () => {
     this.onFocus();
 
     if (typeof prevOnFocus === 'function') {
@@ -100,7 +95,7 @@ StatefulTextboxState> {
       case FormLabelPosition.Hidden:
         this.groupStyle = this.defaultStyle.formGroupStyle;
         this.textboxStyle = this.defaultStyle.textboxFullBorderStyle;
-        this.labelViewStyle = {display: 'none'};
+        this.labelViewStyle = { display: 'none' };
         break;
       default:
         this.groupStyle = this.defaultStyle.inlineFormGroupStyle;
@@ -110,13 +105,14 @@ StatefulTextboxState> {
   }
 
   componentDidMount(): void {
-    console.warn('StatefulTextbox is deprecated and will be removed in the next version of Flagship.');
+    console.warn(
+      'StatefulTextbox is deprecated and will be removed in the next version of Flagship.'
+    );
   }
 
   // eslint-disable-next-line complexity
   render(): JSX.Element {
-
-    const {locals, componentFactory, labelPosition} = this.props;
+    const { locals, componentFactory, labelPosition } = this.props;
 
     const prevOnBlur = locals.onBlur;
     const prevOnFocus = locals.onFocus;
@@ -131,10 +127,12 @@ StatefulTextboxState> {
 
     // eslint-disable-next-line prefer-const
     error = locals.error ? (
-      <Text accessibilityLiveRegion='polite' style={this.errorBlockStyle}>
+      <Text accessibilityLiveRegion="polite" style={this.errorBlockStyle}>
         {locals.error}
       </Text>
-      ) : this.activeErrorField;
+    ) : (
+      this.activeErrorField
+    );
 
     if (labelPosition === FormLabelPosition.Inline) {
       locals.placeholder = this.state.active ? null : locals.error;
@@ -142,13 +140,13 @@ StatefulTextboxState> {
     }
 
     if (labelPosition === FormLabelPosition.Floating) {
-      label = locals.value ?
-        <Text style={[this.controlLabelStyle, {color}]}>{locals.label}</Text>
-        : <Text style={this.controlLabelStyle}>&nbsp;</Text>;
-    } else {
-      label = (
-        <Text style={[this.controlLabelStyle, {color}]}>{locals.label}</Text>
+      label = locals.value ? (
+        <Text style={[this.controlLabelStyle, { color }]}>{locals.label}</Text>
+      ) : (
+        <Text style={this.controlLabelStyle}>&nbsp;</Text>
       );
+    } else {
+      label = <Text style={[this.controlLabelStyle, { color }]}>{locals.label}</Text>;
     }
 
     if (labelPosition === FormLabelPosition.Above) {
@@ -156,46 +154,41 @@ StatefulTextboxState> {
     }
 
     const getIcon = () => {
-      return (this.props.locals.hasError ?
-      <Image source={errorIcon} style={this.alertStyle}/> :
-      <Image source={successIcon} style={this.checkStyle}/>
+      return this.props.locals.hasError ? (
+        <Image source={errorIcon} style={this.alertStyle} />
+      ) : (
+        <Image source={successIcon} style={this.checkStyle} />
       );
     };
 
     return (
       <View>
-        <View style={[this.groupStyle, {borderColor: color}]}>
-          <View style={this.labelViewStyle}>
-            {label}
-          </View>
+        <View style={[this.groupStyle, { borderColor: color }]}>
+          <View style={this.labelViewStyle}>{label}</View>
           <View style={this.textboxViewStyle}>
-            {
-              (componentFactory instanceof Function) ?
-              componentFactory(locals, this.textboxStyle, color) :
-              (
-                <TextInput
-                  accessibilityLabel={locals.label}
-                  ref={this.input}
-                  onChangeText={locals.onChange}
-                  onChange={locals.onChangeNative}
-                  style={[this.textboxStyle, {borderColor: color}]}
-                  {...locals}
-                />
-              )
-            }
+            {componentFactory instanceof Function ? (
+              componentFactory(locals, this.textboxStyle, color)
+            ) : (
+              <TextInput
+                accessibilityLabel={locals.label}
+                ref={this.input}
+                onChangeText={locals.onChange}
+                onChange={locals.onChangeNative}
+                style={[this.textboxStyle, { borderColor: color }]}
+                {...locals}
+              />
+            )}
             <View style={this.rightTextboxIconStyle}>
               {this.state.validated ? getIcon() : null}
             </View>
           </View>
-          {
-            (labelPosition !== FormLabelPosition.Inline) ?
-            (this.state.active ? this.activeErrorField : error) :
-            null
-          }
+          {labelPosition !== FormLabelPosition.Inline
+            ? this.state.active
+              ? this.activeErrorField
+              : error
+            : null}
         </View>
-        <View>
-          {this.help}
-        </View>
+        <View>{this.help}</View>
       </View>
     );
   }
@@ -203,15 +196,14 @@ StatefulTextboxState> {
   private onFocus = () => {
     this.setState({
       active: true,
-      validated: false
+      validated: false,
     });
-  }
+  };
 
   private onBlur = () => {
     this.setState({
       active: false,
-      validated: true
+      validated: true,
     });
-  }
-
+  };
 }

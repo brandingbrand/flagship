@@ -13,7 +13,7 @@ import {
   StyleProp,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { getCenter, getDelta } from '../lib/helpers';
 import { style as S } from '../styles/MapView';
@@ -73,16 +73,12 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     super(props);
     this.state = {
       center: undefined,
-      zoom: undefined
+      zoom: undefined,
     };
   }
 
   componentDidMount(): void {
-    this.moveToLocation(
-      this.props.locations,
-      this.props.isCollapsed,
-      this.props.center
-    );
+    this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
   }
 
   componentDidUpdate(prevProps: PropType): void {
@@ -91,29 +87,21 @@ export default class MapViewWeb extends Component<PropType, StateType> {
       this.props.isCollapsed !== prevProps.isCollapsed ||
       this.props.center !== prevProps.center
     ) {
-      this.moveToLocation(
-        this.props.locations,
-        this.props.isCollapsed,
-        this.props.center
-      );
+      this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
     }
   }
 
   mapRef = (map: any): void => {
     this.map = map;
-  }
+  };
 
   handleMarkerPress = (location: Location) => () => {
     if (this.props.onMakerPress) {
       this.props.onMakerPress(location);
     }
-  }
+  };
 
-  moveToLocation = (
-    locations: Location[],
-    isCollapsed?: boolean,
-    newCenter?: any
-  ) => {
+  moveToLocation = (locations: Location[], isCollapsed?: boolean, newCenter?: any) => {
     if (locations.length) {
       const centerPos = newCenter || getCenter(locations);
       const centerPosDelta = getDelta(locations);
@@ -127,36 +115,36 @@ export default class MapViewWeb extends Component<PropType, StateType> {
       const bounds = {
         nw: {
           lat: centerPos.latitude + centerPosDelta.latitudeDelta,
-          lng: centerPos.longitude - centerPosDelta.longitudeDelta
+          lng: centerPos.longitude - centerPosDelta.longitudeDelta,
         },
         se: {
           lat: centerPos.latitude - centerPosDelta.latitudeDelta,
-          lng: centerPos.longitude + centerPosDelta.longitudeDelta
-        }
+          lng: centerPos.longitude + centerPosDelta.longitudeDelta,
+        },
       };
 
       const bound = fitBounds(bounds, { width, height });
 
       this.setState({
         center: bound.center,
-        zoom: bound.zoom + 1
+        zoom: bound.zoom + 1,
       });
     }
-  }
+  };
 
   handleChange = ({ center, zoom }: { center: Center; zoom: number }) => {
     this.setState({
       center,
-      zoom
+      zoom,
     });
 
     if (this.props.handleRegionChangeComplete) {
       this.props.handleRegionChangeComplete({
         latitude: center.lat,
-        longitude: center.lng
+        longitude: center.lng,
       });
     }
-  }
+  };
 
   render(): JSX.Element {
     const { locations, style, googleMapsAPIKey, currentLocation } = this.props;
@@ -166,11 +154,11 @@ export default class MapViewWeb extends Component<PropType, StateType> {
       <View style={style}>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: googleMapsAPIKey
+            key: googleMapsAPIKey,
           }}
           options={{
             fullscreenControl: false,
-            zoomControl: false
+            zoomControl: false,
           }}
           resetBoundsOnResize={true}
           defaultCenter={this.defaultCenter}
@@ -180,22 +168,18 @@ export default class MapViewWeb extends Component<PropType, StateType> {
           onChange={this.handleChange}
         >
           {currentLocation && (
-            <CurrentLocationPin
-              lat={currentLocation.latitude}
-              lng={currentLocation.longitude}
-            />
+            <CurrentLocationPin lat={currentLocation.latitude} lng={currentLocation.longitude} />
           )}
 
           {locations.map((location, i) => (
-              <Marker
-                key={i}
-                lat={location.address.latlng.lat}
-                lng={location.address.latlng.lng}
-                selected={location.selected}
-                onPress={this.handleMarkerPress(location)}
-              />
-            )
-          )}
+            <Marker
+              key={i}
+              lat={location.address.latlng.lat}
+              lng={location.address.latlng.lng}
+              selected={location.selected}
+              onPress={this.handleMarkerPress(location)}
+            />
+          ))}
         </GoogleMapReact>
       </View>
     );

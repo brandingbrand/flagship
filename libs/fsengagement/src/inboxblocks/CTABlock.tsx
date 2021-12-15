@@ -7,20 +7,15 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { CardContext, EngagementContext } from '../lib/contexts';
 
-import {
-  Action,
-  EmitterProps,
-  Icon,
-  JSON
-} from '../types';
+import { Action, EmitterProps, Icon, JSON } from '../types';
 
 const images: any = {
   rightArrow: require('../../assets/images/rightArrow.png'),
-  rightBlockArrow: require('../../assets/images/rightBlockArrow.png')
+  rightBlockArrow: require('../../assets/images/rightBlockArrow.png'),
 };
 
 const styles = StyleSheet.create({
@@ -28,17 +23,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   backIcon: {
     width: 8,
     height: 13,
-    marginLeft: 10
+    marginLeft: 10,
   },
   buttonContents: {
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 interface LocalizationData {
@@ -58,22 +53,25 @@ export interface CTABlockProps extends EmitterProps {
   onBack?: () => void;
   localization?: LocalizationData[];
 }
-export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
+export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
   const { buttonStyle, textStyle, containerStyle, icon, localization } = props;
   let { text } = props;
   const { handleAction, cardPosition, language } = React.useContext(EngagementContext);
   const { cardActions, handleStoryAction, story } = React.useContext(CardContext);
 
-  const filterLocalization = localization && localization.find(item => {
-    return item.language === language;
-  }) || null;
+  const filterLocalization =
+    (localization &&
+      localization.find((item) => {
+        return item.language === language;
+      })) ||
+    null;
 
   if (filterLocalization) {
     text = filterLocalization.value;
   }
 
   const handleActionNoStory = (actions: Action) => {
-    if (actions && !actions.value || !handleAction) {
+    if ((actions && !actions.value) || !handleAction) {
       return;
     }
     if (actions && actions.type) {
@@ -81,7 +79,7 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
         ...actions,
         name: props.name,
         id: props.id,
-        position: cardPosition
+        position: cardPosition,
       });
     }
     // tappable card with no story - CTAs use actions of container card
@@ -89,7 +87,7 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
       ...cardActions,
       name: props.name,
       id: props.id,
-      position: cardPosition
+      position: cardPosition,
     });
   };
   // eslint-disable-next-line complexity
@@ -98,10 +96,12 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
       return handleAction({
         type: 'blog-url',
         value: story.html.link,
-        position: cardPosition
+        position: cardPosition,
       });
-    } else if (action === 'story' || (story && actions &&
-      (actions.type === null || actions.type === 'story'))) {
+    } else if (
+      action === 'story' ||
+      (story && actions && (actions.type === null || actions.type === 'story'))
+    ) {
       // go to story card
       return handleStoryAction(story);
     } else if (story && actions && actions.type !== 'story') {
@@ -123,16 +123,11 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo(props => {
 
   return (
     <View style={[styles.buttonContainer, containerStyle]}>
-      <TouchableOpacity
-        style={buttonStyle}
-        onPress={onButtonPress}
-        activeOpacity={1}
-      >
+      <TouchableOpacity style={buttonStyle} onPress={onButtonPress} activeOpacity={1}>
         <View style={styles.buttonContents}>
           <Text style={textStyle}>{text}</Text>
           {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
         </View>
-
       </TouchableOpacity>
     </View>
   );

@@ -9,7 +9,7 @@ import {
   StyleProp,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { TextBlock } from './TextBlock';
 import { EngagementContext, EngContext } from '../lib/contexts';
@@ -37,7 +37,7 @@ export interface ImageBlockState {
 
 class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBlockState> {
   static contextTypes: any = {
-    handleAction: PropTypes.func
+    handleAction: PropTypes.func,
   };
   readonly state: ImageBlockState = {};
 
@@ -46,7 +46,8 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
   }
 
   shouldComponentUpdate(nextProps: ImageBlockProps, nextState: ImageBlockState): boolean {
-    return this.props.containerStyle !== nextProps.containerStyle ||
+    return (
+      this.props.containerStyle !== nextProps.containerStyle ||
       this.props.imageStyle !== nextProps.imageStyle ||
       this.props.ratio !== nextProps.ratio ||
       this.props.resizeMethod !== nextProps.resizeMethod ||
@@ -54,16 +55,16 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
       this.props.source !== nextProps.source ||
       this.props.useRatio !== nextProps.useRatio ||
       this.state.height !== nextState.height ||
-      this.state.width !== nextState.width;
+      this.state.width !== nextState.width
+    );
   }
 
   _onLayout = (event: LayoutChangeEvent) => {
     const { ratio, useRatio } = this.props;
     if (useRatio && ratio) {
       this.setState(this.findImageRatio());
-
     }
-  }
+  };
   // eslint-disable-next-line complexity
   findImageRatio = (): ImageBlockState => {
     const { parentWidth, containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
@@ -108,20 +109,18 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
       result.height = result.width / parseFloat(ratio);
     }
     return result;
-  }
+  };
   onPress = (link: string) => () => {
     const { handleAction } = this.props.context;
     if (handleAction) {
       handleAction({
         type: 'deep-link',
-        value: link
+        value: link,
       });
     }
-  }
+  };
   _renderItem(item: any, index: number): JSX.Element {
-    return (
-      <TextBlock {...item} />
-    );
+    return <TextBlock {...item} />;
   }
   // eslint-disable-next-line complexity
   render(): JSX.Element {
@@ -132,7 +131,7 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
       resizeMethod = 'resize',
       source,
       textOverlay,
-      link
+      link,
     } = this.props;
     if (!source) {
       return <View />;
@@ -148,12 +147,12 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
     const horizontalMap: any = {
       left: 'flex-start',
       center: 'center',
-      right: 'flex-end'
+      right: 'flex-end',
     };
     const verticalMap: any = {
       top: 'flex-start',
       center: 'center',
-      bottom: 'flex-end'
+      bottom: 'flex-end',
     };
     let textContainerStyle = {};
     let innerTextContainer: any = {};
@@ -162,32 +161,29 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
         flex: 1,
         justifyContent: verticalMap[textOverlay.options.verticalAlignment],
         alignItems: horizontalMap[textOverlay.options.horizontalAlignment],
-        marginBottom: textOverlay.options &&
-          textOverlay.options.verticalAlignment === 'bottom' ?
-          textOverlay.options.verticalDistanceFromEdge : 0,
-        marginTop: textOverlay.options &&
-          textOverlay.options.verticalAlignment !== 'bottom' ?
-          textOverlay.options.verticalDistanceFromEdge : 0,
-        marginLeft: textOverlay.options &&
-          textOverlay.options.horizontalLeftDistanceFromEdge,
-        marginRight: textOverlay.options &&
-          textOverlay.options.horizontalRightDistanceFromEdge
+        marginBottom:
+          textOverlay.options && textOverlay.options.verticalAlignment === 'bottom'
+            ? textOverlay.options.verticalDistanceFromEdge
+            : 0,
+        marginTop:
+          textOverlay.options && textOverlay.options.verticalAlignment !== 'bottom'
+            ? textOverlay.options.verticalDistanceFromEdge
+            : 0,
+        marginLeft: textOverlay.options && textOverlay.options.horizontalLeftDistanceFromEdge,
+        marginRight: textOverlay.options && textOverlay.options.horizontalRightDistanceFromEdge,
       };
       innerTextContainer = {
         backgroundColor: textOverlay.options.backgroundColor,
-        padding: textOverlay.options.padding || 0
+        padding: textOverlay.options.padding || 0,
       };
       if (textOverlay.options.fullWidth) {
-     //   innerTextContainer.alignItems = horizontalMap[textOverlay.options.horizontalAlignment];
+        //   innerTextContainer.alignItems = horizontalMap[textOverlay.options.horizontalAlignment];
         innerTextContainer.width = '100%';
       }
     }
     if (link) {
       return (
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={this.onPress(link)}
-        >
+        <TouchableOpacity activeOpacity={1} onPress={this.onPress(link)}>
           <View onLayout={this._onLayout} style={containerStyle}>
             <ImageBackground
               source={source}
@@ -195,19 +191,20 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
               resizeMode={resizeMode}
               resizeMethod={resizeMethod}
             >
-              {!!(textOverlay && textOverlay.enabled &&
-                textOverlay.items && textOverlay.items.length) &&
-                (
-                  <View
-                    style={textContainerStyle}
-                  >
-                    <View style={innerTextContainer}>
-                      {(textOverlay.items || []).map((item: any, index: number) => {
-                        return this._renderItem(item, index);
-                      })}
-                    </View>
+              {!!(
+                textOverlay &&
+                textOverlay.enabled &&
+                textOverlay.items &&
+                textOverlay.items.length
+              ) && (
+                <View style={textContainerStyle}>
+                  <View style={innerTextContainer}>
+                    {(textOverlay.items || []).map((item: any, index: number) => {
+                      return this._renderItem(item, index);
+                    })}
                   </View>
-                )}
+                </View>
+              )}
             </ImageBackground>
           </View>
         </TouchableOpacity>
@@ -221,19 +218,20 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
         >
-          {!!(textOverlay && textOverlay.enabled &&
-            textOverlay.items && textOverlay.items.length) &&
-            (
-              <View
-                style={textContainerStyle}
-              >
-                <View style={innerTextContainer}>
-                  {(textOverlay.items || []).map((item: any, index: number) => {
-                    return this._renderItem(item, index);
-                  })}
-                </View>
+          {!!(
+            textOverlay &&
+            textOverlay.enabled &&
+            textOverlay.items &&
+            textOverlay.items.length
+          ) && (
+            <View style={textContainerStyle}>
+              <View style={innerTextContainer}>
+                {(textOverlay.items || []).map((item: any, index: number) => {
+                  return this._renderItem(item, index);
+                })}
               </View>
-            )}
+            </View>
+          )}
         </ImageBackground>
       </View>
     );

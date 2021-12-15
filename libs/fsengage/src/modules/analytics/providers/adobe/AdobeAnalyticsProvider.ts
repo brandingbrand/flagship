@@ -5,13 +5,13 @@ import {
   ACPIdentity,
   ACPLifecycle,
   ACPMobileLogLevel,
-  ACPSignal
+  ACPSignal,
 } from '@adobe/react-native-acpcore';
 import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
 
-type AnalyticsProviderConfiguration = import ('../types/AnalyticsProviderConfiguration').default;
-type Dictionary<T = any> = import ('@brandingbrand/fsfoundation').Dictionary<T>;
-type Arguments<F> = import ('@brandingbrand/fsfoundation').Arguments<F>;
+type AnalyticsProviderConfiguration = import('../types/AnalyticsProviderConfiguration').default;
+type Dictionary<T = any> = import('@brandingbrand/fsfoundation').Dictionary<T>;
+type Arguments<F> = import('@brandingbrand/fsfoundation').Arguments<F>;
 
 export interface AdobeAnalyticsClient {
   configureWithAppId: (appId?: string) => void;
@@ -22,10 +22,11 @@ export interface AdobeAnalyticsClient {
   trackAction: (action: string, contextData?: Dictionary) => void;
 }
 
-type GenericProduct = Events.ImpressionProduct |
-  Events.Product |
-  Events.RefundProduct |
-  Events.TransactionProduct;
+type GenericProduct =
+  | Events.ImpressionProduct
+  | Events.Product
+  | Events.RefundProduct
+  | Events.TransactionProduct;
 type ProviderMethods = Exclude<keyof AdobeAnalyticsProvider, 'lifecycle'>;
 type DisabledEvents = { [key in ProviderMethods]?: boolean };
 type EventNormalizers = {
@@ -46,7 +47,7 @@ export interface AdobeAnalyticsConfig {
 
 export class AdobeAnalyticsProvider extends AnalyticsProvider {
   public static serializeProducts(products: GenericProduct[]): string {
-    const serialized = products.map(product => AdobeAnalyticsProvider.serializeProduct(product));
+    const serialized = products.map((product) => AdobeAnalyticsProvider.serializeProduct(product));
     return serialized.join(',');
   }
 
@@ -63,10 +64,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
   protected disabledEvents: DisabledEvents;
   protected normalizers: EventNormalizers;
   protected client: AdobeAnalyticsClient;
-  constructor(
-    commonConfiguration: AnalyticsProviderConfiguration,
-    config: AdobeAnalyticsConfig
-  ) {
+  constructor(commonConfiguration: AnalyticsProviderConfiguration, config: AdobeAnalyticsConfig) {
     super(commonConfiguration);
     this.client = ACPCore;
     if (config.debug) {
@@ -78,7 +76,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     ACPSignal.registerExtension();
     ACPAnalytics.registerExtension();
     this.client.lifecycleStart();
-    this.client.start().catch(err => console.log('ACPCore start error: ', err));
+    this.client.start().catch((err) => console.log('ACPCore start error: ', err));
     this.disabledEvents = config.disabledEvents || {};
     this.normalizers = config.eventNormalizers || {};
   }
@@ -158,7 +156,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     }
 
     if (!this.normalizers.pageview) {
-      return this.genericState({ ...properties, eventAction: ''});
+      return this.genericState({ ...properties, eventAction: '' });
     }
 
     const { hitName, hitType, ...contextData } = this.normalizers.pageview(properties);
@@ -171,7 +169,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     }
 
     if (!this.normalizers.screenview) {
-      return this.genericState({ ...properties, eventAction: ''});
+      return this.genericState({ ...properties, eventAction: '' });
     }
 
     const { hitName, hitType, ...contextData } = this.normalizers.screenview(properties);
@@ -200,7 +198,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const actionName = 'addToCart';
       const contextData = {
         '&&events': 'scAdd',
-        '&&products': AdobeAnalyticsProvider.serializeProduct(properties)
+        '&&products': AdobeAnalyticsProvider.serializeProduct(properties),
       };
 
       return this.client.trackAction(actionName, contextData);
@@ -220,7 +218,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const actionName = this.generateActionName(eventCategory);
       const contextData = {
         '&&events': 'scCheckout',
-        '&&products': AdobeAnalyticsProvider.serializeProducts(properties.products)
+        '&&products': AdobeAnalyticsProvider.serializeProducts(properties.products),
       };
 
       return this.client.trackState(actionName, contextData);
@@ -252,7 +250,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const { eventCategory, eventAction } = properties;
       const actionName = this.generateActionName(eventCategory, eventAction);
       const contextData = {
-        '&&products': AdobeAnalyticsProvider.serializeProduct(properties)
+        '&&products': AdobeAnalyticsProvider.serializeProduct(properties),
       };
 
       return this.client.trackAction(actionName, contextData);
@@ -311,7 +309,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const actionName = this.generateActionName(eventCategory);
       const contextData = {
         '&&events': 'prodView',
-        '&&products': AdobeAnalyticsProvider.serializeProduct(properties)
+        '&&products': AdobeAnalyticsProvider.serializeProduct(properties),
       };
 
       return this.client.trackState(actionName, contextData);
@@ -330,7 +328,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const contextData = {
         '&&events': 'purchase',
         '&&products': AdobeAnalyticsProvider.serializeProducts(properties.products),
-        purchaseId: action.identifier
+        'purchaseId': action.identifier,
       };
 
       return this.client.trackAction('purchase', contextData);
@@ -375,7 +373,7 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
       const actionName = 'removeFromCart';
       const contextData = {
         '&&events': 'scRemove',
-        '&&products': AdobeAnalyticsProvider.serializeProduct(properties)
+        '&&products': AdobeAnalyticsProvider.serializeProduct(properties),
       };
 
       return this.client.trackAction(actionName, contextData);
@@ -385,7 +383,9 @@ export class AdobeAnalyticsProvider extends AnalyticsProvider {
     this.client[hitType](hitName, contextData);
   }
 
-  lifecycle(properties: Events.App): void { /** noop - Adobe SDK captures this already */}
+  lifecycle(properties: Events.App): void {
+    /** noop - Adobe SDK captures this already */
+  }
 
   protected genericAction(properties: Events.Generics): void {
     const { eventCategory, eventAction } = properties;

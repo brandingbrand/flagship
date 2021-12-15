@@ -6,26 +6,26 @@ Configurable store locator component for React and React Native projects.
 
 ## Table of Contents
 
-* [Configuration Options](#configuration-options)
-* [Developer Notes](#developer-notes)
-  * [Maps](#maps)
-  * [Location Item Components](#location-item-components)
-* [Running the Test Project](#running-the-test-project)
-  * [For Web](#for-web)
-* [Contributing](#contributing)
-* [External Links](#external-links)
+- [Configuration Options](#configuration-options)
+- [Developer Notes](#developer-notes)
+  - [Maps](#maps)
+  - [Location Item Components](#location-item-components)
+- [Running the Test Project](#running-the-test-project)
+  - [For Web](#for-web)
+- [Contributing](#contributing)
+- [External Links](#external-links)
 
 ## Configuration Options
 
-|Name|Required?|Description|Default|
-|----|---------|-----------|-------|
-|brandId|yes|An ID corresponding to a brand in Branding Brand's store locator management system||
-|searchBarProps|no|A collection of properties to be passed to the [search bar component](https://github.com/brandingbrand/flagship/blob/master/packages/fscomponents/src/components/SearchBar.tsx)||
-|locationItemProps|no|A collection of properties to be passed to the [location item component](https://github.com/brandingbrand/flagship/blob/master/packages/fscomponents/src/components/LocationItem.tsx)||
-|style|no|A [React Native StyleSheet](https://facebook.github.io/react-native/docs/style.html) for styling the locator component||
-|listStyle|no|A [React Native StyleSheet](https://facebook.github.io/react-native/docs/style.html) for styling the location results list.||
-|format|no|A string specifying the layout of the locator component. Valid options are `list` which renders a list view only, `mapVertical` which renders a map and list in vertical orientation, and `mapHorizontal` which renders a map and list in horizontal orientation.|list|
-|geoOptions|no|Geolocation options used for finding current location. [React Native Geolocation](https://facebook.github.io/react-native/docs/geolocation.html)|enableHighAccuracy=true, timeout=10000, maximumAge=10000, distanceFilter=100|
+| Name              | Required? | Description                                                                                                                                                                                                                                                       | Default                                                                      |
+| ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| brandId           | yes       | An ID corresponding to a brand in Branding Brand's store locator management system                                                                                                                                                                                |                                                                              |
+| searchBarProps    | no        | A collection of properties to be passed to the [search bar component](https://github.com/brandingbrand/flagship/blob/master/packages/fscomponents/src/components/SearchBar.tsx)                                                                                   |                                                                              |
+| locationItemProps | no        | A collection of properties to be passed to the [location item component](https://github.com/brandingbrand/flagship/blob/master/packages/fscomponents/src/components/LocationItem.tsx)                                                                             |                                                                              |
+| style             | no        | A [React Native StyleSheet](https://facebook.github.io/react-native/docs/style.html) for styling the locator component                                                                                                                                            |                                                                              |
+| listStyle         | no        | A [React Native StyleSheet](https://facebook.github.io/react-native/docs/style.html) for styling the location results list.                                                                                                                                       |                                                                              |
+| format            | no        | A string specifying the layout of the locator component. Valid options are `list` which renders a list view only, `mapVertical` which renders a map and list in vertical orientation, and `mapHorizontal` which renders a map and list in horizontal orientation. | list                                                                         |
+| geoOptions        | no        | Geolocation options used for finding current location. [React Native Geolocation](https://facebook.github.io/react-native/docs/geolocation.html)                                                                                                                  | enableHighAccuracy=true, timeout=10000, maximumAge=10000, distanceFilter=100 |
 
 ## Developer Notes
 

@@ -7,7 +7,7 @@ import {
   NavLayout,
   NavLayoutStackChildren,
   NavModal,
-  NavOptions
+  NavOptions,
 } from '../types';
 
 export interface GenericNavProp {
@@ -31,8 +31,10 @@ export default class Navigator {
     this.props.history.goBack();
   }
   async popToRoot(options?: NavOptions, alternateId?: string): Promise<any> {
-    if (this.props.appConfig.screen &&
-      this.props.appConfig.screens[this.props.appConfig.screen.name]) {
+    if (
+      this.props.appConfig.screen &&
+      this.props.appConfig.screens[this.props.appConfig.screen.name]
+    ) {
       this.props.history.push(
         this.props.appConfig.screens[this.props.appConfig.screen.name].path || '/'
       );
@@ -43,9 +45,7 @@ export default class Navigator {
   async popTo(options?: NavOptions, alternateId?: string): Promise<any> {
     if (alternateId) {
       if (this.props.appConfig.screens[alternateId]) {
-        this.props.history.push(
-          this.props.appConfig.screens[alternateId].path || '/'
-        );
+        this.props.history.push(this.props.appConfig.screens[alternateId].path || '/');
       } else {
         console.error('Unknown screen: ' + alternateId);
       }
@@ -59,7 +59,7 @@ export default class Navigator {
   async showStackedModal(layout: NavLayout | NavLayoutStackChildren): Promise<any> {
     if (layout.component) {
       this.props.modals.push({
-        layout
+        layout,
       });
     }
   }
@@ -90,12 +90,12 @@ export default class Navigator {
       if (options.sideMenu.left && options.sideMenu.left.visible !== undefined) {
         this.props.toggleDrawerFn({
           side: 'left',
-          to: options.sideMenu.left.visible ? 'open' : 'closed'
+          to: options.sideMenu.left.visible ? 'open' : 'closed',
         });
       } else if (options.sideMenu.right && options.sideMenu.right.visible !== undefined) {
         this.props.toggleDrawerFn({
           side: 'right',
-          to: options.sideMenu.right.visible ? 'open' : 'closed'
+          to: options.sideMenu.right.visible ? 'open' : 'closed',
         });
       }
     }
@@ -111,17 +111,14 @@ export default class Navigator {
     console.error('handleDeepLink is no longer part of react-native-navigation');
   }
   setOnNavigatorEvent(): void {
-    console.error('setOnNavigatorEvent is no longer part of react-native-navigation. ' +
-      'Please use navigator.bindNavigation(this) to bind events, then reference ' +
-      'https://wix.github.io/react-native-navigation/#/docs/events');
+    console.error(
+      'setOnNavigatorEvent is no longer part of react-native-navigation. ' +
+        'Please use navigator.bindNavigation(this) to bind events, then reference ' +
+        'https://wix.github.io/react-native-navigation/#/docs/events'
+    );
   }
-  resetTo(options: {
-    screen: string;
-    title: string;
-    animated: boolean;
-  }): void {
-    console.warn('resetTo has been deprecated. ' +
-      'Please use setStackRoot');
+  resetTo(options: { screen: string; title: string; animated: boolean }): void {
+    console.warn('resetTo has been deprecated. ' + 'Please use setStackRoot');
 
     this.setStackRoot({
       component: {
@@ -129,35 +126,43 @@ export default class Navigator {
         options: {
           topBar: {
             title: {
-              text: options.title
-            }
-          }
-        }
-      }
-    }).catch(e => {
+              text: options.title,
+            },
+          },
+        },
+      },
+    }).catch((e) => {
       console.error(e);
     });
   }
   setStyle(options: { navBarTitleTextCentered: boolean }): void {
-    console.warn('setStyle has been deprecated. ' +
-      'Please use mergeOptions({\n  topBar: {\n    alignment: \'center\'\n  }\n}) instead');
+    console.warn(
+      'setStyle has been deprecated. ' +
+        "Please use mergeOptions({\n  topBar: {\n    alignment: 'center'\n  }\n}) instead"
+    );
   }
   setTabBadge(options: {
     tabIndex: number;
     badge: string | number | null;
     badgeColor?: string;
   }): void {
-    console.warn('setTabBadge has been deprecated. ' +
-      'Please use mergeOptions({\n  bottomTab: {\n    badge: \'1\',\n    ' +
-      'badgeColor: \'rgb(255, 255, 255)\',\n    ' +
-      'icon: iconImageSource\n  }\n}, componentIdOfTab) instead');
+    console.warn(
+      'setTabBadge has been deprecated. ' +
+        "Please use mergeOptions({\n  bottomTab: {\n    badge: '1',\n    " +
+        "badgeColor: 'rgb(255, 255, 255)',\n    " +
+        'icon: iconImageSource\n  }\n}, componentIdOfTab) instead'
+    );
   }
-  setTitle(options: { title: string}): void {
-    console.warn('setTitle has been deprecated. ' +
-      'Please use mergeOptions({\n  topBar: {\n    title: \'title\\n  }\n}) instead');
+  setTitle(options: { title: string }): void {
+    console.warn(
+      'setTitle has been deprecated. ' +
+        "Please use mergeOptions({\n  topBar: {\n    title: 'title\\n  }\n}) instead"
+    );
   }
-  switchToTab(options: { tabIndex: number}): void {
-    console.warn('switchToTab has been deprecated. ' +
-      'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead');
+  switchToTab(options: { tabIndex: number }): void {
+    console.warn(
+      'switchToTab has been deprecated. ' +
+        'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead'
+    );
   }
 }

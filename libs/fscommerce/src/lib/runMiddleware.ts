@@ -37,8 +37,7 @@ async function runMiddleware(
 function isMiddlewareArray(
   middleware: MiddlewareFunction | MiddlewareFunction[]
 ): middleware is MiddlewareFunction[] {
-  return isArray(<MiddlewareFunction[]> middleware);
+  return isArray(<MiddlewareFunction[]>middleware);
 }
-
 
 export default runMiddleware;

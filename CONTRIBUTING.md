@@ -49,8 +49,8 @@ Pull requests will not be merged if tests fail during integration testing.
 
 When creating a pull request, please include the following:
 
-* A useful description of the issue solved or new features implemented
-* Instructions for testing your changes
+- A useful description of the issue solved or new features implemented
+- Instructions for testing your changes
 
 When you create a pull request, our continuous integration server will run the linter and tests
 against your branch. The status of the integration tests will appear on the pull request in Github.

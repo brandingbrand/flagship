@@ -2,7 +2,7 @@ import type {
   ModalComponentProps,
   ModalComponentType,
   ModalProviderProps,
-  ModalService
+  ModalService,
 } from './types';
 
 import React, { createContext, FC, Fragment, useCallback, useMemo, useState } from 'react';
@@ -23,7 +23,7 @@ const DEFAULT_MODAL_SERVICE: ModalService = {
   },
   dismissAllModals: async () => {
     throw new Error(NO_MODAL_CONTEXT_ERROR);
-  }
+  },
 };
 
 export const ModalContext = createContext<ModalService>(DEFAULT_MODAL_SERVICE);
@@ -90,22 +90,22 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
                     ...modal.options?.navigationOptions,
                     modal: {
                       ...modal.options?.navigationOptions?.modal,
-                      ...modal.options
+                      ...modal.options,
                     },
                     topBar: {
                       ...modal.options?.navigationOptions?.topBar,
-                      ...modal.topBarOptions
-                    }
+                      ...modal.topBarOptions,
+                    },
                   },
                   passProps: {
                     resolve,
                     reject,
-                    ...props
-                  }
-                }
-              }
-            ]
-          }
+                    ...props,
+                  },
+                },
+              },
+            ],
+          },
         });
       });
     },

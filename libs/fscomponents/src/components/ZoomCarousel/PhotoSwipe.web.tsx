@@ -28,7 +28,7 @@ const events = [
   'destroy',
   'updateScrollOffset',
   'preventDragEvent',
-  'shareLinkClick'
+  'shareLinkClick',
 ];
 
 export interface PhotoSwipeProps {
@@ -82,19 +82,14 @@ export class PhotoSwipe extends PureComponent<PhotoSwipeProps> {
   openPhotoSwipe = (props: PhotoSwipeProps) => {
     const { items, options } = props;
 
-    this.photoSwipe = new Photoswipe(
-      this.pswpElement,
-      PhotoswipeUIDefault,
-      items,
-      options
-    );
+    this.photoSwipe = new Photoswipe(this.pswpElement, PhotoswipeUIDefault, items, options);
 
     events.forEach((event: any) => {
       const callback = get(props, event);
       if (callback || event === 'destroy') {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
-        this.photoSwipe.listen(event, function(...args: any[]): void {
+        this.photoSwipe.listen(event, function (...args: any[]): void {
           if (callback) {
             // @ts-ignore: TODO how to handle this in typescript
             // eslint-disable-next-line no-invalid-this
@@ -109,7 +104,7 @@ export class PhotoSwipe extends PureComponent<PhotoSwipeProps> {
     });
 
     this.photoSwipe.init();
-  }
+  };
 
   closePhotoSwipe = () => {
     if (!this.photoSwipe) {
@@ -117,13 +112,13 @@ export class PhotoSwipe extends PureComponent<PhotoSwipeProps> {
     }
 
     this.photoSwipe.close();
-  }
+  };
 
   handleClose = () => {
     if (this.props.onClose) {
       this.props.onClose();
     }
-  }
+  };
 
   render(): JSX.Element {
     return (
@@ -131,59 +126,59 @@ export class PhotoSwipe extends PureComponent<PhotoSwipeProps> {
         <div
           className={`pswp`}
           tabIndex={-1}
-          role='dialog'
-          aria-hidden='true'
-          ref={node => {
+          role="dialog"
+          aria-hidden="true"
+          ref={(node) => {
             this.pswpElement = node;
           }}
         >
-          <div className='pswp__bg' />
-          <div className='pswp__scroll-wrap'>
-            <div className='pswp__container'>
-              <div className='pswp__item' />
-              <div className='pswp__item' />
-              <div className='pswp__item' />
+          <div className="pswp__bg" />
+          <div className="pswp__scroll-wrap">
+            <div className="pswp__container">
+              <div className="pswp__item" />
+              <div className="pswp__item" />
+              <div className="pswp__item" />
             </div>
-            <div className='pswp__ui pswp__ui--hidden'>
-              <div className='pswp__top-bar'>
-                <div className='pswp__counter' />
+            <div className="pswp__ui pswp__ui--hidden">
+              <div className="pswp__top-bar">
+                <div className="pswp__counter" />
                 <button
-                  className='pswp__button pswp__button--close'
+                  className="pswp__button pswp__button--close"
                   title={FSI18n.string(componentTranslationKeys.actions.close.actionBtn)}
                 />
                 <button
-                  className='pswp__button pswp__button--share'
+                  className="pswp__button pswp__button--share"
                   title={FSI18n.string(componentTranslationKeys.actions.share.actionBtn)}
                 />
                 <button
-                  className='pswp__button pswp__button--fs'
+                  className="pswp__button pswp__button--fs"
                   title={FSI18n.string(componentTranslationKeys.actions.fullscreen.actionBtn)}
                 />
                 <button
-                  className='pswp__button pswp__button--zoom'
+                  className="pswp__button pswp__button--zoom"
                   title={FSI18n.string(componentTranslationKeys.actions.zoom.actionBtn)}
                 />
-                <div className='pswp__preloader'>
-                  <div className='pswp__preloader__icn'>
-                    <div className='pswp__preloader__cut'>
-                      <div className='pswp__preloader__donut' />
+                <div className="pswp__preloader">
+                  <div className="pswp__preloader__icn">
+                    <div className="pswp__preloader__cut">
+                      <div className="pswp__preloader__donut" />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className='pswp__share-modal pswp__share-modal--hidden pswp__single-tap'>
-                <div className='pswp__share-tooltip' />
+              <div className="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div className="pswp__share-tooltip" />
               </div>
               <button
-                className='pswp__button pswp__button--arrow--left'
+                className="pswp__button pswp__button--arrow--left"
                 title={FSI18n.string(componentTranslationKeys.actions.prev.actionBtn)}
               />
               <button
-                className='pswp__button pswp__button--arrow--right'
+                className="pswp__button pswp__button--arrow--right"
                 title={FSI18n.string(componentTranslationKeys.actions.next.actionBtn)}
               />
-              <div className='pswp__caption'>
-                <div className='pswp__caption__center' />
+              <div className="pswp__caption">
+                <div className="pswp__caption__center" />
               </div>
             </div>
           </div>

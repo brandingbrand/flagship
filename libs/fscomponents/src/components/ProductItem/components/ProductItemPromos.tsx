@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ProductItemProps } from '../ProductItem';
 import { types, weights } from '../../../styles/variables';
 
 const style = StyleSheet.create({
   container: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   promo: {
-    fontStyle: 'italic'
-  }
+    fontStyle: 'italic',
+  },
 });
 
 export type ProductItemPromosProps = Pick<
@@ -28,7 +24,7 @@ export class ProductItemPromos extends Component<ProductItemPromosProps> {
       promoStyle,
       promoContainerStyle,
       renderPromos,
-      promos // deprecated
+      promos, // deprecated
     } = this.props;
     const promosList = promotions || promos;
 

@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#eee',
     height: 50,
-    marginRight: 5
-  }
+    marginRight: 5,
+  },
 });
 
 // @ts-ignore no type definition file
@@ -42,27 +42,27 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
   constructor(props: CookieMangerProps) {
     super(props);
     this.state = {
-      data: null
+      data: null,
     };
   }
 
   showData = (data: string) => {
     this.setState({ data });
-  }
+  };
 
   cleanData = () => {
     this.setState({ data: null });
-  }
+  };
 
   render(): JSX.Element {
     return (
       <View style={{ flex: 1 }}>
-        <TouchableRow text='Cookies - Clear' onPress={this.clearCookies} />
-        <TouchableRow text='Cookies - View (iOS only)' onPress={this.viewCookies} />
-        <TouchableRow text='AsyncStorage - Clear' onPress={this.clearAsyncStorage} />
-        <TouchableRow text='AsyncStorage - View' onPress={this.viewAsyncStorage} />
-        <TouchableRow text='Sensitive Info - Clear' onPress={this.clearSensitiveInfo} />
-        <TouchableRow text='Sensitive Info - View' onPress={this.viewSensitiveInfo} />
+        <TouchableRow text="Cookies - Clear" onPress={this.clearCookies} />
+        <TouchableRow text="Cookies - View (iOS only)" onPress={this.viewCookies} />
+        <TouchableRow text="AsyncStorage - Clear" onPress={this.clearAsyncStorage} />
+        <TouchableRow text="AsyncStorage - View" onPress={this.viewAsyncStorage} />
+        <TouchableRow text="Sensitive Info - Clear" onPress={this.clearSensitiveInfo} />
+        <TouchableRow text="Sensitive Info - View" onPress={this.viewSensitiveInfo} />
 
         <Modal visible={!!this.state.data}>
           <ScrollView>
@@ -86,7 +86,7 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
       .catch((err: object) => {
         return alert(`Cookie clear failed. Error: ${err}`);
       });
-  }
+  };
 
   viewCookies = () => {
     if (Platform.OS !== 'ios') {
@@ -100,29 +100,29 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
       .catch((err: object) => {
         return alert(`Cookie View failed. Error: ${err}`);
       });
-  }
+  };
 
   clearAsyncStorage = () => {
     AsyncStorage.clear()
       .then(() => {
         alert('AsyncStorage cleared.');
       })
-      .catch(err => {
+      .catch((err) => {
         alert(`AsyncStorage clear failed. Error: ${err}`);
       });
-  }
+  };
 
   viewAsyncStorage = () => {
     AsyncStorage.getAllKeys()
-      .then(keys => {
+      .then((keys) => {
         AsyncStorage.multiGet(keys)
-          .then(stores => {
+          .then((stores) => {
             this.showData(JSON.stringify(stores, null, '  '));
           })
-          .catch(e => console.log('cannot get multi values from AsyncStorage', e));
+          .catch((e) => console.log('cannot get multi values from AsyncStorage', e));
       })
-      .catch(e => console.log('cannot get all keys from AsyncStorage', e));
-  }
+      .catch((e) => console.log('cannot get all keys from AsyncStorage', e));
+  };
 
   clearSensitiveInfo = () => {
     SInfo.getAllItems(this.props.sInfoKeys || {})
@@ -137,16 +137,16 @@ export default class CookieManger extends Component<CookieMangerProps, CookieMan
           .then(() => {
             alert(`Cleared: ${keys}`);
           })
-          .catch(e => console.log('cannot delete item from react-native-sensitive-info', e));
+          .catch((e) => console.log('cannot delete item from react-native-sensitive-info', e));
       })
-      .catch(e => console.log('cannot get all items from react-native-sensitive-info', e));
-  }
+      .catch((e) => console.log('cannot get all items from react-native-sensitive-info', e));
+  };
 
   viewSensitiveInfo = () => {
     SInfo.getAllItems({})
       .then((values: [SensitiveInfoEntry[]]) => {
         this.showData(JSON.stringify(values, null, '  '));
       })
-      .catch(e => console.warn('cannot view sensitive info', e));
-  }
+      .catch((e) => console.warn('cannot view sensitive info', e));
+  };
 }

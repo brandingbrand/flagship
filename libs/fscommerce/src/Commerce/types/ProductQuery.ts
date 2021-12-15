@@ -57,5 +57,4 @@ export interface ProductQuery extends Partial<Pageable> {
    * }
    */
   refinements?: Record<string, string[]>;
-
 }

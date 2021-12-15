@@ -1,10 +1,4 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
@@ -15,14 +9,14 @@ export const style = StyleSheet.create({
     borderColor: 'black',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   selectorLabel: {
-    minWidth: 30
+    minWidth: 30,
   },
   placeholderStyle: {
     color: '#ccc',
-    fontSize: 13
+    fontSize: 13,
   },
   dropdownArrow: {
     width: 15,
@@ -32,21 +26,21 @@ export const style = StyleSheet.create({
     borderColor: 'black',
     transform: [{ rotate: '-135deg' }],
     marginTop: -8,
-    marginRight: 10
+    marginRight: 10,
   },
   itemsContainer: {
     maxHeight: 300,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   modalContainer: {
     backgroundColor: 'rgba(0,0,0,0.36)',
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   modalContent: {
     justifyContent: 'center',
     marginLeft: 40,
-    marginRight: 40
+    marginRight: 40,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -54,39 +48,39 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#eeeeee',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#CDCDCD'
+    borderBottomColor: '#CDCDCD',
   },
   closeButtonContainer: {
     height: 35,
     width: 35,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     padding: 10,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   closeButton: {
     fontSize: 30,
-    lineHeight: 30
+    lineHeight: 30,
   },
   item: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#CDCDCD'
+    borderBottomColor: '#CDCDCD',
   },
   selectedItem: {
     borderLeftWidth: 2,
-    borderLeftColor: 'black'
+    borderLeftColor: 'black',
   },
   itemText: {
     padding: 10,
     paddingTop: 15,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   selectedItemText: {
-    fontWeight: '600'
+    fontWeight: '600',
   },
   disabledItem: {
-    opacity: 0.5
-  }
+    opacity: 0.5,
+  },
 });

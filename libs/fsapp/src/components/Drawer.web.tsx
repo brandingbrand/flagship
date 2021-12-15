@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ReactDOM from 'react-dom';
 
 export interface PropType {
@@ -22,7 +19,7 @@ export interface DrawerState {
 const DEFAULT_BACKGROUND_COLOR = 'white';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
+const StyleSheetCreate: (obj: any) => StyleSheet.NamedStyles<any> = StyleSheet.create;
 
 const S = StyleSheetCreate({
   container: {
@@ -32,18 +29,18 @@ const S = StyleSheetCreate({
     zIndex: 10000,
     top: 0,
     overflowX: 'hidden',
-    transitionDuration: '0.3s'
+    transitionDuration: '0.3s',
   },
   containerLeft: {
     left: 0,
     boxShadow: 'inset -7px 0 9px -7px rgba(0,0,0,0.7);',
-    paddingRight: 5
+    paddingRight: 5,
   },
   containerRight: {
     right: 0,
     boxShadow: 'inset 7px 0 9px -7px rgba(0,0,0,0.7);',
-    paddingLeft: 5
-  }
+    paddingLeft: 5,
+  },
 });
 
 export default class Drawer extends Component<PropType, DrawerState> {
@@ -52,31 +49,31 @@ export default class Drawer extends Component<PropType, DrawerState> {
   constructor(props: PropType) {
     super(props);
     this.state = {
-      drawerVisible: props.isOpen
+      drawerVisible: props.isOpen,
     };
   }
 
   componentDidUpdate = (prevProps: PropType, prevState: DrawerState): void => {
     if (this.props.isOpen && !this.state.drawerVisible) {
       this.setState({
-        drawerVisible: true
+        drawerVisible: true,
       });
     }
-  }
+  };
 
   componentWillUnmount = (): void => {
     if (this.drawView) {
       this.drawView.removeEventListener('transitionend', this.animationListener);
     }
-  }
+  };
 
   animationListener = (e: Event): void => {
     if (!this.props.isOpen) {
       this.setState({
-        drawerVisible: false
+        drawerVisible: false,
       });
     }
-  }
+  };
 
   animationRef = (ref: View | null): void => {
     if (ref) {
@@ -88,7 +85,7 @@ export default class Drawer extends Component<PropType, DrawerState> {
         this.drawView.addEventListener('transitionend', this.animationListener);
       }
     }
-  }
+  };
 
   render(): JSX.Element {
     const width = this.props.width;
@@ -98,18 +95,18 @@ export default class Drawer extends Component<PropType, DrawerState> {
     const propCss = {
       backgroundColor: this.props.backgroundColor || DEFAULT_BACKGROUND_COLOR,
       transitionDuration: this.props.duration,
-      width: this.props.width
+      width: this.props.width,
     };
 
     let closedCss;
 
     if (this.props.orientation === 'left') {
       closedCss = {
-        marginLeft: '-' + width
+        marginLeft: '-' + width,
       };
     } else {
       closedCss = {
-        marginRight: '-' + width
+        marginRight: '-' + width,
       };
     }
 
@@ -118,10 +115,7 @@ export default class Drawer extends Component<PropType, DrawerState> {
         style={[S.container, propCss, orientationStyle, !this.props.isOpen && closedCss]}
         ref={this.animationRef}
       >
-        <DrawerComponent
-          drawerVisible={this.state.drawerVisible}
-          {...this.props}
-        />
+        <DrawerComponent drawerVisible={this.state.drawerVisible} {...this.props} />
       </View>
     );
   }

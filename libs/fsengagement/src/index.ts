@@ -18,15 +18,15 @@ export {
   EngagementScreenProps,
   InboxBlock,
   InjectedProps,
-  JSON as EngagementJSON
+  JSON as EngagementJSON,
 };
 export * from './EngagementCompGhost';
 
-export default function(params: EngagementSettings): EngagementUtilities {
+export default function (params: EngagementSettings): EngagementUtilities {
   const api = new EngagementService(params);
 
   return {
     engagementService: api,
-    EngagementComp: EngagementComp(api, {...layoutComponents, ...params.components})
+    EngagementComp: EngagementComp(api, { ...layoutComponents, ...params.components }),
   };
 }

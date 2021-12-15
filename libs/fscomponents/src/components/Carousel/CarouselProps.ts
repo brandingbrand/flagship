@@ -14,10 +14,7 @@ export interface SerializableCarouselProps {
   showsButtons?: boolean;
 }
 
-export interface CarouselProps extends Omit<
-  SerializableCarouselProps,
-  'style'
-> {
+export interface CarouselProps extends Omit<SerializableCarouselProps, 'style'> {
   style?: StyleProp<ViewStyle>;
   nativeOptions?: any;
   webOptions?: any;

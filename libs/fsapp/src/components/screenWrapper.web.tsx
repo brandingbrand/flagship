@@ -9,25 +9,25 @@ import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
 import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
-const StyleSheetCreate: ((obj: any) => StyleSheet.NamedStyles<any>) = StyleSheet.create;
+const StyleSheetCreate: (obj: any) => StyleSheet.NamedStyles<any> = StyleSheet.create;
 
 const styles = StyleSheetCreate({
   screenContainer: {
     flex: 1,
-    flexBasis: 'auto'
+    flexBasis: 'auto',
   },
   devNoteContainer: {
     position: 'fixed',
     bottom: 0,
-    right: 0
+    right: 0,
   },
   devNote: {
     paddingLeft: 5,
     paddingRight: 5,
     color: 'white',
     fontSize: 15,
-    backgroundColor: 'rgba(0,0,0,0.36)'
-  }
+    backgroundColor: 'rgba(0,0,0,0.36)',
+  },
 });
 
 export interface GenericScreenStateProp {
@@ -38,8 +38,10 @@ export interface GenericScreenDispatchProp {
   hideDevMenu: () => void;
 }
 
-export interface GenericScreenProp extends GenericScreenStateProp,
-  GenericScreenDispatchProp, GenericNavProp {
+export interface GenericScreenProp
+  extends GenericScreenStateProp,
+    GenericScreenDispatchProp,
+    GenericNavProp {
   api: FSNetwork;
   href: string;
   match: any;
@@ -66,23 +68,21 @@ export default function wrapScreen(
 
     constructor(props: GenericScreenProp) {
       super(props);
-      this.showDevMenu =
-        __DEV__ ||
-        (appConfig.env && appConfig.env.isFLAGSHIP);
+      this.showDevMenu = __DEV__ || (appConfig.env && appConfig.env.isFLAGSHIP);
       this.state = {
-        navModals: []
+        navModals: [],
       };
       this.navigator = new Navigator({
         ...props,
         toggleDrawerFn,
         appConfig,
         updateModals: this.updateModals,
-        modals: props.modals || []
+        modals: props.modals || [],
       });
     }
     updateModals = (navModals: NavModal[]): void => {
       this.setState({ navModals });
-    }
+    };
 
     componentDidMount(): void {
       const component = PageComponent.WrappedComponent || PageComponent;
@@ -101,27 +101,29 @@ export default function wrapScreen(
     onDismiss = (index: number): void => {
       this.state.navModals.splice(index, 1);
       this.setState({
-        navModals: this.state.navModals
+        navModals: this.state.navModals,
       });
-    }
+    };
 
     openDevMenu = () => {
-      this.navigator.push({
-        component: {
-          name: 'devMenu',
-          passProps: {
-            hideDevMenu: this.props.hideDevMenu
+      this.navigator
+        .push({
+          component: {
+            name: 'devMenu',
+            passProps: {
+              hideDevMenu: this.props.hideDevMenu,
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'FLAGSHIP Dev Menu',
+                },
+              },
+            },
           },
-          options: {
-            topBar: {
-              title: {
-                text: 'FLAGSHIP Dev Menu'
-              }
-            }
-          }
-        }
-      }).catch(err => console.warn('openDevMenu SHOWMODAL error: ', err));
-    }
+        })
+        .catch((err) => console.warn('openDevMenu SHOWMODAL error: ', err));
+    };
 
     render(): JSX.Element {
       return (
@@ -146,25 +148,25 @@ export default function wrapScreen(
       }
 
       const versionlabel =
-        appConfig.version || appConfig.packageJson && appConfig.packageJson.version || '';
+        appConfig.version || (appConfig.packageJson && appConfig.packageJson.version) || '';
 
       return (
         <TouchableOpacity style={styles.devNoteContainer} onPress={this.openDevMenu}>
           <Text style={styles.devNote}>{`${versionlabel}`}</Text>
         </TouchableOpacity>
       );
-    }
+    };
 
     renderPage = () => {
       const { location, match } = this.props;
       let passProps = {
-        ...match.params
+        ...match.params,
       };
 
       if (location && location.search) {
         passProps = {
           ...qs.parse(location.search, { ignoreQueryPrefix: true }),
-          ...passProps
+          ...passProps,
         };
       }
 
@@ -181,12 +183,12 @@ export default function wrapScreen(
           navigator={this.navigator}
         />
       );
-    }
+    };
   }
 
   function mapStateToProps(state: any, ownProps: GenericScreenProp): GenericScreenStateProp {
     return {
-      devMenuHidden: state.global.devMenuHidden
+      devMenuHidden: state.global.devMenuHidden,
     };
   }
 
@@ -195,7 +197,7 @@ export default function wrapScreen(
     ownProps: GenericScreenProp
   ): GenericScreenDispatchProp {
     return {
-      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true }))
+      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
     };
   }
 

@@ -3,10 +3,7 @@ import { SessionToken } from '../types/SessionToken';
 export interface CommerceSessionManagerOptions {
   refreshToken: (token: SessionToken) => Promise<SessionToken>;
   createGuestToken: () => Promise<SessionToken>;
-  createLoginToken: (
-    username: string,
-    password: string
-  ) => Promise<SessionToken>;
+  createLoginToken: (username: string, password: string) => Promise<SessionToken>;
   destroyToken: () => Promise<any>;
 }
 
@@ -37,7 +34,7 @@ export default abstract class CommerceSessionManager {
 
   async login({
     username,
-    password
+    password,
   }: {
     username: string;
     password: string;
@@ -64,15 +61,15 @@ export default abstract class CommerceSessionManager {
       this.refreshTimeout = setTimeout(() => {
         this.refreshTimeout = null;
         this.get()
-          .then(async token => {
+          .then(async (token) => {
             if (!token) {
               return Promise.reject(new Error('token is null'));
             }
 
             return this.options.refreshToken(token);
           })
-          .then(async newToken => this.set(newToken))
-          .catch(e => console.log('unable to refresh token:', e));
+          .then(async (newToken) => this.set(newToken))
+          .catch((e) => console.log('unable to refresh token:', e));
       }, refreshMilliseconds);
     }
   }

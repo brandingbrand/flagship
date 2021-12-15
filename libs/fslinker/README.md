@@ -44,7 +44,6 @@ export const SOME_TOKEN = new InjectionToken<number>('SOME_TOKEN');
 // Note that this should only occur once.
 Injector.provide({ provide: SOME_TOKEN, useValue: 9 });
 
-
 // Then you can get the value back anywhere in your application.
 const theValue = Injector.get(SOME_TOKEN); // 9
 ```
@@ -58,7 +57,6 @@ export const SOME_TOKEN = new InjectionToken<number>('SOME_TOKEN');
 // when providing the value you can then use a function
 // which will be executed when creating the provider
 Injector.provide({ provide: SOME_TOKEN, useFactory: () => 5 + 5 });
-
 
 // and then you can use the calculated value
 const theValue = Injector.get(SOME_TOKEN); // 10
@@ -75,7 +73,7 @@ Injector.provide({ provide: OTHER_TOKEN, useValue: 12 });
 
 // You can use `deps` to define a list of InjectionTokens or values
 // that will be passed in to the factory function when creating the value
-Injector.provide({ provide: SOME_TOKEN, useFactory: other => other * 10, deps: [OTHER_TOKEN] });
+Injector.provide({ provide: SOME_TOKEN, useFactory: (other) => other * 10, deps: [OTHER_TOKEN] });
 
 const theValue = Injector.get(SOME_TOKEN); // 120
 ```
@@ -107,7 +105,6 @@ export class OtherService {
   }
 }
 
-
 @Injectable(SOME_TOKEN)
 export class SomeService {
   // Using `@Inject()` will use the Injector to get the dependency.
@@ -117,7 +114,6 @@ export class SomeService {
     this.other.doSomething();
   }
 }
-
 
 // Getting a provided service will give you the singleton instance
 // that was constructed when the dependency was provided.

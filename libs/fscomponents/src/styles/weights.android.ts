@@ -2,31 +2,31 @@ export const weights = {
   thin: {
     includeFontPadding: false,
     fontFamily: 'sans-serif-thin',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   light: {
     includeFontPadding: false,
     fontFamily: 'sans-serif-light',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   regular: {
     includeFontPadding: false,
     fontFamily: 'sans-serif',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   medium: {
     includeFontPadding: false,
     fontFamily: 'sans-serif-thin-medium',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   semibold: {
     includeFontPadding: false,
     fontFamily: 'sans-serif',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   bold: {
     includeFontPadding: false,
     fontFamily: 'sans-serif',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 };

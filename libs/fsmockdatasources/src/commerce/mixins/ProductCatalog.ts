@@ -2,7 +2,7 @@ import {
   CommerceTypes,
   ProductCatalogDataSource,
   ProductRecommendationDataSource,
-  ProductSearchDataSource
+  ProductSearchDataSource,
 } from '@brandingbrand/fscommerce';
 import {
   Categories,
@@ -10,15 +10,16 @@ import {
   Constructor,
   ProductRefinements,
   Products,
-  ProductSortingOptions
+  ProductSortingOptions,
 } from '../../helpers';
 
 export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
-  return class ProductCatalogMixin extends superclass implements ProductCatalogDataSource,
-                                                                 ProductRecommendationDataSource,
-                                                                 ProductSearchDataSource {
+  return class ProductCatalogMixin
+    extends superclass
+    implements ProductCatalogDataSource, ProductRecommendationDataSource, ProductSearchDataSource
+  {
     async fetchProduct(id: string): Promise<CommerceTypes.Product> {
-      const product = Products.find(product => product.id === id);
+      const product = Products.find((product) => product.id === id);
 
       if (product === undefined) {
         throw new Error(`No product with ID '${id} found`);
@@ -39,7 +40,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         keyword,
         refinements,
         page = 1,
-        limit
+        limit,
       } = query;
 
       products = this.applyCategoryIdFilter(products, categoryId);
@@ -62,7 +63,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
         sortingOptions: ProductSortingOptions,
         refinements: ProductRefinements,
         selectedRefinements: refinements,
-        selectedSortingOption: sortBy
+        selectedSortingOption: sortBy,
       };
     }
 
@@ -84,7 +85,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
 
     async fetchProductRecommendations(id: string): Promise<CommerceTypes.Product[]> {
       const recCount = 2;
-      const possibleProducts = Products.filter(product => product.id !== id);
+      const possibleProducts = Products.filter((product) => product.id !== id);
 
       const randomIndex = Math.floor(Math.random() * (possibleProducts.length - recCount));
       return possibleProducts.slice(randomIndex, randomIndex + recCount);
@@ -96,46 +97,52 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
     ): Promise<CommerceTypes.ProductIndex> {
       return this.fetchProductIndex({
         ...query,
-        keyword
+        keyword,
       });
     }
 
     async searchSuggestion(query: string): Promise<CommerceTypes.SearchSuggestion> {
       const lowerCaseQuery = query.toLowerCase();
       const products = Products;
-      const brands = [...new Set(products.map(product => product.brand))].filter(Boolean);
+      const brands = [...new Set(products.map((product) => product.brand))].filter(Boolean);
       const categories = Categories.categories || [];
 
       const suggestedBrands = brands
         .filter((brand): brand is string => typeof brand === 'string')
-        .filter(brand => brand.toLowerCase().includes(lowerCaseQuery))
-        .map(brand => ({ title: brand }));
+        .filter((brand) => brand.toLowerCase().includes(lowerCaseQuery))
+        .map((brand) => ({ title: brand }));
 
       const suggestedCategories = categories
-        .filter(cat => cat.title.toLowerCase().includes(lowerCaseQuery))
-        .map(cat => ({
+        .filter((cat) => cat.title.toLowerCase().includes(lowerCaseQuery))
+        .map((cat) => ({
           categoryId: cat.id,
-          title: cat.title
+          title: cat.title,
         }));
 
       const suggestedProducts = products
-        .filter(product => product.title.toLowerCase().includes(lowerCaseQuery))
-        .map(product => ({
+        .filter((product) => product.title.toLowerCase().includes(lowerCaseQuery))
+        .map((product) => ({
           productId: product.id,
-          title: product.title
+          title: product.title,
         }));
 
       return {
         query,
-        brandSuggestions: !suggestedBrands ? undefined : {
-          brands: suggestedBrands
-        },
-        categorySuggestions: !suggestedCategories ? undefined : {
-          categories: suggestedCategories
-        },
-        productSuggestions: !suggestedProducts ? undefined : {
-          products: suggestedProducts
-        }
+        brandSuggestions: !suggestedBrands
+          ? undefined
+          : {
+              brands: suggestedBrands,
+            },
+        categorySuggestions: !suggestedCategories
+          ? undefined
+          : {
+              categories: suggestedCategories,
+            },
+        productSuggestions: !suggestedProducts
+          ? undefined
+          : {
+              products: suggestedProducts,
+            },
       };
     }
 
@@ -144,8 +151,9 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       categoryId?: string
     ): CommerceTypes.Product[] {
       if (categoryId) {
-        products = products
-          .filter(product => CategoryProduct[categoryId].indexOf(product.id) !== -1);
+        products = products.filter(
+          (product) => CategoryProduct[categoryId].indexOf(product.id) !== -1
+        );
       }
 
       return products;
@@ -156,7 +164,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       productIds?: string[]
     ): CommerceTypes.Product[] {
       if (Array.isArray(productIds)) {
-        products = products.filter(product => productIds.indexOf(product.id) !== -1);
+        products = products.filter((product) => productIds.indexOf(product.id) !== -1);
       }
 
       return products;
@@ -167,7 +175,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       handle?: string
     ): CommerceTypes.Product[] {
       if (handle) {
-        products = products.filter(product => product.handle === handle);
+        products = products.filter((product) => product.handle === handle);
       }
 
       return products;
@@ -178,7 +186,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
       keyword?: string
     ): CommerceTypes.Product[] {
       if (keyword) {
-        products = products.filter(product => product.title.includes(keyword));
+        products = products.filter((product) => product.title.includes(keyword));
       }
 
       return products;
@@ -186,12 +194,12 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
 
     public applyRefinementFilters(
       products: CommerceTypes.Product[],
-      refinements?: import ('@brandingbrand/fsfoundation').Dictionary<string[]>
+      refinements?: import('@brandingbrand/fsfoundation').Dictionary<string[]>
     ): CommerceTypes.Product[] {
       if (refinements) {
         products = Object.keys(refinements).reduce((filteredProducts, key) => {
           const val = refinements[key];
-          return filteredProducts.filter(product => {
+          return filteredProducts.filter((product) => {
             if (Array.isArray(val)) {
               return val.indexOf((product as any)[key]) !== -1;
             }

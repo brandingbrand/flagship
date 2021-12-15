@@ -23,9 +23,11 @@ export default class ApplePayWeb extends ApplePayBase {
   }
 
   canCallSetup(): boolean {
-    return this.theWindow
-      && !!this.theWindow.ApplePaySession
-      && !!this.theWindow.ApplePaySession.openPaymentSetup;
+    return (
+      this.theWindow &&
+      !!this.theWindow.ApplePaySession &&
+      !!this.theWindow.ApplePaySession.openPaymentSetup
+    );
   }
 
   async hasActiveCard(): Promise<boolean> {

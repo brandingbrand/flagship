@@ -47,7 +47,7 @@ test(`get ios native project path`, () => {
 test(`get main activity path`, () => {
   expect(
     path.android.mainActivityPath({
-      name: appName
+      name: appName,
     } as any)
   ).toEqual(
     nodePath.join(
@@ -60,7 +60,7 @@ test(`get main activity path`, () => {
 test(`get main application path`, () => {
   expect(
     path.android.mainApplicationPath({
-      name: appName
+      name: appName,
     } as any)
   ).toEqual(
     nodePath.join(
@@ -73,7 +73,7 @@ test(`get main application path`, () => {
 test(`get android native project path`, () => {
   expect(
     path.android.nativeProjectPath({
-      name: appName
+      name: appName,
     } as any)
   ).toEqual(
     nodePath.join(

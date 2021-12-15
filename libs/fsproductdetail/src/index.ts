@@ -4,5 +4,5 @@ export {
   default as withProductDetailData,
   WithProductDetailProps,
   WithProductDetailState,
-  WithProductDetailProviderProps
+  WithProductDetailProviderProps,
 } from './components/ProductDetailProvider';

@@ -24,10 +24,7 @@ afterEach(() => {
 });
 
 test(`add deeplink hosts`, () => {
-  deeplink.addDeeplinkHosts([
-    'host1',
-    'host2'
-  ]);
+  deeplink.addDeeplinkHosts(['host1', 'host2']);
 
   const manifest = getManifest();
 

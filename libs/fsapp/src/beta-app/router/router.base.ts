@@ -4,7 +4,7 @@ import type {
   FSRouterConstructor,
   InternalRouterConfig,
   RouterConfig,
-  Routes
+  Routes,
 } from './types';
 
 import { Linking } from 'react-native';
@@ -29,7 +29,7 @@ import {
   PATH_CONTEXT_TOKEN,
   PathContext,
   QUERY_CONTEXT_TOKEN,
-  QueryContext
+  QueryContext,
 } from './context';
 import { getPath, resolveRoutes } from './utils';
 

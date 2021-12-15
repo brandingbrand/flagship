@@ -1,16 +1,15 @@
 import * as path from '../../path';
 import * as fs from '../../fs';
 import { Config } from '../../../types';
-import {
-  logError,
-  logInfo,
-  logWarn
-} from '../../../helpers';
+import { logError, logInfo, logWarn } from '../../../helpers';
 
 export function postLink(configuration: Config): void {
-  if (!(configuration.firebase
-        && configuration.firebase.android
-        && configuration.firebase.android.googleServicesJsonFile)
+  if (
+    !(
+      configuration.firebase &&
+      configuration.firebase.android &&
+      configuration.firebase.android.googleServicesJsonFile
+    )
   ) {
     logError('firebase.android.googleServicesJsonFile must be specified in project config');
 
@@ -42,8 +41,9 @@ export function postLink(configuration: Config): void {
     `$1\n    ${firebaseDep}`
   );
 
-  gradleAppBuild += '\napply plugin: \'com.google.gms.google-services\'';
-  gradleAppBuild += '\ncom.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true\n';
+  gradleAppBuild += "\napply plugin: 'com.google.gms.google-services'";
+  gradleAppBuild +=
+    '\ncom.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true\n';
   gradleAppBuild = gradleAppBuild.replace(/compile /g, 'implementation ');
   gradleAppBuild = gradleAppBuild.replace(/compile\(/g, 'implementation(');
   fs.writeFileSync(path.android.gradlePath(), gradleAppBuild);
@@ -73,10 +73,9 @@ export function postLink(configuration: Config): void {
   logInfo('updated ./android/build.gradle');
 
   // Update MainApplication.java
-  let mainApplication = fs.readFileSync(
-    path.android.mainApplicationPath(configuration),
-    { encoding: 'utf8' }
-  );
+  let mainApplication = fs.readFileSync(path.android.mainApplicationPath(configuration), {
+    encoding: 'utf8',
+  });
 
   mainApplication = mainApplication.replace(
     /(import io.invertase.firebase.RNFirebasePackage;)/,

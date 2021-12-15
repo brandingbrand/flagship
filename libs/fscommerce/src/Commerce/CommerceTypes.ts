@@ -1,4 +1,3 @@
-
 export * from './types/Address';
 export * from './types/ApplicablePayment';
 export * from './types/BillingAddressOptions';

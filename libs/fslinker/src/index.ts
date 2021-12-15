@@ -11,5 +11,5 @@ export {
   BasicFactoryProvider,
   BasicClassProvider,
   ClassProvider,
-  FactoryProvider
+  FactoryProvider,
 } from './providers';

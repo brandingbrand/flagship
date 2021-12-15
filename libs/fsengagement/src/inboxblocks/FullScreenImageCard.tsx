@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  DeviceEventEmitter,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import {
-  OptionsModalPresentationStyle
-} from 'react-native-navigation/lib/dist/interfaces/Options';
+import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
 // import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import * as Animatable from 'react-native-animatable';
 import GestureHandler from '../GestureHandler';
@@ -20,11 +12,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 40,
-    marginHorizontal: 25
+    marginHorizontal: 25,
   },
   fullScreen: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   newContainer: {
     backgroundColor: '#c41230',
@@ -33,21 +25,17 @@ const styles = StyleSheet.create({
     width: 40,
     marginBottom: 13,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   newText: {
     fontFamily: 'Interstate-Bold',
     fontSize: 12,
     textAlign: 'center',
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });
 
-import {
-  Action,
-  CardProps,
-  JSON
-} from '../types';
+import { Action, CardProps, JSON } from '../types';
 import { TextBlock } from './TextBlock';
 
 export interface ImageProp {
@@ -65,20 +53,20 @@ export interface FullScreenCardProps extends CardProps {
   setScrollEnabled: (enabled: boolean) => void;
 }
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
-// export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
-//   (props) => {
-//   const navigator = props.discoverPath ? useNavigator() : props.navigator;
-//   const { handleAction } = React.useContext(EngagementContext);
+  // export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
+  //   (props) => {
+  //   const navigator = props.discoverPath ? useNavigator() : props.navigator;
+  //   const { handleAction } = React.useContext(EngagementContext);
   static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func,
     cardActions: PropTypes.object,
     id: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
   };
   static contextTypes: any = {
     handleAction: PropTypes.func,
-    language: PropTypes.string
+    language: PropTypes.string,
   };
   state: any = {};
   AnimatedImage: any;
@@ -86,78 +74,80 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
   constructor(props: FullScreenCardProps) {
     super(props);
     this.state = {
-      swipedUp: false
+      swipedUp: false,
     };
   }
 
-  handleImageRef = (ref: any) => this.AnimatedImage = ref;
-  handleTextRef = (ref: any) => this.AnimatedText = ref;
+  handleImageRef = (ref: any) => (this.AnimatedImage = ref);
+  handleTextRef = (ref: any) => (this.AnimatedText = ref);
 
   getChildContext = () => ({
     story: this.props.story,
     handleStoryAction: this.handleStoryAction,
     cardActions: this.props.actions,
     id: this.props.id,
-    name: this.props.name
-  })
+    name: this.props.name,
+  });
 
   onBack = () => {
     this.props.setScrollEnabled(true);
-    this.AnimatedImage.transitionTo({
-      scale: 1,
-      opacity: 1
-    }, 600, 'ease-out');
-    this.props.AnimatedPageCounter.transitionTo(
-      { opacity: 1 },
-      400, 'linear');
-    this.props.AnimatedNavTitle.transitionTo(
-      { opacity: 1, translateY: 0 },
-      400, 'linear');
+    this.AnimatedImage.transitionTo(
+      {
+        scale: 1,
+        opacity: 1,
+      },
+      600,
+      'ease-out'
+    );
+    this.props.AnimatedPageCounter.transitionTo({ opacity: 1 }, 400, 'linear');
+    this.props.AnimatedNavTitle.transitionTo({ opacity: 1, translateY: 0 }, 400, 'linear');
 
-    this.AnimatedText.transitionTo(
-      { opacity: 1 },
-      400, 'linear');
-  }
+    this.AnimatedText.transitionTo({ opacity: 1 }, 400, 'linear');
+  };
 
   handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id,
-      position: this.props.position
+      position: this.props.position,
     });
-    return this.props.navigator?.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'EngagementComp',
-            options: {
-              layout: {
-                backgroundColor: 'transparent'
+    return this.props.navigator
+      ?.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'EngagementComp',
+                options: {
+                  layout: {
+                    backgroundColor: 'transparent',
+                  },
+                  modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+                  topBar: {
+                    visible: false,
+                    drawBehind: true,
+                  },
+                  bottomTabs: {
+                    visible: false,
+                  },
+                },
+                passProps: {
+                  json,
+                  backButton: true,
+                  language: this.context && this.context.language,
+                  name: this.props.name,
+                  id: this.props.id,
+                  animate: true,
+                  onBack: this.onBack,
+                  cardPosition: this.props.position,
+                },
               },
-              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-              topBar: {
-                visible: false,
-                drawBehind: true
-              },
-              bottomTabs: {
-                visible: false
-              }
             },
-            passProps: {
-              json,
-              backButton: true,
-              language: this.context && this.context.language,
-              name: this.props.name,
-              id: this.props.id,
-              animate: true,
-              onBack: this.onBack,
-              cardPosition: this.props.position
-            }
-          }
-        }]
-      }
-    }).catch(err => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
-  }
+          ],
+        },
+      })
+      .catch((err) => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
+  };
 
   // eslint-disable-next-line complexity
   onCardPress = async (): Promise<void> => {
@@ -167,59 +157,50 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     // if there is a story attached and either
     //    1) no actions object
     //    2) actions.type is null or 'story' (new default tappable cards)
-    if (story &&
-      (!actions || (actions && (actions.type === null || actions.type === 'story')))
-    ) {
-
+    if (story && (!actions || (actions && (actions.type === null || actions.type === 'story')))) {
       if (!(story && story.tabbedItems && story.tabbedItems.length)) {
-        this.AnimatedImage.transitionTo({
-          scale: 1.2,
-          opacity: 0.75
-        }, 700, 'ease-out');
+        this.AnimatedImage.transitionTo(
+          {
+            scale: 1.2,
+            opacity: 0.75,
+          },
+          700,
+          'ease-out'
+        );
       }
 
-      this.AnimatedText.transitionTo({
-        opacity: 0
-      }, 320, 'linear');
+      this.AnimatedText.transitionTo(
+        {
+          opacity: 0,
+        },
+        320,
+        'linear'
+      );
 
-      this.props.AnimatedPageCounter.transitionTo(
-        { opacity: 0 },
-        400, 'linear');
+      this.props.AnimatedPageCounter.transitionTo({ opacity: 0 }, 400, 'linear');
 
-      this.props.AnimatedNavTitle.transitionTo(
-        { opacity: 0, translateY: -10 },
-        400, 'linear');
+      this.props.AnimatedNavTitle.transitionTo({ opacity: 0, translateY: -10 }, 400, 'linear');
 
       return this.handleStoryAction({
         ...story,
         storyGradient,
-        storyType
+        storyType,
       });
     } else if (actions && actions.type) {
       return handleAction(actions);
     }
-  }
+  };
 
   onSwipeUp = async (): Promise<void> => {
     return this.onCardPress();
-  }
+  };
 
   render(): JSX.Element {
-    const {
-      containerStyle,
-      contents
-    } = this.props;
+    const { containerStyle, contents } = this.props;
 
     return (
-      <GestureHandler
-        onSwipe={this.onSwipeUp}
-        setScrollEnabled={this.props.setScrollEnabled}
-      >
-        <TouchableOpacity
-          style={containerStyle}
-          onPress={this.onCardPress}
-          activeOpacity={1}
-        >
+      <GestureHandler onSwipe={this.onSwipeUp} setScrollEnabled={this.props.setScrollEnabled}>
+        <TouchableOpacity style={containerStyle} onPress={this.onCardPress} activeOpacity={1}>
           <View
             accessibilityIgnoresInvertColors={true}
             style={[styles.fullScreen, { backgroundColor: '#000' }]}
@@ -230,29 +211,14 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
               useNativeDriver={false}
               style={[StyleSheet.absoluteFill, styles.fullScreen]}
             />
-            <Animatable.View
-              style={styles.bottom}
-              ref={this.handleTextRef}
-              useNativeDriver={false}
-            >
-              {this.props.isNew &&
-                (
-                <View
-                  style={styles.newContainer}
-                >
-                  <Text
-                    style={styles.newText}
-                  >
-                    {NEW}
-                  </Text>
+            <Animatable.View style={styles.bottom} ref={this.handleTextRef} useNativeDriver={false}>
+              {this.props.isNew && (
+                <View style={styles.newContainer}>
+                  <Text style={styles.newText}>{NEW}</Text>
                 </View>
-                )}
-              <TextBlock
-                {...contents.Eyebrow}
-              />
-              <TextBlock
-                {...contents.Headline}
-              />
+              )}
+              <TextBlock {...contents.Eyebrow} />
+              <TextBlock {...contents.Headline} />
             </Animatable.View>
           </View>
         </TouchableOpacity>

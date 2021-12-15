@@ -7,14 +7,12 @@ import { demandwareProxyConfig } from './demandware';
 
 const proxyConfigPath = process.env.PROXY_CONFIG_PATH || 'proxy';
 const rootDir = '../../../';
-const proxyConfigFile = require(
-  path.resolve(__dirname, rootDir, proxyConfigPath, 'config')
-);
+const proxyConfigFile = require(path.resolve(__dirname, rootDir, proxyConfigPath, 'config'));
 
 const proxyBaseConfig: Partial<proxy.Options> = {
   changeOrigin: true,
   xfwd: true,
-  logLevel: 'silent'
+  logLevel: 'silent',
 };
 
 const proxyEndpoint = (
@@ -26,7 +24,7 @@ const proxyEndpoint = (
   const upstream = url.parse(endpoint);
   const upstreamTarget = url.format({
     protocol: upstream.protocol,
-    host: upstream.host
+    host: upstream.host,
   });
 
   if (upstream.path) {
@@ -44,7 +42,7 @@ const proxyEndpoint = (
         pathRewrite: (path, _req) => {
           return path.replace(endpoint, upstreamPath);
         },
-        ...proxyConfig
+        ...proxyConfig,
       })
     );
     return true;
@@ -61,7 +59,7 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
       const apiConfig = env.dataSource.apiConfig;
       let proxyConfig = {
         ...proxyBaseConfig,
-        ...proxyConfigFile
+        ...proxyConfigFile,
       };
 
       addCors(app, apiConfig);
@@ -69,7 +67,7 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
       if (env.dataSource.type === 'commercecloud') {
         proxyConfig = {
           ...demandwareProxyConfig,
-          ...proxyConfig
+          ...proxyConfig,
         };
       }
 
@@ -86,7 +84,7 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
               preProxy();
             }
           };
-          endpoint.forEach(endpointEntry => {
+          endpoint.forEach((endpointEntry) => {
             if (!proxyEndpoint(endpointEntry, app, proxyConfig, preProxyOnce)) {
               proxySuccess = false;
             }

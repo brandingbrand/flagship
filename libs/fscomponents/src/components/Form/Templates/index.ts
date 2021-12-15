@@ -2,24 +2,23 @@ import {
   labelAboveTextbox,
   labelFloatingTextbox,
   labelHiddenTextbox,
-  labelInlineTextbox
+  labelInlineTextbox,
 } from './textboxTemplates';
 
-
 export const inlineLabels = {
-  textbox: labelInlineTextbox
+  textbox: labelInlineTextbox,
 };
 
 export const hiddenLabels = {
-  textbox: labelHiddenTextbox
+  textbox: labelHiddenTextbox,
 };
 
 export const floatingLabels = {
-  textbox: labelFloatingTextbox
+  textbox: labelFloatingTextbox,
 };
 
 export const aboveLabels = {
-  textbox: labelAboveTextbox
+  textbox: labelAboveTextbox,
 };
 
 export * from './stylesheet';

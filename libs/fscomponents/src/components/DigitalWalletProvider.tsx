@@ -38,7 +38,7 @@ export interface InjectedProps {
 }
 
 export function withDigitalWallet<P extends {}>(
-  Component: (ComponentClass<P & InjectedProps> | StatelessComponent<P & InjectedProps>)
+  Component: ComponentClass<P & InjectedProps> | StatelessComponent<P & InjectedProps>
 ): ComponentClass<P & ExternalProps> {
   type ResultProps = P & ExternalProps;
 
@@ -60,34 +60,36 @@ export function withDigitalWallet<P extends {}>(
     // Function to be invoked when the Apple Pay setup button is pressed. If successful,
     // will update state to specify that the AP pay button should be displayed.
     handleApplePaySetup = async () => {
-      return this.applePay.setupApplePay()
-        .then(success => {
+      return this.applePay
+        .setupApplePay()
+        .then((success) => {
           if (success) {
             this.setState({
               showApplePayButton: true,
-              showApplePaySetupButton: false
+              showApplePaySetupButton: false,
             });
           } else {
             Alert.alert(FSI18n.string(translationKeys.flagship.cart.digitalWallet.appleError));
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e);
           Alert.alert('Apple Pay was unable to complete your request.');
         });
-    }
+    };
 
     async initApplePay(): Promise<void> {
       return new Promise<void>((resolve, reject) => {
         // Check if user has Apple Pay on their device
         if (this.applePay.isEnabled()) {
           // Check if user has a card already set up
-          this.applePay.hasActiveCard()
-            .then(hasActiveCard => {
+          this.applePay
+            .hasActiveCard()
+            .then((hasActiveCard) => {
               if (hasActiveCard) {
                 this.setState({
                   showApplePayButton: true,
-                  showApplePaySetupButton: false
+                  showApplePaySetupButton: false,
                 });
 
                 return resolve();
@@ -95,13 +97,13 @@ export function withDigitalWallet<P extends {}>(
                 // User's device supports invoking the AP setup interface
                 this.setState({
                   showApplePayButton: false,
-                  showApplePaySetupButton: true
+                  showApplePaySetupButton: true,
                 });
 
                 return resolve();
               }
             })
-            .catch(e => {
+            .catch((e) => {
               return reject(e);
             });
         }
@@ -109,19 +111,14 @@ export function withDigitalWallet<P extends {}>(
     }
 
     componentDidMount(): void {
-      Promise.all(this.promises)
-        .catch(e => {
-          console.error(e);
-        });
+      Promise.all(this.promises).catch((e) => {
+        console.error(e);
+      });
     }
 
     render(): JSX.Element {
       return (
-        <Component
-          {...this.props}
-          {...this.state}
-          applePaySetupPress={this.handleApplePaySetup}
-        />
+        <Component {...this.props} {...this.state} applePaySetupPress={this.handleApplePaySetup} />
       );
     }
   };

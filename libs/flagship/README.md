@@ -2,14 +2,14 @@
 
 ## Environment Requirements
 
-* node 8+, yarn 1.5+
-* watchman `brew install watchman`
-* react-native-cli `yarn global add react-native-cli`
-* iOS Development Environment
-  * cocoapods v1.5+ `brew install cocoapods`
-  * Xcode 9
-* Android Development Environment
-  * Follow the steps
+- node 8+, yarn 1.5+
+- watchman `brew install watchman`
+- react-native-cli `yarn global add react-native-cli`
+- iOS Development Environment
+  - cocoapods v1.5+ `brew install cocoapods`
+  - Xcode 9
+- Android Development Environment
+  - Follow the steps
     [here](http://facebook.github.io/react-native/docs/getting-started.html#android-development-environment)
 
 ## How to add icons and a launch screen

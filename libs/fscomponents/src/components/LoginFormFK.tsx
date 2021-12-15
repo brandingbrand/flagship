@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { defineSchema, schemaRegex } from '../lib/formikHelpers';
 import { style as S } from '../styles/FormFK';
 import { TextField } from './FormikFields/TextField';
-import { tr, trKeys} from '../lib/translations/index';
+import { tr, trKeys } from '../lib/translations/index';
 
 export interface LoginFormProps {
   /**
@@ -75,16 +75,15 @@ export interface FormValues {
   password: string;
 }
 
-export const LoginFormFK: React.FC<LoginFormProps> = props => {
-
+export const LoginFormFK: React.FC<LoginFormProps> = (props) => {
   const formSchema = defineSchema<FormValues>({
     emailAddress: schemaRegex.email.required().label('Email'),
-    password: yup.string().required().min(8).label('Password')
+    password: yup.string().required().min(8).label('Password'),
   });
 
   const initialValues: FormValues = {
     emailAddress: '',
-    password: ''
+    password: '',
   };
 
   const handleSubmit = (values: FormValues) => {
@@ -94,37 +93,32 @@ export const LoginFormFK: React.FC<LoginFormProps> = props => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={formSchema}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={formSchema}>
       {(f: FormikProps<FormValues>) => (
         <View style={[S.container, props.containerStyle]}>
           <TextField
-            name='emailAddress'
+            name="emailAddress"
             labelStyle={props.labelStyle}
             label={props.emailLabel || tr.string(trKeys.flagship.loginForm.email)}
             placeholder={tr.string(trKeys.flagship.loginForm.email)}
             style={[S.textInput, props.fieldStyle]}
-            {...props.fieldsOptions && props.fieldsOptions.emailAddress}
+            {...(props.fieldsOptions && props.fieldsOptions.emailAddress)}
           />
           <TextField
-            name='password'
+            name="password"
             labelStyle={props.labelStyle}
             label={props.passLabel || tr.string(trKeys.flagship.loginForm.password)}
             secureTextEntry={true}
             placeholder={tr.string(trKeys.flagship.loginForm.password)}
             style={[S.textInput, props.fieldStyle]}
-            {...props.fieldsOptions && props.fieldsOptions.password}
+            {...(props.fieldsOptions && props.fieldsOptions.password)}
           />
-        <Button
-          onPress={f.handleSubmit}
-          title={props.submitText ||
-            tr.string(trKeys.flagship.loginForm.submit)}
-          style={[S.button, props.submitButtonStyle]}
-        />
-      </View>
+          <Button
+            onPress={f.handleSubmit}
+            title={props.submitText || tr.string(trKeys.flagship.loginForm.submit)}
+            style={[S.button, props.submitButtonStyle]}
+          />
+        </View>
       )}
     </Formik>
   );

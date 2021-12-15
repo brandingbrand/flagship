@@ -1,11 +1,9 @@
-import CommerceSessionManager, {
-  CommerceSessionManagerOptions
-} from './CommerceSessionManager';
+import CommerceSessionManager, { CommerceSessionManagerOptions } from './CommerceSessionManager';
 import { SessionToken } from '../types/SessionToken';
 
 const WebDummySessionToken: SessionToken = {
   token: true,
-  expiresAt: new Date(2499, 1, 1)
+  expiresAt: new Date(2499, 1, 1),
 };
 
 /**

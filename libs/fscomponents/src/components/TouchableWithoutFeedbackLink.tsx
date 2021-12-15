@@ -12,7 +12,7 @@ export const TouchableWithoutFeedbackLink: FunctionComponent<TouchableWithoutFee
   const { href, ...rest } = props;
 
   return (
-    <TouchableWithoutFeedback accessibilityRole='link' {...rest}>
+    <TouchableWithoutFeedback accessibilityRole="link" {...rest}>
       {children}
     </TouchableWithoutFeedback>
   );

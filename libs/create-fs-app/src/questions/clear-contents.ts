@@ -13,14 +13,15 @@ export const clearContents: DistinctQuestion[] = [
   {
     type: 'confirm',
     name: 'clearContents',
-    message: 'The template project will be populated into this directory. It must be empty to continue.\nDo you want to delete all files and folders within it?\n',
-    default: false
+    message:
+      'The template project will be populated into this directory. It must be empty to continue.\nDo you want to delete all files and folders within it?\n',
+    default: false,
   },
   warningTag({
     type: 'confirm',
     name: 'clearContentsConfirm',
     message: `Are you sure? ${warning('THIS OPERATION IS UNRECOVERABLE!')}\n`,
-    when: answers => answers.clearContents,
-    default: false
-  })
+    when: (answers) => answers.clearContents,
+    default: false,
+  }),
 ];

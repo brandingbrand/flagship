@@ -1,12 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  boolean,
-  object,
-  select,
-  text
-} from '@storybook/addon-knobs';
+import { boolean, object, select, text } from '@storybook/addon-knobs';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { SwatchItemType } from '../src/components/Swatches';
 import { ProductItem } from '../src/components/ProductItem';
@@ -15,7 +10,7 @@ import Decimal from 'decimal.js';
 const kActionOnPress = 'ProductItemVerticalList onPress';
 
 const defaultStyle = {
-  padding: 15
+  padding: 15,
 };
 
 const testProduct: CommerceTypes.Product = {
@@ -24,11 +19,11 @@ const testProduct: CommerceTypes.Product = {
   title: 'Product Title',
   price: {
     value: new Decimal('100.00'),
-    currencyCode: 'USD'
+    currencyCode: 'USD',
   },
   originalPrice: {
     value: new Decimal('200.00'),
-    currencyCode: 'USD'
+    currencyCode: 'USD',
   },
   images: [{ uri: 'https://placehold.it/345x200?text=%20' }],
   review: {
@@ -36,14 +31,11 @@ const testProduct: CommerceTypes.Product = {
     statistics: {
       id: '101',
       averageRating: 3.5,
-      reviewCount: 20
+      reviewCount: 20,
     },
-    reviews: []
+    reviews: [],
   },
-  promotions: [
-    'Free Shipping',
-    'Buy One, Get One Free'
-  ]
+  promotions: ['Free Shipping', 'Buy One, Get One Free'],
 };
 
 const testSwatches: SwatchItemType[] = [
@@ -51,13 +43,10 @@ const testSwatches: SwatchItemType[] = [
   { color: '#bf3a41', name: 'dustyRed', value: 'Red' },
   { color: '#c79300', name: 'ocre', value: 'Ocre' },
   { color: '#5c8cb3', name: 'offBlue', value: 'Blue' },
-  { color: '#e0e1e2', name: 'silver', value: 'Orange', available: false }
+  { color: '#e0e1e2', name: 'silver', value: 'Orange', available: false },
 ];
 
-const orientations = [
-  'vertical',
-  'horizontal'
-];
+const orientations = ['vertical', 'horizontal'];
 
 storiesOf('ProductItem', module)
   .add('Horizontal', () => (

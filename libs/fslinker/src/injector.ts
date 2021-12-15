@@ -7,7 +7,7 @@ import {
   InjectedFactoryProvider,
   InjectionToken,
   Provider,
-  ValueProvider
+  ValueProvider,
 } from './providers';
 import { FallbackCache, GlobalInjectorCache, InjectorCache } from './cache';
 import { getDependencies, InjectedClass } from './inject';
@@ -43,9 +43,7 @@ export class Injector implements FallbackCache {
     return this.cache.get(token as InjectionToken<T>);
   }
 
-  public require<T>(
-    token: InjectionToken<T> | InjectedClass<T>
-  ): T extends undefined ? never : T {
+  public require<T>(token: InjectionToken<T> | InjectedClass<T>): T extends undefined ? never : T {
     const dependency = this.get(token);
     if (dependency === undefined) {
       throw new ReferenceError(
@@ -129,7 +127,7 @@ Check that your dependency array matches your factory or classes required depend
   private provideFactoryWithDeps<D extends unknown[], T>(
     provider: InjectedFactoryProvider<D, T>
   ): void {
-    const deps = provider.deps.map(depOrToken => this.requireDep(depOrToken));
+    const deps = provider.deps.map((depOrToken) => this.requireDep(depOrToken));
     this.verifyDeps(provider.useFactory, deps);
 
     const value = provider.useFactory(...(deps as Parameters<typeof provider['useFactory']>));
@@ -152,7 +150,7 @@ Check that your dependency array matches your factory or classes required depend
   private provideClassWithDeps<D extends unknown[], T>(
     provider: InjectedClassProvider<D, T>
   ): void {
-    const deps = provider.deps.map(depOrToken => this.requireDep(depOrToken));
+    const deps = provider.deps.map((depOrToken) => this.requireDep(depOrToken));
     this.verifyDeps(provider.useClass, deps);
 
     const value = new provider.useClass(
@@ -162,7 +160,7 @@ Check that your dependency array matches your factory or classes required depend
   }
 
   private provideStaticClass<D extends unknown[], T>(provider: BasicClassProvider<D, T>): void {
-    const deps = getDependencies(provider.useClass).map(token => this.require(token));
+    const deps = getDependencies(provider.useClass).map((token) => this.require(token));
     this.verifyDeps(provider.useClass, deps);
 
     const value = new provider.useClass(

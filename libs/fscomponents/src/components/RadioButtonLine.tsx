@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle
+  ViewStyle,
 } from 'react-native';
 import { palette } from '../styles/variables';
 
@@ -21,10 +21,11 @@ export interface SerializableRadioButtonLineProps {
   styleTextActive?: TextStyle;
 }
 
-export interface RadioButtonLineProps extends Omit<
-  SerializableRadioButtonLineProps,
-  'styleContainer' | 'styleText' | 'styleTextActive'
-> {
+export interface RadioButtonLineProps
+  extends Omit<
+    SerializableRadioButtonLineProps,
+    'styleContainer' | 'styleText' | 'styleTextActive'
+  > {
   onPress?: () => void;
   label?: JSX.Element;
   // Styles
@@ -43,24 +44,24 @@ const styles = StyleSheet.create({
     paddingRight: 18,
     paddingVertical: 25,
     borderBottomWidth: 1,
-    borderBottomColor: palette.secondary
+    borderBottomColor: palette.secondary,
   },
   text: {
     fontSize: 15,
     lineHeight: 30,
     letterSpacing: 0.5,
     color: palette.secondary,
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
   },
   imageWrap: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imagesRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   radioContainer: {
     display: 'flex',
@@ -73,14 +74,14 @@ const styles = StyleSheet.create({
     borderColor: palette.secondary,
     backgroundColor: palette.background,
     borderRadius: 50,
-    marginLeft: 15
+    marginLeft: 15,
   },
   circle: {
     width: 13,
     height: 13,
     borderRadius: 50,
-    backgroundColor: palette.secondary
-  }
+    backgroundColor: palette.secondary,
+  },
 });
 
 const RadioButtonLineInner: React.FunctionComponent<RadioButtonLineProps> = ({
@@ -92,7 +93,7 @@ const RadioButtonLineInner: React.FunctionComponent<RadioButtonLineProps> = ({
   styleTextActive,
   onPress,
   disabled,
-  label
+  label,
 }: RadioButtonLineProps): React.ReactElement => {
   return (
     <TouchableOpacity
@@ -101,23 +102,10 @@ const RadioButtonLineInner: React.FunctionComponent<RadioButtonLineProps> = ({
       onPress={onPress}
       disabled={disabled}
     >
-      <Text
-        style={[
-          styles.text, styleText,
-          active ? styleTextActive : undefined
-        ]}
-      >
-        {text}
-      </Text>
+      <Text style={[styles.text, styleText, active ? styleTextActive : undefined]}>{text}</Text>
       <View style={styles.imageWrap}>
         {label}
-        <View
-          style={styles.radioContainer}
-        >
-          {active && (
-            <View style={styles.circle} />
-          )}
-        </View>
+        <View style={styles.radioContainer}>{active && <View style={styles.circle} />}</View>
       </View>
     </TouchableOpacity>
   );

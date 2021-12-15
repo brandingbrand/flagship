@@ -5,11 +5,11 @@ import * as fs from './fs';
 export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): void {
   const infoPlist = path.ios.infoPlistPath(config);
 
-  usageDescriptions.forEach(usage => {
+  usageDescriptions.forEach((usage) => {
     if (fs.doesKeywordExist(infoPlist, usage.key)) {
       // Replace the existing usage description for this key
       if (usage.array) {
-        const stringArray = usage.array.map(res => {
+        const stringArray = usage.array.map((res) => {
           return `<string>${res}</string>`;
         });
         fs.update(
@@ -29,23 +29,21 @@ export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): v
     } else {
       // This key doesn't exist so add it to the file
       if (usage.array) {
-        const stringArray = usage.array.map(res => {
+        const stringArray = usage.array.map((res) => {
           return `<string>${res}</string>`;
         });
         fs.update(
           infoPlist,
           '<key>UIRequiredDeviceCapabilities</key>',
-          `<key>${usage.key}</key>`
-          + `<array>${stringArray.join('')}</array>`
-          + `<key>UIRequiredDeviceCapabilities</key>`
+          `<key>${usage.key}</key>` +
+            `<array>${stringArray.join('')}</array>` +
+            `<key>UIRequiredDeviceCapabilities</key>`
         );
       } else {
         fs.update(
           infoPlist,
           '<key>UIRequiredDeviceCapabilities</key>',
-          `<key>${usage.key}</key><string>${
-          usage.string
-          }</string><key>UIRequiredDeviceCapabilities</key>`
+          `<key>${usage.key}</key><string>${usage.string}</string><key>UIRequiredDeviceCapabilities</key>`
         );
       }
     }

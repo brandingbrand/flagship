@@ -2,10 +2,7 @@
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "parserOptions": {
-    "project": [
-      "./libs/fsengagement/tsconfig.lib.json",
-      "./libs/fsengagement/tsconfig.spec.json"
-    ]
+    "project": ["./libs/fsengagement/tsconfig.lib.json", "./libs/fsengagement/tsconfig.spec.json"]
   },
   "overrides": [
     {

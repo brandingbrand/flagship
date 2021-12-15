@@ -1,9 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import {
-  object
-} from '@storybook/addon-knobs';
+import { object } from '@storybook/addon-knobs';
 import { Grid } from '../src/components/Grid';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import { ProductItem } from '../src/components/ProductItem';
@@ -12,16 +10,15 @@ import Decimal from 'decimal.js';
 
 import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
 
-
 const provider = new CoreContentManagementSystemProvider({
   propertyId: '443',
-  environment: 1
+  environment: 1,
 });
 
 const defaultStyle = {
   padding: 15,
   font: 8,
-  textAlign: 'center'
+  textAlign: 'center',
 };
 
 const kActionOnPress = 'ProductItemVerticalList onPress';
@@ -32,11 +29,11 @@ const testProduct: CommerceTypes.Product = {
   title: 'Product',
   price: {
     value: new Decimal('9.99'),
-    currencyCode: 'USD'
+    currencyCode: 'USD',
   },
   originalPrice: {
     value: new Decimal('14.99'),
-    currencyCode: 'USD'
+    currencyCode: 'USD',
   },
   images: [{ uri: require('./assets/images/greyBox.png') }],
   review: {
@@ -44,11 +41,11 @@ const testProduct: CommerceTypes.Product = {
     statistics: {
       id: '101',
       averageRating: 4.5,
-      reviewCount: 20
+      reviewCount: 20,
     },
-    reviews: []
+    reviews: [],
   },
-  promotions: ['This is a sample promotion!']
+  promotions: ['This is a sample promotion!'],
 };
 
 const renderProduct = (): JSX.Element => {
@@ -61,18 +58,8 @@ const renderProduct = (): JSX.Element => {
   );
 };
 
-storiesOf('Shelf', module)
-  .add('basic usage', () => (
-    <Shelf
-      provider={provider}
-      group='Shop'
-      identifier='Banner-Carousel'
-      carouselHeight={100}
-    >
-      <Grid
-        data={[...Array(4).keys()]}
-        columns={2}
-        renderItem={renderProduct}
-      />
-    </Shelf>
-  ));
+storiesOf('Shelf', module).add('basic usage', () => (
+  <Shelf provider={provider} group="Shop" identifier="Banner-Carousel" carouselHeight={100}>
+    <Grid data={[...Array(4).keys()]} columns={2} renderItem={renderProduct} />
+  </Shelf>
+));

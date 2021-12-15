@@ -1,10 +1,4 @@
-import {
-  ImageStyle,
-  RegisteredStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
 
 export const style = StyleSheet.create({
@@ -13,33 +7,33 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 10,
     paddingRight: 10,
-    borderRadius: 3
+    borderRadius: 3,
   },
   buttonView: {
     flex: 1,
     flexBasis: 'auto',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   full: {
     flex: 1,
     flexBasis: 'auto',
-    width: '100%'
+    width: '100%',
   },
   buttonInner: {
     flex: 1,
     flexBasis: 'auto',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon: {
-    marginRight: 5
-  }
+    marginRight: 5,
+  },
 });
 
 export const stylesTextColor = {
@@ -51,29 +45,29 @@ export const stylesTextColor = {
   alert: '#ffffff',
   dark: '#ffffff',
   light: '#555555',
-  disabled: '#aaaaaa'
+  disabled: '#aaaaaa',
 };
 
 export const stylesSize = StyleSheet.create({
   large: {
-    height: 48
+    height: 48,
   },
   medium: {
-    height: 38
+    height: 38,
   },
   small: {
-    height: 28
-  }
+    height: 28,
+  },
 });
 
 export const stylesTextSize = StyleSheet.create({
   large: {
-    fontSize: 18
+    fontSize: 18,
   },
   medium: {
-    fontSize: 14
+    fontSize: 14,
   },
   small: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });

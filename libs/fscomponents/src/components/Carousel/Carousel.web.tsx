@@ -28,11 +28,10 @@ export class Carousel extends Component<CarouselProps> {
       showsPagination,
       loop,
       currentPageIndicatorColor,
-      pageIndicatorColor
+      pageIndicatorColor,
     } = this.props;
 
-    const _showsPagination =
-      typeof showsPagination === 'undefined' ? true : showsPagination;
+    const _showsPagination = typeof showsPagination === 'undefined' ? true : showsPagination;
     const _children: any = children;
 
     return (
@@ -42,10 +41,14 @@ export class Carousel extends Component<CarouselProps> {
             loop={loop}
             Swiper={Swiper}
             modules={[Navigation, Pagination]}
-            pagination={_showsPagination ? {
-              el: `.swiper-pagination`,
-              clickable: true
-            } : {}}
+            pagination={
+              _showsPagination
+                ? {
+                    el: `.swiper-pagination`,
+                    clickable: true,
+                  }
+                : {}
+            }
             {...webOptions}
           >
             {React.Children.map(_children, (child, i) => {

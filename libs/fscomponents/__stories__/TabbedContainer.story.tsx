@@ -5,28 +5,26 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { storiesOf } from '@storybook/react';
 import { TabbedContainer } from '../src/components/TabbedContainer';
-import {
-  number
-} from '@storybook/addon-knobs';
+import { number } from '@storybook/addon-knobs';
 
 const styles = StyleSheet.create({
   tab: {
     padding: 3,
     borderBottomWidth: 5,
-    borderBottomColor: 'rgba(0,0,0,0)'
+    borderBottomColor: 'rgba(0,0,0,0)',
   },
   activeTab: {
-    borderBottomColor: 'coral'
+    borderBottomColor: 'coral',
   },
   tabText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   activeTabText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   content: {
-    paddingTop: 10
-  }
+    paddingTop: 10,
+  },
 });
 
 storiesOf('TabbedContainer', module).add('basic usage', () => {
@@ -42,9 +40,7 @@ storiesOf('TabbedContainer', module).add('basic usage', () => {
     ),
     activeTab: (
       <View style={[styles.tab, styles.activeTab]}>
-        <Text style={[styles.tabText, styles.activeTabText]}>{`Tab ${
-          i + 1
-        }`}</Text>
+        <Text style={[styles.tabText, styles.activeTabText]}>{`Tab ${i + 1}`}</Text>
       </View>
     ),
     renderContent: () => {
@@ -53,7 +49,7 @@ storiesOf('TabbedContainer', module).add('basic usage', () => {
           <Text>{`Tab ${i + 1} Content`}</Text>
         </View>
       );
-    }
+    },
   }));
   return <TabbedContainer tabs={tabs} onTabSwitch={displaySwitchedTab} />;
 });

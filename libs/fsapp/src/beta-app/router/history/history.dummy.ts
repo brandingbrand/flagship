@@ -1,7 +1,9 @@
 import type { FSRouterHistory } from './types';
 import { NO_NAVIGATOR_CONTEXT_ERROR } from './constants';
 
-const throwError = () => { throw new Error(NO_NAVIGATOR_CONTEXT_ERROR); };
+const throwError = () => {
+  throw new Error(NO_NAVIGATOR_CONTEXT_ERROR);
+};
 
 export const dummyHistory: FSRouterHistory = {
   action: 'REPLACE',
@@ -19,6 +21,5 @@ export const dummyHistory: FSRouterHistory = {
   push: throwError,
   registerResolver: throwError,
   replace: throwError,
-  updateTitle: throwError
+  updateTitle: throwError,
 };
-
