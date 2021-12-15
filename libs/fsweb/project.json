@@ -1,0 +1,57 @@
+{
+  "root": "libs/fsweb",
+  "sourceRoot": "libs/fsweb/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsweb",
+        "tsConfig": "libs/fsweb/tsconfig.lib.json",
+        "packageJson": "libs/fsweb/package.json",
+        "main": "libs/fsweb/src/server.prod.ts",
+        "assets": [
+          "libs/fsweb/*.md",
+          "libs/fsweb/*.js",
+          {
+            "glob": "**/*",
+            "input": "libs/fsweb/build",
+            "output": "build"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/fsweb/dev-server",
+            "output": "dev-server"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/fsweb/polyfills",
+            "output": "polyfills"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/fsweb/public",
+            "output": "public"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsweb/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsweb"],
+      "options": {
+        "jestConfig": "libs/fsweb/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
