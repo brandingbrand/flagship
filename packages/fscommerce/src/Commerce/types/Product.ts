@@ -212,4 +212,11 @@ export interface Product extends BaseProduct {
    * @example '165139'
    */
   reviewId?: string;
+
+  /**
+   * List of identifiers of extended sized versions of the original product
+   *
+   * @example ['NC17', 'NC68']
+   */
+  extendedSizs?: string[];
 }
