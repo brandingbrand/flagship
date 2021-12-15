@@ -27,6 +27,14 @@ const Configuration = {
 
   defaultIgnores: true,
   helpUrl: 'https://www.conventionalcommits.org/en/v1.0.0/',
+
+  /**
+   * Dependabot messages cannot be configured
+   *
+   * @link [dependabot-core/issues/1666](https://github.com/dependabot/dependabot-core/issues/1666)
+   * @link [dependabot-core/issues/2455](https://github.com/dependabot/dependabot-core/issues/2455)
+   */
+  ignores: [(message) => /^Bumps \[.+]\(.+\) from .+ to .+\.$/m.test(message)],
 };
 
 module.exports = Configuration;
