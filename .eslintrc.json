@@ -188,6 +188,11 @@
         ],
         "unicorn/prefer-ternary": "off",
         "use-isnan": "error"
+      },
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
       }
     },
     {
