@@ -131,7 +131,6 @@ const ssrConfig = {
             ],
             exclude: /node_modules\/react-native-web\//,
             use: [
-              'cache-loader',
               {
                 loader: require.resolve('babel-loader'),
                 options: {
