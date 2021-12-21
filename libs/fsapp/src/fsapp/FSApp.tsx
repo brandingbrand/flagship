@@ -195,6 +195,7 @@ export class FSApp extends FSAppBase {
   }
 
   protected defaultIdFromName(name: string | number): string {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     return name.toString().toUpperCase + '_TAB';
   }
 

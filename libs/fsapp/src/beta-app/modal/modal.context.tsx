@@ -116,7 +116,8 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
     <InjectedContextProvider
       token={MODAL_CONTEXT_TOKEN}
       value={{ showModal, dismissModal, dismissAllModals }}
-      children={children}
-    />
+    >
+      {children}
+    </InjectedContextProvider>
   );
 };

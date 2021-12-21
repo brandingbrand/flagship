@@ -39,6 +39,7 @@ export interface FSCheckoutProps {
   /**
    * An array description of all checkout steps. Component, identifer, display
    * name and status.
+   *
    * @example [{
    *   name: 'shipping',
    *   displayName: 'Shipping',

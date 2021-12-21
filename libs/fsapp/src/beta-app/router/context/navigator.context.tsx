@@ -27,5 +27,7 @@ export interface NavigatorProviderProps {
   value: FSRouterHistory;
 }
 export const NavigatorProvider: FC<NavigatorProviderProps> = ({ value, children }) => (
-  <InjectedContextProvider token={NAVIGATOR_CONTEXT_TOKEN} value={value} children={children} />
+  <InjectedContextProvider token={NAVIGATOR_CONTEXT_TOKEN} value={value}>
+    {children}
+  </InjectedContextProvider>
 );

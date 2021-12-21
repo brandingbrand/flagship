@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsapp/**/*.ts"]
+        "lintFilePatterns": ["libs/fsapp/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {

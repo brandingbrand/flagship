@@ -17,7 +17,9 @@ export const InjectedReduxProvider: FC<Partial<Omit<ProviderProps, 'context'>>> 
 }) => {
   const context = useDependency(REDUX_CONTEXT_TOKEN);
   return context && store ? (
-    <Provider store={store} context={context} children={children} />
+    <Provider store={store} context={context}>
+      {children}
+    </Provider>
   ) : (
     <>{children}</>
   );

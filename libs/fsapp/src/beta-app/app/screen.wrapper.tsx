@@ -15,16 +15,20 @@ export interface Wrappers {
 
 export const makeScreenWrapper = ({ api, app, store }: Wrappers): FC => {
   const App: React.FC = ({ children }) => (
-    <InjectedContextProvider token={APP_CONTEXT_TOKEN} value={app} children={children} />
+    <InjectedContextProvider token={APP_CONTEXT_TOKEN} value={app}>
+      {children}
+    </InjectedContextProvider>
   );
 
   const Store: React.FC = store
-    ? ({ children }) => <InjectedReduxProvider store={store} children={children} />
+    ? ({ children }) => <InjectedReduxProvider store={store}>{children}</InjectedReduxProvider>
     : ({ children }) => <>{children}</>;
 
   const API: React.FC = api
     ? ({ children }) => (
-        <InjectedContextProvider token={API_CONTEXT_TOKEN} value={api} children={children} />
+        <InjectedContextProvider token={API_CONTEXT_TOKEN} value={api}>
+          {children}
+        </InjectedContextProvider>
       )
     : ({ children }) => <>{children}</>;
 

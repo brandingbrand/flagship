@@ -64,6 +64,7 @@ export class FSRouter extends FSRouterBase {
   ): void {
     const addedRoutes = new Set<string>();
 
+    // eslint-disable-next-line complexity
     routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
       const { path, id } = buildPath(route, prefix);
 

@@ -24,5 +24,5 @@ export const InjectedContextProvider = <T,>({
   children,
 }: InjectedContextProviderProps<T>) => {
   const Context = useDependency(token);
-  return Context ? <Context.Provider value={value} children={children} /> : <>{children}</>;
+  return Context ? <Context.Provider value={value}>{children}</Context.Provider> : <>{children}</>;
 };
