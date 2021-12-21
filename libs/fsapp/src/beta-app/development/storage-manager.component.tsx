@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   closeBtn: {
@@ -132,7 +132,7 @@ export default class CookieManger extends Component<CookieManagerProps, CookieMa
         const keys = values[0].map((item: SensitiveInfoEntry) => item.key);
 
         Promise.all(
-          values[0].map((entry) =>
+          values[0].map(async (entry) =>
             SInfo.deleteItem(
               entry.key,
               this.props.sInfoOptions ?? { keychainService: entry.service }

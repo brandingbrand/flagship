@@ -5,7 +5,7 @@ import type { LayoutComponent } from 'react-native-navigation';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { omit } from 'lodash-es';
 
 import { envs } from '../env';
