@@ -31,7 +31,7 @@ export interface LeanplumProviderConfiguration {
 }
 
 export default class LeanplumProvider extends AnalyticsProvider {
-  client: typeof RNLeanplum;
+  client: any;
   monetizationEventName: string;
 
   constructor(
@@ -45,6 +45,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-purchase-or-monetization-events
     this.monetizationEventName = configuration.monetizationEventName || 'Purchase';
 
+    // @ts-ignore
     this.client = new RNLeanplum(configuration.appId, configuration.key);
     this.client.start();
 
