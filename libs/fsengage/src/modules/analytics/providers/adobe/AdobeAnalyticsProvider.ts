@@ -6,7 +6,7 @@ import {
   ACPLifecycle,
   ACPMobileLogLevel,
   ACPSignal,
-// @ts-ignore
+  // @ts-ignore
 } from '@adobe/react-native-acpcore';
 // @ts-ignore
 import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
