@@ -154,7 +154,6 @@ const globalConfig = {
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
-              'cache-loader',
               {
                 loader: require.resolve('babel-loader'),
                 options: {
