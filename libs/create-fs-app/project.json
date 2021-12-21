@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/create-fs-app/**/*.ts"]
+        "lintFilePatterns": ["libs/create-fs-app/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {

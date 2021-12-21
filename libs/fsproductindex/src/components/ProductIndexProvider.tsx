@@ -127,6 +127,7 @@ function withProductIndexData<
     class ProductIndexProvider extends Component<ResultProps, ResultState> {
       /**
        * Request new reviews if commerce data has changed
+       *
        * @param {ResultProps} prevProps - Previously set Props
        */
       componentDidUpdate(prevProps: ResultProps): void {

@@ -33,7 +33,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/flagship/**/*.ts"]
+        "lintFilePatterns": ["libs/flagship/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {

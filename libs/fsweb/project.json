@@ -42,7 +42,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsweb/**/*.ts"]
+        "lintFilePatterns": ["libs/fsweb/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {

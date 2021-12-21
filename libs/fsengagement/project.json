@@ -26,7 +26,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsengagement/**/*.ts"]
+        "lintFilePatterns": ["libs/fsengagement/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {

@@ -5,12 +5,12 @@ import loadable from '@loadable/component';
 import { fromPairs } from 'lodash-es';
 
 export const StaticImplements =
-  <T extends any>() =>
+  <T,>() =>
   <U extends T>(_constructor: U) => {
     return;
   };
 
-export const isDefined = <T extends any>(value: T | undefined): value is T => value !== undefined;
+export const isDefined = <T,>(value: T | undefined): value is T => value !== undefined;
 
 const pathFromRoute = (route: Route, prefix?: string) => {
   return route.path !== undefined

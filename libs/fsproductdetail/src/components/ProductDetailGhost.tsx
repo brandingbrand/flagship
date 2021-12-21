@@ -172,8 +172,8 @@ const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGho
     countPages,
   } = props;
 
-  const mainImageHeight = !!imageHeight ? imageHeight : 443;
-  const titleWidthSection = !!titleWidth ? titleWidth : 155;
+  const mainImageHeight = imageHeight ? imageHeight : 443;
+  const titleWidthSection = titleWidth ? titleWidth : 155;
   const starArray = new Array(5).fill({});
 
   return (

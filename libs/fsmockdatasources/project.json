@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsmockdatasources/**/*.ts"]
+        "lintFilePatterns": ["libs/fsmockdatasources/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
