@@ -1,7 +1,7 @@
 import type { AppConstructor } from './types';
 
 import { BackHandler, Linking } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { StaticImplements } from '../utils';
