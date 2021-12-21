@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
-import * as path from 'path';
-import * as express from 'express';
+import path from 'path';
+import express from 'express';
 import { addProxy } from './lib/proxy';
 import { healthCheck } from './lib/healthcheck';
 
