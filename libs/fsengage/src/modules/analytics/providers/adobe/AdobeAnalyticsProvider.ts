@@ -6,7 +6,9 @@ import {
   ACPLifecycle,
   ACPMobileLogLevel,
   ACPSignal,
+// @ts-ignore
 } from '@adobe/react-native-acpcore';
+// @ts-ignore
 import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
 
 type AnalyticsProviderConfiguration = import('../types/AnalyticsProviderConfiguration').default;
