@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { Distance, DistanceUnit } from '@brandingbrand/fsfoundation';
-import { Address, Hour } from '../types/Store';
+import type { FlatListProps } from 'react-native';
+import type { Address, Hour } from '../types/Store';
 
 /**
  *
@@ -177,4 +178,20 @@ export function animatedScrollTo(element: HTMLElement, target: number, duration:
 
     requestAnimationFrame(scroll_frame);
   });
+}
+
+/**
+ * set keyExtractor prop helpers func for FlaList
+ *
+ * @param key key for the list indexer
+ * @returns {string} list identifier
+ */
+export function setKeyExtractor<T>(key?: keyof T): FlatListProps<T>['keyExtractor'] {
+  return (item: T, index: number) => {
+    if (item !== null && !!key) {
+      return !!item[key] ? String(item[key]) : index.toString();
+    }
+
+    return index.toString();
+  };
 }

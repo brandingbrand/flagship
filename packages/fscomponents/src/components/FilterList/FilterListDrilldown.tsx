@@ -17,6 +17,7 @@ import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import { setKeyExtractor } from '../../lib/helpers';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
@@ -404,10 +405,6 @@ export class FilterListDrilldown extends PureComponent<
     });
   }
 
-  getKey = (item: any, index: number) => {
-    return index.toString();
-  }
-
   renderEmptyCell = () => {
     return (
       <View style={[S.emptyCell, this.props.optionsFooterStyles]}/>
@@ -455,11 +452,11 @@ export class FilterListDrilldown extends PureComponent<
           ) : null}
         </TouchableOpacity>
         <FlatList
-          keyExtractor={this.getKey}
           data={item.values || []}
           renderItem={this.renderFilterItemValue(item)}
           extraData={this.state}
           ListFooterComponent={this.props.secondLevelShowApply ? this.renderEmptyCell : undefined}
+          keyExtractor={setKeyExtractor()}
         />
         {this.props.secondLevelShowApply ? (
           <TouchableOpacity
@@ -539,6 +536,7 @@ export class FilterListDrilldown extends PureComponent<
             renderItem={this.renderFilterItem}
             extraData={this.state.selectedItems}
             ListFooterComponent={this.props.onClose ? this.renderEmptyCell : undefined}
+            keyExtractor={setKeyExtractor('id')}
           />
           {this.props.onClose ? (
             <TouchableOpacity

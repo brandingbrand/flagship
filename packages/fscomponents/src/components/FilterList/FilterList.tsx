@@ -15,6 +15,7 @@ import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import { setKeyExtractor } from '../../lib/helpers';
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
@@ -216,6 +217,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
         <FlatList
           data={_items}
           renderItem={this.renderFilterItem}
+          keyExtractor={setKeyExtractor('id')}
         />
         <View style={[S.buttonsContainer, this.props.buttonContainerStyle]}>
           <TouchableOpacity

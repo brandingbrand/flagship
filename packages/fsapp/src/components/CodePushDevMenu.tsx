@@ -16,6 +16,7 @@ import { AppConfigType } from '../types';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
 import NativeConstants from '../lib/native-constants';
+import { setKeyExtractor } from '../lib/helpers';
 
 const { CodePush } = NativeModules;
 
@@ -184,6 +185,7 @@ export default class CodePushDevMenu extends Component<
             style={styles.container}
             data={this.state.swimLanes}
             renderItem={this.renderSwimLaneItem}
+            keyExtractor={setKeyExtractor()}
           />
         ) : <Text>No lanes setup for app</Text>}
 

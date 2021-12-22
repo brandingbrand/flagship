@@ -4,5 +4,6 @@ export * from './hooks/grid-chunks.hook';
 export * from './components';
 export * from './lib/color';
 export * from './lib/style';
+export * from './lib/helpers';
 export * from './lib/translations';
 export * from './styles';

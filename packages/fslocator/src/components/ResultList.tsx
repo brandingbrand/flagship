@@ -9,6 +9,7 @@ import {
   View,
   ViewToken
 } from 'react-native';
+import { setKeyExtractor } from '@brandingbrand/fscomponents';
 import { style as S } from '../styles/Locator';
 import { Location } from '../types/Location';
 import { PropType as LocatorPropType } from './LocatorList';
@@ -131,6 +132,7 @@ export default class ResultList extends Component<PropType, StateType> {
           onScroll={onScroll}
           renderItem={this.renderLocationItem}
           onViewableItemsChanged={this.handleViewableItemsChanged}
+          keyExtractor={setKeyExtractor('id')}
         />
       );
     } else {
