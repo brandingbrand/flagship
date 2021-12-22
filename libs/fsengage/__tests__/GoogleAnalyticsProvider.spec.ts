@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/unbound-method */
-// @ts-ignore using ts-sinon instead of sinon causes a conflict between @types/node and @types/react
 import { assert, stub } from 'sinon';
 import { Component } from 'react';
 
