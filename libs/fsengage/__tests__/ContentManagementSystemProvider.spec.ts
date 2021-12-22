@@ -38,7 +38,7 @@ describe('Content Management System Provider', () => {
 
   describe('Core', () => {
     test('Slot Content', (done) => {
-      proxy = stub(CoreContentManagementSystemProvider.prototype, 'pullContent').callsFake(
+      proxy = stub(CoreContentManagementSystemProvider.prototype as any, 'pullContent').callsFake(
         async () => {
           return Promise.resolve(fixture.payload);
         }
@@ -74,7 +74,7 @@ describe('Content Management System Provider', () => {
     });
 
     test('Slot Content Missing', (done) => {
-      proxy = stub(CoreContentManagementSystemProvider.prototype, 'pullContent').callsFake(
+      proxy = stub(CoreContentManagementSystemProvider.prototype as any, 'pullContent').callsFake(
         async () => {
           return Promise.resolve(fixture2);
         }
