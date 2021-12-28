@@ -1,5 +1,5 @@
 // tslint:disable:jsx-use-translation-function
-import React, { Component, ComponentClass } from 'react';
+import React, { Component, ComponentClass, ReactElement } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -227,6 +227,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   discoverPath?: string;
   deepLinkMethod?: DeeplinkMethod;
   renderBackButton?: (navigation?: Navigator) => void;
+  footerComponent?: ReactElement;
 }
 export interface EngagementState {
   scrollY: Animated.Value;
@@ -469,7 +470,9 @@ export default function(
       );
     }
     renderFlatlistFooter = () => {
-      if (this.props.welcomeHeader) {
+      const { footerComponent } = this.props;
+      if (!!footerComponent) return footerComponent;
+      else if (this.props.welcomeHeader) {
         return (
           <View
             style={{
@@ -478,19 +481,18 @@ export default function(
             }}
           />
         );
-      }
-      if (!(this.props.animateScroll)) {
+      } else if (!this.props.animateScroll) {
         return <View />;
-      }
-      return (
-        <View
-          style={{
-            backgroundColor: '#fff',
-            height: 100
-          }}
-        />
-      );
-    }
+      } else
+        return (
+          <View
+            style={{
+              backgroundColor: "#fff",
+              height: 100,
+            }}
+          />
+        );
+    };
     // tslint:disable-next-line:cyclomatic-complexity
     renderFlatlistHeader = () => {
       if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
