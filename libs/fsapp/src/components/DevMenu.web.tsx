@@ -4,19 +4,19 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { GenericScreenProp } from './screenWrapper.web';
 import TouchableRow from './TouchableRow';
-// @ts-ignore project_env_index ignore and will be changed by init
-import projectEnvs from '../../project_env_index';
 import EnvSwitcher from '../lib/env-switcher';
 import { LayoutComponent } from 'react-native-navigation';
 import Navigator from '../lib/nav-wrapper.web';
 import { omit } from 'lodash-es';
 
-const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+import { envs } from '../beta-app/env';
+
+const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
 const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
 
 const envsToDisplay: {
   [key: string]: string;
-} = omit(projectEnvs, hiddenEnvs);
+} = omit(envs, hiddenEnvs);
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -172,7 +172,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   };
 
   renderEnvDetail = () => {
-    const env = projectEnvs[this.state.selectedEnv];
+    const env = envs[this.state.selectedEnv];
 
     return (
       <View style={styles.configViewItem}>

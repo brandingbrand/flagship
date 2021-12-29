@@ -11,17 +11,17 @@ import EnvSwitcher from '../lib/env-switcher';
 import StorageManager from './StorageManager';
 import TouchableRow from './TouchableRow';
 import { LayoutComponent } from 'react-native-navigation';
-// @ts-ignore project_env_index ignore and will be changed by init
-import projectEnvs from '../../project_env_index';
 import NavWrapper from '../lib/nav-wrapper';
+import { envs } from '../beta-app/env';
+
 import { omit } from 'lodash-es';
 
-const activeEnv = projectEnvs[`${EnvSwitcher.envName}`] || projectEnvs.prod;
+const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
 const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
 
 const envsToDisplay: {
   [key: string]: string;
-} = omit(projectEnvs, hiddenEnvs);
+} = omit(envs, hiddenEnvs);
 
 const styles = StyleSheet.create({
   devViewcontainer: {
@@ -219,7 +219,7 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
   };
 
   renderEnvDetail = () => {
-    const env = projectEnvs[this.state.selectedEnv];
+    const env = envs[this.state.selectedEnv];
 
     return (
       <View style={styles.configViewItem}>
