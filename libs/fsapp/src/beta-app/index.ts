@@ -1,4 +1,5 @@
 export * from './app';
+export * from './env';
 export * from './modal';
 export * from './router';
 export * from './shell.web';

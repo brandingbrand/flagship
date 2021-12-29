@@ -1,9 +1,11 @@
+import { getDefaultEnvironment } from '@brandingbrand/fsenv';
+
 // __DEFAULT_ENV__ is injected by webpack.
-declare const __DEFAULT_ENV__: string;
+declare const __DEFAULT_ENV__: string | undefined;
 
 class WebEnvSwitcher {
   storageKey: string = 'envName';
-  defaultAppEnv: string = __DEFAULT_ENV__ || 'prod';
+  defaultAppEnv: string = __DEFAULT_ENV__ || getDefaultEnvironment() || 'prod';
 
   get envName(): string {
     let storedEnvName;
