@@ -1,0 +1,34 @@
+{
+  "root": "libs/fsenv",
+  "sourceRoot": "libs/fsenv/src",
+  "projectType": "library",
+  "tags": ["open-source"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fsenv",
+        "tsConfig": "libs/fsenv/tsconfig.lib.json",
+        "packageJson": "libs/fsenv/package.json",
+        "main": "libs/fsenv/src/index.ts",
+        "assets": ["libs/fsenv/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/fsenv/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/fsenv"],
+      "options": {
+        "jestConfig": "libs/fsenv/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
