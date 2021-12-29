@@ -7,7 +7,6 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const BabelPluginTransformImports = require('babel-plugin-transform-imports');
 const BabelPluginReactNativeWeb = require('babel-plugin-react-native-web');
 const BabelPluginProposalPrivatePropertyInObject = require('@babel/plugin-proposal-private-property-in-object');
 const BabelPluginProposalClassProperties = require('@babel/plugin-proposal-class-properties');
@@ -103,15 +102,6 @@ const globalConfig = {
                     ],
                   ],
                   plugins: [
-                    [
-                      BabelPluginTransformImports,
-                      {
-                        'lodash-es': {
-                          transform: 'lodash-es/${member}',
-                          preventFullImport: true,
-                        },
-                      },
-                    ],
                     [
                       BabelPluginReactNativeWeb,
                       {
