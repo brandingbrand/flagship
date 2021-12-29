@@ -10,3 +10,15 @@ index 9333729..ffca1a5 100644
                      return true;
                  }
  
+diff --git a/node_modules/css-tree/lib/walker/create.js b/node_modules/css-tree/lib/walker/create.js
+index 1731465..7947c10 100644
+--- a/node_modules/css-tree/lib/walker/create.js
++++ b/node_modules/css-tree/lib/walker/create.js
+@@ -165,7 +165,6 @@ module.exports = function createWalker(config) {
+             var enterRet = enter.call(context, node, item, list);
+ 
+             if (enterRet === breakWalk) {
+-                debugger;
+                 return true;
+             }
+ 
