@@ -1,30 +1,31 @@
-import { getDefaultEnvironment } from '@brandingbrand/fsenv';
+import { getDefaultEnvironment, getEnvironmentConfigs } from '@brandingbrand/fsenv';
 
 // __DEFAULT_ENV__ is injected by webpack.
-declare const __DEFAULT_ENV__: string;
+declare const __DEFAULT_ENV__: string | undefined;
 
 class WebEnvSwitcher {
   storageKey: string = 'envName';
   defaultAppEnv: string = __DEFAULT_ENV__ || getDefaultEnvironment() || 'prod';
 
   get envName(): string {
-    let storedEnvName;
     try {
-      storedEnvName = localStorage.getItem(this.storageKey);
-    } catch (e) {
-      return '';
+      const savedEnvName = localStorage.getItem(this.storageKey);
+      if (
+        typeof savedEnvName === 'string' &&
+        Object.keys(getEnvironmentConfigs()).includes(savedEnvName)
+      ) {
+        return savedEnvName;
+      }
+    } catch {
+      return this.defaultAppEnv;
     }
 
-    return storedEnvName || this.defaultAppEnv;
+    return this.defaultAppEnv;
   }
 
   set envName(name: string) {
     if (typeof name === 'string') {
-      try {
-        localStorage.setItem(this.storageKey, name);
-      } catch (e) {
-        return;
-      }
+      localStorage.setItem(this.storageKey, name);
     }
   }
 
@@ -34,5 +35,4 @@ class WebEnvSwitcher {
   }
 }
 
-const EnvSwitcher = new WebEnvSwitcher();
-export default EnvSwitcher;
+export default new WebEnvSwitcher();

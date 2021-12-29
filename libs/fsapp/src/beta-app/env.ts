@@ -11,6 +11,5 @@ try {
 
 setDefaultEnvironment(EnvSwitcher.envName);
 
-console.log(projectEnvs);
 export const envs = projectEnvs;
 export const env = projectEnvs[`${EnvSwitcher.envName}`] ?? projectEnvs.prod;
