@@ -181,6 +181,7 @@
         "react/jsx-key": "warn",
         "react/jsx-no-bind": "warn",
         "react/no-find-dom-node": "warn",
+        "react/no-unknown-property": "off",
         "react/prop-types": "off",
         "react/self-closing-comp": "error",
         "spaced-comment": [
