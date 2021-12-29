@@ -158,15 +158,6 @@ const globalConfig = {
                   ],
                   plugins: [
                     [
-                      BabelPluginTransformImports,
-                      {
-                        'lodash-es': {
-                          transform: 'lodash-es/${member}',
-                          preventFullImport: true,
-                        },
-                      },
-                    ],
-                    [
                       BabelPluginReactNativeWeb,
                       {
                         commonjs: false,
