@@ -19,7 +19,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsi18n/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/fsi18n/**/*.{ts,tsx,js,jsx}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {
