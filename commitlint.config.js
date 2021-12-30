@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { types, scopes, ticketNumberPrefix } = require('./.cz-config.js');
+const { types, scopes } = require('./.cz-config.js');
 
 const typeValues = types.map(({ value }) => value);
 const scopeNames = scopes.map(({ name }) => name);
@@ -8,12 +8,6 @@ const scopeNames = scopes.map(({ name }) => name);
 const Configuration = {
   extends: ['@commitlint/config-conventional'],
   formatter: '@commitlint/format',
-
-  parserPreset: {
-    parserOpts: {
-      issuePrefixes: ticketNumberPrefix,
-    },
-  },
 
   rules: {
     'type-enum': [2, 'always', typeValues],

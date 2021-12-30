@@ -6,8 +6,6 @@ const projectScopes = projects.map((project) => ({
   description: `anything ${project} specific`,
 }));
 
-const ticketScopes = projects.map((name) => `${name.toUpperCase()}-`);
-
 module.exports = {
   types: [
     { name: 'feat:     A new feature', value: 'feat' },
@@ -35,32 +33,24 @@ module.exports = {
     {
       name: 'repo',
       description: 'anything related to managing the repo itself',
-    },
-    { name: 'misc', description: 'misc stuff' },
+    }
   ],
 
-  allowTicketNumber: true,
-  isTicketNumberRequired: false,
-  ticketNumberPrefix: ticketScopes,
-  ticketNumberRegExp: '\\d{1,5}',
+  allowTicketNumber: false,
 
   // it needs to match the value for field type. Eg.: 'fix'
-  /*
+
   scopeOverrides: {
-    fix: [
-      {name: 'merge'},
-      {name: 'style'},
-      {name: 'e2eTest'},
-      {name: 'unitTest'}
-    ]
+    fix: projectScopes,
+    feat: projectScopes,
+    perf: projectScopes,
+    refactor: projectScopes
   },
-  */
+
   // override the messages, defaults are as follows
   messages: {
     type: "Select the type of change that you're committing:",
-    scope: '\nDenote the SCOPE of this change (optional):',
-    // used if allowCustomScopes is true
-    customScope: 'Denote the SCOPE of this change:',
+    scope: '\nDenote the SCOPE of this change:',
     subject: 'Write a SHORT, IMPERATIVE (lowercase) description of the change:\n',
     body: 'Provide a LONGER description of the change (optional). Use "|" to break new line:\n',
     breaking: 'List any BREAKING CHANGES (optional):\n',
@@ -75,7 +65,6 @@ module.exports = {
 
   // limit subject length
   subjectLimit: 100,
-  // breaklineChar: '|', // It is supported for fields body and footer.
-  // footerPrefix : 'ISSUES CLOSED:'
-  askForBreakingChangeFirst: true, // default is false
+  askForBreakingChangeFirst: true,
+
 };
