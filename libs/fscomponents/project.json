@@ -26,7 +26,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fscomponents/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/fscomponents/**/*.{ts,tsx,js,jsx}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

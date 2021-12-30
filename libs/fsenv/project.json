@@ -19,7 +19,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsenv/**/*.ts"]
+        "lintFilePatterns": ["libs/fsenv/**/*.ts"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {
