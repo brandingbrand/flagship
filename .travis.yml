@@ -1,18 +1,36 @@
-cache: yarn
+cache: npm
 stages:
+  - name: lint
+    if: type = pull_request AND tag IS blank
   - name: test
     if: type = pull_request AND tag IS blank
+  - name: build
+    if: type = pull_request AND tag IS blank
+
 install:
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   - nvm install 14
   - npm i -g npm@8
   - npm i
+
 jobs:
   include:
+    - stage: lint
+      language: node_js
+      node_js: '14'
+      script:
+        - npm run lint:all
+        - commitlint-travis
+
     - stage: test
       language: node_js
       node_js: '14'
       script:
-        - nx run-many --target lint --all
-        - nx run-many --target test --all
+        - npm run test:all
         - commitlint-travis
+
+    - stage: build
+      language: node_js
+      node_js: '14'
+      script:
+        - npm run build:all
