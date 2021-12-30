@@ -95,6 +95,10 @@ buck-out/
 *.swp
 *.swo
 
+# Environment variables
+
+.env
+
 ## Nested node_modules
 
 node_modules/
