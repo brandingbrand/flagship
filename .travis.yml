@@ -1,35 +1,34 @@
 cache: npm
 stages:
-  - name: lint
-    if: type = pull_request AND tag IS blank
-  - name: test
-    if: type = pull_request AND tag IS blank
-  - name: build
+  - name: code-quality
     if: type = pull_request AND tag IS blank
 
 install:
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-  - nvm install 14
-  - npm i -g npm@8
-  - npm i
+  - npm install -g npm@8
+  - npm ci
 
 jobs:
   include:
-    - stage: lint
+    - stage: code-quality
+      language: node_js
+      node_js: '14'
+      script:
+        - commitlint-travis
+
+    - stage: code-quality
       language: node_js
       node_js: '14'
       script:
         - npm run lint:all
-        - commitlint-travis
 
-    - stage: test
+    - stage: code-quality
       language: node_js
       node_js: '14'
       script:
         - npm run test:all
-        - commitlint-travis
 
-    - stage: build
+    - stage: code-quality
       language: node_js
       node_js: '14'
       script:
