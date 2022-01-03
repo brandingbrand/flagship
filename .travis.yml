@@ -20,6 +20,12 @@ jobs:
       language: node_js
       node_js: '14'
       script:
+        - npm run format:check
+
+    - stage: code-quality
+      language: node_js
+      node_js: '14'
+      script:
         - npm run lint:all
 
     - stage: code-quality
