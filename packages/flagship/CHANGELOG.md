@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.18.0](https://github.com/brandingbrand/flagship/compare/v10.17.2...v10.18.0) (2022-01-04)
+
+
+### Features
+
+* **flagship:** fastlane automated build numbers ([dd34577](https://github.com/brandingbrand/flagship/commit/dd34577eb92163b27139b427fd3e29c079c4ae8b))
+
+
+
+
+
 ## [10.17.2](https://github.com/brandingbrand/flagship/compare/v10.17.1...v10.17.2) (2021-12-07)
 
 **Note:** Version bump only for package @brandingbrand/flagship
