@@ -9,7 +9,7 @@ import { logInfo } from '../helpers';
  * @param {object} configuration The project configuration.
  * @param {string} version The project version.
  */
-// tslint:disable-next-line: cyclomatic-complexity
+// eslint-disable-next-line complexity
 export function configure(path: string, configuration: Config, version: string): void {
   const buildConfig = configuration && configuration.buildConfig && configuration.buildConfig.ios;
 
