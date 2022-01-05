@@ -144,7 +144,7 @@ function initAndroid(
   rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.mainPath(), 'java');
   rename.pkgDirectory(TEMPLATE_ANDROID_PACKAGE, pkgId, path.android.debugPath(), 'java');
 
-  fastlane.configure(path.android.fastfilePath(), configuration); // Update Fastfile
+  fastlane.configure(path.ios.fastfilePath(), configuration, version); // Update Fastfile
 
   android.urlScheme(configuration); // Add deep link schemes
   android.urlSchemeHost(androidConfig);
