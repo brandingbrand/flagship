@@ -23,6 +23,7 @@ const Configuration = {
     'body-empty': [1, 'never'],
     'body-full-stop': [1, 'never'],
     'footer-leading-blank': [2, 'always'],
+    'body-max-line-length': [0],
   },
 
   defaultIgnores: true,
