@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as android from '../src/lib/android';
+import * as fs from '../src/lib/fs';
 
-import * as fs from 'fs-extra';
 import * as nodePath from 'path';
 
 const mockProjectDir = nodePath.join(__dirname, 'mock_project');

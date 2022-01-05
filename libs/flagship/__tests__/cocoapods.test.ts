@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as cocoapods from '../src/lib/cocoapods';
 import * as os from '../src/lib/os';
+import * as fs from '../src/lib/fs';
 
 import * as childProcess from 'child_process';
-import * as fs from 'fs-extra';
 import * as nodePath from 'path';
 
 const mockProjectDir = nodePath.join(__dirname, 'mock_project');

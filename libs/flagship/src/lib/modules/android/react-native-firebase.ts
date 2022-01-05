@@ -23,7 +23,7 @@ export function postLink(configuration: Config): void {
 
   // Disable aapt2 because it's not compatible with the Firebase install. Add
   // android.enableAapt2=false to gradle.properties
-  let gradleProps = fs.readFileSync(path.android.gradlePropertiesPath(), { encoding: 'utf8' });
+  let gradleProps = fs.readFileSync(path.android.gradlePropertiesPath());
   gradleProps += '\nandroid.enableAapt2=false\n';
   fs.writeFileSync(path.android.gradlePropertiesPath(), gradleProps);
   logInfo('disabled aapt2 in gradle.properties');
@@ -34,7 +34,7 @@ export function postLink(configuration: Config): void {
     implementation 'com.google.firebase:firebase-core:16.0.1'
       `;
 
-  let gradleAppBuild = fs.readFileSync(path.android.gradlePath(), { encoding: 'utf8' });
+  let gradleAppBuild = fs.readFileSync(path.android.gradlePath());
 
   gradleAppBuild = gradleAppBuild.replace(
     /(com.google.android.gms:play-services-base:.+)/,
@@ -50,7 +50,7 @@ export function postLink(configuration: Config): void {
   logInfo('updated ./android/app/build.gradle');
 
   // Add dependencies to /android/build.gradle and update gradle version to 3.1.3
-  let gradleBuild = fs.readFileSync(path.resolve('android', 'build.gradle'), { encoding: 'utf8' });
+  let gradleBuild = fs.readFileSync(path.resolve('android', 'build.gradle'));
   const servicesDep = `classpath 'com.google.gms:google-services:4.0.1'`;
 
   if (gradleBuild.indexOf(servicesDep) > -1) {
@@ -73,9 +73,7 @@ export function postLink(configuration: Config): void {
   logInfo('updated ./android/build.gradle');
 
   // Update MainApplication.java
-  let mainApplication = fs.readFileSync(path.android.mainApplicationPath(configuration), {
-    encoding: 'utf8',
-  });
+  let mainApplication = fs.readFileSync(path.android.mainApplicationPath(configuration));
 
   mainApplication = mainApplication.replace(
     /(import io.invertase.firebase.RNFirebasePackage;)/,
