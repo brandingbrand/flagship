@@ -36,7 +36,6 @@ export function configure(path: string, configuration: Config, version: string):
       fs.update(
         path,
         /.+#PROJECT_MODIFY_FLAG_export_options_provisioning_profile/g,
-        // tslint:disable-next-line:ter-max-len
         `"${buildConfig.provisioningProfileName}" #PROJECT_MODIFY_FLAG_export_options_provisioning_profile`
       );
 
