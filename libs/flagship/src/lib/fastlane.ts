@@ -7,9 +7,10 @@ import { logInfo } from '../helpers';
  *
  * @param {string} path The path to the project Fastfile
  * @param {object} configuration The project configuration.
+ * @param {string} version The project version.
  */
-// eslint-disable-next-line complexity
-export function configure(path: string, configuration: Config): void {
+// tslint:disable-next-line: cyclomatic-complexity
+export function configure(path: string, configuration: Config, version: string): void {
   const buildConfig = configuration && configuration.buildConfig && configuration.buildConfig.ios;
 
   logInfo(`updating fastfile at ${path}`);
@@ -35,6 +36,7 @@ export function configure(path: string, configuration: Config): void {
       fs.update(
         path,
         /.+#PROJECT_MODIFY_FLAG_export_options_provisioning_profile/g,
+        // tslint:disable-next-line:ter-max-len
         `"${buildConfig.provisioningProfileName}" #PROJECT_MODIFY_FLAG_export_options_provisioning_profile`
       );
 
@@ -67,7 +69,12 @@ export function configure(path: string, configuration: Config): void {
       fs.update(
         path,
         /.+#PROJECT_MODIFY_FLAG_appcenter_app_name_ios/g,
-        `app_name: "${distribute.appNameIOS}" #PROJECT_MODIFY_FLAG_appcenter_app_name_ios`
+        `app_name: "${distribute.appNameIOS}", #PROJECT_MODIFY_FLAG_appcenter_app_name_ios`
+      );
+      fs.update(
+        path,
+        /.+#PROJECT_MODIFY_FLAG_appcenter_app_version_ios/g,
+        `version: "${version}", #PROJECT_MODIFY_FLAG_appcenter_app_version_ios`
       );
     }
 
@@ -77,6 +84,19 @@ export function configure(path: string, configuration: Config): void {
         /.+#PROJECT_MODIFY_FLAG_appcenter_app_name_android/g,
         `app_name: "${distribute.appNameAndroid}", #PROJECT_MODIFY_FLAG_appcenter_app_name_android`
       );
+
+      if (!configuration.disableDevFeature) {
+        const overrideVersion =
+          typeof configuration?.android?.build?.versionName === 'string'
+            ? configuration.android.build.versionName
+            : version;
+
+        fs.update(
+          path,
+          /.+#PROJECT_MODIFY_FLAG_appcenter_app_version_android/g,
+          `version: "${overrideVersion}", #PROJECT_MODIFY_FLAG_appcenter_app_version_android`
+        );
+      }
     }
   }
 }

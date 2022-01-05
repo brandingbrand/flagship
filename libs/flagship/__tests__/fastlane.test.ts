@@ -22,15 +22,19 @@ test(`add deeplink hosts`, () => {
   const exportTeamId = `__test__exportTeamId__`;
   const provisioningProfileName = `__test__provisioningProfileName__`;
 
-  fastlane.configure(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`), {
-    buildConfig: {
-      ios: {
-        exportMethod,
-        exportTeamId,
-        provisioningProfileName,
+  fastlane.configure(
+    nodePath.join(tempRootDir, `ios/fastlane/Fastfile`),
+    {
+      buildConfig: {
+        ios: {
+          exportMethod,
+          exportTeamId,
+          provisioningProfileName,
+        },
       },
-    },
-  } as any);
+    } as any,
+    '1.0.0'
+  );
 
   const fastfileBody = fs
     .readFileSync(nodePath.join(tempRootDir, `ios/fastlane/Fastfile`))
