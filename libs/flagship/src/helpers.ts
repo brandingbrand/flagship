@@ -1,5 +1,3 @@
-const fs = require('fs-extra');
-
 export const colors = {
   Reset: '\x1b[0m',
   Bright: '\x1b[1m',
@@ -28,23 +26,6 @@ export const colors = {
   BgWhite: '\x1b[47m',
 };
 
-export function addPod(file: string, podLine: string): void {
-  const fileContent = fs.readFileSync(file, { encoding: 'utf8' });
-  if (fileContent.indexOf(podLine) > -1) {
-    return;
-  }
-
-  fs.writeFileSync(
-    file,
-    fileContent.replace(
-      '# Add new pods below this line',
-      `\t${podLine}\n# Add new pods below this line`
-    )
-  );
-
-  logInfo(`Podfile updated\n${podLine}`);
-}
-
 export function logInfo(...messages: string[]): void {
   logWithType('info', [].slice.call(messages, 0));
 }
@@ -57,31 +38,12 @@ export function logWarn(...messages: string[]): void {
   return logWithType('warn', [].slice.call(messages, 0));
 }
 
-export function updateFile(file: string, oldText: string, newText: string): void {
-  const fileContent = fs.readFileSync(file, { encoding: 'utf8' });
-  fs.writeFileSync(file, fileContent.replace(oldText, newText));
-
-  logInfo(`file updated\n${file}`);
-}
-
-export function appendFile(file: string, text: string): void {
-  const fileContent = fs.readFileSync(file, { encoding: 'utf8' });
-  fs.writeFileSync(file, fileContent + text);
-
-  logInfo(`file appended\n${file}`);
-}
-
 export function getCmdOption(argv: string[]): (a: string) => string | undefined {
   return (optionName: string): string | undefined => {
     const optionArgv = argv.slice(0).find((arg) => arg.indexOf(`--${optionName}=`) === 0);
 
     return (optionArgv && optionArgv.split('=')[1]) || undefined;
   };
-}
-
-export function doesKeywordExist(fileName: string, keyword: string): boolean {
-  const fileContent = fs.readFileSync(fileName, { encoding: 'utf8' });
-  return fileContent.indexOf(keyword) > -1;
 }
 
 function logWithType(type: string, args: string[]): void {

@@ -21,7 +21,7 @@ export function preLink(config: Config): void {
   logInfo('Sucessfully copied ADBMobileConfig.json to iOS folder');
 
   // Add Adobe Mobile SDK Podfile
-  const podfile = fs.readFileSync(path.ios.podfilePath(), { encoding: 'utf-8' });
+  const podfile = fs.readFileSync(path.ios.podfilePath());
   const adobeSdk = `pod 'AdobeMobileSDK', '~> 4.14.1'`;
 
   if (podfile.indexOf(adobeSdk) === -1) {

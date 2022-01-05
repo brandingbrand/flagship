@@ -1,6 +1,6 @@
 import * as rename from '../src/lib/rename';
+import * as fs from '../src/lib/fs';
 
-import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import { trueCasePathSync } from 'true-case-path';

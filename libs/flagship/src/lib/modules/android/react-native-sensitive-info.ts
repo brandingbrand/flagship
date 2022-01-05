@@ -13,7 +13,7 @@ export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-sensitive-info');
   const mainApplicationPath = path.android.mainApplicationPath(configuration);
 
-  let mainApplication = fs.readFileSync(mainApplicationPath, { encoding: 'utf8' });
+  let mainApplication = fs.readFileSync(mainApplicationPath);
 
   if (mainApplication.indexOf('RNSensitiveInfoPackage') > -1) {
     logInfo('react-native-sensitive-info is already linked in MainApplication.java');
@@ -31,6 +31,6 @@ export function postLink(configuration: Config): void {
     '$1\n                new RNSensitiveInfoPackage(),'
   );
 
-  fs.writeFileSync(mainApplicationPath, mainApplication, { encoding: 'utf8' });
+  fs.writeFileSync(mainApplicationPath, mainApplication);
   logInfo('finished patching Android for react-native-sensitive-info');
 }

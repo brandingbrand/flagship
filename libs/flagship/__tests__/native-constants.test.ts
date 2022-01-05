@@ -1,6 +1,6 @@
 import * as nativeConstants from '../src/lib/native-constants';
+import * as fs from '../src/lib/fs';
 
-import * as fs from 'fs-extra';
 import * as nodePath from 'path';
 
 const mockProjectDir = nodePath.join(__dirname, 'mock_project');

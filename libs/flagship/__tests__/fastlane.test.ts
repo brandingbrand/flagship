@@ -1,6 +1,6 @@
 import * as fastlane from '../src/lib/fastlane';
+import * as fs from '../src/lib/fs';
 
-import * as fs from 'fs-extra';
 import * as nodePath from 'path';
 
 const mockProjectDir = nodePath.join(__dirname, 'mock_project');

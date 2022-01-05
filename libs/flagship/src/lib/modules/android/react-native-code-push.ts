@@ -61,7 +61,7 @@ export function postLink(configuration: Config): void {
   const codePushGradlePath =
     'apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"';
   const gradlePath = path.android.gradlePath();
-  const gradleContent = fs.readFileSync(gradlePath, { encoding: 'utf8' });
+  const gradleContent = fs.readFileSync(gradlePath);
   if (gradleContent.indexOf(codePushGradlePath) < 0) {
     logInfo(`patching codepush into build.gradle`);
     fs.writeFileSync(
