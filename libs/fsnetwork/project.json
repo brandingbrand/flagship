@@ -31,6 +31,12 @@
         "jestConfig": "libs/fsnetwork/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   }
 }
