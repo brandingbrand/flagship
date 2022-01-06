@@ -1,5 +1,5 @@
-import faker from 'faker';
 import { Products } from './Products';
+import { boolean, city, name, number, paragraphs, sentence, state } from './RandomValues';
 
 type ReviewUser = import('@brandingbrand/fscommerce').ReviewTypes.ReviewUser;
 type ReviewQuestion = import('@brandingbrand/fscommerce').ReviewTypes.ReviewQuestion;
@@ -9,19 +9,20 @@ type ReviewQuestionsMap = import('@brandingbrand/fsfoundation').Dictionary<Revie
 
 function generateReviewUser(): ReviewUser {
   return {
-    isStaffReviewer: faker.random.boolean(),
-    isVerifiedBuyer: faker.random.boolean(),
-    isVerifiedReviewer: faker.random.boolean(),
-    location: `${faker.address.city()}, ${faker.address.stateAbbr()}`,
-    name: faker.name.findName(),
+    isStaffReviewer: boolean(),
+    isVerifiedBuyer: boolean(),
+    isVerifiedReviewer: boolean(),
+    location: `${city()}, ${state()}`,
+    name: name(),
   };
 }
 
 function generateReview(): Review {
-  const rating = faker.random.number({ min: 1, max: 5 });
+  const rating = number(1, 6);
+
   return {
-    title: faker.lorem.sentence(),
-    text: faker.lorem.paragraphs(),
+    title: sentence(3, 10, ''),
+    text: paragraphs(),
     rating,
     isRecommended: rating > 3,
     user: generateReviewUser(),
@@ -30,11 +31,11 @@ function generateReview(): Review {
 
 function generateQuestion(): ReviewQuestion {
   return {
-    text: faker.lorem.sentence().replace('.', '?'),
-    answers: Array(faker.random.number(10))
+    text: sentence(5, 20, '?'),
+    answers: Array(number())
       .fill(null)
       .map(() => ({
-        text: faker.random.boolean() ? faker.lorem.sentence() : faker.lorem.paragraphs(),
+        text: boolean() ? sentence() : paragraphs(),
       })),
   };
 }
@@ -44,7 +45,7 @@ const Reviews: ReviewsMap = Products.reduce<ReviewsMap>((reviews, { id }) => {
     reviews[id] = [];
   }
 
-  const fakedReviews = Array(faker.random.number(10)).fill(null).map(generateReview);
+  const fakedReviews = Array(number()).fill(null).map(generateReview);
   reviews[id] = [...reviews[id], ...fakedReviews];
   return reviews;
 }, {});
@@ -54,7 +55,7 @@ const Questions: ReviewQuestionsMap = Products.reduce<ReviewQuestionsMap>((quest
     questions[id] = [];
   }
 
-  const fakedQuestions = Array(faker.random.number(10)).fill(null).map(generateQuestion);
+  const fakedQuestions = Array(number()).fill(null).map(generateQuestion);
   questions[id] = [...questions[id], ...fakedQuestions];
   return questions;
 }, {});
