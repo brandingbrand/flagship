@@ -149,18 +149,18 @@ async function resolvePromise<T>(value?: T | Promise<T>): Promise<T | undefined>
   return value;
 }
 
-const resolvePromises = async (
+const resolvePromises = async <K extends keyof AnalyticsProviderConfiguration> (
   configuration: AnalyticsProviderConfiguration
 ): Promise<AnalyticsProviderConfiguration> => {
-  const newConfig: any = {};
+  const newConfig: {[p: string]: any } = {};
   for (const key in configuration) {
     if (configuration.hasOwnProperty(key)) {
       newConfig[key] = await resolvePromise(configuration[
-        key as keyof AnalyticsProviderConfiguration
+        key as K
       ]);
     }
   }
-  return newConfig;
+  return newConfig as AnalyticsProviderConfiguration;
 };
 
 // Class

@@ -310,13 +310,13 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // Helper Functions
 
   private _transformCouponsArray(coupons: string[] = []): { [key: string]: string } {
-    // tslint:disable-next-line:no-inferred-empty-object-type
-    return coupons.reduce((coupons: any, coupon) => {
+    const initial: { [key: string]: string } = {};
+    return coupons.reduce((coupons, coupon) => {
       const couponCount = Object.keys(coupons).length;
 
       coupons[`coupon${couponCount + 1}`] = coupon;
 
       return coupons;
-    }, {});
+    }, initial);
   }
 }

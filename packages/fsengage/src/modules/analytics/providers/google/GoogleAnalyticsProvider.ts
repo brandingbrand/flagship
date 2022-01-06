@@ -24,6 +24,7 @@ import AnalyticsProvider, {
   SearchGeneric,
   Transaction,
   TransactionAction,
+  TransactionProduct,
   TransactionRefund
 } from '../AnalyticsProvider';
 
@@ -59,7 +60,7 @@ interface GoogleAnalyticsScreenViewProperties {
 }
 
 interface QueuedFunction {
-  func: any;
+  func: Function;
   params: IArguments;
 }
 
@@ -413,7 +414,7 @@ export default class GoogleAnalyticsProvider extends AnalyticsProvider {
 
   // Trigger Functions
 
-  private _addProduct(properties: any): void {
+  private _addProduct(properties: Product | TransactionProduct): void {
     if (this.client) {
       this.client.add(new GAHits.Product(
         properties.identifier,

@@ -34,7 +34,7 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
   private readonly kAdminPath: string = '/admin/1.4/rest';
   private readonly kCredentialPath: string = '/token';
 
-  private token?: Promise<any>;
+  private token?: Promise<string>;
   private client: FSNetwork;
   private configuration: AdobeMarketingCloudWebProviderConfiguration;
 
@@ -194,7 +194,7 @@ export default class AdobeMarketingCloudWebProvider extends AnalyticsProvider {
       });
   }
 
-  private async getToken(): Promise<any> {
+  private async getToken(): Promise<string> {
     if (!this.token) {
       const parameters = {
         grant_type: 'client_credentials'
