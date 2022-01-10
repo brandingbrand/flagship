@@ -33,7 +33,7 @@ module.exports = {
     {
       name: 'repo',
       description: 'anything related to managing the repo itself',
-    }
+    },
   ],
 
   allowTicketNumber: false,
@@ -44,7 +44,7 @@ module.exports = {
     fix: projectScopes,
     feat: projectScopes,
     perf: projectScopes,
-    refactor: projectScopes
+    refactor: projectScopes,
   },
 
   // override the messages, defaults are as follows
@@ -66,5 +66,4 @@ module.exports = {
   // limit subject length
   subjectLimit: 100,
   askForBreakingChangeFirst: true,
-
 };
