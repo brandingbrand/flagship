@@ -35,8 +35,10 @@ import {
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
+import close from '../../assets/images/iconClose.png';
+
 const images = {
-  close: require('../../assets/images/iconClose.png'),
+  close,
 };
 
 const styles = StyleSheet.create({
