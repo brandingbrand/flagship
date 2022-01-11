@@ -7,14 +7,14 @@ import { style as S } from '../styles/MapView';
 import { Location, Region } from '../types/Location';
 import CurrentLocationPin from './CurrentLocationPin';
 
+import googleMapMaker from '../../assets/images/google-map-marker.png';
+import googleMapMakerSelected from '../../assets/images/google-map-marker-selected.png';
+
 export const COLLAPSE_LAT_PADDING = 0.15;
 export const COLLAPSE_LAT_DELTA_PADDING = 0.3;
 export const COLLAPSE_LNG_DELTA_PADDING = 0.3;
 export const IOS_MARKER_OFFSET_Y = -16;
 export const IOS_MARKER_OFFSET_Y_SELECTED = -24;
-
-const googleMapMaker = require('../../assets/images/google-map-marker.png');
-const googleMapMakerSelected = require('../../assets/images/google-map-marker-selected.png');
 
 export interface PropType {
   googleMapsAPIKey?: string;
