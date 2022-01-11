@@ -2,8 +2,10 @@ import React, { FC } from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import ContentLoader, { Rect } from '../lib/RNContentLoader';
 
+import favorite from '../../assets/images/Favorite.png';
+
 const icons = {
-  favorite: require('../../assets/images/Favorite.png'),
+  favorite,
 };
 
 const styles = StyleSheet.create({
