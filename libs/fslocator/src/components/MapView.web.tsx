@@ -20,7 +20,8 @@ import { style as S } from '../styles/MapView';
 import { Location, Region } from '../types/Location';
 import CurrentLocationPin from './CurrentLocationPin';
 
-const googleMapMaker = require('../../assets/images/google-map-marker.png');
+import googleMapMaker from '../../assets/images/google-map-marker.png';
+
 const { width, height } = Dimensions.get('window');
 
 export const COLLAPSE_LAT_PADDING = 0.25;

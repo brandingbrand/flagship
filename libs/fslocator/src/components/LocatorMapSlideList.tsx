@@ -17,7 +17,8 @@ import ResultItemWithBack from './ResultItemWithBack';
 import ResultList from './ResultList';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-const defaultLocateMeIcon = require('../../assets/images/locate-me.png');
+import defaultLocateMeIcon from '../../assets/images/locate-me.png';
+
 const MAP_HEIGHT = 300;
 const LIST_HEIGHT = 300;
 const SEARCH_BAR_HEIGHT = 65;

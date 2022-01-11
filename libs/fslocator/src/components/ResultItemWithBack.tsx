@@ -5,7 +5,8 @@ import ResultItem from './ResultItem';
 import { LocationItemProps } from '@brandingbrand/fscomponents';
 import { LocationItemData } from './LocatorContainer';
 
-const arrowLeft = require('../../assets/images/arrow-left.png');
+import arrowLeft from '../../assets/images/arrow-left.png';
+
 const S = StyleSheet.create({
   selectedLocationContainer: {
     flexDirection: 'row',
