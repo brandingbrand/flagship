@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { LocationItem } from '../src/components/LocationItem';
 import { boolean, number, object, select, text } from '@storybook/addon-knobs';
-// @ts-ignore
 import stores from './assets/mocks/stores';
+import greyBox from './assets/images/greyBox.png';
 
 // shared
 const formats = Array(11)
@@ -12,8 +12,10 @@ const formats = Array(11)
   .map((_: any, index: number) => (index + 1).toString());
 const location = stores.locations[0];
 const service = location.services.find((s: any) => s.service === 'Store');
-const hours = service.hours;
-const phone = service.contact.phones.find((s: any) => s.name === 'main');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const hours = service!.hours;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const phone = service!.contact.phones.find((s: any) => s.name === 'main');
 
 // format specific
 const buttonTitle = 'More';
@@ -27,7 +29,6 @@ const distanceValue = 0.6;
 const distanceUnit = ['miles', 'kilometers'];
 const fullDistanceFormat = false;
 const showNavIcon = true;
-const greyBox = require('./assets/images/greyBox.png');
 
 storiesOf('LocationItem', module).add('basic usage', () => (
   <LocationItem
@@ -37,7 +38,8 @@ storiesOf('LocationItem', module).add('basic usage', () => (
     format={select('format', formats, '1')}
     buttonTitle={text('buttonTitle', buttonTitle)}
     onButtonPress={action('LocationItem onButtonPress')}
-    phone={phone.number}
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    phone={phone!.number}
     phoneIcon={greyBox}
     navIcon={boolean('showNavIcon', showNavIcon) ? greyBox : undefined}
     distance={{

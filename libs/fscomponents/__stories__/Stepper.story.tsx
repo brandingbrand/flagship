@@ -5,6 +5,8 @@ import { boolean, number, object, select, text } from '@storybook/addon-knobs';
 import { Stepper } from '../src/components/Stepper';
 import { TextStyle } from 'react-native';
 
+import clearIcon from '../../../assets/images/clear.png';
+
 const formats = ['horizontalCenter', 'horizontalLeft', 'vertical'];
 
 const defaultCounterStyle = {
@@ -20,8 +22,6 @@ const defaultQtyStyle = {
 const defaultPrefixStyle: TextStyle = {
   fontWeight: 'bold',
 };
-
-const clearIcon = require('../../../assets/images/clear.png');
 
 storiesOf('Stepper', module).add('basic usage', () => (
   <Stepper

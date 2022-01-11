@@ -3,6 +3,10 @@ import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } fro
 import { Button, ButtonProps, SerializableFSButtonProps } from './Button';
 import { Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import blueLogo from '../../assets/images/paypal-logo-blue.png';
+import whiteLogo from '../../assets/images/paypal-logo-white.png';
+
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
 type LimitedButtonProps = Omit<ButtonProps, 'color' | 'light' | 'link' | 'palette'>;
@@ -30,9 +34,6 @@ export interface SerializablePayPalCheckoutButtonProps
 }
 
 type DefaultProps = Pick<PayPalCheckoutButtonProps, 'shape' | 'theme' | 'title' | 'tagLine'>;
-
-const blueLogo: ImageSourcePropType = require('../../assets/images/paypal-logo-blue.png');
-const whiteLogo: ImageSourcePropType = require('../../assets/images/paypal-logo-white.png');
 
 const themes = {
   gold: {

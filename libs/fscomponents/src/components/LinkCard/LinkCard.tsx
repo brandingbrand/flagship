@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Image,
-  ImageRequireSource,
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
@@ -13,7 +12,8 @@ import {
 } from 'react-native';
 import { LinkCardGhost } from './LinkCardGhost';
 
-const arrow: ImageRequireSource = require('../../../assets/images/ArrowWithStem.png');
+import arrow from '../../../assets/images/ArrowWithStem.png';
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,

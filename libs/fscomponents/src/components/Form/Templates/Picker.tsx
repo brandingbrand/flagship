@@ -14,6 +14,14 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import arrowDown from '../../../../assets/images/ArrowDown.png';
+import warning from '../../../../assets/images/warning.png';
+
+const icons = {
+  arrowDown,
+  warning,
+};
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -120,11 +128,6 @@ interface FormPickerProps
   imageStyles?: StyleProp<ImageStyle>;
   errorIconStyle?: StyleProp<ImageStyle>;
 }
-
-const icons = {
-  arrowDown: require('../../../../assets/images/ArrowDown.png'),
-  warning: require('../../../../assets/images/warning.png'),
-};
 
 const FormPicker: FC<FormPickerProps> = (props) => {
   const {

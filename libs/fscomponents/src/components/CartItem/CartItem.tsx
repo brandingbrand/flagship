@@ -17,8 +17,8 @@ import {
 import { Stepper } from '../Stepper';
 import { CartItemDetails } from './CartItemDetails';
 
-const decreaseBtn = require('../../../assets/images/decreaseImage.png');
-const increaseBtn = require('../../../assets/images/increaseImage.png');
+import decreaseBtn from '../../../assets/images/decreaseImage.png';
+import increaseBtn from '../../../assets/images/increaseImage.png';
 
 export type CartItemUpdateQuantityFunction = (
   item: CommerceTypes.CartItem,

@@ -5,8 +5,8 @@ import { Dictionary } from '@brandingbrand/fsfoundation';
 import { defaultTextboxStyle, getColor } from './formStyles';
 import { FormLabelPosition } from './fieldTemplates';
 
-export const successIcon = require('../../../../assets/images/checkmarkValidation.png');
-export const errorIcon = require('../../../../assets/images/alert.png');
+import successIcon from '../../../../assets/images/checkmarkValidation.png';
+import errorIcon from '../../../../assets/images/alert.png';
 
 export interface StatefulTextboxProps {
   labelPosition: FormLabelPosition;

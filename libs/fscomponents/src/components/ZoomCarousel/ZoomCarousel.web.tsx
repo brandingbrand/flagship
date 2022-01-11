@@ -21,10 +21,10 @@ import { CarouselController, MultiCarousel } from '../MultiCarousel';
 import { PhotoSwipe } from './PhotoSwipe.web';
 import { Modal } from '../Modal';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import searchIcon from '../../../assets/images/search.png';
 
 const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
 const zoomTranslationKey = FSI18n.string(componentTranslationKeys.fullscreen.actionBtn);
-const searchIcon = require('../../../assets/images/search.png');
 
 let ZOOM_CAROUSEL_ID = 0;
 

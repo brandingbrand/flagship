@@ -19,6 +19,7 @@ import { PageIndicator } from '../PageIndicator';
 import { CarouselController, MultiCarousel } from '../MultiCarousel';
 import { ZoomImages } from './ZoomImages';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import searchIcon from '../../../assets/images/search.png';
 
 export interface ZoomCarouselStateType {
   isZooming: boolean;
@@ -36,7 +37,6 @@ const componentTranslationKeys = translationKeys.flagship.zoomCarousel.actions;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? 64 : 68;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const searchIcon = require('../../../assets/images/search.png');
 
 const APPLE_EASING = Easing.bezier(0.2833, 0.99, 0.31833, 0.99);
 const defaultGapSize = 1;

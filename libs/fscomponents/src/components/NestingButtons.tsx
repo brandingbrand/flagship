@@ -12,7 +12,8 @@ import {
 import { Button, ButtonProps } from './Button';
 import { ModalHalfScreen, ModalHalfScreenProps } from './ModalHalfScreen';
 
-const closeIcon = require('../../assets/images/iconClose.png');
+import closeIcon from '../../assets/images/iconClose.png';
+
 const styles = StyleSheet.create({
   button: {
     margin: 5,

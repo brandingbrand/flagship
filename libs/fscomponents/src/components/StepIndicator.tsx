@@ -13,7 +13,7 @@ import {
 import { Step } from './Step';
 import { palette } from '../styles/variables';
 
-const checkIcon = require('../../assets/images/check.png');
+import checkIcon from '../../assets/images/check.png';
 
 export interface IdStep {
   id: number;

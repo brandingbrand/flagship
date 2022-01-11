@@ -14,9 +14,12 @@ import {
 
 import { style as S } from '../styles/Stepper';
 
+import increase from '../../assets/images/increaseImage.png';
+import decrease from '../../assets/images/decreaseImage.png';
+
 const icons: { [key: string]: ImageSourcePropType } = {
-  increase: require('../../assets/images/increaseImage.png'),
-  decrease: require('../../assets/images/decreaseImage.png'),
+  increase,
+  decrease,
 };
 
 const nonNumericRegex = /\D/g;

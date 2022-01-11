@@ -20,10 +20,11 @@ import { ClearButtonMode } from '../types/Store';
 import { style as S } from '../styles/SearchBar';
 import { tr, trKeys } from '../lib/translations';
 
+import clearIcon from '../../assets/images/clear.png';
+
 const kCancelButtonWidthDefault = 75; // In pts
 const kCancelButtonAnimationDuration = 200; // In ms
 
-const clearIcon = require('../../assets/images/clear.png');
 const isIOS = Platform.OS === 'ios';
 
 export interface SearchBarProps {

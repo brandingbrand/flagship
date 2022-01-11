@@ -3,12 +3,12 @@ export default {
     {
       title: 'Flagship Store',
       identifier: '1',
-      merchantId: null,
+      merchantId: undefined,
       brandsId: 1,
       typeId: 1,
-      parentId: null,
-      yextId: null,
-      created: null,
+      parentId: undefined,
+      yextId: undefined,
+      created: undefined,
       id: 1,
       distance: 15,
       type: { name: 'Store', id: 1 },
@@ -38,7 +38,7 @@ export default {
         latlng: { lat: 40.428535, lng: -79.972448 },
         geohash: 'dppjupvc6cht',
         address1: 'Main St.',
-        address2: null,
+        address2: undefined,
         city: 'Pittsburgh',
         state: 'PA',
         zip: '15293',
@@ -54,7 +54,7 @@ export default {
           hours: [
             {
               dayOfWeek: 1,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -62,7 +62,7 @@ export default {
             },
             {
               dayOfWeek: 2,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -70,7 +70,7 @@ export default {
             },
             {
               dayOfWeek: 3,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -78,7 +78,7 @@ export default {
             },
             {
               dayOfWeek: 4,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -86,7 +86,7 @@ export default {
             },
             {
               dayOfWeek: 5,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -94,7 +94,7 @@ export default {
             },
             {
               dayOfWeek: 6,
-              date: null,
+              date: undefined,
               open: '8 AM',
               close: '8 PM',
               serviceId: 315,
@@ -102,7 +102,7 @@ export default {
             },
             {
               dayOfWeek: 0,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '7 PM',
               serviceId: 315,
@@ -127,12 +127,12 @@ export default {
     {
       title: 'Secondary Store',
       identifier: '1',
-      merchantId: null,
+      merchantId: undefined,
       brandsId: 1,
       typeId: 1,
-      parentId: null,
-      yextId: null,
-      created: null,
+      parentId: undefined,
+      yextId: undefined,
+      created: undefined,
       id: 1,
       distance: 15,
       type: { name: 'Store', id: 1 },
@@ -162,7 +162,7 @@ export default {
         latlng: { lat: 40.452716, lng: -79.98146 },
         geohash: 'dppn5upq0uuf',
         address1: 'Penn Ave.',
-        address2: null,
+        address2: undefined,
         city: 'Pittsburgh',
         state: 'PA',
         zip: '15222',
@@ -178,7 +178,7 @@ export default {
           hours: [
             {
               dayOfWeek: 1,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -186,7 +186,7 @@ export default {
             },
             {
               dayOfWeek: 2,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -194,7 +194,7 @@ export default {
             },
             {
               dayOfWeek: 3,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -202,7 +202,7 @@ export default {
             },
             {
               dayOfWeek: 4,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -210,7 +210,7 @@ export default {
             },
             {
               dayOfWeek: 5,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -218,7 +218,7 @@ export default {
             },
             {
               dayOfWeek: 6,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '9 PM',
               serviceId: 315,
@@ -226,7 +226,7 @@ export default {
             },
             {
               dayOfWeek: 0,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '7 PM',
               serviceId: 315,
@@ -251,12 +251,12 @@ export default {
     {
       title: 'Tertiary Store',
       identifier: '1',
-      merchantId: null,
+      merchantId: undefined,
       brandsId: 1,
       typeId: 1,
-      parentId: null,
-      yextId: null,
-      created: null,
+      parentId: undefined,
+      yextId: undefined,
+      created: undefined,
       id: 1,
       distance: 15,
       type: { name: 'Store', id: 1 },
@@ -286,7 +286,7 @@ export default {
         latlng: { lat: 40.465977, lng: -79.949335 },
         geohash: 'dppnhwwemkz5',
         address1: 'Bloomfield Place',
-        address2: null,
+        address2: undefined,
         city: 'Pittsburgh',
         state: 'PA',
         zip: '15201',
@@ -302,7 +302,7 @@ export default {
           hours: [
             {
               dayOfWeek: 1,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '6 PM',
               serviceId: 315,
@@ -310,7 +310,7 @@ export default {
             },
             {
               dayOfWeek: 2,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '6 PM',
               serviceId: 315,
@@ -318,7 +318,7 @@ export default {
             },
             {
               dayOfWeek: 3,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '6 PM',
               serviceId: 315,
@@ -326,7 +326,7 @@ export default {
             },
             {
               dayOfWeek: 4,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '6 PM',
               serviceId: 315,
@@ -334,7 +334,7 @@ export default {
             },
             {
               dayOfWeek: 5,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '6 PM',
               serviceId: 315,
@@ -342,7 +342,7 @@ export default {
             },
             {
               dayOfWeek: 6,
-              date: null,
+              date: undefined,
               open: '6 AM',
               close: '9 PM',
               serviceId: 315,
@@ -350,7 +350,7 @@ export default {
             },
             {
               dayOfWeek: 0,
-              date: null,
+              date: undefined,
               open: '9 AM',
               close: '7 PM',
               serviceId: 315,
