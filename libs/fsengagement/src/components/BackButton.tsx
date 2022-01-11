@@ -2,6 +2,8 @@ import React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
 import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
+import backArrow from '../../assets/images/backArrow.png';
+
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
@@ -15,8 +17,6 @@ const styles = StyleSheet.create({
     height: 25,
   },
 });
-
-const backArrow = require('../../assets/images/backArrow.png');
 
 export interface BackButtonProps {
   navigator?: Navigator;

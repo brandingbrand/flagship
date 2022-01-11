@@ -10,17 +10,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
-export interface ShareBlockProps {
-  dialogTitle?: string;
-  message: string;
-  shareTitle: string;
-  url: string;
-  imageSrc?: string;
-  underlayColor?: string;
-  imageStyle?: StyleProp<ImageStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
-}
-const shareIcon = require('../../assets/images/share.png');
+import shareIcon from '../../assets/images/share.png';
+
 const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
@@ -39,6 +30,17 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
+
+export interface ShareBlockProps {
+  dialogTitle?: string;
+  message: string;
+  shareTitle: string;
+  url: string;
+  imageSrc?: string;
+  underlayColor?: string;
+  imageStyle?: StyleProp<ImageStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+}
 
 export default class ShareBlock extends Component<ShareBlockProps> {
   onButtonPress = () => {

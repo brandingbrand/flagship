@@ -4,6 +4,10 @@ import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 import { TextBlock } from './TextBlock';
 import { ImageBlock } from './ImageBlock';
 
+import whenIcon from '../../assets/images/whenIcon.png';
+import whereIcon from '../../assets/images/whereIcon.png';
+import whyIcon from '../../assets/images/whyIcon.png';
+
 const styles = StyleSheet.create({
   eventTitle: {
     fontSize: 13,
@@ -55,10 +59,6 @@ export interface EventBlockProps {
   containerStyle?: StyleProp<ViewStyle>;
   eventInfo: EventInfo;
 }
-
-const whenIcon = require('../../assets/images/whenIcon.png');
-const whereIcon = require('../../assets/images/whereIcon.png');
-const whyIcon = require('../../assets/images/whyIcon.png');
 
 export default class EventBlock extends Component<EventBlockProps> {
   shouldComponentUpdate(nextProps: EventBlockProps): boolean {

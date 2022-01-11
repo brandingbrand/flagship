@@ -25,6 +25,8 @@ import { BackButton } from './components/BackButton';
 import { debounce } from 'lodash-es';
 import { EngagementContext } from './lib/contexts';
 
+import closeBronze from '../assets/images/closeBronze.png';
+
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
 const win = Dimensions.get('window');
@@ -268,7 +270,7 @@ export default function (
                     rightButtons: [
                       {
                         color: '#866d4b',
-                        icon: require('../assets/images/closeBronze.png'),
+                        icon: closeBronze,
                         id: 'close',
                       },
                     ],

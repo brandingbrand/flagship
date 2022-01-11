@@ -5,6 +5,8 @@ import { Navigator } from '@brandingbrand/fsapp';
 import { Action, ScreenProps } from './types';
 import WebView from 'react-native-webview';
 
+import backArrow from '../assets/images/backArrow.png';
+
 const styles = StyleSheet.create({
   growStretch: {
     alignSelf: 'stretch',
@@ -22,8 +24,6 @@ const styles = StyleSheet.create({
     height: 25,
   },
 });
-
-const backArrow = require('../assets/images/backArrow.png');
 
 export interface WebViewProps extends ScreenProps {
   actions: Action;

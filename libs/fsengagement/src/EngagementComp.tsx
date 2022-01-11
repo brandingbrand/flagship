@@ -33,6 +33,12 @@ import * as Animatable from 'react-native-animatable';
 import { debounce } from 'lodash-es';
 import { EngagementContext } from './lib/contexts';
 
+import gradientImage from '../assets/images/gradient.png';
+import appleCloseIcon from '../assets/images/apple-close-icn.png';
+import iconCloseXLight from '../assets/images/iconCloseXLight.png';
+import iconCloseXDark from '../assets/images/iconCloseXDark.png';
+import closeBronze from '../assets/images/closeBronze.png';
+
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
 const win = Dimensions.get('window');
@@ -182,11 +188,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
-const gradientImage = require('../assets/images/gradient.png');
-const appleCloseIcon = require('../assets/images/apple-close-icn.png');
-const iconCloseXLight = require('../assets/images/iconCloseXLight.png');
-const iconCloseXDark = require('../assets/images/iconCloseXDark.png');
 
 const topOffset = Platform.OS === 'ios' ? -40 : 1;
 
@@ -390,7 +391,7 @@ export default function (
                     rightButtons: [
                       {
                         color: '#866d4b',
-                        icon: require('../assets/images/closeBronze.png'),
+                        icon: closeBronze,
                         id: 'close',
                       },
                     ],

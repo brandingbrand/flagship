@@ -9,6 +9,10 @@ import { ImageBlock } from './ImageBlock';
 import { CardContext } from '../lib/contexts';
 import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 
+import timeIcon from '../../assets/images/time.png';
+import whenIcon from '../../assets/images/whenIcon.png';
+import whereIcon from '../../assets/images/whereIcon.png';
+
 const styles = StyleSheet.create({
   whenIcon: {
     width: 13,
@@ -46,10 +50,6 @@ const styles = StyleSheet.create({
 export interface ComponentProps extends CardProps {
   contents: any;
 }
-
-const timeIcon = require('../../assets/images/time.png');
-const whenIcon = require('../../assets/images/whenIcon.png');
-const whereIcon = require('../../assets/images/whereIcon.png');
 
 export const EventCard: React.FunctionComponent<ComponentProps> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;

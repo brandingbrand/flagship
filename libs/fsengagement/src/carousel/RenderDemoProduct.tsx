@@ -4,6 +4,8 @@ import styles from './SliderEntry.style';
 import { Navigator } from '@brandingbrand/fsapp';
 import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
 
+import stars from '../../assets/images/stars.png';
+
 export interface RenderDemoProductData {
   image: {
     ratio: number;
@@ -26,7 +28,6 @@ export interface RenderDemoProductProps {
   horizPadding: number;
   itemWidth?: number;
 }
-const stars = require('../../assets/images/stars.png');
 
 export default class RenderDemoProduct extends Component<RenderDemoProductProps> {
   get image(): JSX.Element {
