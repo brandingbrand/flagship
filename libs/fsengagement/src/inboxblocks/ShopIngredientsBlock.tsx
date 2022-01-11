@@ -14,8 +14,10 @@ import {
 import { Action, BlockItem, EmitterProps, Icon, ScreenProps } from '../types';
 import { EngagementContext } from '../lib/contexts';
 
-const images: any = {
-  rightArrow: require('../../assets/images/rightArrow.png'),
+import rightArrow from '../../assets/images/rightArrow.png';
+
+const images = {
+  rightArrow,
 };
 
 const styles = StyleSheet.create({
@@ -101,7 +103,12 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
         <TouchableOpacity style={buttonStyle} onPress={this.onButtonPress} activeOpacity={1}>
           <View style={styles.buttonContents}>
             <Text style={textStyle}>{text}</Text>
-            {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
+            {icon && (
+              <Image
+                style={[styles.backIcon, icon.iconStyle]}
+                source={images[icon.type as keyof typeof images]}
+              />
+            )}
           </View>
         </TouchableOpacity>
       </View>

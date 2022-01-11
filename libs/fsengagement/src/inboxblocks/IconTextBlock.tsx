@@ -15,10 +15,14 @@ import { CTABlock } from './CTABlock';
 import DividerBlock from './DividerBlock';
 import { EngagementContext } from '../lib/contexts';
 
+import rightArrow from '../../assets/images/rightArrow.png';
+import rightBlockArrow from '../../assets/images/rightBlockArrow.png';
+import rightCategoryArrow from '../../assets/images/rightCategoryArrow.png';
+
 const images = {
-  rightArrow: require('../../assets/images/rightArrow.png'),
-  rightBlockArrow: require('../../assets/images/rightBlockArrow.png'),
-  rightCategoryArrow: require('../../assets/images/rightCategoryArrow.png'),
+  rightArrow,
+  rightBlockArrow,
+  rightCategoryArrow,
 };
 
 const styles = StyleSheet.create({

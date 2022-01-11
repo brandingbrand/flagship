@@ -13,9 +13,12 @@ import { CardContext, EngagementContext } from '../lib/contexts';
 
 import { Action, EmitterProps, Icon, JSON } from '../types';
 
-const images: any = {
-  rightArrow: require('../../assets/images/rightArrow.png'),
-  rightBlockArrow: require('../../assets/images/rightBlockArrow.png'),
+import rightArrow from '../../assets/images/rightArrow.png';
+import rightBlockArrow from '../../assets/images/rightBlockArrow.png';
+
+const images = {
+  rightArrow,
+  rightBlockArrow,
 };
 
 const styles = StyleSheet.create({
@@ -126,7 +129,12 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
       <TouchableOpacity style={buttonStyle} onPress={onButtonPress} activeOpacity={1}>
         <View style={styles.buttonContents}>
           <Text style={textStyle}>{text}</Text>
-          {icon && <Image style={[styles.backIcon, icon.iconStyle]} source={images[icon.type]} />}
+          {icon && (
+            <Image
+              style={[styles.backIcon, icon.iconStyle]}
+              source={images[icon.type as keyof typeof images]}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>
