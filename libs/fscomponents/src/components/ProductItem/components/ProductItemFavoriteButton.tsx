@@ -3,7 +3,7 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { ProductItemProps } from '../ProductItem';
 
-const heartIcon = require('../../../../assets/images/heartIcon.png');
+import heartIcon from '../../../../assets/images/heartIcon.png';
 
 const style = StyleSheet.create({
   favButtonContainer: {

@@ -5,9 +5,12 @@ import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import { SearchBar } from '../src/components/SearchBar';
 
+import search from './assets/images/search.png';
+import locate from './assets/images/locate.png';
+
 const icons = {
-  search: require('./assets/images/search.png'),
-  locate: require('./assets/images/locate.png'),
+  search,
+  locate,
 };
 
 storiesOf('SearchBar', module).add('basic usage', () => (

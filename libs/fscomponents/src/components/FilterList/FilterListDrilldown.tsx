@@ -17,11 +17,12 @@ import { SelectableRow, SelectableRowProps } from '../SelectableRow';
 import { FilterItem } from './FilterItem';
 import { FilterItemValue } from './FilterItemValue';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import closeIcon from '../../../assets/images/clear.png';
+
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
-
-const closeIcon = require('../../../assets/images/clear.png');
 
 export interface FilterListDrilldownProps {
   items: FilterItem[];

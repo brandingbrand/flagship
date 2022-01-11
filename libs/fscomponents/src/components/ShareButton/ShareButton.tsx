@@ -3,9 +3,10 @@ import { Clipboard, Image, Share, TouchableOpacity } from 'react-native';
 import { Alert } from '../Alert';
 import { ShareButtonProps } from './ShareButtonProps';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-const componentTranslationKeys = translationKeys.flagship.shareButton;
 
-const shareImage = require('../../../assets/images/share.png');
+import shareImage from '../../../assets/images/share.png';
+
+const componentTranslationKeys = translationKeys.flagship.shareButton;
 
 export const ShareButton: FunctionComponent<ShareButtonProps> = memo((props) => {
   const onSharePress = () => {

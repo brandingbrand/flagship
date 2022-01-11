@@ -17,6 +17,12 @@ import { Price } from '../Price';
 import i18n, { translationKeys } from '@brandingbrand/fsi18n';
 import { palette } from '../../styles/variables';
 
+import error from '../../../assets/images/error.png';
+
+const icons = {
+  error,
+};
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
@@ -82,10 +88,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
 });
-
-const icons = {
-  error: require('../../../assets/images/error.png'),
-};
 
 interface BaseVariantCartItemProp extends CommerceTypes.CartItem {
   /**

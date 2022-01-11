@@ -13,6 +13,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import ACCORDION_ARROW_ICON_DEFAULT from '../../assets/images/arrow.png';
 
 export interface AccordionProps {
   /**
@@ -133,7 +134,6 @@ export interface AccordionState {
 
 const ACCORDION_PADDING_DEFAULT = 15;
 const ACCORDION_ANIMATION_DURATION_DEFAULT = 200; // in ms
-const ACCORDION_ARROW_ICON_DEFAULT = require('../../assets/images/arrow.png');
 const ACCORDION_TITLE_HEIGHT_DEFAULT = 50;
 
 const AccordionStyles = StyleSheet.create({

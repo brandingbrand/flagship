@@ -7,7 +7,8 @@ import { CategoryBox } from '../src/components/CategoryBox';
 import { CategoryLine } from '../src/components/CategoryLine';
 import { Grid } from '../src/components/Grid';
 
-const arrowRight = require('./assets/images/arrow-right.png');
+import arrowRight from './assets/images/arrow-right.png';
+import greyBox from './assets/images/greyBox.png';
 
 const boxImageStyle = {
   width: 60,
@@ -22,8 +23,6 @@ const defaultAccessoryStyle = {
 const defaultStyle = {
   padding: 15,
 };
-
-const greyBox = require('./assets/images/greyBox.png');
 
 const kActionOnPress = 'CategoryLine onPress';
 

@@ -15,7 +15,7 @@ import { style as S } from '../styles/SearchScreen';
 import { SearchBar, SearchBarProps } from './SearchBar';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-const searchIcon = require('../../assets/images/search.png');
+import searchIcon from '../../assets/images/search.png';
 
 const SEARCH_MODAL_HISTORY_KEY = 'SEARCH_MODAL_HISTORY_KEY';
 const MAX_HISTORY_ITEM_NUM = 5;

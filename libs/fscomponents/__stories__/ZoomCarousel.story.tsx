@@ -3,22 +3,25 @@ import { storiesOf } from '@storybook/react';
 import { ZoomCarousel } from '../src/components/ZoomCarousel/ZoomCarousel';
 import { boolean, number, object } from '@storybook/addon-knobs';
 
+import wide from './assets/images/wide.png';
+import wide2x from './assets/images/wide@2x.png';
+
 const defaultImages = [
   {
-    src: require('./assets/images/wide.png'),
-    zoomSrc: require('./assets/images/wide@2x.png'),
+    src: wide,
+    zoomSrc: wide2x,
   },
   {
-    src: require('./assets/images/wide.png'),
-    zoomSrc: require('./assets/images/wide@2x.png'),
+    src: wide,
+    zoomSrc: wide2x,
   },
   {
-    src: require('./assets/images/wide.png'),
-    zoomSrc: require('./assets/images/wide@2x.png'),
+    src: wide,
+    zoomSrc: wide2x,
   },
   {
-    src: require('./assets/images/wide.png'),
-    zoomSrc: require('./assets/images/wide@2x.png'),
+    src: wide,
+    zoomSrc: wide2x,
   },
 ];
 

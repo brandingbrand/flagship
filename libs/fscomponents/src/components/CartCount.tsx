@@ -12,9 +12,10 @@ import {
   ViewStyle,
 } from 'react-native';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-const componentTranslationKeys = translationKeys.flagship.cart.itemsInCart;
 
-const DEFAULT_CART_IMAGE = require('../../assets/images/cart.png');
+import DEFAULT_CART_IMAGE from '../../assets/images/cart.png';
+
+const componentTranslationKeys = translationKeys.flagship.cart.itemsInCart;
 
 export type TextPositions = 'topLeft' | 'topRight' | 'center' | 'bottomLeft' | 'bottomRight';
 

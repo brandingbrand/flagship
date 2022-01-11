@@ -10,6 +10,8 @@ import Decimal from 'decimal.js';
 
 import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
 
+import greyBox from './assets/images/greyBox.png';
+
 const provider = new CoreContentManagementSystemProvider({
   propertyId: '443',
   environment: 1,
@@ -35,7 +37,7 @@ const testProduct: CommerceTypes.Product = {
     value: new Decimal('14.99'),
     currencyCode: 'USD',
   },
-  images: [{ uri: require('./assets/images/greyBox.png') }],
+  images: [{ uri: greyBox }],
   review: {
     id: '101',
     statistics: {
