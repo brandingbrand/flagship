@@ -1,9 +1,9 @@
 declare global {
   export interface EngagementConfig {
-    appId?: string;
+    appId: string;
     apiKey?: string;
-    baseURL?: string;
-    cacheTTL?: number;
+    baseURL: string;
+    cacheTTL: number;
   }
 
   export interface EnvironmentConfig {
@@ -11,7 +11,7 @@ declare global {
     production?: boolean;
     hiddenEnvs?: string[];
     associatedDomains?: string[];
-    engagement?: EngagementConfig;
+    engagement: EngagementConfig;
     [key: string]: unknown;
   }
 
