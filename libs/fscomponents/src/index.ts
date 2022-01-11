@@ -6,3 +6,4 @@ export * from './lib/color';
 export * from './lib/style';
 export * from './lib/translations';
 export * from './styles';
+export * from './types';
