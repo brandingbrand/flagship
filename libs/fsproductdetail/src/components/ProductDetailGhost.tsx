@@ -14,6 +14,12 @@ import ContentLoader, { Rect } from '../lib/RNContentLoader';
 import { PageIndicator } from '@brandingbrand/fscomponents';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
+import ghostStar from '../../assets/images/ghostStar.png';
+
+const icons = {
+  ghostStar,
+};
+
 const baseStyles = StyleSheet.create({
   imageContainer: {
     marginBottom: 15,
@@ -57,10 +63,6 @@ const baseStyles = StyleSheet.create({
     letterSpacing: 1,
   },
 });
-
-const icons = {
-  ghostStar: require('../../assets/images/ghostStar.png'),
-};
 
 export interface SerializableProductDetailGhostProps {
   /**
