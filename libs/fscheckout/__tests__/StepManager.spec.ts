@@ -87,7 +87,7 @@ test('continue step when all step are done', () => {
 
   try {
     stepManager.continue();
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toBeTruthy();
   }
 });
@@ -114,7 +114,7 @@ test('goTo step when the step is not done', () => {
 
   try {
     stepManager.goTo('step2');
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toBeTruthy();
   }
 });
