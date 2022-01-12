@@ -23,7 +23,7 @@ export function source(oldName: string, newName: string, ...pathComponents: stri
       to: [newName, newName.toLocaleLowerCase()],
       glob: { dot: true },
     });
-  } catch (err) {
+  } catch (err: any) {
     logError(`renaming project within source`, err);
     process.exit(1);
   }
@@ -69,7 +69,7 @@ export function pkgDirectory(oldPkg: string, newPkg: string, ...pathComponents: 
           fs.removeSync(dir);
         }
       });
-  } catch (err) {
+  } catch (err: any) {
     logError('renaming project files', err);
     process.exit(1);
   }
@@ -103,7 +103,7 @@ export function files(oldName: string, newName: string, ...pathComponents: strin
 
       fs.renameSync(oldPath, newPath);
     });
-  } catch (err) {
+  } catch (err: any) {
     logError('renaming project files', err);
     process.exit(1);
   }
