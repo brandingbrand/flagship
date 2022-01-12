@@ -12,7 +12,7 @@ export interface ProductListProps {
   renderFooter?: () => JSX.Element | null;
 }
 
-const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {
+export const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element => {
   const { items, style, columns, gridProps, renderItem, renderHeader, renderFooter } = props;
 
   return (
@@ -27,5 +27,3 @@ const ProductList: FunctionComponent<ProductListProps> = (props): JSX.Element =>
     />
   );
 };
-
-export default memo(ProductList);
