@@ -31,7 +31,7 @@ export function install(): void {
     // Remove react dependency in web, the bundler will automatically pick up the one
     // from react-native
     fs.removeSync(path.project.resolve('web', 'node_modules', 'react'));
-  } catch (err) {
+  } catch (err: any) {
     logError(`yarn for Web`, err);
 
     process.exit(1);
@@ -110,7 +110,7 @@ export function headerScripts(fragmentPath?: string): void {
       /<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->`
     );
-  } catch (err) {
+  } catch (err: any) {
     logError(`injecting web header scripts from ${fragmentPath}`, err);
 
     process.exit(1);
@@ -137,7 +137,7 @@ export function footerScripts(fragmentPath?: string): void {
       /<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->`
     );
-  } catch (err) {
+  } catch (err: any) {
     logError(`injecting web footer scripts from ${fragmentPath}`, err);
 
     process.exit(1);

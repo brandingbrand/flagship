@@ -184,7 +184,7 @@ export function icon(configuration: FlagshipTypes.Config): void {
 
   try {
     fs.copySync(source, path.android.resourcesPath());
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError(`updating Android app icon`, err);
 
     process.exit(1);
@@ -207,7 +207,7 @@ export function launchScreen(configuration: FlagshipTypes.Config): void {
 
   try {
     fs.copySync(source, path.android.resourcesPath());
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError('updating Android launch screen', err);
 
     process.exit(1);
@@ -400,7 +400,7 @@ export function sentryProperties(configuration: FlagshipTypes.Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError(`updating Android Sentry properties`, err);
 
     process.exit(1);

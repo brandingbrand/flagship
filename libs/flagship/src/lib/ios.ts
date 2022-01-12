@@ -147,7 +147,7 @@ export function icon(configuration: Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError(`updating iOS app icon`, err);
   }
 }
@@ -189,7 +189,7 @@ export function launchScreen(configuration: Config): void {
 
     fs.copySync(sourceImages, destinationImages);
     fs.copySync(sourceLaunchScreen, destinationLaunchScreen);
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError('updating iOS launch screen', err);
   }
 }
@@ -456,7 +456,7 @@ export function sentryProperties(configuration: Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err) {
+  } catch (err: any) {
     helpers.logError(`updating iOS Sentry properties`, err);
   }
 }
