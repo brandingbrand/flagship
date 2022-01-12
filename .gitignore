@@ -103,3 +103,6 @@ buck-out/
 
 node_modules/
 
+## E2E artifacts
+
+apps/*-e2e/artifacts
