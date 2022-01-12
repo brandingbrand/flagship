@@ -5,7 +5,7 @@ import pluralize from 'pluralize';
 import { UnwrappedProductIndexProps as ProductIndexPropType } from './ProductIndex';
 import { WithProductIndexProps } from './ProductIndexProvider';
 
-import ProductList from './ProductList';
+import { ProductList } from './ProductList';
 
 import {
   FilterItem,

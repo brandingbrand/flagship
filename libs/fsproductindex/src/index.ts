@@ -17,4 +17,5 @@ export {
 } from './components/ProductIndexSearch';
 export * from './components/ProductTileGhost';
 export * from './components/ProductIndexGhost';
+export * from './components/ProductList';
 export * from './styles';
