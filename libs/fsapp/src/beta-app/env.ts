@@ -7,6 +7,9 @@ try {
   projectEnvs = require('../../project_env_index');
 } catch {
   projectEnvs = getEnvironmentConfigs();
+  if (Object.keys(projectEnvs).length === 0) {
+    throw new Error('Failed to load any envs, did you forget to run init?');
+  }
 }
 
 setDefaultEnvironment(EnvSwitcher.envName);
