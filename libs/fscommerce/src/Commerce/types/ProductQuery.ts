@@ -1,4 +1,4 @@
-import Pageable from './Pageable';
+import { Pageable } from './Pageable';
 
 /**
  * Interface prescribing options available when fetching products.
