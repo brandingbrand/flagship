@@ -1,4 +1,6 @@
 export * as CommerceTypes from './Commerce/CommerceTypes';
+export * from './Commerce/CommerceTypes';
+
 export {
   default as withCommerceData,
   WithCommerceDataProps,
@@ -12,6 +14,8 @@ export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
 export { default as CommerceCookieSessionManager } from './Commerce/sessions/CommerceCookieSessionManager';
 
 export * as ReviewTypes from './Review/ReviewTypes';
+export * from './Review/ReviewTypes';
+
 export {
   ReviewDataSource,
   AbstractReviewDataSource,
