@@ -7,8 +7,8 @@ import { boolean, number, object, select, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { Accordion } from '../src/components/Accordion';
 
-import closed from '../../../assets/images/alert.png';
-import open from '../../../assets/images/checkmarkValidation.png';
+import closed from '../assets/images/alert.png';
+import open from '../assets/images/checkmarkValidation.png';
 
 const icons: Record<string, ImageURISource> = {
   closed,
