@@ -58,7 +58,7 @@ export type FSNetworkRequestData =
 /**
  * Manages network requests, optionally adding a set of default configuration to each request.
  */
-export default class FSNetwork {
+export class FSNetwork {
   private instance: AxiosInstance;
   private interceptor?: number;
 
@@ -190,3 +190,5 @@ export default class FSNetwork {
     return this.instance.patch(uri, data, config);
   }
 }
+
+export default FSNetwork;
