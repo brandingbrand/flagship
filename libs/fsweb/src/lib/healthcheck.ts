@@ -1,5 +1,7 @@
 import * as express from 'express';
-const hostPackageJSON: any = require('../../../package.json');
+import { readFileSync } from 'fs';
+
+const hostPackageJSON = JSON.parse(readFileSync('../../../package.json', 'utf-8'));
 
 export const healthCheck = (app: express.Express, env?: any): void => {
   if (env?.noHealthCheck !== false) {
