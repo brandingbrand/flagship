@@ -5,7 +5,7 @@ import { boolean, number, object, select, text } from '@storybook/addon-knobs';
 import { Stepper } from '../src/components/Stepper';
 import { TextStyle } from 'react-native';
 
-import clearIcon from '../../../assets/images/clear.png';
+import clearIcon from '../assets/images/clear.png';
 
 const formats = ['horizontalCenter', 'horizontalLeft', 'vertical'];
 
