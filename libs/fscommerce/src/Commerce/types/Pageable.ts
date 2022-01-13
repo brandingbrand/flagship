@@ -1,4 +1,5 @@
-export default interface Pageable {
+// Made this a named export so I can barrel roll it out for service definitions
+export interface Pageable {
   /**
    * The page number of the products if more products exist for an index than are
    * returned by a single query.
