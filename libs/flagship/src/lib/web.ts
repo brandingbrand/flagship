@@ -70,6 +70,10 @@ export function link(packageJSON: NPMPackageConfig): void {
         logWarn(`dependency ${dependency} existed in web node_modules and was removed`);
       }
 
+      if (fs.pathExistsSync(destinationDependencyPath)) {
+        fs.removeSync(destinationDependencyPath);
+      }
+
       // Link the dependency to the main node_modules
       fs.ensureSymlinkSync(sourceDependencyPath, destinationDependencyPath);
     } else if (fs.pathExistsSync(parentSourceDependencyPath)) {
