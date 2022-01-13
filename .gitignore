@@ -98,6 +98,7 @@ buck-out/
 # Environment variables
 
 .env
+apps/*-e2e/cypress.env.json
 
 ## Nested node_modules
 
