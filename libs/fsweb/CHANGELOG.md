@@ -1,3 +1,18 @@
+# Changelog
+
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+# [11.18.0](https://github.com/brandingbrand/flagship/compare/v11.17.0...v11.18.0) (2022-01-13)
+
+
+### Bug Fixes
+
+* **fsweb:** babel configuration (2afcbd4)
+* **fsweb:** remove broken import (40cc139)
+* **fsweb:** remove incompatible webpack 5 plugin (fd25a9d)
+
+
+
 # [11.10.0](https://github.com/brandingbrand/flagship/compare/v11.9.1...v11.10.0) (2021-12-08)
 
 **Note:** Version bump only for package @brandingbrand/fsweb

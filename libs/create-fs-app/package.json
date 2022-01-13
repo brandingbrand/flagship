@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/create-fs-app",
   "sideEffects": false,
-  "version": "0.0.0",
+  "version": "11.18.0",
   "license": "MIT",
   "bin": {
     "create-fs-app": "./index.js"
