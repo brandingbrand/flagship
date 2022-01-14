@@ -1,3 +1,6 @@
+language: node_js
+node_js: '14'
+
 cache: npm
 stages:
   - name: code-quality
@@ -11,31 +14,26 @@ install:
 jobs:
   include:
     - stage: code-quality
-      language: node_js
-      node_js: '14'
       script:
         - commitlint-travis
 
     - stage: code-quality
-      language: node_js
-      node_js: '14'
       script:
         - npm run format:check
 
     - stage: code-quality
-      language: node_js
-      node_js: '14'
       script:
         - npm run lint:all
 
     - stage: code-quality
-      language: node_js
-      node_js: '14'
       script:
         - npm run test:all
 
     - stage: code-quality
-      language: node_js
-      node_js: '14'
       script:
         - npm run build:all
+
+    - stage: code-quality
+      script:
+        - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
+        - NODE_OPTIONS=--max-old-space-size=8192 npm run build:all:from-source
