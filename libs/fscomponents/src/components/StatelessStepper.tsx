@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Image,
-  ImageURISource,
+  ImageSourcePropType,
   StyleProp,
   Text,
   TextInput,
@@ -16,7 +16,7 @@ import { style as S } from '../styles/Stepper';
 import increase from '../../assets/images/increaseImage.png';
 import decrease from '../../assets/images/decreaseImage.png';
 
-const icons: { [key: string]: ImageURISource } = {
+const icons = {
   increase,
   decrease,
 };
@@ -50,12 +50,12 @@ export interface StatelessStepperProps
 
   // Decrease button
   onDecreaseButtonPress: (count: number) => void;
-  decreaseButtonImage?: ImageURISource;
+  decreaseButtonImage?: ImageSourcePropType;
   renderDecreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
 
   // Increase button
   onIncreaseButtonPress: (count: number) => void;
-  increaseButtonImage?: ImageURISource;
+  increaseButtonImage?: ImageSourcePropType;
   renderIncreaseButton?: (count: number, handlePress: () => void) => React.ReactNode;
 }
 

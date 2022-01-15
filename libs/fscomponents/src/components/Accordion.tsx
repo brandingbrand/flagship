@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
   Animated,
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   LayoutChangeEvent,
   StyleProp,
   StyleSheet,
@@ -23,7 +23,7 @@ export interface AccordionProps {
   /**
    * Arrow icon to use; should be oriented facing right (>)
    */
-  arrowIconImage?: ImageURISource;
+  arrowIconImage?: ImageSourcePropType;
   /**
    * Range of rotation for open/closed arrows
    */
@@ -31,11 +31,11 @@ export interface AccordionProps {
   /**
    * Icon to use when open if icon format is 'image'
    */
-  openIconImage?: ImageURISource;
+  openIconImage?: ImageSourcePropType;
   /**
    * Icon to use when closed if icon format is 'image'
    */
-  closedIconImage?: ImageURISource;
+  closedIconImage?: ImageSourcePropType;
   /**
    * Whether to disable the animation (default false)
    */
