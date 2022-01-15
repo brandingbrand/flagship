@@ -4,7 +4,6 @@ import {
   Image,
   ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   Platform,
   StyleProp,
   StyleSheet,
@@ -50,10 +49,10 @@ export interface SearchBarProps {
   // button
   searchTitle?: string;
   cancelTitle?: string;
-  searchIcon?: ImageURISource;
-  locateIcon?: ImageURISource;
-  cancelImage?: ImageURISource;
-  clearIcon?: ImageURISource;
+  searchIcon?: ImageSourcePropType;
+  locateIcon?: ImageSourcePropType;
+  cancelImage?: ImageSourcePropType;
+  clearIcon?: ImageSourcePropType;
   onLocateButtonPress?: () => void;
 
   // input

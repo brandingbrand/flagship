@@ -61,7 +61,7 @@ export class ProductItemImage extends Component<ProductItemImageProps, ProductIt
 
     // Calcuate image width to fit container and height to maintain aspect ratio
     const image = (images && images.find((img) => !!img.uri)) || this.props.image;
-    if (image && image.uri) {
+    if (image?.uri) {
       Image.getSize(
         image.uri,
         (width, height) => {

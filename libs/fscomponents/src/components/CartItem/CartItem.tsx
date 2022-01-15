@@ -3,8 +3,8 @@ import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import {
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   StyleProp,
   StyleSheet,
   Text,
@@ -165,7 +165,7 @@ export interface CartItemProps
 }
 
 export interface CartItemState {
-  image?: ImageURISource;
+  image?: ImageSourcePropType;
   imageStyle: StyleProp<ImageStyle>;
 }
 
