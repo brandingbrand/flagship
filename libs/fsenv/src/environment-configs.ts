@@ -63,6 +63,6 @@ export const getEnvironmentConfig = (environment?: string) => {
   return configs.get(currentEnvironment) as EnvironmentConfig;
 };
 
-export const getEnvironmentConfigs = () => {
+export const getEnvironmentConfigs = (): Record<string, EnvironmentConfig> => {
   return Object.fromEntries(configs.entries());
 };
