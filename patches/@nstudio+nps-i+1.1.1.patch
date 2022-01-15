@@ -1,0 +1,16 @@
+diff --git a/node_modules/@nstudio/nps-i/exec.js b/node_modules/@nstudio/nps-i/exec.js
+index 42fb8e5..ab79339 100644
+--- a/node_modules/@nstudio/nps-i/exec.js
++++ b/node_modules/@nstudio/nps-i/exec.js
+@@ -1,7 +1,10 @@
+ const execa = require('execa')
+ 
+ module.exports = command => {
+-  const {stdout, stderr} = execa(command, { shell: true, env: { FORCE_COLOR: true } });
++  const {stdout, stderr} = execa(command, {
++    stdin: 'inherit',
++    shell: true, env: { FORCE_COLOR: true }
++   });
+   stdout.pipe(process.stdout);
+   stderr.pipe(process.stderr);
+ }
