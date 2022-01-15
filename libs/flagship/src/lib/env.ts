@@ -128,5 +128,5 @@ export function createEnvIndex(singleEnv?: string): void {
     })
     .join(',\n')}\n}`;
 
-  fs.writeFileSync(app.resolve('project_env_index.js'), envIndexFile);
+  fs.writeFileSync(app.resolve('src/project_env_index.js'), envIndexFile);
 }
