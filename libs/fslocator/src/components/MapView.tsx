@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Image, ImageURISource, Platform, StyleProp, ViewStyle } from 'react-native';
+import {
+  Image,
+  ImageRequireSource,
+  ImageURISource,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { GeoLocation } from '@brandingbrand/fsfoundation';
 import { getCenter, getDelta, isCoordinateChanged } from '../lib/helpers';
@@ -28,7 +35,7 @@ export interface PropType {
   defaultRegion?: Region;
   handleRegionChange?: (e: Region) => void;
   handleRegionChangeComplete?: (e: Region) => void;
-  mapMarkerIcon?: ImageURISource;
+  mapMarkerIcon?: ImageRequireSource | ImageURISource;
 }
 
 export default class MapViewNative extends Component<PropType> {
@@ -117,7 +124,7 @@ export default class MapViewNative extends Component<PropType> {
         {locations
           .filter((location) => !!location.address.latlng.lat)
           .map((location, i) => {
-            let image = null;
+            let image: ImageRequireSource | ImageURISource | undefined;
 
             if (Platform.OS === 'android') {
               image = location.selected ? markerSelected : marker;
