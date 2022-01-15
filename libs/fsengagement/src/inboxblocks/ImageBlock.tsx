@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   LayoutChangeEvent,
   StyleProp,
   TouchableOpacity,
@@ -13,7 +13,7 @@ import {
 import { EngagementContext } from '../lib/contexts';
 
 export interface ImageBlockProps {
-  source: ImageURISource;
+  source: ImageSourcePropType;
   resizeMode?: any;
   resizeMethod?: any;
   ratio?: string;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  ImageSourcePropType,
   ImageStyle,
   Share,
   StyleProp,
@@ -79,7 +80,7 @@ export default class ShareBlock extends Component<ShareBlockProps> {
     return (
       <View style={[styles.buttonContainer, containerStyle]}>
         <TouchableHighlight onPress={this.onButtonPress} underlayColor={underlayColor}>
-          <Image source={image} style={[styles.imageStyle, imageStyle]} />
+          <Image source={image as ImageSourcePropType} style={[styles.imageStyle, imageStyle]} />
         </TouchableHighlight>
       </View>
     );

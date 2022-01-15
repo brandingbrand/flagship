@@ -391,7 +391,9 @@ export default function (
                     rightButtons: [
                       {
                         color: '#866d4b',
-                        icon: closeBronze,
+                        // This is a fix for building from source with
+                        // `ImageURISource` image imports
+                        icon: closeBronze as unknown as number,
                         id: 'close',
                       },
                     ],
