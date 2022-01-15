@@ -3,6 +3,7 @@
   "plugins": [
     "@babel/plugin-transform-flow-strip-types",
     "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-export-namespace-from",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     // Fixes for loose issue from https://github.com/rails/webpacker/issues/3008
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
