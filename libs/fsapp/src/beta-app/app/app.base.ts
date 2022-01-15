@@ -1,7 +1,7 @@
 import type { Action, Store } from 'redux';
 import type { AppConfig, AppConstructor, IApp } from './types';
 
-import FSNetwork from '@brandingbrand/fsnetwork';
+import { FSNetwork } from '@brandingbrand/fsnetwork';
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { boundMethod } from 'autobind-decorator';
 import { ReactReduxContext } from 'react-redux';
