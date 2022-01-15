@@ -138,7 +138,7 @@ export default class ProductIndexGrid extends Component<
         id={item.id}
         title={item.title}
         brand={item.brand}
-        image={item.images && item.images.find((img) => !!img.uri)}
+        images={item.images}
         imageStyle={S.productImage}
         price={item.price}
         originalPrice={item.originalPrice}
