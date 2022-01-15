@@ -96,14 +96,11 @@ buck-out/
 *.swo
 
 # Environment variables
-
 .env
-apps/*-e2e/cypress.env.json
+/apps/*-e2e/cypress.env.json
 
-## Nested node_modules
-
-node_modules/
-
-## E2E artifacts
-
-apps/*-e2e/artifacts
+## Temporary App Files
+/apps/*/android
+/apps/*/ios
+/apps/*/node_modules
+/apps/*-e2e/artifacts
