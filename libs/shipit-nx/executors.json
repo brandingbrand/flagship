@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "import": {
+      "implementation": "./src/lib/features/import/impl",
+      "schema": "./src/lib/features/import/schema.json",
+      "description": ""
+    },
+    "ship": {
+      "implementation": "./src/lib/features/ship/impl",
+      "schema": "./src/lib/features/ship/schema.json",
+      "description": ""
+    }
+  }
+}

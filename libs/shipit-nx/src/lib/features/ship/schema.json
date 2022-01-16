@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "repo": {
+      "type": "string",
+      "description": "The repo where to push the filtered tree to"
+    },
+    "dryRun": {
+      "type": "boolean",
+      "description": "Wether a push should be done when complete"
+    }
+  },
+  "required": ["repo"]
+}
