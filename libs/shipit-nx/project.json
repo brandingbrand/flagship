@@ -1,0 +1,42 @@
+{
+  "root": "libs/shipit-nx",
+  "sourceRoot": "libs/shipit-nx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shipit-nx",
+        "tsConfig": "libs/shipit-nx/tsconfig.lib.json",
+        "packageJson": "libs/shipit-nx/package.json",
+        "main": "libs/shipit-nx/src/index.ts",
+        "assets": [
+          "libs/shipit-nx/*.md",
+          "libs/shipit-nx/executors.json",
+          {
+            "glob": "**/schema.json",
+            "input": "libs/shipit-nx",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shipit-nx/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shipit-nx"],
+      "options": {
+        "jestConfig": "libs/shipit-nx/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
