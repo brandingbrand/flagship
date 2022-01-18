@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string><%= name %></string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string><%= shortVersion %></string>
+	<key>CFBundleSignature</key>
+	<string>????</string><% if (urlSchemes.length) { %>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<% for(const urlScheme of urlSchemes){  %><string><%= urlScheme %></string><%} %>
+			</array>
+		</dict>
+	</array><% } %>
+	<key>CFBundleVersion</key>
+	<string><%= bundleVersion %></string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<% if (development) { %>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<% } %>
+			<% for(const execptionDomain of exceptionDomains){  %>
+			<key><%= execptionDomain %></key>
+			<dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>
+			<%} %>>
+		</dict>
+	</dict>
+	<key>NSHumanReadableCopyright</key>
+	<string></string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<% for(const { key, value } of permissionDescriptors){  %>
+	<key><%=key%></key>
+	<string><%=value%></string>
+	<%} %>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+</dict>
+</plist>
