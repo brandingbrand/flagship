@@ -29,6 +29,7 @@ export interface CreateIosFilesOptions {
 
 export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
   const iosRoot = join(options.projectRoot, 'ios');
+  const podsPath = join(iosRoot, 'Pods');
   const projectPath = join(iosRoot, options.className);
 
   const permissionPods = (Object.keys(options.permissions ?? {}) as IosPermissionKeys[]).map(
@@ -41,6 +42,8 @@ export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
     key: iosPermissionsMetadata[permission].usageDescriptionKey,
     value: description,
   }));
+
+  tree.delete(podsPath);
 
   generateFiles(tree, join(__dirname, '../files/ios'), iosRoot, {
     ...options,
