@@ -1,5 +1,7 @@
-import { basename, dirname, extname, join } from 'path';
+import { basename, dirname, extname, join, sep } from 'path';
 
 export const removeExtension = (path: string) => {
-  return join(dirname(path), basename(path, extname(path)));
+  return join(dirname(path), basename(path, extname(path)))
+    .split(sep)
+    .join('/');
 };
