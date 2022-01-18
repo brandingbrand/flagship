@@ -155,10 +155,12 @@ const main = async (commitFile: string | undefined) => {
 
   const changedProjects = await getChangedProjects(workspace, stagedFiles);
 
-  await verifyBreakingChange(commit);
-  await verifyProjectScope(commit, changedProjects);
-  await verifyWorkspaceScope(commit, changedProjects);
-  await verifyClosedProjectReferences(workspace, stagedFiles);
+  if (commit.scope !== 'release') {
+    await verifyBreakingChange(commit);
+    await verifyProjectScope(commit, changedProjects);
+    await verifyWorkspaceScope(commit, changedProjects);
+    await verifyClosedProjectReferences(workspace, stagedFiles);
+  }
 };
 
 void main(commitMessageFile).catch((error: unknown) => {
