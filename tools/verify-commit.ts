@@ -104,23 +104,23 @@ const verifyWorkspaceScope = async (commit: Commit, changedProjects: string[]) =
 };
 
 const verifyClosedProjectReferences = async (workspace: Workspace, stagedFiles: string[]) => {
-  const closedSourceProjects = Object.entries(workspace.projects).filter(
-    ([, { root, tags }]) => root !== '.' && !tags?.includes('open-source')
+  const closedSourceProjects = Object.values(workspace.projects).filter(
+    ({ root, tags }) => root !== '.' && !tags?.includes('open-source')
   );
 
   const openFiles = stagedFiles
-    .filter((file) => !closedSourceProjects.some(([, { root }]) => isWithin(file, root)))
+    .filter((file) => !closedSourceProjects.some(({ root }) => isWithin(file, root)))
     .filter((file) => !whitelistedFiles.includes(file));
 
   const tree = new FsTree(process.cwd(), false);
   for (const file of openFiles) {
     const contents = tree.read(file)?.toString('utf-8');
 
-    for (const [project] of closedSourceProjects) {
-      if (contents?.includes(project)) {
+    for (const { root } of closedSourceProjects) {
+      if (contents?.includes(root)) {
         const { confirmed } = await prompt({
           name: 'confirmed',
-          message: dedent`Found reference to closed source project ${project} in ${file}.
+          message: dedent`Found reference to closed source project ${root} in ${file}.
                           Typically closed source projects should only be referenced within their
                           own files.
 
