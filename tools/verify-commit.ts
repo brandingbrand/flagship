@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env ./node_modules/.bin/ts-node
 
 import parseCommit from '@commitlint/parse';
 import { Commit } from '@commitlint/types';
@@ -14,7 +14,12 @@ import { readFile } from 'fs/promises';
 import { sep } from 'path';
 
 const commitMessageFile = process.argv[2] as string | undefined;
-const whitelistedFiles = ['tsconfig.base.json', 'workspace.json'];
+const whitelistedFiles = [
+  'tsconfig.base.json',
+  'workspace.json',
+  'package.json',
+  'package-lock.json',
+];
 
 const isWithin = (file: string, path: string) => {
   const fileDirs = file.split(sep);
