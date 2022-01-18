@@ -1,0 +1,55 @@
+require_relative '<%= rootOffset %>../node_modules/react-native/scripts/react_native_pods'
+require_relative '<%= rootOffset %>../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '<%= rootOffset %>../node_modules/@nrwl/react-native/nx_post_install'
+
+platform :ios, '10.0'
+install! 'cocoapods', :deterministic_uuids => false
+
+# ignore all warnings from all pods
+inhibit_all_warnings!
+
+# This provides a post_install workaround for build issues related Xcode 12.5 and Apple Silicon (M1) machines.
+# Call this in the app's main Podfile's post_install hook.
+# See https://github.com/facebook/react-native/issues/31480#issuecomment-902912841 for more context.
+# Actual fix was authored by https://github.com/mikehardy.
+# New app template will call this for now until the underlying issue is resolved.
+def __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  # Flipper podspecs are still targeting an older iOS deployment target, and may cause an error like:
+  #   "error: thread-local storage is not supported for the current target"
+  # The most reliable known workaround is to bump iOS deployment target to match react-native (iOS 11 now).
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # ensure IPHONEOS_DEPLOYMENT_TARGET is at least 11.0
+      deployment_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f
+      should_upgrade = deployment_target < 11.0 && deployment_target != 0.0
+      if should_upgrade
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      end
+
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
+    end
+  end
+end
+
+target '<%= className %>' do
+  config = use_native_modules!
+  puts config
+
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
+
+  node_modules = '<%= rootOffset %>../node_modules'
+  permissions_path = node_modules + '/react-native-permissions/ios'
+  <% for(const pod of permissionPods){  %>
+  <%-pod%><%} %>
+
+  post_install do |installer|
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    nx_post_install(installer)
+  end
+end

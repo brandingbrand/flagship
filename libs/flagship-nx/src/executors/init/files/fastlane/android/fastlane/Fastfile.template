@@ -1,0 +1,53 @@
+default_platform :android
+
+lane :increment_build do
+  begin
+    version = appcenter_fetch_version_number(
+      owner_name: "<%= organization %>",
+      app_name: "<%= appName %>",
+      version: "<%= shortVersion %>",
+    )
+
+    if version["build_number"]
+      build_number = version["build_number"].to_i + 1
+      sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue
+    puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
+  end
+end
+
+lane :appcenter do
+  increment_build
+
+  # build the release variant
+  gradle(task: "assembleRelease")
+
+  appcenter_upload(
+    owner_name: "<%= organization %>",
+    app_name: "<%= appName %>",
+    destination_type: "group"
+  )
+end
+
+lane :appcenter_bundle do
+  increment_build
+
+  # build the release variant
+  gradle(task: "bundleRelease")
+
+  appcenter_upload(
+    owner_name: "<%= organization %>",
+    app_name: "<%= appName %>",
+    destination_type: "store"
+  )
+end
+
+lane :build do
+
+  # build the release variant
+  gradle(task: "assembleRelease")
+
+end

@@ -1,0 +1,42 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+            package="<%= bundleIdentifier %>">
+
+    <uses-permission android:name="android.permission.INTERNET" /><% for(const permission of permissions){  %>
+    <% if (permission === 'ADD_VOICEMAIL') { %><uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" /><%} else { %><uses-permission android:name="android.permission.<%=permission%>" /><%} %><%} %>
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:name=".MainApplication"<% for(const [key, value] of Object.entries(applicationAttributes)){  %>
+        <%=key%>="<%=value%>"<%} %>>
+
+        <activity
+            android:name=".MainActivity"<% for(const [key, value] of Object.entries(activityAttributes)){  %>
+            <%=key%>="<%=value%>"<%} %>>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <% for(const urlScheme of urlSchemes){  %><data android:scheme="<%=urlScheme%>" /><%} %>
+            </intent-filter>
+
+            <!-- deep link intents -->
+        </activity>
+
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="_FlagshipGoogleMapsAPIKey_"/>
+
+        <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
+
+        <!-- __ADDITIONAL_APP_ELEMENTS -->
+    </application>
+
+</manifest>

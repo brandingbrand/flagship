@@ -1,0 +1,217 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "main": {
+      "type": "string",
+      "description": "The entrypoint of the application"
+    },
+    "packageJson": {
+      "type": "string"
+    },
+    "bundleIdentifier": {
+      "anyOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": { "ios": { "type": "string" }, "android": { "type": "string" } }
+        }
+      ]
+    },
+    "development": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "defaultEnvironment": {
+      "type": "string",
+      "default": "prod"
+    },
+    "activityAttributes": {
+      "type": "object",
+      "description": "Android Only",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "applicationAttributes": {
+      "type": "object",
+      "description": "Android Only",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "android": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ACCEPT_HANDOVER",
+              "ACCESS_BACKGROUND_LOCATION",
+              "ACCESS_COARSE_LOCATION",
+              "ACCESS_FINE_LOCATION",
+              "ACTIVITY_RECOGNITION",
+              "ADD_VOICEMAIL",
+              "ANSWER_PHONE_CALLS",
+              "BODY_SENSORS",
+              "CALL_PHONE",
+              "CAMERA",
+              "GET_ACCOUNTS",
+              "PROCESS_OUTGOING_CALLS",
+              "READ_CALENDAR",
+              "READ_CALL_LOG",
+              "READ_CONTACTS",
+              "READ_EXTERNAL_STORAGE",
+              "READ_PHONE_NUMBERS",
+              "READ_PHONE_STATE",
+              "READ_SMS",
+              "RECEIVE_MMS",
+              "RECEIVE_SMS",
+              "RECEIVE_WAP_PUSH",
+              "RECORD_AUDIO",
+              "SEND_SMS",
+              "USE_SIP",
+              "WRITE_CALENDAR",
+              "WRITE_CALL_LOG",
+              "WRITE_CONTACTS",
+              "WRITE_EXTERNAL_STORAGE"
+            ]
+          },
+          "default": []
+        },
+        "ios": {
+          "type": "object",
+          "properties": {
+            "APP_TRACKING_TRANSPARENCY": { "type": "string" },
+            "BLUETOOTH_PERIPHERAL": { "type": "string" },
+            "CALENDARS": { "type": "string" },
+            "CAMERA": { "type": "string" },
+            "CONTACTS": { "type": "string" },
+            "FACE_ID": { "type": "string" },
+            "LOCATION_ALWAYS": { "type": "string" },
+            "LOCATION_WHEN_IN_USE": { "type": "string" },
+            "MEDIA_LIBRARY": { "type": "string" },
+            "MICROPHONE": { "type": "string" },
+            "MOTION": { "type": "string" },
+            "NOTIFICATIONS": { "type": "string" },
+            "PHOTO_LIBRARY": { "type": "string" },
+            "REMINDERS": { "type": "string" },
+            "SIRI": { "type": "string" },
+            "SPEECH_RECOGNITION": { "type": "string" },
+            "STOREKIT": { "type": "string" }
+          },
+          "default": {}
+        }
+      },
+      "default": {
+        "android": [],
+        "ios": {}
+      }
+    },
+    "exceptionDomains": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "urlSchemes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "launchScreen": {
+      "type": "object",
+      "properties": {
+        "android": {
+          "type": "string"
+        },
+        "ios": {
+          "type": "string"
+        }
+      }
+    },
+    "appIcon": {
+      "type": "object",
+      "properties": {
+        "android": {
+          "type": "string"
+        },
+        "ios": {
+          "type": "string"
+        }
+      }
+    },
+    "buildConfig": {
+      "type": "object",
+      "properties": {
+        "ios": {
+          "type": "object",
+          "properties": {
+            "exportTeamId": {
+              "type": "string"
+            },
+            "appleCert": {
+              "type": "string"
+            },
+            "profilesDir": {
+              "type": "string"
+            },
+            "distCert": {
+              "type": "string"
+            },
+            "distP12": {
+              "type": "string"
+            },
+            "provisioningProfileName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "exportTeamId",
+            "appleCert",
+            "profilesDir",
+            "distCert",
+            "distP12",
+            "provisioningProfileName"
+          ]
+        },
+        "android": {
+          "type": "object",
+          "properties": {
+            "storeFile": {
+              "type": "string"
+            },
+            "keyAlias": {
+              "type": "string"
+            }
+          },
+          "required": ["storeFile", "keyAlias"]
+        }
+      },
+      "required": ["ios", "android"]
+    },
+    "appCenter": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "string"
+        },
+        "appName": {
+          "type": "object",
+          "properties": {
+            "ios": {
+              "type": "string"
+            },
+            "android": {
+              "type": "string"
+            }
+          },
+          "required": ["ios", "android"]
+        }
+      },
+      "required": ["organization", "appName"]
+    }
+  },
+  "required": ["main", "packageJson", "bundleIdentifier"]
+}

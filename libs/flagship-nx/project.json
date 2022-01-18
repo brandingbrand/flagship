@@ -1,0 +1,53 @@
+{
+  "root": "libs/flagship-nx",
+  "sourceRoot": "libs/flagship-nx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/flagship-nx",
+        "tsConfig": "libs/flagship-nx/tsconfig.lib.json",
+        "packageJson": "libs/flagship-nx/package.json",
+        "main": "libs/flagship-nx/src/index.ts",
+        "assets": [
+          "libs/flagship-nx/*.md",
+          "libs/flagship-nx/executors.json",
+          {
+            "glob": "**/files/**/*",
+            "input": "libs/flagship-nx",
+            "output": ""
+          },
+          {
+            "glob": "**/schema.json",
+            "input": "libs/flagship-nx",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/flagship-nx/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/flagship-nx"],
+      "options": {
+        "jestConfig": "libs/flagship-nx/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
