@@ -4,8 +4,8 @@ import { boolean, city, name, number, paragraphs, sentence, state } from './Rand
 type ReviewUser = import('@brandingbrand/fscommerce').ReviewTypes.ReviewUser;
 type ReviewQuestion = import('@brandingbrand/fscommerce').ReviewTypes.ReviewQuestion;
 type Review = import('@brandingbrand/fscommerce').ReviewTypes.Review;
-type ReviewsMap = import('@brandingbrand/fsfoundation').Dictionary<Review[]>;
-type ReviewQuestionsMap = import('@brandingbrand/fsfoundation').Dictionary<ReviewQuestion[]>;
+type ReviewsMap = Record<string, Review[]>;
+type ReviewQuestionsMap = Record<string, ReviewQuestion[]>;
 
 function generateReviewUser(): ReviewUser {
   return {

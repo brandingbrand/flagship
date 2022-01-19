@@ -194,7 +194,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
 
     public applyRefinementFilters(
       products: CommerceTypes.Product[],
-      refinements?: import('@brandingbrand/fsfoundation').Dictionary<string[]>
+      refinements?: Record<string, string[]>
     ): CommerceTypes.Product[] {
       if (refinements) {
         products = Object.keys(refinements).reduce((filteredProducts, key) => {

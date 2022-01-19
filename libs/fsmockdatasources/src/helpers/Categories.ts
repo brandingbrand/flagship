@@ -128,7 +128,7 @@ const electronicsProducts = [
   'kodak-c1013',
 ];
 
-export const CategoryProduct: import('@brandingbrand/fsfoundation').Dictionary<string[]> = {
+export const CategoryProduct: Record<string, string[]> = {
   'electronics': electronicsProducts,
   'electronics-digital-cameras': electronicsProducts,
   'mens': mensProducts,
