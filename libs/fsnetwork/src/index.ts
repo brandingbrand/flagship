@@ -6,7 +6,6 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // Export AxiosResponse type so its type definitions are not "private" and other packages depending
 // on FSNetwork can use our type aliases
@@ -51,7 +50,7 @@ export type FSNetworkResponse<T = any> = AxiosResponse<T>;
 export type FSNetworkRequestData =
   | ArrayBuffer
   | ArrayBufferView
-  | Dictionary
+  | Record<string, any>
   | string
   | URLSearchParams;
 
@@ -65,7 +64,7 @@ export class FSNetwork {
   /**
    * Creates a new instance of FSNetwork.
    *
-   * @param {FSNetworkRequestConfig} config Default configuration to apply to every request.
+   * @param config Default configuration to apply to every request.
    */
   constructor(config?: FSNetworkRequestConfig) {
     if (config) {
@@ -97,8 +96,8 @@ export class FSNetwork {
   /**
    * Performs a generic request.
    *
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise<T>} A promise of the network response.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   request<T = any>(config: FSNetworkRequestConfig): FSNetworkPromise<T> {
     return this.instance.request(config);
@@ -108,9 +107,9 @@ export class FSNetwork {
    * Performs a GET request.
    *
    * @template T The response data type.
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise<T>} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   get<T = any>(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise<T> {
     // TODO: caching
@@ -120,9 +119,9 @@ export class FSNetwork {
   /**
    * Performs a DELETE request.
    *
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   delete(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
     return this.instance.delete(uri, config);
@@ -131,9 +130,9 @@ export class FSNetwork {
   /**
    * Performs a HEAD request.
    *
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   head(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
     return this.instance.head(uri, config);
@@ -143,10 +142,10 @@ export class FSNetwork {
    * Performs a POST request.
    *
    * @template T The response data type.
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestData} data The body of the request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise<T>} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param data The body of the request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   post<T = any>(
     uri: string,
@@ -160,10 +159,10 @@ export class FSNetwork {
    * Performs a PUT request.
    *
    * @template T The response data type.
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestData} data The body of the request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise<T>} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param data The body of the request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   put<T = any>(
     uri: string,
@@ -177,10 +176,10 @@ export class FSNetwork {
    * Performs a PATCH request.
    *
    * @template T The response data type.
-   * @param {string} uri A URI or path to request.
-   * @param {FSNetworkRequestData} data The body of the request.
-   * @param {FSNetworkRequestConfig} config Configuration for the request.
-   * @returns {FSNetworkPromise<T>} A promise of the network response.
+   * @param uri A URI or path to request.
+   * @param data The body of the request.
+   * @param config Configuration for the request.
+   * @returns A promise of the network response.
    */
   patch<T = any>(
     uri: string,
