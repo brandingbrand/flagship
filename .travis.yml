@@ -36,4 +36,4 @@ jobs:
     - stage: code-quality
       script:
         - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - NODE_OPTIONS=--max-old-space-size=8192 npm run build:all:from-source
+        - NODE_OPTIONS=--max-old-space-size=8192 npx nx run-many --target build --all --configuration development
