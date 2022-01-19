@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.20.0](https://github.com/wSedlacek/flagship-text/compare/v11.19.0...v11.20.0) (2022-01-19)
+
+
+### Bug Fixes
+
+* **fscommerce:** use import rather than require (92cc110)
+
+
+
 # [11.19.0](https://github.com/wSedlacek/flagship-text/compare/v11.18.1...v11.19.0) (2022-01-18)
 
 
