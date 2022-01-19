@@ -11,7 +11,6 @@ export {
   InitialDataFunction,
 } from './Commerce/CommerceProvider';
 export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
-export { default as CommerceCookieSessionManager } from './Commerce/sessions/CommerceCookieSessionManager';
 
 export * as ReviewTypes from './Review/ReviewTypes';
 export * from './Review/ReviewTypes';
