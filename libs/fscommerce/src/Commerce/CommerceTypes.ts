@@ -20,6 +20,8 @@ export * from './types/PaymentCard';
 export * from './types/PaymentMethod';
 export * from './types/Product';
 export * from './types/ProductIndex';
+export * from './types/ProductGroups';
+export * from './types/ProductGroupsQuery';
 export * from './types/ProductItem';
 export * from './types/ProductQuery';
 export * from './types/ProductPromotion';
