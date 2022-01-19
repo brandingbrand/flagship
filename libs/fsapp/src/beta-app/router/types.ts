@@ -1,6 +1,5 @@
 import type FSNetwork from '@brandingbrand/fsnetwork';
 import type { Analytics } from '@brandingbrand/fsengage';
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type {
   OptionsBottomTab,
   OptionsStatusBar,
@@ -46,8 +45,8 @@ export abstract class ScreenComponent<State = {}> extends Component<
 export type ScreenComponentType = ScreenFC | typeof ScreenComponent;
 export type Tab = OptionsBottomTab & { id: string };
 
-export type RouteData = Dictionary<unknown | undefined>;
-export type RouteParams = Dictionary<string | undefined>;
+export type RouteData = Record<string, unknown | undefined>;
+export type RouteParams = Record<string, string | undefined>;
 export type RouteQuery = ParsedQs;
 
 export interface ActivatedRoute {
@@ -107,7 +106,7 @@ export interface ComponentRoute extends BaseRoute {
   // Used to pass in static data
   readonly data?: RouteData;
   // Used to pass in dynamic data
-  readonly resolve?: Dictionary<ResolverConstructor | ResolverFunction>;
+  readonly resolve?: Record<string, ResolverConstructor | ResolverFunction>;
 
   // Props are never passed directly to the component,
   // with React Navigation this is inherently not type

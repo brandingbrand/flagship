@@ -1,5 +1,4 @@
 import { Analytics } from '@brandingbrand/fsengage';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 import {
   Layout,
@@ -18,7 +17,7 @@ import { Middleware } from 'redux';
 
 export interface DrawerType {
   screen: string;
-  passProps?: Dictionary;
+  passProps?: Record<string, any>;
 }
 
 export interface DrawerConfig {
@@ -85,19 +84,19 @@ export interface SSRData {
 export interface AppConfigType {
   screens: Record<string, RoutableComponentClass>;
   appType?: 'singleScreen';
-  packageJson?: Dictionary; // TODO: deprecated, insecure - should be removed after the transition
+  packageJson?: Record<string, any>; // TODO: deprecated, insecure - should be removed after the transition
   version?: string; // TODO: mark version & basename as required after the transition
   codePushVersionLabel?: string;
   webBasename?: string;
-  env?: Dictionary;
+  env?: Record<string, any>;
   remote?: FSNetworkRequestConfig;
   tabs?: Tab[];
   drawer?: Drawer;
-  variables?: Dictionary;
+  variables?: Record<string, any>;
   initialState?: any;
   reducers?: any;
   webRouterType?: string;
-  webRouterProps?: Dictionary;
+  webRouterProps?: Record<string, any>;
   analytics?: Analytics;
   devMenuScreens?: NavLayoutComponent[];
   popToRootOnTabPressAndroid?: boolean;

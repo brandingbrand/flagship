@@ -1,4 +1,3 @@
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type { AppConfig, WebApplication } from './types';
 
 import { AppRegistry } from 'react-native';
@@ -12,7 +11,7 @@ export const getVersion = async (config: AppConfig<any>): Promise<string> => {
 const isWebRegistry = (
   registry: typeof AppRegistry
 ): registry is typeof AppRegistry & {
-  getApplication(app: string, props?: Dictionary): WebApplication;
+  getApplication(app: string, props?: Record<string, any>): WebApplication;
 } => {
   return 'getApplication' in registry;
 };
