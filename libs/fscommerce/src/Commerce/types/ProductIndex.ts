@@ -1,4 +1,3 @@
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import { Product } from './Product';
 import Pageable from './Pageable';
 
@@ -136,5 +135,5 @@ export interface ProductIndex<T extends Product = Product> extends Partial<Pagea
    *   "cgid": ["womens"]
    * }
    */
-  selectedRefinements?: Dictionary<string[]>;
+  selectedRefinements?: Record<string, string[]>;
 }
