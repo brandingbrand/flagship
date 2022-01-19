@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getDistance } from '../lib/helpers';
 
 import { LocationItem, LocationItemProps } from '@brandingbrand/fscomponents';
-import { DistanceUnit } from '@brandingbrand/fsfoundation';
+import { DistanceUnit } from '@brandingbrand/types-location';
 import { Location } from '../types/Location';
 
 export interface PropType {

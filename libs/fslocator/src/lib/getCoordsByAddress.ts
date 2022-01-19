@@ -1,5 +1,5 @@
 import Geocoder from 'react-native-geocoder';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { GeoLocation } from '@brandingbrand/types-location';
 
 export default async function getCoordsByAddress(
   address: string,

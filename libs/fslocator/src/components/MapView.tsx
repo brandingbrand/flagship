@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { GeoLocation } from '@brandingbrand/types-location';
 import { getCenter, getDelta, isCoordinateChanged } from '../lib/helpers';
 import { style as S } from '../styles/MapView';
 import { Location, Region } from '../types/Location';

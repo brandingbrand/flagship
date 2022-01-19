@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { GeoLocation } from '@brandingbrand/types-location';
 import { GeoLocationDelta, Location } from '../types/Location';
 import promptToLink from './promptToLink';
 

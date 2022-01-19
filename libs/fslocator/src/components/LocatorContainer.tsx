@@ -1,6 +1,6 @@
 import { Analytics } from '@brandingbrand/fsengage';
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { GeoLocation } from '@brandingbrand/types-location';
 import React, { Component } from 'react';
 import { ImageURISource, Platform, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { default as Geolocation, GeolocationOptions } from '@react-native-community/geolocation';
