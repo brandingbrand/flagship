@@ -1,0 +1,7 @@
+{
+  "name": "@brandingbrand/types-utility",
+  "sideEffects": false,
+  "version": "11.19.0",
+  "description": "Utility types",
+  "license": "MIT"
+}
