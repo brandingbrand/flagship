@@ -148,6 +148,9 @@ const globalConfig = {
               new RegExp(
                 'node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics'
               ),
+              new RegExp(
+                'node_modules' + escapedSep + '@commercetools' + escapedSep + 'platform-sdk'
+              ),
             ],
             exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
             use: [
