@@ -2,9 +2,8 @@ import { Component } from 'react';
 import { Platform } from 'react-native';
 
 import AnalyticsProvider from './providers/AnalyticsProvider';
-type Dictionary<T = any> = import('@brandingbrand/fsfoundation').Dictionary<T>;
 
-export type BaseEvent<T = any> = Dictionary<T> & {
+export type BaseEvent<T = any> = Record<string, T> & {
   gaQueryParams?: object;
 };
 

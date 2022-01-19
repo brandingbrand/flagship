@@ -12,16 +12,14 @@ import {
 import { ACPAnalytics } from '@adobe/react-native-acpanalytics';
 
 type AnalyticsProviderConfiguration = import('../types/AnalyticsProviderConfiguration').default;
-type Dictionary<T = any> = import('@brandingbrand/fsfoundation').Dictionary<T>;
-type Arguments<F> = import('@brandingbrand/fsfoundation').Arguments<F>;
 
 export interface AdobeAnalyticsClient {
   configureWithAppId: (appId?: string) => void;
-  lifecycleStart: (additionalContextData?: Dictionary) => void;
+  lifecycleStart: (additionalContextData?: Record<string, any>) => void;
   setLogLevel: (mode: string) => void;
   start: () => Promise<boolean>;
-  trackState: (state: string, contextData?: Dictionary) => void;
-  trackAction: (action: string, contextData?: Dictionary) => void;
+  trackState: (state: string, contextData?: Record<string, any>) => void;
+  trackAction: (action: string, contextData?: Record<string, any>) => void;
 }
 
 type GenericProduct =
@@ -32,10 +30,10 @@ type GenericProduct =
 type ProviderMethods = Exclude<keyof AdobeAnalyticsProvider, 'lifecycle'>;
 type DisabledEvents = { [key in ProviderMethods]?: boolean };
 type EventNormalizers = {
-  [key in ProviderMethods]?: (...args: Arguments<AdobeAnalyticsProvider[key]>) => ContextData;
+  [key in ProviderMethods]?: (...args: Parameters<AdobeAnalyticsProvider[key]>) => ContextData;
 };
 
-interface ContextData extends Dictionary<string> {
+interface ContextData extends Record<string, string> {
   hitName: string;
   hitType: 'trackAction' | 'trackState';
 }

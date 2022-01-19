@@ -6,7 +6,6 @@ import { assert, stub } from 'sinon';
 
 import CoreContentManagementSystemProvider from '../src/modules/cms/providers/core/CoreContentManagementSystemProvider';
 import { ContentManagementSystemContext } from '../src/modules/cms/providers/ContentManagementSystemProvider';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 const fixture = require('./ContentManagementSystem.fixture.json');
 const fixture2 = require('./ContentManagementSystem2.fixture.json');
@@ -55,7 +54,7 @@ describe('Content Management System Provider', () => {
 
       core
         .contentForSlot('Homepage', 'Hero-Carousel', undefined, context)
-        .then((content: Dictionary) => {
+        .then((content: Record<string, any>) => {
           const expectedContent = fixture.payload.data.Homepage['Hero-Carousel'];
 
           // Removes the instance with invalid date.
@@ -91,7 +90,7 @@ describe('Content Management System Provider', () => {
 
       core
         .contentForSlot('home', 'header-text', undefined, context)
-        .then((content: Dictionary) => {
+        .then((content: Record<string, any>) => {
           expect(content).toBeNull();
 
           assert.calledOnce(
