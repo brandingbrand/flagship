@@ -1,5 +1,5 @@
-import FSNetwork from '@brandingbrand/fsnetwork';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { FSNetwork } from '@brandingbrand/fsnetwork';
+import { GeoLocation } from '@brandingbrand/types-location';
 
 import {
   isGeolocationAllowed,

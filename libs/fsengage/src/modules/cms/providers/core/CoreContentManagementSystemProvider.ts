@@ -21,7 +21,6 @@ import {
 } from './targets';
 
 import { Location } from '../../requesters/ContentManagementSystemLocator';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 /**
  * Logs and rethrows a given error.
@@ -61,7 +60,7 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
     slot: string,
     identifier?: string,
     context?: ContentManagementSystemContext
-  ): Promise<Dictionary> {
+  ): Promise<Record<string, any>> {
     return this.pullContent()
       .then((content) => {
         const slotContent =
