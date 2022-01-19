@@ -1,5 +1,4 @@
 import swal from 'sweetalert';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface AlertOptions {
   title: string;
@@ -18,7 +17,7 @@ export const Alert = {
     if (typeof options === 'string') {
       return swal(options);
     } else {
-      const args: Dictionary = {
+      const args: Record<string, string | undefined | (string | boolean)[]> = {
         title: options.title,
         text: options.text,
       };

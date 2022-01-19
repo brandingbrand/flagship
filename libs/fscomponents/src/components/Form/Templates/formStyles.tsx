@@ -1,8 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
-export function getColor(state: Dictionary, locals: Dictionary): String {
+export function getColor(state: Record<string, any>, locals: Record<string, any>): String {
   const colors = locals.stylesheet.colors;
   if (state.active) {
     return colors.active;
@@ -11,7 +10,7 @@ export function getColor(state: Dictionary, locals: Dictionary): String {
   }
 }
 
-export function defaultTextboxStyle(locals: Dictionary): Dictionary {
+export function defaultTextboxStyle(locals: Record<string, any>): Record<string, any> {
   const stylesheet = locals.stylesheet;
 
   let controlLabelStyle = stylesheet.controlLabel.normal;

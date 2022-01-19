@@ -1,11 +1,10 @@
 import React from 'react';
 import StatefulTextbox from './StatefulTextbox';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import { FormLabelPosition } from './fieldTemplates';
 
 export function labelAboveTextbox(
-  locals: Dictionary,
-  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
 ): JSX.Element {
   return (
     <StatefulTextbox
@@ -17,8 +16,8 @@ export function labelAboveTextbox(
 }
 
 export function labelFloatingTextbox(
-  locals: Dictionary,
-  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
 ): JSX.Element {
   return (
     <StatefulTextbox
@@ -30,8 +29,8 @@ export function labelFloatingTextbox(
 }
 
 export function labelHiddenTextbox(
-  locals: Dictionary,
-  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
 ): JSX.Element {
   return (
     <StatefulTextbox
@@ -43,8 +42,8 @@ export function labelHiddenTextbox(
 }
 
 export function labelInlineTextbox(
-  locals: Dictionary,
-  componentFactory?: (locals: Dictionary, textboxStyle: any, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
 ): JSX.Element {
   return (
     <StatefulTextbox

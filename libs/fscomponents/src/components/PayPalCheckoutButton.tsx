@@ -1,7 +1,6 @@
 import React, { FunctionComponent, memo } from 'react';
-import { ImageSourcePropType, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 import { Button, ButtonProps, SerializableFSButtonProps } from './Button';
-import { Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import blueLogo from '../../assets/images/paypal-logo-blue.png';

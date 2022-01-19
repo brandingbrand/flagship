@@ -11,7 +11,6 @@ import { emailRegex } from '../lib/email';
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
@@ -22,14 +21,14 @@ export interface UpdateNameOrEmailState {
 }
 
 export interface UpdateNameOrEmailProps {
-  fieldsStyleConfig?: Dictionary; // custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: <T = any>(value: T) => void; // the behaviour we want onpress of submit button
+  fieldsStyleConfig?: Record<string, any>; // custom stylesheet we want to merge with the default stylesheet
+  onSubmit?: <T = any>(value: T) => void; // the behavior we want onPress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: () => string; // Text to override the submit button
   style?: StyleProp<ViewStyle>;
-  fieldsOptions?: Dictionary; // extra desired behaviour, like placeholders
-  value?: Dictionary;
+  fieldsOptions?: Record<string, any>; // extra desired behavior, like placeholders
+  value?: Record<string, any>;
 }
 
 // check for validity as part of the type
@@ -62,9 +61,9 @@ PasswordType.getValidationErrorMessage = (s: string) => {
 
 export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateNameOrEmailState> {
   form?: Form | null;
-  fieldsStyleConfig: Dictionary;
-  fieldsTypes: Dictionary;
-  fieldsOptions: Dictionary;
+  fieldsStyleConfig: Record<string, any>;
+  fieldsTypes: Record<string, any>;
+  fieldsOptions: Record<string, any>;
 
   constructor(props: UpdateNameOrEmailProps) {
     super(props);

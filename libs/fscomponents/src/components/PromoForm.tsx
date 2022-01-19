@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
-import { Dictionary, Omit } from '@brandingbrand/fsfoundation';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
@@ -17,8 +16,8 @@ export interface PromoFormProps extends Omit<SingleLineFormProps, 'fieldsTypes'>
 }
 
 export class PromoForm extends Component<PromoFormProps> {
-  fieldsTypes: Dictionary;
-  fieldsOptions: Dictionary;
+  fieldsTypes: Record<string, any>;
+  fieldsOptions: Record<string, any>;
 
   constructor(props: PromoFormProps) {
     super(props);

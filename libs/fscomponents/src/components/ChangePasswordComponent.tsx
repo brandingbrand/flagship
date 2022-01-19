@@ -3,7 +3,6 @@ import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { Form } from './Form';
 import { Button } from './Button';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.changePassword;
@@ -20,13 +19,13 @@ export interface FormValues {
 
 export interface ChangePasswordProps {
   // the custom stylesheet we want to merge with the default stylesheet
-  fieldsStyleConfig?: Dictionary;
+  fieldsStyleConfig?: Record<string, any>;
   onSubmit?: (values: FormValues) => void; // the behaviour we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: string; // Text to override the submit button
   style?: StyleProp<ViewStyle>;
-  fieldsOptions?: Dictionary; // any extra desired behaviour, like placeholders
+  fieldsOptions?: Record<string, any>; // any extra desired behaviour, like placeholders
   value?: any;
 }
 
@@ -37,9 +36,9 @@ const PasswordType = t.refinement(t.String, (str: string) => {
 
 export class ChangePassword extends Component<ChangePasswordProps, ChangePasswordState> {
   form?: Form | null;
-  fieldsStyleConfig: Dictionary;
-  fieldsTypes: Dictionary;
-  fieldsOptions: Dictionary;
+  fieldsStyleConfig: Record<string, any>;
+  fieldsTypes: Record<string, any>;
+  fieldsOptions: Record<string, any>;
 
   constructor(props: ChangePasswordProps) {
     super(props);

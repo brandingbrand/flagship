@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import StatefulTextbox from './StatefulTextbox';
 
 export enum FormLabelPosition {
@@ -10,8 +9,12 @@ export enum FormLabelPosition {
 }
 
 export function labelAboveFieldTemplate(
-  locals: Dictionary,
-  componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory: (
+    locals: Record<string, any>,
+    textboxStyle: Record<string, any>,
+    color: string
+  ) => JSX.Element
 ): React.ReactNode {
   return (
     <StatefulTextbox
@@ -23,8 +26,12 @@ export function labelAboveFieldTemplate(
 }
 
 export function labelFloatingFieldTemplate(
-  locals: Dictionary,
-  componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory: (
+    locals: Record<string, any>,
+    textboxStyle: Record<string, any>,
+    color: string
+  ) => JSX.Element
 ): React.ReactNode {
   return (
     <StatefulTextbox
@@ -36,8 +43,12 @@ export function labelFloatingFieldTemplate(
 }
 
 export function labelHiddenFieldTemplate(
-  locals: Dictionary,
-  componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory: (
+    locals: Record<string, any>,
+    textboxStyle: Record<string, any>,
+    color: string
+  ) => JSX.Element
 ): React.ReactNode {
   return (
     <StatefulTextbox
@@ -49,8 +60,12 @@ export function labelHiddenFieldTemplate(
 }
 
 export function labelInlineFieldTemplate(
-  locals: Dictionary,
-  componentFactory: (locals: Dictionary, textboxStyle: Dictionary, color: string) => JSX.Element
+  locals: Record<string, any>,
+  componentFactory: (
+    locals: Record<string, any>,
+    textboxStyle: Record<string, any>,
+    color: string
+  ) => JSX.Element
 ): React.ReactNode {
   return (
     <StatefulTextbox

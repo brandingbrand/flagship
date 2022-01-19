@@ -1,6 +1,5 @@
 // TODO: add proper types
 import React, { Component, ComponentType } from 'react';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface ProjectWrapperComponent {}
 
@@ -10,7 +9,7 @@ export interface ProjectWrapperComponent {}
  * specific styling
  */
 export default function applyDefaults<T>(
-  defaultProps: Dictionary,
+  defaultProps: Record<string, any>,
   ComponentHolder: ComponentType<T>
 ): ProjectWrapperComponent {
   if (isStateless(ComponentHolder)) {
