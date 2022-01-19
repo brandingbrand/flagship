@@ -814,8 +814,6 @@ export default class Analytics {
     suspend: this.lifecycleSuspend,
   };
 
-  // tslint:enable:typedef
-
   // Public Commerce Functions
 
   screenview(component: Component | string, properties: Screenview): void {
