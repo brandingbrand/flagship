@@ -1,3 +1,3 @@
 export * from './make-modal';
 export * from './modal.context';
-export type { ModalComponentType, ModalOptions, ModalComponentProps } from './types';
+export type { ModalService, ModalComponentType, ModalOptions, ModalComponentProps } from './types';
