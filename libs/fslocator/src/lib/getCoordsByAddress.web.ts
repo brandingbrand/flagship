@@ -1,5 +1,5 @@
 import FSNetwork from '@brandingbrand/fsnetwork';
-import { GeoLocation } from '@brandingbrand/fsfoundation';
+import { GeoLocation } from '@brandingbrand/types-location';
 
 const client = new FSNetwork();
 const GOOGLE_GEOCODER_URL = `https://maps.google.com/maps/api/geocode/json`;
