@@ -151,8 +151,6 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     }
   };
 
-  /* tslint:enable */
-
   const renderStoreDetail = (options: RenderOption = {}) => {
     const {
       locationName,
