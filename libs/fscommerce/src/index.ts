@@ -31,6 +31,7 @@ export { default as ProductCatalogDataSource } from './Commerce/interfaces/Produ
 export { default as ProductRecommendationDataSource } from './Commerce/interfaces/ProductRecommendationDataSource';
 export { default as ProductSearchDataSource } from './Commerce/interfaces/ProductSearchDataSource';
 export { default as ContentDataSource } from './Commerce/interfaces/ContentDataSource';
+export { ProductGroupDataSource } from './Commerce/interfaces/ProductGroupDataSource';
 
 export { default as runMiddleware, MiddlewareFunction } from './lib/runMiddleware';
 
