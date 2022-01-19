@@ -5,7 +5,6 @@ import Photoswipe from 'photoswipe';
 import PhotoswipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 import 'photoswipe/dist/photoswipe.css';
 import 'photoswipe/dist/default-skin/default-skin.css';
-// tslint:enable
 import { Modal } from '../Modal';
 import { get } from 'lodash-es';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
