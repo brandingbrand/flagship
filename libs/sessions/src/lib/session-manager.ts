@@ -2,6 +2,14 @@ import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 // @ts-ignore No types for react-native-cookies
 import * as CookieManager from 'react-native-cookies';
+import * as SInfo from 'react-native-sensitive-info';
+
+const SESSION_MANAGER_TOKEN = 'session-manager-token';
+
+const sensitiveInfoOptions: SInfo.RNSensitiveInfoOptions = {
+  sharedPreferencesName: 'Ecommerce-Prefs',
+  keychainService: 'Ecommerce-Service',
+};
 
 export interface SessionManagerOptions {
   refreshToken: (token: CommerceTypes.SessionToken) => Promise<CommerceTypes.SessionToken>;
@@ -15,31 +23,42 @@ export interface SessionManagerOptions {
 export class SessionManager {
   constructor(private readonly options: SessionManagerOptions) {}
 
-  public async set(_token: CommerceTypes.SessionToken): Promise<void> {}
+  public async set(token: CommerceTypes.SessionToken): Promise<void> {
+    const tokenStringify = JSON.stringify(token);
+    await SInfo.setItem(SESSION_MANAGER_TOKEN, tokenStringify, sensitiveInfoOptions).catch((err) =>
+      console.log(err)
+    );
+  }
 
   public async get(): Promise<CommerceTypes.SessionToken> {
-    let token: CommerceTypes.SessionToken | null = null;
-
     try {
-      token = await this.options.sessionCookiesToToken();
+      const tokenString: string = await SInfo.getItem(SESSION_MANAGER_TOKEN, sensitiveInfoOptions);
+      const token = JSON.parse(tokenString);
+      if (token) {
+        return token;
+      }
     } catch (e) {
       /* let it fail sliently */
     }
 
-    if (token) {
-      return token;
+    try {
+      const token = await this.options.sessionCookiesToToken();
+      if (token) {
+        return token;
+      }
+    } catch (e) {
+      /* let it fail sliently */
     }
 
     if (this.options.restoreCookies) {
       try {
         await this.options.restoreCookies();
-        token = await this.options.sessionCookiesToToken();
+        const token = await this.options.sessionCookiesToToken();
+        if (token) {
+          return token;
+        }
       } catch (e) {
         /* let it fail sliently */
-      }
-
-      if (token) {
-        return token;
       }
     }
 
@@ -47,6 +66,7 @@ export class SessionManager {
   }
 
   public async delete(): Promise<void> {
+    await SInfo.deleteItem(SESSION_MANAGER_TOKEN, sensitiveInfoOptions);
     CookieManager.clearAll();
   }
 
