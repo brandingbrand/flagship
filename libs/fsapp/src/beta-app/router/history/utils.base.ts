@@ -1,4 +1,3 @@
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type {
   ActivatedRoute,
   IndexedComponentRoute,
@@ -59,7 +58,7 @@ const matchPath = (path: string | undefined, route: Route) => {
     const [url, ...params] = regex.exec(checkPath.split('?')[0]) ?? [];
     return url
       ? {
-          params: keys.reduce<Dictionary<string>>((memo, key, index) => {
+          params: keys.reduce<Record<string, string>>((memo, key, index) => {
             return {
               ...memo,
               [key.name]: params[index],

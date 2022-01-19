@@ -1,4 +1,3 @@
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type { Route, RouteCollection } from './router';
 
 import loadable from '@loadable/component';
@@ -26,7 +25,7 @@ export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
 
 export const lazyComponent = loadable;
 
-export const promisedEntries = async (data: Dictionary<unknown>) => {
+export const promisedEntries = async (data: Record<string, unknown>) => {
   return fromPairs(
     await Promise.all(
       Object.entries(data).map(async ([key, entry]) => {

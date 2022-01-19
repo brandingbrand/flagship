@@ -1,11 +1,10 @@
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type { AnyAction, ReducersMapObject } from 'redux';
 
-export type GenericState = Readonly<Dictionary>;
+export type GenericState = Readonly<Record<string, any>>;
 
 export interface SSRData<S extends GenericState> {
   readonly initialState: S;
-  readonly variables: Dictionary;
+  readonly variables: Record<string, any>;
 }
 
 export interface StoreConfig<

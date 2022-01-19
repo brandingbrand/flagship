@@ -1,4 +1,3 @@
-import type { Dictionary } from '@brandingbrand/fsfoundation';
 import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
 
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
@@ -62,8 +61,8 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const navigator = useNavigator();
   const route = useActivatedRoute();
   const getApp = useCallback(() => app, [app]);
-  const [modals, setModals] = useState<Dictionary<FC>>({});
-  const [closers, setClosers] = useState<Dictionary<() => void>>({});
+  const [modals, setModals] = useState<Record<string, FC>>({});
+  const [closers, setClosers] = useState<Record<string, () => void>>({});
 
   const removeModal = useCallback(
     (id: string) => {
