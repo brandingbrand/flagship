@@ -13,24 +13,23 @@ import { cloneDeep, merge, pickBy } from 'lodash-es';
 import { emailRegex } from '../lib/email';
 import { Form, FormLabelPosition } from './Form';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 const componentTranslationKeys = translationKeys.flagship.addressForm;
 
 export interface AddressFormProps {
-  fieldsStyleConfig?: Dictionary;
+  fieldsStyleConfig?: Record<string, any>;
   labelPosition?: FormLabelPosition;
-  onSubmit?: (value: Dictionary) => void;
+  onSubmit?: (value: Record<string, any>) => void;
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: string;
-  value?: Dictionary;
+  value?: Record<string, any>;
   style?: StyleProp<ViewStyle>;
-  checkboxStyleConfig?: Dictionary;
-  fieldsOptions?: Dictionary;
-  fieldsTypes?: Dictionary;
+  checkboxStyleConfig?: Record<string, any>;
+  fieldsOptions?: Record<string, any>;
+  fieldsTypes?: Record<string, any>;
 }
 
 const EmailType = t.refinement(t.String, (str: string) => {
@@ -86,7 +85,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
     )
   );
 
-  let checkboxStyleConfig: Dictionary;
+  let checkboxStyleConfig: Record<string, any>;
   if (props.checkboxStyleConfig) {
     checkboxStyleConfig = props.checkboxStyleConfig;
   } else {

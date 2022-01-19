@@ -30,7 +30,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { Distance } from '@brandingbrand/fsfoundation';
+import { Distance } from '@brandingbrand/types-location';
 import { style as S } from '../styles/LocationItem';
 
 import { formatAddress, formatDistance, formatHours } from '../lib/helpers';

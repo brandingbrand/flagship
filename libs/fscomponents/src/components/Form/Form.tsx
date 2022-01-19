@@ -2,7 +2,6 @@ import React, { PureComponent, RefObject } from 'react';
 import { View } from 'react-native';
 import memoize from 'memoize-one';
 // dynamically generates stylesheet w/ correct active, error, inactive colors
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import {
   aboveLabels,
   floatingLabels,
@@ -58,9 +57,9 @@ type CalculateStylesType = (
   activeColor: string,
   errorColor: string,
   inactiveColor: string
-) => Dictionary;
+) => Record<string, any>;
 
-type CalculateBlursType = (fieldsOptions: Dictionary) => void;
+type CalculateBlursType = (fieldsOptions: Record<string, any>) => void;
 
 export class Form extends PureComponent<FormProps> {
   static defaultProps: Partial<FormProps> = {
@@ -78,7 +77,7 @@ export class Form extends PureComponent<FormProps> {
   );
 
   // memoized function that ensures the user's onBlur function is retained
-  calculateBlurs: CalculateBlursType = memoize((fieldsOptions: Dictionary) => {
+  calculateBlurs: CalculateBlursType = memoize((fieldsOptions: Record<string, any>) => {
     Object.keys(fieldsOptions).forEach((path) => {
       const prevOnBlur = fieldsOptions[path].onBlur;
       fieldsOptions[path].onBlur = () => {

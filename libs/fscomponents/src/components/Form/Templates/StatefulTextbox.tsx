@@ -1,7 +1,6 @@
 import React, { Component, RefObject } from 'react';
 import { Image, Text, TextInput, View } from 'react-native';
 import { memoize } from 'lodash-es';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 import { defaultTextboxStyle, getColor } from './formStyles';
 import { FormLabelPosition } from './fieldTemplates';
 
@@ -10,7 +9,7 @@ import errorIcon from '../../../../assets/images/alert.png';
 
 export interface StatefulTextboxProps {
   labelPosition: FormLabelPosition;
-  locals: Dictionary;
+  locals: Record<string, any>;
   // for use w/ custom field templates
   componentFactory?: any;
 }
@@ -24,17 +23,17 @@ export type ComputeFieldType = (prevField: any) => () => void;
 
 export default class StatefulTextbox extends Component<StatefulTextboxProps, StatefulTextboxState> {
   activeErrorField: JSX.Element;
-  alertStyle: Dictionary;
-  checkStyle: Dictionary;
-  controlLabelStyle: Dictionary;
-  defaultStyle: Dictionary;
-  errorBlockStyle: Dictionary;
-  groupStyle: Dictionary;
+  alertStyle: Record<string, any>;
+  checkStyle: Record<string, any>;
+  controlLabelStyle: Record<string, any>;
+  defaultStyle: Record<string, any>;
+  errorBlockStyle: Record<string, any>;
+  groupStyle: Record<string, any>;
   help: JSX.Element;
-  labelViewStyle: Dictionary;
-  rightTextboxIconStyle: Dictionary;
-  textboxStyle: Dictionary;
-  textboxViewStyle: Dictionary;
+  labelViewStyle: Record<string, any>;
+  rightTextboxIconStyle: Record<string, any>;
+  textboxStyle: Record<string, any>;
+  textboxViewStyle: Record<string, any>;
 
   state: StatefulTextboxState = {
     active: false,

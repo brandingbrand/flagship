@@ -5,7 +5,6 @@
 */
 
 import { Platform } from 'react-native';
-import { Dictionary } from '@brandingbrand/fsfoundation';
 
 export interface FieldsColors {
   activeColor: string;
@@ -17,7 +16,7 @@ export interface FieldsColors {
 // extra styles are to make label templates possible while allowing for user to overwrite speicfic
 // characteristics via fields style config
 
-export function styles(colors: FieldsColors): Dictionary {
+export function styles(colors: FieldsColors): Record<string, any> {
   const LABEL_COLOR = colors.activeColor;
   const INPUT_COLOR = '#000000';
   const ERROR_COLOR = colors.errorColor;

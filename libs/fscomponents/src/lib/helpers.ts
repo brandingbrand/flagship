@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Distance, DistanceUnit } from '@brandingbrand/fsfoundation';
+import { Distance, DistanceUnit } from '@brandingbrand/types-location';
 import { Address, Hour } from '../types/Store';
 
 /**
