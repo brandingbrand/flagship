@@ -10,9 +10,9 @@
     "build-ssr": "node --max_old_space_size=4096 ./node_modules/.bin/webpack --config ./webpack.ssr.js",
     "start": "webpack-dev-server -d --config ./webpack.config.js --mode development --inline --hot",
     "start-prod": "webpack-dev-server -d --config ./webpack.config.js --mode production",
-    "server-dev": "node ./dist/server.dev.js",
-    "server-prod": "node ./dist/server.prod.js",
-    "server-ssr": "node ./dist/server.ssr.js"
+    "server-dev": "node ./src/server.dev.js",
+    "server-prod": "node ./src/server.prod.js",
+    "server-ssr": "node ./src/server.ssr.js"
   },
   "dependencies": {
     "@babel/core": "^7.7.2",
