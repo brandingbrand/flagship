@@ -1,0 +1,40 @@
+{
+  "root": "libs/sessions",
+  "sourceRoot": "libs/sessions/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sessions",
+        "tsConfig": "libs/sessions/tsconfig.lib.json",
+        "packageJson": "libs/sessions/package.json",
+        "main": "libs/sessions/src/index.ts",
+        "assets": ["libs/sessions/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/sessions/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/sessions"],
+      "options": {
+        "jestConfig": "libs/sessions/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
