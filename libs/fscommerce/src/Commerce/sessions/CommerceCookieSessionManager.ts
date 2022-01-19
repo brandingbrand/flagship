@@ -1,6 +1,8 @@
 import CommerceSessionManager from './CommerceSessionManager';
 import { SessionToken } from '../types/SessionToken';
-const CookieManager = require('react-native-cookies');
+
+// @ts-ignore
+import * as CookieManager from 'react-native-cookies';
 
 /**
  * Implementation of CommerceSessionManager token based authentication(jwt, oauth, etc.)
