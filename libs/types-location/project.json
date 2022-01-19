@@ -1,0 +1,40 @@
+{
+  "root": "libs/types-location",
+  "sourceRoot": "libs/types-location/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types-location",
+        "tsConfig": "libs/types-location/tsconfig.lib.json",
+        "packageJson": "libs/types-location/package.json",
+        "main": "libs/types-location/src/index.ts",
+        "assets": ["libs/types-location/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/types-location/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/types-location"],
+      "options": {
+        "jestConfig": "libs/types-location/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
