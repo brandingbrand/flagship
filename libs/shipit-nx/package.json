@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/shipit-nx",
-  "version": "11.20.0",
+  "version": "11.20.1",
   "executors": "./executors.json",
   "license": "MIT"
 }
