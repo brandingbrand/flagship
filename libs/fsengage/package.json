@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsengage",
   "sideEffects": false,
-  "version": "11.20.0",
+  "version": "11.20.1",
   "description": "Analytics, CMS, and Settings module for Flagship",
   "license": "MIT"
 }
