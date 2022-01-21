@@ -1,4 +1,5 @@
 /* eslint-disable no-extend-native */
+import 'symbol-observable';
 
 if (!Object.fromEntries) {
   Object.fromEntries = <T>(arr: Iterable<readonly [PropertyKey, T]>) => {
