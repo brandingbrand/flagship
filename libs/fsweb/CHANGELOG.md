@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.21.0](https://github.com/brandingbrand/flagship/compare/v11.20.2...v11.21.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **fsweb:** proper path to package.json for health_check (11ff5b4)
+
+
+
 ## [11.20.2](https://github.com/brandingbrand/flagship/compare/v11.20.1...v11.20.2) (2022-01-20)
 
 
