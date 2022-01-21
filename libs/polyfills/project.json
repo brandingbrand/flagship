@@ -1,0 +1,40 @@
+{
+  "root": "libs/polyfills",
+  "sourceRoot": "libs/polyfills/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/polyfills",
+        "tsConfig": "libs/polyfills/tsconfig.lib.json",
+        "packageJson": "libs/polyfills/package.json",
+        "main": "libs/polyfills/src/index.ts",
+        "assets": ["libs/polyfills/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/polyfills/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/polyfills"],
+      "options": {
+        "jestConfig": "libs/polyfills/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
