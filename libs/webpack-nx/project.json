@@ -1,0 +1,40 @@
+{
+  "root": "libs/webpack-nx",
+  "sourceRoot": "libs/webpack-nx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/webpack-nx",
+        "tsConfig": "libs/webpack-nx/tsconfig.lib.json",
+        "packageJson": "libs/webpack-nx/package.json",
+        "main": "libs/webpack-nx/src/index.ts",
+        "assets": ["libs/webpack-nx/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/webpack-nx/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/webpack-nx"],
+      "options": {
+        "jestConfig": "libs/webpack-nx/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
