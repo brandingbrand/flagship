@@ -54,9 +54,9 @@ type GetWebpackConfig = (
 ) => Configuration;
 
 const webAliases = {
+  'react-native-svg': 'svgs',
   'react-native': 'react-native-web',
   'react-native-linear-gradient': 'react-native-web-linear-gradient',
-  'react-native-svg': 'svgs',
   'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
   'react-native-web/dist/exports/PickerIOS': 'react-native-web/dist/exports/Picker',
   'react-native-web/dist/exports/ProgressBarAndroid': 'react-native-web/dist/exports/ProgressBar',
@@ -138,6 +138,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
 
   const resolve = {
     ...reactConfig.resolve,
+    exportsFields: ['exports'],
     /**
      * `getResolveOptions` returns additional resolution configuration for React Native.
      * If it's removed, you won't be able to use `<file>.<platform>.<ext>` (eg: `file.ios.js`)
@@ -145,7 +146,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
      * in their `package.json` might not work correctly.
      */
     ...ReactNative.getResolveOptions(platform),
-    ...(platform === 'web' ? { alias: webAliases } : {}),
+    ...(platform === 'web' ? { alias: { ...reactConfig.resolve?.alias, ...webAliases } } : {}),
     fallback: {
       // TODO: remove @apidevtools/json-schema-ref-parser
       // required for @apidevtools/json-schema-ref-parser
@@ -153,15 +154,28 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       http: require.resolve('stream-http'),
       buffer: require.resolve('buffer/'),
     },
+    ...(platform === 'web'
+      ? {
+          mainFields: ['browser', 'module', 'main'],
+          aliasFields: ['browser', 'module', 'main'],
+          extensions: [
+            '.web.js',
+            '.js',
+            '.json',
+            '.web.jsx',
+            '.jsx',
+            '.web.ts',
+            '.ts',
+            '.web.tsx',
+            '.tsx',
+            // TODO: Remove tcomb-form
+            // Workaround for tcomb-form
+            '.ios.js',
+            '.ios.jsx',
+          ],
+        }
+      : {}),
   };
-
-  // For some reason this always has `.native`, which doesn't work on web
-  const nonNativeExtensions = resolve.extensions.filter(
-    (extension) => !extension.includes('native')
-  );
-
-  const nonNativeMainFields = resolve.mainFields.filter((field) => field !== 'react-native');
-  const nonNativeAliasFields = resolve.mainFields.filter((field) => field !== 'react-native');
 
   const typeScriptLoaders = [
     {
@@ -194,21 +208,6 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     ...reactConfig,
     resolve: {
       ...resolve,
-      ...(platform === 'web'
-        ? {
-            extensions: [
-              ...nonNativeExtensions,
-              // Fix for brandingbrand/tcomb-form-native
-              // TODO: remove @brandingbrand/tcomb-form-native
-              '.ios.ts',
-              '.ios.js',
-              '.ios.tsx',
-              '.ios.jsx',
-            ],
-            mainFields: nonNativeMainFields,
-            aliasFields: nonNativeAliasFields,
-          }
-        : {}),
       ...(resolve.plugins?.find((plugin) => plugin instanceof TsconfigPathsPlugin) ||
       options?.buildLibsFromSource === false
         ? {}
