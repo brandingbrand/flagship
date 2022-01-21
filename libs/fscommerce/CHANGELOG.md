@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.21.0](https://github.com/wSedlacek/flagship-text/compare/v11.20.2...v11.21.0) (2022-01-21)
+
+
+### Features
+
+* **fscommerce:** prooduct groups interface (e7c5785)
+
+
+
 ## [11.20.2](https://github.com/wSedlacek/flagship-text/compare/v11.20.1...v11.20.2) (2022-01-20)
 
 
