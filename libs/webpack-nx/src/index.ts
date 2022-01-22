@@ -31,6 +31,7 @@ const _loadDeps = () => {
   require('svgs');
   require('@react-native-community/datetimepicker');
   require('react-native-web-webview');
+  require('process');
 };
 
 interface ProgrammaticEnvironment {
