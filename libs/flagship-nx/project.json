@@ -47,6 +47,12 @@
       "options": {
         "access": "public"
       }
+    },
+    "install": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": []
+      }
     }
   },
   "tags": ["open-source"]
