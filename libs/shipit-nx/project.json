@@ -36,6 +36,12 @@
         "jestConfig": "libs/shipit-nx/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "install": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": []
+      }
     }
   },
   "tags": ["open-source"]
