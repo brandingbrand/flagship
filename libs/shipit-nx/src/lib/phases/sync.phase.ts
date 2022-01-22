@@ -12,15 +12,20 @@ export class SyncPhase implements Phase {
 
   private getSourceCommits(): Set<Commit> {
     let initialRevision = this.config.destinationRepo.findLastSourceCommit();
+    let firstCommit = false;
     if (initialRevision === undefined) {
       // Seems like it's a new repo so there is no signed commit.
       // Let's take the first one from our source repo instead.
       initialRevision = this.sourceRepo.findFirstAvailableCommit();
+      firstCommit = true;
     }
+
     const sourceCommits = new Set<Commit>();
     const descendantsPath = this.sourceRepo.findDescendantsPath(initialRevision);
-    if (descendantsPath !== undefined) {
-      for (const revision of descendantsPath) {
+    const revisions = firstCommit ? [initialRevision, ...(descendantsPath ?? [])] : descendantsPath;
+
+    if (revisions !== undefined) {
+      for (const revision of revisions) {
         const commit = this.sourceRepo.getCommitFromID(revision);
         if (commit !== undefined) {
           sourceCommits.add(commit);
