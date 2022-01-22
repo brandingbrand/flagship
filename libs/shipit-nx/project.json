@@ -37,6 +37,12 @@
         "passWithNoTests": true
       }
     },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    },
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
