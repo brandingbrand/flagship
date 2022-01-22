@@ -1,0 +1,40 @@
+{
+  "root": "libs/utils-base64",
+  "sourceRoot": "libs/utils-base64/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/utils-base64",
+        "tsConfig": "libs/utils-base64/tsconfig.lib.json",
+        "packageJson": "libs/utils-base64/package.json",
+        "main": "libs/utils-base64/src/index.ts",
+        "assets": ["libs/utils-base64/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/utils-base64/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/utils-base64"],
+      "options": {
+        "jestConfig": "libs/utils-base64/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
