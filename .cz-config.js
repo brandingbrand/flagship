@@ -29,6 +29,7 @@ module.exports = {
 
   scopes: [
     ...projectScopes,
+    { name: 'workspace', description: 'anything that affects the entire workspace' },
     { name: 'release', description: 'for creating a release' },
     {
       name: 'repo',
