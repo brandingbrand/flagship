@@ -1,12 +1,13 @@
-import { ShipConfig } from './ship.config';
+import { ShipConfig, ShipConfigOptions } from './ship.config';
+
+export interface ImportConfigOptions extends ShipConfigOptions {
+  pullRequestNumber: string;
+}
 
 export class ImportConfig extends ShipConfig {
-  constructor(
-    public readonly pullRequestNumber: string,
-    sourcePath: string,
-    destinationRepoURL: string,
-    destinationBranch = 'main'
-  ) {
-    super(sourcePath, destinationRepoURL, destinationBranch);
+  constructor(public readonly options: ImportConfigOptions) {
+    super(options);
   }
+
+  public readonly pullRequestNumber = this.options.pullRequestNumber;
 }

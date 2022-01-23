@@ -1,11 +1,11 @@
 import { Commit } from '../git/commit';
 import { ShipConfig } from '../configs/ship.config';
-import { findClosedProjectsForRevision } from '../utils/find-closed-projects.util';
+import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.util';
 
 export const stripCommitMessages =
   (config: ShipConfig) =>
   (commit: Commit): Commit => {
-    const excludedProjects = findClosedProjectsForRevision(config, commit.id).map(
+    const excludedProjects = findFilteredProjectsForRevision(config, commit.id).map(
       ({ name }) => name
     );
 

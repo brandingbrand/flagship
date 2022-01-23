@@ -15,13 +15,18 @@ export interface ImportExecutorOptions {
 }
 
 export const importIt = async (options: ImportExecutorOptions, context: ExecutorContext) => {
-  const config = new ImportConfig(options.pullRequestNumber, context.root, options.repo);
-  runPhases(
+  const config = new ImportConfig({
+    destinationRepoURL: options.repo,
+    pullRequestNumber: options.pullRequestNumber,
+    sourcePath: context.root,
+  });
+
+  return runPhases(
     [ClonePhase, CorruptionCheckPhase, CleanPhase, ...(options.dryRun ? [] : [ImportSyncPhase])],
     config
-  );
-
-  return { success: true };
+  )
+    .then(() => ({ success: true }))
+    .catch(() => ({ success: false }));
 };
 
 export default importIt;

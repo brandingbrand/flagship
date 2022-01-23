@@ -1,6 +1,6 @@
 import { Commit, Diff } from '../git/commit';
 import { ShipConfig } from '../configs/ship.config';
-import { findClosedProjectsForRevision } from '../utils/find-closed-projects.util';
+import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.util';
 
 /**
  * Remove any modifications to paths matching `stripPatterns`.
@@ -33,6 +33,6 @@ export const stripPaths =
 export const stripProjectPath =
   (config: ShipConfig) =>
   (commit: Commit): Commit => {
-    const closedPaths = findClosedProjectsForRevision(config, commit.id).map(({ root }) => root);
+    const closedPaths = findFilteredProjectsForRevision(config, commit.id).map(({ root }) => root);
     return stripPaths(closedPaths)(commit);
   };
