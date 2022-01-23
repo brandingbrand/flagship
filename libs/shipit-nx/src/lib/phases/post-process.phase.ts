@@ -331,11 +331,9 @@ export class PostProcessPhase implements Phase {
       }
     }
 
-    // The targets for ship, github, and version do not
-    // make sense outside of the source repo
-    delete workspaceJson.projects.workspace.targets?.ship;
-    delete workspaceJson.projects.workspace.targets?.github;
-    delete workspaceJson.projects.workspace.targets?.version;
+    // The workspace project is unnecessary in
+    // exported projects
+    delete workspaceJson.projects.workspace;
     writeJson(destinationTree, 'workspace.json', workspaceJson);
   }
 
