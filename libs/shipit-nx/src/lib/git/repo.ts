@@ -9,7 +9,7 @@ import { parsePatch } from '../utils/parse-patch.util';
 import { splitHead } from '../utils/split-head.util';
 
 import { accounts } from './accounts';
-import { Commit, Diff } from './commit';
+import { Commit, Diff, Header } from './commit';
 import { ShellCommand } from './shell-command';
 
 export interface SourceRepo {
@@ -348,5 +348,22 @@ export class Repo implements SourceRepo, DestinationRepo {
 
   public getCommitIdFromRevision(revision: string): string {
     return this.gitCommand('rev-list', '--max-count', '1', `${revision}`).runSynchronously().stdout;
+  }
+
+  public stageAll(): Repo {
+    this.gitCommand('add', '-A').runSynchronously();
+    return this;
+  }
+
+  public commit(message: Header): Repo {
+    this.gitCommand(
+      'commit',
+      '--no-verify',
+      '--allow-empty',
+      '-m',
+      dedent`${message.type}(${message.scope}): ${message.subject}`
+    ).runSynchronously();
+
+    return this;
   }
 }

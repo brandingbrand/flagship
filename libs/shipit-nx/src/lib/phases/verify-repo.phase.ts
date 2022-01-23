@@ -76,9 +76,14 @@ export class VerifyRepoPhase implements Phase {
       `shipit_destination/${destinationRepo.getBranch()}`
     )
       .runSynchronously()
-      .stdout.trim();
+      .stdout.trim()
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => !this.config.ignoredFilesAfterMap.some((file) => line.startsWith(file)))
+      .join('\n');
 
-    if (diffStats !== '') {
+    // There will almost always be 1 line for the summary
+    if (diffStats.split('\n').length > 1) {
       throw new Error(`❌ Repository is out of SYNC!\n${diffStats}`);
     }
   }

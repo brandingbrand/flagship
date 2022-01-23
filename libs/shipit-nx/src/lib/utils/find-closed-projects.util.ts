@@ -1,17 +1,13 @@
 import { ShipConfig } from '../configs/ship.config';
 import { StandaloneWorkspace } from '../models/standalone-workspace';
 
-export type IsOpenCallback = (project: Project) => boolean;
+export type ProjectFilter = (project: Project) => boolean;
 
 export interface Project {
   name: string;
   root: string;
   tags?: string[];
 }
-
-const DEFAULT_IS_OPEN: IsOpenCallback = (project) =>
-  ('root' in project && project.name === 'workspace') ||
-  (project.tags?.includes('open-source') ?? false);
 
 export const findProjectsForCommit = (config: ShipConfig, commitId: string): Project[] => {
   try {
@@ -39,10 +35,9 @@ export const findProjectsForCommit = (config: ShipConfig, commitId: string): Pro
   }
 };
 
-export const findClosedProjectsForRevision = (
+export const findFilteredProjectsForRevision = (
   config: ShipConfig,
-  revision: string,
-  isOpen: IsOpenCallback = DEFAULT_IS_OPEN
+  revision: string
 ): Project[] => {
   const last10CommitsProjects = Array.from({ length: 10 }, (_, i) => {
     try {
@@ -67,5 +62,5 @@ export const findClosedProjectsForRevision = (
 
       return firstIndex === index;
     })
-    .filter((project) => !isOpen(project));
+    .filter(config.excludedProjectsFilter);
 };
