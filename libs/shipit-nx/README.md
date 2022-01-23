@@ -14,7 +14,7 @@ This codebase started as a TypeScript rewrite of Adeira's work, but has since
 been adapted to build around the opinionated structure Nx provides to bring
 more features to the tool.
 
-### Getting Started
+## Getting Started
 
 `shipit-nx` provides an Nx Executor that can be configured either as a target
 for a specific project or as a target for the whole workspace.
