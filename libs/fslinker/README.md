@@ -4,31 +4,32 @@
 
 ## Description
 
-This library provides an easy way to provide and consume dependencies with static references.
+This library allows for easy provision and consumption of dependencies with static references.
 It is important that static references are used so that dependencies can be consumed even when
 used in externally bundled code.
 
 ### The Problem
 
-Let's say a you had a dependency like a React Context like so
+Let's say a you have a dependency like a React Context:
 
 ```ts
 export const SomeContext = createContext('defaultValue');
 ```
 
-If you used this context in a bundle the reference to `SomeContext` would be encapsulated in that bundle.
+If you used this context in a bundle, the reference to `SomeContext` would be encapsulated in that bundle.
 If you then tried to make another bundle also using `SomeContext` it would get a new `SomeContext` even
-if the first bundle is already loaded on the page.
+if the first bundle has already been loaded.
 
-This would work fine so long as the expected behavior is that the two bundles operate independently
-however if setting the context in one bundle was expected to affect the other then it would not behave
-as expected.
+In _some_ scenarios, the two bundles operating independently would be the desired and expected behavior.
+However, often it would be expected that any change made to the context in one bundle would be reflected
+in the same context of another bundle. In these cases, it is necessary to maintain static references
+to the dependencies in order to match that behavior.
 
 ### The Solution
 
-In order to preserve the same reference across bundles you can store the reference on the global object
-and then check if it exist and reuse that same value if it already exist. This library handles this
-for you by maintain a `GlobalInjectorCache` which will use the global object to store and reuse the
+To preserve these references, we can store them on the global object. This practice allows us to check
+for and reuse any existing values rather than instantiating new ones. This library handles this process
+for you by maintaining a `GlobalInjectorCache` which will use the global object to store and reuse the
 previously defined references.
 
 ## Example
@@ -80,7 +81,7 @@ const theValue = Injector.get(SOME_TOKEN); // 120
 
 ### Class Usage
 
-Before using classes make sure that decorators are enabled in your TypeScript configuration
+Before using classes make sure that decorators are enabled in your TypeScript configuration:
 
 ```json
 {
@@ -90,7 +91,7 @@ Before using classes make sure that decorators are enabled in your TypeScript co
 }
 ```
 
-With classes there are some decorators which take care of a lot of the work for you.
+With classes there are some decorators which take care of a lot of the work for you:
 
 ```ts
 // Declare Tokens
@@ -121,7 +122,7 @@ const someService = Injector.get(SOME_TOKEN);
 someService.init();
 ```
 
-or if you prefer you can enable the following in your TypeScript configuration
+Or, if you prefer, you can enable the following in your TypeScript configuration:
 
 ```json
 {
@@ -131,7 +132,7 @@ or if you prefer you can enable the following in your TypeScript configuration
 }
 ```
 
-and then you can use the classes themselves as tokens.
+And then you can use the classes themselves as tokens:
 
 ```ts
 export const SOME_TOKEN = new InjectionToken<number>('SOME_TOKEN');
