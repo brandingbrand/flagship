@@ -4,17 +4,17 @@ export interface PlatformSpecific<T> {
 }
 
 export const android = <T>(
-  platformSpecificString: T | { android: PlatformSpecific<T>['android'] }
+  platformSpecificString: T | { android?: PlatformSpecific<T>['android'] }
 ): PlatformSpecific<T>['android'] => {
   if (typeof platformSpecificString === 'object' && 'android' in platformSpecificString) {
-    return platformSpecificString.android;
+    return platformSpecificString.android as T;
   }
 
   if (typeof platformSpecificString === 'object' && 'ios' in platformSpecificString) {
     return undefined as unknown as T;
   }
 
-  return platformSpecificString;
+  return platformSpecificString as T;
 };
 
 export const ios = <T>(

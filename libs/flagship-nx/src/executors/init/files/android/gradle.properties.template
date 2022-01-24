@@ -26,3 +26,9 @@ android.enableJetifier=true
 org.gradle.jvmargs=-Xmx1536M
 VERSION_NAME=<%= shortVersion %>
 VERSION_CODE_SHORT=<%= bundleVersion %>
+<% if (buildConfig && passwords) { %>
+MYAPP_RELEASE_STORE_FILE=<%= rootOffset %>../../<%= buildConfig.storeFile %>
+MYAPP_RELEASE_STORE_PASSWORD=<%= passwords.storePassword %>
+MYAPP_RELEASE_KEY_ALIAS=<%= buildConfig.keyAlias %>
+MYAPP_RELEASE_KEY_PASSWORD=<%= passwords.keyPassword %>
+<% } %>
