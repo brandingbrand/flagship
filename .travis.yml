@@ -5,35 +5,84 @@ cache: npm
 stages:
   - name: code-quality
     if: type = pull_request AND tag IS blank
+  - name: build
+    if: type = pull_request AND tag IS blank
 
 install:
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  - nvm install 14
   - npm install -g npm@8
   - npm ci
 
 jobs:
   include:
     - stage: code-quality
+      name: Commit Lint
       script:
         - commitlint-travis
 
     - stage: code-quality
+      name: Format
       script:
-        - npm run format:check
+        - npx nx format:check
 
     - stage: code-quality
+      name: Lint
       script:
-        - npm run lint:all
+        - npx nx run-many --all --target lint
 
     - stage: code-quality
+      name: Test
       script:
-        - npm run test:all
+        - npx nx run-many --all --target test
 
-    - stage: code-quality
+    - stage: build
+      name: Web Build
       script:
-        - npm run build:all
+        - npx nx run-many --all --target build
 
-    - stage: code-quality
+    - stage: build
+      name: Web Development Build
       script:
+        - npx nx run-many --all --target build --configuration development
+
+    - stage: build
+      name: Android JavaScript Bundle
+      script:
+        - npx nx run-many --all --target android-bundle
+
+    - stage: build
+      name: iOS JavaScript Bundle
+      script:
+        - npx nx run-many --all --target ios-bundle
+
+    - stage: build
+      name: Android Native Code Build
+      sudo: true
+      language: android
+      before_script:
+        # Adds Ruby 2.6.0, Android API 30, Android Build tools 30.0.2
+        # Android 30 and Build Tools 30.0.2 are not available per components level config
+        # https://docs.travis-ci.com/user/languages/android/#how-to-create-and-start-an-emulator
+        - rvm install 2.6.0
+        - touch $HOME/.android/repositories.cfg
+        - yes | sdkmanager "platforms;android-30"
+        - yes | sdkmanager "build-tools;30.0.2"
+      script:
+        # Prevents Travis CI from killing stalled builds
         - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - NODE_OPTIONS=--max-old-space-size=8192 npx nx run-many --target build --all --configuration development
+        - npx nx run-many --all --target init
+        - npx nx run-many --all --target android-build
+        - kill %1
+
+    - stage: build
+      name: iOS Native Code Build
+      language: objective-c
+      os: osx
+      osx_image: xcode13.2
+      script:
+        # Prevents Travis CI from killing stalled builds
+        - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
+        - npx nx run-many --all --target init
+        - npx nx run-many --all --target ios-build
+        - kill %1
