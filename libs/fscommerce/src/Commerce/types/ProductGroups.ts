@@ -1,6 +1,22 @@
-import { ProductIndex } from './ProductIndex';
+import { Product } from './Product';
+import { ProductGroup } from './ProductGroup';
 
 /**
- * A record of product indexes keyed by a `groupId`
+ * This is like an indexes of product indexes
  */
-export type ProductGroups = Record<string, ProductIndex>;
+export interface ProductGroups<T extends Product = Product> {
+  /**
+   * The id of the product group
+   */
+  id: string;
+
+  /**
+   * The title of all the products in the group
+   */
+  title: string;
+
+  /**
+   * A record of product groups keyed by a `groupId`
+   */
+  groups: Record<string, ProductGroup<T>>;
+}
