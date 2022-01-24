@@ -1,5 +1,6 @@
 import { ExecutorContext, names, formatFiles, readJson, offsetFromRoot } from '@nrwl/devkit';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
+import { podInstall } from '@nrwl/react-native/src/utils/pod-install-task';
 
 import { link } from './lib/link';
 import { removeExtension } from './lib/path';
@@ -10,6 +11,7 @@ import { AndroidPermissionKeys, IosPermissionKeys } from './lib/permissions';
 import { createIosFiles } from './lib/create-ios-files';
 import { createAndroidFiles } from './lib/create-android-files';
 import { createFastlaneFiles } from './lib/create-fastlane-files';
+import { join } from 'path';
 
 export interface InitExecutorOptions {
   main: string;
@@ -147,6 +149,7 @@ export const initExecutor = async (
   await formatFiles(tree);
   flushChanges(context.root, tree.listChanges());
   await link(tree.root, projectRoot);
+  await podInstall(join(projectRoot, 'ios'));
   return { success: true };
 };
 
