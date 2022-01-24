@@ -2,7 +2,7 @@ import { Product } from './Product';
 import { ProductGroup } from './ProductGroup';
 
 /**
- * This is like an indexes of product indexes
+ * This is like an index of product indexes
  */
 export interface ProductGroups<T extends Product = Product> {
   /**
