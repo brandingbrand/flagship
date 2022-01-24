@@ -12,6 +12,7 @@ export interface CreateAndroidFilesOptions {
   fileName: string;
   name: string;
   propertyName: string;
+  main: string;
   mainPath: string;
   development: boolean;
   nativeConstants: Record<string, string>;
@@ -26,6 +27,14 @@ export interface CreateAndroidFilesOptions {
   applicationAttributes?: Record<string, string>;
   appIcon?: string;
   launchScreen?: string;
+  buildConfig?: {
+    storeFile: string;
+    keyAlias: string;
+  };
+  passwords?: {
+    storPassword: string;
+    keyPassword: string;
+  };
 }
 
 const defaults = {

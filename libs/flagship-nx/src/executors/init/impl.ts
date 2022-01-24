@@ -37,7 +37,7 @@ export interface InitExecutorOptions {
   };
 
   buildConfig?: {
-    ios: {
+    ios?: {
       exportTeamId: string;
       appleCert: string;
       profilesDir: string;
@@ -45,9 +45,15 @@ export interface InitExecutorOptions {
       distP12: string;
       provisioningProfileName: string;
     };
-    android: {
+    android?: {
       storeFile: string;
       keyAlias: string;
+    };
+  };
+  passwords?: {
+    android?: {
+      storPassword: string;
+      keyPassword: string;
     };
   };
 }
@@ -113,6 +119,7 @@ export const initExecutor = async (
     mainPath,
     nativeConstants,
     shortVersion: version,
+    main: options.main,
     development: options.development,
     exceptionDomains: options.exceptionDomains,
     urlSchemes: options.urlSchemes,
@@ -121,6 +128,8 @@ export const initExecutor = async (
     launchScreen: android(options.launchScreen),
     permissions: android(options.permissions),
     bundleIdentifier: android(options.bundleIdentifier),
+    buildConfig: android(options.buildConfig),
+    passwords: android(options.passwords),
     bundleVersion: bundleVersion(version),
   });
 

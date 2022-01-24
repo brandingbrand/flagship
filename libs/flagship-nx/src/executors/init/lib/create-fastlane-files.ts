@@ -10,7 +10,7 @@ export interface CreateFastlaneFilesOptions {
   organization: string;
   bundleIdentifier: string | PlatformSpecific<string>;
   appName: PlatformSpecific<string>;
-  ios: {
+  ios?: {
     exportTeamId: string;
     appleCert: string;
     profilesDir: string;
@@ -18,29 +18,38 @@ export interface CreateFastlaneFilesOptions {
     distP12: string;
     provisioningProfileName: string;
   };
-  android: {
+  android?: {
     storeFile: string;
     keyAlias: string;
   };
 }
 
 export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOptions) => {
-  const { bundleIdentifier, appName, ...iosOptions } = options;
+  const { bundleIdentifier, appName, ...otherOptions } = options;
 
-  generateFiles(tree, join(__dirname, '../files/fastlane/ios'), join(options.projectRoot, 'ios'), {
-    bundleIdentifier: ios(bundleIdentifier),
-    appName: ios(appName),
-    ...iosOptions,
-  });
+  if (otherOptions.ios) {
+    generateFiles(
+      tree,
+      join(__dirname, '../files/fastlane/ios'),
+      join(options.projectRoot, 'ios'),
+      {
+        bundleIdentifier: ios(bundleIdentifier),
+        appName: ios(appName),
+        ...otherOptions,
+      }
+    );
+  }
 
-  generateFiles(
-    tree,
-    join(__dirname, '../files/fastlane/android'),
-    join(options.projectRoot, 'android'),
-    {
-      bundleIdentifier: android(bundleIdentifier),
-      appName: android(appName),
-      ...iosOptions,
-    }
-  );
+  if (otherOptions.android) {
+    generateFiles(
+      tree,
+      join(__dirname, '../files/fastlane/android'),
+      join(options.projectRoot, 'android'),
+      {
+        bundleIdentifier: android(bundleIdentifier),
+        appName: android(appName),
+        ...otherOptions,
+      }
+    );
+  }
 };

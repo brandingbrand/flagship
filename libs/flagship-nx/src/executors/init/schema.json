@@ -187,9 +187,20 @@
             }
           },
           "required": ["storeFile", "keyAlias"]
+        },
+        "androidPasswords": {
+          "properties": {
+            "storePassword": {
+              "type": "string"
+            },
+            "keyPassword": {
+              "type": "string"
+            }
+          },
+          "required": ["storePassword", "keyPassword"]
         }
       },
-      "required": ["ios", "android"]
+      "required": []
     },
     "appCenter": {
       "type": "object",
