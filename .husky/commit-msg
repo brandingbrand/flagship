@@ -7,4 +7,7 @@ fi
 
 ./node_modules/.bin/commitlint -e $1
 ./tools/verify-commit.ts $1
-./node_modules/.bin/npm-run-all -s test:affected lint:affected format:check workspace-lint
+./node_modules/.bin/nx workspace-lint
+./node_modules/.bin/nx format:check
+./node_modules/.bin/nx affected:test
+./node_modules/.bin/nx affected:lint
