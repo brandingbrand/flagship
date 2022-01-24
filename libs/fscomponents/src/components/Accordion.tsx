@@ -55,7 +55,6 @@ export interface AccordionProps {
    * Whether to initialize as open or closed
    */
   state?: 'open' | 'closed';
-
   /**
    * Color of the title touch highlight
    */
@@ -112,13 +111,25 @@ export interface AccordionProps {
    */
   title: string | JSX.Element;
   /**
-   *  Styles for the accordion title container
+   * Styles for the accordion title container
    */
   titleContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Image to include on left side of title
+   */
+  titleImage?: ImageSourcePropType;
+  /**
+   * Styles for the title image
+   */
+  titleImageStyle?: StyleProp<ImageStyle>;
   /**
    * Styles for the accordion title
    */
   titleStyle?: StyleProp<ViewStyle>;
+  /**
+   * Styles for the accordion title text
+   */
+  titleTextStyle?: StyleProp<TextStyle>;
   /**
    * Height of title touch highlight (has default)
    */
@@ -170,6 +181,10 @@ const AccordionStyles = StyleSheet.create({
   iconImage: {
     width: 15,
     height: 15,
+  },
+  titleImage: {
+    width: 50,
+    height: 50,
   },
 });
 
@@ -246,6 +261,12 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
               this.props.titleContainerStyle,
             ]}
           >
+            {this.props.titleImage && (
+              <Image
+                source={this.props.titleImage}
+                style={[AccordionStyles.titleImage, this.props.titleImageStyle]}
+              />
+            )}
             <View
               style={[
                 AccordionStyles.title,
@@ -254,7 +275,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
               ]}
             >
               {typeof this.props.title === 'string' ? (
-                <Text>{this.props.title}</Text>
+                <Text style={this.props.titleTextStyle}>{this.props.title}</Text>
               ) : (
                 this.props.title
               )}
