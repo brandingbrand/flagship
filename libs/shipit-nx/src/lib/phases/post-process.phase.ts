@@ -31,7 +31,7 @@ interface PackageLockJson {
   packages: Record<
     string,
     {
-      name: string;
+      name?: string;
       dependencies?: Record<string, string>;
       devDependencies?: Record<string, string>;
     }
@@ -148,15 +148,16 @@ export class PostProcessPhase implements Phase {
     // To remove the `file:package` references we need to
     // remove internal packages from the package-lock.json
     for (const dependency of Object.keys(packageLockJson.packages)) {
-      if (dependency && !dependency.startsWith('node_modules')) {
+      if (dependency && !dependency.includes('node_modules')) {
         const { name } = packageLockJson.packages[dependency];
-        const [projectName] = name.split('/').reverse();
-
-        const project = sourceWorkspace.projects[projectName];
-        if (this.config.excludedProjectsFilter({ ...project, name: projectName })) {
-          delete packageLockJson.packages[dependency];
-          delete packageLockJson.packages[`node_modules/${name}`];
-          delete packageLockJson.dependencies[name];
+        if (name) {
+          const [projectName] = name.split('/').reverse();
+          const project = sourceWorkspace.projects[projectName];
+          if (this.config.excludedProjectsFilter({ ...project, name: projectName })) {
+            delete packageLockJson.packages[dependency];
+            delete packageLockJson.packages[`node_modules/${name}`];
+            delete packageLockJson.dependencies[name];
+          }
         }
       }
     }
