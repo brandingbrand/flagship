@@ -1,4 +1,11 @@
-import { ExecutorContext, names, formatFiles, readJson, offsetFromRoot } from '@nrwl/devkit';
+import {
+  ExecutorContext,
+  names,
+  formatFiles,
+  readJson,
+  offsetFromRoot,
+  logger,
+} from '@nrwl/devkit';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
 import { runPodInstall } from '@nrwl/react-native/src/utils/pod-install-task';
 
@@ -76,81 +83,86 @@ export const initExecutor = async (
     return { success: false };
   }
 
-  const tree = new FsTree(context.root, false);
-  const projectRoot = context.workspace.projects[context.projectName].root;
-  const { version } = readJson<PackageJson>(tree, options.packageJson);
+  try {
+    const tree = new FsTree(context.root, false);
+    const projectRoot = context.workspace.projects[context.projectName].root;
+    const { version } = readJson<PackageJson>(tree, options.packageJson);
 
-  const { className, constantName, fileName, name, propertyName } = names(context.projectName);
-  const mainPath = removeExtension(options.main);
-  const rootOffset = offsetFromRoot(projectRoot);
+    const { className, constantName, fileName, name, propertyName } = names(context.projectName);
+    const mainPath = removeExtension(options.main);
+    const rootOffset = offsetFromRoot(projectRoot);
 
-  const nativeConstants = {
-    ...(options.development ? { ShowDevMenu: 'true' } : {}),
-  };
+    const nativeConstants = {
+      ...(options.development ? { ShowDevMenu: 'true' } : {}),
+    };
 
-  createIosFiles(tree, {
-    projectRoot,
-    rootOffset,
-    className,
-    constantName,
-    fileName,
-    name,
-    propertyName,
-    mainPath,
-    nativeConstants,
-    shortVersion: version,
-    development: options.development,
-    exceptionDomains: options.exceptionDomains,
-    urlSchemes: options.urlSchemes,
-    defaultEnvironment: options.defaultEnvironment,
-    appIcon: ios(options.appIcon),
-    launchScreen: ios(options.launchScreen),
-    permissions: ios(options.permissions),
-    bundleIdentifier: ios(options.bundleIdentifier),
-    bundleVersion: bundleVersion(version),
-  });
-
-  createAndroidFiles(tree, {
-    projectRoot,
-    rootOffset,
-    className,
-    constantName,
-    fileName,
-    name,
-    propertyName,
-    mainPath,
-    nativeConstants,
-    shortVersion: version,
-    main: options.main,
-    development: options.development,
-    exceptionDomains: options.exceptionDomains,
-    urlSchemes: options.urlSchemes,
-    defaultEnvironment: options.defaultEnvironment,
-    appIcon: android(options.appIcon),
-    launchScreen: android(options.launchScreen),
-    permissions: android(options.permissions),
-    bundleIdentifier: android(options.bundleIdentifier),
-    buildConfig: android(options.buildConfig),
-    passwords: android(options.passwords),
-    bundleVersion: bundleVersion(version),
-  });
-
-  if (options.appCenter && options.buildConfig) {
-    createFastlaneFiles(tree, {
+    createIosFiles(tree, {
       projectRoot,
+      rootOffset,
       className,
+      constantName,
+      fileName,
+      name,
+      propertyName,
+      mainPath,
+      nativeConstants,
       shortVersion: version,
-      bundleIdentifier: options.bundleIdentifier,
-      ...options.appCenter,
-      ...options.buildConfig,
+      development: options.development,
+      exceptionDomains: options.exceptionDomains,
+      urlSchemes: options.urlSchemes,
+      defaultEnvironment: options.defaultEnvironment,
+      appIcon: ios(options.appIcon),
+      launchScreen: ios(options.launchScreen),
+      permissions: ios(options.permissions),
+      bundleIdentifier: ios(options.bundleIdentifier),
+      bundleVersion: bundleVersion(version),
     });
-  }
 
-  await formatFiles(tree);
-  flushChanges(context.root, tree.listChanges());
-  await link(tree.root, projectRoot);
-  await runPodInstall(join(projectRoot, 'ios'))();
-  return { success: true };
+    createAndroidFiles(tree, {
+      projectRoot,
+      rootOffset,
+      className,
+      constantName,
+      fileName,
+      name,
+      propertyName,
+      mainPath,
+      nativeConstants,
+      shortVersion: version,
+      main: options.main,
+      development: options.development,
+      exceptionDomains: options.exceptionDomains,
+      urlSchemes: options.urlSchemes,
+      defaultEnvironment: options.defaultEnvironment,
+      appIcon: android(options.appIcon),
+      launchScreen: android(options.launchScreen),
+      permissions: android(options.permissions),
+      bundleIdentifier: android(options.bundleIdentifier),
+      buildConfig: android(options.buildConfig),
+      passwords: android(options.passwords),
+      bundleVersion: bundleVersion(version),
+    });
+
+    if (options.appCenter && options.buildConfig) {
+      createFastlaneFiles(tree, {
+        projectRoot,
+        className,
+        shortVersion: version,
+        bundleIdentifier: options.bundleIdentifier,
+        ...options.appCenter,
+        ...options.buildConfig,
+      });
+    }
+
+    await formatFiles(tree);
+    flushChanges(context.root, tree.listChanges());
+    await link(tree.root, projectRoot);
+    await runPodInstall(join(projectRoot, 'ios'))();
+    return { success: true };
+  } catch (error) {
+    logger.error(error);
+    return { success: false };
+  }
 };
 
 export default initExecutor;
