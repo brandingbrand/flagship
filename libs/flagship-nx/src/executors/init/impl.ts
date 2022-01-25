@@ -7,7 +7,8 @@ import {
   logger,
 } from '@nrwl/devkit';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
-import { runPodInstall } from '@nrwl/react-native/src/utils/pod-install-task';
+import { join } from 'path';
+import { platform } from 'os';
 
 import { link } from './lib/link';
 import { removeExtension } from './lib/path';
@@ -18,7 +19,7 @@ import { AndroidPermissionKeys, IosPermissionKeys } from './lib/permissions';
 import { createIosFiles } from './lib/create-ios-files';
 import { createAndroidFiles } from './lib/create-android-files';
 import { createFastlaneFiles } from './lib/create-fastlane-files';
-import { join } from 'path';
+import { podInstall, podRepoUpdate } from './lib/pod-install';
 
 export interface InitExecutorOptions {
   main: string;
@@ -157,7 +158,11 @@ export const initExecutor = async (
     await formatFiles(tree);
     flushChanges(context.root, tree.listChanges());
     await link(tree.root, projectRoot);
-    await runPodInstall(join(projectRoot, 'ios'))();
+    if (platform() === 'darwin') {
+      const iosFolder = join(projectRoot, 'ios');
+      await podRepoUpdate(iosFolder);
+      await podInstall(iosFolder);
+    }
     return { success: true };
   } catch (error) {
     logger.error(error);
