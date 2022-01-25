@@ -71,7 +71,7 @@ jobs:
       script:
         # Prevents Travis CI from killing stalled builds
         - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - npx nx run-many --all --target init
+        - npx nx run-many --all --target init || travis_terminate 1
         - npx nx run-many --all --target android-build
         - kill %1
 
@@ -83,6 +83,6 @@ jobs:
       script:
         # Prevents Travis CI from killing stalled builds
         - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - npx nx run-many --all --target init
+        - npx nx run-many --all --target init || travis_terminate 1
         - npx nx run-many --all --target ios-build
         - kill %1
