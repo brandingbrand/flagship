@@ -26,8 +26,7 @@ export const runPhases = async <C extends ShipConfig>(
       } else {
         logger.error(`An unexpected error occurred`);
       }
-      process.exitCode = 1;
-      break;
+      throw error;
     }
   }
 };
