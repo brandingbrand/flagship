@@ -1,6 +1,6 @@
 import { ExecutorContext, names, formatFiles, readJson, offsetFromRoot } from '@nrwl/devkit';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
-import { podInstall } from '@nrwl/react-native/src/utils/pod-install-task';
+import { runPodInstall } from '@nrwl/react-native/src/utils/pod-install-task';
 
 import { link } from './lib/link';
 import { removeExtension } from './lib/path';
@@ -149,7 +149,7 @@ export const initExecutor = async (
   await formatFiles(tree);
   flushChanges(context.root, tree.listChanges());
   await link(tree.root, projectRoot);
-  await podInstall(join(projectRoot, 'ios'));
+  await runPodInstall(join(projectRoot, 'ios'))();
   return { success: true };
 };
 
