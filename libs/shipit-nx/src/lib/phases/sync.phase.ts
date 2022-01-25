@@ -36,39 +36,45 @@ export class SyncPhase implements Phase {
     return sourceCommits;
   }
 
-  private getFilteredCommits(): Commit[] {
-    const commits = this.getSourceCommits();
+  private *getFilteredCommits(commits: Set<Commit>): Generator<Commit, void> {
     const filter = this.config.getEgressFilter();
-    return Array.from(commits).map((commit) => filter(commit));
+    for (const commit of commits) {
+      yield filter(commit);
+    }
   }
 
-  public run(): void {
-    const commits = this.getFilteredCommits();
+  public *run(): Generator<number, void> {
+    const sourceCommits = this.getSourceCommits();
+    const filteredCommits = this.getFilteredCommits(sourceCommits);
     const { destinationBranch, destinationRepo } = this.config;
     destinationRepo.checkoutBranch(destinationBranch);
 
-    for (const commit of commits) {
-      if (commit.header.merge === true) {
+    let progress = 0;
+    for (const filterCommit of filteredCommits) {
+      if (filterCommit.header.merge === true) {
         throw new Error(
           'Unrecoverable error, merge commit found in change set. Shipit requires a linear git history'
         );
       }
 
-      if (commit.isValid()) {
+      if (filterCommit.isValid()) {
         try {
-          destinationRepo.commitPatch(commit);
+          destinationRepo.commitPatch(filterCommit);
         } catch (error: unknown) {
           logger.error(
-            `Failed on ${commit.header.type}(${commit.header.scope}):${commit.subject} by ${commit.author}`
+            `Failed on ${filterCommit.header.type}(${filterCommit.header.scope}):${filterCommit.subject} by ${filterCommit.author}`
           );
-          logger.error(commit.id);
-          for (const diff of commit.diffs) {
+          logger.error(filterCommit.id);
+          for (const diff of filterCommit.diffs) {
             logger.error(diff.path);
             logger.error(diff.body);
           }
           throw error;
         }
       }
+
+      progress += 1;
+      yield progress / sourceCommits.size;
     }
   }
 }
