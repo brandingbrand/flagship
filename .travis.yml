@@ -80,6 +80,9 @@ jobs:
       language: objective-c
       os: osx
       osx_image: xcode13.2
+      before_script:
+        - rvm install 2.6.0
+        - gem install bundler:2.3.5
       script:
         # Prevents Travis CI from killing stalled builds
         - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
