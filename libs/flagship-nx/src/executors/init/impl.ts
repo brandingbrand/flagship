@@ -7,6 +7,7 @@ import {
   logger,
 } from '@nrwl/devkit';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
+import { ensureNodeModulesSymlink } from '@nrwl/react-native/src/utils/ensure-node-modules-symlink';
 import { join } from 'path';
 import { platform } from 'os';
 
@@ -157,6 +158,8 @@ export const initExecutor = async (
 
     await formatFiles(tree);
     flushChanges(context.root, tree.listChanges());
+    ensureNodeModulesSymlink(context.root, projectRoot);
+
     await link(tree.root, projectRoot);
     if (platform() === 'darwin') {
       const iosFolder = join(projectRoot, 'ios');
