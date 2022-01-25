@@ -16,7 +16,8 @@ export interface ProductGroups<T extends Product = Product> {
   title: string;
 
   /**
-   * A record of product groups keyed by a `groupId`
+   * A record of product groups keyed by the
+   * `groupBy` option used in the query
    */
   groups: Record<string, ProductGroup<T>>;
 }
