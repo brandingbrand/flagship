@@ -104,7 +104,7 @@ export const makeAsyncEffect =
             Observable<AsyncAction<AsyncActionKey, Payload, FailPayload>>
           >((asyncCallbackResult) => {
             if (matches(asyncActionCreators.fail) && effectOptions.predict !== undefined) {
-              return of<AsyncAction<AsyncActionKey, Payload, FailPayload>>(
+              return of(
                 asyncActionCreators.revert.create(stateAtStart.payload),
                 asyncCallbackResult
               );
