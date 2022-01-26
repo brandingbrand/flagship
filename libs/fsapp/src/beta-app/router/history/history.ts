@@ -9,7 +9,7 @@ import type {
 } from './types';
 
 import { Linking, Platform } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { AnimationOptions, Navigation } from 'react-native-navigation';
 
 import { boundMethod } from 'autobind-decorator';
 import {
@@ -24,7 +24,7 @@ import {
 } from 'history';
 import { findLastIndex, isString, uniqueId } from 'lodash-es';
 
-import { ActivatedRoute, MatchingRoute, Routes } from '../types';
+import { ActivatedRoute, MatchingRoute, Routes, ScreenComponentType } from '../types';
 import { isDefined, promisedEntries } from '../../utils';
 
 import { INTERNAL, queueMethod } from './queue.decorator';
@@ -172,7 +172,13 @@ export class History implements FSRouterHistory {
   @boundMethod
   @queueMethod
   public async replace(_to: LocationDescriptor, _state?: unknown): Promise<void> {
-    throw new Error('Native routes cannot be replaced.');
+    const normalized = normalizeLocationDescriptor(_to);
+    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
+    } else {
+      const newLocation = await this.getNextLocation(normalized, _state, INTERNAL !== undefined);
+      await this.updateLocation(newLocation, 'REPLACE');
+    }
   }
 
   @boundMethod
@@ -371,6 +377,32 @@ export class History implements FSRouterHistory {
 
   // eslint-disable-next-line complexity
   private async updateLocation(location: StackedLocation, action: Action): Promise<void> {
+    const baseOptions = (
+      matchingRoute: MatchingRoute,
+      componentOptions: ScreenComponentType,
+      title: string | undefined,
+      animationOptions?: AnimationOptions
+    ) => ({
+      component: {
+        name: matchingRoute.id,
+        id: location.key,
+
+        options: {
+          animations: animationOptions,
+          topBar: {
+            rightButtons: undefined,
+            leftButtons: undefined,
+            ...matchingRoute.topBarStyle,
+            ...componentOptions.buttons,
+            title: {
+              ...matchingRoute.topBarStyle?.title,
+              text: title,
+            },
+          },
+        },
+      },
+    });
+
     if (this.checkBlockers(location, action)) {
       return;
     }
@@ -390,9 +422,9 @@ export class History implements FSRouterHistory {
       }
 
       this.actions.push(action);
+      const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
       switch (action) {
         case 'PUSH':
-          const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
           if (matchingRoute) {
             if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
               this.setLoading(true);
@@ -419,24 +451,7 @@ export class History implements FSRouterHistory {
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
-              const options = {
-                component: {
-                  name: matchingRoute.id,
-                  id: location.key,
-                  options: {
-                    topBar: {
-                      rightButtons: undefined,
-                      leftButtons: undefined,
-                      ...matchingRoute.topBarStyle,
-                      ...componentOptions.buttons,
-                      title: {
-                        ...matchingRoute.topBarStyle?.title,
-                        text: title,
-                      },
-                    },
-                  },
-                },
-              };
+              const options = baseOptions(matchingRoute, componentOptions, title);
 
               if (Platform.OS === 'ios') {
                 void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
@@ -445,8 +460,85 @@ export class History implements FSRouterHistory {
               }
             }
           }
-
           break;
+
+        case 'REPLACE':
+          if (matchingRoute) {
+            // if the location is NOT the same as the previous one.
+            if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
+              this.setLoading(true);
+              const activatedRoute = await this.resolveRouteDetails({
+                ...matchingRoute,
+                data: {
+                  ...matchingRoute.data,
+                  ...(typeof location.state === 'object' ? location.state : {}),
+                },
+              });
+              const observer = this.activationObservers.get(matchingRoute.id);
+              observer?.(activatedRoute);
+
+              const title =
+                typeof matchingRoute.title === 'function'
+                  ? await matchingRoute.title(activatedRoute)
+                  : matchingRoute.title;
+
+              const storeIndex = this.store.findIndex(({ stack }) => stack === location.stack);
+
+              this.store.splice(storeIndex, 1, location);
+
+              this.activeIndex = this.store.length - 1;
+
+              const previousRoute =
+                this.stacks[location.stack].children[
+                  this.stacks[location.stack].children.length - 1
+                ];
+
+              // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
+              this.stacks[location.stack].children.pop();
+              this.stacks[location.stack].children.push(location);
+
+              const componentOptions =
+                'component' in matchingRoute
+                  ? matchingRoute.component
+                  : await matchingRoute.loadComponent(activatedRoute);
+
+              const replaceAnimations = {
+                push: {
+                  content: {
+                    enabled: false,
+                  },
+                  enabled: false,
+                },
+                pop: {
+                  content: {
+                    enabled: false,
+                  },
+                  enabled: false,
+                },
+              };
+
+              const options = baseOptions(
+                matchingRoute,
+                componentOptions,
+                title,
+                replaceAnimations
+              );
+
+              if (Platform.OS === 'ios') {
+                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+                if (previousRoute.key) {
+                  void Navigation.pop(previousRoute.key);
+                }
+              } else {
+                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+                if (previousRoute.key) {
+                  await Navigation.pop(previousRoute.key);
+                }
+              }
+            }
+          }
+          break;
+
         case 'POP':
           if (
             location.key &&
