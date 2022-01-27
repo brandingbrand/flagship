@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsi18n",
   "sideEffects": false,
-  "version": "11.21.0",
+  "version": "11.22.0",
   "description": "Internationalization helpers for Flagship",
   "license": "MIT"
 }

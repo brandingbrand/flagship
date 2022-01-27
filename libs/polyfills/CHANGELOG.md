@@ -5,15 +5,12 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 # [11.22.0](https://github.com/brandingbrand/flagship/compare/v11.21.0...v11.22.0) (2022-01-27)
 
 
-
-# [11.21.0](https://github.com/brandingbrand/flagship/compare/v11.20.2...v11.21.0) (2022-01-21)
-
-
 ### Bug Fixes
 
-* **webpack-nx:** resolve web packages to `browser` field (3facd4b)
+* **polyfills:** metro shim (87f2855)
 
 
 ### Features
 
-* **webpack-nx:** initialize project (1ffab7d)
+* **polyfills:** add symbol-observable (41e4e1c)
+* **polyfills:** initialize project (3b000db)

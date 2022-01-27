@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscomponents",
   "sideEffects": false,
-  "version": "11.21.0",
+  "version": "11.22.0",
   "description": "Reusable, cross-platform frontend components",
   "license": "MIT"
 }
