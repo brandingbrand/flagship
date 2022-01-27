@@ -5,10 +5,12 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 # [11.22.0](https://github.com/wSedlacek/flagship-text/compare/v11.21.0...v11.22.0) (2022-01-27)
 
 
+### Bug Fixes
 
-# [11.21.0](https://github.com/wSedlacek/flagship-text/compare/v11.20.2...v11.21.0) (2022-01-21)
+* **polyfills:** metro shim (87f2855)
 
 
 ### Features
 
-* **types-location:** initialize project (b56f859)
+* **polyfills:** add symbol-observable (41e4e1c)
+* **polyfills:** initialize project (3b000db)
