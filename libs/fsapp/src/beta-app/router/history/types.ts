@@ -5,7 +5,7 @@ import type {
   TransitionPromptHook,
   UnregisterCallback,
 } from 'history';
-import type { OptionsTopBarTitle } from 'react-native-navigation';
+import type { Layout, OptionsTopBarTitle } from 'react-native-navigation';
 
 import type { ActivatedRoute } from '../types';
 
@@ -38,7 +38,12 @@ export interface FSRouterHistory extends History {
 
 export type Blocker = string | boolean | TransitionPromptHook;
 export type StackedLocation = Readonly<Location> & { readonly stack: number };
+
+export interface NativeLocation extends Location {
+  layout: Layout;
+}
+
 export interface Stack {
   readonly id: string;
-  readonly children: Readonly<Location>[];
+  readonly children: Readonly<NativeLocation>[];
 }

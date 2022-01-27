@@ -9,8 +9,9 @@ import type {
 } from './types';
 
 import { Linking, Platform } from 'react-native';
-import { AnimationOptions, Navigation } from 'react-native-navigation';
+import { AnimationOptions, LayoutTabsChildren, Navigation } from 'react-native-navigation';
 
+import { DeepPartial } from '@brandingbrand/types-utility';
 import { boundMethod } from 'autobind-decorator';
 import {
   Action,
@@ -90,16 +91,40 @@ export class History implements FSRouterHistory {
 
         const activatedPaths = extractPagePaths(root).filter(isDefined).filter(isString);
 
-        const stacks = root.bottomTabs
-          ? root.bottomTabs.children?.map(({ stack }) => stack?.id)
-          : [root.stack?.id];
+        const stacks: LayoutTabsChildren[] | undefined = root.bottomTabs
+          ? root.bottomTabs.children
+          : [
+              ...(root.stack?.id
+                ? ([
+                    {
+                      component: {
+                        // TODO: Figure out Root Stack
+                        // id: root.stack.id,
+                        // name: root.stack.id
+                      },
+                    },
+                  ] as LayoutTabsChildren[])
+                : []),
+            ];
 
-        this.stacks.push(
-          ...(stacks ?? []).filter(isDefined).map((id, i) => ({
-            id,
-            children: [{ ...parsePath(activatedPaths[i]), key: activatedPaths[i] }],
-          }))
+        const partialStacks: DeepPartial<Stack>[] = [
+          ...(stacks ?? []).map((layout, i) => ({
+            id: layout.stack?.id,
+            children: [
+              {
+                ...parsePath(activatedPaths[i]),
+                key: activatedPaths[i],
+                layout: layout.stack?.children?.[0],
+              },
+            ],
+          })),
+        ];
+
+        const requiredStacks = partialStacks.filter(
+          (stack): stack is Required<Stack> => !!stack.id
         );
+
+        this.stacks.push(...requiredStacks);
         this.store.push(
           ...this.stacks
             .map((stack, i) => stack.children.map((location) => ({ ...location, stack: i })))
@@ -443,15 +468,16 @@ export class History implements FSRouterHistory {
                   ? await matchingRoute.title(activatedRoute)
                   : matchingRoute.title;
 
-              this.store.push(location);
-              this.activeIndex = this.store.length - 1;
-              this.stacks[location.stack].children.push(location);
               const componentOptions =
                 'component' in matchingRoute
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
               const options = baseOptions(matchingRoute, componentOptions, title);
+
+              this.store.push(location);
+              this.activeIndex = this.store.length - 1;
+              this.stacks[location.stack].children.push({ ...location, layout: options });
 
               if (Platform.OS === 'ios') {
                 void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
@@ -482,58 +508,38 @@ export class History implements FSRouterHistory {
                   ? await matchingRoute.title(activatedRoute)
                   : matchingRoute.title;
 
-              const storeIndex = this.store.findIndex(({ stack }) => stack === location.stack);
-
-              this.store.splice(storeIndex, 1, location);
-
-              this.activeIndex = this.store.length - 1;
-
-              const previousRoute =
-                this.stacks[location.stack].children[
-                  this.stacks[location.stack].children.length - 1
-                ];
-
-              // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
-              this.stacks[location.stack].children.pop();
-              this.stacks[location.stack].children.push(location);
+              this.store[this.activeIndex] = location;
 
               const componentOptions =
                 'component' in matchingRoute
                   ? matchingRoute.component
                   : await matchingRoute.loadComponent(activatedRoute);
 
-              const replaceAnimations = {
-                push: {
-                  content: {
-                    enabled: false,
-                  },
+              const layout = baseOptions(matchingRoute, componentOptions, title, {
+                setStackRoot: {
                   enabled: false,
                 },
-                pop: {
-                  content: {
-                    enabled: false,
-                  },
-                  enabled: false,
-                },
-              };
+              });
 
-              const options = baseOptions(
-                matchingRoute,
-                componentOptions,
-                title,
-                replaceAnimations
-              );
+              // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
+              this.stacks[location.stack].children.pop();
+              this.stacks[location.stack].children.push({ ...location, layout });
+
+              const otherLayout =
+                this.stack?.children
+                  .slice(0, this.stack.children.length - 1)
+                  .map(({ layout }) => layout) ?? [];
 
               if (Platform.OS === 'ios') {
-                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
-                if (previousRoute.key) {
-                  void Navigation.pop(previousRoute.key);
-                }
+                void Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [
+                  ...otherLayout,
+                  layout,
+                ]);
               } else {
-                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
-                if (previousRoute.key) {
-                  await Navigation.pop(previousRoute.key);
-                }
+                await Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [
+                  ...otherLayout,
+                  layout,
+                ]);
               }
             }
           }
@@ -596,7 +602,7 @@ export class History implements FSRouterHistory {
 
   private getPathIndexInStack(stack: number, path: string): number {
     return findLastIndex(
-      this.stacks[stack].children,
+      this.stacks[stack]?.children,
       (pastLocation) => path === stringifyLocation(pastLocation)
     );
   }
