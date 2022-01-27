@@ -1,0 +1,58 @@
+{
+  "root": "libs/orchestrate-nx",
+  "sourceRoot": "libs/orchestrate-nx/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/orchestrate-nx/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/orchestrate-nx"],
+      "options": {
+        "jestConfig": "libs/orchestrate-nx/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/orchestrate-nx",
+        "tsConfig": "libs/orchestrate-nx/tsconfig.lib.json",
+        "packageJson": "libs/orchestrate-nx/package.json",
+        "main": "libs/orchestrate-nx/src/index.ts",
+        "assets": [
+          "libs/orchestrate-nx/*.md",
+          {
+            "input": "./libs/orchestrate-nx/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/orchestrate-nx",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    },
+    "install": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": []
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
