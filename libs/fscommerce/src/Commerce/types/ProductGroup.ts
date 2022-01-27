@@ -7,6 +7,11 @@ import Pageable from './Pageable';
  */
 export interface ProductGroup<T extends Product = Product> extends Partial<Pageable> {
   /**
+   * The id used to index the group
+   */
+  id: string;
+
+  /**
    * An array of products comprising the group.
    */
   products: T[];
