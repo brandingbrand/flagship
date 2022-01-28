@@ -9,7 +9,10 @@ export const stripCommitMessages =
       ({ name }) => name
     );
 
-    if (commit.header.scope !== null && excludedProjects.includes(commit.header.scope)) {
+    if (
+      (commit.header.scope !== null && excludedProjects.includes(commit.header.scope)) ||
+      commit.header.scope === 'ci'
+    ) {
       return commit
         .withDescription('')
         .withScope('repo')
