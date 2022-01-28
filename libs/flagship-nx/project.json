@@ -51,7 +51,7 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": []
+        "commands": ["npm install ./dist/libs/flagship-nx --ignore-scripts"]
       }
     }
   },
