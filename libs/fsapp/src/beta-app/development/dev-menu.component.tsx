@@ -105,7 +105,12 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
 
   const restart = () => {
     resolve();
-    DevSettings.reload();
+    // Reloading with a modal open causes the app to crash
+    // this maybe fixed in a newer version of `react-native-navigation`
+    // but for now just wait for it to close.
+    setTimeout(() => {
+      DevSettings.reload();
+    }, 1000);
   };
 
   const updateSelectedEnv = (env: string) => () => {
