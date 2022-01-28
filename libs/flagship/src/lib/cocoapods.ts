@@ -15,6 +15,7 @@ export function install(): void {
   helpers.logInfo('running pod install');
 
   try {
+    fs.flushSync();
     exec(`cd "${path.project.resolve('ios')}" && pod install`, {
       stdio: [0, 1, 2],
     });
