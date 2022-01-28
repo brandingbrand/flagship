@@ -38,7 +38,7 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": []
+        "commands": ["npm install ./dist/libs/webpack-nx --ignore-scripts"]
       }
     }
   },
