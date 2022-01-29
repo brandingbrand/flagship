@@ -1,7 +1,7 @@
-import { Commit } from '../git/commit';
+import { Commit, DestinationRepo, SourceRepo } from '@brandingbrand/git';
+import { ShellCommand } from '@brandingbrand/shell';
+
 import { ImportConfig } from '../configs/import.config';
-import { DestinationRepo, SourceRepo } from '../git/repo';
-import { ShellCommand } from '../git/shell-command';
 
 import { Phase } from './phase';
 

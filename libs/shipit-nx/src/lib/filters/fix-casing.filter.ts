@@ -1,4 +1,4 @@
-import { Commit } from '../git/commit';
+import { Commit } from '@brandingbrand/git';
 
 export const fixCasingFilter = (commit: Commit) => {
   const diffs = Array.from(commit.diffs);

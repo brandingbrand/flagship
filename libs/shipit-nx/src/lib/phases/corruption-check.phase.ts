@@ -1,5 +1,4 @@
 import { ShipConfig } from '../configs/ship.config';
-import { invariant } from '../utils/invariant.util';
 
 import { Phase } from './phase';
 
@@ -14,6 +13,8 @@ export class CorruptionCheckPhase implements Phase {
     // We should eventually nuke the repo and clone it again. But we do not
     // store the repos in CI yet so it's not necessary. Also, be careful not
     // to nuke monorepo in CI.
-    invariant(!repo.isCorrupted(), `Repo located in '${repo.path}' is corrupted.`);
+    if (repo.isCorrupted()) {
+      throw new Error(`Repo located in '${repo.path}' is corrupted.`);
+    }
   }
 }

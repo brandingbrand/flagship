@@ -1,4 +1,4 @@
-import { Commit, Diff } from '../git/commit';
+import { Commit, Diff } from '@brandingbrand/git';
 
 export const replaceText =
   (searchValue?: RegExp | string, replaceValue?: string) =>
