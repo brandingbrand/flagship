@@ -62,7 +62,7 @@ modules do not need to implement platform-specific code.
 
 Foundation packages provide a normalization over their integrations. For
 example, [`fscommerce`](libs/fscommerce) provides a single interface to query
-both [Demandware](https://www.demandware.com) and
+both [SFCC](https://www.salesforce.com) and
 [Shopify](https://www.shopify.com). The higher-level
 [`fsproductindex`](libs/fsproductindex) module doesn't need to know what the
 data source is to display a grid of products.
