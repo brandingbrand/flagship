@@ -2,8 +2,11 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import { pipe } from 'fp-ts/lib/function';
 
+import { Repo, Commit } from '@brandingbrand/git';
+
 import {
   addTrackingData,
+  fixCasingFilter,
   mapPaths,
   replaceText,
   stripCommitMessages,
@@ -12,10 +15,6 @@ import {
 } from '../filters';
 import { Project, ProjectFilter } from '../utils/find-closed-projects.util';
 import { tmpDir } from '../utils/temp-dir.util';
-
-import { Commit } from '../git/commit';
-import { Repo } from '../git/repo';
-import { fixCasingFilter } from '../filters/fix-casing.filter';
 
 type CommitFilter = (changes: Commit) => Commit[];
 const COMMIT_LINK = /\(\[((?:\d|[a-f]){7})].*\/((?:\d|[a-f]){40})\)\)/;

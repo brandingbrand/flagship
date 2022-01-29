@@ -1,4 +1,4 @@
-import { Commit, Diff } from '../git/commit';
+import { Commit, Diff } from '@brandingbrand/git';
 import { escapeRegex } from '../utils/escape-regex.util';
 
 /**

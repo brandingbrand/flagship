@@ -1,6 +1,7 @@
 import { logger } from '@nrwl/devkit';
 
-import { Commit } from '../git/commit';
+import { Commit } from '@brandingbrand/git';
+
 import { ShipConfig } from '../configs/ship.config';
 
 import { Phase } from './phase';

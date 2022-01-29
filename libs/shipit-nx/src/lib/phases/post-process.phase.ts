@@ -4,10 +4,11 @@ import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
 import { Workspace, Workspaces } from '@nrwl/tao/src/shared/workspace';
 import { execSync } from 'child_process';
 
+import { CommitMessage } from '@brandingbrand/git';
+
 import { join } from 'path';
 
 import { ShipConfig, ShipProjectOptions } from '../configs/ship.config';
-import { CommitMessage } from '../git/commit-message';
 import { sortObject } from '../utils/sort-object.util';
 
 import { Phase } from './phase';

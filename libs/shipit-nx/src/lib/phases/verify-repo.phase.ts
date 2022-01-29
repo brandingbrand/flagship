@@ -1,6 +1,7 @@
+import { Repo } from '@brandingbrand/git';
+import { ShellCommand } from '@brandingbrand/shell';
+
 import { ShipConfig } from '../configs/ship.config';
-import { Repo } from '../git/repo';
-import { ShellCommand } from '../git/shell-command';
 import { tmpDir } from '../utils/temp-dir.util';
 
 import { Phase } from './phase';
@@ -10,7 +11,7 @@ import { Phase } from './phase';
  * following these steps:
  *
  * 1) It exports every project from monorepo and filters it. This way we'll get
- *    fresh state of the project.
+ * fresh state of the project.
  * 2) It adds exported remote and compares these two repositories.
  *
  * There should not be any differences if everything goes well. Otherwise it

@@ -1,4 +1,5 @@
-import { Commit, Diff } from '../git/commit';
+import { Commit, Diff } from '@brandingbrand/git';
+
 import { ShipConfig } from '../configs/ship.config';
 import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.util';
 

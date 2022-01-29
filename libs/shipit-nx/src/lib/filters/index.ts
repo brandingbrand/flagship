@@ -1,3 +1,4 @@
+export * from './fix-casing.filter';
 export * from './map-paths.filter';
 export * from './replace-text.filter';
 export * from './strip-commit-messages';
