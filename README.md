@@ -20,7 +20,8 @@
 
 Flagship accelerates development of the best omnichannel commerce experiences
 by providing a full solution framework with routing solutions, components and
-integrations. In short, it enables you to focus more on innovations that matter.
+integrations. In short, it enables you to focus more on innovations that
+matter.
 
 Flagship helps you to:
 
@@ -38,9 +39,8 @@ It's written in TypeScript, and currently supports React Native.
   src="https://user-images.githubusercontent.com/556070/38953855-09901dc6-431e-11e8-9e50-26cb694c91e2.png"
   align="left">
 
-Flagship is comprised of a core `flagship` Nx plugin and a number of
-ancillary modules. These work together to help you build an ecommerce
-experience.
+Flagship is comprised of a core `flagship` Nx plugin and a number of ancillary
+modules. These work together to help you build an ecommerce experience.
 
 You can use modules independently — with or without the `flagship` core
 package. For example, [`fsproductindex`](packages/fsproductindex) displays a
@@ -62,16 +62,15 @@ modules do not need to implement platform-specific code.
 
 Foundation packages provide a normalization over their integrations. For
 example, [`fscommerce`](libs/fscommerce) provides a single interface to query
-both [SFCC](https://www.salesforce.com) and
-[Shopify](https://www.shopify.com). The higher-level
-[`fsproductindex`](libs/fsproductindex) module doesn't need to know what the
-data source is to display a grid of products.
+both [SFCC](https://www.salesforce.com) and [Shopify](https://www.shopify.com).
+The higher-level [`fsproductindex`](libs/fsproductindex) module doesn't need to
+know what the data source is to display a grid of products.
 
 These foundation packages are built on top of one another. For example,
 [`fscomponents`](libs/fscomponents) has props that inherit from
 [`fscommerce`](libs/fscommerce); [`fscommerce`](libs/fscommerce) sends
 analytics using [`fsengage`](libs/fsengage); and [`fsengage`](libs/fsengage)
-talks to the network using [`fsnetwork`](libs/fsnetwork). |
+talks to the network using [`fsnetwork`](libs/fsnetwork).
 
 ### Platforms
 
@@ -83,14 +82,13 @@ Supported platforms are:
 
 ### Nrwl Nx
 
-In Flagship 11, we began integrating Nrwl Nx into the core of
-Flagship. The existing `flagship` package can still be used without Nrwl Nx,
-however we are very excited about the improvements that Nx brings to the
-development workflow. The [`flagship-nx`](libs/flagship-nx) package includes
-the Flagship Nx plugin. You can use the `init` executor in this package to
-create an `ios` and `android` file for any nx project. The
-[`webpack-nx`]('libs/webpack-nx') includes a ready-made webpack config which
-supports all Flagship modules.
+In Flagship 11, we began integrating Nrwl Nx into the core of Flagship. The
+existing `flagship` package can still be used without Nrwl Nx, however we are
+very excited about the improvements that Nx brings to the development workflow.
+The [`flagship-nx`](libs/flagship-nx) package includes the Flagship Nx plugin.
+You can use the `init` executor in this package to create an `ios` and
+`android` file for any nx project. The [`webpack-nx`]('libs/webpack-nx')
+includes a ready-made webpack config which supports all Flagship modules.
 
 ## Troubleshooting
 
