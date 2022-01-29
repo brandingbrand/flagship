@@ -1,0 +1,46 @@
+{
+  "root": "libs/shell",
+  "sourceRoot": "libs/shell/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shell",
+        "tsConfig": "libs/shell/tsconfig.lib.json",
+        "packageJson": "libs/shell/package.json",
+        "main": "libs/shell/src/index.ts",
+        "assets": ["libs/shell/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shell/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shell"],
+      "options": {
+        "jestConfig": "libs/shell/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    },
+    "install": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npm install ./dist/libs/shell --ignore-scripts"]
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
