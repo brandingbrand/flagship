@@ -20,7 +20,7 @@
 
 Flagship accelerates development of the best omnichannel commerce experiences
 by providing a full solution framework with routing solutions, components and
-integrations. That way, you can focus more on innovations that matter.
+integrations. In short, it enables you to focus more on innovations that matter.
 
 Flagship helps you to:
 
@@ -30,7 +30,7 @@ Flagship helps you to:
 - Manage personalized engagement campaigns using the tools you already use or
   ours
 
-It's written in TypeScript with our first integration being with React Native.
+It's written in TypeScript, and currently supports React Native.
 
 ## How It Works
 
@@ -39,7 +39,7 @@ It's written in TypeScript with our first integration being with React Native.
   align="left">
 
 Flagship is comprised of a core `flagship` Nx plugin and a number of
-ancillary modules which work together to help you build an ecommerce
+ancillary modules. These work together to help you build an ecommerce
 experience.
 
 You can use modules independently — with or without the `flagship` core
@@ -83,14 +83,14 @@ Supported platforms are:
 
 ### Nrwl Nx
 
-In Flagship 11 we started work on integrating Nrwl Nx into the core of
-flagship. The existing `flagship` package can still be used without Nrwl Nx,
+In Flagship 11, we began integrating Nrwl Nx into the core of
+Flagship. The existing `flagship` package can still be used without Nrwl Nx,
 however we are very excited about the improvements that Nx brings to the
 development workflow. The [`flagship-nx`](libs/flagship-nx) package includes
 the Flagship Nx plugin. You can use the `init` executor in this package to
 create an `ios` and `android` file for any nx project. The
-[`webpack-nx`]('libs/webpack-nx') includes a ready made webpack config which
-supports all flagship modules.
+[`webpack-nx`]('libs/webpack-nx') includes a ready-made webpack config which
+supports all Flagship modules.
 
 ## Troubleshooting
 
