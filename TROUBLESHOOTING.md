@@ -8,7 +8,7 @@ the past while using Flagship.
 ### Symlinks
 
 This project utilizes symlinks for managing its TypeScript configurations. If
-you are developing on windows, there are a few extra requirements.
+you are developing on Windows, there are a few extra requirements.
 
 1. Ensure that you are running git 2.28 or higher
    - Older versions of git either don't support or had bugs with symlinks
@@ -21,6 +21,6 @@ you are developing on windows, there are a few extra requirements.
 
 ### Powershell
 
-Powershell has a bug which will cause it to crash when starting up an android
+Powershell has a bug which will cause it to crash when starting up an Android
 project due to a permission issue. It is recommend to use command line or Bash
 instead.
