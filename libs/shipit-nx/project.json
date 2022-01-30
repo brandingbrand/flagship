@@ -46,7 +46,7 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npm install ./dist/libs/shipit-nx --ignore-scripts"]
+        "commands": ["npm install ./dist/libs/shipit-nx --ignore-scripts --no-audit --no-fund"]
       }
     }
   },

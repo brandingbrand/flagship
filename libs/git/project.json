@@ -38,7 +38,7 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npm install ./dist/libs/git --ignore-scripts"]
+        "commands": ["npm install ./dist/libs/git --ignore-scripts --no-audit --no-fund"]
       }
     }
   },
