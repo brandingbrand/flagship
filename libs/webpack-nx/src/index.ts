@@ -35,7 +35,11 @@ const _loadDeps = () => {
 };
 
 interface ProgrammaticEnvironment {
-  options: Partial<WebWebpackExecutorOptions> & { forkTsCheck?: boolean; esm?: boolean };
+  options: Partial<WebWebpackExecutorOptions> & {
+    forkTsCheck?: boolean;
+    esm?: boolean;
+    keepNames?: boolean;
+  };
 }
 
 interface BuildEnvironment {
@@ -214,6 +218,34 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     },
   ];
 
+  const optimization: Configuration['optimization'] = (() => {
+    if (prod) {
+      const keepClassNames = options && 'keepNames' in options ? options.keepNames : false;
+      const otherMinimizers =
+        reactConfig.optimization?.minimizer?.filter(
+          (plugin) => !(plugin instanceof TerserPlugin)
+        ) ?? [];
+
+      return {
+        ...reactConfig.optimization,
+        minimize: true,
+        minimizer: [
+          ...otherMinimizers,
+          new TerserPlugin({
+            terserOptions: {
+              mangle: true,
+              compress: true,
+              keep_fnames: keepClassNames,
+              keep_classnames: keepClassNames,
+            },
+          }),
+        ],
+      };
+    }
+
+    return reactConfig.optimization;
+  })();
+
   const flagshipConfig: Configuration = {
     ...reactConfig,
     resolve: {
@@ -231,20 +263,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             ],
           }),
     },
-    optimization: prod
-      ? {
-          minimize: true,
-          minimizer: [
-            new TerserPlugin({
-              terserOptions: {
-                mangle: true,
-                compress: true,
-              },
-            }),
-          ],
-          ...reactConfig.optimization,
-        }
-      : reactConfig.optimization,
+    optimization,
 
     module: {
       ...reactConfig.module,
