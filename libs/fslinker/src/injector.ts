@@ -17,6 +17,10 @@ export class Injector implements FallbackCache {
     return this.injector.get(token);
   }
 
+  public static has(token: InjectionToken | InjectedClass): boolean {
+    return this.injector.has(token);
+  }
+
   public static require<T>(
     token: InjectionToken<T> | InjectedClass<T>
   ): T extends undefined ? never : T {
@@ -41,6 +45,10 @@ export class Injector implements FallbackCache {
 
   public get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
     return this.cache.get(token as InjectionToken<T>);
+  }
+
+  public has(token: InjectionToken | InjectedClass): boolean {
+    return this.cache.has(token as InjectionToken);
   }
 
   public require<T>(token: InjectionToken<T> | InjectedClass<T>): T extends undefined ? never : T {
