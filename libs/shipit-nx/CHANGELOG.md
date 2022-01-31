@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.23.0](https://github.com/wSedlacek/flagship-text/compare/v11.22.0...v11.23.0) (2022-01-31)
+
+
+### Features
+
+* **shipit-nx:** remove ci commits (27a3672)
+
+
+
 # [11.22.0](https://github.com/wSedlacek/flagship-text/compare/v11.21.0...v11.22.0) (2022-01-27)
 
 

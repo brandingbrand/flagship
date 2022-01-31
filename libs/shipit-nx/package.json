@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/shipit-nx",
   "description": "Copy commits to external repos",
-  "version": "11.22.0",
+  "version": "11.23.0",
   "executors": "./executors.json",
   "license": "MIT"
 }
