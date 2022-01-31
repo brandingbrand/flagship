@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import * as helpers from '../helpers';
 import * as path from './path';
 import * as os from './os';
+import * as fs from './fs';
 
 async function runLink(name?: string): Promise<void> {
   return new Promise<void>((packageResolve, packageReject) => {
@@ -28,6 +29,7 @@ async function runLink(name?: string): Promise<void> {
  * @returns {Promise<void>} A promise representing the child process running react-native link.
  */
 export async function link(forceLink?: string[]): Promise<void> {
+  fs.flushSync();
   return new Promise<void>(async (resolve, reject) => {
     if (forceLink && forceLink.length) {
       for (const name in forceLink) {
