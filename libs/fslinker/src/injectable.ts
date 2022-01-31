@@ -22,8 +22,11 @@ export const Injectable =
 
     target[DEPENDENCIES_SYMBOL] = prevDependencies;
 
-    (injector ?? Injector).provide({
-      provide: token ?? (target as unknown as InjectionToken),
-      useClass: target,
-    });
+    const injectorToken = token ?? (target as unknown as InjectionToken);
+    if (!(injector ?? Injector).has(injectorToken)) {
+      (injector ?? Injector).provide({
+        provide: injectorToken,
+        useClass: target,
+      });
+    }
   };
