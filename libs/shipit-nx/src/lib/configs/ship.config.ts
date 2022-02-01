@@ -90,7 +90,7 @@ export class ShipConfig {
     const projectSpecificPathMap: Record<string, string> =
       'project' in this.options
         ? {
-            'README.md': join(this.options.projectRoot, 'README.md'),
+            [join(this.options.projectRoot, 'README.md')]: 'README.md',
           }
         : {};
 
@@ -100,7 +100,7 @@ export class ShipConfig {
   }
 
   public get ignoredFilesAfterMap(): string[] {
-    const pathMapDestinations = Object.keys(this.pathMap);
+    const pathMapDestinations = Object.values(this.pathMap);
     return this.ignoredFiles.filter((file) => !pathMapDestinations.includes(file));
   }
 
