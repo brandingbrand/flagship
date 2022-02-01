@@ -45,10 +45,14 @@ export class ImportSyncPhase implements Phase {
     return sourceCommits;
   }
 
-  private getFilteredCommits(): Commit[] {
+  private *getFilteredCommits(): Generator<Commit, void> {
     const commits = this.getSourceCommits();
     const filter = this.config.getIngressFilter();
-    return Array.from(commits).map((commit) => filter(commit));
+    for (const commit of commits) {
+      for (const filteredCommit of filter(commit)) {
+        yield filteredCommit;
+      }
+    }
   }
 
   public run(): void {
