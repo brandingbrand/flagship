@@ -29,6 +29,31 @@ export interface DestinationRepo {
   push: (branch: string) => void;
 }
 
+const serializeArgs = (...args: unknown[]) => args.map((arg) => `${arg}`).join(':');
+
+const CacheSymbol = Symbol('CacheDecorator');
+const Cache = (): MethodDecorator => {
+  return (target, _propertyKey, descriptor: PropertyDescriptor) => {
+    const cachedTarget = target as { [CacheSymbol]: Map<unknown, unknown> };
+    const cache = (cachedTarget[CacheSymbol] ??= new Map());
+
+    const method = descriptor.value; // grab the function
+    descriptor.value = function (...args: unknown[]) {
+      const cacheKey = serializeArgs(...args);
+      if (cache.has(cacheKey)) {
+        return cache.get(cacheKey);
+      }
+
+      const result = method.apply(this, args);
+      if (result) {
+        cache.set(cacheKey, result);
+      }
+
+      return result;
+    };
+  };
+};
+
 export class Repo implements SourceRepo, DestinationRepo {
   constructor(public readonly path: string, private readonly sourceUrl?: string) {}
 
@@ -341,11 +366,13 @@ export class Repo implements SourceRepo, DestinationRepo {
     fs.rmSync(archivePath);
   }
 
+  @Cache()
   public getJsonFromRevision<T>(revision: string, path: string): T {
     const file = this.gitCommand('show', `${revision}:${path}`).runSynchronously().stdout;
     return JSON.parse(file) as T;
   }
 
+  @Cache()
   public getCommitIdFromRevision(revision: string): string {
     return this.gitCommand('rev-list', '--max-count', '1', `${revision}`).runSynchronously().stdout;
   }
