@@ -15,8 +15,9 @@ import { tmpDir } from '../utils/temp-dir.util';
 
 import { Commit } from '../git/commit';
 import { Repo } from '../git/repo';
+import { fixCasingFilter } from '../filters/fix-casing.filter';
 
-type CommitFilter = (changes: Commit) => Commit;
+type CommitFilter = (changes: Commit) => Commit[];
 const COMMIT_LINK = /\(\[((?:\d|[a-f]){7})].*\/((?:\d|[a-f]){40})\)\)/;
 
 export interface ShipConfigOptions {
@@ -113,13 +114,14 @@ export class ShipConfig {
         stripCommitMessages(this),
         replaceText(this.sourceRepo.id, this.destinationRepo.id),
         replaceText(COMMIT_LINK, '($1)'),
-        addTrackingData
+        addTrackingData,
+        fixCasingFilter
       );
   }
 
   public getIngressFilter(): CommitFilter {
     return (commit: Commit) =>
-      pipe(commit, replaceText(this.destinationRepo.id, this.sourceRepo.id));
+      pipe(commit, replaceText(this.destinationRepo.id, this.sourceRepo.id), fixCasingFilter);
   }
 
   public excludedProjectsFilter: ProjectFilter = (project) => {

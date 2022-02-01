@@ -49,11 +49,16 @@ export class VerifyRepoPhase implements Phase {
     if (dirtyCommit === undefined) throw new Error('Unexpected empty commit');
 
     const filter = this.config.getEgressFilter();
-    const filteredCommit = filter(dirtyCommit).withHeader('chore(repo): Initial filtered commit');
+    const filteredCommits = filter(dirtyCommit).map((commit) =>
+      commit.withHeader('chore(repo): initial filtered commit')
+    );
 
     const filteredRepoPath = tmpDir('brandingbrand-shipit-verify-filtered-');
     const filteredRepo = this.createNewEmptyRepo(filteredRepoPath);
-    filteredRepo.commitPatch(filteredCommit);
+
+    for (const filteredCommit of filteredCommits) {
+      filteredRepo.commitPatch(filteredCommit);
+    }
 
     new ShellCommand(
       filteredRepoPath,

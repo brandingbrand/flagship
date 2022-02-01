@@ -39,7 +39,9 @@ export class SyncPhase implements Phase {
   private *getFilteredCommits(commits: Set<Commit>): Generator<Commit, void> {
     const filter = this.config.getEgressFilter();
     for (const commit of commits) {
-      yield filter(commit);
+      for (const filteredCommit of filter(commit)) {
+        yield filteredCommit;
+      }
     }
   }
 
