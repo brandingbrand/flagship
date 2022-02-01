@@ -55,7 +55,7 @@ export class ShipConfig {
       'workspace.json',
     ];
 
-    const excludedPaths = ['.github', 'CHANGELOG.md', '.vscode/launch.json'];
+    const excludedPaths = ['.env.example', '.github', 'CHANGELOG.md', '.vscode/launch.json'];
     const projectSpecificExcludedPaths =
       'project' in this.options
         ? [join(this.options.projectRoot, 'package.json'), 'README.md']
