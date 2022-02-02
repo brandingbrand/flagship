@@ -1,0 +1,40 @@
+{
+  "root": "libs/react-linker",
+  "sourceRoot": "libs/react-linker/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/react-linker",
+        "tsConfig": "libs/react-linker/tsconfig.lib.json",
+        "packageJson": "libs/react-linker/package.json",
+        "main": "libs/react-linker/src/index.ts",
+        "assets": ["libs/react-linker/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-linker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/react-linker"],
+      "options": {
+        "jestConfig": "libs/react-linker/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
