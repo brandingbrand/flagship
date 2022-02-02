@@ -44,6 +44,7 @@ export abstract class FSAppBase implements IApp {
       screenWrap: makeScreenWrapper({
         store,
         app: () => app,
+        provider: config.provider,
       }),
       ...config.router,
     });
