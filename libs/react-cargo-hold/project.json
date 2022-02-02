@@ -1,0 +1,40 @@
+{
+  "root": "libs/react-cargo-hold",
+  "sourceRoot": "libs/react-cargo-hold/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/react-cargo-hold",
+        "tsConfig": "libs/react-cargo-hold/tsconfig.lib.json",
+        "packageJson": "libs/react-cargo-hold/package.json",
+        "main": "libs/react-cargo-hold/src/index.ts",
+        "assets": ["libs/react-cargo-hold/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-cargo-hold/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/react-cargo-hold"],
+      "options": {
+        "jestConfig": "libs/react-cargo-hold/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
