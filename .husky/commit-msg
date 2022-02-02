@@ -8,6 +8,6 @@ fi
 ./node_modules/.bin/commitlint -e $1
 ./tools/verify-commit.ts $1
 ./node_modules/.bin/nx workspace-lint
-./node_modules/.bin/nx format:check --base HEAD
-./node_modules/.bin/nx affected:test --base HEAD
-./node_modules/.bin/nx affected:lint --base HEAD
+./node_modules/.bin/nx format:check --files $(git diff --name-only --cached)
+./node_modules/.bin/nx affected:test --files $(git diff --name-only --cached)
+./node_modules/.bin/nx affected:lint --files $(git diff --name-only --cached)
