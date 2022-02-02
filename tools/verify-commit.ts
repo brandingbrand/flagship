@@ -90,8 +90,9 @@ const verifyProjectScope = async (commit: Commit, changedProjects: string[]) => 
   }
 };
 
+const rootScopes = ['workspace', 'ci', 'deps', 'repo'];
 const verifyWorkspaceScope = async (commit: Commit, changedProjects: string[]) => {
-  if (commit.scope !== 'workspace' && changedProjects.length === 0) {
+  if (!commit.scope || (!rootScopes.includes(commit.scope) && changedProjects.length === 0)) {
     const { confirmed } = await prompt({
       name: 'confirmed',
       message: dedent`No projects seem to have been affected, but your scope is ${commit.scope}.
