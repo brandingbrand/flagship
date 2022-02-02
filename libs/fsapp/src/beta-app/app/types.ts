@@ -1,6 +1,8 @@
+import type { FC } from 'react';
 import type { Action, AnyAction, Store } from 'redux';
 import type { Analytics } from '@brandingbrand/fsengage';
-import { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
+import type { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
+
 import type { FSRouter, RouterConfig, Routes } from '../router';
 import type { GenericState, StoreConfig } from '../store';
 import type { ShellConfig } from '../shell.web';
@@ -36,6 +38,7 @@ export interface AppConfig<
     : undefined;
   readonly sInfoOptions?: RNSensitiveInfoOptions;
   readonly getInitialURL?: () => Promise<string | null>;
+  readonly provider?: FC;
 }
 
 export interface IApp {
