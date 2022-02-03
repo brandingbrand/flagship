@@ -1,5 +1,6 @@
 const childProcess = require('child_process');
 const { mapValues } = require('lodash');
+const { Workspaces } = require('@nrwl/tao/src/shared/workspace');
 
 const tryRequire = (path) => {
   try {
@@ -10,18 +11,28 @@ const tryRequire = (path) => {
 };
 
 const nx = require('../workspace.json');
+const workspaces = new Workspaces(process.cwd());
 const projects = mapValues(nx.projects, (pathOrProject) =>
   typeof pathOrProject === 'string' ? require(`../${pathOrProject}/project.json`) : pathOrProject
 );
 
 const nxCommands = mapValues(projects, (project, name) => {
   const commands = Object.entries(project.targets)
-    .map(([target, { configurations }]) => {
-      const configurationCommands = Object.keys(configurations ?? {}).map(
-        (configuration) => `${name}:${target}:${configuration}`
+    .map(([target, targetConfig]) => {
+      const configurationCommands = Object.keys(targetConfig.configurations ?? {}).map(
+        (configuration) => ({
+          command: `${name}:${target}:${configuration}`,
+          description: '',
+        })
       );
 
-      return [`${name}:${target}`, ...configurationCommands];
+      const [nodeModule, executor] = targetConfig.executor.split(':');
+      const { schema } = workspaces.readExecutor(nodeModule, executor);
+
+      return [
+        { command: `${name}:${target}`, description: schema?.description ?? '' },
+        ...configurationCommands,
+      ];
     })
     .flat();
 
@@ -31,16 +42,30 @@ const nxCommands = mapValues(projects, (project, name) => {
   };
 });
 
+const blacklistedCommands = new Set([
+  'workspace:android',
+  'workspace:ios',
+  'workspace:build',
+  'workspace:lint',
+  'workspace:test',
+  'workspace:pr',
+]);
+
 const nxScripts = Object.entries(nxCommands)
-  .map(([project, { root, commands }]) => {
+  .map(([project, { root, commands }], i) => {
     const package = tryRequire(`../${root}/package.json`);
-    const commandScripts = commands.reduce(
-      (aggregate, command) => ({
-        ...aggregate,
-        [command]: `nx run ${command}`,
-      }),
-      {}
-    );
+    const commandScripts = commands
+      .filter(({ command }) => !blacklistedCommands.has(command))
+      .reduce(
+        (aggregate, { command, description }) => ({
+          ...aggregate,
+          [command]: {
+            script: `nx run ${command}`,
+            description,
+          },
+        }),
+        {}
+      );
 
     return {
       [project]: {
@@ -48,6 +73,7 @@ const nxScripts = Object.entries(nxCommands)
         description: package?.description ?? '',
       },
       ...commandScripts,
+      ['​'.repeat(i + 1)]: ' ',
     };
   })
   .reduce((aggregate, commands) => {
@@ -116,6 +142,11 @@ module.exports = {
       script: 'cz',
       description: 'Walks through the process of creating a commit message',
     },
+    'pr': {
+      script: 'nx pr workspace',
+      description: 'Walks through the process of creating a pull request',
+    },
+    ' ': ' ',
     ...nxScripts,
   },
 };
