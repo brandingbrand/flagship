@@ -10,6 +10,9 @@ const tryRequire = (path) => {
   }
 };
 
+const trimString = (string, length) =>
+  string.length > length ? `${string.substring(0, length)}...` : string;
+
 const nx = require('../workspace.json');
 const workspaces = new Workspaces(process.cwd());
 const projects = mapValues(nx.projects, (pathOrProject) =>
@@ -30,7 +33,7 @@ const nxCommands = mapValues(projects, (project, name) => {
       const { schema } = workspaces.readExecutor(nodeModule, executor);
 
       return [
-        { command: `${name}:${target}`, description: schema?.description ?? '' },
+        { command: `${name}:${target}`, description: schema?.description },
         ...configurationCommands,
       ];
     })
@@ -61,7 +64,7 @@ const nxScripts = Object.entries(nxCommands)
           ...aggregate,
           [command]: {
             script: `nx run ${command}`,
-            description,
+            description: trimString(description ?? '', 28),
           },
         }),
         {}
@@ -70,7 +73,7 @@ const nxScripts = Object.entries(nxCommands)
     return {
       [project]: {
         script: `nps | grep ${project}:`,
-        description: package?.description ?? '',
+        description: trimString(package?.description ?? '', 28),
       },
       ...commandScripts,
       ['​'.repeat(i + 1)]: ' ',
@@ -112,11 +115,11 @@ module.exports = {
     },
     'docker:all': {
       script: 'nx run-many --target docker --all',
-      description: 'Build docker images of all projects',
+      description: 'Build all docker images',
     },
     'docker:affected': {
       script: 'nx affected --target docker',
-      description: 'Build docker images of affected projects',
+      description: 'Build affected docker images',
     },
     'format': {
       script: 'nps | grep format:',
@@ -124,7 +127,7 @@ module.exports = {
     },
     'format:check': {
       script: 'nx format:check',
-      description: 'Checks that changed files are formatted',
+      description: 'Checks file formatting',
     },
     'format:check:all': {
       script: `nx format:check --base ${rootRevision}`,
@@ -140,11 +143,11 @@ module.exports = {
     },
     'commit': {
       script: 'cz',
-      description: 'Walks through the process of creating a commit message',
+      description: 'Interactive commit',
     },
     'pr': {
       script: 'nx pr workspace',
-      description: 'Walks through the process of creating a pull request',
+      description: 'Interactive pull request',
     },
     ' ': ' ',
     ...nxScripts,
