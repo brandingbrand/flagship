@@ -56,6 +56,7 @@ type GetWebpackConfig = (
 
 const webAliases = {
   'react-native-svg': 'svgs',
+  'react-native-webview': 'react-native-web-webview',
   'react-native': 'react-native-web',
   'react-native-linear-gradient': 'react-native-web-linear-gradient',
   'react-native-web/dist/exports/DatePickerIOS': '@react-native-community/datetimepicker',
@@ -65,7 +66,6 @@ const webAliases = {
     'react-native-web/dist/modules/UnimplementedView',
   'react-native-web/dist/exports/SegmentedControlIOS':
     'react-native-web/dist/modules/UnimplementedView',
-  'react-native-web/dist/exports/WebView': 'react-native-web-webview',
 };
 
 const webLoaders = [
@@ -75,6 +75,15 @@ const webLoaders = [
     options: {
       name: 'static/media/[name].[hash:8].[ext]',
       scalings: { '@2x': 2, '@3x': 3 },
+    },
+  },
+  {
+    test: /postMock.html$/,
+    use: {
+      loader: require.resolve('file-loader'),
+      options: {
+        name: '[name].[ext]',
+      },
     },
   },
   {
