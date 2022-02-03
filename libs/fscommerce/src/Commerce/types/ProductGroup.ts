@@ -1,5 +1,5 @@
 import { Product } from './Product';
-import Pageable from './Pageable';
+import { Pageable } from './Pageable';
 
 /**
  * Similar to a ProductIndex but with the group metadata removed
