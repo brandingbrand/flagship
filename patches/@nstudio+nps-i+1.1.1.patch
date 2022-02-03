@@ -14,3 +14,18 @@ index 42fb8e5..ab79339 100644
    stdout.pipe(process.stdout);
    stderr.pipe(process.stderr);
  }
+diff --git a/node_modules/@nstudio/nps-i/index.js b/node_modules/@nstudio/nps-i/index.js
+index b6406bd..8126ab6 100755
+--- a/node_modules/@nstudio/nps-i/index.js
++++ b/node_modules/@nstudio/nps-i/index.js
+@@ -66,7 +66,9 @@ flattenScripts(packageScripts)
+ /* Find longest key */
+ let longestKey = ''
+ flatScripts.forEach(element => {
+-  if (element.name.length > longestKey.length) longestKey = element.name
++  // Remove zero width characters
++  const normalizedName = element.name.replace(/​/g, '');
++  if (normalizedName.length > longestKey.length) longestKey = normalizedName
+ })
+ 
+ /* Width of key column */
