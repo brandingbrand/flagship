@@ -38,6 +38,7 @@ export interface AppConfig<
     : undefined;
   readonly sInfoOptions?: RNSensitiveInfoOptions;
   readonly getInitialURL?: () => Promise<string | null>;
+  readonly onDestroy?: () => void;
   readonly provider?: FC;
 }
 

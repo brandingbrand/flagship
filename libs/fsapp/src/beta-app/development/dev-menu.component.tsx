@@ -109,6 +109,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
     // this maybe fixed in a newer version of `react-native-navigation`
     // but for now just wait for it to close.
     setTimeout(() => {
+      app?.config.onDestroy?.();
       DevSettings.reload();
     }, 1000);
   };

@@ -23,6 +23,7 @@ export class FSAppBeta extends FSAppBase {
   }
 
   public async stopApplication(): Promise<void> {
+    this.config.onDestroy?.();
     if (this.root) {
       // React Native Web hack due to unmatched Type Definitions
       // React Native Web aliases `unmountComponentAtNode` from `react-dom`

@@ -36,6 +36,7 @@ export class FSAppBeta extends FSAppBase {
   }
 
   public async stopApplication(): Promise<void> {
+    this.config.onDestroy?.();
     BackHandler.exitApp();
   }
 }
