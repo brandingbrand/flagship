@@ -20,6 +20,15 @@ export interface SessionManagerOptions {
   restoreCookies?: () => Promise<void>;
 }
 
+const timeToExpiry = (expiryTime: Date): number => {
+  return new Date(expiryTime).getTime() - new Date().getTime();
+};
+
+const shouldRefreshToken = (token: CommerceTypes.SessionToken): boolean => {
+  const timeToRefresh = timeToExpiry(token.expiresAt);
+  return timeToRefresh > 0 && timeToRefresh < 300000;
+};
+
 export class SessionManager {
   constructor(private readonly options: SessionManagerOptions) {}
 
@@ -30,7 +39,7 @@ export class SessionManager {
     );
   }
 
-  public async get(): Promise<CommerceTypes.SessionToken> {
+  private async getCurrent(): Promise<CommerceTypes.SessionToken | null> {
     try {
       const tokenString: string = await SInfo.getItem(SESSION_MANAGER_TOKEN, sensitiveInfoOptions);
       const token = JSON.parse(tokenString);
@@ -38,16 +47,17 @@ export class SessionManager {
         return token;
       }
     } catch (e) {
-      /* let it fail sliently */
+      /* let it fail silently */
     }
 
     try {
       const token = await this.options.sessionCookiesToToken();
       if (token) {
+        await this.set(token);
         return token;
       }
     } catch (e) {
-      /* let it fail sliently */
+      /* let it fail silently */
     }
 
     if (this.options.restoreCookies) {
@@ -55,14 +65,32 @@ export class SessionManager {
         await this.options.restoreCookies();
         const token = await this.options.sessionCookiesToToken();
         if (token) {
+          await this.set(token);
           return token;
         }
       } catch (e) {
-        /* let it fail sliently */
+        /* let it fail silently */
       }
     }
 
-    return this.options.createGuestToken();
+    return null;
+  }
+
+  public async get(): Promise<CommerceTypes.SessionToken> {
+    const token = await this.getCurrent();
+    if (!token) {
+      const token = await this.options.createGuestToken();
+      await this.set(token);
+      return token;
+    }
+
+    if (shouldRefreshToken(token)) {
+      const refreshedToken = await this.options.refreshToken(token);
+      await this.set(refreshedToken);
+      return refreshedToken;
+    }
+
+    return token;
   }
 
   public async delete(): Promise<void> {
