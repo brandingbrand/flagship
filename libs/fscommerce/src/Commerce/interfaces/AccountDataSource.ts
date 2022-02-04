@@ -79,6 +79,14 @@ export default interface AccountDataSource {
   register(account: CustomerAccount, password: string): Promise<CustomerAccount>;
 
   /**
+   * Deletes an existing customer account.
+   *
+   * @param {CustomerAccount} account - Metadata about the new customer's account
+   * @returns {Promise.<boolean>} A Promise representing a new user's account
+   */
+  deleteAccount?(account?: CustomerAccount): Promise<boolean>;
+
+  /**
    * Fetch saved addresses for the active user's account.
    *
    * @returns {Promise.<Array.<CustomerAddress>>} A Promise representing saved addresses for a user
