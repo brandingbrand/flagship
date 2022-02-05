@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.24.0](https://github.com/brandingbrand/flagship/compare/v11.23.0...v11.24.0) (2022-02-05)
+
+
+### Bug Fixes
+
+* **shipit-nx:** correct commits that change casing of file name (0d5fe58)
+* **shipit-nx:** ignore env example (fafeed7)
+* **shipit-nx:** path mapping directories (9b37863)
+
+
+### Performance Improvements
+
+* **shipit-nx:** cache results of pure git commands (93a4b0c)
+
+
+
 # [11.23.0](https://github.com/brandingbrand/flagship/compare/v11.22.0...v11.23.0) (2022-01-31)
 
 
