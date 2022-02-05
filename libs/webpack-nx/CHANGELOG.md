@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.24.0](https://github.com/wSedlacek/flagship-text/compare/v11.23.0...v11.24.0) (2022-02-05)
+
+
+### Features
+
+* **webpack-nx:** support react-native-webview on web (ddf134e)
+
+
+
 # [11.23.0](https://github.com/wSedlacek/flagship-text/compare/v11.22.0...v11.23.0) (2022-01-31)
 
 

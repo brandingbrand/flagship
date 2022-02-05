@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.24.0](https://github.com/wSedlacek/flagship-text/compare/v11.23.0...v11.24.0) (2022-02-05)
+
+
+### Bug Fixes
+
+* **fscommerce:** add id to product group (c152c94)
+* **fscommerce:** update product group (a3de396)
+
+
+### Features
+
+* **fscommerce:** delete account interface (f0a1e93)
+
+
+
 # [11.23.0](https://github.com/wSedlacek/flagship-text/compare/v11.22.0...v11.23.0) (2022-01-31)
 
 
