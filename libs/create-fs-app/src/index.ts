@@ -15,7 +15,7 @@ import { callout } from './lib/colors';
 const TEMPLATE_URL = 'https://github.com/brandingbrand/flagship-template/archive/master.tar.gz';
 const pipeline = promisify(stream.pipeline);
 
-type Answers = questions.AssociatedDomainsAnswers &
+type PromptAnswers = questions.AssociatedDomainsAnswers &
   questions.BundleIdsAnswers &
   questions.CodePushAnswers &
   questions.DoExtendedConfigAnswers &
@@ -24,7 +24,7 @@ type Answers = questions.AssociatedDomainsAnswers &
   questions.UsageDescriptionsAnswers &
   questions.ZendeskChatAnswers;
 
-type UserConfig = Answers['config'];
+type UserConfig = PromptAnswers['config'];
 type Config = UserConfig & BaseConfig;
 
 const clearDirectory = async () => {
@@ -57,7 +57,7 @@ const populateRepo = async () => {
   await pipeline(response.body, zlib.createUnzip(), extract({ strip: 1 }));
 };
 
-const populateConfigs = async (): Promise<Answers> => {
+const populateConfigs = async (): Promise<PromptAnswers> => {
   const {
     associatedDomains,
     bundleIds,
@@ -82,7 +82,7 @@ const populateConfigs = async (): Promise<Answers> => {
     ...zendeskChat.map(onlyWhenExtendedConfig),
   ];
 
-  const answers = await inquirer.prompt<Answers>(orderedQuestions.map(newLineSuffix));
+  const answers = await inquirer.prompt<PromptAnswers>(orderedQuestions.map(newLineSuffix));
 
   return answers;
 };
