@@ -2,7 +2,7 @@ import type { PAYLOAD } from '../internal/tokens';
 import type { AnyAction, ActionHandler, Action, AnyActionSpecifier } from './action-bus.types';
 import type { TypeGuard } from './action';
 
-import { Subject, Subscription, type Observable } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export class ActionBus {

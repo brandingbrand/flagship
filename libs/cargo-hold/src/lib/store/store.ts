@@ -1,4 +1,4 @@
-import { BehaviorSubject, ReplaySubject, type Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Observable, Subscription } from 'rxjs';
 import { scan, switchMap } from 'rxjs/operators';
 import { accumulateToArray } from '../internal/util/operators';
 import { ActionBus, AnyAction } from '../action-bus';
