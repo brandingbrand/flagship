@@ -93,6 +93,38 @@ export interface ProductSuggestion {
 }
 
 /**
+ * Ambigious query only results that have no real categorization that are meant
+ * to lead the user to another search
+ */
+export interface QuerySuggestion {
+  /**
+   * The actual suggested query
+   *
+   * @example 'indigo jeans'
+   */
+  value: string;
+
+  /**
+   * A metadata value that represents how popular this query value is in relation to other queries.
+   * Ex: Algolia calls this value 'popularity'
+   *
+   */
+  rank?: number;
+}
+
+export interface QuerySuggestions {
+  /**
+   * An array of suggested product metadata.
+   *
+   * @example [{
+   *   value: 'red shirt',
+   *   rank: 2
+   * }]
+   */
+  queries: QuerySuggestion[];
+}
+
+/**
  * Encapsulation of suggested brands, categories, and products for a specified query.
  */
 export interface SearchSuggestion {
@@ -115,4 +147,11 @@ export interface SearchSuggestion {
    * Suggested products for the specified query.
    */
   productSuggestions?: ProductSuggestions;
+
+  /**
+   * Query suggestions that have no real categorization
+   *
+   * example: An autocomplete dropdown that gives you search terms after typing in 3 letters
+   */
+  querySuggestions?: QuerySuggestions;
 }
