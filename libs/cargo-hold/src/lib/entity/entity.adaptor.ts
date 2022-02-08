@@ -1,5 +1,5 @@
 import { makeReducers } from '.';
-import { composeLens, LensCreator, type Lens } from '../lens';
+import { composeLens, LensCreator, Lens } from '../lens';
 import { makeCreateState } from './entity.reducer';
 import { getSelectors } from './entity.selectors';
 import type { Comparer, EntityAdaptor, EntityState, IdSelector } from './entity.types';

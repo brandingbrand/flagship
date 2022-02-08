@@ -4,7 +4,7 @@ import type { Effect, SourcesList } from '../store/store.types';
 
 import { map } from 'rxjs/operators';
 
-import { composeLens, type Lens, LensCreator } from '../lens';
+import { composeLens, Lens, LensCreator } from '../lens';
 import { createAsyncActionCreators } from './async.actions';
 import { makeAsyncEffect } from './async.effect';
 import {

@@ -5,7 +5,7 @@ import type { AsyncAction, AsyncState, CreateAsyncEffectOptions } from './async.
 import { from, merge, Observable, of } from 'rxjs';
 import { filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { isRight, left, right } from '../internal/util/functional/either';
-import { matches, type Effect } from '../store';
+import { matches, Effect } from '../store';
 
 /**
  * `makeAsyncEffect` is the "raw" creator function that gets used in the `AsyncAdaptor`. It gets

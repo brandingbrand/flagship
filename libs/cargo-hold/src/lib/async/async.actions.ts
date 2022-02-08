@@ -1,4 +1,4 @@
-import { createActionCreator, type ActionCreator } from '../action-bus';
+import { createActionCreator, ActionCreator } from '../action-bus';
 
 /**
  * AsyncActionCreators are utilities to both filter reducers/effects and then trigger those reducers
