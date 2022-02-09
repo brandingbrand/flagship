@@ -1,0 +1,33 @@
+{
+  "root": "libs/shared/util-std-branded",
+  "sourceRoot": "libs/shared/util-std-branded/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-branded",
+        "main": "libs/shared/util-std-branded/src/index.ts",
+        "tsConfig": "libs/shared/util-std-branded/tsconfig.lib.json",
+        "assets": ["libs/shared/util-std-branded/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-branded/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-branded"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-branded/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
