@@ -1,4 +1,4 @@
-import { Failure, isFailure, isOk, Result } from './result';
+import { isFailure, Result } from './result';
 
 export function flatMapAll<A, OkType, FailureType>(
   inputA: Result<A, FailureType>,
@@ -32,8 +32,5 @@ export function flatMapAll<A, B, C, D, E, OkType, FailureType>(
 ): Result<OkType, FailureType>;
 export function flatMapAll<OkType, FailureType>(...params: any[]): Result<OkType, FailureType> {
   const handler = params.pop();
-  if (params.every(isOk)) {
-    return handler(...params.map((param) => param.ok));
-  }
-  return params.find(isFailure) as Failure<FailureType>;
+  return params.find(isFailure) ?? handler(...params.map((param) => param.ok));
 }
