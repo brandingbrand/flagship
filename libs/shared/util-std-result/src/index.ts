@@ -1,4 +1,5 @@
 export * from './apply-param';
+export * from './builder';
 export * from './extract';
 export * from './flat-map-all';
 export * from './flat-map';
