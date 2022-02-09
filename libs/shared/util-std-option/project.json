@@ -4,14 +4,20 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-option",
         "tsConfig": "libs/shared/util-std-option/tsconfig.lib.json",
-        "packageJson": "libs/shared/util-std-option/package.json",
-        "main": "libs/shared/util-std-option/src/index.ts",
-        "assets": ["libs/shared/util-std-option/*.md"]
+        "project": "libs/shared/util-std-option/package.json",
+        "entryFile": "libs/shared/util-std-option/src/index.ts",
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-option",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
@@ -27,6 +33,12 @@
       "options": {
         "jestConfig": "libs/shared/util-std-option/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },
