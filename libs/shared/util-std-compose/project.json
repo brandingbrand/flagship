@@ -1,0 +1,34 @@
+{
+  "root": "libs/shared/util-std-compose",
+  "sourceRoot": "libs/shared/util-std-compose/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-compose",
+        "tsConfig": "libs/shared/util-std-compose/tsconfig.lib.json",
+        "packageJson": "libs/shared/util-std-compose/package.json",
+        "main": "libs/shared/util-std-compose/src/index.ts",
+        "assets": ["libs/shared/util-std-compose/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-compose/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-compose"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-compose/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
