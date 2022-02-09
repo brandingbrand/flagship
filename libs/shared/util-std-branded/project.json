@@ -4,13 +4,20 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-branded",
-        "main": "libs/shared/util-std-branded/src/index.ts",
+        "entryFile": "libs/shared/util-std-branded/src/index.ts",
+        "project": "libs/shared/util-std-branded/package.json",
         "tsConfig": "libs/shared/util-std-branded/tsconfig.lib.json",
-        "assets": ["libs/shared/util-std-branded/*.md"]
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-branded",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
@@ -26,6 +33,12 @@
       "options": {
         "jestConfig": "libs/shared/util-std-branded/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },
