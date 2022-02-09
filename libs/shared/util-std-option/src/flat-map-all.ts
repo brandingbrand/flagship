@@ -1,4 +1,5 @@
-import { isSome, none, Option } from './option';
+import { isNone } from '.';
+import { Option } from './option';
 
 export function flatMapAll<A, Value>(
   inputA: Option<A>,
@@ -32,8 +33,5 @@ export function flatMapAll<A, B, C, D, E, Value>(
 ): Option<Value>;
 export function flatMapAll<Value>(...params: any[]): Option<Value> {
   const handler = params.pop();
-  if (params.every(isSome)) {
-    return handler(...params.map((param) => param.value));
-  }
-  return none;
+  return params.find(isNone) ?? handler(...params.map((param) => param.value));
 }
