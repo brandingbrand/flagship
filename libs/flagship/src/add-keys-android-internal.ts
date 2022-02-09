@@ -1,8 +1,6 @@
-import { copyFileSync } from 'fs';
+import { append, copySync } from './lib/fs';
 import { basename } from 'path';
 import { project } from './lib/path';
-
-const helpers = require('./helpers');
 
 let projectEnv = null;
 
@@ -43,7 +41,7 @@ const gradlePropertiesPath = project.resolve('android', 'gradle.properties');
 if (buildConfig && buildConfig.storeFile) {
   // add keystore setting to {project}/android/gradle.properties
   copyKeystore(buildConfig.storeFile);
-  helpers.appendFile(
+  append(
     gradlePropertiesPath,
     `
   MYAPP_RELEASE_STORE_FILE=${project.resolve('env', buildConfig.storeFile)}
@@ -63,7 +61,7 @@ function copyKeystore(pathName: string): void {
   const to = project.resolve('android', 'app', filename);
 
   try {
-    copyFileSync(from, to);
+    copySync(from, to);
   } catch (e) {
     console.error(`ERROR: keystore [${from}] not found`);
     process.exit(1);

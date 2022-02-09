@@ -267,3 +267,16 @@ export function writeFileSync(dest: string, body: string): void {
     process.once('beforeExit', file.dirty);
   }
 }
+
+/**
+ * Appends text to a given file.
+ *
+ * @param {string} path The path to the file to update.
+ * @param {string} text The replacement text.
+ */
+export function append(path: string, text: string): void {
+  const fileContent = readFileSync(path);
+  writeFileSync(path, fileContent + text);
+
+  helpers.logInfo(`file appended\n${path}`);
+}
