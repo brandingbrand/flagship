@@ -67,5 +67,3 @@ function copyKeystore(pathName: string): void {
     process.exit(1);
   }
 }
-
-process.exit();

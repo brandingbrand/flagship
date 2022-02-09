@@ -76,5 +76,3 @@ exec(
     buildConfig.profilesDir
   )}/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
 );
-
-process.exit();
