@@ -1,0 +1,33 @@
+{
+  "root": "libs/shared/util-std-lens",
+  "sourceRoot": "libs/shared/util-std-lens/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-lens",
+        "main": "libs/shared/util-std-lens/src/index.ts",
+        "tsConfig": "libs/shared/util-std-lens/tsconfig.lib.json",
+        "assets": ["libs/shared/util-std-lens/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-lens/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-lens"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-lens/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
