@@ -1,4 +1,4 @@
-import type { Lazy } from '@brandingbrand/standard-compose';
+import type { Lazy } from '@brandingbrand/types-utility';
 import { fail, ok, Result } from './result';
 
 export const tryCatch = <OkType, FailureType>(
