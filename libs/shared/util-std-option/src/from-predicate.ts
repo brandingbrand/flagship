@@ -1,4 +1,4 @@
-import { Predicate, TypeGuard } from '@brandingbrand/standard-compose';
+import type { Predicate, TypeGuard } from '@brandingbrand/types-utility';
 import { none, Option, some } from './option';
 
 export function fromPredicate<A, B extends A>(predicate: TypeGuard<A, B>): (input: A) => Option<B>;
