@@ -1,6 +1,6 @@
+import { createLens } from '@brandingbrand/standard-lens';
 import * as FastCheck from 'fast-check';
 import { createAsyncAdaptor } from '.';
-import { LensCreator } from '..';
 import { asyncStateArbitrary } from '../../testing/fast-check-arbitraries.util';
 
 describe('createAsyncAdaptor', () => {
@@ -19,7 +19,7 @@ describe('createAsyncAdaptor', () => {
           ).filter((value) => Object.keys(value).length >= 1),
           (actionKey, newState, state) => {
             const stateKey = Object.keys(state)[0];
-            const lens = new LensCreator<typeof state>().fromProp(stateKey);
+            const lens = createLens<typeof state>().fromPath(stateKey);
             const adaptor = createAsyncAdaptor({ actionKey }).withLens(lens);
             expect(adaptor.selectors.selectPayload(state)).toBe(state[stateKey].payload);
             expect(adaptor.lensedReducers.init(newState)(state)).toEqual({

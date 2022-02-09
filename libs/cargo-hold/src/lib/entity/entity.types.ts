@@ -1,4 +1,4 @@
-import type { Lens } from '../lens';
+import type { ILens } from '@brandingbrand/standard-lens';
 import type { StateReducer } from '../store';
 
 export type EntityId = string | number;
@@ -54,7 +54,7 @@ export interface EntityAdaptor<T, Structure = EntityState<T>> {
    * Create an Adaptor that operates in a larger outer structure
    */
   withLens: <OuterStructure>(
-    lens: Lens<OuterStructure, Structure>
+    lens: ILens<OuterStructure, Structure>
   ) => EntityAdaptor<T, OuterStructure>;
 
   /**

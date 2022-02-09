@@ -1,5 +1,5 @@
+import { createLens } from '@brandingbrand/standard-lens';
 import * as FastCheck from 'fast-check';
-import { LensCreator } from '../lens';
 import { defaultIdSelector } from './entity.adaptor';
 import { makeReducers } from './entity.reducer';
 import type { EntityState } from './entity.types';
@@ -9,7 +9,7 @@ type SampleItem = {
   value: unknown;
 };
 
-const entityStateLens = new LensCreator<EntityState<SampleItem>>().id();
+const entityStateLens = createLens<EntityState<SampleItem>>().fromPath();
 
 const sampleItemArbitrary: FastCheck.Arbitrary<SampleItem> = FastCheck.record({
   id: FastCheck.integer(),

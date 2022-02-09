@@ -1,10 +1,7 @@
-import type { ActionSpecifier, AnyAction } from '../action-bus';
-import type { AsyncAdaptor, AsyncState, CreateAsyncEffectOptions } from './async.types';
-import type { Effect, SourcesList } from '../store/store.types';
-
+import { ComposableLens, createLens, ILens } from '@brandingbrand/standard-lens';
 import { map } from 'rxjs/operators';
-
-import { composeLens, Lens, LensCreator } from '../lens';
+import type { ActionSpecifier, AnyAction } from '../action-bus';
+import type { Effect, SourcesList } from '../store/store.types';
 import { createAsyncActionCreators } from './async.actions';
 import { makeAsyncEffect } from './async.effect';
 import {
@@ -14,12 +11,13 @@ import {
   createReducers,
 } from './async.reducer';
 import { createSelectors } from './async.selectors';
+import type { AsyncAdaptor, AsyncState, CreateAsyncEffectOptions } from './async.types';
 
 export type AsyncAdaptorOptions<ActionKey extends string, Payload, FailPayload, Structure> = {
   emitSource?: string | symbol;
   listenToSources?: SourcesList;
   actionKey: ActionKey;
-  lens?: Lens<Structure, AsyncState<Payload, FailPayload>>;
+  lens?: ILens<Structure, AsyncState<Payload, FailPayload>>;
 };
 
 export const createAsyncAdaptor = <
@@ -30,10 +28,10 @@ export const createAsyncAdaptor = <
 >(
   options: AsyncAdaptorOptions<ActionKey, Payload, FailPayload, Structure>
 ): AsyncAdaptor<ActionKey, Payload, FailPayload, Structure> => {
-  const payloadLens = new LensCreator<AsyncState<Payload, FailPayload>>().fromProp('payload');
+  const payloadLens = createLens<AsyncState<Payload, FailPayload>>().fromPath('payload');
   const structureLens =
     options.lens ??
-    (new LensCreator<Structure>().id() as unknown as Lens<
+    (createLens<Structure>().fromPath() as unknown as ILens<
       Structure,
       AsyncState<Payload, FailPayload>
     >);
@@ -67,10 +65,10 @@ export const createAsyncAdaptor = <
     const effect = makeAsyncEffect(actionCreators)(effectOptions);
     return (action$, state$) => effect(action$, state$.pipe(map(structureLens.get)));
   };
-  const withLens = <OuterStructure>(lens: Lens<OuterStructure, Structure>) =>
+  const withLens = <OuterStructure>(lens: ILens<OuterStructure, Structure>) =>
     createAsyncAdaptor<ActionKey, Payload, FailPayload, OuterStructure>({
       ...options,
-      lens: composeLens(structureLens)(lens),
+      lens: new ComposableLens(structureLens).withOuterLens(lens),
     });
 
   return {

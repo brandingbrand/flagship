@@ -1,15 +1,15 @@
-import type { Lens } from '../lens';
+import type { ILens } from '@brandingbrand/standard-lens';
 import type { EntityId, EntityState } from './entity.types';
 
 export const makeSelectAll =
-  <T, Structure>(lens: Lens<Structure, EntityState<T>>) =>
+  <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
     return state.ids.map((id) => state.entities[id]);
   };
 
 export const makeSelectByIds =
-  <T, Structure>(lens: Lens<Structure, EntityState<T>>) =>
+  <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (ids: EntityId[]) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
@@ -17,7 +17,7 @@ export const makeSelectByIds =
   };
 
 export const makeSelectById =
-  <T, Structure>(lens: Lens<Structure, EntityState<T>>) =>
+  <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (id: EntityId) =>
   (structure: Structure): T | undefined => {
     const state = lens.get(structure);
@@ -25,7 +25,7 @@ export const makeSelectById =
   };
 
 export const makeSelectByIndex =
-  <T, Structure>(lens: Lens<Structure, EntityState<T>>) =>
+  <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (index: number) =>
   (structure: Structure): T | undefined => {
     const state = lens.get(structure);
@@ -33,7 +33,7 @@ export const makeSelectByIndex =
   };
 
 export const makeSelectByIndices =
-  <T, Structure>(lens: Lens<Structure, EntityState<T>>) =>
+  <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (indices: number[]) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
@@ -43,7 +43,7 @@ export const makeSelectByIndices =
       .map((id) => state.entities[state.ids[id]]);
   };
 
-export const getSelectors = <T, Structure>(lens: Lens<Structure, EntityState<T>>) => ({
+export const getSelectors = <T, Structure>(lens: ILens<Structure, EntityState<T>>) => ({
   selectAll: makeSelectAll(lens),
   selectByIds: makeSelectByIds(lens),
   selectById: makeSelectById(lens),
