@@ -1,0 +1,33 @@
+{
+  "root": "libs/shared/util-std-result",
+  "sourceRoot": "libs/shared/util-std-result/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-result",
+        "main": "libs/shared/util-std-result/src/index.ts",
+        "tsConfig": "libs/shared/util-std-result/tsconfig.lib.json",
+        "assets": ["libs/shared/util-std-result/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-result/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-result"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-result/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
