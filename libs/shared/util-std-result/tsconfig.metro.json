@@ -6,5 +6,5 @@
     "types": []
   },
   "include": ["**/*.ts", "**/*.js"],
-  "exclude": ["**/*.spec.ts", "index.ts"]
+  "exclude": ["**/*.spec.ts"]
 }
