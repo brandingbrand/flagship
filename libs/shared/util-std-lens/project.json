@@ -4,13 +4,20 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-lens",
-        "main": "libs/shared/util-std-lens/src/index.ts",
+        "entryFile": "libs/shared/util-std-lens/src/index.ts",
+        "project": "libs/shared/util-std-lens/package.json",
         "tsConfig": "libs/shared/util-std-lens/tsconfig.lib.json",
-        "assets": ["libs/shared/util-std-lens/*.md"]
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-lens",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
@@ -26,6 +33,12 @@
       "options": {
         "jestConfig": "libs/shared/util-std-lens/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   },
