@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fslinker",
   "sideEffects": false,
-  "version": "11.25.0",
+  "version": "11.25.1",
   "description": "Dependency Injection",
   "license": "MIT"
 }
