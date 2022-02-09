@@ -1,11 +1,10 @@
-import type { ActionSpecifier, AnyAction } from '../action-bus';
-import type { AsyncActionCreators } from './async.actions';
-import type { AsyncAction, AsyncState, CreateAsyncEffectOptions } from './async.types';
-
+import { fail, isOk, ok } from '@brandingbrand/standard-result';
 import { from, merge, Observable, of } from 'rxjs';
 import { filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
-import { isRight, left, right } from '../internal/util/functional/either';
-import { matches, Effect } from '../store';
+import type { ActionSpecifier, AnyAction } from '../action-bus';
+import { Effect, matches } from '../store';
+import type { AsyncActionCreators } from './async.actions';
+import type { AsyncAction, AsyncState, CreateAsyncEffectOptions } from './async.types';
 
 /**
  * `makeAsyncEffect` is the "raw" creator function that gets used in the `AsyncAdaptor`. It gets
@@ -71,25 +70,25 @@ export const makeAsyncEffect =
           // error in the observable, so we catch it and wrap it for identification in the next step.
           effectOptions
             .do(...(action as AnyAction<Params>).payload)
-            .then(right)
-            .catch(left)
+            .then(ok)
+            .catch(fail)
         ).pipe(
           // grab state after callback returned
           withLatestFrom(state$),
           map(([result, currentState]) => {
-            if (isRight(result)) {
+            if (isOk(result)) {
               if (effectOptions.mapOnSuccess) {
                 return asyncActionCreators.succeed.create(
-                  effectOptions.mapOnSuccess(result.right)(currentState.payload)
+                  effectOptions.mapOnSuccess(result.ok)(currentState.payload)
                 );
               }
               // onSuccess would have been required if CallbackResult wasn't a Payload,
               // so we know this coercion is safe.
-              return asyncActionCreators.succeed.create(result.right as unknown as Payload);
+              return asyncActionCreators.succeed.create(result.ok as unknown as Payload);
             }
             if (effectOptions.mapOnFail) {
               return asyncActionCreators.fail.create(
-                effectOptions.mapOnFail(result.left)(
+                effectOptions.mapOnFail(result.failure)(
                   currentState.payload,
                   currentState.status === 'failure' ? currentState.failure : undefined
                 )
@@ -97,7 +96,7 @@ export const makeAsyncEffect =
             }
             // onFail would have been required if FailCallbackResult wasn't a FailPayload,
             // so we know this coercion is safe.
-            return asyncActionCreators.fail.create(result.left as unknown as FailPayload);
+            return asyncActionCreators.fail.create(result.failure as unknown as FailPayload);
           }),
           mergeMap<
             AsyncAction<AsyncActionKey, Payload, FailPayload>,

@@ -1,5 +1,5 @@
+import { ComposableLens, createLens, ILens } from '@brandingbrand/standard-lens';
 import { makeReducers } from '.';
-import { composeLens, LensCreator, Lens } from '../lens';
 import { makeCreateState } from './entity.reducer';
 import { getSelectors } from './entity.selectors';
 import type { Comparer, EntityAdaptor, EntityState, IdSelector } from './entity.types';
@@ -10,7 +10,7 @@ export const defaultIdSelector = <T extends { id: string | number }>(item: T) =>
 export type CreateEntityAdaptorOptions<T, Structure> = {
   idSelector: IdSelector<T>;
   comparer?: Comparer<T>;
-  lens?: Lens<Structure, EntityState<T>>;
+  lens?: ILens<Structure, EntityState<T>>;
 };
 
 export const createEntityAdaptor = <T, Structure>(
@@ -19,21 +19,21 @@ export const createEntityAdaptor = <T, Structure>(
   const isSorted: boolean = !!options.comparer;
   const structureLens =
     options.lens ??
-    (new LensCreator<Structure>().id() as unknown as Lens<Structure, EntityState<T>>);
+    (createLens<Structure>().fromPath() as unknown as ILens<Structure, EntityState<T>>);
   const deps: EntityAdaptorDeps<T, Structure> = { ...options, lens: structureLens, isSorted };
   const unlensedDeps: EntityAdaptorDeps<T, EntityState<T>> = {
     ...options,
     isSorted,
-    lens: new LensCreator<EntityState<T>>().id(),
+    lens: createLens<EntityState<T>>().fromPath(),
   };
 
   const lensedReducers = makeReducers(deps);
   const reducers = makeReducers(unlensedDeps);
 
-  const withLens = <OuterStructure>(lens: Lens<OuterStructure, Structure>) =>
+  const withLens = <OuterStructure>(lens: ILens<OuterStructure, Structure>) =>
     createEntityAdaptor<T, OuterStructure>({
       ...options,
-      lens: composeLens(structureLens)(lens),
+      lens: new ComposableLens(structureLens).withOuterLens(lens),
     });
 
   const selectors = getSelectors(structureLens);

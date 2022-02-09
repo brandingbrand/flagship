@@ -1,3 +1,4 @@
+import { ILens } from '@brandingbrand/standard-lens';
 import type {
   Action,
   ActionSpecifier,
@@ -6,8 +7,7 @@ import type {
   TypeGuard,
 } from '../action-bus';
 import type { OptionalIfExtends } from '../internal/types';
-import type { Lens } from '../lens';
-import type { Effect, AnyActionReducer, StateReducer } from '../store';
+import type { AnyActionReducer, Effect, StateReducer } from '../store';
 import type { AsyncActionCreators } from './async.actions';
 
 type BaseAsyncState<Status extends string, T> = {
@@ -143,10 +143,10 @@ export interface AsyncAdaptor<ActionKey extends string, Payload, FailPayload, St
   reducers: AsyncReducers<Payload, FailPayload, AsyncState<Payload, FailPayload>>;
   lensedReducers: AsyncReducers<Payload, FailPayload, Structure>;
   combinedReducer: AnyActionReducer<Structure>;
-  payloadLens: Lens<AsyncState<Payload, FailPayload>, Payload>;
+  payloadLens: ILens<AsyncState<Payload, FailPayload>, Payload>;
   selectors: AsyncSelectors<Payload, FailPayload, Structure>;
   withLens: <OuterStructure>(
-    lens: Lens<OuterStructure, Structure>
+    lens: ILens<OuterStructure, Structure>
   ) => AsyncAdaptor<ActionKey, Payload, FailPayload, OuterStructure>;
   createEffect: <
     DesiredActionSpecifier extends

@@ -1,6 +1,9 @@
+import { createLens } from '@brandingbrand/standard-lens';
 import * as FastCheck from 'fast-check';
 import { AsyncState, createAsyncActionCreators, createLensedReducers, createReducers } from '.';
-import { AnyAction, LensCreator, StateReducer } from '..';
+import { asyncStateArbitrary } from '../../testing/fast-check-arbitraries.util';
+import { AnyAction } from '../action-bus';
+import { StateReducer } from '../store';
 import {
   createCombinedReducer,
   createFailureState,
@@ -8,7 +11,6 @@ import {
   createLoadingState,
   createSuccessState,
 } from './async.reducer';
-import { asyncStateArbitrary } from '../../testing/fast-check-arbitraries.util';
 
 const createAsyncState = () => asyncStateArbitrary(FastCheck.anything(), FastCheck.anything());
 
@@ -138,7 +140,7 @@ describe('createLensedReducers', () => {
   type State = {
     nestedValue: AsyncState<unknown, unknown>;
   };
-  const lens = new LensCreator<State>().fromProp('nestedValue');
+  const lens = createLens<State>().fromPath('nestedValue');
 
   it('creates a working init reducer', () => {
     FastCheck.assert(
@@ -244,7 +246,7 @@ describe('createLensedReducers', () => {
 describe('createCombinedReducer', () => {
   const myAsyncActionKey = 'asyncActionKey' as const;
   const actionCreators = createAsyncActionCreators(myAsyncActionKey);
-  const idLens = new LensCreator<AsyncState<unknown, unknown>>().id();
+  const idLens = createLens<AsyncState<unknown, unknown>>().fromPath();
   const combinedActionReducer = createCombinedReducer(actionCreators, idLens);
 
   it('returns state if no actions match', () => {

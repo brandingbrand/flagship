@@ -1,5 +1,5 @@
+import { withLens } from '@brandingbrand/standard-lens';
 import { EntityReducers } from '.';
-import { withLens } from '../lens';
 import type { StateReducer } from '../store/store.types';
 import type { EntityId, EntityState } from './entity.types';
 import type { EntityAdaptorDeps } from './entity.types.internal';

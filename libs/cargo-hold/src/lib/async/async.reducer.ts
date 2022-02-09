@@ -1,4 +1,4 @@
-import { Lens, withLens } from '../lens';
+import { ILens, withLens } from '@brandingbrand/standard-lens';
 import { combineActionReducers, matches, on, StateReducer } from '../store';
 import type { AsyncActionCreators } from './async.actions';
 import type {
@@ -68,7 +68,7 @@ export const createReducers = <Payload, FailPayload>() => ({
 });
 
 export const createLensedReducers = <Payload, FailPayload, Structure>(
-  lens: Lens<Structure, AsyncState<Payload, FailPayload>>
+  lens: ILens<Structure, AsyncState<Payload, FailPayload>>
 ) => {
   const reducers = createReducers<Payload, FailPayload>();
   return {
@@ -83,7 +83,7 @@ export const createLensedReducers = <Payload, FailPayload, Structure>(
 
 export const createCombinedReducer = <ActionKey extends string, Payload, FailPayload, Structure>(
   actionCreators: AsyncActionCreators<ActionKey, Payload, FailPayload>,
-  lens: Lens<Structure, AsyncState<Payload, FailPayload>>
+  lens: ILens<Structure, AsyncState<Payload, FailPayload>>
 ) => {
   const reducers = createLensedReducers(lens);
   return combineActionReducers(
