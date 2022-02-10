@@ -4,14 +4,22 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-cargo-hold",
         "tsConfig": "libs/react-cargo-hold/tsconfig.lib.json",
-        "packageJson": "libs/react-cargo-hold/package.json",
-        "main": "libs/react-cargo-hold/src/index.ts",
-        "assets": ["libs/react-cargo-hold/*.md"]
+        "project": "libs/react-cargo-hold/package.json",
+        "entryFile": "libs/react-cargo-hold/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/react-cargo-hold",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
