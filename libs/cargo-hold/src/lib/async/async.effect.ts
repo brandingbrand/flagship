@@ -51,7 +51,7 @@ export const makeAsyncEffect =
           (state.status === 'success' || state.status === 'loading-more') &&
           effectOptions.loadingMore
         ) {
-          return asyncActionCreators.loadMore.create(update);
+          return asyncActionCreators.loadMore.create(update as Payload);
         }
 
         return asyncActionCreators.load.create(update);

@@ -15,11 +15,11 @@ type BaseAsyncState<Status extends string, T> = {
   payload: T;
 };
 
-export type AsyncIdleState<T> = BaseAsyncState<'idle', T>;
-export type AsyncLoadingState<T> = BaseAsyncState<'loading', T>;
+export type AsyncIdleState<T> = BaseAsyncState<'idle', T | undefined>;
+export type AsyncLoadingState<T> = BaseAsyncState<'loading', T | undefined>;
 export type AsyncLoadingMoreState<T> = BaseAsyncState<'loading-more', T>;
 export type AsyncSuccessState<T> = BaseAsyncState<'success', T>;
-export type AsyncFailureState<T, FailureType> = BaseAsyncState<'failure', T> & {
+export type AsyncFailureState<T, FailureType> = BaseAsyncState<'failure', T | undefined> & {
   failure: FailureType;
 };
 
@@ -43,7 +43,7 @@ type BaseAsyncAction<ActionKey extends string, TransitionKey extends string, Pay
 export type AsyncLoadAction<ActionKey extends string, Payload> = BaseAsyncAction<
   ActionKey,
   'async:load',
-  Payload
+  Payload | undefined
 >;
 export type AsyncFailAction<ActionKey extends string, Payload> = BaseAsyncAction<
   ActionKey,
@@ -58,12 +58,12 @@ export type AsyncSucceedAction<ActionKey extends string, Payload> = BaseAsyncAct
 export type AsyncInitAction<ActionKey extends string, Payload> = BaseAsyncAction<
   ActionKey,
   'async:init',
-  Payload
+  Payload | undefined
 >;
 export type AsyncRevertAction<ActionKey extends string, Payload> = BaseAsyncAction<
   ActionKey,
   'async:revert',
-  Payload
+  Payload | undefined
 >;
 
 export type AsyncAction<ActionKey extends string, Payload, FailPayload> =
@@ -85,7 +85,7 @@ export interface AsyncReducers<Payload, FailPayload, Structure> {
 }
 
 export interface AsyncSelectors<Payload, FailPayload, Structure> {
-  selectPayload: (structure: Structure) => Payload;
+  selectPayload: (structure: Structure) => Payload | undefined;
   selectStatus: (structure: Structure) => AsyncStatus;
   selectFailure: (structure: Structure) => FailPayload | undefined;
 }
@@ -103,11 +103,11 @@ export interface BaseCreateAsyncEffectOptions<
   loadingMore?: boolean;
   when: TypeGuard<AnyActionSpecifier, DesiredActionSpecifier>;
   do: (...params: Params) => Promise<CallbackResult>;
-  mapOnSuccess: (result: CallbackResult) => (currentPayload: Payload) => Payload;
+  mapOnSuccess: (result: CallbackResult) => (currentPayload: Payload | undefined) => Payload;
   mapOnFail: (
     result: FailedCallbackResult
-  ) => (currentPayload: Payload, currentFailure?: FailPayload) => FailPayload;
-  predict?: (params: Params, state: Payload) => Payload;
+  ) => (currentPayload: Payload | undefined, currentFailure?: FailPayload) => FailPayload;
+  predict?: (params: Params, state: Payload | undefined) => Payload;
 }
 
 export type CreateAsyncEffectOptions<
@@ -143,7 +143,7 @@ export interface AsyncAdaptor<ActionKey extends string, Payload, FailPayload, St
   reducers: AsyncReducers<Payload, FailPayload, AsyncState<Payload, FailPayload>>;
   lensedReducers: AsyncReducers<Payload, FailPayload, Structure>;
   combinedReducer: AnyActionReducer<Structure>;
-  payloadLens: ILens<AsyncState<Payload, FailPayload>, Payload>;
+  payloadLens: ILens<AsyncState<Payload, FailPayload>, Payload | undefined>;
   selectors: AsyncSelectors<Payload, FailPayload, Structure>;
   withLens: <OuterStructure>(
     lens: ILens<OuterStructure, Structure>

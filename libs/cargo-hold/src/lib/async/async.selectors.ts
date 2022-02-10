@@ -3,7 +3,7 @@ import type { AsyncState, AsyncStatus } from './async.types';
 
 export const makeSelectPayload =
   <Payload, FailPayload, Structure>(lens: ILens<Structure, AsyncState<Payload, FailPayload>>) =>
-  (structure: Structure): Payload =>
+  (structure: Structure): Payload | undefined =>
     lens.get(structure).payload;
 
 export const makeSelectStatus =

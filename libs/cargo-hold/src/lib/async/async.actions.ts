@@ -5,12 +5,17 @@ import { ActionCreator, createActionCreator } from '../action-bus';
  * and effects upon dispatch.
  */
 export type AsyncActionCreators<ActionKey extends string, Payload, FailPayload> = {
-  init: ActionCreator<ActionKey, 'async:init', Payload, [payload: Payload]>;
-  load: ActionCreator<ActionKey, 'async:load', Payload, [payload: Payload]>;
+  init: ActionCreator<ActionKey, 'async:init', Payload | undefined, [payload: Payload | undefined]>;
+  load: ActionCreator<ActionKey, 'async:load', Payload | undefined, [payload: Payload | undefined]>;
   loadMore: ActionCreator<ActionKey, 'async:load-more', Payload, [payload: Payload]>;
   succeed: ActionCreator<ActionKey, 'async:succeed', Payload, [payload: Payload]>;
   fail: ActionCreator<ActionKey, 'async:fail', FailPayload, [failure: FailPayload]>;
-  revert: ActionCreator<ActionKey, 'async:revert', Payload, [payload: Payload]>;
+  revert: ActionCreator<
+    ActionKey,
+    'async:revert',
+    Payload | undefined,
+    [payload: Payload | undefined]
+  >;
 };
 
 /**
