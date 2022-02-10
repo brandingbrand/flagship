@@ -189,6 +189,7 @@
           "required": ["storeFile", "keyAlias"]
         },
         "androidPasswords": {
+          "type": "object",
           "properties": {
             "storePassword": {
               "type": "string"
