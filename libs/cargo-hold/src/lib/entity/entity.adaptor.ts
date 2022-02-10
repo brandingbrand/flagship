@@ -1,6 +1,5 @@
 import { ComposableLens, createLens, ILens } from '@brandingbrand/standard-lens';
-import { makeReducers } from '.';
-import { makeCreateState } from './entity.reducer';
+import { makeCreateState, makeReducers } from './entity.reducer';
 import { getSelectors } from './entity.selectors';
 import type { Comparer, EntityAdaptor, EntityState, IdSelector } from './entity.types';
 import type { EntityAdaptorDeps } from './entity.types.internal';

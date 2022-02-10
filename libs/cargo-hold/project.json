@@ -4,14 +4,22 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/cargo-hold",
         "tsConfig": "libs/cargo-hold/tsconfig.lib.json",
-        "packageJson": "libs/cargo-hold/package.json",
-        "main": "libs/cargo-hold/src/index.ts",
-        "assets": ["libs/cargo-hold/*.md"]
+        "project": "libs/cargo-hold/package.json",
+        "entryFile": "libs/cargo-hold/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/cargo-hold",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
