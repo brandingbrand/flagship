@@ -5,6 +5,6 @@
     "declaration": true,
     "types": []
   },
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "index.ts"],
-  "include": ["**/*.ts", "**/*.js"]
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["**/*.spec.ts", "index.ts"]
 }
