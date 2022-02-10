@@ -4,14 +4,22 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shell",
         "tsConfig": "libs/shell/tsconfig.lib.json",
-        "packageJson": "libs/shell/package.json",
-        "main": "libs/shell/src/index.ts",
-        "assets": ["libs/shell/*.md"]
+        "project": "libs/shell/package.json",
+        "entryFile": "libs/shell/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shell",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
