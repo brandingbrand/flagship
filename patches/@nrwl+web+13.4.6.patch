@@ -1,0 +1,171 @@
+diff --git a/node_modules/@nrwl/web/src/executors/rollup/lib/swc-plugin.js b/node_modules/@nrwl/web/src/executors/rollup/lib/swc-plugin.js
+index d30540a..03d158b 100644
+--- a/node_modules/@nrwl/web/src/executors/rollup/lib/swc-plugin.js
++++ b/node_modules/@nrwl/web/src/executors/rollup/lib/swc-plugin.js
+@@ -8,6 +8,18 @@ function swc() {
+         transform(code, filename) {
+             return transform(code, {
+                 filename,
++                jsc: {
++                    target: 'es2015',
++                    parser: {
++                        syntax: 'typescript',
++                        decorators: true,
++                        dynamicImport: true
++                    },
++                    keepClassNames: true,
++                    transform: {
++                        decoratorMetadata: true
++                    }
++                },
+             });
+         },
+     };
+diff --git a/node_modules/@nrwl/web/src/executors/rollup/lib/validate-types.js b/node_modules/@nrwl/web/src/executors/rollup/lib/validate-types.js
+index acecba8..b0dc031 100644
+--- a/node_modules/@nrwl/web/src/executors/rollup/lib/validate-types.js
++++ b/node_modules/@nrwl/web/src/executors/rollup/lib/validate-types.js
+@@ -9,7 +9,8 @@ function validateTypes(opts) {
+         const result = yield (0, js_1.runTypeCheck)({
+             workspaceRoot: opts.workspaceRoot,
+             tsConfigPath: (0, path_1.join)(opts.workspaceRoot, opts.tsconfig),
+-            mode: 'noEmit',
++            mode: 'emitDeclarationOnly',
++            outDir: path_1.join(opts.workspaceRoot, 'dist')
+         });
+         yield (0, js_1.printDiagnostics)(result.errors, result.warnings);
+         if (result.errors.length > 0) {
+diff --git a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+index b948c2e..12736c0 100644
+--- a/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
++++ b/node_modules/@nrwl/web/src/executors/rollup/rollup.impl.js
+@@ -43,18 +43,6 @@ function rollupExecutor(rawOptions, context) {
+             .filter((d) => d.target.startsWith('npm:'))
+             .map((d) => d.target.substr(4));
+         const rollupOptions = createRollupOptions(options, dependencies, context, packageJson, sourceRoot, npmDeps);
+-        if (options.compiler === 'swc') {
+-            try {
+-                yield (0, tslib_1.__await)((0, validate_types_1.validateTypes)({
+-                    workspaceRoot: context.root,
+-                    projectRoot: options.projectRoot,
+-                    tsconfig: options.tsConfig,
+-                }));
+-            }
+-            catch (_b) {
+-                return yield (0, tslib_1.__await)({ success: false });
+-            }
+-        }
+         if (options.watch) {
+             const watcher = rollup.watch(rollupOptions);
+             return yield (0, tslib_1.__await)(yield (0, tslib_1.__await)(yield* (0, tslib_1.__asyncDelegator)((0, tslib_1.__asyncValues)((0, rxjs_for_await_1.eachValueFrom)(new rxjs_1.Observable((obs) => {
+@@ -77,6 +65,7 @@ function rollupExecutor(rawOptions, context) {
+             }))))));
+         }
+         else {
++
+             devkit_1.logger.info(`Bundling ${context.projectName}...`);
+             // Delete output path before bundling
+             if (options.deleteOutputPath) {
+@@ -92,17 +81,32 @@ function rollupExecutor(rawOptions, context) {
+                     return acc;
+                 return result;
+             }, { success: true }), (0, operators_1.last)(), (0, operators_1.tap)({
+-                next: (result) => {
++                next: (result) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+                     if (result.success) {
+                         const end = process.hrtime.bigint();
+                         const duration = `${(Number(end - start) / 1000000000).toFixed(2)}s`;
++
++                        if (options.compiler === 'swc') {
++                            try {
++                                yield (0, validate_types_1.validateTypes)({
++                                    workspaceRoot: context.root,
++                                    projectRoot: options.projectRoot,
++                                    tsconfig: options.tsConfig,
++                                    outDir: options.outputPath,
++                                });
++                            }
++                            catch (_b) {
++                                return { success: false };
++                            }
++                        }
++
+                         updatePackageJson(options, context, target, dependencies, packageJson);
+                         devkit_1.logger.info(`⚡ Done in ${duration}`);
+                     }
+                     else {
+                         devkit_1.logger.error(`Bundle failed: ${context.projectName}`);
+                     }
+-                },
++                }),
+             }))
+                 .toPromise());
+         }
+@@ -113,6 +117,18 @@ exports.default = rollupExecutor;
+ function createRollupOptions(options, dependencies, context, packageJson, sourceRoot, npmDeps) {
+     const useBabel = options.compiler === 'babel';
+     const useSwc = options.compiler === 'swc';
++    const entryPointName = (format) => {
++        if (format === 'esm') {
++            return `[name]-esm.js`
++        }
++
++        if (format === 'cjs') {
++            return `[name].js`
++        }
++
++        return `[name].${format}.js`;
++    }
++
+     return options.format.map((format, idx) => {
+         const plugins = [
+             copy({
+@@ -179,6 +195,7 @@ function createRollupOptions(options, dependencies, context, packageJson, source
+             .map((d) => d.name)
+             .concat(options.external || [])
+             .concat(Object.keys(packageJson.dependencies || {}));
++
+         const rollupConfig = {
+             input: options.entryFile,
+             output: {
+@@ -186,8 +203,8 @@ function createRollupOptions(options, dependencies, context, packageJson, source
+                 format,
+                 dir: `${options.outputPath}`,
+                 name: options.umdName || (0, devkit_1.names)(context.projectName).className,
+-                entryFileNames: `[name].${format}.js`,
+-                chunkFileNames: `[name].${format}.js`,
++                entryFileNames: entryPointName(format),
++                chunkFileNames: entryPointName(format),
+                 // umd doesn't support code-split bundles
+                 inlineDynamicImports: format === 'umd',
+             },
+@@ -215,10 +232,25 @@ function createCompilerOptions(format, options, dependencies) {
+ }
+ function updatePackageJson(options, context, target, dependencies, packageJson) {
+     const entryFileTmpl = `./index.<%= extension %>.js`;
+-    const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
+-    packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
+-    packageJson.module = entryFileTmpl.replace('<%= extension %>', 'esm');
+-    packageJson.typings = `./${typingsFile}`;
++
++    if (options.compiler === 'swc'){
++        const typingsFile = (0, path_1.relative)(options.projectRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
++        packageJson.typings = `./${typingsFile}`;
++    } else {
++        const typingsFile = (0, path_1.relative)(options.entryRoot, options.entryFile).replace(/\.[jt]sx?$/, '.d.ts');
++        packageJson.typings = `./${typingsFile}`;
++    }
++
++    if (options.format.includes('umd')) {
++        packageJson.main = entryFileTmpl.replace('<%= extension %>', 'umd');
++    } else if (options.format.includes('cjs')) {
++        packageJson.main = entryFileTmpl.replace('<%= extension %>.js', 'js');
++    }
++
++    if (options.format.includes('esm')) {
++        packageJson.module = entryFileTmpl.replace('.<%= extension %>', '-esm');
++    }
++
+     (0, devkit_1.writeJsonFile)(`${options.outputPath}/package.json`, packageJson);
+     if (dependencies.length > 0 &&
+         options.updateBuildableProjectDepsInPackageJson) {
