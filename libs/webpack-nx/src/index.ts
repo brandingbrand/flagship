@@ -381,4 +381,4 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   return flagshipConfig;
 };
 
-export = getFlagshipWebpackConfig;
+export default getFlagshipWebpackConfig;
