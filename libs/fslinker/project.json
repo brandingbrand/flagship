@@ -12,6 +12,7 @@
         "tsConfig": "libs/fslinker/tsconfig.lib.json",
         "project": "libs/fslinker/package.json",
         "entryFile": "libs/fslinker/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "format": ["esm", "cjs"],
         "assets": [
           {

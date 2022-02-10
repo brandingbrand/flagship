@@ -11,6 +11,7 @@
         "tsConfig": "libs/react-linker/tsconfig.lib.json",
         "project": "libs/react-linker/package.json",
         "entryFile": "libs/react-linker/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [

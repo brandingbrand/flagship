@@ -11,6 +11,7 @@
         "tsConfig": "libs/utils-base64/tsconfig.lib.json",
         "project": "libs/utils-base64/package.json",
         "entryFile": "libs/utils-base64/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "rollupConfig": "libs/utils-base64/rollup.config.js",

@@ -11,6 +11,7 @@
         "tsConfig": "libs/cargo-hold/tsconfig.lib.json",
         "project": "libs/cargo-hold/package.json",
         "entryFile": "libs/cargo-hold/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [
