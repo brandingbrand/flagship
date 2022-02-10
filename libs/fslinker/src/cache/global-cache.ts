@@ -36,7 +36,8 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
   private static cache: GlobalInjectorCache = new GlobalInjectorCache();
 
   constructor() {
-    const globalObject = typeof global !== 'undefined' ? global : window;
+    // @ts-ignore ignore node specific type
+    const globalObject = typeof global !== 'undefined' ? (global as typeof globalThis) : window;
 
     if (globalObject === undefined) {
       throw new ReferenceError(
