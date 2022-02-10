@@ -11,9 +11,9 @@
         "tsConfig": "libs/webpack-nx/tsconfig.lib.json",
         "project": "libs/webpack-nx/package.json",
         "entryFile": "libs/webpack-nx/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
-        "buildableProjectDepsInPackageJsonType": "dependencies",
         "rollupConfig": "libs/webpack-nx/rollup.config.js",
         "assets": [
           {

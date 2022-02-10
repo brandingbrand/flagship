@@ -11,6 +11,7 @@
         "tsConfig": "libs/shared/util-std-option/tsconfig.lib.json",
         "project": "libs/shared/util-std-option/package.json",
         "entryFile": "libs/shared/util-std-option/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [

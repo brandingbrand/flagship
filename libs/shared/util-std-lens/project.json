@@ -11,6 +11,7 @@
         "entryFile": "libs/shared/util-std-lens/src/index.ts",
         "project": "libs/shared/util-std-lens/package.json",
         "tsConfig": "libs/shared/util-std-lens/tsconfig.lib.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [

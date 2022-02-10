@@ -12,6 +12,7 @@
         "tsConfig": "libs/types-utility/tsconfig.lib.json",
         "project": "libs/types-utility/package.json",
         "entryFile": "libs/types-utility/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [
