@@ -4,14 +4,23 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/utils-base64",
         "tsConfig": "libs/utils-base64/tsconfig.lib.json",
-        "packageJson": "libs/utils-base64/package.json",
-        "main": "libs/utils-base64/src/index.ts",
-        "assets": ["libs/utils-base64/*.md"]
+        "project": "libs/utils-base64/package.json",
+        "entryFile": "libs/utils-base64/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "rollupConfig": "libs/utils-base64/rollup.config.js",
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/utils-base64",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
