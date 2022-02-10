@@ -4,14 +4,24 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/webpack-nx",
         "tsConfig": "libs/webpack-nx/tsconfig.lib.json",
-        "packageJson": "libs/webpack-nx/package.json",
-        "main": "libs/webpack-nx/src/index.ts",
-        "assets": ["libs/webpack-nx/*.md"]
+        "project": "libs/webpack-nx/package.json",
+        "entryFile": "libs/webpack-nx/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "rollupConfig": "libs/webpack-nx/rollup.config.js",
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/webpack-nx",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
