@@ -5,14 +5,22 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/types-utility",
         "tsConfig": "libs/types-utility/tsconfig.lib.json",
-        "packageJson": "libs/types-utility/package.json",
-        "main": "libs/types-utility/src/index.ts",
-        "assets": ["libs/types-utility/*.md"]
+        "project": "libs/types-utility/package.json",
+        "entryFile": "libs/types-utility/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/types-utility",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
