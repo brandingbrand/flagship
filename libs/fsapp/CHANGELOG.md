@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.26.0](https://github.com/wSedlacek/flagship-text/compare/v11.25.1...v11.26.0) (2022-02-10)
+
+
+### Features
+
+* **fsapp:** app wide providers (900b654)
+* **fsapp:** on destory hook (e9906fe)
+
+
+
 ## [11.25.1](https://github.com/wSedlacek/flagship-text/compare/v11.25.0...v11.25.1) (2022-02-09)
 
 

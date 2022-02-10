@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.26.0](https://github.com/wSedlacek/flagship-text/compare/v11.25.1...v11.26.0) (2022-02-10)
+
+
+### Bug Fixes
+
+* **cargo-hold:** use typescript 4.2 compatible interface (c0b6b5c)
+
+
+### Features
+
+* **cargo-hold:** initialize project (4b72e26)
+* **cargo-hold:** removed cargo-hold lens in favor of util lens (e47ea5f)
+
+
+
 # [11.25.0](https://github.com/wSedlacek/flagship-text/compare/v11.24.0...v11.25.0) (2022-02-08)
 
 # [11.24.0](https://github.com/wSedlacek/flagship-text/compare/v11.23.0...v11.24.0) (2022-02-05)
