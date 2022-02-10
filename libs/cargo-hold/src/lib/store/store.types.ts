@@ -63,22 +63,24 @@ export type SourcesList = NonEmptyArray<Source | undefined>;
 
 export interface IStore<State = Record<PropertyKey, unknown>> {
   /**
-   *
+   * A snapshot of the most recent update to state. This value is not reactive so do not try to key
+   * off of it for effects, instead use state$
    */
-  get state(): State;
+  readonly state: State;
 
   /**
-   * The only way to get state out of a store. As it is an Observable, it must be subscribed to in
-   * order to get this state. Its behavior is similar to that of an RXJS ReplaySubject(1), whereas upon
-   * subscription, it will immediately emit current state. Additionally, it is effectively multicast,
-   * as multiple subscriptions to `state$` will not force the reducers & effects to be re-evaluated.
+   * As it is an Observable, it must be subscribed to in order to get this state. Its behavior is
+   * similar to that of an RXJS ReplaySubject(1), whereas upon subscription, it will immediately
+   * emit current state. Additionally, it is effectively multicast, as multiple subscriptions to
+   * `state$` will not force the reducers & effects to be re-evaluated.
    */
-  get state$(): Observable<State>;
+  readonly state$: Observable<State>;
 
   /**
-   *
+   * An observable of actions acting upon this store. Will only emit values that occur after
+   * observer subscribes.
    */
-  get action$(): Observable<AnyAction>;
+  readonly action$: Observable<AnyAction>;
 
   /**
    * Dispatch actions in order to trigger effects and/or reducers.
