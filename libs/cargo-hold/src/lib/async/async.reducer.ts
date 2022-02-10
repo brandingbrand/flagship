@@ -33,7 +33,7 @@ export const createSuccessState = <Payload>(payload: Payload): AsyncSuccessState
 });
 
 export const createFailureState = <Payload, FailureType>(
-  payload: Payload,
+  payload: Payload | undefined,
   failure: FailureType
 ): AsyncFailureState<Payload, FailureType> => ({
   status: 'failure',
