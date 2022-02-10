@@ -11,6 +11,8 @@
         "tsConfig": "libs/shared/util-std-compose/tsconfig.lib.json",
         "project": "libs/shared/util-std-compose/package.json",
         "entryFile": "libs/shared/util-std-compose/src/index.ts",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
