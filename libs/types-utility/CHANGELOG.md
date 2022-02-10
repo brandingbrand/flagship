@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.26.0](https://github.com/brandingbrand/flagship/compare/v11.25.1...v11.26.0) (2022-02-10)
+
+
+### Features
+
+* **types-utility:** add Lazy, Predicate, & TypeGuard (e5af18f)
+* **types-utility:** add optional utility type (c7e240b)
+
+
+
 ## [11.25.1](https://github.com/brandingbrand/flagship/compare/v11.25.0...v11.25.1) (2022-02-09)
 
 

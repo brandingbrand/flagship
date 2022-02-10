@@ -1,0 +1,16 @@
+# Changelog
+
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+# [11.26.0](https://github.com/brandingbrand/flagship/compare/v11.25.1...v11.26.0) (2022-02-10)
+
+
+### Bug Fixes
+
+* **shared-util-std-result:** add metro shim (14b38a3)
+
+
+### Features
+
+* **shared-util-std-result:** applyParam & builder pattern (9135c03)
+* **shared-util-std-result:** initialize project (75c5e4d)

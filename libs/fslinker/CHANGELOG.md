@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.26.0](https://github.com/brandingbrand/flagship/compare/v11.25.1...v11.26.0) (2022-02-10)
+
+
+### Bug Fixes
+
+* **fslinker:** only inject inectable if not present (c237a09)
+
+
+### Features
+
+* **fslinker:** check if injector has tokens (65281c6)
+
+
+
 ## [11.25.1](https://github.com/brandingbrand/flagship/compare/v11.25.0...v11.25.1) (2022-02-09)
 
 
