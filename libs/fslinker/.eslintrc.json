@@ -1,12 +1,12 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "parserOptions": {
-    "project": ["./libs/fslinker/tsconfig.lib.json", "./libs/fslinker/tsconfig.spec.json"]
-  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["libs/fslinker/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     {

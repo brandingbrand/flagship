@@ -5,14 +5,21 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fslinker",
         "tsConfig": "libs/fslinker/tsconfig.lib.json",
-        "packageJson": "libs/fslinker/package.json",
-        "main": "libs/fslinker/src/index.ts",
-        "assets": ["libs/fslinker/*.md"]
+        "project": "libs/fslinker/package.json",
+        "entryFile": "libs/fslinker/src/index.ts",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/fslinker",
+            "output": ""
+          }
+        ]
       }
     },
     "lint": {
