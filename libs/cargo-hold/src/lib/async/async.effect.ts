@@ -16,8 +16,8 @@ import type { AsyncAction, AsyncState, CreateAsyncEffectOptions } from './async.
  * @returns A function that takes in CreateAsyncEffectOptions and returns an Effect
  */
 export const makeAsyncEffect =
-  <AsyncActionKey extends string, Payload, FailPayload>(
-    asyncActionCreators: AsyncActionCreators<AsyncActionKey, Payload, FailPayload>
+  <AsyncActionKey extends string, Payload, FailPayload, EmptyPayload = Payload>(
+    asyncActionCreators: AsyncActionCreators<AsyncActionKey, Payload, FailPayload, EmptyPayload>
   ) =>
   <
     DesiredActionSpecifier extends
@@ -33,9 +33,10 @@ export const makeAsyncEffect =
       CallbackResult,
       Payload,
       FailedCallbackResult,
-      FailPayload
+      FailPayload,
+      EmptyPayload
     >
-  ): Effect<AsyncState<Payload, FailPayload>> =>
+  ): Effect<AsyncState<Payload, FailPayload, EmptyPayload>> =>
   (action$, state$) => {
     const optimisticUpdate = effectOptions.predict ?? ((_params, state) => state);
 
@@ -99,8 +100,8 @@ export const makeAsyncEffect =
             return asyncActionCreators.fail.create(result.failure as unknown as FailPayload);
           }),
           mergeMap<
-            AsyncAction<AsyncActionKey, Payload, FailPayload>,
-            Observable<AsyncAction<AsyncActionKey, Payload, FailPayload>>
+            AsyncAction<AsyncActionKey, Payload, FailPayload, EmptyPayload>,
+            Observable<AsyncAction<AsyncActionKey, Payload, FailPayload, EmptyPayload>>
           >((asyncCallbackResult) => {
             if (matches(asyncActionCreators.fail) && effectOptions.predict !== undefined) {
               return of(

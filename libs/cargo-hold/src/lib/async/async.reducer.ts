@@ -32,58 +32,71 @@ export const createSuccessState = <Payload>(payload: Payload): AsyncSuccessState
   payload,
 });
 
-export const createFailureState = <Payload, FailureType>(
-  payload: Payload | undefined,
+export const createFailureState = <Payload, FailureType, EmptyPayload = Payload>(
+  payload: Payload | EmptyPayload,
   failure: FailureType
-): AsyncFailureState<Payload, FailureType> => ({
+): AsyncFailureState<Payload | EmptyPayload, FailureType> => ({
   status: 'failure',
   payload,
   failure,
 });
 
-export const createReducers = <Payload, FailPayload>() => ({
+export const createReducers = <Payload, FailPayload, EmptyPayload>() => ({
   init:
-    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload>> =>
+    (
+      payload: Payload | EmptyPayload
+    ): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
     () =>
       createIdleState(payload),
   load:
-    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload>> =>
+    (
+      payload: Payload | EmptyPayload
+    ): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
     () =>
       createLoadingState(payload),
   loadMore:
-    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload>> =>
+    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
     () =>
       createLoadingMoreState(payload),
   succeed:
-    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload>> =>
+    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
     () =>
       createSuccessState(payload),
   fail:
-    (failure: FailPayload): StateReducer<AsyncState<Payload, FailPayload>> =>
+    (failure: FailPayload): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
     (state) =>
       createFailureState(state.payload, failure),
   revert:
-    (payload: Payload): StateReducer<AsyncState<Payload, FailPayload>> =>
-    (state) => ({ ...state, payload }),
+    (
+      payload: Payload | EmptyPayload
+    ): StateReducer<AsyncState<Payload, FailPayload, EmptyPayload>> =>
+    (state) =>
+      ({ ...state, payload } as AsyncState<Payload, FailPayload, EmptyPayload>),
 });
 
-export const createLensedReducers = <Payload, FailPayload, Structure>(
-  lens: ILens<Structure, AsyncState<Payload, FailPayload>>
+export const createLensedReducers = <Payload, FailPayload, Structure, EmptyPayload = Payload>(
+  lens: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>
 ) => {
-  const reducers = createReducers<Payload, FailPayload>();
+  const reducers = createReducers<Payload, FailPayload, EmptyPayload>();
   return {
-    init: (payload: Payload) => withLens(lens)(reducers.init(payload)),
-    load: (payload: Payload) => withLens(lens)(reducers.load(payload)),
+    init: (payload: Payload | EmptyPayload) => withLens(lens)(reducers.init(payload)),
+    load: (payload: Payload | EmptyPayload) => withLens(lens)(reducers.load(payload)),
     loadMore: (payload: Payload) => withLens(lens)(reducers.loadMore(payload)),
     succeed: (payload: Payload) => withLens(lens)(reducers.succeed(payload)),
     fail: (failure: FailPayload) => withLens(lens)(reducers.fail(failure)),
-    revert: (payload: Payload) => withLens(lens)(reducers.revert(payload)),
+    revert: (payload: Payload | EmptyPayload) => withLens(lens)(reducers.revert(payload)),
   };
 };
 
-export const createCombinedReducer = <ActionKey extends string, Payload, FailPayload, Structure>(
-  actionCreators: AsyncActionCreators<ActionKey, Payload, FailPayload>,
-  lens: ILens<Structure, AsyncState<Payload, FailPayload>>
+export const createCombinedReducer = <
+  ActionKey extends string,
+  Payload,
+  FailPayload,
+  Structure,
+  EmptyPayload = Payload
+>(
+  actionCreators: AsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload>,
+  lens: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>
 ) => {
   const reducers = createLensedReducers(lens);
   return combineActionReducers(
