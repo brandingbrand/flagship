@@ -4,17 +4,32 @@ import { ActionCreator, createActionCreator } from '../action-bus';
  * AsyncActionCreators are utilities to both filter reducers/effects and then trigger those reducers
  * and effects upon dispatch.
  */
-export type AsyncActionCreators<ActionKey extends string, Payload, FailPayload> = {
-  init: ActionCreator<ActionKey, 'async:init', Payload | undefined, [payload: Payload | undefined]>;
-  load: ActionCreator<ActionKey, 'async:load', Payload | undefined, [payload: Payload | undefined]>;
+export type AsyncActionCreators<
+  ActionKey extends string,
+  Payload,
+  FailPayload,
+  EmptyPayload = Payload
+> = {
+  init: ActionCreator<
+    ActionKey,
+    'async:init',
+    Payload | EmptyPayload,
+    [payload: Payload | EmptyPayload]
+  >;
+  load: ActionCreator<
+    ActionKey,
+    'async:load',
+    Payload | EmptyPayload,
+    [payload: Payload | EmptyPayload]
+  >;
   loadMore: ActionCreator<ActionKey, 'async:load-more', Payload, [payload: Payload]>;
   succeed: ActionCreator<ActionKey, 'async:succeed', Payload, [payload: Payload]>;
   fail: ActionCreator<ActionKey, 'async:fail', FailPayload, [failure: FailPayload]>;
   revert: ActionCreator<
     ActionKey,
     'async:revert',
-    Payload | undefined,
-    [payload: Payload | undefined]
+    Payload | EmptyPayload,
+    [payload: Payload | EmptyPayload]
   >;
 };
 
@@ -25,10 +40,15 @@ export type AsyncActionCreators<ActionKey extends string, Payload, FailPayload> 
  * specific reducers.
  * @returns `AsyncActionCreators` - init, load, succeed, fail, & revert.
  */
-export const createAsyncActionCreators = <ActionKey extends string, Payload, FailPayload>(
+export const createAsyncActionCreators = <
+  ActionKey extends string,
+  Payload,
+  FailPayload,
+  EmptyPayload = Payload
+>(
   actionKey: ActionKey,
   source?: string | symbol
-): AsyncActionCreators<ActionKey, Payload, FailPayload> => ({
+): AsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload> => ({
   init: createActionCreator({
     actionKey,
     subtype: 'async:init',
