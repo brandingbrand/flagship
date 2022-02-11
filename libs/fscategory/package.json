@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscategory",
   "sideEffects": false,
-  "version": "11.26.0",
+  "version": "11.26.1",
   "description": "components for category navigation",
   "license": "MIT"
 }
