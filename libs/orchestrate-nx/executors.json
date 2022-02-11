@@ -4,7 +4,12 @@
     "run-all": {
       "implementation": "./src/executors/run-all/impl",
       "schema": "./src/executors/run-all/schema.json",
-      "description": "A builder that executes many builders in parallel, and succeed if both succeeds."
+      "description": "A executor that executes many executors in parallel, and succeeds if all succeed."
+    },
+    "concat-all": {
+      "implementation": "./src/executors/concat-all/impl",
+      "schema": "./src/executors/concat-all/schema.json",
+      "description": "A executor that executes many executors in serial, and succeeds if all succeed."
     }
   }
 }

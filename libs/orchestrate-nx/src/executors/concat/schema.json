@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": ".*:.*"
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["targets"]
+}
