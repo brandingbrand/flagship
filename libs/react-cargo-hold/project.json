@@ -12,7 +12,6 @@
         "project": "libs/react-cargo-hold/package.json",
         "entryFile": "libs/react-cargo-hold/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
         "format": ["esm", "cjs"],
         "assets": [
           {
