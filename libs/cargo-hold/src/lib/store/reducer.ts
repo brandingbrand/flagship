@@ -62,7 +62,7 @@ export const matches =
     return (
       action.type === inputAction.type &&
       action.subtype === inputAction.subtype &&
-      requireSource(action.source, ...(extraSources ?? []))(inputAction)
+      (extraSources === undefined || requireSource(action.source, ...extraSources)(inputAction))
     );
   };
 
