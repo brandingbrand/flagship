@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.27.0](https://github.com/wSedlacek/flagship-text/compare/v11.26.1...v11.27.0) (2022-02-14)
+
+
+### Bug Fixes
+
+* **cargo-hold:** match source only if provided (d4233a0)
+
+
+### Features
+
+* **cargo-hold:** added AsyncAdaptor EmptyPayload (8c9a44a)
+* **cargo-hold:** allowed for async idle state to be undefined (e7aae84)
+
+
+
 ## [11.26.1](https://github.com/wSedlacek/flagship-text/compare/v11.26.0...v11.26.1) (2022-02-11)
 
 

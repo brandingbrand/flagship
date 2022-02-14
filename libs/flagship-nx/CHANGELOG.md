@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.27.0](https://github.com/wSedlacek/flagship-text/compare/v11.26.1...v11.27.0) (2022-02-14)
+
+
+### Bug Fixes
+
+* **flagship-nx:** android passwords schema (68dcc7c)
+
+
+
 ## [11.26.1](https://github.com/wSedlacek/flagship-text/compare/v11.26.0...v11.26.1) (2022-02-11)
 
 
