@@ -50,7 +50,7 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": []
+        "commands": ["npm install ./dist/libs/orchestrate-nx --ignore-scripts --no-audit --no-fund"]
       }
     }
   },
