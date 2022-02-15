@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscommerce",
   "sideEffects": false,
-  "version": "11.27.0",
+  "version": "11.28.0",
   "description": "Commerce Data Layer for Flagship",
   "license": "MIT"
 }
