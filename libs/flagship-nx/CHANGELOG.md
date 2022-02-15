@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.28.0](https://github.com/wSedlacek/flagship-text/compare/v11.27.0...v11.28.0) (2022-02-15)
+
+
+### Features
+
+* **flagship-nx:** key off of dependencies (d5f8446)
+
+
+
 # [11.27.0](https://github.com/wSedlacek/flagship-text/compare/v11.26.1...v11.27.0) (2022-02-14)
 
 
