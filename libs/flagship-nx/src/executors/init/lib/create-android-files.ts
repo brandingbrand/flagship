@@ -35,6 +35,7 @@ export interface CreateAndroidFilesOptions {
     storPassword: string;
     keyPassword: string;
   };
+  dependencies: string[];
 }
 
 const defaults = {

@@ -21,6 +21,8 @@ import { createIosFiles } from './lib/create-ios-files';
 import { createAndroidFiles } from './lib/create-android-files';
 import { createFastlaneFiles } from './lib/create-fastlane-files';
 import { podInstall, podRepoUpdate } from './lib/pod-install';
+import { findDependencies } from './lib/find-dependencies.util';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 
 export interface InitExecutorOptions {
   main: string;
@@ -98,6 +100,9 @@ export const initExecutor = async (
       ...(options.development ? { ShowDevMenu: 'true' } : {}),
     };
 
+    const graph = await createProjectGraphAsync();
+    const dependencies = await findDependencies(tree, graph, context.projectName);
+
     createIosFiles(tree, {
       projectRoot,
       rootOffset,
@@ -118,6 +123,7 @@ export const initExecutor = async (
       permissions: ios(options.permissions),
       bundleIdentifier: ios(options.bundleIdentifier),
       bundleVersion: bundleVersion(version),
+      dependencies: [...dependencies.values()],
     });
 
     createAndroidFiles(tree, {
@@ -143,6 +149,7 @@ export const initExecutor = async (
       buildConfig: android(options.buildConfig),
       passwords: android(options.passwords),
       bundleVersion: bundleVersion(version),
+      dependencies: [...dependencies.values()],
     });
 
     if (options.appCenter && options.buildConfig) {
@@ -153,6 +160,7 @@ export const initExecutor = async (
         bundleIdentifier: options.bundleIdentifier,
         ...options.appCenter,
         ...options.buildConfig,
+        dependencies: [...dependencies.values()],
       });
     }
 

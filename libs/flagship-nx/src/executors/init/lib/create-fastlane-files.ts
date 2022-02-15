@@ -22,6 +22,7 @@ export interface CreateFastlaneFilesOptions {
     storeFile: string;
     keyAlias: string;
   };
+  dependencies: string[];
 }
 
 export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOptions) => {
