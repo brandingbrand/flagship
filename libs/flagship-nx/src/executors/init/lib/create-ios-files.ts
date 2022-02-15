@@ -25,6 +25,7 @@ export interface CreateIosFilesOptions {
   permissions?: Record<IosPermissionKeys, string>;
   appIcon?: string;
   launchScreen?: string;
+  dependencies: string[];
 }
 
 export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
