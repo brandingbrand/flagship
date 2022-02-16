@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fslocator",
   "sideEffects": false,
-  "version": "11.28.0",
+  "version": "11.29.0",
   "description": "Locator React Components",
   "license": "MIT"
 }

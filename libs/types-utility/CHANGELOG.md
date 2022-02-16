@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.29.0](https://github.com/wSedlacek/flagship-text/compare/v11.28.0...v11.29.0) (2022-02-16)
+
+
+### Features
+
+* **types-utility:** add MaybePromise (3811e1c)
+
+
+
 # [11.28.0](https://github.com/wSedlacek/flagship-text/compare/v11.27.0...v11.28.0) (2022-02-15)
 
 
