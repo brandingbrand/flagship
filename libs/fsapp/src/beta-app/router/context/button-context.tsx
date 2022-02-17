@@ -5,10 +5,11 @@ import { uniqueId } from 'lodash-es';
 import { InjectionToken } from '@brandingbrand/fslinker';
 
 import { InjectedContextProvider, useDependencyContext } from '../../lib/use-dependency';
+import { useScreenId } from './activated-route.context';
 
 export interface ButtonService {
   onPress(buttonId: string, callback: () => void): () => void;
-  onPress(buttonId: string, componentId: string, callback: () => void): () => void;
+  onPress(buttonId: string, componentId: undefined | string, callback: () => void): () => void;
 }
 
 const DEFAULT_BUTTON_SERVICE: ButtonService = {
@@ -23,12 +24,17 @@ export const useButtons = () =>
   useDependencyContext(BUTTON_CONTEXT_TOKEN) ?? DEFAULT_BUTTON_SERVICE;
 
 export const ButtonProvider: FC = ({ children }) => {
+  const screenId = useScreenId();
   const listenerRepo = useMemo(() => new Map<string, Map<string, () => void>>(), []);
 
   const onPress = useCallback(
-    ((buttonId: string, componentIdOrCallback: string | (() => void), callback: () => void) => {
+    ((
+      buttonId: string,
+      componentIdOrCallback: undefined | string | (() => void),
+      callback: () => void
+    ) => {
       const componentId =
-        typeof componentIdOrCallback === 'string' ? componentIdOrCallback : undefined;
+        typeof componentIdOrCallback === 'function' ? screenId : componentIdOrCallback;
       const actualCallback =
         typeof componentIdOrCallback === 'function' ? componentIdOrCallback : callback;
 

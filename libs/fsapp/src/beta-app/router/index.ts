@@ -8,12 +8,14 @@ export {
   ParamContext,
   PathContext,
   QueryContext,
+  ScreenIdContext,
   useActivatedRoute,
   useRouteData,
   useRouteLoading,
   useRouteParams,
   useRoutePath,
   useRouteQuery,
+  useScreenId,
   ButtonContext,
   useButtons,
   useButtonEffect,
@@ -25,6 +27,7 @@ export {
   PARAM_CONTEXT_TOKEN,
   PATH_CONTEXT_TOKEN,
   QUERY_CONTEXT_TOKEN,
+  SCREEN_ID_CONTEXT_TOKEN,
 } from './context';
 export { ScreenProps, makeScreen } from './make-screen';
 export { dummyHistory } from './history/history.dummy';

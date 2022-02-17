@@ -50,6 +50,7 @@ export type RouteParams = Record<string, string | undefined>;
 export type RouteQuery = ParsedQs;
 
 export interface ActivatedRoute {
+  readonly id: string | undefined;
   readonly path: string | undefined;
   readonly loading: boolean;
   readonly data: RouteData;
