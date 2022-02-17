@@ -137,7 +137,10 @@ export class History implements FSRouterHistory {
           const activations = activatedPaths.map(async (path) => {
             const matchingRoute = await matchRoute(this.matchers, path);
             if (matchingRoute) {
-              const activatedRoute = await this.resolveRouteDetails(matchingRoute);
+              const activatedRoute = await this.resolveRouteDetails(
+                matchingRoute.id,
+                matchingRoute
+              );
               const observer = this.activationObservers.get(matchingRoute.id);
               observer?.(activatedRoute);
               return [matchingRoute, activatedRoute] as const;
@@ -453,7 +456,7 @@ export class History implements FSRouterHistory {
           if (matchingRoute) {
             if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
               this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails({
+              const activatedRoute = await this.resolveRouteDetails(location.key, {
                 ...matchingRoute,
                 data: {
                   ...matchingRoute.data,
@@ -493,7 +496,7 @@ export class History implements FSRouterHistory {
             // if the location is NOT the same as the previous one.
             if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
               this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails({
+              const activatedRoute = await this.resolveRouteDetails(location.key, {
                 ...matchingRoute,
                 data: {
                   ...matchingRoute.data,
@@ -572,9 +575,13 @@ export class History implements FSRouterHistory {
     }
   }
 
-  private async resolveRouteDetails(matchingRoute: MatchingRoute): Promise<ActivatedRoute> {
-    const resolvedData = await promisedEntries(resolveRoute(matchingRoute));
+  private async resolveRouteDetails(
+    id: string | undefined,
+    matchingRoute: MatchingRoute
+  ): Promise<ActivatedRoute> {
+    const resolvedData = await promisedEntries(resolveRoute(id, matchingRoute));
     return {
+      id,
       data: resolvedData,
       query: matchingRoute.query,
       params: matchingRoute.params,

@@ -73,6 +73,7 @@ export const applyMatcher = async (matchers: Matchers, route: RouteCollection | 
     const title =
       typeof component.title === 'function'
         ? await component.title({
+            id: component.id,
             data: component.data ?? {},
             query: component.query,
             params: component.params,

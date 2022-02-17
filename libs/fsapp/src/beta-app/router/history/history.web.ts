@@ -194,7 +194,11 @@ export class History implements FSRouterHistory {
     const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
 
     if (matchingRoute) {
-      await this.activateRoute(matchingRoute, this.browserHistory.location.state);
+      await this.activateRoute(
+        this.browserHistory.location.key,
+        matchingRoute,
+        this.browserHistory.location.state
+      );
       this._action = this.browserHistory.action;
       this._location = this.browserHistory.location;
       this.locationObservers.forEach((listener) => {
@@ -203,9 +207,13 @@ export class History implements FSRouterHistory {
     }
   }
 
-  private async activateRoute(matchingRoute: MatchingRoute, state: unknown): Promise<void> {
+  private async activateRoute(
+    id: string | undefined,
+    matchingRoute: MatchingRoute,
+    state: unknown
+  ): Promise<void> {
     this.setLoading(true);
-    const activatedRoute = await this.resolveRouteDetails(matchingRoute, state);
+    const activatedRoute = await this.resolveRouteDetails(id, matchingRoute, state);
     const observer = this.activationObservers.get(matchingRoute.id);
     observer?.(activatedRoute);
 
@@ -229,7 +237,7 @@ export class History implements FSRouterHistory {
       const unblock = this.browserHistory.block(true);
       const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
       if (matchingRoute) {
-        await this.activateRoute(matchingRoute, location.state);
+        await this.activateRoute(location.key, matchingRoute, location.state);
         this._action = action;
         this._location = location;
         this.locationObservers.forEach((listener) => {
@@ -249,11 +257,13 @@ export class History implements FSRouterHistory {
   }
 
   private async resolveRouteDetails(
+    id: string | undefined,
     matchingRoute: MatchingRoute,
     state: unknown
   ): Promise<ActivatedRoute> {
-    const resolvedData = await promisedEntries(resolveRoute(matchingRoute));
+    const resolvedData = await promisedEntries(resolveRoute(id, matchingRoute));
     return {
+      id,
       data: { ...resolvedData, ...(typeof state === 'object' ? state : {}) },
       query: matchingRoute.query,
       params: matchingRoute.params,

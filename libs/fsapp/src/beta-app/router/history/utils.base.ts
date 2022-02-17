@@ -137,11 +137,12 @@ export const resolve = async (
   }
 };
 
-export const resolveRoute = (route: MatchingRoute): RouteData => {
+export const resolveRoute = (id: string | undefined, route: MatchingRoute): RouteData => {
   const resolved = fromPairs(
     Object.entries(route.resolve ?? {}).map(([key, resolver]) => [
       key,
       resolve(resolver, {
+        id,
         data: route.data ?? {},
         query: route.query,
         params: route.params,
