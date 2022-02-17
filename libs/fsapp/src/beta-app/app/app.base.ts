@@ -14,7 +14,7 @@ import {
   REDUX_CONTEXT_TOKEN,
   REDUX_STORE_TOKEN,
 } from './context';
-import { FSRouter, Routes } from '../router';
+import { FSRouter, FSRouterType, Routes } from '../router';
 import { GenericState, StoreManager } from '../store';
 import { makeScreenWrapper } from './screen.wrapper';
 import { getVersion } from './utils';
@@ -67,7 +67,7 @@ export abstract class FSAppBase implements IApp {
   constructor(
     public readonly version: string,
     public readonly config: AppConfig,
-    protected readonly router: FSRouter,
+    protected readonly router: FSRouterType,
     public readonly api?: FSNetwork,
     public readonly store?: Store
   ) {
