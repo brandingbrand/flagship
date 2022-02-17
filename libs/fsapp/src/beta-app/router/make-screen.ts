@@ -1,12 +1,12 @@
-import type { ComponentType } from 'react';
-import type { ScreenComponentType, ScreenOptions } from './types';
+import type { ScreenOptions } from './types';
+import type { FC } from 'react';
 
 export interface ScreenProps {
   componentId: string;
 }
 
-export const makeScreen = (component: ComponentType<ScreenProps>, options?: ScreenOptions) => {
-  const route = component as ScreenComponentType;
+export const makeScreen = (Component: FC<ScreenProps>, options?: ScreenOptions) => {
+  const route = (props: ScreenProps) => Component(props);
   route.buttons = options?.buttons;
   return route;
 };
