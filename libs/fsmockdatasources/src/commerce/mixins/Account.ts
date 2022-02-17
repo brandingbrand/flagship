@@ -88,6 +88,12 @@ export const AccountMixin = <T extends Constructor>(superclass: T) => {
       throw new Error('Not implemented yet');
     }
 
+    async createProductList(
+      productList: CommerceTypes.CustomerProductList
+    ): Promise<CommerceTypes.CustomerProductList> {
+      throw new Error('Not implemented yet');
+    }
+
     async addItemToProductList(
       listId: string,
       options?: CommerceTypes.ProductListAddItemOptions
