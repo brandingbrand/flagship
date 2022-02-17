@@ -26,6 +26,14 @@ export default interface AccountDataSource {
   fetchProductLists?: (options?: ProductListsOptions) => Promise<CustomerProductList[]>;
 
   /**
+   * Create customer product list
+   *
+   * @param {productList} - The product list of the request
+   * @returns {Promise.<CustomerProductList>}  A Promise representing the customer product list
+   */
+  createProductList?: (productList: CustomerProductList) => Promise<CustomerProductList>;
+
+  /**
    * Add item to the logged-in user's product list. Requires a valid session token
    * to exist in local storage.
    *
