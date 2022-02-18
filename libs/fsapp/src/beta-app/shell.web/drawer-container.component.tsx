@@ -16,13 +16,11 @@ const styles = CreateWebStyles({
   },
   containerLeft: {
     left: 0,
-    paddingRight: 5,
     transitionProperty: 'margin-left',
     boxShadow: 'inset -7px 0 9px -7px rgba(0,0,0,0.7)',
   },
   containerRight: {
     right: 0,
-    paddingLeft: 5,
     transitionProperty: 'margin-right',
     boxShadow: 'inset 7px 0 9px -7px rgba(0,0,0,0.7)',
   },
