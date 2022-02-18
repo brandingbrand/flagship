@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsapp",
   "sideEffects": false,
-  "version": "11.30.0",
+  "version": "11.31.0",
   "description": "Flagship app base",
   "license": "MIT"
 }

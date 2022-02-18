@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.31.0](https://github.com/wSedlacek/flagship-text/compare/v11.30.0...v11.31.0) (2022-02-18)
+
+
+### Features
+
+* **fsmockdatasources:** updated mock for createProductList (90cee0c)
+
+
+
 # [11.30.0](https://github.com/wSedlacek/flagship-text/compare/v11.29.0...v11.30.0) (2022-02-17)
 
 
