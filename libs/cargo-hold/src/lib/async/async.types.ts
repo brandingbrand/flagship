@@ -147,7 +147,9 @@ export interface AsyncAdaptor<
   Structure,
   EmptyPayload = Payload
 > {
-  createState: (initialPayload: Payload) => AsyncState<Payload, FailPayload, EmptyPayload>;
+  createState: (
+    initialPayload: Payload | EmptyPayload
+  ) => AsyncState<Payload, FailPayload, EmptyPayload>;
   actionCreators: AsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload>;
   reducers: AsyncReducers<
     Payload,

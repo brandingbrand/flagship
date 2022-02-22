@@ -53,8 +53,9 @@ export const createAsyncAdaptor = <
   );
   const combinedReducer = createCombinedReducer(actionCreators, structureLens);
   const selectors = createSelectors(structureLens);
-  const createState = (initialPayload: Payload): AsyncState<Payload, FailPayload> =>
-    createIdleState(initialPayload);
+  const createState = (
+    initialPayload: Payload | EmptyPayload
+  ): AsyncState<Payload, FailPayload, EmptyPayload> => createIdleState(initialPayload);
   const createEffect = <
     DesiredActionSpecifier extends
       | ActionSpecifier<string, string | undefined, Params>
