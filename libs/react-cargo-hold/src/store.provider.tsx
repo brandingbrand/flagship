@@ -8,6 +8,8 @@ import { GlobalStoreContext } from './global-store.context';
 
 export interface StoreProviderProps {
   store: IStore;
+  // TODO: Make this refer to GlobalState, not any
+  globalStore: IStore<any>;
 }
 
 export const StoreProvider: FC<StoreProviderProps> = ({ store, children }) => {
