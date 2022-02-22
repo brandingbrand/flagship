@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.32.0](https://github.com/wSedlacek/flagship-text/compare/v11.31.0...v11.32.0) (2022-02-22)
+
+
+### Bug Fixes
+
+* **fsapp:** apply options to new screen reference (0fa67eb)
+* **fsapp:** remove drawer padding (e632899)
+
+
+### Features
+
+* **fsapp:** screen id context (0f9cabe)
+
+
+
 # [11.31.0](https://github.com/wSedlacek/flagship-text/compare/v11.30.0...v11.31.0) (2022-02-18)
 
 
