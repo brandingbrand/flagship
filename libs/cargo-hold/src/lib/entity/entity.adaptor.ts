@@ -51,3 +51,8 @@ export const createEntityAdaptor = <T, Structure>(
     withLens,
   };
 };
+
+export const EMPTY_ENTITY_STATE: EntityState<never> = {
+  entities: {},
+  ids: [],
+};
