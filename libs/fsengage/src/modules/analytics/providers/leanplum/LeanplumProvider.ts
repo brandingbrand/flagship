@@ -1,4 +1,4 @@
-import { default as RNLeanplum } from '@brandingbrand/react-native-leanplum';
+import { default as RNLeanplum } from '@leanplum/react-native-sdk';
 import Decimal from 'decimal.js';
 
 import AnalyticsProvider, {
