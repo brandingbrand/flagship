@@ -1,15 +1,11 @@
-import type { FC } from 'react';
 import type { IStore } from '@brandingbrand/cargo-hold';
-
 import { TokenProvider, useReact } from '@brandingbrand/react-linker';
-
-import { StoreContext } from './store.context';
+import type { FC } from 'react';
 import { GlobalStoreContext } from './global-store.context';
+import { StoreContext } from './store.context';
 
 export interface StoreProviderProps {
   store: IStore;
-  // TODO: Make this refer to GlobalState, not any
-  globalStore: IStore<any>;
 }
 
 export const StoreProvider: FC<StoreProviderProps> = ({ store, children }) => {
