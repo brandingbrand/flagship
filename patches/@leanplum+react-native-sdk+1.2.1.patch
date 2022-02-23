@@ -1,0 +1,28 @@
+diff --git a/node_modules/@leanplum/react-native-sdk/ios/Leanplum.swift b/node_modules/@leanplum/react-native-sdk/ios/Leanplum.swift
+index 576f077..b213f9f 100644
+--- a/node_modules/@leanplum/react-native-sdk/ios/Leanplum.swift
++++ b/node_modules/@leanplum/react-native-sdk/ios/Leanplum.swift
+@@ -15,6 +15,11 @@ class RNLeanplum: RCTEventEmitter {
+     var variables = [String: Var]()
+     var allSupportedEvents: [String] = []
+
++    @objc
++    func hasStarted(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
++        resolve(Leanplum.hasStarted())
++    }
++
+     @objc
+     override static func requiresMainQueueSetup() -> Bool {
+         return true
+diff --git a/node_modules/@leanplum/react-native-sdk/react-native-leanplum.podspec b/node_modules/@leanplum/react-native-sdk/react-native-leanplum.podspec
+index 4562b37..60cb04e 100644
+--- a/node_modules/@leanplum/react-native-sdk/react-native-leanplum.podspec
++++ b/node_modules/@leanplum/react-native-sdk/react-native-leanplum.podspec
+@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
+   s.platforms    = { :ios => "9.0" }
+   s.source       = { :git => "https://github.com/Leanplum/Leanplum-ReactNative-SDK", :tag => "#{s.version}" }
+
++  s.swift_version = "5.0"
+   s.source_files = "ios/**/*.{h,m,swift}"
+   s.requires_arc = true
+
