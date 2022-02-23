@@ -9,13 +9,15 @@ export const useGlobalActionCreator = <
   Payload,
   Params extends unknown[]
 >(
-  actionCreator: ActionCreator<Type, Subtype, Payload, Params>
+  actionCreator?: ActionCreator<Type, Subtype, Payload, Params>
 ) => {
   const { useCallback } = useReact();
   const store = useGlobalStore();
   return useCallback(
     (...params: Params) => {
-      store.dispatch(actionCreator.create(...params));
+      if (actionCreator) {
+        store.dispatch(actionCreator.create(...params));
+      }
     },
     [store, actionCreator]
   );

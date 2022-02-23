@@ -1,20 +1,17 @@
-import type { Store } from '@brandingbrand/cargo-hold';
-
+import type { IStore } from '@brandingbrand/cargo-hold';
 import { useReact } from '@brandingbrand/react-linker';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-export const useGlobalStoreState = <State, Return = State>(
-  store: Store<State>,
-  mapState?: (state: State) => Return
+export const useGlobalStoreState = <GlobalState, ReturnType>(
+  store: IStore,
+  mapState: (state: GlobalState) => ReturnType
 ) => {
   const { useLayoutEffect, useState } = useReact();
-  const [state, setState] = useState<Return>(
-    () => mapState?.(store.state) ?? (store.state as unknown as Return)
-  );
+  const [state, setState] = useState<ReturnType>(() => mapState(store.state));
 
   useLayoutEffect(() => {
     const subscription = store.state$
-      .pipe(map(mapState ?? ((state) => state as unknown as Return)), distinctUntilChanged())
+      .pipe(map(mapState), distinctUntilChanged())
       .subscribe(setState);
 
     return () => subscription.unsubscribe();
