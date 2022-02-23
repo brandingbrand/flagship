@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.33.0](https://github.com/wSedlacek/flagship-text/compare/v11.32.0...v11.33.0) (2022-02-23)
+
+
+### Features
+
+* **create:** search zone vNext (2ca5905)
+* **react-cargo-hold:** added global store hooks (bb206b6)
+* **react-cargo-hold:** allow for separate globalStore (15fb349)
+* **react-cargo-hold:** enable global state hooks (ae005cf)
+
+
+
 # [11.32.0](https://github.com/wSedlacek/flagship-text/compare/v11.31.0...v11.32.0) (2022-02-22)
 
 
