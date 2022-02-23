@@ -33,6 +33,8 @@ export interface InitExecutorOptions {
   urlSchemes: string[];
   exceptionDomains: string[];
 
+  googleServicesJson?: string;
+
   activityAttributes?: Record<string, string>;
   applicationAttributes?: Record<string, string>;
 
@@ -143,6 +145,7 @@ export const initExecutor = async (
       exceptionDomains: options.exceptionDomains,
       urlSchemes: options.urlSchemes,
       defaultEnvironment: options.defaultEnvironment,
+      googleServicesJson: options.googleServicesJson,
       appIcon: android(options.appIcon),
       launchScreen: android(options.launchScreen),
       permissions: android(options.permissions),

@@ -1,4 +1,7 @@
 apply plugin: "com.android.application"
+<% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+apply plugin: "com.google.gms.google-services"
+<% } %>
 
 import com.android.build.OutputFile
 
@@ -194,6 +197,13 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+    implementation 'com.leanplum:leanplum-fcm:5.3.3'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-iid'
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    <% } %>
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

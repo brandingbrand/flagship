@@ -76,5 +76,9 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  <key>LeanplumSwizzlingEnabled</key>
+  <false/>
+  <% } %>
 </dict>
 </plist>

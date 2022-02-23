@@ -27,6 +27,7 @@ export interface CreateAndroidFilesOptions {
   applicationAttributes?: Record<string, string>;
   appIcon?: string;
   launchScreen?: string;
+  googleServicesJson?: string;
   buildConfig?: {
     storeFile: string;
     keyAlias: string;
@@ -77,5 +78,14 @@ export const createAndroidFiles = (tree: Tree, options: CreateAndroidFilesOption
   if (options.launchScreen) {
     const resourcesPath = join(androidRoot, 'app', 'src', 'main', 'res');
     writeRecursive(tree, options.launchScreen, resourcesPath);
+  }
+
+  if (options.googleServicesJson) {
+    const resourcesPath = join(androidRoot, 'app');
+    const googleServicesJson = tree.read(options.googleServicesJson);
+
+    if (googleServicesJson) {
+      tree.write(join(resourcesPath, 'google-services.json'), googleServicesJson);
+    }
   }
 };

@@ -131,6 +131,9 @@
         }
       }
     },
+    "googleServicesJson": {
+      "type": "string"
+    },
     "appIcon": {
       "type": "object",
       "properties": {

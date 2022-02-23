@@ -8,6 +8,9 @@
  */
 
 #import "AppDelegate.h"
+<% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+#import <Leanplum.h>
+<% } %>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -86,18 +89,35 @@ NSURL *jsCodeLocation;
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  [Leanplum didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  <% } else { %>
   [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  <% } %>
 }
 // Required for the notification event. You must call the completion handler after handling the remote notification.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  void (^leanplumCompletionHandler)(LeanplumUIBackgroundFetchResult) =  ^(LeanplumUIBackgroundFetchResult result) {
+            UIBackgroundFetchResult r = result;
+            completionHandler(r);
+        };
+        [Leanplum didReceiveRemoteNotification:userInfo
+    fetchCompletionHandler:leanplumCompletionHandler];
+  <% } else { %>
   [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+  <% } %>
 }
 // Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
+  <% } else { %>
   [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
+  <% } %>
 }
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
