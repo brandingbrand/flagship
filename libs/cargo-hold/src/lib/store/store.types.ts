@@ -61,7 +61,7 @@ export type Source = string | symbol;
  */
 export type SourcesList = NonEmptyArray<Source | undefined>;
 
-export interface IStore<State = Record<PropertyKey, unknown>> {
+export interface IStore<State = any> {
   /**
    * A snapshot of the most recent update to state. This value is not reactive so do not try to key
    * off of it for effects, instead use state$
