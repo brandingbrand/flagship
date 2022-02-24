@@ -494,6 +494,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
           scrollbarWidth: 'none',
           overflowX: hideOverflow ?? hideScrollbar ?? true ? 'hidden' : 'scroll',
           scrollSnapType: mouseDown ? undefined : 'x mandatory',
+          flexGrow: 1,
         }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
