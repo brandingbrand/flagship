@@ -1,8 +1,8 @@
-import { BehaviorSubject, ReplaySubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { scan, switchMap } from 'rxjs/operators';
-import { accumulateToArray } from '../internal/util/operators';
 import { ActionBus } from '../action-bus';
-import type { IStore, Effect, AnyActionReducer } from './store.types';
+import { accumulateToArray } from '../internal/util/operators';
+import type { AnyActionReducer, Effect, IStore } from './store.types';
 
 /**
  * `Store` provides the state container and facilitates effects & reducers upon state.
