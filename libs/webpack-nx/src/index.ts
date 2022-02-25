@@ -10,7 +10,8 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { TsconfigPathsPlugin } from '@nrwl/web/src/utils/webpack/plugins/tsconfig-paths/tsconfig-paths.plugin';
 
-import { join } from 'path';
+import { join, parse } from 'path';
+import { existsSync } from 'fs';
 
 /**
  * This is ha hack to get nx to auto generate the package.json so that
@@ -245,6 +246,19 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
 
     return reactConfig.optimization;
   })();
+
+  if (typeof reactConfig.entry === 'object' && !Array.isArray(reactConfig.entry)) {
+    for (const [key, value] of Object.entries(reactConfig.entry)) {
+      if (typeof value === 'string') {
+        const file = parse(value);
+        const platformSpecificEntry = join(file.dir, `${file.name}.${platform}${file.ext}`);
+
+        if (existsSync(platformSpecificEntry)) {
+          reactConfig.entry[key] = platformSpecificEntry;
+        }
+      }
+    }
+  }
 
   const flagshipConfig: Configuration = {
     ...reactConfig,
