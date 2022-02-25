@@ -99,6 +99,10 @@ export interface Cart<T extends CartItem = CartItem> {
    * An array of bonus discount line items available.
    */
   bonusDiscountLineItems?: BonusDiscountLineItem[];
+  /**
+   * A string to an external checkout URL.
+   */
+  webviewCheckoutUrl?: string;
 }
 
 /**
