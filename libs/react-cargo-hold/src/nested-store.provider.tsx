@@ -8,7 +8,7 @@ import { useStore } from './use-store.hook';
 
 export interface NestedStoreProviderProps {
   tag: symbol;
-  store: IStore<any>;
+  store: IStore;
 }
 
 export const NestedStoreProvider: FC<NestedStoreProviderProps> = ({ tag, store, children }) => {
