@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.34.0](https://github.com/wSedlacek/flagship-text/compare/v11.33.0...v11.34.0) (2022-02-25)
+
+
+### Bug Fixes
+
+* **fscomponents:** grow carousel images (61fe3e2)
+
+
+
 # [11.33.0](https://github.com/wSedlacek/flagship-text/compare/v11.32.0...v11.33.0) (2022-02-23)
 
 
