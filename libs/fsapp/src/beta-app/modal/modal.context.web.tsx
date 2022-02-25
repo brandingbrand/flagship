@@ -133,6 +133,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
               return navigator.listen(handleReject);
             }, [navigator]);
 
+            const Provider = getApp()?.config.provider ?? React.Fragment;
             return (
               <Modal
                 key={id}
@@ -147,17 +148,19 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
                     <NavigatorProvider value={navigator}>
                       <InjectedReduxProvider store={store}>
                         <ActivatedRouteProvider {...route}>
-                          <TouchableWithoutFeedback onPress={handleReject}>
-                            <View style={[navStyle.backdrop, modal.options?.backdropStyle]} />
-                          </TouchableWithoutFeedback>
-                          <View style={modal.options?.style}>
-                            {modal.options?.title ? <Text>{modal.options.title}</Text> : null}
-                            <Content
-                              resolve={handleResolve}
-                              reject={handleReject}
-                              {...(props as P)}
-                            />
-                          </View>
+                          <Provider>
+                            <TouchableWithoutFeedback onPress={handleReject}>
+                              <View style={[navStyle.backdrop, modal.options?.backdropStyle]} />
+                            </TouchableWithoutFeedback>
+                            <View style={modal.options?.style}>
+                              {modal.options?.title ? <Text>{modal.options.title}</Text> : null}
+                              <Content
+                                resolve={handleResolve}
+                                reject={handleReject}
+                                {...(props as P)}
+                              />
+                            </View>
+                          </Provider>
                         </ActivatedRouteProvider>
                       </InjectedReduxProvider>
                     </NavigatorProvider>
