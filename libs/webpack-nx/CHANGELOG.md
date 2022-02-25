@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.35.0](https://github.com/wSedlacek/flagship-text/compare/v11.34.0...v11.35.0) (2022-02-25)
+
+
+### Bug Fixes
+
+* **webpack-nx:** platform specific entries (a8c4e43)
+
+
+
 # [11.34.0](https://github.com/wSedlacek/flagship-text/compare/v11.33.0...v11.34.0) (2022-02-25)
 
 
