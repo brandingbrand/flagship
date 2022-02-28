@@ -1,4 +1,4 @@
-import { default as RNLeanplum } from '@leanplum/react-native-sdk';
+import { Leanplum } from '@leanplum/react-native-sdk';
 import Decimal from 'decimal.js';
 
 import AnalyticsProvider, {
@@ -31,7 +31,6 @@ export interface LeanplumProviderConfiguration {
 }
 
 export default class LeanplumProvider extends AnalyticsProvider {
-  client: any;
   monetizationEventName: string;
 
   constructor(
@@ -45,10 +44,8 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-purchase-or-monetization-events
     this.monetizationEventName = configuration.monetizationEventName || 'Purchase';
 
-    // @ts-ignore
-    this.client = new RNLeanplum(configuration.appId, configuration.key);
-    this.client.start();
-
+    Leanplum.setAppIdForProductionMode(configuration.appId, configuration.key);
+    Leanplum.start();
     // TODO: Enable 'trackAllAppScreens'
   }
 
@@ -59,25 +56,25 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // Commerce Functions
 
   contactCall(properties: ContactCall): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       number: properties.number,
     });
   }
 
   contactEmail(properties: ContactEmail): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       to: properties.to,
     });
   }
 
   clickGeneric(properties: ClickGeneric): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
-      identifier: properties.identifier,
-      name: properties.name,
-      index: properties.index,
+      identifier: properties.identifier as string,
+      name: properties.name as string,
+      index: properties.index as number,
     });
   }
 
@@ -87,10 +84,10 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   locationDirections(properties: LocationDirections): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
-      identifier: properties.identifier,
-      address: properties.address,
+      identifier: properties.identifier as string,
+      address: properties.address as string,
     });
   }
 
@@ -99,36 +96,36 @@ export default class LeanplumProvider extends AnalyticsProvider {
   }
 
   screenview(properties: Screenview): void {
-    this.client.track('ScreenView', undefined, undefined, {
+    Leanplum.track('ScreenView', {
       component: properties.eventCategory,
       appId: this.appId,
-      appInstallerId: this.appInstallerId,
+      appInstallerId: this.appInstallerId as string,
       appName: this.appName,
       appVersion: this.appVersion,
     });
   }
 
   searchGeneric(properties: SearchGeneric): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       term: properties.term,
-      count: properties.count,
+      count: properties.count as number,
     });
   }
 
   // Enhanced Commerce Functions
 
   addProduct(properties: Product): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      brand: properties.brand,
-      category: properties.category,
-      variant: properties.variant,
-      price: properties.price,
-      quantity: properties.quantity,
-      index: properties.index,
+      brand: properties.brand as string,
+      category: properties.category as string,
+      variant: properties.variant as string,
+      price: properties.price as string,
+      quantity: properties.quantity as number,
+      index: properties.index as number,
       ...this._transformCouponsArray(properties.coupons),
     });
   }
@@ -139,17 +136,17 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach((product) => {
-      this.client.track(properties.eventAction, undefined, undefined, {
+      Leanplum.track(properties.eventAction, {
         component: properties.eventCategory,
         identifier: product.identifier,
         name: product.name,
-        brand: product.brand,
-        category: product.category,
-        variant: product.variant,
-        price: product.price,
-        quantity: product.quantity,
-        index: product.index,
-        step: action.step, // Checkout step.
+        brand: product.brand as string,
+        category: product.category as string,
+        variant: product.variant as string,
+        price: product.price as string,
+        quantity: product.quantity as number,
+        index: product.index as number,
+        step: action.step as number, // Checkout step.
         ...this._transformCouponsArray(product.coupons),
       });
     });
@@ -157,58 +154,58 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // Leanplum does not accept nested structures. So a separate event it is been sent for tracking
     // the checkout option, which do not need to be attached to every single product on the
     // checkout.
-    this.client.track('checkoutOption', undefined, undefined, {
+    Leanplum.track('checkoutOption', {
       component: properties.eventCategory,
-      step: action.step,
-      option: action.option,
+      step: action.step as number,
+      option: action.option as string,
     });
   }
 
   checkoutOption(properties: Generics, action: CheckoutAction): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
-      step: action.step,
-      option: action.option,
+      step: action.step as number,
+      option: action.option as string,
     });
   }
 
   clickProduct(properties: Product, action?: ProductAction): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      brand: properties.brand,
-      category: properties.category,
-      list: action && action.list,
-      variant: properties.variant,
-      price: properties.price,
-      quantity: properties.quantity,
-      index: properties.index,
+      brand: properties.brand as string,
+      category: properties.category as string,
+      list: action?.list as string,
+      variant: properties.variant as string,
+      price: properties.price as string,
+      quantity: properties.quantity as number,
+      index: properties.index as number,
       ...this._transformCouponsArray(properties.coupons),
     });
   }
 
   clickPromotion(properties: Promotion): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      creative: properties.creative,
-      slot: properties.slot,
+      creative: properties.creative as string,
+      slot: properties.slot as string,
     });
   }
 
   impressionProduct(properties: ImpressionProduct): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
       name: properties.name,
-      brand: properties.brand,
-      category: properties.category,
+      brand: properties.brand as string,
+      category: properties.category as string,
       list: properties.list,
-      variant: properties.variant,
-      price: properties.price,
-      index: properties.index,
+      variant: properties.variant as string,
+      price: properties.price as string,
+      index: properties.index as number,
     });
   }
 
@@ -228,29 +225,30 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach((product) => {
-      this.client.track('purchaseDetail', undefined, undefined, {
+      Leanplum.track('purchaseDetail', {
         component: properties.eventCategory,
         identifier: product.identifier,
         transactionIdentifier: action.identifier, // Same as 'identifier' on 'purchase' event.
         name: product.name,
-        brand: product.brand,
-        category: product.category,
-        variant: product.variant,
-        price: product.price,
-        quantity: product.quantity,
-        index: product.index,
+        brand: product.brand as string,
+        category: product.category as string,
+        variant: product.variant as string,
+        price: product.price as string,
+        quantity: product.quantity as number,
+        index: product.index as number,
         ...this._transformCouponsArray(product.coupons),
       });
     });
 
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
-    this.client.track(this.monetizationEventName, total || 0, undefined, {
+    Leanplum.track(this.monetizationEventName, {
       component: properties.eventCategory,
       identifier: action.identifier, // Same as 'transactionIdentifier' on 'purchaseDetail' event.
-      affiliation: action.affiliation,
-      tax: action.tax,
-      shippingCost: action.shippingCost,
+      affiliation: action.affiliation as string,
+      tax: action.tax as string,
+      shippingCost: action.shippingCost as string,
+      total: total || 0,
       ...this._transformCouponsArray(action.coupons),
     });
   }
@@ -258,12 +256,13 @@ export default class LeanplumProvider extends AnalyticsProvider {
   refundAll(properties: Generics, action: TransactionAction): void {
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
-    this.client.track(properties.eventAction, total || 0, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: action.identifier,
-      affiliation: action.affiliation,
-      tax: action.tax,
-      shippingCost: action.shippingCost,
+      affiliation: action.affiliation as string,
+      tax: action.tax as string,
+      shippingCost: action.shippingCost as string,
+      total: total || 0,
       ...this._transformCouponsArray(action.coupons),
     });
   }
@@ -274,25 +273,24 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
     properties.products.forEach((product) => {
-      this.client.track('refundPartialDetail', undefined, undefined, {
+      Leanplum.track('refundPartialDetail', {
         component: properties.eventCategory,
         identifier: product.identifier,
         transactionIdentifier: action.identifier, // Same as 'identifier' on 'refundPartial' event.
-        price: product.price,
+        price: product.price as string,
         quantity: product.quantity,
-        ...this._transformCouponsArray(product.coupons),
       });
     });
 
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
-    this.client.track(properties.eventAction, total || 0, undefined, {
+    Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: action.identifier, // Same as 'transactionIdentifier' on 'refundPartialDetail'.
-      affiliation: action.affiliation,
-      tax: action.tax,
-      shippingCost: action.shippingCost,
-      ...this._transformCouponsArray(action.coupons),
+      affiliation: action.affiliation as string,
+      tax: action.tax as string,
+      shippingCost: action.shippingCost as string,
+      total: total || 0,
     });
   }
 
@@ -304,7 +302,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
   // App Lifecycle Functions
 
   lifecycle(properties: App): void {
-    this.client.track(properties.eventAction, undefined, undefined, {
+    Leanplum.track(properties.eventAction, {
       appId: this.appId,
       lifecycle: properties.lifecycle,
     });
