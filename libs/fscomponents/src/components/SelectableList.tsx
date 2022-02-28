@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
@@ -21,6 +21,7 @@ export interface SelectableListProps {
   applyDisabledStyle?: StyleProp<ViewStyle>;
   applyButtonTextStyle?: StyleProp<TextStyle>;
   applyButtonText?: string;
+  radioButton?: boolean;
 }
 
 export interface SelectableListState {
@@ -52,85 +53,71 @@ const S = StyleSheet.create({
   },
 });
 
-export class SelectableList extends Component<SelectableListProps, SelectableListState> {
-  constructor(props: SelectableListProps) {
-    super(props);
-    let selectedItem: SelectableListItem | undefined;
-    if (props.selectedId) {
-      props.items.forEach((item: SelectableListItem) => {
-        if (item.id === props.selectedId) {
-          selectedItem = item;
-        }
-      });
+const RenderApply = ({
+  props,
+  handleApply,
+  selectedItem,
+}: {
+  props: SelectableListProps | undefined;
+  handleApply: () => void | undefined;
+  selectedItem: CommerceTypes.SortingOption | undefined;
+}): JSX.Element | null => {
+  if (props?.applyButton) {
+    if (props.applyButton !== true) {
+      return props.applyButton(handleApply, selectedItem);
+    } else {
+      return (
+        <Button
+          title={props.applyButtonText || FSI18n.string(translationKeys.flagship.button.apply)}
+          onPress={handleApply}
+          style={[
+            S.applyButton,
+            props.applyButtonStyle,
+            selectedItem ? undefined : [S.applyDisabled, props.applyDisabledStyle],
+          ]}
+          titleStyle={[S.applyButtonText, props.applyButtonTextStyle]}
+        />
+      );
     }
-    this.state = {
-      selectedItem,
-    };
   }
-  renderItem = (item: SelectableListItem, index: number) => {
+  return null;
+};
+
+export const SelectableList: FC<SelectableListProps> = (props) => {
+  const selectedItem = useMemo(() => {
+    for (const item of props.items) {
+      if (item.id === props.selectedId) {
+        return item;
+      }
+    }
+
+    return undefined;
+  }, [props.items, props.selectedId]);
+
+  const renderItem = (item: SelectableListItem, index: number) => {
     return (
       <SelectableRow
         key={item.id || index}
         title={item.title}
-        selected={
-          this.state.selectedItem
-            ? item.id === this.state.selectedItem.id
-            : item.id === this.props.selectedId
-        }
-        onPress={this.handlePress(item)}
-        {...this.props.selectableRow}
+        selected={selectedItem ? item.id === selectedItem.id : item.id === props.selectedId}
+        radioButton={props.radioButton}
+        // eslint-disable-next-line react/jsx-no-bind
+        onPress={() => props.onChange}
+        {...props.selectableRow}
       />
     );
   };
 
-  renderApply = (): JSX.Element | null => {
-    if (this.props.applyButton) {
-      if (this.props.applyButton !== true) {
-        return this.props.applyButton(this.handleApply, this.state.selectedItem);
-      } else {
-        return (
-          <Button
-            title={
-              this.props.applyButtonText || FSI18n.string(translationKeys.flagship.button.apply)
-            }
-            onPress={this.handleApply}
-            style={[
-              S.applyButton,
-              this.props.applyButtonStyle,
-              this.state.selectedItem
-                ? undefined
-                : [S.applyDisabled, this.props.applyDisabledStyle],
-            ]}
-            titleStyle={[S.applyButtonText, this.props.applyButtonTextStyle]}
-          />
-        );
-      }
+  const handleApply = useCallback((): void => {
+    if (selectedItem) {
+      props.onChange(selectedItem);
     }
-    return null;
-  };
+  }, [props, selectedItem]);
 
-  handlePress = (selectedItem: SelectableListItem) => () => {
-    if (this.props.applyButton) {
-      this.setState({
-        selectedItem,
-      });
-    } else {
-      this.props.onChange(selectedItem);
-    }
-  };
-
-  handleApply = (): void => {
-    if (this.state.selectedItem) {
-      this.props.onChange(this.state.selectedItem);
-    }
-  };
-
-  render(): JSX.Element {
-    return (
-      <View style={[S.container, this.props.style]}>
-        {this.props.items.map(this.renderItem)}
-        {this.renderApply()}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={[S.container, props.style]}>
+      {props.items.map(renderItem)}
+      <RenderApply props={props} handleApply={handleApply} selectedItem={selectedItem} />
+    </View>
+  );
+};
