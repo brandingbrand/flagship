@@ -14,10 +14,12 @@ export interface SelectableRowProps {
   title: string;
   onPress?: () => void;
   selected?: boolean;
+  radioButton?: boolean;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   selectedTextStyle?: StyleProp<TextStyle>;
   markerIconStyle?: StyleProp<ViewStyle>;
+  renderRadioButton?: () => React.ReactNode;
   renderCheckMark?: () => React.ReactNode;
   renderUncheckMark?: () => React.ReactNode;
   accessibilityLabel?: string;
@@ -32,8 +34,31 @@ const S = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    width: 30,
+    height: 30,
+    borderWidth: 1,
+    borderColor: '#333132',
+    backgroundColor: 'white',
+    borderRadius: 50,
+  },
+  circle: {
+    width: 13,
+    height: 13,
+    borderRadius: 50,
+    backgroundColor: 'black',
+  },
   rowText: {
     fontSize: 16,
+  },
+  selectedContainer: {
+    borderWidth: 1.5,
   },
   marker: {
     position: 'absolute',
@@ -75,6 +100,16 @@ export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props)
     return null;
   };
 
+  const renderRadioButton = () => {
+    return (
+      <View style={S.marker}>
+        <View style={props.selected ? [S.container, S.selectedContainer] : [S.container]}>
+          {props.selected && <View style={S.circle} />}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <TouchableOpacity
       style={[S.row, props.style]}
@@ -87,7 +122,8 @@ export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props)
       >
         {props.title}
       </Text>
-      {props.selected ? renderCheckMark() : renderUncheckMark()}
+      {props.radioButton && renderRadioButton()}
+      {!props.radioButton && props.selected ? renderCheckMark() : renderUncheckMark()}
     </TouchableOpacity>
   );
 });
