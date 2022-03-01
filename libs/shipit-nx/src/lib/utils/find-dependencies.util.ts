@@ -1,4 +1,5 @@
 import { ProjectConfiguration, ProjectGraph } from '@nrwl/devkit';
+import { existsSync } from 'fs';
 
 import { join } from 'path';
 
@@ -24,11 +25,10 @@ export const findDependencies = async (
     const npmNode = graph.externalNodes?.[projectName];
 
     if (npmNode) {
-      const packageJson = await readJson<{ nativePackage?: boolean }>(
-        join('node_modules', npmNode.data.packageName, 'package.json')
-      );
+      const possibleIosPath = join('node_modules', npmNode.data.packageName, 'ios');
+      const possibleAndroidPath = join('node_modules', npmNode.data.packageName, 'android');
 
-      if (packageJson?.nativePackage) {
+      if (existsSync(possibleIosPath) || existsSync(possibleAndroidPath)) {
         list.add(npmNode.data.packageName);
       } else if (!nested) {
         // Ignore references that are only in package.json

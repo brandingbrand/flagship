@@ -294,6 +294,17 @@ export class PostProcessPhase implements Phase {
     projectPackageJson.version = '0.0.1';
     projectPackageJson.dependencies = {};
 
+    for (const dependency of options.dependencies) {
+      if (packageJson.dependencies[dependency] !== undefined) {
+        const possibleIosPath = join('node_modules', dependency, 'ios');
+        const possibleAndroidPath = join('node_modules', dependency, 'android');
+
+        if (sourceTree.exists(possibleIosPath) || sourceTree.exists(possibleAndroidPath)) {
+          projectPackageJson.dependencies[dependency] = '*';
+        }
+      }
+    }
+
     writeJson(destinationTree, projectPackageJsonPath, projectPackageJson);
     writeJson(destinationTree, 'package.json', sortPackageJson(packageJson));
   }
