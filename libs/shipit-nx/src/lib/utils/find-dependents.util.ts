@@ -22,7 +22,9 @@ export const findDependents = async (
   for (const [otherProject] of otherProjects) {
     list.add(graph.nodes[otherProject].name);
     for (const dep of graph.dependencies[otherProject] ?? []) {
-      await findDependents(graph, dep.target, list, seen);
+      if (!dep.target.startsWith('npm:')) {
+        await findDependents(graph, dep.target, list, seen);
+      }
     }
   }
 
