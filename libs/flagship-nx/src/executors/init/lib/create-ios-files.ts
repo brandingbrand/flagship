@@ -13,6 +13,7 @@ export interface CreateIosFilesOptions {
   fileName: string;
   name: string;
   propertyName: string;
+  main: string;
   mainPath: string;
   development: boolean;
   nativeConstants: Record<string, string>;
