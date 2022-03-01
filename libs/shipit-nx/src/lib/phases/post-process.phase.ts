@@ -94,6 +94,7 @@ const isForcedDevDependency = (dependency: string) => {
     dependency === 'husky' ||
     dependency === 'ts-dedent' ||
     dependency === 'inquirer' ||
+    dependency === '@types/inquirer' ||
     dependency === '@nstudio/nps-i' ||
     dependency === 'npm-run-all' ||
     dependency === 'nps' ||
