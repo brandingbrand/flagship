@@ -114,6 +114,7 @@ export const initExecutor = async (
       mainPath,
       nativeConstants,
       shortVersion: version,
+      main: options.main,
       development: options.development,
       exceptionDomains: options.exceptionDomains,
       urlSchemes: options.urlSchemes,
