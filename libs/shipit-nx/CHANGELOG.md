@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.36.0](https://github.com/wSedlacek/flagship-text/compare/v11.35.0...v11.36.0) (2022-03-02)
+
+
+### Bug Fixes
+
+* **shipit-nx:** ignore dependants of npm packages (50f50ab)
+* **shipit-nx:** link native dependencies (800c1dd)
+* **shipit-nx:** missing dev dependency (e56abc4)
+
+
+
 # [11.35.0](https://github.com/wSedlacek/flagship-text/compare/v11.34.0...v11.35.0) (2022-02-25)
 
 
