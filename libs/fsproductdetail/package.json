@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fsproductdetail",
   "sideEffects": false,
-  "version": "11.36.0",
+  "version": "11.37.0",
   "description": "components for product detail pages",
   "license": "MIT"
 }

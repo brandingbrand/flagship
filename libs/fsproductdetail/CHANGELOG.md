@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.37.0](https://github.com/wSedlacek/flagship-text/compare/v11.36.0...v11.37.0) (2022-03-03)
+
+
+
 # [11.36.0](https://github.com/wSedlacek/flagship-text/compare/v11.35.0...v11.36.0) (2022-03-02)
 
 
