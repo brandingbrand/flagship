@@ -101,6 +101,16 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     decreaseButtonImage: icons.decrease,
   };
 
+  static getDerivedStateFromProps(props: StepperProps, state: StepperState) {
+    if (props.count && props.count !== state.count) {
+      return {
+        count: props.count,
+      };
+    }
+
+    return null;
+  }
+
   private readonly kButtonTouchabilityOpacity: number = 0.5;
 
   constructor(props: StepperProps) {
