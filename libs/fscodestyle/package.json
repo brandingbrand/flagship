@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/fscodestyle",
-  "version": "11.36.0",
+  "version": "11.37.0",
   "license": "MIT",
   "bin": {
     "fscodestyle": "index.js"
