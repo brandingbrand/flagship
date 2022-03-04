@@ -1,0 +1,81 @@
+{
+  "npmScope": "brandingbrand",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*",
+    ".env": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "init", "build-prisma", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "targetDependencies": {
+    "publish": [
+      {
+        "target": "publish",
+        "projects": "dependencies"
+      }
+    ],
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "install": [
+      {
+        "target": "install",
+        "projects": "dependencies"
+      },
+      {
+        "target": "build",
+        "projects": "self"
+      }
+    ]
+  },
+  "generators": {
+    "@nrwl/js": {
+      "library": {
+        "buildable": true,
+        "publishable": true,
+        "standaloneConfig": true,
+        "setParserOptionsProject": true
+      }
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/node": {
+      "library": {
+        "buildable": true,
+        "publishable": true,
+        "standaloneConfig": true,
+        "setParserOptionsProject": true
+      }
+    }
+  }
+}
