@@ -39,8 +39,6 @@ const S = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
     width: 30,
     height: 30,
     borderWidth: 1,
