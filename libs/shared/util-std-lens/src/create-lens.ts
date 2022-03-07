@@ -52,6 +52,104 @@ const fromPathTyped = <Structure>() => {
     k4: Key4,
     k5: Key5
   ): ComposableLens<Structure, Structure[Key1][Key2][Key3][Key4][Key5]>;
+  function fromPath<
+    Key1 extends keyof Structure,
+    Key2 extends keyof Structure[Key1],
+    Key3 extends keyof Structure[Key1][Key2],
+    Key4 extends keyof Structure[Key1][Key2][Key3],
+    Key5 extends keyof Structure[Key1][Key2][Key3][Key4],
+    Key6 extends keyof Structure[Key1][Key2][Key3][Key4][Key5]
+  >(
+    k1: Key1,
+    k2: Key2,
+    k3: Key3,
+    k4: Key4,
+    k5: Key5,
+    k6: Key6
+  ): ComposableLens<Structure, Structure[Key1][Key2][Key3][Key4][Key5][Key6]>;
+  function fromPath<
+    Key1 extends keyof Structure,
+    Key2 extends keyof Structure[Key1],
+    Key3 extends keyof Structure[Key1][Key2],
+    Key4 extends keyof Structure[Key1][Key2][Key3],
+    Key5 extends keyof Structure[Key1][Key2][Key3][Key4],
+    Key6 extends keyof Structure[Key1][Key2][Key3][Key4][Key5],
+    Key7 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6]
+  >(
+    k1: Key1,
+    k2: Key2,
+    k3: Key3,
+    k4: Key4,
+    k5: Key5,
+    k6: Key6,
+    k7: Key7
+  ): ComposableLens<Structure, Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7]>;
+  function fromPath<
+    Key1 extends keyof Structure,
+    Key2 extends keyof Structure[Key1],
+    Key3 extends keyof Structure[Key1][Key2],
+    Key4 extends keyof Structure[Key1][Key2][Key3],
+    Key5 extends keyof Structure[Key1][Key2][Key3][Key4],
+    Key6 extends keyof Structure[Key1][Key2][Key3][Key4][Key5],
+    Key7 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6],
+    Key8 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7]
+  >(
+    k1: Key1,
+    k2: Key2,
+    k3: Key3,
+    k4: Key4,
+    k5: Key5,
+    k6: Key6,
+    k7: Key7,
+    k8: Key8
+  ): ComposableLens<Structure, Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8]>;
+  function fromPath<
+    Key1 extends keyof Structure,
+    Key2 extends keyof Structure[Key1],
+    Key3 extends keyof Structure[Key1][Key2],
+    Key4 extends keyof Structure[Key1][Key2][Key3],
+    Key5 extends keyof Structure[Key1][Key2][Key3][Key4],
+    Key6 extends keyof Structure[Key1][Key2][Key3][Key4][Key5],
+    Key7 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6],
+    Key8 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7],
+    Key9 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8]
+  >(
+    k1: Key1,
+    k2: Key2,
+    k3: Key3,
+    k4: Key4,
+    k5: Key5,
+    k6: Key6,
+    k7: Key7,
+    k8: Key8,
+    k9: Key9
+  ): ComposableLens<Structure, Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8][Key9]>;
+  function fromPath<
+    Key1 extends keyof Structure,
+    Key2 extends keyof Structure[Key1],
+    Key3 extends keyof Structure[Key1][Key2],
+    Key4 extends keyof Structure[Key1][Key2][Key3],
+    Key5 extends keyof Structure[Key1][Key2][Key3][Key4],
+    Key6 extends keyof Structure[Key1][Key2][Key3][Key4][Key5],
+    Key7 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6],
+    Key8 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7],
+    Key9 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8],
+    Key10 extends keyof Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8][Key9]
+  >(
+    k1: Key1,
+    k2: Key2,
+    k3: Key3,
+    k4: Key4,
+    k5: Key5,
+    k6: Key6,
+    k7: Key7,
+    k8: Key8,
+    k9: Key9,
+    k10: Key10
+  ): ComposableLens<
+    Structure,
+    Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8][Key9][Key10]
+  >;
   function fromPath(...keys: PropertyKey[]): unknown {
     return new ComposableLens(_fromPath(...keys));
   }
