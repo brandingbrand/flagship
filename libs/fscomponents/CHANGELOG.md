@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.38.0](https://github.com/brandingbrand/flagship/compare/v11.37.0...v11.38.0) (2022-03-07)
+
+
+### Bug Fixes
+
+* **fscomponents:** remove container border bottom style (8fe08b1)
+* **fscomponents:** update stepper state on prop change (1c49310)
+
+
+
 # [11.37.0](https://github.com/brandingbrand/flagship/compare/v11.36.0...v11.37.0) (2022-03-03)
 
 
