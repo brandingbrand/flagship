@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.39.0](https://github.com/brandingbrand/flagship/compare/v11.38.0...v11.39.0) (2022-03-08)
+
+
+### Bug Fixes
+
+* **fsweb:** include ix package in webpack config (d6bcd1b)
+
+
+
 # [11.38.0](https://github.com/brandingbrand/flagship/compare/v11.37.0...v11.38.0) (2022-03-07)
 
 
