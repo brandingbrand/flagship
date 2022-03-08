@@ -78,3 +78,10 @@ export type ActionCreator<
 };
 
 export type ActionHandler<T extends AnyAction> = (action: T) => void;
+
+export type ActionSpecifierOf<ActionType extends ActionSpecifier<string, any, unknown>> =
+  ActionSpecifier<
+    ActionType['type'],
+    ActionType['subtype'],
+    Exclude<ActionType[typeof PAYLOAD], undefined>
+  >;
