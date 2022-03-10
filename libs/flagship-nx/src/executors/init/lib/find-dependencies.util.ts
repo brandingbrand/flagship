@@ -22,17 +22,7 @@ export const findDependencies = async (
     const npmNode = graph.externalNodes?.[projectName];
 
     if (npmNode) {
-      // Ignore references that are only in package.json
-      const isSourceDependency = graph.allWorkspaceFiles
-        ?.filter(({ file }) => file.startsWith(graph.nodes[originalProjectName]?.data.root))
-        .filter(
-          ({ file }) => file !== join(graph.nodes[originalProjectName]?.data.root, 'package.json')
-        )
-        .some(({ deps }) => deps?.some(({ projectName }) => projectName === npmNode.name));
-
-      if (isSourceDependency) {
-        list.add(npmNode.data.packageName);
-      }
+      list.add(npmNode.data.packageName);
     } else {
       const project = graph.nodes[projectName];
       if (project?.type === 'lib') {

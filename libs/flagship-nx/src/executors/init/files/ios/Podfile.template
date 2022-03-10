@@ -23,6 +23,9 @@ target '<%= className %>' do
   permissions_path = node_modules + '/react-native-permissions/ios'
   <% for(const pod of permissionPods){  %>
   <%-pod%><%} %>
+  <% if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
+  pod "KlaviyoSwift"
+  <% } %>
 
   post_install do |installer|
     nx_post_install(installer)
