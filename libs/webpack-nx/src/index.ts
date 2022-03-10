@@ -260,6 +260,11 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     }
   }
 
+  const demo =
+    typeof environment === 'object' &&
+    'configuration' in environment &&
+    environment.configuration === 'demo';
+
   const flagshipConfig: Configuration = {
     ...reactConfig,
     resolve: {
@@ -376,7 +381,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
         Buffer: ['buffer', 'Buffer'],
       }),
       new DefinePlugin({
-        __DEV__: !prod,
+        __DEV__: !prod || demo,
         __VERSION__: options?.root
           ? `"${require(join(options.root, 'package.json')).version}"`
           : '"0.0.0"',
