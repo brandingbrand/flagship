@@ -1,0 +1,40 @@
+{
+  "root": "libs/shared/util-std-json-schema",
+  "sourceRoot": "libs/shared/util-std-json-schema/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-json-schema",
+        "tsConfig": "libs/shared/util-std-json-schema/tsconfig.lib.json",
+        "packageJson": "libs/shared/util-std-json-schema/package.json",
+        "main": "libs/shared/util-std-json-schema/src/index.ts",
+        "assets": ["libs/shared/util-std-json-schema/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-json-schema/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-json-schema"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-json-schema/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
