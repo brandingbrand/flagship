@@ -1,0 +1,40 @@
+{
+  "root": "libs/shared/util-std-object",
+  "sourceRoot": "libs/shared/util-std-object/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-object",
+        "tsConfig": "libs/shared/util-std-object/tsconfig.lib.json",
+        "packageJson": "libs/shared/util-std-object/package.json",
+        "main": "libs/shared/util-std-object/src/index.ts",
+        "assets": ["libs/shared/util-std-object/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-object/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-object"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-object/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
