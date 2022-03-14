@@ -1,0 +1,40 @@
+{
+  "root": "libs/shared/util-std-math",
+  "sourceRoot": "libs/shared/util-std-math/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-math",
+        "tsConfig": "libs/shared/util-std-math/tsconfig.lib.json",
+        "packageJson": "libs/shared/util-std-math/package.json",
+        "main": "libs/shared/util-std-math/src/index.ts",
+        "assets": ["libs/shared/util-std-math/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-math/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-math"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-math/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
