@@ -16,4 +16,9 @@ describe('isSuperSet', () => {
     const matches = inputSatisfies(liftedSchema, alignChildrenSchema);
     expect(matches).toBe(false);
   });
+
+  it('should not match anything with an empty schema', () => {
+    const matches = inputSatisfies({}, { type: 'boolean' });
+    expect(matches).toBe(false);
+  });
 });

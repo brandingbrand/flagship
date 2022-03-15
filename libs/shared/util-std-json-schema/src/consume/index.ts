@@ -22,10 +22,6 @@ export const consumeSchema = (
     return schema;
   }
 
-  if (schema.title === editorSchema.title) {
-    delete schema.title;
-  }
-
   if (schema.type === 'object' && editorSchema.type === 'object') {
     if (schema.properties) {
       for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
@@ -46,8 +42,10 @@ export const consumeSchema = (
     }
 
     if (Object.keys(schema.properties ?? {}).length === 0) {
+      delete schema.title;
       delete schema.type;
       delete schema.properties;
+      delete schema.additionalProperties;
     }
   } else if (schema.type === 'string' && editorSchema.type === 'string') {
     if (schema.enum) {
@@ -55,11 +53,13 @@ export const consumeSchema = (
     }
 
     if (!schema.enum?.length) {
+      delete schema.title;
       delete schema.type;
       delete schema.enum;
     }
   } else {
     if (schema.type === editorSchema.type) {
+      delete schema.title;
       delete schema.type;
     }
   }

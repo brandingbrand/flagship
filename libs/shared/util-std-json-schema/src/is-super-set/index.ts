@@ -190,6 +190,15 @@ const getTypeMatchErrors: Validator = (input, target, options, paths) => {
   if (isEmptyObject(target) || !target.type) {
     return;
   } else if ((!input || isEmptyObject(input)) && options.allowPartial) {
+    if (target.type) {
+      return [
+        {
+          paths,
+          args: [`Type mismatch: ${input.type} does not satisfy ${target.type}`],
+        },
+      ];
+    }
+
     return;
   }
 

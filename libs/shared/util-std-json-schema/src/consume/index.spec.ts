@@ -1,5 +1,5 @@
 import { consumeSchema } from './index';
-import { alignChildrenSchema, viewStyleSchema } from '../../fixtures';
+import { alignChildrenSchema, liftedSchema, viewStyleSchema } from '../../fixtures';
 import { cloneDeep } from '@brandingbrand/standard-object';
 
 describe('consumeSchema', () => {
@@ -15,5 +15,25 @@ describe('consumeSchema', () => {
 
     consumeSchema(duplicatedAlignChildrenSchema, alignChildrenSchema);
     expect(duplicatedAlignChildrenSchema).toStrictEqual({});
+  });
+
+  it('should only consume the properties that are matching', () => {
+    const duplicatedViewSchema = cloneDeep(viewStyleSchema);
+
+    consumeSchema(duplicatedViewSchema, alignChildrenSchema);
+    expect(duplicatedViewSchema).toStrictEqual(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          backgroundColor: expect.objectContaining({}),
+        }),
+      })
+    );
+  });
+
+  it('should return an empty object if all properties are consumed', () => {
+    const duplicatedLiftedSchema = cloneDeep(liftedSchema);
+
+    consumeSchema(duplicatedLiftedSchema, duplicatedLiftedSchema);
+    expect(duplicatedLiftedSchema).toStrictEqual({});
   });
 });
