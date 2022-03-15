@@ -1,5 +1,5 @@
 import type { JSONSchema7Definition } from 'json-schema';
-import { difference } from '@brandingbrand/standard-array';
+import { difference, toArray } from '@brandingbrand/standard-array';
 
 // eslint-disable-next-line complexity
 export const consumeSchema = (
@@ -22,7 +22,7 @@ export const consumeSchema = (
     return schema;
   }
 
-  if (schema.type === 'object' && editorSchema.type === 'object') {
+  if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
     if (schema.properties) {
       for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
         const updatedSchema = consumeSchema(schema.properties[property], propertySchema);
@@ -47,18 +47,15 @@ export const consumeSchema = (
       delete schema.properties;
       delete schema.additionalProperties;
     }
-  } else if (schema.type === 'string' && editorSchema.type === 'string') {
-    if (schema.enum) {
-      schema.enum = difference(schema.enum, editorSchema.enum ?? []);
-    }
-
-    if (!schema.enum?.length) {
-      delete schema.title;
-      delete schema.type;
-      delete schema.enum;
-    }
+  } else if (schema.type?.includes('string') && editorSchema.type?.includes('string')) {
+    delete schema.title;
+    delete schema.type;
+    delete schema.enum;
   } else {
-    if (schema.type === editorSchema.type) {
+    if (
+      schema.type &&
+      toArray(schema.type).some((type) => toArray(editorSchema.type).includes(type))
+    ) {
       delete schema.title;
       delete schema.type;
     }

@@ -1,6 +1,9 @@
+import type { JSONSchema7 } from 'json-schema';
+
+import { cloneDeep } from '@brandingbrand/standard-object';
+
 import { consumeSchema } from './index';
 import { alignChildrenSchema, liftedSchema, viewStyleSchema } from '../../fixtures';
-import { cloneDeep } from '@brandingbrand/standard-object';
 
 describe('consumeSchema', () => {
   it('should maintain object type if not all properties are consumed', () => {
@@ -35,5 +38,16 @@ describe('consumeSchema', () => {
 
     consumeSchema(duplicatedLiftedSchema, duplicatedLiftedSchema);
     expect(duplicatedLiftedSchema).toStrictEqual({});
+  });
+
+  it('should remove types', () => {
+    const schema: JSONSchema7 = {
+      enum: ['hidden', 'visible'],
+      type: 'string',
+      title: 'backfaceVisibility',
+    };
+    consumeSchema(schema, { type: 'string', enum: [] });
+
+    expect(schema).toStrictEqual({});
   });
 });
