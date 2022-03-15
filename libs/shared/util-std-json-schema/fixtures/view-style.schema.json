@@ -1,0 +1,359 @@
+{
+  "title": "ViewStyle",
+  "type": "object",
+  "properties": {
+    "backfaceVisibility": {
+      "enum": ["hidden", "visible"],
+      "type": "string",
+      "title": "backfaceVisibility"
+    },
+    "backgroundColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "backgroundColor"
+    },
+    "borderBottomColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderBottomColor"
+    },
+    "borderBottomEndRadius": { "type": "number", "title": "borderBottomEndRadius" },
+    "borderBottomLeftRadius": { "type": "number", "title": "borderBottomLeftRadius" },
+    "borderBottomRightRadius": { "type": "number", "title": "borderBottomRightRadius" },
+    "borderBottomStartRadius": { "type": "number", "title": "borderBottomStartRadius" },
+    "borderBottomWidth": { "type": "number", "title": "borderBottomWidth" },
+    "borderColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderColor"
+    },
+    "borderEndColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderEndColor"
+    },
+    "borderLeftColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderLeftColor"
+    },
+    "borderLeftWidth": { "type": "number", "title": "borderLeftWidth" },
+    "borderRadius": { "type": "number", "title": "borderRadius" },
+    "borderRightColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderRightColor"
+    },
+    "borderRightWidth": { "type": "number", "title": "borderRightWidth" },
+    "borderStartColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderStartColor"
+    },
+    "borderStyle": {
+      "enum": ["dashed", "dotted", "solid"],
+      "type": "string",
+      "title": "borderStyle"
+    },
+    "borderTopColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "borderTopColor"
+    },
+    "borderTopEndRadius": { "type": "number", "title": "borderTopEndRadius" },
+    "borderTopLeftRadius": { "type": "number", "title": "borderTopLeftRadius" },
+    "borderTopRightRadius": { "type": "number", "title": "borderTopRightRadius" },
+    "borderTopStartRadius": { "type": "number", "title": "borderTopStartRadius" },
+    "borderTopWidth": { "type": "number", "title": "borderTopWidth" },
+    "borderWidth": { "type": "number", "title": "borderWidth" },
+    "opacity": { "type": "number", "title": "opacity" },
+    "testID": { "type": "string", "title": "testID" },
+    "elevation": {
+      "description": "Sets the elevation of a view, using Android's underlying\n[elevation API](https://developer.android.com/training/material/shadows-clipping.html#Elevation).\nThis adds a drop shadow to the item and affects z-order for overlapping views.\nOnly supported on Android 5.0+, has no effect on earlier versions.",
+      "type": "number",
+      "title": "elevation"
+    },
+    "alignContent": {
+      "enum": ["center", "flex-end", "flex-start", "space-around", "space-between", "stretch"],
+      "type": "string",
+      "title": "alignContent"
+    },
+    "alignItems": {
+      "enum": ["baseline", "center", "flex-end", "flex-start", "stretch"],
+      "type": "string",
+      "title": "alignItems"
+    },
+    "alignSelf": {
+      "enum": ["auto", "baseline", "center", "flex-end", "flex-start", "stretch"],
+      "type": "string",
+      "title": "alignSelf"
+    },
+    "aspectRatio": { "type": "number", "title": "aspectRatio" },
+    "borderEndWidth": { "type": ["string", "number"], "title": "borderEndWidth" },
+    "borderStartWidth": { "type": ["string", "number"], "title": "borderStartWidth" },
+    "bottom": { "type": ["string", "number"], "title": "bottom" },
+    "display": { "enum": ["flex", "none"], "type": "string", "title": "display" },
+    "end": { "type": ["string", "number"], "title": "end" },
+    "flex": { "type": "number", "title": "flex" },
+    "flexBasis": { "type": ["string", "number"], "title": "flexBasis" },
+    "flexDirection": {
+      "enum": ["column", "column-reverse", "row", "row-reverse"],
+      "type": "string",
+      "title": "flexDirection"
+    },
+    "flexGrow": { "type": "number", "title": "flexGrow" },
+    "flexShrink": { "type": "number", "title": "flexShrink" },
+    "flexWrap": {
+      "enum": ["nowrap", "wrap", "wrap-reverse"],
+      "type": "string",
+      "title": "flexWrap"
+    },
+    "height": { "type": ["string", "number"], "title": "height" },
+    "justifyContent": {
+      "enum": ["center", "flex-end", "flex-start", "space-around", "space-between", "space-evenly"],
+      "type": "string",
+      "title": "justifyContent"
+    },
+    "left": { "type": ["string", "number"], "title": "left" },
+    "margin": { "type": ["string", "number"], "title": "margin" },
+    "marginBottom": { "type": ["string", "number"], "title": "marginBottom" },
+    "marginEnd": { "type": ["string", "number"], "title": "marginEnd" },
+    "marginHorizontal": { "type": ["string", "number"], "title": "marginHorizontal" },
+    "marginLeft": { "type": ["string", "number"], "title": "marginLeft" },
+    "marginRight": { "type": ["string", "number"], "title": "marginRight" },
+    "marginStart": { "type": ["string", "number"], "title": "marginStart" },
+    "marginTop": { "type": ["string", "number"], "title": "marginTop" },
+    "marginVertical": { "type": ["string", "number"], "title": "marginVertical" },
+    "maxHeight": { "type": ["string", "number"], "title": "maxHeight" },
+    "maxWidth": { "type": ["string", "number"], "title": "maxWidth" },
+    "minHeight": { "type": ["string", "number"], "title": "minHeight" },
+    "minWidth": { "type": ["string", "number"], "title": "minWidth" },
+    "overflow": { "enum": ["hidden", "scroll", "visible"], "type": "string", "title": "overflow" },
+    "padding": { "type": ["string", "number"], "title": "padding" },
+    "paddingBottom": { "type": ["string", "number"], "title": "paddingBottom" },
+    "paddingEnd": { "type": ["string", "number"], "title": "paddingEnd" },
+    "paddingHorizontal": { "type": ["string", "number"], "title": "paddingHorizontal" },
+    "paddingLeft": { "type": ["string", "number"], "title": "paddingLeft" },
+    "paddingRight": { "type": ["string", "number"], "title": "paddingRight" },
+    "paddingStart": { "type": ["string", "number"], "title": "paddingStart" },
+    "paddingTop": { "type": ["string", "number"], "title": "paddingTop" },
+    "paddingVertical": { "type": ["string", "number"], "title": "paddingVertical" },
+    "position": { "enum": ["absolute", "relative"], "type": "string", "title": "position" },
+    "right": { "type": ["string", "number"], "title": "right" },
+    "start": { "type": ["string", "number"], "title": "start" },
+    "top": { "type": ["string", "number"], "title": "top" },
+    "width": { "type": ["string", "number"], "title": "width" },
+    "zIndex": { "type": "number", "title": "zIndex" },
+    "direction": { "enum": ["inherit", "ltr", "rtl"], "type": "string", "title": "direction" },
+    "shadowColor": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "__TYPE__": { "type": "string", "enum": ["Color"], "title": "__TYPE__" }
+          },
+          "required": ["__TYPE__"]
+        },
+        { "type": "string" }
+      ],
+      "title": "shadowColor"
+    },
+    "shadowOffset": {
+      "type": "object",
+      "properties": {
+        "width": { "type": "number", "title": "width" },
+        "height": { "type": "number", "title": "height" }
+      },
+      "additionalProperties": false,
+      "required": ["height", "width"],
+      "title": "shadowOffset"
+    },
+    "shadowOpacity": { "type": "number", "title": "shadowOpacity" },
+    "shadowRadius": { "type": "number", "title": "shadowRadius" },
+    "transform": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "title": "PerpectiveTransform",
+            "type": "object",
+            "properties": { "perspective": { "type": "number", "title": "perspective" } },
+            "additionalProperties": false,
+            "required": ["perspective"]
+          },
+          {
+            "title": "RotateTransform",
+            "type": "object",
+            "properties": { "rotate": { "type": "string", "title": "rotate" } },
+            "additionalProperties": false,
+            "required": ["rotate"]
+          },
+          {
+            "title": "RotateXTransform",
+            "type": "object",
+            "properties": { "rotateX": { "type": "string", "title": "rotateX" } },
+            "additionalProperties": false,
+            "required": ["rotateX"]
+          },
+          {
+            "title": "RotateYTransform",
+            "type": "object",
+            "properties": { "rotateY": { "type": "string", "title": "rotateY" } },
+            "additionalProperties": false,
+            "required": ["rotateY"]
+          },
+          {
+            "title": "RotateZTransform",
+            "type": "object",
+            "properties": { "rotateZ": { "type": "string", "title": "rotateZ" } },
+            "additionalProperties": false,
+            "required": ["rotateZ"]
+          },
+          {
+            "title": "ScaleTransform",
+            "type": "object",
+            "properties": { "scale": { "type": "number", "title": "scale" } },
+            "additionalProperties": false,
+            "required": ["scale"]
+          },
+          {
+            "title": "ScaleXTransform",
+            "type": "object",
+            "properties": { "scaleX": { "type": "number", "title": "scaleX" } },
+            "additionalProperties": false,
+            "required": ["scaleX"]
+          },
+          {
+            "title": "ScaleYTransform",
+            "type": "object",
+            "properties": { "scaleY": { "type": "number", "title": "scaleY" } },
+            "additionalProperties": false,
+            "required": ["scaleY"]
+          },
+          {
+            "title": "TranslateXTransform",
+            "type": "object",
+            "properties": { "translateX": { "type": "number", "title": "translateX" } },
+            "additionalProperties": false,
+            "required": ["translateX"]
+          },
+          {
+            "title": "TranslateYTransform",
+            "type": "object",
+            "properties": { "translateY": { "type": "number", "title": "translateY" } },
+            "additionalProperties": false,
+            "required": ["translateY"]
+          },
+          {
+            "title": "SkewXTransform",
+            "type": "object",
+            "properties": { "skewX": { "type": "string", "title": "skewX" } },
+            "additionalProperties": false,
+            "required": ["skewX"]
+          },
+          {
+            "title": "SkewYTransform",
+            "type": "object",
+            "properties": { "skewY": { "type": "string", "title": "skewY" } },
+            "additionalProperties": false,
+            "required": ["skewY"]
+          },
+          {
+            "title": "MatrixTransform",
+            "type": "object",
+            "properties": {
+              "matrix": { "type": "array", "items": { "type": "number" }, "title": "matrix" }
+            },
+            "additionalProperties": false,
+            "required": ["matrix"]
+          }
+        ]
+      },
+      "title": "transform"
+    },
+    "transformMatrix": {
+      "type": "array",
+      "items": { "type": "number" },
+      "title": "transformMatrix"
+    },
+    "rotation": { "type": "number", "title": "rotation" },
+    "scaleX": { "type": "number", "title": "scaleX" },
+    "scaleY": { "type": "number", "title": "scaleY" },
+    "translateX": { "type": "number", "title": "translateX" },
+    "translateY": { "type": "number", "title": "translateY" }
+  },
+  "additionalProperties": false
+}

@@ -232,6 +232,7 @@ const getRequiredInputErrors: Validator = (input, target, options, paths) => {
   return;
 };
 
+// eslint-disable-next-line complexity
 const getExtraneousInputErrors: Validator = (input, target, options, paths) => {
   // Verify that the input doesn't have extra properties violating the target
   if (target.additionalProperties === false) {
@@ -242,6 +243,20 @@ const getExtraneousInputErrors: Validator = (input, target, options, paths) => {
           {
             paths,
             args: ['input has extraneous property', prop],
+          },
+        ];
+      }
+    }
+  }
+
+  if (target.required) {
+    const superProps = new Set(Object.keys(input.properties ?? {}));
+    for (const requiredProp of target.required) {
+      if (!superProps.has(requiredProp) && options.allowPartial) {
+        return [
+          {
+            paths,
+            args: ['input does not have property defined', requiredProp],
           },
         ];
       }
@@ -1180,7 +1195,7 @@ const tryMergeAllOf = (schema: JSONSchema7) => {
 export const inputSatisfies = (
   input: JSONSchema7,
   target: JSONSchema7,
-  options: boolean | Partial<Options> = false
+  options: boolean | Partial<Options> = true
 ): boolean => {
   if (isEmptyObject(target)) {
     return true;
@@ -1199,8 +1214,8 @@ export const inputSatisfies = (
           allowAdditionalProps: false,
         }
       : {
-          allowPartial: options.allowPartial || false,
-          allowAdditionalProps: options.allowAdditionalProps || false,
+          allowPartial: options.allowPartial ?? true,
+          allowAdditionalProps: options.allowAdditionalProps ?? false,
         };
 
   if (hasAllOf(input)) input = tryMergeAllOf(input);
