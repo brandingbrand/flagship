@@ -4,7 +4,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
 export const useGlobalStoreState = <GlobalState, ReturnType>(
   store: IStore,
-  mapState: (state: GlobalState) => ReturnType
+  mapState: (state: GlobalState) => ReturnType,
+  dependencies: unknown[]
 ) => {
   const { useLayoutEffect, useState } = useReact();
   const [state, setState] = useState<ReturnType>(() => mapState(store.state));
@@ -15,7 +16,7 @@ export const useGlobalStoreState = <GlobalState, ReturnType>(
       .subscribe(setState);
 
     return () => subscription.unsubscribe();
-  }, [store, setState]);
+  }, [store, setState, ...dependencies]);
 
   return state;
 };
