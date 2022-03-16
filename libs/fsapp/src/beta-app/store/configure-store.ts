@@ -24,7 +24,10 @@ const middleware = __DEV__
     })()
   : [thunk];
 
-const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose;
+const composeEnhancers =
+  __DEV__ && window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
 
 export const configureStore = <S, A extends Action>(
   initialState: PreloadedState<S> | undefined,
