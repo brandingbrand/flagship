@@ -445,10 +445,6 @@ export class History implements FSRouterHistory {
 
     const nextLoad = this.waitForNextLoadOf(location);
     try {
-      if (this.activeStack !== location.stack) {
-        await this.switchStack(location.stack);
-      }
-
       this.actions.push(action);
       const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
       switch (action) {
@@ -481,6 +477,11 @@ export class History implements FSRouterHistory {
               this.store.push(location);
               this.activeIndex = this.store.length - 1;
               this.stacks[location.stack].children.push({ ...location, layout: options });
+
+              if (this.activeStack !== location.stack) {
+                void this.switchStack(location.stack);
+                this.activeStack = location.stack;
+              }
 
               if (Platform.OS === 'ios') {
                 void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
