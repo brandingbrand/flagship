@@ -265,6 +265,8 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     'configuration' in environment &&
     environment.configuration === 'demo';
 
+  const packageJson = options?.root ? require(join(options.root, 'package.json')) : undefined;
+
   const flagshipConfig: Configuration = {
     ...reactConfig,
     resolve: {
@@ -382,10 +384,9 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       }),
       new DefinePlugin({
         __DEV__: !prod || demo,
-        __VERSION__: options?.root
-          ? `"${require(join(options.root, 'package.json')).version}"`
-          : '"0.0.0"',
+        __VERSION__: packageJson?.version ? `"${packageJson.version}"` : '"0.0.0"',
         __DEFAULT_ENV__: undefined,
+        __BASE_NAME__: packageJson?.homepage ? `"${packageJson.homepage}"` : `undefined`,
       }),
     ],
     node: {
