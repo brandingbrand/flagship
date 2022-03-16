@@ -387,6 +387,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
         __VERSION__: packageJson?.version ? `"${packageJson.version}"` : '"0.0.0"',
         __DEFAULT_ENV__: undefined,
         __BASE_NAME__: packageJson?.homepage ? `"${packageJson.homepage}"` : `undefined`,
+        ...(prod ? { __REACT_DEVTOOLS_GLOBAL_HOOK__: '({ isDisabled: true })' } : {}),
       }),
     ],
     node: {
