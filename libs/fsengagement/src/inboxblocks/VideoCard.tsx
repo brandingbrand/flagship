@@ -6,7 +6,8 @@ import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
 import { VideoBlock } from './VideoBlock';
 import { CardContext, EngagementContext } from '../lib/contexts';
-import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { useNavigator } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
 
 export interface ComponentProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<TextStyle>;

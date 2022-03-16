@@ -2,7 +2,8 @@ import React from 'react';
 import { DeviceEventEmitter, StyleProp, TextStyle, TouchableOpacity } from 'react-native';
 
 import { CardProps, JSON, StoryGradient } from '../types';
-import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { useNavigator } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
 import { CardContext } from '../lib/contexts';
 import { TextBlock, TextBlockProps } from './TextBlock';
 import { CTABlock, CTABlockProps } from './CTABlock';

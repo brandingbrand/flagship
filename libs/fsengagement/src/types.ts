@@ -1,6 +1,6 @@
 import { ComponentClass, FunctionComponent } from 'react';
 import { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
+import type { Navigator } from '@brandingbrand/fsapp/legacy';
 import { EngagementService } from './EngagementService';
 
 export interface ScreenProps {

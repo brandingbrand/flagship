@@ -7,7 +7,8 @@ import { TextBlock } from './TextBlock';
 import { CTABlock } from './CTABlock';
 import { ImageBlock } from './ImageBlock';
 import { CardContext } from '../lib/contexts';
-import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { useNavigator } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
 
 import timeIcon from '../../assets/images/time.png';
 import whenIcon from '../../assets/images/whenIcon.png';

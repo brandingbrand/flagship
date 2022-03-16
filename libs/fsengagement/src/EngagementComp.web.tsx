@@ -15,7 +15,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Injector } from '@brandingbrand/fslinker';
-import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
+import { NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 
 import { EngagementService } from './EngagementService';
 import { Navigation } from 'react-native-navigation';

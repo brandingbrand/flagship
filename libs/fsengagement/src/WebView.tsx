@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
+import { Navigator, makeLegacyScreen } from '@brandingbrand/fsapp/legacy';
 
 import { Action, ScreenProps } from './types';
 import WebView from 'react-native-webview';
@@ -27,25 +27,19 @@ const styles = StyleSheet.create({
 
 export interface WebViewProps extends ScreenProps {
   actions: Action;
+  navigator: Navigator;
   isBlog?: boolean;
   backButton?: boolean;
 }
 
-export default class EngagementWebView extends PureComponent<WebViewProps> {
+class EngagementWebView extends PureComponent<WebViewProps> {
   navigationEventListener: any;
-  navigator: Navigator;
 
   constructor(props: WebViewProps) {
     super(props);
-    this.navigator = new Navigator({
-      componentId: props.componentId || '',
-      tabs: [],
-    });
   }
 
-  componentDidMount(): void {
-    this.navigationEventListener = this.navigator.bindNavigation(this);
-  }
+  componentDidMount(): void {}
 
   componentWillUnmount(): void {
     if (this.navigationEventListener) {
@@ -55,12 +49,12 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
 
   async navigationButtonPressed({ buttonId }: any): Promise<any> {
     if (buttonId === 'close') {
-      return this.navigator.dismissModal();
+      return this.props.navigator.dismissModal();
     }
   }
 
   onBackPress = async (): Promise<void> => {
-    return this.navigator.pop();
+    return this.props.navigator.pop();
   };
 
   injectBlogJS(): string {
@@ -87,3 +81,5 @@ export default class EngagementWebView extends PureComponent<WebViewProps> {
     );
   }
 }
+
+export default makeLegacyScreen(EngagementWebView, [], {});

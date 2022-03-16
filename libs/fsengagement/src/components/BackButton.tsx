@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
-import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { useNavigator } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
 
 import backArrow from '../../assets/images/backArrow.png';
 

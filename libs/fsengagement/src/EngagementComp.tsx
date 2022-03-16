@@ -20,7 +20,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Injector } from '@brandingbrand/fslinker';
-import { Navigator, NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
+import { NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
+import type { Navigator } from '@brandingbrand/fsapp/legacy';
 
 import { EngagementService } from './EngagementService';
 import TabbedStory from './inboxblocks/TabbedStory';

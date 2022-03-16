@@ -3,7 +3,8 @@ import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
 
 import { Action, CardProps, JSON } from '../types';
 import { CardContext, EngagementContext } from '../lib/contexts';
-import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+import { useNavigator } from '@brandingbrand/fsapp';
+import { Navigator } from '@brandingbrand/fsapp/legacy';
 
 export interface ActionsCard extends CardProps {
   actions?: Action;
