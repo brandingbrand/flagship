@@ -11,6 +11,7 @@ export interface DrawerOptions {
   readonly width?: number | string;
   readonly animationDuration?: string;
   readonly overlayOpacity?: number;
+  readonly backgroundColor?: string;
   readonly style?: StyleProp<ViewStyle>;
 }
 

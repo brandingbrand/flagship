@@ -14,7 +14,7 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import FSNetwork from '@brandingbrand/fsnetwork';
 
-import NativeConstants from '../../lib/native-constants';
+import { NativeConstants } from '../lib/native-constants';
 
 const { CodePush } = NativeModules;
 

@@ -146,7 +146,9 @@ export const resolveRoute = (id: string | undefined, route: MatchingRoute): Rout
         data: route.data ?? {},
         query: route.query,
         params: route.params,
-        path: route.matchedPath,
+        path: route.path,
+        url: route.matchedPath,
+        isExact: route.path === route.matchedPath,
         loading: true,
       }),
     ])

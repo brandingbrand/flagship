@@ -9,6 +9,7 @@ import type {
 } from 'react-native-navigation';
 import type { ParsedQs } from 'qs';
 import type { ShellConfig } from '../shell.web';
+import type { LocationDescriptorObject } from 'history';
 
 import { Component, ComponentType, FC } from 'react';
 
@@ -56,6 +57,8 @@ export interface ActivatedRoute {
   readonly data: RouteData;
   readonly params: RouteParams;
   readonly query: RouteQuery;
+  readonly url: string;
+  readonly isExact: boolean;
 }
 
 export interface Resolver<Data = unknown> {
@@ -222,6 +225,7 @@ export interface RouterConfig {
   readonly routes: Routes;
   readonly externalRoutes?: ExternalRouteFactory;
   readonly loading?: JSX.Element;
+  readonly basename?: string;
 }
 
 export interface InternalRouterConfig {
@@ -240,3 +244,5 @@ export interface FSRouterConstructor<T extends FSRouter = FSRouter> {
   new (routes: Routes, options: RouterConfig & InternalRouterConfig): T;
   register(options: RouterConfig & InternalRouterConfig): Promise<FSRouter>;
 }
+
+export type StackedLocationDescriptor = string | (LocationDescriptorObject & { stack?: number });

@@ -1,4 +1,4 @@
 import { NativeModules } from 'react-native';
-const { NativeConstants } = NativeModules;
+const { NativeConstants } = NativeModules as { NativeConstants: Record<string, string> };
 
 export { NativeConstants };

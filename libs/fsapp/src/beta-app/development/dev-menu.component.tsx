@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DevMenu = makeModal(({ reject, resolve }) => {
+export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
   const [devView, setDevView] = useState('menu');
   const [selectedEnv, setSelectedEnv] = useState('');
   const [devKeepPage, setDevKeepPage] = useState(false);
@@ -100,7 +100,7 @@ export const DevMenu = makeModal(({ reject, resolve }) => {
   }, []);
 
   const handleHideDevMenu = () => {
-    resolve();
+    resolve('hide');
   };
 
   const restart = () => {

@@ -1,4 +1,4 @@
-import type { AnyAction, ReducersMapObject } from 'redux';
+import type { AnyAction, Middleware, ReducersMapObject } from 'redux';
 
 export type GenericState = Readonly<Record<string, any>>;
 
@@ -15,4 +15,5 @@ export interface StoreConfig<
   readonly reducers: ReducersMapObject<S, A>;
   readonly uncachedData?: (initialState: SSRData<Partial<S>>, req?: Request) => Promise<SSRData<S>>;
   readonly cachedData?: (initialState: SSRData<Partial<S>>, req?: Request) => Promise<SSRData<S>>;
+  readonly middleware?: Middleware[];
 }

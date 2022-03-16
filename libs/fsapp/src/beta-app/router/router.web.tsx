@@ -66,7 +66,7 @@ const Redirect: FC<RedirectProps> = ({ route }) => {
     guardRoute(route, activatedRoute)
       .then((allowed) => {
         if (allowed) {
-          navigator.open(`/${redirect}`);
+          navigator.open(`/${redirect.replace(/^\//, '')}`);
         }
       })
       .catch(noop);
@@ -78,7 +78,7 @@ const Redirect: FC<RedirectProps> = ({ route }) => {
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
-    super(routes, new History(routes));
+    super(routes, new History(routes, { basename: options.basename }));
     Injector.provide({ provide: WEB_SHELL_CONTEXT_TOKEN, useValue: WebShellContext });
     this.registerRoutes();
   }
@@ -101,21 +101,21 @@ export class FSRouter extends FSRouterBase {
     const { id, path } = useMemo(() => buildPath(route, prefix), []);
     const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       const isMatch = () => {
         if (!path) {
-          return path === routeDetails?.path;
-        } else if (!routeDetails?.path) {
+          return path === routeDetails?.url;
+        } else if (!routeDetails?.url) {
           return false;
         }
 
-        return !!pathToRegexp(path).exec(routeDetails.path.split('?')[0]);
+        return !!pathToRegexp(path).exec(routeDetails.url?.split('?')?.[0] ?? '');
       };
 
       if (isMatch()) {
         setFilteredRoute(routeDetails);
       }
-    }, [routeDetails]);
+    }, [JSON.stringify(routeDetails)]);
 
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(

@@ -38,7 +38,8 @@ export class StoreManager<S extends GenericState, A extends Action> {
   public getReduxStore = async (initialState?: S) => {
     return configureStore(
       (initialState ?? this.config.initialState) as unknown as PreloadedState<S>,
-      this.config.reducers
+      this.config.reducers,
+      this.config.middleware
     );
   };
 }

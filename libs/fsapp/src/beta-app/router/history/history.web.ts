@@ -1,5 +1,11 @@
 import type { ActivatedRoute, MatchingRoute, Routes } from '../types';
-import type { FSRouterHistory, LoadingListener, RequiredTitle, ResolverListener } from './types';
+import type {
+  FSRouterHistory,
+  HistoryOptions,
+  LoadingListener,
+  RequiredTitle,
+  ResolverListener,
+} from './types';
 
 import { boundMethod } from 'autobind-decorator';
 import {
@@ -44,7 +50,9 @@ export class History implements FSRouterHistory {
   }
 
   private readonly matchers: Matchers = buildMatchers(this.routes);
-  private readonly browserHistory: BrowserHistory = createBrowserHistory();
+  private readonly browserHistory: BrowserHistory = createBrowserHistory({
+    ...(this.options?.basename ? { basename: this.options?.basename } : {}),
+  });
   private readonly activationObservers: Map<string, ResolverListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
   private readonly locationObservers: Map<string, LocationListener> = new Map();
@@ -58,7 +66,7 @@ export class History implements FSRouterHistory {
     state: {},
     key: createKey(),
   });
-  constructor(private readonly routes: Routes) {
+  constructor(private readonly routes: Routes, protected readonly options?: HistoryOptions) {
     void this.initialNavigation()
       .then(() => {
         this.observeNavigation();
@@ -104,6 +112,12 @@ export class History implements FSRouterHistory {
     }
   }
 
+  @boundMethod
+  @queueMethod
+  async pushTo(path: string): Promise<void> {
+    await this.push(path, {}, INTERNAL);
+  }
+
   public replace(path: string, state?: unknown): Promise<void>;
   public replace(location: LocationDescriptor): Promise<void>;
   @boundMethod
@@ -132,6 +146,20 @@ export class History implements FSRouterHistory {
   public async pop(): Promise<void> {
     this.browserHistory.goBack();
     await this.nextLoad;
+  }
+
+  @boundMethod
+  @queueMethod
+  popTo(): void {
+    throw new Error(
+      `${History.name}: ${this.popTo.name}() is not implemented for web. Please use push() instead...`
+    );
+  }
+
+  @boundMethod
+  @queueMethod
+  async popToRoot(): Promise<void> {
+    await this.push('/', {}, INTERNAL);
   }
 
   @boundMethod
@@ -267,7 +295,9 @@ export class History implements FSRouterHistory {
       data: { ...resolvedData, ...(typeof state === 'object' ? state : {}) },
       query: matchingRoute.query,
       params: matchingRoute.params,
-      path: matchingRoute.matchedPath,
+      url: matchingRoute.matchedPath,
+      path: matchingRoute.path,
+      isExact: matchingRoute.path === matchingRoute.matchedPath,
       loading: true,
     };
   }

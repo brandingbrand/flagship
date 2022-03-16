@@ -24,17 +24,18 @@ export const WEB_SHELL_CONTEXT_TOKEN = new InjectionToken<typeof WebShellContext
 
 export const useWebShell = () => useDependencyContext(WEB_SHELL_CONTEXT_TOKEN) ?? dummyShell;
 
-const useDrawerOptions = (LeftDrawer?: DrawerComponentType) => {
-  const width = useMemo(() => LeftDrawer?.options?.width ?? DEFAULT_DRAWER_WIDTH, [LeftDrawer]);
+const useDrawerOptions = (drawer?: DrawerComponentType) => {
+  const width = useMemo(() => drawer?.options?.width ?? DEFAULT_DRAWER_WIDTH, [drawer]);
   const duration = useMemo(
-    () => LeftDrawer?.options?.animationDuration ?? DEFAULT_DRAWER_ANIMATION,
-    [LeftDrawer]
+    () => drawer?.options?.animationDuration ?? DEFAULT_DRAWER_ANIMATION,
+    [drawer]
   );
   const opacity = useMemo(
-    () => LeftDrawer?.options?.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY,
-    [LeftDrawer]
+    () => drawer?.options?.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY,
+    [drawer]
   );
-  return [width, duration, opacity] as const;
+  const backgroundColor = useMemo(() => drawer?.options?.backgroundColor, [drawer]);
+  return [width, duration, opacity, backgroundColor] as const;
 };
 
 // TODO Move to Drawer definition
@@ -113,8 +114,9 @@ export const WebShellProvider: FC<ShellConfig> = ({
     return navigator.listen(closeAllDrawers);
   }, []);
 
-  const [leftWidth, leftDuration, leftOpacity] = useDrawerOptions(LeftDrawer);
-  const [rightWidth, rightDuration, rightOpacity] = useDrawerOptions(RightDrawer);
+  const [leftWidth, leftDuration, leftOpacity, leftBackgroundColor] = useDrawerOptions(LeftDrawer);
+  const [rightWidth, rightDuration, rightOpacity, rightBackgroundColor] =
+    useDrawerOptions(RightDrawer);
 
   const activateLeft = leftDrawerOpen || leftActive;
   const activateRight = rightDrawerOpen || rightActive;
@@ -144,8 +146,8 @@ export const WebShellProvider: FC<ShellConfig> = ({
             <View
               style={[
                 styles.containerOverlay,
-                leftDrawerOpen && { opacity: leftOpacity },
-                rightDrawerOpen && { opacity: rightOpacity },
+                leftDrawerOpen && { opacity: leftOpacity, backgroundColor: leftBackgroundColor },
+                rightDrawerOpen && { opacity: rightOpacity, backgroundColor: rightBackgroundColor },
                 (activateLeft || activateRight) && styles.containerOverlayActive,
                 activateLeft &&
                   ({

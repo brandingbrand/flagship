@@ -14,6 +14,10 @@ export type LoadingListener = (loading: boolean) => void;
 
 export type RequiredTitle = string | (OptionsTopBarTitle & { text: string });
 
+export interface HistoryOptions {
+  basename?: string;
+}
+
 export interface FSRouterHistory extends History {
   open(path: string, state?: unknown): void;
   open(location: LocationDescriptor): void;
@@ -21,10 +25,14 @@ export interface FSRouterHistory extends History {
   push(path: string, state?: unknown): void;
   push(location: LocationDescriptor): void;
 
+  pushTo(path: string, screenId: string): void;
+
   replace(path: string, state?: unknown): void;
   replace(location: LocationDescriptor): void;
 
   pop(): void;
+  popTo(screenId: string): void;
+  popToRoot(): void;
 
   goBack(): void;
   goForward(): void;

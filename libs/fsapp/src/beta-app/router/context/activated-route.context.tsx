@@ -11,6 +11,8 @@ export const defaultActivatedRoute: ActivatedRoute = {
   id: undefined,
   path: undefined,
   loading: false,
+  isExact: false,
+  url: '',
   data: {},
   query: {},
   params: {},

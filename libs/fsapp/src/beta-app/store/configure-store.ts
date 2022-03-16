@@ -4,6 +4,7 @@ import {
   combineReducers,
   compose,
   createStore,
+  Middleware,
   PreloadedState,
   ReducersMapObject,
 } from 'redux';
@@ -27,11 +28,12 @@ const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose
 
 export const configureStore = <S, A extends Action>(
   initialState: PreloadedState<S> | undefined,
-  reducers: ReducersMapObject<S, A>
+  reducers: ReducersMapObject<S, A>,
+  customMiddleware?: Middleware[]
 ) => {
   return createStore(
     combineReducers(reducers),
     initialState,
-    composeEnhancers(applyMiddleware(...middleware))
+    composeEnhancers(applyMiddleware(...middleware, ...(customMiddleware ?? [])))
   );
 };

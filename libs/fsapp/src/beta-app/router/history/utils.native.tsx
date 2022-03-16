@@ -7,7 +7,7 @@ import { Layout, LayoutRoot, LayoutTabsChildren, Navigation } from 'react-native
 import { defaultsDeep, uniqueId } from 'lodash-es';
 
 import { Matchers, matchRoute } from './utils.base';
-import { ROOT_STACK } from './constants';
+import { ROOT_STACK, ROOT_STACK_OPTIONS } from './constants';
 
 export const isTabRoute = (route: Route): route is RouteCollection => 'tab' in route;
 
@@ -77,7 +77,9 @@ export const applyMatcher = async (matchers: Matchers, route: RouteCollection | 
             data: component.data ?? {},
             query: component.query,
             params: component.params,
-            path: component.matchedPath,
+            path: component.path,
+            url: component.matchedPath,
+            isExact: component.path === component.matchedPath,
             loading: true,
           })
         : component.title;
@@ -124,6 +126,7 @@ export const makeRootLayout = async (
     return {
       bottomTabs: {
         id: ROOT_STACK,
+        options: ROOT_STACK_OPTIONS,
         children: tabs,
       },
     };
@@ -159,6 +162,7 @@ export const activateStacks = async (
         ...root,
         bottomTabs: {
           id: ROOT_STACK,
+          options: ROOT_STACK_OPTIONS,
           children: await Promise.all(
             activated.map(([route, activated], i) => {
               const layout = root.bottomTabs?.children?.[i] as LayoutTabsChildren;

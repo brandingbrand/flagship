@@ -1,4 +1,4 @@
-import NativeConstants from '../../lib/native-constants';
+import { NativeConstants } from '../lib/native-constants';
 
 const { ShowDevMenu } = NativeConstants;
 

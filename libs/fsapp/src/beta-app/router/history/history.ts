@@ -1,6 +1,7 @@
 import type {
   Blocker,
   FSRouterHistory,
+  HistoryOptions,
   LoadingListener,
   RequiredTitle,
   ResolverListener,
@@ -25,7 +26,13 @@ import {
 } from 'history';
 import { findLastIndex, isString, uniqueId } from 'lodash-es';
 
-import { ActivatedRoute, MatchingRoute, Routes, ScreenComponentType } from '../types';
+import {
+  ActivatedRoute,
+  MatchingRoute,
+  Routes,
+  ScreenComponentType,
+  StackedLocationDescriptor,
+} from '../types';
 import { isDefined, promisedEntries } from '../../utils';
 
 import { INTERNAL, queueMethod } from './queue.decorator';
@@ -74,7 +81,7 @@ export class History implements FSRouterHistory {
   private readonly lactationObservers: Map<string, LocationListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
 
-  constructor(private readonly routes: Routes) {
+  constructor(private readonly routes: Routes, protected readonly options?: HistoryOptions) {
     this.observeNavigation();
     const tabRoutes = this.routes.filter(isTabRoute);
     const universalRoutes = this.routes.filter(isNotTabRoute);
@@ -178,12 +185,12 @@ export class History implements FSRouterHistory {
   }
 
   public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
-  public push(location: LocationDescriptor): Promise<void>;
+  public push(location: StackedLocationDescriptor, _internal?: typeof INTERNAL): Promise<void>;
   @boundMethod
   @queueMethod
   public async push(
-    to: LocationDescriptor,
-    state?: unknown,
+    to: StackedLocationDescriptor,
+    state?: unknown | typeof INTERNAL,
     _internal?: typeof INTERNAL
   ): Promise<void> {
     const normalized = normalizeLocationDescriptor(to);
@@ -192,6 +199,19 @@ export class History implements FSRouterHistory {
     } else {
       const newLocation = await this.getNextLocation(normalized, state, _internal !== undefined);
       await this.updateLocation(newLocation, 'PUSH');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  async pushTo(path: string, screenId: string): Promise<void> {
+    const targetStack = this.stacks.findIndex(({ children }) =>
+      children.some(({ key }) => screenId === key)
+    );
+
+    const location = normalizeLocationDescriptor(path);
+    if (targetStack) {
+      await this.push({ ...location, stack: targetStack }, INTERNAL);
     }
   }
 
@@ -223,6 +243,28 @@ export class History implements FSRouterHistory {
     };
 
     await this.updateLocation(newLocation, 'POP');
+  }
+
+  @boundMethod
+  @queueMethod
+  async popTo(screenId: string): Promise<void> {
+    const screen = this.stacks
+      .flatMap(({ children }, stack) => children.map((location) => ({ ...location, stack })))
+      .find(({ key }) => key === screenId);
+
+    if (screen) {
+      await this.updateLocation(screen, 'POP');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  async popToRoot(): Promise<void> {
+    const root = this.stack?.children[0];
+
+    if (root) {
+      await this.updateLocation({ ...root, stack: this.activeStack }, 'POP');
+    }
   }
 
   @boundMethod
@@ -586,7 +628,9 @@ export class History implements FSRouterHistory {
       data: resolvedData,
       query: matchingRoute.query,
       params: matchingRoute.params,
-      path: matchingRoute.matchedPath,
+      url: matchingRoute.matchedPath,
+      path: matchingRoute.path,
+      isExact: matchingRoute.path === matchingRoute.matchedPath,
       loading: true,
     };
   }

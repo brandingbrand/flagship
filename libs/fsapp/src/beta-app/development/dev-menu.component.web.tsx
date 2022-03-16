@@ -3,7 +3,7 @@
 
 import type { Routes } from '../router';
 
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { envs } from '../env';
@@ -95,12 +95,16 @@ const extractDevRoutes = (routes?: Routes, prefix: string = ''): string[] => {
   );
 };
 
-export const DevMenu = makeModal(({ reject }) => {
+export const DevMenu = makeModal<'hide' | void>(({ resolve, reject }) => {
   const app = useApp();
   const currentEnv = useMemo(() => EnvSwitcher.envName, []);
   const devRoutes = useMemo(() => extractDevRoutes(app?.routes), [app]);
   const [devView, setDevView] = useState('menu');
   const [selectedEnv, setSelectedEnv] = useState(currentEnv);
+
+  const hideDevMenu = useCallback(() => {
+    resolve('hide');
+  }, [resolve]);
 
   const updateDevView = (view: string) => () => {
     setDevView(view);
@@ -231,6 +235,9 @@ export const DevMenu = makeModal(({ reject }) => {
     <View style={styles.devViewContainer}>
       <ScrollView>{view}</ScrollView>
       <View style={styles.bottomBtns}>
+        <TouchableOpacity style={styles.closeBtn} onPress={hideDevMenu}>
+          <Text style={styles.closeBtnText}>Hide</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.closeBtn} onPress={reject}>
           <Text style={styles.closeBtnText}>Close</Text>
         </TouchableOpacity>
