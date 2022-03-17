@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.41.0](https://github.com/brandingbrand/flagship/compare/v11.40.0...v11.41.0) (2022-03-17)
+
+
+### Bug Fixes
+
+* **orchestrate-nx:** concat paths (b9e1c4c)
+
+
+
 # [11.40.0](https://github.com/brandingbrand/flagship/compare/v11.39.0...v11.40.0) (2022-03-10)
 
 

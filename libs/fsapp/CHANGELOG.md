@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.41.0](https://github.com/brandingbrand/flagship/compare/v11.40.0...v11.41.0) (2022-03-17)
+
+
+### Features
+
+* **fsapp:** disable redux dev tools on prod (e5cd29d)
+* **fsapp:** legacy app shim (ef2f3cf)
+
+
+### Performance Improvements
+
+* **fsapp:** start push before switch tab has finished (de96762)
+
+
+
 # [11.40.0](https://github.com/brandingbrand/flagship/compare/v11.39.0...v11.40.0) (2022-03-10)
 
 

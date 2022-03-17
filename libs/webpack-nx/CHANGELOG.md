@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.41.0](https://github.com/brandingbrand/flagship/compare/v11.40.0...v11.41.0) (2022-03-17)
+
+
+### Features
+
+* **webpack-nx:** disable react dev tools on prod (d758dbd)
+* **webpack-nx:** use homepage for basename (f27514a)
+
+
+
 # [11.40.0](https://github.com/brandingbrand/flagship/compare/v11.39.0...v11.40.0) (2022-03-10)
 
 

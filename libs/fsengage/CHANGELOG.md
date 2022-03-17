@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.41.0](https://github.com/brandingbrand/flagship/compare/v11.40.0...v11.41.0) (2022-03-17)
+
+
+### Bug Fixes
+
+* **fsengage:** remove leanplum provider on uat (b168c5d)
+
+
+### Features
+
+* **fsengage:** start leanplum (96e9b73)
+* **fsengage:** transition to @leanplum/react-native-sdk lib (40c5762)
+
+
+
 # [11.40.0](https://github.com/brandingbrand/flagship/compare/v11.39.0...v11.40.0) (2022-03-10)
 
 
