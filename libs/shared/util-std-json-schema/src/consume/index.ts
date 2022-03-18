@@ -1,5 +1,5 @@
 import type { JSONSchema7Definition } from 'json-schema';
-import { difference, toArray } from '@brandingbrand/standard-array';
+import { toArray } from '@brandingbrand/standard-array';
 
 // eslint-disable-next-line complexity
 export const consumeSchema = (
@@ -22,6 +22,29 @@ export const consumeSchema = (
     return schema;
   }
 
+  if ('anyOf' in editorSchema) {
+    for (let i = 0; i < (editorSchema.anyOf?.length ?? 0); i++) {
+      const anyOfSchema = editorSchema.anyOf?.[i];
+      consumeSchema(schema, anyOfSchema);
+    }
+  }
+
+  if ('anyOf' in schema) {
+    for (let i = 0; i < (schema.anyOf?.length ?? 0); i++) {
+      const anyOfSchema = schema.anyOf?.[i];
+      const updatedSchema = consumeSchema(anyOfSchema, editorSchema);
+      if (typeof updatedSchema === 'object' && Object.keys(updatedSchema).length === 0) {
+        delete schema.anyOf?.[i];
+      }
+    }
+
+    schema.anyOf = schema.anyOf?.filter(Boolean);
+    if (schema.anyOf?.length === 0) {
+      delete schema.anyOf;
+      delete schema.title;
+    }
+  }
+
   if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
     if (schema.properties) {
       for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
@@ -34,7 +57,7 @@ export const consumeSchema = (
     }
 
     if (schema.required) {
-      schema.required = difference(schema.required, editorSchema.required ?? []);
+      schema.required = schema.required.filter((value) => !editorSchema.required?.includes(value));
     }
 
     if (!schema.required?.length) {
@@ -59,10 +82,6 @@ export const consumeSchema = (
       delete schema.title;
       delete schema.type;
     }
-  }
-
-  if ('anyOf' in schema) {
-    delete schema.anyOf;
   }
 
   return schema;

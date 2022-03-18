@@ -1,0 +1,65 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "exampleID": {
+          "type": "string",
+          "title": "exampleID"
+        },
+        "__type": {
+          "type": "string",
+          "enum": ["product", "category", "product-group"],
+          "title": "__type"
+        },
+        "selectedSource": {
+          "type": "string",
+          "title": "selectedSource"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["__type", "exampleID", "selectedSource"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "fixedID": {
+          "type": "string",
+          "title": "fixedID"
+        },
+        "__type": {
+          "type": "string",
+          "enum": ["product", "category", "product-group"],
+          "title": "__type"
+        },
+        "selectedSource": {
+          "type": "string",
+          "title": "selectedSource"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["__type", "fixedID", "selectedSource"]
+    },
+    {
+      "type": "object",
+      "required": ["__type", "fixedQuery", "selectedSource"],
+      "properties": {
+        "__type": {
+          "enum": ["product", "category", "product-group"],
+          "type": "string",
+          "title": "__type"
+        },
+        "fixedQuery": {
+          "type": "string",
+          "title": "fixedQuery"
+        },
+        "selectedSource": {
+          "type": "string",
+          "title": "selectedSource"
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "title": "commerceDataSource"
+}

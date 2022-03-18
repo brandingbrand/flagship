@@ -3,7 +3,13 @@ import type { JSONSchema7 } from 'json-schema';
 import { cloneDeep } from '@brandingbrand/standard-object';
 
 import { consumeSchema } from './index';
-import { alignChildrenSchema, liftedSchema, viewStyleSchema } from '../../fixtures';
+import {
+  alignChildrenSchema,
+  commerceDataSourceEditorSchema,
+  commerceDataSourceSchema,
+  liftedSchema,
+  viewStyleSchema,
+} from '../../fixtures';
 
 describe('consumeSchema', () => {
   it('should maintain object type if not all properties are consumed', () => {
@@ -49,5 +55,13 @@ describe('consumeSchema', () => {
     consumeSchema(schema, { type: 'string', enum: [] });
 
     expect(schema).toStrictEqual({});
+  });
+
+  it('should remove all of the any of definitions', () => {
+    const duplicatedCommerceDataSourceSchema = cloneDeep(commerceDataSourceSchema);
+
+    consumeSchema(duplicatedCommerceDataSourceSchema, commerceDataSourceEditorSchema);
+
+    expect(duplicatedCommerceDataSourceSchema).toStrictEqual({});
   });
 });
