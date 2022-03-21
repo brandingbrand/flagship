@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.42.0](https://github.com/brandingbrand/flagship/compare/v11.41.0...v11.42.0) (2022-03-21)
+
+
+### Bug Fixes
+
+* **shared-util-std-json-schema:** property consume any of (f29b1b9)
+
+
+
 # [11.41.0](https://github.com/brandingbrand/flagship/compare/v11.40.0...v11.41.0) (2022-03-17)
 
 
