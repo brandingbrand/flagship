@@ -20,7 +20,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath("com.android.tools.build:gradle:3.5.3")
-        <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+        <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
         classpath 'com.google.gms:google-services:4.3.3'
         <% } %>
 

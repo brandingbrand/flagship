@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-<% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+<% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
 apply plugin: "com.google.gms.google-services"
 <% } %>
 
@@ -198,7 +198,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+    <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
     implementation 'com.leanplum:leanplum-fcm:5.3.3'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-iid'

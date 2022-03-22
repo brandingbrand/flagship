@@ -8,7 +8,8 @@
  */
 
 #import "AppDelegate.h"
-<% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+
+<% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
 #import <Leanplum.h>
 <% } %>
 
@@ -89,7 +90,7 @@ NSURL *jsCodeLocation;
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
   [Leanplum didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   <% } else { %>
   [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
@@ -99,7 +100,7 @@ NSURL *jsCodeLocation;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
   void (^leanplumCompletionHandler)(LeanplumUIBackgroundFetchResult) =  ^(LeanplumUIBackgroundFetchResult result) {
             UIBackgroundFetchResult r = result;
             completionHandler(r);
@@ -113,7 +114,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 // Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-  <% if (dependencies.includes("@leanplum/react-native-sdk")) { %>
+  <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
   [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
   <% } else { %>
   [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
