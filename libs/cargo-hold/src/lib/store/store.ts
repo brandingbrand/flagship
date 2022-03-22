@@ -1,7 +1,7 @@
 import type { AnyActionReducer, Effect, IStore } from './store.types';
-import { asapScheduler, BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
-import { observeOn, scan, switchMap } from 'rxjs/operators';
-import { ActionBus } from '../action-bus';
+import { BehaviorSubject, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { map, scan, switchMap, withLatestFrom } from 'rxjs/operators';
+import { ActionBus, AnyAction } from '../action-bus';
 import { accumulateToArray } from '../internal/util/operators';
 
 /**
@@ -12,6 +12,7 @@ import { accumulateToArray } from '../internal/util/operators';
 export class Store<State> extends ActionBus implements IStore<State> {
   private readonly _state$: BehaviorSubject<State>;
   private readonly _reducer$ = new ReplaySubject<AnyActionReducer<State>>();
+  private readonly _reducedAction$ = new Subject<AnyAction>();
 
   constructor(initialState: State) {
     super();
@@ -25,11 +26,23 @@ export class Store<State> extends ActionBus implements IStore<State> {
               (currentState, action) =>
                 reducers.reduce((state, reducer) => reducer(action)(state), currentState),
               initialState
-            )
+            ),
+            withLatestFrom(this._action$)
           )
         )
       )
-      .subscribe(this._state$);
+      .subscribe({
+        next: ([state, action]) => {
+          this._state$.next(state);
+          this._reducedAction$.next(action);
+        },
+        complete: () => {
+          this._state$.complete();
+        },
+        error: (err) => {
+          this._state$.error(err);
+        },
+      });
 
     this.subscriptions.add(reducerSubscription);
   }
@@ -47,12 +60,7 @@ export class Store<State> extends ActionBus implements IStore<State> {
   };
 
   public registerEffect = (effect: Effect<State>): Subscription => {
-    const subscription = effect(this._action$, this._state$)
-      .pipe(
-        // allow reducers to run before more actions are piled onto action$
-        observeOn(asapScheduler)
-      )
-      .subscribe(this._action$);
+    const subscription = effect(this._reducedAction$, this._state$).subscribe(this._action$);
     this.subscriptions.add(subscription);
     return subscription;
   };
