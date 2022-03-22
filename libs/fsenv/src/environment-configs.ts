@@ -8,6 +8,7 @@ declare global {
 
   export interface EnvironmentConfig {
     default?: boolean;
+    disableCaching?: boolean;
     production?: boolean;
     hiddenEnvs?: string[];
     associatedDomains?: string[];
