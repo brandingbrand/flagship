@@ -145,7 +145,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       ? environment.buildOptions
       : undefined);
 
-  const forkTsCheck =
+  const shouldForkTsCheck =
     options && 'forkTsCheck' in options
       ? options.forkTsCheck
       : !!reactConfig.plugins?.find((plugin) => plugin instanceof ForkTsCheckerWebpackPlugin) ||
@@ -214,7 +214,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       loader: require.resolve('ts-loader'),
       options: {
         configFile: options?.tsConfig,
-        transpileOnly: forkTsCheck,
+        transpileOnly: shouldForkTsCheck,
       },
     },
   ];
@@ -376,8 +376,17 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     },
     plugins: [
       ...(reactConfig.plugins ?? []).filter(
-        (plugin) => forkTsCheck || !(plugin instanceof ForkTsCheckerWebpackPlugin)
+        (plugin) => !(plugin instanceof ForkTsCheckerWebpackPlugin)
       ),
+      ...(shouldForkTsCheck
+        ? [
+            new ForkTsCheckerWebpackPlugin({
+              async: false,
+              eslint: undefined,
+              typescript: { memoryLimit: 4096 },
+            }),
+          ]
+        : []),
       new ProvidePlugin({
         process: 'process/browser',
         Buffer: ['buffer', 'Buffer'],
@@ -395,7 +404,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     },
     stats: {
       ...(typeof reactConfig.stats === 'object' ? reactConfig.stats : {}),
-      ...(forkTsCheck ? { warningsFilter: /export .* was not found in/ } : {}),
+      ...(shouldForkTsCheck ? { warningsFilter: /export .* was not found in/ } : {}),
     },
   };
 
