@@ -12,7 +12,7 @@ export const Injectable =
 
     const paramTypes = (Reflect.getMetadata('design:paramtypes', target) ?? []) as InjectionToken[];
 
-    Object.assign(target, new InjectionToken(target.name));
+    Object.assign(target, new InjectionToken(Symbol(target.name)));
     const prevDependencies = target[DEPENDENCIES_SYMBOL] ?? [];
     paramTypes.forEach((type, i) => {
       if (typeof type === 'function' && 'uniqueKey' in type && prevDependencies[i] === undefined) {

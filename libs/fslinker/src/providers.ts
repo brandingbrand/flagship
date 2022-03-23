@@ -1,6 +1,6 @@
 export class InjectionToken<T = unknown> {
   protected readonly brand: T | undefined;
-  constructor(public readonly uniqueKey: string) {}
+  constructor(public readonly uniqueKey: string | symbol) {}
 }
 
 export type OfToken<A extends any[]> = {

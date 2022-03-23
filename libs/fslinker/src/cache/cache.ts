@@ -15,7 +15,7 @@ export interface FallbackCache {
 
 export class InMemoryCache {
   constructor(
-    private readonly providers: Map<string, unknown>,
+    private readonly providers: Map<string | symbol, unknown>,
     private readonly fallback?: FallbackCache
   ) {}
 
@@ -34,7 +34,9 @@ export class InMemoryCache {
 
     if (this.providers.has(token.uniqueKey)) {
       throw new TypeError(
-        `${InMemoryCache.name}: Duplicate provider, token ${token.uniqueKey} is already provided.
+        `${
+          InMemoryCache.name
+        }: Duplicate provider, token ${token.uniqueKey.toString()} is already provided.
 If you are a developer seeing this message there can be a few causes:
 - You have explicitly reused the same token when providing dependencies
 - You have given two tokens the same name

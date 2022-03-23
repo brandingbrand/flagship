@@ -55,7 +55,9 @@ export class Injector implements FallbackCache {
     const dependency = this.get(token);
     if (dependency === undefined) {
       throw new ReferenceError(
-        `${Injector.name}: Required ${(token as InjectionToken<T>).uniqueKey} is undefined.
+        `${Injector.name}: Required ${(
+          token as InjectionToken<T>
+        ).uniqueKey.toString()} is undefined.
 If you are a developer seeing this message there can be a few causes:
 - You are requiring a token that is never provided
 - You are requiring a token that is not *yet* provided
