@@ -28,6 +28,10 @@ export interface InitExecutorOptions {
   main: string;
   packageJson: string;
   bundleIdentifier: string | PlatformSpecific<string>;
+  /**
+   * @deprecated In Flagship 12 this should be made to be required.
+   */
+  bundleVersion?: string | PlatformSpecific<string>;
   development: boolean;
   defaultEnvironment: string;
   urlSchemes: string[];
@@ -125,7 +129,7 @@ export const initExecutor = async (
       launchScreen: ios(options.launchScreen),
       permissions: ios(options.permissions),
       bundleIdentifier: ios(options.bundleIdentifier),
-      bundleVersion: bundleVersion(version),
+      bundleVersion: ios(options.bundleVersion) ?? bundleVersion(version),
       dependencies: [...dependencies.values()],
     });
 
@@ -152,7 +156,7 @@ export const initExecutor = async (
       bundleIdentifier: android(options.bundleIdentifier),
       buildConfig: android(options.buildConfig),
       passwords: android(options.passwords),
-      bundleVersion: bundleVersion(version),
+      bundleVersion: android(options.bundleVersion) ?? bundleVersion(version),
       dependencies: [...dependencies.values()],
     });
 
