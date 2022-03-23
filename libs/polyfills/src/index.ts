@@ -1,5 +1,14 @@
 /* eslint-disable no-extend-native */
 import 'symbol-observable';
+import base64 from '@brandingbrand/utils-base64';
+
+if (!global.btoa) {
+  global.btoa = base64.encode;
+}
+
+if (!global.atob) {
+  global.atob = base64.decode;
+}
 
 if (!Object.fromEntries) {
   Object.fromEntries = <T>(arr: Iterable<readonly [PropertyKey, T]>) => {
