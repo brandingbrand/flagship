@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.45.0](https://github.com/brandingbrand/flagship/compare/v11.44.0...v11.45.0) (2022-03-24)
+
+
+### Bug Fixes
+
+* **flagship-nx:** invald fastlane options (c96d8ba)
+
+
+### Features
+
+* **flagship-nx:** android versionCode (2941841)
+* **flagship-nx:** custom entitlements (e5ea300)
+* **flagship-nx:** customizable export method (20f069c)
+
+
+
 # [11.44.0](https://github.com/brandingbrand/flagship/compare/v11.43.0...v11.44.0) (2022-03-23)
 
 
