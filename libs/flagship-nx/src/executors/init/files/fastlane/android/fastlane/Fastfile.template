@@ -5,7 +5,7 @@ lane :increment_build do
     version = appcenter_fetch_version_number(
       owner_name: "<%= organization %>",
       app_name: "<%= appName %>",
-      version: "<%= shortVersion %>",
+      version: "<%= versionName %>",
     )
 
     if version["build_number"]

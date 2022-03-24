@@ -7,6 +7,7 @@ export interface CreateFastlaneFilesOptions {
   projectRoot: string;
   className: string;
   shortVersion: string;
+  versionName: string;
   organization: string;
   bundleIdentifier: string | PlatformSpecific<string>;
   appName: PlatformSpecific<string>;

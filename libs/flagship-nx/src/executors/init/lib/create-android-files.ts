@@ -16,8 +16,8 @@ export interface CreateAndroidFilesOptions {
   mainPath: string;
   development: boolean;
   nativeConstants: Record<string, string>;
-  shortVersion: string;
-  bundleVersion: string;
+  versionName: string;
+  versionCode: number;
   bundleIdentifier: string;
   defaultEnvironment: string;
   exceptionDomains: string[];

@@ -20,13 +20,12 @@
       ]
     },
     "bundleVersion": {
-      "anyOf": [
-        { "type": "string" },
-        {
-          "type": "object",
-          "properties": { "ios": { "type": "string" }, "android": { "type": "string" } }
-        }
-      ]
+      "type": "string",
+      "description": "iOS Specific"
+    },
+    "versionCode": {
+      "type": "number",
+      "description": "Android Specific"
     },
     "development": {
       "type": "boolean",

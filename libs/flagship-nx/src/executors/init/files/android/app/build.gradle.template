@@ -127,7 +127,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName project.VERSION_NAME
-        versionCode <%= bundleVersion %>
+        versionCode <%= versionCode %>
     }
     signingConfigs {
         release {
