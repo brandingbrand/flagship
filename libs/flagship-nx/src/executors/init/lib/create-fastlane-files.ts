@@ -11,6 +11,7 @@ export interface CreateFastlaneFilesOptions {
   bundleIdentifier: string | PlatformSpecific<string>;
   appName: PlatformSpecific<string>;
   ios?: {
+    exportMethod: string;
     exportTeamId: string;
     appleCert: string;
     profilesDir: string;

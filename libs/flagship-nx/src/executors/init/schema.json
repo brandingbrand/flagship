@@ -160,6 +160,10 @@
         "ios": {
           "type": "object",
           "properties": {
+            "exportMethod": {
+              "type": "string",
+              "default": "enterprise"
+            },
             "exportTeamId": {
               "type": "string"
             },

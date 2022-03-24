@@ -27,7 +27,7 @@ lane :appcenter do
   gym(
     scheme: "<%= className %>",
     clean: true,
-    export_method: "enterprise",
+    export_method: "<%= ios.exportMethod %>"
     export_team_id: "<%= ios.exportTeamId %>",
     export_options: {
       provisioningProfiles: {

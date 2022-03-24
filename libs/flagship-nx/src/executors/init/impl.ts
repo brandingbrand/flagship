@@ -57,6 +57,7 @@ export interface InitExecutorOptions {
 
   buildConfig?: {
     ios?: {
+      exportMethod: string;
       exportTeamId: string;
       appleCert: string;
       profilesDir: string;
