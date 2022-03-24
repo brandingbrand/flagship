@@ -63,6 +63,7 @@ export interface InitExecutorOptions {
       distCert: string;
       distP12: string;
       provisioningProfileName: string;
+      entitlementsFile?: string;
     };
     android?: {
       storeFile: string;
@@ -130,6 +131,7 @@ export const initExecutor = async (
       permissions: ios(options.permissions),
       bundleIdentifier: ios(options.bundleIdentifier),
       bundleVersion: ios(options.bundleVersion) ?? bundleVersion(version),
+      entitlementsFile: options.buildConfig?.ios?.entitlementsFile,
       dependencies: [...dependencies.values()],
     });
 

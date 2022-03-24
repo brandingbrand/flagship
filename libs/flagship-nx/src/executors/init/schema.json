@@ -175,6 +175,9 @@
             "distP12": {
               "type": "string"
             },
+            "entitlementsFile": {
+              "type": "string"
+            },
             "provisioningProfileName": {
               "type": "string"
             }

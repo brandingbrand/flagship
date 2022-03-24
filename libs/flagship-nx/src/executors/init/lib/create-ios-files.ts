@@ -26,6 +26,7 @@ export interface CreateIosFilesOptions {
   permissions?: Record<IosPermissionKeys, string>;
   appIcon?: string;
   launchScreen?: string;
+  entitlementsFile?: string;
   dependencies: string[];
 }
 
@@ -77,6 +78,16 @@ export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
     const storyboard = tree.read(launchScreenStoryboardTemplatePath);
     if (storyboard) {
       tree.write(launchScreenStoryboardPath, storyboard);
+    }
+  }
+
+  if (options.entitlementsFile) {
+    const entitlementsPath = join(projectPath, `${options.className}.entitlements`);
+    const entitlementsTemplatePath = join(options.entitlementsFile);
+
+    const entitlements = tree.read(entitlementsTemplatePath);
+    if (entitlements) {
+      tree.write(entitlementsPath, entitlements);
     }
   }
 };
