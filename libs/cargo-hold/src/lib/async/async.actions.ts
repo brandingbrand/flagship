@@ -47,42 +47,49 @@ export const createAsyncActionCreators = <
   EmptyPayload = Payload
 >(
   actionKey: ActionKey,
-  source?: string | symbol
+  source?: string | symbol,
+  metadata?: Record<string, unknown>
 ): AsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload> => ({
   init: createActionCreator({
     actionKey,
     subtype: 'async:init',
     source,
+    metadata,
     callback: (payload) => payload,
   }),
   load: createActionCreator({
     actionKey,
     subtype: 'async:load',
     source,
+    metadata,
     callback: (payload) => payload,
   }),
   loadMore: createActionCreator({
     actionKey,
     subtype: 'async:load-more',
     source,
+    metadata,
     callback: (payload) => payload,
   }),
   succeed: createActionCreator({
     actionKey,
     subtype: 'async:succeed',
     source,
+    metadata,
     callback: (payload) => payload,
   }),
   fail: createActionCreator({
     actionKey,
     subtype: 'async:fail',
     source,
+    metadata,
     callback: (failure) => failure,
   }),
   revert: createActionCreator({
     actionKey,
     subtype: 'async:revert',
     source,
+    metadata,
     callback: (payload) => payload,
   }),
 });

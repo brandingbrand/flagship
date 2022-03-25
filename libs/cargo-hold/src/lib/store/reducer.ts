@@ -7,6 +7,7 @@ import type {
   TypeGuard,
 } from '../action-bus';
 import type { AnyActionReducer, SourcesList, ActionReducer, StateReducer } from './store.types';
+import equal from 'fast-deep-equal';
 
 export const combineActionReducers =
   <State extends {}>(...reducers: AnyActionReducer<State>[]): AnyActionReducer<State> =>
@@ -55,14 +56,16 @@ export const isSubtype =
 
 export const matches =
   <DesiredActionSpecifier extends AnyActionSpecifier>(
-    action: DesiredActionSpecifier,
+    specifier: DesiredActionSpecifier,
     extraSources?: SourcesList
   ): TypeGuard<AnyActionSpecifier, DesiredActionSpecifier> =>
   (inputAction): inputAction is DesiredActionSpecifier => {
     return (
-      action.type === inputAction.type &&
-      action.subtype === inputAction.subtype &&
-      (extraSources === undefined || requireSource(action.source, ...extraSources)(inputAction))
+      specifier.type === inputAction.type &&
+      specifier.subtype === inputAction.subtype &&
+      (extraSources === undefined ||
+        requireSource(specifier.source, ...extraSources)(inputAction)) &&
+      equal(specifier.filterMetadata, inputAction.filterMetadata)
     );
   };
 

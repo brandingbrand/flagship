@@ -23,6 +23,12 @@ export type ActionSpecifier<Type extends string, Subtype extends string | undefi
   source?: string | symbol;
 
   /**
+   * `filterMetadata` is any optional data that should be filtered along with type when matching
+   * against the action for reducers and effects.
+   */
+  filterMetadata?: Record<string, unknown>;
+
+  /**
    * This key doesn't truly exist; it is only a placeholder in order to pass on the Payload type.
    */
   [PAYLOAD]?: Payload;

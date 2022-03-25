@@ -21,6 +21,7 @@ export type CreateActionOptions<
   actionKey: ActionKey;
   subtype?: Subtype;
   source?: string | symbol;
+  metadata?: Record<string, unknown>;
   callback?: (...params: Params) => Payload;
 };
 
@@ -35,10 +36,12 @@ export const createActionCreator = <
   type: options.actionKey,
   subtype: options.subtype,
   source: options.source,
+  filterMetadata: options.metadata,
   create: (...params) => ({
     type: options.actionKey,
     subtype: options.subtype,
     source: options.source,
+    filterMetadata: options.metadata,
     payload: options.callback ? options.callback(...params) : ({} as Payload),
   }),
 });

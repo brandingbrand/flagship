@@ -23,6 +23,7 @@ export type AsyncAdaptorOptions<
   emitSource?: string | symbol;
   listenToSources?: SourcesList;
   actionKey: ActionKey;
+  metadata?: Record<string, unknown>;
   lens?: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>;
 };
 
@@ -45,7 +46,8 @@ export const createAsyncAdaptor = <
     >);
   const actionCreators = createAsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload>(
     options.actionKey,
-    options.emitSource
+    options.emitSource,
+    options.metadata
   );
   const reducers = createReducers<Payload, FailPayload, EmptyPayload>();
   const lensedReducers = createLensedReducers<Payload, FailPayload, Structure, EmptyPayload>(
