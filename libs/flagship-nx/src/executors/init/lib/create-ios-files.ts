@@ -28,6 +28,14 @@ export interface CreateIosFilesOptions {
   launchScreen?: string;
   entitlementsFile?: string;
   dependencies: string[];
+  buildConfig?: {
+    exportTeamId: string;
+    appleCert: string;
+    profilesDir: string;
+    distCert: string;
+    distP12: string;
+    provisioningProfileName: string;
+  };
 }
 
 export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
@@ -89,5 +97,16 @@ export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
     if (entitlements) {
       tree.write(entitlementsPath, entitlements);
     }
+  }
+
+  if (options?.buildConfig?.appleCert) {
+    const { appleCert, distCert, distP12, profilesDir } = options.buildConfig;
+
+    generateFiles(tree, join(__dirname, '../files/scripts/ios'), join(iosRoot), {
+      appleCert,
+      distCert,
+      distP12,
+      profilesDir,
+    });
   }
 };

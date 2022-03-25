@@ -78,9 +78,10 @@ export interface InitExecutorOptions {
       keyAlias: string;
     };
   };
+
   passwords?: {
     android?: {
-      storPassword: string;
+      storePassword: string;
       keyPassword: string;
     };
   };
@@ -141,6 +142,7 @@ export const initExecutor = async (
       bundleVersion: ios(options.bundleVersion) ?? bundleVersion(version),
       entitlementsFile: options.buildConfig?.ios?.entitlementsFile,
       dependencies: [...dependencies.values()],
+      buildConfig: options.buildConfig?.ios,
     });
 
     createAndroidFiles(tree, {

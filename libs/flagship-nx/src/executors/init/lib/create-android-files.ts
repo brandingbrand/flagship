@@ -33,7 +33,7 @@ export interface CreateAndroidFilesOptions {
     keyAlias: string;
   };
   passwords?: {
-    storPassword: string;
+    storePassword: string;
     keyPassword: string;
   };
   dependencies: string[];
