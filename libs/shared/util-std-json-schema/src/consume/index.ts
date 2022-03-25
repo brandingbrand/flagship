@@ -45,6 +45,29 @@ export const consumeSchema = (
     }
   }
 
+  if ('allOf' in editorSchema) {
+    for (let i = 0; i < (editorSchema.allOf?.length ?? 0); i++) {
+      const allOfSchema = editorSchema.allOf?.[i];
+      consumeSchema(schema, allOfSchema);
+    }
+  }
+
+  if ('allOf' in schema) {
+    for (let i = 0; i < (schema.allOf?.length ?? 0); i++) {
+      const allOfSchema = schema.anyOf?.[i];
+      const updatedSchema = consumeSchema(allOfSchema, editorSchema);
+      if (typeof updatedSchema === 'object' && Object.keys(updatedSchema).length === 0) {
+        delete schema.allOf?.[i];
+      }
+    }
+
+    schema.allOf = schema.allOf?.filter(Boolean);
+    if (schema.allOf?.length === 0) {
+      delete schema.allOf;
+      delete schema.title;
+    }
+  }
+
   if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
     if (schema.properties) {
       for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
