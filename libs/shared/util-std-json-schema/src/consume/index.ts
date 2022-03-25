@@ -68,7 +68,41 @@ export const consumeSchema = (
     }
   }
 
-  if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
+  if (schema.type?.includes('array') && editorSchema.type?.includes('array')) {
+    if (editorSchema.items === undefined) {
+      schema.items = [];
+    }
+
+    if (schema.items) {
+      const editorItemSchemas = toArray(editorSchema.items ?? []);
+      for (let i = 0; i++; i < editorItemSchemas.length) {
+        const editorItemSchema = editorItemSchemas[i];
+
+        const updatedSchema = consumeSchema(
+          Array.isArray(schema.items) ? schema.items[i] : schema.items,
+          editorItemSchema
+        );
+
+        if (typeof updatedSchema === 'object' && Object.keys(updatedSchema).length === 0) {
+          if (Array.isArray(schema.items)) {
+            delete schema.items[i];
+          } else {
+            delete schema.items;
+          }
+        }
+      }
+    }
+
+    if (toArray(schema.items).length === 0) {
+      delete schema.title;
+      delete schema.type;
+      delete schema.items;
+      delete schema.additionalItems;
+      delete schema.uniqueItems;
+      delete schema.maxItems;
+      delete schema.minItems;
+    }
+  } else if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
     if (schema.properties) {
       for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
         const updatedSchema = consumeSchema(schema.properties[property], propertySchema);
