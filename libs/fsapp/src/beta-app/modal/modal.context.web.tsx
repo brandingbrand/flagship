@@ -1,6 +1,6 @@
 import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
 
-import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
+import React, { createContext, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { uniqueId } from 'lodash-es';
 
@@ -62,25 +62,29 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const route = useActivatedRoute();
   const getApp = useCallback(() => app, [app]);
   const [modals, setModals] = useState<Record<string, FC>>({});
-  const [closers, setClosers] = useState<Record<string, () => void>>({});
+
+  const closers = useRef<Map<string, () => void>>();
+  if (closers.current === undefined) {
+    closers.current = new Map();
+  }
 
   const removeModal = useCallback(
     (id: string) => {
-      const { [id]: modal, ...otherModals } = modals;
-      const { [id]: close, ...otherClosers } = closers;
-      setModals(otherModals);
-      setClosers(otherClosers);
+      setModals((modals) => {
+        const { [id]: modal, ...otherModals } = modals;
+        return otherModals;
+      });
+
+      closers.current?.delete(id);
     },
-    [modals, setModals]
+    [setModals]
   );
 
   // TODO: Animations, Styles
-  const dismissModal = useCallback(
-    async (id: string) => {
-      closers[id]();
-    },
-    [closers]
-  );
+  const dismissModal = useCallback(async (id: string) => {
+    const closer = closers.current?.get(id);
+    closer?.();
+  }, []);
 
   // TODO: Animations, Styles
   const dismissAllModals = useCallback(async () => {
@@ -93,7 +97,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
       const id = uniqueId(`${modal.definitionId}-`);
       const Content = modal;
       return new Promise<T>((resolve, reject) => {
-        setModals({
+        setModals((modals) => ({
           ...modals,
           [id]: () => {
             const [visible, setVisible] = useState(true);
@@ -107,7 +111,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
             }, [visible]);
 
             useEffect(() => {
-              setClosers({ ...closers, [id]: () => setVisible(false) });
+              closers.current?.set(id, () => setVisible(false));
             }, []);
 
             const handleResolve = useCallback(
@@ -169,17 +173,19 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
               </Modal>
             );
           },
-        });
+        }));
       });
     },
-    [modals, setModals]
+    [setModals]
+  );
+
+  const modalContext = useMemo(
+    () => ({ showModal, dismissModal, dismissAllModals }),
+    [showModal, dismissModal, dismissAllModals]
   );
 
   return (
-    <InjectedContextProvider
-      token={MODAL_CONTEXT_TOKEN}
-      value={{ showModal, dismissModal, dismissAllModals }}
-    >
+    <InjectedContextProvider token={MODAL_CONTEXT_TOKEN} value={modalContext}>
       {children}
       {Object.entries(modals).map(([id, Modal]) => (
         <Modal key={id} />
