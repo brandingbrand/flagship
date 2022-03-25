@@ -27,6 +27,7 @@ import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph'
 export interface InitExecutorOptions {
   main: string;
   packageJson: string;
+  appName?: string | PlatformSpecific<string>;
   bundleIdentifier: string | PlatformSpecific<string>;
 
   /**
@@ -95,6 +96,7 @@ interface PackageJson {
  * This really should be a generator, but until the template is converted into
  * an nx generator this will have to be an executor
  */
+// eslint-disable-next-line complexity
 export const initExecutor = async (
   options: InitExecutorOptions,
   context: ExecutorContext
@@ -125,7 +127,7 @@ export const initExecutor = async (
       className,
       constantName,
       fileName,
-      name,
+      name: ios(options.appName) ?? name,
       propertyName,
       mainPath,
       nativeConstants,
@@ -151,7 +153,7 @@ export const initExecutor = async (
       className,
       constantName,
       fileName,
-      name,
+      name: android(options.appName) ?? name,
       propertyName,
       mainPath,
       nativeConstants,
