@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.46.0](https://github.com/brandingbrand/flagship/compare/v11.45.0...v11.46.0) (2022-03-28)
+
+
+### Features
+
+* **flagship-nx:** add new generated add-keys-ios script (f6fada4)
+* **flagship-nx:** overridable app name (0833fea)
+
+
+
 # [11.45.0](https://github.com/brandingbrand/flagship/compare/v11.44.0...v11.45.0) (2022-03-24)
 
 

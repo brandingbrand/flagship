@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.46.0](https://github.com/brandingbrand/flagship/compare/v11.45.0...v11.46.0) (2022-03-28)
+
+
+### Bug Fixes
+
+* **shared-util-std-json-schema:** consume all of (f924fda)
+* **shared-util-std-json-schema:** consume items (9666eb1)
+
+
+
 # [11.45.0](https://github.com/brandingbrand/flagship/compare/v11.44.0...v11.45.0) (2022-03-24)
 
 
