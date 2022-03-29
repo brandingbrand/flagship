@@ -214,21 +214,21 @@
             }
           },
           "required": ["storeFile", "keyAlias"]
-        },
-        "androidPasswords": {
-          "type": "object",
-          "properties": {
-            "storePassword": {
-              "type": "string"
-            },
-            "keyPassword": {
-              "type": "string"
-            }
-          },
-          "required": ["storePassword", "keyPassword"]
         }
       },
       "required": []
+    },
+    "androidPasswords": {
+      "type": "object",
+      "properties": {
+        "storePassword": {
+          "type": "string"
+        },
+        "keyPassword": {
+          "type": "string"
+        }
+      },
+      "required": ["storePassword", "keyPassword"]
     },
     "appCenter": {
       "type": "object",

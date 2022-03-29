@@ -80,11 +80,9 @@ export interface InitExecutorOptions {
     };
   };
 
-  passwords?: {
-    android?: {
-      storePassword: string;
-      keyPassword: string;
-    };
+  androidPasswords?: {
+    storePassword: string;
+    keyPassword: string;
   };
 }
 
@@ -170,7 +168,7 @@ export const initExecutor = async (
       permissions: android(options.permissions),
       bundleIdentifier: android(options.bundleIdentifier),
       buildConfig: android(options.buildConfig),
-      passwords: android(options.passwords),
+      passwords: options.androidPasswords,
       dependencies: [...dependencies.values()],
     });
 
