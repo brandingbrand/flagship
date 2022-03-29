@@ -1,28 +1,31 @@
-import { parseTargetString, Task } from '@nrwl/devkit';
+import { parseTargetString, TargetDependencyConfig } from '@nrwl/devkit';
 import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import { createTasksForProjectToRun } from '@nrwl/workspace/src/tasks-runner/run-command';
 
-export async function calculateDependencies(targets: string[]) {
+export async function calculateDependencies(
+  targets: string[],
+  targetDependencies?: Record<string, TargetDependencyConfig[]>
+) {
   const projectGraph = await createProjectGraphAsync();
-  const taskList = targets.map((targetString) => {
+
+  const taskList = targets.flatMap((targetString) => {
     const { project, target, configuration } = parseTargetString(targetString);
 
-    return createTasksForProjectToRun(
+    const tasks = createTasksForProjectToRun(
       [projectGraph.nodes[project]],
       { target, configuration: configuration as string, overrides: {} },
       projectGraph,
-      project
+      project,
+      targetDependencies
     );
+
+    // The last task in the list will always be the `targetString`
+    // that is to be run, we are only interested in the dependencies
+    // of that task as it relates to calculating the dependencies.
+    const childTasks = tasks.slice(0, -1);
+    return childTasks;
   });
 
-  const dependencyList = taskList.reduce((aggregate, list) => {
-    const dependencies = list.slice(0, -1);
-    for (const dependency of dependencies) {
-      aggregate.set(dependency.id, dependency);
-    }
-
-    return aggregate;
-  }, new Map<string, Task>());
-
+  const dependencyList = new Set(taskList.map(({ id }) => id));
   return Array.from(dependencyList.keys());
 }

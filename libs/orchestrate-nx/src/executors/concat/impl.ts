@@ -10,7 +10,10 @@ export interface ConcatAllExecutorOptions {
 
 export async function concatAll(options: ConcatAllExecutorOptions, context: ExecutorContext) {
   try {
-    const dependencyList = await calculateDependencies(options.targets);
+    const dependencyList = await calculateDependencies(
+      options.targets,
+      context.workspace.targetDependencies
+    );
     const completedTask = new Set<string>();
 
     for (const targetString of [...dependencyList, ...options.targets]) {

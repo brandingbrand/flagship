@@ -14,7 +14,10 @@ export interface RunAllExecutorOptions {
 
 export async function* runAll(options: RunAllExecutorOptions, context: ExecutorContext) {
   logger.info(`${CONSOLE_PREFIX} Building dependencies...`);
-  const dependencyList = await calculateDependencies(options.targets);
+  const dependencyList = await calculateDependencies(
+    options.targets,
+    context.workspace.targetDependencies
+  );
   const dependencyExecution = await concatAll({ targets: dependencyList }, context);
 
   if (!dependencyExecution.success) {
