@@ -6,6 +6,7 @@ import { CONSOLE_PREFIX } from '../../lib/constants';
 
 export interface ConcatAllExecutorOptions {
   targets: string[];
+  options?: object;
 }
 
 export async function concatAll(options: ConcatAllExecutorOptions, context: ExecutorContext) {
@@ -23,7 +24,7 @@ export async function concatAll(options: ConcatAllExecutorOptions, context: Exec
 
       const target = parseTargetString(targetString);
       logger.info(`${CONSOLE_PREFIX} Running ${cyan(targetString)}...`);
-      for await (const execution of await runExecutor(target, {}, context)) {
+      for await (const execution of await runExecutor(target, options.options ?? {}, context)) {
         if (execution.success) {
           completedTask.add(targetString);
         }

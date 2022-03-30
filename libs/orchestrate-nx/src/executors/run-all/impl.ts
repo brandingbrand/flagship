@@ -10,6 +10,7 @@ import { concatAll } from '../concat/impl';
 
 export interface RunAllExecutorOptions {
   targets: string[];
+  options?: object;
 }
 
 export async function* runAll(options: RunAllExecutorOptions, context: ExecutorContext) {
@@ -32,7 +33,7 @@ export async function* runAll(options: RunAllExecutorOptions, context: ExecutorC
   const executions$ = from(options.targets).pipe(
     mergeMap(async (targetString) => {
       const target = parseTargetString(targetString);
-      const executor = await runExecutor(target, {}, context);
+      const executor = await runExecutor(target, options.options ?? {}, context);
       return from(executor).pipe(map((progress) => ({ ...progress, target: targetString })));
     }),
     mergeAll()
