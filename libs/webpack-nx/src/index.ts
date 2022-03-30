@@ -383,7 +383,11 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             new ForkTsCheckerWebpackPlugin({
               async: false,
               eslint: undefined,
-              typescript: { memoryLimit: 4096 },
+              typescript: {
+                enabled: true,
+                configFile: options?.tsConfig,
+                memoryLimit: 4096,
+              },
             }),
           ]
         : []),
