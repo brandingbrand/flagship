@@ -45,5 +45,5 @@
       }
     }
   },
-  "tags": ["open-source"]
+  "tags": ["open-source", "scope:shared", "type:util"]
 }
