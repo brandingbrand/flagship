@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.47.0](https://github.com/brandingbrand/flagship/compare/v11.46.0...v11.47.0) (2022-03-31)
+
+
+### Bug Fixes
+
+* **webpack-nx:** type checking at build time (cc118a2)
+
+
+
 # [11.46.0](https://github.com/brandingbrand/flagship/compare/v11.45.0...v11.46.0) (2022-03-28)
 
 

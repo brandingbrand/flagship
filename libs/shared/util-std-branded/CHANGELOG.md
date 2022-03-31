@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.47.0](https://github.com/brandingbrand/flagship/compare/v11.46.0...v11.47.0) (2022-03-31)
+
+
+### Features
+
+* **shared-util-std-branded:** add tags to shared-util-std-branded (9b20855)
+
+
+
 # [11.46.0](https://github.com/brandingbrand/flagship/compare/v11.45.0...v11.46.0) (2022-03-28)
 
 
