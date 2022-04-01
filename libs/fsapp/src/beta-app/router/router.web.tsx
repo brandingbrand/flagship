@@ -115,7 +115,7 @@ export class FSRouter extends FSRouterBase {
       if (isMatch()) {
         setFilteredRoute(routeDetails);
       }
-    }, [JSON.stringify(routeDetails)]);
+    }, [routeDetails]);
 
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(
