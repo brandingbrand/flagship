@@ -6,7 +6,7 @@
  */
 export const bundleVersion = (version: string): string => {
   const [versionAndLabel] = version.split('-');
-  const [major, minor, patch] = versionAndLabel.split('.');
+  const [major, minor, patch] = versionAndLabel?.split('.') ?? '';
 
-  return `${major.padStart(2, '0')}${minor.padStart(3, '0')}${patch.padStart(3, '0')}`;
+  return `${major?.padStart(2, '0')}${minor?.padStart(3, '0')}${patch?.padStart(3, '0')}`;
 };

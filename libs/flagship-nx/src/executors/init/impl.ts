@@ -105,7 +105,7 @@ export const initExecutor = async (
 
   try {
     const tree = new FsTree(context.root, false);
-    const projectRoot = context.workspace.projects[context.projectName].root;
+    const projectRoot = context.workspace.projects[context.projectName]?.root ?? '.';
     const { version } = readJson<PackageJson>(tree, options.packageJson);
 
     const { className, constantName, fileName, name, propertyName } = names(context.projectName);
