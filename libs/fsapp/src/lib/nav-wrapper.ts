@@ -100,7 +100,8 @@ export default class Navigator {
         'icon: iconImageSource\n  }\n}, componentIdOfTab) instead'
     );
     const icon =
-      this.tabs[options.tabIndex].icon || this.tabs[options.tabIndex].options?.bottomTab?.icon;
+      this.tabs?.[options.tabIndex]?.icon ||
+      this.tabs?.[options.tabIndex]?.options?.bottomTab?.icon;
     if (icon) {
       this.mergeOptions(
         {
@@ -110,7 +111,7 @@ export default class Navigator {
             icon,
           },
         },
-        this.tabs[options.tabIndex].id
+        this.tabs?.[options.tabIndex]?.id
       );
     }
   }

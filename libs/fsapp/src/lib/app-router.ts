@@ -71,13 +71,16 @@ export default class AppRouter {
   }
 
   // eslint-disable-next-line complexity
-  async url(navigator: Navigator, href: string, props?: any): Promise<void> {
+  async url(navigator: Navigator, href: string): Promise<void> {
     let found: any = {};
     if (!href) {
       console.warn('appRouter.url() must be called with an href');
       return;
     }
+    // eslint-disable-next-line guard-for-in
     for (const path in this.pageRoutes) {
+      const pageRoute = this.pageRoutes[path] as PublishedPage;
+
       if (this.pageRoutes.hasOwnProperty(path)) {
         const keys: Key[] = [];
         const regexp = pathToRegexp(path, keys);
@@ -86,33 +89,33 @@ export default class AppRouter {
           if (!keys.length && this.pageRoutes.hasOwnProperty(path)) {
             found = {
               type: 'cms-page',
-              title: this.pageRoutes[path].title || '',
-              pageId: this.pageRoutes[path].pageId,
-              content: this.pageRoutes[path].content,
+              title: pageRoute.title || '',
+              pageId: pageRoute.pageId,
+              content: pageRoute.content,
             };
             break;
           }
           const [, ...values] = match;
           const passProps = keys.reduce<Record<string, string>>((memo, key, index) => {
-            memo[key.name] = values[index];
+            memo[key.name] = values[index] as string;
             return memo;
           }, {});
           if (
-            this.pageRoutes[path].defaultInputs.length &&
-            this.pageRoutes[path].dataInputs.length === this.pageRoutes[path].defaultInputs.length
+            pageRoute.defaultInputs.length &&
+            pageRoute.dataInputs.length === pageRoute.defaultInputs.length
           ) {
             let valid = true;
-            this.pageRoutes[path].dataInputs.forEach((inp: string, index: number) => {
-              if (passProps[inp] !== this.pageRoutes[path].defaultInputs[index]) {
+            pageRoute.dataInputs.forEach((inp: string, index: number) => {
+              if (passProps[inp] !== pageRoute.defaultInputs[index]) {
                 valid = false;
               }
             });
             if (valid) {
               found = {
                 type: 'cms-page',
-                title: this.pageRoutes[path].title || '',
-                pageId: this.pageRoutes[path].pageId,
-                content: this.pageRoutes[path].content,
+                title: pageRoute.title || '',
+                pageId: pageRoute.pageId,
+                content: pageRoute.content,
               };
               break;
             }
@@ -155,11 +158,11 @@ export default class AppRouter {
           if (!keys.length && this.appRoutes[path]) {
             found = {
               type: 'app-page',
-              screen: this.appRoutes[path].screen || null,
-              tabIndex: this.appRoutes[path].tabIndex || null,
+              screen: this.appRoutes?.[path]?.screen || null,
+              tabIndex: this.appRoutes?.[path]?.tabIndex || null,
             };
             if (this.appRoutes[path]) {
-              found.passProps = { ...this.appRoutes[path].passProps } || {};
+              found.passProps = { ...this.appRoutes?.[path]?.passProps } || {};
             }
             break;
           }
@@ -172,7 +175,7 @@ export default class AppRouter {
             const matchedRoute = JSON.parse(JSON.stringify(this.appRoutes[path]));
             const [, ...values] = match;
             id = values[0];
-            handleType = keys[0].name;
+            handleType = keys?.[0]?.name;
             const params = keys.reduce((memo, key, index) => {
               memo[key.name] = values[index];
               return memo;

@@ -148,8 +148,10 @@ export const layoutComponentsToRoutes = (options: LayoutComponentsToRoutesOption
     )
     .map((key) => legacyRoutes.get(`${key}`) as ComponentRoute);
 
+  const redirect = pathEntries[0]?.[1];
+
   const redirectRoutes: Routes = [
-    { path: '', exact: true, redirect: pathEntries[0][1] },
+    ...(redirect ? [{ path: '', exact: true as const, redirect }] : []),
     ...getNotFoundRoutes(options, paths),
   ];
 

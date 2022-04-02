@@ -17,7 +17,7 @@ import { envs } from '../beta-app/env';
 import { omit } from 'lodash-es';
 
 const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
-const hiddenEnvs: string[] = activeEnv.hiddenEnvs || [];
+const hiddenEnvs: string[] = activeEnv?.hiddenEnvs || [];
 
 const envsToDisplay: {
   [key: string]: string;

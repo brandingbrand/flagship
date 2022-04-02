@@ -226,7 +226,7 @@ export const attachSSR = (
       }
 
       Object.keys(config.screens).forEach((key) => {
-        const screen = config.screens[key];
+        const screen = config.screens[key] as FSAppTypes.RoutableComponentClass;
         const path = pathForScreen(screen, key);
         const keys: Key[] = [];
         const regex = pathToRegexp(path, keys);

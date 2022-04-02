@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import screenWrapper, { GenericScreenProp } from '../components/screenWrapper.web';
 import { BrowserRouter, HashRouter, Route, StaticRouter, Switch } from 'react-router-dom';
 import pathToRegexp, { compile, Key } from 'path-to-regexp';
-import { AppConfigType, DrawerConfig } from '../types';
+import { AppConfigType, DrawerConfig, RoutableComponentClass } from '../types';
 import Drawer from '../components/Drawer.web';
 import FSNetwork from '@brandingbrand/fsnetwork';
 import { pathForScreen } from '../lib/helpers';
@@ -104,20 +104,21 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     // per-inject parsed path to screen object,
     // so it can be filled with passProps efficiently
     Object.keys(screens).forEach((key) => {
-      const path = screens[key].path || routes[key];
+      const path = screens[key]?.path || routes[key];
       // pathToRegexp is supposed to be able to take a string or array of string
       // however it throws an error if its an array of ONE string (multiple works)
       // - if there are multiple paths, leave as array, otherwise convert back to string
       const newPath = Array.isArray(path) && path.length === 1 ? path[0] : path;
-      if (path) {
+      const screen = screens[key];
+      if (screen && path) {
         const keys: Key[] = [];
-        screens[key].path = newPath;
+        screen.path = newPath;
         pathToRegexp(newPath, keys);
         // compile() cannot take an array, we don't need toPath for array values regardless
         if (typeof newPath === 'string') {
-          screens[key].toPath = compile(newPath);
+          screen.toPath = compile(newPath);
         }
-        screens[key].paramKeys = keys;
+        screen.paramKeys = keys;
       }
     });
 
@@ -137,7 +138,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
     );
 
     const screensRoutes = Object.keys(screens).map((key, i) => {
-      const path = pathForScreen(screens[key], key);
+      const path = pathForScreen(screens[key] as RoutableComponentClass, key);
       const component = screens[key];
 
       return (

@@ -28,7 +28,10 @@ import { findLastIndex, isString, uniqueId } from 'lodash-es';
 
 import {
   ActivatedRoute,
+  IndexedComponentRoute,
   MatchingRoute,
+  RedirectRoute,
+  RouteParams,
   Routes,
   ScreenComponentType,
   StackedLocationDescriptor,
@@ -87,7 +90,21 @@ export class History implements FSRouterHistory {
     const universalRoutes = this.routes.filter(isNotTabRoute);
     const stackMatchers = tabRoutes.map(async ({ children, tab }) => buildMatchers(children, tab));
 
-    const promisedStacks = tabRoutes.map(async (route, i) => matchStack(route, stackMatchers[i]));
+    const promisedStacks = tabRoutes.map(async (route, i) =>
+      matchStack(
+        route,
+        stackMatchers[i] as Promise<
+          (readonly [
+            (checkPath: string) =>
+              | {
+                  params: RouteParams;
+                }
+              | undefined,
+            RedirectRoute | IndexedComponentRoute
+          ])[]
+        >
+      )
+    );
 
     void Promise.all(promisedStacks)
       .then(async (awaitedStacks) => {
@@ -119,7 +136,7 @@ export class History implements FSRouterHistory {
             id: layout.stack?.id,
             children: [
               {
-                ...parsePath(activatedPaths[i]),
+                ...parsePath(activatedPaths[i] as string),
                 key: activatedPaths[i],
                 layout: layout.stack?.children?.[0],
               },
@@ -275,7 +292,7 @@ export class History implements FSRouterHistory {
     }
 
     const newLocation = this.store[this.activeIndex + n];
-    if (newLocation.key) {
+    if (newLocation?.key) {
       const inStack = this.getKeyIndexInStack(newLocation.stack, newLocation.key) !== -1;
       await this.updateLocation(newLocation, inStack ? 'POP' : 'PUSH');
     }
@@ -518,7 +535,7 @@ export class History implements FSRouterHistory {
 
               this.store.push(location);
               this.activeIndex = this.store.length - 1;
-              this.stacks[location.stack].children.push({ ...location, layout: options });
+              this.stacks[location.stack]?.children.push({ ...location, layout: options });
 
               if (this.activeStack !== location.stack) {
                 void this.switchStack(location.stack);
@@ -568,8 +585,8 @@ export class History implements FSRouterHistory {
               });
 
               // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
-              this.stacks[location.stack].children.pop();
-              this.stacks[location.stack].children.push({ ...location, layout });
+              this.stacks[location.stack]?.children.pop();
+              this.stacks[location.stack]?.children.push({ ...location, layout });
 
               const otherLayout =
                 this.stack?.children
@@ -600,7 +617,7 @@ export class History implements FSRouterHistory {
               location.stack,
               stringifyLocation(location)
             );
-            this.stacks[location.stack].children.splice(indexInStack + 1);
+            this.stacks[location.stack]?.children.splice(indexInStack + 1);
 
             if (Platform.OS === 'ios') {
               void Navigation.popTo(location.key);
@@ -660,7 +677,7 @@ export class History implements FSRouterHistory {
   }
 
   private getKeyIndexInStack(stack: number, key: string): number {
-    return findLastIndex(this.stacks[stack].children, (pastLocation) => key === pastLocation.key);
+    return findLastIndex(this.stacks[stack]?.children, (pastLocation) => key === pastLocation.key);
   }
 
   private async switchStack(stack: number | string): Promise<void> {

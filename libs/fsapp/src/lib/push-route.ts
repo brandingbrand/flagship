@@ -12,16 +12,18 @@ export function overwrite(newProps: any, history: any, appConfig: AppConfigType)
   for (const screenName in appConfig.screens) {
     if (appConfig.screens.hasOwnProperty(screenName)) {
       const screen = appConfig.screens[screenName];
-      let pathReg = new RegExp('^/_s/' + screenName + '/?$');
 
-      if (screen.path) {
-        pathReg = pathToRegexp(screen.path);
-      }
-      if (pathReg.test(window.location.pathname)) {
-        matchedScreen = {
-          screen,
-          screenName,
-        };
+      if (screen) {
+        let pathReg = new RegExp('^/_s/' + screenName + '/?$');
+        if (screen.path) {
+          pathReg = pathToRegexp(screen.path);
+        }
+        if (pathReg.test(window.location.pathname)) {
+          matchedScreen = {
+            screen,
+            screenName,
+          };
+        }
       }
     }
   }

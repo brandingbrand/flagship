@@ -36,7 +36,7 @@ export default class Navigator {
       this.props.appConfig.screens[this.props.appConfig.screen.name]
     ) {
       this.props.history.push(
-        this.props.appConfig.screens[this.props.appConfig.screen.name].path || '/'
+        this.props.appConfig.screens[this.props.appConfig.screen.name]?.path || '/'
       );
     } else {
       this.props.history.push('/');
@@ -45,7 +45,7 @@ export default class Navigator {
   async popTo(options?: NavOptions, alternateId?: string): Promise<any> {
     if (alternateId) {
       if (this.props.appConfig.screens[alternateId]) {
-        this.props.history.push(this.props.appConfig.screens[alternateId].path || '/');
+        this.props.history.push(this.props.appConfig.screens[alternateId]?.path || '/');
       } else {
         console.error('Unknown screen: ' + alternateId);
       }
@@ -68,7 +68,7 @@ export default class Navigator {
     if (layout.stack && layout.stack.children) {
       // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let loop = 0; loop < layout.stack.children.length; loop++) {
-        await this.showModal(layout.stack.children[loop]);
+        await this.showModal(layout.stack.children[loop] as NavLayoutStackChildren);
       }
     }
     await this.showStackedModal(layout);

@@ -19,7 +19,8 @@ export class FSApp extends FSAppBase {
         devMenu: DevMenu,
         ...this.appConfig.screens,
       };
-      if (this.appConfig.devMenuPath) {
+
+      if (this.appConfig.devMenuPath && this.appConfig.screens.devMenu) {
         this.appConfig.screens.devMenu.path = this.appConfig.devMenuPath;
       }
     }

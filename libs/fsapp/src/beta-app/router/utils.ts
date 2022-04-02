@@ -136,7 +136,7 @@ export const getPath = (url: string) => {
   }
 
   const [schema, ...domainAndPath] = url.split('//');
-  return schema.includes('http')
+  return schema?.includes('http')
     ? `/${domainAndPath.join('/').split('/').slice(1).join('/') ?? ''}`
     : `/${domainAndPath.join('/') ?? ''}`;
 };

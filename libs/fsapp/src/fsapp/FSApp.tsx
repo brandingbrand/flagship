@@ -113,8 +113,8 @@ export class FSApp extends FSAppBase {
       Navigation.events().registerBottomTabSelectedListener((event: BottomTabSelectedEvent) => {
         if (event.selectedTabIndex === event.unselectedTabIndex && tabs) {
           const tabId =
-            tabs[event.selectedTabIndex].id ||
-            this.defaultIdFromName(tabs[event.selectedTabIndex].name);
+            tabs?.[event.selectedTabIndex]?.id ||
+            this.defaultIdFromName(tabs?.[event.selectedTabIndex]?.name ?? '');
           Navigation.popToRoot(tabId).catch((e) => console.warn(e));
         }
       });

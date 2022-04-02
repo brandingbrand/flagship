@@ -55,13 +55,13 @@ const matchPath = (path: string | undefined, route: Route) => {
     const keys: Key[] = [];
     const normalizedPath = path.length > 1 ? path.replace(/\/$/, '').replace('//', '/') : path;
     const regex = pathToRegexp(normalizedPath, keys, { strict: route.exact });
-    const [url, ...params] = regex.exec(checkPath.split('?')[0]) ?? [];
+    const [url, ...params] = regex.exec(checkPath?.split('?')?.[0] ?? '') ?? [];
     return url
       ? {
           params: keys.reduce<Record<string, string>>((memo, key, index) => {
             return {
               ...memo,
-              [key.name]: params[index],
+              [key.name]: params[index] as string,
             };
           }, {}),
         }

@@ -132,7 +132,7 @@ export const makeRootLayout = async (
     };
   }
 
-  if (tabs.length === 1) {
+  if (tabs.length === 1 && tabs?.[0]) {
     return tabs[0];
   }
 
@@ -146,7 +146,7 @@ export const makeRootLayout = async (
 
 export const extractPagePaths = (root: Layout) => {
   return (
-    root.bottomTabs?.children?.map(({ stack }) => stack?.children?.[0].component?.id) ?? [
+    root.bottomTabs?.children?.map(({ stack }) => stack?.children?.[0]?.component?.id) ?? [
       root.stack?.children?.[0]?.component?.id,
     ]
   );
