@@ -88,7 +88,7 @@ export default class I18nHelper {
 
     const translations = this.i18n.translations;
     const availableTranslations = Object.keys(translations).map((locale) =>
-      this.flatten(translations[locale])
+      this.flatten(translations[locale] ?? {})
     );
 
     return merge({}, ...availableTranslations);
