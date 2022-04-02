@@ -208,6 +208,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
 
   render(): JSX.Element {
     const activeStep = this.stepManager.getActive() || this.props.steps[0];
+    if (!activeStep) return <></>;
 
     return (
       <View style={[styles.constainer, this.props.style]}>

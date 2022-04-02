@@ -46,7 +46,7 @@ export default class StepManager {
         s.status !== 'done' &&
         s.status !== 'active' &&
         this.steps[i - 1] &&
-        this.steps[i - 1].status === 'active'
+        this.steps[i - 1]?.status === 'active'
     );
 
     // try find step is not done or active, but previous is done
@@ -56,11 +56,11 @@ export default class StepManager {
           s.status !== 'done' &&
           s.status !== 'active' &&
           this.steps[i - 1] &&
-          this.steps[i - 1].status === 'done'
+          this.steps[i - 1]?.status === 'done'
       );
     }
 
-    return this.steps[nextActiveStepIndex];
+    return this.steps[nextActiveStepIndex] as Step;
   }
 
   continue(): void {

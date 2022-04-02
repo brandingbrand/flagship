@@ -61,8 +61,8 @@ test('continue step', () => {
   ]);
 
   stepManager.continue();
-  expect(stepManager.steps[0].status).toBe('done');
-  expect(stepManager.steps[1].status).toBe('active');
+  expect(stepManager.steps[0]?.status).toBe('done');
+  expect(stepManager.steps[1]?.status).toBe('active');
 });
 
 test('continue step when next step is done', () => {
@@ -73,9 +73,9 @@ test('continue step when next step is done', () => {
   ]);
 
   stepManager.continue();
-  expect(stepManager.steps[0].status).toBe('done');
-  expect(stepManager.steps[1].status).toBe('done');
-  expect(stepManager.steps[2].status).toBe('active');
+  expect(stepManager.steps[0]?.status).toBe('done');
+  expect(stepManager.steps[1]?.status).toBe('done');
+  expect(stepManager.steps[2]?.status).toBe('active');
 });
 
 test('continue step when all step are done', () => {
@@ -100,9 +100,9 @@ test('goTo step', () => {
   ]);
 
   stepManager.goTo('step2');
-  expect(stepManager.steps[0].status).toBe('pending');
-  expect(stepManager.steps[1].status).toBe('active');
-  expect(stepManager.steps[2].status).toBe('pending');
+  expect(stepManager.steps[0]?.status).toBe('pending');
+  expect(stepManager.steps[1]?.status).toBe('active');
+  expect(stepManager.steps[2]?.status).toBe('pending');
 });
 
 test('goTo step when the step is not done', () => {
@@ -128,8 +128,8 @@ test('back step', () => {
 
   stepManager.continue();
   stepManager.back();
-  expect(stepManager.steps[0].status).toBe('active');
-  expect(stepManager.steps[1].status).toBe('done');
+  expect(stepManager.steps[0]?.status).toBe('active');
+  expect(stepManager.steps[1]?.status).toBe('done');
 });
 
 test('back step once after continue twice', () => {
@@ -142,9 +142,9 @@ test('back step once after continue twice', () => {
   stepManager.continue();
   stepManager.continue();
   stepManager.back();
-  expect(stepManager.steps[0].status).toBe('done');
-  expect(stepManager.steps[1].status).toBe('active');
-  expect(stepManager.steps[2].status).toBe('pending');
+  expect(stepManager.steps[0]?.status).toBe('done');
+  expect(stepManager.steps[1]?.status).toBe('active');
+  expect(stepManager.steps[2]?.status).toBe('pending');
 });
 
 test('back step when there is no history', () => {
@@ -155,9 +155,9 @@ test('back step when there is no history', () => {
   ]);
 
   stepManager.back();
-  expect(stepManager.steps[0].status).toBe('active');
-  expect(stepManager.steps[1].status).toBe('pending');
-  expect(stepManager.steps[2].status).toBe('pending');
+  expect(stepManager.steps[0]?.status).toBe('active');
+  expect(stepManager.steps[1]?.status).toBe('pending');
+  expect(stepManager.steps[2]?.status).toBe('pending');
 });
 
 test('set steps', () => {
@@ -171,9 +171,9 @@ test('set steps', () => {
     done: ['step1', 'step2'],
     active: ['step3'],
   });
-  expect(stepManager.steps[0].status).toBe('done');
-  expect(stepManager.steps[1].status).toBe('done');
-  expect(stepManager.steps[2].status).toBe('active');
+  expect(stepManager.steps[0]?.status).toBe('done');
+  expect(stepManager.steps[1]?.status).toBe('done');
+  expect(stepManager.steps[2]?.status).toBe('active');
 });
 
 test('onChange on continue', (done) => {
@@ -184,9 +184,9 @@ test('onChange on continue', (done) => {
   ]);
 
   stepManager.onChange((nextSteps: Step[]) => {
-    expect(nextSteps[0].status).toBe('done');
-    expect(nextSteps[1].status).toBe('active');
-    expect(nextSteps[2].status).toBe('pending');
+    expect(nextSteps[0]?.status).toBe('done');
+    expect(nextSteps[1]?.status).toBe('active');
+    expect(nextSteps[2]?.status).toBe('pending');
     done();
   });
 
