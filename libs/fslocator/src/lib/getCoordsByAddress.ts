@@ -6,10 +6,11 @@ export default async function getCoordsByAddress(
   googleMapsAPIKey?: string
 ): Promise<GeoLocation | undefined> {
   return Geocoder.geocodeAddress(address).then((res) => {
-    if (res && res.length) {
+    const [firstRes] = res;
+    if (firstRes) {
       return {
-        latitude: res[0].position.lat,
-        longitude: res[0].position.lng,
+        latitude: firstRes.position.lat,
+        longitude: firstRes.position.lng,
       };
     }
     return undefined;
