@@ -152,7 +152,7 @@ export const ProductCatalogMixin = <T extends Constructor>(superclass: T) => {
     ): CommerceTypes.Product[] {
       if (categoryId) {
         products = products.filter(
-          (product) => CategoryProduct[categoryId].indexOf(product.id) !== -1
+          (product) => CategoryProduct?.[categoryId]?.indexOf(product.id) !== -1
         );
       }
 

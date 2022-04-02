@@ -38,13 +38,19 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
   ): Promise<ReviewTypes.ReviewStatistics[]> {
     const initialDistribution: { [p: string]: number } = {};
 
+    const defaultSummary = {
+      recommendations: 0,
+      ratings: 0,
+      distribution: initialDistribution,
+    };
+
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
     const summaries = ids
-      .filter((id) => Reviews[id] && Reviews[id].length)
+      .filter((id) => Reviews?.[id]?.length)
       .map((id) => {
-        const count = Reviews[id].length;
-        const { recommendations, ratings, distribution } = Reviews[id].reduce(
-          (stats, review) => {
+        const count = Reviews?.[id]?.length ?? 0;
+        const { recommendations, ratings, distribution } =
+          Reviews?.[id]?.reduce((stats, review) => {
             const { rating } = review;
             if (stats.distribution[rating] === undefined) {
               stats.distribution[rating] = 0;
@@ -55,13 +61,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
             stats.ratings += rating;
 
             return stats;
-          },
-          {
-            recommendations: 0,
-            ratings: 0,
-            distribution: initialDistribution,
-          }
-        );
+          }, defaultSummary) ?? defaultSummary;
 
         const stats: ReviewTypes.ReviewStatistics = {
           id,
@@ -70,7 +70,7 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
           reviewCount: count,
           ratingDistribution: Object.keys(distribution).map((key) => ({
             value: key,
-            count: distribution[key],
+            count: distribution?.[key] ?? 0,
           })),
         };
 
@@ -83,7 +83,11 @@ export class MockDataSource extends AbstractReviewDataSource implements ReviewDa
   async fetchQuestions(query: ReviewTypes.ReviewQuery): Promise<ReviewTypes.ReviewQuestion[]> {
     const ids = Array.isArray(query.ids) ? query.ids : [query.ids];
 
-    return ids.map((id) => Questions[id]).reduce((all, current) => [...all, ...current], []);
+    return (
+      ids
+        ?.map((id) => Questions?.[id])
+        ?.reduce((all, current) => [...(all ?? []), ...(current ?? [])], []) ?? []
+    );
   }
 
   async writeReview(

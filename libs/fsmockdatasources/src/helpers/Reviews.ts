@@ -46,7 +46,7 @@ const Reviews: ReviewsMap = Products.reduce<ReviewsMap>((reviews, { id }) => {
   }
 
   const fakedReviews = Array(number()).fill(null).map(generateReview);
-  reviews[id] = [...reviews[id], ...fakedReviews];
+  reviews[id] = [...(reviews[id] ?? []), ...fakedReviews];
   return reviews;
 }, {});
 
@@ -56,7 +56,7 @@ const Questions: ReviewQuestionsMap = Products.reduce<ReviewQuestionsMap>((quest
   }
 
   const fakedQuestions = Array(number()).fill(null).map(generateQuestion);
-  questions[id] = [...questions[id], ...fakedQuestions];
+  questions[id] = [...(questions[id] ?? []), ...fakedQuestions];
   return questions;
 }, {});
 

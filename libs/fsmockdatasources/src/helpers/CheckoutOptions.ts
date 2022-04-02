@@ -26,16 +26,18 @@ export const PaymentMethods: ApplicablePayments = [
   },
 ];
 
+const defaultShippingMethod = {
+  id: 'ground',
+  name: 'Ground',
+  price: {
+    currencyCode: DefaultCurrencyCode,
+    value: new Decimal(0.99),
+  },
+};
+
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ShippingMethods: ShippingMethods = [
-  {
-    id: 'ground',
-    name: 'Ground',
-    price: {
-      currencyCode: DefaultCurrencyCode,
-      value: new Decimal(0.99),
-    },
-  },
+  defaultShippingMethod,
   {
     id: 'two-day',
     name: 'Two Day',
@@ -46,4 +48,4 @@ export const ShippingMethods: ShippingMethods = [
   },
 ];
 
-export const DefaultShippingMethod = ShippingMethods[0];
+export const DefaultShippingMethod = defaultShippingMethod;
