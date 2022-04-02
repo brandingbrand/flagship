@@ -48,7 +48,7 @@ export const leastCommonMultiple = (...numbers: [number, number, ...number[]]): 
 
   // Convert any negative integers to positive integers...
   for (i = 0; i < numbers.length; i++) {
-    a = numbers[i];
+    a = numbers[i] as number;
     if (a < 0) {
       numbers[i] = -a;
     }
@@ -56,8 +56,7 @@ export const leastCommonMultiple = (...numbers: [number, number, ...number[]]): 
 
   // Exploit the fact that the lcm is an associative function...
   a = numbers[0];
-  for (i = 1; i < numbers.length; i++) {
-    b = numbers[i];
+  for (const b of numbers.slice(1)) {
     if (a === 0 || b === 0) {
       return 0;
     }

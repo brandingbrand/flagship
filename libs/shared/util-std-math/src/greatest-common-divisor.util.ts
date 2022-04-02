@@ -143,7 +143,7 @@ export const greatestCommonDivisor = (...numbers: [number, number, ...number[]])
 
   // Convert any negative integers to positive integers...
   for (i = 0; i < numbers.length; i++) {
-    a = numbers[i];
+    a = numbers[i] as number;
     if (a < 0) {
       numbers[i] = -a;
     }
@@ -152,7 +152,7 @@ export const greatestCommonDivisor = (...numbers: [number, number, ...number[]])
   // Exploit the fact that the gcd is an associative function...
   a = numbers[0];
   for (i = 1; i < numbers.length; i++) {
-    b = numbers[i];
+    b = numbers[i] as number;
     if (b <= Number.MAX_SAFE_INTEGER && a <= Number.MAX_SAFE_INTEGER) {
       a = bitwise(a, b);
     } else {
