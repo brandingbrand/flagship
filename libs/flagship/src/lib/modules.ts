@@ -49,9 +49,9 @@ function getUsedModules(dependencies: string[], modules: ModuleList): Module[] {
   return dependencies
     .map((dependency) => {
       const [scopeOrModule, module] = dependency.split('/');
-      return modules[module || scopeOrModule];
+      return modules[(module || scopeOrModule) ?? ''];
     })
-    .filter(Boolean);
+    .filter((module): module is Module => Boolean(module));
 }
 
 /**

@@ -357,8 +357,8 @@ export function iosExtensions(configuration: Config, version: string): void {
     const extGroup = project.addPbxGroup(files, extensionPath, iosExtensionPath);
     const groups = project.hash.project.objects.PBXGroup;
 
-    Object.keys(groups).forEach((key) => {
-      if (groups[key].name === 'CustomTemplate') {
+    Object.keys(groups ?? {}).forEach((key) => {
+      if (groups?.[key]?.name === 'CustomTemplate') {
         project.addToPbxGroup(extGroup.uuid, key);
       }
     });

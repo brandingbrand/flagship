@@ -28,7 +28,7 @@ export function clone(...resource: string[]): void {
   );
 
   if (fileQueue[source]) {
-    writeFileSync(destination, fileQueue[source].body);
+    writeFileSync(destination, fileQueue[source]?.body ?? '');
   } else {
     copySync(source, destination);
   }
@@ -57,7 +57,7 @@ export function copySync(src: string, dest: string, options?: Object): void {
       return fs.copySync(src, dest, options);
     } else if (stat.isFile()) {
       if (fileQueue[src]) {
-        return writeFileSync(dest, fileQueue[src].body);
+        return writeFileSync(dest, fileQueue[src]?.body ?? '');
       }
     }
   }
@@ -107,7 +107,7 @@ export function flushSync(): void {
     if (fileQueue.hasOwnProperty(name)) {
       const file = fileQueue[name];
 
-      if (file.dirty) {
+      if (file?.dirty) {
         fs.writeFileSync(name, file.body);
 
         process.removeListener('beforeExit', file.dirty);
@@ -198,7 +198,7 @@ export function removeSync(src: string): void {
       if (cached.startsWith(name)) {
         file = fileQueue[cached];
 
-        if (file.dirty) {
+        if (file?.dirty) {
           process.removeListener('beforeExit', file.dirty);
         }
 
@@ -253,12 +253,12 @@ export function writeFileSync(dest: string, body: string): void {
     file.dirty = (code) => {
       // Only commit the file to disk if the process is exiting successfully.
       if (0 === code) {
-        fs.writeFile(name, file.body, (err: Error) => {
+        fs.writeFile(name, file?.body, (err: Error) => {
           if (err) {
             helpers.logError(`Error saving file ${name}`, err.toString());
           }
 
-          delete file.dirty;
+          delete file?.dirty;
         });
       }
     };

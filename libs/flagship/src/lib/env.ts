@@ -15,11 +15,13 @@ function toAppName(projectName: string): string {
   const split = projectName.split('/');
   const moduleName = split[split.length - 1];
 
-  return moduleName
-    .replace(/-/g, '_')
-    .split('_')
-    .map((w) => `${w[0].toUpperCase()}${w.substring(1)}`)
-    .join('');
+  return (
+    moduleName
+      ?.replace(/-/g, '_')
+      .split('_')
+      .map((w) => `${w[0]?.toUpperCase()}${w.substring(1)}`)
+      .join('') ?? ''
+  );
 }
 
 /**
