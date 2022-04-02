@@ -4,12 +4,14 @@ import { ILens } from './types';
 const _fromPath = <S>(...keys: PropertyKey[]): ILens<S, unknown> => ({
   get: (structure: S) => keys.reduce((value, key) => (value as any)[key], structure),
   set: (value: any) => (structure: S) => {
-    if (!keys.length) {
+    const firstKey = keys[0];
+    if (firstKey === undefined) {
       return value;
     }
+
     return {
       ...structure,
-      [keys[0]]: _fromPath(...keys.slice(1)).set(value)((structure as any)[keys[0]]),
+      [firstKey]: _fromPath(...keys.slice(1)).set(value)((structure as any)[firstKey]),
     };
   },
 });
