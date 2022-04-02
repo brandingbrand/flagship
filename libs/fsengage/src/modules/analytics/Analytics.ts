@@ -234,7 +234,11 @@ export default class Analytics {
   // Private Commerce Properties
 
   private clickGeneric = (component: Component | string, properties: ClickGeneric): void => {
+    if (!this.kFunctionsName.clickGeneric) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickGeneric];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -255,7 +259,11 @@ export default class Analytics {
   };
 
   private contactCall = (component: Component | string, properties: ContactCall): void => {
+    if (!this.kFunctionsName.contactCall) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactCall];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -276,7 +284,10 @@ export default class Analytics {
   };
 
   private contactEmail = (component: Component | string, properties: ContactEmail): void => {
+    if (!this.kFunctionsName.contactEmail) return;
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactEmail];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -300,7 +311,11 @@ export default class Analytics {
     component: Component | string,
     properties: ImpressionGeneric
   ): void => {
+    if (!this.kFunctionsName.impressionGeneric) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionGeneric];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -324,7 +339,10 @@ export default class Analytics {
     component: Component | string,
     properties: LocationDirections
   ): void => {
+    if (!this.kFunctionsName.locationDirections) return;
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.locationDirections];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -345,7 +363,11 @@ export default class Analytics {
   };
 
   private searchGeneric = (component: Component | string, properties: SearchGeneric): void => {
+    if (!this.kFunctionsName.searchGeneric) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.searchGeneric];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -368,7 +390,11 @@ export default class Analytics {
   // Private Enhanced Commerce Properties
 
   private impressionPromotion = (component: Component | string, properties: Promotion): void => {
+    if (!this.kFunctionsName.impressionPromotion) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionPromotion];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -392,7 +418,11 @@ export default class Analytics {
     component: Component | string,
     properties: ImpressionProduct
   ): void => {
+    if (!this.kFunctionsName.impressionProduct) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionProduct];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -413,7 +443,11 @@ export default class Analytics {
   };
 
   private clickPromotion = (component: Component | string, properties: Promotion): void => {
+    if (!this.kFunctionsName.clickPromotion) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickPromotion];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -438,7 +472,11 @@ export default class Analytics {
     properties: Product,
     action?: ProductAction
   ): void => {
+    if (!this.kFunctionsName.clickProduct) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickProduct];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -466,7 +504,11 @@ export default class Analytics {
     properties: Product,
     action?: ProductAction
   ): void => {
+    if (!this.kFunctionsName.detailProduct) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.detailProduct];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -490,7 +532,11 @@ export default class Analytics {
   };
 
   private addProduct = (component: Component | string, properties: Product): void => {
+    if (!this.kFunctionsName.addProduct) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.addProduct];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
@@ -511,11 +557,13 @@ export default class Analytics {
   };
 
   private removeProduct = (component: Component | string, properties: Product): void => {
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.removeProduct];
+    const key = this.kFunctionsName.removeProduct ?? '';
+
+    const eventAction = this.kFunctionsEventAction[key] ?? '';
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.removeProduct]
+      this.kFunctionsEventCategoryKey[key]
     );
 
     if (__DEV__) {
@@ -536,11 +584,13 @@ export default class Analytics {
     products: RefundProduct[],
     action: TransactionAction
   ): void => {
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundPartial];
+    const key = this.kFunctionsName.refundPartial ?? '';
+
+    const eventAction = this.kFunctionsEventAction[key] ?? '';
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.refundPartial]
+      this.kFunctionsEventCategoryKey[key]
     );
 
     if (__DEV__) {
@@ -560,11 +610,13 @@ export default class Analytics {
   };
 
   private refundAll = (component: Component | string, action: TransactionAction): void => {
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.refundAll];
+    const key = this.kFunctionsName.refundAll ?? '';
+
+    const eventAction = this.kFunctionsEventAction[key] ?? '';
     const eventCategory = this.geteventCategoryFromComponent(
       component,
       eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.refundAll]
+      this.kFunctionsEventCategoryKey[key]
     );
 
     if (__DEV__) {
@@ -585,8 +637,13 @@ export default class Analytics {
   // Private Apps Lifecyle Properties
 
   private lifecycleActive = (): void => {
+    if (!this.kFunctionsName.lifecycleActive) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleActive];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleActive];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -601,8 +658,13 @@ export default class Analytics {
   };
 
   private lifecycleBackground = (): void => {
+    if (!this.kFunctionsName.lifecycleBackground) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleBackground];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleBackground];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -617,8 +679,13 @@ export default class Analytics {
   };
 
   private lifecycleCreate = (): void => {
+    if (!this.kFunctionsName.lifecycleCreate) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleCreate];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleCreate];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -633,8 +700,13 @@ export default class Analytics {
   };
 
   private lifecycleClose = (): void => {
+    if (!this.kFunctionsName.lifecycleClose) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleClose];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleClose];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -649,8 +721,13 @@ export default class Analytics {
   };
 
   private lifecycleInactive = (): void => {
+    if (!this.kFunctionsName.lifecycleInactive) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleInactive];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleInactive];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -665,8 +742,13 @@ export default class Analytics {
   };
 
   private lifecycleStart = (): void => {
+    if (!this.kFunctionsName.lifecycleStart) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleStart];
+    if (!eventAction) return;
+
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleStart];
+    if (!lifecycle) return;
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -681,8 +763,16 @@ export default class Analytics {
   };
 
   private lifecycleSuspend = (): void => {
+    if (!this.kFunctionsName.lifecycleSuspend || !this.kFunctionsName.lifecycleSuspend) {
+      return;
+    }
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleSuspend];
     const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleSuspend];
+
+    if (!eventAction || !lifecycle) {
+      return;
+    }
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -817,6 +907,10 @@ export default class Analytics {
 
   screenview(component: Component | string, properties: Screenview): void {
     const eventAction = this.kFunctionsEventAction[this.screenview.name];
+    if (!eventAction) {
+      return;
+    }
+
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -843,7 +937,15 @@ export default class Analytics {
   // Public Enhanced Commerce Functions
 
   checkout(component: Component | string, products: Product[], action: CheckoutAction): void {
+    if (!this.kFunctionsName.checkout) {
+      return;
+    }
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkout];
+    if (!eventAction) {
+      return;
+    }
+
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -863,7 +965,11 @@ export default class Analytics {
   }
 
   checkoutOption(component: Component | string, action: CheckoutAction): void {
+    if (!this.kFunctionsName.checkoutOption) return;
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkoutOption];
+    if (!eventAction) return;
+
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -882,7 +988,15 @@ export default class Analytics {
   }
 
   purchase(component: Component | string, products: Product[], action: TransactionAction): void {
+    if (!this.kFunctionsName.purchase) {
+      return;
+    }
+
     const eventAction = this.kFunctionsEventAction[this.kFunctionsName.purchase];
+    if (!eventAction) {
+      return;
+    }
+
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
