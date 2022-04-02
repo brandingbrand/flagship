@@ -31,12 +31,12 @@ export const findDependencies = async (
       if (existsSync(possibleIosPath) || existsSync(possibleAndroidPath)) {
         list.add(npmNode.data.packageName);
       } else if (!nested) {
+        const node = graph.nodes[originalProjectName];
+
         // Ignore references that are only in package.json
         const isSourceDependency = graph.allWorkspaceFiles
-          ?.filter(({ file }) => file.startsWith(graph.nodes[originalProjectName].data.root))
-          .filter(
-            ({ file }) => file !== join(graph.nodes[originalProjectName].data.root, 'package.json')
-          )
+          ?.filter(({ file }) => file.startsWith(node?.data.root))
+          .filter(({ file }) => file !== join(node?.data?.root ?? '', 'package.json'))
           .some(({ deps }) => deps?.some(({ projectName }) => projectName === npmNode.name));
 
         if (isSourceDependency) {
@@ -45,7 +45,7 @@ export const findDependencies = async (
       }
     } else {
       const project = graph.nodes[projectName];
-      if (project.type === 'lib') {
+      if (project?.type === 'lib') {
         const packageJson =
           project.data?.targets?.build?.options?.packageJson ??
           join(project.data.root, 'package.json');
@@ -66,7 +66,7 @@ export const findDependencies = async (
   };
 
   const projectJson = await readJson<ProjectConfiguration>(
-    join(graph.nodes[originalProjectName].data.root, 'project.json')
+    join(graph.nodes[originalProjectName]?.data?.root ?? '', 'project.json')
   );
 
   const dependencies = await internalFindDependencies(originalProjectName);

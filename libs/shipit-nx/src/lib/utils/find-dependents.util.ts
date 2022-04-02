@@ -16,11 +16,16 @@ export const findDependents = async (
     .filter(([project]) => project !== projectName)
     .filter(([, { type }]) => type !== 'npm')
     .filter(([project]) =>
-      graph.dependencies[project].some(({ target }) => target === projectName)
+      graph.dependencies?.[project]?.some(({ target }) => target === projectName)
     );
 
   for (const [otherProject] of otherProjects) {
-    list.add(graph.nodes[otherProject].name);
+    const node = graph.nodes[otherProject];
+
+    if (node) {
+      list.add(node.name);
+    }
+
     for (const dep of graph.dependencies[otherProject] ?? []) {
       if (!dep.target.startsWith('npm:')) {
         await findDependents(graph, dep.target, list, seen);

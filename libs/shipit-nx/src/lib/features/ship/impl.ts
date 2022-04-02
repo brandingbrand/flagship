@@ -31,7 +31,7 @@ export const shipIt = async (options: ShipExecutorOptions, context: ExecutorCont
     ...(context.projectName && context.projectName !== 'workspace'
       ? {
           project: context.projectName,
-          projectRoot: context.workspace.projects[context.projectName].root,
+          projectRoot: context.workspace.projects[context.projectName]?.root,
           dependencies: await findDependencies(projectGraph, context.projectName),
           dependents: await findDependents(projectGraph, context.projectName),
           workspace: await findProjectNames(context.workspace.projects),

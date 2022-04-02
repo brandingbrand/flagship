@@ -151,11 +151,11 @@ export class PostProcessPhase implements Phase {
     // remove internal packages from the package-lock.json
     for (const dependency of Object.keys(packageLockJson.packages)) {
       if (dependency && !dependency.includes('node_modules')) {
-        const { name } = packageLockJson.packages[dependency];
+        const { name = '' } = packageLockJson.packages[dependency] ?? {};
         if (name) {
-          const [projectName] = name.split('/').reverse();
+          const [projectName = ''] = name.split('/').reverse() ?? '';
           const project = sourceWorkspace.projects[projectName];
-          if (this.config.excludedProjectsFilter({ ...project, name: projectName })) {
+          if (project && this.config.excludedProjectsFilter({ ...project, name: projectName })) {
             delete packageLockJson.packages[dependency];
             delete packageLockJson.packages[`node_modules/${name}`];
             delete packageLockJson.dependencies[name];
@@ -216,36 +216,36 @@ export class PostProcessPhase implements Phase {
       // `file:package` versions
       if (!options.workspace.includes(dependency)) {
         if (dependency in originalDependencies) {
-          packageJson.dependencies[dependency] = originalDependencies[dependency];
+          packageJson.dependencies[dependency] = originalDependencies[dependency] as string;
         }
 
         if (dependency in originalDevDependencies) {
-          packageJson.devDependencies[dependency] = originalDevDependencies[dependency];
+          packageJson.devDependencies[dependency] = originalDevDependencies[dependency] as string;
         }
 
         // For any dependency that has a `@types` package
         // we will add that types package to devDependencies
         const typePackage = `@types/${dependency}`;
         if (typePackage in originalDependencies) {
-          packageJson.devDependencies[typePackage] = originalDependencies[typePackage];
+          packageJson.devDependencies[typePackage] = originalDependencies[typePackage] as string;
         }
 
         if (typePackage in originalDevDependencies) {
-          packageJson.devDependencies[typePackage] = originalDevDependencies[typePackage];
+          packageJson.devDependencies[typePackage] = originalDevDependencies[typePackage] as string;
         }
 
         // If we depend on any `react-native` dependencies
         // that have web aliases when using webpack, then
         // we will add those here
         if (dependency in webAliases) {
-          const aliases = webAliases[dependency];
+          const aliases = webAliases[dependency] ?? [];
           for (const alias of aliases) {
             if (alias in originalDependencies) {
-              packageJson.devDependencies[alias] = originalDependencies[alias];
+              packageJson.devDependencies[alias] = originalDependencies[alias] as string;
             }
 
             if (alias in originalDevDependencies) {
-              packageJson.devDependencies[alias] = originalDevDependencies[alias];
+              packageJson.devDependencies[alias] = originalDevDependencies[alias] as string;
             }
           }
         }
@@ -260,14 +260,20 @@ export class PostProcessPhase implements Phase {
     })) {
       if (isForcedDependency(dependency)) {
         delete packageJson.devDependencies[dependency];
-        packageJson.dependencies[dependency] =
-          originalDependencies[dependency] ?? originalDevDependencies[dependency];
+        const original = originalDependencies[dependency] ?? originalDevDependencies[dependency];
+
+        if (original) {
+          packageJson.dependencies[dependency] = original ?? '';
+        }
       }
 
       if (isForcedDevDependency(dependency)) {
         delete packageJson.dependencies[dependency];
-        packageJson.devDependencies[dependency] =
-          originalDependencies[dependency] ?? originalDevDependencies[dependency];
+        const original = originalDependencies[dependency] ?? originalDevDependencies[dependency];
+
+        if (original) {
+          packageJson.devDependencies[dependency] = original ?? '';
+        }
       }
     }
 
@@ -316,7 +322,7 @@ export class PostProcessPhase implements Phase {
       for (const [name, [root]] of Object.entries(tsConfig.compilerOptions.paths ?? {})) {
         const [projectName, project] =
           Object.entries(sourceWorkspace.projects).find(([, project]) =>
-            root.startsWith(project.root)
+            root?.startsWith(project.root)
           ) ?? [];
 
         if (
@@ -356,7 +362,7 @@ export class PostProcessPhase implements Phase {
     destinationWorkspace: Workspace,
     options: ShipProjectOptions
   ) {
-    if ('sync-deps' in (destinationWorkspace.projects[options.project].targets ?? {})) {
+    if ('sync-deps' in (destinationWorkspace.projects[options?.project ?? '']?.targets ?? {})) {
       // This will populate the dependencies for react-native auto linking
       await run(
         destinationTree.root,
