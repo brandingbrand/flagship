@@ -20,7 +20,9 @@
 export const intersectionWith = <T>(compareFunction: (a: T, b: T) => boolean, ...arrays: T[][]) => {
   const [firstArray, ...otherArrays] = arrays;
 
-  return firstArray.filter((a) =>
-    otherArrays.every((array) => array.some((b) => compareFunction(a, b)))
+  return (
+    firstArray?.filter((a) =>
+      otherArrays.every((array) => array.some((b) => compareFunction(a, b)))
+    ) ?? []
   );
 };

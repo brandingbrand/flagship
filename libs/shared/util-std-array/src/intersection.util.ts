@@ -16,5 +16,5 @@
 export const intersection = <T>(...arrays: T[][]) => {
   const [firstArray, ...otherArrays] = arrays;
 
-  return firstArray.filter((value) => otherArrays.every((array) => array.includes(value)));
+  return firstArray?.filter((value) => otherArrays.every((array) => array.includes(value))) ?? [];
 };
