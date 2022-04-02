@@ -13,7 +13,9 @@ const removeDWCookies = (req: Request, res: Response) => {
 
   filtered.forEach((cookie) => {
     const key = cookie.split('=')[0];
-    res.clearCookie(key);
+    if (key) {
+      res.clearCookie(key);
+    }
   });
 };
 
