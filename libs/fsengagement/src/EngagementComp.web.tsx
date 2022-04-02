@@ -353,7 +353,7 @@ export default function (
       }
 
       return React.createElement(
-        layoutComponents[WHITE_INBOX_WRAPPER],
+        layoutComponents[WHITE_INBOX_WRAPPER] ?? '',
         {
           key: this.dataKeyExtractor(item),
           navigator: this.props.navigator,
@@ -392,7 +392,7 @@ export default function (
       if (item.wrapper) {
         delete item.wrapper;
         return React.createElement(
-          layoutComponents[INBOX_WRAPPER],
+          layoutComponents[INBOX_WRAPPER] ?? '',
           {
             key: this.dataKeyExtractor(item),
             navigator: this.props.navigator,
@@ -403,7 +403,7 @@ export default function (
       }
 
       return React.createElement(
-        layoutComponents[private_type],
+        layoutComponents[private_type] ?? '',
         {
           ...props,
           navigator: this.props.navigator,

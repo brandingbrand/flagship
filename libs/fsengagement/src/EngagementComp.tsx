@@ -565,8 +565,10 @@ export default function (
         return null;
       }
 
+      const layoutComponent = layoutComponents[WHITE_INBOX_WRAPPER];
+      if (!layoutComponent) return null;
       return React.createElement(
-        layoutComponents[WHITE_INBOX_WRAPPER],
+        layoutComponent,
         {
           key: this.dataKeyExtractor(item),
           navigator: this.props.navigator,
@@ -590,6 +592,7 @@ export default function (
       }
       return blocks;
     };
+    // eslint-disable-next-line complexity
     renderBlock = (item: BlockItem): React.ReactElement | null => {
       const { private_blocks, private_type, ...restProps } = item;
       const { json, id, name } = this.props;
@@ -613,8 +616,11 @@ export default function (
       }
       if (item.wrapper) {
         delete item.wrapper;
+        const layoutComponent = layoutComponents[INBOX_WRAPPER];
+        if (!layoutComponent) return null;
+
         return React.createElement(
-          layoutComponents[INBOX_WRAPPER],
+          layoutComponent,
           {
             key: this.dataKeyExtractor(item),
             animateIndex: item.animateIndex,
@@ -627,8 +633,11 @@ export default function (
         );
       }
 
+      const layoutComponent = layoutComponents[private_type];
+      if (!layoutComponent) return null;
+
       return React.createElement(
-        layoutComponents[private_type],
+        layoutComponent,
         {
           ...props,
           navigator: this.props.navigator,
@@ -892,8 +901,8 @@ export default function (
         this.props.json.private_blocks[index]
       ) {
         DeviceEventEmitter.emit('swipeCard', {
-          title: this.props.json.private_blocks[index].name,
-          id: this.props.json.private_blocks[index].id,
+          title: this.props.json.private_blocks[index]?.name,
+          id: this.props.json.private_blocks[index]?.id,
           position: pageNum,
         });
       }

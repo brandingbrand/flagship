@@ -104,7 +104,7 @@ export class EngagementService {
       locale:
         RNLocalize.getLocales() &&
         RNLocalize.getLocales().length &&
-        RNLocalize.getLocales()[0].languageTag,
+        RNLocalize.getLocales()[0]?.languageTag,
       country: RNLocalize.getCountry(),
       timezone: RNLocalize.getTimeZone(),
       deviceIdentifier: DeviceInfo.getUniqueId(),
@@ -317,7 +317,8 @@ export class EngagementService {
       return false;
     });
     for (let i = pinnedTopIndexes.length - 1; i >= 0; i--) {
-      sortedAll.splice(pinnedTopIndexes[i], 1);
+      const pinnedTopIndex = pinnedTopIndexes[i];
+      if (pinnedTopIndex) sortedAll.splice(pinnedTopIndex, 1);
     }
 
     const pinnedBottom = sortedAll.filter((msg, idx) => {
@@ -333,7 +334,10 @@ export class EngagementService {
       return false;
     });
     for (let idx = pinnedBottomIndexes.length - 1; idx >= 0; idx--) {
-      sortedAll.splice(pinnedBottomIndexes[idx], 1);
+      const pinnedIndex = pinnedBottomIndexes[idx];
+      if (pinnedIndex) {
+        sortedAll.splice(pinnedIndex, 1);
+      }
     }
 
     return [...pinnedTop, ...sortedAll, ...pinnedBottom];

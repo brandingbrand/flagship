@@ -114,11 +114,11 @@ export default class CustomCarouselBlock extends Component<
       ...restProps,
     };
 
-    if (!components?.[private_type]) {
-      return null;
-    }
+    const component = components?.[private_type];
+    if (!component) return null;
+
     return React.createElement(
-      components[private_type],
+      component,
       {
         ...props,
         navigator: this.props.navigator,
