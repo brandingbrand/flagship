@@ -76,7 +76,7 @@ export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = (p
   return (
     <View style={props.style}>
       {renderTabs()}
-      {props.tabs[selectedIndex].renderContent()}
+      {props.tabs[selectedIndex]?.renderContent()}
     </View>
   );
 };

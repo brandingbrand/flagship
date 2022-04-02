@@ -296,8 +296,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           src: img.uri || img,
           w: this.state.screenWidth,
           h: this.state.imageSizes[i]
-            ? (this.state.screenWidth * this.state.imageSizes[i].height) /
-              this.state.imageSizes[i].width
+            ? (this.state.screenWidth * (this.state.imageSizes[i]?.height ?? 0)) /
+              (this.state.imageSizes[i]?.width ?? 0)
             : this.state.imageHeight,
         }))}
       options={{

@@ -10,9 +10,9 @@ function shadeRGBColor(color: string, percent: number): string {
   const components = color.split(',');
   const t = percent < 0 ? 0 : 255;
   const p = percent < 0 ? percent * -1 : percent;
-  const R = parseInt(components[0].slice(4), 10);
-  const G = parseInt(components[1], 10);
-  const B = parseInt(components[2], 10);
+  const R = parseInt(components[0]?.slice(4) ?? '0', 10);
+  const G = parseInt(components[1] ?? '0', 10);
+  const B = parseInt(components[2] ?? '0', 10);
 
   return (
     'rgb(' +

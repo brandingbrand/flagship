@@ -109,11 +109,11 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
 
     // Copy existing options
     const newOptionValues = [...optionValues];
-    const optionIndex = newOptionValues.findIndex((option) => option.name === name);
-    if (optionIndex === -1) {
+    const newOptionValue = newOptionValues.find((option) => option.name === name);
+    if (!newOptionValue) {
       newOptionValues.push({ name, value });
     } else {
-      newOptionValues[optionIndex].value = value;
+      newOptionValue.value = value;
     }
 
     // Search for matching variant

@@ -348,15 +348,16 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     return (
       <View style={[{ alignItems: 'center' }, style]} onLayout={handleLayout}>
         <View style={[{ width: calculatedItemWidth }, itemStyle]}>
-          {renderItem?.({
-            item: data[0],
-            index: 0,
-            separators: {
-              highlight: () => undefined,
-              unhighlight: () => undefined,
-              updateProps: () => undefined,
-            },
-          })}
+          {data[0] &&
+            renderItem?.({
+              item: data[0],
+              index: 0,
+              separators: {
+                highlight: () => undefined,
+                unhighlight: () => undefined,
+                updateProps: () => undefined,
+              },
+            })}
         </View>
       </View>
     );

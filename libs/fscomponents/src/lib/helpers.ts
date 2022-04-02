@@ -43,12 +43,12 @@ function normalizedHourString(hour: string): number {
   if (hour.indexOf(':') > -1) {
     const split = hour.match(/(\d+):(\d+)/);
     if (split && split.length > 2) {
-      hourNumber = +split[1] * 100 + +split[2];
+      hourNumber = +(split?.[1] ?? 0) * 100 + +(split?.[2] ?? 0);
     }
   } else {
     const split = hour.match(/(\d+)/);
     if (split && split.length > 1) {
-      hourNumber = +split[1] * 100;
+      hourNumber = +(split?.[1] ?? 0) * 100;
     }
   }
 

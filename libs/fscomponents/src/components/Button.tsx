@@ -161,14 +161,14 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
   get titleState(): string {
     const { title, selectedTitleState, dynamicTitleStates } = this.props;
 
-    if (
-      selectedTitleState === undefined ||
-      !dynamicTitleStates ||
-      selectedTitleState >= dynamicTitleStates.length
-    ) {
+    if (selectedTitleState === undefined) {
       return title;
     }
+    if (!dynamicTitleStates || selectedTitleState >= dynamicTitleStates.length) {
+      return title;
+    }
+    const dynamicTitle = dynamicTitleStates[selectedTitleState];
 
-    return dynamicTitleStates[selectedTitleState];
+    return dynamicTitle ?? title;
   }
 }

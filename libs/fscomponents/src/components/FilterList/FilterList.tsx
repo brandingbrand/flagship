@@ -108,14 +108,14 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
   handleSelect = (id: string, value: string) => () => {
     const { selectedItems } = this.state;
     const singleFilterIds = this.props.singleFilterIds || defaultSingleFilterIds;
-
+    const selectedItem = selectedItems[id];
     // if already selected, and it's not in the list of single filter
-    if (selectedItems[id] && singleFilterIds.indexOf(id) === -1) {
-      const findIndex = selectedItems[id].indexOf(value);
+    if (selectedItem && singleFilterIds.indexOf(id) === -1) {
+      const findIndex = selectedItem.indexOf(value);
       if (findIndex > -1) {
-        selectedItems[id].splice(findIndex, 1);
+        selectedItem.splice(findIndex, 1);
       } else {
-        selectedItems[id].push(value);
+        selectedItem.push(value);
       }
       this.setState({
         selectedItems: {
@@ -133,9 +133,8 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
   };
 
   renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number) => {
-    const selected =
-      this.state.selectedItems[item.id] &&
-      this.state.selectedItems[item.id].indexOf(value.value) > -1;
+    const selectedItem = this.state.selectedItems[item.id];
+    const selected = (selectedItem && selectedItem.indexOf(value.value) > -1) ?? false;
 
     if (this.props.renderFilterItemValue) {
       return this.props.renderFilterItemValue(

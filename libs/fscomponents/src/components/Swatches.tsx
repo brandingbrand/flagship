@@ -9,7 +9,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { findIndex } from 'lodash-es';
 
 import { style as S } from '../styles/Swatches';
 
@@ -140,9 +139,9 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     // Default swatch selection
     if (defaultValue) {
-      const defaultIndex = findIndex(items, { value: defaultValue });
-      if (defaultIndex > -1) {
-        const defaultSwatch = items[defaultIndex];
+      const defaultIndex = items.findIndex((item) => item.value === defaultValue);
+      const defaultSwatch = items[defaultIndex];
+      if (defaultSwatch) {
         return {
           index: defaultIndex,
           swatch: {

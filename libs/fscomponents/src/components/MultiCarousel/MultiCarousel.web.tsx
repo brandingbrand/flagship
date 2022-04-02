@@ -386,9 +386,10 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const handleTouchStart = useCallback(
     (e: TouchEvent) => {
-      if (e.touches.length) {
+      const firstTouch = e.touches[0];
+      if (firstTouch) {
         stopCarouselLooping();
-        handleStart(e.touches[0].pageX);
+        handleStart(firstTouch.pageX);
       }
     },
     [handleStart]
@@ -422,8 +423,9 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const handleTouchEnd = useCallback(
     async (e: TouchEvent) => {
-      if (e.touches.length) {
-        await handleEnd(e.touches[0].pageX);
+      const firstTouch = e.touches[0];
+      if (firstTouch) {
+        await handleEnd(firstTouch.pageX);
       } else {
         const pageX = initialScrollX + currentScrollX - (scrollView?.current?.scrollLeft || 0);
         await handleEnd(pageX);
@@ -455,8 +457,9 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const handleTouchMove = useCallback(
     (e: TouchEvent) => {
-      if (e.touches.length) {
-        handleMove(e.touches[0].pageX);
+      const firstTouch = e.touches[0];
+      if (firstTouch) {
+        handleMove(firstTouch.pageX);
       }
     },
     [handleMove]
@@ -469,15 +472,16 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   if (data.length <= 1) {
     return (
       <View style={[{ alignItems: 'center' }, style]} onLayout={handleLayout}>
-        {renderItemContainer?.({
-          item: data[0],
-          index: 0,
-          separators: {
-            highlight: () => undefined,
-            unhighlight: () => undefined,
-            updateProps: () => undefined,
-          },
-        })}
+        {data[0] &&
+          renderItemContainer?.({
+            item: data[0],
+            index: 0,
+            separators: {
+              highlight: () => undefined,
+              unhighlight: () => undefined,
+              updateProps: () => undefined,
+            },
+          })}
       </View>
     );
   }

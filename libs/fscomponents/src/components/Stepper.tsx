@@ -17,10 +17,10 @@ import { style as S } from '../styles/Stepper';
 import increase from '../../assets/images/increaseImage.png';
 import decrease from '../../assets/images/decreaseImage.png';
 
-const icons: { [key: string]: ImageSourcePropType } = {
+const icons = {
   increase,
   decrease,
-};
+} as const;
 
 const nonNumericRegex = /\D/g;
 

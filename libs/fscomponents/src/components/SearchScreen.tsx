@@ -349,9 +349,10 @@ function highlightStr(name: string, query: string): HighlightResult[] {
         });
       }
 
-      if (matches[index]) {
+      const match = matches[index];
+      if (match) {
         acc.result.push({
-          str: matches[index],
+          str: match,
           isHighlight: true,
         });
       }

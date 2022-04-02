@@ -255,13 +255,14 @@ export class FilterListDrilldown extends PureComponent<
 
     let nextSelectedItems = null;
 
+    const selectedItem = selectedItems[id];
     // if already selected, and it's not in the list of single filter
-    if (selectedItems[id] && singleFilterIds.indexOf(id) === -1) {
-      const findIndex = selectedItems[id].indexOf(value);
+    if (selectedItem && singleFilterIds.indexOf(id) === -1) {
+      const findIndex = selectedItem.indexOf(value);
       if (findIndex > -1) {
-        selectedItems[id].splice(findIndex, 1);
+        selectedItem.splice(findIndex, 1);
       } else {
-        selectedItems[id].push(value);
+        selectedItem.push(value);
       }
       nextSelectedItems = {
         ...selectedItems,
@@ -283,9 +284,8 @@ export class FilterListDrilldown extends PureComponent<
   renderFilterItemValue =
     (filterItem: FilterItem, skipCustomRender?: boolean) =>
     ({ item, index }: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>): JSX.Element => {
-      const selected =
-        this.state.selectedItems[filterItem.id] &&
-        this.state.selectedItems[filterItem.id].indexOf(item.value) > -1;
+      const selectedItem = this.state.selectedItems[filterItem.id];
+      const selected = (selectedItem && selectedItem.indexOf(item.value) > -1) ?? false;
 
       if (this.props.renderFilterItemValue && !skipCustomRender) {
         return this.props.renderFilterItemValue(

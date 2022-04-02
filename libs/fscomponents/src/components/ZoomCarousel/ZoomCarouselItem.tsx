@@ -45,14 +45,17 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
         this.justMoveX = undefined;
       },
 
+      // eslint-disable-next-line complexity
       onPanResponderMove: (evt, gestureState) => {
         if (evt.nativeEvent.changedTouches.length > 1) {
           this.isZooming = true;
           const distanceX = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageX - evt.nativeEvent.changedTouches[1].pageX
+            (evt.nativeEvent.changedTouches[0]?.pageX ?? 0) -
+              (evt.nativeEvent.changedTouches[1]?.pageX ?? 0)
           );
           const distanceY = Math.abs(
-            evt.nativeEvent.changedTouches[0].pageY - evt.nativeEvent.changedTouches[1].pageY
+            (evt.nativeEvent.changedTouches[0]?.pageY ?? 0) -
+              (evt.nativeEvent.changedTouches[1]?.pageY ?? 0)
           );
           const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
