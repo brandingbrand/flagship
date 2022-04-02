@@ -14,7 +14,7 @@ export type MiddlewareFunction = (data: object, normalized: object) => any;
 async function runMiddleware(
   data: object,
   normalized: object,
-  middleware: MiddlewareFunction | MiddlewareFunction[]
+  middleware: MiddlewareFunction | MiddlewareFunction[] | undefined
 ): Promise<any> {
   if (middleware) {
     if (isMiddlewareArray(middleware)) {
