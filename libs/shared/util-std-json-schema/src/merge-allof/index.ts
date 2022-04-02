@@ -427,7 +427,13 @@ export const mergeAllOf = (
       (all, resolverKeyword, index) => ({
         ...all,
         ...callGroupResolver(
-          complexKeys[index],
+          complexKeys[index] as (
+            | 'properties'
+            | 'items'
+            | 'patternProperties'
+            | 'additionalProperties'
+            | 'additionalItems'
+          )[],
           resolverKeyword as keyof typeof complexResolvers,
           definedSchemas,
           mergeSchemas,

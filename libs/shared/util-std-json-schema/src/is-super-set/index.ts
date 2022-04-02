@@ -25,7 +25,7 @@ export const all = <T>(
   condition: (val: T, idx: number) => ErrorArray | undefined
 ): ErrorArray | undefined => {
   for (let i = 0, len = elements.length; i < len; i++) {
-    const errors = condition(elements[i], i);
+    const errors = condition(elements[i] as T, i);
     if (errors?.length) {
       return errors as ErrorArray;
     }
@@ -35,7 +35,7 @@ export const all = <T>(
 
 export const allBool = <T>(elements: T[], condition: (val: T, idx: number) => boolean): boolean => {
   for (let i = 0, len = elements.length; i < len; i++) {
-    if (!condition(elements[i], i)) {
+    if (!condition(elements[i] as T, i)) {
       return false;
     }
   }
@@ -49,7 +49,7 @@ export const some = <T>(
   const allErrors = [];
   // Reverse for legible error message ordering
   for (let i = elements.length - 1; i >= 0; i--) {
-    const errors = condition(elements[i], i);
+    const errors = condition(elements[i] as T, i);
     if (errors?.length) {
       allErrors.push(...errors);
     } else {
@@ -65,7 +65,7 @@ export const someBool = <T>(
   condition: (val: T, idx: number) => boolean
 ): boolean => {
   for (let i = 0, len = elements.length; i < len; i++) {
-    if (condition(elements[i], i)) {
+    if (condition(elements[i] as T, i)) {
       return true;
     }
   }
@@ -81,7 +81,7 @@ export const one = <T>(
   let matches = 0;
   // Reverse for legible error message ordering
   for (let i = elements.length - 1; i >= 0; i--) {
-    const errors = condition(elements[i], i);
+    const errors = condition(elements[i] as T, i);
     if (errors?.length) {
       matches++;
       allErrors.push(...errors);
@@ -371,7 +371,7 @@ const getTitleErrors: Validator = (input, target, options, paths) => {
   if (target.title) {
     const regexTitle = regexRegex.exec(target.title);
     if (regexTitle) {
-      const titleRegex = new RegExp(regexTitle[1], regexTitle[2]);
+      const titleRegex = new RegExp(regexTitle[1] as string, regexTitle[2] as string);
 
       if (!input.title || !titleRegex.test(input.title)) {
         return [
@@ -414,7 +414,7 @@ const getStringErrors: Validator = (input, target, options, paths) => {
       compatible = !!(
         input.format &&
         subFormats[target.format] &&
-        subFormats[target.format].indexOf(input.format) !== -1
+        subFormats[target.format]?.indexOf(input.format) !== -1
       );
     }
     if (!compatible) {
@@ -796,12 +796,17 @@ const getInputPropertyErrors: Validator = (input, target, options, paths) => {
         continue;
       }
 
-      const errors = getErrors(subProps[prop], superProps[prop], options, {
-        input: [...paths.input, prop],
-        target: paths.target.concat([prop]),
-      });
-      if (errors?.length) {
-        return [...errors, { paths, args: ['Property', prop, 'does not match'] }] as ErrorArray;
+      const subProp = subProps[prop];
+      const superProp = superProps[prop];
+      if (subProp && superProp) {
+        const errors = getErrors(subProp, superProp, options, {
+          input: [...paths.input, prop],
+          target: paths.target.concat([prop]),
+        });
+
+        if (errors?.length) {
+          return [...errors, { paths, args: ['Property', prop, 'does not match'] }] as ErrorArray;
+        }
       }
     }
   }
