@@ -90,10 +90,13 @@ export const makeRemoveMany =
     withLens(deps.lens)((state) => {
       const newIds = state.ids.filter((id) => !ids.includes(id));
       const newEntities = Object.fromEntries(newIds.map((id) => [id, state.entities[id]]));
+
+      // TODO @grayontheweb 04-01-2022 we shouldn't have to type coerce this but
+      // this is a quick fix
       return {
         ids: newIds,
         entities: newEntities,
-      };
+      } as EntityState<T>;
     });
 
 export const makeRemoveOne =

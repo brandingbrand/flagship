@@ -5,7 +5,13 @@ export const makeSelectAll =
   <T, Structure>(lens: ILens<Structure, EntityState<T>>) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
-    return state.ids.map((id) => state.entities[id]);
+
+    // TODO @grayontheweb 04-01-2022 this pattern is repeated with minor
+    // variations a few times in this file
+    return state.ids.reduce<T[]>((acc, id) => {
+      const entity = state.entities[id];
+      return entity ? [...acc, entity] : acc;
+    }, []);
   };
 
 export const makeSelectByIds =
@@ -13,7 +19,11 @@ export const makeSelectByIds =
   (ids: EntityId[]) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
-    return ids.filter((id) => id in state.entities).map((id) => state.entities[id]);
+
+    return ids.reduce<T[]>((acc, id) => {
+      const entity = state.entities[id];
+      return entity ? [...acc, entity] : acc;
+    }, []);
   };
 
 export const makeSelectById =
@@ -29,7 +39,9 @@ export const makeSelectByIndex =
   (index: number) =>
   (structure: Structure): T | undefined => {
     const state = lens.get(structure);
-    return index < state.ids.length ? state.entities[state.ids[index]] : undefined;
+    const id = state.ids[index];
+
+    return id ? state.entities[id] : undefined;
   };
 
 export const makeSelectByIndices =
@@ -37,10 +49,13 @@ export const makeSelectByIndices =
   (indices: number[]) =>
   (structure: Structure): T[] => {
     const state = lens.get(structure);
-    const length = state.ids.length;
-    return indices
-      .filter((index) => index < length && state.ids[index] in state.entities)
-      .map((id) => state.entities[state.ids[id]]);
+
+    return indices.reduce<T[]>((acc, index) => {
+      const id = state.ids[index];
+      const entity = id ? state.entities[id] : undefined;
+
+      return entity && entity in state.entities ? [...acc, entity] : acc;
+    }, []);
   };
 
 export const getSelectors = <T, Structure>(lens: ILens<Structure, EntityState<T>>) => ({

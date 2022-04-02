@@ -18,10 +18,10 @@ describe('createAsyncAdaptor', () => {
             // filter. @dtwiers 2022-01-28
           ).filter((value) => Object.keys(value).length >= 1),
           (actionKey, newState, state) => {
-            const stateKey = Object.keys(state)[0];
+            const stateKey = Object.keys(state)[0] as string;
             const lens = createLens<typeof state>().fromPath(stateKey);
             const adaptor = createAsyncAdaptor({ actionKey }).withLens(lens);
-            expect(adaptor.selectors.selectPayload(state)).toBe(state[stateKey].payload);
+            expect(adaptor.selectors.selectPayload(state)).toBe(state[stateKey]?.payload);
             expect(adaptor.lensedReducers.init(newState)(state)).toEqual({
               ...state,
               [stateKey]: {
