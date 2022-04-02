@@ -1,4 +1,4 @@
-import { parseTargetString, TargetDependencyConfig } from '@nrwl/devkit';
+import { parseTargetString, ProjectGraphNode, TargetDependencyConfig } from '@nrwl/devkit';
 import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import { createTasksForProjectToRun } from '@nrwl/workspace/src/tasks-runner/run-command';
 
@@ -12,7 +12,7 @@ export async function calculateDependencies(
     const { project, target, configuration } = parseTargetString(targetString);
 
     const tasks = createTasksForProjectToRun(
-      [projectGraph.nodes[project]],
+      [projectGraph.nodes[project] as ProjectGraphNode],
       { target, configuration: configuration as string, overrides: {} },
       projectGraph,
       project,
