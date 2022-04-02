@@ -260,7 +260,7 @@ export class Repo implements SourceRepo, DestinationRepo {
     const rawOutput = this.gitCommand('rev-list', '--max-parents=0', 'HEAD').runSynchronously()
       .stdout;
     const rootRevisions = rawOutput.trim().split('\n');
-    return rootRevisions[rootRevisions.length - 1];
+    return rootRevisions[rootRevisions.length - 1] ?? 'HEAD';
   }
 
   public getBranch(): string {
