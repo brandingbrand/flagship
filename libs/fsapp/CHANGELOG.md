@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.48.0](https://github.com/brandingbrand/flagship/compare/v11.47.0...v11.48.0) (2022-04-05)
+
+
+### Bug Fixes
+
+* **fsapp:** allow complex route details (9723144)
+
+
+
 # [11.47.0](https://github.com/brandingbrand/flagship/compare/v11.46.0...v11.47.0) (2022-03-31)
 
 
