@@ -1,46 +1,18 @@
 import { ILens, withLens } from '@brandingbrand/standard-lens';
-import { combineActionReducers, matches, on, StateReducer } from '../store';
+import { combineActionReducers, matches, on, StateReducer } from '../../../store';
+import {
+  createFailureState,
+  createIdleState,
+  createLoadingMoreState,
+  createLoadingState,
+  createSuccessState,
+} from '../async.stateCreators';
+import type { AsyncState } from '../async.types';
 import type { AsyncActionCreators } from './async.actions';
-import type {
-  AsyncFailureState,
-  AsyncIdleState,
-  AsyncLoadingMoreState,
-  AsyncLoadingState,
-  AsyncState,
-  AsyncSuccessState,
-} from './async.types';
 
-export const createIdleState = <Payload>(payload: Payload): AsyncIdleState<Payload> => ({
-  status: 'idle',
-  payload,
-});
-
-export const createLoadingState = <Payload>(payload: Payload): AsyncLoadingState<Payload> => ({
-  status: 'loading',
-  payload,
-});
-
-export const createLoadingMoreState = <Payload>(
-  payload: Payload
-): AsyncLoadingMoreState<Payload> => ({
-  status: 'loading-more',
-  payload,
-});
-
-export const createSuccessState = <Payload>(payload: Payload): AsyncSuccessState<Payload> => ({
-  status: 'success',
-  payload,
-});
-
-export const createFailureState = <Payload, FailureType, EmptyPayload = Payload>(
-  payload: Payload | EmptyPayload,
-  failure: FailureType
-): AsyncFailureState<Payload | EmptyPayload, FailureType> => ({
-  status: 'failure',
-  payload,
-  failure,
-});
-
+/**
+ * @deprecated Use builder-based reducer functions.
+ */
 export const createReducers = <Payload, FailPayload, EmptyPayload>() => ({
   init:
     (
@@ -74,6 +46,9 @@ export const createReducers = <Payload, FailPayload, EmptyPayload>() => ({
       ({ ...state, payload } as AsyncState<Payload, FailPayload, EmptyPayload>),
 });
 
+/**
+ * @deprecated Use builder-based async functions.
+ */
 export const createLensedReducers = <Payload, FailPayload, Structure, EmptyPayload = Payload>(
   lens: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>
 ) => {
@@ -88,6 +63,9 @@ export const createLensedReducers = <Payload, FailPayload, Structure, EmptyPaylo
   };
 };
 
+/**
+ * @deprecated Use builder-based async functions.
+ */
 export const createCombinedReducer = <
   ActionKey extends string,
   Payload,

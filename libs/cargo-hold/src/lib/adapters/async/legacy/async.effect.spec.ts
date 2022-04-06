@@ -1,8 +1,8 @@
 import * as FastCheck from 'fast-check';
 import { merge, NEVER, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { createAsyncActionCreators } from '.';
-import { matches } from '../store';
+import { createAsyncActionCreators } from './async.actions';
+import { matches } from '../../../store';
 import { makeAsyncEffect } from './async.effect';
 
 describe('makeAsyncEffect', () => {

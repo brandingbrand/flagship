@@ -1,16 +1,17 @@
 import { createLens } from '@brandingbrand/standard-lens';
 import * as FastCheck from 'fast-check';
-import { AsyncState, createAsyncActionCreators, createLensedReducers, createReducers } from '.';
-import { asyncStateArbitrary } from '../../testing/fast-check-arbitraries.util';
-import { AnyAction } from '../action-bus';
-import { StateReducer } from '../store';
+import { createAsyncActionCreators } from '.';
+import { asyncStateArbitrary } from '../../../../testing/fast-check-arbitraries.util';
+import { AnyAction } from '../../../action-bus';
+import { StateReducer } from '../../../store';
 import {
-  createCombinedReducer,
   createFailureState,
   createIdleState,
   createLoadingState,
   createSuccessState,
-} from './async.reducer';
+} from '../async.stateCreators';
+import { AsyncState } from '../async.types';
+import { createCombinedReducer, createLensedReducers, createReducers } from './async.reducer';
 
 const createAsyncState = () => asyncStateArbitrary(FastCheck.anything(), FastCheck.anything());
 

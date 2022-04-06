@@ -1,7 +1,7 @@
 import { createLens } from '@brandingbrand/standard-lens';
 import * as FastCheck from 'fast-check';
-import { createAsyncAdaptor } from '.';
-import { asyncStateArbitrary } from '../../testing/fast-check-arbitraries.util';
+import { createAsyncAdaptor } from './async.adaptor';
+import { asyncStateArbitrary } from '../../../../testing/fast-check-arbitraries.util';
 
 describe('createAsyncAdaptor', () => {
   describe('withLens', () => {

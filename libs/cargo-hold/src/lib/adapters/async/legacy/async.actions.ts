@@ -1,8 +1,10 @@
-import { ActionCreator, createActionCreator } from '../action-bus';
+import { ActionCreator, createActionCreator } from '../../../action-bus';
 
 /**
  * AsyncActionCreators are utilities to both filter reducers/effects and then trigger those reducers
  * and effects upon dispatch.
+ *
+ * @deprecated Use builder-based async functions.
  */
 export type AsyncActionCreators<
   ActionKey extends string,
@@ -39,6 +41,7 @@ export type AsyncActionCreators<
  * @param source Optional source to emit with the actions to "lock in" these actions to target
  * specific reducers.
  * @returns `AsyncActionCreators` - init, load, succeed, fail, & revert.
+ * @deprecated Use builder-based async functions.
  */
 export const createAsyncActionCreators = <
   ActionKey extends string,

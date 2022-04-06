@@ -17,13 +17,13 @@ export const combineActionReducers =
 
 export const on =
   <State, DesiredActionSpecifier extends ActionSpecifier<string, any, unknown>>(
-    filter: TypeGuard<ActionSpecifier<string, any, unknown>, DesiredActionSpecifier>,
+    filter: TypeGuard<AnyActionSpecifier, DesiredActionSpecifier>,
     reducer: ActionReducer<State, ActionOf<DesiredActionSpecifier>>
   ): AnyActionReducer<State> =>
   (action) => {
     if (filter(action)) {
       // sorry for coercion. TS can't detect the typeguard logic through the ActionOf<> type.
-      return reducer(action as ActionOf<DesiredActionSpecifier>);
+      return reducer(action as unknown as ActionOf<DesiredActionSpecifier>);
     }
     return (state) => state;
   };

@@ -58,11 +58,10 @@ export type Action<
 /**
  * The type of an `action` described by an `ActionSpecifier`
  */
-export type ActionOf<ActionType extends ActionSpecifier<string, any, unknown>> = Action<
-  ActionType['type'],
-  Exclude<ActionType[typeof PAYLOAD], undefined>,
-  ActionType['subtype']
->;
+export type ActionOf<ActionType extends ActionSpecifier<string, any, unknown>> =
+  ActionType extends ActionSpecifier<infer ActionKey, infer Subtype, infer Payload>
+    ? Action<ActionKey, Payload, Subtype>
+    : never;
 
 /**
  * `AnyAction` would be the supertype for any `Action` type. It is used in places where we don't care
@@ -86,8 +85,6 @@ export type ActionCreator<
 export type ActionHandler<T extends AnyAction> = (action: T) => void;
 
 export type ActionSpecifierOf<ActionType extends ActionSpecifier<string, any, unknown>> =
-  ActionSpecifier<
-    ActionType['type'],
-    ActionType['subtype'],
-    Exclude<ActionType[typeof PAYLOAD], undefined>
-  >;
+  ActionType extends ActionSpecifier<infer ActionKey, infer ActionSubtype, infer ActionPayload>
+    ? ActionSpecifier<ActionKey, ActionSubtype, ActionPayload>
+    : never;

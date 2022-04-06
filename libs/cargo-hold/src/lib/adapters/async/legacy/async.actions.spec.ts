@@ -1,6 +1,6 @@
 import * as FastCheck from 'fast-check';
+import type { AsyncAction } from '../async.action.types';
 import { AsyncActionCreators, createAsyncActionCreators } from './async.actions';
-import type { AsyncAction } from './async.types';
 
 describe('createAsyncActionCreators', () => {
   it('creates all actions', () => {
