@@ -1216,9 +1216,9 @@ export const inputSatisfies = (
   }
 
   if (!isValidTopLevelSchema(input)) {
-    throw new Error('Input schema does not appear to be a top-level schema');
+    return false;
   } else if (!isValidTopLevelSchema(target)) {
-    throw new Error('Target schema does not appear to be a top-level schema');
+    return false;
   }
 
   const processedOpts: Options =
