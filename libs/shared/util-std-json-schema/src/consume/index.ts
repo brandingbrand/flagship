@@ -103,29 +103,39 @@ export const consumeSchema = (
       delete schema.minItems;
     }
   } else if (schema.type?.includes('object') && editorSchema.type?.includes('object')) {
-    if (schema.properties) {
-      for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
-        const updatedSchema = consumeSchema(schema.properties[property], propertySchema);
-
-        if (typeof updatedSchema === 'object' && Object.keys(updatedSchema).length === 0) {
-          delete schema.properties[property];
-        }
-      }
-    }
-
-    if (schema.required) {
-      schema.required = schema.required.filter((value) => !editorSchema.required?.includes(value));
-    }
-
-    if (!schema.required?.length) {
-      delete schema.required;
-    }
-
-    if (Object.keys(schema.properties ?? {}).length === 0) {
+    if (editorSchema.additionalProperties) {
       delete schema.title;
       delete schema.type;
       delete schema.properties;
       delete schema.additionalProperties;
+      delete schema.required;
+    } else {
+      if (schema.properties) {
+        for (const [property, propertySchema] of Object.entries(editorSchema.properties ?? {})) {
+          const updatedSchema = consumeSchema(schema.properties[property], propertySchema);
+
+          if (typeof updatedSchema === 'object' && Object.keys(updatedSchema).length === 0) {
+            delete schema.properties[property];
+          }
+        }
+      }
+
+      if (schema.required) {
+        schema.required = schema.required.filter(
+          (value) => !editorSchema.required?.includes(value)
+        );
+      }
+
+      if (!schema.required?.length) {
+        delete schema.required;
+      }
+
+      if (Object.keys(schema.properties ?? {}).length === 0) {
+        delete schema.title;
+        delete schema.type;
+        delete schema.properties;
+        delete schema.additionalProperties;
+      }
     }
   } else if (schema.type?.includes('string') && editorSchema.type?.includes('string')) {
     delete schema.title;
