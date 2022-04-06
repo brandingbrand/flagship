@@ -158,6 +158,11 @@ const fromPathTyped = <Structure>() => {
   return fromPath;
 };
 
+/**
+ * @deprecated use createLensCreator instead.
+ */
 export const createLens = <Structure>() => ({
   fromPath: fromPathTyped<Structure>(),
 });
+
+export const createLensCreator = createLens;

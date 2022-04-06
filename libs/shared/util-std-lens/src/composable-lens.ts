@@ -1,7 +1,10 @@
 import { applyParam, flow, pipe } from '@brandingbrand/standard-compose';
-import { ILens } from './types';
+import { createLensCreator } from '.';
+import { ExtendWithPath, ILens, IPathLens } from './types';
 
-export class ComposableLens<Structure, FocussedValue> implements ILens<Structure, FocussedValue> {
+export class ComposableLens<Structure, FocussedValue>
+  implements IPathLens<Structure, FocussedValue>
+{
   constructor(private lens: ILens<Structure, FocussedValue>) {}
 
   public get = this.lens.get;
@@ -26,4 +29,9 @@ export class ComposableLens<Structure, FocussedValue> implements ILens<Structure
         pipe(structure, lens.get, this.lens.set(value), lens.set, applyParam(structure)),
     });
   };
+
+  public extendWithPath: ExtendWithPath<Structure, FocussedValue> = ((...paths: PropertyKey[]) =>
+    this.withInnerLens(
+      (createLensCreator<FocussedValue>().fromPath as any)(...(paths as any))
+    )) as ExtendWithPath<Structure, FocussedValue>;
 }
