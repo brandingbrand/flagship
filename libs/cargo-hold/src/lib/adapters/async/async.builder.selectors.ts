@@ -3,13 +3,13 @@ import { buildPayloadLens } from './async.builder.lens';
 import { WithLensInstance, WithPayloadTypes } from './async.builder.types';
 import { AsyncFailureState, AsyncState, AsyncStatus } from './async.types';
 
-export function buildSelectPayload<SuccessType, FailureType, IdleType>(
-  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
-): (input: AsyncState<SuccessType, FailureType, IdleType>) => SuccessType | IdleType;
 export function buildSelectPayload<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>> &
     WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
 ): (input: OuterStructureType) => SuccessType | IdleType;
+export function buildSelectPayload<SuccessType, FailureType, IdleType>(
+  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
+): (input: AsyncState<SuccessType, FailureType, IdleType>) => SuccessType | IdleType;
 export function buildSelectPayload<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<
     WithPayloadTypes<SuccessType, FailureType, IdleType> &
@@ -19,13 +19,13 @@ export function buildSelectPayload<SuccessType, FailureType, IdleType, OuterStru
   return buildPayloadLens(builder).get;
 }
 
-export function buildSelectStatus<SuccessType, FailureType, IdleType>(
-  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
-): (input: AsyncState<SuccessType, FailureType, IdleType>) => AsyncStatus;
 export function buildSelectStatus<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>> &
     WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
 ): (input: OuterStructureType) => AsyncStatus;
+export function buildSelectStatus<SuccessType, FailureType, IdleType>(
+  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
+): (input: AsyncState<SuccessType, FailureType, IdleType>) => AsyncStatus;
 export function buildSelectStatus<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<
     WithPayloadTypes<SuccessType, FailureType, IdleType> &
@@ -40,12 +40,12 @@ export function buildSelectStatus<SuccessType, FailureType, IdleType, OuterStruc
   return statusLens.get;
 }
 
-export function buildSelectFailure<SuccessType, FailureType, IdleType>(
-  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
-): (input: AsyncState<SuccessType, FailureType, IdleType>) => FailureType | undefined;
 export function buildSelectFailure<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>> &
     WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
+): (input: AsyncState<SuccessType, FailureType, IdleType>) => FailureType | undefined;
+export function buildSelectFailure<SuccessType, FailureType, IdleType>(
+  builder: Partial<WithPayloadTypes<SuccessType, FailureType, IdleType>>
 ): (input: AsyncState<SuccessType, FailureType, IdleType>) => FailureType | undefined;
 export function buildSelectFailure<SuccessType, FailureType, IdleType, OuterStructureType>(
   builder: Partial<

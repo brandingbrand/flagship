@@ -1,6 +1,17 @@
 import { fail, isOk, ok, Result } from '@brandingbrand/standard-result';
 import type { MaybePromise } from '@brandingbrand/types-utility';
-import { filter, from, map, merge, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  filter,
+  from,
+  map,
+  merge,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs';
+import { AsyncFailureState, WithLensInstance } from '.';
 import type {
   ActionOf,
   ActionSpecifier,
@@ -39,7 +50,7 @@ export type AsyncEffectDeps<
   WithActionKey<ActionKey> &
   WithTriggerActionFilter<TriggerSpecifier> &
   Partial<WithEnableLoadingMore> &
-  Partial<WithMapOnFailure<unknown, AsyncState<SuccessType, FailureType, IdleType>, FailureType>> &
+  Partial<WithMapOnFailure<unknown, FailureType>> &
   Partial<
     WithOptimisticUpdate<
       TriggerSpecifier extends ActionSpecifier<string, any, infer Payload> ? Payload : never,
@@ -53,31 +64,32 @@ export type AsyncEffectDeps<
         SuccessType
       > &
         // mapOnSuccess is optional
-        Partial<WithMapOnSuccess<SuccessType, SuccessType>>
+        Partial<WithMapOnSuccess<CallbackResult, SuccessType>>
     : WithAsyncCallback<
         TriggerSpecifier extends ActionSpecifier<string, any, infer Payload> ? Payload : never,
         CallbackResult
       > &
         WithMapOnSuccess<CallbackResult, SuccessType | IdleType, SuccessType>);
 
-export const buildAsyncEffect = <
-  ActionKey extends string,
-  SuccessType,
-  FailureType,
-  IdleType,
-  TriggerSpecifier extends AnyActionSpecifier,
-  CallbackResult
->(
-  builder: AsyncEffectDeps<
-    ActionKey,
+export const buildAsyncEffect =
+  <
+    ActionKey extends string,
     SuccessType,
     FailureType,
     IdleType,
-    TriggerSpecifier,
+    TriggerSpecifier extends AnyActionSpecifier,
     CallbackResult
-  >
-): Effect<AsyncState<SuccessType, FailureType, IdleType>> => {
-  return (action$, state$) => {
+  >(
+    builder: AsyncEffectDeps<
+      ActionKey,
+      SuccessType,
+      FailureType,
+      IdleType,
+      TriggerSpecifier,
+      CallbackResult
+    >
+  ): Effect<AsyncState<SuccessType, FailureType, IdleType>> =>
+  (action$, state$) => {
     const load$ = action$.pipe(
       // these typeguards don't have perfect Typescript defs
       filter(
@@ -119,6 +131,8 @@ export const buildAsyncEffect = <
             .catch(fail)
         ).pipe(
           // grab latest state for mapOnSuccess etc functions to use
+          // type coercion because "run the lens if we have one, and if we don't we'll assume the raw
+          // value is right" is not a simple Typescript concept.
           withLatestFrom(state$),
           mergeMap(([wrappedResult, stateAtReturn]) => {
             if (isOk(wrappedResult)) {
@@ -132,15 +146,17 @@ export const buildAsyncEffect = <
               return of(buildSucceedActionCreator(builder).create(newState));
             }
             const result = wrappedResult.failure;
-            const newState = builder.mapOnFailure
-              ? builder.mapOnFailure(result)(stateAtReturn)
+            const mappedFailure = builder.mapOnFailure
+              ? builder.mapOnFailure(result)(
+                  (stateAtReturn as AsyncFailureState<SuccessType | IdleType, FailureType>).failure
+                )
               : (result as FailureType);
             return builder.prediction
               ? of(
                   buildRevertActionCreator(builder).create(stateAtStart.payload),
-                  buildFailActionCreator(builder).create(newState)
+                  buildFailActionCreator(builder).create(mappedFailure)
                 )
-              : of(buildFailActionCreator(builder).create(newState));
+              : of(buildFailActionCreator(builder).create(mappedFailure));
           })
         )
       )
@@ -148,4 +164,26 @@ export const buildAsyncEffect = <
 
     return merge(load$, callbackAction$);
   };
-};
+
+export const buildAsyncEffectWithLens =
+  <
+    ActionKey extends string,
+    SuccessType,
+    FailureType,
+    IdleType,
+    TriggerSpecifier extends AnyActionSpecifier,
+    CallbackResult,
+    OuterStructureType
+  >(
+    builder: AsyncEffectDeps<
+      ActionKey,
+      SuccessType,
+      FailureType,
+      IdleType,
+      TriggerSpecifier,
+      CallbackResult
+    > &
+      WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
+  ): Effect<OuterStructureType> =>
+  (action$, state$) =>
+    buildAsyncEffect(builder as any)(action$, state$.pipe(map(builder.lens.get)));

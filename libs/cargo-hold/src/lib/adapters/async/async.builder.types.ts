@@ -41,8 +41,8 @@ export type WithAsyncCallback<Input, Output> = {
 export type WithMapOnSuccess<Input, State, OutputState = State> = {
   mapOnSuccess: (input: Input) => (state: State) => OutputState;
 };
-export type WithMapOnFailure<Input, State, OutputState = State> = {
-  mapOnFailure: (input: Input) => (state: State) => OutputState;
+export type WithMapOnFailure<Input, FailureType, Output = FailureType> = {
+  mapOnFailure: (input: Input) => (oldFailure?: FailureType | undefined) => Output;
 };
 export type WithOptimisticUpdate<Input, State, OutputState = State> = {
   prediction: (input: Input) => (state: State) => OutputState;
