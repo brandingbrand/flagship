@@ -1,7 +1,6 @@
 import { filter, map, skip, take } from 'rxjs/operators';
-import { and, combineActionReducers, on } from '.';
 import { Action } from '../action-bus';
-import { isType, requireSource } from './reducer';
+import { and, combineActionReducers, on, isType, requireSource } from './reducer';
 import { Store } from './store';
 import type { Effect } from './store.types';
 

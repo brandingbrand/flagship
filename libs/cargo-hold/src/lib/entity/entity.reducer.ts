@@ -1,7 +1,6 @@
 import { withLens } from '@brandingbrand/standard-lens';
-import { EntityReducers } from '.';
 import type { StateReducer } from '../store/store.types';
-import type { EntityId, EntityState } from './entity.types';
+import type { EntityId, EntityReducers, EntityState } from './entity.types';
 import type { EntityAdaptorDeps } from './entity.types.internal';
 
 // dedupe ids while preserving order

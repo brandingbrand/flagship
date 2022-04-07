@@ -1,5 +1,4 @@
-import { and, combineActionReducers } from '.';
-import { isType, on, requireSource } from './reducer';
+import { and, combineActionReducers, isType, on, requireSource } from './reducer';
 import type { AnyActionReducer } from './store.types';
 
 type State = {

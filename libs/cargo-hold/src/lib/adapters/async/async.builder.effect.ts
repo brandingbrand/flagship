@@ -1,17 +1,6 @@
 import { fail, isOk, ok, Result } from '@brandingbrand/standard-result';
 import type { MaybePromise } from '@brandingbrand/types-utility';
-import {
-  filter,
-  from,
-  map,
-  merge,
-  mergeMap,
-  Observable,
-  of,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs';
-import { AsyncFailureState, WithLensInstance } from '.';
+import { filter, from, map, merge, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
 import type {
   ActionOf,
   ActionSpecifier,
@@ -31,13 +20,14 @@ import type {
   WithActionKey,
   WithAsyncCallback,
   WithEnableLoadingMore,
+  WithLensInstance,
   WithMapOnFailure,
   WithMapOnSuccess,
   WithOptimisticUpdate,
   WithPayloadTypes,
   WithTriggerActionFilter,
 } from './async.builder.types';
-import type { AsyncState } from './async.types';
+import type { AsyncFailureState, AsyncState } from './async.types';
 
 export type AsyncEffectDeps<
   ActionKey extends string,
