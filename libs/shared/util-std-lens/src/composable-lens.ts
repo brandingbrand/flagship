@@ -1,5 +1,5 @@
 import { applyParam, flow, pipe } from '@brandingbrand/standard-compose';
-import { createLensCreator } from '.';
+import { createLensCreator } from './create-lens';
 import { ExtendWithPath, ILens, IPathLens } from './types';
 
 export class ComposableLens<Structure, FocussedValue>
