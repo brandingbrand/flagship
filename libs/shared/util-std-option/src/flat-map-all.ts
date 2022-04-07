@@ -1,5 +1,4 @@
-import { isNone } from '.';
-import { Option } from './option';
+import { isNone, Option } from './option';
 
 export function flatMapAll<A, Value>(
   inputA: Option<A>,
