@@ -314,7 +314,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   };
 
   useEffect(() => {
-    if (autoplay && numberOfPages > 0 && !animating && shouldPlay) {
+    if (pageWidth && autoplay && numberOfPages > 0 && !animating && shouldPlay) {
       autoplayTimeout.current = setTimeout(async () => {
         const options = {
           animated: true,
@@ -332,7 +332,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
       };
     }
     return undefined;
-  }, [numberOfPages, currentIndex, autoplay, animating]);
+  }, [numberOfPages, currentIndex, autoplay, animating, pageWidth]);
 
   useEffect(() => {
     carouselController?.({
