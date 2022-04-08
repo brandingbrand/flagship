@@ -31,7 +31,7 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
               ...definition,
               ...otherProperties,
             },
-            definitions
+            currentDefinitions
           ) as T;
         }
 
@@ -46,16 +46,24 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
       ? {
           properties: Object.fromEntries(
             Object.entries(jsonSchema.properties ?? {}).map(
-              ([key, childSchema]) => [key, dereference(childSchema, definitions)] as const
+              ([key, childSchema]) => [key, dereference(childSchema, currentDefinitions)] as const
             )
           ),
         }
       : {}),
     ...('anyOf' in jsonSchema
-      ? { anyOf: jsonSchema.anyOf?.map((childSchema) => dereference(childSchema, definitions)) }
+      ? {
+          anyOf: jsonSchema.anyOf?.map((childSchema) =>
+            dereference(childSchema, currentDefinitions)
+          ),
+        }
       : {}),
     ...('allOf' in jsonSchema
-      ? { allOf: jsonSchema.allOf?.map((childSchema) => dereference(childSchema, definitions)) }
+      ? {
+          allOf: jsonSchema.allOf?.map((childSchema) =>
+            dereference(childSchema, currentDefinitions)
+          ),
+        }
       : {}),
   } as JSONSchema7 as T;
 };
