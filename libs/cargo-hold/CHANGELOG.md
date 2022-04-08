@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.49.0](https://github.com/brandingbrand/flagship/compare/v11.48.0...v11.49.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* **cargo-hold:** clean up builder types (3999e93)
+
+
+### Features
+
+* **cargo-hold:** async builder & deprecate asyncAdaptor (d2f8abf)
+
+
+
 # [11.48.0](https://github.com/brandingbrand/flagship/compare/v11.47.0...v11.48.0) (2022-04-05)
 
 

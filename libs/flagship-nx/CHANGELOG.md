@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.49.0](https://github.com/brandingbrand/flagship/compare/v11.48.0...v11.49.0) (2022-04-08)
+
+
+### Features
+
+* **flagship-nx:** add klaviyo code in exececutor (973bc7c)
+* **flagship-nx:** update templates code related to leanplum (95774ee)
+
+
+
 # [11.48.0](https://github.com/brandingbrand/flagship/compare/v11.47.0...v11.48.0) (2022-04-05)
 
 

@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.49.0](https://github.com/brandingbrand/flagship/compare/v11.48.0...v11.49.0) (2022-04-08)
+
+
+### Features
+
+* **types-utility:** add KeysOfType (7ec9af2)
+
+
+
 # [11.48.0](https://github.com/brandingbrand/flagship/compare/v11.47.0...v11.48.0) (2022-04-05)
 
 

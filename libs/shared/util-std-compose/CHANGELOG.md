@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.49.0](https://github.com/brandingbrand/flagship/compare/v11.48.0...v11.49.0) (2022-04-08)
+
+
+### Features
+
+* **shared-util-std-compose:** branch & branchObject (de1c4c0)
+
+
+
 # [11.48.0](https://github.com/brandingbrand/flagship/compare/v11.47.0...v11.48.0) (2022-04-05)
 
 
