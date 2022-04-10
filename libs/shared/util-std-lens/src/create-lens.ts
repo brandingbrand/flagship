@@ -2,7 +2,7 @@ import { ComposableLens } from './composable-lens';
 import { ILens } from './types';
 
 const _fromPath = <S>(...keys: PropertyKey[]): ILens<S, unknown> => ({
-  get: (structure: S) => keys.reduce((value, key) => (value as any)[key], structure),
+  get: (structure: S) => keys.reduce((value, key) => (value as any)?.[key], structure),
   set: (value: any) => (structure: S) => {
     const firstKey = keys[0];
     if (firstKey === undefined) {
