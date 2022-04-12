@@ -980,6 +980,47 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
     return;
   }
 
+  if (target.allOf && Array.isArray(input.type)) {
+    const inputAnyOf = input.type.map((type): JSONSchema7 => ({ ...input, type }));
+
+    let targetIndex = 0;
+    for (const targetBranch of target.allOf) {
+      let inputIndex = 0;
+
+      let targetMatch = false;
+      let inputErrors: ErrorArray | undefined;
+      for (const inputBranch of inputAnyOf) {
+        const errors = getErrors(inputBranch, targetBranch as JSONSchema7, options, {
+          input: [...paths.input, 'type', inputIndex],
+          target: paths.target.concat(['anyOf', targetIndex]),
+        });
+
+        if (errors) {
+          inputErrors = [...(inputErrors ?? []), ...errors];
+        } else {
+          targetMatch = true;
+          break;
+        }
+
+        inputIndex += 1;
+      }
+
+      if (!targetMatch) {
+        return [
+          ...(inputErrors ?? []),
+          {
+            paths,
+            args: ['Some target.allOf elements cannot be satisfied'],
+          },
+        ];
+      }
+
+      targetIndex += 1;
+    }
+
+    return;
+  }
+
   if (input.allOf) {
     const errors = all(input.allOf as JSONSchema7[], (e, idx) =>
       getErrors(e, target, options, {
