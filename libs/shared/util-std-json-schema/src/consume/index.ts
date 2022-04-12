@@ -151,5 +151,9 @@ export const consumeSchema = (
     }
   }
 
+  if (Object.keys(schema).every((key) => key === 'dependencies')) {
+    delete schema.dependencies;
+  }
+
   return schema;
 };
