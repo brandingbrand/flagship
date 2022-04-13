@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.51.0](https://github.com/brandingbrand/flagship/compare/v11.50.0...v11.51.0) (2022-04-13)
+
+
+### Bug Fixes
+
+* **shared-util-std-json-schema:** match all-of against any of types (2fac3b0)
+
+
+### Features
+
+* **shared-util-std-json-schema:** consume dependencies (8d13271)
+
+
+
 # [11.50.0](https://github.com/brandingbrand/flagship/compare/v11.49.0...v11.50.0) (2022-04-11)
 
 
