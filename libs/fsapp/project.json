@@ -5,14 +5,14 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsapp",
         "tsConfig": "libs/fsapp/tsconfig.lib.json",
-        "packageJson": "libs/fsapp/package.json",
         "main": "libs/fsapp/src/index.ts",
-        "assets": ["libs/fsapp/*.md"]
+        "assets": ["libs/fsapp/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

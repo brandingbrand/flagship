@@ -5,14 +5,14 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsenv",
         "tsConfig": "libs/fsenv/tsconfig.lib.json",
-        "packageJson": "libs/fsenv/package.json",
         "main": "libs/fsenv/src/index.ts",
-        "assets": ["libs/fsenv/*.md"]
+        "assets": ["libs/fsenv/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

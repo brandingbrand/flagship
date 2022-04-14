@@ -5,12 +5,11 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/flagship",
         "tsConfig": "libs/flagship/tsconfig.lib.json",
-        "packageJson": "libs/flagship/package.json",
         "main": "libs/flagship/src/index.ts",
         "assets": [
           "libs/flagship/*.md",
@@ -26,7 +25,8 @@
             "input": "libs/flagship/android",
             "output": "android"
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

@@ -4,12 +4,11 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shipit-nx",
         "tsConfig": "libs/shipit-nx/tsconfig.lib.json",
-        "packageJson": "libs/shipit-nx/package.json",
         "main": "libs/shipit-nx/src/index.ts",
         "assets": [
           "libs/shipit-nx/*.md",
@@ -19,7 +18,8 @@
             "input": "libs/shipit-nx",
             "output": ""
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

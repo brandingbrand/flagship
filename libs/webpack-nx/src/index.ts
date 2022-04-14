@@ -8,7 +8,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { TsconfigPathsPlugin } from '@nrwl/web/src/utils/webpack/plugins/tsconfig-paths/tsconfig-paths.plugin';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
 import { join, parse } from 'path';
 import { existsSync } from 'fs';
@@ -132,10 +132,10 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   const prod = config.mode === 'production';
   process.env.BABEL_ENV = config.mode;
 
-  const reactConfig = (getReactWebpackConfig as GetWebpackConfig)(
-    { ...config, module: { ...config.module, rules: [...(config.module?.rules ?? [])] } },
-    environment
-  );
+  const reactConfig = (getReactWebpackConfig as unknown as GetWebpackConfig)({
+    ...config,
+    module: { ...config.module, rules: [...(config.module?.rules ?? [])] },
+  });
 
   const options =
     environment &&
@@ -271,18 +271,14 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     ...reactConfig,
     resolve: {
       ...resolve,
-      ...(resolve.plugins?.find((plugin) => plugin instanceof TsconfigPathsPlugin) ||
-      options?.buildLibsFromSource === false
-        ? {}
-        : {
-            plugins: [
-              ...(resolve.plugins ?? []),
-              new TsconfigPathsPlugin({
-                mainFields: resolve.mainFields,
-                configFile: options?.tsConfig,
-              }),
-            ],
-          }),
+      plugins: [
+        ...(resolve.plugins?.filter((plugin) => !(plugin instanceof TsconfigPathsPlugin)) ?? []),
+        new TsconfigPathsPlugin({
+          extensions: resolve.extensions,
+          mainFields: resolve.mainFields,
+          configFile: options?.tsConfig,
+        }) as never, // TODO: Remove never type when 'tsconfig-paths-webpack-plugin' types fixed
+      ],
     },
     optimization,
 
@@ -382,9 +378,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
         ? [
             new ForkTsCheckerWebpackPlugin({
               async: false,
-              eslint: undefined,
               typescript: {
-                enabled: true,
                 configFile: options?.tsConfig,
                 memoryLimit: 4096,
               },

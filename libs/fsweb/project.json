@@ -5,12 +5,11 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsweb",
         "tsConfig": "libs/fsweb/tsconfig.lib.json",
-        "packageJson": "libs/fsweb/package.json",
         "main": "libs/fsweb/src/server.prod.ts",
         "assets": [
           "libs/fsweb/*.md",
@@ -35,7 +34,8 @@
             "input": "libs/fsweb/public",
             "output": "public"
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

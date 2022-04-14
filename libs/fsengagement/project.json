@@ -5,12 +5,11 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsengagement",
         "tsConfig": "libs/fsengagement/tsconfig.lib.json",
-        "packageJson": "libs/fsengagement/package.json",
         "main": "libs/fsengagement/src/index.ts",
         "assets": [
           "libs/fsengagement/*.md",
@@ -19,7 +18,8 @@
             "input": "libs/fsengagement/assets",
             "output": "assets"
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

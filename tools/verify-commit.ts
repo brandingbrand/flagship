@@ -3,9 +3,9 @@
 import parseCommit from '@commitlint/parse';
 import { Commit } from '@commitlint/types';
 
-import { logger } from '@nrwl/devkit';
+import { logger, WorkspaceJsonConfiguration } from '@nrwl/devkit';
 import { FsTree } from '@nrwl/tao/src/shared/tree';
-import { Workspace, Workspaces } from '@nrwl/tao/src/shared/workspace';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 
 import dedent from 'ts-dedent';
 import { prompt } from 'inquirer';
@@ -26,7 +26,7 @@ const isWithin = (file: string, path: string) => {
   return path.split(sep).every((dir, i) => fileDirs[i] === dir);
 };
 
-const getWorkspace = (): Workspace => {
+const getWorkspace = (): WorkspaceJsonConfiguration => {
   return new Workspaces(process.cwd()).readWorkspaceConfiguration();
 };
 
@@ -43,7 +43,7 @@ const getStagedFiles = async () => {
 };
 
 const getChangedProjects = async (
-  workspace: Workspace,
+  workspace: WorkspaceJsonConfiguration,
   stagedFiles: string[]
 ): Promise<string[]> => {
   return Object.entries(workspace.projects)
@@ -109,7 +109,10 @@ const verifyWorkspaceScope = async (commit: Commit, changedProjects: string[]) =
   }
 };
 
-const verifyClosedProjectReferences = async (workspace: Workspace, stagedFiles: string[]) => {
+const verifyClosedProjectReferences = async (
+  workspace: WorkspaceJsonConfiguration,
+  stagedFiles: string[]
+) => {
   const closedSourceProjects = Object.values(workspace.projects).filter(
     ({ root, tags }) => root !== '.' && !tags?.includes('open-source')
   );

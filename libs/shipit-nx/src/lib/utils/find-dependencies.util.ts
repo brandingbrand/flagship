@@ -37,7 +37,7 @@ export const findDependencies = async (
         const isSourceDependency = graph.allWorkspaceFiles
           ?.filter(({ file }) => file.startsWith(node?.data.root))
           .filter(({ file }) => file !== join(node?.data?.root ?? '', 'package.json'))
-          .some(({ deps }) => deps?.some(({ projectName }) => projectName === npmNode.name));
+          .some(({ deps }) => deps?.some((projectName) => projectName === npmNode.name));
 
         if (isSourceDependency) {
           list.add(npmNode.data.packageName);
@@ -46,9 +46,7 @@ export const findDependencies = async (
     } else {
       const project = graph.nodes[projectName];
       if (project?.type === 'lib') {
-        const packageJson =
-          project.data?.targets?.build?.options?.packageJson ??
-          join(project.data.root, 'package.json');
+        const packageJson = join(project.data.root, 'package.json');
 
         const { name } = await readJson<{ name?: string }>(packageJson);
 

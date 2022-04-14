@@ -5,12 +5,11 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsproductdetail",
         "tsConfig": "libs/fsproductdetail/tsconfig.lib.json",
-        "packageJson": "libs/fsproductdetail/package.json",
         "main": "libs/fsproductdetail/src/index.ts",
         "assets": [
           "libs/fsproductdetail/*.md",
@@ -19,7 +18,8 @@
             "input": "libs/fsproductdetail/assets",
             "output": "assets"
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

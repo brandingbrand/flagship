@@ -4,14 +4,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-array",
         "tsConfig": "libs/shared/util-std-array/tsconfig.lib.json",
-        "packageJson": "libs/shared/util-std-array/package.json",
         "main": "libs/shared/util-std-array/src/index.ts",
-        "assets": ["libs/shared/util-std-array/*.md"]
+        "assets": ["libs/shared/util-std-array/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

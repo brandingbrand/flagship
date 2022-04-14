@@ -14,7 +14,6 @@ export const findDependents = async (
 
   const otherProjects = Object.entries(graph.nodes)
     .filter(([project]) => project !== projectName)
-    .filter(([, { type }]) => type !== 'npm')
     .filter(([project]) =>
       graph.dependencies?.[project]?.some(({ target }) => target === projectName)
     );

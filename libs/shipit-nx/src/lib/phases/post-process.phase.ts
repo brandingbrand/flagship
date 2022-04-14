@@ -1,7 +1,13 @@
-import { formatFiles, getPackageManagerCommand, readJson, writeJson } from '@nrwl/devkit';
-import { run } from '@nrwl/tao/src/commands/run';
+import {
+  formatFiles,
+  getPackageManagerCommand,
+  readJson,
+  WorkspaceJsonConfiguration,
+  writeJson,
+} from '@nrwl/devkit';
+import { run } from 'nx/src/command-line/run';
 import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
-import { Workspace, Workspaces } from '@nrwl/tao/src/shared/workspace';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
 import { execSync } from 'child_process';
 
 import { CommitMessage } from '@brandingbrand/git';
@@ -121,7 +127,11 @@ export class PostProcessPhase implements Phase {
   constructor(private readonly config: ShipConfig) {}
   public readonly readableName = 'Post process repository';
 
-  private cleanNxJson(sourceTree: FsTree, sourceWorkspace: Workspace, destinationTree: FsTree) {
+  private cleanNxJson(
+    sourceTree: FsTree,
+    sourceWorkspace: WorkspaceJsonConfiguration,
+    destinationTree: FsTree
+  ) {
     const nxJson = readJson<NxJson>(sourceTree, 'nx.json');
 
     if ('project' in this.config.options) {
@@ -142,7 +152,7 @@ export class PostProcessPhase implements Phase {
 
   private cleanPackageLockJson(
     sourceTree: FsTree,
-    sourceWorkspace: Workspace,
+    sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
   ) {
     const packageLockJson = readJson<PackageLockJson>(sourceTree, 'package-lock.json');
@@ -169,7 +179,7 @@ export class PostProcessPhase implements Phase {
 
   private cleanPackageJsonForWorkspace(
     sourceTree: FsTree,
-    sourceWorkspace: Workspace,
+    sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
   ) {
     const packageJson = readJson<PackageJson>(sourceTree, 'package.json');
@@ -315,7 +325,11 @@ export class PostProcessPhase implements Phase {
     writeJson(destinationTree, 'package.json', sortPackageJson(packageJson));
   }
 
-  private cleanTsConfig(sourceTree: FsTree, sourceWorkspace: Workspace, destinationTree: FsTree) {
+  private cleanTsConfig(
+    sourceTree: FsTree,
+    sourceWorkspace: WorkspaceJsonConfiguration,
+    destinationTree: FsTree
+  ) {
     const tsConfig = readJson<TsConfigJson>(sourceTree, 'tsconfig.base.json');
 
     if (tsConfig.compilerOptions?.paths) {
@@ -340,7 +354,7 @@ export class PostProcessPhase implements Phase {
 
   private cleanWorkspaceJson(
     sourceTree: FsTree,
-    sourceWorkspace: Workspace,
+    sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
   ) {
     const workspaceJson = readJson<WorkspaceJson>(sourceTree, 'workspace.json');
@@ -359,7 +373,7 @@ export class PostProcessPhase implements Phase {
 
   private async syncDeps(
     destinationTree: FsTree,
-    destinationWorkspace: Workspace,
+    destinationWorkspace: WorkspaceJsonConfiguration,
     options: ShipProjectOptions
   ) {
     if ('sync-deps' in (destinationWorkspace.projects[options?.project ?? '']?.targets ?? {})) {
@@ -367,7 +381,9 @@ export class PostProcessPhase implements Phase {
       await run(
         destinationTree.root,
         destinationTree.root,
-        [`${options.project}:sync-deps`],
+        { project: options.project, target: 'sync-deps' },
+        {},
+        false,
         false
       );
     }

@@ -45,7 +45,7 @@ export class History implements FSRouterHistory {
     return this._action;
   }
 
-  public get location(): Location<unknown> {
+  public get location(): Location {
     return this._location;
   }
 
@@ -75,7 +75,7 @@ export class History implements FSRouterHistory {
   }
 
   public open(path: string, state?: unknown): Promise<void>;
-  public open(location: LocationDescriptor<unknown>): Promise<void>;
+  public open(location: LocationDescriptor): Promise<void>;
   @boundMethod
   @queueMethod
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {

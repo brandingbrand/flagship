@@ -4,14 +4,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sessions",
         "tsConfig": "libs/sessions/tsconfig.lib.json",
-        "packageJson": "libs/sessions/package.json",
         "main": "libs/sessions/src/index.ts",
-        "assets": ["libs/sessions/*.md"]
+        "assets": ["libs/sessions/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

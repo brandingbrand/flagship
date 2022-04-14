@@ -4,12 +4,11 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/flagship-nx",
         "tsConfig": "libs/flagship-nx/tsconfig.lib.json",
-        "packageJson": "libs/flagship-nx/package.json",
         "main": "libs/flagship-nx/src/index.ts",
         "assets": [
           "libs/flagship-nx/*.md",
@@ -24,7 +23,8 @@
             "input": "libs/flagship-nx",
             "output": ""
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

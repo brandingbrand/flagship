@@ -19,12 +19,11 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/orchestrate-nx",
         "tsConfig": "libs/orchestrate-nx/tsconfig.lib.json",
-        "packageJson": "libs/orchestrate-nx/package.json",
         "main": "libs/orchestrate-nx/src/index.ts",
         "assets": [
           "libs/orchestrate-nx/*.md",
@@ -38,7 +37,8 @@
             "glob": "executors.json",
             "output": "."
           }
-        ]
+        ],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {

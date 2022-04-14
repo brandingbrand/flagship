@@ -4,14 +4,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-math",
         "tsConfig": "libs/shared/util-std-math/tsconfig.lib.json",
-        "packageJson": "libs/shared/util-std-math/package.json",
         "main": "libs/shared/util-std-math/src/index.ts",
-        "assets": ["libs/shared/util-std-math/*.md"]
+        "assets": ["libs/shared/util-std-math/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

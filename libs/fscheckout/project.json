@@ -5,14 +5,14 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fscheckout",
         "tsConfig": "libs/fscheckout/tsconfig.lib.json",
-        "packageJson": "libs/fscheckout/package.json",
         "main": "libs/fscheckout/src/index.ts",
-        "assets": ["libs/fscheckout/*.md"]
+        "assets": ["libs/fscheckout/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

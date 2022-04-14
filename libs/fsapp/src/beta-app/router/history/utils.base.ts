@@ -194,9 +194,7 @@ export const matchRoute = async (
   return;
 };
 
-export const normalizeLocationDescriptor = (
-  to: LocationDescriptor<unknown>
-): LocationDescriptorObject<unknown> => {
+export const normalizeLocationDescriptor = (to: LocationDescriptor): LocationDescriptorObject => {
   if (typeof to === 'string') {
     return normalizeLocationDescriptor(parsePath(to));
   }

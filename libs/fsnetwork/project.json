@@ -5,15 +5,14 @@
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fsnetwork",
         "tsConfig": "libs/fsnetwork/tsconfig.lib.json",
-        "packageJson": "libs/fsnetwork/package.json",
         "main": "libs/fsnetwork/src/index.ts",
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "assets": ["libs/fsnetwork/*.md"]
+        "assets": ["libs/fsnetwork/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {
