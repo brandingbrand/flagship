@@ -36,7 +36,8 @@ export interface SerializableTotalProps {
 export interface TotalProps extends Pick<SerializableTotalProps, 'keyName' | 'value'> {
   keyStyle?: StyleProp<TextStyle>; // Optional styling for the key text element
   valueStyle?: StyleProp<TextStyle>; // Optional styling for the value text element
-
+  leftColumnStyle?: StyleProp<ViewStyle>;
+  rightColumnStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>; // Optional styling for the entire total row
 }
 
@@ -66,8 +67,10 @@ const TotalInner = (props: TotalProps): JSX.Element => {
 
   return (
     <View style={[styles.row, props.style]}>
-      <View style={styles.leftColumn}>{renderData(props.keyName, [props.keyStyle])}</View>
-      <View style={styles.rightColumn}>
+      <View style={[styles.leftColumn, props.leftColumnStyle]}>
+        {renderData(props.keyName, [props.keyStyle])}
+      </View>
+      <View style={[styles.rightColumn, props.rightColumnStyle]}>
         {renderData(props.value, [
           styles.rightColumnText as StyleProp<TextStyle>,
           props.valueStyle,
