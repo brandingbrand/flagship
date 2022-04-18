@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.52.0](https://github.com/brandingbrand/flagship/compare/v11.51.0...v11.52.0) (2022-04-18)
+
+
+### Features
+
+* **fscomponents:** add columns style props (f256216)
+
+
+
 # [11.51.0](https://github.com/brandingbrand/flagship/compare/v11.50.0...v11.51.0) (2022-04-13)
 
 
