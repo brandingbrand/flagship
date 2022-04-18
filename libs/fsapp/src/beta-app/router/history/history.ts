@@ -619,6 +619,11 @@ export class History implements FSRouterHistory {
             );
             this.stacks[location.stack]?.children.splice(indexInStack + 1);
 
+            if (this.activeStack !== location.stack) {
+              void this.switchStack(location.stack);
+              this.activeStack = location.stack;
+            }
+
             if (Platform.OS === 'ios') {
               void Navigation.popTo(location.key);
             } else {
