@@ -3,6 +3,8 @@ import type { Store } from '@brandingbrand/cargo-hold';
 import { useReact } from '@brandingbrand/react-linker';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
+import isEqual from 'fast-deep-equal';
+
 export const useStoreState = <State, Return = State>(
   store: Store<State>,
   mapState?: (state: State) => Return
@@ -14,7 +16,7 @@ export const useStoreState = <State, Return = State>(
 
   useLayoutEffect(() => {
     const subscription = store.state$
-      .pipe(map(mapState ?? ((state) => state as unknown as Return)), distinctUntilChanged())
+      .pipe(map(mapState ?? ((state) => state as unknown as Return)), distinctUntilChanged(isEqual))
       .subscribe(setState);
 
     return () => subscription.unsubscribe();
