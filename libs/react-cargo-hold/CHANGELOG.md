@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.53.0](https://github.com/brandingbrand/flagship/compare/v11.52.0...v11.53.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* **react-cargo-hold:** use fast deep comparison for store state (e4e9a69)
+
+
+
 # [11.52.0](https://github.com/brandingbrand/flagship/compare/v11.51.0...v11.52.0) (2022-04-18)
 
 
