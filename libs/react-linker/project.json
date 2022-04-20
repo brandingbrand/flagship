@@ -27,7 +27,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/react-linker/**/*.ts"]
+        "lintFilePatterns": ["libs/react-linker/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

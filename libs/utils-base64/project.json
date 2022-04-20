@@ -28,7 +28,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/utils-base64/**/*.ts"]
+        "lintFilePatterns": ["libs/utils-base64/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

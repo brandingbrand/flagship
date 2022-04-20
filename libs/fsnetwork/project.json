@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/fsnetwork/**/*.{ts,tsx,js,jsx}"],
+        "lintFilePatterns": ["libs/fsnetwork/**/*.{ts,js}"],
         "hasTypeAwareRules": true
       }
     },

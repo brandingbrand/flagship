@@ -28,7 +28,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/types-utility/**/*.{ts,tsx,js,jsx}"],
+        "lintFilePatterns": ["libs/types-utility/**/*.{ts,js}"],
         "hasTypeAwareRules": true
       }
     },

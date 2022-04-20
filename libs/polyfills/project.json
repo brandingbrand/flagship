@@ -18,7 +18,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/polyfills/**/*.ts"]
+        "lintFilePatterns": ["libs/polyfills/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

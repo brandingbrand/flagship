@@ -1,21 +1,13 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "parserOptions": {
-    "project": ["./libs/fsenv/tsconfig.lib.json", "./libs/fsenv/tsconfig.spec.json"]
-  },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "files": ["*.ts"],
+      "parserOptions": { "project": ["libs/fsenv/tsconfig.*?.json"] },
       "rules": {}
     },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
   ]
 }

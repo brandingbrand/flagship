@@ -1,20 +1,17 @@
 {
-  "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "public", ".cache", "node_modules"],
-  "parserOptions": {
-    "project": ["./libs/fscomponents/tsconfig.lib.json", "./libs/fscomponents/tsconfig.spec.json"]
-  },
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
-    },
-    {
+      "extends": ["brandingbrand/typescript", "brandingbrand/react-native", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
+      "parserOptions": { "project": ["libs/fscomponents/tsconfig.*?.json"] },
       "rules": {}
     },
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} },
     {
-      "files": ["*.js", "*.jsx"],
+      "extends": "brandingbrand/storybook",
+      "files": ["*.story.ts", "*.stories.ts", "*.story.tsx", "*.stories.tsx"],
       "rules": {}
     }
   ]

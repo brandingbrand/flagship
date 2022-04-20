@@ -1,21 +1,13 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "parserOptions": {
-    "project": ["./libs/fsengagement/tsconfig.lib.json", "./libs/fsengagement/tsconfig.spec.json"]
-  },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
-    },
-    {
+      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
+      "parserOptions": { "project": ["libs/fsengagement/tsconfig.*?.json"] },
       "rules": {}
     },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} }
   ]
 }

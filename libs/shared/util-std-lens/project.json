@@ -27,7 +27,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/util-std-lens/**/*.ts"]
+        "lintFilePatterns": ["libs/shared/util-std-lens/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

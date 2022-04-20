@@ -3,19 +3,11 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "parserOptions": {
-        "project": ["libs/shared/util-std-compose/tsconfig.*?.json"]
-      },
+      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "files": ["*.ts"],
+      "parserOptions": { "project": ["libs/shared/util-std-compose/tsconfig.*?.json"] },
       "rules": {}
     },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
   ]
 }

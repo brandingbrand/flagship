@@ -1,21 +1,13 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "parserOptions": {
-    "project": ["./libs/shipit-nx/tsconfig.lib.json", "./libs/shipit-nx/tsconfig.spec.json"]
-  },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/node", "brandingbrand/rxjs"],
+      "files": ["*.ts"],
+      "parserOptions": { "project": ["libs/shipit-nx/tsconfig.*?.json"] },
       "rules": {}
     },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
   ]
 }

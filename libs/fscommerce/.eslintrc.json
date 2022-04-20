@@ -1,23 +1,13 @@
 {
-  "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "public", ".cache", "node_modules"],
-  "parserOptions": {
-    "project": ["./libs/fscommerce/tsconfig.lib.json", "./libs/fscommerce/tsconfig.spec.json"]
-  },
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@typescript-eslint/ban-ts-comment": "off"
-      }
-    },
-    {
+      "extends": ["brandingbrand/typescript", "brandingbrand/react", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
+      "parserOptions": { "project": ["libs/fscommerce/tsconfig.*?.json"] },
       "rules": {}
     },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} }
   ]
 }

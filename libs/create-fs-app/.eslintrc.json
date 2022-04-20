@@ -1,21 +1,18 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "parserOptions": {
-    "project": ["./libs/create-fs-app/tsconfig.lib.json", "./libs/create-fs-app/tsconfig.spec.json"]
-  },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "files": ["*.ts"],
+      "parserOptions": { "project": ["libs/create-fs-app/tsconfig.*?.json"] },
       "rules": {}
     },
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["index.js"],
+      "extends": ["brandingbrand/node"],
       "rules": {}
     },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
   ]
 }

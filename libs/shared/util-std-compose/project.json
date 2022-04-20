@@ -27,7 +27,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/util-std-compose/**/*.ts"]
+        "lintFilePatterns": ["libs/shared/util-std-compose/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {

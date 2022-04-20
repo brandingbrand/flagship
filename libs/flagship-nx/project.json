@@ -31,7 +31,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/flagship-nx/**/*.ts"]
+        "lintFilePatterns": ["libs/flagship-nx/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
       }
     },
     "test": {
