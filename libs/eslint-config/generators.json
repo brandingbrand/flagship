@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "config": {
+      "factory": "./src/generators/config/generator",
+      "schema": "./src/generators/config/schema.json",
+      "description": "Generate a eslint config hooked up with eslint-config-brandingbrand"
+    }
+  }
+}

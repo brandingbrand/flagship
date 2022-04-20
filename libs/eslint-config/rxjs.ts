@@ -1,0 +1,71 @@
+import {
+  LARGE_PERFORMANCE_COST,
+  NOT_RELEVANT,
+  OFF,
+  PROJECT_BY_PROJECT,
+  SUCCESSOR,
+  WARN,
+} from './utils';
+
+export = {
+  plugins: ['rxjs'],
+  rules: {
+    // plugin:rxjs **************************************************************
+    // rules URL: https://github.com/cartant/eslint-plugin-rxjs
+    'rxjs/ban-observables': OFF(PROJECT_BY_PROJECT),
+    'rxjs/ban-operators': OFF(PROJECT_BY_PROJECT),
+    'rxjs/finnish': [
+      OFF(LARGE_PERFORMANCE_COST),
+      {
+        functions: false,
+        methods: false,
+        names: {
+          '^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$':
+            false,
+        },
+        parameters: true,
+        properties: true,
+        types: {
+          '^EventEmitter$': false,
+        },
+        variables: true,
+      },
+    ],
+    'rxjs/just': WARN,
+    'rxjs/macro': OFF(NOT_RELEVANT),
+    'rxjs/no-async-subscribe': WARN,
+    'rxjs/no-compat': WARN,
+    'rxjs/no-connectable': WARN,
+    'rxjs/no-create': WARN,
+    'rxjs/no-cyclic-action': WARN,
+    'rxjs/no-explicit-generics': WARN,
+    'rxjs/no-exposed-subjects': WARN,
+    'rxjs/no-finnish': SUCCESSOR('rxjs/finnish'),
+    'rxjs/no-ignored-error': WARN,
+    'rxjs/no-ignored-notifier': WARN,
+    'rxjs/no-ignored-observable': WARN,
+    'rxjs/no-ignored-replay-buffer': WARN,
+    'rxjs/no-ignored-subscribe': WARN,
+    'rxjs/no-ignored-subscription': OFF('takeUntil pattern'),
+    'rxjs/no-ignored-takewhile-value': WARN,
+    'rxjs/no-implicit-any-catch': WARN,
+    'rxjs/no-index': WARN,
+    'rxjs/no-internal': WARN,
+    'rxjs/no-nested-subscribe': WARN,
+    'rxjs/no-redundant-notify': WARN,
+    'rxjs/no-sharereplay': [WARN, { allowConfig: true }],
+    'rxjs/no-subclass': WARN,
+    'rxjs/no-subject-unsubscribe': WARN,
+    'rxjs/no-subject-value': OFF(),
+    'rxjs/no-topromise': WARN,
+    'rxjs/no-unbound-methods': WARN,
+    'rxjs/no-unsafe-catch': WARN,
+    'rxjs/no-unsafe-first': WARN,
+    'rxjs/no-unsafe-subject-next': WARN,
+    'rxjs/no-unsafe-switchmap': WARN,
+    'rxjs/no-unsafe-takeuntil': WARN,
+    'rxjs/prefer-observer': WARN,
+    'rxjs/suffix-subjects': OFF(LARGE_PERFORMANCE_COST),
+    'rxjs/throw-error': WARN,
+  },
+};

@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Config",
+  "title": "Configure",
+  "type": "object",
+  "properties": {
+    "projectName": {
+      "type": "string",
+      "description": "The name of the project to configure (see workspace.json)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What project would you like to configure?"
+    },
+    "language": {
+      "type": "string",
+      "description": "Wether to use JavaScript or TypeScript",
+      "alias": "l",
+      "enum": ["javascript", "typescript"],
+      "x-prompt": "What language is this project written in?"
+    },
+    "framework": {
+      "type": "string",
+      "description": "The framework this project was written with",
+      "alias": "f",
+      "enum": ["node", "react", "react-native", "angular", "none"],
+      "x-prompt": "What framework is this project written with?"
+    },
+    "testing": {
+      "type": "string",
+      "description": "The testing framework the project uses",
+      "alias": "t",
+      "enum": ["cypress", "jest", "none"],
+      "x-prompt": "What framework does this project using for testing?"
+    },
+    "libraries": {
+      "type": "array",
+      "description": "A list of libraries that this project consumes",
+      "alias": "l",
+      "items": {
+        "type": "string",
+        "enum": ["rxjs", "ngneat", "lodash", "fp-ts", "ngrx"]
+      },
+      "x-prompt": {
+        "message": "Which libraries does this project use?",
+        "type": "list",
+        "multiselect": true,
+        "items": [
+          {
+            "value": "rxjs",
+            "label": "RxJS"
+          },
+          {
+            "value": "ngneat",
+            "label": "@ngneat"
+          },
+          {
+            "value": "lodash",
+            "label": "Lodash"
+          },
+          {
+            "value": "ngrx",
+            "label": "NgRx"
+          },
+          {
+            "value": "fp-ts",
+            "label": "FP-TS"
+          }
+        ]
+      }
+    }
+  },
+  "required": ["projectName", "language", "framework", "testing", "libraries"]
+}
