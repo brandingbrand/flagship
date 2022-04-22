@@ -1274,7 +1274,6 @@ export const inputSatisfies = (
         };
 
   if (hasAllOf(input)) input = tryMergeAllOf(input);
-  if (hasAllOf(target)) target = tryMergeAllOf(target);
   const errors = getErrors(input, target, processedOpts, {
     input: [],
     target: [],
