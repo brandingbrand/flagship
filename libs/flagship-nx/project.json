@@ -47,12 +47,6 @@
       "options": {
         "access": "public"
       }
-    },
-    "install": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": ["npm install ./dist/libs/flagship-nx --ignore-scripts --no-audit --no-fund"]
-      }
     }
   },
   "tags": ["open-source"]
