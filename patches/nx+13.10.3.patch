@@ -1,5 +1,5 @@
 diff --git a/node_modules/nx/src/command-line/workspace-integrity-checks.js b/node_modules/nx/src/command-line/workspace-integrity-checks.js
-index 4c27c3d..79fd283 100644
+index 4c27c3d..4e86583 100644
 --- a/node_modules/nx/src/command-line/workspace-integrity-checks.js
 +++ b/node_modules/nx/src/command-line/workspace-integrity-checks.js
 @@ -13,7 +13,7 @@ class WorkspaceIntegrityChecks {
@@ -11,3 +11,49 @@ index 4c27c3d..79fd283 100644
              .map((p) => `Cannot find project '${p.name}' in '${p.data.root}'`);
          const errorGroupBodyLines = errors.map((f) => `${output_1.output.dim('-')} ${f}`);
          return errors.length === 0
+diff --git a/node_modules/nx/src/tasks-runner/run-command.js b/node_modules/nx/src/tasks-runner/run-command.js
+index 39f223a..affc6a0 100644
+--- a/node_modules/nx/src/tasks-runner/run-command.js
++++ b/node_modules/nx/src/tasks-runner/run-command.js
+@@ -217,7 +217,7 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+         hasTarget: (0, project_graph_utils_1.projectHasTarget)(project, target),
+     };
+     const newPath = [...path, pathFragment];
+-    seenSet.add(project.name);
++    seenSet.add(targetIdentifier);
+     if (tasksMap.has(targetIdentifier)) {
+         return;
+     }
+@@ -230,11 +230,11 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+                     (0, project_graph_utils_1.projectHasTarget)(depProject, dependencyConfig.target)) {
+                     const depTargetId = getId({
+                         project: depProject.name,
+-                        target,
++                        target: dependencyConfig.target,
+                         configuration: configuration,
+                     });
+                     exitOnCircularDep(newPath, depTargetId);
+-                    if (seenSet.has(dep.target)) {
++                    if (seenSet.has(depTargetId)) {
+                         continue;
+                     }
+                     addTasksForProjectTarget({
+@@ -247,16 +247,15 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+                 }
+                 else {
+                     if (!depProject) {
+-                        seenSet.add(dep.target);
+                         continue;
+                     }
+                     const depTargetId = getId({
+                         project: depProject.name,
+-                        target,
++                        target: dependencyConfig.target,
+                         configuration: configuration,
+                     });
+                     exitOnCircularDep(newPath, depTargetId);
+-                    if (seenSet.has(dep.target)) {
++                    if (seenSet.has(depTargetId)) {
+                         continue;
+                     }
+                     addTasksForProjectDependencyConfig(depProject, { target, configuration, overrides }, dependencyConfig, defaultDependencyConfigs, projectGraph, originalTargetExecutor, tasksMap, newPath, seenSet);
