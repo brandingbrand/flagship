@@ -606,7 +606,36 @@ export = {
     'jsdoc/check-tag-names': [
       WARN,
       {
-        definedTags: ['usageNotes', 'publicApi', 'internal'],
+        definedTags: [
+          'usageNotes',
+          'publicApi',
+          'internal',
+          /**
+           * TypeScript Schema JSON directives
+           *
+           * @see https://github.com/YousefED/typescript-json-schema/blob/master/api.md
+           */
+          '$id',
+          '$ref',
+          'additionalProperties',
+          'chance',
+          'examples',
+          'ignore',
+          'important',
+          'items',
+          'minimum',
+          'minItems',
+          'maximum',
+          'maxItems',
+          'nullable',
+          'title',
+          'TJS-ignore',
+          'TJS-type',
+          'TJS-format',
+          'TJS-hide',
+          'TJS-minimum',
+          'TJS-pattern',
+        ],
       },
     ],
     'jsdoc/check-types': WARN,
