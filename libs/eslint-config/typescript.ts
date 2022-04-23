@@ -278,7 +278,7 @@ export = {
         selector: ['typeParameter'],
         format: ['PascalCase'],
         custom: {
-          regex: '^([A-Z][a-z]([A-Z]|[a-z])*[a-z])?[A-Z]$',
+          regex: '^([A-Z][a-z](([A-Z]|[a-z])*[a-z])?)?([A-Z]|Type)$',
           match: true,
         },
         leadingUnderscore: 'forbid',
