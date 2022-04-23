@@ -245,16 +245,47 @@ export = {
       {
         selector: ['memberLike'],
         format: ['camelCase', 'PascalCase'],
+        /**
+         * Using leading underscores to denote private members is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * In TypeScript we have member access modifiers in classes
+         * which can provide design time privacy, and for true privacy
+         * ES2019 Private Members can be leveraged.
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['variableLike'],
         format: ['camelCase'],
+        /**
+         * Using leading underscores to denote private variables is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * Use symbols, reflection or other true private mechanism to
+         * ensure true privacy.
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['parameter'],
         format: ['camelCase'],
+        /**
+         * A leading underscore when used with a parameter denotes
+         * that the parameter is not used internally by the function
+         *
+         * This is often times used to build functions that follow
+         * a certain interface for interoperability despite a specific
+         * implementation not needing all the parameters provided.
+         */
         leadingUnderscore: 'allow',
       },
       {
@@ -262,16 +293,49 @@ export = {
         types: ['boolean'],
         format: ['PascalCase'],
         prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+        /**
+         * Using leading underscores to denote private variables is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * Use symbols, reflection or other true private mechanism to
+         * ensure true privacy.
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['variable'],
         format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+        /**
+         * Using leading underscores to denote private variables is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * Use symbols, reflection or other true private mechanism to
+         * ensure true privacy.
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['function'],
         format: ['camelCase'],
+        /**
+         * Using leading underscores to denote private variables is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * Use symbols, reflection or other true private mechanism to
+         * ensure true privacy.
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
@@ -281,17 +345,44 @@ export = {
           regex: '^([A-Z][a-z](([A-Z]|[a-z])*[a-z])?)?([A-Z]|Type)$',
           match: true,
         },
+        /**
+         * Unlike parameters, type parameters are either inferred or
+         * explicitly defined. They cannot be defined such that they
+         * are compatible with an interface.
+         *
+         * To that end, there is no valid use case for an unused type
+         * parameter
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['interface'],
         format: ['PascalCase'],
+        /**
+         * Using leading underscores to denote private interfaces is an
+         * anti-pattern. This provides the illusion of privacy despite
+         * in many cases external systems being built on top of that
+         * implementation.
+         *
+         * Use `@internal` jsdocs and exclusive exports to keep
+         * an interface internal to a specific library
+         *
+         * @see https://www.hyrumslaw.com
+         */
         leadingUnderscore: 'forbid',
       },
       {
         selector: ['variable'],
         modifiers: ['destructured'],
         format: ['camelCase'],
+        /**
+         * A leading underscore when used with a destructured property denotes
+         * that the parameter is explicitly being thrown away
+         *
+         * This is often times used to remove a specific value from from an
+         * object with the rest of the properties being collected in a rest
+         * variable
+         */
         leadingUnderscore: 'allow',
       },
     ],
