@@ -134,6 +134,8 @@ export interface AccordionProps {
    * Height of title touch highlight (has default)
    */
   titleTouchStyle?: StyleProp<ViewStyle>;
+
+  dataSet?: Record<string, ''>;
 }
 
 export interface AccordionState {
@@ -242,6 +244,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
 
     return (
       <View
+        {...{ dataSet: this.props.dataSet }}
         style={[
           AccordionStyles.container,
           this.props.style,

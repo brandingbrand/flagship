@@ -171,4 +171,6 @@ export interface MultiCarouselProps<ItemT>
    * Number in miliseconds that defines the delay between transitions
    */
   autoplayTimeoutDuration?: number;
+
+  dataSet?: Record<string, ''>;
 }

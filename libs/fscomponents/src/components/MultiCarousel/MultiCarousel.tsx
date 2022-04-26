@@ -115,6 +115,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     prevArrowOnBlur,
     showArrow,
     style,
+    dataSet,
     itemUpdated,
     hidePageIndicator,
     renderPageIndicator,
@@ -384,6 +385,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
         onScroll={handleScroll}
         onScrollEndDrag={handleScrollEndDrag}
         onScrollBeginDrag={handleScrollBeginDrag}
+        {...{ dataSet }}
       />
 
       {hidePageIndicator ? null : renderPageIndicator ? (

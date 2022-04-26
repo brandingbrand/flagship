@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { AccessibilityRole, StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 import { style as S } from '../styles/ReviewIndicator';
@@ -21,6 +21,8 @@ export interface ReviewIndicatorProps {
   renderFullStar?: () => React.ReactNode;
   renderHalfStar?: () => React.ReactNode;
   renderEmptyStar?: () => React.ReactNode;
+
+  dataSet?: Record<string, ''>;
 }
 
 export interface NormalizedValue {
@@ -42,151 +44,183 @@ const Star = ({ renderStar, style, text }: StarProps): JSX.Element => {
 
   return <Text style={[S.star, style]}>{text}</Text>;
 };
-export const ReviewIndicatorInner: FunctionComponent<ReviewIndicatorProps> = (
-  props
-): JSX.Element => {
-  const getItemData = (value: number, base: number = 5): NormalizedValue => {
-    if (value >= base) {
-      return {
-        full: base,
-        empty: 0,
-        hasHalf: false,
-      };
-    }
 
-    let full = Math.floor(value);
-    const decimal = value - full;
-    let empty = base - full;
-    let hasHalf = false;
+interface HalfStarProps {
+  itemSize?: number;
+  itemColor?: string;
+  emptyStar?: boolean;
+  emptyColor?: string;
 
-    if (decimal < 0.25) {
-      hasHalf = false;
-    } else if (decimal >= 0.25 && decimal <= 0.75) {
-      hasHalf = true;
-      empty = empty - 1;
-    } else {
-      hasHalf = false;
-      full = full + 1;
-      empty = empty - 1;
-    }
+  renderHalfStar?: () => React.ReactNode;
+}
 
-    return {
-      full,
-      empty,
-      hasHalf,
-    };
-  };
+const HalfStar: FC<HalfStarProps> = ({
+  itemSize,
+  itemColor,
+  emptyStar,
+  emptyColor,
+  renderHalfStar,
+}) => {
+  const customStarStyle = useMemo<StyleProp<TextStyle>>(
+    () => ({
+      ...(itemSize ? { fontSize: itemSize, width: itemSize, height: itemSize * 1.2 } : {}),
+      ...(itemColor ? { color: itemColor } : {}),
+    }),
+    [itemColor, itemSize]
+  );
+  const containerStarStyle = useMemo<StyleProp<TextStyle>>(
+    () => ({
+      ...(itemSize ? { width: itemSize, height: itemSize * 1.2 } : {}),
+    }),
+    [itemSize]
+  );
+  const starHalfRightStyle = useMemo<StyleProp<TextStyle>>(
+    () => ({
+      ...(itemSize ? { marginLeft: -itemSize / 2 } : {}),
+    }),
+    [itemSize]
+  );
 
-  const renderHalf = (): JSX.Element => {
-    const customStarStyle: StyleProp<TextStyle> = {};
-    const containerStarStyle: StyleProp<ViewStyle> = {};
-    const starHalfRightStyle: StyleProp<TextStyle> = {};
-    const { emptyStar, itemSize, itemColor } = props;
+  if (renderHalfStar) {
+    return renderHalfStar() as JSX.Element;
+  }
 
-    if (itemSize) {
-      customStarStyle.fontSize = itemSize;
-      customStarStyle.width = itemSize;
-      customStarStyle.height = itemSize * 1.2;
-      containerStarStyle.width = itemSize;
-      containerStarStyle.height = itemSize * 1.2;
-      starHalfRightStyle.marginLeft = -itemSize / 2;
-    }
-    if (itemColor) {
-      customStarStyle.color = itemColor;
-    }
-
-    return (
-      <View style={[S.halfStarContainer, containerStarStyle]}>
-        <View style={S.starHalfLeftWrap}>
-          <Star text="★" style={[S.starHalfLeft, customStarStyle]} />
-        </View>
-        <View style={S.starHalfRightWrap}>
-          <Star
-            text={emptyStar === true ? '☆' : '★'}
-            style={[
-              customStarStyle,
-              S.starHalfRight,
-              starHalfRightStyle,
-              S.emptyStar,
-              props.emptyColor
-                ? {
-                    color: props.emptyColor,
-                  }
-                : undefined,
-            ]}
-          />
-        </View>
+  return (
+    <View style={[S.halfStarContainer, containerStarStyle]}>
+      <View style={S.starHalfLeftWrap}>
+        <Star text="★" style={[S.starHalfLeft, customStarStyle]} />
       </View>
-    );
+      <View style={S.starHalfRightWrap}>
+        <Star
+          text={emptyStar === true ? '☆' : '★'}
+          style={[
+            customStarStyle,
+            S.starHalfRight,
+            starHalfRightStyle,
+            S.emptyStar,
+            emptyColor
+              ? {
+                  color: emptyColor,
+                }
+              : undefined,
+          ]}
+        />
+      </View>
+    </View>
+  );
+};
+
+const getItemData = (value: number, base: number = 5): NormalizedValue => {
+  if (value >= base) {
+    return {
+      full: base,
+      empty: 0,
+      hasHalf: false,
+    };
+  }
+
+  let full = Math.floor(value);
+  const decimal = value - full;
+  let empty = base - full;
+  let hasHalf = false;
+
+  if (decimal < 0.25) {
+    hasHalf = false;
+  } else if (decimal >= 0.25 && decimal <= 0.75) {
+    hasHalf = true;
+    empty = empty - 1;
+  } else {
+    hasHalf = false;
+    full = full + 1;
+    empty = empty - 1;
+  }
+
+  return {
+    full,
+    empty,
+    hasHalf,
   };
+};
 
-  const {
-    value,
-    base,
-    emptyStar,
-    itemSize,
-    itemColor,
-    style,
-    renderFullStar,
-    renderHalfStar,
-    renderEmptyStar,
-  } = props;
-
-  const itemData = getItemData(value, base);
-  const customStarStyle: StyleProp<TextStyle> = {};
-
-  if (itemSize) {
-    customStarStyle.fontSize = itemSize;
-    customStarStyle.width = itemSize;
-    customStarStyle.height = itemSize * 1.2;
+const newArray = (num: number): number[] => {
+  const arr = [];
+  for (let i = 0; i < num; i++) {
+    arr.push(i);
   }
 
-  if (itemColor) {
-    customStarStyle.color = itemColor;
-  }
+  return arr;
+};
 
-  const label = props.accessibilityLabel
-    ? props.accessibilityLabel
-    : props.value + FSI18n.string(componentTranslationKeys.indicatorDefault);
+export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
+  accessibilityHint,
+  accessibilityLabel,
+  accessibilityRole,
+  accessible,
+  value,
+  base,
+  emptyStar,
+  itemSize,
+  itemColor,
+  style,
+  renderFullStar,
+  renderHalfStar,
+  renderEmptyStar,
+  emptyColor,
+  dataSet,
+}): JSX.Element => {
+  const itemData = useMemo(() => getItemData(value, base), [base, value]);
+  const fullStars = useMemo(() => newArray(itemData.full), [itemData.full]);
+  const emptyStars = useMemo(() => newArray(itemData.empty), [itemData.empty]);
+
+  const customStarStyle = useMemo<StyleProp<TextStyle>>(
+    () => ({
+      ...(itemSize ? { fontSize: itemSize, width: itemSize, height: itemSize * 1.2 } : {}),
+      ...(itemColor ? { color: itemColor } : {}),
+    }),
+    [itemColor, itemSize]
+  );
+
+  const label = accessibilityLabel
+    ? accessibilityLabel
+    : value + FSI18n.string(componentTranslationKeys.indicatorDefault);
 
   return (
     <View
       style={[S.container, style]}
-      accessible={props.accessible}
-      accessibilityHint={props.accessibilityHint}
-      accessibilityRole={props.accessibilityRole}
+      accessible={accessible}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={accessibilityRole}
       accessibilityLabel={label}
+      {...{ dataSet }}
     >
-      {newArray(itemData.full).map((v) => (
-        <Star text="★" renderStar={renderFullStar} style={customStarStyle} key={v} />
+      {fullStars.map((v) => (
+        <Star key={v} text="★" renderStar={renderFullStar} style={customStarStyle} />
       ))}
-      {itemData.hasHalf && (renderHalfStar ? renderHalfStar() : renderHalf())}
-      {newArray(itemData.empty).map((v) => (
+      {itemData.hasHalf && (
+        <HalfStar
+          itemSize={itemSize}
+          itemColor={itemColor}
+          emptyStar={emptyStar}
+          emptyColor={emptyColor}
+          renderHalfStar={renderHalfStar}
+        />
+      )}
+      {emptyStars.map((v) => (
         <Star
+          key={v}
           text={emptyStar === true ? '☆' : '★'}
           renderStar={renderEmptyStar}
           style={[
             customStarStyle,
             S.emptyStar,
-            props.emptyColor
+            emptyColor
               ? {
-                  color: props.emptyColor,
+                  color: emptyColor,
                 }
               : undefined,
           ]}
-          key={v}
         />
       ))}
     </View>
   );
 };
-
-export const ReviewIndicator = memo(ReviewIndicatorInner);
-
-function newArray(num: number): number[] {
-  const arr = [];
-  for (let i = 0; i < num; i++) {
-    arr.push(i);
-  }
-  return arr;
-}

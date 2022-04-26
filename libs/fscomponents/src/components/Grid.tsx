@@ -283,6 +283,8 @@ export interface GridProps<ItemT>
   insertAfter?: InsertAfterTable<ItemT>;
   insertEveryFrequency?: number;
   insertEveryValues?: ItemT | GridItem<ItemT> | (ItemT | GridItem<ItemT>)[];
+
+  dataSet?: Record<string, ''>;
 }
 
 export interface GridState<ItemT> extends Pick<FlatListProps<ItemT[]>, 'data'> {
@@ -327,6 +329,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     refreshing,
     rowSeparatorStyle,
     style,
+    dataSet,
     backToTopButtonStyle,
     backToTopContainerStyle,
     backToTopShowAtHeight,
@@ -503,6 +506,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         onContentSizeChange={setWidth}
         extraData={rerenderTrigger}
         {...listViewProps}
+        {...{ dataSet }}
       />
       {(showBackToTop || BackToTopComponent) && (
         <Animated.View

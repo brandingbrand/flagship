@@ -48,6 +48,8 @@ export interface ToggleButtonProps
   containerActiveStyle?: StyleProp<ViewStyle>;
   containerPinStyle?: StyleProp<ViewStyle>;
   containerPinActiveStyle?: StyleProp<ViewStyle>;
+
+  dataSet?: Record<string, ''>;
 }
 
 export interface ToggleButtonState {
@@ -113,7 +115,7 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
     });
 
     return (
-      <View style={this.props.wrapperStyle}>
+      <View style={this.props.wrapperStyle} {...{ dataSet: this.props.dataSet }}>
         <TouchableWithoutFeedback
           onPress={this.toggleAccordion}
           accessible={this.props.accessible}
