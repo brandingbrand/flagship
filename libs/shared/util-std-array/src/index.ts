@@ -1,3 +1,4 @@
+export * from './chunk.util';
 export * from './difference.util';
 export * from './from-entries.util';
 export * from './insert-between.util';
