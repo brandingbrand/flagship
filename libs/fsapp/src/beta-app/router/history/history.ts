@@ -25,6 +25,7 @@ import {
   UnregisterCallback,
 } from 'history';
 import { findLastIndex, isString, uniqueId } from 'lodash-es';
+import isEqual from 'fast-deep-equal';
 
 import {
   ActivatedRoute,
@@ -188,10 +189,11 @@ export class History implements FSRouterHistory {
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
     const normalized = normalizeLocationDescriptor(to);
     const path = stringifyLocation(normalized);
-    const index = this.getPathIndexInHistory(path);
+    const index = this.getPathIndexInHistory(path, state);
     const indexInStack = this.getPathIndexInStack(
       (await this.getStackAffinity(path)) ?? this.activeStack,
-      path
+      path,
+      state
     );
 
     if (indexInStack !== -1) {
@@ -615,7 +617,8 @@ export class History implements FSRouterHistory {
           ) {
             const indexInStack = this.getPathIndexInStack(
               location.stack,
-              stringifyLocation(location)
+              stringifyLocation(location),
+              location.state
             );
             this.stacks[location.stack]?.children.splice(indexInStack + 1);
 
@@ -670,14 +673,19 @@ export class History implements FSRouterHistory {
     return findLastIndex(this.store, (pastLocation) => key === pastLocation.key);
   }
 
-  private getPathIndexInHistory(path: string): number {
-    return findLastIndex(this.store, (pastLocation) => path === stringifyLocation(pastLocation));
+  private getPathIndexInHistory(path: string, state: unknown): number {
+    return findLastIndex(
+      this.store,
+      (pastLocation) =>
+        path === stringifyLocation(pastLocation) && isEqual(pastLocation.state, state)
+    );
   }
 
-  private getPathIndexInStack(stack: number, path: string): number {
+  private getPathIndexInStack(stack: number, path: string, state: unknown): number {
     return findLastIndex(
       this.stacks[stack]?.children,
-      (pastLocation) => path === stringifyLocation(pastLocation)
+      (pastLocation) =>
+        path === stringifyLocation(pastLocation) && isEqual(pastLocation.state, state)
     );
   }
 
