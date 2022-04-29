@@ -334,7 +334,7 @@ export = {
     'no-negated-condition': OFF(
       'when checking for falsy conditions in ternaries negative conditions feel more natural'
     ),
-    'no-nested-ternary': SUCCESSOR('unicorn/no-nested-ternary'),
+    'no-nested-ternary': SUCCESSOR('ternary/nesting'),
     'no-new-object': WARN,
     'no-plusplus': WARN,
     'no-restricted-syntax': OFF(PROJECT_BY_PROJECT),
@@ -759,7 +759,7 @@ export = {
     // rules URL: https://github.com/grayedfox/eslint-plugin-ternary#rules
     'ternary/no-dupe': WARN,
     'ternary/no-unreachable': BUGGY('eslint-plugin-ternary@1.0.3', 'Invalidly detects duplicates'),
-    'ternary/nesting': SUCCESSOR('unicorn/no-nested-ternary'),
+    'ternary/nesting': [WARN, { test: true, consequent: true, alternate: true, depth: 0 }],
 
     // plugin:unicorn **********************************************************
     // rules URL: https://github.com/sindresorhus/eslint-plugin-unicorn#rules
@@ -794,6 +794,7 @@ export = {
     'unicorn/no-invalid-remove-event-listener': WARN,
     'unicorn/no-keyword-prefix': WARN,
     'unicorn/no-lonely-if': WARN,
+    'unicorn/no-nested-ternary': SUCCESSOR('ternary/nesting'),
     'unicorn/no-new-array': WARN,
     'unicorn/no-new-buffer': WARN,
     'unicorn/no-null': OFF('null is often times used by third party libraries like such as an ORM'),
@@ -873,7 +874,6 @@ export = {
 
     // Disabled due to overlap with code formatters, eg Prettier
     'unicorn/empty-brace-spaces': OFF(CODE_FORMATTING),
-    'unicorn/no-nested-ternary': OFF(CODE_FORMATTING),
     'unicorn/number-literal-case': OFF(CODE_FORMATTING),
   },
 };
