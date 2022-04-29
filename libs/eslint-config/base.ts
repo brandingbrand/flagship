@@ -280,7 +280,9 @@ export = {
         min: 2,
         exceptions: [
           'a',
-          'b', // commonly used in general purpose comparator functions where (definitionally, since the functions are general purpose) no better name can be given
+          'b',
+          'x',
+          'y', // commonly used in general purpose comparator functions where (definitionally, since the functions are general purpose) no better name can be given
           '_', // often used to indicate an intentionally unused variable as well as for underscore/lodash/ramda/scoreunder/etc.
           'i',
           'j', // iterators
