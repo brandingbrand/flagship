@@ -305,7 +305,7 @@ export = {
       },
     ],
     'max-nested-callbacks': WARN,
-    'max-params': [WARN, { max: 9 }], // the reason for this precaution is that many libraries (both in terms of the typescript types and the implementations themselves) that seem magical suddenly become very un-magical and break horribly when you get into a large number of arguments because the authors have (often silently) decided that they don't want to actually support variadic arguments for realz while at the same time appear like they do.  For example: https://github.com/ramda/ramda/blob/v0.26.1/source/internal/_arity.js is a function almost every ramda call passes through.  Keep an eye on https://github.com/Microsoft/TypeScript/issues/5453.
+    'max-params': [WARN, { max: 6 }],
     'max-statements': [WARN, { max: 30 }],
     'max-statements-per-line': [WARN, { max: 2 }],
     'multiline-comment-style': OFF(
