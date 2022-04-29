@@ -540,19 +540,19 @@ export = {
     'import/named': WARN,
     'import/namespace': WARN,
     'import/no-absolute-path': WARN,
-    'import/no-cycle': WARN,
+    'import/no-cycle': OFF(LARGE_PERFORMANCE_COST),
     'import/no-dynamic-require': WARN,
     'import/no-internal-modules': OFF(PROJECT_BY_PROJECT),
     'import/no-relative-parent-imports': OFF(NOT_VALUABLE),
     'import/no-restricted-paths': OFF(PROJECT_BY_PROJECT),
     'import/no-self-import': OFF(LARGE_PERFORMANCE_COST),
-    'import/no-unused-modules': WARN,
+    'import/no-unused-modules': OFF(LARGE_PERFORMANCE_COST),
     'import/no-useless-path-segments': OFF(LARGE_PERFORMANCE_COST),
     'import/no-webpack-loader-syntax': WARN,
 
     // Helpful warnings
     'import/export': WARN,
-    'import/no-deprecated': WARN,
+    'import/no-deprecated': OFF(LARGE_PERFORMANCE_COST),
     'import/no-extraneous-dependencies': OFF(
       "This rule doesn't play nice with monorepos, unfortunately"
     ),
@@ -584,7 +584,7 @@ export = {
       'Unfortunately some systems (e.g. Gatsby) hinge on usage of default exports.'
     ),
     'import/no-named-default': WARN,
-    'import/no-named-export': OFF(),
+    'import/no-named-export': OFF(LARGE_PERFORMANCE_COST),
     'import/no-namespace': OFF(
       "typescript uses namespace imports - I'm not otherwise sure what the motivation for turning this off would be"
     ),

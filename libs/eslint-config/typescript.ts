@@ -79,15 +79,7 @@ export = {
     // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
     'import/named': OFF(TYPESCRIPT),
     'import/namespace': OFF(TYPESCRIPT),
-    'import/no-cycle': BUGGY(
-      '@typescript-eslint/parser@4.22.1',
-      'Does not play well with flow types.'
-    ),
     'import/default': OFF(TYPESCRIPT),
-    'import/no-deprecated': BUGGY(
-      '@typescript-eslint/parser@4.22.1',
-      'Does not play well with flow types.'
-    ),
     'import/no-named-as-default-member': OFF(TYPESCRIPT),
     'import/no-unresolved': OFF(TYPESCRIPT),
 
