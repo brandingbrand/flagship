@@ -1,0 +1,49 @@
+{
+  "root": "libs/shared/util-std-collection",
+  "sourceRoot": "libs/shared/util-std-collection/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-collection",
+        "tsConfig": "libs/shared/util-std-collection/tsconfig.lib.json",
+        "project": "libs/shared/util-std-collection/package.json",
+        "entryFile": "libs/shared/util-std-collection/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-collection",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-collection/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-collection"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-option/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source", "scope:shared", "type:util"]
+}
