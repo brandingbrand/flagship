@@ -24,22 +24,22 @@ export class ActionBus {
     handler: ActionHandler<
       Action<Specifier['type'], NonNullable<Specifier[typeof PAYLOAD]>, Specifier['subtype']>
     >
-  ): void => {
-    this.subscriptions.add(
-      this._action$
-        .pipe(
-          filter(
-            (
-              value
-            ): value is Action<
-              Specifier['type'],
-              NonNullable<Specifier[typeof PAYLOAD]>,
-              Specifier['subtype']
-            > => guard(value)
-          )
+  ): Subscription => {
+    const subscription = this._action$
+      .pipe(
+        filter(
+          (
+            value
+          ): value is Action<
+            Specifier['type'],
+            NonNullable<Specifier[typeof PAYLOAD]>,
+            Specifier['subtype']
+          > => guard(value)
         )
-        .subscribe(handler)
-    );
+      )
+      .subscribe(handler);
+    this.subscriptions.add(subscription);
+    return subscription;
   };
 
   public dispose = (): void => {
