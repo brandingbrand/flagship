@@ -1,10 +1,5 @@
 import type { PAYLOAD } from '../internal/tokens';
-import type {
-  Action,
-  ActionCreator,
-  ActionSpecifier,
-  AnyActionSpecifier,
-} from './action-bus.types';
+import type { Action, ActionCreator, AnyAction, AnyActionSpecifier } from './action-bus.types';
 
 import { filter } from 'rxjs/operators';
 
@@ -51,11 +46,17 @@ export const ofType = <ActionType extends AnyActionSpecifier>(
 ) => {
   return filter(
     (
-      action: ActionSpecifier<string, any, unknown>
+      action: AnyAction
     ): action is Action<
       ActionType['type'],
       NonNullable<ActionType[typeof PAYLOAD]>,
       ActionType['subtype']
     > => selectActions.some((selectAction) => selectAction.type === action.type)
+  );
+};
+
+export const notOfType = (...selectActions: NonEmptyArray<AnyActionSpecifier>) => {
+  return filter((action: AnyAction) =>
+    selectActions.every((selectAction) => selectAction.type !== action.type)
   );
 };
