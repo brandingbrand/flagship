@@ -772,7 +772,7 @@ export = {
     ),
     'unicorn/error-message': WARN,
     'unicorn/escape-case': WARN,
-    'unicorn/expiring-todo-comments': [WARN, { allowWarningComments: false }],
+    'unicorn/expiring-todo-comments': [WARN, { allowWarningComments: true }],
     'unicorn/explicit-length-check': WARN,
     'unicorn/filename-case': WARN,
     'unicorn/import-index': WARN,
