@@ -1,3 +1,5 @@
+import type { Observable, Subscription } from 'rxjs';
+
 import type { PAYLOAD } from '../internal/tokens';
 
 /**
@@ -83,6 +85,7 @@ export type ActionCreator<
 };
 
 export type ActionHandler<T extends AnyAction> = (action: T) => void;
+export type AnyActionHandler = (action$: Observable<AnyAction>) => Subscription;
 
 export type ActionSpecifierOf<ActionType extends ActionSpecifier<string, any, unknown>> =
   ActionType extends ActionSpecifier<infer ActionKey, infer ActionSubtype, infer ActionPayload>

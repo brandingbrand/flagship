@@ -1,9 +1,16 @@
+import type { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import type { PAYLOAD } from '../internal/tokens';
 import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
 
-import type { Action, ActionCreator, AnyAction, AnyActionSpecifier } from './action-bus.types';
+import type {
+  Action,
+  ActionCreator,
+  ActionHandler,
+  AnyAction,
+  AnyActionSpecifier,
+} from './action-bus.types';
 
 export type TypeGuard<A, B extends A> = (val: A) => val is B;
 
@@ -40,6 +47,28 @@ export const createActionCreator = <
     payload: options.callback ? options.callback(...params) : ({} as Payload),
   }),
 });
+
+export const createHandler =
+  <Specifier extends AnyActionSpecifier>(
+    guard: TypeGuard<AnyActionSpecifier, Specifier>,
+    handler: ActionHandler<
+      Action<Specifier['type'], NonNullable<Specifier[typeof PAYLOAD]>, Specifier['subtype']>
+    >
+  ) =>
+  (action$: Observable<AnyAction>) =>
+    action$
+      .pipe(
+        filter(
+          (
+            value
+          ): value is Action<
+            Specifier['type'],
+            NonNullable<Specifier[typeof PAYLOAD]>,
+            Specifier['subtype']
+          > => guard(value)
+        )
+      )
+      .subscribe(handler);
 
 export const ofType = <ActionType extends AnyActionSpecifier>(
   ...selectActions: NonEmptyArray<ActionType>

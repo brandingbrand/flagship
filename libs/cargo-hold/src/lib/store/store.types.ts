@@ -1,6 +1,6 @@
 import type { Observable, Subscription } from 'rxjs';
 
-import type { AnyAction } from '../action-bus';
+import type { ActionBus, AnyAction } from '../action-bus';
 import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
 
 /**
@@ -62,7 +62,7 @@ export type Source = string | symbol;
  */
 export type SourcesList = NonEmptyArray<Source | undefined>;
 
-export interface IStore<State = any> {
+export interface IStore<State = any> extends ActionBus {
   /**
    * A snapshot of the most recent update to state. This value is not reactive so do not try to key
    * off of it for effects, instead use state$

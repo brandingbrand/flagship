@@ -1,11 +1,17 @@
 import type { Observable } from 'rxjs';
 import { Subject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import type { PAYLOAD } from '../internal/tokens';
 
 import type { TypeGuard } from './action';
-import type { Action, ActionHandler, AnyAction, AnyActionSpecifier } from './action-bus.types';
+import { createHandler } from './action';
+import type {
+  Action,
+  ActionHandler,
+  AnyAction,
+  AnyActionHandler,
+  AnyActionSpecifier,
+} from './action-bus.types';
 
 export class ActionBus {
   protected readonly subscriptions = new Subscription();
@@ -21,28 +27,32 @@ export class ActionBus {
     this._action$.next(action);
   };
 
-  public registerHandler = <Specifier extends AnyActionSpecifier>(
+  public registerHandler(handler: AnyActionHandler): Subscription;
+  public registerHandler<Specifier extends AnyActionSpecifier>(
     guard: TypeGuard<AnyActionSpecifier, Specifier>,
     handler: ActionHandler<
       Action<Specifier['type'], NonNullable<Specifier[typeof PAYLOAD]>, Specifier['subtype']>
     >
-  ): Subscription => {
-    const subscription = this._action$
-      .pipe(
-        filter(
-          (
-            value
-          ): value is Action<
-            Specifier['type'],
-            NonNullable<Specifier[typeof PAYLOAD]>,
-            Specifier['subtype']
-          > => guard(value)
-        )
-      )
-      .subscribe(handler);
+  ): Subscription;
+  public registerHandler<Specifier extends AnyActionSpecifier>(
+    guardOrActionHandler: AnyActionHandler | TypeGuard<AnyActionSpecifier, Specifier>,
+    handler?: ActionHandler<
+      Action<Specifier['type'], NonNullable<Specifier[typeof PAYLOAD]>, Specifier['subtype']>
+    >
+  ): Subscription {
+    if (handler) {
+      const guard = guardOrActionHandler as TypeGuard<AnyActionSpecifier, Specifier>;
+      const actionHandler = createHandler(guard, handler);
+      const subscription = actionHandler(this._action$);
+      this.subscriptions.add(subscription);
+      return subscription;
+    }
+
+    const actionHandler = guardOrActionHandler as AnyActionHandler;
+    const subscription = actionHandler(this._action$);
     this.subscriptions.add(subscription);
     return subscription;
-  };
+  }
 
   public dispose = (): void => {
     this.subscriptions.unsubscribe();
