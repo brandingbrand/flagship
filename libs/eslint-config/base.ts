@@ -111,7 +111,7 @@ export = {
     ),
     'complexity': [WARN, { max: 50 }],
     'consistent-return': WARN,
-    'curly': [WARN, 'multi-line'],
+    'curly': [WARN, 'all'],
     'default-case': [WARN, { commentPattern: '^no default$' }],
     'default-case-last': WARN,
     'default-param-last': WARN,
