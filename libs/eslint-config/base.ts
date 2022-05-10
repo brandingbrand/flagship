@@ -292,7 +292,7 @@ export = {
     ],
     'id-match': SUCCESSOR('@typescript-eslint/naming-convention'),
     'lines-between-class-members': [WARN, 'always', { exceptAfterSingleLine: true }],
-    'max-depth': [WARN, 7],
+    'max-depth': [WARN, 5],
 
     'max-lines': [WARN, { max: 1000 }],
     'max-lines-per-function': [
