@@ -11,6 +11,9 @@
       "extends": ["brandingbrand/import-order"],
       "files": ["*.tsx", "*.ts", "*.jsx", "*.js"],
       "rules": {
+        // Temporarily errors until `max-warnings` set to 0
+        "eslint-comments/no-unlimited-disable": "error",
+
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
