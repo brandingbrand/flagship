@@ -1,15 +1,17 @@
 import { ReactReduxContext } from 'react-redux';
 
+import type { IStore as CargoHoldStore } from '@brandingbrand/cargo-hold';
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { FSNetwork } from '@brandingbrand/fsnetwork';
 
 import { boundMethod } from 'autobind-decorator';
 import type { Action, Store } from 'redux';
 
-import type { FSRouterType, Routes } from '../router';
+import type { GenericState } from '../legacy/store';
+import { StoreManager } from '../legacy/store';
 import { FSRouter } from '../router';
-import type { GenericState } from '../store';
-import { StoreManager } from '../store';
+import type { FSRouterType, Routes } from '../router';
+import { initializeCargoHold } from '../store';
 
 import {
   APIContext,
@@ -28,9 +30,9 @@ export const APP_CONFIG_TOKEN = new InjectionToken<AppConfig>('APP_CONFIG_TOKEN'
 export const API_TOKEN = new InjectionToken<FSNetwork>('API_TOKEN');
 
 export abstract class FSAppBase implements IApp {
-  public static async bootstrap<S extends GenericState, A extends Action, T extends FSAppBase>(
+  public static async bootstrap<S extends GenericState, A extends Action, T extends FSAppBase, C>(
     this: AppConstructor<T>,
-    config: AppConfig<S, A>
+    config: AppConfig<S, A, C>
   ): Promise<T> {
     const version = await getVersion(config);
     const api = config.remote ? new FSNetwork(config.remote) : undefined;
@@ -38,6 +40,7 @@ export abstract class FSAppBase implements IApp {
     const store = !config.serverSide
       ? await storeManager?.getReduxStore(await storeManager.updatedInitialState())
       : undefined;
+    const cargoHold = config.cargoHold ? initializeCargoHold(config.cargoHold) : undefined;
 
     // eslint-disable-next-line prefer-const
     let app: T | undefined;
@@ -45,10 +48,11 @@ export abstract class FSAppBase implements IApp {
       api,
       shell: config.webShell,
       analytics: config.analytics,
-      screenWrap: makeScreenWrapper({
+      screenWrap: await makeScreenWrapper({
         store,
         app: () => app,
         provider: config.provider,
+        cargoHold,
       }),
       ...config.router,
     });
@@ -58,6 +62,7 @@ export abstract class FSAppBase implements IApp {
       config,
       router,
       api,
+      cargoHold,
       store as S extends GenericState ? (A extends Action ? Store<S, A> : undefined) : undefined
     );
     if (!config.serverSide) {
@@ -71,6 +76,7 @@ export abstract class FSAppBase implements IApp {
     public readonly config: AppConfig,
     protected readonly router: FSRouterType,
     public readonly api?: FSNetwork,
+    public readonly cargoHold?: CargoHoldStore,
     public readonly store?: Store
   ) {
     Injector.provide({ provide: API_TOKEN, useValue: api });
