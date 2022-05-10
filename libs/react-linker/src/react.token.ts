@@ -4,6 +4,7 @@ import { InjectionToken } from '@brandingbrand/fslinker';
 
 type UsedReactAPIs =
   | 'createElement'
+  | 'Fragment'
   | 'Component'
   | 'PureComponent'
   | 'Children'
