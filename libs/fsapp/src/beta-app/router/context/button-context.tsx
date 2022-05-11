@@ -62,8 +62,10 @@ export const ButtonProvider: FC = ({ children }) => {
     return () => subscription.remove();
   }, []);
 
+  const buttonService = useMemo(() => ({ onPress }), [onPress]);
+
   return (
-    <InjectedContextProvider token={BUTTON_CONTEXT_TOKEN} value={{ onPress }}>
+    <InjectedContextProvider token={BUTTON_CONTEXT_TOKEN} value={buttonService}>
       {children}
     </InjectedContextProvider>
   );

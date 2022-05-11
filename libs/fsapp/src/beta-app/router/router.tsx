@@ -79,6 +79,9 @@ export class FSRouter extends FSRouterBase {
             async () => {
               const AwaitedComponent =
                 'component' in route ? route.component : await route.loadComponent(routeDetails);
+              const MemoizedComponent = React.memo<{ componentId: string }>(({ componentId }) => (
+                <AwaitedComponent componentId={componentId} />
+              ));
 
               return ({ componentId }) => {
                 const [loading, setLoading] = useState(false);
@@ -94,7 +97,7 @@ export class FSRouter extends FSRouterBase {
                     <ModalProvider screenWrap={this.options.screenWrap}>
                       <ButtonProvider>
                         <VersionOverlay>
-                          <AwaitedComponent componentId={componentId} />
+                          <MemoizedComponent componentId={componentId} />
                         </VersionOverlay>
                       </ButtonProvider>
                     </ModalProvider>

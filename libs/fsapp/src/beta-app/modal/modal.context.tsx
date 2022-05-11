@@ -112,11 +112,13 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
     [registeredModals, setRegisteredModals, Wrapper]
   );
 
+  const modalService = useMemo(
+    () => ({ showModal, dismissModal, dismissAllModals }),
+    [showModal, dismissModal, dismissAllModals]
+  );
+
   return (
-    <InjectedContextProvider
-      token={MODAL_CONTEXT_TOKEN}
-      value={{ showModal, dismissModal, dismissAllModals }}
-    >
+    <InjectedContextProvider token={MODAL_CONTEXT_TOKEN} value={modalService}>
       {children}
     </InjectedContextProvider>
   );
