@@ -56,9 +56,9 @@ class QueueRunner {
       try {
         // Promise Like
         await promise;
-      } catch {
+      } catch (error) {
         this.promises.clear();
-        throw new Error('Error in queue, Try Again');
+        throw error;
       }
     }
 
