@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.60.0](https://github.com/brandingbrand/flagship/compare/v11.59.0...v11.60.0) (2022-05-12)
+
+
+### Bug Fixes
+
+* **fsapp:** prevent context changes from rerendering entire trees (a62d376)
+* **fsapp:** reuse thrown errors when queued (5b3421e)
+
+
+
 # [11.59.0](https://github.com/brandingbrand/flagship/compare/v11.58.0...v11.59.0) (2022-05-11)
 
 
