@@ -318,7 +318,7 @@ export class EngagementService {
     });
     for (let i = pinnedTopIndexes.length - 1; i >= 0; i--) {
       const pinnedTopIndex = pinnedTopIndexes[i];
-      if (pinnedTopIndex) sortedAll.splice(pinnedTopIndex, 1);
+      if (pinnedTopIndex !== undefined) sortedAll.splice(pinnedTopIndex, 1);
     }
 
     const pinnedBottom = sortedAll.filter((msg, idx) => {
@@ -335,7 +335,7 @@ export class EngagementService {
     });
     for (let idx = pinnedBottomIndexes.length - 1; idx >= 0; idx--) {
       const pinnedIndex = pinnedBottomIndexes[idx];
-      if (pinnedIndex) {
+      if (pinnedIndex !== undefined) {
         sortedAll.splice(pinnedIndex, 1);
       }
     }
