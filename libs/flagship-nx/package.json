@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/flagship-nx",
-  "version": "11.60.0",
+  "version": "11.61.0",
   "license": "MIT",
   "executors": "./executors.json"
 }
