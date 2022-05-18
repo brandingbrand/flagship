@@ -74,7 +74,7 @@ export interface StepperProps
 
   // Counter
   counterStyle?: StyleProp<TextStyle>;
-  renderText?: (text: string, style: StyleProp<TextStyle>, value: number, onTextChange: (text: string) => void) => React.ReactNode;
+  renderText?: (text: string, style: StyleProp<TextStyle>, value: number, onTextChange?: (text: string) => void) => React.ReactNode;
 
   // Decrease button
   onDecreaseButtonPress: (count: number) => void;
