@@ -74,7 +74,7 @@ export interface StepperProps
 
   // Counter
   counterStyle?: StyleProp<TextStyle>;
-  renderText?: (text: string, style: StyleProp<TextStyle>, value: number) => React.ReactNode;
+  renderText?: (text: string, style: StyleProp<TextStyle>, value: number, onTextChange: (text: string) => void) => React.ReactNode;
 
   // Decrease button
   onDecreaseButtonPress: (count: number) => void;
@@ -255,7 +255,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     const counterText = prefix ? `${prefix} ${count}` : `${count}`;
 
     if (this.props.renderText) {
-      return this.props.renderText(counterText, counterStyle, this.state.count);
+      return this.props.renderText(counterText, counterStyle, this.state.count, this.onTextChange);
     }
     if (this.props.editable) {
       return (
