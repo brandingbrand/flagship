@@ -37,6 +37,11 @@ export interface ActionSpecifier<Type extends string, Subtype extends string | u
 }
 
 /**
+ * `Dispatch` is the type of method that can dispatch actions into an action bus or store.
+ */
+export type Dispatch = (action: AnyAction) => void;
+
+/**
  * `AnyActionSpecifier` is the general form of an `ActionSpecifier`. All possible `ActionSpecifier`s
  * would conform to an `AnyActionSpecifier`.
  */

@@ -11,6 +11,7 @@ import type {
   AnyAction,
   AnyActionHandler,
   AnyActionSpecifier,
+  Dispatch,
 } from './action-bus.types';
 
 export class ActionBus {
@@ -23,7 +24,7 @@ export class ActionBus {
     return this._action$.asObservable();
   }
 
-  public dispatch = (action: AnyAction): void => {
+  public dispatch: Dispatch = (action) => {
     this._action$.next(action);
   };
 
