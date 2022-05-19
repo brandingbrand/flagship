@@ -362,19 +362,16 @@ export = {
          */
         leadingUnderscore: 'forbid',
       },
+      /**
+       * Variable naming on destructuring is outside of the control of
+       * the one destructuring. While we could rename the values, the
+       * warnings are caught further upstream and it would be best they
+       * are dealt with at their source.
+       */
       {
-        selector: ['variable'],
+        selector: 'variable',
         modifiers: ['destructured'],
-        format: ['camelCase', 'PascalCase'],
-        /**
-         * A leading underscore when used with a destructured property denotes
-         * that the parameter is explicitly being thrown away
-         *
-         * This is often times used to remove a specific value from from an
-         * object with the rest of the properties being collected in a rest
-         * variable
-         */
-        leadingUnderscore: 'allow',
+        format: null,
       },
     ],
     '@typescript-eslint/no-base-to-string': WARN,
