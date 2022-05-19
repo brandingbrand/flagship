@@ -612,6 +612,7 @@ export = {
           'usageNotes',
           'publicApi',
           'internal',
+          'platform',
           /**
            * TypeScript Schema JSON directives
            *
