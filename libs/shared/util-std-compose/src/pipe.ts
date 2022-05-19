@@ -239,6 +239,10 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>
   rs: (r: R) => S,
   st: (s: S) => T
 ): T;
+export function pipe<InputType>(
+  value: InputType,
+  ...functions: Array<(input: InputType) => InputType>
+): InputType;
 /**
  *
  * @param value
