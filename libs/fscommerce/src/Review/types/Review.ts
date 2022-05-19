@@ -1,7 +1,8 @@
-import { Image } from '../../Commerce/types/Image';
-import { ReviewMetadata } from './ReviewMetadata';
-import { ReviewContext } from './ReviewContext';
-import { ReviewDimension } from './ReviewDimension';
+import type { Image } from '../../Commerce/types/Image';
+
+import type { ReviewContext } from './ReviewContext';
+import type { ReviewDimension } from './ReviewDimension';
+import type { ReviewMetadata } from './ReviewMetadata';
 
 /**
  * A single review

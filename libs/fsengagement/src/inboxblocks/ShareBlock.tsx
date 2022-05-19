@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
-  Share,
-  StyleProp,
-  StyleSheet,
-  TouchableHighlight,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { ImageSourcePropType, ImageStyle, StyleProp, ViewStyle } from 'react-native';
+import { Image, Share, StyleSheet, TouchableHighlight, View } from 'react-native';
 
 import shareIcon from '../../assets/images/share.png';
 
@@ -44,8 +36,8 @@ export interface ShareBlockProps {
 }
 
 export default class ShareBlock extends Component<ShareBlockProps> {
-  onButtonPress = () => {
-    const { url, shareTitle, message, dialogTitle } = this.props;
+  private readonly onButtonPress = () => {
+    const { dialogTitle, message, shareTitle, url } = this.props;
 
     Share.share(
       {
@@ -58,12 +50,12 @@ export default class ShareBlock extends Component<ShareBlockProps> {
       }
     ).catch((error) => {
       if (error) {
-        console.warn('Error opening sharing: ', error);
+        console.warn('Error opening sharing:', error);
       }
     });
   };
 
-  shouldComponentUpdate(nextProps: ShareBlockProps): boolean {
+  public shouldComponentUpdate(nextProps: ShareBlockProps): boolean {
     return (
       nextProps.imageSrc !== this.props.imageSrc ||
       nextProps.imageStyle !== this.props.imageStyle ||
@@ -72,8 +64,8 @@ export default class ShareBlock extends Component<ShareBlockProps> {
     );
   }
 
-  render(): JSX.Element {
-    const { imageSrc, imageStyle, underlayColor, containerStyle } = this.props;
+  public render(): JSX.Element {
+    const { containerStyle, imageSrc, imageStyle, underlayColor } = this.props;
 
     const image = imageSrc ? imageSrc : shareIcon;
 

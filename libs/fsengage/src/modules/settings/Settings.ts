@@ -1,21 +1,21 @@
-import SettingsProvider from './providers/SettingsProvider';
+import type SettingsProvider from './providers/SettingsProvider';
 
 export default class Settings {
-  provider?: SettingsProvider;
-  settings?: { [index: string]: any };
-
   constructor(provider: SettingsProvider) {
     // TODO | BD: Implement functionality
   }
 
-  async valueForKey(key: string): Promise<any> {
+  private readonly provider?: SettingsProvider;
+  private readonly settings?: Record<string, unknown>;
+
+  private log(key: string): void {
+    console.log(`Settings\nkey = ${key}\n`);
+  }
+
+  public async valueForKey(key: string): Promise<unknown> {
     this.log(key);
     // TODO | BD: Implement functionality
 
     return this.settings && this.settings[key];
-  }
-
-  private log(key: string): void {
-    console.log(`Settings\nkey = ${key}\n`);
   }
 }

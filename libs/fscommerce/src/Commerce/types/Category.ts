@@ -1,4 +1,4 @@
-import { Image } from './Image';
+import type { Image } from './Image';
 
 /**
  * Information about a category. Categories contain sub-categories and/or products.

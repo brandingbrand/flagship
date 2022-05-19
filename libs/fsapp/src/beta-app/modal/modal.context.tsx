@@ -1,18 +1,21 @@
+import type { FC } from 'react';
+import React, { Fragment, createContext, useCallback, useMemo, useState } from 'react';
+
+import { Navigation } from 'react-native-navigation';
+
+import { InjectionToken } from '@brandingbrand/fslinker';
+
+import { uniqueId } from 'lodash-es';
+
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
+
+import { MODALS_STACK, NO_MODAL_CONTEXT_ERROR } from './constants';
 import type {
   ModalComponentProps,
   ModalComponentType,
   ModalProviderProps,
   ModalService,
 } from './types';
-
-import React, { createContext, FC, Fragment, useCallback, useMemo, useState } from 'react';
-import { Navigation } from 'react-native-navigation';
-import { uniqueId } from 'lodash-es';
-
-import { InjectionToken } from '@brandingbrand/fslinker';
-
-import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
-import { MODALS_STACK, NO_MODAL_CONTEXT_ERROR } from './constants';
 
 const DEFAULT_MODAL_SERVICE: ModalService = {
   showModal: async () => {
@@ -65,20 +68,20 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) 
         setRegisteredModals(new Set([...registeredModals, modal.definitionId]));
       }
 
-      return new Promise<T>(async (resolvePromise, rejectPromise) => {
+      return new Promise<T>((resolvePromise, rejectPromise) => {
         const id = uniqueId(`${modal.definitionId}-`);
 
-        const resolve = async (data: T) => {
+        const resolve = async (data: T): Promise<void> => {
           resolvePromise(data);
           await dismissModal(id);
         };
 
-        const reject = async () => {
+        const reject = async (): Promise<void> => {
           rejectPromise();
           await dismissModal(id);
         };
 
-        await Navigation.showModal({
+        void Navigation.showModal({
           stack: {
             id: MODALS_STACK,
             children: [

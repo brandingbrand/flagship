@@ -1,22 +1,22 @@
 import React from 'react';
+
 import { View } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { color, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import { Button } from '../src/components/Button';
 import { Form } from '../src/components/Form/Form';
 import { FormLabelPosition } from '../src/components/Form/Templates/fieldTemplates';
-import { Button } from '../src/components/Button';
 import { emailRegex } from '../src/lib/email';
+
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
 
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
-const PasswordType = t.refinement(t.String, (str: string) => {
-  return str.length >= 6;
-});
+const PasswordType = t.refinement(t.String, (str: string) => str.length >= 6);
 
 const fieldsTypes = t.struct({
   email: EmailType,
@@ -64,29 +64,28 @@ const fieldsStyle = {
   },
 };
 
-const renderForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
-  return () => {
-    return (
+const renderForm =
+  (labelPosition?: FormLabelPosition): (() => JSX.Element) =>
+  () =>
+    (
       <View>
         <Form
           activeColor={color('Active Field Color', '#000000')}
           errorColor={color('Error Color', '#d0021b')}
-          inactiveColor={color('Inactive Color', '#9B9B9B')}
-          style={object('style', defaultStyle)}
-          fieldsTypes={fieldsTypes}
-          fieldsStyleConfig={fieldsStyle}
           fieldsOptions={object('fieldsOptions', fieldsOptions)}
+          fieldsStyleConfig={fieldsStyle}
+          fieldsTypes={fieldsTypes}
+          inactiveColor={color('Inactive Color', '#9B9B9B')}
           labelPosition={labelPosition}
+          style={object('style', defaultStyle)}
         />
         <Button
-          title={text('submitText', 'Submit')}
           onPress={action('FormOnSubmit')}
           style={{ marginHorizontal: 10 }}
+          title={text('submitText', 'Submit')}
         />
       </View>
     );
-  };
-};
 
 storiesOf('Form', module)
   .add('basic usage', renderForm())

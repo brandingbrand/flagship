@@ -1,7 +1,12 @@
-import React, { FunctionComponent, memo } from 'react';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.cart.item;
 
 const defaultStyles = StyleSheet.create({
@@ -11,7 +16,7 @@ const defaultStyles = StyleSheet.create({
 });
 
 export interface CartItemDetailsProps
-  extends Pick<CommerceTypes.CartItem, 'itemText' | 'productId' | 'price' | 'totalPrice'> {
+  extends Pick<CommerceTypes.CartItem, 'itemText' | 'price' | 'productId' | 'totalPrice'> {
   style?: StyleProp<ViewStyle>;
   detailTextStyle?: StyleProp<TextStyle>;
 }
@@ -25,8 +30,8 @@ export const CartItemDetails: FunctionComponent<CartItemDetailsProps> = memo(
       if (price) {
         convertedPrice = FSI18n.currency(price);
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
 
     let convertedTotalPrice: string | undefined;
@@ -34,8 +39,8 @@ export const CartItemDetails: FunctionComponent<CartItemDetailsProps> = memo(
       if (totalPrice) {
         convertedTotalPrice = FSI18n.currency(totalPrice);
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
 
     return (

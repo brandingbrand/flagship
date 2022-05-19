@@ -1,10 +1,10 @@
 import { and, combineActionReducers, isType, on, requireSource } from './reducer';
 import type { AnyActionReducer } from './store.types';
 
-type State = {
+interface State {
   filterMatched: boolean;
   someNumber: number;
-};
+}
 const initialState: State = {
   filterMatched: false,
   someNumber: 0,
@@ -85,6 +85,7 @@ describe('combineReducers', () => {
       },
       simpleReducer
     );
+
     expect(reducer({ type: 'nonTargetType', payload: null })(initialState)).toEqual<State>({
       filterMatched: false,
       someNumber: 15,

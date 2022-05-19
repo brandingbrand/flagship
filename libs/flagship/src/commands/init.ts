@@ -1,3 +1,4 @@
+import * as helpers from '../helpers';
 import * as android from '../lib/android';
 import * as cocoapods from '../lib/cocoapods';
 import * as deeplinking from '../lib/deeplinking';
@@ -6,13 +7,12 @@ import * as fastlane from '../lib/fastlane';
 import * as fs from '../lib/fs';
 import * as ios from '../lib/ios';
 import * as link from '../lib/link';
-import * as helpers from '../helpers';
 import * as modules from '../lib/modules';
+import * as os from '../lib/os';
 import * as path from '../lib/path';
 import * as rename from '../lib/rename';
 import * as web from '../lib/web';
-import * as os from '../lib/os';
-import { Config, NPMPackageConfig } from '../types';
+import type { Config, NPMPackageConfig } from '../types';
 
 export interface BuilderArgs {
   option: (
@@ -36,16 +36,15 @@ export const command = 'init [platform]';
 
 export const describe = 'initialize FLAGSHIP for [platform]';
 
-export function builder(yargs: BuilderArgs): void {
+export const builder = (yargs: BuilderArgs): void => {
   yargs.option('env', {
     alias: 'e',
     default: 'prod',
   });
-}
+};
 
-// eslint-disable-next-line complexity
-export function handler(argv: HandlerArgs): void {
-  const platform = argv.platform;
+export const handler = (argv: HandlerArgs): void => {
+  const { platform } = argv;
   const doAndroid = !platform || platform === 'android' || platform === 'native';
   const doIOS = (!platform || platform === 'ios' || platform === 'native') && !os.win;
   const doWeb = !platform || platform === 'web';
@@ -84,47 +83,47 @@ export function handler(argv: HandlerArgs): void {
         cocoapods.install();
       }
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error);
       process.exit(1);
     });
-}
+};
 
 /**
  * Initializes common features across all platforms.
  *
- * @param {string} environmentIdentifier The environment identifier for which to initialize.
- * @param {object} packageJSON The project's package.json.
- * @param {boolean} onlyDefault Set if you want only the default environment added to the project
- * @returns {object} The project configuration.
+ * @param environmentIdentifier The environment identifier for which to initialize.
+ * @param packageJSON The project's package.json.
+ * @param onlyDefault Set if you want only the default environment added to the project
+ * @return The project configuration.
  */
-function initEnvironment(
+const initEnvironment = (
   environmentIdentifier: string,
   packageJSON: NPMPackageConfig,
   onlyDefault?: boolean
-): Config {
+): Config => {
   const configuration = env.configuration(environmentIdentifier, packageJSON);
 
   env.write(configuration); // Replace env.js with the current environment
   env.createEnvIndex(onlyDefault ? environmentIdentifier : undefined);
 
   return configuration;
-}
+};
 
 /**
  * Initializes the Android app.
  *
- * @param {object} packageJSON The project's package.json.
- * @param {object} configuration The project configuration.
- * @param {string} version The app version number to initialize.
- * @param {string} environmentIdentifier The environment identifier for which to initialize.
+ * @param packageJSON The project's package.json.
+ * @param configuration The project configuration.
+ * @param version The app version number to initialize.
+ * @param environmentIdentifier The environment identifier for which to initialize.
  */
-function initAndroid(
+const initAndroid = (
   packageJSON: NPMPackageConfig,
   configuration: Config,
   version: string,
   environmentIdentifier: string
-): void {
+): void => {
   helpers.logInfo('beginning Android initialization');
 
   // Clone the boilerplate into the project
@@ -173,22 +172,23 @@ function initAndroid(
   modules.android(packageJSON, configuration, 'preLink');
 
   helpers.logInfo('finished Android initialization');
-}
+};
 
 /**
  * Initializes the iOS app.
  *
- * @param {object} packageJSON The project's package.json.
- * @param {object} configuration The project configuration.
- * @param {string} version The app version number to initialize.
- * @param {string} environmentIdentifier The environment identifier for which to initialize.
+ * @param packageJSON The project's package.json.
+ * @param configuration The project configuration.
+ * @param version The app version number to initialize.
+ * @param environmentIdentifier The environment identifier for which to initialize.
  */
-function initIOS(
+// eslint-disable-next-line max-statements
+const initIOS = (
   packageJSON: NPMPackageConfig,
   configuration: Config,
   version: string,
   environmentIdentifier: string
-): void {
+): void => {
   helpers.logInfo('beginning iOS initialization');
 
   // Clone the boilerplate into the project
@@ -239,14 +239,14 @@ function initIOS(
   modules.ios(packageJSON, configuration, 'preLink');
 
   helpers.logInfo('finished iOS initialization');
-}
+};
 
 /**
  * Initializes the web app.
  *
- * @param {object} packageJSON The project's package.json.
- * @param {object} configuration The web configuration object.
- * @param {string} environmentIdentifier The environment identifier for which to initialize.
+ * @param packageJSON The project's package.json.
+ * @param configuration The web configuration object.
+ * @param environmentIdentifier The environment identifier for which to initialize.
  */
 function initWeb(
   packageJSON: NPMPackageConfig,

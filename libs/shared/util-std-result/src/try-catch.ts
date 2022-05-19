@@ -1,13 +1,15 @@
 import type { Lazy } from '@brandingbrand/types-utility';
-import { fail, ok, Result } from './result';
+
+import type { Result } from './result';
+import { fail, ok } from './result';
 
 export const tryCatch = <OkType, FailureType>(
   throwingFn: Lazy<OkType>
 ): Result<OkType, FailureType> => {
   try {
     return ok(throwingFn());
-  } catch (e) {
-    return fail(e as FailureType);
+  } catch (error) {
+    return fail(error as FailureType);
   }
 };
 
@@ -16,7 +18,7 @@ export const withTryCatch =
   (...params: Params): Result<OkType, FailureType> => {
     try {
       return ok(throwingFn(...params));
-    } catch (e) {
-      return fail(e as FailureType);
+    } catch (error) {
+      return fail(error as FailureType);
     }
   };

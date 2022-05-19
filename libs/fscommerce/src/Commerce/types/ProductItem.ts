@@ -1,5 +1,5 @@
-import { BaseGiftOptions } from './GiftOptions';
-import { CartItem } from './Cart';
+import type { CartItem } from './Cart';
+import type { BaseGiftOptions } from './GiftOptions';
 
 /**
  * Information about products that belong to an order.

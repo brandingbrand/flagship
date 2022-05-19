@@ -1,6 +1,6 @@
-import { Address } from './Address';
-import { BaseGiftOptions } from './GiftOptions';
-import { ShippingMethod } from './ShippingMethod';
+import type { Address } from './Address';
+import type { BaseGiftOptions } from './GiftOptions';
+import type { ShippingMethod } from './ShippingMethod';
 
 /**
  * Information about a shipment, which represents a single package shipped as part of an order.

@@ -29,9 +29,7 @@ const configs = (globalObject.__FLAGSHIP_ENVIRONMENT_CONFIGS__ = new Map<
   EnvironmentConfig
 >());
 
-export const getDefaultEnvironment = () => {
-  return globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__;
-};
+export const getDefaultEnvironment = () => globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__;
 
 export const setDefaultEnvironment = (environment: string) => {
   globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__ = environment;
@@ -64,6 +62,5 @@ export const getEnvironmentConfig = (environment?: string) => {
   return configs.get(currentEnvironment) as EnvironmentConfig;
 };
 
-export const getEnvironmentConfigs = (): Record<string, EnvironmentConfig> => {
-  return Object.fromEntries(configs.entries());
-};
+export const getEnvironmentConfigs = (): Record<string, EnvironmentConfig> =>
+  Object.fromEntries(configs.entries());

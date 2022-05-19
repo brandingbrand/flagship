@@ -1,9 +1,10 @@
-import { Branded, makeBranding } from '@brandingbrand/standard-branded';
+import type { Branded } from '@brandingbrand/standard-branded';
+import { makeBranding } from '@brandingbrand/standard-branded';
 
 export type Ok<T> = Branded<{ ok: T }, 'ok'>;
 export type Failure<T> = Branded<{ failure: T }, 'failure'>;
 
-export type Result<OkType, FailureType> = Ok<OkType> | Failure<FailureType>;
+export type Result<OkType, FailureType> = Failure<FailureType> | Ok<OkType>;
 
 const okBrand = makeBranding('ok');
 const failureBrand = makeBranding('failure');

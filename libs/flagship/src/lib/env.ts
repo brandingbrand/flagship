@@ -1,17 +1,18 @@
-import { NPMPackageConfig } from '../types';
-import * as fs from './fs';
 import * as helpers from '../helpers';
+import type { NPMPackageConfig } from '../types';
+
+import * as fs from './fs';
 import { app, project } from './path';
 
-const kEnvReplacementRegex = /\{ENV\.([^}]+)\}/g;
+const kEnvReplacementRegex = /{ENV\.([^}]+)}/g;
 
 /**
  * Normalizes a project name into a display name for the app.
  *
- * @param {string} projectName The project name to normalize.
- * @returns {string} The display name for the app.
+ * @param projectName The project name to normalize.
+ * @return The display name for the app.
  */
-function toAppName(projectName: string): string {
+const toAppName = (projectName: string): string => {
   const split = projectName.split('/');
   const moduleName = split[split.length - 1];
 
@@ -19,42 +20,40 @@ function toAppName(projectName: string): string {
     moduleName
       ?.replace(/-/g, '_')
       .split('_')
-      .map((w) => `${w[0]?.toUpperCase()}${w.substring(1)}`)
+      .map((w) => `${w[0]?.toUpperCase()}${w.slice(1)}`)
       .join('') ?? ''
   );
-}
+};
 
 /**
  * Returns the path to the environment configuration file for the given environment.
  *
- * @param {string} env The identifier for the environment for which to return the path.
- * @returns {string} The path to the environment configuration file.
+ * @param env The identifier for the environment for which to return the path.
+ * @return The path to the environment configuration file.
  */
-export function path(env: string): string {
-  return project.resolve('env', `env.${env}.js`);
-}
+export const path = (env: string): string => project.resolve('env', `env.${env}.js`);
 
 /**
  * Writes the current environment to env.js
  *
- * @param {object} configuration The project environment configuration.
+ * @param configuration The project environment configuration.
  */
-export function write(configuration: any): void {
+export const write = (configuration: unknown): void => {
   fs.writeFileSync(
     project.resolve('env', 'env.js'),
     `module.exports = ${JSON.stringify(configuration, null, 2)}`
   );
-}
+};
 
 /**
  * Overwrites any value in the form of `{ENV.XXX}` in the env.js file with the environment variable
  * `XXX`.
  *
- * @param {object} configuration The project environment configuration.
- * @returns {object} The project environment configuration with ENV variables replaced.
+ * @param configuration The project environment configuration.
+ * @return The project environment configuration with ENV variables replaced.
  */
-function overwriteEnv(configuration: any): any {
-  return Object.keys(configuration).reduce((accumulator: any, key: string) => {
+const overwriteEnv = (configuration: any): any =>
+  Object.keys(configuration).reduce((accumulator: any, key: string) => {
     let value = configuration[key];
 
     if (value && !Array.isArray(value)) {
@@ -64,7 +63,10 @@ function overwriteEnv(configuration: any): any {
           break;
 
         case 'string':
-          value = value.replace(kEnvReplacementRegex, (a: any, b: string) => process.env[b] || '');
+          value = value.replace(
+            kEnvReplacementRegex,
+            (a: unknown, b: string) => process.env[b] || ''
+          );
           break;
 
         default:
@@ -75,21 +77,20 @@ function overwriteEnv(configuration: any): any {
 
     return accumulator;
   }, {});
-}
 
 /**
  * Returns the project environment configuration object.
  *
- * @param {string} env The identifier for the environment for which to return the configuration.
- * @param {object} projectPackageJson The project package.json object
- * @returns {object} The project environment configuration.
+ * @param env The identifier for the environment for which to return the configuration.
+ * @param projectPackageJson The project package.json object
+ * @return The project environment configuration.
  */
-export function configuration(env: string, projectPackageJson: NPMPackageConfig): any {
+export const configuration = (env: string, projectPackageJson: NPMPackageConfig): any => {
   let projectEnv;
 
   try {
     projectEnv = require(path(env));
-  } catch (err) {
+  } catch {
     helpers.logWarn('Environment configuration not found, fallback to default.');
 
     projectEnv = {
@@ -103,17 +104,17 @@ export function configuration(env: string, projectPackageJson: NPMPackageConfig)
     ...overwriteEnv(projectEnv),
     version: projectPackageJson.version,
   };
-}
+};
 
 /**
  * Create a index file for project envs
  *
- * @param {string} singleEnv Set if you want only a single environment added to the file
+ * @param singleEnv Set if you want only a single environment added to the file
  */
-export function createEnvIndex(singleEnv?: string): void {
-  let envMatch = /env.[\w]+.js/;
+export const createEnvIndex = (singleEnv?: string): void => {
+  let envMatch = /env.\w+.js/;
   if (singleEnv) {
-    envMatch = new RegExp('env\\.' + singleEnv + '\\.js');
+    envMatch = new RegExp(`env\\.${singleEnv}\\.js`);
     helpers.logInfo('Creating index file for default env');
   } else {
     helpers.logInfo('Creating index file for project envs');
@@ -123,7 +124,7 @@ export function createEnvIndex(singleEnv?: string): void {
 
   const envIndexFile = `module.exports = {\n${envs
     .map((env: string) => {
-      const envName = env.match(/env.([\w]+).js/);
+      const envName = /env.(\w+).js/.exec(env);
       return (
         envName && `"${envName.pop()}": require(${JSON.stringify(project.resolve('env', env))})`
       );
@@ -131,4 +132,4 @@ export function createEnvIndex(singleEnv?: string): void {
     .join(',\n')}\n}`;
 
   fs.writeFileSync(app.resolve('src/project_env_index.js'), envIndexFile);
-}
+};

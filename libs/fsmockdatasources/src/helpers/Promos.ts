@@ -1,7 +1,10 @@
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import Decimal from 'decimal.js';
+
 import { DefaultCurrencyCode } from './Misc';
 
-export const Promos: import('@brandingbrand/fscommerce').CommerceTypes.Promo[] = [
+export const Promos: CommerceTypes.Promo[] = [
   {
     id: 'valid-promo',
     code: 'VALID',

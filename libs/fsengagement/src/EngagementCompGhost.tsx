@@ -1,6 +1,9 @@
 import React from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
 import ContentLoader, { Rect } from './lib/RNContentLoader';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
 export interface SerializableEngagementCompGhostProps {
   style?: ViewStyle;
@@ -15,7 +18,7 @@ export interface EngagementCompGhostProps
 }
 
 export const EngagementCompGhost: React.FC<EngagementCompGhostProps> = React.memo(
-  ({ style, height = 839, backgroundColor = '#EFEFEF', foregroundColor = '#F9F9F9' }) => {
+  ({ backgroundColor = '#EFEFEF', foregroundColor = '#F9F9F9', height = 839, style }) => {
     const image1 = {
       width: 335,
       height: 366,

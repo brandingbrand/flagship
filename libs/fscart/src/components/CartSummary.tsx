@@ -1,7 +1,11 @@
-import React, { FunctionComponent, memo } from 'react';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
 import { StyleSheet, Text, View } from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.cart.summary;
 
 const style = StyleSheet.create({

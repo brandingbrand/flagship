@@ -1,11 +1,13 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { TextStyle } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, number, object, select, text } from '@storybook/addon-knobs';
-import { Stepper } from '../src/components/Stepper';
-import { TextStyle } from 'react-native';
+import { storiesOf } from '@storybook/react';
 
 import clearIcon from '../assets/images/clear.png';
+import { Stepper } from '../src/components/Stepper';
 
 const formats = ['horizontalCenter', 'horizontalLeft', 'vertical'];
 
@@ -25,16 +27,16 @@ const defaultPrefixStyle: TextStyle = {
 
 storiesOf('Stepper', module).add('basic usage', () => (
   <Stepper
-    format={select('format', formats, 'horizontalCenter') as any}
     count={2}
+    countUpperLimit={number('countUpperLimit', 10)}
     counterStyle={object('defaultCounterStyle', defaultCounterStyle)}
     editable={boolean('editable', false)}
-    prefix={text('prefix', '')}
-    countUpperLimit={number('countUpperLimit', 10)}
+    format={select('format', formats, 'horizontalCenter') as any}
     onDecreaseButtonPress={action('Stepper onDecreaseButtonPress')}
     onIncreaseButtonPress={action('Stepper onIncreaseButtonPress')}
-    qtyStyle={object('Quantity Text Style', defaultQtyStyle)}
+    prefix={text('prefix', '')}
     prefixStyle={object('Prefix Text Style', defaultPrefixStyle)}
-    removeButtonImage={boolean('Use Remove Image Button', false) && clearIcon}
+    qtyStyle={object('Quantity Text Style', defaultQtyStyle)}
+    removeButtonImage={boolean('Use Remove Image Button', false) ? clearIcon : undefined}
   />
 ));

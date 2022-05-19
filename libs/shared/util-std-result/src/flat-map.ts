@@ -1,4 +1,5 @@
-import { isFailure, isOk, Result } from './result';
+import type { Result } from './result';
+import { isFailure, isOk } from './result';
 
 export const flatMap =
   <InputOkType, OutputOkType, FailureType>(

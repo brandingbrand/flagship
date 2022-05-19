@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Navigator, makeLegacyScreen } from '@brandingbrand/fsapp/legacy';
 
-import { Action, ScreenProps } from './types';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 
+import type { Navigator } from '@brandingbrand/fsapp/legacy';
+import { makeLegacyScreen } from '@brandingbrand/fsapp/legacy';
+
 import backArrow from '../assets/images/backArrow.png';
+
+import type { Action, ScreenProps } from './types';
 
 const styles = StyleSheet.create({
   growStretch: {
@@ -33,31 +36,17 @@ export interface WebViewProps extends ScreenProps {
 }
 
 class EngagementWebView extends PureComponent<WebViewProps> {
-  navigationEventListener: any;
+  private readonly navigationEventListener: any;
 
-  constructor(props: WebViewProps) {
-    super(props);
-  }
-
-  componentDidMount(): void {}
-
-  componentWillUnmount(): void {
-    if (this.navigationEventListener) {
-      this.navigationEventListener.remove();
-    }
-  }
-
-  async navigationButtonPressed({ buttonId }: any): Promise<any> {
+  private async navigationButtonPressed({ buttonId }: any): Promise<any> {
     if (buttonId === 'close') {
       return this.props.navigator.dismissModal();
     }
   }
 
-  onBackPress = async (): Promise<void> => {
-    return this.props.navigator.pop();
-  };
+  private readonly onBackPress = async (): Promise<void> => this.props.navigator.pop();
 
-  injectBlogJS(): string {
+  private injectBlogJS(): string {
     return this.props.isBlog
       ? `var els = document.querySelectorAll(
       ".site-header, .notice-bar, .site-footer, .site-footer__navigation");
@@ -65,7 +54,15 @@ class EngagementWebView extends PureComponent<WebViewProps> {
       : ``;
   }
 
-  render(): JSX.Element {
+  public componentDidMount(): void {}
+
+  public componentWillUnmount(): void {
+    if (this.navigationEventListener) {
+      this.navigationEventListener.remove();
+    }
+  }
+
+  public render(): JSX.Element {
     const {
       actions: { value },
     } = this.props;

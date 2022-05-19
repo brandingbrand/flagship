@@ -1,4 +1,4 @@
-import { ActionCreator } from '@brandingbrand/cargo-hold';
+import type { ActionCreator } from '@brandingbrand/cargo-hold';
 import { useReact } from '@brandingbrand/react-linker';
 
 import { useStore } from './use-store.hook';

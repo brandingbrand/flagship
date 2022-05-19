@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import {
-  AccessibilityRole,
-  Animated,
-  LayoutChangeEvent,
-  StyleProp,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { AccessibilityRole, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
+import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+
 import { palette } from '../styles/variables';
 
 export interface SerializableToggleButtonProps {
@@ -33,11 +27,11 @@ export interface SerializableToggleButtonProps {
 export interface ToggleButtonProps
   extends Omit<
     SerializableToggleButtonProps,
-    | 'wrapperStyle'
-    | 'containerStyle'
     | 'containerActiveStyle'
-    | 'containerPinStyle'
     | 'containerPinActiveStyle'
+    | 'containerPinStyle'
+    | 'containerStyle'
+    | 'wrapperStyle'
   > {
   renderTogglePin?: () => React.ReactNode;
   onPress?: (state: boolean) => void;
@@ -66,20 +60,20 @@ const TOGGLE_PIN_SIZE_DEFAULT = 32;
 
 const styles = StyleSheet.create({
   container: {
-    width: TOGGLE_CONTAINER_WIDTH_DEFAULT,
-    height: TOGGLE_CONTAINER_HEIGHT_DEFAULT,
     backgroundColor: palette.surface,
     borderRadius: 16,
     flexDirection: 'column',
+    height: TOGGLE_CONTAINER_HEIGHT_DEFAULT,
     justifyContent: 'center',
+    width: TOGGLE_CONTAINER_WIDTH_DEFAULT,
   },
   containerPin: {
-    width: TOGGLE_PIN_SIZE_DEFAULT,
-    height: TOGGLE_PIN_SIZE_DEFAULT,
+    backgroundColor: palette.background,
+    borderColor: palette.surface,
     borderRadius: TOGGLE_PIN_SIZE_DEFAULT / 2,
     borderWidth: 2,
-    borderColor: palette.surface,
-    backgroundColor: palette.background,
+    height: TOGGLE_PIN_SIZE_DEFAULT,
+    width: TOGGLE_PIN_SIZE_DEFAULT,
   },
 });
 
@@ -96,7 +90,66 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
     };
   }
 
-  render(): JSX.Element {
+  private readonly animateTogglePin = (indent: number) => {
+    if (!this.props.disableAnimation) {
+      Animated.spring(this.state.pinIndentAnimation, {
+        bounciness: 0,
+        toValue: indent,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      this.setState({
+        pinIndentAnimation: new Animated.Value(indent),
+      });
+    }
+  };
+
+  private readonly containerOnLayout = (event: LayoutChangeEvent) => {
+    const { isSelected } = this.state;
+    const { width } = event.nativeEvent.layout;
+    this.setState({
+      containerWidth: width,
+    });
+    if (isSelected) {
+      this.setState({
+        pinIndentAnimation: new Animated.Value(1),
+      });
+    }
+  };
+
+  private readonly pinOnLayout = (event: LayoutChangeEvent) => {
+    const { containerPinWidthInitialized, isSelected } = this.state;
+    const { width } = event.nativeEvent.layout;
+    this.setState({
+      containerPinWidth: width,
+      containerPinWidthInitialized: true,
+    });
+    if (isSelected && !containerPinWidthInitialized) {
+      this.setState({
+        pinIndentAnimation: new Animated.Value(1),
+      });
+    }
+  };
+
+  private readonly toggleAccordion = () => {
+    const { isSelected } = this.state;
+
+    this.setState({
+      isSelected: !isSelected,
+    });
+
+    if (this.props.onPress) {
+      this.props.onPress(!isSelected);
+    }
+
+    if (isSelected) {
+      this.animateTogglePin(0);
+    } else {
+      this.animateTogglePin(1);
+    }
+  };
+
+  public render(): JSX.Element {
     const { containerPinWidth, containerWidth, isSelected, pinIndentAnimation } = this.state;
 
     const indentation = {
@@ -117,11 +170,11 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
     return (
       <View style={this.props.wrapperStyle} {...{ dataSet: this.props.dataSet }}>
         <TouchableWithoutFeedback
-          onPress={this.toggleAccordion}
-          accessible={this.props.accessible}
           accessibilityHint={this.props.accessibilityHint}
           accessibilityLabel={this.props.accessibilityLabel}
           accessibilityRole={this.props.accessibilityRole ?? 'button'}
+          accessible={this.props.accessible}
+          onPress={this.toggleAccordion}
         >
           <Animated.View
             onLayout={this.containerOnLayout}
@@ -154,63 +207,4 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
       </View>
     );
   }
-
-  private animateTogglePin = (indent: number) => {
-    if (!this.props.disableAnimation) {
-      Animated.spring(this.state.pinIndentAnimation, {
-        bounciness: 0,
-        toValue: indent,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      this.setState({
-        pinIndentAnimation: new Animated.Value(indent),
-      });
-    }
-  };
-
-  private containerOnLayout = (event: LayoutChangeEvent) => {
-    const { isSelected } = this.state;
-    const width = event.nativeEvent.layout.width;
-    this.setState({
-      containerWidth: width,
-    });
-    if (isSelected) {
-      this.setState({
-        pinIndentAnimation: new Animated.Value(1),
-      });
-    }
-  };
-
-  private pinOnLayout = (event: LayoutChangeEvent) => {
-    const { containerPinWidthInitialized, isSelected } = this.state;
-    const width = event.nativeEvent.layout.width;
-    this.setState({
-      containerPinWidth: width,
-      containerPinWidthInitialized: true,
-    });
-    if (isSelected && !containerPinWidthInitialized) {
-      this.setState({
-        pinIndentAnimation: new Animated.Value(1),
-      });
-    }
-  };
-
-  private toggleAccordion = () => {
-    const { isSelected } = this.state;
-
-    this.setState({
-      isSelected: !isSelected,
-    });
-
-    if (this.props.onPress) {
-      this.props.onPress(!isSelected);
-    }
-
-    if (isSelected) {
-      this.animateTogglePin(0);
-    } else {
-      this.animateTogglePin(1);
-    }
-  };
 }

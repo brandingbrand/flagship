@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
-import axios, {
+import type {
   AxiosError,
   AxiosInstance,
   AxiosPromise,
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
+import axios from 'axios';
 
 // Export AxiosResponse type so its type definitions are not "private" and other packages depending
 // on FSNetwork can use our type aliases
-export { AxiosPromise, AxiosRequestConfig, AxiosResponse };
 
 // As of Axios 0.18, the typings don't show the Axios property even though it exists
 
@@ -51,16 +51,13 @@ export type FSNetworkRequestData =
   | ArrayBuffer
   | ArrayBufferView
   | Record<string, any>
-  | string
-  | URLSearchParams;
+  | URLSearchParams
+  | string;
 
 /**
  * Manages network requests, optionally adding a set of default configuration to each request.
  */
 export class FSNetwork {
-  private instance: AxiosInstance;
-  private interceptor?: number;
-
   /**
    * Creates a new instance of FSNetwork.
    *
@@ -68,7 +65,7 @@ export class FSNetwork {
    */
   constructor(config?: FSNetworkRequestConfig) {
     if (config) {
-      const { responseIntercept, responseError, ...axiosConfig } = config;
+      const { responseError, responseIntercept, ...axiosConfig } = config;
       this.instance = axios.create(axiosConfig);
       this.setInterceptor(config);
     } else {
@@ -76,14 +73,17 @@ export class FSNetwork {
     }
   }
 
-  removeInterceptor(): void {
+  private readonly instance: AxiosInstance;
+  private interceptor?: number;
+
+  public removeInterceptor(): void {
     if (this.interceptor !== undefined) {
       this.instance.interceptors.response.eject(this.interceptor);
       this.interceptor = undefined;
     }
   }
 
-  setInterceptor(config?: FSNetworkRequestConfig): void {
+  public setInterceptor(config?: FSNetworkRequestConfig): void {
     this.removeInterceptor();
     if (config && (config.responseIntercept || config.responseError)) {
       this.interceptor = this.instance.interceptors.response.use(
@@ -97,9 +97,9 @@ export class FSNetwork {
    * Performs a generic request.
    *
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  request<T = any>(config: FSNetworkRequestConfig): FSNetworkPromise<T> {
+  public request<T = any>(config: FSNetworkRequestConfig): FSNetworkPromise<T> {
     return this.instance.request(config);
   }
 
@@ -109,9 +109,9 @@ export class FSNetwork {
    * @template T The response data type.
    * @param uri A URI or path to request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  get<T = any>(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise<T> {
+  public get<T = any>(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise<T> {
     // TODO: caching
     return this.instance.get(uri, config);
   }
@@ -121,9 +121,9 @@ export class FSNetwork {
    *
    * @param uri A URI or path to request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  delete(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
+  public delete(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
     return this.instance.delete(uri, config);
   }
 
@@ -132,9 +132,9 @@ export class FSNetwork {
    *
    * @param uri A URI or path to request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  head(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
+  public head(uri: string, config?: FSNetworkRequestConfig): FSNetworkPromise {
     return this.instance.head(uri, config);
   }
 
@@ -145,9 +145,9 @@ export class FSNetwork {
    * @param uri A URI or path to request.
    * @param data The body of the request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  post<T = any>(
+  public post<T = any>(
     uri: string,
     data?: FSNetworkRequestData,
     config?: FSNetworkRequestConfig
@@ -162,9 +162,9 @@ export class FSNetwork {
    * @param uri A URI or path to request.
    * @param data The body of the request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  put<T = any>(
+  public put<T = any>(
     uri: string,
     data?: FSNetworkRequestData,
     config?: FSNetworkRequestConfig
@@ -179,9 +179,9 @@ export class FSNetwork {
    * @param uri A URI or path to request.
    * @param data The body of the request.
    * @param config Configuration for the request.
-   * @returns A promise of the network response.
+   * @return A promise of the network response.
    */
-  patch<T = any>(
+  public patch<T = any>(
     uri: string,
     data?: FSNetworkRequestData,
     config?: FSNetworkRequestConfig
@@ -190,4 +190,9 @@ export class FSNetwork {
   }
 }
 
+/**
+ * @deprecated use named export instead
+ */
 export default FSNetwork;
+
+export type { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';

@@ -1,21 +1,31 @@
 import React, { isValidElement } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Decimal from 'decimal.js';
 
-import { storiesOf } from '@storybook/react';
+import { StyleSheet, Text, View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, number, object } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import Decimal from 'decimal.js';
 
-import { Grid, GridRenderItem } from '../src/components/Grid';
+import type { GridRenderItem } from '../src/components/Grid';
+import { Grid } from '../src/components/Grid';
 import { ProductItem } from '../src/components/ProductItem';
 
-const productItems = [...Array(10)].map((a, i) => ({
+const productItems = [...Array.from({ length: 10 })].map((a, i) => ({
   id: i,
   title: `Product ${i + 1}`,
   image: 'https://placehold.it/100x100',
 }));
 
 const styles = StyleSheet.create({
+  big: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   fill: {
     flexGrow: 1,
     height: 150,
@@ -23,17 +33,9 @@ const styles = StyleSheet.create({
   gray: {
     backgroundColor: '#bdbdbd',
   },
-  big: {
-    textAlign: 'center',
-    fontSize: 18,
-  },
   spacing: {
     marginBottom: 10,
     marginHorizontal: 10,
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
@@ -43,9 +45,9 @@ const makePromo = (key: string, title: string) => (
   </View>
 );
 
-const renderItem: GridRenderItem<typeof productItems[number] | React.ReactElement> = ({
-  item,
+const renderItem: GridRenderItem<React.ReactElement | typeof productItems[number]> = ({
   columns,
+  item,
   totalColumns,
 }) => {
   if (isValidElement(item)) {
@@ -56,31 +58,33 @@ const renderItem: GridRenderItem<typeof productItems[number] | React.ReactElemen
 
   return (
     <ProductItem
-      id={`${item.id}`}
+      contentStyle={styles.center}
       handle={item.title}
-      title={item.title}
-      image={{ uri: item.image, width: 100 * columns }}
+      id={`${item.id}`}
+      image={{ uri: item.image, width: 100 * (columns ?? 1) }}
       imageStyle={[
         {
-          width: 100 * columns,
+          width: 100 * (columns ?? 1),
           height: 100,
         },
-        tall && { height: columns * 100 },
+        tall && { height: (columns ?? 1) * 100 },
       ]}
-      contentStyle={styles.center}
-      style={[styles.center, tall && { height: columns * 180 }]}
+      onPress={action('MultiCarousel ProductItem onPress')}
       price={{
         value: new Decimal('5.95'),
         currencyCode: 'USD',
       }}
-      onPress={action('MultiCarousel ProductItem onPress')}
+      style={[styles.center, tall && { height: (columns ?? 1) * 180 }]}
+      title={item.title}
     />
   );
 };
 
 const Promo1 = makePromo('promo-1', 'Promo');
 const TargetedPromo = makePromo('promo-2', 'Targeted Promo');
-const Promos = [...Array(10)].map((_, i) => makePromo(`promo-every-${i}`, `Promo ${i}`));
+const Promos = [...Array.from({ length: 10 })].map((_, i) =>
+  makePromo(`promo-every-${i}`, `Promo ${i}`)
+);
 
 // TODO: Update MultiCarousel to support prop switching
 storiesOf('Grid', module).add('basic usage', () => {
@@ -96,15 +100,15 @@ storiesOf('Grid', module).add('basic usage', () => {
 
   return (
     <Grid
-      data={productItems}
-      renderItem={renderItem}
-      minColumnWidth={minColumnWidth}
-      numColumns={autoColumns ? 'auto' : columns}
       columnWidthTable={columnWidthTable}
-      insertRows={insertRows}
+      data={productItems}
       insertAfter={insertAfter}
       insertEveryFrequency={insertEveryFrequency}
       insertEveryValues={insertEveryValues}
+      insertRows={insertRows}
+      minColumnWidth={minColumnWidth}
+      numColumns={autoColumns ? 'auto' : columns}
+      renderItem={renderItem}
     />
   );
 });

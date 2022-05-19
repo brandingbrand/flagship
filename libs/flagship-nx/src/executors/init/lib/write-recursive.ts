@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
 import { join } from 'path';
 
 export const writeRecursive = (tree: Tree, from: string, to: string): void => {

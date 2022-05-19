@@ -1,13 +1,13 @@
-import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 
 export type MergeSchemas = (
   schemas: JSONSchema7Definition[],
-  parents?: (number | string)[]
+  parents?: Array<number | string>
 ) => JSONSchema7Definition | undefined;
 
 export type Resolver<T> = (
   compacted: T[],
-  paths: (number | string)[],
+  paths: Array<number | string>,
   mergeSchemas: MergeSchemas
 ) => T | undefined;
 
@@ -17,6 +17,6 @@ type Merges<K extends keyof JSONSchema7> = {
 
 export type ComplexResolver<K extends keyof JSONSchema7> = (
   values: JSONSchema7[],
-  parents: (string | number)[],
+  parents: Array<number | string>,
   mergers: Merges<K>
 ) => JSONSchema7;

@@ -1,7 +1,9 @@
-import React, { FunctionComponent, memo } from 'react';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
 
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Svg, { Line } from 'react-native-svg';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
 export interface NavArrowProps {
   height?: number;
@@ -12,10 +14,10 @@ export interface NavArrowProps {
 }
 
 export const NavArrow: FunctionComponent<NavArrowProps> = memo((props): JSX.Element => {
-  const kDefaultHeight: number = 16;
-  const kDefaultWidth: number = 10;
-  const kDefaultColor: string = 'black';
-  const kDefaultStrokeWidth: number = 1;
+  const kDefaultHeight = 16;
+  const kDefaultWidth = 10;
+  const kDefaultColor = 'black';
+  const kDefaultStrokeWidth = 1;
 
   const {
     height = kDefaultHeight,
@@ -33,14 +35,14 @@ export const NavArrow: FunctionComponent<NavArrowProps> = memo((props): JSX.Elem
   return (
     <View style={props.style}>
       <Svg height={height} width={width}>
-        <Line x1={0} x2={width} y1={0} y2={intersectY} stroke={color} strokeWidth={strokeWidth} />
+        <Line stroke={color} strokeWidth={strokeWidth} x1={0} x2={width} y1={0} y2={intersectY} />
         <Line
+          stroke={color}
+          strokeWidth={strokeWidth}
           x1={0}
           x2={width}
           y1={height}
           y2={intersectY}
-          stroke={color}
-          strokeWidth={strokeWidth}
         />
       </Svg>
     </View>

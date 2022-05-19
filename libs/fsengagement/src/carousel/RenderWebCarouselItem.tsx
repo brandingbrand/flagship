@@ -40,9 +40,10 @@ export interface RenderItemState {
 }
 
 class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }, RenderItemState> {
-  static contextTypes: any = {
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
+
   constructor(props: RenderItemProps & { context: any }) {
     super(props);
     this.state = {
@@ -50,7 +51,8 @@ class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }
       viewHeightChanged: false,
     };
   }
-  get image(): any {
+
+  private get image(): JSX.Element {
     const {
       data: { source },
       options,
@@ -71,7 +73,21 @@ class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }
     );
   }
 
-  _onLayout = (event: LayoutChangeEvent) => {
+  private onPress = () => {
+    const {
+      data: { link },
+    } = this.props;
+    if (!link) {
+      return;
+    }
+    const { handleAction } = this.props.context;
+    handleAction({
+      type: 'deep-link',
+      value: link,
+    });
+  };
+
+  public _onLayout = (event: LayoutChangeEvent) => {
     var { height } = event.nativeEvent.layout;
 
     if (
@@ -85,21 +101,8 @@ class RenderWebCarouselItem extends Component<RenderItemProps & { context: any }
       });
     }
   };
-  onPress = () => {
-    const {
-      data: { link },
-    } = this.props;
-    if (!link) {
-      return;
-    }
-    const { handleAction } = this.props.context;
-    handleAction({
-      type: 'deep-link',
-      value: link,
-    });
-  };
-  // eslint-disable-next-line complexity
-  render() {
+
+  public render() {
     const {
       data: { showText, text, header, additional, eyebrow },
       horizPadding = 0,

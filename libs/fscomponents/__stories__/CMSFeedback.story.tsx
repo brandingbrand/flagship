@@ -2,10 +2,13 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
+
 import { Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react';
-import { CMSFeedback } from '../src/components/CMSFeedback';
+
 import { object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import { CMSFeedback } from '../src/components/CMSFeedback';
 
 const bodyTextStyle = {
   marginBottom: 10,
@@ -22,14 +25,12 @@ storiesOf('CMSFeedback', module).add('basic usage', () => {
       '800-555-5555 or view the customer service page.'
   );
 
-  const renderModalBody = () => {
-    return (
-      <View>
-        <Text style={object('bodyText', bodyTextStyle)}>{bodyTextFirst}</Text>
-        <Text style={object('bodyText', bodyTextStyle)}>{bodyTextSecond}</Text>
-      </View>
-    );
-  };
+  const renderModalBody = () => (
+    <View>
+      <Text style={object('bodyText', bodyTextStyle)}>{bodyTextFirst}</Text>
+      <Text style={object('bodyText', bodyTextStyle)}>{bodyTextSecond}</Text>
+    </View>
+  );
   return (
     <CMSFeedback
       propertyId="443"

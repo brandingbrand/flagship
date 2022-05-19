@@ -1,16 +1,16 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import { Config } from '../../../types';
 import { logError, logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
 const kRepository = `maven { url 'https://zendesk.artifactoryonline.com/zendesk/repo' }`;
 
 /**
  * Patches Android for the module.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function postLink(configuration: Config): void {
+export const postLink = (configuration: Config): void => {
   logInfo('patching Android for react-native-zendesk-chat');
 
   const gradlePath = path.android.gradlePath();
@@ -40,4 +40,4 @@ export function postLink(configuration: Config): void {
     'import com.taskrabbit.zendesk.RNZendeskChat.RNZendeskChatPackage;',
     `import com.taskrabbit.zendesk.*;`
   );
-}
+};

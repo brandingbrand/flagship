@@ -1,25 +1,33 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+/**
+ *
+ */
 export function createElement() {
   return {
-    setAttribute: function () {},
+    setAttribute() {},
     pathname: '',
     style: {},
     nodeType: 1,
   };
 }
 
+/**
+ *
+ */
 export function querySelector() {
   return null;
 }
 
+/**
+ *
+ */
 export function getElementById() {
   return {
-    setAttribute: function () {},
+    setAttribute() {},
     pathname: '',
     style: {},
   };
 }
 
 export const body = document.body || {
-  appendChild: function () {},
+  appendChild() {},
 };

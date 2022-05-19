@@ -1,4 +1,4 @@
-import { Image } from './Image';
+import type { Image } from './Image';
 
 /**
  * Interface describing a single value of a key-value pair.
@@ -30,7 +30,7 @@ export interface OptionValue {
    * Swatches to display instead of the text, typically used for colors
    * Can be a string to represent a color or an image
    */
-  swatch?: string | Image;
+  swatch?: Image | string;
 
   /**
    * Images to display when this option is selected

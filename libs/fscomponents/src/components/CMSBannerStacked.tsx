@@ -6,18 +6,19 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { CMSProviderProps, withCMSProvider } from './CMSProvider';
-
-import { CMSBanner, CMSBannerProps } from './CMSBanner';
+import type { CMSBannerProps } from './CMSBanner';
+import { CMSBanner } from './CMSBanner';
+import type { CMSProviderProps } from './CMSProvider';
+import { withCMSProvider } from './CMSProvider';
 
 export interface CMSBannerStackedProps extends CMSBannerProps, CMSProviderProps {
-  carouselProps?: any;
+  carouselProps?: unknown;
   accessible?: boolean;
-  getAccessibilityLabel?: (instance: any) => string;
+  getAccessibilityLabel?: (instance: unknown) => string;
 }
 
 class CMSBannerStacked extends CMSBanner<CMSBannerStackedProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { cmsData } = this.props;
 
     if (!cmsData || !cmsData.instances) {
@@ -26,7 +27,7 @@ class CMSBannerStacked extends CMSBanner<CMSBannerStackedProps> {
 
     return (
       <View style={this.props.style}>
-        {cmsData.instances.map((instance: any, i: number) => this.renderInstance(instance, i))}
+        {cmsData.instances.map((instance: unknown, i: number) => this.renderInstance(instance, i))}
       </View>
     );
   }

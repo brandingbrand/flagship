@@ -1,12 +1,17 @@
 import React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
+import type { ReviewTypes } from '@brandingbrand/fscommerce';
+
 import { action } from '@storybook/addon-actions';
 import { number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { ReviewsList } from '../src/components/ReviewsList';
 
 const props = {
-  reviews: (): import('@brandingbrand/fscommerce').ReviewTypes.Review[] => [
+  reviews: (): ReviewTypes.Review[] => [
     {
       rating: number('Rating', 5.2),
       title: text('Title', 'Review Title'),
@@ -57,9 +62,9 @@ smoothies.',
 
 storiesOf('ReviewsList', module).add('basic usage', () => (
   <ReviewsList
-    reviews={props.reviews()}
-    reviewStyle={props.reviewStyle()}
     onHelpful={action('ReviewsList onHelpful')}
     onNotHelpful={action('ReviewsList onNotHelpful')}
+    reviewStyle={props.reviewStyle()}
+    reviews={props.reviews()}
   />
 ));

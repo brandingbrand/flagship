@@ -1,1 +1,1 @@
-export { default as AnalyticsProviderConfiguration } from './AnalyticsProviderConfiguration';
+export type { default as AnalyticsProviderConfiguration } from './AnalyticsProviderConfiguration';

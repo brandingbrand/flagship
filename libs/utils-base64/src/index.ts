@@ -5,7 +5,7 @@ class InvalidCharacterError extends Error {
   }
 }
 
-const error = function (message: string) {
+const error = (message: string) => {
   // Note: the error messages used throughout this file match those used by
   // the native `atob`/`btoa` implementation in Chromium.
   throw new InvalidCharacterError(message);
@@ -14,9 +14,9 @@ const error = function (message: string) {
 const TABLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const REGEX_SPACE_CHARACTERS = /[\t\n\f\r ]/g;
 
-function decode(input: string) {
+const decode = (input: string) => {
   input = String(input).replace(REGEX_SPACE_CHARACTERS, '');
-  let length = input.length;
+  let { length } = input;
   if (length % 4 === 0) {
     input = input.replace(/==?$/, '');
     length = input.length;
@@ -24,7 +24,7 @@ function decode(input: string) {
   if (
     length % 4 === 1 ||
     // http://whatwg.org/C#alphanumeric-ascii-characters
-    /[^+a-zA-Z0-9/]/.test(input)
+    /[^\d+/A-Za-z]/.test(input)
   ) {
     error('Invalid character: the string to be decoded is not correctly encoded.');
   }
@@ -43,11 +43,11 @@ function decode(input: string) {
     }
   }
   return output;
-}
+};
 
-const encode = function (input: string) {
+const encode = (input: string) => {
   input = String(input);
-  if (/[^\0-\xFF]/.test(input)) {
+  if (/[^\0-\u00FF]/.test(input)) {
     // Note: no need to special-case astral symbols here, as surrogates are
     // matched, and the input is supposed to only contain ASCII anyway.
     error('The string to be encoded contains characters outside of the ' + 'Latin1 range.');
@@ -81,14 +81,14 @@ const encode = function (input: string) {
     a = input.charCodeAt(position) << 8;
     b = input.charCodeAt(++position);
     buffer = a + b;
-    output +=
+    output += `${
       TABLE.charAt(buffer >> 10) +
       TABLE.charAt((buffer >> 4) & 0x3f) +
-      TABLE.charAt((buffer << 2) & 0x3f) +
-      '=';
+      TABLE.charAt((buffer << 2) & 0x3f)
+    }=`;
   } else if (padding === 1) {
     buffer = input.charCodeAt(position);
-    output += TABLE.charAt(buffer >> 2) + TABLE.charAt((buffer << 4) & 0x3f) + '==';
+    output += `${TABLE.charAt(buffer >> 2) + TABLE.charAt((buffer << 4) & 0x3f)}==`;
   }
 
   return output;

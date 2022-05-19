@@ -1,12 +1,19 @@
 import React, { PureComponent } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
-import { cloneDeep, find, get } from 'lodash-es';
-import { Button, ButtonProps } from './Button';
-import { Swatches, SwatchesProps } from './Swatches';
-import { Stepper, StepperProps } from './Stepper';
 
-import { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
+import type { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { cloneDeep, find, get } from 'lodash-es';
+
+import type { ButtonProps } from './Button';
+import { Button } from './Button';
+import type { StepperProps } from './Stepper';
+import { Stepper } from './Stepper';
+import type { SwatchesProps } from './Swatches';
+import { Swatches } from './Swatches';
 
 export interface AddToCartProps {
   product: CommerceTypes.Product;
@@ -30,8 +37,8 @@ export interface AddToCartProps {
   stepperProps?: Partial<StepperProps>;
 
   // Custom Rendering
-  renderStepper?(onChange: (count: number) => void): JSX.Element;
-  renderButton?(onPress: () => void): JSX.Element;
+  renderStepper?: (onChange: (count: number) => void) => JSX.Element;
+  renderButton?: (onPress: () => void) => JSX.Element;
 }
 
 // TODO: This should be replaced with a type from fscommerce
@@ -47,7 +54,9 @@ export interface AddToCartState {
 }
 
 export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
-  static getDerivedStateFromProps(nextProps: AddToCartProps): Partial<AddToCartState> | null {
+  public static getDerivedStateFromProps(
+    nextProps: AddToCartProps
+  ): Partial<AddToCartState> | null {
     const { defaultVariantId, product } = nextProps;
     const variant = defaultVariantId
       ? product.variants && product.variants.find((variant) => variant.id === defaultVariantId)
@@ -73,39 +82,34 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     };
   }
 
-  determineVariant(props: AddToCartProps): string {
+  private determineVariant(props: AddToCartProps): string {
     if (props.product && props.product.id && !props.product.variants) {
       return props.product.id;
     }
     return '';
   }
 
-  changeQty = (count: number) => {
-    this.setState((prevState) => {
-      return { quantity: count };
-    });
+  private readonly changeQty = (count: number) => {
+    this.setState(() => ({ quantity: count }));
   };
 
-  addToCart = () => {
+  private readonly addToCart = () => {
     const { commerceDataSource, onAddToCart } = this.props;
     const { quantity, variantId } = this.state;
 
-    let response;
-
-    if (!quantity || !variantId) {
-      response = Promise.reject(new Error(FSI18n.string(translationKeys.flagship.cart.error)));
-    } else {
-      response = commerceDataSource.addToCart(variantId, quantity);
-    }
+    const response =
+      !quantity || !variantId
+        ? Promise.reject(new Error(FSI18n.string(translationKeys.flagship.cart.error)))
+        : commerceDataSource.addToCart(variantId, quantity);
 
     if (onAddToCart) {
       onAddToCart(response);
     }
   };
 
-  updateOption = (name: string, value: string) => {
+  private readonly updateOption = (name: string, value: string) => {
     const { optionValues } = this.state;
-    const { product, onChangeOption } = this.props;
+    const { onChangeOption, product } = this.props;
 
     // Copy existing options
     const newOptionValues = [...optionValues];
@@ -133,48 +137,46 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
     }
   };
 
-  _renderStepper(): JSX.Element {
+  private renderStepper(): JSX.Element {
     const { renderStepper, stepperProps } = this.props;
 
     if (renderStepper) {
       return renderStepper(this.changeQty);
-    } else {
-      return (
-        <Stepper
-          count={1}
-          onIncreaseButtonPress={this.changeQty}
-          onDecreaseButtonPress={this.changeQty}
-          {...stepperProps}
-        />
-      );
     }
+    return (
+      <Stepper
+        count={1}
+        onDecreaseButtonPress={this.changeQty}
+        onIncreaseButtonPress={this.changeQty}
+        {...stepperProps}
+      />
+    );
   }
 
-  _renderButton(): JSX.Element {
-    const { renderButton, buttonProps } = this.props;
+  private renderButton(): JSX.Element {
+    const { buttonProps, renderButton } = this.props;
 
     if (renderButton) {
       return renderButton(this.addToCart);
-    } else {
-      return (
-        <Button
-          title={FSI18n.string(translationKeys.flagship.cart.actions.add.actionBtn)}
-          onPress={this.addToCart}
-          {...buttonProps}
-        />
-      );
     }
+    return (
+      <Button
+        onPress={this.addToCart}
+        title={FSI18n.string(translationKeys.flagship.cart.actions.add.actionBtn)}
+        {...buttonProps}
+      />
+    );
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      product,
-      swatchesProps,
-      style,
-      swatchesStyle,
-      stepperStyle,
-      buttonStyle,
       actionBarStyle,
+      buttonStyle,
+      product,
+      stepperStyle,
+      style,
+      swatchesProps,
+      swatchesStyle,
     } = this.props;
 
     const { optionValues } = this.state;
@@ -187,12 +189,11 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
               const defaultOption = optionValues.find((value) => option.name === option.id);
               return (
                 <Swatches
-                  key={index}
-                  title={option.name}
-                  items={option.values}
                   defaultValue={defaultOption ? defaultOption.value : undefined}
-                  // eslint-disable-next-line react/jsx-no-bind
+                  items={option.values}
+                  key={index}
                   onChangeSwatch={this.updateOption.bind(this, option.id)}
+                  title={option.name}
                   {...swatchesProps}
                 />
               );
@@ -200,8 +201,8 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
           </View>
         )}
         <View style={[{ flexDirection: 'row' }, actionBarStyle]}>
-          <View style={[{ flex: 1 }, stepperStyle]}>{this._renderStepper()}</View>
-          <View style={[{ flex: 1 }, buttonStyle]}>{this._renderButton()}</View>
+          <View style={[{ flex: 1 }, stepperStyle]}>{this.renderStepper()}</View>
+          <View style={[{ flex: 1 }, buttonStyle]}>{this.renderButton()}</View>
         </View>
       </View>
     );

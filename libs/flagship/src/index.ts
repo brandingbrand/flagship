@@ -1,33 +1,15 @@
-import * as android from './lib/android';
-import * as cocoapods from './lib/cocoapods';
-import * as deeplinking from './lib/deeplinking';
-import * as env from './lib/env';
-import * as fastlane from './lib/fastlane';
-import * as fs from './lib/fs';
-import * as ios from './lib/ios';
-import * as link from './lib/link';
-import * as modules from './lib/modules';
-import * as nativeConstants from './lib/native-constants';
-import * as os from './lib/os';
-import * as path from './lib/path';
-import * as rename from './lib/rename';
-import * as version from './lib/version';
-import * as web from './lib/web';
-
-export {
-  android,
-  cocoapods,
-  deeplinking,
-  env,
-  fastlane,
-  fs,
-  ios,
-  link,
-  modules,
-  nativeConstants,
-  os,
-  path,
-  rename,
-  version,
-  web,
-};
+export * as android from './lib/android';
+export * as cocoapods from './lib/cocoapods';
+export * as deeplinking from './lib/deeplinking';
+export * as env from './lib/env';
+export * as fastlane from './lib/fastlane';
+export * as fs from './lib/fs';
+export * as ios from './lib/ios';
+export * as link from './lib/link';
+export * as modules from './lib/modules';
+export * as nativeConstants from './lib/native-constants';
+export * as os from './lib/os';
+export * as path from './lib/path';
+export * as rename from './lib/rename';
+export * as version from './lib/version';
+export * as web from './lib/web';

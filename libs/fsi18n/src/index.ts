@@ -1,7 +1,7 @@
 import I18n from './i18n';
 import I18nHelper from './i18nHelper';
 import * as translationAssets from './translations';
-import { FSTranslationKeys, I18n as I18nInterface } from './types';
+import type { FSTranslationKeys, I18n as I18nInterface } from './types';
 
 // We're a little stricter/more explicit in our type definitions for translations,
 // so we need to do a type assertion. The translation type definitions are technically
@@ -15,5 +15,7 @@ const translations = {
 const translationKeys = FSI18n.addTranslations<FSTranslationKeys<string>>(translations);
 
 export default FSI18n;
+export * as translationAssets from './translations';
+export { translationKeys };
+
 export * from './types';
-export { translationKeys, translationAssets };

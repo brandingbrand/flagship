@@ -1,8 +1,11 @@
-import { ComponentClass } from 'react';
-import { EngagementService, EngagementServiceConfig } from './EngagementService';
-import EngagementComp, { EngagementScreenProps } from './EngagementComp';
-import { ComponentList, EngagementMessage, InboxBlock, InjectedProps, JSON } from './types';
+import type { ComponentClass } from 'react';
+
+import type { EngagementScreenProps } from './EngagementComp';
+import EngagementComp from './EngagementComp';
+import type { EngagementServiceConfig } from './EngagementService';
+import { EngagementService } from './EngagementService';
 import layoutComponents from './inboxblocks';
+import type { ComponentList } from './types';
 
 export interface EngagementSettings extends EngagementServiceConfig {
   components?: ComponentList;
@@ -13,15 +16,12 @@ export interface EngagementUtilities {
   EngagementComp: ComponentClass<EngagementScreenProps>;
 }
 
-export {
-  EngagementMessage,
-  EngagementScreenProps,
-  InboxBlock,
-  InjectedProps,
-  JSON as EngagementJSON,
-};
 export * from './EngagementCompGhost';
 
+/**
+ *
+ * @param params
+ */
 export default function (params: EngagementSettings): EngagementUtilities {
   const api = new EngagementService(params);
 
@@ -30,3 +30,6 @@ export default function (params: EngagementSettings): EngagementUtilities {
     EngagementComp: EngagementComp(api, { ...layoutComponents, ...params.components }),
   };
 }
+
+export type { EngagementMessage, InboxBlock, InjectedProps, JSON as EngagementJSON } from './types';
+export type { EngagementScreenProps } from './EngagementComp';

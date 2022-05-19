@@ -1,5 +1,5 @@
-import { Config, IOSPermissionKeys, UsageDescriptionIOS } from '../../../types';
 import { logInfo } from '../../../helpers';
+import type { Config, IOSPermissionKeys, UsageDescriptionIOS } from '../../../types';
 import * as pods from '../../cocoapods';
 import * as usageDescriptionsHelper from '../../usage-descriptions';
 
@@ -79,10 +79,10 @@ const permissionPods: { [k in IOSPermissionKeys]: IOSPermissionMeta } = {
   },
 };
 
-export function preLink(config: Config): void {
+export const preLink = (config: Config): void => {
   logInfo('patching iOS for react-native-permissions');
 
-  if (!config?.permissions?.ios) {
+  if (!config.permissions?.ios) {
     logInfo('react-native-permissions not configured for iOS');
 
     return;
@@ -90,7 +90,7 @@ export function preLink(config: Config): void {
 
   const usageDescriptions: UsageDescriptionIOS[] = [];
 
-  (Object.keys(config.permissions.ios) as IOSPermissionKeys[]).forEach((key) => {
+  for (const key of Object.keys(config.permissions.ios) as IOSPermissionKeys[]) {
     const permission = permissionPods[key];
 
     if (permission) {
@@ -99,13 +99,13 @@ export function preLink(config: Config): void {
       if (permission.usageDescriptionKey) {
         usageDescriptions.push({
           key: permission.usageDescriptionKey,
-          string: (config?.permissions?.ios && config.permissions.ios[key]) || '',
+          string: (config.permissions.ios && config.permissions.ios[key]) || '',
         });
       }
     }
-  });
+  }
 
   if (usageDescriptions.length > 0) {
     usageDescriptionsHelper.add(config, usageDescriptions);
   }
-}
+};

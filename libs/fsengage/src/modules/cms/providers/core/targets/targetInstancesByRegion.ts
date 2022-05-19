@@ -1,11 +1,10 @@
-import { Location } from '../../../requesters/ContentManagementSystemLocator';
+import type { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// eslint-disable-next-line complexity
-export default function targetInstancesByRegion(
+const targetInstancesByRegion = (
   instance: any,
-  targets: { [index: string]: any },
+  targets: Record<string, any>,
   location: Location
-): boolean {
+): boolean => {
   if (!instance) {
     return false;
   }
@@ -22,7 +21,7 @@ export default function targetInstancesByRegion(
   const instanceCoordinates =
     instance.targets && instance.targets.Region && instance.targets.Region.coordinates;
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
   const campaignCoordinates =
     targets[campaign] && targets[campaign].Region && targets[campaign].Region.coordinates;
 
@@ -35,20 +34,22 @@ export default function targetInstancesByRegion(
   }
 
   return true;
-}
+};
 
-function isLocationInsideCoordinates(location: Location, coordinates: any[]): boolean {
+export default targetInstancesByRegion;
+
+const isLocationInsideCoordinates = (location: Location, coordinates: any[]): boolean => {
   // Based on algorithm:
   // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 
   for (let index = coordinates.length - 1; index >= 0; --index) {
     const region = coordinates[index];
 
-    if (!region || !region.length) {
+    if (!region || region.length === 0) {
       return false;
     }
 
-    const latitude = location.latitude;
+    const { latitude } = location;
     const longituge = location.longitude;
     let isLocationInside = false;
 
@@ -75,4 +76,4 @@ function isLocationInsideCoordinates(location: Location, coordinates: any[]): bo
   }
 
   return false;
-}
+};

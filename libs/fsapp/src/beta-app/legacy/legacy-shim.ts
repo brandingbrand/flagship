@@ -1,24 +1,24 @@
-import type { Middleware } from 'redux';
 import type { Options } from 'react-native-navigation';
+
 import type { Analytics } from '@brandingbrand/fsengage';
-import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
-import type { RouterConfig } from '../router';
-import type { ShellConfig } from '../shell.web';
-
-import type { LegacyDrawer } from './legacy-drawer';
-import type { LegacyRoutableComponentClass, LegacySSRData } from './legacy-route.type';
-import type { LegacyNavLayout, LegacyNavLayoutComponent, LegacyTab } from './legacy-navigator.type';
-
 import { Injector } from '@brandingbrand/fslinker';
+import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
+
+import type { Middleware } from 'redux';
 
 import { FSAppBeta } from '../app';
+import type { RouterConfig } from '../router';
 import { setRootStackId, setRootStackOptions } from '../router/history/constants';
+import type { ShellConfig } from '../shell.web';
 
 import { applyDefaultOptions } from './internal/apply-default-options';
-import { layoutComponentsToRoutes } from './internal/utils/layout-components-to-routes';
-import { LEGACY_PATH_MAP } from './internal/utils/layout-to-path';
 import { LEGACY_ROUTES } from './internal/screens.token';
 import { drawerToWebShell } from './internal/utils/drawer-to-web-shell';
+import { layoutComponentsToRoutes } from './internal/utils/layout-components-to-routes';
+import { LEGACY_PATH_MAP } from './internal/utils/layout-to-path';
+import type { LegacyDrawer } from './legacy-drawer';
+import type { LegacyNavLayout, LegacyNavLayoutComponent, LegacyTab } from './legacy-navigator.type';
+import type { LegacyRoutableComponentClass, LegacySSRData } from './legacy-route.type';
 
 /**
  *
@@ -77,7 +77,7 @@ export interface FSLegacyShimConfig {
    *
    * @deprecated
    */
-  notFoundRedirect?: LegacyRoutableComponentClass | LegacyNavLayout | true;
+  notFoundRedirect?: LegacyNavLayout | LegacyRoutableComponentClass | true;
 
   /**
    *
@@ -133,14 +133,15 @@ export interface FSLegacyShimConfig {
 export const FSLegacyShim = {
   /**
    *
+   * @param config
    * @deprecated
    */
-  async bootstrap(config: FSLegacyShimConfig): Promise<FSAppBeta> {
+  bootstrap: async (config: FSLegacyShimConfig): Promise<FSAppBeta> => {
     applyDefaultOptions(config.defaultOptions);
     setRootStackId(config.bottomTabsId);
     setRootStackOptions(config.bottomTabsOptions);
 
-    const { paths, routes, legacyRoutes } = layoutComponentsToRoutes(config);
+    const { legacyRoutes, paths, routes } = layoutComponentsToRoutes(config);
     Injector.provide({ provide: LEGACY_PATH_MAP, useValue: paths });
     Injector.provide({ provide: LEGACY_ROUTES, useValue: legacyRoutes });
 

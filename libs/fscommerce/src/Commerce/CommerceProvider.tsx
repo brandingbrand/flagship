@@ -1,12 +1,14 @@
-import React, { Component, ComponentClass } from 'react';
-import { ProductQuery } from './types/ProductQuery';
-import CommerceDataSource from './CommerceDataSource';
+import type { ComponentClass } from 'react';
+import React, { Component } from 'react';
+
+import type CommerceDataSource from './CommerceDataSource';
+import type { ProductQuery } from './types/ProductQuery';
 
 /**
  * Additional props that are used both by the high order component and passed to the wrapped
  * component.
  *
- * @typeparam Source The type of datasource. Defaults to `CommerceDataSource`.
+ * @template Source The type of datasource. Defaults to `CommerceDataSource`.
  */
 export interface WithCommerceSharedProps<Source = CommerceDataSource> {
   /**
@@ -19,8 +21,8 @@ export interface WithCommerceSharedProps<Source = CommerceDataSource> {
 /**
  * Additional props that are consumed by the high order component.
  *
- * @typeparam Data The type of data provided to the wrapped component.
- * @typeparam Source The type of datasource. Defaults to `CommerceDataSource`.
+ * @template Data The type of data provided to the wrapped component.
+ * @template Source The type of datasource. Defaults to `CommerceDataSource`.
  */
 export interface WithCommerceProviderProps<Data, Source = CommerceDataSource>
   extends WithCommerceSharedProps<Source> {
@@ -38,7 +40,7 @@ export interface WithCommerceProviderProps<Data, Source = CommerceDataSource>
 /**
  * Props to provide the commerce data.
  *
- * @typeparam Data The type of data provided to the wrapped component.
+ * @template Data The type of data provided to the wrapped component.
  */
 export interface WithCommerceDataProps<Data> {
   /**
@@ -54,8 +56,8 @@ export interface WithCommerceDataProps<Data> {
 /**
  * Additional props that will be provided to the wrapped component.
  *
- * @typeparam Data The type of data provided to the wrapped component.
- * @typeparam Source The type of datasource. Defaults to `CommerceDataSource`.
+ * @template Data The type of data provided to the wrapped component.
+ * @template Source The type of datasource. Defaults to `CommerceDataSource`.
  */
 export interface WithCommerceProps<Data, Source = CommerceDataSource>
   extends WithCommerceSharedProps<Source>,
@@ -76,19 +78,19 @@ export interface WithCommerceProps<Data, Source = CommerceDataSource>
 /**
  * The state of the CommerceProvider component which is passed to the wrapped component as a prop.
  *
- * @typeparam Data The type of data provided to the wrapped component.
+ * @template Data The type of data provided to the wrapped component.
  */
 export type WithCommerceState<Data> = WithCommerceDataProps<Data>;
 
 /**
  * A function that fetches data using the given datasource for a given query.
  *
- * @typeparam P The original props of the wrapped component.
- * @typeparam Data The type of data provided to the wrapped component.
- * @typeparam Source The type of datasource. Defaults to `CommerceDataSource`.
- * @param {Readonly<Source>} datasource The datasource with which to fetch the data.
- * @param {Readonly<P>} props The props passed to the wrapped component.
- * @param {ProductQuery} query Deprecated. Additional query parameters to restrict the data further.
+ * @template P The original props of the wrapped component.
+ * @template Data The type of data provided to the wrapped component.
+ * @template Source The type of datasource. Defaults to `CommerceDataSource`.
+ * @param datasource The datasource with which to fetch the data.
+ * @param props The props passed to the wrapped component.
+ * @param query Deprecated. Additional query parameters to restrict the data further.
  */
 export type FetchDataFunction<P, Data, Source = CommerceDataSource> = (
   datasource: Readonly<Source>,
@@ -99,9 +101,9 @@ export type FetchDataFunction<P, Data, Source = CommerceDataSource> = (
 /**
  * A function that fetches data using the given datasource for a given query.
  *
- * @typeparam P The original props of the wrapped component.
- * @typeparam Data The type of data provided to the wrapped component.
- * @param {Readonly<P>} props The props passed to the wrapped component.
+ * @template P The original props of the wrapped component.
+ * @template Data The type of data provided to the wrapped component.
+ * @param props The props passed to the wrapped component.
  */
 export type InitialDataFunction<P, Data> = (props: Readonly<P>) => Data | undefined;
 
@@ -109,13 +111,12 @@ export type InitialDataFunction<P, Data> = (props: Readonly<P>) => Data | undefi
  * A function that wraps a a component and returns a new high order component. The wrapped
  * component will be given commerce data as props.
  *
- * @typeparm P The original props of the wrapped component.
- * @typeparam Data The type of product data that will be provided.
- * @typeparam Source The type of datasource providing the data. Defaults to `CommerceDataSource`.
- *
- * @param {ComponentClass<P & WithCommerceProps<Data, Source>>} WrappedComponent A component to wrap
+ * @template P The original props of the wrapped component.
+ * @template Data The type of product data that will be provided.
+ * @template Source The type of datasource providing the data. Defaults to `CommerceDataSource`.
+ * @param WrappedComponent A component to wrap
  * and provide commerce data to as props.
- * @returns {ComponentClass<P & WithCommerceProviderProps<Data, Source>>} A high order component.
+ * @return A high order component.
  */
 export type CommerceWrapper<P, Data, Source = CommerceDataSource> = (
   WrappedComponent: ComponentClass<P & WithCommerceProps<Data, Source>>
@@ -125,13 +126,13 @@ export type CommerceWrapper<P, Data, Source = CommerceDataSource> = (
  * Function that wraps a specified component with additional properties and state allowing
  * it to interact with a Commerce Data Source.
  *
- * @typeparm P The original props of the wrapped component.
- * @typeparam Data The type of product data that will be provided.
- * @typeparam Source The type of datasource providing the data. Defaults to `CommerceDataSource`.
- * @param {FetchDataFunction<P, Data, Source>} fetchData Function to retrieve commerce data
- * @param {InitialDataFunction<P, Data>} initialData Function to determine initial data to be
+ * @template P The original props of the wrapped component.
+ * @template Data The type of product data that will be provided.
+ * @template Source The type of datasource providing the data. Defaults to `CommerceDataSource`.
+ * @param fetchData Function to retrieve commerce data
+ * @param initialData Function to determine initial data to be
  * loaded into the provider
- * @returns {CommerceWrapper<P, Data, Source>} A function that wraps a a component and returns a new
+ * @return A function that wraps a a component and returns a new
  * high order component. The wrapped component will be given commerce data as props.
  */
 function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
@@ -142,12 +143,12 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
   // data methods applied.
   return (
     WrappedComponent: ComponentClass<P & WithCommerceProps<Data, Source>>
-  ): ComponentClass<P & WithCommerceProviderProps<Data, Source>> => {
-    return class CommerceProvider extends Component<
+  ): ComponentClass<P & WithCommerceProviderProps<Data, Source>> =>
+    class CommerceProvider extends Component<
       P & WithCommerceProviderProps<Data, Source>,
       WithCommerceState<Data>
     > {
-      constructor(props: any) {
+      constructor(props: P & WithCommerceProviderProps<Data, Source>) {
         super(props);
         const commerceData = initialData ? initialData(props) : undefined;
         this.state = {
@@ -155,35 +156,14 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           isLoading: false,
         };
       }
-      componentDidMount(): void {
-        if (this.state.commerceData) {
-          if (this.props.onDataLoaded) {
-            this.props.onDataLoaded(this.state.commerceData);
-          }
-        } else {
-          this.loadData();
-        }
-      }
-
-      render(): JSX.Element {
-        const { onDataLoaded, onDataError, ...props } = this.props as any; // TypeScript does not support rest parameters for generics :(
-
-        return (
-          <WrappedComponent
-            {...props}
-            commerceData={this.state && this.state.commerceData}
-            isLoading={this.state && this.state.isLoading}
-            commerceLoadData={this.loadData}
-            commerceProviderLoadMore={this.loadMore}
-          />
-        );
-      }
 
       /**
        * Handle errors received while attempting to load new data. Log said errors
        * and pass them into the optional onDataError callback to be further processed.
+       *
+       * @param error
        */
-      private handleLoadingError = (error: Error) => {
+      private readonly handleLoadingError = (error: Error) => {
         this.setState({
           isLoading: false,
         });
@@ -192,7 +172,7 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
           this.props.onDataError(error);
         }
 
-        console.error('CommerceProvider Error: ', error);
+        console.error('CommerceProvider Error:', error);
       };
 
       /**
@@ -200,7 +180,7 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
        *
        * @param data - New data to repalce state with
        */
-      private setData = (data?: Data) => {
+      private readonly setData = (data?: Data) => {
         this.setState(
           {
             commerceData: data,
@@ -220,9 +200,10 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
        *
        * @param data - Optional data to initialize the commerceData in state
        */
-      private loadData = (data?: Data) => {
+      private readonly loadData = (data?: Data) => {
         if (data) {
-          return this.setData(data);
+          this.setData(data);
+          return;
         }
 
         this.setState({
@@ -236,10 +217,12 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
       /**
        * Query for additional data and append to the current commerce data if an additional
        * page of data is found.
+       *
+       * @param productQuery
        */
-      private loadMore = async (productQuery: ProductQuery): Promise<Data> => {
+      private readonly loadMore = async (productQuery: ProductQuery): Promise<Data> => {
         const request = fetchData(this.props.commerceDataSource, {
-          ...(this.props as any), // TypeScript does not support rest parameters for generics :(
+          ...this.props,
           productQuery,
         });
 
@@ -280,8 +263,31 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
         // that components downstream can react immediately to the original data
         return request;
       };
+
+      public componentDidMount(): void {
+        if (this.state.commerceData) {
+          if (this.props.onDataLoaded) {
+            this.props.onDataLoaded(this.state.commerceData);
+          }
+        } else {
+          this.loadData();
+        }
+      }
+
+      public render(): JSX.Element {
+        const { onDataError, onDataLoaded, ...props } = this.props as any;
+
+        return (
+          <WrappedComponent
+            {...props}
+            commerceData={this.state && this.state.commerceData}
+            commerceLoadData={this.loadData}
+            commerceProviderLoadMore={this.loadMore}
+            isLoading={this.state && this.state.isLoading}
+          />
+        );
+      }
     };
-  };
 }
 
 export default withCommerceData;

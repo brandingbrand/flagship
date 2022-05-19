@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
-import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { style as S } from '../styles/MoreText';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.moreText;
 
-export type FormatType = 'outward' | 'inward';
+export type FormatType = 'inward' | 'outward';
 
 export interface SerializableMoreTextProps {
   numberOfCharacters: number;
@@ -25,7 +29,7 @@ export interface SerializableMoreTextProps {
 }
 
 export interface MoreTextProps
-  extends Omit<SerializableMoreTextProps, 'containerStyle' | 'textStyle' | 'textMoreLessStyle'> {
+  extends Omit<SerializableMoreTextProps, 'containerStyle' | 'textMoreLessStyle' | 'textStyle'> {
   // Container
   containerStyle?: StyleProp<ViewStyle>;
 
@@ -46,10 +50,6 @@ export interface MoreTextState {
 }
 
 export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
-  private readonly kButtonTouchabilityOpacity: number = 0.5;
-  private readonly kTextMore: string = FSI18n.string(componentTranslationKeys.readMore);
-  private readonly kTextLess: string = FSI18n.string(componentTranslationKeys.readLess);
-
   constructor(props: MoreTextProps) {
     super(props);
 
@@ -57,13 +57,17 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
       shouldShowMore: props.text.length > props.numberOfCharacters,
       visibleText:
         props.text.length > props.numberOfCharacters
-          ? props.text.substring(0, props.numberOfCharacters)
+          ? props.text.slice(0, Math.max(0, props.numberOfCharacters))
           : props.text,
     };
   }
 
-  handlePress = () => {
-    const { text, numberOfCharacters } = this.props;
+  private readonly kButtonTouchabilityOpacity: number = 0.5;
+  private readonly kTextMore: string = FSI18n.string(componentTranslationKeys.readMore);
+  private readonly kTextLess: string = FSI18n.string(componentTranslationKeys.readLess);
+
+  private readonly handlePress = () => {
+    const { numberOfCharacters, text } = this.props;
 
     if (this.state.shouldShowMore) {
       this.setState({
@@ -74,15 +78,15 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
       this.setState({
         shouldShowMore: true,
         visibleText:
-          text.length > numberOfCharacters ? text.substring(0, numberOfCharacters) : text,
+          text.length > numberOfCharacters ? text.slice(0, Math.max(0, numberOfCharacters)) : text,
       });
     }
   };
 
-  renderMoreLessOutwardSection = () => {
+  private readonly renderMoreLessOutwardSection = () => {
     const { shouldShowMore } = this.state;
 
-    const { textMore, textLess, textMoreLessStyle, renderMoreLessOutwardSection } = this.props;
+    const { renderMoreLessOutwardSection, textLess, textMore, textMoreLessStyle } = this.props;
 
     if (renderMoreLessOutwardSection) {
       return renderMoreLessOutwardSection(shouldShowMore, this.handlePress);
@@ -104,7 +108,7 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
     );
   };
 
-  renderOutward = () => {
+  private readonly renderOutward = () => {
     const { visibleText } = this.state;
 
     const { containerStyle, textStyle } = this.props;
@@ -118,7 +122,7 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
     );
   };
 
-  renderInward = () => {
+  private readonly renderInward = () => {
     const { shouldShowMore, visibleText } = this.state;
 
     const { containerStyle, textLess, textMore, textMoreLessStyle, textStyle } = this.props;
@@ -144,8 +148,8 @@ export class MoreText extends PureComponent<MoreTextProps, MoreTextState> {
     );
   };
 
-  render(): JSX.Element {
-    const { text, textStyle, numberOfCharacters } = this.props;
+  public render(): JSX.Element {
+    const { numberOfCharacters, text, textStyle } = this.props;
 
     if (text.length <= numberOfCharacters) {
       return <Text style={textStyle ? textStyle : S.text}>{text}</Text>;

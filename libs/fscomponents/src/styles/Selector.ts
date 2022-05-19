@@ -1,36 +1,41 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  selector: {
-    padding: 10,
-    height: 35,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'black',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  closeButton: {
+    fontSize: 30,
+    lineHeight: 30,
+  },
+  closeButtonContainer: {
     alignItems: 'center',
+    height: 35,
+    justifyContent: 'center',
+    width: 35,
   },
-  selectorLabel: {
-    minWidth: 30,
-  },
-  placeholderStyle: {
-    color: '#ccc',
-    fontSize: 13,
+  disabledItem: {
+    opacity: 0.5,
   },
   dropdownArrow: {
-    width: 15,
-    height: 15,
+    borderColor: 'black',
     borderLeftWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: 'black',
-    transform: [{ rotate: '-135deg' }],
-    marginTop: -8,
+    height: 15,
     marginRight: 10,
+    marginTop: -8,
+    transform: [{ rotate: '-135deg' }],
+    width: 15,
+  },
+  item: {
+    borderBottomColor: '#CDCDCD',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  itemText: {
+    padding: 10,
+    paddingBottom: 15,
+    paddingTop: 15,
   },
   itemsContainer: {
-    maxHeight: 300,
     backgroundColor: 'white',
+    maxHeight: 300,
   },
   modalContainer: {
     backgroundColor: 'rgba(0,0,0,0.36)',
@@ -43,44 +48,40 @@ export const style = StyleSheet.create({
     marginRight: 40,
   },
   modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#eeeeee',
-    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#CDCDCD',
-  },
-  closeButtonContainer: {
-    height: 35,
-    width: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    padding: 10,
-    fontWeight: '600',
-  },
-  closeButton: {
-    fontSize: 30,
-    lineHeight: 30,
-  },
-  item: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#CDCDCD',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  placeholderStyle: {
+    color: '#ccc',
+    fontSize: 13,
   },
   selectedItem: {
-    borderLeftWidth: 2,
     borderLeftColor: 'black',
-  },
-  itemText: {
-    padding: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
+    borderLeftWidth: 2,
   },
   selectedItemText: {
     fontWeight: '600',
   },
-  disabledItem: {
-    opacity: 0.5,
+  selector: {
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    height: 35,
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  selectorLabel: {
+    minWidth: 30,
+  },
+  title: {
+    fontWeight: '600',
+    padding: 10,
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

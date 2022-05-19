@@ -14,5 +14,5 @@ export { style as SearchScreenStyles } from './SearchScreen';
 export { style as SelectorStyles } from './Selector';
 export { style as StepperStyles } from './Stepper';
 export { style as SwatchesStyles } from './Swatches';
-export { RadioButtonStyle } from './RadioButtonStyle';
+export type { RadioButtonStyle } from './RadioButtonStyle';
 export * from './variables';

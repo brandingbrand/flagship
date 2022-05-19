@@ -1,11 +1,12 @@
 import { exec } from 'child_process';
-import path from 'path';
 import express from 'express';
-import { addProxy } from './lib/proxy';
+import path from 'path';
+
 import { healthCheck } from './lib/healthcheck';
+import { addProxy } from './lib/proxy';
 
 const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const envPath = process.env.ENV_PATH || 'env';
 const envFile = process.env.ENV || 'env';
 const rootDir = '../../';

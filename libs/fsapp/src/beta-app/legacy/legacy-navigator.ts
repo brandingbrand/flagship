@@ -1,11 +1,12 @@
-import type { LegacyNavLayout, LegacyNavOptions, LegacyTab } from './legacy-navigator.type';
-import type { FSRouterHistory } from '../router';
-import type { ModalService } from '../modal';
-
-import type { WebShell } from '../shell.web';
-import { BaseLegacyNavigator } from './internal/legacy-navigator.base';
 import { Navigation } from 'react-native-navigation';
+
+import type { ModalService } from '../modal';
+import type { FSRouterHistory } from '../router';
+import type { WebShell } from '../shell.web';
+
+import { BaseLegacyNavigator } from './internal/legacy-navigator.base';
 import { layoutToPath } from './internal/utils/layout-to-path';
+import type { LegacyNavLayout, LegacyNavOptions, LegacyTab } from './legacy-navigator.type';
 
 /**
  * @deprecated
@@ -28,6 +29,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param layout
+   * @param alternateId
    * @deprecated
    */
   public async push(layout: LegacyNavLayout, alternateId?: string): Promise<void> {
@@ -53,6 +56,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param _options
+   * @param alternateId
    * @deprecated
    */
   public async popTo(_options?: LegacyNavOptions, alternateId?: string): Promise<void> {
@@ -61,6 +66,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
 
   /**
    *
+   * @param layout
+   * @param alternateId
    * @deprecated
    */
   public async setStackRoot(layout: LegacyNavLayout, alternateId?: string): Promise<void> {
@@ -68,6 +75,7 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param layout
    * @deprecated
    */
   public async showModal(layout: LegacyNavLayout): Promise<void> {
@@ -75,6 +83,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param options
+   * @param alternateId
    * @deprecated
    */
   public mergeOptions(options: LegacyNavOptions, alternateId?: string): void {
@@ -82,6 +92,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param newProps
+   * @param alternateId
    * @deprecated
    */
   public async updateProps(newProps: object, alternateId?: string): Promise<void> {
@@ -89,6 +101,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param options
+   * @param alternateId
    * @deprecated
    */
   public async dismissModal(options?: LegacyNavOptions, alternateId?: string): Promise<void> {
@@ -96,6 +110,7 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param options
    * @deprecated
    */
   public async dismissAllModals(options?: LegacyNavOptions): Promise<void> {

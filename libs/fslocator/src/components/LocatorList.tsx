@@ -1,14 +1,18 @@
-import { SearchBar } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
+
 import { View } from 'react-native';
+
+import { SearchBar } from '@brandingbrand/fscomponents';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { style as S } from '../styles/Locator';
-import { Location, Region } from '../types/Location';
-import {
+import type { Location, Region } from '../types/Location';
+
+import type {
   PropType as LocatorContainerPropType,
   StateType as LocatorContainerStateType,
 } from './LocatorContainer';
 import ResultList from './ResultList';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 export interface PropType extends LocatorContainerPropType, LocatorContainerStateType {
   submitSearch: (searchValue: string) => void;
@@ -24,8 +28,8 @@ export interface PropType extends LocatorContainerPropType, LocatorContainerStat
 }
 
 export default class LocatorList extends Component<PropType> {
-  renderSearchBar = () => {
-    const { searchBarProps, renderSearchBar } = this.props;
+  private readonly renderSearchBar = () => {
+    const { renderSearchBar, searchBarProps } = this.props;
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
@@ -33,14 +37,14 @@ export default class LocatorList extends Component<PropType> {
       })
     ) : (
       <SearchBar
-        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
         onSubmit={this.props.submitSearch}
+        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
         {...searchBarProps}
       />
     );
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { listStyle } = this.props;
 
     return (

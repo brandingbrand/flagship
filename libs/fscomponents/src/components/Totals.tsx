@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { SerializableTotalProps, Total, TotalProps } from './Total';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
+import type { SerializableTotalProps, TotalProps } from './Total';
+import { Total } from './Total';
 
 export interface TotalsProps {
   totals: TotalProps[];
@@ -18,9 +21,9 @@ export const Totals: React.FunctionComponent<TotalsProps> = (props) => {
 
   return (
     <View style={style}>
-      {totals.map((total: TotalProps, index: number) => {
-        return <Total key={typeof total.keyName === 'string' ? total.keyName : index} {...total} />;
-      })}
+      {totals.map((total: TotalProps, index: number) => (
+        <Total key={typeof total.keyName === 'string' ? total.keyName : index} {...total} />
+      ))}
     </View>
   );
 };

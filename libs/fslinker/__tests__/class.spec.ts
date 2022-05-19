@@ -1,11 +1,10 @@
-// eslint-disable-next-line max-classes-per-file
 import {
-  getDependencies,
   Inject,
   Injectable,
   InjectionToken,
   Injector,
   LocalInjectorCache,
+  getDependencies,
 } from '../src';
 
 describe('injected class', () => {
@@ -19,7 +18,9 @@ describe('injected class', () => {
     class Example {}
     const token = new InjectionToken<Example>('CLASS_TOKEN');
 
-    expect(() => injector.provide({ provide: token, useClass: Example })).not.toThrow();
+    expect(() => {
+      injector.provide({ provide: token, useClass: Example });
+    }).not.toThrow();
   });
 
   it('should provide an instance of an injected class', () => {
@@ -29,6 +30,7 @@ describe('injected class', () => {
     injector.provide({ provide: token, useClass: Example });
 
     const instance = injector.get(token);
+
     expect(instance).toBeInstanceOf(Example);
   });
 
@@ -45,6 +47,7 @@ describe('injected class', () => {
     injector.provide({ provide: token, useClass: Example, deps: [dependencyToken] });
 
     const instance = injector.get(token);
+
     expect(instance?.dep).toBeInstanceOf(Dependency);
   });
 
@@ -58,14 +61,15 @@ describe('injected class', () => {
     const token = new InjectionToken<Example>('CLASS_TOKEN');
 
     injector.provide({ provide: dependencyToken, useClass: Dependency });
-    expect(() =>
+
+    expect(() => {
       injector.provide({
         provide: token,
         useClass: Example,
         // @ts-expect-error
         deps: [dependencyToken, dependencyToken],
-      })
-    ).toThrow(ReferenceError);
+      });
+    }).toThrow(ReferenceError);
   });
 
   it('should throw if a dependency is missing', () => {
@@ -77,13 +81,13 @@ describe('injected class', () => {
     const dependencyToken = new InjectionToken<Dependency>('DEPENDENCY_TOKEN');
     const token = new InjectionToken<Example>('CLASS_TOKEN');
 
-    expect(() =>
+    expect(() => {
       injector.provide({
         provide: token,
         useClass: Example,
         deps: [dependencyToken],
-      })
-    ).toThrow(ReferenceError);
+      });
+    }).toThrow(ReferenceError);
   });
 
   it('should automatically apply decorated dependencies', () => {
@@ -105,6 +109,7 @@ describe('injected class', () => {
     injector.provide({ provide: token, useClass: Example });
 
     const instance = injector.get(token);
+
     expect(instance?.dep1).toBeInstanceOf(Dependency1);
     expect(instance?.dep2).toBeInstanceOf(Dependency2);
   });
@@ -116,6 +121,7 @@ describe('injected class', () => {
     class Example {}
 
     const instance = injector.get(token);
+
     expect(instance).toBeInstanceOf(Example);
   });
 
@@ -136,6 +142,7 @@ describe('injected class', () => {
     }
 
     const instance = injector.get(SomeOtherService);
+
     expect(instance).toBeInstanceOf(SomeOtherService);
     expect(instance?.service).toBeInstanceOf(SomeService);
     expect(instance?.dep1).toBeInstanceOf(Dependency1);
@@ -151,6 +158,7 @@ describe('injected class', () => {
     }
 
     const instance = injector.get(SomeOtherService);
+
     expect(instance).toBeInstanceOf(SomeOtherService);
     expect(instance?.service).toBeInstanceOf(SomeService);
   });
@@ -180,6 +188,7 @@ describe('injected class', () => {
     }
 
     const deps = getDependencies(Example);
+
     expect(deps).toHaveLength(2);
     expect(deps[0]).toBe(dependencyToken1);
     expect(deps[1]).toBe(dependencyToken2);

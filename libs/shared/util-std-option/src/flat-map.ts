@@ -1,4 +1,5 @@
-import { isSome, Option } from './option';
+import type { Option } from './option';
+import { isSome } from './option';
 
 export const flatMap =
   <Input, Output>(flatMapFn: (input: Input) => Option<Output>) =>

@@ -1,21 +1,17 @@
 import React, { PureComponent } from 'react';
-import {
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  Text,
-  TextInput,
   TextStyle,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import { style as S } from '../styles/Stepper';
-
-import increase from '../../assets/images/increaseImage.png';
 import decrease from '../../assets/images/decreaseImage.png';
+import increase from '../../assets/images/increaseImage.png';
+import { style as S } from '../styles/Stepper';
 
 const icons = {
   increase,
@@ -65,7 +61,7 @@ export interface SerializableStepperProps {
 export interface StepperProps
   extends Omit<
     SerializableStepperProps,
-    'counterStyle' | 'stepperStyle' | 'qtyChangeButtonStyle' | 'qtyChangeImageStyle'
+    'counterStyle' | 'qtyChangeButtonStyle' | 'qtyChangeImageStyle' | 'stepperStyle'
   > {
   onChange?: (count: number) => void;
 
@@ -96,12 +92,12 @@ export interface StepperState {
 }
 
 export class Stepper extends PureComponent<StepperProps, StepperState> {
-  static defaultProps: Partial<StepperProps> = {
+  public static defaultProps: Partial<StepperProps> = {
     increaseButtonImage: icons.increase,
     decreaseButtonImage: icons.decrease,
   };
 
-  static getDerivedStateFromProps(props: StepperProps, state: StepperState) {
+  public static getDerivedStateFromProps(props: StepperProps, state: StepperState) {
     if (props.count && props.count !== state.count) {
       return {
         count: props.count,
@@ -111,8 +107,6 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     return null;
   }
 
-  private readonly kButtonTouchabilityOpacity: number = 0.5;
-
   constructor(props: StepperProps) {
     super(props);
 
@@ -121,7 +115,9 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     };
   }
 
-  handleDecreasePress = () => {
+  private readonly kButtonTouchabilityOpacity: number = 0.5;
+
+  private readonly handleDecreasePress = () => {
     const newCount = this.state.count - 1;
 
     this.setState({ count: newCount });
@@ -133,7 +129,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     }
   };
 
-  handleIncreasePress = () => {
+  private readonly handleIncreasePress = () => {
     const newCount = this.state.count + 1;
 
     this.setState({ count: newCount });
@@ -145,7 +141,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     }
   };
 
-  renderDecreaseButton = (style: {} = {}) => {
+  private readonly renderDecreaseButton = (style: {} = {}) => {
     const {
       decreaseButtonImage = icons.decrease,
       removeButtonImage,
@@ -156,7 +152,9 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     } = this.props;
     const { count } = this.state;
     const icon =
-      count <= countLowerLimit + 1 && !!removeButtonImage ? removeButtonImage : decreaseButtonImage;
+      count <= countLowerLimit + 1 && removeButtonImage !== undefined
+        ? removeButtonImage
+        : decreaseButtonImage;
 
     if (renderDecreaseButton) {
       return renderDecreaseButton(count, this.handleDecreasePress);
@@ -179,7 +177,7 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     );
   };
 
-  renderIncreaseButton = (style: {} = {}) => {
+  private readonly renderIncreaseButton = (style: {} = {}) => {
     const {
       countUpperLimit,
       increaseButtonImage = icons.increase,
@@ -209,43 +207,80 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
     );
   };
 
-  renderHorizontalCenter = (
+  private readonly renderHorizontalCenter = (
     counterStyle: StyleProp<TextStyle>,
     stepperStyle: StyleProp<ViewStyle>
-  ) => {
-    return (
-      <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
-        {this.renderDecreaseButton()}
-        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalCenter)}
-        {this.renderIncreaseButton()}
-      </View>
-    );
-  };
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
+      {this.renderDecreaseButton()}
+      {this.renderText(counterStyle ? counterStyle : S.counterHorizontalCenter)}
+      {this.renderIncreaseButton()}
+    </View>
+  );
 
-  renderHorizontalLeft = (
+  private readonly renderHorizontalLeft = (
     counterStyle: StyleProp<TextStyle>,
     stepperStyle: StyleProp<ViewStyle>
-  ) => {
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
+      {this.renderText(counterStyle ? counterStyle : S.counterHorizontalLeft)}
+      {this.renderDecreaseButton()}
+      {this.renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
+    </View>
+  );
+
+  private readonly renderVertical = (
+    counterStyle: StyleProp<TextStyle>,
+    stepperStyle: StyleProp<ViewStyle>
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
+      {this.renderIncreaseButton()}
+      {this.renderText(counterStyle ? counterStyle : S.counterVertical)}
+      {this.renderDecreaseButton()}
+    </View>
+  );
+
+  private readonly renderText = (counterStyle: StyleProp<TextStyle>) => {
+    const { count } = this.state;
+    const { prefix, prefixStyle, qtyStyle } = this.props;
+    const counterText = prefix ? `${prefix} ${count}` : `${count}`;
+
+    if (this.props.renderText) {
+      return this.props.renderText(counterText, counterStyle, this.state.count);
+    }
+    if (this.props.editable) {
+      return (
+        <TextInput
+          keyboardType="phone-pad"
+          onChangeText={this.onTextChange}
+          style={counterStyle}
+          value={counterText}
+        />
+      );
+    }
     return (
-      <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
-        {this.renderText(counterStyle ? counterStyle : S.counterHorizontalLeft)}
-        {this.renderDecreaseButton()}
-        {this.renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
-      </View>
+      <Text style={counterStyle}>
+        {Boolean(prefix) && <Text style={prefixStyle}>{prefix}</Text>}
+        <Text style={qtyStyle}>{count}</Text>
+      </Text>
     );
   };
 
-  renderVertical = (counterStyle: StyleProp<TextStyle>, stepperStyle: StyleProp<ViewStyle>) => {
-    return (
-      <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
-        {this.renderIncreaseButton()}
-        {this.renderText(counterStyle ? counterStyle : S.counterVertical)}
-        {this.renderDecreaseButton()}
-      </View>
-    );
+  private readonly onTextChange = (text: string) => {
+    text = text.replace(nonNumericRegex, '');
+    let value = Number.parseInt(text, 10);
+    if (!isNaN(value)) {
+      if (this.props.countUpperLimit && value > this.props.countUpperLimit) {
+        value = this.props.countUpperLimit;
+      }
+      this.setState({ count: value });
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
+    }
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { counterStyle, format, stepperStyle } = this.props;
     switch (format) {
       case 'horizontalCenter':
@@ -258,44 +293,4 @@ export class Stepper extends PureComponent<StepperProps, StepperState> {
         return this.renderHorizontalCenter(counterStyle, stepperStyle);
     }
   }
-
-  private renderText = (counterStyle: StyleProp<TextStyle>) => {
-    const { count } = this.state;
-    const { prefix, prefixStyle, qtyStyle } = this.props;
-    const counterText = prefix ? `${prefix} ${count}` : `${count}`;
-
-    if (this.props.renderText) {
-      return this.props.renderText(counterText, counterStyle, this.state.count);
-    }
-    if (this.props.editable) {
-      return (
-        <TextInput
-          keyboardType={'phone-pad'}
-          onChangeText={this.onTextChange}
-          style={counterStyle}
-          value={counterText}
-        />
-      );
-    }
-    return (
-      <Text style={counterStyle}>
-        {!!prefix && <Text style={prefixStyle}>{prefix}</Text>}
-        <Text style={qtyStyle}>{count}</Text>
-      </Text>
-    );
-  };
-
-  private onTextChange = (text: string) => {
-    text = text.replace(nonNumericRegex, '');
-    let value = parseInt(text, 10);
-    if (!isNaN(value)) {
-      if (this.props.countUpperLimit && value > this.props.countUpperLimit) {
-        value = this.props.countUpperLimit;
-      }
-      this.setState({ count: value });
-      if (this.props.onChange) {
-        this.props.onChange(value);
-      }
-    }
-  };
 }

@@ -1,10 +1,10 @@
-import * as path from '../../path';
+import { logError, logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
 import * as fs from '../../fs';
 import * as nativeConstants from '../../native-constants';
-import { Config } from '../../../types';
-import { logError, logInfo } from '../../../helpers';
+import * as path from '../../path';
 
-export function preLink(configuration: Config): void {
+export const preLink = (configuration: Config): void => {
   // Stick the Code Push deployment key into strings.xml so it's picked up by react-native-code-
   // push when init is run
   const deploymentKey = configuration.codepush && configuration.codepush.android.deploymentKey;
@@ -18,18 +18,20 @@ export function preLink(configuration: Config): void {
   fs.update(
     path.android.stringsPath(),
     '</resources>',
-    '    <string name="reactNativeCodePush_androidDeploymentKey">' +
-      deploymentKey +
-      '</string>\n</resources>'
+    `    <string name="reactNativeCodePush_androidDeploymentKey">${deploymentKey}</string>\n</resources>`
   );
-}
+};
 
 /**
  * Patches Android for the module.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-// eslint-disable-next-line complexity
+
+/**
+ *
+ * @param configuration
+ */
 export function postLink(configuration: Config): void {
   logInfo('patching Android for react-native-codepush');
 
@@ -39,7 +41,7 @@ export function postLink(configuration: Config): void {
 
   const assetsPath = path.android.assetsPath();
   const appCenterConfigPath = path.resolve(assetsPath, 'appcenter-config.json');
-  const codepush = configuration.codepush;
+  const { codepush } = configuration;
   const mainApplicationPath = path.android.mainApplicationPath(configuration);
 
   if (!codepush || !codepush.android) {
@@ -62,7 +64,7 @@ export function postLink(configuration: Config): void {
     'apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"';
   const gradlePath = path.android.gradlePath();
   const gradleContent = fs.readFileSync(gradlePath);
-  if (gradleContent.indexOf(codePushGradlePath) < 0) {
+  if (!gradleContent.includes(codePushGradlePath)) {
     logInfo(`patching codepush into build.gradle`);
     fs.writeFileSync(
       gradlePath,

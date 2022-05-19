@@ -1,7 +1,8 @@
-export { FSLegacyShim, FSLegacyShimConfig } from './legacy-shim';
+export type { FSLegacyShimConfig } from './legacy-shim';
+export { FSLegacyShim } from './legacy-shim';
 
 export { LegacyNavigator } from './legacy-navigator';
-export {
+export type {
   LegacyNavLayout,
   LegacyNavLayoutComponent,
   LegacyNavLayoutStack,
@@ -10,5 +11,5 @@ export {
   LegacyNavOptions,
   LegacyTab,
 } from './legacy-navigator.type';
-export { LegacyRoutableComponentClass, LegacySSRData } from './legacy-route.type';
+export type { LegacyRoutableComponentClass, LegacySSRData } from './legacy-route.type';
 export { makeLegacyScreen } from './components/legacy-screen.component';

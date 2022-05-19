@@ -1,4 +1,4 @@
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 
 export interface SessionManagerOptions {
   refreshToken: (token: CommerceTypes.SessionToken) => Promise<CommerceTypes.SessionToken>;
@@ -20,9 +20,9 @@ export class SessionManager {
 
   public async get(): Promise<CommerceTypes.SessionToken> {
     // allow no more than one invocation at a time
-    // eslint-disable-next-line complexity
+
     this.getPromise = (this.getPromise ?? Promise.resolve()).then(async () => {
-      let token: CommerceTypes.SessionToken | null | undefined = this.token;
+      let { token } = this;
 
       // we have expired token stored locally
       if (token && token.expiresAt < new Date()) {
@@ -42,8 +42,8 @@ export class SessionManager {
 
       // no token - get a token from the session
       try {
-        token = await this.options.sessionCookiesToToken();
-      } catch (e) {
+        token = (await this.options.sessionCookiesToToken()) ?? undefined;
+      } catch {
         /* let it fail sliently */
       }
 
@@ -58,9 +58,9 @@ export class SessionManager {
       if (this.options.restoreCookies) {
         try {
           await this.options.restoreCookies();
-          token = await this.options.sessionCookiesToToken();
-        } catch (e) {
-          /* let it fail sliently */
+          token = (await this.options.sessionCookiesToToken()) ?? undefined;
+        } catch {
+          /* let it fail silently */
         }
       }
 

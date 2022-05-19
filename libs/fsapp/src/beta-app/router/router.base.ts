@@ -1,17 +1,9 @@
-import type { FSRouterHistory } from './history';
-import type {
-  FSRouter,
-  FSRouterConstructor,
-  InternalRouterConfig,
-  RouterConfig,
-  Routes,
-} from './types';
-
 import { Linking } from 'react-native';
 
 import { Injector } from '@brandingbrand/fslinker';
 
 import { MODAL_CONTEXT_TOKEN, ModalContext } from '../modal';
+
 import {
   ACTIVATED_ROUTE_CONTEXT_TOKEN,
   ActivatedRouteContext,
@@ -25,18 +17,26 @@ import {
   NAVIGATOR_TOKEN,
   NavigatorContext,
   PARAM_CONTEXT_TOKEN,
-  ParamContext,
   PATH_CONTEXT_TOKEN,
+  ParamContext,
   PathContext,
   QUERY_CONTEXT_TOKEN,
   QueryContext,
 } from './context';
+import type { FSRouterHistory } from './history';
+import type {
+  FSRouter,
+  FSRouterConstructor,
+  InternalRouterConfig,
+  RouterConfig,
+  Routes,
+} from './types';
 import { getPath, resolveRoutes } from './utils';
 
 export abstract class FSRouterBase implements FSRouter {
   public static async register<T extends FSRouterBase>(
     this: FSRouterConstructor<T>,
-    options: RouterConfig & InternalRouterConfig
+    options: InternalRouterConfig & RouterConfig
   ): Promise<T> {
     const mergedRoutes = await resolveRoutes(options);
     return new this(mergedRoutes, options);
@@ -59,7 +59,7 @@ export abstract class FSRouterBase implements FSRouter {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       const path = getPath(url);
-      return this.history.open(path.startsWith('/') ? path : `/${path}`);
+      this.history.open(path.startsWith('/') ? path : `/${path}`);
     }
   }
 }

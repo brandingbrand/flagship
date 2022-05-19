@@ -1,27 +1,23 @@
 import React, { PureComponent } from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { Accordion, AccordionProps } from '../Accordion';
-import { SelectableRow, SelectableRowProps } from '../SelectableRow';
-import { FilterItem } from './FilterItem';
-import { FilterItemValue } from './FilterItemValue';
+
+import type { ListRenderItemInfo, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import type { AccordionProps } from '../Accordion';
+import { Accordion } from '../Accordion';
+import type { SelectableRowProps } from '../SelectableRow';
+import { SelectableRow } from '../SelectableRow';
+
+import type { FilterItem } from './FilterItem';
+import type { FilterItemValue } from './FilterItemValue';
+
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
 const defaultSingleFilterIds = [`cgid`];
 
-export interface SelectedItems {
-  [key: string]: string[];
-}
+export type SelectedItems = Record<string, string[]>;
 
 export interface FilterListProps {
   items: FilterItem[];
@@ -55,44 +51,44 @@ export interface FilterListState {
 }
 
 const S = StyleSheet.create({
-  titleStyle: {
-    fontWeight: 'bold',
-    fontSize: 15,
-  },
-  valueButton: {
-    height: 40,
+  accordionheader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   applyButton: {
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    flex: 1,
+    height: 40,
+    justifyContent: 'center',
     marginLeft: 10,
     marginVertical: 10,
-    height: 40,
-    flex: 1,
-    backgroundColor: '#eee',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
   },
   buttonsContainer: {
     flexDirection: 'row',
     marginRight: 10,
   },
-  accordionheader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  container: {
+    flex: 1,
   },
   selectedValueStyle: {
     color: '#999',
+    flex: 1,
     fontSize: 13,
     marginHorizontal: 10,
     textAlign: 'right',
-    flex: 1,
+  },
+  titleStyle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  valueButton: {
+    height: 40,
   },
 });
 
 export class FilterList extends PureComponent<FilterListProps, FilterListState> {
-  static getDerivedStateFromProps(nextProps: FilterListProps): Partial<FilterListState> {
+  public static getDerivedStateFromProps(nextProps: FilterListProps): Partial<FilterListState> {
     return {
       selectedItems: nextProps.selectedItems || {},
     };
@@ -105,12 +101,12 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     };
   }
 
-  handleSelect = (id: string, value: string) => () => {
+  private readonly handleSelect = (id: string, value: string) => () => {
     const { selectedItems } = this.state;
     const singleFilterIds = this.props.singleFilterIds || defaultSingleFilterIds;
     const selectedItem = selectedItems[id];
     // if already selected, and it's not in the list of single filter
-    if (selectedItem && singleFilterIds.indexOf(id) === -1) {
+    if (selectedItem && !singleFilterIds.includes(id)) {
       const findIndex = selectedItem.indexOf(value);
       if (findIndex > -1) {
         selectedItem.splice(findIndex, 1);
@@ -132,34 +128,35 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
     }
   };
 
-  renderFilterItemValue = (item: FilterItem) => (value: FilterItemValue, i: number) => {
-    const selectedItem = this.state.selectedItems[item.id];
-    const selected = (selectedItem && selectedItem.indexOf(value.value) > -1) ?? false;
+  private readonly renderFilterItemValue =
+    (item: FilterItem) => (value: FilterItemValue, i: number) => {
+      const selectedItem = this.state.selectedItems[item.id];
+      const selected = (selectedItem && selectedItem.includes(value.value)) ?? false;
 
-    if (this.props.renderFilterItemValue) {
-      return this.props.renderFilterItemValue(
-        item,
-        value,
-        this.handleSelect(item.id, value.value),
-        selected
+      if (this.props.renderFilterItemValue) {
+        return this.props.renderFilterItemValue(
+          item,
+          value,
+          this.handleSelect(item.id, value.value),
+          selected
+        );
+      }
+
+      return (
+        <SelectableRow
+          key={i}
+          onPress={this.handleSelect(item.id, value.value)}
+          selected={selected}
+          title={value.title}
+          {...this.props.selectableRowProps}
+        />
       );
-    }
+    };
 
-    return (
-      <SelectableRow
-        key={i}
-        title={value.title}
-        selected={selected}
-        onPress={this.handleSelect(item.id, value.value)}
-        {...this.props.selectableRowProps}
-      />
-    );
-  };
-
-  renderFilterItem = ({ item }: ListRenderItemInfo<FilterItem>) => {
+  private readonly renderFilterItem = ({ item }: ListRenderItemInfo<FilterItem>) => {
     const selectedValues = this.state.selectedItems[item.id] || [];
     const selectedValueTitle = (item.values || [])
-      .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
+      .filter((v: FilterItemValue) => selectedValues.includes(v.value))
       .map((v: FilterItemValue) => v.title);
 
     let accordionTitle: JSX.Element | undefined =
@@ -168,7 +165,7 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
       accordionTitle = (
         <View style={[S.accordionheader, this.props.itemStyle]}>
           <Text style={[S.titleStyle, this.props.itemTextStyle]}>{item.title}</Text>
-          <Text style={S.selectedValueStyle} numberOfLines={1} ellipsizeMode="tail">
+          <Text ellipsizeMode="tail" numberOfLines={1} style={S.selectedValueStyle}>
             {selectedValueTitle.join(', ')}
           </Text>
         </View>
@@ -177,23 +174,27 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
 
     return (
       <Accordion
+        content={
+          <React.Fragment>
+            {(item.values || []).map(this.renderFilterItemValue(item))}
+          </React.Fragment>
+        }
         title={accordionTitle}
-        content={<>{(item.values || []).map(this.renderFilterItemValue(item))}</>}
         {...this.props.accordionProps}
       />
     );
   };
 
-  handleApply = () => {
+  private readonly handleApply = () => {
     this.props.onApply(this.state.selectedItems);
   };
 
-  handleRest = () => {
+  private readonly handleRest = () => {
     this.setState({ selectedItems: {} });
     this.props.onReset();
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     // If we don't make a new copy, item in the
     // list won't get re-rendered when selected.
     // we might need more performant way to handle
@@ -204,20 +205,20 @@ export class FilterList extends PureComponent<FilterListProps, FilterListState> 
         <FlatList data={_items} renderItem={this.renderFilterItem} />
         <View style={[S.buttonsContainer, this.props.buttonContainerStyle]}>
           <TouchableOpacity
-            style={[S.applyButton, this.props.resetButtonStyle]}
-            onPress={this.handleRest}
-            accessibilityRole={'button'}
             accessibilityLabel={FSI18n.string(componentTranslationKeys.reset)}
+            accessibilityRole="button"
+            onPress={this.handleRest}
+            style={[S.applyButton, this.props.resetButtonStyle]}
           >
             <Text style={this.props.resetButtonTextStyle}>
               {this.props.resetText || FSI18n.string(componentTranslationKeys.reset)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[S.applyButton, this.props.applyButtonStyle]}
-            onPress={this.handleApply}
-            accessibilityRole={'button'}
             accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
+            accessibilityRole="button"
+            onPress={this.handleApply}
+            style={[S.applyButton, this.props.applyButtonStyle]}
           >
             <Text style={this.props.applyButtonTextStyle}>
               {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}

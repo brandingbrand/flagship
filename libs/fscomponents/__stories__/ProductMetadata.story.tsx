@@ -1,9 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { ReviewTypes } from '@brandingbrand/fscommerce';
+
 import { object, text } from '@storybook/addon-knobs';
-import { ReviewTypes } from '@brandingbrand/fscommerce';
-import { ProductMetadata } from '../src/components/ProductMetadata';
+import { storiesOf } from '@storybook/react';
 import Decimal from 'decimal.js';
+
+import { ProductMetadata } from '../src/components/ProductMetadata';
 
 const defaultReview: ReviewTypes.ReviewDetails = {
   id: '1',
@@ -17,10 +20,8 @@ const defaultReview: ReviewTypes.ReviewDetails = {
 
 storiesOf('ProductMetadata', module).add('basic usage', () => (
   <ProductMetadata
-    id="1"
-    style={{ padding: 20 }}
     brand={text('brand', 'Branding Brand')}
-    title={text('title', 'Product Name')}
+    id="1"
     originalPrice={object('originalPrice', {
       value: new Decimal('2.75'),
       currencyCode: 'USD',
@@ -30,5 +31,7 @@ storiesOf('ProductMetadata', module).add('basic usage', () => (
       currencyCode: 'USD',
     })}
     review={defaultReview}
+    style={{ padding: 20 }}
+    title={text('title', 'Product Name')}
   />
 ));

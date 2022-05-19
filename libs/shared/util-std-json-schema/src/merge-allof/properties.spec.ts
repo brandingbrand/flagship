@@ -1,23 +1,24 @@
+import { cloneDeep } from '@brandingbrand/standard-object';
+
+import AJV from 'ajv';
 import type { JSONSchema7Definition } from 'json-schema';
 
-import { cloneDeep } from '@brandingbrand/standard-object';
-import AJV from 'ajv';
-
-import { mergeAllOf as merger } from './index';
+import { mergeAllOf as merger } from '.';
 
 const ajv = new AJV({
   allowMatchingProperties: true,
 });
 
-function validateInputOutput(
+const validateInputOutput = (
   schema: JSONSchema7Definition,
   transformedSchema: JSONSchema7Definition,
   obj: unknown
-) {
+) => {
   const validOriginal = ajv.validate(schema, obj);
   const validNew = ajv.validate(transformedSchema, obj);
+
   expect(validOriginal).toStrictEqual(validNew);
-}
+};
 
 describe('properties', () => {
   describe('additionalProperties', () => {
@@ -199,6 +200,7 @@ describe('properties', () => {
       };
       const origSchema = cloneDeep(schema);
       const result = merger(schema);
+
       expect(result).not.toStrictEqual(origSchema);
 
       expect(result).toStrictEqual({
@@ -210,7 +212,8 @@ describe('properties', () => {
         },
         additionalProperties: false,
       });
-      [
+
+      for (const val of [
         {
           foo123: 'testfdsdfsfd',
         },
@@ -236,9 +239,9 @@ describe('properties', () => {
           // additionalProp
           foo234: 'testffdsafdsads',
         },
-      ].forEach((val) => {
+      ]) {
         validateInputOutput(origSchema, result, val);
-      });
+      }
     });
 
     it('disallows all except matching patternProperties if both true', () => {
@@ -268,6 +271,7 @@ describe('properties', () => {
       };
       const origSchema = cloneDeep(schema);
       const result = merger(schema);
+
       expect(result).not.toStrictEqual(origSchema);
 
       expect(result).toStrictEqual({
@@ -283,7 +287,8 @@ describe('properties', () => {
           '.+\\d+$': true,
         },
       });
-      [
+
+      for (const val of [
         {
           foo123: 'testfdsdfsfd',
         },
@@ -311,9 +316,9 @@ describe('properties', () => {
         {
           foo234: 'testffdsafdsads',
         },
-      ].forEach((val) => {
+      ]) {
         validateInputOutput(origSchema, result, val);
-      });
+      }
     });
 
     it('disallows all except matching patternProperties if one false', () => {
@@ -341,6 +346,7 @@ describe('properties', () => {
       };
       const origSchema = cloneDeep(schema);
       const result = merger(schema);
+
       expect(result).not.toStrictEqual(origSchema);
 
       expect(result).toStrictEqual({
@@ -355,7 +361,8 @@ describe('properties', () => {
         },
         additionalProperties: false,
       });
-      [
+
+      for (const val of [
         {
           foo123: 'testfdsdfsfd',
         },
@@ -383,9 +390,9 @@ describe('properties', () => {
         {
           foo234: 'testffdsafdsads',
         },
-      ].forEach((val) => {
+      ]) {
         validateInputOutput(origSchema, result, val);
-      });
+      }
     });
 
     it('disallows all if no patternProperties and if both false', () => {
@@ -412,7 +419,7 @@ describe('properties', () => {
       });
     });
 
-    it('applies additionalProperties to other schemas properties if they have any', function () {
+    it('applies additionalProperties to other schemas properties if they have any', () => {
       const result = merger({
         properties: {
           common: true,
@@ -728,7 +735,8 @@ describe('properties', () => {
           },
         },
       });
-      [
+
+      for (const val of [
         {
           name: 'test',
         },
@@ -748,9 +756,9 @@ describe('properties', () => {
           name: 'test',
           name2: 'testffdsafdsads',
         },
-      ].forEach((val) => {
+      ]) {
         validateInputOutput(schema, result, val);
-      });
+      }
     });
   });
 });

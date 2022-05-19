@@ -29,7 +29,8 @@ export {
   QUERY_CONTEXT_TOKEN,
   SCREEN_ID_CONTEXT_TOKEN,
 } from './context';
-export { ScreenProps, makeScreen } from './make-screen';
+export type { ScreenProps } from './make-screen';
+export { makeScreen } from './make-screen';
 export { dummyHistory } from './history/history.dummy';
 
 export type { FSRouterHistory } from './history';

@@ -1,7 +1,8 @@
-import type { LegacyNavLayout, LegacyNavLayoutComponent } from '../../legacy-navigator.type';
-
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
+
 import qs from 'qs';
+
+import type { LegacyNavLayout, LegacyNavLayoutComponent } from '../../legacy-navigator.type';
 
 /**
  * @internal
@@ -11,6 +12,7 @@ export const LEGACY_PATH_MAP = new InjectionToken<Map<string, string>>('LEGACY_P
 
 /**
  * @internal
+ * @param layout
  * @deprecated
  */
 export const layoutToPath = (layout: LegacyNavLayout | LegacyNavLayoutComponent) => {

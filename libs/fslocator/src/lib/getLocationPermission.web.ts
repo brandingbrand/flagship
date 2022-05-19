@@ -1,3 +1,3 @@
-export default async function getLocationPermission(): Promise<boolean> {
-  return true;
-}
+const getLocationPermission = async (): Promise<boolean> => true;
+
+export default getLocationPermission;

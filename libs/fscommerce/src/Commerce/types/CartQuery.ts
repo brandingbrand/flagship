@@ -1,4 +1,4 @@
-import { Cart } from './Cart';
+import type { Cart } from './Cart';
 
 /**
  * An interface that prescribes the options that can be passed into a data source's fetchCart

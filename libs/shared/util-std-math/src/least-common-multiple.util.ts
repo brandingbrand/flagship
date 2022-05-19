@@ -2,15 +2,16 @@
 // MIT
 
 import { isIntegerArray } from '@brandingbrand/standard-array';
+
 import { greatestCommonDivisor } from './greatest-common-divisor.util';
 
 /**
  * Computes the least common multiple (lcm).
  *
  * @param numbers - input array of integers
- * @returns least common multiple or null
+ * @return least common multiple or null
  */
-// eslint-disable-next-line complexity
+
 export const leastCommonMultiple = (...numbers: [number, number, ...number[]]): number => {
   let a: number;
   let b: number;

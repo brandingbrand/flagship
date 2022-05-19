@@ -1,4 +1,5 @@
 import { useContextToken } from '@brandingbrand/react-linker';
+
 import { GlobalStoreContext } from './global-store.context';
 
 export const useGlobalStore = () => {

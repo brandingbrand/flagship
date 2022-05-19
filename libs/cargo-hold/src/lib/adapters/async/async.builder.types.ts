@@ -1,7 +1,10 @@
-import { IPathLens } from '@brandingbrand/standard-lens';
-import { MaybePromise } from '@brandingbrand/types-utility';
-import { ActionSpecifier, AnyActionSpecifier, TypeGuard } from '../../action-bus';
-import { AsyncState } from './async.types';
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+import type { IPathLens } from '@brandingbrand/standard-lens';
+import type { MaybePromise } from '@brandingbrand/types-utility';
+
+import type { ActionSpecifier, AnyActionSpecifier, TypeGuard } from '../../action-bus';
+
+import type { AsyncState } from './async.types';
 
 const IDLE_SYMBOL = Symbol('IdleType');
 const SUCCESS_SYMBOL = Symbol('SuccessType');
@@ -21,7 +24,7 @@ export type WithPayloadTypes<
   SuccessType,
   FailureType,
   IdleType = SuccessType
-> = WithIdleType<IdleType> & WithSuccessType<SuccessType> & WithFailureType<FailureType>;
+> = WithFailureType<FailureType> & WithIdleType<IdleType> & WithSuccessType<SuccessType>;
 
 export type WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> = {
   lens: IPathLens<OuterStructureType, AsyncState<SuccessType, FailureType, IdleType>>;

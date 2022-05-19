@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from 'react-native';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import { EngagementContext } from '../lib/contexts';
 
 const styles = StyleSheet.create({
@@ -23,7 +26,7 @@ export interface TextBlockProps {
   link?: string;
 }
 export const TextBlock: React.FC<TextBlockProps> = React.memo(
-  ({ textStyle, containerStyle, localization, link, subtitle, text, animateIndex }) => {
+  ({ animateIndex, containerStyle, link, localization, subtitle, text, textStyle }) => {
     let fadeInView: any;
     let displayText = text;
     const handleFadeInRef = (ref: any) => (fadeInView = ref);
@@ -31,11 +34,7 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(
     const { handleAction, language } = React.useContext(EngagementContext);
 
     const filterLocalization =
-      (localization &&
-        localization.find((item) => {
-          return item.language === language;
-        })) ||
-      null;
+      (localization && localization.find((item) => item.language === language)) || null;
 
     if (filterLocalization) {
       displayText = filterLocalization.value;
@@ -75,7 +74,7 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(
         <TouchableOpacity activeOpacity={1} onPress={onPress(link)}>
           <View style={containerStyle}>
             <Text style={[styles.default, textStyle]}>{displayText}</Text>
-            {!!subtitle && (
+            {subtitle !== undefined && (
               <View style={subtitle.containerStyle}>
                 <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>
               </View>
@@ -87,7 +86,7 @@ export const TextBlock: React.FC<TextBlockProps> = React.memo(
     return (
       <View style={containerStyle}>
         <Text style={[styles.default, textStyle]}>{displayText}</Text>
-        {!!subtitle && (
+        {subtitle !== undefined && (
           <View style={subtitle.containerStyle}>
             <Text style={[styles.default, subtitle.textStyle]}>{subtitle.text}</Text>
           </View>

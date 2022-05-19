@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 
+import type { InjectedClass } from './inject';
+import { DEPENDENCIES_SYMBOL } from './inject';
 import { Injector } from './injector';
 import { InjectionToken } from './providers';
-import { DEPENDENCIES_SYMBOL, InjectedClass } from './inject';
 
 export const Injectable =
   <T>(tokenOrInjector?: InjectionToken<T> | Injector, optionalInjector?: Injector) =>
@@ -14,11 +15,11 @@ export const Injectable =
 
     Object.assign(target, new InjectionToken(Symbol(target.name)));
     const prevDependencies = target[DEPENDENCIES_SYMBOL] ?? [];
-    paramTypes.forEach((type, i) => {
+    for (const [i, type] of paramTypes.entries()) {
       if (typeof type === 'function' && 'uniqueKey' in type && prevDependencies[i] === undefined) {
         prevDependencies[i] = type;
       }
-    });
+    }
 
     target[DEPENDENCIES_SYMBOL] = prevDependencies;
 

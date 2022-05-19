@@ -1,19 +1,13 @@
-import React, { FunctionComponent, memo } from 'react';
-import {
-  Image,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { Step } from './Step';
-import { palette } from '../styles/variables';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import checkIcon from '../../assets/images/check.png';
+import { palette } from '../styles/variables';
+
+import { Step } from './Step';
 
 export interface IdStep {
   id: number;
@@ -33,16 +27,16 @@ export interface SerializableStepIndicatorProps {
   defaultStyle?: ViewStyle;
   defaultTextStyle?: TextStyle;
   style?: ViewStyle;
-  stepTitles: (string | IdStep)[];
+  stepTitles: Array<IdStep | string>;
   line?: boolean;
 }
 
 export interface StepIndicatorProps
   extends Omit<
     SerializableStepIndicatorProps,
+    | 'completedIconStyle'
     | 'completedStyle'
     | 'completedTextStyle'
-    | 'completedIconStyle'
     | 'currentStyle'
     | 'currentTextStyle'
     | 'defaultStyle'
@@ -61,107 +55,107 @@ export interface StepIndicatorProps
   style?: StyleProp<ViewStyle>;
 
   // Renders
-  renderComplete?: (step: string | IdStep) => JSX.Element;
-  renderActive?: (step: string | IdStep) => JSX.Element;
-  renderIncomplete?: (step: string | IdStep) => JSX.Element;
+  renderComplete?: (step: IdStep | string) => JSX.Element;
+  renderActive?: (step: IdStep | string) => JSX.Element;
+  renderIncomplete?: (step: IdStep | string) => JSX.Element;
 }
 
 const styles = StyleSheet.create({
-  largeContainer: {
-    flex: 1,
-    paddingHorizontal: 40,
-    paddingBottom: 45,
-    paddingTop: 10,
-  },
-  stepIndicatorContainer: {
+  active: {
+    alignItems: 'center',
+    backgroundColor: palette.secondary,
+    borderRadius: 50,
     display: 'flex',
     flexDirection: 'row',
+    height: 30,
+    justifyContent: 'center',
+    width: 30,
+  },
+  activeNumber: {
+    color: palette.onPrimary,
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+  },
+  activeTitleStyles: {
+    color: palette.secondary,
+    fontWeight: '600',
+  },
+  complete: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: palette.background,
+    borderColor: palette.primary,
+    borderRadius: 50,
+    borderWidth: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    height: 30,
+    justifyContent: 'center',
+    width: 30,
+  },
+  completeImage: {
+    height: 16,
+    width: 16,
+  },
+  container: {
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+  },
+  incomplete: {
+    alignItems: 'center',
+    backgroundColor: palette.secondary,
+    borderRadius: 50,
+    display: 'flex',
+    flexDirection: 'row',
+    height: 11,
+    justifyContent: 'center',
+    width: 11,
+  },
+  incompleteCircle: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    height: 30,
+  },
+  indicatorTitle: {
+    color: palette.secondary,
+    fontSize: 13,
+    fontWeight: '400',
+    letterSpacing: 0.5,
+    position: 'absolute',
+    top: '100%',
   },
   indicatorWrap: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  indicatorTitle: {
-    position: 'absolute',
-    top: '100%',
-    fontWeight: '400',
-    color: palette.secondary,
-    fontSize: 13,
-    letterSpacing: 0.5,
-  },
-  complete: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: palette.primary,
-    backgroundColor: palette.background,
-  },
-  completeImage: {
-    width: 16,
-    height: 16,
+  largeContainer: {
+    flex: 1,
+    paddingBottom: 45,
+    paddingHorizontal: 40,
+    paddingTop: 10,
   },
   line: {
-    height: 1,
-    flex: 1,
     backgroundColor: palette.secondary,
+    flex: 1,
+    height: 1,
   },
   lineActive: {
     backgroundColor: palette.secondary,
   },
-  active: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 30,
-    height: 30,
-    backgroundColor: palette.secondary,
-    borderRadius: 50,
-  },
-  activeNumber: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    letterSpacing: 0.5,
-    color: palette.onPrimary,
-  },
-  incompleteCircle: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 30,
-  },
-  incomplete: {
-    width: 11,
-    height: 11,
-    borderRadius: 50,
-    backgroundColor: palette.secondary,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  wrap: {
-    position: 'relative',
-    display: 'flex',
-  },
-  activeTitleStyles: {
-    fontWeight: '600',
-    color: palette.secondary,
-  },
-  container: {
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-  },
   stepContainer: {
     flex: 1,
+  },
+  stepIndicatorContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  wrap: {
+    display: 'flex',
+    position: 'relative',
   },
 });
 
@@ -169,17 +163,17 @@ const styles = StyleSheet.create({
  * StepIndicator component for displaying a series of steps in their completed state
  */
 export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props): JSX.Element => {
-  const { stepTitles, currentStep } = props;
+  const { currentStep, stepTitles } = props;
 
-  const stepPressed = (index: number, title: string): (() => void) => {
-    return () => {
+  const stepPressed =
+    (index: number, title: string): (() => void) =>
+    () => {
       if (props.onStepPressed) {
         props.onStepPressed(index, title);
       }
     };
-  };
 
-  const renderStep = (step: string | IdStep, index: number): JSX.Element => {
+  const renderStep = (step: IdStep | string, index: number): JSX.Element => {
     const completed = index < props.currentStep;
     let stepStyle = props.defaultStyle;
     let textStyle = props.defaultTextStyle;
@@ -192,7 +186,7 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
       textStyle = props.completedTextStyle;
     }
 
-    const stepTitle = typeof step === 'string' ? step : step.id + '. ' + step.name;
+    const stepTitle = typeof step === 'string' ? step : `${step.id}. ${step.name}`;
 
     return (
       <Step
@@ -209,19 +203,19 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
     );
   };
 
-  const ownRenderComplete = (step: string | IdStep): JSX.Element => {
+  const ownRenderComplete = (step: IdStep | string): JSX.Element => {
     if (props.renderComplete) {
       return props.renderComplete(step);
     }
 
     return (
       <View style={[styles.complete, props.completedStyle]}>
-        <Image style={styles.completeImage} source={checkIcon} resizeMode={'contain'} />
+        <Image resizeMode="contain" source={checkIcon} style={styles.completeImage} />
       </View>
     );
   };
 
-  const ownRenderActive = (step: string | IdStep): JSX.Element => {
+  const ownRenderActive = (step: IdStep | string): JSX.Element => {
     if (props.renderActive) {
       return props.renderActive(step);
     }
@@ -233,27 +227,27 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
     );
   };
 
-  const ownRenderIncomplete = (step: string | IdStep): JSX.Element => {
+  const ownRenderIncomplete = (step: IdStep | string): JSX.Element => {
     if (props.renderIncomplete) {
       return props.renderIncomplete(step);
     }
 
     return (
-      <View style={[styles.incompleteCircle]}>
+      <View style={styles.incompleteCircle}>
         <View style={[styles.incomplete, props.incompleteStyle]} />
       </View>
     );
   };
 
-  const renderStepIndicator = (step: string | IdStep, index: number): JSX.Element => {
+  const renderStepIndicator = (step: IdStep | string, index: number): JSX.Element => {
     const isActive = index === currentStep;
     const isComplete = index < currentStep;
     const isIncomplete = index > currentStep;
     const isLast = index === stepTitles.length - 1;
 
     return (
-      <>
-        <View key={index} style={[styles.indicatorWrap]}>
+      <React.Fragment>
+        <View key={index} style={styles.indicatorWrap}>
           <View style={styles.wrap}>
             {isComplete && ownRenderComplete(step)}
             {isActive && ownRenderActive(step)}
@@ -271,7 +265,7 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
           </Text>
         </View>
         {!isLast && <View style={[styles.line, isComplete && styles.lineActive]} />}
-      </>
+      </React.Fragment>
     );
   };
 

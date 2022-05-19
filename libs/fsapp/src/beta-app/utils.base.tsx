@@ -1,21 +1,15 @@
 import type { Route, RouteCollection } from './router';
 
-import loadable from '@loadable/component';
-import { fromPairs } from 'lodash-es';
-
 export const StaticImplements =
   <T,>() =>
-  <U extends T>(_constructor: U) => {
-    return;
-  };
+  <U extends T>(_constructor: U) => {};
 
 export const isDefined = <T,>(value: T | undefined): value is T => value !== undefined;
 
-const pathFromRoute = (route: Route, prefix?: string) => {
-  return route.path !== undefined
-    ? `${prefix?.replace(/\/$/, '') ?? ''}/${route.path?.replace(/^\//, '') ?? ''}`
+const pathFromRoute = (route: Route, prefix?: string) =>
+  route.path !== undefined
+    ? `${prefix?.replace(/\/$/, '') ?? ''}/${route.path.replace(/^\//, '') ?? ''}`
     : prefix ?? '/';
-};
 
 export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
   const path = pathFromRoute(route, prefix);
@@ -23,16 +17,13 @@ export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
   return { id, path };
 };
 
-export const lazyComponent = loadable;
-
-export const promisedEntries = async (data: Record<string, unknown>) => {
-  return fromPairs(
+export const promisedEntries = async (data: Record<string, unknown>) =>
+  Object.fromEntries(
     await Promise.all(
-      Object.entries(data).map(async ([key, entry]) => {
-        return [key, await Promise.resolve(entry)];
-      })
+      Object.entries(data).map(async ([key, entry]) => [key, await Promise.resolve(entry)])
     )
   );
-};
 
 export type Mutable<T> = { -readonly [P in keyof T]?: T[P] };
+
+export { default as lazyComponent } from '@loadable/component';

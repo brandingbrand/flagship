@@ -1,4 +1,8 @@
-import React, { Component, ComponentClass } from 'react';
+/* eslint-disable max-lines */
+import type { ComponentClass } from 'react';
+import React, { Component } from 'react';
+
+import type { ListRenderItem, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import {
   ActivityIndicator,
   Animated,
@@ -8,37 +12,35 @@ import {
   Image,
   ImageBackground,
   Linking,
-  ListRenderItem,
   Platform,
   RefreshControl,
-  StyleProp,
   StyleSheet,
   Text,
-  TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
-import { Injector } from '@brandingbrand/fslinker';
+import * as Animatable from 'react-native-animatable';
+import { Navigation } from 'react-native-navigation';
+import Carousel from 'react-native-snap-carousel';
+
 import { NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 import type { Navigator } from '@brandingbrand/fsapp/legacy';
+import { Injector } from '@brandingbrand/fslinker';
 
-import { EngagementService } from './EngagementService';
-import TabbedStory from './inboxblocks/TabbedStory';
-import { Navigation } from 'react-native-navigation';
-import { Action, BlockItem, ComponentList, EmitterProps, JSON, ScreenProps } from './types';
+import { debounce } from 'lodash-es';
+
+import appleCloseIcon from '../assets/images/apple-close-icn.png';
+import closeBronze from '../assets/images/closeBronze.png';
+import gradientImage from '../assets/images/gradient.png';
+import iconCloseXDark from '../assets/images/iconCloseXDark.png';
+import iconCloseXLight from '../assets/images/iconCloseXLight.png';
+
+import type { EngagementService } from './EngagementService';
 import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
-import Carousel from 'react-native-snap-carousel';
-import * as Animatable from 'react-native-animatable';
-import { debounce } from 'lodash-es';
+import TabbedStory from './inboxblocks/TabbedStory';
 import { EngagementContext } from './lib/contexts';
-
-import gradientImage from '../assets/images/gradient.png';
-import appleCloseIcon from '../assets/images/apple-close-icn.png';
-import iconCloseXLight from '../assets/images/iconCloseXLight.png';
-import iconCloseXDark from '../assets/images/iconCloseXDark.png';
-import closeBronze from '../assets/images/closeBronze.png';
+import type { Action, BlockItem, ComponentList, EmitterProps, JSON, ScreenProps } from './types';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
@@ -205,13 +207,13 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   autoplayDelay?: number;
   autoplayInterval?: number;
   storyType?: string;
-  tabbedItems?: any[];
+  tabbedItems?: unknown[];
   lastUpdate?: number;
   containerStyle?: StyleProp<ViewStyle>;
   animateScroll?: boolean;
   onBack?: () => void;
   language?: string;
-  AnimatedImage?: any;
+  AnimatedImage?: unknown;
   welcomeHeader?: boolean;
   headerName?: string;
   animate?: boolean;
@@ -233,224 +235,155 @@ export interface EngagementState {
   scrollEnabled: boolean;
 }
 
-export default function (
+// eslint-disable-next-line max-lines-per-function
+const WithEngagement = (
   api: EngagementService,
   layoutComponents: ComponentList
-): ComponentClass<EngagementScreenProps> {
-  return class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
-    state: any = {};
-    AnimatedStory: any;
-    AnimatedCloseIcon: any;
-    flatListRef: any;
-    AnimatedPageCounter: any;
-    AnimatedNavTitle: any;
-    pageCounterStyle: StyleProp<ViewStyle>;
-    pageNumberStyle: StyleProp<TextStyle>;
-    cardMove: any;
-    scrollPosition: number = 0;
-    AnimatedAppleClose: any;
-    AnimatedWelcome: any;
-    componentIsMounted: boolean = false;
+): ComponentClass<EngagementScreenProps> =>
+  class EngagementComp extends Component<EngagementScreenProps, EngagementState> {
+    public state = {
+      scrollY: new Animated.Value(0),
+      pageNum: 1,
+      isLoading: true,
+      showCarousel: false,
+      showDarkX: false,
+      slideBackground: false,
+      isClosingAnimation: false,
+      activeProgressBarIndex: 0,
+      scrollEnabled: true,
+    };
 
-    constructor(props: EngagementScreenProps) {
-      super(props);
-      this.state = {
-        scrollY: new Animated.Value(0),
-        pageNum: 1,
-        isLoading: true,
-        showCarousel: false,
-        showDarkX: false,
-        slideBackground: false,
-        isClosingAnimation: false,
-        activeProgressBarIndex: 0,
-        scrollEnabled: true,
-      };
-    }
+    private AnimatedStory: any;
+    private AnimatedCloseIcon: any;
+    private AnimatedPageCounter: any;
+    private AnimatedNavTitle: any;
+    private AnimatedAppleClose: any;
+    private AnimatedWelcome: any;
 
-    handleCloseIconRef = (ref: any) => (this.AnimatedCloseIcon = ref);
-    handleAnimatedRef = (ref: any) => (this.AnimatedStory = ref);
-    handlePageCounterRef = (ref: any) => (this.AnimatedPageCounter = ref);
-    handleNavTitleRef = (ref: any) => (this.AnimatedNavTitle = ref);
-    handleWelcomeRef = (ref: any) => (this.AnimatedWelcome = ref);
-    handleAppleCloseRef = (ref: any) => (this.AnimatedAppleClose = ref);
-    componentWillUnmount(): void {
-      // Check if closing because of navigation change or ui
-      if (!this.state.isClosingAnimation) {
-        // If navigation change also try to return back out of the story
-        if (this.props.onBack) {
-          this.props.onBack();
-        }
-      }
+    private flatListRef: any;
 
-      this.componentIsMounted = false;
-    }
-    componentDidMount(): void {
-      this.componentIsMounted = true;
+    private pageCounterStyle: StyleProp<ViewStyle>;
+    private pageNumberStyle: StyleProp<TextStyle>;
+    private readonly cardMove: unknown;
+    private scrollPosition = 0;
 
-      if (this.props.animate) {
-        if (this.props.json && this.props.json.tabbedItems && this.props.json.tabbedItems.length) {
-          this.setState({ showDarkX: true });
-        }
-        this.AnimatedStory.transition(
-          { translateY: 700 },
-          { translateY: 100 },
-          700,
-          'ease-out-cubic'
-        );
-        this.AnimatedCloseIcon.transition({ opacity: 0 }, { opacity: 1 }, 400, 'linear');
-      }
-      if (this.props.animateScroll) {
-        if (this.AnimatedStory) {
-          this.AnimatedStory.transition(
-            { translateY: 700 },
-            { translateY: 0 },
-            700,
-            'ease-out-cubic'
-          );
-        }
-        if (this.AnimatedAppleClose) {
-          setTimeout(() => {
-            this.AnimatedAppleClose.transition(
-              { translateY: 0 },
-              { translateY: -85 },
-              800,
-              'ease-in-out-back'
-            );
-          }, 300);
-        }
-      }
-      if (!(this.props.json && this.props.json.private_type === 'story')) {
-        setTimeout(() => {
-          if (this.componentIsMounted) {
-            this.setState({ showCarousel: true });
-          }
-        }, 500);
-      }
-    }
-    scrollToTop = () => {
+    private componentIsMounted = false;
+
+    private readonly handleCloseIconRef = (ref: unknown) => (this.AnimatedCloseIcon = ref);
+    private readonly handleAnimatedRef = (ref: unknown) => (this.AnimatedStory = ref);
+    private readonly handlePageCounterRef = (ref: unknown) => (this.AnimatedPageCounter = ref);
+    private readonly handleNavTitleRef = (ref: unknown) => (this.AnimatedNavTitle = ref);
+    private readonly handleWelcomeRef = (ref: unknown) => (this.AnimatedWelcome = ref);
+    private readonly handleAppleCloseRef = (ref: unknown) => (this.AnimatedAppleClose = ref);
+
+    private readonly scrollToTop = () => {
       this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     };
-    componentDidUpdate(prevProps: EngagementScreenProps): void {
-      const PRIVATE_BLOCKS = 'private_blocks';
-      const prevBlocks = (prevProps.json && prevProps.json[PRIVATE_BLOCKS]) || [];
-      const blocks = (this.props.json && this.props.json[PRIVATE_BLOCKS]) || [];
 
-      if (!prevBlocks.length && blocks.length) {
-        if (this.props.welcomeHeader && this.AnimatedWelcome) {
-          this.AnimatedWelcome.transition(
-            { translateY: -100 },
-            { translateY: 0 },
-            600,
-            'ease-out-cubic'
-          );
-        }
+    private readonly handleAction = debounce(async (actions: Action) => {
+      if (!(actions && actions.type && actions.value)) {
+        return false;
       }
-    }
-
-    handleAction =
-      // eslint-disable-next-line complexity
-      debounce(async (actions: Action) => {
-        if (!(actions && actions.type && actions.value)) {
-          return false;
-        }
-        DeviceEventEmitter.emit('viewLink', {
-          title: actions.name,
-          id: actions.id,
-          type: actions.type,
-          value: actions.value,
-          position: actions.position,
-        });
-        switch (actions.type) {
-          case 'blog-url':
-            await this.props.navigator?.push({
-              component: {
-                name: 'EngagementWebView',
-                options: {
-                  topBar: {
-                    visible: false,
-                  },
-                },
-                passProps: {
-                  actions,
-                  isBlog: true,
-                  backButton: true,
+      DeviceEventEmitter.emit('viewLink', {
+        title: actions.name,
+        id: actions.id,
+        type: actions.type,
+        value: actions.value,
+        position: actions.position,
+      });
+      switch (actions.type) {
+        case 'blog-url':
+          await this.props.navigator?.push({
+            component: {
+              name: 'EngagementWebView',
+              options: {
+                topBar: {
+                  visible: false,
                 },
               },
-            });
-            break;
-          case 'web-url':
-            await this.props.navigator?.showModal({
-              component: {
-                name: 'EngagementWebView',
-                passProps: { actions },
-                options: {
-                  statusBar: {
-                    style: 'dark' as const,
-                  },
-                  topBar: {
-                    background: { color: '#f5f2ee' },
-                    rightButtons: [
-                      {
-                        color: '#866d4b',
-                        // This is a fix for building from source with
-                        // `ImageURISource` image imports
-                        icon: closeBronze as unknown as number,
-                        id: 'close',
-                      },
-                    ],
-                  },
+              passProps: {
+                actions,
+                isBlog: true,
+                backButton: true,
+              },
+            },
+          });
+          break;
+        case 'web-url':
+          await this.props.navigator?.showModal({
+            component: {
+              name: 'EngagementWebView',
+              passProps: { actions },
+              options: {
+                statusBar: {
+                  style: 'dark' as const,
+                },
+                topBar: {
+                  background: { color: '#f5f2ee' },
+                  rightButtons: [
+                    {
+                      color: '#866d4b',
+                      // This is a fix for building from source with
+                      // `ImageURISource` image imports
+                      icon: closeBronze as unknown as number,
+                      id: 'close',
+                    },
+                  ],
                 },
               },
+            },
+          });
+          break;
+        case 'deep-link':
+          if (this.props.discoverPath && actions.value) {
+            const navigator = Injector.require(NAVIGATOR_TOKEN);
+            const method = this.props.deepLinkMethod || 'open';
+            navigator[method](actions.value);
+            break;
+          }
+          const separator = ~actions.value.indexOf('?') ? '&' : '?';
+          const query = `${separator}engagementDeeplink=true`;
+          const url = actions.value + query;
+          Linking.canOpenURL(actions.value)
+            .then((supported) => {
+              if (!supported) {
+                alert(`An error occurred: can't handle url ${url}`);
+                return false;
+              }
+              return Linking.openURL(url);
+            })
+            .catch((error) => {
+              alert(`An error occurred: ${error}`);
             });
-            break;
-          case 'deep-link':
-            if (this.props.discoverPath && actions.value) {
-              const navigator = Injector.require(NAVIGATOR_TOKEN);
-              const method = this.props.deepLinkMethod || 'open';
-              navigator[method](actions.value);
-              break;
-            }
-            const separator = ~actions.value.indexOf('?') ? '&' : '?';
-            const query = separator + 'engagementDeeplink=true';
-            const url = actions.value + query;
-            Linking.canOpenURL(actions.value)
-              .then((supported) => {
-                if (!supported) {
-                  alert("An error occurred: can't handle url " + url);
-                  return false;
-                } else {
-                  return Linking.openURL(url);
-                }
-              })
-              .catch((err) => alert('An error occurred: ' + err));
-            break;
-          case 'phone':
-            Linking.openURL('tel:' + actions.value).catch((err) =>
-              alert('An error occurred: ' + err)
-            );
-            break;
-          case 'email':
-            let mailUrl = 'mailto:' + actions.value;
-            if (actions.subject) {
-              const subject = actions.subject.replace(/ /g, '%20');
-              mailUrl += '?subject=' + subject;
-            }
-            if (actions.body) {
-              const separator = ~mailUrl.indexOf('?') ? '&' : '?';
-              const body = actions.body.replace(/ /g, '%20');
-              mailUrl += separator + 'body=' + body;
-            }
-            Linking.openURL(mailUrl).catch((err) =>
-              alert('An error occurred when trying to send email to ' + actions.value + ': ' + err)
-            );
-            break;
-          default:
-            break;
-        }
-        return;
-      }, 300);
+          break;
+        case 'phone':
+          Linking.openURL(`tel:${actions.value}`).catch((error) => {
+            alert(`An error occurred: ${error}`);
+          });
+          break;
+        case 'email':
+          let mailUrl = `mailto:${actions.value}`;
+          if (actions.subject) {
+            const subject = actions.subject.replace(/ /g, '%20');
+            mailUrl += `?subject=${subject}`;
+          }
+          if (actions.body) {
+            const separator = ~mailUrl.indexOf('?') ? '&' : '?';
+            const body = actions.body.replace(/ /g, '%20');
+            mailUrl += `${separator}body=${body}`;
+          }
+          Linking.openURL(mailUrl).catch((error) => {
+            alert(`An error occurred when trying to send email to ${actions.value}: ${error}`);
+          });
+          break;
+        default:
+          break;
+      }
 
-    renderBlockItem: ListRenderItem<BlockItem> = ({ item, index }) => {
+      return undefined;
+    }, 300);
+
+    private readonly renderBlockItem: ListRenderItem<BlockItem> = ({ index, item }) => {
       item.index = index;
       if (this.props.animate || (this.props.json && this.props.json.fullScreenCardImage)) {
         item.wrapper = true;
@@ -465,8 +398,9 @@ export default function (
       }
       return this.renderBlock(item);
     };
-    renderHeaderName = () => {
-      const { json, headerName } = this.props;
+
+    private readonly renderHeaderName = () => {
+      const { headerName, json } = this.props;
       const name = headerName || '';
       const headerTitleStyle = (json && json.headerTitleStyle) || {};
       const comma = name ? ', ' : '';
@@ -477,7 +411,8 @@ export default function (
         </Text>
       );
     };
-    renderFlatlistFooter = () => {
+
+    private readonly renderFlatlistFooter = () => {
       if (this.props.welcomeHeader) {
         return (
           <View
@@ -500,7 +435,8 @@ export default function (
         />
       );
     };
-    renderFlatlistHeader = () => {
+
+    private readonly renderFlatlistHeader = () => {
       if (!(this.props.animateScroll || this.props.welcomeHeader) || this.props.renderHeader) {
         return <View />;
       }
@@ -559,14 +495,17 @@ export default function (
         />
       );
     };
-    renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
+
+    private readonly renderBlockWrapper = (item: BlockItem): React.ReactElement | null => {
       const { private_type } = item;
       if (!layoutComponents[private_type]) {
         return null;
       }
 
       const layoutComponent = layoutComponents[WHITE_INBOX_WRAPPER];
-      if (!layoutComponent) return null;
+      if (!layoutComponent) {
+        return null;
+      }
       return React.createElement(
         layoutComponent,
         {
@@ -577,25 +516,24 @@ export default function (
         this.renderBlock(item)
       );
     };
-    addParentCardProps = (
+
+    private readonly addParentCardProps = (
       type: string,
       blocks: BlockItem[],
       parentStyle: StyleProp<ViewStyle>
     ): any => {
       if (type === 'Card') {
-        return (blocks || []).map((b) => {
-          return {
-            ...b,
-            cardContainerStyle: parentStyle,
-          };
-        });
+        return (blocks || []).map((b) => ({
+          ...b,
+          cardContainerStyle: parentStyle,
+        }));
       }
       return blocks;
     };
-    // eslint-disable-next-line complexity
-    renderBlock = (item: BlockItem): React.ReactElement | null => {
+
+    private readonly renderBlock = (item: BlockItem): React.ReactElement | null => {
       const { private_blocks, private_type, ...restProps } = item;
-      const { json, id, name } = this.props;
+      const { id, json, name } = this.props;
       const props = {
         id,
         name,
@@ -617,7 +555,9 @@ export default function (
       if (item.wrapper) {
         delete item.wrapper;
         const layoutComponent = layoutComponents[INBOX_WRAPPER];
-        if (!layoutComponent) return null;
+        if (!layoutComponent) {
+          return null;
+        }
 
         return React.createElement(
           layoutComponent,
@@ -634,7 +574,9 @@ export default function (
       }
 
       const layoutComponent = layoutComponents[private_type];
-      if (!layoutComponent) return null;
+      if (!layoutComponent) {
+        return null;
+      }
 
       return React.createElement(
         layoutComponent,
@@ -653,7 +595,7 @@ export default function (
       );
     };
 
-    onAnimatedClose = (): void => {
+    private readonly onAnimatedClose = (): void => {
       if (this.state.isClosingAnimation) {
         return;
       }
@@ -663,7 +605,7 @@ export default function (
       const { json } = this.props;
       const tabbedItems = json && json.tabbedItems;
       const timeout = this.scrollPosition < 1400 ? this.scrollPosition / 7 : 200;
-      const outYPositon = tabbedItems && tabbedItems.length ? 1020 : 700;
+      const outYPositon = tabbedItems && tabbedItems.length > 0 ? 1020 : 700;
       if (this.scrollPosition > 0) {
         this.scrollToTop();
       }
@@ -703,18 +645,20 @@ export default function (
       //   return this.props.navigator.dismissModal();
       // }, 550);
     };
-    setScrollEnabled = (enabled: boolean): void => {
+
+    private readonly setScrollEnabled = (enabled: boolean): void => {
       this.setState({
         scrollEnabled: enabled,
       });
     };
-    renderBlocks(): JSX.Element {
+
+    private renderBlocks(): JSX.Element {
       const { json } = this.props;
       const empty: any = (json && json.empty) || {};
       return (
         <>
           {((json && json.private_blocks) || []).map(this.renderBlock)}
-          {empty && !(json && json.private_blocks && json.private_blocks.length) && (
+          {empty && !(json && json.private_blocks && json.private_blocks.length > 0) && (
             <Text style={[styles.emptyMessage, empty.textStyle]}>
               {empty.message || 'No content found.'}
             </Text>
@@ -722,20 +666,20 @@ export default function (
         </>
       );
     }
-    // eslint-disable-next-line complexity
-    renderStoryGradient(): JSX.Element {
+
+    private renderStoryGradient(): JSX.Element {
       const {
         json: { storyGradient, tabbedItems },
       } = this.props;
       const { scrollY } = this.state;
       const empty: any = this.props.json.empty || {};
-      const { startFadePosition = 0, endFadePosition = 250 } = storyGradient || {};
+      const { endFadePosition = 250, startFadePosition = 0 } = storyGradient || {};
       const headerOpacity = scrollY.interpolate({
         inputRange: [startFadePosition, endFadePosition],
         outputRange: [0, 1],
         extrapolate: 'clamp',
       });
-      if (tabbedItems && tabbedItems.length) {
+      if (tabbedItems && tabbedItems.length > 0) {
         return (
           <TabbedStory
             items={tabbedItems}
@@ -786,7 +730,8 @@ export default function (
         </>
       );
     }
-    onTabbedCardPress = () => {
+
+    private readonly onTabbedCardPress = () => {
       const { json } = this.props;
       if (json.tabbedItems && this.state.activeProgressBarIndex >= json.tabbedItems.length - 1) {
         this.onAnimatedClose();
@@ -796,8 +741,8 @@ export default function (
         });
       }
     };
-    // eslint-disable-next-line complexity
-    renderContent(): JSX.Element {
+
+    private renderContent(): JSX.Element {
       const { animate, animateScroll, backButton, containerStyle, json } = this.props;
       if (animateScroll) {
         return (
@@ -839,17 +784,15 @@ export default function (
             </Animatable.View>
             {json && json.tabbedItems && json.tabbedItems.length && (
               <View style={styles.progressBar}>
-                {(json.tabbedItems || []).map((item: any, index: number) => {
-                  return (
-                    <View
-                      key={item.key}
-                      style={[
-                        styles.progressItem,
-                        this.state.activeProgressBarIndex === index && styles.activeProgress,
-                      ]}
-                    />
-                  );
-                })}
+                {(json.tabbedItems || []).map((item: any, index: number) => (
+                  <View
+                    key={item.key}
+                    style={[
+                      styles.progressItem,
+                      this.state.activeProgressBarIndex === index && styles.activeProgress,
+                    ]}
+                  />
+                ))}
               </View>
             )}
             {backButton && (
@@ -886,18 +829,19 @@ export default function (
       );
     }
 
-    onScrollFlatList = (event: any) => {
+    private readonly onScrollFlatList = (event: any) => {
       this.scrollPosition = event.nativeEvent.contentOffset.y;
       if (this.scrollPosition < topOffset) {
         this.onAnimatedClose();
       }
     };
-    onSnapToItem = (index: number): void => {
+
+    private readonly onSnapToItem = (index: number): void => {
       const pageNum = index + 1;
       if (
         this.props.json &&
         this.props.json.private_blocks &&
-        this.props.json.private_blocks.length &&
+        this.props.json.private_blocks.length > 0 &&
         this.props.json.private_blocks[index]
       ) {
         DeviceEventEmitter.emit('swipeCard', {
@@ -911,11 +855,11 @@ export default function (
       });
     };
 
-    renderFlatlistFooterPadding = (): JSX.Element => {
-      return <View style={styles.storyFooter} />;
-    };
-    // eslint-disable-next-line complexity
-    renderScrollView(): JSX.Element {
+    private readonly renderFlatlistFooterPadding = (): JSX.Element => (
+      <View style={styles.storyFooter} />
+    );
+
+    private renderScrollView(): JSX.Element {
       const { json } = this.props;
       const storyGradient = json && json.storyGradient;
       const tabbedItems = json && json.tabbedItems;
@@ -928,7 +872,7 @@ export default function (
         const autoplayInterval = this.props.autoplayInterval || 3000;
         return (
           <>
-            {empty && !(json && json.private_blocks && json.private_blocks.length) && (
+            {empty && !(json && json.private_blocks && json.private_blocks.length > 0) && (
               <Text style={[styles.emptyMessage, empty && empty.textStyle]}>
                 {(empty && empty.message) || 'No content found.'}
               </Text>
@@ -947,7 +891,7 @@ export default function (
                 inactiveSlideOpacity={1}
                 inactiveSlideScale={1}
                 onSnapToItem={this.onSnapToItem}
-                useScrollView={Platform.OS === 'ios' ? true : false}
+                useScrollView={Platform.OS === 'ios'}
               />
             )}
             {!this.state.showCarousel && <ActivityIndicator style={styles.growAndCenter} />}
@@ -989,7 +933,7 @@ export default function (
         return <>{this.renderBlocks()}</>;
       } else if (this.props.backButton && storyGradient && storyGradient.enabled) {
         return this.renderStoryGradient();
-      } else if (tabbedItems && tabbedItems.length) {
+      } else if (tabbedItems && tabbedItems.length > 0) {
         return (
           <TabbedStory
             items={tabbedItems}
@@ -1036,7 +980,7 @@ export default function (
             data={this.props.json.private_blocks || []}
             keyExtractor={this.dataKeyExtractor}
             renderItem={this.renderBlockItem}
-            ref={(ref: any) => {
+            ref={(ref: unknown) => {
               this.flatListRef = ref;
             }}
             onScroll={this.onScrollFlatList}
@@ -1062,8 +1006,90 @@ export default function (
       );
     }
 
-    // eslint-disable-next-line complexity
-    render(): JSX.Element {
+    private readonly dataKeyExtractor = (item: BlockItem): string =>
+      item.id || item.key || Math.floor(Math.random() * 1_000_000).toString();
+
+    public componentWillUnmount(): void {
+      // Check if closing because of navigation change or ui
+      if (
+        !this.state.isClosingAnimation && // If navigation change also try to return back out of the story
+        this.props.onBack
+      ) {
+        this.props.onBack();
+      }
+
+      this.componentIsMounted = false;
+    }
+
+    public componentDidMount(): void {
+      this.componentIsMounted = true;
+
+      if (this.props.animate) {
+        if (
+          this.props.json &&
+          this.props.json.tabbedItems &&
+          this.props.json.tabbedItems.length > 0
+        ) {
+          this.setState({ showDarkX: true });
+        }
+        this.AnimatedStory.transition(
+          { translateY: 700 },
+          { translateY: 100 },
+          700,
+          'ease-out-cubic'
+        );
+        this.AnimatedCloseIcon.transition({ opacity: 0 }, { opacity: 1 }, 400, 'linear');
+      }
+      if (this.props.animateScroll) {
+        if (this.AnimatedStory) {
+          this.AnimatedStory.transition(
+            { translateY: 700 },
+            { translateY: 0 },
+            700,
+            'ease-out-cubic'
+          );
+        }
+        if (this.AnimatedAppleClose) {
+          setTimeout(() => {
+            this.AnimatedAppleClose.transition(
+              { translateY: 0 },
+              { translateY: -85 },
+              800,
+              'ease-in-out-back'
+            );
+          }, 300);
+        }
+      }
+      if (!(this.props.json && this.props.json.private_type === 'story')) {
+        setTimeout(() => {
+          if (this.componentIsMounted) {
+            this.setState({ showCarousel: true });
+          }
+        }, 500);
+      }
+    }
+
+    public componentDidUpdate(prevProps: EngagementScreenProps): void {
+      const PRIVATE_BLOCKS = 'private_blocks';
+      const prevBlocks = (prevProps.json && prevProps.json[PRIVATE_BLOCKS]) || [];
+      const blocks = (this.props.json && this.props.json[PRIVATE_BLOCKS]) || [];
+
+      if (
+        prevBlocks.length === 0 &&
+        blocks.length > 0 &&
+        this.props.welcomeHeader &&
+        this.AnimatedWelcome
+      ) {
+        this.AnimatedWelcome.transition(
+          { translateY: -100 },
+          { translateY: 0 },
+          600,
+          'ease-out-cubic'
+        );
+      }
+    }
+
+    public render(): JSX.Element {
       const { json, navBarTitle } = this.props;
       this.pageCounterStyle =
         json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
@@ -1111,9 +1137,6 @@ export default function (
         </EngagementContext.Provider>
       );
     }
-
-    dataKeyExtractor = (item: BlockItem): string => {
-      return item.id || item.key || Math.floor(Math.random() * 1000000).toString();
-    };
   };
-}
+
+export default WithEngagement;

@@ -1,9 +1,9 @@
 import type { GridItem } from './grid.util';
 
-export type InsertAfterTable<T> = Record<number, T | GridItem<T>>;
+export type InsertAfterTable<T> = Record<number, GridItem<T> | T>;
 export interface InsertEveryOptions<T> {
   frequency: number;
-  values: (T | GridItem<T>) | (T | GridItem<T>)[];
+  values: Array<GridItem<T> | T> | GridItem<T> | T;
 }
 
 export interface InsertOptions<T> {
@@ -18,7 +18,7 @@ const makeInserter = <T>(
   const insertedIndexes = new Set<number>();
   const insertedIntervals = new Set<number>();
 
-  return (itIndex: number): { value: T | GridItem<T>; hasInserted: () => void } | undefined => {
+  return (itIndex: number): { value: GridItem<T> | T; hasInserted: () => void } | undefined => {
     const insertedIndex = insertAfter?.[itIndex - 1];
     if (insertedIndex !== undefined && !insertedIndexes.has(itIndex)) {
       const hasInserted = () => insertedIndexes.add(itIndex);
@@ -32,7 +32,7 @@ const makeInserter = <T>(
       if (shouldInsert && !insertedIntervals.has(iteration)) {
         const hasInserted = () => insertedIntervals.add(iteration);
 
-        if (Array.isArray(insertEvery?.values)) {
+        if (Array.isArray(insertEvery.values)) {
           const value = insertEvery.values[iteration];
           if (value === undefined) {
             return undefined;
@@ -52,6 +52,11 @@ const makeInserter = <T>(
   };
 };
 
+/**
+ *
+ * @param iterator
+ * @param options
+ */
 export function* gridInsert<T>(iterator: Iterable<T>, options?: InsertOptions<T>) {
   const { insertAfter, insertEvery } = options ?? {};
   const generator = iterator[Symbol.iterator]();

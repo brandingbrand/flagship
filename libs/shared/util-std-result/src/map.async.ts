@@ -1,5 +1,7 @@
-import { MaybePromise } from '@brandingbrand/types-utility';
-import { isOk, ok, Result, fail, isFailure } from './result';
+import type { MaybePromise } from '@brandingbrand/types-utility';
+
+import type { Result } from './result';
+import { fail, isFailure, isOk, ok } from './result';
 
 export const mapOkAsync =
   <InputOkType, OutputOkType, FailureType>(

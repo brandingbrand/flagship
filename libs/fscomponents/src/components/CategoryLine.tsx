@@ -1,19 +1,21 @@
-import React, { FunctionComponent, memo } from 'react';
-import {
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type {
   AccessibilityRole,
-  Image,
+  ImageSourcePropType,
   ImageStyle,
-  ImageURISource,
   StyleProp,
-  Text,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { TouchableHighlightLink } from './TouchableHighlightLink';
+import { Image, Text, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 
 import { style as S } from '../styles/CategoryLine';
+
+import { TouchableHighlightLink } from './TouchableHighlightLink';
 
 export interface SerializableCategoryLineProps extends CommerceTypes.Category {
   accessoryStyle?: ImageStyle;
@@ -24,7 +26,7 @@ export interface SerializableCategoryLineProps extends CommerceTypes.Category {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   underlayColor?: string;
-  accessorySrc?: ImageURISource;
+  accessorySrc?: ImageSourcePropType;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
 }
@@ -42,19 +44,18 @@ export interface CategoryLineProps
   titleStyle?: StyleProp<TextStyle>;
 }
 
-// eslint-disable-next-line complexity
 export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): JSX.Element => {
   const {
-    renderAccessory,
-    showAccessory,
     accessibilityLabel,
     accessibilityRole,
     accessorySrc,
     accessoryStyle,
     href,
     image,
-    showImage,
     imageStyle,
+    renderAccessory,
+    showAccessory,
+    showImage,
     style,
     title,
     titleStyle,
@@ -64,13 +65,13 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
   /**
    * Called when a user taps on the item.
    *
-   * @returns {void}
+   * @return
    */
   const handlePress = () => {
     const { onPress } = props;
 
     if (onPress) {
-      return onPress(props);
+      onPress(props);
     }
   };
 
@@ -79,18 +80,18 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
 
   return (
     <TouchableHighlightLink
-      style={[S.container, style]}
-      underlayColor={underlayColor || '#eee'}
-      onPress={handlePress}
-      href={href}
       accessibilityLabel={accessibilityLabel || title}
       accessibilityRole={accessibilityRole || 'link'}
+      href={href}
+      onPress={handlePress}
+      style={[S.container, style]}
+      underlayColor={underlayColor || '#eee'}
     >
       <View style={S.rowInner}>
         {showImageValue && image && <Image source={image} style={imageStyle} />}
         <Text style={[S.buttonText, titleStyle]}>{title}</Text>
         {showAccessoryValue && accessorySrc && (
-          <Image source={accessorySrc} style={accessoryStyle} resizeMode="contain" />
+          <Image resizeMode="contain" source={accessorySrc} style={accessoryStyle} />
         )}
         {renderAccessory && renderAccessory()}
       </View>

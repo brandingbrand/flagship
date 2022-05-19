@@ -1,26 +1,26 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
   markerImage: {
-    width: 22,
     height: 32,
+    width: 22,
   },
   markerImageSelected: {
-    width: 32,
     height: 48,
-  },
-  markerImageWeb: {
-    width: 22,
-    height: 32,
-    marginLeft: -11,
-    marginTop: -32,
+    width: 32,
   },
   markerImageSelectedWeb: {
-    width: 32,
     height: 48,
     marginLeft: -16,
     marginTop: -48,
+    width: 32,
+  },
+  markerImageWeb: {
+    height: 32,
+    marginLeft: -11,
+    marginTop: -32,
+    width: 22,
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

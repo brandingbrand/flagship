@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text } from 'react-native';
 
-import { ProductItemProps } from '../ProductItem';
 import { types } from '../../../styles/variables';
+import type { ProductItemProps } from '../ProductItem';
 
 export type ProductItemBrandProps = Pick<ProductItemProps, 'brand' | 'brandStyle' | 'renderBrand'>;
 
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export class ProductItemBrand extends Component<ProductItemBrandProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { brand, brandStyle, renderBrand } = this.props;
 
     if (renderBrand) {

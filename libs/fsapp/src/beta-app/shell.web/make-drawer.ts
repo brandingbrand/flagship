@@ -1,5 +1,7 @@
 import type { ComponentType } from 'react';
+
 import type { Mutable } from '../utils';
+
 import type { DrawerComponentProps, DrawerComponentType, DrawerOptions } from './types';
 
 export const makeDrawer = (

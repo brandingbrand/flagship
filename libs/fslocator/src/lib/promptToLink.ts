@@ -1,21 +1,16 @@
-import { Alert } from '@brandingbrand/fscomponents';
 import { Linking } from 'react-native';
 
-export default async function promptToLink({
-  title,
-  subTitle,
-  buttonText,
-  link,
-}: any): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
+import { Alert } from '@brandingbrand/fscomponents';
+
+const promptToLink = async ({ buttonText, link, subTitle, title }: any): Promise<void> =>
+  new Promise<void>((resolve, reject) => {
     Alert.alert({
       title,
       text: subTitle,
       confirmButtonText: buttonText,
       showCancelButton: true,
-      onConfirm: async () => {
-        return Linking.openURL(link).then(resolve).catch(reject);
-      },
+      onConfirm: async () => Linking.openURL(link).then(resolve).catch(reject),
     });
   });
-}
+
+export default promptToLink;

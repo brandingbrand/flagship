@@ -1,11 +1,10 @@
-import { Location } from '../../../requesters/ContentManagementSystemLocator';
+import type { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// eslint-disable-next-line complexity
-export default function targetInstancesByCity(
+const targetInstancesByCity = (
   instance: any,
-  targets: { [index: string]: any },
+  targets: Record<string, any>,
   location: Location
-): boolean {
+): boolean => {
   if (!instance) {
     return false;
   }
@@ -22,17 +21,19 @@ export default function targetInstancesByCity(
   const instanceUSCities =
     instance.targets && instance.targets['US-Cities'] && instance.targets['US-Cities'].cities;
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
   const campaignUSCities =
     targets[campaign] && targets[campaign]['US-Cities'] && targets[campaign]['US-Cities'].cities;
 
-  if (instanceUSCities && instanceUSCities.indexOf(location.city) === -1) {
+  if (instanceUSCities && !instanceUSCities.includes(location.city)) {
     return false;
   }
 
-  if (campaignUSCities && campaignUSCities.indexOf(location.city) === -1) {
+  if (campaignUSCities && !campaignUSCities.includes(location.city)) {
     return false;
   }
 
   return true;
-}
+};
+
+export default targetInstancesByCity;

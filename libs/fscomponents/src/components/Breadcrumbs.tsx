@@ -1,5 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React from 'react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
 import { TouchableOpacityLink } from './TouchableOpacityLink';
 
 export interface Breadcrumb {
@@ -50,15 +54,15 @@ export interface BreadcrumbsProps {
 const BREADCRUMBS_SEPARATOR_DEFAULT = '>';
 
 const BreadcrumbsStyles = StyleSheet.create({
+  breadcrumbContainer: {
+    flexDirection: 'row',
+    paddingBottom: 3,
+    paddingRight: 10,
+    paddingTop: 3,
+  },
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-  },
-  breadcrumbContainer: {
-    paddingTop: 3,
-    paddingRight: 10,
-    paddingBottom: 3,
-    flexDirection: 'row',
   },
   separator: {
     paddingLeft: 10,
@@ -66,31 +70,16 @@ const BreadcrumbsStyles = StyleSheet.create({
 });
 
 export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Element => {
-  const defaultProps: Partial<BreadcrumbsProps> = {
-    separator: BREADCRUMBS_SEPARATOR_DEFAULT,
-  };
-  const numItems = props.items.length;
-
-  return (
-    <View style={[BreadcrumbsStyles.container, props.style]}>
-      {props.items.map((item: Breadcrumb, index: number) =>
-        renderBreadcrumb(item, index, index === numItems - 1)
-      )}
-    </View>
-  );
-
-  function renderBreadcrumb(item: Breadcrumb, index: number, isLast: boolean): JSX.Element {
+  const renderBreadcrumb = (item: Breadcrumb, index: number, isLast: boolean): JSX.Element => {
     let title: JSX.Element;
 
-    if (item.onPress) {
-      title = (
-        <TouchableOpacityLink onPress={item.onPress} href={item.href}>
-          <Text style={[props.titleStyle, props.titleClickableStyle]}>{item.title}</Text>
-        </TouchableOpacityLink>
-      );
-    } else {
-      title = <Text style={[props.titleStyle, props.titleDisabledStyle]}>{item.title}</Text>;
-    }
+    title = item.onPress ? (
+      <TouchableOpacityLink href={item.href} onPress={item.onPress}>
+        <Text style={[props.titleStyle, props.titleClickableStyle]}>{item.title}</Text>
+      </TouchableOpacityLink>
+    ) : (
+      <Text style={[props.titleStyle, props.titleDisabledStyle]}>{item.title}</Text>
+    );
 
     return (
       <View
@@ -105,5 +94,18 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Ele
         )}
       </View>
     );
-  }
+  };
+
+  const defaultProps: Partial<BreadcrumbsProps> = {
+    separator: BREADCRUMBS_SEPARATOR_DEFAULT,
+  };
+  const numItems = props.items.length;
+
+  return (
+    <View style={[BreadcrumbsStyles.container, props.style]}>
+      {props.items.map((item: Breadcrumb, index: number) =>
+        renderBreadcrumb(item, index, index === numItems - 1)
+      )}
+    </View>
+  );
 };

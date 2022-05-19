@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
-import { InjectedProps } from '../types';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
+import type { InjectedProps } from '../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,17 +19,18 @@ export interface CardProps extends InjectedProps {
 }
 
 export default class InboxWrapper extends Component<CardProps> {
-  fadeInView: any;
-  handleFadeInRef = (ref: any) => (this.fadeInView = ref);
+  private fadeInView: any;
+  private readonly handleFadeInRef = (ref: any) => (this.fadeInView = ref);
 
-  componentDidMount(): void {
+  public componentDidMount(): void {
     if (this.props.animateIndex && this.props.animateIndex <= 2 && this.props.animateIndex >= 1) {
       setTimeout(() => {
         this.fadeInView.transition({ translateX: 0 }, { translateX: 24 }, 600, 'ease-out');
       }, 250);
     }
   }
-  componentDidUpdate(prevProps: CardProps): void {
+
+  public componentDidUpdate(prevProps: CardProps): void {
     if (
       this.props.slideBackground !== prevProps.slideBackground &&
       this.props.animateIndex &&
@@ -37,7 +41,7 @@ export default class InboxWrapper extends Component<CardProps> {
     }
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { animateIndex } = this.props;
     if (animateIndex && animateIndex <= 2 && animateIndex >= 1) {
       return (

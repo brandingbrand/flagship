@@ -1,38 +1,37 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
+  buttonInner: {
     alignItems: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderRadius: 3,
-  },
-  buttonView: {
     flex: 1,
     flexBasis: 'auto',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    textAlign: 'center',
+  buttonView: {
+    alignItems: 'center',
+    flex: 1,
+    flexBasis: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    borderRadius: 3,
+    justifyContent: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   full: {
     flex: 1,
     flexBasis: 'auto',
     width: '100%',
   },
-  buttonInner: {
-    flex: 1,
-    flexBasis: 'auto',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   icon: {
     marginRight: 5,
+  },
+  text: {
+    textAlign: 'center',
   },
 });
 
@@ -71,3 +70,5 @@ export const stylesTextSize = StyleSheet.create({
     fontSize: 12,
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

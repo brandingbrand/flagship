@@ -1,7 +1,9 @@
-import { Navigation, Options } from 'react-native-navigation';
+import type { Options } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
 /**
  * @internal
+ * @param defaultOptions
  * @deprecated
  */
 export const applyDefaultOptions = (defaultOptions?: Options) => {

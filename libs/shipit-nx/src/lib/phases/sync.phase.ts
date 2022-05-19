@@ -1,10 +1,10 @@
+import type { Commit } from '@brandingbrand/git';
+
 import { logger } from '@nrwl/devkit';
 
-import { Commit } from '@brandingbrand/git';
+import type { ShipConfig } from '../configs/ship.config';
 
-import { ShipConfig } from '../configs/ship.config';
-
-import { Phase } from './phase';
+import type { Phase } from './phase';
 
 export class SyncPhase implements Phase {
   constructor(private readonly config: ShipConfig) {}
@@ -13,17 +13,19 @@ export class SyncPhase implements Phase {
 
   private getSourceCommits(): Set<Commit> {
     let initialRevision = this.config.destinationRepo.findLastSourceCommit();
-    let firstCommit = false;
+    let isFirstCommit = false;
     if (initialRevision === undefined) {
       // Seems like it's a new repo so there is no signed commit.
       // Let's take the first one from our source repo instead.
       initialRevision = this.sourceRepo.findFirstAvailableCommit();
-      firstCommit = true;
+      isFirstCommit = true;
     }
 
     const sourceCommits = new Set<Commit>();
     const descendantsPath = this.sourceRepo.findDescendantsPath(initialRevision);
-    const revisions = firstCommit ? [initialRevision, ...(descendantsPath ?? [])] : descendantsPath;
+    const revisions = isFirstCommit
+      ? [initialRevision, ...(descendantsPath ?? [])]
+      : descendantsPath;
 
     if (revisions !== undefined) {
       for (const revision of revisions) {

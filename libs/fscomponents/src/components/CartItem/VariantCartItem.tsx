@@ -1,23 +1,31 @@
 import React from 'react';
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableHighlight,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { Button, ButtonProps, SerializableFSButtonProps } from '../Button';
-import { SerializableStepperProps, Stepper, StepperProps } from '../Stepper';
-import { Price } from '../Price';
+
+import type { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 import i18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { palette } from '../../styles/variables';
 
 import error from '../../../assets/images/error.png';
+import { palette } from '../../styles/variables';
+import type { ButtonProps, SerializableFSButtonProps } from '../Button';
+import { Button } from '../Button';
+import { Price } from '../Price';
+import type { SerializableStepperProps, StepperProps } from '../Stepper';
+import { Stepper } from '../Stepper';
+
+const variantToSelectedOptions = (item: CommerceTypes.CartItem): string[][] => {
+  const variantOptions = item.variants?.find(({ id }) => id === item.productId)?.optionValues;
+  const variantDetails = variantOptions?.map((selected) => {
+    const option = item.options?.find((option) => option.id === selected.name);
+    const name = option?.name;
+    const val = option?.values.find((val) => val.value === selected.value)?.name;
+    return !name || !val ? undefined : [name, val];
+  });
+  const details = variantDetails?.filter((detail): detail is string[] => Array.isArray(detail));
+
+  return details || [];
+};
 
 const icons = {
   error,
@@ -25,30 +33,12 @@ const icons = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
     paddingBottom: 30,
+    paddingHorizontal: 10,
   },
-  title: {
-    fontSize: 17,
-    lineHeight: 24,
-    letterSpacing: 0.5,
-    color: palette.onBackground,
-    marginBottom: 15,
-  },
-  productImage: {
-    resizeMode: 'contain',
-    width: 132,
-    height: 155,
-  },
-  wishlistButton: {
-    marginTop: 7,
-  },
-  wishlistButtonText: {
-    fontWeight: '500',
-    fontSize: 13,
-    lineHeight: 15,
-    letterSpacing: 0.5,
-    flexWrap: 'nowrap',
+  detailLine: {
+    lineHeight: 20,
+    marginBottom: 2,
   },
   itemWrapper: {
     flex: 1,
@@ -67,25 +57,43 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   outOfStockContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
     marginTop: 5,
   },
   outOfStockText: {
-    fontWeight: '500',
-    fontSize: 14,
-    lineHeight: 20,
-    letterSpacing: 0.5,
     color: palette.error,
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+    lineHeight: 20,
     marginLeft: 5,
   },
   priceWrapper: {
     marginBottom: 7,
   },
-  detailLine: {
-    lineHeight: 20,
-    marginBottom: 2,
+  productImage: {
+    height: 155,
+    resizeMode: 'contain',
+    width: 132,
+  },
+  title: {
+    color: palette.onBackground,
+    fontSize: 17,
+    letterSpacing: 0.5,
+    lineHeight: 24,
+    marginBottom: 15,
+  },
+  wishlistButton: {
+    marginTop: 7,
+  },
+  wishlistButtonText: {
+    flexWrap: 'nowrap',
+    fontSize: 13,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+    lineHeight: 15,
   },
 });
 
@@ -182,36 +190,37 @@ export interface SerializableVariantCartItemProps extends BaseVariantCartItemPro
 
 const isOutOfStock = (item: CommerceTypes.CartItem): boolean => {
   const variant = item.variants?.find(({ id }) => id === item.productId)?.available;
-  return !!variant;
+  return Boolean(variant);
 };
 
 export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props) => {
   const {
-    onQtyChange,
-    onMoveToWishlist,
-    onImagePress,
-    wishlistButtonProps,
-    style,
-    titleStyle,
-    leftColumnStyle,
-    rightColumnStyle,
-    productImageStyle,
-    originalPriceStyle,
-    priceStyle,
-    salePriceStyle,
     itemDetailLabelStyle,
     itemDetailValueStyle,
+    leftColumnStyle,
+    onImagePress,
+    onMoveToWishlist,
+    onQtyChange,
+    originalPriceStyle,
     outOfStockTextStyle,
-    stepperStyle,
+    priceStyle,
+    productImageStyle,
+    rightColumnStyle,
+    salePriceStyle,
     stepperProps,
+    stepperStyle,
+    style,
+    titleStyle,
+    wishlistButtonProps,
     ...item
   } = props;
-  const onQtyChangeHandler = (qty: number) => {
-    return onQtyChange?.(item.itemId, qty).catch((e) => console.log(e));
-  };
+  const onQtyChangeHandler = (qty: number) =>
+    onQtyChange?.(item.itemId, qty).catch((error_) => {
+      console.log(error_);
+    });
   const onMoveToWishlistHandler = () => onMoveToWishlist?.(item);
   const onImagePressHandler = () => onImagePress?.(item);
-  const image = item.images?.find((img) => !!img.uri);
+  const image = item.images?.find((img) => Boolean(img.uri));
 
   const details = [['SKU#', item.productId], ...variantToSelectedOptions(item)];
 
@@ -221,18 +230,21 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props
       <View style={styles.itemWrapper}>
         <View style={[styles.itemWrapperLeft, leftColumnStyle]}>
           {image && (
-            <TouchableHighlight disabled={!!onImagePressHandler} onPress={onImagePressHandler}>
+            <TouchableHighlight
+              disabled={Boolean(onImagePressHandler)}
+              onPress={onImagePressHandler}
+            >
               <Image source={image} style={[styles.productImage, productImageStyle]} />
             </TouchableHighlight>
           )}
-          {!!onMoveToWishlist && (
+          {Boolean(onMoveToWishlist) && (
             <Button
+              color="accent"
               onPress={onMoveToWishlistHandler}
               title={i18n.string(translationKeys.flagship.cart.moveToWishlist)}
-              color={'accent'}
               {...wishlistButtonProps}
-              titleStyle={[styles.wishlistButtonText, wishlistButtonProps?.titleStyle]}
               style={[styles.wishlistButton, wishlistButtonProps?.style]}
+              titleStyle={[styles.wishlistButtonText, wishlistButtonProps?.titleStyle]}
             />
           )}
         </View>
@@ -240,9 +252,9 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props
           <View>
             <View style={styles.priceWrapper}>
               <Price
-                price={item.price}
                 originalPrice={item.originalPrice}
                 originalPriceStyle={originalPriceStyle}
+                price={item.price}
                 priceStyle={priceStyle}
                 salePriceStyle={salePriceStyle}
               />
@@ -277,16 +289,3 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props
     </View>
   );
 });
-
-function variantToSelectedOptions(item: CommerceTypes.CartItem): string[][] {
-  const variantOptions = item.variants?.find(({ id }) => id === item.productId)?.optionValues;
-  const variantDetails = variantOptions?.map((selected) => {
-    const option = item.options?.find((option) => option.id === selected.name);
-    const name = option?.name;
-    const val = option?.values.find((val) => val.value === selected.value)?.name;
-    return !name || !val ? undefined : [name, val];
-  });
-  const details = variantDetails?.filter((detail): detail is string[] => Array.isArray(detail));
-
-  return details || [];
-}

@@ -1,12 +1,16 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import { Text } from 'react-native';
+
+import type { Navigator } from '@brandingbrand/fsapp';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 
 import { Card } from '../src/inboxblocks/Card';
-import { Text } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
-import { Action } from '../src/types';
+import type { Action } from '../src/types';
+
 import ActionContext from './assets/ActionContext';
 
 const submitAction = action('submit');
@@ -16,7 +20,7 @@ const WrapperContext = ActionContext((actions: Action) => {
 });
 
 const navigator: Navigator = {
-  push: (params: any) => {
+  push: (params: unknown) => {
     pushAction(params);
   },
 } as Navigator;
@@ -29,7 +33,7 @@ storiesOf('Engagement Card', module).add('basic usage', () => (
         type: boolean('Is Story', false) ? 'story' : 'click',
         value: text('actionValue', 'click'),
       }}
-      navigator={navigator}
+      navigator={navigator as any}
       story={{
         html: {
           link: text('Story Link', 'test.html'),

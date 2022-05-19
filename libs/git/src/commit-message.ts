@@ -1,8 +1,8 @@
-import { Header } from './commit';
+import type { Header } from './commit';
 
 export class CommitMessage implements Header {
   constructor(
-    private readonly message: Partial<Header> & Pick<Header, 'subject' | 'scope' | 'type'>
+    private readonly message: Partial<Header> & Pick<Header, 'scope' | 'subject' | 'type'>
   ) {}
 
   public readonly breaking = this.message.breaking ?? false;

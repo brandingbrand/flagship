@@ -3,11 +3,15 @@
  * fetch data from engagement module and render carousel
  */
 
-import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
-import React, { FunctionComponent, memo } from 'react';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
 import { View } from 'react-native';
-import { CarouselProps } from './Carousel';
+
+import type { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
+
 import { CMSBannerCarousel } from './CMSBannerCarousel';
+import type { CarouselProps } from './Carousel';
 
 export interface ShelfProps {
   provider: CoreContentManagementSystemProvider;
@@ -20,13 +24,13 @@ export interface ShelfProps {
 
 export const Shelf: FunctionComponent<ShelfProps> = memo((props): JSX.Element => {
   const {
+    bottomCarouselProps,
+    carouselHeight,
     children,
-    provider,
     group,
     identifier,
-    carouselHeight,
+    provider,
     topCarouselProps,
-    bottomCarouselProps,
   } = props;
 
   const tCarouselProps = topCarouselProps || {
@@ -42,19 +46,19 @@ export const Shelf: FunctionComponent<ShelfProps> = memo((props): JSX.Element =>
   return (
     <View>
       <CMSBannerCarousel
-        cmsProviderManagementConfig={provider}
-        cmsProviderGroup={group}
-        cmsProviderSlot="Banner-Top"
-        cmsProviderIdentifier={identifier}
         carouselProps={tCarouselProps}
+        cmsProviderGroup={group}
+        cmsProviderIdentifier={identifier}
+        cmsProviderManagementConfig={provider}
+        cmsProviderSlot="Banner-Top"
       />
       {children}
       <CMSBannerCarousel
-        cmsProviderManagementConfig={provider}
-        cmsProviderGroup={group}
-        cmsProviderSlot="Banner-Bottom"
-        cmsProviderIdentifier={identifier}
         carouselProps={bCarouselProps}
+        cmsProviderGroup={group}
+        cmsProviderIdentifier={identifier}
+        cmsProviderManagementConfig={provider}
+        cmsProviderSlot="Banner-Bottom"
       />
     </View>
   );

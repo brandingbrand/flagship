@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import type { default as RNPermissions, Permission } from 'react-native-permissions';
+import type { Permission, default as RNPermissions } from 'react-native-permissions';
 
 // Geolocation is currently bundled with fsengage even though apps may not use location-based
 // targeting. Because react-native-permissions requires apps to expose the permissions they use,
@@ -10,20 +10,19 @@ let rnPermissions: typeof RNPermissions | null = null;
 
 try {
   rnPermissions = require('react-native-permissions');
-} catch (e) {
+} catch {
   console.warn(
     'react-native-permissions must be added to your project' +
       ' to enable granular geolocation in fsengage'
   );
 }
 
-function getPermissionToCheck(rnPermissions: typeof RNPermissions): Permission {
-  return Platform.OS === 'ios'
+const getPermissionToCheck = (rnPermissions: typeof RNPermissions): Permission =>
+  Platform.OS === 'ios'
     ? rnPermissions.PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
     : rnPermissions.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-}
 
-export async function isGeolocationAllowed(): Promise<boolean> {
+export const isGeolocationAllowed = async (): Promise<boolean> => {
   const permissions = rnPermissions;
 
   if (permissions) {
@@ -35,7 +34,7 @@ export async function isGeolocationAllowed(): Promise<boolean> {
       .catch((error: Error) => {
         if (__DEV__) {
           console.log(
-            `%cLocator\n%c Function: isGeolocationAllowed\n Error: `,
+            `%cLocator\n%c Function: isGeolocationAllowed\n Error:`,
             'color: blue',
             'color: grey',
             error
@@ -46,10 +45,10 @@ export async function isGeolocationAllowed(): Promise<boolean> {
       });
   }
 
-  return Promise.resolve(false);
-}
+  return false;
+};
 
-export async function requestGeolocationPermission(): Promise<boolean> {
+export const requestGeolocationPermission = async (): Promise<boolean> => {
   const permissions = rnPermissions;
 
   if (permissions) {
@@ -60,5 +59,5 @@ export async function requestGeolocationPermission(): Promise<boolean> {
       .then((status) => status === permissions.RESULTS.GRANTED);
   }
 
-  return Promise.resolve(false);
-}
+  return false;
+};

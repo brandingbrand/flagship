@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
-import { isEqual, omit } from 'lodash-es';
-import { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
-import {
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
+import type { CommerceDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
+import type {
   FilterListDrilldownProps,
   FilterListProps,
   GridProps,
-  Loading,
   ProductItemProps,
   RefineActionBarProps,
   SelectableListProps,
 } from '@brandingbrand/fscomponents';
+import { Loading } from '@brandingbrand/fscomponents';
+
+import { isEqual, omit } from 'lodash-es';
 
 import { style as S } from '../styles/ProductIndex';
+
 import ProductIndexGrid from './ProductIndexGrid';
-import {
-  default as withProductIndexData,
-  WithProductIndexProps,
-  WithProductIndexProviderProps,
-} from './ProductIndexProvider';
+import type { WithProductIndexProps, WithProductIndexProviderProps } from './ProductIndexProvider';
+import { default as withProductIndexData } from './ProductIndexProvider';
 
 export interface UnwrappedProductIndexProps {
   columns?: number;
@@ -26,14 +28,14 @@ export interface UnwrappedProductIndexProps {
   fetchProducts?: (
     productQuery?: CommerceTypes.ProductQuery
   ) => Promise<CommerceTypes.ProductIndex>;
-  format?: 'list' | 'grid';
+  format?: 'grid' | 'list';
   errorText?: string;
   errorTextStyle?: StyleProp<TextStyle>;
   filterHeaderTitle?: string;
   filterListProps?: Partial<FilterListProps>;
   showDrilldownClose?: boolean;
-  gridProps?: Partial<GridProps<any>>;
-  handleFilterApply?: (data: any, info?: { isButtonPress: boolean }) => void;
+  gridProps?: Partial<GridProps<unknown>>;
+  handleFilterApply?: (data: unknown, info?: { isButtonPress: boolean }) => void;
   handleFilterReset?: () => void;
   onLoadComplete?: (
     loadMore: () => void,
@@ -58,7 +60,7 @@ export interface UnwrappedProductIndexProps {
   renderGhost?: () => JSX.Element;
   setTitleTotalItem?: (count: number) => void;
   renderFilter?: (
-    handleFilterApply: (data: any, info?: { isButtonPress: boolean }) => void,
+    handleFilterApply: (data: unknown, info?: { isButtonPress: boolean }) => void,
     handleFilterReset: () => void,
     commerceData: CommerceTypes.ProductIndex
   ) => JSX.Element;
@@ -74,7 +76,7 @@ export interface UnwrappedProductIndexProps {
     showFilterModal: () => void,
     showSortModal: () => void,
     commerceData: CommerceTypes.ProductIndex,
-    applyFilters?: (selectedItems: any, info?: { isButtonPress: boolean }) => void,
+    applyFilters?: (selectedItems: unknown, info?: { isButtonPress: boolean }) => void,
     resetFilters?: () => void
   ) => JSX.Element;
   renderSort?: (
@@ -86,7 +88,7 @@ export interface UnwrappedProductIndexProps {
   sortListProps?: Partial<SelectableListProps>;
   FilterListDrilldownProps?: Partial<FilterListDrilldownProps>;
   style?: StyleProp<ViewStyle>;
-  modalAnimationType?: 'none' | 'slide' | 'fade';
+  modalAnimationType?: 'fade' | 'none' | 'slide';
   modalType?: 'full-screen' | 'half-screen';
   filterType?: 'accordion' | 'drilldown';
   refinementBlacklist?: string[];
@@ -100,22 +102,48 @@ export interface UnwrappedProductIndexProps {
 export type ProductIndexProps = UnwrappedProductIndexProps & WithProductIndexProviderProps;
 
 export class ProductIndex extends Component<UnwrappedProductIndexProps & WithProductIndexProps> {
-  onPress = (data: CommerceTypes.Product) => {
-    return () => {
-      if (this.props.onNavigate) {
-        this.props.onNavigate(data);
-      }
-    };
+  private readonly onPress = (data: CommerceTypes.Product) => () => {
+    if (this.props.onNavigate) {
+      this.props.onNavigate(data);
+    }
   };
 
-  componentDidUpdate(prevProps: UnwrappedProductIndexProps & WithProductIndexProps): void {
+  private readonly getCommerceData = (
+    commerceData: CommerceTypes.ProductIndex,
+    selectedRefinementBlacklist?: string[]
+  ) => {
+    const filteredCommerceData =
+      selectedRefinementBlacklist && commerceData.selectedRefinements
+        ? {
+            ...commerceData,
+            selectedRefinements:
+              commerceData.selectedRefinements &&
+              omit(commerceData.selectedRefinements, selectedRefinementBlacklist),
+            refinements:
+              commerceData.refinements &&
+              (this.props.refinementBlacklist
+                ? commerceData.refinements.filter(
+                    (refinement) => this.props.refinementBlacklist?.indexOf(refinement.id) === -1
+                  )
+                : commerceData.refinements),
+          }
+        : commerceData;
+
+    if (filteredCommerceData.total !== undefined && this.props.setTitleTotalItem !== undefined) {
+      this.props.setTitleTotalItem(filteredCommerceData.total);
+    }
+
+    return filteredCommerceData;
+  };
+
+  public componentDidUpdate(prevProps: UnwrappedProductIndexProps & WithProductIndexProps): void {
     if (this.props.commerceLoadData && !isEqual(prevProps.productQuery, this.props.productQuery)) {
       this.props.commerceLoadData();
     }
   }
 
-  render(): JSX.Element {
-    const { format, loadingStyle, style, commerceData, modalCancelButton } = this.props;
+  public render(): JSX.Element {
+    const { commerceData, format, loadingStyle, modalCancelButton, style } = this.props;
     const productIndexProps = {
       ...this.props,
       onPress: this.onPress,
@@ -160,38 +188,9 @@ export class ProductIndex extends Component<UnwrappedProductIndexProps & WithPro
 
     return <View style={[S.container, style]}>{content}</View>;
   }
-
-  private getCommerceData = (
-    commerceData: CommerceTypes.ProductIndex,
-    selectedRefinementBlacklist?: string[]
-  ) => {
-    const filteredCommerceData =
-      selectedRefinementBlacklist && commerceData.selectedRefinements
-        ? {
-            ...commerceData,
-            selectedRefinements:
-              commerceData.selectedRefinements &&
-              omit(commerceData.selectedRefinements, selectedRefinementBlacklist),
-            refinements:
-              commerceData.refinements &&
-              (this.props.refinementBlacklist
-                ? commerceData.refinements.filter((refinement) => {
-                    return this.props.refinementBlacklist?.indexOf(refinement.id) === -1;
-                  })
-                : commerceData.refinements),
-          }
-        : commerceData;
-
-    if (!!filteredCommerceData.total && !!this.props.setTitleTotalItem) {
-      this.props.setTitleTotalItem(filteredCommerceData.total);
-    }
-
-    return filteredCommerceData;
-  };
 }
 
 export default withProductIndexData<UnwrappedProductIndexProps>(
-  async (dataSource: CommerceDataSource, props: UnwrappedProductIndexProps) => {
-    return dataSource.fetchProductIndex(props.productQuery);
-  }
+  async (dataSource: CommerceDataSource, props: UnwrappedProductIndexProps) =>
+    dataSource.fetchProductIndex(props.productQuery)
 )(ProductIndex);

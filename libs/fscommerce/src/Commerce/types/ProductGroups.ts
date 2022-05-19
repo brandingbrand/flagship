@@ -1,5 +1,5 @@
-import { Product } from './Product';
-import { ProductGroup } from './ProductGroup';
+import type { Product } from './Product';
+import type { ProductGroup } from './ProductGroup';
 
 /**
  * This is like an index of product indexes

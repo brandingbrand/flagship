@@ -1,5 +1,6 @@
-import type { ScreenOptions } from './types';
 import type { FC } from 'react';
+
+import type { ScreenOptions } from './types';
 
 export interface ScreenProps {
   componentId: string;

@@ -1,4 +1,5 @@
-import { DistinctQuestion } from 'inquirer';
+import type { DistinctQuestion } from 'inquirer';
+
 import { strToArray } from '../lib/transforms';
 
 export interface ExceptionDomainsAnswers {

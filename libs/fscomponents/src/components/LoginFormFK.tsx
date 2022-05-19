@@ -1,12 +1,18 @@
 import React from 'react';
-import { StyleProp, TextInputProps, TextStyle, View, ViewStyle } from 'react-native';
-import { Button } from './Button';
-import { Formik, FormikProps } from 'formik';
+
+import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
+import type { FormikProps } from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
+
 import { defineSchema, schemaRegex } from '../lib/formikHelpers';
+import { tr, trKeys } from '../lib/translations';
 import { style as S } from '../styles/FormFK';
+
+import { Button } from './Button';
 import { TextField } from './FormikFields/TextField';
-import { tr, trKeys } from '../lib/translations/index';
 
 export interface LoginFormProps {
   /**
@@ -63,7 +69,7 @@ export interface LoginFormProps {
   /**
    * Called on form submission
    */
-  onSubmit: (values: any) => void;
+  onSubmit: (values: FormValues) => void;
 }
 
 export type FieldOption = {
@@ -97,26 +103,26 @@ export const LoginFormFK: React.FC<LoginFormProps> = (props) => {
       {(f: FormikProps<FormValues>) => (
         <View style={[S.container, props.containerStyle]}>
           <TextField
-            name="emailAddress"
-            labelStyle={props.labelStyle}
             label={props.emailLabel || tr.string(trKeys.flagship.loginForm.email)}
+            labelStyle={props.labelStyle}
+            name="emailAddress"
             placeholder={tr.string(trKeys.flagship.loginForm.email)}
             style={[S.textInput, props.fieldStyle]}
             {...(props.fieldsOptions && props.fieldsOptions.emailAddress)}
           />
           <TextField
-            name="password"
-            labelStyle={props.labelStyle}
             label={props.passLabel || tr.string(trKeys.flagship.loginForm.password)}
-            secureTextEntry={true}
+            labelStyle={props.labelStyle}
+            name="password"
             placeholder={tr.string(trKeys.flagship.loginForm.password)}
+            secureTextEntry
             style={[S.textInput, props.fieldStyle]}
             {...(props.fieldsOptions && props.fieldsOptions.password)}
           />
           <Button
             onPress={f.handleSubmit}
-            title={props.submitText || tr.string(trKeys.flagship.loginForm.submit)}
             style={[S.button, props.submitButtonStyle]}
+            title={props.submitText || tr.string(trKeys.flagship.loginForm.submit)}
           />
         </View>
       )}

@@ -1,4 +1,5 @@
 import type { ComponentType, ReactElement } from 'react';
+
 import type {
   FlatListProps,
   ListRenderItemInfo,
@@ -6,6 +7,7 @@ import type {
   TextStyle,
   ViewStyle,
 } from 'react-native';
+
 import type { GridItem, InsertAfterTable, InsertRowTable, WidthTable } from './utils';
 
 export type GridScrollToTopFunc = () => void;
@@ -19,27 +21,27 @@ export interface GridRenderItemInfo<ItemT> extends ListRenderItemInfo<ItemT> {
 }
 
 export type GridRenderItem<ItemT> = (info: GridRenderItemInfo<ItemT>) => ReactElement | null;
-export type GridRow<ItemT> = GridItem<ItemT | null>[];
+export type GridRow<ItemT> = Array<GridItem<ItemT | null>>;
 
 // TODO [>=12.0.0] (@wSedlacek): remove deprecated props
 export interface GridProps<ItemT>
   extends Pick<
     FlatListProps<ItemT>,
-    | 'accessible'
     | 'accessibilityHint'
     | 'accessibilityLabel'
     | 'accessibilityRole'
-    | 'style'
+    | 'accessible'
     | 'data'
-    | 'refreshing'
-    | 'refreshControl'
-    | 'onRefresh'
-    | 'onLayout'
     | 'ListEmptyComponent'
     | 'ListFooterComponent'
     | 'ListFooterComponentStyle'
     | 'ListHeaderComponent'
     | 'ListHeaderComponentStyle'
+    | 'onLayout'
+    | 'onRefresh'
+    | 'refreshControl'
+    | 'refreshing'
+    | 'style'
   > {
   /**
    * Takes an item from data and renders it into the list. Typical usage:
@@ -214,7 +216,7 @@ export interface GridProps<ItemT>
   insertRows?: InsertRowTable<ItemT>;
   insertAfter?: InsertAfterTable<ItemT>;
   insertEveryFrequency?: number;
-  insertEveryValues?: ItemT | GridItem<ItemT> | (ItemT | GridItem<ItemT>)[];
+  insertEveryValues?: Array<GridItem<ItemT> | ItemT> | GridItem<ItemT> | ItemT;
 
   dataSet?: Record<string, ''>;
 

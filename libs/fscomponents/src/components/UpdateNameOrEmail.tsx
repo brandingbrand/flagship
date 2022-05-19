@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import {
+
+import type {
   NativeSyntheticEvent,
   StyleProp,
   TextInputFocusEventData,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
-import { emailRegex } from '../lib/email';
-import { Form } from './Form';
-import { Button } from './Button';
+import { View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { emailRegex } from '../lib/email';
+
+import { Button } from './Button';
+import { Form } from './Form';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.updateNameOrEmail;
 
 export interface UpdateNameOrEmailState {
@@ -21,33 +26,28 @@ export interface UpdateNameOrEmailState {
 }
 
 export interface UpdateNameOrEmailProps {
-  fieldsStyleConfig?: Record<string, any>; // custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: <T = any>(value: T) => void; // the behavior we want onPress of submit button
+  fieldsStyleConfig?: Record<string, unknown>; // custom stylesheet we want to merge with the default stylesheet
+  onSubmit?: <T = unknown>(value: T) => void; // the behavior we want onPress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: () => string; // Text to override the submit button
   style?: StyleProp<ViewStyle>;
-  fieldsOptions?: Record<string, any>; // extra desired behavior, like placeholders
-  value?: Record<string, any>;
+  fieldsOptions?: Record<string, unknown>; // extra desired behavior, like placeholders
+  value?: Record<string, unknown>;
 }
 
 // check for validity as part of the type
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
 EmailType.getValidationErrorMessage = (s: string) => {
   if (!s) {
     return FSI18n.string(componentTranslationKeys.form.emailAddress.error.missing);
-  } else {
-    return FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid);
   }
+  return FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid);
 };
 
 // check for minimum password length of 6
-const PasswordType = t.refinement(t.String, (str: string) => {
-  return str.length >= 6;
-});
+const PasswordType = t.refinement(t.String, (str: string) => str.length >= 6);
 
 PasswordType.getValidationErrorMessage = (s: string) => {
   if (!s) {
@@ -60,11 +60,6 @@ PasswordType.getValidationErrorMessage = (s: string) => {
 };
 
 export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateNameOrEmailState> {
-  form?: Form | null;
-  fieldsStyleConfig: Record<string, any>;
-  fieldsTypes: Record<string, any>;
-  fieldsOptions: Record<string, any>;
-
   constructor(props: UpdateNameOrEmailProps) {
     super(props);
 
@@ -83,7 +78,9 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('lastName'),
+        onSubmitEditing: () => {
+          this.focusField('lastName');
+        },
         error: FSI18n.string(componentTranslationKeys.form.firstName.error),
       },
       lastName: {
@@ -91,7 +88,9 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('emailAddress'),
+        onSubmitEditing: () => {
+          this.focusField('emailAddress');
+        },
         error: FSI18n.string(componentTranslationKeys.form.lastName.error),
       },
       emailAddress: {
@@ -100,7 +99,9 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
-        onSubmitEditing: () => this.focusField('password'),
+        onSubmitEditing: () => {
+          this.focusField('password');
+        },
         error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid),
       },
       password: {
@@ -108,7 +109,9 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('confirmPassword'),
+        onSubmitEditing: () => {
+          this.focusField('confirmPassword');
+        },
         secureTextEntry: true,
         onChange: (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
           const currentVal = this.state.value;
@@ -142,21 +145,28 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
       },
       ...props.fieldsStyleConfig,
     };
-  } // end constructor
-
-  componentDidMount(): void {
-    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
   }
 
-  handleSubmit = () => {
-    const value = this?.form?.getValue();
+  private form?: Form | null;
+  private readonly fieldsStyleConfig: Record<string, unknown>;
+  private readonly fieldsTypes: Record<string, unknown>;
+  private readonly fieldsOptions: Record<string, unknown>;
+
+  private readonly handleSubmit = () => {
+    const value = this.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   };
 
-  focusField = (fieldName: string) => {
-    const field = this?.form?.getComponent(fieldName);
+  private readonly handleChange = (value: string) => {
+    this.setState({
+      value,
+    });
+  };
+
+  public focusField = (fieldName: string) => {
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -164,27 +174,25 @@ export class UpdateNameOrEmail extends Component<UpdateNameOrEmailProps, UpdateN
     }
   };
 
-  handleChange = (value: string) => {
-    this.setState({
-      value,
-    });
-  };
+  public componentDidMount(): void {
+    console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
+  }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={(ref) => (this.form = ref)}
-          fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
-          value={this.state.value}
+          fieldsTypes={this.fieldsTypes}
           onChange={this.handleChange}
+          ref={(ref) => (this.form = ref)}
+          value={this.state.value}
         />
         <Button
-          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
           onPress={this.handleSubmit}
           style={{ backgroundColor: '#867CDD', borderRadius: 5, borderColor: '#473BC7' }}
+          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
         />
       </View>
     );

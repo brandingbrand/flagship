@@ -1,8 +1,6 @@
 import type { FSLegacyShimConfig, LegacyRoutableComponentClass } from './src/beta-app/legacy';
 
-export {
-  FSLegacyShim,
-  makeLegacyScreen,
+export type {
   FSLegacyShimConfig as FSAppConfig,
   LegacyNavLayout as NavLayout,
   LegacyNavLayoutComponent as NavLayoutComponent,
@@ -10,10 +8,14 @@ export {
   LegacyNavLayoutStackChildren as NavLayoutStackChildren,
   LegacyNavModalOptions as NavModalOptions,
   LegacyNavOptions as NavOptions,
-  LegacyNavigator as Navigator,
   LegacyRoutableComponentClass as RoutableComponentClass,
   LegacySSRData as SSRData,
   LegacyTab as Tab,
+} from './src/beta-app/legacy';
+export {
+  FSLegacyShim,
+  makeLegacyScreen,
+  LegacyNavigator as Navigator,
 } from './src/beta-app/legacy';
 
 /**

@@ -1,6 +1,6 @@
-import { ShipConfig } from '../configs/ship.config';
+import type { ShipConfig } from '../configs/ship.config';
 
-import { Phase } from './phase';
+import type { Phase } from './phase';
 
 export class CleanPhase implements Phase {
   constructor(private readonly config: ShipConfig) {}

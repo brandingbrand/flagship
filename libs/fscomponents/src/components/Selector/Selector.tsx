@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react';
-import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 import { style as styles } from '../../styles/Selector';
 import { Modal } from '../Modal';
+
 import { SelectorList } from './SelectorList';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const componentTranslationKeys = translationKeys.flagship.selector;
 
@@ -45,7 +50,7 @@ export interface SelectorStateType {
 }
 
 export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
-  static getDerivedStateFromProps(
+  public static getDerivedStateFromProps(
     nextProps: SelectorProps,
     prevState: SelectorStateType
   ): Partial<SelectorStateType> | null {
@@ -66,8 +71,8 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
     };
   }
 
-  renderSelector = () => {
-    const { title, items, selectButtonStyle, labelStyle, placeholder, placeholderStyle } =
+  private readonly renderSelector = () => {
+    const { items, labelStyle, placeholder, placeholderStyle, selectButtonStyle, title } =
       this.props;
 
     const { selectedValue } = this.state;
@@ -79,9 +84,9 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
 
     return (
       <TouchableOpacity
-        style={[styles.selector, selectButtonStyle]}
-        onPress={this.openModal}
         accessibilityRole="button"
+        onPress={this.openModal}
+        style={[styles.selector, selectButtonStyle]}
       >
         {!selectorLabel && placeholder ? (
           <Text style={[styles.placeholderStyle, placeholderStyle]}>{placeholder}</Text>
@@ -95,47 +100,45 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
     );
   };
 
-  renderDropdownArrow = () => {
+  private readonly renderDropdownArrow = () => {
     if (this.props.renderDropdownArrow) {
       return this.props.renderDropdownArrow();
-    } else {
-      return <View style={styles.dropdownArrow} />;
     }
+    return <View style={styles.dropdownArrow} />;
   };
 
-  renderCloseButton = () => {
+  private readonly renderCloseButton = () => {
     if (this.props.renderCloseButton) {
       return this.props.renderCloseButton(this.closeModal);
-    } else {
-      return (
-        <TouchableOpacity
-          style={styles.closeButtonContainer}
-          onPress={this.closeModal}
-          accessibilityRole="button"
-          accessibilityLabel={FSI18n.string(componentTranslationKeys.close)}
-        >
-          <Text style={styles.closeButton}>×</Text>
-        </TouchableOpacity>
-      );
     }
+    return (
+      <TouchableOpacity
+        accessibilityLabel={FSI18n.string(componentTranslationKeys.close)}
+        accessibilityRole="button"
+        onPress={this.closeModal}
+        style={styles.closeButtonContainer}
+      >
+        <Text style={styles.closeButton}>×</Text>
+      </TouchableOpacity>
+    );
   };
 
-  renderModal = () => {
+  private readonly renderModal = () => {
     const title = this.props.title || FSI18n.string(componentTranslationKeys.select);
     return (
       <Modal
         animationType="fade"
-        transparent={true}
-        visible={this.state.modalVisible}
         onRequestClose={this.closeModal}
+        transparent
+        visible={this.state.modalVisible}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={[styles.modalHeader, this.props.modalHeaderStyle]}>
               <Text
-                style={[styles.title, this.props.modalHeaderTextStyle]}
-                accessibilityRole="header"
                 accessibilityLabel={this.props.titleAccessibilityLabel || title}
+                accessibilityRole="header"
+                style={[styles.title, this.props.modalHeaderTextStyle]}
               >
                 {title}
               </Text>
@@ -144,15 +147,15 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
 
             <View>
               <SelectorList
-                items={this.props.items}
-                onSelectChange={this.chooseItem}
-                selectedValue={this.state.selectedValue}
+                disabledItemStyle={this.props.disabledItemStyle}
                 itemHeight={this.props.itemHeight}
                 itemStyle={this.props.itemStyle}
                 itemTextStyle={this.props.itemTextStyle}
-                disabledItemStyle={this.props.disabledItemStyle}
+                items={this.props.items}
+                onSelectChange={this.chooseItem}
                 selectedItemStyle={this.props.selectedItemStyle}
                 selectedItemTextStyle={this.props.selectedItemTextStyle}
+                selectedValue={this.state.selectedValue}
               />
             </View>
           </View>
@@ -161,7 +164,29 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
     );
   };
 
-  render(): JSX.Element {
+  private readonly openModal = () => {
+    this.setState({
+      modalVisible: true,
+    });
+  };
+
+  private readonly closeModal = () => {
+    this.setState({
+      modalVisible: false,
+    });
+  };
+
+  private readonly chooseItem = (value: string) => () => {
+    this.setState({
+      selectedValue: value,
+    });
+    this.closeModal();
+    if (this.props.onValueChange) {
+      this.props.onValueChange(value);
+    }
+  };
+
+  public render(): JSX.Element {
     return (
       <View style={this.props.style}>
         {this.renderSelector()}
@@ -169,28 +194,4 @@ export class Selector extends PureComponent<SelectorProps, SelectorStateType> {
       </View>
     );
   }
-
-  openModal = () => {
-    this.setState({
-      modalVisible: true,
-    });
-  };
-
-  closeModal = () => {
-    this.setState({
-      modalVisible: false,
-    });
-  };
-
-  chooseItem = (value: string) => {
-    return () => {
-      this.setState({
-        selectedValue: value,
-      });
-      this.closeModal();
-      if (this.props.onValueChange) {
-        this.props.onValueChange(value);
-      }
-    };
-  };
 }

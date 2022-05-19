@@ -1,15 +1,19 @@
-import { FSApp } from '../fsapp/FSApp';
-import * as FSAppTypes from '../types';
-import type { default as expressRoot, Express, NextFunction, Request, Response } from 'express';
-import type { default as helmetRoot, HelmetData } from 'react-helmet';
+import type { HelmetData, default as helmetRoot } from 'react-helmet';
+
 import type { default as cookieParserRoot } from 'cookie-parser';
+import type { Express, NextFunction, Request, Response, default as expressRoot } from 'express';
 import fs from 'fs-extra';
 import path from 'path';
-import pathToRegexp, { Key } from 'path-to-regexp';
+import type { Key } from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp';
 import ReactDOMServer from 'react-dom/server';
+import type { Store } from 'redux';
 import { inspect } from 'util';
+
+import { FSApp } from '../fsapp/FSApp';
+import type * as FSAppTypes from '../types';
+
 import { pathForScreen } from './helpers';
-import { Store } from 'redux';
 
 // Load all these as soft dependencies
 let express: typeof expressRoot | undefined;
@@ -18,7 +22,7 @@ let cookieParser: typeof cookieParserRoot | undefined;
 
 try {
   express = require('express');
-} catch (e) {
+} catch {
   console.warn('express must be added to your project' + ' to enable server-side rendering');
 }
 
@@ -27,13 +31,13 @@ try {
   if (Helmet) {
     Helmet.canUseDOM = false;
   }
-} catch (e) {
+} catch {
   console.warn('react-helmet must be added to your project' + ' to enable server-side rendering');
 }
 
 try {
   cookieParser = require('cookie-parser');
-} catch (e) {
+} catch {
   console.warn('cookie-parser must be added to your project' + ' to enable server-side rendering');
 }
 
@@ -57,10 +61,10 @@ const sanitizeString = (inputString: string): string => {
   return decodedString;
 };
 
-async function initApp(
+const initApp = async (
   appConfig: FSAppTypes.AppConfigType,
   preInit?: (config: FSAppTypes.AppConfigType) => Promise<FSAppTypes.AppConfigType>
-): Promise<InitResponse> {
+): Promise<InitResponse> => {
   let cloneConfig = { ...appConfig };
 
   if (preInit) {
@@ -74,21 +78,21 @@ async function initApp(
     flagship,
     config: cloneConfig,
   };
-}
+};
 
 const _global: any = global;
 _global.IS_SERVER_SIDE = true;
 
 declare const BUNDLE_TIMESTAMP: string;
 
-async function renderApp(
+const renderApp = async (
   baseHTML: string,
   res: Response,
   flagshipApp: InitResponse,
   cache: boolean,
   req?: Request
-): Promise<void> {
-  const { flagship, config } = flagshipApp;
+): Promise<void> => {
+  const { config, flagship } = flagshipApp;
   const updatedConfig = {
     ...config,
     initialState: {
@@ -149,17 +153,17 @@ async function renderApp(
         res.status(500).send('There was an issue loading the React app.');
       }
     })
-    .catch((e: Error) => {
-      console.error(e);
-      res.status(500).send(e.toString());
+    .catch((error: Error) => {
+      console.error(error);
+      res.status(500).send(error.toString());
     });
-}
+};
 
-async function flagshipPreinit(
+const flagshipPreinit = async (
   req: Request,
   config: FSAppTypes.AppConfigType,
   pageState?: (data: FSAppTypes.SSRData, req: Request) => Promise<FSAppTypes.SSRData>
-): Promise<FSAppTypes.AppConfigType> {
+): Promise<FSAppTypes.AppConfigType> => {
   let ssrData: FSAppTypes.SSRData = {
     initialState: {
       ...config.initialState,
@@ -187,7 +191,7 @@ async function flagshipPreinit(
       state: {},
     },
   };
-}
+};
 
 export const attachSSR = (
   app: Express,
@@ -207,25 +211,23 @@ export const attachSSR = (
 
   initApp(
     appConfig,
-    async (config: FSAppTypes.AppConfigType): Promise<FSAppTypes.AppConfigType> => {
-      return {
-        ...config,
-        serverSide: true,
-        webRouterType: 'static',
-        webRouterProps: {
-          context: {},
-        },
-      };
-    }
+    async (config: FSAppTypes.AppConfigType): Promise<FSAppTypes.AppConfigType> => ({
+      ...config,
+      serverSide: true,
+      webRouterType: 'static',
+      webRouterProps: {
+        context: {},
+      },
+    })
   )
     .then((flagshipApp: InitResponse) => {
-      const { flagship, config } = flagshipApp;
+      const { config, flagship } = flagshipApp;
 
       if (express) {
         app.use('/static', express.static('./ssr-build/static'));
       }
 
-      Object.keys(config.screens).forEach((key) => {
+      for (const key of Object.keys(config.screens)) {
         const screen = config.screens[key] as FSAppTypes.RoutableComponentClass;
         const path = pathForScreen(screen, key);
         const keys: Key[] = [];
@@ -237,22 +239,21 @@ export const attachSSR = (
           }
           flagshipPreinit(req, config, screen.loadInitialData)
             .then(async (pageConfig: FSAppTypes.AppConfigType) => {
-              if (screen.shouldNext) {
-                if (
-                  await screen.shouldNext(
-                    {
-                      initialState: pageConfig.initialState,
-                      variables: pageConfig.variables,
-                    },
-                    req
-                  )
-                ) {
-                  next();
-                  return;
-                }
+              if (
+                screen.shouldNext &&
+                (await screen.shouldNext(
+                  {
+                    initialState: pageConfig.initialState,
+                    variables: pageConfig.variables,
+                  },
+                  req
+                ))
+              ) {
+                next();
+                return;
               }
               if (screen.cache !== undefined) {
-                res.set('Cache-Control', 'max-age=' + screen.cache);
+                res.set('Cache-Control', `max-age=${screen.cache}`);
               }
               renderApp(
                 baseHTML,
@@ -264,13 +265,13 @@ export const attachSSR = (
                     uncachedData: screen.cache ? undefined : pageConfig.uncachedData,
                   },
                 },
-                !!screen.cache,
+                Boolean(screen.cache),
                 req
               ).catch(handleRequestError(req, res));
             })
             .catch(handleRequestError(req, res));
         });
-      });
+      }
 
       if (options?.renderRoot !== false) {
         app.get('/', (req: Request, res: Response) => {
@@ -291,21 +292,21 @@ export const attachSSR = (
         });
       }
     })
-    .catch((e: any) => {
+    .catch((error: unknown) => {
       // There was an error initializing the SSR React App
-      console.error(e);
+      console.error(error);
     });
 };
 
-function handleRequestError(req: Request, res: Response): (e: any) => void {
-  return (e: any) => {
+const handleRequestError =
+  (req: Request, res: Response): ((e: unknown) => void) =>
+  (e: any) => {
     const debugMode = req.cookies.debug === 'on';
 
     if (!debugMode && !req.cookies.errorRetry) {
-      res.cookie('errorRetry', '1', { maxAge: 10000 });
+      res.cookie('errorRetry', '1', { maxAge: 10_000 });
 
       res.redirect(307, req.originalUrl);
-      return;
     } else {
       const statusCode = debugMode ? 200 : 500;
       let errorString = `<h2>We're sorry, an error has occurred.</h2><br />`;
@@ -315,7 +316,7 @@ function handleRequestError(req: Request, res: Response): (e: any) => void {
       errorString += `<pre> ${sanitizedError} </pre>`;
 
       if (e && e.code === 'ECONNRESET' && !debugMode && req.cookies.errorRetry !== '2') {
-        res.cookie('errorRetry', '2', { maxAge: 10000 });
+        res.cookie('errorRetry', '2', { maxAge: 10_000 });
         errorString += `
           <script>
             window.location.reload();
@@ -326,7 +327,5 @@ function handleRequestError(req: Request, res: Response): (e: any) => void {
       }
 
       res.status(statusCode).send(errorString);
-      return;
     }
   };
-}

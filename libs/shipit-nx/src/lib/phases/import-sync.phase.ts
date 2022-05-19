@@ -1,9 +1,9 @@
-import { Commit, DestinationRepo, SourceRepo } from '@brandingbrand/git';
+import type { Commit, DestinationRepo, SourceRepo } from '@brandingbrand/git';
 import { ShellCommand } from '@brandingbrand/shell';
 
-import { ImportConfig } from '../configs/import.config';
+import type { ImportConfig } from '../configs/import.config';
 
-import { Phase } from './phase';
+import type { Phase } from './phase';
 
 export class ImportSyncPhase implements Phase {
   constructor(private readonly config: ImportConfig) {}

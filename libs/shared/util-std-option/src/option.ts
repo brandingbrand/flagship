@@ -1,4 +1,5 @@
-import { Branded, makeBranding } from '@brandingbrand/standard-branded';
+import type { Branded } from '@brandingbrand/standard-branded';
+import { makeBranding } from '@brandingbrand/standard-branded';
 
 export type Some<T> = Branded<
   {
@@ -9,7 +10,7 @@ export type Some<T> = Branded<
 
 export type None = Branded<{}, 'none'>;
 
-export type Option<T> = Some<T> | None;
+export type Option<T> = None | Some<T>;
 
 const brandSome = makeBranding('some');
 const brandNone = makeBranding('none');

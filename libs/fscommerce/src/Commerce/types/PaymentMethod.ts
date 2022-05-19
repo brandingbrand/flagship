@@ -1,5 +1,5 @@
-import { PaymentBankAccount } from './PaymentBankAccount';
-import { PaymentCard } from './PaymentCard';
+import type { PaymentBankAccount } from './PaymentBankAccount';
+import type { PaymentCard } from './PaymentCard';
 
 /**
  * Information about a payment method saved in a user's account and/or used to pay

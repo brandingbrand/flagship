@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text, View } from 'react-native';
-import { ProductItemProps } from '../ProductItem';
+
 import { types, weights } from '../../../styles/variables';
+import type { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   container: {
@@ -14,17 +16,17 @@ const style = StyleSheet.create({
 
 export type ProductItemPromosProps = Pick<
   ProductItemProps,
-  'promotions' | 'promoStyle' | 'promoContainerStyle' | 'renderPromos' | 'promos'
+  'promoContainerStyle' | 'promos' | 'promoStyle' | 'promotions' | 'renderPromos'
 >;
 
 export class ProductItemPromos extends Component<ProductItemPromosProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const {
-      promotions,
-      promoStyle,
       promoContainerStyle,
-      renderPromos,
-      promos, // deprecated
+      promoStyle,
+      promos,
+      promotions,
+      renderPromos, // deprecated
     } = this.props;
     const promosList = promotions || promos;
 
@@ -32,7 +34,7 @@ export class ProductItemPromos extends Component<ProductItemPromosProps> {
       return renderPromos();
     }
 
-    if (!promosList || !promosList.length) {
+    if (!promosList || promosList.length === 0) {
       return null;
     }
 

@@ -1,18 +1,21 @@
 import React, { Component, useContext } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Dimensions,
-  ImageBackground,
+
+import type {
   ImageStyle,
   ImageURISource,
   LayoutChangeEvent,
   StyleProp,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Dimensions, ImageBackground, TouchableOpacity, View } from 'react-native';
+
+import PropTypes from 'prop-types';
+
+import type { EngContext } from '../lib/contexts';
+import { EngagementContext } from '../lib/contexts';
+
 import { TextBlock } from './TextBlock';
-import { EngagementContext, EngContext } from '../lib/contexts';
+
 export interface ImageBlockProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -35,17 +38,84 @@ export interface ImageBlockState {
   height?: number;
 }
 
-class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBlockState> {
-  static contextTypes: any = {
+class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, ImageBlockState> {
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
-  readonly state: ImageBlockState = {};
 
-  componentDidMount(): void {
+  public readonly state: ImageBlockState = {};
+
+  private readonly _onLayout = (event: LayoutChangeEvent) => {
+    const { ratio, useRatio } = this.props;
+    if (useRatio && ratio) {
+      this.setState(this.findImageRatio());
+    }
+  };
+
+  private readonly findImageRatio = (): ImageBlockState => {
+    const { containerStyle, outerContainerStyle, parentWidth, ratio, useRatio } = this.props;
+    const { windowWidth } = this.props.context;
+    if (!useRatio) {
+      return {};
+    }
+    const win = Dimensions.get('window');
+    const result: ImageBlockState = { height: undefined, width: undefined };
+    result.width = parentWidth || windowWidth || win.width;
+    if (containerStyle) {
+      if (containerStyle.paddingLeft) {
+        result.width -= Number(containerStyle.paddingLeft);
+      }
+      if (containerStyle.marginLeft) {
+        result.width -= Number(containerStyle.marginLeft);
+      }
+      if (containerStyle.paddingRight) {
+        result.width -= Number(containerStyle.paddingRight);
+      }
+      if (containerStyle.marginRight) {
+        result.width -= Number(containerStyle.marginRight);
+      }
+    }
+
+    // check for parent container margin/padding
+    if (outerContainerStyle) {
+      if (outerContainerStyle.paddingLeft) {
+        result.width -= Number(outerContainerStyle.paddingLeft);
+      }
+      if (outerContainerStyle.marginLeft) {
+        result.width -= Number(outerContainerStyle.marginLeft);
+      }
+      if (outerContainerStyle.paddingRight) {
+        result.width -= Number(outerContainerStyle.paddingRight);
+      }
+      if (outerContainerStyle.marginRight) {
+        result.width -= Number(outerContainerStyle.marginRight);
+      }
+    }
+    if (ratio) {
+      result.height = result.width / Number.parseFloat(ratio);
+    }
+    return result;
+  };
+
+  private readonly onPress = (link: string) => () => {
+    const { handleAction } = this.props.context;
+    if (handleAction) {
+      handleAction({
+        type: 'deep-link',
+        value: link,
+      });
+    }
+  };
+
+  private _renderItem(item: any, index: number): JSX.Element {
+    return <TextBlock {...item} />;
+  }
+
+  public componentDidMount(): void {
     this.setState(this.findImageRatio());
   }
 
-  shouldComponentUpdate(nextProps: ImageBlockProps, nextState: ImageBlockState): boolean {
+  public shouldComponentUpdate(nextProps: ImageBlockProps, nextState: ImageBlockState): boolean {
     return (
       this.props.containerStyle !== nextProps.containerStyle ||
       this.props.imageStyle !== nextProps.imageStyle ||
@@ -59,71 +129,7 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
     );
   }
 
-  _onLayout = (event: LayoutChangeEvent) => {
-    const { ratio, useRatio } = this.props;
-    if (useRatio && ratio) {
-      this.setState(this.findImageRatio());
-    }
-  };
-  // eslint-disable-next-line complexity
-  findImageRatio = (): ImageBlockState => {
-    const { parentWidth, containerStyle, ratio, useRatio, outerContainerStyle } = this.props;
-    const { windowWidth } = this.props.context;
-    if (!useRatio) {
-      return {};
-    }
-    const win = Dimensions.get('window');
-    const result: ImageBlockState = { height: undefined, width: undefined };
-    result.width = parentWidth || windowWidth || win.width;
-    if (containerStyle) {
-      if (containerStyle.paddingLeft) {
-        result.width = result.width - +containerStyle.paddingLeft;
-      }
-      if (containerStyle.marginLeft) {
-        result.width = result.width - +containerStyle.marginLeft;
-      }
-      if (containerStyle.paddingRight) {
-        result.width = result.width - +containerStyle.paddingRight;
-      }
-      if (containerStyle.marginRight) {
-        result.width = result.width - +containerStyle.marginRight;
-      }
-    }
-
-    // check for parent container margin/padding
-    if (outerContainerStyle) {
-      if (outerContainerStyle.paddingLeft) {
-        result.width = result.width - +outerContainerStyle.paddingLeft;
-      }
-      if (outerContainerStyle.marginLeft) {
-        result.width = result.width - +outerContainerStyle.marginLeft;
-      }
-      if (outerContainerStyle.paddingRight) {
-        result.width = result.width - +outerContainerStyle.paddingRight;
-      }
-      if (outerContainerStyle.marginRight) {
-        result.width = result.width - +outerContainerStyle.marginRight;
-      }
-    }
-    if (ratio) {
-      result.height = result.width / parseFloat(ratio);
-    }
-    return result;
-  };
-  onPress = (link: string) => () => {
-    const { handleAction } = this.props.context;
-    if (handleAction) {
-      handleAction({
-        type: 'deep-link',
-        value: link,
-      });
-    }
-  };
-  _renderItem(item: any, index: number): JSX.Element {
-    return <TextBlock {...item} />;
-  }
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
       imageStyle = {},
       containerStyle,
@@ -191,17 +197,17 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
               resizeMode={resizeMode}
               resizeMethod={resizeMethod}
             >
-              {!!(
+              {Boolean(
                 textOverlay &&
-                textOverlay.enabled &&
-                textOverlay.items &&
-                textOverlay.items.length
+                  textOverlay.enabled &&
+                  textOverlay.items &&
+                  textOverlay.items.length > 0
               ) && (
                 <View style={textContainerStyle}>
                   <View style={innerTextContainer}>
-                    {(textOverlay.items || []).map((item: any, index: number) => {
-                      return this._renderItem(item, index);
-                    })}
+                    {(textOverlay.items || []).map((item: any, index: number) =>
+                      this._renderItem(item, index)
+                    )}
                   </View>
                 </View>
               )}
@@ -218,17 +224,14 @@ class ImageWithOverlay extends Component<ImageBlockProps & ContextProps, ImageBl
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
         >
-          {!!(
-            textOverlay &&
-            textOverlay.enabled &&
-            textOverlay.items &&
-            textOverlay.items.length
+          {Boolean(
+            textOverlay && textOverlay.enabled && textOverlay.items && textOverlay.items.length > 0
           ) && (
             <View style={textContainerStyle}>
               <View style={innerTextContainer}>
-                {(textOverlay.items || []).map((item: any, index: number) => {
-                  return this._renderItem(item, index);
-                })}
+                {(textOverlay.items || []).map((item: any, index: number) =>
+                  this._renderItem(item, index)
+                )}
               </View>
             </View>
           )}

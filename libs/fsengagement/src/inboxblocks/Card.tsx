@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
 
-import { Action, CardProps, JSON } from '../types';
-import { CardContext, EngagementContext } from '../lib/contexts';
 import { useNavigator } from '@brandingbrand/fsapp';
 import { Navigator } from '@brandingbrand/fsapp/legacy';
+
+import { CardContext, EngagementContext } from '../lib/contexts';
+import type { Action, CardProps, JSON } from '../types';
 
 export interface ActionsCard extends CardProps {
   actions?: Action;
@@ -24,12 +26,13 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo((props) => 
       return;
     }
     if (props.discoverPath && !(navigator instanceof Navigator)) {
-      return navigator.open(`${props.discoverPath}/${props.id}`, {
+      navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
         name: props.name,
         discoverPath: props.discoverPath,
       });
+      return;
     }
     return navigator.push({
       component: {

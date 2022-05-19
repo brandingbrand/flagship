@@ -1,8 +1,12 @@
 import React from 'react';
+
 import { TouchableOpacity, View } from 'react-native';
-import { ApplePayButtonBase } from './ApplePayButtonBase';
-import { ApplePayButtonProps } from './ApplePayButtonProps';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { ApplePayButtonBase } from './ApplePayButtonBase';
+import type { ApplePayButtonProps } from './ApplePayButtonProps';
+
 const componentTranslation = translationKeys.flagship.applePayButton.text;
 
 const css = `
@@ -65,16 +69,16 @@ const css = `
 `;
 
 export class ApplePayButton extends ApplePayButtonBase {
-  buttonStyle: string;
-
   constructor(props: ApplePayButtonProps) {
     super(props);
 
     this.buttonStyle = props.buttonStyle || 'black';
   }
 
-  renderSetupButton(): JSX.Element {
-    const className = 'apple-pay-set-up-button-' + this.buttonStyle;
+  private readonly buttonStyle: string;
+
+  private renderSetupButton(): JSX.Element {
+    const className = `apple-pay-set-up-button-${this.buttonStyle}`;
 
     return (
       <TouchableOpacity onPress={this.props.applePaySetupPress}>
@@ -83,21 +87,21 @@ export class ApplePayButton extends ApplePayButtonBase {
     );
   }
 
-  renderPayButton(): JSX.Element {
-    const className = 'apple-pay-button-' + this.buttonStyle;
+  private renderPayButton(): JSX.Element {
+    const className = `apple-pay-button-${this.buttonStyle}`;
 
     return (
       <TouchableOpacity
-        onPress={this.props.applePayOnPress}
-        accessibilityRole={'button'}
         accessibilityLabel={FSI18n.string(componentTranslation)}
+        accessibilityRole="button"
+        onPress={this.props.applePayOnPress}
       >
         <div className={`apple-pay-button ${className}`} />
       </TouchableOpacity>
     );
   }
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     if (!this.props.showApplePaySetupButton && !this.props.showApplePayButton) {
       return null;
     }

@@ -53,6 +53,26 @@ export const border = {
 };
 
 export const types = StyleSheet.create({
+  caption: {
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  large: {
+    fontSize: 19,
+    lineHeight: 24,
+  },
+  micro: {
+    fontSize: 10,
+    lineHeight: 12,
+  },
+  regular: {
+    fontSize: 16,
+    lineHeight: 22,
+  },
+  small: {
+    fontSize: 14,
+    lineHeight: 18,
+  },
   title1: {
     fontSize: 44,
     lineHeight: 56,
@@ -64,25 +84,5 @@ export const types = StyleSheet.create({
   title3: {
     fontSize: 24,
     lineHeight: 28,
-  },
-  large: {
-    fontSize: 19,
-    lineHeight: 24,
-  },
-  regular: {
-    fontSize: 16,
-    lineHeight: 22,
-  },
-  small: {
-    fontSize: 14,
-    lineHeight: 18,
-  },
-  caption: {
-    fontSize: 12,
-    lineHeight: 16,
-  },
-  micro: {
-    fontSize: 10,
-    lineHeight: 12,
   },
 });

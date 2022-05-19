@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import type { ReactNode } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
 
 // TODO: Unify these web/native options and clean up these types ...a lot
 export interface SerializableCarouselProps {
@@ -16,8 +17,8 @@ export interface SerializableCarouselProps {
 
 export interface CarouselProps extends Omit<SerializableCarouselProps, 'style'> {
   style?: StyleProp<ViewStyle>;
-  nativeOptions?: any;
-  webOptions?: any;
+  nativeOptions?: unknown;
+  webOptions?: unknown;
   nextButton?: ReactNode;
   prevButton?: ReactNode;
 }

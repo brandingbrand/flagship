@@ -2,20 +2,23 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
+
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
-import { TotalProps } from '../src/components/Total';
-import { Totals } from '../src/components/Totals';
 import { object } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import type { TotalProps } from '../src/components/Total';
+import { Totals } from '../src/components/Totals';
 
 const styles = StyleSheet.create({
   style: {
     padding: 20,
   },
   zipCode: {
-    textDecorationLine: 'underline',
     textAlign: 'right',
+    textDecorationLine: 'underline',
   },
 });
 
@@ -59,5 +62,5 @@ const style = {
 };
 
 storiesOf('Totals', module).add('basic usage', () => (
-  <Totals totals={totals} style={object('containerStyle', style)} />
+  <Totals style={object('containerStyle', style)} totals={totals} />
 ));

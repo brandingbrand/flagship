@@ -1,7 +1,9 @@
 import { pipe } from '@brandingbrand/standard-compose';
+
 import { flatMap } from './flat-map';
 import { map } from './map';
-import { Option, Some, some } from './option';
+import type { Option, Some } from './option';
+import { some } from './option';
 
 export const build: Some<{}> = some({});
 

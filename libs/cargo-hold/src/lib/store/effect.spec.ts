@@ -1,14 +1,16 @@
 import { filter, map, switchMap, withLatestFrom } from 'rxjs';
-import { Effect } from './store.types';
+
 import { createActionCreator, ofType } from '../action-bus';
+
 import { combineActionReducers, matches, on } from './reducer';
 import { Store } from './store';
+import type { Effect } from './store.types';
 
 jest.setTimeout(700);
 
-type State = {
+interface State {
   bool: boolean;
-};
+}
 
 const initialState = {
   bool: false,
@@ -61,6 +63,7 @@ describe('effects happen one at a time', () => {
     store.registerEffect(effect2);
     store.action$.pipe(ofType(actionCreators.callOnlyIfBoolIsTrue)).subscribe((action) => {
       expect(action.type).toBe('callOnlyIfBoolIsTrue');
+
       done();
     });
     store.dispatch(actionCreators.setBoolToTrue.create());

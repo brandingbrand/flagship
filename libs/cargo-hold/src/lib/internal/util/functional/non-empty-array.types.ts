@@ -1,3 +1,3 @@
-export type NonEmptyArray<T> = {
+export type NonEmptyArray<T> = T[] & {
   0: T;
-} & T[];
+};

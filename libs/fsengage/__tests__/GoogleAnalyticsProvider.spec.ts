@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/unbound-method */
-import { assert, stub } from 'sinon';
 import { Component } from 'react';
+
+import { assert, stub } from 'sinon';
 
 import Analytics from '../src/modules/analytics/Analytics';
 import GoogleAnalyticsProvider from '../src/modules/analytics/providers/google/GoogleAnalyticsProvider';
@@ -13,8 +12,8 @@ describe('Analytics', () => {
   let stubbed: any;
 
   beforeAll((done) => {
-    const commonConfiguration = fixture.commonConfiguration;
-    const configuration = fixture.configuration;
+    const { commonConfiguration } = fixture;
+    const { configuration } = fixture;
     const providers = [new GoogleAnalyticsProvider(commonConfiguration, configuration)];
 
     analytics = new Analytics(providers);
@@ -27,14 +26,14 @@ describe('Analytics', () => {
     return done();
   });
 
-  describe('Events', () => {
-    describe('Commerce', () => {
+  describe('events', () => {
+    describe('commerce', () => {
       // Contact
 
-      test('Contact Call & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Call & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.call.response.default);
           }
         );
@@ -43,39 +42,39 @@ describe('Analytics', () => {
         analytics.contact.call(component, fixture.contact.call.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Contact Call & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Call & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.call.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.call.module;
 
         const component = new Component({});
         analytics.contact.call(component, fixture.contact.call.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Contact Call & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Call & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.call.response.custom);
           }
         );
@@ -86,17 +85,17 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Contact Email & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Email & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.email.response.default);
           }
         );
@@ -105,39 +104,39 @@ describe('Analytics', () => {
         analytics.contact.email(component, fixture.contact.email.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Contact Email & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Email & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.email.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.contact.email.module;
 
         const component = new Component({});
         analytics.contact.email(component, fixture.contact.email.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Contact Email & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('contact Email & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.contact.email.response.custom);
           }
         );
@@ -148,7 +147,7 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
@@ -157,10 +156,10 @@ describe('Analytics', () => {
 
       // Click
 
-      test('Click Generic & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('click Generic & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.click.generic.response.default);
           }
         );
@@ -169,39 +168,39 @@ describe('Analytics', () => {
         analytics.click.generic(component, fixture.click.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Click Generic & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('click Generic & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.click.generic.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.click.generic.module;
 
         const component = new Component({});
         analytics.click.generic(component, fixture.click.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Click Generic & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('click Generic & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.click.generic.response.custom);
           }
         );
@@ -212,7 +211,7 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
@@ -221,10 +220,10 @@ describe('Analytics', () => {
 
       // Location
 
-      test('Location Directions & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('location Directions & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.location.directions.response.default);
           }
         );
@@ -233,39 +232,39 @@ describe('Analytics', () => {
         analytics.location.directions(component, fixture.location.directions.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Location Directions & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('location Directions & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.location.directions.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.location.directions.module;
 
         const component = new Component({});
         analytics.location.directions(component, fixture.location.directions.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Location Directions & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('location Directions & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.location.directions.response.custom);
           }
         );
@@ -276,7 +275,7 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
@@ -285,10 +284,10 @@ describe('Analytics', () => {
 
       // Search
 
-      test('Search Generic & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('search Generic & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.search.generic.response.default);
           }
         );
@@ -297,39 +296,39 @@ describe('Analytics', () => {
         analytics.search.generic(component, fixture.search.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Search Generic & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('search Generic & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.search.generic.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.search.generic.module;
 
         const component = new Component({});
         analytics.search.generic(component, fixture.search.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Search Generic & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('search Generic & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.search.generic.response.custom);
           }
         );
@@ -340,7 +339,7 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
@@ -349,10 +348,10 @@ describe('Analytics', () => {
 
       // Impression
 
-      test('Impression Generic & Component', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('impression Generic & Component', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.impression.generic.response.default);
           }
         );
@@ -361,39 +360,39 @@ describe('Analytics', () => {
         analytics.impression.generic(component, fixture.impression.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Impression Generic & Component Property', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('impression Generic & Component Property', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.impression.generic.response.custom);
           }
         );
 
-        // @ts-ignore we add an .analytics property to components
+        // @ts-expect-error we add an .analytics property to components
         Component.prototype.analytics = fixture.impression.generic.module;
 
         const component = new Component({});
         analytics.impression.generic(component, fixture.impression.generic.request);
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Impression Generic & Component Custom', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('impression Generic & Component Custom', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.impression.generic.response.custom);
           }
         );
@@ -404,7 +403,7 @@ describe('Analytics', () => {
         );
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
@@ -412,11 +411,11 @@ describe('Analytics', () => {
       });
     });
 
-    describe('App Lifecycle', () => {
-      test('Active App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+    describe('app Lifecycle', () => {
+      it('active App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.active.response);
           }
         );
@@ -424,17 +423,17 @@ describe('Analytics', () => {
         analytics.lifecycle.active();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Background App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('background App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.background.response);
           }
         );
@@ -442,17 +441,17 @@ describe('Analytics', () => {
         analytics.lifecycle.background();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Close App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('close App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.close.response);
           }
         );
@@ -460,17 +459,17 @@ describe('Analytics', () => {
         analytics.lifecycle.close();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Create App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('create App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.create.response);
           }
         );
@@ -478,17 +477,17 @@ describe('Analytics', () => {
         analytics.lifecycle.create();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Inactive App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('inactive App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.inactive.response);
           }
         );
@@ -496,17 +495,17 @@ describe('Analytics', () => {
         analytics.lifecycle.inactive();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Start App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('start App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.start.response);
           }
         );
@@ -514,17 +513,17 @@ describe('Analytics', () => {
         analytics.lifecycle.start();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 
         return done();
       });
 
-      test('Suspend App', (done) => {
-        // @ts-ignore ts-sinon does not define these types
+      it('suspend App', (done) => {
+        // @ts-expect-error ts-sinon does not define these types
         stubbed = stub(GoogleAnalyticsProvider.prototype, '_sendEvent').callsFake(
-          (properties: any) => {
+          (properties: unknown) => {
             expect(properties).toEqual(fixture.lifecycle.suspend.response);
           }
         );
@@ -532,7 +531,7 @@ describe('Analytics', () => {
         analytics.lifecycle.suspend();
 
         assert.calledOnce(
-          // @ts-ignore accessing private function
+          // @ts-expect-error accessing private function
           GoogleAnalyticsProvider.prototype._sendEvent
         );
 

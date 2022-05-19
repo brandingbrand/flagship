@@ -12,7 +12,7 @@ import type { Union } from 'ts-toolbelt';
  *
  * @param object The destination object.
  * @param sources The source objects.
- * @returns Returns `object`.
+ * @return Returns `object`.
  * @example
  *
  * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 })
@@ -24,7 +24,7 @@ export const defaults = <T extends object, S extends object[]>(
 ): T & Union.IntersectOf<S[number]> => {
   for (const source of sources) {
     if (source !== null) {
-      for (const key of Object.keys(source) as (keyof S[number])[]) {
+      for (const key of Object.keys(source) as Array<keyof S[number]>) {
         const value = object[key];
 
         if (

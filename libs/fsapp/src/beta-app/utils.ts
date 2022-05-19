@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import type { StyleSheet } from 'react-native';
+
 export * from './utils.base';
 
 // No-op web exclusive APIs

@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nrwl/devkit';
 import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 
 import { ShipConfig } from '../../configs/ship.config';
@@ -12,7 +12,6 @@ import {
   VerifyRepoPhase,
   runPhases,
 } from '../../phases';
-
 import { findDependencies } from '../../utils/find-dependencies.util';
 import { findDependents } from '../../utils/find-dependents.util';
 import { findProjectNames } from '../../utils/find-project-names.util';

@@ -1,4 +1,5 @@
 import type { Analytics } from '@brandingbrand/fsengage';
+
 import type {
   ActivatedRoute,
   ActivatorConstructor,
@@ -15,9 +16,9 @@ import type {
 
 export const resolveRoutes = async ({
   api,
-  routes,
   externalRoutes: externalRoutesFactory,
-}: RouterConfig & InternalRouterConfig) => {
+  routes,
+}: InternalRouterConfig & RouterConfig) => {
   const externalRoutes = await (async () => {
     try {
       if (typeof externalRoutesFactory === 'function') {
@@ -25,9 +26,9 @@ export const resolveRoutes = async ({
       }
 
       return (await externalRoutesFactory) ?? [];
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        console.warn(`Failed to load external routes with the following error ${e.message}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.warn(`Failed to load external routes with the following error ${error.message}`);
       } else {
         console.warn('Failed to load external routes');
       }
@@ -45,7 +46,6 @@ export const resolveRoutes = async ({
     routeValue: F
   ) => ('initialPath' in route ? routeCollectionValue : routeValue);
 
-  // eslint-disable-next-line complexity
   const findRoute = (
     search: ExternalRoute,
     children = routes,
@@ -62,7 +62,7 @@ export const resolveRoutes = async ({
 
       if (
         (tab && search.exact && prefixedPath === `/${searchPath}`) ||
-        (!search.exact && prefixedPath?.startsWith(`/${searchPath}` ?? ''))
+        (!search.exact && prefixedPath.startsWith(`/${searchPath}` ?? ''))
       ) {
         return tab;
       }
@@ -80,7 +80,7 @@ export const resolveRoutes = async ({
       }
     }
 
-    return;
+    return undefined;
   };
 
   const withTabAffinity = (route: ExternalRoute): ExternalRoute => {
@@ -97,7 +97,7 @@ export const resolveRoutes = async ({
           ...route,
           children: [
             ...tabbedExternalRoutes
-              .filter(({ tabAffinity }) => tabAffinity === route.tab?.id)
+              .filter(({ tabAffinity }) => tabAffinity === route.tab.id)
               .map((external) => ({
                 ...external,
                 path: external.path?.replace(/\/$/, '').replace(/^\//, ''),
@@ -143,7 +143,7 @@ export const getPath = (url: string) => {
 
 export const guardRoute = async (
   route: Route,
-  routeInfo: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+  routeInfo: Pick<ActivatedRoute, 'params' | 'path' | 'query'>
 ) => {
   if (!route.canActivate) {
     return true;
@@ -156,7 +156,6 @@ export const guardRoute = async (
 
   if (isClass(route.canActivate)) {
     return new route.canActivate(routeInfo).activate();
-  } else {
-    return route.canActivate(routeInfo);
   }
+  return route.canActivate(routeInfo);
 };

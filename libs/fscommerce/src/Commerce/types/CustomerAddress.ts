@@ -1,4 +1,4 @@
-import { Address } from './Address';
+import type { Address } from './Address';
 
 /**
  * Information about an address that is associated with a customer.

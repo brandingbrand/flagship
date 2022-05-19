@@ -1,16 +1,15 @@
+import { ShellCommand } from '@brandingbrand/shell';
+
 import * as fs from 'fs';
 import { basename, dirname, join } from 'path';
 import { dedent } from 'ts-dedent';
 
-import { ShellCommand } from '@brandingbrand/shell';
-
+import { accounts } from './accounts';
+import type { Commit, Diff, Header } from './commit';
 import { extractRepoId } from './utils/extract-repo-id.util';
 import { parsePatchHeader } from './utils/parse-patch-header.util';
 import { parsePatch } from './utils/parse-patch.util';
 import { splitHead } from './utils/split-head.util';
-
-import { accounts } from './accounts';
-import { Commit, Diff, Header } from './commit';
 
 export interface SourceRepo {
   getCurrentRevision: () => string;
@@ -32,25 +31,23 @@ export interface DestinationRepo {
 const serializeArgs = (...args: unknown[]) => args.map((arg) => `${arg}`).join(':');
 
 const CacheSymbol = Symbol('CacheDecorator');
-const Cache = (): MethodDecorator => {
-  return (target, _propertyKey, descriptor: PropertyDescriptor) => {
-    const cachedTarget = target as { [CacheSymbol]: Map<unknown, unknown> };
-    const cache = (cachedTarget[CacheSymbol] ??= new Map());
+const Cache = (): MethodDecorator => (target, _propertyKey, descriptor: PropertyDescriptor) => {
+  const cachedTarget = target as { [CacheSymbol]: Map<unknown, unknown> };
+  const cache = (cachedTarget[CacheSymbol] ??= new Map());
 
-    const method = descriptor.value; // grab the function
-    descriptor.value = function (...args: unknown[]) {
-      const cacheKey = serializeArgs(...args);
-      if (cache.has(cacheKey)) {
-        return cache.get(cacheKey);
-      }
+  const method = descriptor.value; // grab the function
+  descriptor.value = function (...args: unknown[]) {
+    const cacheKey = serializeArgs(...args);
+    if (cache.has(cacheKey)) {
+      return cache.get(cacheKey);
+    }
 
-      const result = method.apply(this, args);
-      if (result) {
-        cache.set(cacheKey, result);
-      }
+    const result = method.apply(this, args);
+    if (result) {
+      cache.set(cacheKey, result);
+    }
 
-      return result;
-    };
+    return result;
   };
 };
 
@@ -85,7 +82,7 @@ export class Repo implements SourceRepo, DestinationRepo {
       throw new Error('It is not possible to render empty commit.');
     }
 
-    for (const diff of Array.from(commit.diffs)) {
+    for (const diff of commit.diffs) {
       const { body, path } = diff;
       renderedDiffs += `diff --git a/${path} b/${path}\n${body}`;
     }
@@ -106,15 +103,16 @@ export class Repo implements SourceRepo, DestinationRepo {
 
     // Mon Sep 17 is a magic date used by format-patch to distinguish from real mailboxes
     // see: https://git-scm.com/docs/git-format-patch
-    return dedent`From ${commit.id} Mon Sep 17 00:00:00 2001
-                    From: ${commit.author}
-                    Date: ${commit.timestamp}
-                    Subject: [PATCH] ${commitMessage}
+    return dedent`
+      From ${commit.id} Mon Sep 17 00:00:00 2001
+                          From: ${commit.author}
+                          Date: ${commit.timestamp}
+                          Subject: [PATCH] ${commitMessage}
 
-                    ${renderedDiffs}
-                    --
-                    2.21.0
-                    `;
+                          ${renderedDiffs}
+                          --
+                          2.21.0
+    `;
   }
 
   private getNativePatchFromID(revision: string): string {
@@ -151,7 +149,7 @@ export class Repo implements SourceRepo, DestinationRepo {
   private getCommitFromExportedPatch(header: string, patch: string): Commit {
     const commit = parsePatchHeader(header);
     const diffs = new Set<Diff>();
-    for (const hunk of Array.from(parsePatch(patch))) {
+    for (const hunk of parsePatch(patch)) {
       const diff = this.parseDiffHunk(hunk);
       if (diff !== undefined) {
         diffs.add(diff);
@@ -381,12 +379,12 @@ export class Repo implements SourceRepo, DestinationRepo {
     return this.gitCommand('rev-list', '--max-count', '1', `${revision}`).runSynchronously().stdout;
   }
 
-  public stageAll(): Repo {
+  public stageAll(): this {
     this.gitCommand('add', '-A').runSynchronously();
     return this;
   }
 
-  public commit(message: Header): Repo {
+  public commit(message: Header): this {
     this.gitCommand(
       'commit',
       '--no-verify',

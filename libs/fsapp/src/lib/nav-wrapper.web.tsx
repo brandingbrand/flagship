@@ -1,7 +1,8 @@
-import React from 'react';
-import { EventSubscription } from 'react-native';
-import pushRoute, { overwrite } from './push-route';
-import {
+import type React from 'react';
+
+import type { EventSubscription } from 'react-native';
+
+import type {
   AppConfigType,
   DrawerConfig,
   NavLayout,
@@ -9,6 +10,8 @@ import {
   NavModal,
   NavOptions,
 } from '../types';
+
+import pushRoute, { overwrite } from './push-route';
 
 export interface GenericNavProp {
   appConfig: AppConfigType;
@@ -19,18 +22,17 @@ export interface GenericNavProp {
 }
 
 export default class Navigator {
-  props: GenericNavProp;
-  constructor(props: GenericNavProp) {
-    this.props = props;
-  }
+  constructor(private readonly props: GenericNavProp) {}
 
-  async push(layout: NavLayout, alternateId?: string): Promise<any> {
+  public async push(layout: NavLayout, alternateId?: string): Promise<any> {
     pushRoute(layout, this.props.history, this.props.appConfig, alternateId);
   }
-  async pop(options?: NavOptions, alternateId?: string): Promise<any> {
+
+  public async pop(options?: NavOptions, alternateId?: string): Promise<any> {
     this.props.history.goBack();
   }
-  async popToRoot(options?: NavOptions, alternateId?: string): Promise<any> {
+
+  public async popToRoot(options?: NavOptions, alternateId?: string): Promise<any> {
     if (
       this.props.appConfig.screen &&
       this.props.appConfig.screens[this.props.appConfig.screen.name]
@@ -42,21 +44,24 @@ export default class Navigator {
       this.props.history.push('/');
     }
   }
-  async popTo(options?: NavOptions, alternateId?: string): Promise<any> {
+
+  public async popTo(options?: NavOptions, alternateId?: string): Promise<any> {
     if (alternateId) {
       if (this.props.appConfig.screens[alternateId]) {
         this.props.history.push(this.props.appConfig.screens[alternateId]?.path || '/');
       } else {
-        console.error('Unknown screen: ' + alternateId);
+        console.error(`Unknown screen: ${alternateId}`);
       }
     } else {
       console.warn('Specify a screen to pop to.');
     }
   }
-  async setStackRoot(layout: NavLayout, alternateId?: string): Promise<any> {
+
+  public async setStackRoot(layout: NavLayout, alternateId?: string): Promise<any> {
     pushRoute(layout, this.props.history, this.props.appConfig);
   }
-  async showStackedModal(layout: NavLayout | NavLayoutStackChildren): Promise<any> {
+
+  public async showStackedModal(layout: NavLayout | NavLayoutStackChildren): Promise<any> {
     if (layout.component) {
       this.props.modals.push({
         layout,
@@ -64,9 +69,8 @@ export default class Navigator {
     }
   }
 
-  async showModal(layout: NavLayout): Promise<any> {
+  public async showModal(layout: NavLayout): Promise<any> {
     if (layout.stack && layout.stack.children) {
-      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let loop = 0; loop < layout.stack.children.length; loop++) {
         await this.showModal(layout.stack.children[loop] as NavLayoutStackChildren);
       }
@@ -74,18 +78,22 @@ export default class Navigator {
     await this.showStackedModal(layout);
     this.props.updateModals(this.props.modals);
   }
-  async dismissModal(options?: NavOptions, alternateId?: string): Promise<any> {
+
+  public async dismissModal(options?: NavOptions, alternateId?: string): Promise<any> {
     this.props.modals.pop();
     this.props.updateModals(this.props.modals);
   }
-  async dismissAllModals(options?: NavOptions): Promise<any> {
+
+  public async dismissAllModals(options?: NavOptions): Promise<any> {
     this.props.modals = [];
     this.props.updateModals(this.props.modals);
   }
-  async updateProps(newProps: object, alternateId?: string): Promise<any> {
+
+  public async updateProps(newProps: object, alternateId?: string): Promise<any> {
     overwrite(newProps, this.props.history, this.props.appConfig);
   }
-  mergeOptions(options: NavOptions, alternateId?: string): void {
+
+  public mergeOptions(options: NavOptions, alternateId?: string): void {
     if (options.sideMenu && this.props.toggleDrawerFn) {
       if (options.sideMenu.left && options.sideMenu.left.visible !== undefined) {
         this.props.toggleDrawerFn({
@@ -99,25 +107,28 @@ export default class Navigator {
         });
       }
     }
-    return;
   }
-  bindNavigation(bindee: React.Component, alternateId?: string): EventSubscription | null {
+
+  public bindNavigation(bindee: React.Component, alternateId?: string): EventSubscription | null {
     // This is something that we likely won't need, as it's usually for changing tabs,
     // but is technically something TODO
     console.warn('binding to navigation events is not supported in web');
     return null;
   }
-  handleDeepLink(options: any): void {
+
+  public handleDeepLink(options: unknown): void {
     console.error('handleDeepLink is no longer part of react-native-navigation');
   }
-  setOnNavigatorEvent(): void {
+
+  public setOnNavigatorEvent(): void {
     console.error(
       'setOnNavigatorEvent is no longer part of react-native-navigation. ' +
         'Please use navigator.bindNavigation(this) to bind events, then reference ' +
         'https://wix.github.io/react-native-navigation/#/docs/events'
     );
   }
-  resetTo(options: { screen: string; title: string; animated: boolean }): void {
+
+  public resetTo(options: { screen: string; title: string; animated: boolean }): void {
     console.warn('resetTo has been deprecated. ' + 'Please use setStackRoot');
 
     this.setStackRoot({
@@ -131,19 +142,21 @@ export default class Navigator {
           },
         },
       },
-    }).catch((e) => {
-      console.error(e);
+    }).catch((error) => {
+      console.error(error);
     });
   }
-  setStyle(options: { navBarTitleTextCentered: boolean }): void {
+
+  public setStyle(options: { navBarTitleTextCentered: boolean }): void {
     console.warn(
       'setStyle has been deprecated. ' +
         "Please use mergeOptions({\n  topBar: {\n    alignment: 'center'\n  }\n}) instead"
     );
   }
-  setTabBadge(options: {
+
+  public setTabBadge(options: {
     tabIndex: number;
-    badge: string | number | null;
+    badge: number | string | null;
     badgeColor?: string;
   }): void {
     console.warn(
@@ -153,13 +166,15 @@ export default class Navigator {
         'icon: iconImageSource\n  }\n}, componentIdOfTab) instead'
     );
   }
-  setTitle(options: { title: string }): void {
+
+  public setTitle(options: { title: string }): void {
     console.warn(
       'setTitle has been deprecated. ' +
         "Please use mergeOptions({\n  topBar: {\n    title: 'title\\n  }\n}) instead"
     );
   }
-  switchToTab(options: { tabIndex: number }): void {
+
+  public switchToTab(options: { tabIndex: number }): void {
     console.warn(
       'switchToTab has been deprecated. ' +
         'Please use mergeOptions({\n  bottomTabs: {\n    currentTabIndex: 0\n  }\n}) instead'

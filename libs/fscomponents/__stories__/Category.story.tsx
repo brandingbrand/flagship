@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { FlatList } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { CategoryBox } from '../src/components/CategoryBox';
 import { CategoryLine } from '../src/components/CategoryLine';
 import { Grid } from '../src/components/Grid';
@@ -31,46 +34,42 @@ const lineImageStyle = {
   height: 50,
 };
 
-const renderCategoryBox = (): JSX.Element => {
-  return (
-    <CategoryBox
-      id={'123'}
-      title={text('title', 'Category')}
-      style={object('style', defaultStyle)}
-      onPress={action('CategoryBox onPress')}
-      image={greyBox}
-      showImage={boolean('thumbnail?', true)}
-      imageStyle={object('imageStyle', boxImageStyle)}
-    />
-  );
-};
+const renderCategoryBox = (): JSX.Element => (
+  <CategoryBox
+    id="123"
+    image={greyBox as any}
+    imageStyle={object('imageStyle', boxImageStyle)}
+    onPress={action('CategoryBox onPress')}
+    showImage={boolean('thumbnail?', true)}
+    style={object('style', defaultStyle)}
+    title={text('title', 'Category')}
+  />
+);
 
-const renderCategoryLine = (): JSX.Element => {
-  return (
-    <CategoryLine
-      id={'123'}
-      title={text('title', 'Category')}
-      style={object('style', defaultStyle)}
-      onPress={action(kActionOnPress)}
-      image={greyBox}
-      showImage={boolean('thumbnail?', true)}
-      imageStyle={object('imageStyle', lineImageStyle)}
-      showAccessory={boolean('accessory?', true)}
-      accessorySrc={arrowRight}
-      accessoryStyle={object('accessoryStyle', defaultAccessoryStyle)}
-    />
-  );
-};
+const renderCategoryLine = (): JSX.Element => (
+  <CategoryLine
+    accessorySrc={arrowRight}
+    accessoryStyle={object('accessoryStyle', defaultAccessoryStyle)}
+    id="123"
+    image={greyBox as any}
+    imageStyle={object('imageStyle', lineImageStyle)}
+    onPress={action(kActionOnPress)}
+    showAccessory={boolean('accessory?', true)}
+    showImage={boolean('thumbnail?', true)}
+    style={object('style', defaultStyle)}
+    title={text('title', 'Category')}
+  />
+);
 
 storiesOf('Category', module)
   .add('Category Box', () => (
     <Grid
-      renderItem={renderCategoryBox}
-      data={[...Array(6).keys()]}
       columns={select('number of columns', [1, 2, 3], 2)}
+      data={[...Array.from({ length: 6 }).keys()]}
+      renderItem={renderCategoryBox}
     />
   ))
   .add('Category Line', renderCategoryLine)
   .add('Category Line in FlatList', () => (
-    <FlatList renderItem={renderCategoryLine} data={[1, 2, 3]} />
+    <FlatList data={[1, 2, 3]} renderItem={renderCategoryLine} />
   ));

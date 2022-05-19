@@ -1,10 +1,15 @@
-import React, { FC, useCallback, useMemo } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { Button } from './Button';
+import type { FC } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { SelectableRow, SelectableRowProps } from './SelectableRow';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { Button } from './Button';
+import type { SelectableRowProps } from './SelectableRow';
+import { SelectableRow } from './SelectableRow';
 
 export type SelectableListItem = CommerceTypes.SortingOption;
 
@@ -29,56 +34,55 @@ export interface SelectableListState {
 }
 
 const S = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   applyButton: {
-    position: 'absolute',
     bottom: 15,
-    zIndex: 1,
-    justifyContent: 'center',
-    paddingVertical: 17,
     height: undefined,
+    justifyContent: 'center',
     left: 20,
+    paddingVertical: 17,
+    position: 'absolute',
     right: 20,
+    zIndex: 1,
+  },
+  applyButtonText: {
+    fontSize: 18,
+    letterSpacing: 1,
+    lineHeight: 21,
+    textAlign: 'center',
   },
   applyDisabled: {
     opacity: 0.5,
   },
-  applyButtonText: {
-    fontSize: 18,
-    lineHeight: 21,
-    letterSpacing: 1,
-    textAlign: 'center',
+  container: {
+    flex: 1,
   },
 });
 
 const RenderApply = ({
-  props,
   handleApply,
+  props,
   selectedItem,
 }: {
   props: SelectableListProps | undefined;
-  handleApply: () => void | undefined;
+  handleApply: () => undefined | void;
   selectedItem: CommerceTypes.SortingOption | undefined;
 }): JSX.Element | null => {
   if (props?.applyButton) {
     if (props.applyButton !== true) {
       return props.applyButton(handleApply, selectedItem);
-    } else {
-      return (
-        <Button
-          title={props.applyButtonText || FSI18n.string(translationKeys.flagship.button.apply)}
-          onPress={handleApply}
-          style={[
-            S.applyButton,
-            props.applyButtonStyle,
-            selectedItem ? undefined : [S.applyDisabled, props.applyDisabledStyle],
-          ]}
-          titleStyle={[S.applyButtonText, props.applyButtonTextStyle]}
-        />
-      );
     }
+    return (
+      <Button
+        onPress={handleApply}
+        style={[
+          S.applyButton,
+          props.applyButtonStyle,
+          selectedItem ? undefined : [S.applyDisabled, props.applyDisabledStyle],
+        ]}
+        title={props.applyButtonText || FSI18n.string(translationKeys.flagship.button.apply)}
+        titleStyle={[S.applyButtonText, props.applyButtonTextStyle]}
+      />
+    );
   }
   return null;
 };
@@ -94,19 +98,16 @@ export const SelectableList: FC<SelectableListProps> = (props) => {
     return undefined;
   }, [props.items, props.selectedId]);
 
-  const renderItem = (item: SelectableListItem, index: number) => {
-    return (
-      <SelectableRow
-        key={item.id || index}
-        title={item.title}
-        selected={selectedItem ? item.id === selectedItem.id : item.id === props.selectedId}
-        radioButton={props.radioButton}
-        // eslint-disable-next-line react/jsx-no-bind
-        onPress={() => props.onChange}
-        {...props.selectableRow}
-      />
-    );
-  };
+  const renderItem = (item: SelectableListItem, index: number) => (
+    <SelectableRow
+      key={item.id || index}
+      onPress={() => props.onChange}
+      radioButton={props.radioButton}
+      selected={selectedItem ? item.id === selectedItem.id : item.id === props.selectedId}
+      title={item.title}
+      {...props.selectableRow}
+    />
+  );
 
   const handleApply = useCallback((): void => {
     if (selectedItem) {
@@ -117,7 +118,7 @@ export const SelectableList: FC<SelectableListProps> = (props) => {
   return (
     <View style={[S.container, props.style]}>
       {props.items.map(renderItem)}
-      <RenderApply props={props} handleApply={handleApply} selectedItem={selectedItem} />
+      <RenderApply handleApply={handleApply} props={props} selectedItem={selectedItem} />
     </View>
   );
 };

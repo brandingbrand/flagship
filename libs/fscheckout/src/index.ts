@@ -1,9 +1,5 @@
-export {
-  default as FSCheckout,
-  Step,
-  StepManager,
-  FSCheckoutProps,
-  FSCheckoutStepProps,
-} from './FSCheckout';
+export type { Step, FSCheckoutProps, FSCheckoutStepProps } from './FSCheckout';
+export { default as FSCheckout, StepManager } from './FSCheckout';
 
-export { default as StepTracker, StepTrackerProps } from './components/StepTracker';
+export type { StepTrackerProps } from './components/StepTracker';
+export { default as StepTracker } from './components/StepTracker';

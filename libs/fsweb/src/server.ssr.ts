@@ -1,17 +1,18 @@
-import path from 'path';
 import express from 'express';
-import { addProxy } from './lib/proxy';
+import path from 'path';
+
 import { healthCheck } from './lib/healthcheck';
+import { addProxy } from './lib/proxy';
 
 let ssr;
 
 try {
   ssr = require('../ssr-build/attachSSR').default;
-} catch (e) {
-  console.error('SSR could not be loaded', e);
+} catch (error) {
+  console.error('SSR could not be loaded', error);
 }
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const envPath = process.env.ENV_PATH || 'env';
 const envFile = process.env.ENV || 'env';
 const buildPath = process.env.BUILD_PATH || 'web-compiled';
@@ -23,7 +24,7 @@ const app = express();
 
 app.use((req, res, next) => {
   // Exclude index.html and '/' so SSR can run on it
-  if (['/index.html', '/'].indexOf(req.path) === -1) {
+  if (!['/index.html', '/'].includes(req.path)) {
     express.static(path.resolve(__dirname, rootDir, buildPath))(req, res, next);
     return;
   }

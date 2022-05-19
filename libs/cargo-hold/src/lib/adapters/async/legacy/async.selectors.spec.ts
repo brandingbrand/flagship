@@ -1,12 +1,15 @@
 import { createLensCreator } from '@brandingbrand/standard-lens';
+
 import * as FastCheck from 'fast-check';
+
 import { asyncStateArbitrary } from '../../../../testing/fast-check-arbitraries.util';
-import { AsyncState } from '../async.types';
+import type { AsyncState } from '../async.types';
+
 import { createSelectors } from './async.selectors';
 
 describe('createSelectors', () => {
   const lens = createLensCreator<AsyncState<unknown, unknown>>().fromPath();
-  const { selectPayload, selectStatus, selectFailure } = createSelectors(lens);
+  const { selectFailure, selectPayload, selectStatus } = createSelectors(lens);
 
   describe('selectPayload', () => {
     it('selects an async payload', () => {

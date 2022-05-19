@@ -1,7 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { number, select, text } from '@storybook/addon-knobs';
-import { FormatType, MoreText } from '../src/components/MoreText';
+import { storiesOf } from '@storybook/react';
+
+import type { FormatType } from '../src/components/MoreText';
+import { MoreText } from '../src/components/MoreText';
 
 const lorem =
   'here are many variations of passages of Lorem Ipsum available, but the majority \
@@ -18,10 +21,10 @@ const formatOptions = ['outward', 'inward'];
 
 storiesOf('MoreText', module).add('basic usage', () => (
   <MoreText
+    format={select('format', formatOptions, 'outward') as FormatType}
     numberOfCharacters={number('numberOfCharacters', 105)}
     text={text('text', lorem)}
-    format={select('format', formatOptions, 'outward') as FormatType}
-    textMore={text('textMore', 'Read More')}
     textLess={text('textLess', 'Read Less')}
+    textMore={text('textMore', 'Read More')}
   />
 ));

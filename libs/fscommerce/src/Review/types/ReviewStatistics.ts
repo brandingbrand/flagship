@@ -1,7 +1,7 @@
-import { ReviewSummary } from './ReviewSummary';
-import { ReviewDistribution } from './ReviewDistribution';
-import { ReviewContextDistribution } from './ReviewContext';
-import { ReviewDimensionAverage } from './ReviewDimension';
+import type { ReviewContextDistribution } from './ReviewContext';
+import type { ReviewDimensionAverage } from './ReviewDimension';
+import type { ReviewDistribution } from './ReviewDistribution';
+import type { ReviewSummary } from './ReviewSummary';
 
 /**
  * Statistics for a group of reviews

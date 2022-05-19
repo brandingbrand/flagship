@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { Animated, View } from 'react-native';
 
 export interface StateType {
@@ -6,18 +7,18 @@ export interface StateType {
 }
 
 export default class CurrentLocationPin extends Component<any, StateType> {
-  constructor(props: any) {
+  constructor(props: unknown) {
     super(props);
     this.state = {
       scale: new Animated.Value(1),
     };
   }
 
-  componentDidMount(): void {
+  public componentDidMount(): void {
     this.startAnimation();
   }
 
-  startAnimation(): void {
+  public startAnimation(): void {
     Animated.timing(this.state.scale, {
       toValue: 2.5,
       duration: 1500,
@@ -28,7 +29,7 @@ export default class CurrentLocationPin extends Component<any, StateType> {
     });
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { scale } = this.state;
     const opacity = scale.interpolate({
       inputRange: [1, 2.5],

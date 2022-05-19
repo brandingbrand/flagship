@@ -1,14 +1,17 @@
-import type { Store } from 'redux';
-import type FSNetwork from '@brandingbrand/fsnetwork';
-import type { IApp } from './types';
+import type { FC } from 'react';
+import React, { Fragment } from 'react';
 
-import React, { FC, Fragment } from 'react';
+import type FSNetwork from '@brandingbrand/fsnetwork';
+
+import type { Store } from 'redux';
 
 import { InjectedContextProvider } from '../lib/use-dependency';
+
 import { API_CONTEXT_TOKEN, APP_CONTEXT_TOKEN, InjectedReduxProvider } from './context';
+import type { IApp } from './types';
 
 export interface Wrappers {
-  readonly store?: Store<any, any>;
+  readonly store?: Store;
   readonly api?: FSNetwork;
   readonly app: () => IApp | undefined;
   readonly provider?: FC;
@@ -28,7 +31,7 @@ export const makeScreenWrapper = ({
 
   const Store: React.FC = store
     ? ({ children }) => <InjectedReduxProvider store={store}>{children}</InjectedReduxProvider>
-    : ({ children }) => <>{children}</>;
+    : ({ children }) => <React.Fragment>{children}</React.Fragment>;
 
   const API: React.FC = api
     ? ({ children }) => (
@@ -36,17 +39,15 @@ export const makeScreenWrapper = ({
           {children}
         </InjectedContextProvider>
       )
-    : ({ children }) => <>{children}</>;
+    : ({ children }) => <React.Fragment>{children}</React.Fragment>;
 
-  return ({ children }) => {
-    return (
-      <App>
-        <Store>
-          <API>
-            <Provider>{children}</Provider>
-          </API>
-        </Store>
-      </App>
-    );
-  };
+  return ({ children }) => (
+    <App>
+      <Store>
+        <API>
+          <Provider>{children}</Provider>
+        </API>
+      </Store>
+    </App>
+  );
 };

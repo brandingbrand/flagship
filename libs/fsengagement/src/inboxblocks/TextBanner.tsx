@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { TextBlock } from './TextBlock';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
 import { CTABlock } from './CTABlock';
+import { TextBlock } from './TextBlock';
 
 export interface TextBannerProps {
   contents: any;
@@ -10,7 +12,7 @@ export interface TextBannerProps {
 }
 
 export default class TextBannerBlock extends Component<TextBannerProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { containerStyle, contents } = this.props;
 
     return (

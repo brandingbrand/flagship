@@ -7,7 +7,8 @@
 
 import React, { useState } from 'react';
 
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export interface Tab {
   tab: JSX.Element;
@@ -53,25 +54,23 @@ export const TabbedContainer: React.FunctionComponent<TabbedContainerProps> = (p
     }
   };
 
-  const renderTabs = (): JSX.Element => {
-    return (
-      <View style={[styles.tabContainer, props.tabContainerStyle]}>
-        {props.tabs.map((tab, index) => {
-          const tabToUse = selectedIndex === index ? tab.activeTab : tab.tab;
+  const renderTabs = (): JSX.Element => (
+    <View style={[styles.tabContainer, props.tabContainerStyle]}>
+      {props.tabs.map((tab, index) => {
+        const tabToUse = selectedIndex === index ? tab.activeTab : tab.tab;
 
-          return (
-            <TouchableOpacity
-              onPress={selectTab(index)}
-              style={[styles.tabTouchableOpacity, props.tabTouchableStyle]}
-              key={index}
-            >
-              {tabToUse}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
+        return (
+          <TouchableOpacity
+            key={index}
+            onPress={selectTab(index)}
+            style={[styles.tabTouchableOpacity, props.tabTouchableStyle]}
+          >
+            {tabToUse}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
 
   return (
     <View style={props.style}>

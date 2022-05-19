@@ -1,13 +1,17 @@
 import React from 'react';
-import { DeviceEventEmitter, StyleProp, TextStyle, TouchableOpacity } from 'react-native';
-import { Action, CardProps, EmitterProps, JSON, ScreenProps, StoryGradient } from '../types';
 
-import { TextBlock } from './TextBlock';
-import { CTABlock } from './CTABlock';
-import { VideoBlock } from './VideoBlock';
-import { CardContext, EngagementContext } from '../lib/contexts';
+import type { StyleProp, TextStyle } from 'react-native';
+import { DeviceEventEmitter, TouchableOpacity } from 'react-native';
+
 import { useNavigator } from '@brandingbrand/fsapp';
 import { Navigator } from '@brandingbrand/fsapp/legacy';
+
+import { CardContext, EngagementContext } from '../lib/contexts';
+import type { Action, CardProps, EmitterProps, JSON, ScreenProps, StoryGradient } from '../types';
+
+import { CTABlock } from './CTABlock';
+import { TextBlock } from './TextBlock';
+import { VideoBlock } from './VideoBlock';
 
 export interface ComponentProps extends ScreenProps, EmitterProps {
   containerStyle?: StyleProp<TextStyle>;
@@ -37,12 +41,13 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo((pr
       return;
     }
     if (props.discoverPath && !(navigator instanceof Navigator)) {
-      return navigator.open(`${props.discoverPath}/${props.id}`, {
+      navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
         name: props.name,
         discoverPath: props.discoverPath,
       });
+      return;
     }
     return navigator.push({
       component: {
@@ -61,7 +66,7 @@ export const VideoCard: React.FunctionComponent<ComponentProps> = React.memo((pr
       },
     });
   };
-  // eslint-disable-next-line complexity
+
   const onCardPress = async (): Promise<void> => {
     const { actions, story, storyGradient } = props;
     if (!handleAction) {

@@ -1,10 +1,10 @@
-import { PAYLOAD } from '../internal/tokens';
+import type { PAYLOAD } from '../internal/tokens';
 
 /**
  * `ActionSpecifier` is an object designed to provide a "prototype" action so that various filter
  * functions can filter actions by it. It effectively provides everything but the payload of an action.
  */
-export type ActionSpecifier<Type extends string, Subtype extends string | undefined, Payload> = {
+export interface ActionSpecifier<Type extends string, Subtype extends string | undefined, Payload> {
   /**
    * `Type` is a string that describes the event happening.
    */
@@ -32,7 +32,7 @@ export type ActionSpecifier<Type extends string, Subtype extends string | undefi
    * This key doesn't truly exist; it is only a placeholder in order to pass on the Payload type.
    */
   [PAYLOAD]?: Payload;
-};
+}
 
 /**
  * `AnyActionSpecifier` is the general form of an `ActionSpecifier`. All possible `ActionSpecifier`s

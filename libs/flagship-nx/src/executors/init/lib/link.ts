@@ -1,8 +1,8 @@
 import { fork } from 'child_process';
 import { join } from 'path';
 
-export const link = async (workspaceRoot: string, projectRoot: string): Promise<number> => {
-  return new Promise((resolve, reject) => {
+export const link = async (workspaceRoot: string, projectRoot: string): Promise<number> =>
+  new Promise((resolve, reject) => {
     const childProcess = fork(join(workspaceRoot, './node_modules/react-native/cli.js'), ['link'], {
       cwd: join(workspaceRoot, projectRoot),
     });
@@ -21,4 +21,3 @@ export const link = async (workspaceRoot: string, projectRoot: string): Promise<
       }
     });
   });
-};

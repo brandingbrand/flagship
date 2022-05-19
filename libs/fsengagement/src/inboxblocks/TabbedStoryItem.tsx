@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+
 import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
 import VideoPlayer from 'react-native-video';
+
 import { TextBlock } from './TextBlock';
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+const { height: viewportHeight, width: viewportWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   bottom: {
@@ -62,7 +65,7 @@ export interface TabbedItemState {
   activeIndex?: number;
 }
 export default class TabbedStoryItem extends Component<TabbedStoryItemProps, TabbedItemState> {
-  static getDerivedStateFromProps(
+  public static getDerivedStateFromProps(
     props: TabbedStoryItemProps,
     prevState: TabbedItemState
   ): Partial<TabbedItemState> {
@@ -83,11 +86,11 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
     };
   }
 
-  loaded = (loaded: boolean) => () => {
+  private readonly loaded = (loaded: boolean) => () => {
     this.setState({ loaded });
   };
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
+
+  public render(): JSX.Element {
     const { item } = this.props;
 
     const horizontalMap: any = {
@@ -124,8 +127,10 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
           <ImageBackground source={item.source} style={styles.fullScreen}>
             {item.textOverlay && item.textOverlay.enabled && (
               <View style={textContainerStyle}>
-                {!!item.textOverlay && <TextBlock {...item.textOverlay.Title} />}
-                {!!item.textOverlay.Subtitle.text && <TextBlock {...item.textOverlay.Subtitle} />}
+                {Boolean(item.textOverlay) && <TextBlock {...item.textOverlay.Title} />}
+                {Boolean(item.textOverlay.Subtitle.text) && (
+                  <TextBlock {...item.textOverlay.Subtitle} />
+                )}
               </View>
             )}
           </ImageBackground>
@@ -148,8 +153,10 @@ export default class TabbedStoryItem extends Component<TabbedStoryItemProps, Tab
           />
           {item.textOverlay && item.textOverlay.enabled && (
             <View style={[textContainerStyle, StyleSheet.absoluteFillObject]}>
-              {!!item.textOverlay.Title.text && <TextBlock {...item.textOverlay.Title} />}
-              {!!item.textOverlay.Subtitle.text && <TextBlock {...item.textOverlay.Subtitle} />}
+              {Boolean(item.textOverlay.Title.text) && <TextBlock {...item.textOverlay.Title} />}
+              {Boolean(item.textOverlay.Subtitle.text) && (
+                <TextBlock {...item.textOverlay.Subtitle} />
+              )}
             </View>
           )}
           {!this.state.loaded && (

@@ -5,11 +5,11 @@ import { intersectionWith, toArray, unique, uniqueWith } from '@brandingbrand/st
 import { defaults, isPlainObject } from '@brandingbrand/standard-object';
 
 import isEqual from 'fast-deep-equal';
-import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 
 const undef = <T>(val: T | undefined): val is undefined => val === undefined;
 
-const emptySchema = (schema: unknown): schema is {} | true | undefined =>
+const emptySchema = (schema: unknown): schema is true | {} | undefined =>
   undef(schema) || isEqual(schema, {}) || schema === true;
 
 const isSchema = (val: unknown): val is JSONSchema7Definition | undefined =>
@@ -20,7 +20,7 @@ const keys = (obj: unknown) => (isPlainObject(obj) || Array.isArray(obj) ? Objec
 const has = <K extends string>(obj: object, key: K): obj is Record<K, unknown> =>
   obj.hasOwnProperty(key);
 
-const stringArray = (arr: undefined | string[]) => (arr ? unique(arr).sort() : []);
+const stringArray = (arr: string[] | undefined) => (arr ? unique(arr).sort() : []);
 
 const undefEmpty = (val: unknown) => undef(val) || (Array.isArray(val) && val.length === 0);
 
@@ -37,18 +37,17 @@ const undefAndZero = (a: unknown, b: unknown) =>
 const falseUndefined = (a: unknown, b: unknown) =>
   (undef(a) && b === false) || (undef(b) && a === false) || isEqual(a, b);
 
-const emptyObjUndef = (schema: unknown): schema is undefined | {} =>
+const emptyObjUndef = (schema: unknown): schema is {} | undefined =>
   undef(schema) || isEqual(schema, {});
 
-const undefArrayEqual = (a: undefined | string[], b: undefined | string[]) => {
+const undefArrayEqual = (a: string[] | undefined, b: string[] | undefined) => {
   if (undefEmpty(a) && undefEmpty(b)) {
     return true;
-  } else {
-    return isEqual(stringArray(a), stringArray(b));
   }
+  return isEqual(stringArray(a), stringArray(b));
 };
 
-const unsortedNormalizedArray = (a: string | string[], b: string | string[]) => {
+const unsortedNormalizedArray = (a: string[] | string, b: string[] | string) => {
   a = toArray(a);
   b = toArray(b);
   return isEqual(stringArray(a), stringArray(b));
@@ -63,9 +62,9 @@ const schemaGroup = (
   const allProps = unique(keys(a).concat(keys(b)));
   if (emptyObjUndef(a) && emptyObjUndef(b)) {
     return true;
-  } else if (emptyObjUndef(a) && keys(b).length) {
+  } else if (emptyObjUndef(a) && keys(b).length > 0) {
     return false;
-  } else if (emptyObjUndef(b) && keys(a).length) {
+  } else if (emptyObjUndef(b) && keys(a).length > 0) {
     return false;
   }
 
@@ -93,9 +92,8 @@ const items = (
     return compare(a, b);
   } else if (Array.isArray(a) && Array.isArray(b)) {
     return schemaGroup(a, b, key, compare);
-  } else {
-    return isEqual(a, b);
   }
+  return isEqual(a, b);
 };
 
 const unsortedArray = (
@@ -154,7 +152,6 @@ export interface CompareOptions {
   ignore: string[];
 }
 
-// eslint-disable-next-line complexity
 export const compare = (
   a: unknown | undefined,
   b: unknown | undefined,
@@ -194,17 +191,16 @@ export const compare = (
 
   let allKeys = unique(Object.keys(a).concat(Object.keys(b)));
 
-  if (opts.ignore.length) {
-    allKeys = allKeys.filter((k) => opts.ignore.indexOf(k) === -1);
+  if (opts.ignore.length > 0) {
+    allKeys = allKeys.filter((k) => !opts.ignore.includes(k));
   }
 
-  if (!allKeys.length) {
+  if (allKeys.length === 0) {
     return true;
   }
 
   const innerCompare = (a: unknown | undefined, b: unknown | undefined) => compare(a, b, options);
 
-  // eslint-disable-next-line complexity
   return allKeys.every((key) => {
     const aValue = a[key as keyof JSONSchema7];
     const bValue = b[key as keyof JSONSchema7];
@@ -221,16 +217,17 @@ export const compare = (
       return true;
     }
 
-    if (!acceptsUndefined.includes(key as AcceptsUndefinedKey)) {
-      if ((!has(a, key) && has(b, key)) || (has(a, key) && !has(b, key))) {
-        return aValue === bValue;
-      }
+    if (
+      !acceptsUndefined.includes(key as AcceptsUndefinedKey) &&
+      ((!has(a, key) && has(b, key)) || (has(a, key) && !has(b, key)))
+    ) {
+      return aValue === bValue;
     }
 
     const result = comparer(aValue, bValue, key, innerCompare);
 
     if (typeof result !== 'boolean') {
-      throw new Error('Comparer must return true or false');
+      throw new TypeError('Comparer must return true or false');
     }
 
     return result;

@@ -1,9 +1,10 @@
-import { Address } from './Address';
-import { CurrencyValue } from '../CommerceTypes';
-import { CustomerAccount } from './CustomerAccount';
-import { Payment } from './Payment';
-import { ProductItem } from './ProductItem';
-import { Shipment } from './Shipment';
+import type { CurrencyValue } from '../CommerceTypes';
+
+import type { Address } from './Address';
+import type { CustomerAccount } from './CustomerAccount';
+import type { Payment } from './Payment';
+import type { ProductItem } from './ProductItem';
+import type { Shipment } from './Shipment';
 
 /**
  * Information about a transaction that has been successfully completed.

@@ -8,21 +8,19 @@ export interface I18n {
   translate: (scope: TranslationKey, options?: I18n.TranslateOptions) => string;
 }
 
-export interface Translations {
-  [locale: string]: TranslationKeys;
-}
+export type Translations = Record<string, TranslationKeys>;
 
 export interface TranslationKeys {
-  [key: string]: TranslationKeys | TranslationKey | object;
+  [key: string]: TranslationKey | TranslationKeys | object;
 }
 
-export type TranslationKey =
-  | string
-  | {
-      zero?: string;
-      one?: string;
-      other?: string;
-    };
+export interface PluralTranslationKey {
+  zero?: string;
+  one?: string;
+  other?: string;
+}
+
+export type TranslationKey = PluralTranslationKey | string;
 
 export interface FSTranslationKeys<KeyType = TranslationKey> extends TranslationKeys {
   flagship: {

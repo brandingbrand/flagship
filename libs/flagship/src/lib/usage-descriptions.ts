@@ -1,17 +1,21 @@
-import { Config, UsageDescriptionIOS } from '../types';
-import * as path from './path';
-import * as fs from './fs';
+import type { Config, UsageDescriptionIOS } from '../types';
 
-export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): void {
+import * as fs from './fs';
+import * as path from './path';
+
+/**
+ *
+ * @param config
+ * @param usageDescriptions
+ */
+export const add = (config: Config, usageDescriptions: UsageDescriptionIOS[]): void => {
   const infoPlist = path.ios.infoPlistPath(config);
 
-  usageDescriptions.forEach((usage) => {
+  for (const usage of usageDescriptions) {
     if (fs.doesKeywordExist(infoPlist, usage.key)) {
       // Replace the existing usage description for this key
       if (usage.array) {
-        const stringArray = usage.array.map((res) => {
-          return `<string>${res}</string>`;
-        });
+        const stringArray = usage.array.map((res) => `<string>${res}</string>`);
         fs.update(
           infoPlist,
           new RegExp(
@@ -29,9 +33,7 @@ export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): v
     } else {
       // This key doesn't exist so add it to the file
       if (usage.array) {
-        const stringArray = usage.array.map((res) => {
-          return `<string>${res}</string>`;
-        });
+        const stringArray = usage.array.map((res) => `<string>${res}</string>`);
         fs.update(
           infoPlist,
           '<key>UIRequiredDeviceCapabilities</key>',
@@ -47,5 +49,5 @@ export function add(config: Config, usageDescriptions: UsageDescriptionIOS[]): v
         );
       }
     }
-  });
-}
+  }
+};

@@ -3,9 +3,10 @@ import {
   registerEnvironmentConfig,
   setDefaultEnvironment,
 } from '@brandingbrand/fsenv';
-import { EnvSwitcher } from './lib/env-switcher';
 
 import * as projectEnvs from '../project_env_index';
+
+import { EnvSwitcher } from './lib/env-switcher';
 
 for (const [name, environment] of Object.entries(projectEnvs)) {
   if (environment) {

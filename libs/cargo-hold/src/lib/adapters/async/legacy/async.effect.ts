@@ -1,10 +1,15 @@
 import { fail, isOk, ok } from '@brandingbrand/standard-result';
-import { from, merge, Observable, of } from 'rxjs';
+
+import type { Observable } from 'rxjs';
+import { from, of as just, merge } from 'rxjs';
 import { filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
+
 import type { ActionSpecifier, AnyAction } from '../../../action-bus';
-import { Effect, matches } from '../../../store';
-import { AsyncAction } from '../async.action.types';
-import { AsyncState } from '../async.types';
+import type { Effect } from '../../../store';
+import { matches } from '../../../store';
+import type { AsyncAction } from '../async.action.types';
+import type { AsyncState } from '../async.types';
+
 import type { AsyncActionCreators } from './async.actions';
 import type { CreateAsyncEffectOptions } from './async.types';
 
@@ -15,7 +20,7 @@ import type { CreateAsyncEffectOptions } from './async.types';
  *
  * @param asyncActionCreators The Async Action creators that should be called to dispatch the correct
  * actions to update status and payload.
- * @returns A function that takes in CreateAsyncEffectOptions and returns an Effect
+ * @return A function that takes in CreateAsyncEffectOptions and returns an Effect
  */
 export const makeAsyncEffect =
   <AsyncActionKey extends string, Payload, FailPayload, EmptyPayload = Payload>(
@@ -66,8 +71,8 @@ export const makeAsyncEffect =
       filter(effectOptions.when),
       // grab state as of init time
       withLatestFrom(state$),
-      switchMap(([action, stateAtStart]) => {
-        return from(
+      switchMap(([action, stateAtStart]) =>
+        from(
           // success is wrapped in a Right structure, failure in a Left. We don't want to put an
           // error in the observable, so we catch it and wrap it for identification in the next step.
           effectOptions
@@ -105,15 +110,15 @@ export const makeAsyncEffect =
             Observable<AsyncAction<AsyncActionKey, Payload, FailPayload, EmptyPayload>>
           >((asyncCallbackResult) => {
             if (matches(asyncActionCreators.fail) && effectOptions.predict !== undefined) {
-              return of(
+              return just(
                 asyncActionCreators.revert.create(stateAtStart.payload),
                 asyncCallbackResult
               );
             }
-            return of(asyncCallbackResult);
+            return just(asyncCallbackResult);
           })
-        );
-      })
+        )
+      )
     );
 
     return merge(emitLoadWithPredictor$, runCallback$);

@@ -1,17 +1,18 @@
 import React from 'react';
+
 import { Text } from 'react-native';
 
-export function getColor(state: Record<string, any>, locals: Record<string, any>): String {
-  const colors = locals.stylesheet.colors;
+export const getColor = (state: Record<string, any>, locals: Record<string, any>): string => {
+  const { colors } = locals.stylesheet;
   if (state.active) {
     return colors.active;
-  } else {
-    return locals.hasError ? colors.error : colors.inactive;
   }
-}
+  return locals.hasError ? colors.error : colors.inactive;
+};
 
-export function defaultTextboxStyle(locals: Record<string, any>): Record<string, any> {
-  const stylesheet = locals.stylesheet;
+// eslint-disable-next-line max-statements
+export const defaultTextboxStyle = (locals: Record<string, any>): Record<string, any> => {
+  const { stylesheet } = locals;
 
   let controlLabelStyle = stylesheet.controlLabel.normal;
   let formGroupStyle = stylesheet.formGroup.normal;
@@ -52,6 +53,7 @@ export function defaultTextboxStyle(locals: Record<string, any>): Record<string,
   if (typeof locals.help === 'string') {
     help = <Text style={helpBlockStyle}>{locals.help}</Text>;
   } else if (React.isValidElement(locals.help)) {
+    // eslint-disable-next-line prefer-destructuring
     help = locals.help;
   }
 
@@ -79,4 +81,4 @@ export function defaultTextboxStyle(locals: Record<string, any>): Record<string,
     textboxUnderlineStyle,
     textboxViewStyle,
   };
-}
+};

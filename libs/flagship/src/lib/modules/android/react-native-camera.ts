@@ -1,9 +1,9 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import { Config } from '../../../types';
 import { logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
-export function postLink(configuration: Config): void {
+export const postLink = (configuration: Config): void => {
   // Add dependencies to /android/app/build.gradle and replace compile command with implementation
   // command due to Gradle 3 changes
   let gradleAppBuild = fs.readFileSync(path.android.gradlePath());
@@ -25,4 +25,4 @@ export function postLink(configuration: Config): void {
   logInfo('disabled aapt2 in gradle.properties');
 
   logInfo('finished updating Android for react-native-camera');
-}
+};

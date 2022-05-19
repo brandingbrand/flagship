@@ -1,4 +1,4 @@
-export type Position = 'before' | 'after';
+export type Position = 'after' | 'before';
 
 /**
  * A callback function that generates an item to be inserted
@@ -10,7 +10,7 @@ export type Position = 'before' | 'after';
  * separator will be inserted
  * @param array The original array before items have been inserted
  * @param position The position of the separator
- * @returns A value that will be inserted between items in the `array`
+ * @return A value that will be inserted between items in the `array`
  */
 export type SeparatorGenerator<T, V> = (index: number, array: T[], position: Position) => V;
 
@@ -29,7 +29,7 @@ export interface InsertBetweenOptions {
  * @param separatorGenerator a callback function that
  * generates the items to be inserted between each item of the `array`
  * @param options additional options
- * @returns a new array with values from the `separatorGenerator`
+ * @return a new array with values from the `separatorGenerator`
  * inserted between each item of the original `array`
  */
 export const insertBetween = <T, V>(

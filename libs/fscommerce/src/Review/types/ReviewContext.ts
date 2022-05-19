@@ -1,4 +1,4 @@
-import { ReviewDistribution } from './ReviewDistribution';
+import type { ReviewDistribution } from './ReviewDistribution';
 
 /**
  * Review context
@@ -23,7 +23,7 @@ export interface ReviewContext {
    *
    * @example 18to24
    */
-  value?: string | string[];
+  value?: string[] | string;
 
   /**
    * Label for the context value

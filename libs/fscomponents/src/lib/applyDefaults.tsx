@@ -1,57 +1,68 @@
 // TODO: add proper types
-import React, { Component, ComponentType } from 'react';
+import type { ComponentType } from 'react';
+import React, { Component } from 'react';
 
 export interface ProjectWrapperComponent {}
 
+export const isStateless = <T,>(Component: ComponentType<T>) => !Component.prototype.render;
+
 /**
- * wrapp the component with high order component to support
+ * wrap the component with high order component to support
  * component default props, it can be used to specify project
  * specific styling
+ *
+ * @param defaultProps
+ * @param ComponentHolder
  */
-export default function applyDefaults<T>(
+const applyDefaults = <T,>(
   defaultProps: Record<string, any>,
   ComponentHolder: ComponentType<T>
-): ProjectWrapperComponent {
+): ProjectWrapperComponent => {
   if (isStateless(ComponentHolder)) {
-    return function ProjectWrapperComponent(props: T): React.ReactElement {
+    return (props: T): React.ReactElement => {
       const mergedProps = mergeProps(defaultProps, props);
       return <ComponentHolder {...mergedProps} />;
     };
-  } else {
-    // this is not elegant, the wrapper component is masking the origin component,
-    // which makes the origin component method not accessible from ref. So we have
-    // to create the same method in the wrapper component that delegate to the origin
-    // component. But luckily, there is not too much of these methods.
-    return class ProjectWrapperComponent extends Component {
-      comp: any;
+  }
+  // this is not elegant, the wrapper component is masking the origin component,
+  // which makes the origin component method not accessible from ref. So we have
+  // to create the same method in the wrapper component that delegate to the origin
+  // component. But luckily, there is not too much of these methods.
+  return class ProjectWrapperComponent extends Component {
+    public comp: any;
 
-      setValue = (v: any) => {
-        if (this.comp.setValue) {
-          this.comp.setValue(v);
-        }
-      };
-      extratRef = (comp: any) => (this.comp = comp);
-      render() {
-        const mergedProps = mergeProps(defaultProps, this.props);
-        return <ComponentHolder ref={this.extratRef} {...mergedProps} />;
+    public setValue = (v: unknown) => {
+      if (this.comp.setValue) {
+        this.comp.setValue(v);
       }
     };
-  }
-}
+
+    public extratRef = (comp: unknown) => (this.comp = comp);
+    public render() {
+      const mergedProps = mergeProps(defaultProps, this.props);
+      return <ComponentHolder ref={this.extratRef} {...mergedProps} />;
+    }
+  };
+};
+
+export default applyDefaults;
 
 /**
  * merge new props to default props,
  * if the default prop is array or object, merge them
  * or override default
+ *
+ * @param defaultProps
+ * @param newProps
  */
-export function mergeProps(defaultProps: any, newProps: any) {
+export const mergeProps = (defaultProps: any, newProps: any) => {
   if (!defaultProps) {
     return newProps;
   }
 
   const props = { ...defaultProps };
 
-  Object.keys(newProps).forEach((key) => {
+  for (const key of Object.keys(newProps)) {
     const val = newProps[key];
 
     if (props[key]) {
@@ -79,11 +90,7 @@ export function mergeProps(defaultProps: any, newProps: any) {
     } else {
       props[key] = val;
     }
-  });
+  }
 
   return props;
-}
-
-export function isStateless<T>(Component: ComponentType<T>) {
-  return !Component.prototype.render;
-}
+};

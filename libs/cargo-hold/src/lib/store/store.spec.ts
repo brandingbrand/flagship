@@ -1,6 +1,8 @@
 import { filter, map, skip, take } from 'rxjs/operators';
-import { Action } from '../action-bus';
-import { and, combineActionReducers, on, isType, requireSource } from './reducer';
+
+import type { Action } from '../action-bus';
+
+import { and, combineActionReducers, isType, on, requireSource } from './reducer';
 import { Store } from './store';
 import type { Effect } from './store.types';
 
@@ -9,15 +11,15 @@ type LogoutAction = Action<'logout', undefined>;
 type AddItemToListAction = Action<'addItemToList', any>;
 type TriggerEffectAction = Action<'triggerEffect', any>;
 
-type State = {
-  listOfThings: any[];
+interface State {
+  listOfThings: unknown[];
   isLoggedIn: boolean;
   user:
     | {
         username: string;
       }
     | undefined;
-};
+}
 
 const loginReducer = on<State, LoginAction>(isType('login'), (action) => (state) => ({
   ...state,
@@ -57,6 +59,7 @@ const triggeredEffect: Effect<State> = (action$) =>
 describe('Store', () => {
   jest.setTimeout(300);
   let store: Store<State>;
+
   beforeEach(() => {
     store = new Store<State>({
       listOfThings: [],
@@ -76,11 +79,13 @@ describe('Store', () => {
 
   it('initializes correctly', (done) => {
     expect.assertions(3);
+
     store.state$.pipe(take(1)).subscribe({
       next: (state) => {
         expect(state.listOfThings).toEqual([]);
         expect(state.user).toBeUndefined();
         expect(state.isLoggedIn).toBe(false);
+
         done();
       },
     });
@@ -94,6 +99,7 @@ describe('Store', () => {
           user: { username: 'alice' },
           isLoggedIn: true,
         });
+
         done();
       },
     });
@@ -114,6 +120,7 @@ describe('Store', () => {
           user: undefined,
           isLoggedIn: false,
         });
+
         done();
       },
     });
@@ -138,6 +145,7 @@ describe('Store', () => {
           user: { username: 'this is totally a backdoor' },
           isLoggedIn: true,
         });
+
         done();
       },
     });
@@ -161,24 +169,26 @@ describe('Store', () => {
   it('handles many dispatches', (done) => {
     store.state$.pipe(skip(10)).subscribe({
       next: (state) => {
-        expect(state.listOfThings.length).toEqual(10);
+        expect(state.listOfThings).toHaveLength(10);
+
         done();
       },
     });
 
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].forEach((index) => {
+    for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
       store.dispatch({
         type: 'addItemToList',
         payload: index,
       });
-    });
+    }
     store.dispose();
   });
 
   it('triggers simple effects', (done) => {
     store.state$.pipe(skip(2)).subscribe({
       next: (state) => {
-        expect(state.listOfThings.length).toEqual(1);
+        expect(state.listOfThings).toHaveLength(1);
+
         done();
       },
     });

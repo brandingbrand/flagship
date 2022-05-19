@@ -1,9 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { SelectableList } from '../src/components/SelectableList';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
 
 const itemList: CommerceTypes.SortingOption[] = [
   {
@@ -18,9 +21,9 @@ const itemList: CommerceTypes.SortingOption[] = [
 
 storiesOf('SelectableList', module).add('basic usage', () => (
   <SelectableList
-    onChange={action('onChange')}
-    items={itemList}
     applyButton={boolean('Has Apply Button', true)}
+    items={itemList}
+    onChange={action('onChange')}
     style={{
       paddingBottom: 100,
     }}

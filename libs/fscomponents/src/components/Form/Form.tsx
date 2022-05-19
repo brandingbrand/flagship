@@ -1,6 +1,10 @@
-import React, { PureComponent, RefObject } from 'react';
+import React, { PureComponent } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
 import { View } from 'react-native';
+
 import memoize from 'memoize-one';
+
 // dynamically generates stylesheet w/ correct active, error, inactive colors
 import {
   aboveLabels,
@@ -29,14 +33,14 @@ const LabelMap = {
   [FormLabelPosition.Above]: aboveLabels,
 };
 
-export interface FormProps {
+export interface FormProps<T> {
   fieldsTypes: any;
   fieldsOptions?: any;
   fieldsStyleConfig?: any;
   labelPosition?: FormLabelPosition;
-  style?: any;
-  value?: any;
-  onChange?: (value: any) => void;
+  style?: StyleProp<ViewStyle>;
+  value?: T;
+  onChange?: (value: T) => void;
   templates?: FormTemplates;
   activeColor?: string;
   errorColor?: string;
@@ -45,40 +49,41 @@ export interface FormProps {
 }
 
 export interface FormTemplates {
-  checkbox?: (locals: any) => React.ReactNode;
-  datepicker?: (locals: any) => React.ReactNode;
-  list?: (locals: any) => React.ReactNode;
-  select?: (locals: any) => React.ReactNode;
-  struct?: (locals: any) => React.ReactNode;
-  textbox?: (locals: any) => React.ReactNode;
+  checkbox?: (locals: unknown) => React.ReactNode;
+  datepicker?: (locals: unknown) => React.ReactNode;
+  list?: (locals: unknown) => React.ReactNode;
+  select?: (locals: unknown) => React.ReactNode;
+  struct?: (locals: unknown) => React.ReactNode;
+  textbox?: (locals: unknown) => React.ReactNode;
 }
 
 type CalculateStylesType = (
   activeColor: string,
   errorColor: string,
   inactiveColor: string
-) => Record<string, any>;
+) => Record<string, unknown>;
 
-type CalculateBlursType = (fieldsOptions: Record<string, any>) => void;
+type CalculateBlursType = (fieldsOptions: Record<string, unknown>) => void;
 
-export class Form extends PureComponent<FormProps> {
-  static defaultProps: Partial<FormProps> = {
+export class Form<T = any> extends PureComponent<FormProps<T>> {
+  public static defaultProps: Partial<FormProps<unknown>> = {
     errorColor: '#d0021b',
     activeColor: '#000000',
     inactiveColor: '#cccccc',
     labelPosition: FormLabelPosition.Inline,
   };
 
+  private readonly form = React.createRef<TcombForm>();
+
   // dynamically generates stylesheet w/ correct active, error, inactive colors
-  calculateStyles: CalculateStylesType = memoize(
-    (activeColor: string, errorColor: string, inactiveColor: string) => {
-      return styles({ activeColor, errorColor, inactiveColor });
-    }
+  public calculateStyles: CalculateStylesType = memoize(
+    (activeColor: string, errorColor: string, inactiveColor: string) =>
+      styles({ activeColor, errorColor, inactiveColor })
   );
 
   // memoized function that ensures the user's onBlur function is retained
-  calculateBlurs: CalculateBlursType = memoize((fieldsOptions: Record<string, any>) => {
-    Object.keys(fieldsOptions).forEach((path) => {
+  public calculateBlurs: CalculateBlursType = memoize((fieldsOptions: Record<string, any>) => {
+    for (const path of Object.keys(fieldsOptions)) {
       const prevOnBlur = fieldsOptions[path].onBlur;
       fieldsOptions[path].onBlur = () => {
         if (prevOnBlur instanceof Function) {
@@ -86,47 +91,39 @@ export class Form extends PureComponent<FormProps> {
         }
         this.validateField(path);
       };
-    });
+    }
   });
 
-  private form: RefObject<TcombForm>;
-
-  constructor(props: FormProps) {
-    super(props);
-
-    this.form = React.createRef<TcombForm>();
-  }
-
-  componentDidMount(): void {
+  public componentDidMount(): void {
     console.warn('Form is deprecated and will be removed in the next version of Flagship.');
   }
 
-  getValue = () => {
+  public getValue = () => {
     if (this.form.current) {
       return this.form.current.getValue();
     }
   };
 
-  validate = () => {
+  public validate = () => {
     if (this.form.current) {
       return this.form.current.validate();
     }
   };
 
   // for individual field validation
-  validateField = (path: any) => {
+  public validateField = (path: unknown) => {
     if (this.form.current) {
       return this.form.current.getComponent(path).validate();
     }
   };
 
-  getComponent = (...args: any[]) => {
+  public getComponent = (...args: unknown[]) => {
     if (this.form.current) {
       return this.form.current.getComponent.apply(this.form.current, args);
     }
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
       errorColor = '#d0021b',
       activeColor = '#000000',
@@ -158,10 +155,10 @@ export class Form extends PureComponent<FormProps> {
     return (
       <View style={style}>
         <TcombForm
-          ref={this.form}
-          options={_options}
-          type={fieldsTypes}
           onChange={onChange}
+          options={_options}
+          ref={this.form}
+          type={fieldsTypes}
           value={value}
         />
       </View>

@@ -3,22 +3,22 @@ import type * as React from 'react';
 import { InjectionToken } from '@brandingbrand/fslinker';
 
 type UsedReactAPIs =
+  | 'Children'
+  | 'Component'
+  | 'createContext'
   | 'createElement'
   | 'Fragment'
-  | 'Component'
-  | 'PureComponent'
-  | 'Children'
-  | 'memo'
-  | 'createContext'
   | 'isValidElement'
-  | 'useState'
-  | 'useReducer'
+  | 'memo'
+  | 'PureComponent'
+  | 'useCallback'
+  | 'useContext'
   | 'useEffect'
   | 'useLayoutEffect'
   | 'useMemo'
-  | 'useCallback'
-  | 'useContext'
-  | 'useRef';
+  | 'useReducer'
+  | 'useRef'
+  | 'useState';
 
 export type ReactType = Pick<typeof React, UsedReactAPIs>;
 

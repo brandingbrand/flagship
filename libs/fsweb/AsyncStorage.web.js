@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /**
  * Copyright (c) Nicolas Gallagher.
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -10,58 +9,63 @@
  */
 import merge from 'deep-assign';
 
-var mergeLocalStorageItem = function mergeLocalStorageItem(key, value) {
-  var oldValue = window.localStorage.getItem(key);
-  var oldObject = JSON.parse(oldValue);
-  var newObject = JSON.parse(value);
-  var nextValue = JSON.stringify(merge({}, oldObject, newObject));
+const mergeLocalStorageItem = function mergeLocalStorageItem(key, value) {
+  const oldValue = window.localStorage.getItem(key);
+  const oldObject = JSON.parse(oldValue);
+  const newObject = JSON.parse(value);
+  const nextValue = JSON.stringify(merge({}, oldObject, newObject));
   window.localStorage.setItem(key, nextValue);
 };
 
-var createPromise = function createPromise(getValue, callback) {
-  return new Promise(function (resolve, reject) {
+const createPromise = function createPromise(getValue, callback) {
+  return new Promise((resolve, reject) => {
     try {
-      var value = getValue();
+      const value = getValue();
 
       if (callback) {
         callback(null, value);
       }
 
       resolve(value);
-    } catch (err) {
+    } catch (error) {
       if (callback) {
-        callback(err);
+        callback(error);
       }
 
-      reject(err);
+      reject(error);
     }
   });
 };
 
-var createPromiseAll = function createPromiseAll(promises, callback, processResult) {
+const createPromiseAll = function createPromiseAll(promises, callback, processResult) {
   return Promise.all(promises).then(
-    function (result) {
-      var value = processResult ? processResult(result) : null;
+    (result) => {
+      const value = processResult ? processResult(result) : null;
       callback && callback(null, value);
-      return Promise.resolve(value);
+      return value;
     },
-    function (errors) {
-      callback && callback(errors);
-      return Promise.reject(errors);
+    (error) => {
+      callback && callback(error);
+      throw error;
     }
   );
 };
 
-var AsyncStorage =
-  /*#__PURE__*/
+const AsyncStorage =
+  /* #__PURE__*/
   (function () {
+    /**
+     *
+     */
     function AsyncStorage() {}
 
     /**
      * Erases *all* AsyncStorage for the domain.
+     *
+     * @param callback
      */
     AsyncStorage.clear = function clear(callback) {
-      return createPromise(function () {
+      return createPromise(() => {
         window.localStorage.clear();
       }, callback);
     };
@@ -75,12 +79,12 @@ var AsyncStorage =
      */
 
     AsyncStorage.getAllKeys = function getAllKeys(callback) {
-      return createPromise(function () {
-        var numberOfKeys = window.localStorage.length;
-        var keys = [];
+      return createPromise(() => {
+        const numberOfKeys = window.localStorage.length;
+        const keys = [];
 
-        for (var i = 0; i < numberOfKeys; i += 1) {
-          var key = window.localStorage.key(i);
+        for (let i = 0; i < numberOfKeys; i += 1) {
+          const key = window.localStorage.key(i);
           keys.push(key);
         }
 
@@ -92,9 +96,7 @@ var AsyncStorage =
      */
 
     AsyncStorage.getItem = function getItem(key, callback) {
-      return createPromise(function () {
-        return window.localStorage.getItem(key);
-      }, callback);
+      return createPromise(() => window.localStorage.getItem(key), callback);
     };
     /**
      * multiGet resolves to an array of key-value pair arrays that matches the
@@ -104,14 +106,10 @@ var AsyncStorage =
      */
 
     AsyncStorage.multiGet = function multiGet(keys, callback) {
-      var promises = keys.map(function (key) {
-        return AsyncStorage.getItem(key);
-      });
+      const promises = keys.map((key) => AsyncStorage.getItem(key));
 
-      var processResult = function processResult(result) {
-        return result.map(function (value, i) {
-          return [keys[i], value];
-        });
+      const processResult = function processResult(result) {
+        return result.map((value, i) => [keys[i], value]);
       };
 
       return createPromiseAll(promises, callback, processResult);
@@ -121,7 +119,7 @@ var AsyncStorage =
      */
 
     AsyncStorage.setItem = function setItem(key, value, callback) {
-      return createPromise(function () {
+      return createPromise(() => {
         window.localStorage.setItem(key, value);
       }, callback);
     };
@@ -131,9 +129,7 @@ var AsyncStorage =
      */
 
     AsyncStorage.multiSet = function multiSet(keyValuePairs, callback) {
-      var promises = keyValuePairs.map(function (item) {
-        return AsyncStorage.setItem(item[0], item[1]);
-      });
+      const promises = keyValuePairs.map((item) => AsyncStorage.setItem(item[0], item[1]));
       return createPromiseAll(promises, callback);
     };
     /**
@@ -141,7 +137,7 @@ var AsyncStorage =
      */
 
     AsyncStorage.mergeItem = function mergeItem(key, value, callback) {
-      return createPromise(function () {
+      return createPromise(() => {
         mergeLocalStorageItem(key, value);
       }, callback);
     };
@@ -153,9 +149,7 @@ var AsyncStorage =
      */
 
     AsyncStorage.multiMerge = function multiMerge(keyValuePairs, callback) {
-      var promises = keyValuePairs.map(function (item) {
-        return AsyncStorage.mergeItem(item[0], item[1]);
-      });
+      const promises = keyValuePairs.map((item) => AsyncStorage.mergeItem(item[0], item[1]));
       return createPromiseAll(promises, callback);
     };
     /**
@@ -163,18 +157,14 @@ var AsyncStorage =
      */
 
     AsyncStorage.removeItem = function removeItem(key, callback) {
-      return createPromise(function () {
-        return window.localStorage.removeItem(key);
-      }, callback);
+      return createPromise(() => window.localStorage.removeItem(key), callback);
     };
     /**
      * Delete all the keys in the `keys` array.
      */
 
     AsyncStorage.multiRemove = function multiRemove(keys, callback) {
-      var promises = keys.map(function (key) {
-        return AsyncStorage.removeItem(key);
-      });
+      const promises = keys.map((key) => AsyncStorage.removeItem(key));
       return createPromiseAll(promises, callback);
     };
 

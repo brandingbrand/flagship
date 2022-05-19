@@ -1,60 +1,63 @@
 import 'i18n-js';
 
-import i18nHelper from '../src/i18nHelper';
 import Decimal from 'decimal.js';
+
+import i18nHelper from '../src/i18nHelper';
+
 let i18n: i18nHelper;
 
-beforeEach(() => {
-  i18n = new i18nHelper({
-    currentLocale: () => 'en-US',
-    translate: () => 'test',
-    translations: {},
-    locale: 'en-US',
-  });
-});
-
 describe('fsi18n', () => {
+  beforeEach(() => {
+    i18n = new i18nHelper({
+      currentLocale: () => 'en-US',
+      translate: () => 'test',
+      translations: {},
+      locale: 'en-US',
+    });
+  });
+
   describe('string', () => {
-    test('should throw an error if no translations have been set', () => {
-      expect(() => i18n.string('test')).toThrowError();
+    it('should throw an error if no translations have been set', () => {
+      expect(() => i18n.string('test')).toThrow();
     });
   });
 
   describe('number', () => {
-    test('should throw an error when provided something other than a number or string', () => {
-      // @ts-ignore
-      expect(() => i18n.number({})).toThrowError();
+    it('should throw an error when provided something other than a number or string', () => {
+      // @ts-expect-error
+      expect(() => i18n.number({})).toThrow();
     });
 
-    test('should throw an error when provided an invalid number', () => {
-      expect(() => i18n.number('not a number')).toThrowError();
+    it('should throw an error when provided an invalid number', () => {
+      expect(() => i18n.number('not a number')).toThrow();
     });
 
-    test('should handle strings', () => {
+    it('should handle strings', () => {
       const num = i18n.number('1234');
+
       expect(num).toBe('1,234');
     });
   });
 
   describe('currency', () => {
-    test('should add default options to format the number into a currency string', () => {
+    it('should add default options to format the number into a currency string', () => {
       const spy = jest.spyOn(i18n, 'number');
       const testNumber = 1234.56;
       const testCurrency = 'usd';
 
       i18n.currency(testNumber, testCurrency);
 
-      expect(spy).toBeCalledWith(testNumber, {
+      expect(spy).toHaveBeenCalledWith(testNumber, {
         style: 'currency',
         currency: testCurrency,
       });
     });
 
-    test('should throw an error if no currency is set', () => {
-      expect(() => i18n.currency(1234)).toThrowError();
+    it('should throw an error if no currency is set', () => {
+      expect(() => i18n.currency(1234)).toThrow();
     });
 
-    test('should allow options to overwrite the defaults', () => {
+    it('should allow options to overwrite the defaults', () => {
       const spy = jest.spyOn(i18n, 'number');
       const testNumber = 1234.56;
       const options = {
@@ -63,7 +66,7 @@ describe('fsi18n', () => {
 
       i18n.currency(testNumber, undefined, options);
 
-      expect(spy).toBeCalledWith(testNumber, {
+      expect(spy).toHaveBeenCalledWith(testNumber, {
         style: 'currency',
         currency: 'eur',
       });
@@ -71,27 +74,28 @@ describe('fsi18n', () => {
   });
 
   describe('percent', () => {
-    test('should add default options to format the number into a currency string', () => {
+    it('should add default options to format the number into a currency string', () => {
       const spy = jest.spyOn(i18n, 'number');
       const testNumber = 1234.56;
 
       i18n.percent(testNumber);
 
-      expect(spy).toBeCalledWith(testNumber, {
+      expect(spy).toHaveBeenCalledWith(testNumber, {
         style: 'percent',
       });
     });
   });
 
   describe('date', () => {
-    test('should throw an error when provided something other than a date', () => {
-      // @ts-ignore
-      expect(() => i18n.date('1234')).toThrowError();
+    it('should throw an error when provided something other than a date', () => {
+      // @ts-expect-error
+      expect(() => i18n.date('1234')).toThrow();
     });
 
-    test('should throw an error when provided an invalid date', () => {
+    it('should throw an error when provided an invalid date', () => {
       const invalidDate = new Date('Not a date.');
-      expect(() => i18n.date(invalidDate)).toThrowError();
+
+      expect(() => i18n.date(invalidDate)).toThrow();
     });
   });
 
@@ -111,7 +115,7 @@ describe('fsi18n', () => {
       },
       {
         input: 'bad',
-        result: NaN,
+        result: Number.NaN,
       },
       {
         input: new Decimal(123),
@@ -119,13 +123,14 @@ describe('fsi18n', () => {
       },
     ];
 
-    tests.forEach(({ input, result }) => {
-      test(`should convert "${input}" to a number`, () => {
-        // @ts-ignore Testing protected function
+    for (const { input, result } of tests) {
+      it(`should convert "${input}" to a number`, () => {
+        // @ts-expect-error Testing protected function
         const num = i18n.convertToNumber(input);
+
         expect(typeof num).toBe('number');
         expect(num).toBe(result);
       });
-    });
+    }
   });
 });

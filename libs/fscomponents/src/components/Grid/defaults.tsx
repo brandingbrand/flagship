@@ -1,4 +1,4 @@
-import { GridItem } from './utils';
+import type { GridItem } from './utils';
 
 export const DEFAULT_COLUMNS = 2;
 export const DEFAULT_MIN_COLUMNS = 175;
@@ -10,7 +10,7 @@ export const DEFAULT_KEY_EXTRACTOR = <ItemT extends GridItem<{ id?: string; key?
   const key = items
     .map((item) => item.value?.key ?? item.value?.id)
     .filter(Boolean)
-    .join();
+    .join(',');
 
   return key || `${index}`;
 };

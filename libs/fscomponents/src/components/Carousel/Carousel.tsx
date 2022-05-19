@@ -1,43 +1,45 @@
 import React, { Component } from 'react';
+
 import Swiper from 'react-native-swiper';
-import { CarouselProps } from './CarouselProps';
+
+import type { CarouselProps } from './CarouselProps';
 
 export class Carousel extends Component<CarouselProps> {
-  swiper?: Swiper | null;
+  private swiper?: Swiper | null;
 
-  scrollBy = (index: number, animated?: boolean) => {
+  private readonly scrollBy = (index: number, animated?: boolean) => {
     this.swiper?.scrollBy(index, animated);
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      height,
-      style,
       children,
-      showsButtons,
-      showsPagination,
+      currentPageIndicatorColor,
+      height,
+      loop,
       nativeOptions,
       nextButton,
-      loop,
-      currentPageIndicatorColor,
       pageIndicatorColor,
       prevButton,
+      showsButtons,
+      showsPagination,
+      style,
     } = this.props;
 
     return (
       <Swiper
-        ref={(swiper) => (this.swiper = swiper)}
-        showsPagination={showsPagination}
         activeDotColor={currentPageIndicatorColor}
+        bounces
+        containerStyle={style}
         dotColor={pageIndicatorColor}
         height={height}
-        containerStyle={style}
-        bounces={true}
         loop={loop ?? false}
+        ref={(swiper) => (this.swiper = swiper)}
+        showsPagination={showsPagination}
         {...nativeOptions}
-        showsButtons={showsButtons}
         nextButton={nextButton}
         prevButton={prevButton}
+        showsButtons={showsButtons}
       >
         {children}
       </Swiper>

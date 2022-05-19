@@ -1,15 +1,19 @@
-import React, { createContext, FC, useCallback, useEffect, useMemo } from 'react';
+import type { FC } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo } from 'react';
+
 import { Navigation } from 'react-native-navigation';
-import { uniqueId } from 'lodash-es';
 
 import { InjectionToken } from '@brandingbrand/fslinker';
 
+import { uniqueId } from 'lodash-es';
+
 import { InjectedContextProvider, useDependencyContext } from '../../lib/use-dependency';
+
 import { useScreenId } from './activated-route.context';
 
 export interface ButtonService {
-  onPress(buttonId: string, callback: () => void): () => void;
-  onPress(buttonId: string, componentId: undefined | string, callback: () => void): () => void;
+  onPress: ((buttonId: string, callback: () => void) => () => void) &
+    ((buttonId: string, componentId: string | undefined, callback: () => void) => () => void);
 }
 
 const DEFAULT_BUTTON_SERVICE: ButtonService = {
@@ -30,7 +34,7 @@ export const ButtonProvider: FC = ({ children }) => {
   const onPress = useCallback(
     ((
       buttonId: string,
-      componentIdOrCallback: undefined | string | (() => void),
+      componentIdOrCallback: string | (() => void) | undefined,
       callback: () => void
     ) => {
       const componentId =
@@ -54,12 +58,18 @@ export const ButtonProvider: FC = ({ children }) => {
   useEffect(() => {
     const subscription = Navigation.events().registerNavigationButtonPressedListener(
       ({ buttonId, componentId }) => {
-        listenerRepo.get(buttonId)?.forEach((callback) => callback());
-        listenerRepo.get(`${buttonId}-${componentId}`)?.forEach((callback) => callback());
+        listenerRepo.get(buttonId)?.forEach((callback) => {
+          callback();
+        });
+        listenerRepo.get(`${buttonId}-${componentId}`)?.forEach((callback) => {
+          callback();
+        });
       }
     );
 
-    return () => subscription.remove();
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const buttonService = useMemo(() => ({ onPress }), [onPress]);
@@ -73,15 +83,14 @@ export const ButtonProvider: FC = ({ children }) => {
 
 export const useButtonEffect = (
   callback: () => void,
-  ids: [buttonId: string] | [buttonId: string, componentId: string]
+  ids: [buttonId: string, componentId: string] | [buttonId: string]
 ) => {
   const buttons = useButtons();
 
   useEffect(() => {
     if (ids.length === 1) {
       return buttons.onPress(...ids, callback);
-    } else {
-      return buttons.onPress(...ids, callback);
     }
+    return buttons.onPress(...ids, callback);
   }, ids);
 };

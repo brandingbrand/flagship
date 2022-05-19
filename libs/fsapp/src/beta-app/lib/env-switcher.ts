@@ -1,3 +1,3 @@
 import { NativeModules } from 'react-native';
 
-export const EnvSwitcher = NativeModules?.EnvSwitcher;
+export const { EnvSwitcher } = NativeModules;

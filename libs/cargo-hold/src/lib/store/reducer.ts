@@ -1,16 +1,18 @@
-import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
-import type {
-  ActionSpecifier,
-  ActionOf,
-  AnyActionSpecifier,
-  AnyAction,
-  TypeGuard,
-} from '../action-bus';
-import type { AnyActionReducer, SourcesList, ActionReducer, StateReducer } from './store.types';
 import equal from 'fast-deep-equal';
 
+import type {
+  ActionOf,
+  ActionSpecifier,
+  AnyAction,
+  AnyActionSpecifier,
+  TypeGuard,
+} from '../action-bus';
+import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
+
+import type { ActionReducer, AnyActionReducer, SourcesList, StateReducer } from './store.types';
+
 export const combineActionReducers =
-  <State extends {}>(...reducers: AnyActionReducer<State>[]): AnyActionReducer<State> =>
+  <State extends {}>(...reducers: Array<AnyActionReducer<State>>): AnyActionReducer<State> =>
   (action) =>
   (state) =>
     reducers.reduce((currentState, reducer) => reducer(action)(currentState), state);
@@ -29,18 +31,18 @@ export const on =
   };
 
 export const requireSource =
-  (...sources: (string | symbol | undefined)[]) =>
+  (...sources: Array<string | symbol | undefined>) =>
   <ActionType extends ActionSpecifier<string, any, unknown>>(
     action: ActionType
   ): action is ActionType =>
-    !sources.length || sources.includes(action.source);
+    sources.length === 0 || sources.includes(action.source);
 
 export const optionalSource =
-  (...sources: (string | symbol | undefined)[]) =>
+  (...sources: Array<string | symbol | undefined>) =>
   <ActionType extends ActionSpecifier<string, any, unknown>>(
     action: ActionType
   ): action is ActionType =>
-    !sources.length || !action.source || sources.includes(action.source);
+    sources.length === 0 || !action.source || sources.includes(action.source);
 
 export const isType =
   <ActionType extends ActionSpecifier<string, any, unknown>>(
@@ -59,15 +61,11 @@ export const matches =
     specifier: DesiredActionSpecifier,
     extraSources?: SourcesList
   ): TypeGuard<AnyActionSpecifier, DesiredActionSpecifier> =>
-  (inputAction): inputAction is DesiredActionSpecifier => {
-    return (
-      specifier.type === inputAction.type &&
-      specifier.subtype === inputAction.subtype &&
-      (extraSources === undefined ||
-        requireSource(specifier.source, ...extraSources)(inputAction)) &&
-      equal(specifier.filterMetadata, inputAction.filterMetadata)
-    );
-  };
+  (inputAction): inputAction is DesiredActionSpecifier =>
+    specifier.type === inputAction.type &&
+    specifier.subtype === inputAction.subtype &&
+    (extraSources === undefined || requireSource(specifier.source, ...extraSources)(inputAction)) &&
+    equal(specifier.filterMetadata, inputAction.filterMetadata);
 
 export const and =
   <
@@ -90,7 +88,7 @@ export const or =
     typeguardA: TypeGuard<OuterActionType, ActionTypeA>,
     typeguardB: TypeGuard<OuterActionType, ActionTypeB>
   ): TypeGuard<OuterActionType, ActionTypeA | ActionTypeB> =>
-  (action): action is ActionTypeB | ActionTypeA =>
+  (action): action is ActionTypeA | ActionTypeB =>
     typeguardA(action) || typeguardB(action);
 
 export const composeStateReducers =

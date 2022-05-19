@@ -2,9 +2,12 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
+
 import { Text } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { files, object, select } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { ImageWithOverlay } from '../src/components/ImageWithOverlay';
 
 const defaultImageStyle = {
@@ -39,7 +42,7 @@ storiesOf('ImageWithOverlay', module).add('basic usage', () => {
         style: { ...styles },
       }}
       overlay={overlay}
-      overlayPosition={select('overlayPosition', positions, 'topRight') as any}
+      overlayPosition={select('overlayPosition', positions, 'topRight') as unknown}
     />
   );
 });

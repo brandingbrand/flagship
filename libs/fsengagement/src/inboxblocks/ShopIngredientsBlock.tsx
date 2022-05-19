@@ -1,20 +1,13 @@
 import React, { Component, useContext } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Image,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
 
-import { Action, BlockItem, EmitterProps, Icon, ScreenProps } from '../types';
-import { EngagementContext } from '../lib/contexts';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import PropTypes from 'prop-types';
 
 import rightArrow from '../../assets/images/rightArrow.png';
+import { EngagementContext } from '../lib/contexts';
+import type { Action, BlockItem, EmitterProps, Icon, ScreenProps } from '../types';
 
 const images = {
   rightArrow,
@@ -49,7 +42,7 @@ export interface ShopIngredientsBlockProps extends ScreenProps, EmitterProps {
 }
 
 class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { context: any }> {
-  static contextTypes: any = {
+  public static contextTypes: any = {
     story: PropTypes.object,
     cardActions: PropTypes.object,
     handleAction: PropTypes.func,
@@ -58,13 +51,13 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
     id: PropTypes.string,
   };
 
-  takeAction = (action: string, actions: Action): void => {
+  private readonly takeAction = (action: string, actions: Action): void => {
     const { handleAction, story } = this.props.context;
     const { private_blocks } = story;
     const PRIVATE_TYPE = 'private_type';
-    const recipeList = (private_blocks || []).find((block: BlockItem) => {
-      return block[PRIVATE_TYPE] === 'RecipeList';
-    });
+    const recipeList = (private_blocks || []).find(
+      (block: BlockItem) => block[PRIVATE_TYPE] === 'RecipeList'
+    );
     const productIDs = recipeList.items.reduce((ret: string, attr: any) => {
       const amp = ret ? '&' : '';
       if (attr.productId) {
@@ -81,11 +74,11 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
     });
   };
 
-  onButtonPress = () => {
+  private readonly onButtonPress = () => {
     this.takeAction(this.props.action, this.props.actions);
   };
 
-  shouldComponentUpdate(nextProps: ShopIngredientsBlockProps): boolean {
+  public shouldComponentUpdate(nextProps: ShopIngredientsBlockProps): boolean {
     return (
       nextProps.buttonStyle !== this.props.buttonStyle ||
       nextProps.textStyle !== this.props.textStyle ||
@@ -95,8 +88,8 @@ class ShopIngredientsBlock extends Component<ShopIngredientsBlockProps & { conte
     );
   }
 
-  render(): JSX.Element {
-    const { buttonStyle, textStyle, containerStyle, text, icon } = this.props;
+  public render(): JSX.Element {
+    const { buttonStyle, containerStyle, icon, text, textStyle } = this.props;
 
     return (
       <View style={[styles.buttonContainer, containerStyle]}>

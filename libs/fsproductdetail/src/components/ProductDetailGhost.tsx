@@ -1,26 +1,46 @@
-import React, { FC } from 'react';
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
-import ContentLoader, { Rect } from '../lib/RNContentLoader';
+import type { FC } from 'react';
+import React from 'react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+
 import { PageIndicator } from '@brandingbrand/fscomponents';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import ghostStar from '../../assets/images/ghostStar.png';
+import ContentLoader, { Rect } from '../lib/RNContentLoader';
 
 const icons = {
   ghostStar,
 };
 
 const baseStyles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'black',
+    borderRadius: 100,
+    height: 55,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: 1,
+  },
+  buttonWrapper: {
+    paddingHorizontal: 20,
+  },
+  ghostContentWrapper: {
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    marginTop: 22,
+    paddingBottom: 24,
+    paddingHorizontal: 15,
+  },
   imageContainer: {
     marginBottom: 15,
   },
@@ -30,37 +50,11 @@ const baseStyles = StyleSheet.create({
   paginationActive: {
     marginTop: 15,
   },
-  ghostContentWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    marginTop: 22,
-    paddingBottom: 24,
-    marginBottom: 20,
-    borderBottomWidth: 1,
-  },
   starsWrapper: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     height: 24,
     marginRight: 27,
-  },
-  buttonWrapper: {
-    paddingHorizontal: 20,
-  },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    borderRadius: 100,
-    height: 55,
-    width: '100%',
-  },
-  buttonText: {
-    fontWeight: '500',
-    color: '#fff',
-    fontSize: 18,
-    letterSpacing: 1,
   },
 });
 
@@ -129,17 +123,17 @@ export interface SerializableProductDetailGhostProps {
 export interface ProductDetailGhostProps
   extends Omit<
     SerializableProductDetailGhostProps,
-    | 'containerStyle'
-    | 'paginationStyle'
-    | 'paginationActiveStyle'
-    | 'ghostContentWrapperStyle'
-    | 'starsWrapperStyle'
-    | 'buttonWrapperStyle'
     | 'buttonStyle'
     | 'buttonTextStyle'
-    | 'screenWidth'
+    | 'buttonWrapperStyle'
+    | 'containerStyle'
     | 'countPages'
+    | 'ghostContentWrapperStyle'
     | 'imageHeight'
+    | 'paginationActiveStyle'
+    | 'paginationStyle'
+    | 'screenWidth'
+    | 'starsWrapperStyle'
     | 'titleWidth'
   > {
   containerStyle?: StyleProp<ViewStyle>;
@@ -176,37 +170,37 @@ const ProductDetailGhost: FC<ProductDetailGhostProps> = (props: ProductDetailGho
 
   const mainImageHeight = imageHeight ? imageHeight : 443;
   const titleWidthSection = titleWidth ? titleWidth : 155;
-  const starArray = new Array(5).fill({});
+  const starArray = Array.from({ length: 5 }).fill({});
 
   return (
     <ScrollView style={containerStyle}>
       <View style={baseStyles.imageContainer}>
         <ContentLoader
-          width={screenWidth}
           height={mainImageHeight}
           viewBox={`0 0 ${screenWidth} ${mainImageHeight}`}
+          width={screenWidth}
         >
-          <Rect x="0" y="0" rx="4" ry="4" width={screenWidth} height={mainImageHeight} />
+          <Rect height={mainImageHeight} rx="4" ry="4" width={screenWidth} x="0" y="0" />
         </ContentLoader>
       </View>
       <PageIndicator
         currentIndex={0}
-        itemsCount={countPages || 3}
-        dotStyle={paginationStyle}
         dotActiveStyle={paginationActiveStyle}
+        dotStyle={paginationStyle}
+        itemsCount={countPages || 3}
       />
       <View style={[baseStyles.ghostContentWrapper, ghostContentWrapperStyle]}>
         <ContentLoader
-          width={titleWidthSection}
           height={24}
           viewBox={`0 0 ${titleWidthSection} 24`}
+          width={titleWidthSection}
         >
-          <Rect x="0" y="0" rx="4" ry="4" width={titleWidthSection} height="24" />
+          <Rect height="24" rx="4" ry="4" width={titleWidthSection} x="0" y="0" />
         </ContentLoader>
         <View style={[baseStyles.starsWrapper, starsWrapperStyle]}>
-          {starArray.map((elem, i: number) => {
-            return <Image key={i} source={icons.ghostStar} />;
-          })}
+          {starArray.map((elem, i: number) => (
+            <Image key={i} source={icons.ghostStar} />
+          ))}
         </View>
       </View>
       <View style={[baseStyles.buttonWrapper, buttonWrapperStyle]}>

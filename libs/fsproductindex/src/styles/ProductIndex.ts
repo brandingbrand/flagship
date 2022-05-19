@@ -1,103 +1,104 @@
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexBasis: 'auto',
-  },
-  loading: {
-    paddingTop: 20,
-  },
-  list: {
-    flex: 1,
-    backgroundColor: '#eee',
-    paddingRight: 10,
-  },
-  productImage: {
-    width: 100,
-    height: 100,
-  },
-  productItem: {
-    margin: 10,
-    marginBottom: 0,
-    marginRight: 0,
-    padding: 10,
-    backgroundColor: 'white',
-    flex: 1,
-  },
   actionBar: {
     paddingLeft: 10,
     paddingTop: 10,
   },
-  modalHeader: {
-    height: 70,
-    paddingTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: '#eee',
-  },
-  modalHeaderText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  modalHeaderCloseText: {},
-  modalHeaderClose: {
-    height: 70,
-    paddingTop: 20,
-    paddingHorizontal: 10,
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  resetButton: {
-    width: 150,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#eee',
-  },
-  noResultContainer: {
+  container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexBasis: 'auto',
   },
-  noResultText: {
-    marginBottom: 20,
-  },
-  modalContainer: {
-    flex: 1,
+  error: {
+    margin: 20,
+    textAlign: 'center',
   },
   footer: {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  list: {
+    backgroundColor: '#eee',
+    flex: 1,
+    paddingRight: 10,
+  },
   loadMoreButton: {
-    height: 40,
-    marginVertical: 10,
-    paddingHorizontal: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
     borderColor: '#ccc',
     borderWidth: 1,
-    backgroundColor: 'white',
+    height: 40,
+    justifyContent: 'center',
+    marginVertical: 10,
+    paddingHorizontal: 20,
+  },
+  loading: {
+    paddingTop: 20,
   },
   loadingLoadMore: {
     height: 40,
-    paddingTop: 0,
     marginVertical: 10,
+    paddingTop: 0,
   },
-  error: {
-    textAlign: 'center',
-    margin: 20,
+  modalContainer: {
+    flex: 1,
+  },
+  modalHeader: {
+    alignItems: 'center',
+    borderBottomColor: '#eee',
+    borderBottomWidth: 2,
+    height: 70,
+    justifyContent: 'center',
+    paddingTop: 20,
+  },
+  modalHeaderClose: {
+    alignItems: 'center',
+    bottom: 0,
+    height: 70,
+    justifyContent: 'center',
+    left: 0,
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    position: 'absolute',
+  },
+  modalHeaderCloseText: {},
+  modalHeaderText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   modelLoadingContainer: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     justifyContent: 'center',
   },
+  noResultContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  noResultText: {
+    marginBottom: 20,
+  },
+  productImage: {
+    height: 100,
+    width: 100,
+  },
+  productItem: {
+    backgroundColor: 'white',
+    flex: 1,
+    margin: 10,
+    marginBottom: 0,
+    marginRight: 0,
+    padding: 10,
+  },
+  resetButton: {
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    height: 40,
+    justifyContent: 'center',
+    width: 150,
+  },
 });
+
+export type { ImageStyle, TextStyle, ViewStyle } from 'react-native';

@@ -1,4 +1,6 @@
-import { InjectionToken, Injector } from '@brandingbrand/fslinker';
+import type { InjectionToken } from '@brandingbrand/fslinker';
+import { Injector } from '@brandingbrand/fslinker';
+
 import { REACT } from './react.token';
 
 export const useToken = <T>(token: InjectionToken<T>) => {

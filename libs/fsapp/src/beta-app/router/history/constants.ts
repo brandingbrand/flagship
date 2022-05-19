@@ -7,6 +7,7 @@ export let ROOT_STACK = 'ROOT';
  * Changed by legacy shim
  *
  * @internal
+ * @param id
  * @deprecated
  */
 export const setRootStackId = (id?: string) => {

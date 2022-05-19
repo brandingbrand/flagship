@@ -1,11 +1,12 @@
-const exec = require('child_process').execSync;
 import { project } from './lib/path';
+
+const exec = require('child_process').execSync;
 
 const keychainName = process.env.KEY_CHAIN || 'login.keychain';
 const keychain = `~/Library/Keychains/${keychainName}`;
 console.log(`keychain is ${keychain}`);
 
-const DISTRIBUTION_CERT_PASS = process.env.DISTRIBUTION_CERT_PASS;
+const { DISTRIBUTION_CERT_PASS } = process.env;
 
 if (!DISTRIBUTION_CERT_PASS) {
   console.error('DISTRIBUTION_CERT_PASS environment variable is required');
@@ -17,7 +18,7 @@ let projectEnv = null;
 
 try {
   projectEnv = require(project.resolve('env', 'env.js'));
-} catch (e) {
+} catch {
   console.error('env/env.js not found, did you init your project?');
 
   process.exit(1);

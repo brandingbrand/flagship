@@ -1,7 +1,7 @@
-export type ILens<Structure, FocussedValue> = {
+export interface ILens<Structure, FocussedValue> {
   get: (structure: Structure) => FocussedValue;
   set: (value: FocussedValue) => (structure: Structure) => Structure;
-};
+}
 
 export interface ExtendWithPath<Structure, FocussedValue> {
   (): IPathLens<Structure, FocussedValue>;

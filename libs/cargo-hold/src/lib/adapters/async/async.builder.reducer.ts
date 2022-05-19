@@ -1,7 +1,10 @@
 import { branch, pipe } from '@brandingbrand/standard-compose';
 import { withLens } from '@brandingbrand/standard-lens';
-import { ActionCreator } from '../../action-bus';
-import { AnyActionReducer, combineActionReducers, matches, on, StateReducer } from '../../store';
+
+import type { ActionCreator } from '../../action-bus';
+import type { AnyActionReducer, StateReducer } from '../../store';
+import { combineActionReducers, matches, on } from '../../store';
+
 import {
   buildFailActionCreator,
   buildInitActionCreator,
@@ -10,7 +13,7 @@ import {
   buildRevertActionCreator,
   buildSucceedActionCreator,
 } from './async.builder.actions';
-import {
+import type {
   WithActionKey,
   WithIdleType,
   WithLensInstance,
@@ -24,7 +27,7 @@ import {
   createLoadingState,
   createSuccessState,
 } from './async.stateCreators';
-import {
+import type {
   AsyncIdleState,
   AsyncLoadingMoreState,
   AsyncLoadingState,
@@ -96,7 +99,7 @@ export const buildInitActionReducer = <ActionKey extends string, IdleType>(
   );
 
 export const buildLoadingActionReducer = <ActionKey extends string, SuccessType, IdleType>(
-  builder: WithActionKey<ActionKey> & WithSuccessType<SuccessType> & WithIdleType<IdleType>
+  builder: WithActionKey<ActionKey> & WithIdleType<IdleType> & WithSuccessType<SuccessType>
 ): AnyActionReducer<AsyncLoadingState<IdleType | SuccessType>> =>
   pipe(
     builder,
@@ -106,7 +109,7 @@ export const buildLoadingActionReducer = <ActionKey extends string, SuccessType,
         matches(actionCreator),
         // slight coercion necessary as TS isn't picking up the union quite properly
         (action) =>
-          stateReducerCreator(action.payload) as () => AsyncLoadingState<SuccessType | IdleType>
+          stateReducerCreator(action.payload) as () => AsyncLoadingState<IdleType | SuccessType>
       )
   );
 
@@ -181,15 +184,17 @@ export const buildCombinedReducers = <ActionKey extends string, SuccessType, Fai
     ),
     (actionReducers) =>
       combineActionReducers(
-        ...(actionReducers as AnyActionReducer<AsyncState<SuccessType, FailureType, IdleType>>[])
+        ...(actionReducers as Array<
+          AnyActionReducer<AsyncState<SuccessType, FailureType, IdleType>>
+        >)
       )
   );
 
 export const buildCombinedLensedReducers =
   <ActionKey extends string, SuccessType, FailureType, IdleType, OuterStructureType>(
     builder: WithActionKey<ActionKey> &
-      WithPayloadTypes<SuccessType, FailureType, IdleType> &
-      WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
+      WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> &
+      WithPayloadTypes<SuccessType, FailureType, IdleType>
   ): AnyActionReducer<OuterStructureType> =>
   (action) =>
     withLens(builder.lens)(buildCombinedReducers(builder)(action));

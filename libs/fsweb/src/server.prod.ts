@@ -1,9 +1,10 @@
-import path from 'path';
 import express from 'express';
-import { addProxy } from './lib/proxy';
-import { healthCheck } from './lib/healthcheck';
+import path from 'path';
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+import { healthCheck } from './lib/healthcheck';
+import { addProxy } from './lib/proxy';
+
+const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const envPath = process.env.ENV_PATH || 'env';
 const envFile = process.env.ENV || 'env';
 const buildPath = process.env.BUILD_PATH || 'web-compiled';

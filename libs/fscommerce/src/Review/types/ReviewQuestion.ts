@@ -1,4 +1,4 @@
-import { ReviewMetadata } from './ReviewMetadata';
+import type { ReviewMetadata } from './ReviewMetadata';
 
 /**
  * Question posed for a product

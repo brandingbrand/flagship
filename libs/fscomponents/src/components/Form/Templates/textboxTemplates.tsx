@@ -1,55 +1,64 @@
 import React from 'react';
+
 import StatefulTextbox from './StatefulTextbox';
 import { FormLabelPosition } from './fieldTemplates';
 
-export function labelAboveTextbox(
-  locals: Record<string, any>,
-  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
-): JSX.Element {
-  return (
-    <StatefulTextbox
-      locals={locals}
-      labelPosition={FormLabelPosition.Above}
-      componentFactory={componentFactory}
-    />
-  );
-}
+export const labelAboveTextbox = (
+  locals: Record<string, unknown>,
+  componentFactory?: (
+    locals: Record<string, unknown>,
+    textboxStyle: unknown,
+    color: string
+  ) => JSX.Element
+): JSX.Element => (
+  <StatefulTextbox
+    componentFactory={componentFactory}
+    labelPosition={FormLabelPosition.Above}
+    locals={locals}
+  />
+);
 
-export function labelFloatingTextbox(
-  locals: Record<string, any>,
-  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
-): JSX.Element {
-  return (
-    <StatefulTextbox
-      locals={locals}
-      labelPosition={FormLabelPosition.Floating}
-      componentFactory={componentFactory}
-    />
-  );
-}
+export const labelFloatingTextbox = (
+  locals: Record<string, unknown>,
+  componentFactory?: (
+    locals: Record<string, unknown>,
+    textboxStyle: unknown,
+    color: string
+  ) => JSX.Element
+): JSX.Element => (
+  <StatefulTextbox
+    componentFactory={componentFactory}
+    labelPosition={FormLabelPosition.Floating}
+    locals={locals}
+  />
+);
 
-export function labelHiddenTextbox(
-  locals: Record<string, any>,
-  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
-): JSX.Element {
-  return (
-    <StatefulTextbox
-      locals={locals}
-      labelPosition={FormLabelPosition.Hidden}
-      componentFactory={componentFactory}
-    />
-  );
-}
+export const labelHiddenTextbox = (
+  locals: Record<string, unknown>,
+  componentFactory?: (
+    locals: Record<string, unknown>,
+    textboxStyle: unknown,
+    color: string
+  ) => JSX.Element
+): JSX.Element => (
+  <StatefulTextbox
+    componentFactory={componentFactory}
+    labelPosition={FormLabelPosition.Hidden}
+    locals={locals}
+  />
+);
 
-export function labelInlineTextbox(
-  locals: Record<string, any>,
-  componentFactory?: (locals: Record<string, any>, textboxStyle: any, color: string) => JSX.Element
-): JSX.Element {
-  return (
-    <StatefulTextbox
-      locals={locals}
-      labelPosition={FormLabelPosition.Inline}
-      componentFactory={componentFactory}
-    />
-  );
-}
+export const labelInlineTextbox = (
+  locals: Record<string, unknown>,
+  componentFactory?: (
+    locals: Record<string, unknown>,
+    textboxStyle: unknown,
+    color: string
+  ) => JSX.Element
+): JSX.Element => (
+  <StatefulTextbox
+    componentFactory={componentFactory}
+    labelPosition={FormLabelPosition.Inline}
+    locals={locals}
+  />
+);

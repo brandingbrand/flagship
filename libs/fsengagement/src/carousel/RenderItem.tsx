@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+
 import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import { ParallaxImage } from 'react-native-snap-carousel';
+
 import styles from './SliderEntry.style';
 
 export interface RenderItemProps {
   data?: any;
   index?: number;
-  parallax?: any;
-  parallaxProps?: any;
+  parallax?: unknown;
+  parallaxProps?: unknown;
   even?: boolean;
-  navigator: any;
+  navigator: unknown;
   onPressOpenModal?: boolean;
   isDemoProduct?: boolean;
   horizPadding: number;
@@ -19,12 +21,12 @@ export interface RenderItemProps {
 const { height: viewportHeight } = Dimensions.get('window');
 
 export default class RenderItem extends Component<RenderItemProps> {
-  get image(): any {
+  private get image(): JSX.Element {
     const {
       data: { source },
+      even,
       parallax,
       parallaxProps,
-      even,
     } = this.props;
 
     return parallax ? (
@@ -41,31 +43,30 @@ export default class RenderItem extends Component<RenderItemProps> {
       <Image source={source} style={styles.image} />
     );
   }
-  onPress = () => {
-    return false;
-  };
-  render(): JSX.Element {
+
+  private readonly onPress = () => false;
+
+  public render(): JSX.Element {
     const {
-      data: { ratio, title, subtitle },
+      data: { ratio, subtitle, title },
       even,
-      itemWidth,
       horizPadding = 0,
+      itemWidth,
     } = this.props;
 
     let itemStyle: any = {};
-    if (ratio && itemWidth) {
-      itemStyle = {
-        width: itemWidth,
-        height: itemWidth / parseFloat(ratio),
-        paddingHorizontal: horizPadding,
-      };
-    } else {
-      itemStyle = {
-        width: itemWidth,
-        height: viewportHeight * 0.36,
-        paddingHorizontal: horizPadding,
-      };
-    }
+    itemStyle =
+      ratio && itemWidth
+        ? {
+            width: itemWidth,
+            height: itemWidth / Number.parseFloat(ratio),
+            paddingHorizontal: horizPadding,
+          }
+        : {
+            width: itemWidth,
+            height: viewportHeight * 0.36,
+            paddingHorizontal: horizPadding,
+          };
     const uppercaseTitle = title ? (
       <Text style={[styles.title, even ? styles.titleEven : {}]} numberOfLines={2}>
         {title.toUpperCase()}

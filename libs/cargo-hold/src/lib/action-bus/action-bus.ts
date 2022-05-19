@@ -1,9 +1,11 @@
-import type { PAYLOAD } from '../internal/tokens';
-import type { AnyAction, ActionHandler, Action, AnyActionSpecifier } from './action-bus.types';
-import type { TypeGuard } from './action';
-
-import { Subject, Subscription, Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import type { PAYLOAD } from '../internal/tokens';
+
+import type { TypeGuard } from './action';
+import type { Action, ActionHandler, AnyAction, AnyActionSpecifier } from './action-bus.types';
 
 export class ActionBus {
   protected readonly subscriptions = new Subscription();

@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
-import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
-import { style as S } from '../styles/ReviewsSummary';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Text, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { style as S } from '../styles/ReviewsSummary';
+
+import type { ReviewIndicatorProps } from './ReviewIndicator';
+import { ReviewIndicator } from './ReviewIndicator';
 
 export interface SerializableReviewsSummaryProps {
   value: number;
@@ -24,13 +30,13 @@ export interface SerializableReviewsSummaryProps {
 export interface ReviewsSummaryProps
   extends Omit<
     SerializableReviewsSummaryProps,
-    | 'style'
-    | 'countStyle'
     | 'averageStyle'
+    | 'countStyle'
     | 'recommendStyle'
-    | 'rowStyle'
     | 'reviewIndicatorRowStyle'
     | 'reviewIndicatorTitleTextStyle'
+    | 'rowStyle'
+    | 'style'
   > {
   style?: StyleProp<ViewStyle>;
   countStyle?: StyleProp<TextStyle>;
@@ -64,7 +70,7 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = (pro
   const numberFormatting = { maximumFractionDigits: 1 };
   const reviewIndicatorCopy = reviewIndicatorSubtitle
     ? reviewIndicatorSubtitle
-    : 'based on ' + count + ' reviews';
+    : `based on ${count} reviews`;
 
   return (
     <View style={[S.container, style]}>

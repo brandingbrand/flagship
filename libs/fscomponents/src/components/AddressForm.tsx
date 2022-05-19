@@ -1,50 +1,48 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import type { FunctionComponent } from 'react';
+import React, { useEffect } from 'react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { cloneDeep, merge, pickBy } from 'lodash-es';
+
 import { emailRegex } from '../lib/email';
+
 import { Form, FormLabelPosition } from './Form';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.addressForm;
 
 export interface AddressFormProps {
-  fieldsStyleConfig?: Record<string, any>;
+  fieldsStyleConfig?: Record<string, unknown>;
   labelPosition?: FormLabelPosition;
-  onSubmit?: (value: Record<string, any>) => void;
+  onSubmit?: (value: Record<string, unknown>) => void;
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: string;
-  value?: Record<string, any>;
+  value?: Record<string, unknown>;
   style?: StyleProp<ViewStyle>;
-  checkboxStyleConfig?: Record<string, any>;
-  fieldsOptions?: Record<string, any>;
-  fieldsTypes?: Record<string, any>;
+  checkboxStyleConfig?: Record<string, unknown>;
+  fieldsOptions?: Record<string, unknown>;
+  fieldsTypes?: Record<string, unknown>;
 }
 
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
 const S = StyleSheet.create({
   submitButtonStyle: {
-    flex: 1,
-    backgroundColor: '#EEE',
-    padding: 10,
     alignItems: 'center',
+    backgroundColor: '#EEE',
+    flex: 1,
+    padding: 10,
   },
 });
 
+// eslint-disable-next-line max-lines-per-function
 export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Element => {
   let form: Form | null;
 
@@ -81,7 +79,7 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         email: EmailType,
         ...props.fieldsTypes,
       },
-      (v) => !!v
+      Boolean
     )
   );
 
@@ -113,31 +111,41 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         placeholder: FSI18n.string(componentTranslationKeys.firstName),
         returnKeyType: 'next',
         autoCorrect: false,
-        onSubmitEditing: () => focusField('lastName'),
+        onSubmitEditing: () => {
+          focusField('lastName');
+        },
         error: FSI18n.string(componentTranslationKeys.firstNameError),
       },
       lastName: {
         placeholder: FSI18n.string(componentTranslationKeys.lastName),
         returnKeyType: 'next',
         autoCorrect: false,
-        onSubmitEditing: () => focusField('address1'),
+        onSubmitEditing: () => {
+          focusField('address1');
+        },
         error: FSI18n.string(componentTranslationKeys.lastNameError),
       },
       address1: {
         placeholder: FSI18n.string(componentTranslationKeys.address1),
         returnKeyType: 'next',
-        onSubmitEditing: () => focusField('address2'),
+        onSubmitEditing: () => {
+          focusField('address2');
+        },
         error: FSI18n.string(componentTranslationKeys.address1Error),
       },
       address2: {
         placeholder: FSI18n.string(componentTranslationKeys.address2),
         returnKeyType: 'next',
-        onSubmitEditing: () => focusField('city'),
+        onSubmitEditing: () => {
+          focusField('city');
+        },
       },
       city: {
         placeholder: FSI18n.string(componentTranslationKeys.city),
         returnKeyType: 'next',
-        onSubmitEditing: () => focusField('postalCode'),
+        onSubmitEditing: () => {
+          focusField('postalCode');
+        },
         error: FSI18n.string(componentTranslationKeys.cityError),
       },
       postalCode: {
@@ -145,12 +153,16 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         keyboardType: 'number-pad',
         autoCorrect: false,
         returnKeyType: 'next',
-        onSubmitEditing: () => focusField('stateCode'),
+        onSubmitEditing: () => {
+          focusField('stateCode');
+        },
         error: FSI18n.string(componentTranslationKeys.postalError),
       },
       stateCode: {
         placeholder: FSI18n.string(componentTranslationKeys.state),
-        onSubmitEditing: () => focusField('phone'),
+        onSubmitEditing: () => {
+          focusField('phone');
+        },
         error: FSI18n.string(componentTranslationKeys.stateError),
       },
       phone: {
@@ -159,7 +171,9 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
         autoCorrect: false,
         autoCapitalize: 'none',
         returnKeyType: 'next',
-        onSubmitEditing: () => focusField('email'),
+        onSubmitEditing: () => {
+          focusField('email');
+        },
         error: FSI18n.string(componentTranslationKeys.phoneError),
       },
       email: {
@@ -193,16 +207,16 @@ export const AddressForm: FunctionComponent<AddressFormProps> = (props): JSX.Ele
   return (
     <View style={props.style}>
       <Form
-        ref={(ref) => (form = ref)}
-        fieldsTypes={fieldsTypes}
         fieldsOptions={fieldsOptions}
         fieldsStyleConfig={fieldsStyleConfig}
+        fieldsTypes={fieldsTypes}
         labelPosition={labelPosition}
+        ref={(ref) => (form = ref)}
         value={props.value}
       />
       <TouchableOpacity
-        style={[S.submitButtonStyle, props.submitButtonStyle]}
         onPress={handleSubmit}
+        style={[S.submitButtonStyle, props.submitButtonStyle]}
       >
         <Text style={props.submitTextStyle}>
           {props.submitText || FSI18n.string(componentTranslationKeys.submit)}

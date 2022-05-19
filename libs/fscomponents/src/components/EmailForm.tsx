@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 
-import { emailRegex } from '../lib/email';
-import { SingleLineForm } from './SingleLineForm';
-import { FormLabelPosition } from './Form';
+import type { StyleProp, ViewStyle } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { emailRegex } from '../lib/email';
+
+import { FormLabelPosition } from './Form';
+import { SingleLineForm } from './SingleLineForm';
+
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.emailForm;
 
 export interface EmailFormValue {
@@ -16,23 +22,20 @@ export interface EmailFormProps {
   fieldsStyleConfig?: any;
   labelPosition?: FormLabelPosition;
   onSubmit?: (value: EmailFormValue) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<ViewStyle>;
   submitText?: any;
   value?: EmailFormValue;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   fieldsOptions?: any;
 }
 
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
+/**
+ * @deprecated
+ */
 export class EmailForm extends Component<EmailFormProps> {
-  fieldsTypes: any;
-  fieldsOptions: any;
-  labelPosition: FormLabelPosition;
-
   constructor(props: EmailFormProps) {
     super(props);
 
@@ -57,16 +60,20 @@ export class EmailForm extends Component<EmailFormProps> {
       typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
   }
 
-  componentDidMount(): void {
+  private readonly fieldsTypes: unknown;
+  private readonly fieldsOptions: unknown;
+  private readonly labelPosition: FormLabelPosition;
+
+  public componentDidMount(): void {
     console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return (
       <SingleLineForm
         {...this.props}
-        fieldsTypes={this.fieldsTypes}
         fieldsOptions={this.fieldsOptions}
+        fieldsTypes={this.fieldsTypes}
         labelPosition={this.labelPosition}
       />
     );

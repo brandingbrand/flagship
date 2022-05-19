@@ -2,30 +2,30 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
+
 import { Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 
-import { withDigitalWallet } from '../src/components/DigitalWalletProvider';
 import { ApplePayButton } from '../src/components/ApplePayButton';
+import { withDigitalWallet } from '../src/components/DigitalWalletProvider';
 
-const ApplePayButtonWrapper = (props: any) => {
-  return (
-    <View>
-      {(props.showApplePayButton || props.showApplePaySetupButton) && (
-        <ApplePayButton
-          applePayOnPress={props.applePayOnPress}
-          applePaySetupPress={props.applePaySetupPress}
-          showApplePayButton={props.showApplePayButton}
-          showApplePaySetupButton={props.showApplePaySetupButton}
-        />
-      )}
-      {!props.showApplePayButton && !props.showApplePaySetupButton && (
-        <Text>Apple Pay is not supported on this device or browser</Text>
-      )}
-    </View>
-  );
-};
+const ApplePayButtonWrapper = (props: any) => (
+  <View>
+    {(props.showApplePayButton || props.showApplePaySetupButton) && (
+      <ApplePayButton
+        applePayOnPress={props.applePayOnPress}
+        applePaySetupPress={props.applePaySetupPress}
+        showApplePayButton={props.showApplePayButton}
+        showApplePaySetupButton={props.showApplePaySetupButton}
+      />
+    )}
+    {!props.showApplePayButton && !props.showApplePaySetupButton && (
+      <Text>Apple Pay is not supported on this device or browser</Text>
+    )}
+  </View>
+);
 
 const ApplePayButtonWithWallet = withDigitalWallet(ApplePayButtonWrapper);
 

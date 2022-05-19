@@ -1,18 +1,20 @@
-import { Config } from '../types';
-import * as fs from './fs';
-import * as helpers from '../helpers';
-import * as path from './path';
-import * as versionLib from './version';
-import * as nativeConstants from './native-constants';
 import * as xcode from 'xcode';
+
+import * as helpers from '../helpers';
+import type { Config } from '../types';
+
+import * as fs from './fs';
+import * as nativeConstants from './native-constants';
+import * as path from './path';
 import * as usageDescriptions from './usage-descriptions';
+import * as versionLib from './version';
 
 /**
  * Updates app bundle id.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function bundleId(configuration: Config): void {
+export const bundleId = (configuration: Config): void => {
   if (!configuration.bundleIds) {
     return;
   }
@@ -31,38 +33,37 @@ export function bundleId(configuration: Config): void {
     /.+#PROJECT_MODIFY_FLAG_export_options_export_team_id/g,
     `"${bundleId}" => #PROJECT_MODIFY_FLAG_export_options_export_team_id`
   );
-}
+};
 
 /**
  * Enables capabilities for the project.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function capabilities(configuration: Config): void {
+export const capabilities = (configuration: Config): void => {
   if (configuration.enabledCapabilitiesIOS) {
     helpers.logInfo(`enabling iOS capabilities [${configuration.enabledCapabilitiesIOS}]`);
 
-    configuration.enabledCapabilitiesIOS.forEach((capability) => {
+    for (const capability of configuration.enabledCapabilitiesIOS) {
       fs.update(
         path.ios.pbxprojFilePath(configuration),
         new RegExp(`com.apple.${capability}\\s*=\\s*{\\s*enabled = 0;`),
         `com.apple.${capability} = { enabled = 1;`
       );
-    });
+    }
   }
-}
+};
 
 /**
  * Sets the app's targeted build devices
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-
-export function targetedDevice(configuration: Config): void {
+export const targetedDevice = (configuration: Config): void => {
   if (configuration.targetedDevices) {
     helpers.logInfo(`selecting targeted devices: ${configuration.targetedDevices}`);
 
-    const devices: { [key: string]: any } = {
+    const devices: Record<string, unknown> = {
       iPhone: 1,
       iPad: 2,
       Universal: `"1,2"`,
@@ -76,14 +77,14 @@ export function targetedDevice(configuration: Config): void {
       `TARGETED_DEVICE_FAMILY = ${devices[configuration.targetedDevices]}`
     );
   }
-}
+};
 
 /**
  * Enables entitlements for the project.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function entitlements(configuration: Config): void {
+export const entitlements = (configuration: Config): void => {
   if (!configuration.entitlementsFileIOS) {
     return;
   }
@@ -103,14 +104,14 @@ export function entitlements(configuration: Config): void {
     `CODE_SIGN_ENTITLEMENTS = ${configuration.name + path.sep + configuration.name}.entitlements;
     CODE_SIGN_IDENTITY = `
   );
-}
+};
 
 /**
  * Updates app display name.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function displayName(configuration: Config): void {
+export const displayName = (configuration: Config): void => {
   if (!configuration.displayName) {
     return;
   }
@@ -122,14 +123,14 @@ export function displayName(configuration: Config): void {
     /<key>CFBundleDisplayName<\/key>\s+<string>\w+<\/string>/,
     `<key>CFBundleDisplayName</key><string>${configuration.displayName}</string>`
   );
-}
+};
 
 /**
  * Sets the app's icon.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function icon(configuration: Config): void {
+export const icon = (configuration: Config): void => {
   if (!configuration || !configuration.appIconDir || !configuration.appIconDir.ios) {
     return;
   }
@@ -147,17 +148,17 @@ export function icon(configuration: Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err: any) {
-    helpers.logError(`updating iOS app icon`, err);
+  } catch (error: any) {
+    helpers.logError(`updating iOS app icon`, error);
   }
-}
+};
 
 /**
  * Sets the app's launch screen.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function launchScreen(configuration: Config): void {
+export const launchScreen = (configuration: Config): void => {
   if (!configuration || !configuration.launchScreen || !configuration.launchScreen.ios) {
     return;
   }
@@ -189,20 +190,20 @@ export function launchScreen(configuration: Config): void {
 
     fs.copySync(sourceImages, destinationImages);
     fs.copySync(sourceLaunchScreen, destinationLaunchScreen);
-  } catch (err: any) {
-    helpers.logError('updating iOS launch screen', err);
+  } catch (error: any) {
+    helpers.logError('updating iOS launch screen', error);
   }
-}
+};
 
 /**
  * Adds exception domains for App Transport Security from the project configuration.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function exceptionDomains(configuration: Config): void {
+export const exceptionDomains = (configuration: Config): void => {
   const exceptionDomains = configuration.exceptionDomains || [];
 
-  if (exceptionDomains.length) {
+  if (exceptionDomains.length > 0) {
     // Users should not add exception domains. They introduce a security vulnerability.
     helpers.logWarn(
       `adding iOS exception domains\n\tYou should not enable exception domains in a production app.`
@@ -213,12 +214,12 @@ export function exceptionDomains(configuration: Config): void {
     // remove localhost exception when dev feature is disabled
     fs.update(
       path.ios.infoPlistPath(configuration),
-      /<!-- {NSExceptionDomains-localhost-start} -->[.\s\S]+<!-- {NSExceptionDomains-localhost-end} -->/,
+      /<!-- {NSExceptionDomains-localhost-start} -->[\S\s]+<!-- {NSExceptionDomains-localhost-end} -->/,
       ''
     );
   }
 
-  if (exceptionDomains.length) {
+  if (exceptionDomains.length > 0) {
     fs.update(
       path.ios.infoPlistPath(configuration),
       '<!-- {NSExceptionDomains} -->',
@@ -229,21 +230,20 @@ export function exceptionDomains(configuration: Config): void {
               `<key>${item}</key>`,
               '<dict><key>NSExceptionAllowsInsecureHTTPLoads</key><true/></dict>',
             ].join('');
-          } else {
-            return `<key>${item.domain}</key><dict>${item.value}</dict>`;
           }
+          return `<key>${item.domain}</key><dict>${item.value}</dict>`;
         })
         .join('')
     );
   }
-}
+};
 
 /**
  * Adds usage description from the project configuration.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function usageDescription(configuration: Config): void {
+export const usageDescription = (configuration: Config): void => {
   if (!configuration.usageDescriptionIOS) {
     return;
   }
@@ -253,14 +253,14 @@ export function usageDescription(configuration: Config): void {
   );
 
   usageDescriptions.add(configuration, configuration.usageDescriptionIOS);
-}
+};
 
 /**
  * Adds usage description from the project configuration.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function backgroundModes(configuration: Config): void {
+export const backgroundModes = (configuration: Config): void => {
   if (!configuration.UIBackgroundModes) {
     return;
   }
@@ -276,34 +276,32 @@ export function backgroundModes(configuration: Config): void {
     '<key>UIRequiredDeviceCapabilities</key>',
     `<key>UIBackgroundModes</key>
       <array>
-      ${configuration.UIBackgroundModes.map((mode) => {
-        return `<string>${mode.string}</string>`;
-      })}
+      ${configuration.UIBackgroundModes.map((mode) => `<string>${mode.string}</string>`)}
       </array>
     <key>UIRequiredDeviceCapabilities</key>`
   );
-}
+};
 
 /**
  * Sets the default app URL scheme.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function urlScheme(configuration: Config): void {
+export const urlScheme = (configuration: Config): void => {
   const scheme = (configuration && configuration.urlScheme) || configuration.name.toLowerCase();
 
   helpers.logInfo(`setting iOS URL scheme to ${scheme}`);
 
   fs.update(path.ios.infoPlistPath(configuration), 'default-bb-rn-url-scheme', scheme);
-}
+};
 
 /**
  * Sets the app version number.
  *
- * @param {object} configuration The project configuration.
- * @param {string} newVersion The version number to set.
+ * @param configuration The project configuration.
+ * @param newVersion The version number to set.
  */
-export function version(configuration: Config, newVersion: string): void {
+export const version = (configuration: Config, newVersion: string): void => {
   const shortVersion = (configuration.ios && configuration.ios.shortVersion) || newVersion;
 
   const bundleVersion =
@@ -314,33 +312,33 @@ export function version(configuration: Config, newVersion: string): void {
 
   fs.update(
     path.ios.infoPlistPath(configuration),
-    /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
+    /<key>CFBundleShortVersionString<\/key>\s+<string>[\d.]+<\/string>/,
     `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
   );
 
   fs.update(
     path.ios.infoPlistPath(configuration),
-    /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[\d\.]+<\/string\>/,
+    /<key>CFBundleVersion<\/key>\s+<string>[\d.]+<\/string>/,
     `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
   );
-}
+};
 
-// eslint-disable-next-line complexity
-export function iosExtensions(configuration: Config, version: string): void {
-  if (!configuration?.ios?.extensions) {
+// eslint-disable-next-line max-statements
+export const iosExtensions = (configuration: Config, version: string): void => {
+  if (!configuration.ios?.extensions) {
     return;
   }
   helpers.logInfo(`Adding iOS App Extensions`);
   const shortVersion = (configuration.ios && configuration.ios.shortVersion) || version;
   const bundleVersion =
     (configuration.ios && configuration.ios.buildVersion) || versionLib.normalize(version);
-  const extensions = configuration?.ios?.extensions;
+  const { extensions } = configuration.ios;
   const projectPath = path.ios.pbxprojFilePath(configuration);
   const fastFilePath = path.ios.fastfilePath();
   const teamId = configuration.buildConfig.ios.exportTeamId;
   const appBundleId = configuration.bundleIds.ios;
   for (const extension of extensions) {
-    const { extensionPath, bundleExtensionId, provisioningProfileName, frameworks, entitlements } =
+    const { bundleExtensionId, entitlements, extensionPath, frameworks, provisioningProfileName } =
       extension;
 
     const iosExtensionPath = path.project.resolve('ios', extensionPath);
@@ -357,11 +355,11 @@ export function iosExtensions(configuration: Config, version: string): void {
     const extGroup = project.addPbxGroup(files, extensionPath, iosExtensionPath);
     const groups = project.hash.project.objects.PBXGroup;
 
-    Object.keys(groups ?? {}).forEach((key) => {
+    for (const key of Object.keys(groups ?? {})) {
       if (groups?.[key]?.name === 'CustomTemplate') {
         project.addToPbxGroup(extGroup.uuid, key);
       }
-    });
+    }
 
     // Create the target and add it to the build phases
     const target = project.addTarget(
@@ -407,12 +405,12 @@ export function iosExtensions(configuration: Config, version: string): void {
     // Update Extension PList
     fs.update(
       extPlistPath,
-      /\<key\>CFBundleShortVersionString\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
+      /<key>CFBundleShortVersionString<\/key>\s+<string>\S+<\/string>/,
       `<key>CFBundleShortVersionString</key>\n\t<string>${shortVersion}</string>`
     );
     fs.update(
       extPlistPath,
-      /\<key\>CFBundleVersion\<\/key\>[\n\r\s]+\<string\>[^\s]+<\/string\>/,
+      /<key>CFBundleVersion<\/key>\s+<string>\S+<\/string>/,
       `<key>CFBundleVersion</key>\n\t<string>${bundleVersion}</string>`
     );
 
@@ -425,25 +423,25 @@ export function iosExtensions(configuration: Config, version: string): void {
       }
     }
   }
-}
+};
 
 /**
- * @param {object} project XCode Project
- * @param {string[]} frameworks Frameworks to add
- * @param {string} uuid Target uuid
+ * @param project XCode Project
+ * @param frameworks Frameworks to add
+ * @param uuid Target uuid
  */
-function addFrameworks(project: xcode.XCodeproject, frameworks: string[], uuid: string): void {
+const addFrameworks = (project: xcode.XCodeproject, frameworks: string[], uuid: string): void => {
   for (const framework of frameworks || []) {
     project.addFramework(framework, { target: uuid, customFramework: true, embed: true });
   }
-}
+};
 
 /**
  * Copy custom sentry properties file to ios directory
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function sentryProperties(configuration: Config): void {
+export const sentryProperties = (configuration: Config): void => {
   if (!configuration || !configuration.sentry || !configuration.sentry.propertiesPath) {
     return;
   }
@@ -456,60 +454,62 @@ export function sentryProperties(configuration: Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err: any) {
-    helpers.logError(`updating iOS Sentry properties`, err);
+  } catch (error: any) {
+    helpers.logError(`updating iOS Sentry properties`, error);
   }
-}
+};
 
 /**
  * Adds ShowDevMenu:"true" to NativeConstants for showing the dev menu
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function addDevMenuFlag(configuration: Config): void {
+export const addDevMenuFlag = (configuration: Config): void => {
   nativeConstants.addIOS(configuration, 'ShowDevMenu', 'true');
-}
+};
 
 /**
  * Sets initial env in EnvSwitcher
  *
- * @param {object} configuration The project configuration.
- * @param {string} env The identifier for the environment for which to return the configuration.
+ * @param configuration The project configuration.
+ * @param env The identifier for the environment for which to return the configuration.
  */
-export function setEnvSwitcherInitialEnv(configuration: Config, env: string): void {
+export const setEnvSwitcherInitialEnv = (configuration: Config, env: string): void => {
   helpers.logInfo(`setting initial env in EnvSwitcher for IOS`);
 
   const envSwitcherPath = path.resolve(path.ios.nativeProjectPath(configuration), 'EnvSwitcher.m');
 
   fs.update(
     envSwitcherPath,
-    /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
+    /@"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName]/,
     `@"${env}"; // [EnvSwitcher initialEnvName]`
   );
-}
+};
 
 /**
  * Adds iOS system and custom frameworks to project
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function frameworks(configuration: Config): void {
+export const frameworks = (configuration: Config): void => {
   const projectPath = path.ios.pbxprojFilePath(configuration);
   const project = xcode.project(projectPath);
   project.parseSync();
 
-  configuration.ios?.frameworks?.forEach((obj) => {
-    const { framework, frameworkPath } = obj;
-    if (frameworkPath) {
-      const source = path.resolve(path.project.path(), frameworkPath, framework);
-      const destination = path.resolve(path.project.path(), 'ios', framework);
-      fs.copySync(source, destination);
+  if (configuration.ios?.frameworks) {
+    for (const obj of configuration.ios.frameworks) {
+      const { framework, frameworkPath } = obj;
+      if (frameworkPath) {
+        const source = path.resolve(path.project.path(), frameworkPath, framework);
+        const destination = path.resolve(path.project.path(), 'ios', framework);
+        fs.copySync(source, destination);
 
-      project.addFramework(destination, { customFramework: true });
-    } else {
-      project.addFramework(framework, {});
+        project.addFramework(destination, { customFramework: true });
+      } else {
+        project.addFramework(framework, {});
+      }
     }
-  });
+  }
 
   fs.writeFileSync(projectPath, project.writeSync());
-}
+};

@@ -1,10 +1,10 @@
-import { Config } from '../../../types';
 import { logError, logInfo } from '../../../helpers';
-import * as path from '../../path';
-import * as fs from '../../fs';
+import type { Config } from '../../../types';
 import * as pods from '../../cocoapods';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
-export function preLink(config: Config): void {
+export const preLink = (config: Config): void => {
   if (
     !config.adobeAnalytics ||
     !config.adobeAnalytics.ios ||
@@ -24,10 +24,10 @@ export function preLink(config: Config): void {
   const podfile = fs.readFileSync(path.ios.podfilePath());
   const adobeSdk = `pod 'AdobeMobileSDK', '~> 4.14.1'`;
 
-  if (podfile.indexOf(adobeSdk) === -1) {
+  if (!podfile.includes(adobeSdk)) {
     pods.add([adobeSdk]);
     logInfo('updated Podfile with Adobe Mobile SDK');
   }
 
   logInfo('finished updating iOS for react-native-adobe-analytics');
-}
+};

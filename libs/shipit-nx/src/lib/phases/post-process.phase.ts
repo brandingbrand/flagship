@@ -1,23 +1,17 @@
-import {
-  formatFiles,
-  getPackageManagerCommand,
-  readJson,
-  WorkspaceJsonConfiguration,
-  writeJson,
-} from '@nrwl/devkit';
-import { run } from 'nx/src/command-line/run';
-import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
-import { Workspaces } from '@nrwl/tao/src/shared/workspace';
-import { execSync } from 'child_process';
-
 import { CommitMessage } from '@brandingbrand/git';
 
+import type { WorkspaceJsonConfiguration } from '@nrwl/devkit';
+import { formatFiles, getPackageManagerCommand, readJson, writeJson } from '@nrwl/devkit';
+import { FsTree, flushChanges } from '@nrwl/tao/src/shared/tree';
+import { Workspaces } from '@nrwl/tao/src/shared/workspace';
+import { execSync } from 'child_process';
+import { run } from 'nx/src/command-line/run';
 import { join } from 'path';
 
-import { ShipConfig, ShipProjectOptions } from '../configs/ship.config';
+import type { ShipConfig, ShipProjectOptions } from '../configs/ship.config';
 import { sortObject } from '../utils/sort-object.util';
 
-import { Phase } from './phase';
+import type { Phase } from './phase';
 
 interface NxJson {
   defaultProject?: string;
@@ -58,13 +52,13 @@ interface WorkspaceJson {
 }
 
 const sortPackageJson = ({
-  name,
-  version,
-  private: isPrivate,
-  engines,
-  scripts,
   dependencies,
   devDependencies,
+  engines,
+  name,
+  private: isPrivate,
+  scripts,
+  version,
   ...other
 }: PackageJson): PackageJson => ({
   name,
@@ -86,42 +80,37 @@ const webAliases: Record<string, string[]> = {
 
 const installCommand = `${getPackageManagerCommand().install} --silent --ignore-scripts`;
 
-export const isForcedDependency = (dependency: string) => {
-  return dependency === 'tslib' || dependency === 'react-native-vector-icons';
-};
+export const isForcedDependency = (dependency: string) =>
+  dependency === 'tslib' || dependency === 'react-native-vector-icons';
 
-// eslint-disable-next-line complexity
-const isForcedDevDependency = (dependency: string) => {
-  return (
-    dependency.startsWith('@nrwl') ||
-    dependency.startsWith('@commitlint') ||
-    dependency.startsWith('@commitlint') ||
-    dependency.startsWith('storybook') ||
-    dependency === 'husky' ||
-    dependency === 'ts-dedent' ||
-    dependency === 'inquirer' ||
-    dependency === '@types/inquirer' ||
-    dependency === '@nstudio/nps-i' ||
-    dependency === 'npm-run-all' ||
-    dependency === 'nps' ||
-    dependency === 'patch-package' ||
-    dependency === 'typescript' ||
-    dependency === 'prettier' ||
-    dependency.includes('eslint') ||
-    dependency.includes('jest') ||
-    dependency === 'cypress' ||
-    dependency === 'detox' ||
-    dependency === '@jscutlery/semver' ||
-    dependency === 'ts-jest' ||
-    dependency === 'ts-node' ||
-    dependency.includes('metro') ||
-    dependency.startsWith('@react-native-community/cli') ||
-    dependency === 'react-native-svg-transformer' ||
-    dependency === 'jetifier' ||
-    dependency === 'jsc-android' ||
-    dependency === 'cz-customizable'
-  );
-};
+const isForcedDevDependency = (dependency: string) =>
+  dependency.startsWith('@nrwl') ||
+  dependency.startsWith('@commitlint') ||
+  dependency.startsWith('@commitlint') ||
+  dependency.startsWith('storybook') ||
+  dependency === 'husky' ||
+  dependency === 'ts-dedent' ||
+  dependency === 'inquirer' ||
+  dependency === '@types/inquirer' ||
+  dependency === '@nstudio/nps-i' ||
+  dependency === 'npm-run-all' ||
+  dependency === 'nps' ||
+  dependency === 'patch-package' ||
+  dependency === 'typescript' ||
+  dependency === 'prettier' ||
+  dependency.includes('eslint') ||
+  dependency.includes('jest') ||
+  dependency === 'cypress' ||
+  dependency === 'detox' ||
+  dependency === '@jscutlery/semver' ||
+  dependency === 'ts-jest' ||
+  dependency === 'ts-node' ||
+  dependency.includes('metro') ||
+  dependency.startsWith('@react-native-community/cli') ||
+  dependency === 'react-native-svg-transformer' ||
+  dependency === 'jetifier' ||
+  dependency === 'jsc-android' ||
+  dependency === 'cz-customizable';
 
 export class PostProcessPhase implements Phase {
   constructor(private readonly config: ShipConfig) {}
@@ -204,7 +193,6 @@ export class PostProcessPhase implements Phase {
     writeJson(destinationTree, 'package.json', sortPackageJson(packageJson));
   }
 
-  // eslint-disable-next-line complexity
   private async cleanPackageJsonForProject(
     sourceTree: FsTree,
     destinationTree: FsTree,
@@ -376,7 +364,7 @@ export class PostProcessPhase implements Phase {
     destinationWorkspace: WorkspaceJsonConfiguration,
     options: ShipProjectOptions
   ) {
-    if ('sync-deps' in (destinationWorkspace.projects[options?.project ?? '']?.targets ?? {})) {
+    if ('sync-deps' in (destinationWorkspace.projects[options.project ?? '']?.targets ?? {})) {
       // This will populate the dependencies for react-native auto linking
       await run(
         destinationTree.root,

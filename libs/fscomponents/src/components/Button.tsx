@@ -1,20 +1,19 @@
 import React, { PureComponent } from 'react';
-import {
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  Text,
   TextStyle,
-  TouchableHighlight,
   TouchableHighlightProperties,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Image, Text, TouchableHighlight, View } from 'react-native';
 
 import { darken } from '../lib/color';
-import { border, palette } from '../styles/variables';
 import { style as S, stylesSize, stylesTextSize } from '../styles/Button';
+import { border, palette } from '../styles/variables';
+
 import { Loading } from './Loading';
 
 const DEFAULT_TINT_PERC = 15;
@@ -50,7 +49,7 @@ export interface ButtonProps extends Pick<TouchableHighlightProperties, 'hitSlop
   full?: boolean;
 }
 
-export interface SerializableFSButtonProps extends Omit<ButtonProps, 'onPress' | 'onLongPress'> {
+export interface SerializableFSButtonProps extends Omit<ButtonProps, 'onLongPress' | 'onPress'> {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   iconStyle?: ImageStyle;
@@ -58,17 +57,53 @@ export interface SerializableFSButtonProps extends Omit<ButtonProps, 'onPress' |
 }
 
 export interface ButtonState {
-  palette: any;
+  palette: Record<string, string>;
   title: string;
 }
 
 export class Button extends PureComponent<ButtonProps, ButtonState> {
-  state: ButtonState = {
+  private readonly renderButtonInner = (): JSX.Element => {
+    const {
+      color = 'primary',
+      icon,
+      iconStyle,
+      light,
+      link,
+      loading,
+      size = 'medium',
+      titleStyle,
+      viewStyle,
+    } = this.props;
+
+    const { palette, title } = this.state;
+    const onColor = `on${color.charAt(0).toUpperCase()}${color.slice(1)}`;
+
+    if (loading) {
+      return <Loading />;
+    }
+    return (
+      <View style={[S.buttonView, viewStyle]}>
+        {icon && <Image source={icon} style={[S.icon, iconStyle]} />}
+        <Text
+          style={[
+            S.text,
+            { color: light || link ? palette[color] : palette[onColor] },
+            stylesTextSize[size],
+            titleStyle,
+          ]}
+        >
+          {title}
+        </Text>
+      </View>
+    );
+  };
+
+  public state: ButtonState = {
     palette: this.props.palette || palette,
     title: this.titleState,
   };
 
-  componentDidUpdate(): void {
+  public componentDidUpdate(): void {
     const { title } = this.state;
     const newTitle = this.titleState;
     if (newTitle !== title) {
@@ -76,7 +111,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     }
   }
 
-  render(): any {
+  public render(): JSX.Element {
     const {
       title,
       style = {},
@@ -99,11 +134,10 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
       <TouchableHighlight
         accessibilityLabel={accessibilityLabel || title}
         accessibilityRole="button"
-        onPress={onPress}
-        onLongPress={onLongPress}
-        underlayColor={underlayColor || darken(palette[color], DEFAULT_TINT_PERC)}
         disabled={disabled}
         hitSlop={hitSlop}
+        onLongPress={onLongPress}
+        onPress={onPress}
         style={[
           S.container,
           {
@@ -115,51 +149,15 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
           full && S.full,
           style,
         ]}
+        underlayColor={underlayColor || darken(palette[color] as string, DEFAULT_TINT_PERC)}
       >
         <View style={S.buttonInner}>{this.renderButtonInner()}</View>
       </TouchableHighlight>
     );
   }
 
-  private renderButtonInner = () => {
-    const {
-      loading,
-      icon,
-      iconStyle,
-      titleStyle,
-      viewStyle,
-      size = 'medium',
-      color = 'primary',
-      light,
-      link,
-    } = this.props;
-
-    const { palette, title } = this.state;
-    const onColor = 'on' + color.charAt(0).toUpperCase() + color.slice(1);
-
-    if (loading) {
-      return <Loading />;
-    } else {
-      return (
-        <View style={[S.buttonView, viewStyle]}>
-          {icon && <Image style={[S.icon, iconStyle]} source={icon} />}
-          <Text
-            style={[
-              S.text,
-              { color: light || link ? palette[color] : palette[onColor] },
-              stylesTextSize[size],
-              titleStyle,
-            ]}
-          >
-            {title}
-          </Text>
-        </View>
-      );
-    }
-  };
-
-  get titleState(): string {
-    const { title, selectedTitleState, dynamicTitleStates } = this.props;
+  public get titleState(): string {
+    const { dynamicTitleStates, selectedTitleState, title } = this.props;
 
     if (selectedTitleState === undefined) {
       return title;

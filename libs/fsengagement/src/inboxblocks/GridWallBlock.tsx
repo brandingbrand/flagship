@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
+
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { ActivityIndicator, Dimensions, View } from 'react-native';
+
 import FSNetwork from '@brandingbrand/fsnetwork';
-import {
-  ActivityIndicator,
-  Dimensions,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import RenderProduct from '../carousel/RenderProduct';
+import { wp } from '../carousel/SliderEntry.style';
 import styles from '../carousel/index.style';
 
 const { width: viewportWidth } = Dimensions.get('window');
 const SLIDER_1_FIRST_ITEM = 1;
 const sliderWidth = viewportWidth;
 let renderItemOptions: any = {};
-let renderItemWidth: number = 0;
+let renderItemWidth = 0;
 let onBackPress: () => void;
-import { wp } from '../carousel/SliderEntry.style';
-import RenderProduct from '../carousel/RenderProduct';
 
 export interface GridWallBlockProps {
   source: ImageURISource;
@@ -48,9 +43,6 @@ export interface GridWallBlockState {
 }
 
 export default class GridWallBlock extends Component<GridWallBlockProps, GridWallBlockState> {
-  _slider1Ref: any | null = null;
-
-  private network: FSNetwork;
   constructor(props: GridWallBlockProps) {
     super(props);
     this.state = {
@@ -63,47 +55,35 @@ export default class GridWallBlock extends Component<GridWallBlockProps, GridWal
     });
   }
 
-  async componentDidMount(): Promise<void> {
-    const { items } = this.props;
-    const products = await this.fetchProducts(items);
-    this.setState({
-      products: products.filter((item: any) => !item.error),
-      loading: false,
-    });
-  }
+  public _slider1Ref: any | null = null;
+  private readonly network: FSNetwork;
 
-  async fetchProduct(id: string): Promise<any> {
+  private async fetchProduct(id: string): Promise<any> {
     const imageFormat = this.props.imageFormat || 'Regular_Mobile';
     return this.network
       .get(id)
       .then((r: any) => r.data)
-      .then((item: any) => {
-        return {
-          name: item.name,
-          price: item.price,
-          url: item.url,
-          productId: id,
-          deepLinkUrl: this.props.deepLinkUrl,
-          image: (item.galleryImageList.galleryImage || []).find((img: any) => {
-            return img.format === imageFormat;
-          }),
-        };
-      })
-      .catch(async (e: any) => {
-        return Promise.resolve({
-          error: e,
-        });
-      });
+      .then((item: any) => ({
+        name: item.name,
+        price: item.price,
+        url: item.url,
+        productId: id,
+        deepLinkUrl: this.props.deepLinkUrl,
+        image: (item.galleryImageList.galleryImage || []).find(
+          (img: any) => img.format === imageFormat
+        ),
+      }))
+      .catch(async (error: any) => ({
+        error,
+      }));
   }
 
-  async fetchProducts(items: any[]): Promise<any> {
-    const promises = items.map(async (item) => {
-      return this.fetchProduct(item.productId);
-    });
+  private async fetchProducts(items: any[]): Promise<any> {
+    const promises = items.map(async (item) => this.fetchProduct(item.productId));
     return Promise.all(promises);
   }
 
-  _renderItem(item: any, index: number): JSX.Element {
+  private _renderItem(item: any, index: number): JSX.Element {
     return (
       <RenderProduct
         data={item}
@@ -117,7 +97,7 @@ export default class GridWallBlock extends Component<GridWallBlockProps, GridWal
     );
   }
 
-  horizontalMarginPadding(): number {
+  private horizontalMarginPadding(): number {
     const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
@@ -125,15 +105,18 @@ export default class GridWallBlock extends Component<GridWallBlockProps, GridWal
     const pl = containerStyle.paddingLeft || 0;
     return ml + mr + pr + pl;
   }
-  calculateSliderWidth(): number {
+
+  private calculateSliderWidth(): number {
     return sliderWidth - this.horizontalMarginPadding();
   }
-  calculateItemWidth(): number {
+
+  private calculateItemWidth(): number {
     const { options } = this.props;
     const slideWidth = wp(50);
     return slideWidth - options.spaceBetweenHorizontal / 2 - this.horizontalMarginPadding() / 2;
   }
-  createGrid(): JSX.Element {
+
+  private createGrid(): JSX.Element {
     const { options } = this.props;
     renderItemOptions = options;
     renderItemWidth = this.calculateItemWidth();
@@ -145,13 +128,23 @@ export default class GridWallBlock extends Component<GridWallBlockProps, GridWal
           flexWrap: 'wrap',
         }}
       >
-        {(this.state.products || []).map((product: any, index: number) => {
-          return this._renderItem(product, index);
-        })}
+        {(this.state.products || []).map((product: any, index: number) =>
+          this._renderItem(product, index)
+        )}
       </View>
     );
   }
-  render(): JSX.Element {
+
+  public async componentDidMount(): Promise<void> {
+    const { items } = this.props;
+    const products = await this.fetchProducts(items);
+    this.setState({
+      products: products.filter((item: any) => !item.error),
+      loading: false,
+    });
+  }
+
+  public render(): JSX.Element {
     const { containerStyle } = this.props;
     if (this.props.onBack) {
       onBackPress = this.props.onBack;

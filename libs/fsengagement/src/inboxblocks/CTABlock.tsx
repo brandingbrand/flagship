@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  Image,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { CardContext, EngagementContext } from '../lib/contexts';
 
-import { Action, EmitterProps, Icon, JSON } from '../types';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import rightArrow from '../../assets/images/rightArrow.png';
 import rightBlockArrow from '../../assets/images/rightBlockArrow.png';
+import { CardContext, EngagementContext } from '../lib/contexts';
+import type { Action, EmitterProps, Icon, JSON } from '../types';
 
 const images = {
   rightArrow,
@@ -57,17 +49,13 @@ export interface CTABlockProps extends EmitterProps {
   localization?: LocalizationData[];
 }
 export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
-  const { buttonStyle, textStyle, containerStyle, icon, localization } = props;
+  const { buttonStyle, containerStyle, icon, localization, textStyle } = props;
   let { text } = props;
-  const { handleAction, cardPosition, language } = React.useContext(EngagementContext);
+  const { cardPosition, handleAction, language } = React.useContext(EngagementContext);
   const { cardActions, handleStoryAction, story } = React.useContext(CardContext);
 
   const filterLocalization =
-    (localization &&
-      localization.find((item) => {
-        return item.language === language;
-      })) ||
-    null;
+    (localization && localization.find((item) => item.language === language)) || null;
 
   if (filterLocalization) {
     text = filterLocalization.value;
@@ -78,29 +66,31 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
       return;
     }
     if (actions && actions.type) {
-      return handleAction({
+      handleAction({
         ...actions,
         name: props.name,
         id: props.id,
         position: cardPosition,
       });
+      return;
     }
     // tappable card with no story - CTAs use actions of container card
-    return handleAction({
+    handleAction({
       ...cardActions,
       name: props.name,
       id: props.id,
       position: cardPosition,
     });
   };
-  // eslint-disable-next-line complexity
+
   const handleActionWithStory = (action: string, actions: Action, story: JSON) => {
     if (story.html && handleAction) {
-      return handleAction({
+      handleAction({
         type: 'blog-url',
         value: story.html.link,
         position: cardPosition,
       });
+      return;
     } else if (
       action === 'story' ||
       (story && actions && (actions.type === null || actions.type === 'story'))
@@ -108,7 +98,8 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
       // go to story card
       return handleStoryAction(story);
     } else if (story && actions && actions.type !== 'story') {
-      return handleActionNoStory(actions);
+      handleActionNoStory(actions);
+      return;
     }
     return null;
   };
@@ -117,7 +108,7 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
     if (action === 'story' || story) {
       return handleActionWithStory(action, actions, story);
     }
-    return handleActionNoStory(actions);
+    handleActionNoStory(actions);
   };
 
   const onButtonPress = () => {

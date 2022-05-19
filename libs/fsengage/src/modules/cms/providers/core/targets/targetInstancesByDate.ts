@@ -1,4 +1,4 @@
-export default function targetInstancesByDate(instances: any[]): any[] {
+const targetInstancesByDate = (instances: any[]): any[] => {
   const currentDate = new Date();
   const currentLocalTime = currentDate.getTime();
 
@@ -10,4 +10,6 @@ export default function targetInstancesByDate(instances: any[]): any[] {
       return currentLocalTime >= startDate && currentLocalTime < endDate;
     })
     .filter(Boolean);
-}
+};
+
+export default targetInstancesByDate;

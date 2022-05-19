@@ -1,4 +1,4 @@
-import { InjectionToken, OfToken } from './providers';
+import type { InjectionToken, OfToken } from './providers';
 
 export const DEPENDENCIES_SYMBOL = Symbol('DEPENDENCIES_SYMBOL');
 
@@ -17,6 +17,5 @@ export const Inject =
     target[DEPENDENCIES_SYMBOL] = prevDependencies;
   };
 
-export const getDependencies = <T, D extends unknown[]>(target: InjectedClass<T, D>) => {
-  return (target[DEPENDENCIES_SYMBOL] ?? []) as OfToken<D>;
-};
+export const getDependencies = <T, D extends unknown[]>(target: InjectedClass<T, D>): OfToken<D> =>
+  (target[DEPENDENCIES_SYMBOL] ?? []) as OfToken<D>;

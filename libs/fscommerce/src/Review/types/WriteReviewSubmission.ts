@@ -1,4 +1,4 @@
-import { Review } from './Review';
+import type { Review } from './Review';
 
 export interface WriteReviewSubmission {
   review?: Review;

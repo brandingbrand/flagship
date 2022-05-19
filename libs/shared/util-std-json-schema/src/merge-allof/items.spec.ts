@@ -1,4 +1,4 @@
-import { mergeAllOf } from './index';
+import { mergeAllOf } from '.';
 
 describe('items', () => {
   it('merges additionalItems', () => {

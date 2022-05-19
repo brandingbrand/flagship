@@ -1,7 +1,9 @@
-import { generateFiles, Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
+import { generateFiles } from '@nrwl/devkit';
 import { join } from 'path';
 
-import { android, ios, PlatformSpecific } from './platform';
+import type { PlatformSpecific } from './platform';
+import { android, ios } from './platform';
 
 export interface CreateFastlaneFilesOptions {
   projectRoot: string;
@@ -9,7 +11,7 @@ export interface CreateFastlaneFilesOptions {
   shortVersion: string;
   versionName: string;
   organization: string;
-  bundleIdentifier: string | PlatformSpecific<string>;
+  bundleIdentifier: PlatformSpecific<string> | string;
   appName: PlatformSpecific<string>;
   ios?: {
     exportMethod: string;
@@ -28,7 +30,7 @@ export interface CreateFastlaneFilesOptions {
 }
 
 export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOptions) => {
-  const { bundleIdentifier, appName, ...otherOptions } = options;
+  const { appName, bundleIdentifier, ...otherOptions } = options;
 
   if (otherOptions.ios) {
     generateFiles(

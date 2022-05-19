@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react';
-import { ComponentRoute } from '../../router';
+
+import type { ComponentRoute } from '../../router';
 
 /**
- * @deprecated
  * @internal
+ * @param screen
+ * @param legacyRoutes
+ * @deprecated
  */
 export const makeLegacyDrawer = (screen: string, legacyRoutes: Map<string, ComponentRoute>) => {
   const Component = legacyRoutes.get(screen)?.component ?? Fragment;
 
-  return () => {
-    return <Component componentId={screen} />;
-  };
+  return () => <Component componentId={screen} />;
 };

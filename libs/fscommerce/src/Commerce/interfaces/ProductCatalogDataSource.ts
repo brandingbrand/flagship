@@ -1,5 +1,11 @@
-import { Category, CategoryQuery, Product, ProductIndex, ProductQuery } from '../CommerceTypes';
-import { ProductPromotion } from '../types/ProductPromotion';
+import type {
+  Category,
+  CategoryQuery,
+  Product,
+  ProductIndex,
+  ProductQuery,
+} from '../CommerceTypes';
+import type { ProductPromotion } from '../types/ProductPromotion';
 
 /**
  * Methods to request product and/or category metadata from a data source.
@@ -8,33 +14,33 @@ export default interface ProductCatalogDataSource {
   /**
    * Fetch a single product via an id.
    *
-   * @param {string} id - The id of the product to fetch
-   * @returns {Promise.<Product>} A promise representing a product matching the id
+   * @param id - The id of the product to fetch
+   * @return A promise representing a product matching the id
    */
-  fetchProduct(id: string): Promise<Product>;
+  fetchProduct: (id: string) => Promise<Product>;
 
   /**
    * Fetch a product index by means of a product query.
    *
-   * @param {ProductQuery} query - The query for which matching products will be returned
-   * @returns {Promise.<ProductQuery>} A promise representing a product index
+   * @param query - The query for which matching products will be returned
+   * @return A promise representing a product index
    */
-  fetchProductIndex(query: ProductQuery): Promise<ProductIndex>;
+  fetchProductIndex: (query: ProductQuery) => Promise<ProductIndex>;
 
   /**
    * Fetch a category via a category id or category query.
    *
-   * @param {string} [id] - An id by which an associated category will be returned
-   * @param {CategoryQuery} [query] - A query describing the category to be returned
-   * @returns {Promise.<Category>} A promise representing a category corresponding to id
+   * @param id - An id by which an associated category will be returned
+   * @param query - A query describing the category to be returned
+   * @return A promise representing a category corresponding to id
    */
-  fetchCategory(id?: string, query?: CategoryQuery): Promise<Category>;
+  fetchCategory: (id?: string, query?: CategoryQuery) => Promise<Category>;
 
   /**
    * Fetch information about a promotion
    *
-   * @param {string} id - A promotion identifier to query
-   * @returns {Promise.<ProductPromotion>} A Promise representing a product's promotion metadata
+   * @param id - A promotion identifier to query
+   * @return A Promise representing a product's promotion metadata
    */
-  fetchProductPromotion?(id: string): Promise<ProductPromotion>;
+  fetchProductPromotion?: (id: string) => Promise<ProductPromotion>;
 }

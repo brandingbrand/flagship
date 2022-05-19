@@ -1,17 +1,27 @@
-import { Analytics } from '@brandingbrand/fsengage';
-import FSNetwork from '@brandingbrand/fsnetwork';
-import { GeoLocation } from '@brandingbrand/types-location';
 import React, { Component } from 'react';
-import { ImageURISource, Platform, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { default as Geolocation, GeolocationOptions } from '@react-native-community/geolocation';
+
+import type { ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Platform } from 'react-native';
+
+import type { LocationItemProps, SearchBarProps } from '@brandingbrand/fscomponents';
+import type { Analytics } from '@brandingbrand/fsengage';
+import FSNetwork from '@brandingbrand/fsnetwork';
+import type { GeoLocation } from '@brandingbrand/types-location';
+
+import type { GeolocationOptions } from '@react-native-community/geolocation';
+import { default as Geolocation } from '@react-native-community/geolocation';
+import { find } from 'lodash-es';
+
+import LocatorList from '../components/LocatorList';
+import LocatorMapSlideList from '../components/LocatorMapSlideList';
+import LocatorMapVertical from '../components/LocatorMapVertical';
 import getCoordsByAddress from '../lib/getCoordsByAddress';
 import getLocationPermission from '../lib/getLocationPermission';
 import { callPhone, startDirections } from '../lib/helpers';
-import { Location, Region } from '../types/Location';
-import { COLLAPSE_LAT_PADDING } from './MapView';
 import states from '../lib/states';
-import { find } from 'lodash-es';
-import { LocationItemProps, SearchBarProps } from '@brandingbrand/fscomponents';
+import type { Location, Region } from '../types/Location';
+
+import { COLLAPSE_LAT_PADDING } from './MapView';
 
 // Distance filter is currently missing from @react-native-community/geolocation
 // https://github.com/react-native-community/react-native-geolocation/issues/11
@@ -20,10 +30,6 @@ interface GeoOptions extends GeolocationOptions {
 }
 
 const DEFAULT_RADIUS = 10;
-
-import LocatorList from '../components/LocatorList';
-import LocatorMapSlideList from '../components/LocatorMapSlideList';
-import LocatorMapVertical from '../components/LocatorMapVertical';
 
 export interface LocationItemData {
   location: Location;
@@ -42,7 +48,7 @@ export interface SearchBarData {
 export interface PropType {
   brandId: string;
   googleMapsAPIKey?: string;
-  format?: 'list' | 'mapVertical' | 'mapHorizontal' | 'mapSlideList';
+  format?: 'list' | 'mapHorizontal' | 'mapSlideList' | 'mapVertical';
   searchBarProps?: SearchBarProps;
   locationItemProps?: LocationItemProps;
   style?: StyleProp<ViewStyle>;
@@ -78,12 +84,6 @@ export interface StateType {
 }
 
 export default class LocatorContainer extends Component<PropType, StateType> {
-  fsNetwork: FSNetwork;
-  currentMapRegion?: Region;
-
-  readyToShowSearchAreaButton: boolean = false;
-  timerToShowSearchAreaButton: any = null;
-
   constructor(props: PropType) {
     super(props);
     this.state = {
@@ -96,13 +96,13 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     this.fsNetwork = new FSNetwork();
   }
 
-  componentDidMount(): void {
-    if (this.props.analytics) {
-      this.props.analytics.impression.generic(this, {});
-    }
-  }
+  private readonly fsNetwork: FSNetwork;
+  private currentMapRegion?: Region;
 
-  submitSearch = (searchValue: string) => {
+  private readyToShowSearchAreaButton = false;
+  private timerToShowSearchAreaButton: any = null;
+
+  private readonly submitSearch = (searchValue: string) => {
     if (!searchValue) {
       return;
     }
@@ -123,7 +123,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
           this.setState({
             locations: _data.locations,
             isLoading: false,
-            locationsNotFound: !_data.locations || !_data.locations.length,
+            locationsNotFound: !_data.locations || _data.locations.length === 0,
             selectedLocation: undefined,
             shouldShowSearchAreaButton: false,
           });
@@ -135,7 +135,9 @@ export default class LocatorContainer extends Component<PropType, StateType> {
             });
           }
         })
-        .catch((e) => console.log(e));
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
     const state = find(states, (state, abbr) => {
@@ -144,7 +146,8 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     });
 
     if (state) {
-      return this.fetchLocationsByState(searchValue);
+      this.fetchLocationsByState(searchValue);
+      return;
     }
 
     return getCoordsByAddress(searchValue, googleMapsAPIKey)
@@ -165,17 +168,17 @@ export default class LocatorContainer extends Component<PropType, StateType> {
           );
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         this.setState({ isLoading: false });
         if (this.props.handleAddressNotFound) {
           this.props.handleAddressNotFound();
         } else {
-          alert(`Cannot get address: ${err}`);
+          alert(`Cannot get address: ${error}`);
         }
       });
   };
 
-  handlePhonePress = (phone: string, locationId?: any, index?: number) => () => {
+  private readonly handlePhonePress = (phone: string, locationId?: any, index?: number) => () => {
     if (this.props.analytics) {
       this.props.analytics.click.generic('CallButton', {
         identifier: locationId || '',
@@ -196,44 +199,47 @@ export default class LocatorContainer extends Component<PropType, StateType> {
       });
   };
 
-  handleNavPress = (location: Location, locationId?: any, index?: number) => () => {
-    if (this.props.analytics) {
-      this.props.analytics.click.generic('DirectionButton', {
-        identifier: locationId || '',
-        index,
-      });
-    }
+  private readonly handleNavPress =
+    (location: Location, locationId?: any, index?: number) => () => {
+      if (this.props.analytics) {
+        this.props.analytics.click.generic('DirectionButton', {
+          identifier: locationId || '',
+          index,
+        });
+      }
 
-    startDirections(location.title, location.address)
-      .then(() => {
-        if (this.props.analytics) {
-          const fullAddress =
-            [location.address.address1, location.address.address2].filter(Boolean).join(' ') +
-            ` ${location.address.city}, ${location.address.state} ${location.address.zip}`;
+      startDirections(location.title, location.address)
+        .then(() => {
+          if (this.props.analytics) {
+            const fullAddress = `${[location.address.address1, location.address.address2]
+              .filter(Boolean)
+              .join(' ')} ${location.address.city}, ${location.address.state} ${
+              location.address.zip
+            }`;
 
-          this.props.analytics.location.directions('DirectionButton', {
-            address: fullAddress,
-            identifier: locationId || '',
-          });
-        }
-      })
-      .catch(() => {
-        // TODO: better error handling
-      });
-  };
+            this.props.analytics.location.directions('DirectionButton', {
+              address: fullAddress,
+              identifier: locationId || '',
+            });
+          }
+        })
+        .catch(() => {
+          // TODO: better error handling
+        });
+    };
 
-  fetchLocationsByQuery = (query: string, term: string): void => {
+  private readonly fetchLocationsByQuery = (query: string, term: string): void => {
     this.setState({
       locationsNotFound: false,
       isLoading: true,
     });
 
-    const searchEndpoint = this.props.searchEndpoint;
+    const { searchEndpoint } = this.props;
     const brandId = encodeURIComponent(this.props.brandId);
     const resultLimit = this.props.resultLimit
-      ? '&limit=' + encodeURIComponent(this.props.resultLimit + '')
+      ? `&limit=${encodeURIComponent(`${this.props.resultLimit}`)}`
       : '';
-    const brandedQuery = `brand=${brandId}` + (query ? '&' + query : '') + resultLimit;
+    const brandedQuery = `brand=${brandId}${query ? `&${query}` : ''}${resultLimit}`;
 
     this.fsNetwork
       .get(`${searchEndpoint}/?${brandedQuery}`)
@@ -244,7 +250,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
         this.setState({
           locations: _data.locations,
           isLoading: false,
-          locationsNotFound: !_data.locations || !_data.locations.length,
+          locationsNotFound: !_data.locations || _data.locations.length === 0,
           selectedLocation: undefined,
           shouldShowSearchAreaButton: false,
         });
@@ -256,9 +262,9 @@ export default class LocatorContainer extends Component<PropType, StateType> {
           });
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         if (__DEV__) {
-          console.error(err);
+          console.error(error);
         }
         this.setState({
           isLoading: false,
@@ -268,17 +274,22 @@ export default class LocatorContainer extends Component<PropType, StateType> {
       });
   };
 
-  fetchLocationsByState = (state: string): void => {
+  private readonly fetchLocationsByState = (state: string): void => {
     const encodedState = encodeURIComponent(state);
     const query = `state=${encodedState}`;
 
     this.fetchLocationsByQuery(query, state);
   };
 
-  fetchLocations = (searchValue: string, lat: number, lon: number, radius: number): void => {
-    const encodedLat = encodeURIComponent('' + lat);
-    const encodedLon = encodeURIComponent('' + lon);
-    const encodedRadius = encodeURIComponent('' + radius);
+  private readonly fetchLocations = (
+    searchValue: string,
+    lat: number,
+    lon: number,
+    radius: number
+  ): void => {
+    const encodedLat = encodeURIComponent(`${lat}`);
+    const encodedLon = encodeURIComponent(`${lon}`);
+    const encodedRadius = encodeURIComponent(`${radius}`);
     const query = `lat=${encodedLat}&lon=${encodedLon}&radius=${encodedRadius}`;
 
     this.fetchLocationsByQuery(query, searchValue);
@@ -287,7 +298,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
   // hold the map move for a few seconds after result show
   // because the map is moving but we don't want to show
   // seach area button yet.
-  resetShowSearchAreaButton = () => {
+  private readonly resetShowSearchAreaButton = () => {
     this.readyToShowSearchAreaButton = false;
     clearTimeout(this.timerToShowSearchAreaButton);
     this.timerToShowSearchAreaButton = setTimeout(() => {
@@ -295,21 +306,22 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     }, 1000);
   };
 
-  useCurrentLocation = async () => {
+  private readonly useCurrentLocation = async () => {
     if (this.props.analytics) {
       this.props.analytics.click.generic('LocateMeButton', {});
     }
 
     if (__DEV__) {
       this.setState({
-        currentLocation: { latitude: 40.7127837, longitude: -74.0059413 },
+        currentLocation: { latitude: 40.712_783_7, longitude: -74.005_941_3 },
       });
-      return this.fetchLocations(
+      this.fetchLocations(
         'Current Location',
-        40.7127837,
-        -74.0059413,
+        40.712_783_7,
+        -74.005_941_3,
         this.props.searchRadius || DEFAULT_RADIUS
       );
+      return;
     }
 
     const granted = await getLocationPermission();
@@ -325,12 +337,10 @@ export default class LocatorContainer extends Component<PropType, StateType> {
               pos.coords.longitude,
               this.props.searchRadius || DEFAULT_RADIUS
             );
+          } else if (this.props.handleLocationNotFound) {
+            this.props.handleLocationNotFound();
           } else {
-            if (this.props.handleLocationNotFound) {
-              this.props.handleLocationNotFound();
-            } else {
-              this.handleLocationNotFound();
-            }
+            this.handleLocationNotFound();
           }
         },
         (error) => {
@@ -342,8 +352,8 @@ export default class LocatorContainer extends Component<PropType, StateType> {
         },
         {
           enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 10000,
+          timeout: 10_000,
+          maximumAge: 10_000,
           distanceFilter: 100,
           ...this.props.geoOptions,
         } as GeoOptions
@@ -351,16 +361,18 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     }
   };
 
-  handleLocationNotFound = () => {
+  private readonly handleLocationNotFound = () => {
     // TODO
     alert('Sorry, we cannot determine your location.');
   };
 
-  selectLocation = (location: Location) => {
+  private readonly selectLocation = (location: Location) => {
     this.resetShowSearchAreaButton();
 
     const { locations } = this.state;
-    locations.forEach((l) => (l.selected = l.id === location.id));
+    for (const l of locations) {
+      l.selected = l.id === location.id;
+    }
     this.setState({
       selectedLocation: location,
       locations,
@@ -368,11 +380,13 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     });
   };
 
-  deselectLocation = () => {
+  private readonly deselectLocation = () => {
     this.resetShowSearchAreaButton();
 
     const { locations } = this.state;
-    locations.forEach((l) => (l.selected = false));
+    for (const l of locations) {
+      l.selected = false;
+    }
     this.setState({
       selectedLocation: undefined,
       locations,
@@ -380,11 +394,11 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     });
   };
 
-  handleRegionChange = (region: Region) => {
+  private readonly handleRegionChange = (region: Region) => {
     this.currentMapRegion = region;
   };
 
-  handleRegionChangeComplete = (region: Region) => {
+  private readonly handleRegionChangeComplete = (region: Region) => {
     if (!this.readyToShowSearchAreaButton) {
       return;
     }
@@ -399,7 +413,7 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     });
   };
 
-  searchArea = () => {
+  private readonly searchArea = () => {
     const offset = this.state.selectedLocation ? 0 : COLLAPSE_LAT_PADDING;
     const { latitude = 0, longitude = 0 } = this.currentMapRegion || {};
 
@@ -411,7 +425,13 @@ export default class LocatorContainer extends Component<PropType, StateType> {
     );
   };
 
-  render(): JSX.Element {
+  public componentDidMount(): void {
+    if (this.props.analytics) {
+      this.props.analytics.impression.generic(this, {});
+    }
+  }
+
+  public render(): JSX.Element {
     const { format } = this.props;
     const locatorProps = {
       ...this.props,

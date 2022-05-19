@@ -1,8 +1,12 @@
-import React, { FunctionComponent, memo, useState } from 'react';
+import type { FunctionComponent } from 'react';
+import React, { memo, useState } from 'react';
 
-import { Image, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { ReviewTypes } from '@brandingbrand/fscommerce';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
+import type { ReviewTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 const S = StyleSheet.create({
@@ -13,9 +17,9 @@ const S = StyleSheet.create({
   },
   syndicatedLabel: {
     color: '#767676',
-    fontSize: 13,
     display: 'flex',
     flexDirection: 'column',
+    fontSize: 13,
     justifyContent: 'center',
   },
 });
@@ -48,15 +52,15 @@ export const SyndicationIndicator: FunctionComponent<SyndicationIndicatorProps> 
         ]}
       >
         <Image
+          accessibilityLabel={`${props.syndicationSource.Name} logo`}
+          source={{ uri: props.syndicationSource.LogoImageUrl }}
           style={{
             height: syndicatedImageHeight,
             width: syndicatedImageWidth,
             marginRight: 6,
           }}
-          source={{ uri: props.syndicationSource.LogoImageUrl }}
-          accessibilityLabel={`${props.syndicationSource.Name} logo`}
         />
-        <Text style={[S.syndicatedLabel]}>
+        <Text style={S.syndicatedLabel}>
           {FSI18n.string(componentTranslationKeys.syndicatedLabel, {
             site: props.syndicationSource.Name,
           })}

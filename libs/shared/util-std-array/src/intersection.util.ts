@@ -7,7 +7,7 @@
  * determined by the first array.
  *
  * @param arrays The arrays to inspect.
- * @returns Returns the new array of intersecting values.
+ * @return Returns the new array of intersecting values.
  * @example
  *
  * intersection([2, 1], [2, 3])

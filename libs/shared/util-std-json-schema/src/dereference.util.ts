@@ -2,7 +2,6 @@ import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 
 const refRegex = /^#\/definitions\/(.*)$/;
 
-// eslint-disable-next-line complexity
 export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
   schema: T,
   parentDefinitions?: JSONSchema7['definitions']

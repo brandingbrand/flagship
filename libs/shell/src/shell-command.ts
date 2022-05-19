@@ -69,13 +69,15 @@ export class ShellCommand {
    * input to this function. Any input containing shell metacharacters may be
    * used to trigger arbitrary command execution.
    *
-   * @throws if `setNoExceptions()` has not been called AND the command fails
    * @return the result of the command
+   * @throws if `setNoExceptions()` has not been called AND the command fails
    */
-  // eslint-disable-next-line complexity
+
   public runSynchronously(): ShellCommandResult {
     const [command, ...args] = this.command.filter((arg) => arg !== '');
-    if (command === undefined) throw new Error('Unknown command');
+    if (command === undefined) {
+      throw new Error('Unknown command');
+    }
 
     const response = spawnSync(command, args, {
       cwd: this.cwd,
@@ -104,7 +106,7 @@ export class ShellCommand {
     if (response.status !== 0) {
       // we could eventually pass down the status code into error so wrapping
       // scripts can return proper process.exitCode
-      const stderr = response.stderr?.toString() ?? '';
+      const stderr = response.stderr.toString() ?? '';
       const error = stderr === '' ? '.' : `: ${stderr}`;
       this.maybeThrow(new Error(`Command failed with exit code ${response.status}${error}`));
     }
@@ -119,8 +121,8 @@ export class ShellCommand {
 
     return {
       exitCode: response.status ?? 1, // status is null for signal kills and response errors
-      stdout: response.stdout?.toString() ?? '',
-      stderr: response.stderr?.toString() ?? '',
+      stdout: response.stdout.toString() ?? '',
+      stderr: response.stderr.toString() ?? '',
     };
   }
 }

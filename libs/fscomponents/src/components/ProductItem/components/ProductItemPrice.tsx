@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, View } from 'react-native';
-import { ProductItemProps } from '../ProductItem';
+
 import { types, weights } from '../../../styles/variables';
 import { Price } from '../../Price';
+import type { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginBottom: 7,
-  },
   originalPrice: {
-    textDecorationLine: 'line-through',
     color: '#ccc',
+    textDecorationLine: 'line-through',
+  },
+  priceContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    marginBottom: 7,
   },
   salePrice: {
     marginLeft: 7,
@@ -21,12 +23,12 @@ const style = StyleSheet.create({
 
 export type ProductItemPriceProps = Pick<
   ProductItemProps,
-  'price' | 'originalPrice' | 'priceStyle' | 'originalPriceStyle' | 'salePriceStyle' | 'renderPrice'
+  'originalPrice' | 'originalPriceStyle' | 'price' | 'priceStyle' | 'renderPrice' | 'salePriceStyle'
 >;
 
 export class ProductItemPrice extends Component<ProductItemPriceProps> {
-  render(): React.ReactNode {
-    const { price, originalPrice, priceStyle, originalPriceStyle, salePriceStyle, renderPrice } =
+  public render(): React.ReactNode {
+    const { originalPrice, originalPriceStyle, price, priceStyle, renderPrice, salePriceStyle } =
       this.props;
 
     if (renderPrice) {
@@ -50,12 +52,12 @@ export class ProductItemPrice extends Component<ProductItemPriceProps> {
     ]);
 
     return (
-      <View style={[style.priceContainer]}>
+      <View style={style.priceContainer}>
         <Price
-          originalPriceFirst={true}
           originalPrice={originalPrice}
-          price={price}
+          originalPriceFirst
           originalPriceStyle={flattenedOriginalPriceStyle}
+          price={price}
           priceStyle={flattenedPriceStyle}
           salePriceStyle={flattenedSalePriceStyle}
         />

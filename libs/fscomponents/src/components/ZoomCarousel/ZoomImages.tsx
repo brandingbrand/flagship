@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import { Animated, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ZoomCarouselItem } from './ZoomCarouselItem';
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -27,102 +29,102 @@ export interface ZoomImagesProps {
 }
 
 const S = StyleSheet.create({
-  closeZoom: {
-    position: 'absolute',
-    top: 30,
-    left: 10,
-    zIndex: 100,
-  },
-  scrollViewContainer: {
-    flex: 1,
-  },
-  customScrollView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  scrollViewZoomBG: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'white',
-  },
-  goToZoomNext: {
-    position: 'absolute',
-    bottom: SCREEN_HEIGHT / 2 - 15,
-    right: 0,
-    zIndex: 100,
-    padding: 10,
-  },
-  goToZoomPrev: {
-    position: 'absolute',
-    bottom: SCREEN_HEIGHT / 2 - 15,
-    left: 0,
-    zIndex: 100,
-    padding: 10,
-  },
-  buttonPrevIcon: {
-    width: 25,
-    height: 25,
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    borderColor: 'black',
-    transform: [
-      {
-        rotate: '-45deg',
-      },
-    ],
-  },
   buttonNextIcon: {
-    width: 25,
-    height: 25,
-    borderTopWidth: 2,
-    borderRightWidth: 2,
     borderColor: 'black',
+    borderRightWidth: 2,
+    borderTopWidth: 2,
+    height: 25,
     transform: [
       {
         rotate: '45deg',
       },
     ],
+    width: 25,
+  },
+  buttonPrevIcon: {
+    borderColor: 'black',
+    borderLeftWidth: 2,
+    borderTopWidth: 2,
+    height: 25,
+    transform: [
+      {
+        rotate: '-45deg',
+      },
+    ],
+    width: 25,
   },
   closeButtonIcon: {
-    width: 35,
     height: 35,
     paddingTop: 15,
+    width: 35,
   },
   closeButtonLeft: {
-    width: 35,
+    backgroundColor: '#555',
     height: 1,
     transform: [{ rotate: '45deg' }],
-    backgroundColor: '#555',
+    width: 35,
   },
   closeButtonRight: {
-    width: 35,
+    backgroundColor: '#555',
     height: 1,
     transform: [{ rotate: '135deg' }],
-    backgroundColor: '#555',
+    width: 35,
+  },
+  closeZoom: {
+    left: 10,
+    position: 'absolute',
+    top: 30,
+    zIndex: 100,
+  },
+  customScrollView: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+  },
+  goToZoomNext: {
+    bottom: SCREEN_HEIGHT / 2 - 15,
+    padding: 10,
+    position: 'absolute',
+    right: 0,
+    zIndex: 100,
+  },
+  goToZoomPrev: {
+    bottom: SCREEN_HEIGHT / 2 - 15,
+    left: 0,
+    padding: 10,
+    position: 'absolute',
+    zIndex: 100,
+  },
+  scrollViewContainer: {
+    flex: 1,
+  },
+  scrollViewZoomBG: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'white',
   },
 });
 
 export class ZoomImages extends Component<ZoomImagesProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      style,
-      opacityStyle,
-      sizeStyle,
+      closeButtonStyle,
+      closeZoom,
+      currentZoomIndex,
+      gapSizeScaled,
+      goToZoomNext,
+      goToZoomPrev,
       handleItemMoveOutX,
       handleItemMoveOutY,
       handleMoveRelease,
       handleZoomRelease,
-      closeZoom,
-      goToZoomNext,
-      goToZoomPrev,
       images,
-      zoomContainerWidth,
-      gapSizeScaled,
-      currentZoomIndex,
-      showArrow,
       isOpeningZoom,
+      opacityStyle,
       renderCloseButton,
-      closeButtonStyle,
+      showArrow,
+      sizeStyle,
+      style,
+      zoomContainerWidth,
     } = this.props;
 
     return (
@@ -130,30 +132,28 @@ export class ZoomImages extends Component<ZoomImagesProps> {
         <Animated.View style={[S.scrollViewZoomBG, opacityStyle]} />
         <View style={S.scrollViewContainer}>
           <Animated.View style={[S.customScrollView, { width: zoomContainerWidth }, sizeStyle]}>
-            {images.map((item: any, i: number) => {
-              return (
-                <ZoomCarouselItem
-                  key={i}
+            {images.map((item: any, i: number) => (
+              <ZoomCarouselItem
+                key={i}
+                onItemMoveOutX={handleItemMoveOutX}
+                onItemMoveOutY={handleItemMoveOutY}
+                onMoveRelease={handleMoveRelease}
+                onZoomRelease={handleZoomRelease}
+                style={{
+                  marginRight: i !== images.length ? gapSizeScaled : 0,
+                  opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1,
+                }}
+              >
+                <Image
+                  resizeMode="contain"
+                  source={item.zoomSrc || item.src}
                   style={{
-                    marginRight: i !== images.length ? gapSizeScaled : 0,
-                    opacity: isOpeningZoom && currentZoomIndex !== i ? 0 : 1,
+                    width: SCREEN_WIDTH,
+                    height: SCREEN_WIDTH,
                   }}
-                  onItemMoveOutX={handleItemMoveOutX}
-                  onItemMoveOutY={handleItemMoveOutY}
-                  onMoveRelease={handleMoveRelease}
-                  onZoomRelease={handleZoomRelease}
-                >
-                  <Image
-                    style={{
-                      width: SCREEN_WIDTH,
-                      height: SCREEN_WIDTH,
-                    }}
-                    source={item.zoomSrc || item.src}
-                    resizeMode="contain"
-                  />
-                </ZoomCarouselItem>
-              );
-            })}
+                />
+              </ZoomCarouselItem>
+            ))}
           </Animated.View>
 
           <Animated.View style={[S.closeZoom, opacityStyle, closeButtonStyle]}>
@@ -169,16 +169,16 @@ export class ZoomImages extends Component<ZoomImagesProps> {
             )}
           </Animated.View>
 
-          {currentZoomIndex !== 0 && !!showArrow && (
+          {currentZoomIndex !== 0 && Boolean(showArrow) && (
             <Animated.View style={opacityStyle}>
-              <TouchableOpacity style={S.goToZoomPrev} onPress={goToZoomPrev}>
+              <TouchableOpacity onPress={goToZoomPrev} style={S.goToZoomPrev}>
                 <View style={S.buttonPrevIcon} />
               </TouchableOpacity>
             </Animated.View>
           )}
-          {currentZoomIndex !== images.length - 1 && !!showArrow && (
+          {currentZoomIndex !== images.length - 1 && Boolean(showArrow) && (
             <Animated.View style={opacityStyle}>
-              <TouchableOpacity style={S.goToZoomNext} onPress={goToZoomNext}>
+              <TouchableOpacity onPress={goToZoomNext} style={S.goToZoomNext}>
                 <View style={S.buttonNextIcon} />
               </TouchableOpacity>
             </Animated.View>

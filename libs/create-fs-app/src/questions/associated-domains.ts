@@ -1,4 +1,5 @@
-import { DistinctQuestion } from 'inquirer';
+import type { DistinctQuestion } from 'inquirer';
+
 import * as formatters from '../lib/formatters';
 import { strToArray } from '../lib/transforms';
 

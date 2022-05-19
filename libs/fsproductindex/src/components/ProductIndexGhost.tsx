@@ -1,13 +1,19 @@
-import React, { FC } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { ProductIndexProps } from './ProductIndex';
+import type { FC } from 'react';
+import React from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import { times } from 'lodash-es';
-import { ProductTileGhost, ProductTileGhostProps } from './ProductTileGhost';
+
+import type { ProductIndexProps } from './ProductIndex';
+import type { ProductTileGhostProps } from './ProductTileGhost';
+import { ProductTileGhost } from './ProductTileGhost';
 
 const styles = StyleSheet.create({
   row: {
-    flexWrap: 'wrap',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
 });
@@ -28,8 +34,8 @@ export interface ProductIndexGhostProps extends Omit<SerializableProductIndexGho
 }
 
 export const ProductIndexGhost: FC<ProductIndexGhostProps> = ({
-  style,
   renderRefineActionBar,
+  style,
   tileProps,
 }) => {
   const ghostTile = renderGhostTile(tileProps);

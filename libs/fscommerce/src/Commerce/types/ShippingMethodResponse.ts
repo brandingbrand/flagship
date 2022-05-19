@@ -1,4 +1,4 @@
-import { ShippingMethod } from './ShippingMethod';
+import type { ShippingMethod } from './ShippingMethod';
 
 /**
  * Interface representing the response when querying available shipping methods for an order.

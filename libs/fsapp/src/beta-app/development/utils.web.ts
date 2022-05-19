@@ -1,3 +1,1 @@
-export const shouldShowDevMenu = (): boolean => {
-  return __DEV__;
-};
+export const shouldShowDevMenu = (): boolean => __DEV__;

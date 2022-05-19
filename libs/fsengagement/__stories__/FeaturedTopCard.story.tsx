@@ -1,12 +1,16 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import { Text } from 'react-native';
+
+import type { Navigator } from '@brandingbrand/fsapp';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 
 import { FeaturedTopCard } from '../src/inboxblocks/FeaturedTopCard';
-import { Text } from 'react-native';
-import { Navigator } from '@brandingbrand/fsapp';
-import { Action } from '../src/types';
+import type { Action } from '../src/types';
+
 import ActionContext from './assets/ActionContext';
 
 const submitAction = action('submit');
@@ -16,7 +20,7 @@ const WrapperContext = ActionContext((actions: Action) => {
 });
 
 const navigator: Navigator = {
-  push: (params: any) => {
+  push: (params: unknown) => {
     pushAction(params);
   },
 } as Navigator;
@@ -25,7 +29,7 @@ storiesOf('Engagement FeaturedTopCard', module).add('basic usage', () => (
   <WrapperContext>
     <FeaturedTopCard
       private_blocks={[]}
-      navigator={navigator}
+      navigator={navigator as any}
       contents={{
         Image: {
           source: {

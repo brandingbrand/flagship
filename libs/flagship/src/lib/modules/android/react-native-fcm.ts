@@ -1,14 +1,14 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
 import { logInfo } from '../../../helpers';
-import { Config } from '../../../types';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
 /**
  * Patches Android for the module.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function postLink(configuration: Config): void {
+export const postLink = (configuration: Config): void => {
   logInfo('patching Android for react-native-fcm');
 
   const globalGradle = path.resolve('android', 'build.gradle');
@@ -98,4 +98,4 @@ import android.content.Intent;`
     }
     public static Activity getActivity(){`
   );
-}
+};

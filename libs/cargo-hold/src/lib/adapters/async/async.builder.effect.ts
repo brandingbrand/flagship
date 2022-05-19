@@ -1,6 +1,10 @@
-import { fail, isOk, ok, Result } from '@brandingbrand/standard-result';
+/* eslint-disable @typescript-eslint/sort-type-union-intersection-members */
+import type { Result } from '@brandingbrand/standard-result';
+import { fail, isOk, ok } from '@brandingbrand/standard-result';
 import type { MaybePromise } from '@brandingbrand/types-utility';
-import { filter, from, map, merge, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
+
+import { filter, from, of as just, map, merge, mergeMap, switchMap, withLatestFrom } from 'rxjs';
+
 import type {
   ActionOf,
   ActionSpecifier,
@@ -9,6 +13,7 @@ import type {
   TypeGuard,
 } from '../../action-bus';
 import type { Effect } from '../../store';
+
 import {
   buildFailActionCreator,
   buildLoadingActionCreator,
@@ -113,8 +118,8 @@ export const buildAsyncEffect =
           new Promise<CallbackResult>((resolve, reject) => {
             try {
               resolve(builder.callback(action.payload) as MaybePromise<CallbackResult>);
-            } catch (e) {
-              reject(e);
+            } catch (error) {
+              reject(error);
             }
           })
             .then(ok)
@@ -133,7 +138,7 @@ export const buildAsyncEffect =
                     stateAtReturn.payload as SuccessType
                   )
                 : (result as unknown as SuccessType);
-              return of(buildSucceedActionCreator(builder).create(newState));
+              return just(buildSucceedActionCreator(builder).create(newState));
             }
             const result = wrappedResult.failure;
             const mappedFailure = builder.mapOnFailure
@@ -142,11 +147,11 @@ export const buildAsyncEffect =
                 )
               : (result as FailureType);
             return builder.prediction
-              ? of(
+              ? just(
                   buildRevertActionCreator(builder).create(stateAtStart.payload),
                   buildFailActionCreator(builder).create(mappedFailure)
                 )
-              : of(buildFailActionCreator(builder).create(mappedFailure));
+              : just(buildFailActionCreator(builder).create(mappedFailure));
           })
         )
       )

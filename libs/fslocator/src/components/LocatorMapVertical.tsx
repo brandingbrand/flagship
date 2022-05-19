@@ -1,22 +1,19 @@
-import { SearchBar } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
-import {
-  Image,
-  LayoutAnimation,
-  LayoutChangeEvent,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+
+import type { LayoutChangeEvent } from 'react-native';
+import { Image, LayoutAnimation, Platform, TouchableOpacity, View } from 'react-native';
+
+import { SearchBar } from '@brandingbrand/fscomponents';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import defaultLocateMeIcon from '../../assets/images/locate-me.png';
 import { style as S } from '../styles/LocatorMapVertical';
-import { PropType as LocatorPropType } from './LocatorList';
+
+import type { PropType as LocatorPropType } from './LocatorList';
 import MapView from './MapView';
 import ResultItemWithBack from './ResultItemWithBack';
 import ResultList from './ResultList';
 import SeachAreaButton from './SeachAreaButton';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-
-import defaultLocateMeIcon from '../../assets/images/locate-me.png';
 
 const MAP_HEIGHT = 300;
 const LIST_HEIGHT = 300;
@@ -26,68 +23,55 @@ export interface LocatorStateType {
 }
 
 export default class Locator extends Component<LocatorPropType, LocatorStateType> {
-  map: any;
+  public state = {
+    orientation: undefined,
+  };
 
-  constructor(props: LocatorPropType) {
-    super(props);
+  public map: unknown;
 
-    this.state = {
-      orientation: undefined,
-    };
-  }
-
-  extractMapRef = (map: any) => (this.map = map);
-
-  onLayout = (e: LayoutChangeEvent): void => {
-    const { width, height } = e.nativeEvent.layout;
+  private readonly onLayout = (e: LayoutChangeEvent): void => {
+    const { height, width } = e.nativeEvent.layout;
 
     this.setState({
       orientation: width > height ? 'horizontal' : 'vertical',
     });
   };
 
-  componentDidUpdate(): void {
-    if (Platform.OS !== 'web') {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    }
-  }
-
-  renderList = () => {
+  private readonly renderList = () => {
     const {
-      locationItemProps,
+      deselectLocation,
       handleNavPress,
       handlePhonePress,
-      selectLocation,
-      selectedLocation,
-      deselectLocation,
+      locationItemProps,
       renderLocationItem,
       renderLocationItemWithBack,
+      selectLocation,
+      selectedLocation,
     } = this.props;
 
     if (selectedLocation) {
       return (
         <ResultItemWithBack
           deselectLocation={deselectLocation}
-          selectedLocation={selectedLocation}
           handleNavPress={handleNavPress}
           handlePhonePress={handlePhonePress}
           locationItemProps={locationItemProps}
-          selectLocation={selectLocation}
           renderLocationItem={renderLocationItem}
           renderLocationItemWithBack={renderLocationItemWithBack}
+          selectLocation={selectLocation}
+          selectedLocation={selectedLocation}
         />
       );
-    } else {
-      return (
-        <View style={[S.resultContainer, { height: LIST_HEIGHT }]}>
-          <ResultList {...this.props} onItemPress={selectLocation} />
-        </View>
-      );
     }
+    return (
+      <View style={[S.resultContainer, { height: LIST_HEIGHT }]}>
+        <ResultList {...this.props} onItemPress={selectLocation} />
+      </View>
+    );
   };
 
-  renderSearchBar = () => {
-    const { searchBarProps, renderSearchBar } = this.props;
+  private readonly renderSearchBar = () => {
+    const { renderSearchBar, searchBarProps } = this.props;
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
@@ -95,34 +79,42 @@ export default class Locator extends Component<LocatorPropType, LocatorStateType
       })
     ) : (
       <SearchBar
-        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
-        onSubmit={this.props.submitSearch}
-        style={S.mapVerticalSearchBar}
         containerStyle={S.inputContainer}
+        onSubmit={this.props.submitSearch}
+        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
+        style={S.mapVerticalSearchBar}
         {...searchBarProps}
       />
     );
   };
 
-  render(): JSX.Element {
+  public readonly extractMapRef = (map: unknown) => (this.map = map);
+
+  public componentDidUpdate(): void {
+    if (Platform.OS !== 'web') {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+  }
+
+  public render(): JSX.Element {
     const {
-      style,
-      locations,
-      useCurrentLocation,
-      locateMeIcon,
-      googleMapsAPIKey,
-      selectLocation,
-      selectedLocation,
-      locationsNotFound,
       currentLocation,
+      defaultRegion,
+      googleMapsAPIKey,
       handleRegionChange,
       handleRegionChangeComplete,
-      shouldShowSearchAreaButton,
-      searchArea,
+      locateMeIcon,
+      locations,
+      locationsNotFound,
       mapMarkerIcon,
-      showLocateMe,
-      defaultRegion,
       mapStyle,
+      searchArea,
+      selectLocation,
+      selectedLocation,
+      shouldShowSearchAreaButton,
+      showLocateMe,
+      style,
+      useCurrentLocation,
     } = this.props;
 
     const shouldMapCollapsed = !selectedLocation;
@@ -130,24 +122,24 @@ export default class Locator extends Component<LocatorPropType, LocatorStateType
       latitude: selectedLocation.address.latlng.lat,
       longitude: selectedLocation.address.latlng.lng,
     };
-    const shouldShowList = locationsNotFound || !!locations.length;
+    const shouldShowList = locationsNotFound || locations.length > 0;
 
     return (
-      <View style={[S.container, style]} onLayout={this.onLayout}>
+      <View onLayout={this.onLayout} style={[S.container, style]}>
         <MapView
-          googleMapsAPIKey={googleMapsAPIKey}
-          ref={this.extractMapRef}
-          style={[S.map, mapStyle]}
-          locations={locations}
-          collapseHeight={MAP_HEIGHT}
-          isCollapsed={shouldMapCollapsed}
-          onMakerPress={selectLocation}
           center={center}
+          collapseHeight={MAP_HEIGHT}
           currentLocation={currentLocation}
+          defaultRegion={defaultRegion}
+          googleMapsAPIKey={googleMapsAPIKey}
           handleRegionChange={handleRegionChange}
           handleRegionChangeComplete={handleRegionChangeComplete}
+          isCollapsed={shouldMapCollapsed}
+          locations={locations}
           mapMarkerIcon={mapMarkerIcon}
-          defaultRegion={defaultRegion}
+          onMakerPress={selectLocation}
+          ref={this.extractMapRef}
+          style={[S.map, mapStyle]}
         />
         <View>
           {this.renderSearchBar()}
@@ -157,7 +149,7 @@ export default class Locator extends Component<LocatorPropType, LocatorStateType
         </View>
         <View style={S.resultListAndLocateMe}>
           {(this.state.orientation === 'vertical' || !shouldShowList) && showLocateMe && (
-            <TouchableOpacity style={S.locateMeButton} onPress={useCurrentLocation}>
+            <TouchableOpacity onPress={useCurrentLocation} style={S.locateMeButton}>
               <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
             </TouchableOpacity>
           )}

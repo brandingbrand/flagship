@@ -1,4 +1,4 @@
-import {
+import type {
   AsyncFailureState,
   AsyncIdleState,
   AsyncLoadingMoreState,
@@ -29,9 +29,9 @@ export const createSuccessState = <Payload>(payload: Payload): AsyncSuccessState
 });
 
 export const createFailureState = <Payload, FailureType, EmptyPayload = Payload>(
-  payload: Payload | EmptyPayload,
+  payload: EmptyPayload | Payload,
   failure: FailureType
-): AsyncFailureState<Payload | EmptyPayload, FailureType> => ({
+): AsyncFailureState<EmptyPayload | Payload, FailureType> => ({
   status: 'failure',
   payload,
   failure,

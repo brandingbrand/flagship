@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
-import { emailRegex } from '../lib/email';
-import { Form, FormLabelPosition } from './Form';
-import { Button } from './Button';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { emailRegex } from '../lib/email';
+
+import { Button } from './Button';
+import { Form, FormLabelPosition } from './Form';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.loginForm;
 
 export interface LoginFormProps {
@@ -49,38 +55,32 @@ export interface LoginFormProps {
   /**
    * Initial form field values
    */
-  value?: any;
+  value?: unknown;
 
   /**
    * Called on form submission
    */
-  onSubmit: (value: any) => void;
+  onSubmit: (value: unknown) => void;
 }
 
 export interface LoginFormState {
-  value: any;
+  value: unknown;
 }
 
 // check for validity as part of the type
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
 EmailType.getValidationErrorMessage = (s: string) => {
   if (!s) {
     return FSI18n.string(componentTranslationKeys.emailReq);
-  } else {
-    return s + FSI18n.string(componentTranslationKeys.emailNotValid);
   }
+  return s + FSI18n.string(componentTranslationKeys.emailNotValid);
 };
 
+/**
+ * @deprecated
+ */
 export class LoginForm extends Component<LoginFormProps, LoginFormState> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
-  labelPosition: FormLabelPosition;
-
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -99,7 +99,9 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
-        onSubmitEditing: () => this.focusField('password'),
+        onSubmitEditing: () => {
+          this.focusField('password');
+        },
         error: FSI18n.string(componentTranslationKeys.emailError),
       },
       password: {
@@ -123,19 +125,21 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
       typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
   }
 
-  componentDidMount(): void {
-    console.warn('LoginForm is deprecated and will be removed in the next version of Flagship.');
-  }
+  private form: Form<unknown> | null = null;
+  private readonly fieldsStyleConfig: unknown;
+  private readonly fieldsTypes: unknown;
+  private readonly fieldsOptions: unknown;
+  private readonly labelPosition: FormLabelPosition;
 
-  handleSubmit = () => {
-    const value = this.form.getValue();
+  private readonly handleSubmit = () => {
+    const value = this.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   };
 
-  focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+  private readonly focusField = (fieldName: string) => {
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -143,30 +147,34 @@ export class LoginForm extends Component<LoginFormProps, LoginFormState> {
     }
   };
 
-  handleChange = (value: any) => {
+  private readonly handleChange = (value: unknown) => {
     this.setState({
       value,
     });
   };
 
-  render(): JSX.Element {
+  public componentDidMount(): void {
+    console.warn('LoginForm is deprecated and will be removed in the next version of Flagship.');
+  }
+
+  public render(): JSX.Element {
     const { style, submitButtonStyle, submitText } = this.props;
 
     return (
       <View style={style}>
         <Form
-          ref={(ref) => (this.form = ref)}
-          fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
+          fieldsTypes={this.fieldsTypes}
           labelPosition={this.labelPosition}
-          value={this.state.value}
           onChange={this.handleChange}
+          ref={(ref) => (this.form = ref)}
+          value={this.state.value}
         />
         <Button
-          title={submitText || FSI18n.string(componentTranslationKeys.submit)}
           onPress={this.handleSubmit}
           style={submitButtonStyle}
+          title={submitText || FSI18n.string(componentTranslationKeys.submit)}
         />
       </View>
     );

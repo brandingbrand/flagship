@@ -1,9 +1,9 @@
 export { Injector } from './injector';
 export { Inject, getDependencies } from './inject';
 export { Injectable } from './injectable';
-export { InjectorCache, GlobalInjectorCache, LocalInjectorCache } from './cache';
-export {
-  InjectionToken,
+export type { InjectorCache } from './cache';
+export { GlobalInjectorCache, LocalInjectorCache } from './cache';
+export type {
   ValueProvider,
   InjectedClassProvider,
   InjectedFactoryProvider,
@@ -13,3 +13,4 @@ export {
   ClassProvider,
   FactoryProvider,
 } from './providers';
+export { InjectionToken } from './providers';

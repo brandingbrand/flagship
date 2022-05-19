@@ -1,62 +1,56 @@
-import type { GridProps } from './GridProps';
-
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+
+import type { NativeScrollEvent, NativeSyntheticEvent, ViewStyle } from 'react-native';
 import {
   Animated,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
 
-import { useGridItems } from './hooks';
-import { ChunkOptions, InsertOptions, KeysOptions, SizeOptions, Width } from './utils';
+import type { GridProps } from './GridProps';
 import { DEFAULT_BACK_TOP_BUTTON_SHOW_AT_HEIGHT, DEFAULT_MIN_COLUMNS } from './defaults';
+import { useGridItems } from './hooks';
+import type { ChunkOptions, InsertOptions, KeysOptions, SizeOptions, Width } from './utils';
 
 const styles = StyleSheet.create({
   grid: {
     display: 'grid' as 'flex',
   },
-  scrollTopButtonContainer: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    zIndex: 200,
-  },
   scrollTopButton: {
     backgroundColor: '#eee',
     padding: 10,
   },
+  scrollTopButtonContainer: {
+    bottom: 30,
+    position: 'absolute',
+    right: 30,
+    zIndex: 200,
+  },
 });
 
-const fixedColumnStyles = (numColumns: number) => {
-  return { gridTemplateColumns: `repeat(${numColumns}, 1fr)` } as ViewStyle;
-};
+const fixedColumnStyles = (numColumns: number) =>
+  ({ gridTemplateColumns: `repeat(${numColumns}, 1fr)` } as ViewStyle);
 
-const columnSizeStyles = (minColumnWidth: number, autoFit?: boolean) => {
-  return {
+const columnSizeStyles = (minColumnWidth: number, autoFit?: boolean) =>
+  ({
     gridTemplateColumns: `repeat(${
       autoFit ? 'auto-fit' : 'auto-fill'
     }, minmax(${minColumnWidth}px, 1fr))`,
-  } as ViewStyle;
-};
+  } as ViewStyle);
 
-const fixedRowStyles = (row: number | string) => {
-  return { gridColumnStart: '1', gridColumnEnd: '-1', gridRowStart: row } as ViewStyle;
-};
+const fixedRowStyles = (row: number | string) =>
+  ({ gridColumnStart: '1', gridColumnEnd: '-1', gridRowStart: row } as ViewStyle);
 
 const gridItemSizeStyles = (size: Width) => {
   if (typeof size === 'number') {
     // TODO: Fix grid blow out when grid is smaller than span provided
     return { gridColumn: `span ${size}` } as ViewStyle;
-  } else {
-    return { gridColumn: '1 / -1' } as ViewStyle;
   }
+  return { gridColumn: '1 / -1' } as ViewStyle;
 };
 
 const separators = {
@@ -65,7 +59,7 @@ const separators = {
   updateProps: () => {},
 };
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-lines-per-function
 export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   const {
     accessible,
@@ -115,7 +109,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   const backToTopVisible = useRef(false);
 
   const definitionOptions = useMemo<
-    ChunkOptions<ItemT, null> & InsertOptions<ItemT> & SizeOptions & KeysOptions
+    ChunkOptions<ItemT, null> & InsertOptions<ItemT> & KeysOptions & SizeOptions
   >(
     () => ({
       widthTable: columnWidthTable,
@@ -139,11 +133,15 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   );
 
   const { iterator, rowIterator } = useGridItems(data ?? [], definitionOptions);
-  const gridItems = useMemo(() => Array.from(iterator), [iterator]);
+  const gridItems = useMemo(() => [...iterator], [iterator]);
 
   const scrollRefreshController = useMemo(() => {
-    if (refreshControl) return refreshControl;
-    if (onRefresh) return <RefreshControl refreshing={refreshing ?? false} onRefresh={onRefresh} />;
+    if (refreshControl) {
+      return refreshControl;
+    }
+    if (onRefresh) {
+      return <RefreshControl onRefresh={onRefresh} refreshing={refreshing ?? false} />;
+    }
     return undefined;
   }, [onRefresh, refreshControl, refreshing]);
 
@@ -179,10 +177,10 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   return (
     <View style={gridContainerStyle}>
       <ScrollView
-        accessible={accessible}
         accessibilityHint={accessibilityHint}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole={accessibilityRole}
+        accessible={accessible}
         contentContainerStyle={[
           style,
           styles.grid,
@@ -190,9 +188,9 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             ? columnSizeStyles(minColumnWidth, autoFit)
             : fixedColumnStyles(columns ?? numColumns),
         ]}
-        refreshControl={scrollRefreshController}
         onLayout={onLayout}
         onScroll={handleScroll}
+        refreshControl={scrollRefreshController}
         {...{ dataSet }}
       >
         {ListHeaderComponent && (
@@ -211,8 +209,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
           </View>
         )}
 
-        {gridItems.length ? (
-          <>
+        {gridItems.length > 0 ? (
+          <React.Fragment>
             {gridItems.map((item, index) => (
               <View key={item.key} style={gridItemSizeStyles(item.width)}>
                 {renderItem({
@@ -231,7 +229,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
                 })}
               </View>
             ))}
-          </>
+          </React.Fragment>
         ) : ListEmptyComponent ? (
           React.isValidElement(ListEmptyComponent) ? (
             ListEmptyComponent
@@ -273,8 +271,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             renderBackToTopButton(handleBackToTop)
           ) : (
             <TouchableOpacity
-              style={[styles.scrollTopButton, backToTopButtonStyle]}
               onPress={handleBackToTop}
+              style={[styles.scrollTopButton, backToTopButtonStyle]}
             >
               <Text style={backToTopTextStyle}>{backToTopText ?? 'Top'}</Text>
             </TouchableOpacity>

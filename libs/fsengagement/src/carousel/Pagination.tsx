@@ -1,16 +1,17 @@
 import React from 'react';
+
 import { Pagination } from 'react-native-snap-carousel';
 
 export const CarouselPagination = React.memo((props: any) => {
-  const { containerStyle, pagination, items, activeIndex } = props;
+  const { activeIndex, containerStyle, items, pagination } = props;
   if (!pagination || !items?.length) {
     return <></>;
   }
   const {
     dotColor,
-    inactiveDotColor,
     dotSize,
     dotSpacing,
+    inactiveDotColor,
     inactiveDotOpacity,
     inactiveDotScale,
     position,

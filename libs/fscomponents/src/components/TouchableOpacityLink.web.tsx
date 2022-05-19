@@ -1,5 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, TouchableOpacityProperties } from 'react-native';
+
+import type { TouchableOpacityProperties } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+
 import { TouchableDelay } from './TouchableDelay';
 
 const TouchableOpacityWithHref: React.ComponentClass<TouchableOpacityLinkProps> = TouchableOpacity;
@@ -9,14 +12,14 @@ export interface TouchableOpacityLinkProps extends TouchableOpacityProperties {
 }
 
 export class TouchableOpacityLink extends TouchableDelay<TouchableOpacityLinkProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { href, onPress, ...props } = this.props;
 
     return (
       <TouchableOpacityWithHref
         {...props}
-        href={href}
         accessibilityRole="link"
+        href={href}
         onPress={this.handleOnPress}
       >
         {this.props.children}

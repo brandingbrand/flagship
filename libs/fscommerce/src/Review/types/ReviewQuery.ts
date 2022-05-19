@@ -6,7 +6,7 @@ export interface ReviewQuery {
   /**
    * Identifier(s) of the reviews to be queried
    */
-  ids: string | string[];
+  ids: string[] | string;
 
   /**
    * Page of results
@@ -27,7 +27,7 @@ export interface ReviewQuery {
    *
    * @example ['ProductId:50', 'Rating:eq:2']
    */
-  filter?: string | string[];
+  filter?: string[] | string;
 
   /**
    * The Sort parameter for the Bazaarvoice query

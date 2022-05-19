@@ -1,13 +1,11 @@
 import type { ComponentRoute, Routes } from '../../../router';
-
+import { makeLegacyScreen } from '../../components/legacy-screen.component';
 import type {
   LegacyNavLayout,
   LegacyNavLayoutComponent,
   LegacyTab,
 } from '../../legacy-navigator.type';
 import type { LegacyRoutableComponentClass } from '../../legacy-route.type';
-
-import { makeLegacyScreen } from '../../components/legacy-screen.component';
 
 /**
  * @deprecated
@@ -53,18 +51,19 @@ export interface LayoutComponentsToRoutesOptions {
    *
    * @deprecated
    */
-  notFoundRedirect?: LegacyRoutableComponentClass | LegacyNavLayout | true;
+  notFoundRedirect?: LegacyNavLayout | LegacyRoutableComponentClass | true;
 }
 
-const moveLayoutComponentToFront = (
-  root: LegacyNavLayoutComponent | undefined
-):
-  | ((
-      a: [string, LegacyRoutableComponentClass],
-      b: [string, LegacyRoutableComponentClass]
-    ) => number)
-  | undefined => {
-  return ([a], [b]) => {
+const moveLayoutComponentToFront =
+  (
+    root: LegacyNavLayoutComponent | undefined
+  ):
+    | ((
+        a: [string, LegacyRoutableComponentClass],
+        b: [string, LegacyRoutableComponentClass]
+      ) => number)
+    | undefined =>
+  ([a], [b]) => {
     if (a === root?.name) {
       return -1;
     }
@@ -75,7 +74,6 @@ const moveLayoutComponentToFront = (
 
     return 0;
   };
-};
 
 const getNotFoundRoutes = (
   options: LayoutComponentsToRoutesOptions,
@@ -102,6 +100,7 @@ const getNotFoundRoutes = (
 
 /**
  * @internal
+ * @param options
  * @deprecated
  */
 export const layoutComponentsToRoutes = (options: LayoutComponentsToRoutesOptions) => {
@@ -142,7 +141,7 @@ export const layoutComponentsToRoutes = (options: LayoutComponentsToRoutesOption
     }) ?? []),
   ];
 
-  const componentRoutes: Routes = Array.from(paths.keys())
+  const componentRoutes: Routes = [...paths.keys()]
     .filter(
       (key) => options.appType === 'singleScreen' || options.tabs?.every(({ name }) => name !== key)
     )

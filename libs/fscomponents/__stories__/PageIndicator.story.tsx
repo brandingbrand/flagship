@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { StyleSheet, View } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { number } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { PageIndicator } from '../src/components/PageIndicator';
 
 const styles = StyleSheet.create({

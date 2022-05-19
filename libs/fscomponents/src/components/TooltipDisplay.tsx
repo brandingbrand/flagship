@@ -1,10 +1,14 @@
-import React, { FunctionComponent } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import { palette } from '../styles/variables';
 
 export interface SerializableTooltipDisplayProps {
-  positionX?: 'left' | 'right' | 'center';
-  positionY?: 'top' | 'bottom';
+  positionX?: 'center' | 'left' | 'right';
+  positionY?: 'bottom' | 'top';
   style?: ViewStyle;
   innerStyle?: ViewStyle;
   tooltipArrowStyle?: ViewStyle;
@@ -12,48 +16,43 @@ export interface SerializableTooltipDisplayProps {
 }
 
 export interface TooltipDisplayProps
-  extends Omit<SerializableTooltipDisplayProps, 'style' | 'innerStyle' | 'tooltipArrowStyle'> {
+  extends Omit<SerializableTooltipDisplayProps, 'innerStyle' | 'style' | 'tooltipArrowStyle'> {
   style?: StyleProp<ViewStyle>;
   innerStyle?: StyleProp<ViewStyle>;
   tooltipArrowStyle?: StyleProp<ViewStyle>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    zIndex: 10000,
-    backgroundColor: palette.background,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: palette.secondary,
-    shadowRadius: 38,
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      width: 0,
-      height: 19,
-    },
+  arrowBottom: {
+    transform: [
+      {
+        rotate: '-135deg',
+      },
+    ],
   },
-  innerContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+  arrowCenter: {
+    justifyContent: 'center',
   },
   arrowContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
   },
-  tooltipArrow: {
-    width: 14,
-    height: 14,
-    zIndex: 1,
-    backgroundColor: palette.background,
-    borderTopColor: palette.secondary,
-    borderLeftColor: palette.secondary,
-    borderTopWidth: 1,
-    borderLeftWidth: 1,
-    borderTopLeftRadius: 4,
+  arrowContainerBottom: {
+    bottom: -7,
+  },
+  arrowContainerTop: {
+    top: -7,
+  },
+  arrowLeft: {
+    justifyContent: 'flex-start',
+    left: 14,
+  },
+  arrowRight: {
+    justifyContent: 'flex-end',
+    right: 14,
   },
   arrowTop: {
     transform: [
@@ -62,35 +61,40 @@ const styles = StyleSheet.create({
       },
     ],
   },
-  arrowBottom: {
-    transform: [
-      {
-        rotate: '-135deg',
-      },
-    ],
+  container: {
+    backgroundColor: palette.background,
+    borderColor: palette.secondary,
+    borderRadius: 12,
+    borderWidth: 1,
+    position: 'absolute',
+    shadowOffset: {
+      width: 0,
+      height: 19,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 38,
+    zIndex: 10_000,
   },
-  arrowContainerTop: {
-    top: -7,
+  innerContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
-  arrowContainerBottom: {
-    bottom: -7,
-  },
-  arrowLeft: {
-    justifyContent: 'flex-start',
-    left: 14,
-  },
-  arrowCenter: {
-    justifyContent: 'center',
-  },
-  arrowRight: {
-    justifyContent: 'flex-end',
-    right: 14,
+  tooltipArrow: {
+    backgroundColor: palette.background,
+    borderLeftColor: palette.secondary,
+    borderLeftWidth: 1,
+    borderTopColor: palette.secondary,
+    borderTopLeftRadius: 4,
+    borderTopWidth: 1,
+    height: 14,
+    width: 14,
+    zIndex: 1,
   },
 });
 
 export const TooltipDisplay: FunctionComponent<TooltipDisplayProps> = (props) => {
   const renderTooltipArrow = () => {
-    const { positionY, positionX, tooltipArrowStyle } = props;
+    const { positionX, positionY, tooltipArrowStyle } = props;
 
     let mergeTooltipStyle;
     let mergeContainerStyle;

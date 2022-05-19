@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
-// import { Navigator, useNavigator } from '@brandingbrand/fsapp';
 import * as Animatable from 'react-native-animatable';
+
+import PropTypes from 'prop-types';
+import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
+
+// import { Navigator, useNavigator } from '@brandingbrand/fsapp';
+
 import GestureHandler from '../GestureHandler';
+import type { Action, CardProps, JSON } from '../types';
+
+import { TextBlock } from './TextBlock';
 
 const NEW = 'NEW';
 const styles = StyleSheet.create({
@@ -35,9 +42,6 @@ const styles = StyleSheet.create({
   },
 });
 
-import { Action, CardProps, JSON } from '../types';
-import { TextBlock } from './TextBlock';
-
 export interface ImageProp {
   uri: string;
 }
@@ -53,24 +57,19 @@ export interface FullScreenCardProps extends CardProps {
   setScrollEnabled: (enabled: boolean) => void;
 }
 export default class FullScreenImageCard extends Component<FullScreenCardProps> {
-  // export const FullScreenImageCard: React.FunctionComponent<FullScreenCardProps> = React.memo(
-  //   (props) => {
-  //   const navigator = props.discoverPath ? useNavigator() : props.navigator;
-  //   const { handleAction } = React.useContext(EngagementContext);
-  static childContextTypes: any = {
+  public static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func,
     cardActions: PropTypes.object,
     id: PropTypes.string,
     name: PropTypes.string,
   };
-  static contextTypes: any = {
+
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
     language: PropTypes.string,
   };
-  state: any = {};
-  AnimatedImage: any;
-  AnimatedText: any;
+
   constructor(props: FullScreenCardProps) {
     super(props);
     this.state = {
@@ -78,18 +77,14 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     };
   }
 
-  handleImageRef = (ref: any) => (this.AnimatedImage = ref);
-  handleTextRef = (ref: any) => (this.AnimatedText = ref);
+  private AnimatedImage: any;
+  private AnimatedText: any;
+  public state: any = {};
 
-  getChildContext = () => ({
-    story: this.props.story,
-    handleStoryAction: this.handleStoryAction,
-    cardActions: this.props.actions,
-    id: this.props.id,
-    name: this.props.name,
-  });
+  private readonly handleImageRef = (ref: any) => (this.AnimatedImage = ref);
+  private readonly handleTextRef = (ref: any) => (this.AnimatedText = ref);
 
-  onBack = () => {
+  private readonly onBack = () => {
     this.props.setScrollEnabled(true);
     this.AnimatedImage.transitionTo(
       {
@@ -105,7 +100,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     this.AnimatedText.transitionTo({ opacity: 1 }, 400, 'linear');
   };
 
-  handleStoryAction = async (json: JSON) => {
+  private readonly handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id,
@@ -146,11 +141,12 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
           ],
         },
       })
-      .catch((err) => console.log('EngagementhandleStoryAction SHOWMODAL error:', err));
+      .catch((error) => {
+        console.log('EngagementhandleStoryAction SHOWMODAL error:', error);
+      });
   };
 
-  // eslint-disable-next-line complexity
-  onCardPress = async (): Promise<void> => {
+  private readonly onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient, storyType } = this.props;
 
@@ -158,7 +154,7 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     //    1) no actions object
     //    2) actions.type is null or 'story' (new default tappable cards)
     if (story && (!actions || (actions && (actions.type === null || actions.type === 'story')))) {
-      if (!(story && story.tabbedItems && story.tabbedItems.length)) {
+      if (!(story && story.tabbedItems && story.tabbedItems.length > 0)) {
         this.AnimatedImage.transitionTo(
           {
             scale: 1.2,
@@ -191,11 +187,17 @@ export default class FullScreenImageCard extends Component<FullScreenCardProps> 
     }
   };
 
-  onSwipeUp = async (): Promise<void> => {
-    return this.onCardPress();
-  };
+  private readonly onSwipeUp = async (): Promise<void> => this.onCardPress();
 
-  render(): JSX.Element {
+  public getChildContext = () => ({
+    story: this.props.story,
+    handleStoryAction: this.handleStoryAction,
+    cardActions: this.props.actions,
+    id: this.props.id,
+    name: this.props.name,
+  });
+
+  public render(): JSX.Element {
     const { containerStyle, contents } = this.props;
 
     return (

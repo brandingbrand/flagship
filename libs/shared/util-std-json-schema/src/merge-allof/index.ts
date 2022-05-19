@@ -1,54 +1,51 @@
 // CREDIT: https://github.com/mokkabonna/json-schema-merge-allof
 // MIT
 
+import { intersection, intersectionWith, unique, uniqueWith } from '@brandingbrand/standard-array';
+import { leastCommonMultiple } from '@brandingbrand/standard-math';
+import { cloneDeep, isPlainObject } from '@brandingbrand/standard-object';
+
+import isEqual from 'fast-deep-equal';
 import type {
   JSONSchema7,
   JSONSchema7Array,
   JSONSchema7Definition,
   JSONSchema7Object,
 } from 'json-schema';
-import type { MergeSchemas, Resolver } from './resolver.type';
-
-import { intersection, intersectionWith, unique, uniqueWith } from '@brandingbrand/standard-array';
-import { leastCommonMultiple } from '@brandingbrand/standard-math';
-import { cloneDeep, isPlainObject } from '@brandingbrand/standard-object';
-
-import isEqual from 'fast-deep-equal';
 
 import { compare } from '../compare.util';
+
 import {
+  allUniqueKeys,
   getValues,
+  isFalse,
   isSchema,
   isSchemaDefinition,
-  allUniqueKeys,
-  notUndefined,
-  isFalse,
   isTrue,
+  notUndefined,
   stringArray,
 } from './common';
-
-import * as propertiesResolver from './complex-resolvers/properties';
 import * as itemsResolver from './complex-resolvers/items';
+import * as propertiesResolver from './complex-resolvers/properties';
+import type { MergeSchemas, Resolver } from './resolver.type';
 
 const schemaResolver = <T extends JSONSchema7Definition | undefined>(
   compacted: T[],
-  key: (number | string)[],
+  key: Array<number | string>,
   mergeSchemas: MergeSchemas
 ): T => mergeSchemas(compacted.filter(notUndefined) as JSONSchema7Definition[]) as T;
 
-const createRequiredMetaArray = <T>(arr: T[]) => {
-  return { required: arr };
-};
+const createRequiredMetaArray = <T>(arr: T[]) => ({ required: arr });
 
 const getAnyOfCombinations = <T>(arrOfArrays: T[][], combinations?: T[][]): T[][] => {
   combinations = combinations || [];
-  if (!arrOfArrays.length) {
+  if (arrOfArrays.length === 0) {
     return combinations;
   }
 
-  const values = arrOfArrays.slice(0).shift() ?? [];
+  const values = [...arrOfArrays].shift() ?? [];
   const rest = arrOfArrays.slice(1);
-  if (combinations.length) {
+  if (combinations.length > 0) {
     return getAnyOfCombinations(
       rest,
       combinations.flatMap((combination) => values.map((item) => [item, ...combination]))
@@ -64,17 +61,16 @@ const getAnyOfCombinations = <T>(arrOfArrays: T[][], combinations?: T[][]): T[][
 const tryMergeSchemaGroups = (
   schemaGroups: JSONSchema7Definition[][],
   mergeSchemas: MergeSchemas
-) => {
-  return schemaGroups
+) =>
+  schemaGroups
     .map((schemas, index) => {
       try {
         return mergeSchemas(schemas, [index]);
-      } catch (e) {
+      } catch {
         return undefined;
       }
     })
     .filter(notUndefined);
-};
 
 // resolvers
 const first = <T>(compacted: T[]) => compacted[0];
@@ -82,7 +78,7 @@ const required: Resolver<string[]> = (compacted) => stringArray(compacted);
 const maximumValue: Resolver<number> = (compacted) => Math.max(...compacted);
 const minimumValue: Resolver<number> = (compacted) => Math.min(...compacted);
 const uniqueItems: Resolver<boolean> = (compacted) => compacted.some(isTrue);
-const examples: Resolver<string | number | boolean | JSONSchema7Object | JSONSchema7Array> = (
+const examples: Resolver<JSONSchema7Array | JSONSchema7Object | boolean | number | string> = (
   compacted
 ) => uniqueWith(compacted.flat(), isEqual);
 
@@ -91,19 +87,21 @@ const oneOf: Resolver<JSONSchema7Definition[]> = (compacted, paths, mergeSchemas
   const result = tryMergeSchemaGroups(combinations, mergeSchemas);
   const unique = uniqueWith(result, compare);
 
-  if (unique.length) {
+  if (unique.length > 0) {
     return unique;
   }
 
-  return;
+  return undefined;
 };
 
-const definitions: Resolver<{
-  [key: string]: JSONSchema7Definition;
-}> = (compacted, paths, mergeSchemas) => {
-  const allChildren = allUniqueKeys(compacted) as string[];
+const definitions: Resolver<Record<string, JSONSchema7Definition>> = (
+  compacted,
+  paths,
+  mergeSchemas
+) => {
+  const allChildren = allUniqueKeys(compacted);
 
-  return allChildren.reduce((all, childKey) => {
+  return allChildren.reduce<Record<string, JSONSchema7Definition>>((all, childKey) => {
     const childSchemas = getValues(compacted, childKey);
     let innerCompacted = uniqueWith(childSchemas.filter(notUndefined), isEqual);
     innerCompacted = uniqueWith(innerCompacted, compare);
@@ -111,15 +109,17 @@ const definitions: Resolver<{
       childKey,
     ]) as JSONSchema7Definition;
     return all;
-  }, {} as Record<string, JSONSchema7Definition>);
+  }, {});
 };
 
-const dependencies: Resolver<{
-  [key: string]: JSONSchema7Definition | string[];
-}> = (compacted, paths, mergeSchemas) => {
-  const allChildren = allUniqueKeys(compacted) as string[];
+const dependencies: Resolver<Record<string, JSONSchema7Definition | string[]>> = (
+  compacted,
+  paths,
+  mergeSchemas
+) => {
+  const allChildren = allUniqueKeys(compacted);
 
-  return allChildren.reduce((all, childKey) => {
+  return allChildren.reduce<Record<string, JSONSchema7Definition | string[]>>((all, childKey) => {
     const childSchemas = getValues(compacted, childKey);
     let innerCompacted = uniqueWith(childSchemas.filter(notUndefined), isEqual);
 
@@ -128,7 +128,7 @@ const dependencies: Resolver<{
       Array.isArray(compacted)
     );
 
-    if (innerArrays.length) {
+    if (innerArrays.length > 0) {
       if (innerArrays.length === innerCompacted.length) {
         all[childKey] = stringArray(innerCompacted as string[][]);
       } else {
@@ -147,12 +147,13 @@ const dependencies: Resolver<{
       childKey,
     ]) as JSONSchema7Definition;
     return all;
-  }, {} as Record<string, JSONSchema7Definition | string[]>);
+  }, {});
 };
 
-const compareProp = (key: string) => {
-  return <T>(a: T, b: T) => compare({ [key]: a }, { [key]: b });
-};
+const compareProp =
+  (key: string) =>
+  <T>(a: T, b: T) =>
+    compare({ [key]: a }, { [key]: b });
 
 const getAllOf = (schema: JSONSchema7Definition): JSONSchema7Definition[] => {
   if (typeof schema !== 'object') {
@@ -163,15 +164,11 @@ const getAllOf = (schema: JSONSchema7Definition): JSONSchema7Definition[] => {
   return [copy, ...allOf.flatMap(getAllOf)];
 };
 
-const throwIncompatible = (values: unknown[], paths: (string | number)[]) => {
+const throwIncompatible = (values: unknown[], paths: Array<number | string>) => {
   let asJSON;
   try {
-    asJSON = values
-      .map((val) => {
-        return JSON.stringify(val, null, 2);
-      })
-      .join('\n');
-  } catch (variable) {
+    asJSON = values.map((val) => JSON.stringify(val, null, 2)).join('\n');
+  } catch {
     asJSON = values.join(', ');
   }
   throw new Error(
@@ -214,9 +211,7 @@ type Resolvers = {
 const resolvers: Resolvers = {
   type(compacted) {
     if (compacted.some(Array.isArray)) {
-      const normalized = compacted.map(function (val) {
-        return Array.isArray(val) ? val : [val];
-      });
+      const normalized = compacted.map((val) => (Array.isArray(val) ? val : [val]));
       const common = intersection(...normalized);
 
       if (common.length === 1) {
@@ -226,7 +221,7 @@ const resolvers: Resolvers = {
       }
     }
 
-    return;
+    return undefined;
   },
   dependencies,
   oneOf,
@@ -234,7 +229,7 @@ const resolvers: Resolvers = {
     return { anyOf: compacted };
   },
   pattern(compacted) {
-    return compacted.map((r) => '(?=' + r + ')').join('');
+    return compacted.map((r) => `(?=${r})`).join('');
   },
   multipleOf(compacted: number[]) {
     let integers = [...compacted];
@@ -246,18 +241,18 @@ const resolvers: Resolvers = {
 
     while (integers.some((n) => !Number.isInteger(n))) {
       integers = integers.map((n) => n * 10) as [number, number, ...number[]];
-      factor = factor * 10;
+      factor *= 10;
     }
 
     return leastCommonMultiple(...(integers as [number, number, ...number[]])) / factor;
   },
   enum(compacted) {
     const enums = intersectionWith(isEqual, ...compacted);
-    if (enums.length) {
+    if (enums.length > 0) {
       return enums.sort();
     }
 
-    return;
+    return undefined;
   },
   $id: first,
   $ref: first,
@@ -300,37 +295,38 @@ const callGroupResolver = (
   mergeSchemas: (
     schemas: JSONSchema7Definition[],
     base?: JSONSchema7Definition | null,
-    parents?: (number | string)[]
+    parents?: Array<number | string>
   ) => JSONSchema7Definition | undefined,
-  parents: (string | number)[]
+  parents: Array<number | string>
 ) => {
-  if (complexKeywords.length) {
+  if (complexKeywords.length > 0) {
     const resolverConfig = complexResolvers[resolverName];
 
     if (!resolverConfig || !resolverConfig.resolver) {
-      throw new Error('No resolver found for ' + resolverName);
+      throw new Error(`No resolver found for ${resolverName}`);
     }
 
     // extract all keywords from all the schemas that have one or more
     // then remove all undefined ones and not unique
     const extractedKeywordsOnly = schemas.map((schema) =>
-      complexKeywords.reduce((all, key) => {
-        if (schema[key] !== undefined) all[key] = schema[key] as any;
+      complexKeywords.reduce<JSONSchema7>((all, key) => {
+        if (schema[key] !== undefined) {
+          all[key] = schema[key] as any;
+        }
         return all;
-      }, {} as JSONSchema7)
+      }, {})
     );
 
     const unique = uniqueWith(extractedKeywordsOnly, compare);
 
     // create mergers that automatically add the path of the keyword for use in the complex resolver
-    const mergers = (resolverConfig.keywords as readonly ComplexResolverKey[]).reduce(
-      (all, key) => ({
-        ...all,
-        [key]: (schemas: JSONSchema7Definition[], extraKey: (number | string)[] = []) =>
+    const mergers = Object.fromEntries(
+      (resolverConfig.keywords as readonly ComplexResolverKey[]).map((key) => [
+        key,
+        (schemas: JSONSchema7Definition[], extraKey: Array<number | string> = []) =>
           mergeSchemas(schemas, null, [...parents, key, ...extraKey]),
-      }),
-      {} as Record<ComplexResolverKey, MergeSchemas>
-    );
+      ])
+    ) as Record<ComplexResolverKey, MergeSchemas>;
 
     const result = resolverConfig.resolver(unique, [...parents, resolverName], mergers);
 
@@ -341,7 +337,7 @@ const callGroupResolver = (
     return result;
   }
 
-  return;
+  return undefined;
 };
 
 export const mergeAllOf = (
@@ -351,13 +347,13 @@ export const mergeAllOf = (
   const mergeSchemas = (
     schemas: JSONSchema7Definition[],
     base?: JSONSchema7Definition | null,
-    parents: (number | string)[] = []
+    parents: Array<number | string> = []
   ): JSONSchema7Definition | undefined => {
     schemas = cloneDeep(schemas.filter(notUndefined));
     const merged = isPlainObject(base) ? base : {};
 
     // return undefined, an empty schema
-    if (!schemas.length) {
+    if (schemas.length === 0) {
       return undefined;
     }
 
@@ -390,19 +386,19 @@ export const mergeAllOf = (
     );
 
     const simpleKeys = allKeys.filter(
-      <T>(key: T | ComplexResolverKey): key is T =>
+      <T>(key: ComplexResolverKey | T): key is T =>
         !complexKeys.some((keys) => keys.includes(key as ComplexResolverKey))
     );
 
     // call all simple resolvers for relevant keywords
-    simpleKeys.forEach((key) => {
+    for (const key of simpleKeys) {
       const values = getValues(definedSchemas, key);
       const compacted = uniqueWith(values.filter(notUndefined), compareProp(key));
 
       // arrayProps like anyOf and oneOf must be merged first, as they include schemas
       // allOf is treated differently altogether
       if (compacted.length === 1 && isSchemaArrayKey(key)) {
-        merged[key] = (compacted as JSONSchema7[SchemaArrayKey][])[0]
+        merged[key] = (compacted as Array<JSONSchema7[SchemaArrayKey]>)[0]
           ?.map((schema) => mergeSchemas([schema], schema))
           .filter(notUndefined);
         // prop groups must always be resolved
@@ -410,9 +406,11 @@ export const mergeAllOf = (
         merged[key] = compacted[0] as any;
       } else {
         const resolver = resolvers[key];
-        if (!resolver) throw new Error(`No resolver found for key ${key}.`);
+        if (!resolver) {
+          throw new Error(`No resolver found for key ${key}.`);
+        }
 
-        const merger = (schemas: JSONSchema7Definition[], extraKey: (number | string)[] = []) =>
+        const merger = (schemas: JSONSchema7Definition[], extraKey: Array<number | string> = []) =>
           mergeSchemas(schemas, null, [...parents, key, ...extraKey]);
 
         merged[key] = resolver(compacted as any, [...parents, key], merger) as any;
@@ -421,19 +419,19 @@ export const mergeAllOf = (
           throwIncompatible(compacted, [...parents, key]);
         }
       }
-    });
+    }
 
     return Object.keys(complexResolvers).reduce(
       (all, resolverKeyword, index) => ({
         ...all,
         ...callGroupResolver(
-          complexKeys[index] as (
-            | 'properties'
+          complexKeys[index] as Array<
+            | 'additionalItems'
+            | 'additionalProperties'
             | 'items'
             | 'patternProperties'
-            | 'additionalProperties'
-            | 'additionalItems'
-          )[],
+            | 'properties'
+          >,
           resolverKeyword as keyof typeof complexResolvers,
           definedSchemas,
           mergeSchemas,

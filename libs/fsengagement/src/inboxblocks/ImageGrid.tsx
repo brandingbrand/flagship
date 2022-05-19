@@ -1,9 +1,12 @@
 import React, { Component, useContext } from 'react';
-import { Dimensions, ImageURISource, View, ViewStyle } from 'react-native';
+
+import type { ImageURISource, ViewStyle } from 'react-native';
+import { Dimensions, View } from 'react-native';
+
+import RenderImageTextItem from '../carousel/RenderImageTextItem';
 import { EngagementContext } from '../lib/contexts';
 
 const { width: viewportWidth } = Dimensions.get('window');
-import RenderImageTextItem from '../carousel/RenderImageTextItem';
 
 export interface GridItem {
   link: string;
@@ -40,35 +43,21 @@ class ImageGrid extends Component<ImageGridContextProps, ImageGridState> {
       tallestTextHeight: 0,
     };
   }
-  // eslint-disable-next-line complexity
-  shouldComponentUpdate(nextProps: ImageGridContextProps, nextState: ImageGridState): boolean {
-    return (
-      this.props.containerStyle !== nextProps.containerStyle ||
-      this.props.items !== nextProps.items ||
-      this.props.ratio !== nextProps.ratio ||
-      this.props.options !== nextProps.options ||
-      this.props.resizeMode !== nextProps.resizeMode ||
-      this.props.source !== nextProps.source ||
-      this.props.headerStyle !== nextProps.headerStyle ||
-      this.props.textStyle !== nextProps.textStyle ||
-      this.props.eyebrowStyle !== nextProps.eyebrowStyle ||
-      this.props.context !== nextProps.context ||
-      this.state.tallestTextHeight !== nextState.tallestTextHeight
-    );
-  }
-  wp(percentage: any): any {
+
+  private wp(percentage: any): any {
     const { windowWidth } = this.props.context;
     const value = (percentage * (windowWidth || viewportWidth)) / 100;
     return Math.round(value);
   }
-  _renderItem(item: any, index: number): JSX.Element {
-    const { options, eyebrowStyle, headerStyle, textStyle } = this.props;
+
+  private _renderItem(item: any, index: number): JSX.Element {
+    const { eyebrowStyle, headerStyle, options, textStyle } = this.props;
     const { numColumns = 2 } = options;
     const totalItemWidth =
       this.calculateGridWidth() - options.spaceBetweenHorizontal * (numColumns - 1);
     const itemWidth = Math.round(totalItemWidth / numColumns);
-    const spaceBetweenHorizontal = options.spaceBetweenHorizontal;
-    const spaceBetweenVertical = options.spaceBetweenVertical;
+    const { spaceBetweenHorizontal } = options;
+    const { spaceBetweenVertical } = options;
 
     return (
       <RenderImageTextItem
@@ -90,20 +79,20 @@ class ImageGrid extends Component<ImageGridContextProps, ImageGridState> {
     );
   }
 
-  parentCardStyles(): number {
+  private parentCardStyles(): number {
     const { cardContainerStyle } = this.props;
 
     if (!cardContainerStyle) {
       return 0;
     }
-    const ml = +(cardContainerStyle.marginLeft || 0);
-    const mr = +(cardContainerStyle.marginRight || 0);
-    const pr = +(cardContainerStyle.paddingRight || 0);
-    const pl = +(cardContainerStyle.paddingLeft || 0);
+    const ml = Number(cardContainerStyle.marginLeft || 0);
+    const mr = Number(cardContainerStyle.marginRight || 0);
+    const pr = Number(cardContainerStyle.paddingRight || 0);
+    const pl = Number(cardContainerStyle.paddingLeft || 0);
     return ml + mr + pr + pl;
   }
 
-  horizontalMarginPadding(): number {
+  private horizontalMarginPadding(): number {
     const { containerStyle } = this.props;
     const ml = containerStyle.marginLeft || 0;
     const mr = containerStyle.marginRight || 0;
@@ -112,13 +101,13 @@ class ImageGrid extends Component<ImageGridContextProps, ImageGridState> {
     return ml + mr + pr + pl;
   }
 
-  calculateGridWidth(): number {
+  private calculateGridWidth(): number {
     const { windowWidth } = this.props.context;
     const sliderWidth = windowWidth || viewportWidth;
     return sliderWidth - this.horizontalMarginPadding() - this.parentCardStyles();
   }
 
-  createGrid(): JSX.Element {
+  private createGrid(): JSX.Element {
     return (
       <View
         style={{
@@ -127,14 +116,33 @@ class ImageGrid extends Component<ImageGridContextProps, ImageGridState> {
           flexWrap: 'wrap',
         }}
       >
-        {(this.props.items || []).map((product: any, index: number) => {
-          return this._renderItem(product, index);
-        })}
+        {(this.props.items || []).map((product: any, index: number) =>
+          this._renderItem(product, index)
+        )}
       </View>
     );
   }
 
-  render(): JSX.Element {
+  public shouldComponentUpdate(
+    nextProps: ImageGridContextProps,
+    nextState: ImageGridState
+  ): boolean {
+    return (
+      this.props.containerStyle !== nextProps.containerStyle ||
+      this.props.items !== nextProps.items ||
+      this.props.ratio !== nextProps.ratio ||
+      this.props.options !== nextProps.options ||
+      this.props.resizeMode !== nextProps.resizeMode ||
+      this.props.source !== nextProps.source ||
+      this.props.headerStyle !== nextProps.headerStyle ||
+      this.props.textStyle !== nextProps.textStyle ||
+      this.props.eyebrowStyle !== nextProps.eyebrowStyle ||
+      this.props.context !== nextProps.context ||
+      this.state.tallestTextHeight !== nextState.tallestTextHeight
+    );
+  }
+
+  public render(): JSX.Element {
     const { containerStyle } = this.props;
     const grid = this.createGrid();
     return <View style={containerStyle}>{grid}</View>;

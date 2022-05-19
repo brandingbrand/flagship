@@ -1,17 +1,14 @@
-import type { WebWebpackExecutorOptions } from '@nrwl/web/src/executors/webpack/webpack.impl';
-
-import { Configuration, DefinePlugin, ProvidePlugin } from 'webpack';
-import getReactWebpackConfig from '@nrwl/react/plugins/webpack';
-
 import * as ReactNative from '@callstack/repack';
-import TerserPlugin from 'terser-webpack-plugin';
+import getReactWebpackConfig from '@nrwl/react/plugins/webpack';
+import type { WebWebpackExecutorOptions } from '@nrwl/web/src/executors/webpack/webpack.impl';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-
-import { join, parse } from 'path';
 import { existsSync } from 'fs';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { join, parse } from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import { DefinePlugin, ProvidePlugin } from 'webpack';
+import type { Configuration } from 'webpack';
 
 /**
  * This is ha hack to get nx to auto generate the package.json so that
@@ -127,7 +124,7 @@ const webBabelPlugins = [
   ],
 ];
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-lines-per-function
 const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platform = 'web') => {
   const prod = config.mode === 'production';
   process.env.BABEL_ENV = config.mode;
@@ -148,8 +145,9 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   const shouldForkTsCheck =
     options && 'forkTsCheck' in options
       ? options.forkTsCheck
-      : !!reactConfig.plugins?.find((plugin) => plugin instanceof ForkTsCheckerWebpackPlugin) ||
-        options?.buildLibsFromSource;
+      : Boolean(
+          reactConfig.plugins?.find((plugin) => plugin instanceof ForkTsCheckerWebpackPlugin)
+        ) || options?.buildLibsFromSource;
 
   const resolve = {
     ...reactConfig.resolve,

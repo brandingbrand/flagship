@@ -1,6 +1,6 @@
-import { CustomerAddress } from './CustomerAddress';
-import { PaymentMethod } from './PaymentMethod';
-import { Person } from './Person';
+import type { CustomerAddress } from './CustomerAddress';
+import type { PaymentMethod } from './PaymentMethod';
+import type { Person } from './Person';
 
 /**
  * The possible authentication states of a customer.
@@ -89,7 +89,7 @@ export interface CustomerAccount extends Person {
   /**
    * The customer's gender.
    */
-  gender?: string | number;
+  gender?: number | string;
 
   /**
    * The customer's job title.

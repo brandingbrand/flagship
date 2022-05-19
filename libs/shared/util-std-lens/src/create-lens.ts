@@ -1,5 +1,5 @@
 import { ComposableLens } from './composable-lens';
-import { ILens } from './types';
+import type { ILens } from './types';
 
 const _fromPath = <S>(...keys: PropertyKey[]): ILens<S, unknown> => ({
   get: (structure: S) => keys.reduce((value, key) => (value as any)?.[key], structure),
@@ -152,6 +152,10 @@ const fromPathTyped = <Structure>() => {
     Structure,
     Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8][Key9][Key10]
   >;
+  /**
+   *
+   * @param keys
+   */
   function fromPath(...keys: PropertyKey[]): unknown {
     return new ComposableLens(_fromPath(...keys));
   }

@@ -537,6 +537,7 @@ describe('compare', () => {
 
     expect(compare(minLength, emptySchema)).toBe(true);
   });
+
   it('compares equal minItems undefined and 0', () => {
     const minItems = {
       minItems: 0,

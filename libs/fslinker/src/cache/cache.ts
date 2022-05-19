@@ -1,16 +1,16 @@
-import { InjectionToken } from '../providers';
+import type { InjectionToken } from '../providers';
 
 export interface InjectorCache {
-  get<T>(token: InjectionToken<T>): T | undefined;
-  has(token: InjectionToken): boolean;
-  provide<T>(token: InjectionToken<T>, value: T): void;
-  remove(token: InjectionToken): void;
-  reset(): void;
+  get: <T>(token: InjectionToken<T>) => T | undefined;
+  has: (token: InjectionToken) => boolean;
+  provide: <T>(token: InjectionToken<T>, value: T) => void;
+  remove: (token: InjectionToken) => void;
+  reset: () => void;
 }
 
 export interface FallbackCache {
-  get<T>(token: InjectionToken<T>): T | undefined;
-  has(token: InjectionToken): boolean;
+  get: <T>(token: InjectionToken<T>) => T | undefined;
+  has: (token: InjectionToken) => boolean;
 }
 
 export class InMemoryCache {
@@ -18,6 +18,20 @@ export class InMemoryCache {
     private readonly providers: Map<string | symbol, unknown>,
     private readonly fallback?: FallbackCache
   ) {}
+
+  private verifyToken(token: InjectionToken): void {
+    if (
+      !token ||
+      (typeof token !== 'object' && typeof token !== 'function') ||
+      !('uniqueKey' in token)
+    ) {
+      const actualType =
+        token !== null && typeof token === 'object'
+          ? (token as object).constructor.name
+          : typeof token;
+      throw new TypeError(`Expected token to be InjectionToken but got ${actualType} instead`);
+    }
+  }
 
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
@@ -58,19 +72,5 @@ more than a single version`
 
   public reset(): void {
     this.providers.clear();
-  }
-
-  private verifyToken(token: InjectionToken): void {
-    if (
-      !token ||
-      (typeof token !== 'object' && typeof token !== 'function') ||
-      !('uniqueKey' in token)
-    ) {
-      const actualType =
-        token !== null && typeof token === 'object'
-          ? (token as object).constructor.name
-          : typeof token;
-      throw new TypeError(`Expected token to be InjectionToken but got ${actualType} instead`);
-    }
   }
 }

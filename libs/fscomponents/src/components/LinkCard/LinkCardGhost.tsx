@@ -1,6 +1,9 @@
 import React from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
 import ContentLoader, { Rect } from '../../lib/RNContentLoader';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
 export interface SerializableLinkCardGhostProps {
   style?: ViewStyle;
@@ -14,7 +17,7 @@ export interface LinkCardGhostProps extends Omit<SerializableLinkCardGhostProps,
 }
 
 export const LinkCardGhost: React.FC<LinkCardGhostProps> = React.memo(
-  ({ style, height = 192, backgroundColor = '#EFEFEF', foregroundColor = '#F9F9F9' }) => {
+  ({ backgroundColor = '#EFEFEF', foregroundColor = '#F9F9F9', height = 192, style }) => {
     const title = {
       width: 335,
       height: 133,
@@ -37,11 +40,11 @@ export const LinkCardGhost: React.FC<LinkCardGhostProps> = React.memo(
     return (
       <View style={style}>
         <ContentLoader
-          width={'100%'}
-          height={height}
-          viewBox={`0 0 335 ${height}`}
           backgroundColor={backgroundColor}
           foregroundColor={foregroundColor}
+          height={height}
+          viewBox={`0 0 335 ${height}`}
+          width="100%"
         >
           <Rect rx="4" ry="4" {...title} />
           <Rect rx="4" ry="4" {...line1} />

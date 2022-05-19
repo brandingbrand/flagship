@@ -1,4 +1,4 @@
-import { CurrencyValue } from '../CommerceTypes';
+import type { CurrencyValue } from '../CommerceTypes';
 
 /**
  * Information about a promotion that has been applied to an order.

@@ -1,4 +1,4 @@
-import { ILens } from './types';
+import type { ILens } from './types';
 
 export const withLenses =
   <Structure, Value, Values extends unknown[]>(

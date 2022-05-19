@@ -1,8 +1,8 @@
-import { CustomerProductListRegistrant } from './CustomerProductListRegistrant';
-import { ItemLink } from './ItemLink';
-import { CustomerProductListItem } from './CustomerProductListItem';
-import { ProductListEvent } from './ProductListEvent';
-import { ProductListShippingAddress } from './ProductListShippingAddress';
+import type { CustomerProductListItem } from './CustomerProductListItem';
+import type { CustomerProductListRegistrant } from './CustomerProductListRegistrant';
+import type { ItemLink } from './ItemLink';
+import type { ProductListEvent } from './ProductListEvent';
+import type { ProductListShippingAddress } from './ProductListShippingAddress';
 
 /**
  * Document representing a customer product List.
@@ -86,5 +86,5 @@ export interface CustomerProductList {
   /**
    * The type of the product list.
    */
-  type?: 'wish_list' | 'gift_registry' | 'shopping_list' | 'custom_1' | 'custom_2' | 'custom_3';
+  type?: 'custom_1' | 'custom_2' | 'custom_3' | 'gift_registry' | 'shopping_list' | 'wish_list';
 }

@@ -1,16 +1,13 @@
-import AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
-import Decimal from 'decimal.js';
-import { Campaign } from '../Analytics';
-type BaseEvent = import('../Analytics').BaseEvent;
+import type Decimal from 'decimal.js';
 
-// Common Interface
+import type { BaseEvent, Campaign } from '../Analytics';
+
+import type AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
 
 export interface Generics extends BaseEvent {
   eventAction: string;
   eventCategory: string;
 }
-
-// Commerce Interfaces
 
 export interface ClickGeneric extends Generics {
   identifier?: string;
@@ -47,8 +44,6 @@ export interface Screenview extends BaseEvent {
   url: string;
 }
 
-// Enhanced Commerce Interfaces
-
 export interface Checkout extends Generics {
   products: TransactionProduct[];
 }
@@ -60,7 +55,7 @@ export interface ImpressionProduct extends Generics {
   category?: string;
   list: string;
   variant?: string;
-  price?: string | Decimal;
+  price?: Decimal | string;
   index?: number;
 }
 
@@ -70,7 +65,7 @@ export interface Product extends Generics {
   brand?: string;
   category?: string;
   variant?: string;
-  price?: string | Decimal;
+  price?: Decimal | string;
   quantity?: number;
   coupons?: string[];
   index?: number;
@@ -86,7 +81,7 @@ export interface Promotion extends Generics {
 export interface RefundProduct extends BaseEvent {
   identifier: string;
   quantity: number;
-  price?: string | Decimal;
+  price?: Decimal | string;
   coupons?: string[];
 }
 
@@ -96,7 +91,7 @@ export interface TransactionProduct extends BaseEvent {
   brand?: string;
   category?: string;
   variant?: string;
-  price?: string | Decimal;
+  price?: Decimal | string;
   quantity?: number;
   coupons?: string[];
   index?: number;
@@ -130,23 +125,20 @@ export interface TransactionAction extends BaseEvent {
   coupons?: string[];
 }
 
-// App Lifercyle Interfaces
-
 export interface App extends BaseEvent {
   eventAction: string;
   lifecycle: string;
 }
 
-async function resolvePromise<T>(value?: T | Promise<T>): Promise<T | undefined> {
+const resolvePromise = async <T>(value?: Promise<T> | T): Promise<T | undefined> => {
   if (value === undefined) {
     return undefined;
   }
-  // @ts-ignore Check is needed to determine if it is a promise or not
   if ((value as Promise<T>).then) {
     return value as Promise<T>;
   }
   return value;
-}
+};
 
 const resolvePromises = async (
   configuration: AnalyticsProviderConfiguration
@@ -162,17 +154,7 @@ const resolvePromises = async (
   return newConfig;
 };
 
-// Class
-
 export default abstract class AnalyticsProvider {
-  protected userAgent: string = '';
-  protected osType: string = '';
-  protected osVersion: string = '';
-  protected appName: string = '';
-  protected appId: string = '';
-  protected appVersion: string = '';
-  protected appInstallerId?: string;
-
   constructor(initialConfig: AnalyticsProviderConfiguration) {
     resolvePromises(initialConfig)
       .then((configuration: AnalyticsProviderConfiguration) => {
@@ -183,66 +165,66 @@ export default abstract class AnalyticsProvider {
         this.appId = String(configuration.appId);
         this.appVersion = String(configuration.appVersion);
         this.appInstallerId = configuration.appInstallerId && String(configuration.appInstallerId);
-        this.asyncInit().catch((e) => {
-          console.warn('error initializing analytics provider', e);
+        this.asyncInit().catch((error) => {
+          console.warn('error initializing analytics provider', error);
         });
       })
-      .catch((e) => {
-        console.warn('error initializing analytics promises', e);
+      .catch((error) => {
+        console.warn('error initializing analytics promises', error);
       });
   }
 
-  abstract asyncInit(): Promise<void>;
+  protected userAgent = '';
+  protected osType = '';
+  protected osVersion = '';
+  protected appName = '';
+  protected appId = '';
+  protected appVersion = '';
+  protected appInstallerId?: string;
 
-  // Commerce Functions
+  public abstract asyncInit(): Promise<void>;
 
-  abstract clickGeneric(properties: ClickGeneric): void;
+  public abstract clickGeneric(properties: ClickGeneric): void;
 
-  abstract contactCall(properties: ContactCall): void;
+  public abstract contactCall(properties: ContactCall): void;
 
-  abstract contactEmail(properties: ContactEmail): void;
+  public abstract contactEmail(properties: ContactEmail): void;
 
-  abstract impressionGeneric(properties: ImpressionGeneric): void;
+  public abstract impressionGeneric(properties: ImpressionGeneric): void;
 
-  abstract locationDirections(properties: LocationDirections): void;
+  public abstract locationDirections(properties: LocationDirections): void;
 
-  abstract pageview(properties: Screenview): void;
+  public abstract pageview(properties: Screenview): void;
 
-  abstract screenview(properties: Screenview): void;
+  public abstract screenview(properties: Screenview): void;
 
-  abstract searchGeneric(properties: SearchGeneric): void;
+  public abstract searchGeneric(properties: SearchGeneric): void;
 
-  // Enhanced Commerce Functions
+  public abstract addProduct(properties: Product): void;
 
-  abstract addProduct(properties: Product): void;
+  public abstract checkout(properties: Checkout, action: CheckoutAction): void;
 
-  abstract checkout(properties: Checkout, action: CheckoutAction): void;
+  public abstract checkoutOption(properties: Generics, action: CheckoutAction): void;
 
-  abstract checkoutOption(properties: Generics, action: CheckoutAction): void;
+  public abstract clickProduct(properties: Product, action?: ProductAction): void;
 
-  abstract clickProduct(properties: Product, action?: ProductAction): void;
+  public abstract clickPromotion(properties: Promotion): void;
 
-  abstract clickPromotion(properties: Promotion): void;
+  public abstract impressionProduct(properties: ImpressionProduct): void;
 
-  abstract impressionProduct(properties: ImpressionProduct): void;
+  public abstract impressionPromotion(properties: Promotion): void;
 
-  abstract impressionPromotion(properties: Promotion): void;
+  public abstract detailProduct(properties: Product, action?: ProductAction): void;
 
-  abstract detailProduct(properties: Product, action?: ProductAction): void;
+  public abstract purchase(properties: Transaction, action: TransactionAction): void;
 
-  abstract purchase(properties: Transaction, action: TransactionAction): void;
+  public abstract refundAll(properties: Generics, action: TransactionAction): void;
 
-  abstract refundAll(properties: Generics, action: TransactionAction): void;
+  public abstract refundPartial(properties: TransactionRefund, action: TransactionAction): void;
 
-  abstract refundPartial(properties: TransactionRefund, action: TransactionAction): void;
+  public abstract removeProduct(properties: Product): void;
 
-  abstract removeProduct(properties: Product): void;
+  public abstract lifecycle(properties: App): void;
 
-  // App Lifecycle Function
-
-  abstract lifecycle(properties: App): void;
-
-  setTrafficSource(properties: Campaign): void {
-    // no-op
-  }
+  public setTrafficSource(properties: Campaign): void {}
 }

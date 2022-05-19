@@ -1,21 +1,22 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
-import { LocationItem } from '../src/components/LocationItem';
 import { boolean, number, object, select, text } from '@storybook/addon-knobs';
-import stores from './assets/mocks/stores';
+import { storiesOf } from '@storybook/react';
+
+import { LocationItem } from '../src/components/LocationItem';
+
 import greyBox from './assets/images/greyBox.png';
+import stores from './assets/mocks/stores';
 
 // shared
-const formats = Array(11)
+const formats = Array.from({ length: 11 })
   .fill('')
-  .map((_: any, index: number) => (index + 1).toString());
+  .map((_: unknown, index: number) => (index + 1).toString());
 const location = stores.locations[0];
-const service = location.services.find((s: any) => s.service === 'Store');
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const hours = service!.hours;
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const phone = service!.contact.phones.find((s: any) => s.name === 'main');
+const service = location?.services.find((s) => s.service === 'Store');
+const { hours } = service!;
+const phone = service!.contact.phones.find((s) => s.name === 'main');
 
 // format specific
 const buttonTitle = 'More';
@@ -32,31 +33,30 @@ const showNavIcon = true;
 
 storiesOf('LocationItem', module).add('basic usage', () => (
   <LocationItem
-    locationName={location.title}
-    address={location.address}
-    hours={hours}
-    format={select('format', formats, '1')}
+    address={location!.address}
+    buttonStyle={object('buttonStyle', buttonStyle)}
     buttonTitle={text('buttonTitle', buttonTitle)}
-    onButtonPress={action('LocationItem onButtonPress')}
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    phone={phone!.number}
-    phoneIcon={greyBox}
-    navIcon={boolean('showNavIcon', showNavIcon) ? greyBox : undefined}
+    buttonTitleStyle={object('buttonTitleStyle', buttonTitleStyle)}
     distance={{
       value: number('distanceValue', distanceValue),
       unit: select('distanceUnit', distanceUnit, 'miles') === 'miles' ? 0 : 1,
     }}
-    hourFormat={select('hourFomat', ['1', '2', '3'], '1')}
     distanceFormat={boolean('fullDistanceFormat', fullDistanceFormat) ? 'full' : undefined}
-    onNavButtonPress={action('LocationItem onNavButtonPress')}
-    onPhoneButtonPress={action('LocationItem onPhoneButtonPress')}
-    titleStyle={object('titleStyle', titleStyle)}
-    textStyle={object('textStyle', textStyle)}
-    storeImage={greyBox}
-    storeImageStyle={{ height: 100, width: 100 }}
-    buttonStyle={object('buttonStyle', buttonStyle)}
-    buttonTitleStyle={object('buttonTitleStyle', buttonTitleStyle)}
+    format={select('format', formats, '1')}
+    hourFormat={select('hourFomat', ['1', '2', '3'], '1')}
+    hours={hours}
     linkStyle={object('linkStyle', linkStyle)}
     linkTitleStyle={object('linkTitleStyle', linkTitleStyle)}
+    locationName={location?.title ?? ''}
+    navIcon={boolean('showNavIcon', showNavIcon) ? greyBox : undefined}
+    onButtonPress={action('LocationItem onButtonPress')}
+    onNavButtonPress={action('LocationItem onNavButtonPress')}
+    onPhoneButtonPress={action('LocationItem onPhoneButtonPress')}
+    phone={phone!.number}
+    phoneIcon={greyBox}
+    storeImage={greyBox}
+    storeImageStyle={{ height: 100, width: 100 }}
+    textStyle={object('textStyle', textStyle)}
+    titleStyle={object('titleStyle', titleStyle)}
   />
 ));

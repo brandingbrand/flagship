@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 
 export interface Divider {
   color: string;
@@ -10,8 +12,8 @@ export interface TextBlockProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 export default class TextBlock extends Component<TextBlockProps> {
-  render(): JSX.Element {
-    const { options, containerStyle } = this.props;
+  public render(): JSX.Element {
+    const { containerStyle, options } = this.props;
     const divider = {
       height: options.thickness,
       backgroundColor: options.color,

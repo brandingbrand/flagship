@@ -1,6 +1,6 @@
-import { Commit } from '@brandingbrand/git';
+import type { Commit } from '@brandingbrand/git';
 
-import { ShipConfig } from '../configs/ship.config';
+import type { ShipConfig } from '../configs/ship.config';
 import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.util';
 
 export const stripCommitMessages =

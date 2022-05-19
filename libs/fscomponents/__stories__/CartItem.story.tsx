@@ -1,26 +1,21 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { object } from '@storybook/addon-knobs';
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import Decimal from 'decimal.js';
-import { CartItem, VariantCartItem } from '../src/components/CartItem';
-import { Stepper } from '../src/components/Stepper';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-const noopPromise = async () => Promise.resolve();
+import { action } from '@storybook/addon-actions';
+import { object } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import Decimal from 'decimal.js';
+
+import { CartItem, VariantCartItem } from '../src/components/CartItem';
+import { Stepper } from '../src/components/Stepper';
+
+const noopPromise = async () => {};
 
 const styles = StyleSheet.create({
-  rightColumnStyle: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  stepperStyle: {
-    borderWidth: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   quantityRowStyle: {
     justifyContent: 'space-between',
   },
@@ -29,6 +24,15 @@ const styles = StyleSheet.create({
   },
   removeButtonTextStyle: {
     color: 'red',
+  },
+  rightColumnStyle: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  stepperStyle: {
+    alignItems: 'center',
+    borderWidth: 0,
+    flexDirection: 'row',
   },
 });
 
@@ -84,43 +88,39 @@ const testCartItem: CommerceTypes.CartItem = {
   ],
 };
 
-const renderStepper = () => {
-  return (
-    <Stepper
-      count={testCartItem.quantity}
-      countUpperLimit={10}
-      onDecreaseButtonPress={action('Stepper onDecreaseButtonPress')}
-      onIncreaseButtonPress={action('Stepper onIncreaseButtonPress')}
-      stepperStyle={styles.stepperStyle}
-    />
-  );
-};
+const renderStepper = () => (
+  <Stepper
+    count={testCartItem.quantity}
+    countUpperLimit={10}
+    onDecreaseButtonPress={action('Stepper onDecreaseButtonPress')}
+    onIncreaseButtonPress={action('Stepper onIncreaseButtonPress')}
+    stepperStyle={styles.stepperStyle}
+  />
+);
 
-const renderRemoveButton = (): React.ReactNode => {
-  return (
-    <TouchableOpacity onPress={action('RemoveButton onPress')}>
-      <View style={styles.removeButtonStyle}>
-        <Text style={styles.removeButtonTextStyle}>
-          {FSI18n.string(translationKeys.flagship.cart.actions.remove.actionBtn)}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+const renderRemoveButton = (): React.ReactNode => (
+  <TouchableOpacity onPress={action('RemoveButton onPress')}>
+    <View style={styles.removeButtonStyle}>
+      <Text style={styles.removeButtonTextStyle}>
+        {FSI18n.string(translationKeys.flagship.cart.actions.remove.actionBtn)}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
 
 storiesOf('CartItem', module)
   .add('basic usage', () => (
     <CartItem
       {...object('CartItem', testCartItem)}
-      removeItem={noopPromise}
-      updateQty={noopPromise}
-      rightColumnStyle={styles.rightColumnStyle}
       quantityRowStyle={styles.quantityRowStyle}
-      stepperStyle={styles.stepperStyle}
       removeButtonStyle={styles.removeButtonStyle}
       removeButtonTextStyle={styles.removeButtonTextStyle}
-      renderStepper={renderStepper}
+      removeItem={noopPromise}
       renderRemoveButton={renderRemoveButton}
+      renderStepper={renderStepper}
+      rightColumnStyle={styles.rightColumnStyle}
+      stepperStyle={styles.stepperStyle}
+      updateQty={noopPromise}
     />
   ))
   .add('variant cart item', () => (

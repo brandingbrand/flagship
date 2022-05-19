@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { GestureResponderEvent, TouchableWithoutFeedbackProperties } from 'react-native';
+
+import type { GestureResponderEvent, TouchableWithoutFeedbackProperties } from 'react-native';
 
 const kOnPressDelayMS = 200; // Delay before sending an onPress event to wait for scroll
 
@@ -8,11 +9,7 @@ export abstract class TouchableDelay<
 > extends Component<P> {
   private onPressDelayTimer: ReturnType<typeof setTimeout> | null = null;
 
-  componentWillUnmount(): void {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll = (event: Event) => {
+  protected readonly handleScroll = (event: Event) => {
     if (this.onPressDelayTimer) {
       clearTimeout(this.onPressDelayTimer);
       this.onPressDelayTimer = null;
@@ -21,7 +18,7 @@ export abstract class TouchableDelay<
     }
   };
 
-  handleOnPress = (event: GestureResponderEvent): void => {
+  protected readonly handleOnPress = (event: GestureResponderEvent): void => {
     const { onPress } = this.props;
 
     if (onPress) {
@@ -32,7 +29,7 @@ export abstract class TouchableDelay<
           this.onPressDelayTimer = null;
           window.removeEventListener('scroll', this.handleScroll);
 
-          return onPress(event);
+          onPress(event);
         }, kOnPressDelayMS);
       }
 
@@ -40,4 +37,8 @@ export abstract class TouchableDelay<
       event.preventDefault();
     }
   };
+
+  public componentWillUnmount(): void {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
 }

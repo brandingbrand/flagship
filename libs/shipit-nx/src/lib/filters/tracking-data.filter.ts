@@ -1,4 +1,4 @@
-import { Commit } from '@brandingbrand/git';
+import type { Commit } from '@brandingbrand/git';
 
 export const addTrackingData = (commit: Commit): Commit => {
   const revision = commit.id;

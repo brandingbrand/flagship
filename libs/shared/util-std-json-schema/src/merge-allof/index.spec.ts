@@ -1,9 +1,11 @@
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
-import AJV from 'ajv';
-
-import { mergeAllOf } from './index';
-import { notUndefined } from './common';
 import { intersection } from '@brandingbrand/standard-array';
+
+import AJV from 'ajv';
+import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+
+import { notUndefined } from './common';
+
+import { mergeAllOf } from '.';
 
 const ajv = new AJV();
 
@@ -14,14 +16,12 @@ const mergeAndValidate = (schema: JSONSchema7) => {
       throw new Error("Schema returned by resolver isn't valid.");
     }
     return result;
-  } catch (e: unknown) {
-    console.log(e);
-    if (e instanceof Error && !/stack/i.test(e.message)) {
-      throw e;
+  } catch (error: unknown) {
+    console.log(error);
+    if (error instanceof Error && !/stack/i.test(error.message)) {
+      throw error;
     }
   }
-
-  return;
 };
 
 describe('mergeAllOf', () => {
@@ -113,8 +113,10 @@ describe('mergeAllOf', () => {
 
     const innerDeconstruct = (schema: JSONSchema7Definition): JSONSchema7Definition[] => {
       const allChildObj = Object.entries(schema).map(([key, val]) => {
-        if (typeof val === 'object') return innerDeconstruct(val);
-        else return undefined;
+        if (typeof val === 'object') {
+          return innerDeconstruct(val);
+        }
+        return undefined;
       });
 
       return [schema, ...allChildObj.filter(notUndefined).flat()];
@@ -128,6 +130,7 @@ describe('mergeAllOf', () => {
     const resultObjects = getAllObjects(result);
 
     const commonObjects = intersection(inputObjects, resultObjects);
+
     expect(commonObjects).toHaveLength(0);
   });
 
@@ -1307,18 +1310,18 @@ describe('mergeAllOf', () => {
         mergeAndValidate({
           allOf: [
             {
-              multipleOf: 100000,
+              multipleOf: 100_000,
             },
             {
-              multipleOf: 1000000,
+              multipleOf: 1_000_000,
             },
             {
-              multipleOf: 500000,
+              multipleOf: 500_000,
             },
           ],
         })
       ).toStrictEqual({
-        multipleOf: 1000000,
+        multipleOf: 1_000_000,
       });
     });
   });
@@ -1506,7 +1509,7 @@ describe('mergeAllOf', () => {
         mergeAndValidate({
           allOf: [true, false],
         })
-      ).toStrictEqual(false);
+      ).toBe(false);
 
       expect(
         mergeAndValidate({
@@ -1750,7 +1753,7 @@ describe('mergeAllOf', () => {
     });
   });
 
-  describe('propertyNames', function () {
+  describe('propertyNames', () => {
     it('merges simliar schemas', () => {
       const result = mergeAndValidate({
         propertyNames: {

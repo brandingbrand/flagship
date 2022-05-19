@@ -35,7 +35,7 @@ export default {
       ],
       address: {
         name: 'HQ',
-        latlng: { lat: 40.428535, lng: -79.972448 },
+        latlng: { lat: 40.428_535, lng: -79.972_448 },
         geohash: 'dppjupvc6cht',
         address1: 'Main St.',
         address2: undefined,
@@ -159,7 +159,7 @@ export default {
       ],
       address: {
         name: 'Penn Ave.',
-        latlng: { lat: 40.452716, lng: -79.98146 },
+        latlng: { lat: 40.452_716, lng: -79.981_46 },
         geohash: 'dppn5upq0uuf',
         address1: 'Penn Ave.',
         address2: undefined,
@@ -283,7 +283,7 @@ export default {
       ],
       address: {
         name: 'Bloomfield',
-        latlng: { lat: 40.465977, lng: -79.949335 },
+        latlng: { lat: 40.465_977, lng: -79.949_335 },
         geohash: 'dppnhwwemkz5',
         address1: 'Bloomfield Place',
         address2: undefined,

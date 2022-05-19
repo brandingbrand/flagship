@@ -1,5 +1,6 @@
-import { Store } from '@brandingbrand/cargo-hold';
+import type { Store } from '@brandingbrand/cargo-hold';
 import { useContextToken } from '@brandingbrand/react-linker';
+
 import { StoreContext } from './store.context';
 
 export const useStore = <T extends Store<{}>>() => {

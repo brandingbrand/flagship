@@ -1,28 +1,67 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
+  bottomSection: {
+    marginTop: 15,
+  },
   container: {
     padding: 15,
   },
-  topSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  distance: {
+    marginTop: 5,
+  },
+  icon: {
+    height: 30,
+    width: 30,
   },
   leftSection: {
     flex: 1,
   },
+  link: {
+    color: 'blue',
+  },
+  linkButton: {
+    alignItems: 'flex-start',
+    height: 25,
+    paddingLeft: 0,
+    paddingRight: 0,
+    width: 130,
+  },
+  linkButtonText: {
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  locationName: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  navIconContainer: {
+    alignItems: 'center',
+  },
+  phoneIconContainer: {
+    alignItems: 'center',
+  },
   rightSection: {
-    width: 100,
     alignItems: 'flex-end',
     marginRight: 15,
+    width: 100,
+  },
+  storeDetailContainer: {},
+  storeImage: {
+    height: 80,
+    marginRight: 10,
+    width: 80,
+  },
+  topSection: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   twoIconsContainer: {
-    width: 80,
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 15,
+    width: 80,
   },
   twoIconsContainerVertical: {
     height: 75,
@@ -32,44 +71,6 @@ export const style = StyleSheet.create({
   twoIconsContainerVerticalTall: {
     height: 90,
   },
-  link: {
-    color: 'blue',
-  },
-  bottomSection: {
-    marginTop: 15,
-  },
-  icon: {
-    width: 30,
-    height: 30,
-  },
-  navIconContainer: {
-    alignItems: 'center',
-  },
-  phoneIconContainer: {
-    alignItems: 'center',
-  },
-  locationName: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  distance: {
-    marginTop: 5,
-  },
-  storeDetailContainer: {},
-  linkButton: {
-    width: 130,
-    alignItems: 'flex-start',
-    paddingLeft: 0,
-    paddingRight: 0,
-    height: 25,
-  },
-  linkButtonText: {
-    fontSize: 14,
-    textDecorationLine: 'underline',
-  },
-  storeImage: {
-    marginRight: 10,
-    width: 80,
-    height: 80,
-  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

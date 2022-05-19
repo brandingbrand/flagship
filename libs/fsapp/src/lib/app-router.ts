@@ -1,9 +1,12 @@
-import FSNetwork from '@brandingbrand/fsnetwork';
-import { LayoutComponent } from 'react-native-navigation';
-import Navigator from './nav-wrapper';
-import pathToRegexp, { Key } from 'path-to-regexp';
 import { Platform } from 'react-native';
-import {
+import type { LayoutComponent } from 'react-native-navigation';
+
+import FSNetwork from '@brandingbrand/fsnetwork';
+
+import type { Key } from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp';
+
+import type {
   AppConfigType,
   CMSRoutesConfig,
   CombinedRouter,
@@ -12,14 +15,9 @@ import {
   RouterConfig,
 } from '../types';
 
-export default class AppRouter {
-  cmsToken: string = '';
-  appId: string;
-  networkClient: FSNetwork;
-  pageRoutes: CMSRoutesConfig = {};
-  routerConfig: CombinedRouter = {};
-  appRoutes: RouterConfig = {};
+import type Navigator from './nav-wrapper';
 
+export default class AppRouter {
   constructor(appConfig: AppConfigType) {
     const { env = {}, routerConfig = {} } = appConfig;
     const {
@@ -37,20 +35,26 @@ export default class AppRouter {
     });
   }
 
-  async loadRoutes(): Promise<void> {
+  private readonly cmsToken = '';
+  private readonly appId: string;
+  private readonly networkClient: FSNetwork;
+  private pageRoutes: CMSRoutesConfig = {};
+  private routerConfig: CombinedRouter = {};
+  private readonly appRoutes: RouterConfig = {};
+
+  public async loadRoutes(): Promise<void> {
     this.pageRoutes = await this.fetchPageRoutes();
     this.routerConfig = { ...this.appRoutes, ...this.pageRoutes };
   }
 
-  getConfig(): any {
-    const config = {
+  public getConfig(): any {
+    return {
       user: { ...this.pageRoutes },
       app: { ...this.appRoutes },
     };
-    return config;
   }
 
-  getWebRouterConfig(): any {
+  public getWebRouterConfig(): any {
     const config: any = {};
     for (const path in this.appRoutes) {
       if (this.appRoutes.hasOwnProperty(path)) {
@@ -60,7 +64,7 @@ export default class AppRouter {
     for (const path in this.pageRoutes) {
       if (config.hasOwnProperty(path)) {
         // already exists in app routes
-        if (path.indexOf(':') === -1) {
+        if (!path.includes(':')) {
           config[path] = { ...this.pageRoutes[path] };
         }
       } else {
@@ -70,8 +74,8 @@ export default class AppRouter {
     return config;
   }
 
-  // eslint-disable-next-line complexity
-  async url(navigator: Navigator, href: string): Promise<void> {
+  // eslint-disable-next-line max-lines-per-function, max-statements
+  public async url(navigator: Navigator, href: string): Promise<void> {
     let found: any = {};
     if (!href) {
       console.warn('appRouter.url() must be called with an href');
@@ -86,7 +90,7 @@ export default class AppRouter {
         const regexp = pathToRegexp(path, keys);
         const match = regexp.exec(href);
         if (match) {
-          if (!keys.length && this.pageRoutes.hasOwnProperty(path)) {
+          if (keys.length === 0 && this.pageRoutes.hasOwnProperty(path)) {
             found = {
               type: 'cms-page',
               title: pageRoute.title || '',
@@ -101,7 +105,7 @@ export default class AppRouter {
             return memo;
           }, {});
           if (
-            pageRoute.defaultInputs.length &&
+            pageRoute.defaultInputs.length > 0 &&
             pageRoute.dataInputs.length === pageRoute.defaultInputs.length
           ) {
             let valid = true;
@@ -146,7 +150,9 @@ export default class AppRouter {
           },
           Platform.OS === 'web' ? href : undefined
         )
-        .catch((e) => console.warn('CMS Navigator PUSH error: ', e));
+        .catch((error) => {
+          console.warn('CMS Navigator PUSH error:', error);
+        });
     }
 
     for (const path in this.appRoutes) {
@@ -155,14 +161,14 @@ export default class AppRouter {
         const regexp = pathToRegexp(path, keys);
         const match = regexp.exec(href);
         if (match) {
-          if (!keys.length && this.appRoutes[path]) {
+          if (keys.length === 0 && this.appRoutes[path]) {
             found = {
               type: 'app-page',
-              screen: this.appRoutes?.[path]?.screen || null,
-              tabIndex: this.appRoutes?.[path]?.tabIndex || null,
+              screen: this.appRoutes[path]?.screen || null,
+              tabIndex: this.appRoutes[path]?.tabIndex || null,
             };
             if (this.appRoutes[path]) {
-              found.passProps = { ...this.appRoutes?.[path]?.passProps } || {};
+              found.passProps = { ...this.appRoutes[path]?.passProps } || {};
             }
             break;
           }
@@ -171,15 +177,15 @@ export default class AppRouter {
           let id;
           let handleType;
 
-          if (keys.length && this.appRoutes[path]) {
+          if (keys.length > 0 && this.appRoutes[path]) {
             const matchedRoute = JSON.parse(JSON.stringify(this.appRoutes[path]));
             const [, ...values] = match;
             id = values[0];
-            handleType = keys?.[0]?.name;
-            const params = keys.reduce((memo, key, index) => {
+            handleType = keys[0]?.name;
+            const params = keys.reduce<any>((memo, key, index) => {
               memo[key.name] = values[index];
               return memo;
-            }, {} as any);
+            }, {});
             found = {
               type: 'app-page',
               handleType,
@@ -199,11 +205,12 @@ export default class AppRouter {
 
     if (found && found.type && found.type === 'app-page') {
       if (found.tabIndex) {
-        return navigator.mergeOptions({
+        navigator.mergeOptions({
           bottomTabs: {
             currentTabIndex: found.tabIndex,
           },
         });
+        return;
       } else if (found.screen) {
         return navigator
           .push(
@@ -215,26 +222,26 @@ export default class AppRouter {
             },
             Platform.OS === 'web' ? href : undefined
           )
-          .catch((e) => console.warn('ProductIndex PUSH error: ', e));
+          .catch((error) => {
+            console.warn('ProductIndex PUSH error:', error);
+          });
       }
     }
 
     let notFoundPage: any = {};
-    if (this.pageRoutes['/404']) {
-      notFoundPage = {
-        name: 'CMS',
-        title: this.pageRoutes['/404'].title,
-        props: {
-          defaultLayout: this.pageRoutes['/404'].content,
-        },
-      };
-    } else {
-      notFoundPage = {
-        name: 'NotFound',
-        title: '404 Not Found',
-        props: {},
-      };
-    }
+    notFoundPage = this.pageRoutes['/404']
+      ? {
+          name: 'CMS',
+          title: this.pageRoutes['/404'].title,
+          props: {
+            defaultLayout: this.pageRoutes['/404'].content,
+          },
+        }
+      : {
+          name: 'NotFound',
+          title: '404 Not Found',
+          props: {},
+        };
 
     return navigator
       .push(
@@ -253,7 +260,9 @@ export default class AppRouter {
         },
         Platform.OS === 'web' ? href : undefined
       )
-      .catch((e) => console.warn('CMS Navigator PUSH error: ', e));
+      .catch((error) => {
+        console.warn('CMS Navigator PUSH error:', error);
+      });
   }
 
   findPropKeys(props: any, params: any): LayoutComponent['passProps'] {
@@ -278,20 +287,19 @@ export default class AppRouter {
     return props;
   }
 
-  async fetchPageRoutes(): Promise<any> {
+  private async fetchPageRoutes(): Promise<any> {
     return this.networkClient
       .get(
-        'PublishedPages?filter=' +
-          encodeURIComponent(
-            JSON.stringify({
-              where: {
-                appId: this.appId,
-                deleted: 0,
-                active: 1,
-              },
-              order: 'title',
-            })
-          ),
+        `PublishedPages?filter=${encodeURIComponent(
+          JSON.stringify({
+            where: {
+              appId: this.appId,
+              deleted: 0,
+              active: 1,
+            },
+            order: 'title',
+          })
+        )}`,
         {
           headers: {
             Authorization: `Bearer ${this.cmsToken}`,
@@ -307,8 +315,8 @@ export default class AppRouter {
             if (data.content) {
               try {
                 parsedContent = JSON.parse(data.content);
-              } catch (e) {
-                console.error(e);
+              } catch (error) {
+                console.error(error);
               }
             }
             return {

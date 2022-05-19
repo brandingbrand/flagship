@@ -1,6 +1,7 @@
-import { DistinctQuestion } from 'inquirer';
-import { requiredString } from '../lib/validation';
+import type { DistinctQuestion } from 'inquirer';
+
 import { required } from '../lib/formatters';
+import { requiredString } from '../lib/validation';
 
 export interface NamesAnswers {
   config: {

@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableHighlight,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import type { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, Text, TouchableHighlight, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import { style as S } from '../styles/CategoryBox';
 
 export interface SerializableCategoryBoxProps extends CommerceTypes.Category {
@@ -29,22 +24,22 @@ export interface CategoryBoxProps
 }
 
 const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
-  const { image, showImage, imageStyle, style, title, titleStyle, underlayColor } = props;
+  const { image, imageStyle, showImage, style, title, titleStyle, underlayColor } = props;
 
   // Called when a user taps on the item.
   const handlePress = () => {
     const { onPress } = props;
     if (onPress) {
-      return onPress(props);
+      onPress(props);
     }
   };
 
   return (
     <TouchableHighlight
+      accessibilityRole="imagebutton"
+      onPress={handlePress}
       style={[S.boxOuter, style]}
       underlayColor={underlayColor || '#eee'}
-      onPress={handlePress}
-      accessibilityRole="imagebutton"
     >
       <View style={S.boxInner}>
         {showImage !== false && image && <Image source={image} style={imageStyle} />}

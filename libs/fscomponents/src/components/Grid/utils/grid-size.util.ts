@@ -1,4 +1,5 @@
-import { GridItem, isGridItem, Width, makeGridItem } from './grid.util';
+import type { GridItem, Width } from './grid.util';
+import { isGridItem, makeGridItem } from './grid.util';
 
 export type WidthTable = Record<number, Width>;
 
@@ -6,8 +7,9 @@ export interface SizeOptions {
   widthTable?: WidthTable;
 }
 
-const makeSizer = (widthTable?: WidthTable) => {
-  return <T>(itIndex: number, item: T | GridItem<T>) => {
+const makeSizer =
+  (widthTable?: WidthTable) =>
+  <T>(itIndex: number, item: GridItem<T> | T) => {
     const overrideWidth = widthTable?.[itIndex];
     if (overrideWidth !== undefined) {
       return overrideWidth;
@@ -15,9 +17,13 @@ const makeSizer = (widthTable?: WidthTable) => {
 
     return isGridItem(item) ? item.width : 1;
   };
-};
 
-export function* gridSize<T>(iterator: Iterable<T | GridItem<T>>, options?: SizeOptions) {
+/**
+ *
+ * @param iterator
+ * @param options
+ */
+export function* gridSize<T>(iterator: Iterable<GridItem<T> | T>, options?: SizeOptions) {
   const { widthTable } = options ?? {};
 
   const sizer = makeSizer(widthTable);

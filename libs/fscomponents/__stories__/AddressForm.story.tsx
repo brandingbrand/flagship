@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { AddressForm } from '../src/components/AddressForm';
 import { FormLabelPosition } from '../src/components/Form';
 
@@ -17,9 +18,9 @@ const defaultValue = {
   address2: 'APT 12',
   isPoBox: false,
   city: 'Pittsburgh',
-  postalCode: 15203,
+  postalCode: 15_203,
   stateCode: 'PA',
-  phone: 4121231231,
+  phone: 4_121_231_231,
   email: 'test@bb.com',
 };
 
@@ -46,19 +47,20 @@ const fieldType = {
   email: null,
 };
 
-const renderAddressForm = (labelPosition?: FormLabelPosition): (() => JSX.Element) => {
-  return () => (
-    <AddressForm
-      style={object('Style', defaultStyle)}
-      value={object('Value', defaultValue)}
-      submitText={text('Submit Text', 'CONTINUE')}
-      onSubmit={action('Submit')}
-      fieldsStyleConfig={fieldsStyle}
-      fieldsTypes={fieldType}
-      labelPosition={labelPosition}
-    />
-  );
-};
+const renderAddressForm =
+  (labelPosition?: FormLabelPosition): (() => JSX.Element) =>
+  () =>
+    (
+      <AddressForm
+        fieldsStyleConfig={fieldsStyle}
+        fieldsTypes={fieldType}
+        labelPosition={labelPosition}
+        onSubmit={action('Submit')}
+        style={object('Style', defaultStyle)}
+        submitText={text('Submit Text', 'CONTINUE')}
+        value={object('Value', defaultValue)}
+      />
+    );
 
 storiesOf('AddressForm', module)
   .add('basic usage', renderAddressForm())

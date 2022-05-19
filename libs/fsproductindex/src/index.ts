@@ -1,21 +1,21 @@
+export type { UnwrappedProductIndexProps } from './components/ProductIndex';
 export {
   default as ProductIndex,
   ProductIndex as UnwrappedProductIndex,
-  UnwrappedProductIndexProps,
 } from './components/ProductIndex';
-export {
-  default as ProductIndexProvider,
+export type {
   WithProductIndexProps,
   WithProductIndexState,
   WithProductIndexProviderProps,
 } from './components/ProductIndexProvider';
+export { default as ProductIndexProvider } from './components/ProductIndexProvider';
 export { default as ProductIndexGrid } from './components/ProductIndexGrid';
+export type { UnwrappedProductIndexSearchProps } from './components/ProductIndexSearch';
 export {
   default as ProductIndexSearch,
   ProductIndexSearch as UnwrappedProductIndexSearch,
-  UnwrappedProductIndexSearchProps,
 } from './components/ProductIndexSearch';
-export * from './components/ProductTileGhost';
 export * from './components/ProductIndexGhost';
 export * from './components/ProductList';
+export * from './components/ProductTileGhost';
 export * from './styles';

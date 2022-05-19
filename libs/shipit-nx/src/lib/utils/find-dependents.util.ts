@@ -1,4 +1,4 @@
-import { ProjectGraph } from '@nrwl/devkit';
+import type { ProjectGraph } from '@nrwl/devkit';
 
 export const findDependents = async (
   graph: ProjectGraph,
@@ -15,7 +15,7 @@ export const findDependents = async (
   const otherProjects = Object.entries(graph.nodes)
     .filter(([project]) => project !== projectName)
     .filter(([project]) =>
-      graph.dependencies?.[project]?.some(({ target }) => target === projectName)
+      graph.dependencies[project]?.some(({ target }) => target === projectName)
     );
 
   for (const [otherProject] of otherProjects) {

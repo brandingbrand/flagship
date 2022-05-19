@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import type { IStore } from '@brandingbrand/cargo-hold';
 
+import type { IStore } from '@brandingbrand/cargo-hold';
 import { TokenProvider, useReact } from '@brandingbrand/react-linker';
 
 import { StoreContext } from './store.context';
@@ -11,7 +11,7 @@ export interface NestedStoreProviderProps {
   store: IStore;
 }
 
-export const NestedStoreProvider: FC<NestedStoreProviderProps> = ({ tag, store, children }) => {
+export const NestedStoreProvider: FC<NestedStoreProviderProps> = ({ children, store, tag }) => {
   const React = useReact();
   const parentStore = useStore();
 

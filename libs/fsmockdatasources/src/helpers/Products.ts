@@ -1,7 +1,10 @@
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import Decimal from 'decimal.js';
+
 import { DefaultCurrencyCode } from './Misc';
 
-export const Products: import('@brandingbrand/fscommerce').CommerceTypes.Product[] = [
+export const Products: CommerceTypes.Product[] = [
   {
     id: 'P0150',
     title: 'Upright Case (33L - 3.7Kg)',
@@ -4732,31 +4735,34 @@ export const Products: import('@brandingbrand/fscommerce').CommerceTypes.Product
   },
 ];
 
-export const ProductSortingOptions: import('@brandingbrand/fscommerce').CommerceTypes.SortingOption[] =
-  [
-    {
-      id: 'title-asc',
-      title: 'Name (asc)',
-    },
-    {
-      id: 'title-desc',
-      title: 'Name (desc)',
-    },
-    {
-      id: 'price-asc',
-      title: 'Price (asc)',
-    },
-    {
-      id: 'price-desc',
-      title: 'Price (desc)',
-    },
-  ];
+export const ProductSortingOptions: Array<
+  import('@brandingbrand/fscommerce').CommerceTypes.SortingOption
+> = [
+  {
+    id: 'title-asc',
+    title: 'Name (asc)',
+  },
+  {
+    id: 'title-desc',
+    title: 'Name (desc)',
+  },
+  {
+    id: 'price-asc',
+    title: 'Price (asc)',
+  },
+  {
+    id: 'price-desc',
+    title: 'Price (desc)',
+  },
+];
 
 const brands = Products.map((product) => product.brand).filter(
   (brand): brand is string => brand !== undefined
 );
 
-export const ProductRefinements: import('@brandingbrand/fscommerce').CommerceTypes.Refinement[] = [
+export const ProductRefinements: Array<
+  import('@brandingbrand/fscommerce').CommerceTypes.Refinement
+> = [
   {
     id: 'brand',
     title: 'Brand',

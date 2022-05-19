@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text } from 'react-native';
 
-import { ProductItemProps } from '../ProductItem';
+import type { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   variantText: {
@@ -11,12 +12,12 @@ const style = StyleSheet.create({
 
 export type ProductItemVariantProps = Pick<
   ProductItemProps,
-  'variantText' | 'variantTextStyle' | 'renderVariantText'
+  'renderVariantText' | 'variantText' | 'variantTextStyle'
 >;
 
 export class ProductItemVariant extends Component<ProductItemVariantProps> {
-  render(): React.ReactNode {
-    const { variantText, variantTextStyle, renderVariantText } = this.props;
+  public render(): React.ReactNode {
+    const { renderVariantText, variantText, variantTextStyle } = this.props;
 
     if (renderVariantText) {
       return renderVariantText();

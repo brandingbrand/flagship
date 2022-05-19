@@ -239,6 +239,11 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>
   rs: (r: R) => S,
   st: (s: S) => T
 ): T;
-export function pipe(value: unknown, ...functions: ((input: unknown) => unknown)[]): unknown {
+/**
+ *
+ * @param value
+ * @param functions
+ */
+export function pipe(value: unknown, ...functions: Array<(input: unknown) => unknown>): unknown {
   return functions.reduce((val, fn) => fn(val), value);
 }

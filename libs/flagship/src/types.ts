@@ -91,7 +91,7 @@ export interface Config {
     android?: string;
     ios?: string;
   };
-  firebaseGoogleServices?: any;
+  firebaseGoogleServices?: unknown;
 
   zendeskChat?: {
     accountKey: string;
@@ -106,13 +106,13 @@ export interface Config {
     };
   };
 
-  exceptionDomains: (
+  exceptionDomains: Array<
     | string
     | {
         domain: string;
         value: string;
       }
-  )[];
+  >;
 
   buildConfig: {
     android: {
@@ -141,9 +141,9 @@ export interface Config {
     android?: AndroidPermissionKeys[];
   };
 
-  UIBackgroundModes?: {
+  UIBackgroundModes?: Array<{
     string: string;
-  }[];
+  }>;
 
   bundleIds: {
     android: string;
@@ -205,10 +205,10 @@ export interface AndroidBuildConfig {
 }
 
 export interface AndroidManifestConfig {
-  activityAttributes?: { [key: string]: string };
+  activityAttributes?: Record<string, string>;
   additionalElements?: string[];
   additionalPermissions?: string[];
-  applicationAttributes?: { [key: string]: string };
+  applicationAttributes?: Record<string, string>;
   urlSchemeHost?: string;
 }
 
@@ -249,10 +249,8 @@ export interface FrameworksConfig {
 export interface NPMPackageConfig {
   name: string;
   version: string;
-  dependencies?: {
-    [key: string]: string;
-  };
-  [key: string]: any;
+  dependencies?: Record<string, string>;
+  [key: string]: unknown;
 }
 
 export interface IOSExtension {

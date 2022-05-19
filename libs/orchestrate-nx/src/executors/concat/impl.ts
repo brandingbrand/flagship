@@ -1,4 +1,5 @@
-import { runExecutor, parseTargetString, ExecutorContext, logger } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nrwl/devkit';
+import { logger, parseTargetString, runExecutor } from '@nrwl/devkit';
 import { cyan } from 'chalk';
 
 import { calculateDependencies } from '../../lib/calculate-dependencies';
@@ -9,7 +10,16 @@ export interface ConcatAllExecutorOptions {
   options?: object;
 }
 
-export async function concatAll(options: ConcatAllExecutorOptions, context: ExecutorContext) {
+/**
+ *
+ * @param options
+ * @param context
+ * @return
+ */
+export const concatAll = async (
+  options: ConcatAllExecutorOptions,
+  context: ExecutorContext
+): Promise<{ success: boolean }> => {
   try {
     const dependencyList = await calculateDependencies(
       options.targets,
@@ -40,6 +50,6 @@ export async function concatAll(options: ConcatAllExecutorOptions, context: Exec
   }
 
   return { success: true };
-}
+};
 
 export default concatAll;

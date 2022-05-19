@@ -1,14 +1,16 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
+
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
-import { Grid } from '../src/components/Grid';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { ProductItem } from '../src/components/ProductItem';
-import { Shelf } from '../src/components/Shelf';
+import { storiesOf } from '@storybook/react';
 import Decimal from 'decimal.js';
 
-import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
+import { Grid } from '../src/components/Grid';
+import { ProductItem } from '../src/components/ProductItem';
+import { Shelf } from '../src/components/Shelf';
 
 import greyBox from './assets/images/greyBox.png';
 
@@ -37,7 +39,7 @@ const testProduct: CommerceTypes.Product = {
     value: new Decimal('14.99'),
     currencyCode: 'USD',
   },
-  images: [{ uri: greyBox }],
+  images: [{ uri: greyBox } as any],
   review: {
     id: '101',
     statistics: {
@@ -50,18 +52,16 @@ const testProduct: CommerceTypes.Product = {
   promotions: ['This is a sample promotion!'],
 };
 
-const renderProduct = (): JSX.Element => {
-  return (
-    <ProductItem
-      {...object('Product', testProduct)}
-      style={object('style', defaultStyle)}
-      onPress={action(kActionOnPress)}
-    />
-  );
-};
+const renderProduct = (): JSX.Element => (
+  <ProductItem
+    {...object('Product', testProduct)}
+    onPress={action(kActionOnPress)}
+    style={object('style', defaultStyle)}
+  />
+);
 
 storiesOf('Shelf', module).add('basic usage', () => (
-  <Shelf provider={provider} group="Shop" identifier="Banner-Carousel" carouselHeight={100}>
-    <Grid data={[...Array(4).keys()]} columns={2} renderItem={renderProduct} />
+  <Shelf carouselHeight={100} group="Shop" identifier="Banner-Carousel" provider={provider}>
+    <Grid columns={2} data={[...Array.from({ length: 4 }).keys()]} renderItem={renderProduct} />
   </Shelf>
 ));

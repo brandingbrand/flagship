@@ -1,19 +1,20 @@
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 
+import React, { useEffect, useMemo, useState } from 'react';
+
+import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { LayoutComponent } from 'react-native-navigation';
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { omit } from 'lodash-es';
 
-import { envs } from '../env';
-import { makeModal } from '../modal';
-import { EnvSwitcher } from '../lib/env-switcher';
-import { NativeConstants } from '../lib/native-constants';
 import { useApp } from '../app/context';
 import type { IApp } from '../app/types';
+import { envs } from '../env';
+import { EnvSwitcher } from '../lib/env-switcher';
+import { NativeConstants } from '../lib/native-constants';
+import { makeModal } from '../modal';
 
 import CodePushDevMenu from './code-push.component';
 import StorageManager from './storage-manager.component';
@@ -22,59 +23,57 @@ import { TouchableRow } from './touchable-row.component';
 const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
 const hiddenEnvs: string[] = activeEnv?.hiddenEnvs || [];
 
-const envsToDisplay: {
-  [key: string]: string;
-} = omit(envs, hiddenEnvs);
+const envsToDisplay: Record<string, string> = omit(envs, hiddenEnvs);
 
 const styles = StyleSheet.create({
-  devViewContainer: {
-    flex: 1,
-    backgroundColor: 'white',
+  bottomBtns: {
+    flexDirection: 'row',
+    marginBottom: 5,
+    marginLeft: 5,
   },
-  fullHeight: {
-    height: '100%',
+  closeBtn: {
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    flex: 1,
+    height: 50,
+    justifyContent: 'center',
+    marginRight: 5,
+  },
+  closeBtnText: {
+    color: '#333',
   },
   configView: { padding: 10 },
   configViewItem: {
     marginBottom: 10,
   },
+  configViewText: {
+    fontSize: 12,
+  },
   configViewTitle: {
     fontSize: 12,
     fontWeight: '600',
   },
-  configViewText: {
-    fontSize: 12,
+  devViewContainer: {
+    backgroundColor: 'white',
+    flex: 1,
   },
   envView: {
-    padding: 10,
     flex: 1,
+    padding: 10,
   },
   envViewText: {
     fontSize: 12,
   },
-  bottomBtns: {
-    flexDirection: 'row',
-    marginLeft: 5,
-    marginBottom: 5,
-  },
-  closeBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#eee',
-    height: 50,
-    flex: 1,
-    marginRight: 5,
+  fullHeight: {
+    height: '100%',
   },
   reloadBtn: {
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#555',
-    height: 50,
     flex: 1,
+    height: 50,
+    justifyContent: 'center',
     marginRight: 5,
-  },
-  closeBtnText: {
-    color: '#333',
   },
   reloadBtnText: {
     color: 'white',
@@ -96,7 +95,9 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
       .then((value) => {
         setDevKeepPage(value === 'true');
       })
-      .catch((e) => console.log('cannot get devKeepPage flag from AsyncStorage', e));
+      .catch((error) => {
+        console.log('cannot get devKeepPage flag from AsyncStorage', error);
+      });
   }, []);
 
   const handleHideDevMenu = () => {
@@ -135,14 +136,14 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
 
   const keepLastPage = () => {
     setDevKeepPage(!devKeepPage);
-    AsyncStorage.setItem('devKeepPage', `${devKeepPage}`).catch((e) =>
-      console.log('cannot set devKeepPage flag in AsyncStorage', e)
-    );
+    AsyncStorage.setItem('devKeepPage', `${devKeepPage}`).catch((error) => {
+      console.log('cannot set devKeepPage flag in AsyncStorage', error);
+    });
   };
 
   const renderCustomDevScreen = (item: LayoutComponent, i: number) => {
-    const name = item.name;
-    const title = item?.options?.topBar?.title?.text;
+    const { name } = item;
+    const title = item.options?.topBar?.title?.text;
     return (
       <TouchableRow key={i} onPress={pushToScreen(item)}>
         {title ?? name}
@@ -174,13 +175,11 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     );
   };
 
-  const renderStorageManager = () => {
-    return (
-      <View style={styles.devViewContainer}>
-        <StorageManager sInfoOptions={app?.config?.sInfoOptions} />
-      </View>
-    );
-  };
+  const renderStorageManager = () => (
+    <View style={styles.devViewContainer}>
+      <StorageManager sInfoOptions={app?.config.sInfoOptions} />
+    </View>
+  );
 
   const renderEnvSwitcher = () => {
     const currentEnv = EnvSwitcher.envName || 'prod';
@@ -202,10 +201,10 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     return (
       <View style={styles.configViewItem}>
         <View style={styles.switchBtns}>
-          <TouchableOpacity style={styles.reloadBtn} onPress={switchToSelectedEnv}>
+          <TouchableOpacity onPress={switchToSelectedEnv} style={styles.reloadBtn}>
             <Text style={styles.reloadBtnText}>Switch to [{selectedEnv}] env</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.closeBtn} onPress={updateSelectedEnv('')}>
+          <TouchableOpacity onPress={updateSelectedEnv('')} style={styles.closeBtn}>
             <Text style={styles.closeBtnText}>Back</Text>
           </TouchableOpacity>
         </View>
@@ -217,9 +216,7 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     );
   };
 
-  const renderCodePush = () => {
-    return <CodePushDevMenu />;
-  };
+  const renderCodePush = () => <CodePushDevMenu />;
 
   const view = useMemo(() => {
     switch (devView) {
@@ -241,10 +238,10 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
       <ScrollView style={styles.fullHeight}>{view}</ScrollView>
 
       <View style={styles.bottomBtns}>
-        <TouchableOpacity style={styles.reloadBtn} onPress={restart}>
+        <TouchableOpacity onPress={restart} style={styles.reloadBtn}>
           <Text style={styles.reloadBtnText}>Reload JS</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.closeBtn} onPress={reject}>
+        <TouchableOpacity onPress={reject} style={styles.closeBtn}>
           <Text style={styles.closeBtnText}>Close</Text>
         </TouchableOpacity>
       </View>

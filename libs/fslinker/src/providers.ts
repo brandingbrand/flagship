@@ -1,13 +1,13 @@
 export class InjectionToken<T = unknown> {
-  protected readonly brand: T | undefined;
   constructor(public readonly uniqueKey: string | symbol) {}
+  protected readonly brand: T | undefined;
 }
 
-export type OfToken<A extends any[]> = {
+export type OfToken<A extends unknown[]> = {
   [K in keyof A]: InjectionToken<A[K]>;
 };
 
-export type OrToken<A extends any[]> = {
+export type OrToken<A extends unknown[]> = {
   [K in keyof A]: A[K] | InjectionToken<A[K]>;
 };
 
@@ -47,6 +47,6 @@ export type FactoryProvider<D extends unknown[], T = unknown> =
   | InjectedFactoryProvider<D, T>;
 
 export type Provider<D extends unknown[], T = unknown> =
-  | ValueProvider<T>
   | ClassProvider<D, T>
-  | FactoryProvider<D, T>;
+  | FactoryProvider<D, T>
+  | ValueProvider<T>;

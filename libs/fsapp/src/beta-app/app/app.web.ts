@@ -1,18 +1,18 @@
-import type { AppConstructor } from './types';
-
 import { AppRegistry } from 'react-native';
 
 import { StaticImplements } from '../utils';
+
 import { FSAppBase } from './app.base';
+import type { AppConstructor } from './types';
 
 export { APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN } from './app.base';
 
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
-  private root: Element | null =
+  private readonly root: Element | null =
     (typeof this.config.root === 'string'
       ? document.querySelector(this.config.root)
-      : this.config.root) ?? document.getElementById('root');
+      : this.config.root) ?? document.querySelector('#root');
 
   public async startApplication(): Promise<void> {
     AppRegistry.runApplication('Flagship', {

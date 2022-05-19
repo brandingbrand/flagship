@@ -1,3 +1,23 @@
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
+
+import type { NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
+import { VersionOverlay } from '../development/version-overlay.component';
+import { ModalProvider } from '../modal';
+import { StaticImplements, buildPath, lazyComponent } from '../utils';
+
+import {
+  ActivatedRouteProvider,
+  ButtonProvider,
+  NavigatorProvider,
+  defaultActivatedRoute,
+} from './context';
+import { History, stringifyLocation } from './history';
+import { FSRouterBase } from './router.base';
 import type {
   ExternalRoute,
   ExternalRoutes,
@@ -6,26 +26,8 @@ import type {
   Route,
   RouteCollection,
   RouterConfig,
-  Routes,
 } from './types';
-
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Navigation, NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
-
-import { History, stringifyLocation } from './history';
-import { buildPath, lazyComponent, StaticImplements } from '../utils';
-import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
-import { VersionOverlay } from '../development/version-overlay.component';
-import { ModalProvider } from '../modal';
-
-import {
-  ActivatedRouteProvider,
-  ButtonProvider,
-  defaultActivatedRoute,
-  NavigatorProvider,
-} from './context';
-import { FSRouterBase } from './router.base';
+import { Routes } from './types';
 import { trackView } from './utils';
 
 export { NAVIGATOR_TOKEN } from './context/navigator.context';
@@ -37,7 +39,7 @@ Navigation.registerComponent('noop', () => () => null);
 
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
-  constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
+  constructor(routes: Routes, private readonly options: InternalRouterConfig & RouterConfig) {
     super(routes, new History(routes));
     this.registerRoutes(routes);
     this.trackCurrentPage();
@@ -51,25 +53,24 @@ export class FSRouter extends FSRouterBase {
         if (keepLastScreen === 'true') {
           await AsyncStorage.setItem(LAST_SCREEN_KEY, JSON.stringify(stringifyLocation(location)));
         }
-      } catch (e) {
-        console.log('Cannot get lastScreen from AsyncStorage', e);
+      } catch (error) {
+        console.log('Cannot get lastScreen from AsyncStorage', error);
       }
     });
   }
 
   private registerRoutes(
-    routes: Routes | ExternalRoutes,
-    prefix: string = '',
-    tab?: string | OptionsBottomTab
+    routes: ExternalRoutes | Routes,
+    prefix = '',
+    tab?: OptionsBottomTab | string
   ): void {
     const addedRoutes = new Set<string>();
 
-    // eslint-disable-next-line complexity
-    routes.forEach((route: RouteCollection | Route | ExternalRoute) => {
-      const { path, id } = buildPath(route, prefix);
+    routes.forEach((route: ExternalRoute | Route | RouteCollection) => {
+      const { id, path } = buildPath(route, prefix);
 
       if (!addedRoutes.has(id)) {
-        const LoadingPlaceholder = () => <>{this.options.loading}</>;
+        const LoadingPlaceholder = () => <React.Fragment>{this.options.loading}</React.Fragment>;
         if ('component' in route || 'loadComponent' in route) {
           let routeDetails = defaultActivatedRoute;
           this.history.registerResolver(id, (details) => {
@@ -122,7 +123,6 @@ export class FSRouter extends FSRouterBase {
           Navigation.registerComponent(id, () => WrappedComponent);
           addedRoutes.add(id);
         } else if ('redirect' in route) {
-          return;
         } else if ('children' in route) {
           const tabAffinity = 'tab' in route ? route.tab : tab;
           this.registerRoutes(

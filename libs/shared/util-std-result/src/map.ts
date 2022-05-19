@@ -1,4 +1,5 @@
-import { fail, isFailure, isOk, ok, Result } from './result';
+import type { Result } from './result';
+import { fail, isFailure, isOk, ok } from './result';
 
 export const mapOk =
   <InputOkType, OutputOkType, FailureType>(mapFn: (input: InputOkType) => OutputOkType) =>

@@ -9,7 +9,10 @@ describe('injected factory', () => {
 
   it('should not throw an error when injecting a factory', () => {
     const token = new InjectionToken<number>('NUMBER_TOKEN');
-    expect(() => injector.provide({ provide: token, useFactory: () => 9 })).not.toThrow();
+
+    expect(() => {
+      injector.provide({ provide: token, useFactory: () => 9 });
+    }).not.toThrow();
   });
 
   it('should provide the returned value of the factory', () => {
@@ -17,6 +20,7 @@ describe('injected factory', () => {
     injector.provide({ provide: token, useFactory: () => 10 + 20 });
 
     const value = injector.get(token);
+
     expect(value).toBe(30);
   });
 
@@ -35,6 +39,7 @@ describe('injected factory', () => {
     });
 
     const value = injector.get(token);
+
     expect(value).toBe(200);
   });
 
@@ -48,32 +53,33 @@ describe('injected factory', () => {
     });
 
     const value = injector.get(token);
+
     expect(value).toBe(300);
   });
 
   it('should throw if the incorrect number of dependencies is provided', () => {
     const token = new InjectionToken<number>('NUMBER_TOKEN');
 
-    expect(() =>
+    expect(() => {
       injector.provide({
         provide: token,
         useFactory: (dependency: number) => dependency * 10,
         // @ts-expect-error
         deps: [],
-      })
-    ).toThrow(ReferenceError);
+      });
+    }).toThrow(ReferenceError);
   });
 
   it('should throw if a dependency is not provided', () => {
     const dependencyToken = new InjectionToken<number>('DEPENDENCY_TOKEN');
     const token = new InjectionToken<number>('NUMBER_TOKEN');
 
-    expect(() =>
+    expect(() => {
       injector.provide({
         provide: token,
         useFactory: (dependency) => dependency * 10,
         deps: [dependencyToken],
-      })
-    ).toThrow(ReferenceError);
+      });
+    }).toThrow(ReferenceError);
   });
 });

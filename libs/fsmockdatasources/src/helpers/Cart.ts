@@ -1,16 +1,85 @@
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { DefaultCurrencyCode } from './Misc';
-import { Products } from './Products';
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import Decimal from 'decimal.js';
 
+import { DefaultCurrencyCode } from './Misc';
+import { Products } from './Products';
+
 export class Cart {
-  public id: string = 'my-cart';
+  public id = 'my-cart';
   public billingAddress?: CommerceTypes.Address;
   public customerInfo?: CommerceTypes.CustomerAccount;
   public payment?: CommerceTypes.Payment;
   public promos?: CommerceTypes.Promo[];
   public shipment?: CommerceTypes.Shipment;
   public itemStore: Map<string, number> = new Map();
+
+  protected calculateSubtotal(items: CommerceTypes.CartItem[]): CommerceTypes.CurrencyValue {
+    const subtotal = {
+      currencyCode: DefaultCurrencyCode,
+      value: new Decimal(0),
+    };
+
+    return items.reduce((subtotal, item) => {
+      if (item.totalPrice) {
+        subtotal.currencyCode = item.totalPrice.currencyCode;
+        subtotal.value = subtotal.value.add(item.totalPrice.value);
+      }
+
+      return subtotal;
+    }, subtotal);
+  }
+
+  protected calculateShipping(method: CommerceTypes.ShippingMethod): CommerceTypes.CurrencyValue {
+    if (!method || !method.price) {
+      return {
+        currencyCode: DefaultCurrencyCode,
+        value: new Decimal(0),
+      };
+    }
+
+    return method.price;
+  }
+
+  protected calculateTax(
+    subtotal: CommerceTypes.CurrencyValue,
+    promosTotal?: CommerceTypes.CurrencyValue
+  ): CommerceTypes.CurrencyValue {
+    const discounts = promosTotal ? promosTotal.value : new Decimal(0);
+
+    return {
+      currencyCode: subtotal.currencyCode,
+      value: subtotal.value.minus(discounts).times(0.07),
+    };
+  }
+
+  protected calculatePromos(promos: CommerceTypes.Promo[]): CommerceTypes.CurrencyValue {
+    const promoTotal = promos.reduce(
+      (total, promo) => (promo.value ? total.add(promo.value.value) : total),
+      new Decimal(0)
+    );
+
+    return {
+      currencyCode: DefaultCurrencyCode,
+      value: promoTotal,
+    };
+  }
+
+  protected calculateTotal(
+    subtotal: CommerceTypes.CurrencyValue,
+    tax: CommerceTypes.CurrencyValue,
+    shipping: CommerceTypes.CurrencyValue,
+    promos?: CommerceTypes.CurrencyValue
+  ): CommerceTypes.CurrencyValue {
+    const discounts = promos ? promos.value : new Decimal(0);
+
+    const totalValue = subtotal.value.add(tax.value).add(shipping.value).minus(discounts);
+
+    return {
+      currencyCode: subtotal.currencyCode,
+      value: totalValue.lessThan(0) ? new Decimal(0) : totalValue,
+    };
+  }
 
   public serialize(): CommerceTypes.Cart {
     const items = this.getItems();
@@ -122,7 +191,7 @@ export class Cart {
       return;
     }
 
-    const shippingMethod = this.shipment.shippingMethod;
+    const { shippingMethod } = this.shipment;
     return this.calculateShipping(shippingMethod);
   }
 
@@ -157,72 +226,5 @@ export class Cart {
     }
 
     return this.calculateTotal(subtotal, tax, shipping, promos);
-  }
-
-  protected calculateSubtotal(items: CommerceTypes.CartItem[]): CommerceTypes.CurrencyValue {
-    const subtotal = {
-      currencyCode: DefaultCurrencyCode,
-      value: new Decimal(0),
-    };
-
-    return items.reduce((subtotal, item) => {
-      if (item.totalPrice) {
-        subtotal.currencyCode = item.totalPrice.currencyCode;
-        subtotal.value = subtotal.value.add(item.totalPrice.value);
-      }
-
-      return subtotal;
-    }, subtotal);
-  }
-
-  protected calculateShipping(method: CommerceTypes.ShippingMethod): CommerceTypes.CurrencyValue {
-    if (!method || !method.price) {
-      return {
-        currencyCode: DefaultCurrencyCode,
-        value: new Decimal(0),
-      };
-    }
-
-    return method.price;
-  }
-
-  protected calculateTax(
-    subtotal: CommerceTypes.CurrencyValue,
-    promosTotal?: CommerceTypes.CurrencyValue
-  ): CommerceTypes.CurrencyValue {
-    const discounts = promosTotal ? promosTotal.value : new Decimal(0);
-
-    return {
-      currencyCode: subtotal.currencyCode,
-      value: subtotal.value.minus(discounts).times(0.07),
-    };
-  }
-
-  protected calculatePromos(promos: CommerceTypes.Promo[]): CommerceTypes.CurrencyValue {
-    const promoTotal = promos.reduce(
-      (total, promo) => (promo.value ? total.add(promo.value.value) : total),
-      new Decimal(0)
-    );
-
-    return {
-      currencyCode: DefaultCurrencyCode,
-      value: promoTotal,
-    };
-  }
-
-  protected calculateTotal(
-    subtotal: CommerceTypes.CurrencyValue,
-    tax: CommerceTypes.CurrencyValue,
-    shipping: CommerceTypes.CurrencyValue,
-    promos?: CommerceTypes.CurrencyValue
-  ): CommerceTypes.CurrencyValue {
-    const discounts = promos ? promos.value : new Decimal(0);
-
-    const totalValue = subtotal.value.add(tax.value).add(shipping.value).minus(discounts);
-
-    return {
-      currencyCode: subtotal.currencyCode,
-      value: totalValue.lessThan(0) ? new Decimal(0) : totalValue,
-    };
   }
 }

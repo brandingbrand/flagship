@@ -1,5 +1,5 @@
-import { ShipConfig } from '../configs/ship.config';
-import { StandaloneWorkspace } from '../models/standalone-workspace';
+import type { ShipConfig } from '../configs/ship.config';
+import type { StandaloneWorkspace } from '../models/standalone-workspace';
 
 export type ProjectFilter = (project: Project) => boolean;
 

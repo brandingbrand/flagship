@@ -1,18 +1,17 @@
 import React, { PureComponent } from 'react';
-import {
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  Text,
   TextStyle,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
-import type { SwatchItemType } from './Swatches';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { style as S } from '../styles/Swatches';
+
+import type { SwatchItemType } from './Swatches';
 
 export interface SwatchStyle {
   // color style
@@ -59,32 +58,32 @@ export interface SwatchProps extends SwatchStyle, SerializableSwatchProps {
 }
 
 export class Swatch extends PureComponent<SwatchProps> {
-  _renderTouchable(style: StyleProp<ViewStyle>, child: JSX.Element): JSX.Element {
+  private renderTouchable(style: StyleProp<ViewStyle>, child: JSX.Element): JSX.Element {
     const { disabled, name, onSelect, value } = this.props;
 
     return (
       <TouchableOpacity
-        style={style}
-        onPress={onSelect.bind(this, this.props)}
-        disabled={disabled}
-        accessibilityRole="button"
         accessibilityLabel={name || value}
+        accessibilityRole="button"
+        disabled={disabled}
+        onPress={onSelect.bind(this, this.props)}
+        style={style}
       >
         {child}
       </TouchableOpacity>
     );
   }
 
-  _renderColor(color: string): JSX.Element {
+  private renderColor(color: string): JSX.Element {
     const {
-      selected,
       colorContainerStyle,
-      selectedColorContainerStyle,
-      disabledColorContainerStyle,
       colorStyle,
-      selectedColorStyle,
-      disabledColorStyle,
       disabled,
+      disabledColorContainerStyle,
+      disabledColorStyle,
+      selected,
+      selectedColorContainerStyle,
+      selectedColorStyle,
     } = this.props;
 
     const style: StyleProp<ViewStyle> = [
@@ -93,7 +92,7 @@ export class Swatch extends PureComponent<SwatchProps> {
       disabled && disabledColorContainerStyle,
     ];
 
-    return this._renderTouchable(
+    return this.renderTouchable(
       style,
       <View
         style={[
@@ -107,16 +106,16 @@ export class Swatch extends PureComponent<SwatchProps> {
     );
   }
 
-  _renderImage(image: ImageSourcePropType): React.ReactNode {
+  private renderImage(image: ImageSourcePropType): React.ReactNode {
     const {
-      selected,
-      imageContainerStyle,
-      selectedImageContainerStyle,
-      disabledImageContainerStyle,
-      imageStyle,
-      selectedImageStyle,
-      disabledImageStyle,
       disabled,
+      disabledImageContainerStyle,
+      disabledImageStyle,
+      imageContainerStyle,
+      imageStyle,
+      selected,
+      selectedImageContainerStyle,
+      selectedImageStyle,
     } = this.props;
 
     if (!image) {
@@ -129,9 +128,10 @@ export class Swatch extends PureComponent<SwatchProps> {
       disabled && disabledImageContainerStyle,
     ];
 
-    return this._renderTouchable(
+    return this.renderTouchable(
       style,
       <Image
+        source={image}
         style={[
           S.imageItem,
           selected ? S.selectedImageItem : [],
@@ -139,23 +139,22 @@ export class Swatch extends PureComponent<SwatchProps> {
           selected ? selectedImageStyle : [],
           disabled ? disabledImageStyle : [],
         ]}
-        source={image}
       />
     );
   }
 
-  _renderText(): JSX.Element {
+  private renderText(): JSX.Element {
     const {
-      value,
-      selected,
-      textContainerStyle,
-      selectedTextContainerStyle,
-      disabledTextContainerStyle,
-      textStyle,
-      selectedTextStyle,
-      disabledTextStyle,
       disabled,
+      disabledTextContainerStyle,
+      disabledTextStyle,
       name,
+      selected,
+      selectedTextContainerStyle,
+      selectedTextStyle,
+      textContainerStyle,
+      textStyle,
+      value,
     } = this.props;
 
     const style: StyleProp<ViewStyle> = [
@@ -164,7 +163,7 @@ export class Swatch extends PureComponent<SwatchProps> {
       disabled && disabledTextContainerStyle,
     ];
 
-    return this._renderTouchable(
+    return this.renderTouchable(
       style,
       <Text
         style={[
@@ -179,25 +178,23 @@ export class Swatch extends PureComponent<SwatchProps> {
     );
   }
 
-  render(): React.ReactNode {
-    const { color, image, value, render, swatch } = this.props;
+  public render(): React.ReactNode {
+    const { color, image, render, swatch, value } = this.props;
 
     if (render) {
       return render(this.props);
     } else if (color) {
-      return this._renderColor(color);
+      return this.renderColor(color);
     } else if (image) {
-      return this._renderImage(image);
+      return this.renderImage(image);
     } else if (swatch) {
       if (typeof swatch === 'string') {
-        return this._renderColor(swatch);
-      } else {
-        return this._renderImage(swatch);
+        return this.renderColor(swatch);
       }
+      return this.renderImage(swatch);
     } else if (value) {
-      return this._renderText();
-    } else {
-      return null;
+      return this.renderText();
     }
+    return null;
   }
 }

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { SingleLineForm, SingleLineFormProps } from './SingleLineForm';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import type { SingleLineFormProps } from './SingleLineForm';
+import { SingleLineForm } from './SingleLineForm';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.promoForm;
 
 export interface PromoFormValue {
@@ -16,9 +20,6 @@ export interface PromoFormProps extends Omit<SingleLineFormProps, 'fieldsTypes'>
 }
 
 export class PromoForm extends Component<PromoFormProps> {
-  fieldsTypes: Record<string, any>;
-  fieldsOptions: Record<string, any>;
-
   constructor(props: PromoFormProps) {
     super(props);
 
@@ -40,16 +41,19 @@ export class PromoForm extends Component<PromoFormProps> {
     };
   }
 
-  componentDidMount(): void {
+  private readonly fieldsTypes: Record<string, unknown>;
+  private readonly fieldsOptions: Record<string, unknown>;
+
+  public componentDidMount(): void {
     console.warn('EmailForm is deprecated and will be removed in the next version of Flagship.');
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return (
       <SingleLineForm
         {...this.props}
-        fieldsTypes={this.fieldsTypes}
         fieldsOptions={this.fieldsOptions}
+        fieldsTypes={this.fieldsTypes}
       />
     );
   }

@@ -7,14 +7,13 @@
  * is kept. The order of result values is determined by the order they occur
  * in the array.
  *
- 
+ *
  * @param array The array to inspect.
- * @returns Returns the new duplicate free array.
+ * @return Returns the new duplicate free array.
  * @example
  *
  * uniq([2, 1, 2])
  * // => [2, 1]
  */
-export const unique = <T>(array: T[]) => {
-  return array !== null && array.length ? Array.from(new Set(array)) : [];
-};
+export const unique = <T>(array: T[]) =>
+  array !== null && array.length > 0 ? [...new Set(array)] : [];

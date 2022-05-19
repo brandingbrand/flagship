@@ -3,9 +3,11 @@
  * of configurable width (props.separatorWidth) between each child.
  */
 
-import React, { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
+import React from 'react';
 
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export interface ActionBarProps {
   style?: StyleProp<ViewStyle>;
@@ -17,8 +19,8 @@ const DEFAULT_SEPARATOR_WIDTH = 15;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   item: {
     flex: 1,

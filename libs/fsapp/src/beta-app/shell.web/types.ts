@@ -1,9 +1,10 @@
 import type { ComponentType } from 'react';
+
 import type { StyleProp, ViewStyle } from 'react-native';
 
 export interface WebShell {
-  toggleLeftDrawer(open?: boolean): void;
-  toggleRightDrawer(open?: boolean): void;
+  toggleLeftDrawer: (open?: boolean) => void;
+  toggleRightDrawer: (open?: boolean) => void;
 }
 
 export interface DrawerOptions {

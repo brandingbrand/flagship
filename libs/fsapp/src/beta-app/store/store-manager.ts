@@ -1,7 +1,7 @@
 import type { Action, PreloadedState } from 'redux';
-import type { GenericState, StoreConfig } from './types';
 
 import { configureStore } from './configure-store';
+import type { GenericState, StoreConfig } from './types';
 
 export class StoreManager<S extends GenericState, A extends Action> {
   constructor(private readonly config: StoreConfig<S, A>) {}
@@ -35,11 +35,10 @@ export class StoreManager<S extends GenericState, A extends Action> {
     return updatedState as S;
   };
 
-  public getReduxStore = async (initialState?: S) => {
-    return configureStore(
+  public getReduxStore = async (initialState?: S) =>
+    configureStore(
       (initialState ?? this.config.initialState) as unknown as PreloadedState<S>,
       this.config.reducers,
       this.config.middleware
     );
-  };
 }

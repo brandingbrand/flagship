@@ -1,9 +1,11 @@
-import { merge, set } from 'lodash-es';
 import Decimal from 'decimal.js';
-import {
+import { merge, set } from 'lodash-es';
+
+import type {
   FSTranslationKeys,
   I18n,
   NumberLike,
+  PluralTranslationKey,
   TranslationKey,
   TranslationKeys,
   Translations,
@@ -20,22 +22,86 @@ export interface ICurrencyValue {
 }
 
 export default class I18nHelper {
-  protected readonly i18n: I18n;
-  protected localeListeners: ((locale: string) => void)[];
-
-  constructor(i18n: I18n) {
-    this.i18n = i18n;
+  constructor(protected readonly i18n: I18n) {
     this.i18n.fallbacks = true;
-    this.localeListeners = [];
+  }
+
+  protected localeListeners: Array<(locale: string) => void> = [];
+
+  /**
+   * Converts a given number-like value into an actual number
+   *
+   * @param num - number-like value to be converted
+   * @return - Converted number
+   */
+  protected convertToNumber(num: NumberLike): number {
+    if (num instanceof Decimal) {
+      return num.toNumber();
+    } else if (typeof num === 'string') {
+      return Number.parseFloat(num);
+    }
+
+    return num;
+  }
+
+  /**
+   * Recursively creates a new object matching the structure of the currently set
+   * translations with each keys' value replaced by its object path. This object can be
+   * used to reference the intended translation key with auto-completion and type checking.
+   *
+   * @param translations - Translations keys to flatten
+   * @param parentTranslations - New object containing the object paths
+   * @param paths - Paths to the current translation keys object from the root level
+   * @return - New object containing the object paths
+   */
+  protected flatten(
+    translations: TranslationKeys,
+    parentTranslations: TranslationKeys = {},
+    paths: string[] = []
+  ): TranslationKeys {
+    return Object.keys(translations).reduce((parentTranslations, key) => {
+      paths.push(key);
+
+      if (!this.isTranslationKey(translations[key])) {
+        this.flatten(translations[key] as TranslationKeys, parentTranslations, paths);
+      } else {
+        set(parentTranslations, paths, paths.join('.'));
+      }
+
+      paths.pop();
+      return parentTranslations;
+    }, parentTranslations);
+  }
+
+  /**
+   * Determines if a given value is a translation key
+   *
+   * @param translationKey - Value to check if it is a translation key
+   * @param translationKey.zero
+   * @param translationKey.one
+   * @param translationKey.other
+   * @return - Whether or not the value is a translation key
+   */
+  protected isTranslationKey(
+    translationKey: TranslationKey | object | undefined
+  ): translationKey is TranslationKey {
+    const isString = typeof translationKey === 'string';
+    const hasPluralizationKeys =
+      Boolean(translationKey) &&
+      typeof translationKey === 'object' &&
+      (typeof (translationKey as PluralTranslationKey).zero === 'string' ||
+        typeof (translationKey as PluralTranslationKey).one === 'string' ||
+        typeof (translationKey as PluralTranslationKey).other === 'string');
+
+    return isString || hasPluralizationKeys;
   }
 
   /**
    * Recursively merges new string translations into any existing
    *
-   * @param {Translations} translations - A locale-indexed object containing
+   * @param translations - A locale-indexed object containing
    * key/value pairs of string translations
-   *
-   * @returns {object} - All possible string translations
+   * @return - All possible string translations
    */
   public addTranslations<T = TranslationKeys>(
     translations: Translations
@@ -52,7 +118,7 @@ export default class I18nHelper {
   /**
    * Change language
    *
-   * @param {string} locale - Set locale
+   * @param locale - Set locale
    */
   public setLocale(locale: string): void {
     this.i18n.locale = locale;
@@ -61,16 +127,14 @@ export default class I18nHelper {
     });
   }
 
-  // @ts-ignore
   public addLocaleListener(func: (locale: string) => void): void {
     this.localeListeners.push(func);
   }
 
-  // @ts-ignore
   public removeLocaleListener(func: (locale: string) => void): void {
-    this.localeListeners = this.localeListeners.filter((testFunc: (locale: string) => void) => {
-      return func !== testFunc;
-    });
+    this.localeListeners = this.localeListeners.filter(
+      (testFunc: (locale: string) => void) => func !== testFunc
+    );
   }
 
   /**
@@ -79,14 +143,14 @@ export default class I18nHelper {
    *
    * Used for code completion.
    *
-   * @returns {Translations} Available string translations
+   * @return Available string translations
    */
   public getAvailableStringTranslations<T = TranslationKeys>(): T {
     if (this.i18n.translations === undefined) {
       throw MISSING_TRANSLATIONS_ERROR;
     }
 
-    const translations = this.i18n.translations;
+    const { translations } = this.i18n;
     const availableTranslations = Object.keys(translations).map((locale) =>
       this.flatten(translations[locale] ?? {})
     );
@@ -97,12 +161,10 @@ export default class I18nHelper {
   /**
    * Converts a number-like value into a locale-formatted string
    *
+   * @param num - Number to be formatted
+   * @param [options] - Options to control how the number is formatted
+   * @return - Formatted number
    * @example FSI18n.number(1234); // returns "1,234"
-   *
-   * @param {string | number | Decimal} num - Number to be formatted
-   * @param {Intl.NumberFormatOptions} [options] - Options to control how the number is formatted
-   *
-   * @returns {string} - Formatted number
    */
   public number(num: NumberLike, options?: Intl.NumberFormatOptions): string {
     if (typeof num === 'string' || num instanceof Decimal) {
@@ -119,16 +181,14 @@ export default class I18nHelper {
   /**
    * Converts a number-like value into a locale-formatted currency string
    *
+   * @param num - Number to be formatted
+   * @param [currency] - ISO 4217 currency code
+   * @param [options] - Options to control how the number is formatted
+   * @return - Formatted number
    * @example FSI18n.currency(1.23, 'USD'); // returns "$1.23"
-   *
-   * @param {string | number | Decimal | CurrencyValue} num - Number to be formatted
-   * @param {string} [currency] - ISO 4217 currency code
-   * @param {Intl.NumberFormatOptions} [options] - Options to control how the number is formatted
-   *
-   * @returns {string} - Formatted number
    */
   public currency(
-    num: NumberLike | ICurrencyValue,
+    num: ICurrencyValue | NumberLike,
     currency?: string,
     options?: Intl.NumberFormatOptions
   ): string {
@@ -157,12 +217,10 @@ export default class I18nHelper {
   /**
    * Converts a number-like value into a locale-formatted percent string
    *
+   * @param num - Number to be formatted
+   * @param [options] - Options to control how the number is formatted
+   * @return - Formatted number
    * @example FSI18n.percent(.12); // returns "12%"
-   *
-   * @param {string | number | Decimal | CurrencyValue} num - Number to be formatted
-   * @param {Intl.NumberFormatOptions} [options] - Options to control how the number is formatted
-   *
-   * @returns {string} - Formatted number
    */
   public percent(num: NumberLike, options?: Intl.NumberFormatOptions): string {
     const percentOptions: Intl.NumberFormatOptions = {
@@ -176,12 +234,10 @@ export default class I18nHelper {
   /**
    * Converts a date object into a locale-formatted string
    *
+   * @param date - Date object to be formatted
+   * @param [options] - Options to control how the date is formatted
+   * @return - Formatted date string
    * @example FSI18n.date(new Date()); // returns "6/13/2018"
-   *
-   * @param {string | number | Decimal | CurrencyValue} date - Date object to be formatted
-   * @param {Intl.DateTimeFormatOptions} [options] - Options to control how the date is formatted
-   *
-   * @returns {string} - Formatted date string
    */
   public date(date: Date, options?: Intl.DateTimeFormatOptions): string {
     if (!(date instanceof Date) || isNaN(date.valueOf())) {
@@ -194,11 +250,10 @@ export default class I18nHelper {
   /**
    * Returns the language appropriate for a given translationKey
    *
-   * @param {string|string[]} translationKey - Path to the appropriate key in a translation object
-   * @param {I18n.TranslationOptions} [options] - Optional options object to
+   * @param translationKey - Path to the appropriate key in a translation object
+   * @param [options] - Optional options object to
    * allow for interpolation and/or pluralization
-   *
-   * @returns {string} - Localized string
+   * @return - Localized string
    */
   public string(translationKey?: TranslationKey, options?: I18n.TranslateOptions): string {
     if (Object.getOwnPropertyNames(this.i18n.translations).length === 0) {
@@ -214,73 +269,9 @@ export default class I18nHelper {
   }
 
   /**
-   * @returns {string} Current locale
+   * @return Current locale
    */
   public currentLocale(): string {
     return this.i18n.currentLocale();
-  }
-
-  /**
-   * Converts a given number-like value into an actual number
-   *
-   * @param {NumberLike} num - number-like value to be converted
-   * @returns {number} - Converted number
-   */
-  protected convertToNumber(num: NumberLike): number {
-    if (num instanceof Decimal) {
-      return num.toNumber();
-    } else if (typeof num === 'string') {
-      return parseFloat(num);
-    }
-
-    return num;
-  }
-
-  /**
-   * Recursively creates a new object matching the structure of the currently set
-   * translations with each keys' value replaced by its object path. This object can be
-   * used to reference the intended translation key with auto-completion and type checking.
-   *
-   * @param {TranslationKeys} translations - Translations keys to flatten
-   * @param {TranslationKeys} parentTranslations - New object containing the object paths
-   * @param {string[]} paths - Paths to the current translation keys object from the root level
-   *
-   * @returns {TranslationKeys} - New object containing the object paths
-   */
-  protected flatten(
-    translations: TranslationKeys,
-    parentTranslations: TranslationKeys = {},
-    paths: string[] = []
-  ): TranslationKeys {
-    return Object.keys(translations).reduce((parentTranslations, key) => {
-      paths.push(key);
-
-      if (!this.isTranslationKey(translations[key])) {
-        this.flatten(translations[key] as TranslationKeys, parentTranslations, paths);
-      } else {
-        set(parentTranslations, paths, paths.join('.'));
-      }
-
-      paths.pop();
-      return parentTranslations;
-    }, parentTranslations);
-  }
-
-  /**
-   * Determines if a given value is a translation key
-   *
-   * @param {string|object} translationKey - Value to check if it is a translation key
-   * @returns {boolean} - Whether or not the value is a translation key
-   */
-  protected isTranslationKey(translationKey: any): translationKey is TranslationKey {
-    const isString = typeof translationKey === 'string';
-    const hasPluralizationKeys =
-      translationKey &&
-      typeof translationKey === 'object' &&
-      (typeof translationKey.zero === 'string' ||
-        typeof translationKey.one === 'string' ||
-        typeof translationKey.other === 'string');
-
-    return isString || hasPluralizationKeys;
   }
 }

@@ -1,13 +1,12 @@
-import { Location } from '../../../requesters/ContentManagementSystemLocator';
+import type { Location } from '../../../requesters/ContentManagementSystemLocator';
 
 const kUSZipCodeKey = 'US-Zipcodes';
 
-// eslint-disable-next-line complexity
-export default function targetInstancesByPostalCode(
+const targetInstancesByPostalCode = (
   instance: any,
-  targets: { [index: string]: any },
+  targets: Record<string, any>,
   location: Location
-): boolean {
+): boolean => {
   if (!instance) {
     return false;
   }
@@ -24,19 +23,21 @@ export default function targetInstancesByPostalCode(
   const instancePostalCodes =
     instance.targets && instance.targets[kUSZipCodeKey] && instance.targets[kUSZipCodeKey].zipcodes;
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
   const campaignPostalCodes =
     targets[campaign] &&
     targets[campaign][kUSZipCodeKey] &&
     targets[campaign][kUSZipCodeKey].zipcodes;
 
-  if (instancePostalCodes && instancePostalCodes.indexOf(location.postalCode) === -1) {
+  if (instancePostalCodes && !instancePostalCodes.includes(location.postalCode)) {
     return false;
   }
 
-  if (campaignPostalCodes && campaignPostalCodes.indexOf(location.postalCode) === -1) {
+  if (campaignPostalCodes && !campaignPostalCodes.includes(location.postalCode)) {
     return false;
   }
 
   return true;
-}
+};
+
+export default targetInstancesByPostalCode;

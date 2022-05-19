@@ -1,4 +1,5 @@
-import { isNone, Option } from './option';
+import type { Option } from './option';
+import { isNone } from './option';
 
 export function flatMapAll<A, Value>(
   inputA: Option<A>,
@@ -30,6 +31,10 @@ export function flatMapAll<A, B, C, D, E, Value>(
   inputE: Option<E>,
   handler: (inputA: A, inputB: B, inputC: C, inputD: D, inputE: E) => Option<Value>
 ): Option<Value>;
+/**
+ *
+ * @param params
+ */
 export function flatMapAll<Value>(...params: any[]): Option<Value> {
   const handler = params.pop();
   return params.find(isNone) ?? handler(...params.map((param) => param.value));

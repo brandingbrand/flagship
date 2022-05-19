@@ -31,6 +31,10 @@ export function branch<Input, FnResult1, FnResult2, FnResult3, FnResult4, FnResu
   fn5: (input: Input) => FnResult5,
   fn6: (input: Input) => FnResult6
 ): (input: Input) => [FnResult1, FnResult2, FnResult3, FnResult4, FnResult5, FnResult6];
-export function branch<Input>(...fns: ((input: Input) => unknown)[]) {
+/**
+ *
+ * @param fns
+ */
+export function branch<Input>(...fns: Array<(input: Input) => unknown>) {
   return (input: Input) => fns.map((fn) => fn(input));
 }

@@ -1,16 +1,17 @@
+/* eslint-disable max-lines */
 // CREDIT: https://github.com/haggholm/is-json-schema-subset
 // MIT
 
-import type { JSONSchema7, JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
+import { toArray } from '@brandingbrand/standard-array';
 
 import AJV from 'ajv';
 import isEqual from 'fast-deep-equal';
+import type { JSONSchema7, JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
+
 import { mergeAllOf } from '../merge-allof';
 
-import { toArray } from '@brandingbrand/standard-array';
-
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const hasOwnProperty = Object.prototype.hasOwnProperty;
+const { hasOwnProperty } = Object.prototype;
 const ajv = new AJV();
 
 type Validator = (
@@ -56,10 +57,15 @@ export const some = <T>(
       return;
     }
   }
+
   return allErrors as ErrorArray; // if length were 0 we'd have returned early
 };
 
-/** @internal */
+/**
+ * @internal
+ * @param elements
+ * @param condition
+ */
 export const someBool = <T>(
   elements: T[],
   condition: (val: T, idx: number) => boolean
@@ -89,15 +95,15 @@ export const one = <T>(
   }
 
   if (matches === 1) {
-    return;
+    return undefined;
   } else if (matches > 1) {
     return [{ paths, args: ['oneOf matches more than one branch'] }];
-  } else {
-    return [
-      ...(allErrors as ErrorArray),
-      { paths, args: ['oneOf does not match any branches'] },
-    ] as ErrorArray;
   }
+
+  return [
+    ...(allErrors as ErrorArray),
+    { paths, args: ['oneOf does not match any branches'] },
+  ] as ErrorArray;
 };
 
 export const isEmptyObject = (ob: JSONSchema7Definition): boolean => {
@@ -132,51 +138,51 @@ export const subFormats: Record<string, string[]> = {
   'uri-reference': ['uri'],
 };
 
-// eslint-disable-next-line complexity
 export const cloneRefs = <T extends JSONSchema7>(ob: T): T => {
   if (!ob || typeof ob !== 'object') {
     return ob;
   } else if (Array.isArray(ob)) {
     const len = ob.length;
-    const copy: any = new Array(len);
+    const copy: unknown[] = new Array(len);
     let changed = false;
     for (let i = 0; i < len; i++) {
-      const el = ob[+i];
-      copy[+i] = el && typeof el === 'object' ? cloneRefs(el) : el;
-      changed = changed || copy[+i] !== el;
+      const el = ob[Number(i)];
+      copy[Number(i)] = el && typeof el === 'object' ? cloneRefs(el) : el;
+      changed = changed || copy[Number(i)] !== el;
     }
-    return changed ? copy : ob;
+
+    return changed ? (copy as T & unknown[]) : ob;
   }
 
   if ('type' in ob && ob.type === 'object') {
     const newProps = cloneRefs(ob.properties ?? {});
     return '$ref' in ob || newProps === ob.properties ? ob : ({ ...ob, properties: newProps } as T);
-  } else {
-    const copy = {} as T;
-    let changed = '$ref' in ob;
-    for (const key in ob) {
-      if (hasOwnProperty.call(ob, key)) {
-        const oldProp = ob[key];
-        if (oldProp && typeof oldProp === 'object') {
-          const newProp = (copy[key] = cloneRefs(ob[key]));
-          changed = changed || oldProp !== newProp;
-        } else {
-          copy[key] = oldProp;
-        }
+  }
+  const copy = {} as T;
+  let changed = '$ref' in ob;
+  for (const key in ob) {
+    if (hasOwnProperty.call(ob, key)) {
+      const oldProp = ob[key];
+      if (oldProp && typeof oldProp === 'object') {
+        const newProp = (copy[key] = cloneRefs(ob[key]));
+        changed = changed || oldProp !== newProp;
+      } else {
+        copy[key] = oldProp;
       }
     }
-    return changed ? copy : ob;
   }
+
+  return changed ? copy : ob;
 };
 
 export interface Paths {
-  input: (string | number)[];
-  target: (string | number)[];
+  input: Array<number | string>;
+  target: Array<number | string>;
 }
 
 export interface SchemaCompatError {
   paths: Paths;
-  args: any[];
+  args: unknown[];
 }
 
 export type ErrorArray = [SchemaCompatError, ...SchemaCompatError[]];
@@ -218,7 +224,7 @@ const getTypeMatchErrors: Validator = (input, target, options, paths) => {
     ];
   }
 
-  return;
+  return undefined;
 };
 
 const getRequiredInputErrors: Validator = (input, target, options, paths) => {
@@ -238,10 +244,9 @@ const getRequiredInputErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
 const getExtraneousInputErrors: Validator = (input, target, options, paths) => {
   // Verify that the input doesn't have extra properties violating the target
   if (target.additionalProperties === false) {
@@ -272,13 +277,12 @@ const getExtraneousInputErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
 export const mergeTopWithAnyOf = (ob: SchemaWithAnyOf): SchemaWithAnyOf => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { anyOf, title, ...rest } = ob;
-  if (!Array.isArray(anyOf) || !Object.keys(rest).length) {
+  if (!Array.isArray(anyOf) || Object.keys(rest).length === 0) {
     return ob;
   }
 
@@ -295,8 +299,8 @@ export const mergeTopWithAnyOf = (ob: SchemaWithAnyOf): SchemaWithAnyOf => {
       if (typeof merged === 'object') {
         newAnyOf.push(merged);
       }
-    } catch (err) {
-      error = err as Error;
+    } catch (caughtError) {
+      error = caughtError as Error;
     }
   }
 
@@ -347,9 +351,9 @@ const calculateEffectiveMaxLength = (schema: JSONSchema7): number => {
   return -1;
 };
 
-const gatherEnumValues = (schema: JSONSchema7): any[] | undefined => {
+const gatherEnumValues = (schema: JSONSchema7): unknown[] | undefined => {
   if (schema.allOf ?? schema.anyOf ?? schema.oneOf) {
-    let enums: any[] | undefined;
+    let enums: unknown[] | undefined;
     for (const e of (schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchema7[]) {
       const subEnums = gatherEnumValues(e);
       if (subEnums) {
@@ -361,9 +365,9 @@ const gatherEnumValues = (schema: JSONSchema7): any[] | undefined => {
       }
     }
     return enums;
-  } else {
-    return schema.enum ?? undefined;
   }
+
+  return schema.enum ?? undefined;
 };
 
 const regexRegex = /^\/(.+)\/(g|i)?$/;
@@ -397,26 +401,22 @@ const getTitleErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
 const getStringErrors: Validator = (input, target, options, paths) => {
   if (target.type !== 'string') {
     return;
   }
 
   if (target.format && target.format !== input.format) {
-    let compatible: boolean;
-    if (input.enum) {
-      compatible = allBool(input.enum, (s: JSONSchema7Type) => ajv.validate(target, s));
-    } else {
-      compatible = !!(
-        input.format &&
-        subFormats[target.format] &&
-        subFormats[target.format]?.indexOf(input.format) !== -1
-      );
-    }
+    const compatible = input.enum
+      ? allBool(input.enum, (s: JSONSchema7Type) => ajv.validate(target, s))
+      : Boolean(
+          input.format &&
+            subFormats[target.format] &&
+            subFormats[target.format]?.indexOf(input.format) !== -1
+        );
     if (!compatible) {
       return [{ paths, args: ['String format mismatch'] }];
     }
@@ -450,7 +450,7 @@ const getStringErrors: Validator = (input, target, options, paths) => {
   }
 
   const maybeTargetEnums = new Set(gatherEnumValues(target));
-  if (maybeTargetEnums.size) {
+  if (maybeTargetEnums.size > 0) {
     const inputEnums = gatherEnumValues(input);
     if (inputEnums === undefined) {
       return [
@@ -465,7 +465,7 @@ const getStringErrors: Validator = (input, target, options, paths) => {
         return [
           {
             paths,
-            args: ['target', Array.from(maybeTargetEnums), 'is missing possible input enum:', e],
+            args: ['target', [...maybeTargetEnums], 'is missing possible input enum:', e],
           },
         ];
       }
@@ -481,10 +481,10 @@ const getStringErrors: Validator = (input, target, options, paths) => {
     ];
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 const getNumericErrors: Validator = (input, target, options, paths) => {
   if (target.type !== 'integer' && target.type !== 'number') {
     return;
@@ -595,7 +595,7 @@ const getNumericErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
 const getConstErrors: Validator = (input, target, options, paths) => {
@@ -608,10 +608,10 @@ const getConstErrors: Validator = (input, target, options, paths) => {
     ];
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 const getErrors: Validator = (input, target, options, paths) => {
   if (
     !target ||
@@ -627,10 +627,8 @@ const getErrors: Validator = (input, target, options, paths) => {
     return [{ paths, args: ['input does not provide a value'] }];
   }
 
-  if ('const' in input) {
-    if (!ajv.validate(target, input)) {
-      return [{ paths, args: ['const input does not match target schema'] }];
-    }
+  if ('const' in input && !ajv.validate(target, input)) {
+    return [{ paths, args: ['const input does not match target schema'] }];
   }
 
   if (target.allOf || input.allOf) {
@@ -690,10 +688,9 @@ const getErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
 const getAnyOfErrors: Validator = (input, target, options, paths) => {
   if (input.anyOf && target.anyOf) {
     const { anyOf: inputAnyOf } = mergeTopWithAnyOf(input as SchemaWithAnyOf);
@@ -708,7 +705,7 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
       for (const targetBranch of targetAnyOf) {
         const errors = getErrors(inputBranch, targetBranch, options, {
           input: [...paths.input, 'anyOf', inputIndex],
-          target: paths.target.concat(['anyOf', targetIndex]),
+          target: [...paths.target, 'anyOf', targetIndex],
         });
 
         if (errors) {
@@ -734,7 +731,7 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
       inputIndex += 1;
     }
 
-    return;
+    return undefined;
   }
 
   // If input can be anyOf [a,b,...], then each of them must be accepted
@@ -765,7 +762,7 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
     const errors = some(anyOf as JSONSchema7[], (branch, idx) =>
       getErrors(input, branch, options, {
         input: paths.input,
-        target: paths.target.concat(['anyOf', idx]),
+        target: [...paths.target, 'anyOf', idx],
       })
     );
     if (errors?.length) {
@@ -779,16 +776,12 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
 const getInputPropertyErrors: Validator = (input, target, options, paths) => {
-  const subProps = (input.properties ?? {}) as {
-    [k: string]: JSONSchema7;
-  };
-  const superProps = (target.properties ?? {}) as {
-    [k: string]: JSONSchema7;
-  };
+  const subProps = (input.properties ?? {}) as Record<string, JSONSchema7>;
+  const superProps = (target.properties ?? {}) as Record<string, JSONSchema7>;
 
   if (subProps) {
     for (const prop in superProps) {
@@ -801,7 +794,7 @@ const getInputPropertyErrors: Validator = (input, target, options, paths) => {
       if (subProp && superProp) {
         const errors = getErrors(subProp, superProp, options, {
           input: [...paths.input, prop],
-          target: paths.target.concat([prop]),
+          target: [...paths.target, prop],
         });
 
         if (errors?.length) {
@@ -811,10 +804,10 @@ const getInputPropertyErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 const getArrayErrors: Validator = (input, target, options, paths) => {
   if (target.type !== 'array') {
     return; // nop
@@ -875,7 +868,7 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
         options,
         {
           input: [...paths.input, i],
-          target: paths.target.concat([i]),
+          target: [...paths.target, i],
         }
       );
       if (errors?.length) {
@@ -897,7 +890,7 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
     for (const it of input.items) {
       const errors = getErrors(it as JSONSchema7, (target.items ?? {}) as JSONSchema7, options, {
         input: [...paths.input, 'items'],
-        target: paths.target.concat(['items']),
+        target: [...paths.target, 'items'],
       });
       if (errors?.length) {
         return [
@@ -916,7 +909,7 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
       options,
       {
         input: [...paths.input, 'items'],
-        target: paths.target.concat(['items']),
+        target: [...paths.target, 'items'],
       }
     );
     if (errors?.length) {
@@ -934,10 +927,10 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
     return [{ paths, args: ['input does not require uniqueItems'] }];
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 const getAllOfErrors: Validator = (input, target, options, paths) => {
   if (target.allOf && input.anyOf) {
     const { anyOf: inputAnyOf } = mergeTopWithAnyOf(input as SchemaWithAnyOf);
@@ -951,7 +944,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
       for (const inputBranch of inputAnyOf) {
         const errors = getErrors(inputBranch, targetBranch as JSONSchema7, options, {
           input: [...paths.input, 'anyOf', inputIndex],
-          target: paths.target.concat(['anyOf', targetIndex]),
+          target: [...paths.target, 'anyOf', targetIndex],
         });
 
         if (errors) {
@@ -992,7 +985,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
       for (const inputBranch of inputAnyOf) {
         const errors = getErrors(inputBranch, targetBranch as JSONSchema7, options, {
           input: [...paths.input, 'type', inputIndex],
-          target: paths.target.concat(['anyOf', targetIndex]),
+          target: [...paths.target, 'anyOf', targetIndex],
         });
 
         if (errors) {
@@ -1043,7 +1036,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
     const errors = all(target.allOf as JSONSchema7[], (e, idx) =>
       getErrors(input, e, options, {
         input: paths.input,
-        target: paths.target.concat(['allOf', idx]),
+        target: [...paths.target, 'allOf', idx],
       })
     );
     if (errors?.length) {
@@ -1057,7 +1050,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
 type SchemaWithAnyOf = JSONSchema7 & { anyOf: JSONSchema7[] };
@@ -1091,7 +1084,7 @@ const getOneOfErrors: Validator = (input, target, options, paths) => {
       (e, idx) =>
         getErrors(input, e, options, {
           input: paths.input,
-          target: paths.target.concat(['oneOf', idx]),
+          target: [...paths.target, 'oneOf', idx],
         })
     );
     if (errors?.length) {
@@ -1099,7 +1092,7 @@ const getOneOfErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
 const getNotErrors: Validator = (input, target, options, paths) => {
@@ -1121,7 +1114,7 @@ const getNotErrors: Validator = (input, target, options, paths) => {
   if (target.not) {
     const errors = getErrors(input, target.not as JSONSchema7, options, {
       input: paths.input,
-      target: paths.target.concat(['not']),
+      target: [...paths.target, 'not'],
     });
     if (!errors?.length) {
       return [
@@ -1133,10 +1126,9 @@ const getNotErrors: Validator = (input, target, options, paths) => {
     }
   }
 
-  return;
+  return undefined;
 };
 
-// eslint-disable-next-line complexity
 export const isValidTopLevelSchema = (schema: JSONSchema7Definition): boolean => {
   if (typeof schema !== 'object') {
     return false;
@@ -1155,17 +1147,19 @@ export const isValidTopLevelSchema = (schema: JSONSchema7Definition): boolean =>
   }
 
   for (const key in schema) {
-    if (hasOwnProperty.call(schema, key)) {
-      if (key !== 'description' && key !== 'title' && !key.startsWith('$')) {
-        return false;
-      }
+    if (
+      hasOwnProperty.call(schema, key) &&
+      key !== 'description' &&
+      key !== 'title' &&
+      !key.startsWith('$')
+    ) {
+      return false;
     }
   }
 
   return true;
 };
 
-// eslint-disable-next-line complexity
 const hasAllOf = (schema: JSONSchema7Definition): boolean => {
   if (!schema || typeof schema !== 'object') {
     return false;
@@ -1177,12 +1171,10 @@ const hasAllOf = (schema: JSONSchema7Definition): boolean => {
     return true;
   } else if ('type' in schema && schema.type === 'object') {
     return someBool(Object.values(schema.properties ?? {}), hasAllOf);
-  } else {
-    return someBool(Object.values(schema ?? {}), hasAllOf);
   }
+  return someBool(Object.values(schema ?? {}), hasAllOf);
 };
 
-// eslint-disable-next-line complexity
 const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
   if (!s || typeof s !== 'object') {
     return s;
@@ -1208,8 +1200,7 @@ const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
       (!s.properties || isEmptyObject(s.properties)) &&
       allBool(s.anyOf, (sub) => sub && typeof sub === 'object' && sub.type === 'object')
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { type, properties, required, ...rest } = s;
+      const { properties, required, type, ...rest } = s;
       s = rest;
     }
 
@@ -1246,11 +1237,10 @@ const tryMergeAllOf = (schema: JSONSchema7) => {
   }
 };
 
-// eslint-disable-next-line complexity
 export const inputSatisfies = (
   input: JSONSchema7,
   target: JSONSchema7,
-  options: boolean | Partial<Options> = true
+  options: Partial<Options> | boolean = true
 ): boolean => {
   if (isEmptyObject(target)) {
     return true;
@@ -1273,7 +1263,10 @@ export const inputSatisfies = (
           allowAdditionalProps: options.allowAdditionalProps ?? false,
         };
 
-  if (hasAllOf(input)) input = tryMergeAllOf(input);
+  if (hasAllOf(input)) {
+    input = tryMergeAllOf(input);
+  }
+
   const errors = getErrors(input, target, processedOpts, {
     input: [],
     target: [],

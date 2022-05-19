@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
+
 import { StyleSheet } from 'react-native';
+
 import { Button } from '../../Button';
-import { ProductItemProps } from '../ProductItem';
+import type { ProductItemProps } from '../ProductItem';
 
 export type ProductItemButtonProps = Pick<
   ProductItemProps,
-  | 'buttonText'
-  | 'buttonStyle'
-  | 'buttonTextStyle'
   | 'buttonProps'
+  | 'buttonStyle'
+  | 'buttonText'
+  | 'buttonTextStyle'
   | 'onButtonPress'
   | 'renderButton'
 >;
 
 const style = StyleSheet.create({
   button: {
-    marginTop: 7,
     marginBottom: 10,
+    marginTop: 7,
   },
 });
 
 export class ProductItemButton extends Component<ProductItemButtonProps> {
-  render(): React.ReactNode {
-    const { buttonText, buttonStyle, buttonTextStyle, buttonProps, onButtonPress, renderButton } =
+  public render(): React.ReactNode {
+    const { buttonProps, buttonStyle, buttonText, buttonTextStyle, onButtonPress, renderButton } =
       this.props;
 
     if (renderButton) {
@@ -36,10 +38,10 @@ export class ProductItemButton extends Component<ProductItemButtonProps> {
     return (
       <Button
         full
-        title={buttonText}
-        style={[style.button, buttonStyle]}
-        titleStyle={buttonTextStyle}
         onPress={onButtonPress}
+        style={[style.button, buttonStyle]}
+        title={buttonText}
+        titleStyle={buttonTextStyle}
         {...buttonProps}
       />
     );

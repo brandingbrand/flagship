@@ -1,23 +1,19 @@
 import React, { Component, useContext } from 'react';
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { ImageStyle, StyleProp, ViewStyle } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import PropTypes from 'prop-types';
-import { TextBlock } from './TextBlock';
-import { ImageBlock } from './ImageBlock';
-import { CTABlock } from './CTABlock';
-import DividerBlock from './DividerBlock';
-import { EngagementContext } from '../lib/contexts';
 
 import rightArrow from '../../assets/images/rightArrow.png';
 import rightBlockArrow from '../../assets/images/rightBlockArrow.png';
 import rightCategoryArrow from '../../assets/images/rightCategoryArrow.png';
+import { EngagementContext } from '../lib/contexts';
+
+import { CTABlock } from './CTABlock';
+import DividerBlock from './DividerBlock';
+import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 const images = {
   rightArrow,
@@ -71,10 +67,11 @@ export interface IconTextProps {
 export type ArrowTypes = 'rightArrow' | 'rightBlockArrow' | 'rightCategoryArrow';
 
 class IconTextBlock extends Component<IconTextProps & { context: any }> {
-  static contextTypes: any = {
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
-  onPress = (link?: string) => () => {
+
+  private readonly onPress = (link?: string) => () => {
     if (!link) {
       return;
     }
@@ -84,8 +81,8 @@ class IconTextBlock extends Component<IconTextProps & { context: any }> {
       value: link,
     });
   };
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
+
+  public render(): JSX.Element {
     const { containerStyle, contents, imageAlignment = 'left', link } = this.props;
     const imageDimensions: StyleProp<ImageStyle> = {};
     const iconSpacing: StyleProp<ViewStyle> = contents.Image
@@ -98,7 +95,7 @@ class IconTextBlock extends Component<IconTextProps & { context: any }> {
     const iconWidth = (contents.Image && contents.Image.iconWidth) || 0;
     imageDimensions.width = iconWidth;
     imageDimensions.height = contents?.Image?.ratio
-      ? iconWidth / parseFloat(contents.Image.ratio)
+      ? iconWidth / Number.parseFloat(contents.Image.ratio)
       : 0;
 
     const iconType: ArrowTypes = contents?.Icon?.type || 'rightArrow';
@@ -109,7 +106,7 @@ class IconTextBlock extends Component<IconTextProps & { context: any }> {
           <View
             style={[
               styles.flexContainer,
-              !!(imageAlignment && imageAlignment === 'right') && styles.flexContainerReverse,
+              Boolean(imageAlignment && imageAlignment === 'right') && styles.flexContainerReverse,
             ]}
           >
             {contents.Image && (

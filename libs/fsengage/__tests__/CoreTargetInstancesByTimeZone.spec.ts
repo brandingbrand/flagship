@@ -3,7 +3,7 @@ import targetInstancesByTimeZone from '../src/modules/cms/providers/core/targets
 const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - TimeZone Target', () => {
-  test('Valid Location', (done) => {
+  it('valid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
 
@@ -13,12 +13,12 @@ describe('Core Content Management System Provider - TimeZone Target', () => {
 
     const result = targetInstancesByTimeZone(instances, targets);
 
-    expect(result).toEqual(true);
+    expect(result).toBe(true);
 
     return done();
   });
 
-  test('Invalid Location', (done) => {
+  it('invalid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[1];
     const targets = fixture.payload.data._Targets;
 
@@ -28,7 +28,7 @@ describe('Core Content Management System Provider - TimeZone Target', () => {
 
     const result = targetInstancesByTimeZone(instances, targets);
 
-    expect(result).toEqual(false);
+    expect(result).toBe(false);
 
     return done();
   });

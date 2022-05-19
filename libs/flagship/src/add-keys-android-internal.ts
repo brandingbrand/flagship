@@ -1,19 +1,33 @@
-import { append, copySync } from './lib/fs';
 import { basename } from 'path';
+
+import { append, copySync } from './lib/fs';
 import { project } from './lib/path';
 
 let projectEnv = null;
 
+const copyKeystore = (pathName: string): void => {
+  const filename = basename(pathName);
+  const from = project.resolve('env', pathName);
+  const to = project.resolve('android', 'app', filename);
+
+  try {
+    copySync(from, to);
+  } catch {
+    console.error(`ERROR: keystore [${from}] not found`);
+    process.exit(1);
+  }
+};
+
 try {
   projectEnv = require(project.resolve('env', 'env.js'));
-} catch (e) {
+} catch {
   console.error('env/env.js not found, did you init your project?');
 
   process.exit(1);
 }
 
-const STORE_PASSWORD = process.env.STORE_PASSWORD;
-const KEY_PASSWORD = process.env.KEY_PASSWORD;
+const { STORE_PASSWORD } = process.env;
+const { KEY_PASSWORD } = process.env;
 
 if (!STORE_PASSWORD) {
   console.error('STORE_PASSWORD environment variable is required');
@@ -53,17 +67,4 @@ if (buildConfig && buildConfig.storeFile) {
   console.log(
     `\nDONE: Android keystore config added to gradle.properties [${buildConfig.storeFile}].\n`
   );
-}
-
-function copyKeystore(pathName: string): void {
-  const filename = basename(pathName);
-  const from = project.resolve('env', pathName);
-  const to = project.resolve('android', 'app', filename);
-
-  try {
-    copySync(from, to);
-  } catch (e) {
-    console.error(`ERROR: keystore [${from}] not found`);
-    process.exit(1);
-  }
 }

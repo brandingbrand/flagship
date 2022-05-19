@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import ReactPlayer from 'react-player';
+
 import { cloneDeep } from 'lodash-es';
+
 import { CardContext, EngagementContext } from '../lib/contexts';
 
 export interface VideoSource {
@@ -15,7 +18,7 @@ export interface VideoBlockProps {
   ratio?: number;
   autoPlay?: boolean;
   repeat?: boolean;
-  resizeMode?: 'stretch' | 'contain' | 'cover' | 'none';
+  resizeMode?: 'contain' | 'cover' | 'none' | 'stretch';
   style?: any;
   muted?: boolean;
   fullscreen?: boolean;
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
 
 const DEFAULT_WIDTH = Dimensions.get('window').width;
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-statements
 export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
   const [videoPaused, setVideoPaused] = useState(false);
   const { isCard } = React.useContext(CardContext);
@@ -79,7 +82,7 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
     }
   };
 
-  const renderSocial = (src: string, { width, height }: any, type: string) => {
+  const renderSocial = (src: string, { height, width }: any, type: string) => {
     const socialID = src.replace(`${type}://`, '');
     const iframeUri =
       type === 'youtube'
@@ -89,8 +92,8 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
     return <WebView style={{ flex: 1 }} source={{ uri: iframeUri }} />;
   };
 
-  const renderHttp = (src: string, { width, height }: any) => {
-    const { autoPlay = false, repeat = false, muted = false } = props;
+  const renderHttp = (src: string, { height, width }: any) => {
+    const { autoPlay = false, muted = false, repeat = false } = props;
 
     return (
       <View>
@@ -128,38 +131,34 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
 
   if (containerStyle) {
     if (containerStyle.paddingLeft) {
-      blockStyle.width = blockStyle.width - +containerStyle.paddingLeft;
+      blockStyle.width -= Number(containerStyle.paddingLeft);
     }
     if (containerStyle.marginLeft) {
-      blockStyle.width = blockStyle.width - +containerStyle.marginLeft;
+      blockStyle.width -= Number(containerStyle.marginLeft);
     }
     if (containerStyle.paddingRight) {
-      blockStyle.width = blockStyle.width - +containerStyle.paddingRight;
+      blockStyle.width -= Number(containerStyle.paddingRight);
     }
     if (containerStyle.marginRight) {
-      blockStyle.width = blockStyle.width - +containerStyle.marginRight;
+      blockStyle.width -= Number(containerStyle.marginRight);
     }
   }
   if (outerContainerStyle) {
     if (outerContainerStyle.paddingLeft) {
-      blockStyle.width = blockStyle.width - outerContainerStyle.paddingLeft;
+      blockStyle.width -= outerContainerStyle.paddingLeft;
     }
     if (outerContainerStyle.marginLeft) {
-      blockStyle.width = blockStyle.width - outerContainerStyle.marginLeft;
+      blockStyle.width -= outerContainerStyle.marginLeft;
     }
     if (outerContainerStyle.paddingRight) {
-      blockStyle.width = blockStyle.width - outerContainerStyle.paddingRight;
+      blockStyle.width -= outerContainerStyle.paddingRight;
     }
     if (outerContainerStyle.marginRight) {
-      blockStyle.width = blockStyle.width - outerContainerStyle.marginRight;
+      blockStyle.width -= outerContainerStyle.marginRight;
     }
   }
 
-  if (source && source.ratio) {
-    blockStyle.height = blockStyle.width / source.ratio;
-  } else {
-    blockStyle.height = height;
-  }
+  blockStyle.height = source && source.ratio ? blockStyle.width / source.ratio : height;
 
   return (
     <View style={containerStyle}>

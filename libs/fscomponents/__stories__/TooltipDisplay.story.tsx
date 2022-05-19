@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { Text, View } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { boolean, select } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { TooltipDisplay } from '../src/components/TooltipDisplay';
 
 storiesOf('TooltipDisplay', module).add('basic usage', () => (

@@ -1,9 +1,8 @@
 import type { Store } from '@brandingbrand/cargo-hold';
-
 import { useReact } from '@brandingbrand/react-linker';
-import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import isEqual from 'fast-deep-equal';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 export const useStoreState = <State, Return = State>(
   store: Store<State>,
@@ -19,7 +18,9 @@ export const useStoreState = <State, Return = State>(
       .pipe(map(mapState ?? ((state) => state as unknown as Return)), distinctUntilChanged(isEqual))
       .subscribe(setState);
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [store, setState]);
 
   return state;

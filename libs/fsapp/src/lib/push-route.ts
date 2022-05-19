@@ -1,8 +1,9 @@
-import qs from 'qs';
-import { AppConfigType, NavLayout, RoutableComponentClass } from '../types';
 import pathToRegexp from 'path-to-regexp';
+import qs from 'qs';
 
-export function overwrite(newProps: any, history: any, appConfig: AppConfigType): any {
+import type { AppConfigType, NavLayout, RoutableComponentClass } from '../types';
+
+export const overwrite = (newProps: any, history: any, appConfig: AppConfigType): any => {
   let matchedScreen:
     | {
         screen: RoutableComponentClass;
@@ -14,7 +15,7 @@ export function overwrite(newProps: any, history: any, appConfig: AppConfigType)
       const screen = appConfig.screens[screenName];
 
       if (screen) {
-        let pathReg = new RegExp('^/_s/' + screenName + '/?$');
+        let pathReg = new RegExp(`^/_s/${screenName}/?$`);
         if (screen.path) {
           pathReg = pathToRegexp(screen.path);
         }
@@ -33,14 +34,9 @@ export function overwrite(newProps: any, history: any, appConfig: AppConfigType)
   } else {
     console.error('Could not match current screen');
   }
-}
+};
 
-export default function push(
-  layout: NavLayout,
-  history: any,
-  appConfig: AppConfigType,
-  href?: string
-): any {
+const push = (layout: NavLayout, history: any, appConfig: AppConfigType, href?: string): any => {
   if (layout.component) {
     if (appConfig.screens[layout.component.name]) {
       if (href) {
@@ -54,16 +50,18 @@ export default function push(
         history.push(path);
       }
     } else {
-      console.error('Unknown screen: ' + layout.component.name);
+      console.error(`Unknown screen: ${layout.component.name}`);
     }
   } else {
     console.error('No component to push');
   }
-}
+};
 
-function getPathWithPassProps(screenName: string, screen: any, passProps: any): string {
+export default push;
+
+const getPathWithPassProps = (screenName: string, screen: any, passProps: any): string => {
   if (screen && screen.path) {
-    if (screen.path.indexOf(':') > -1) {
+    if (screen.path.includes(':')) {
       let convertProps = passProps;
       if (screen.urlConvert) {
         convertProps = screen.urlConvert(convertProps);
@@ -71,30 +69,26 @@ function getPathWithPassProps(screenName: string, screen: any, passProps: any): 
       const extraQS = getExtraQS(screen.paramKeys, convertProps);
       return (
         screen.toPath(convertProps, {
-          encode: (str: string): string => {
-            return str;
-          },
+          encode: (str: string): string => str,
         }) + extraQS
       );
-    } else {
-      return screen.path + '?' + qs.stringify(passProps);
     }
-  } else {
-    return `/_s/${screenName}` + '?' + qs.stringify(passProps);
+    return `${screen.path}?${qs.stringify(passProps)}`;
   }
-}
+  return `/_s/${screenName}` + `?${qs.stringify(passProps)}`;
+};
 
-function getExtraQS(paramKeys: any, passProps: any): string {
+const getExtraQS = (paramKeys: any, passProps: any): string => {
   const extra: any = {};
-  const keyNames = paramKeys.map((k: any) => k.name).filter((n: any) => !!n);
+  const keyNames = new Set(paramKeys.map((k: any) => k.name).filter(Boolean));
   let hasExtra = false;
 
-  Object.keys(passProps).forEach((pk) => {
-    if (keyNames.indexOf(pk) === -1) {
+  for (const pk of Object.keys(passProps)) {
+    if (!keyNames.has(pk)) {
       extra[pk] = passProps[pk];
       hasExtra = true;
     }
-  });
+  }
 
-  return hasExtra ? '?' + qs.stringify(extra) : '';
-}
+  return hasExtra ? `?${qs.stringify(extra)}` : '';
+};

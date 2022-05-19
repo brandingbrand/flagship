@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
 import FSI18n from '@brandingbrand/fsi18n';
+
 type CurrencyValue = import('@brandingbrand/fscommerce').CommerceTypes.CurrencyValue;
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 3,
-    paddingBottom: 3,
-  },
   leftColumn: {
     flex: 1,
   },
@@ -21,11 +18,17 @@ const styles = StyleSheet.create({
   rightColumnText: {
     textAlign: 'right',
   },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 3,
+    paddingTop: 3,
+  },
 });
 
 export interface SerializableTotalProps {
-  keyName: string | JSX.Element; // String or element for the row's key
-  value: string | CurrencyValue | JSX.Element; // String or element for the row's value
+  keyName: JSX.Element | string; // String or element for the row's key
+  value: CurrencyValue | JSX.Element | string; // String or element for the row's value
 
   keyStyle?: TextStyle; // Optional styling for the key text element
   valueStyle?: TextStyle; // Optional styling for the value text element
@@ -41,13 +44,12 @@ export interface TotalProps extends Pick<SerializableTotalProps, 'keyName' | 'va
   style?: StyleProp<ViewStyle>; // Optional styling for the entire total row
 }
 
-function isCurrency(data: JSX.Element | CurrencyValue): data is CurrencyValue {
-  return !!((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
-}
+const isCurrency = (data: CurrencyValue | JSX.Element): data is CurrencyValue =>
+  Boolean((data as CurrencyValue).value && (data as CurrencyValue).currencyCode);
 
 const TotalInner = (props: TotalProps): JSX.Element => {
   const renderData = (
-    data: string | CurrencyValue | JSX.Element,
+    data: CurrencyValue | JSX.Element | string,
     style?: StyleProp<ViewStyle>
   ): JSX.Element => {
     if (typeof data === 'string') {
@@ -57,8 +59,8 @@ const TotalInner = (props: TotalProps): JSX.Element => {
       let convertedTotal: string | undefined;
       try {
         convertedTotal = FSI18n.currency(data);
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
       return <Text style={style}>{convertedTotal}</Text>;
     }

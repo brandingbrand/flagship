@@ -1,4 +1,5 @@
-import { isNone, Option } from './option';
+import type { Option } from './option';
+import { isNone } from './option';
 
 export const orElse =
   <T>(alternative: () => Option<T>) =>

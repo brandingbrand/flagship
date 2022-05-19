@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
+
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Location } from '../types/Location';
-import ResultItem from './ResultItem';
-import { LocationItemProps } from '@brandingbrand/fscomponents';
-import { LocationItemData } from './LocatorContainer';
+
+import type { LocationItemProps } from '@brandingbrand/fscomponents';
 
 import arrowLeft from '../../assets/images/arrow-left.png';
+import type { Location } from '../types/Location';
+
+import type { LocationItemData } from './LocatorContainer';
+import ResultItem from './ResultItem';
 
 const S = StyleSheet.create({
-  selectedLocationContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
   backButton: {
     backgroundColor: 'white',
     justifyContent: 'center',
   },
   backButtonImage: {
+    height: 30,
     marginLeft: 10,
     width: 30,
-    height: 30,
   },
   itemContainer: {
     flex: 1,
+  },
+  selectedLocationContainer: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
   },
 });
 
@@ -41,13 +44,13 @@ export default class ResultItemWithBack extends Component<PropType> {
   render(): JSX.Element {
     const {
       deselectLocation,
-      selectedLocation,
       handleNavPress,
       handlePhonePress,
       locationItemProps,
-      selectLocation,
       renderLocationItem,
       renderLocationItemWithBack,
+      selectLocation,
+      selectedLocation,
     } = this.props;
 
     if (renderLocationItemWithBack) {
@@ -62,18 +65,18 @@ export default class ResultItemWithBack extends Component<PropType> {
 
     return (
       <View style={S.selectedLocationContainer}>
-        <TouchableOpacity style={S.backButton} onPress={deselectLocation}>
+        <TouchableOpacity onPress={deselectLocation} style={S.backButton}>
           <Image source={arrowLeft} style={S.backButtonImage} />
         </TouchableOpacity>
         <View style={S.itemContainer}>
           <ResultItem
-            location={selectedLocation}
-            selected={true}
             handleNavPress={handleNavPress}
             handlePhonePress={handlePhonePress}
+            location={selectedLocation}
             locationItemProps={locationItemProps}
-            selectLocation={selectLocation}
             renderLocationItem={renderLocationItem}
+            selectLocation={selectLocation}
+            selected
           />
         </View>
       </View>

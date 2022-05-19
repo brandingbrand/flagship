@@ -1,11 +1,12 @@
-import type { AppConstructor } from './types';
-
 import { BackHandler, Linking } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { StaticImplements } from '../utils';
+
 import { FSAppBase } from './app.base';
+import type { AppConstructor } from './types';
 
 export { APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN } from './app.base';
 

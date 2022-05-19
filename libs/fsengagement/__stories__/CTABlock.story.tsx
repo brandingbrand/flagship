@@ -1,10 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 
 import { CTABlock } from '../src/inboxblocks/CTABlock';
-import { Action } from '../src/types';
+import type { Action } from '../src/types';
+
 import ActionContext from './assets/ActionContext';
 
 const submitAction = action('submit');

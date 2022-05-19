@@ -1,26 +1,21 @@
 import React from 'react';
-import {
-  FlatList,
-  FlatListProps,
-  ListRenderItemInfo,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { FlatListProps, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+
 import ContentLoader, { Rect } from '../lib/RNContentLoader';
 
 const defaultStyle = StyleSheet.create({
   itemContainer: {
+    alignItems: 'center',
+    borderBottomColor: '#DBDBDB',
+    borderBottomWidth: StyleSheet.hairlineWidth,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    paddingBottom: 27,
     paddingHorizontal: 20,
     paddingTop: 32,
-    paddingBottom: 27,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#DBDBDB',
   },
 });
 
@@ -30,23 +25,23 @@ export interface SerializableCategoryListGhostProps {
   height?: number;
 }
 
-const keyExtractor = (item: any, index: number) => index.toString();
+const keyExtractor = (item: unknown, index: number) => index.toString();
 
 const renderItem =
   (itemProps: CategoryListGhostProps) =>
-  ({ index }: ListRenderItemInfo<any>) => {
+  ({ index }: ListRenderItemInfo<unknown>) => {
     const width = index % 2 ? 142 : 207;
     const height = itemProps.height || 24;
     return (
       <View style={[defaultStyle.itemContainer, itemProps.itemContainerStyle]}>
         <ContentLoader
-          width={width}
+          backgroundColor="#EFEFEF"
+          foregroundColor="#F9F9F9"
           height={height}
           viewBox={`0 0 ${width} ${height}`}
-          backgroundColor={'#EFEFEF'}
-          foregroundColor={'#F9F9F9'}
+          width={width}
         >
-          <Rect x="0" y="0" rx="4" ry="4" width={width} height={height} />
+          <Rect height={height} rx="4" ry="4" width={width} x="0" y="0" />
         </ContentLoader>
         {itemProps.renderAccessory?.()}
       </View>
@@ -54,8 +49,8 @@ const renderItem =
   };
 
 export interface CategoryListGhostProps
-  extends Partial<FlatListProps<any>>,
-    Omit<SerializableCategoryListGhostProps, 'itemContainerStyle' | 'count' | 'height'> {
+  extends Partial<FlatListProps<unknown>>,
+    Omit<SerializableCategoryListGhostProps, 'count' | 'height' | 'itemContainerStyle'> {
   count?: number;
 
   /**
@@ -70,7 +65,7 @@ export interface CategoryListGhostProps
 
 export const CategoryListGhost: React.FC<CategoryListGhostProps> = React.memo((props) => {
   const { count = 6, ...flatListProps } = props;
-  const data = Array(count).fill(null);
+  const data = new Array(count).fill(null);
 
   return (
     <FlatList

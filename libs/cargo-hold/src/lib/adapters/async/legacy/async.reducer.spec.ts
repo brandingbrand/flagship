@@ -1,15 +1,18 @@
 import { createLensCreator } from '@brandingbrand/standard-lens';
+
 import * as FastCheck from 'fast-check';
+
 import { asyncStateArbitrary } from '../../../../testing/fast-check-arbitraries.util';
-import { AnyAction } from '../../../action-bus';
-import { StateReducer } from '../../../store';
+import type { AnyAction } from '../../../action-bus';
+import type { StateReducer } from '../../../store';
 import {
   createFailureState,
   createIdleState,
   createLoadingState,
   createSuccessState,
 } from '../async.stateCreators';
-import { AsyncState } from '../async.types';
+import type { AsyncState } from '../async.types';
+
 import { createAsyncActionCreators } from './async.actions';
 import { createCombinedReducer, createLensedReducers, createReducers } from './async.reducer';
 
@@ -62,6 +65,7 @@ describe('createFailureState', () => {
 describe('createReducers', () => {
   it('creates a reducer object of the right shape', () => {
     const reducers = createReducers();
+
     expect(reducers).toHaveProperty('init');
     expect(reducers).toHaveProperty('load');
     expect(reducers).toHaveProperty('succeed');
@@ -74,6 +78,7 @@ describe('createReducers', () => {
       FastCheck.property(createAsyncState(), FastCheck.anything(), (oldState, payload) => {
         const reducers = createReducers();
         const stateReducer: StateReducer<AsyncState<unknown, unknown>> = reducers.init(payload);
+
         expect(stateReducer(oldState)).toEqual({
           status: 'idle',
           payload,
@@ -87,6 +92,7 @@ describe('createReducers', () => {
       FastCheck.property(createAsyncState(), FastCheck.anything(), (oldState, payload) => {
         const reducers = createReducers();
         const stateReducer: StateReducer<AsyncState<unknown, unknown>> = reducers.load(payload);
+
         expect(stateReducer(oldState)).toEqual({
           status: 'loading',
           payload,
@@ -100,6 +106,7 @@ describe('createReducers', () => {
       FastCheck.property(createAsyncState(), FastCheck.anything(), (oldState, payload) => {
         const reducers = createReducers();
         const stateReducer: StateReducer<AsyncState<unknown, unknown>> = reducers.succeed(payload);
+
         expect(stateReducer(oldState)).toEqual({
           status: 'success',
           payload,
@@ -113,6 +120,7 @@ describe('createReducers', () => {
       FastCheck.property(createAsyncState(), FastCheck.anything(), (oldState, payload) => {
         const reducers = createReducers();
         const stateReducer: StateReducer<AsyncState<unknown, unknown>> = reducers.revert(payload);
+
         expect(stateReducer(oldState)).toEqual({
           status: oldState.status,
           payload,
@@ -127,6 +135,7 @@ describe('createReducers', () => {
       FastCheck.property(createAsyncState(), FastCheck.anything(), (oldState, failure) => {
         const reducers = createReducers();
         const stateReducer: StateReducer<AsyncState<unknown, unknown>> = reducers.fail(failure);
+
         expect(stateReducer(oldState)).toEqual({
           status: 'failure',
           payload: oldState.payload,
@@ -138,9 +147,9 @@ describe('createReducers', () => {
 });
 
 describe('createLensedReducers', () => {
-  type State = {
+  interface State {
     nestedValue: AsyncState<unknown, unknown>;
-  };
+  }
   const lens = createLensCreator<State>().fromPath('nestedValue');
 
   it('creates a working init reducer', () => {
@@ -151,6 +160,7 @@ describe('createLensedReducers', () => {
         (oldState, payload) => {
           const reducers = createLensedReducers(lens);
           const stateReducer: StateReducer<State> = reducers.init(payload);
+
           expect(stateReducer(oldState)).toEqual({
             nestedValue: {
               status: 'idle',
@@ -170,6 +180,7 @@ describe('createLensedReducers', () => {
         (oldState, payload) => {
           const reducers = createLensedReducers(lens);
           const stateReducer: StateReducer<State> = reducers.load(payload);
+
           expect(stateReducer(oldState)).toEqual({
             nestedValue: {
               status: 'loading',
@@ -189,6 +200,7 @@ describe('createLensedReducers', () => {
         (oldState, payload) => {
           const reducers = createLensedReducers(lens);
           const stateReducer: StateReducer<State> = reducers.succeed(payload);
+
           expect(stateReducer(oldState)).toEqual({
             nestedValue: {
               status: 'success',
@@ -208,6 +220,7 @@ describe('createLensedReducers', () => {
         (oldState, payload) => {
           const reducers = createLensedReducers(lens);
           const stateReducer: StateReducer<State> = reducers.revert(payload);
+
           expect(stateReducer(oldState)).toEqual({
             nestedValue: {
               status: oldState.nestedValue.status,
@@ -231,6 +244,7 @@ describe('createLensedReducers', () => {
         (oldState, failure) => {
           const reducers = createLensedReducers(lens);
           const stateReducer: StateReducer<State> = reducers.fail(failure);
+
           expect(stateReducer(oldState)).toEqual({
             nestedValue: {
               status: 'failure',
@@ -258,6 +272,7 @@ describe('createCombinedReducer', () => {
         FastCheck.anything(),
         (oldState, key, payload) => {
           const action: AnyAction = { type: key, payload };
+
           expect(combinedActionReducer(action)(oldState)).toEqual(oldState);
         }
       )

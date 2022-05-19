@@ -1,8 +1,8 @@
-import { ImageProps, ImageURISource, StyleProp, ViewStyle } from 'react-native';
+import type { Image, ImageRequireSource, ImageURISource, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageData {
-  src: ImageURISource;
-  zoomSrc?: ImageURISource;
+  src: ImageRequireSource | ImageURISource;
+  zoomSrc?: ImageRequireSource | ImageURISource;
 }
 
 export interface ZoomCarouselProps {
@@ -13,33 +13,33 @@ export interface ZoomCarouselProps {
   fillContainer?: boolean;
   peekSize?: number;
   showArrow?: boolean;
-  pageIndicatorZoomStyle?: any;
-  closeButtonStyle?: any;
-  dotStyle?: any;
-  dotActiveStyle?: any;
-  pageIndicatorStyle?: any;
-  zoomButtonStyle?: any;
+  pageIndicatorZoomStyle?: StyleProp<ViewStyle>;
+  closeButtonStyle?: StyleProp<ViewStyle>;
+  dotStyle?: StyleProp<ViewStyle>;
+  dotActiveStyle?: StyleProp<ViewStyle>;
+  pageIndicatorStyle?: StyleProp<ViewStyle>;
+  zoomButtonStyle?: StyleProp<ViewStyle>;
   renderImage?: (
     item: ImageData,
     index: number,
-    originalImgs: React.Component<ImageProps, React.ComponentState>[],
+    originalImgs: Array<Image | null>,
     imageWidth: number,
     imageHeight: number,
     openZoom: () => void
   ) => JSX.Element;
-  renderImageWeb?: (data: any, i: number) => JSX.Element;
+  renderImageWeb?: (data: unknown, i: number) => JSX.Element;
   renderCloseButton?: (closeZoom: () => void) => JSX.Element;
   renderModalContent?: (closeModal: () => void) => JSX.Element;
   renderPageIndicator?: (currentIndex: number, itemsCount: number) => JSX.Element;
   renderZoomButton?: (openZoom: () => void) => JSX.Element;
   renderThumbnails?: (
     currentIndex: number,
-    goTo: (index: number, options: any) => void
+    goTo: (index: number, options: unknown) => void
   ) => JSX.Element;
   nextArrowOnBlur?: () => void;
   showThumbnails?: boolean;
-  thumbnailStyle?: any;
-  thumbnailContainerStyle?: any;
+  thumbnailStyle?: StyleProp<ViewStyle>;
+  thumbnailContainerStyle?: StyleProp<ViewStyle>;
   hideOverflow?: boolean;
 
   /**

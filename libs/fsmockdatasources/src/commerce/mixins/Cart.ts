@@ -1,7 +1,8 @@
-import { CartDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
+import type { CartDataSource, CommerceTypes } from '@brandingbrand/fscommerce';
+
+import type { Constructor } from '../../helpers';
 import {
   Cart,
-  Constructor,
   DefaultShippingMethod,
   PaymentMethods,
   Products,
@@ -9,17 +10,18 @@ import {
   ShippingMethods,
 } from '../../helpers';
 
-export const CartMixin = <T extends Constructor>(superclass: T) => {
-  return class CartMixin extends superclass implements CartDataSource {
-    public cart: Cart;
-    public orders: Map<string, CommerceTypes.Order> = new Map();
-
+// eslint-disable-next-line max-lines-per-function
+export const CartMixin = <T extends Constructor>(superclass: T) =>
+  class CartMixin extends superclass implements CartDataSource {
     constructor(...args: any[]) {
       super(...args);
       this.cart = new Cart();
     }
 
-    async addToCart(
+    public cart: Cart;
+    public orders: Map<string, CommerceTypes.Order> = new Map();
+
+    public async addToCart(
       productId: string,
       qty?: number,
       product?: CommerceTypes.Product
@@ -36,26 +38,27 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async addPayment(cartId: string, payment: CommerceTypes.Payment): Promise<CommerceTypes.Cart> {
+    public async addPayment(
+      cartId: string,
+      payment: CommerceTypes.Payment
+    ): Promise<CommerceTypes.Cart> {
       this.cart.payment = payment;
       return this.cart.serialize();
     }
 
-    async fetchCart(query?: CommerceTypes.CartQuery): Promise<CommerceTypes.Cart> {
+    public async fetchCart(query?: CommerceTypes.CartQuery): Promise<CommerceTypes.Cart> {
       return this.cart.serialize();
     }
 
-    async destroyCart(): Promise<void> {
+    public async destroyCart(): Promise<void> {
       this.cart = new Cart();
-
-      return;
     }
 
-    async fetchPaymentMethods(cartId: string): Promise<CommerceTypes.ApplicablePayment[]> {
+    public async fetchPaymentMethods(cartId: string): Promise<CommerceTypes.ApplicablePayment[]> {
       return PaymentMethods;
     }
 
-    async fetchShippingMethods(
+    public async fetchShippingMethods(
       cartId: string,
       shipmentId: string
     ): Promise<CommerceTypes.ShippingMethodResponse> {
@@ -65,12 +68,12 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       };
     }
 
-    async removeCartItem(itemId: string): Promise<CommerceTypes.Cart> {
+    public async removeCartItem(itemId: string): Promise<CommerceTypes.Cart> {
       this.cart.itemStore.delete(itemId);
       return this.cart.serialize();
     }
 
-    async setBillingAddress(
+    public async setBillingAddress(
       options: CommerceTypes.BillingAddressOptions
     ): Promise<CommerceTypes.Cart> {
       if (options.address === undefined) {
@@ -95,7 +98,9 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async setCustomerInfo(options: CommerceTypes.CustomerInfoOptions): Promise<CommerceTypes.Cart> {
+    public async setCustomerInfo(
+      options: CommerceTypes.CustomerInfoOptions
+    ): Promise<CommerceTypes.Cart> {
       const { email } = options;
 
       this.cart.customerInfo = {
@@ -108,7 +113,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async setShipmentAddress(
+    public async setShipmentAddress(
       options: CommerceTypes.ShipmentAddressOptions
     ): Promise<CommerceTypes.Cart> {
       if (options.address === undefined) {
@@ -131,7 +136,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async setShipmentMethod(
+    public async setShipmentMethod(
       options: CommerceTypes.ShipmentMethodOptions
     ): Promise<CommerceTypes.Cart> {
       if (!this.cart.shipment) {
@@ -147,7 +152,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async submitOrder(cartId: string): Promise<CommerceTypes.Order> {
+    public async submitOrder(cartId: string): Promise<CommerceTypes.Order> {
       const orderId = Date.now().toString();
 
       const isValid = this.cart.validate();
@@ -156,7 +161,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
         throw new Error(`Unable to submit order.\n${errors.join('\n')}`);
       }
 
-      const { billingAddress, customerInfo, tax, total, payments, items, shipments } =
+      const { billingAddress, customerInfo, items, payments, shipments, tax, total } =
         this.cart.serialize();
 
       const customerName =
@@ -186,7 +191,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return order;
     }
 
-    async updateOrder(order: CommerceTypes.Order): Promise<CommerceTypes.Order> {
+    public async updateOrder(order: CommerceTypes.Order): Promise<CommerceTypes.Order> {
       const oldOrder = this.orders.get(order.orderId);
       const updatedOrder = {
         ...oldOrder,
@@ -197,7 +202,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return updatedOrder;
     }
 
-    async updateOrderPayment(
+    public async updateOrderPayment(
       orderId: string,
       paymentId: string,
       payment: CommerceTypes.Payment
@@ -214,7 +219,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       });
     }
 
-    async updateCartItemQty(itemId: string, qty: number): Promise<CommerceTypes.Cart> {
+    public async updateCartItemQty(itemId: string, qty: number): Promise<CommerceTypes.Cart> {
       if (qty === 0) {
         return this.removeCartItem(itemId);
       }
@@ -223,7 +228,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async updatePayment(
+    public async updatePayment(
       cartId: string,
       paymentId: string,
       payment: CommerceTypes.Payment
@@ -238,11 +243,13 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async updateGiftOptions(giftOptions: CommerceTypes.GiftOptions): Promise<CommerceTypes.Cart> {
+    public async updateGiftOptions(
+      giftOptions: CommerceTypes.GiftOptions
+    ): Promise<CommerceTypes.Cart> {
       throw new Error('Gifts are not supported');
     }
 
-    async applyPromo(promoCode: string): Promise<CommerceTypes.Cart> {
+    public async applyPromo(promoCode: string): Promise<CommerceTypes.Cart> {
       this.cart.promos = this.cart.promos || [];
 
       const promo = Promos.find((promo) => promo.code === promoCode);
@@ -259,7 +266,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
 
-    async removePromo(promoItemId: string): Promise<CommerceTypes.Cart> {
+    public async removePromo(promoItemId: string): Promise<CommerceTypes.Cart> {
       if (Array.isArray(this.cart.promos)) {
         this.cart.promos = this.cart.promos.filter((promo) => promo.id !== promoItemId);
       }
@@ -267,4 +274,3 @@ export const CartMixin = <T extends Constructor>(superclass: T) => {
       return this.cart.serialize();
     }
   };
-};

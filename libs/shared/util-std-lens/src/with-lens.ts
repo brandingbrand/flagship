@@ -1,5 +1,6 @@
 import { pipe } from '@brandingbrand/standard-compose';
-import { ILens } from './types';
+
+import type { ILens } from './types';
 
 export const withLens =
   <Structure, Value>(lens: ILens<Structure, Value>) =>

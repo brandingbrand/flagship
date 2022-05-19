@@ -1,8 +1,5 @@
-import {
-  ConventionalChangelogCommit,
-  parser,
-  toConventionalChangelogFormat,
-} from '@conventional-commits/parser';
+import type { ConventionalChangelogCommit } from '@conventional-commits/parser';
+import { parser, toConventionalChangelogFormat } from '@conventional-commits/parser';
 
 const REVERT_REGEX = /^Revert "(.*)"$/;
 

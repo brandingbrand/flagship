@@ -1,11 +1,11 @@
-import React, { Component, ComponentClass } from 'react';
-import {
-  ContentManagementSystem,
-  CoreContentManagementSystemProvider,
-} from '@brandingbrand/fsengage';
+import type { ComponentClass } from 'react';
+import React, { Component } from 'react';
+
+import type { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
+import { ContentManagementSystem } from '@brandingbrand/fsengage';
 
 export interface CMSProviderState {
-  cmsData: any;
+  cmsData: unknown;
 }
 
 export interface CMSProviderProps {
@@ -15,10 +15,10 @@ export interface CMSProviderProps {
   cmsProviderIdentifier?: string;
 }
 
-export function withCMSProvider<P extends {}>(
-  WrappedComponent: ComponentClass<P & CMSProviderProps>
-): ComponentClass<P & CMSProviderProps> {
-  type ResultProps = P & CMSProviderProps;
+export const withCMSProvider = <P,>(
+  WrappedComponent: ComponentClass<CMSProviderProps & P>
+): ComponentClass<CMSProviderProps & P> => {
+  type ResultProps = CMSProviderProps & P;
 
   return class CommerceProvider extends Component<ResultProps, CMSProviderState> {
     constructor(props: ResultProps) {
@@ -28,16 +28,12 @@ export function withCMSProvider<P extends {}>(
       };
     }
 
-    componentDidMount(): void {
-      this.fetchData();
-    }
-
-    fetchData = () => {
+    private readonly fetchData = () => {
       const {
-        cmsProviderManagementConfig,
         cmsProviderGroup,
-        cmsProviderSlot,
         cmsProviderIdentifier,
+        cmsProviderManagementConfig,
+        cmsProviderSlot,
       } = this.props;
 
       const CMS = new ContentManagementSystem(cmsProviderManagementConfig);
@@ -57,8 +53,12 @@ export function withCMSProvider<P extends {}>(
         });
     };
 
-    render(): JSX.Element {
+    public componentDidMount(): void {
+      this.fetchData();
+    }
+
+    public render(): JSX.Element {
       return <WrappedComponent {...this.props} {...this.state} />;
     }
   };
-}
+};

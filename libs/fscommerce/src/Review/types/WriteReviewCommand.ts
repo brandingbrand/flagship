@@ -13,13 +13,7 @@ export interface WriteReviewCommand {
   userLocation?: string;
   userNickname?: string;
 
-  additionalFields?: {
-    [key: string]: string;
-  };
-  additionalRatings?: {
-    [key: string]: string;
-  };
-  tags?: {
-    [key: string]: string;
-  };
+  additionalFields?: Record<string, string>;
+  additionalRatings?: Record<string, string>;
+  tags?: Record<string, string>;
 }

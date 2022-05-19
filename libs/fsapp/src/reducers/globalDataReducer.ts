@@ -1,4 +1,5 @@
-import { GlobalDataAction, GlobalDataActionType } from '../actions/globalDataAction';
+import type { GlobalDataAction } from '../actions/globalDataAction';
+import { GlobalDataActionType } from '../actions/globalDataAction';
 
 export default (state = {}, action: GlobalDataAction) => {
   if (action.type === GlobalDataActionType) {

@@ -1,4 +1,5 @@
 import type { ILens } from '@brandingbrand/standard-lens';
+
 import type { EntityId, EntityState } from './entity.types';
 
 export const makeSelectAll =

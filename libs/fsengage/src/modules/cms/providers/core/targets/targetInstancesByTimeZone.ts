@@ -1,8 +1,4 @@
-// eslint-disable-next-line complexity
-export default function targetInstancesByTimeZone(
-  instance: any,
-  targets: { [index: string]: any }
-): boolean {
+const targetInstancesByTimeZone = (instance: any, targets: Record<string, any>): boolean => {
   if (!instance) {
     return false;
   }
@@ -14,7 +10,7 @@ export default function targetInstancesByTimeZone(
   const instanceTimeZone =
     instance.targets && instance.targets.Timezone && instance.targets.Timezone.timezone;
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
   const campaignTimeZone =
     targets[campaign] && targets[campaign].Timezone && targets[campaign].Timezone.timezone;
 
@@ -29,4 +25,6 @@ export default function targetInstancesByTimeZone(
   }
 
   return true;
-}
+};
+
+export default targetInstancesByTimeZone;

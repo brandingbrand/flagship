@@ -1,14 +1,15 @@
 import type { ILens } from '@brandingbrand/standard-lens';
+
 import type { StateReducer } from '../store';
 
-export type EntityId = string | number;
+export type EntityId = number | string;
 export type IdSelector<T> = (entity: T) => EntityId;
-export type ComparerResult = 1 | 0 | -1;
+export type ComparerResult = -1 | 0 | 1;
 export type Comparer<T> = (a: T, b: T) => ComparerResult;
-export type EntityState<T> = {
+export interface EntityState<T> {
   ids: EntityId[];
   entities: Record<EntityId, T>;
-};
+}
 export interface EntityReducers<T, Structure> {
   addMany: (items: T[]) => StateReducer<Structure>;
   addOne: (item: T) => StateReducer<Structure>;

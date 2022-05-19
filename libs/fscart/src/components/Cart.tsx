@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, View } from 'react-native';
-import {
+
+import type {
   CommerceDataSource,
   CommerceTypes,
-  withCommerceData,
   WithCommerceProps,
   WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
-import { CartItem, CartItemProps, Loading } from '@brandingbrand/fscomponents';
+import { withCommerceData } from '@brandingbrand/fscommerce';
+import type { CartItemProps } from '@brandingbrand/fscomponents';
+import { CartItem, Loading } from '@brandingbrand/fscomponents';
 
 import CartSummary from './CartSummary';
 import EmptyCart from './EmptyCart';
@@ -65,7 +68,54 @@ export interface UnwrappedCartProps {
 export type CartProps = UnwrappedCartProps & WithCommerceProviderProps<CommerceTypes.Cart>;
 
 class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceTypes.Cart>> {
-  render(): React.ReactNode {
+  /**
+   * Updates the quantity of an item in cart.
+   *
+   * @param item
+   * @param qty
+   */
+  private readonly updateQty = async (item: CommerceTypes.CartItem, qty: number) => {
+    if (!this.props.commerceDataSource) {
+      throw new Error(kErrorMessageDataSourceMissing);
+    }
+
+    // TODO: We should debounce this to avoid sending multiple calls in rapid succession if the
+    // user uses the stepper.
+    return this.props.commerceDataSource.updateCartItemQty(item.itemId, qty).then(this.updateData);
+  };
+
+  /**
+   * Removes an item from cart.
+   *
+   * @param item
+   */
+  private readonly removeItem = async (item: CommerceTypes.CartItem) => {
+    if (!this.props.commerceDataSource) {
+      throw new Error(kErrorMessageDataSourceMissing);
+    }
+
+    return this.props.commerceDataSource.removeCartItem(item.itemId).then(this.updateData);
+  };
+
+  /**
+   * Replaces the current cart data with the newly provided data and invokes the change
+   * handler.
+   *
+   * @param data
+   */
+  private readonly updateData = (data: CommerceTypes.Cart) => {
+    if (!this.props.commerceLoadData) {
+      throw new Error(kErrorMessageDataSourceMissing);
+    }
+
+    this.props.commerceLoadData(data);
+
+    if (this.props.onChange) {
+      this.props.onChange(data);
+    }
+  };
+
+  public render(): React.ReactNode {
     const {
       cartItemProps,
       commerceData,
@@ -85,7 +135,7 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
       return <Loading style={defaultStyles.loading} />;
     }
 
-    if (!commerceData.items.length) {
+    if (commerceData.items.length === 0) {
       if (renderEmptyCart) {
         return renderEmptyCart(commerceData);
       }
@@ -97,18 +147,16 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
       <View>
         {renderCartItem
           ? commerceData.items.map(renderCartItem)
-          : commerceData.items.map((item: CommerceTypes.CartItem) => {
-              return (
-                <CartItem
-                  key={item.itemId}
-                  removeItem={this.removeItem}
-                  updateQty={this.updateQty}
-                  onImagePress={onImagePress}
-                  {...item}
-                  {...cartItemProps}
-                />
-              );
-            })}
+          : commerceData.items.map((item: CommerceTypes.CartItem) => (
+              <CartItem
+                key={item.itemId}
+                onImagePress={onImagePress}
+                removeItem={this.removeItem}
+                updateQty={this.updateQty}
+                {...item}
+                {...cartItemProps}
+              />
+            ))}
         {renderPromoForm && renderPromoForm(commerceData)}
         {renderSummary ? (
           renderSummary(commerceData)
@@ -123,46 +171,6 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
       </View>
     );
   }
-
-  /**
-   * Updates the quantity of an item in cart.
-   */
-  private updateQty = async (item: CommerceTypes.CartItem, qty: number) => {
-    if (!this.props.commerceDataSource) {
-      throw new Error(kErrorMessageDataSourceMissing);
-    }
-
-    // TODO: We should debounce this to avoid sending multiple calls in rapid succession if the
-    // user uses the stepper.
-    return this.props.commerceDataSource.updateCartItemQty(item.itemId, qty).then(this.updateData);
-  };
-
-  /**
-   * Removes an item from cart.
-   */
-  private removeItem = async (item: CommerceTypes.CartItem) => {
-    if (!this.props.commerceDataSource) {
-      throw new Error(kErrorMessageDataSourceMissing);
-    }
-
-    return this.props.commerceDataSource.removeCartItem(item.itemId).then(this.updateData);
-  };
-
-  /**
-   * Replaces the current cart data with the newly provided data and invokes the change
-   * handler.
-   */
-  private updateData = (data: CommerceTypes.Cart) => {
-    if (!this.props.commerceLoadData) {
-      throw new Error(kErrorMessageDataSourceMissing);
-    }
-
-    this.props.commerceLoadData(data);
-
-    if (this.props.onChange) {
-      this.props.onChange(data);
-    }
-  };
 }
 
 export default withCommerceData<UnwrappedCartProps, CommerceTypes.Cart>(

@@ -1,13 +1,15 @@
 import { createLens } from '@brandingbrand/standard-lens';
+
 import * as FastCheck from 'fast-check';
+
 import { defaultIdSelector } from './entity.adaptor';
 import { makeReducers } from './entity.reducer';
 import type { EntityState } from './entity.types';
 
-type SampleItem = {
+interface SampleItem {
   id: number;
   value: unknown;
-};
+}
 
 const entityStateLens = createLens<EntityState<SampleItem>>().fromPath();
 
@@ -31,7 +33,7 @@ describe('makeReducers', () => {
   });
 
   describe('addMany', () => {
-    it('adds multiple items, ignoring duplicates', () =>
+    it('adds multiple items, ignoring duplicates', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -46,21 +48,27 @@ describe('makeReducers', () => {
 
             expect(result.ids).toHaveLength(deduplicatedLength);
             expect(Object.values(result.entities)).toHaveLength(deduplicatedLength);
-            newItems.forEach((item) => expect(result.ids).toContain(item.id));
-            newItems
-              .filter((item) => !entityState.ids.includes(item.id))
-              .forEach((item) => expect(Object.values(result.entities)).toContain(item));
-            entityState.ids.forEach((id) => expect(result.ids).toContain(id));
-            entityState.ids
-              .map((id) => entityState.entities[id])
-              .forEach((item) => expect(Object.values(result.entities)).toContain(item));
+
+            for (const item of newItems) {
+              expect(result.ids).toContain(item.id);
+            }
+            for (const item of newItems.filter((item) => !entityState.ids.includes(item.id))) {
+              expect(Object.values(result.entities)).toContain(item);
+            }
+            for (const id of entityState.ids) {
+              expect(result.ids).toContain(id);
+            }
+            for (const item of entityState.ids.map((id) => entityState.entities[id])) {
+              expect(Object.values(result.entities)).toContain(item);
+            }
           }
         )
-      ));
+      );
+    });
   });
 
   describe('addOne', () => {
-    it('adds an item, ignoring duplicates', () =>
+    it('adds an item, ignoring duplicates', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -75,6 +83,7 @@ describe('makeReducers', () => {
             expect(result.ids).toHaveLength(deduplicatedLength);
             expect(Object.values(result.entities)).toHaveLength(deduplicatedLength);
             expect(result.ids).toContain(newItem.id);
+
             if (newItemIdIsInEntityState) {
               expect(result).toEqual(entityState);
               expect(Object.values(result.entities)).not.toContain(newItem);
@@ -84,11 +93,12 @@ describe('makeReducers', () => {
             }
           }
         )
-      ));
+      );
+    });
   });
 
   describe('setMany', () => {
-    it('sets multiple items, overwriting duplicates', () =>
+    it('sets multiple items, overwriting duplicates', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -100,23 +110,32 @@ describe('makeReducers', () => {
               ...new Set(newItems.map((item) => item.id)),
               ...entityState.ids,
             ]).size;
+
             expect(result.ids).toHaveLength(deduplicatedLength);
             expect(Object.values(result.entities)).toHaveLength(deduplicatedLength);
 
-            newItems.forEach((item) => expect(result.ids).toContain(item.id));
-            newItems.forEach((item) => expect(Object.values(result.entities)).toContain(item));
-            entityState.ids.forEach((id) => expect(result.ids).toContain(id));
-            entityState.ids
+            for (const item of newItems) {
+              expect(result.ids).toContain(item.id);
+            }
+            for (const item of newItems) {
+              expect(Object.values(result.entities)).toContain(item);
+            }
+            for (const id of entityState.ids) {
+              expect(result.ids).toContain(id);
+            }
+            for (const item of entityState.ids
               .filter((id) => !newItems.map(defaultIdSelector).includes(id))
-              .map((id) => entityState.entities[id])
-              .forEach((item) => expect(Object.values(result.entities)).toContain(item));
+              .map((id) => entityState.entities[id])) {
+              expect(Object.values(result.entities)).toContain(item);
+            }
           }
         )
-      ));
+      );
+    });
   });
 
   describe('setOne', () => {
-    it('sets an item, existing or not, overwriting existing items', () =>
+    it('sets an item, existing or not, overwriting existing items', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -134,11 +153,12 @@ describe('makeReducers', () => {
             expect(Object.values(result.entities)).toContain(newItem);
           }
         )
-      ));
+      );
+    });
   });
 
   describe('setAll', () => {
-    it('replaces all items', () =>
+    it('replaces all items', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -150,17 +170,24 @@ describe('makeReducers', () => {
             expect(Object.values(result.entities)).toHaveLength(newItems.length);
 
             // new items are all in there
-            newItems.forEach((item) => expect(result.ids).toContain(item.id));
-            newItems.forEach((item) => expect(Object.values(result.entities)).toContain(item));
+            for (const item of newItems) {
+              expect(result.ids).toContain(item.id);
+            }
+            for (const item of newItems) {
+              expect(Object.values(result.entities)).toContain(item);
+            }
 
             // old items whose ids don't happen to be in newItems aren't there
-            entityState.ids
+            for (const id of entityState.ids.filter(
+              (id) => !newItems.map(defaultIdSelector).includes(id)
+            )) {
+              expect(result.ids).not.toContain(id);
+            }
+            for (const item of entityState.ids
               .filter((id) => !newItems.map(defaultIdSelector).includes(id))
-              .forEach((id) => expect(result.ids).not.toContain(id));
-            entityState.ids
-              .filter((id) => !newItems.map(defaultIdSelector).includes(id))
-              .map((id) => entityState.entities[id])
-              .forEach((item) => expect(Object.values(result.entities)).not.toContain(item));
+              .map((id) => entityState.entities[id])) {
+              expect(Object.values(result.entities)).not.toContain(item);
+            }
 
             expect(result).toEqual({
               ids: newItems.map(defaultIdSelector),
@@ -168,24 +195,27 @@ describe('makeReducers', () => {
             });
           }
         )
-      ));
+      );
+    });
   });
 
   describe('removeAll', () => {
-    it('removes all items, leaving an empty state', () =>
+    it('removes all items, leaving an empty state', () => {
       FastCheck.assert(
         FastCheck.property(sampleItemEntityArbitrary, (entityState) => {
           const result = reducers.removeAll()(entityState);
+
           expect(result).toEqual({
             ids: [],
             entities: {},
           });
         })
-      ));
+      );
+    });
   });
 
   describe('removeMany', () => {
-    it('removes the specified ids, leaving any other ids unaffected', () =>
+    it('removes the specified ids, leaving any other ids unaffected', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -195,9 +225,13 @@ describe('makeReducers', () => {
             const overlappingIds = idsToRemove.filter((id) => entityState.ids.includes(id));
             const newLength = entityState.ids.length - overlappingIds.length;
 
-            idsToRemove.forEach((id) => expect(result.ids).not.toContain(id));
-            idsToRemove.forEach((id) => expect(result.entities).not.toHaveProperty(`${id}`));
-            if (overlappingIds.length) {
+            for (const id of idsToRemove) {
+              expect(result.ids).not.toContain(id);
+            }
+            for (const id of idsToRemove) {
+              expect(result.entities).not.toHaveProperty(`${id}`);
+            }
+            if (overlappingIds.length > 0) {
               expect(result.ids).toHaveLength(newLength);
               expect(Object.values(result.entities)).toHaveLength(newLength);
             } else {
@@ -205,11 +239,12 @@ describe('makeReducers', () => {
             }
           }
         )
-      ));
+      );
+    });
   });
 
   describe('removeOne', () => {
-    it('removes the specified id, leaving any other ids unaffected', () =>
+    it('removes the specified id, leaving any other ids unaffected', () => {
       FastCheck.assert(
         FastCheck.property(
           sampleItemEntityArbitrary,
@@ -230,6 +265,7 @@ describe('makeReducers', () => {
             }
           }
         )
-      ));
+      );
+    });
   });
 });

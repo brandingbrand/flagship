@@ -4,10 +4,10 @@ import { getDefaultEnvironment, getEnvironmentConfigs } from '@brandingbrand/fse
 declare const __DEFAULT_ENV__: string | undefined;
 
 class WebEnvSwitcher {
-  storageKey: string = 'envName';
-  defaultAppEnv: string = __DEFAULT_ENV__ || getDefaultEnvironment() || 'prod';
+  private readonly storageKey = 'envName';
+  private readonly defaultAppEnv: string = __DEFAULT_ENV__ || getDefaultEnvironment() || 'prod';
 
-  get envName(): string {
+  public get envName(): string {
     try {
       const savedEnvName = localStorage.getItem(this.storageKey);
       if (
@@ -23,14 +23,14 @@ class WebEnvSwitcher {
     return this.defaultAppEnv;
   }
 
-  set envName(name: string) {
+  public set envName(name: string) {
     if (typeof name === 'string') {
       localStorage.setItem(this.storageKey, name);
     }
   }
 
   // Match the native version's method for type reasons
-  async setEnv(name: string): Promise<void> {
+  public async setEnv(name: string): Promise<void> {
     this.envName = name;
   }
 }

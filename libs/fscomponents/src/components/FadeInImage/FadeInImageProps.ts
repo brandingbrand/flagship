@@ -1,3 +1,3 @@
-import { ImageProps } from 'react-native';
+import type { ImageProps } from 'react-native';
 
 export type FadeInImageProps = Pick<ImageProps, 'resizeMethod' | 'resizeMode' | 'source' | 'style'>;

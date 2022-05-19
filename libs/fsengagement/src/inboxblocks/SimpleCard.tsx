@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 
-import { InboxBlock } from '../types';
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { TextBlock } from './TextBlock';
+import type { InboxBlock } from '../types';
+
 import { CTABlock } from './CTABlock';
 import { ImageBlock } from './ImageBlock';
 import ShareBlock from './ShareBlock';
+import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
   eventContainer: {
@@ -50,7 +52,7 @@ export interface ComponentProps {
 }
 
 export default class SimpleCard extends Component<ComponentProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { containerStyle, contents } = this.props;
 
     return (

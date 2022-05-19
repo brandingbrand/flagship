@@ -1,36 +1,38 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text, View } from 'react-native';
+
 import { ReviewIndicator } from '../../ReviewIndicator';
-import { ProductItemProps } from '../ProductItem';
+import type { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
   reviewConatiner: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginBottom: 10,
   },
   reviewCountStyle: {
     fontSize: 12,
-    marginTop: 2,
     lineHeight: 18,
     marginLeft: 6,
+    marginTop: 2,
   },
 });
 
 export type ProductItemReviewsProps = Pick<
   ProductItemProps,
+  | 'renderReviews'
   | 'review'
-  | 'reviewStyle'
+  | 'reviewCount'
   | 'reviewCountStyle'
   | 'reviewIndicatorProps'
-  | 'renderReviews'
+  | 'reviewStyle'
   | 'reviewValue'
-  | 'reviewCount'
   | 'showReviewCount'
 >;
 
 export class ProductItemReviews extends Component<ProductItemReviewsProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const {
       review,
       reviewStyle,

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+
 import { Modal } from './Modal';
-import { SearchScreen, SearchScreenProps, SerializableSearchScreenProps } from './SearchScreen';
+import type { SearchScreenProps, SerializableSearchScreenProps } from './SearchScreen';
+import { SearchScreen } from './SearchScreen';
 
 interface SharedSearchModalProps {
   visible: boolean;
@@ -13,10 +15,10 @@ export interface SerializableSearchModalProps
 export interface SearchModalProps extends SearchScreenProps, SharedSearchModalProps {}
 
 export class SearchModal extends Component<SearchModalProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { visible, ...searchProps } = this.props;
     return (
-      <Modal visible={this.props.visible} animationType="fade" onRequestClose={this.props.onClose}>
+      <Modal animationType="fade" onRequestClose={this.props.onClose} visible={this.props.visible}>
         <SearchScreen {...searchProps} />
       </Modal>
     );

@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+
+import type { PanResponderInstance, StyleProp, ViewStyle } from 'react-native';
 import { Animated, Dimensions, PanResponder, View } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -7,8 +9,8 @@ export interface ZoomCarouselItemProps {
   onItemMoveOutX: (dx: number) => void;
   onItemMoveOutY: (dy: number) => void;
   onZoomRelease: (didistanceDiffff: number) => void;
-  onMoveRelease: (evt: any, gestureState: any, justMoveX: boolean) => void;
-  style?: any;
+  onMoveRelease: (evt: unknown, gestureState: unknown, justMoveX: boolean) => void;
+  style?: StyleProp<ViewStyle>;
 }
 export interface ZoomCarouselItemState {
   zoomImageSize: Animated.Value;
@@ -16,12 +18,6 @@ export interface ZoomCarouselItemState {
 }
 
 export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomCarouselItemState> {
-  initialZoomDistance?: number;
-  distanceDiff: number = 0;
-  isZooming: boolean = false;
-  justMoveX?: boolean;
-  panResponder: any = null;
-
   constructor(props: ZoomCarouselItemProps) {
     super(props);
 
@@ -33,7 +29,13 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
     };
   }
 
-  initPanResponder = () => {
+  private initialZoomDistance?: number;
+  private distanceDiff = 0;
+  private isZooming = false;
+  private justMoveX?: boolean;
+  private panResponder: PanResponderInstance | null = null;
+
+  private readonly initPanResponder = () => {
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
@@ -45,7 +47,6 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
         this.justMoveX = undefined;
       },
 
-      // eslint-disable-next-line complexity
       onPanResponderMove: (evt, gestureState) => {
         if (evt.nativeEvent.changedTouches.length > 1) {
           this.isZooming = true;
@@ -71,21 +72,15 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
           }
         } else if (evt.nativeEvent.changedTouches.length === 1 && !this.isZooming) {
           if (this.justMoveX === undefined) {
-            if (Math.abs(gestureState.dx) >= Math.abs(gestureState.dy)) {
-              this.justMoveX = true;
-            } else {
-              this.justMoveX = false;
-            }
+            this.justMoveX = Math.abs(gestureState.dx) >= Math.abs(gestureState.dy);
           }
 
           if (this.justMoveX) {
             if (this.props.onItemMoveOutX) {
               this.props.onItemMoveOutX(gestureState.dx);
             }
-          } else {
-            if (this.props.onItemMoveOutY) {
-              this.props.onItemMoveOutY(gestureState.dy);
-            }
+          } else if (this.props.onItemMoveOutY) {
+            this.props.onItemMoveOutY(gestureState.dy);
           }
         }
       },
@@ -109,7 +104,7 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
     });
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { zoomImagePosition, zoomImageSize } = this.state;
     const zoomStyle = {
       transform: [
@@ -128,7 +123,7 @@ export class ZoomCarouselItem extends PureComponent<ZoomCarouselItemProps, ZoomC
       ],
     };
     return (
-      <View {...this.panResponder.panHandlers} style={this.props.style}>
+      <View {...this.panResponder?.panHandlers} style={this.props.style}>
         <Animated.View style={zoomStyle}>{this.props.children}</Animated.View>
       </View>
     );

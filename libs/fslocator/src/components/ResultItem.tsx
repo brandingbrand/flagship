@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { getDistance } from '../lib/helpers';
 
-import { LocationItem, LocationItemProps } from '@brandingbrand/fscomponents';
+import type { LocationItemProps } from '@brandingbrand/fscomponents';
+import { LocationItem } from '@brandingbrand/fscomponents';
 import { DistanceUnit } from '@brandingbrand/types-location';
-import { Location } from '../types/Location';
+
+import { getDistance } from '../lib/helpers';
+import type { Location } from '../types/Location';
 
 export interface PropType {
   location: Location;
@@ -18,16 +20,16 @@ export interface PropType {
 }
 
 export default class ResultItem extends Component<PropType> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      locationItemProps,
       currentLocation,
-      location,
-      index,
       handleNavPress,
       handlePhonePress,
-      selectLocation,
+      index,
+      location,
+      locationItemProps,
       renderLocationItem,
+      selectLocation,
       selected,
     } = this.props;
 
@@ -44,7 +46,7 @@ export default class ResultItem extends Component<PropType> {
     }
 
     const primaryService = location.services.find((s) => s.service === 'Store') || ({} as any);
-    const hours = primaryService.hours;
+    const { hours } = primaryService;
     const phone = primaryService.contact.phones.find((p: any) => p.name === 'main').number;
 
     const distance = currentLocation
@@ -61,15 +63,15 @@ export default class ResultItem extends Component<PropType> {
 
     return (
       <LocationItem
-        locationName={location.title}
         address={location.address}
-        hours={hours}
-        format="1"
-        phone={phone}
         buttonTitle={phone}
         distance={distance}
+        format="1"
+        hours={hours}
+        locationName={location.title}
         onNavButtonPress={handleNavPress(location, location.id, index)}
         onPhoneButtonPress={handlePhonePress(phone, location.id, index)}
+        phone={phone}
         {...locationItemProps}
       />
     );

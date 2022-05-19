@@ -1,9 +1,9 @@
-import { Config } from '../../../types';
 import { logError, logInfo } from '../../../helpers';
-import * as path from '../../path';
+import type { Config } from '../../../types';
 import * as fs from '../../fs';
+import * as path from '../../path';
 
-export function postLink(config: Config): void {
+export const postLink = (config: Config): void => {
   if (
     !config.adobeAnalytics ||
     !config.adobeAnalytics.android ||
@@ -19,4 +19,4 @@ export function postLink(config: Config): void {
   fs.copySync(source, destination);
 
   logInfo('finished updating Android for react-native-adobe-analytics');
-}
+};

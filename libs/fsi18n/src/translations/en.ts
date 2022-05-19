@@ -1,4 +1,4 @@
-import { EmailErrors, FSTranslationKeys, PasswordFormErrors } from '../types';
+import type { EmailErrors, FSTranslationKeys, PasswordFormErrors } from '../types';
 
 export const passwordErrors: PasswordFormErrors = {
   tooShort: 'Password should have at least {{minCharacters}} characters',

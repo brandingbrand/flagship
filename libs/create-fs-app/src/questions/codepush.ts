@@ -1,5 +1,7 @@
-import { DistinctQuestion } from 'inquirer';
-import { android, ios, QuestionFormatter } from '../lib/formatters';
+import type { DistinctQuestion } from 'inquirer';
+
+import type { QuestionFormatter } from '../lib/formatters';
+import { android, ios } from '../lib/formatters';
 import { requiredString } from '../lib/validation';
 
 const generateCodePushConfig = (os: string, formatter: QuestionFormatter): DistinctQuestion[] => {

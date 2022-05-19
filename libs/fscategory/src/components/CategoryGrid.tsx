@@ -1,13 +1,16 @@
-import { CategoryBox, Grid } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
-import { ListRenderItemInfo } from 'react-native';
-import { UnwrappedCategoryProps } from './Category';
-import { CommerceTypes, WithCommerceDataProps } from '@brandingbrand/fscommerce';
+
+import type { ListRenderItemInfo } from 'react-native';
+
+import type { CommerceTypes, WithCommerceDataProps } from '@brandingbrand/fscommerce';
+import { CategoryBox, Grid } from '@brandingbrand/fscomponents';
+
+import type { UnwrappedCategoryProps } from './Category';
 
 export default class CategoryGrid extends Component<
   UnwrappedCategoryProps & WithCommerceDataProps<CommerceTypes.Category>
 > {
-  renderItem = ({ item }: ListRenderItemInfo<CommerceTypes.Category>) => {
+  private readonly renderItem = ({ item }: ListRenderItemInfo<CommerceTypes.Category>) => {
     const { categoryItemProps, onNavigate, renderCategoryItem } = this.props;
 
     if (renderCategoryItem) {
@@ -17,14 +20,14 @@ export default class CategoryGrid extends Component<
     return <CategoryBox onPress={onNavigate} {...item} {...categoryItemProps} />;
   };
 
-  render(): React.ReactNode {
-    const { commerceData, columns, categoryGridProps } = this.props;
+  public render(): React.ReactNode {
+    const { categoryGridProps, columns, commerceData } = this.props;
 
     if (commerceData && commerceData.categories) {
       return (
         <Grid
-          data={commerceData.categories}
           columns={columns}
+          data={commerceData.categories}
           renderItem={this.renderItem}
           {...categoryGridProps}
         />

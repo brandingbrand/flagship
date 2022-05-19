@@ -1,36 +1,40 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
-import {
+import type {
   EventSubscription,
-  Navigation,
   NavigationButtonPressedEvent,
   Options,
   OptionsTopBar,
 } from 'react-native-navigation';
-import FSNetwork from '@brandingbrand/fsnetwork';
+import { Navigation } from 'react-native-navigation';
+import { connect } from 'react-redux';
+
+import type FSNetwork from '@brandingbrand/fsnetwork';
+
 import { setGlobalData } from '../actions/globalDataAction';
-import { AppConfigType, DrawerConfig, NavButton } from '../types';
-import NativeConstants from '../lib/native-constants';
 import EnvSwitcher from '../lib/env-switcher';
-import Navigator, { GenericNavProp } from '../lib/nav-wrapper';
+import NativeConstants from '../lib/native-constants';
+import type { GenericNavProp } from '../lib/nav-wrapper';
+import Navigator from '../lib/nav-wrapper';
+import type { AppConfigType, DrawerConfig, NavButton } from '../types';
 
 const styles = StyleSheet.create({
+  devNote: {
+    color: 'white',
+    fontSize: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  devNoteContainer: {
+    backgroundColor: 'rgba(0,0,0,0.36)',
+    bottom: 0,
+    position: 'absolute',
+    right: 0,
+  },
   screenContainer: {
     flex: 1,
     flexBasis: 'auto',
-  },
-  devNoteContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.36)',
-  },
-  devNote: {
-    paddingLeft: 5,
-    paddingRight: 5,
-    color: 'white',
-    fontSize: 15,
   },
 });
 
@@ -51,19 +55,19 @@ export interface GenericScreenProp
   testID: string;
 }
 
-export default function wrapScreen(
+const wrapScreen = (
   PageComponent: any,
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): any {
+): any => {
   // Note: in RNN v2, PageComponent.options type is a function `(passProps: Props) => Options`
   // the transformation code below for backward-compatibility purpose will only work
   // if the incoming value is not a function
   const pageOptions: Options = PageComponent.options;
   const pageTopBar: OptionsTopBar = PageComponent.options && PageComponent.options.topBar;
   class GenericScreen extends Component<GenericScreenProp> {
-    static options: Options =
+    public static options: Options =
       typeof PageComponent.options === 'function'
         ? PageComponent.options
         : {
@@ -75,14 +79,8 @@ export default function wrapScreen(
             },
           };
 
-    navigator: Navigator;
-    navigationEventListener: EventSubscription | null;
-    bottomTabEventListener: EventSubscription | null;
-    showDevMenu: boolean;
-
     constructor(props: GenericScreenProp) {
       super(props);
-
       this.navigationEventListener = null;
       this.bottomTabEventListener = null;
       this.showDevMenu =
@@ -96,38 +94,25 @@ export default function wrapScreen(
       });
     }
 
-    navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
+    private readonly navigator: Navigator;
+    private navigationEventListener: EventSubscription | null;
+    private readonly showDevMenu: boolean;
+    public bottomTabEventListener: EventSubscription | null;
+
+    public readonly navigationButtonPressed = (event: NavigationButtonPressedEvent): void => {
       const navButtons = [
         ...(PageComponent.rightButtons || []),
         ...(PageComponent.leftButtons || []),
       ];
 
-      navButtons.forEach((btn) => {
+      for (const btn of navButtons) {
         if (event.buttonId === btn.button.id) {
           btn.action(this.navigator);
         }
-      });
+      }
     };
 
-    componentDidMount(): void {
-      const component = PageComponent.WrappedComponent || PageComponent;
-
-      this.navigationEventListener = Navigation.events().bindComponent(this);
-
-      if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
-        appConfig.analytics.screenview(component, {
-          url: component.name,
-        });
-      }
-    }
-
-    componentWillUnmount(): void {
-      if (this.navigationEventListener) {
-        this.navigationEventListener.remove();
-      }
-    }
-
-    openDevMenu = () => {
+    private readonly openDevMenu = () => {
       Navigation.showModal({
         stack: {
           children: [
@@ -148,19 +133,12 @@ export default function wrapScreen(
             },
           ],
         },
-      }).catch((err) => console.warn('openDevMenu SHOWMODAL error: ', err));
+      }).catch((error) => {
+        console.warn('openDevMenu SHOWMODAL error:', error);
+      });
     };
 
-    render(): JSX.Element {
-      return (
-        <View style={styles.screenContainer}>
-          {this.renderPage()}
-          {this.renderVersion()}
-        </View>
-      );
-    }
-
-    renderVersion = () => {
+    private readonly renderVersion = () => {
       // DEV feature
       if (!this.showDevMenu || this.props.testID === 'devMenu' || this.props.devMenuHidden) {
         return null;
@@ -171,10 +149,10 @@ export default function wrapScreen(
 
       return (
         <TouchableOpacity
-          accessible={true}
-          accessibilityLabel={'development menu'}
-          style={styles.devNoteContainer}
+          accessibilityLabel="development menu"
+          accessible
           onPress={this.openDevMenu}
+          style={styles.devNoteContainer}
         >
           <Text style={styles.devNote}>
             {`${versionlabel}`}
@@ -185,24 +163,47 @@ export default function wrapScreen(
       );
     };
 
-    renderPage = () => {
+    private readonly renderPage = () => (
+      <PageComponent {...this.props} api={api} appConfig={appConfig} navigator={this.navigator} />
+    );
+
+    public componentDidMount(): void {
+      const component = PageComponent.WrappedComponent || PageComponent;
+
+      this.navigationEventListener = Navigation.events().bindComponent(this);
+
+      if (!__DEV__ && appConfig.analytics && !component.disableTracking) {
+        appConfig.analytics.screenview(component, {
+          url: component.name,
+        });
+      }
+    }
+
+    public componentWillUnmount(): void {
+      if (this.navigationEventListener) {
+        this.navigationEventListener.remove();
+      }
+    }
+
+    public render(): JSX.Element {
       return (
-        <PageComponent {...this.props} appConfig={appConfig} api={api} navigator={this.navigator} />
+        <View style={styles.screenContainer}>
+          {this.renderPage()}
+          {this.renderVersion()}
+        </View>
       );
-    };
+    }
   }
 
-  function mapStateToProps(state: any, ownProps: GenericScreenProp): GenericScreenStateProp {
-    return {
-      devMenuHidden: state.global.devMenuHidden,
-    };
-  }
+  const mapStateToProps = (state: any, ownProps: GenericScreenProp): GenericScreenStateProp => ({
+    devMenuHidden: state.global.devMenuHidden,
+  });
 
-  function mapDispatchToProps(dispatch: any): GenericScreenDispatchProp {
-    return {
-      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
-    };
-  }
+  const mapDispatchToProps = (dispatch: any): GenericScreenDispatchProp => ({
+    hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
+  });
 
   return connect(mapStateToProps, mapDispatchToProps)(GenericScreen);
-}
+};
+
+export default wrapScreen;

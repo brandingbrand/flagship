@@ -1,5 +1,7 @@
-import { MaybePromise } from '@brandingbrand/types-utility';
-import { isOk, Result } from './result';
+import type { MaybePromise } from '@brandingbrand/types-utility';
+
+import type { Result } from './result';
+import { isOk } from './result';
 
 export const extractAsync =
   <OkType, FailureType, Output>(

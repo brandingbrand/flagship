@@ -9,7 +9,10 @@ describe('injected value', () => {
 
   it('should not throw an error when injecting a value', () => {
     const token = new InjectionToken<number>('NUMBER_TOKEN');
-    expect(() => injector.provide({ provide: token, useValue: 9 })).not.toThrow();
+
+    expect(() => {
+      injector.provide({ provide: token, useValue: 9 });
+    }).not.toThrow();
   });
 
   it('should return the provided value', () => {
@@ -17,6 +20,7 @@ describe('injected value', () => {
     injector.provide({ provide: token, useValue: 9 });
 
     const value = injector.get(token);
+
     expect(value).toBe(9);
   });
 
@@ -24,7 +28,9 @@ describe('injected value', () => {
     const token = new InjectionToken<number>('NUMBER_TOKEN');
     injector.provide({ provide: token, useValue: 9 });
 
-    expect(() => injector.provide({ provide: token, useValue: 9 })).toThrowError(/duplicate/i);
+    expect(() => {
+      injector.provide({ provide: token, useValue: 9 });
+    }).toThrow(/duplicate/i);
   });
 
   it('should maintain references', () => {
@@ -33,6 +39,7 @@ describe('injected value', () => {
     injector.provide({ provide: token, useValue: array });
 
     const value = injector.get(token);
+
     expect(value).toBe(array);
   });
 
@@ -61,14 +68,20 @@ describe('injected value', () => {
   });
 
   it('should throw in the injection token is invalid', () => {
-    // @ts-expect-error
-    expect(() => injector.provide({ provide: 9, useValue: 9 })).toThrow(TypeError);
+    expect(() => {
+      // @ts-expect-error
+      injector.provide({ provide: 9, useValue: 9 });
+    }).toThrow(TypeError);
 
-    // @ts-expect-error
-    expect(() => injector.provide({ provide: {}, useValue: 9 })).toThrow(TypeError);
+    expect(() => {
+      // @ts-expect-error
+      injector.provide({ provide: {}, useValue: 9 });
+    }).toThrow(TypeError);
 
-    // @ts-expect-error
-    expect(() => injector.provide({ provide: null, useValue: 9 })).toThrow(TypeError);
+    expect(() => {
+      // @ts-expect-error
+      injector.provide({ provide: null, useValue: 9 });
+    }).toThrow(TypeError);
   });
 
   it('should provide undefined for removed tokens', () => {
@@ -77,6 +90,7 @@ describe('injected value', () => {
     injector.remove(token);
 
     const value = injector.get(token);
+
     expect(value).toBeUndefined();
   });
 
@@ -87,6 +101,7 @@ describe('injected value', () => {
     injector.reset();
 
     const value = injector.get(token);
+
     expect(value).toBeUndefined();
   });
 });

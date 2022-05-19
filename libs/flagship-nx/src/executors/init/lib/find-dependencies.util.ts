@@ -1,5 +1,5 @@
-import { ProjectConfiguration, ProjectGraph, readJson, Tree } from '@nrwl/devkit';
-
+import type { ProjectConfiguration, ProjectGraph, Tree } from '@nrwl/devkit';
+import { readJson } from '@nrwl/devkit';
 import { join } from 'path';
 
 export const findDependencies = async (
@@ -7,7 +7,6 @@ export const findDependencies = async (
   graph: ProjectGraph,
   originalProjectName: string
 ): Promise<Set<string>> => {
-  // eslint-disable-next-line complexity
   const internalFindDependencies = async (
     projectName: string,
     list = new Set<string>(),
@@ -27,8 +26,8 @@ export const findDependencies = async (
       const project = graph.nodes[projectName];
       if (project?.type === 'lib') {
         const packageJson =
-          project?.data?.targets?.build?.options?.packageJson ??
-          join(project?.data.root, 'package.json');
+          project.data?.targets?.build?.options?.packageJson ??
+          join(project.data.root, 'package.json');
 
         const { name } = readJson<{ name?: string }>(tree, packageJson);
 
@@ -57,7 +56,7 @@ export const findDependencies = async (
     .map(([packageName]) => packageName);
 
   const webpackConfigs = Object.values(projectJson.targets ?? {})
-    .flatMap(({ options, configurations }) => [
+    .flatMap(({ configurations, options }) => [
       options?.webpackConfig,
       ...Object.values(configurations ?? {}).map(({ webpackConfig }) => webpackConfig),
     ])

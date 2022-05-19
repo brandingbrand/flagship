@@ -1,21 +1,14 @@
 import { useMemo } from 'react';
+
 import { DEFAULT_KEY_EXTRACTOR } from '../defaults';
-import {
-  ChunkOptions,
-  gridInsert,
-  gridSize,
-  InsertOptions,
-  makeGridItem,
-  SizeOptions,
-  gridKeys,
-  KeysOptions,
-} from '../utils';
+import type { ChunkOptions, InsertOptions, KeysOptions, SizeOptions } from '../utils';
+import { gridInsert, gridKeys, gridSize, makeGridItem } from '../utils';
 
 export const useGridItems = <T, E = undefined>(
   iterator: Iterable<T>,
-  options?: ChunkOptions<T, E> & InsertOptions<T> & SizeOptions & KeysOptions
-) => {
-  return useMemo(() => {
+  options?: ChunkOptions<T, E> & InsertOptions<T> & KeysOptions & SizeOptions
+) =>
+  useMemo(() => {
     const iteratorWithInsertions = gridInsert(iterator, options);
     const iteratorWithSizes = gridSize(iteratorWithInsertions, options);
     const iteratorWithKeys = gridKeys(iteratorWithSizes, options);
@@ -33,4 +26,3 @@ export const useGridItems = <T, E = undefined>(
       rowIterator: rowIteratorWithKeys,
     };
   }, [iterator, options]);
-};

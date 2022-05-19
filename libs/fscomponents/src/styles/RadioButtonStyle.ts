@@ -1,4 +1,4 @@
-import { ColorValue, ViewStyle } from 'react-native';
+import type { ColorValue, ViewStyle } from 'react-native';
 
 export interface RadioButtonStyle extends ViewStyle {
   buttonColor?: ColorValue;

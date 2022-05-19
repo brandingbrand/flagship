@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
+
 import { ShareButton } from '../src/components/ShareButton/ShareButton';
 
 storiesOf('ShareButton', module)

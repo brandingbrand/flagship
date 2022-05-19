@@ -8,12 +8,12 @@ export interface Address {
 }
 
 export type CreditCardType =
-  | 'VISA'
-  | 'MASTERCARD'
   | 'AMERICANEXPRESS'
   | 'DINERSCLUB'
   | 'DISCOVER'
-  | 'JCB';
+  | 'JCB'
+  | 'MASTERCARD'
+  | 'VISA';
 
 export interface Hour {
   dayOfWeek: number;
@@ -22,29 +22,29 @@ export interface Hour {
   close: string;
 }
 
-export type ClearButtonMode = 'never' | 'while-editing' | 'unless-editing' | 'always';
+export type ClearButtonMode = 'always' | 'never' | 'unless-editing' | 'while-editing';
 
 export type AccessibilityTraits =
-  | 'none'
-  | 'button'
-  | 'link'
-  | 'header'
-  | 'search'
-  | 'image'
-  | 'selected'
-  | 'plays'
-  | 'key'
-  | 'text'
-  | 'summary'
-  | 'disabled'
-  | 'frequentUpdates'
-  | 'startsMedia'
   | 'adjustable'
   | 'allowsDirectInteraction'
-  | 'pageTurn';
+  | 'button'
+  | 'disabled'
+  | 'frequentUpdates'
+  | 'header'
+  | 'image'
+  | 'key'
+  | 'link'
+  | 'none'
+  | 'pageTurn'
+  | 'plays'
+  | 'search'
+  | 'selected'
+  | 'startsMedia'
+  | 'summary'
+  | 'text';
 
 export type AccessibilityComponentType =
-  | 'none'
   | 'button'
+  | 'none'
   | 'radiobutton_checked'
   | 'radiobutton_unchecked';

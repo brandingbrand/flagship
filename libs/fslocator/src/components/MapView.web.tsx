@@ -1,28 +1,25 @@
-// @ts-ignore TODO: Fix @types/google-map-react (doesn't support all available options)
+import React, { Component } from 'react';
+
+import type { ImageURISource, StyleProp, ViewStyle } from 'react-native';
+import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
+
+import type { GeoLocation } from '@brandingbrand/types-location';
+
+// @ts-expect-error TODO: Fix @types/google-map-react (doesn't support all available options)
 import GoogleMapReact from 'google-map-react';
 
-// @ts-ignore TODO: Add typing support for google-map-react/utils
+// @ts-expect-error TODO: Add typing support for google-map-react/utils
 // The root GoogleMapReact module does not export its utils, so we have to disable that check too
 import { fitBounds } from 'google-map-react/utils';
-import { GeoLocation } from '@brandingbrand/types-location';
-import React, { Component } from 'react';
-import {
-  Dimensions,
-  Image,
-  ImageURISource,
-  StyleProp,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { getCenter, getDelta } from '../lib/helpers';
-import { style as S } from '../styles/MapView';
-import { Location, Region } from '../types/Location';
-import CurrentLocationPin from './CurrentLocationPin';
 
 import googleMapMaker from '../../assets/images/google-map-marker.png';
+import { getCenter, getDelta } from '../lib/helpers';
+import { style as S } from '../styles/MapView';
+import type { Location, Region } from '../types/Location';
 
-const { width, height } = Dimensions.get('window');
+import CurrentLocationPin from './CurrentLocationPin';
+
+const { height, width } = Dimensions.get('window');
 
 export const COLLAPSE_LAT_PADDING = 0.25;
 export const COLLAPSE_LAT_DELTA_PADDING = 0.2;
@@ -53,57 +50,37 @@ export interface StateType {
   zoom?: number;
 }
 
-function Marker({ lat, lng, onPress, selected }: any): JSX.Element {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Image
-        source={googleMapMaker}
-        style={[S.markerImageWeb, selected && S.markerImageSelectedWeb]}
-      />
-    </TouchableOpacity>
-  );
-}
+const Marker = ({ lat, lng, onPress, selected }: any): JSX.Element => (
+  <TouchableOpacity onPress={onPress}>
+    <Image
+      source={googleMapMaker}
+      style={[S.markerImageWeb, selected && S.markerImageSelectedWeb]}
+    />
+  </TouchableOpacity>
+);
 
 export default class MapViewWeb extends Component<PropType, StateType> {
-  map: any;
+  public map: any;
+  private readonly defaultCenter: unknown = { lat: 39.506_061, lng: -96.409_026 };
+  private readonly defaultZoom = 3;
 
-  defaultCenter: any = { lat: 39.506061, lng: -96.409026 };
-  defaultZoom: number = 3;
-
-  constructor(props: PropType) {
-    super(props);
-    this.state = {
-      center: undefined,
-      zoom: undefined,
-    };
-  }
-
-  componentDidMount(): void {
-    this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
-  }
-
-  componentDidUpdate(prevProps: PropType): void {
-    if (
-      this.props.locations !== prevProps.locations ||
-      this.props.isCollapsed !== prevProps.isCollapsed ||
-      this.props.center !== prevProps.center
-    ) {
-      this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
-    }
-  }
-
-  mapRef = (map: any): void => {
-    this.map = map;
+  public state = {
+    center: undefined,
+    zoom: undefined,
   };
 
-  handleMarkerPress = (location: Location) => () => {
+  private readonly handleMarkerPress = (location: Location) => () => {
     if (this.props.onMakerPress) {
       this.props.onMakerPress(location);
     }
   };
 
-  moveToLocation = (locations: Location[], isCollapsed?: boolean, newCenter?: any) => {
-    if (locations.length) {
+  private readonly moveToLocation = (
+    locations: Location[],
+    isCollapsed?: boolean,
+    newCenter?: GeoLocation
+  ) => {
+    if (locations.length > 0) {
       const centerPos = newCenter || getCenter(locations);
       const centerPosDelta = getDelta(locations);
 
@@ -133,7 +110,7 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     }
   };
 
-  handleChange = ({ center, zoom }: { center: Center; zoom: number }) => {
+  private readonly handleChange = ({ center, zoom }: { center: Center; zoom: number }) => {
     this.setState({
       center,
       zoom,
@@ -147,8 +124,26 @@ export default class MapViewWeb extends Component<PropType, StateType> {
     }
   };
 
-  render(): JSX.Element {
-    const { locations, style, googleMapsAPIKey, currentLocation } = this.props;
+  public readonly mapRef = (map: unknown): void => {
+    this.map = map;
+  };
+
+  public componentDidMount(): void {
+    this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
+  }
+
+  public componentDidUpdate(prevProps: PropType): void {
+    if (
+      this.props.locations !== prevProps.locations ||
+      this.props.isCollapsed !== prevProps.isCollapsed ||
+      this.props.center !== prevProps.center
+    ) {
+      this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
+    }
+  }
+
+  public render(): JSX.Element {
+    const { currentLocation, googleMapsAPIKey, locations, style } = this.props;
     const { center, zoom } = this.state;
 
     return (
@@ -157,16 +152,16 @@ export default class MapViewWeb extends Component<PropType, StateType> {
           bootstrapURLKeys={{
             key: googleMapsAPIKey,
           }}
+          center={center}
+          defaultCenter={this.defaultCenter}
+          defaultZoom={this.defaultZoom}
+          onChange={this.handleChange}
           options={{
             fullscreenControl: false,
             zoomControl: false,
           }}
-          resetBoundsOnResize={true}
-          defaultCenter={this.defaultCenter}
-          defaultZoom={this.defaultZoom}
-          center={center}
+          resetBoundsOnResize
           zoom={zoom}
-          onChange={this.handleChange}
         >
           {currentLocation && (
             <CurrentLocationPin lat={currentLocation.latitude} lng={currentLocation.longitude} />
@@ -177,8 +172,8 @@ export default class MapViewWeb extends Component<PropType, StateType> {
               key={i}
               lat={location.address.latlng.lat}
               lng={location.address.latlng.lng}
-              selected={location.selected}
               onPress={this.handleMarkerPress(location)}
+              selected={location.selected}
             />
           ))}
         </GoogleMapReact>

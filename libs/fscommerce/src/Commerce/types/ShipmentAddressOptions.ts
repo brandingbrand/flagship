@@ -1,4 +1,4 @@
-import { Address } from './Address';
+import type { Address } from './Address';
 
 /**
  * Interface that prescribes options that can be provided to the commerce source method to

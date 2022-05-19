@@ -1,5 +1,5 @@
-import * as fs from '../lib/fs';
 import { logError } from '../helpers';
+import * as fs from '../lib/fs';
 import * as path from '../lib/path';
 
 export interface Args {

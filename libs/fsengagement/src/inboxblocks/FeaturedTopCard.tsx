@@ -1,13 +1,20 @@
 import React from 'react';
-import { DeviceEventEmitter, StyleProp, TextStyle, TouchableOpacity } from 'react-native';
 
-import { CardProps, JSON, StoryGradient } from '../types';
+import type { StyleProp, TextStyle } from 'react-native';
+import { DeviceEventEmitter, TouchableOpacity } from 'react-native';
+
 import { useNavigator } from '@brandingbrand/fsapp';
 import { Navigator } from '@brandingbrand/fsapp/legacy';
+
 import { CardContext } from '../lib/contexts';
-import { TextBlock, TextBlockProps } from './TextBlock';
-import { CTABlock, CTABlockProps } from './CTABlock';
-import { ImageBlock, ImageBlockProps } from './ImageBlock';
+import type { CardProps, JSON, StoryGradient } from '../types';
+
+import type { CTABlockProps } from './CTABlock';
+import { CTABlock } from './CTABlock';
+import type { ImageBlockProps } from './ImageBlock';
+import { ImageBlock } from './ImageBlock';
+import type { TextBlockProps } from './TextBlock';
+import { TextBlock } from './TextBlock';
 
 export interface FeaturedTopCardContents {
   Image: ImageBlockProps;
@@ -37,12 +44,14 @@ export const FeaturedTopCard: React.FunctionComponent<ComponentProps> = React.me
       return;
     }
     if (props.discoverPath && !(navigator instanceof Navigator)) {
-      return navigator.open(`${props.discoverPath}/${props.id}`, {
+      navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
         name: props.name,
         discoverPath: props.discoverPath,
       });
+
+      return;
     }
     return navigator.push({
       component: {

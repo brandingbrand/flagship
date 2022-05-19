@@ -16,7 +16,8 @@ export interface FieldsColors {
 // extra styles are to make label templates possible while allowing for user to overwrite speicfic
 // characteristics via fields style config
 
-export function styles(colors: FieldsColors): Record<string, any> {
+// eslint-disable-next-line max-lines-per-function
+export const styles = (colors: FieldsColors): Record<string, unknown> => {
   const LABEL_COLOR = colors.activeColor;
   const INPUT_COLOR = '#000000';
   const ERROR_COLOR = colors.errorColor;
@@ -385,4 +386,4 @@ export function styles(colors: FieldsColors): Record<string, any> {
       width: 80,
     },
   });
-}
+};

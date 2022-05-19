@@ -1,4 +1,5 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nrwl/devkit';
+
 import { ImportConfig } from '../../configs/import.config';
 import {
   CleanPhase,

@@ -1,28 +1,31 @@
-import React, { Component, StatelessComponent } from 'react';
+import type { StatelessComponent } from 'react';
+import React, { Component } from 'react';
+
 import { Animated } from 'react-native';
-import StepManager from './StepManager';
-import { Step } from './types';
+
+import type StepManager from './StepManager';
+import type { Step } from './types';
 
 export interface FSCheckoutStepsProps {
-  steps: (Step & { component: StatelessComponent<any> })[];
+  steps: Array<Step & { component: StatelessComponent<any> }>;
   activeStep: Step;
   stepManager: StepManager;
   checkoutState?: any;
-  checkoutActions?: { [key: string]: any };
+  checkoutActions?: Record<string, any>;
   animated?: boolean;
 }
 
 export default class FSCheckoutSteps extends Component<FSCheckoutStepsProps> {
-  animatedOpacity: Animated.Value;
-  animatedTranslateX: Animated.Value;
+  private readonly animatedOpacity = new Animated.Value(1);
+  private readonly animatedTranslateX = new Animated.Value(1);
 
-  constructor(props: FSCheckoutStepsProps) {
-    super(props);
-    this.animatedOpacity = new Animated.Value(1);
-    this.animatedTranslateX = new Animated.Value(1);
-  }
+  private readonly getAnimatedDirection = (prevStep: Step, currStep: Step) => {
+    const prevStepIndex = this.props.steps.findIndex((step) => step.name === prevStep.name);
+    const currStepIndex = this.props.steps.findIndex((step) => step.name === currStep.name);
+    return currStepIndex > prevStepIndex ? 'left' : 'right';
+  };
 
-  componentDidUpdate(prevProps: FSCheckoutStepsProps): void {
+  public componentDidUpdate(prevProps: FSCheckoutStepsProps): void {
     if (prevProps.activeStep !== this.props.activeStep) {
       const direciton = this.getAnimatedDirection(prevProps.activeStep, this.props.activeStep);
 
@@ -44,13 +47,7 @@ export default class FSCheckoutSteps extends Component<FSCheckoutStepsProps> {
     }
   }
 
-  getAnimatedDirection = (prevStep: Step, currStep: Step) => {
-    const prevStepIndex = this.props.steps.findIndex((step) => step.name === prevStep.name);
-    const currStepIndex = this.props.steps.findIndex((step) => step.name === currStep.name);
-    return currStepIndex > prevStepIndex ? 'left' : 'right';
-  };
-
-  render(): JSX.Element | null {
+  public render(): JSX.Element | null {
     if (!this.props.activeStep) {
       return null;
     }
@@ -73,8 +70,8 @@ export default class FSCheckoutSteps extends Component<FSCheckoutStepsProps> {
     return (
       <Animated.View style={animatedStyle}>
         <activeStepObject.component
-          checkoutState={this.props.checkoutState}
           checkoutActions={this.props.checkoutActions}
+          checkoutState={this.props.checkoutState}
           stepManager={this.props.stepManager}
         />
       </Animated.View>

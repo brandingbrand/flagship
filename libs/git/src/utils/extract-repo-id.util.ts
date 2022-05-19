@@ -12,7 +12,9 @@ export const extractRepoId = (url: string): string | undefined => {
    */
   const repoUrlMatcher = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
   const result = repoUrlMatcher.exec(url);
-  if (result === null) return undefined;
+  if (result === null) {
+    return undefined;
+  }
 
   return result[1];
 };

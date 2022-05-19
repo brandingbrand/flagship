@@ -1,5 +1,5 @@
-import { Product } from './Product';
-import { Pageable } from './Pageable';
+import type { Pageable } from './Pageable';
+import type { Product } from './Product';
 
 /**
  * An interface representing a single type of sort that can be applied to a product index.

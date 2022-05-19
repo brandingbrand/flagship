@@ -1,11 +1,13 @@
-import React, { Context, createContext, useContext, useMemo } from 'react';
-import { InjectionToken, Injector } from '@brandingbrand/fslinker';
+import type { Context } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
+
+import type { InjectionToken } from '@brandingbrand/fslinker';
+import { Injector } from '@brandingbrand/fslinker';
 
 const UNDEFINED_CONTEXT = createContext(undefined);
 
-export const useDependency = <T,>(token: InjectionToken<T>) => {
-  return useMemo(() => Injector.get(token), [token]);
-};
+export const useDependency = <T,>(token: InjectionToken<T>) =>
+  useMemo(() => Injector.get(token), [token]);
 
 export const useDependencyContext = <T,>(token: InjectionToken<Context<T>>) => {
   const context = useMemo(() => Injector.get(token), [token]);
@@ -19,10 +21,14 @@ export interface InjectedContextProviderProps<T> {
 }
 
 export const InjectedContextProvider = <T,>({
+  children,
   token,
   value,
-  children,
 }: InjectedContextProviderProps<T>) => {
   const Context = useDependency(token);
-  return Context ? <Context.Provider value={value}>{children}</Context.Provider> : <>{children}</>;
+  return Context ? (
+    <Context.Provider value={value}>{children}</Context.Provider>
+  ) : (
+    <React.Fragment>{children}</React.Fragment>
+  );
 };

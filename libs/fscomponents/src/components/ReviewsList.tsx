@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { ImageURISource, ScrollView, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { ReviewIndicatorProps } from './ReviewIndicator';
-import { MoreTextProps } from './MoreText';
-import { ReviewItem, ReviewItemProps } from './ReviewItem';
+
+import type { ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { ScrollView } from 'react-native';
+
+import type { MoreTextProps } from './MoreText';
+import type { ReviewIndicatorProps } from './ReviewIndicator';
+import type { ReviewItemProps } from './ReviewItem';
+import { ReviewItem } from './ReviewItem';
 
 export interface ReviewsListProps {
-  reviews: import('@brandingbrand/fscommerce').ReviewTypes.Review[];
+  reviews: Array<import('@brandingbrand/fscommerce').ReviewTypes.Review>;
   reviewStyle?: Record<string, StyleProp<TextStyle | ViewStyle>>;
   reviewItemProps?: Partial<ReviewItemProps>;
 
@@ -22,17 +26,17 @@ export interface ReviewsListProps {
 }
 
 export class ReviewsList extends Component<ReviewsListProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      reviews,
-      reviewStyle,
+      moreTextProps,
       onHelpful,
       onNotHelpful,
-      reviewIndicatorProps,
-      moreTextProps,
       recommendedImage,
-      verifiedImage,
+      reviewIndicatorProps,
       reviewItemProps,
+      reviewStyle,
+      reviews,
+      verifiedImage,
     } = this.props;
 
     return (
@@ -41,22 +45,20 @@ export class ReviewsList extends Component<ReviewsListProps> {
           flexBasis: 'auto',
         }}
       >
-        {reviews.map((review, key) => {
-          return (
-            <ReviewItem
-              key={key}
-              {...review}
-              {...reviewStyle}
-              recommendedImage={recommendedImage}
-              verifiedImage={verifiedImage}
-              reviewIndicatorProps={reviewIndicatorProps}
-              moreTextProps={moreTextProps}
-              onHelpful={onHelpful}
-              onNotHelpful={onNotHelpful}
-              {...reviewItemProps}
-            />
-          );
-        })}
+        {reviews.map((review, key) => (
+          <ReviewItem
+            key={key}
+            {...review}
+            {...reviewStyle}
+            moreTextProps={moreTextProps}
+            onHelpful={onHelpful}
+            onNotHelpful={onNotHelpful}
+            recommendedImage={recommendedImage}
+            reviewIndicatorProps={reviewIndicatorProps}
+            verifiedImage={verifiedImage}
+            {...reviewItemProps}
+          />
+        ))}
       </ScrollView>
     );
   }

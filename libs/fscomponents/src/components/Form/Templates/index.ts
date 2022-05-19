@@ -21,6 +21,6 @@ export const aboveLabels = {
   textbox: labelAboveTextbox,
 };
 
-export * from './stylesheet';
-export * from './fieldTemplates';
 export * from './StatefulTextbox';
+export * from './fieldTemplates';
+export * from './stylesheet';

@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import {
-  Image,
-  ImageRequireSource,
-  ImageURISource,
-  Platform,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+
+import type { ImageRequireSource, ImageURISource, StyleProp, ViewStyle } from 'react-native';
+import { Image, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { GeoLocation } from '@brandingbrand/types-location';
+
+import type { GeoLocation } from '@brandingbrand/types-location';
+
+import googleMapMakerSelected from '../../assets/images/google-map-marker-selected.png';
+import googleMapMaker from '../../assets/images/google-map-marker.png';
 import { getCenter, getDelta, isCoordinateChanged } from '../lib/helpers';
 import { style as S } from '../styles/MapView';
-import { Location, Region } from '../types/Location';
-import CurrentLocationPin from './CurrentLocationPin';
+import type { Location, Region } from '../types/Location';
 
-import googleMapMaker from '../../assets/images/google-map-marker.png';
-import googleMapMakerSelected from '../../assets/images/google-map-marker-selected.png';
+import CurrentLocationPin from './CurrentLocationPin';
 
 export const COLLAPSE_LAT_PADDING = 0.15;
 export const COLLAPSE_LAT_DELTA_PADDING = 0.3;
@@ -39,30 +36,39 @@ export interface PropType {
 }
 
 export default class MapViewNative extends Component<PropType> {
-  map: any;
+  public map: any;
 
-  componentDidMount(): void {
+  private readonly handleMarkerPress = (location: Location) => () => {
+    if (this.props.onMakerPress) {
+      this.props.onMakerPress(location);
+    }
+  };
+
+  public componentDidMount(): void {
     this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
   }
 
-  componentDidUpdate(prevProps: PropType): void {
+  public componentDidUpdate(prevProps: PropType): void {
     this.moveToLocation(this.props.locations, this.props.isCollapsed, this.props.center);
   }
 
-  shouldComponentUpdate(nextProps: PropType): boolean {
+  public shouldComponentUpdate(nextProps: PropType): boolean {
     if (
       nextProps.locations !== this.props.locations ||
       nextProps.isCollapsed !== this.props.isCollapsed ||
       isCoordinateChanged(nextProps.center, this.props.center)
     ) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
-  moveToLocation(locations: Location[], isCollapsed?: boolean, newCenter?: GeoLocation): void {
-    if (!locations.length) {
+  public moveToLocation(
+    locations: Location[],
+    isCollapsed?: boolean,
+    newCenter?: GeoLocation
+  ): void {
+    if (locations.length === 0) {
       return;
     }
 
@@ -73,29 +79,23 @@ export default class MapViewNative extends Component<PropType> {
       delta.latitudeDelta += COLLAPSE_LAT_DELTA_PADDING;
       delta.longitudeDelta += COLLAPSE_LNG_DELTA_PADDING;
     }
-    const region = locations.length
-      ? {
-          ...center,
-          ...delta,
-        }
-      : null;
+    const region =
+      locations.length > 0
+        ? {
+            ...center,
+            ...delta,
+          }
+        : null;
 
     this.map.animateToRegion(region);
   }
 
-  handleMarkerPress = (location: Location) => () => {
-    if (this.props.onMakerPress) {
-      this.props.onMakerPress(location);
-    }
-  };
-
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
-    const { locations, style, currentLocation, mapMarkerIcon, defaultRegion } = this.props;
+  public render(): JSX.Element {
+    const { currentLocation, defaultRegion, locations, mapMarkerIcon, style } = this.props;
     const marker = mapMarkerIcon || googleMapMaker;
     const markerSelected = mapMarkerIcon || googleMapMakerSelected;
 
-    if (!currentLocation && !(locations && locations.length) && defaultRegion) {
+    if (!currentLocation && !(locations && locations.length > 0) && defaultRegion) {
       const initialRegion = {
         latitude: defaultRegion.latitude || 0,
         longitude: defaultRegion.longitude || 0,
@@ -104,16 +104,16 @@ export default class MapViewNative extends Component<PropType> {
       };
 
       return (
-        <MapView ref={(map) => (this.map = map)} style={style} initialRegion={initialRegion} />
+        <MapView initialRegion={initialRegion} ref={(map) => (this.map = map)} style={style} />
       );
     }
 
     return (
       <MapView
-        ref={(map) => (this.map = map)}
-        style={style}
         onRegionChange={this.props.handleRegionChange}
         onRegionChangeComplete={this.props.handleRegionChangeComplete}
+        ref={(map) => (this.map = map)}
+        style={style}
       >
         {currentLocation && (
           <Marker coordinate={currentLocation}>
@@ -122,7 +122,7 @@ export default class MapViewNative extends Component<PropType> {
         )}
 
         {locations
-          .filter((location) => !!location.address.latlng.lat)
+          .filter((location) => Boolean(location.address.latlng.lat))
           .map((location, i) => {
             let image: ImageRequireSource | ImageURISource | undefined;
 
@@ -132,9 +132,6 @@ export default class MapViewNative extends Component<PropType> {
 
             return (
               <Marker
-                key={i}
-                onPress={this.handleMarkerPress(location)}
-                image={image}
                 centerOffset={{
                   x: 0,
                   y: location.selected ? IOS_MARKER_OFFSET_Y_SELECTED : IOS_MARKER_OFFSET_Y,
@@ -143,11 +140,14 @@ export default class MapViewNative extends Component<PropType> {
                   latitude: location.address.latlng.lat,
                   longitude: location.address.latlng.lng,
                 }}
+                image={image}
+                key={i}
+                onPress={this.handleMarkerPress(location)}
               >
                 {Platform.OS === 'ios' && (
                   <Image
-                    source={marker}
                     resizeMode="contain"
+                    source={marker}
                     style={location.selected ? S.markerImageSelected : S.markerImage}
                   />
                 )}

@@ -1,7 +1,8 @@
-import { CurrencyValue, ProductPromotion } from '../CommerceTypes';
-import { Image } from './Image';
-import { Option, OptionValue } from './Option';
-import { ReviewDetails } from '../../Review/ReviewTypes';
+import type { ReviewDetails } from '../../Review/ReviewTypes';
+import type { CurrencyValue, ProductPromotion } from '../CommerceTypes';
+
+import type { Image } from './Image';
+import type { Option, OptionValue } from './Option';
 
 /**
  * Information describing the state of a product and what actions a user is able to perform

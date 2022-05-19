@@ -1,5 +1,6 @@
-import { Combinable, CombinableWithEmpty } from './types';
 import type { NonEmptyArray } from '@brandingbrand/standard-array';
+
+import type { Combinable, CombinableWithEmpty } from './types';
 
 export const combine =
   <Element>(combinable: Combinable<Element>) =>
@@ -15,7 +16,7 @@ export const combine =
 export const combineWithEmpty =
   <Element>(combinable: CombinableWithEmpty<Element>) =>
   (input: Element[]): Element => {
-    if (!input.length) {
+    if (input.length === 0) {
       return combinable.empty;
     }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

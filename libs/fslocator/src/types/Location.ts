@@ -33,5 +33,5 @@ export interface Service {
   service: string;
   locationId: number;
   id: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }

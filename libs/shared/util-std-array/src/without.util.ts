@@ -9,13 +9,11 @@
  *
  * @param array The array to inspect.
  * @param [values] The values to exclude.
- * @returns Returns the new array of filtered values.
- 
+ * @return Returns the new array of filtered values.
  * @example
  *
  * without([2, 1, 2, 3], 1, 2)
  * // => [3]
  */
-export const without = <T>(array: T[], ...values: T[]) => {
-  return Array.isArray(array) ? array.filter((item) => !values.includes(item)) : [];
-};
+export const without = <T>(array: T[], ...values: T[]) =>
+  Array.isArray(array) ? array.filter((item) => !values.includes(item)) : [];

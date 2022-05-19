@@ -1,15 +1,17 @@
-import { Commit, Diff } from '@brandingbrand/git';
+import type { Commit, Diff } from '@brandingbrand/git';
 
 export const replaceText =
   (searchValue?: RegExp | string, replaceValue?: string) =>
   (commit: Commit): Commit => {
-    if (searchValue === undefined || replaceValue === undefined) return commit;
+    if (searchValue === undefined || replaceValue === undefined) {
+      return commit;
+    }
 
     const search =
       typeof searchValue === 'string' ? new RegExp(`${searchValue}`, 'g') : searchValue;
 
     const diffs = new Set<Diff>();
-    for (const diff of Array.from(commit.diffs)) {
+    for (const diff of commit.diffs) {
       diffs.add({
         ...diff,
         body: diff.body

@@ -1,30 +1,35 @@
-import { ComposableLens, createLens, ILens } from '@brandingbrand/standard-lens';
+import type { ILens } from '@brandingbrand/standard-lens';
+import { ComposableLens, createLens } from '@brandingbrand/standard-lens';
+
 import { map } from 'rxjs/operators';
+
 import type { ActionSpecifier, AnyAction } from '../../../action-bus';
 import type { Effect, SourcesList } from '../../../store/store.types';
 import { createIdleState } from '../async.stateCreators';
-import { AsyncState } from '../async.types';
+import type { AsyncState } from '../async.types';
+
 import { createAsyncActionCreators } from './async.actions';
 import { makeAsyncEffect } from './async.effect';
 import { createCombinedReducer, createLensedReducers, createReducers } from './async.reducer';
 import { createSelectors } from './async.selectors';
 import type { AsyncAdaptor, CreateAsyncEffectOptions } from './async.types';
 
-export type AsyncAdaptorOptions<
+export interface AsyncAdaptorOptions<
   ActionKey extends string,
   Payload,
   FailPayload,
   Structure,
   EmptyPayload = Payload
-> = {
+> {
   emitSource?: string | symbol;
   listenToSources?: SourcesList;
   actionKey: ActionKey;
   metadata?: Record<string, unknown>;
   lens?: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>;
-};
+}
 
 /**
+ * @param options
  * @deprecated Use `asyncBuilder`-based functions instead.
  */
 export const createAsyncAdaptor = <
@@ -56,7 +61,7 @@ export const createAsyncAdaptor = <
   const combinedReducer = createCombinedReducer(actionCreators, structureLens);
   const selectors = createSelectors(structureLens);
   const createState = (
-    initialPayload: Payload | EmptyPayload
+    initialPayload: EmptyPayload | Payload
   ): AsyncState<Payload, FailPayload, EmptyPayload> => createIdleState(initialPayload);
   const createEffect = <
     DesiredActionSpecifier extends

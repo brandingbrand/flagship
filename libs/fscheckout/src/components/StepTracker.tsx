@@ -1,30 +1,35 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { Step, StepDetails } from '../types';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import type { Step, StepDetails } from '../types';
 
 const styles = StyleSheet.create({
-  stepsContainer: {
-    flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'grey',
-    backgroundColor: 'white',
+  check: {
+    fontSize: 12,
+    marginHorizontal: 2,
   },
   item: {
-    flex: 1,
-    paddingVertical: 4,
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
     backgroundColor: 'rgba(0,0,0,0.3)',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 4,
+  },
+  slider: {
+    backgroundColor: 'grey',
+    bottom: StyleSheet.hairlineWidth,
+    height: 2,
+    left: 0,
+    position: 'absolute',
+  },
+  stepsContainer: {
+    backgroundColor: 'white',
+    borderBottomColor: 'grey',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
   },
   title: {
     color: 'white',
@@ -32,17 +37,6 @@ const styles = StyleSheet.create({
   },
   titleActive: {
     color: '#333',
-  },
-  check: {
-    fontSize: 12,
-    marginHorizontal: 2,
-  },
-  slider: {
-    position: 'absolute',
-    bottom: StyleSheet.hairlineWidth,
-    left: 0,
-    height: 2,
-    backgroundColor: 'grey',
   },
 });
 
@@ -66,17 +60,16 @@ export interface StepTrackerState {
 }
 
 export default class StepTracker extends Component<StepTrackerProps, StepTrackerState> {
-  sliderPosition: Animated.Value;
-
   constructor(props: StepTrackerProps) {
     super(props);
-    this.sliderPosition = new Animated.Value(0);
     this.state = {
       itemWidth: 0,
     };
   }
 
-  calculateWidth = ({
+  private readonly sliderPosition = new Animated.Value(0);
+
+  private readonly calculateWidth = ({
     nativeEvent: {
       layout: { width },
     },
@@ -87,7 +80,20 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     }
   };
 
-  componentDidUpdate(prevProps: StepTrackerProps, prevState: StepTrackerState): void {
+  protected getStepDetails = (step: Step, index: number): StepDetails => {
+    const isActive = step.status === 'active';
+    const isDone = step.status === 'done';
+
+    const stepName = isDone ? step.displayName : `${index + 1}. ${step.displayName}`;
+    const onPress = this.props.onStepPress ? this.props.onStepPress(step) : undefined;
+
+    const isTouchable = onPress && isDone && !isActive;
+    const Container = isTouchable ? TouchableOpacity : View;
+
+    return { isActive, isDone, stepName, onPress, Container };
+  };
+
+  public componentDidUpdate(prevProps: StepTrackerProps, prevState: StepTrackerState): void {
     const prevActiveStep = prevProps.steps.findIndex((step) => step.status === 'active');
     const currActiveStep = this.props.steps.findIndex((step) => step.status === 'active');
 
@@ -107,29 +113,29 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
     }
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      style,
       checkStyle,
-      itemStyle,
       itemActiveStyle,
       itemDoneStyle,
-      titleStyle,
+      itemStyle,
+      steps,
+      style,
       titleActiveStyle,
       titleDoneStyle,
-      steps,
+      titleStyle,
     } = this.props;
 
     return (
-      <View style={[styles.stepsContainer, style]} onLayout={this.calculateWidth}>
+      <View onLayout={this.calculateWidth} style={[styles.stepsContainer, style]}>
         {steps.map((step, i) => {
-          const { isActive, isDone, stepName, onPress, Container } = this.getStepDetails(step, i);
+          const { Container, isActive, isDone, onPress, stepName } = this.getStepDetails(step, i);
 
           return (
             <Container
+              key={step.name}
               onPress={onPress}
               style={[styles.item, itemStyle, isActive && itemActiveStyle, isDone && itemDoneStyle]}
-              key={step.name}
             >
               {isDone && <Text style={[styles.check, checkStyle]}>&#10004;</Text>}
               <Text
@@ -162,17 +168,4 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
       </View>
     );
   }
-
-  protected getStepDetails = (step: Step, index: number): StepDetails => {
-    const isActive = step.status === 'active';
-    const isDone = step.status === 'done';
-
-    const stepName = isDone ? step.displayName : `${index + 1}. ${step.displayName}`;
-    const onPress = this.props.onStepPress ? this.props.onStepPress(step) : undefined;
-
-    const isTouchable = onPress && isDone && !isActive;
-    const Container = isTouchable ? TouchableOpacity : View;
-
-    return { isActive, isDone, stepName, onPress, Container };
-  };
 }

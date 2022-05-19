@@ -16,53 +16,53 @@ declare module 'xcode' {
     removeProductFile: (path: string, opt: Options) => PBXFile;
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     addSourceFile: (path: string, opt: Options, group?: string) => PBXFile;
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     removeSourceFile: (path: string, opt: Options, group?: string) => PBXFile;
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     addHeaderFile: (path: string, opt: Options, group: string) => PBXFile;
 
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     removeHeaderFile: (path: string, opt: Options, group: string) => PBXFile;
 
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     addResourceFile: (path: string, opt: Options, group: string) => PBXFile;
 
     /**
      *
-     * @param path {String}
-     * @param opt {Object} see pbxFile for avail options
-     * @param group {String} group key
-     * @returns {Object} file; see pbxFile
+     * @param path
+     * @param opt see pbxFile for avail options
+     * @param group group key
+     * @return file; see pbxFile
      */
     removeResourceFile: (path: string, opt: Options, group: string) => PBXFile;
 
@@ -137,6 +137,6 @@ declare module 'xcode' {
 
     addToPbxGroup: (uuid: string, key: string) => void;
 
-    hash: { project: { objects: { [key: string]: { [key: string]: { name: string } } } } };
+    hash: { project: { objects: Record<string, Record<string, { name: string }>> } };
   }
 }

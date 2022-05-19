@@ -1,37 +1,34 @@
-import React, { Component, ComponentClass, StatelessComponent } from 'react';
-import {
-  ActivityIndicator,
-  BackHandler,
-  ScrollView,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
-import StepManager from './StepManager';
-import StepTracker, { StepTrackerProps } from './components/StepTracker';
+import type { ComponentClass, StatelessComponent } from 'react';
+import React, { Component } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { ActivityIndicator, BackHandler, ScrollView, StyleSheet, View } from 'react-native';
+
 import FSCheckoutSteps from './FSCheckoutSteps';
-import { Omit, Step } from './types';
+import StepManager from './StepManager';
+import type { StepTrackerProps } from './components/StepTracker';
+import StepTracker from './components/StepTracker';
+import type { Omit, Step } from './types';
 
 const styles = StyleSheet.create({
   constainer: {
     flex: 1,
   },
-  loadingContainer: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingInner: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   hide: {
     display: 'none',
+  },
+  loadingContainer: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingInner: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 5,
+    height: 50,
+    justifyContent: 'center',
+    width: 50,
   },
 });
 
@@ -47,7 +44,7 @@ export interface FSCheckoutProps {
    *   component: StepShipping
    * }]
    */
-  steps: (Step & { component: StatelessComponent<any> })[];
+  steps: Array<Step & { component: StatelessComponent<unknown> }>;
 
   /**
    * Your entire checkout state; this usually is `this.state`
@@ -55,7 +52,7 @@ export interface FSCheckoutProps {
    * `isSameAsShipping`, form values, selected checkbox value for
    * shipping methods and payment methods
    */
-  checkoutState: any;
+  checkoutState: unknown;
 
   /**
    * An object that defines checkout actions that interact with
@@ -63,7 +60,7 @@ export interface FSCheckoutProps {
    * the API and update checkout state, or update your internal
    * state like changing selected shipping method.
    */
-  checkoutActions: { [key: string]: any };
+  checkoutActions: Record<string, unknown>;
 
   /**
    * A flag to turn on/off global loading view. The loading view
@@ -90,7 +87,7 @@ export interface FSCheckoutProps {
    * Function to get a reference to ScrollView; you can use the
    * reference to scroll to certain positions on the page.
    */
-  scrollViewRef?: (ref: any) => void;
+  scrollViewRef?: (ref: unknown) => void;
 
   /**
    * Function to filter which steps you want to show in the step
@@ -128,12 +125,12 @@ export interface FSCheckoutProps {
    * Component class for using custom scroll view; this can be used to replace
    * ScrollView with a regular View.
    */
-  CustomScrollView?: ComponentClass<any>;
+  CustomScrollView?: ComponentClass<unknown>;
 
   /**
    * Extra props to pass to ScrollView or CustomScrollView
    */
-  ScrollViewProps?: any;
+  ScrollViewProps?: unknown;
 
   /**
    * Flag to turn on/off the animation.
@@ -159,10 +156,7 @@ export interface FSCheckoutState {
   steps: Step[];
 }
 
-export { StepManager, Step };
 export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutState> {
-  stepManager: StepManager;
-
   constructor(props: FSCheckoutProps) {
     super(props);
     this.stepManager = new StepManager(
@@ -189,54 +183,34 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     }
   }
 
-  componentDidMount(): void {
-    BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
-  }
+  private readonly stepManager: StepManager;
 
-  componentWillUnmount(): void {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBackButton);
-  }
-
-  handleAndroidBackButton = () => {
+  private readonly handleAndroidBackButton = () => {
     if (this.stepManager.back()) {
       // stop propagate
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
 
-  render(): JSX.Element {
-    const activeStep = this.stepManager.getActive() || this.props.steps[0];
-    if (!activeStep) return <></>;
-
-    return (
-      <View style={[styles.constainer, this.props.style]}>
-        {this.renderStepTracker(activeStep)}
-        {this.renderContent(activeStep)}
-        {this.renderLoading({ isLoading: !!this.props.isLoading })}
-      </View>
-    );
-  }
-
-  renderContent = (activeStep: Step) => {
+  private readonly renderContent = (activeStep: Step) => {
     const CustomScrollView = this.props.CustomScrollView || ScrollView;
 
     return (
       <CustomScrollView ref={this.props.scrollViewRef} {...this.props.ScrollViewProps}>
         <FSCheckoutSteps
           activeStep={activeStep}
-          steps={this.props.steps}
-          stepManager={this.stepManager}
-          checkoutState={this.props.checkoutState}
-          checkoutActions={this.props.checkoutActions}
           animated={this.props.animated}
+          checkoutActions={this.props.checkoutActions}
+          checkoutState={this.props.checkoutState}
+          stepManager={this.stepManager}
+          steps={this.props.steps}
         />
       </CustomScrollView>
     );
   };
 
-  renderStepTracker = (activeStep: Step) => {
+  private readonly renderStepTracker = (activeStep: Step) => {
     if (this.props.renderStepTracker) {
       return this.props.renderStepTracker(this.state.steps, activeStep);
     }
@@ -252,14 +226,14 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
 
     return (
       <StepTracker
-        steps={stepsFoIndicators}
         animated={this.props.animated}
+        steps={stepsFoIndicators}
         {...this.props.StepTrackerProps}
       />
     );
   };
 
-  renderLoading = ({ isLoading }: { isLoading: boolean }) => {
+  private readonly renderLoading = ({ isLoading }: { isLoading: boolean }) => {
     if (this.props.renderLoading) {
       return this.props.renderLoading(isLoading);
     }
@@ -272,4 +246,30 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
       </View>
     );
   };
+
+  public componentDidMount(): void {
+    BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
+  }
+
+  public componentWillUnmount(): void {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBackButton);
+  }
+
+  public render(): JSX.Element {
+    const activeStep = this.stepManager.getActive() || this.props.steps[0];
+    if (!activeStep) {
+      return <React.Fragment />;
+    }
+
+    return (
+      <View style={[styles.constainer, this.props.style]}>
+        {this.renderStepTracker(activeStep)}
+        {this.renderContent(activeStep)}
+        {this.renderLoading({ isLoading: Boolean(this.props.isLoading) })}
+      </View>
+    );
+  }
 }
+
+export { type Step } from './types';
+export { default as StepManager } from './StepManager';

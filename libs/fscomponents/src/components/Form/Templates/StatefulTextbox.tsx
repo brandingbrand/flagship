@@ -1,17 +1,22 @@
-import React, { Component, RefObject } from 'react';
-import { Image, Text, TextInput, View } from 'react-native';
-import { memoize } from 'lodash-es';
-import { defaultTextboxStyle, getColor } from './formStyles';
-import { FormLabelPosition } from './fieldTemplates';
+import type { RefObject } from 'react';
+import React, { Component } from 'react';
 
-import successIcon from '../../../../assets/images/checkmarkValidation.png';
+import type { ImageStyle, StyleProp, ViewStyle } from 'react-native';
+import { Image, Text, TextInput, View } from 'react-native';
+
+import { memoize } from 'lodash-es';
+
 import errorIcon from '../../../../assets/images/alert.png';
+import successIcon from '../../../../assets/images/checkmarkValidation.png';
+
+import { FormLabelPosition } from './fieldTemplates';
+import { defaultTextboxStyle, getColor } from './formStyles';
 
 export interface StatefulTextboxProps {
   labelPosition: FormLabelPosition;
   locals: Record<string, any>;
   // for use w/ custom field templates
-  componentFactory?: any;
+  componentFactory?: unknown;
 }
 
 export interface StatefulTextboxState {
@@ -19,46 +24,9 @@ export interface StatefulTextboxState {
   validated: boolean;
 }
 
-export type ComputeFieldType = (prevField: any) => () => void;
+export type ComputeFieldType = (prevField: unknown) => () => void;
 
 export default class StatefulTextbox extends Component<StatefulTextboxProps, StatefulTextboxState> {
-  activeErrorField: JSX.Element;
-  alertStyle: Record<string, any>;
-  checkStyle: Record<string, any>;
-  controlLabelStyle: Record<string, any>;
-  defaultStyle: Record<string, any>;
-  errorBlockStyle: Record<string, any>;
-  groupStyle: Record<string, any>;
-  help: JSX.Element;
-  labelViewStyle: Record<string, any>;
-  rightTextboxIconStyle: Record<string, any>;
-  textboxStyle: Record<string, any>;
-  textboxViewStyle: Record<string, any>;
-
-  state: StatefulTextboxState = {
-    active: false,
-    validated: false,
-  };
-
-  // memoizes returned function so as not to recompute on each rerender
-  private computeBlur: ComputeFieldType = memoize((prevOnBlur) => () => {
-    this.onBlur();
-
-    if (typeof prevOnBlur === 'function') {
-      prevOnBlur();
-    }
-  });
-
-  private computeFocus: ComputeFieldType = memoize((prevOnFocus) => () => {
-    this.onFocus();
-
-    if (typeof prevOnFocus === 'function') {
-      prevOnFocus();
-    }
-  });
-
-  private input: RefObject<TextInput>;
-
   constructor(props: StatefulTextboxProps) {
     super(props);
 
@@ -103,15 +71,65 @@ export default class StatefulTextbox extends Component<StatefulTextboxProps, Sta
     }
   }
 
-  componentDidMount(): void {
+  private readonly activeErrorField: JSX.Element;
+  private readonly alertStyle: StyleProp<ImageStyle>;
+  private readonly checkStyle: StyleProp<ImageStyle>;
+  private readonly controlLabelStyle: StyleProp<ViewStyle>;
+  private readonly defaultStyle: any;
+  private readonly errorBlockStyle: StyleProp<ViewStyle>;
+  private readonly groupStyle: StyleProp<ViewStyle>;
+  private readonly help: JSX.Element;
+  private readonly labelViewStyle: StyleProp<ViewStyle>;
+  private readonly rightTextboxIconStyle: StyleProp<ViewStyle>;
+  private readonly textboxStyle: StyleProp<ViewStyle>;
+  private readonly textboxViewStyle: StyleProp<ViewStyle>;
+
+  public state: StatefulTextboxState = {
+    active: false,
+    validated: false,
+  };
+
+  // memoizes returned function so as not to recompute on each rerender
+  private readonly computeBlur: ComputeFieldType = memoize((prevOnBlur) => () => {
+    this.onBlur();
+
+    if (typeof prevOnBlur === 'function') {
+      prevOnBlur();
+    }
+  });
+
+  private readonly computeFocus: ComputeFieldType = memoize((prevOnFocus) => () => {
+    this.onFocus();
+
+    if (typeof prevOnFocus === 'function') {
+      prevOnFocus();
+    }
+  });
+
+  private readonly onFocus = () => {
+    this.setState({
+      active: true,
+      validated: false,
+    });
+  };
+
+  private readonly onBlur = () => {
+    this.setState({
+      active: false,
+      validated: true,
+    });
+  };
+
+  private readonly input: RefObject<TextInput>;
+
+  public componentDidMount(): void {
     console.warn(
       'StatefulTextbox is deprecated and will be removed in the next version of Flagship.'
     );
   }
 
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
-    const { locals, componentFactory, labelPosition } = this.props;
+  public render(): JSX.Element {
+    const { componentFactory, labelPosition, locals } = this.props;
 
     const prevOnBlur = locals.onBlur;
     const prevOnFocus = locals.onFocus;
@@ -152,13 +170,12 @@ export default class StatefulTextbox extends Component<StatefulTextboxProps, Sta
       locals.placeholder = '';
     }
 
-    const getIcon = () => {
-      return this.props.locals.hasError ? (
+    const getIcon = () =>
+      this.props.locals.hasError ? (
         <Image source={errorIcon} style={this.alertStyle} />
       ) : (
         <Image source={successIcon} style={this.checkStyle} />
       );
-    };
 
     return (
       <View>
@@ -170,9 +187,9 @@ export default class StatefulTextbox extends Component<StatefulTextboxProps, Sta
             ) : (
               <TextInput
                 accessibilityLabel={locals.label}
-                ref={this.input}
-                onChangeText={locals.onChange}
                 onChange={locals.onChangeNative}
+                onChangeText={locals.onChange}
+                ref={this.input}
                 style={[this.textboxStyle, { borderColor: color }]}
                 {...locals}
               />
@@ -191,18 +208,4 @@ export default class StatefulTextbox extends Component<StatefulTextboxProps, Sta
       </View>
     );
   }
-
-  private onFocus = () => {
-    this.setState({
-      active: true,
-      validated: false,
-    });
-  };
-
-  private onBlur = () => {
-    this.setState({
-      active: false,
-      validated: true,
-    });
-  };
 }

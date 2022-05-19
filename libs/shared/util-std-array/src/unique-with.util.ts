@@ -8,7 +8,7 @@
  *
  * @param array The array to inspect.
  * @param compareFunction The comparator invoked per element.
- * @returns Returns the new duplicate free array.
+ * @return Returns the new duplicate free array.
  * @example
  *
  * const objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 2 }]
@@ -30,7 +30,5 @@ export const uniqueWith = <T>(array: T[], compareFunction: (a: T, b: T) => boole
     return index === firstIndex;
   };
 
-  return array.filter((a, aIndex) => {
-    return isFirstIndex(a, aIndex) || array.every(isUnique(a, aIndex));
-  });
+  return array.filter((a, aIndex) => isFirstIndex(a, aIndex) || array.every(isUnique(a, aIndex)));
 };

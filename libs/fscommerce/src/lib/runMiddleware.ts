@@ -4,18 +4,17 @@ import { isArray, isFunction } from 'lodash-es';
  * Type representing a middleware function that accepts original and normalized data
  * and returns manipulated normalized data.
  *
- * @typedef {function} MiddlewareFunction
- * @param {Object} data - The raw response from the request
- * @param {Object} normalized - The normalized data from the response
- * @returns {Object} Normalized data containing additional manipulations
+ * @param data - The raw response from the request
+ * @param normalized - The normalized data from the response
+ * @return Normalized data containing additional manipulations
  */
-export type MiddlewareFunction = (data: object, normalized: object) => any;
+export type MiddlewareFunction = (data: object, normalized: object) => unknown;
 
-async function runMiddleware(
+const runMiddleware = async (
   data: object,
   normalized: object,
   middleware: MiddlewareFunction | MiddlewareFunction[] | undefined
-): Promise<any> {
+): Promise<any> => {
   if (middleware) {
     if (isMiddlewareArray(middleware)) {
       for (const fn of middleware) {
@@ -32,12 +31,10 @@ async function runMiddleware(
     }
   }
   return normalized;
-}
+};
 
-function isMiddlewareArray(
+const isMiddlewareArray = (
   middleware: MiddlewareFunction | MiddlewareFunction[]
-): middleware is MiddlewareFunction[] {
-  return isArray(<MiddlewareFunction[]>middleware);
-}
+): middleware is MiddlewareFunction[] => isArray(<MiddlewareFunction[]>middleware);
 
 export default runMiddleware;

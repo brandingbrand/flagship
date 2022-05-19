@@ -1,4 +1,4 @@
-import { CurrencyValue } from '../CommerceTypes';
+import type { CurrencyValue } from '../CommerceTypes';
 
 /**
  * Information about a promotion for a shipping method.

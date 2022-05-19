@@ -1,5 +1,8 @@
-import { Alert as NativeAlert, AlertButton } from 'react-native';
+import type { AlertButton } from 'react-native';
+import { Alert as NativeAlert } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.alertDefaults;
 
 export interface SerializedAlertOptions {
@@ -16,7 +19,7 @@ export interface AlertOptions extends SerializedAlertOptions {
 }
 
 export const Alert = {
-  alert: (options: string | AlertOptions) => {
+  alert: (options: AlertOptions | string) => {
     if (typeof options === 'string') {
       NativeAlert.alert(options);
     } else {

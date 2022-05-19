@@ -13,34 +13,29 @@ export interface AlertOptions {
 export const Alert = {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   setDefaults: swal.setDefaults,
-  alert: async (options: string | AlertOptions): Promise<void> => {
+  alert: async (options: AlertOptions | string): Promise<void> => {
     if (typeof options === 'string') {
       return swal(options);
-    } else {
-      const args: Record<string, string | undefined | (string | boolean)[]> = {
-        title: options.title,
-        text: options.text,
-      };
-
-      if (options.showCancelButton) {
-        args.buttons = [options.cancelButtonText || true, options.confirmButtonText || true];
-      } else {
-        if (options.confirmButtonText) {
-          args.button = options.confirmButtonText;
-        }
-      }
-
-      return swal(args).then((isConfirm: boolean) => {
-        if (isConfirm) {
-          if (options.onConfirm) {
-            options.onConfirm();
-          }
-        } else {
-          if (options.onCancel) {
-            options.onCancel();
-          }
-        }
-      });
     }
+    const args: Record<string, Array<boolean | string> | string | undefined> = {
+      title: options.title,
+      text: options.text,
+    };
+
+    if (options.showCancelButton) {
+      args.buttons = [options.cancelButtonText || true, options.confirmButtonText || true];
+    } else if (options.confirmButtonText) {
+      args.button = options.confirmButtonText;
+    }
+
+    return swal(args).then((isConfirm: boolean) => {
+      if (isConfirm) {
+        if (options.onConfirm) {
+          options.onConfirm();
+        }
+      } else if (options.onCancel) {
+        options.onCancel();
+      }
+    });
   },
 };

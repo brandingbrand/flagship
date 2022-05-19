@@ -1,24 +1,24 @@
-import type { PAYLOAD } from '../internal/tokens';
-import type { Action, ActionCreator, AnyAction, AnyActionSpecifier } from './action-bus.types';
-
 import { filter } from 'rxjs/operators';
 
-import { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
+import type { PAYLOAD } from '../internal/tokens';
+import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
+
+import type { Action, ActionCreator, AnyAction, AnyActionSpecifier } from './action-bus.types';
 
 export type TypeGuard<A, B extends A> = (val: A) => val is B;
 
-export type CreateActionOptions<
+export interface CreateActionOptions<
   ActionKey extends string,
   Subtype extends string | undefined,
   Payload,
   Params extends unknown[]
-> = {
+> {
   actionKey: ActionKey;
   subtype?: Subtype;
   source?: string | symbol;
   metadata?: Record<string, unknown>;
   callback?: (...params: Params) => Payload;
-};
+}
 
 export const createActionCreator = <
   ActionKey extends string,
@@ -43,8 +43,8 @@ export const createActionCreator = <
 
 export const ofType = <ActionType extends AnyActionSpecifier>(
   ...selectActions: NonEmptyArray<ActionType>
-) => {
-  return filter(
+) =>
+  filter(
     (
       action: AnyAction
     ): action is Action<
@@ -53,10 +53,8 @@ export const ofType = <ActionType extends AnyActionSpecifier>(
       ActionType['subtype']
     > => selectActions.some((selectAction) => selectAction.type === action.type)
   );
-};
 
-export const notOfType = (...selectActions: NonEmptyArray<AnyActionSpecifier>) => {
-  return filter((action: AnyAction) =>
+export const notOfType = (...selectActions: NonEmptyArray<AnyActionSpecifier>) =>
+  filter((action: AnyAction) =>
     selectActions.every((selectAction) => selectAction.type !== action.type)
   );
-};

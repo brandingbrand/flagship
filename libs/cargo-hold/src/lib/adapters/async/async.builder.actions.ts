@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/sort-type-union-intersection-members */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { branchObject, pipe } from '@brandingbrand/standard-compose';
+
 import { createActionCreator } from '../../action-bus';
+
 import type {
   WithActionKey,
   WithFailureType,
@@ -17,13 +21,12 @@ export const buildInitActionCreator = <
   builder: WithIdleType<IdleType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     subtype: 'async:init',
     callback: (idlePayload: IdleType) => idlePayload,
   });
-};
 
 export const buildLoadingActionCreator = <
   ActionKey extends string,
@@ -35,14 +38,13 @@ export const buildLoadingActionCreator = <
     WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     actionKey: builder.actionKey,
     subtype: 'async:load' as const,
     callback: (loadingPayload: IdleType | SuccessType) => loadingPayload,
   });
-};
 
 export const buildLoadingMoreActionCreator = <
   ActionKey extends string,
@@ -52,13 +54,12 @@ export const buildLoadingMoreActionCreator = <
   builder: WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     subtype: 'async:load-more',
     callback: (loadingPayload: SuccessType) => loadingPayload,
   });
-};
 
 export const buildSucceedActionCreator = <
   ActionKey extends string,
@@ -68,13 +69,12 @@ export const buildSucceedActionCreator = <
   builder: WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     subtype: 'async:succeed',
     callback: (succeedPayload: SuccessType) => succeedPayload,
   });
-};
 
 export const buildFailActionCreator = <
   ActionKey extends string,
@@ -84,13 +84,12 @@ export const buildFailActionCreator = <
   builder: WithFailureType<FailureType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     subtype: 'async:fail',
     callback: (failure: FailureType) => failure,
   });
-};
 
 export const buildRevertActionCreator = <
   ActionKey extends string,
@@ -102,13 +101,12 @@ export const buildRevertActionCreator = <
   builder: WithActionKey<ActionKey> &
     WithPayloadTypes<SuccessType, FailureType, IdleType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) => {
-  return createActionCreator({
+) =>
+  createActionCreator({
     ...builder,
     subtype: 'async:revert',
     callback: (revertPayload: SuccessType | IdleType) => revertPayload,
   });
-};
 
 export const buildActionCreators = <
   ActionKey extends string,

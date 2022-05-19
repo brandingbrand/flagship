@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { NavLayoutComponent, NavModal } from '../types';
+
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
-// @ts-ignore TODO: Update react-native-web-modal to support typing
+// @ts-expect-error TODO: Update react-native-web-modal to support typing
 import Modal from 'react-native-web-modal';
+
+import type { GenericNavProp } from '../lib/nav-wrapper.web';
+import type Navigator from '../lib/nav-wrapper.web';
+import type { NavLayoutComponent, NavModal } from '../types';
 
 export interface NavigatorProp extends GenericNavProp {
   navigator: Navigator;
@@ -11,29 +14,29 @@ export interface NavigatorProp extends GenericNavProp {
 }
 
 const navStyle = StyleSheet.create({
-  modal: {},
   backdrop: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    width: '100%',
-    height: '100%',
     backgroundColor: 'black',
+    bottom: 0,
+    height: '100%',
+    left: 0,
     opacity: 0.7,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: '100%',
   },
+  modal: {},
 });
 
 export default class NavRender extends Component<NavigatorProp> {
-  renderComponent(component: NavLayoutComponent): JSX.Element | null {
+  private renderComponent(component: NavLayoutComponent): JSX.Element | null {
     const Screen = this.props.appConfig.screens[component.name];
     if (Screen) {
       return (
         <Screen
           appConfig={this.props.appConfig}
+          isWebModal
           navigator={this.props.navigator}
-          isWebModal={true}
           {...component.passProps}
         />
       );
@@ -41,23 +44,23 @@ export default class NavRender extends Component<NavigatorProp> {
     return null;
   }
 
-  onDismiss(index: number): () => void {
+  private onDismiss(index: number): () => void {
     return (): void => {
       this.props.onDismiss(index);
     };
   }
 
-  renderModal = (modal: NavModal, index: number): JSX.Element | null => {
+  private readonly renderModal = (modal: NavModal, index: number): JSX.Element | null => {
     if (modal.layout.component) {
       const modalOptions =
         (modal.layout.component.options && modal.layout.component.options.modal) || {};
       return (
         <Modal
-          key={modal.layout.component.name + 'modal' + index}
-          transparent={true}
-          visible={true}
           animationType="fade"
+          key={`${modal.layout.component.name}modal${index}`}
           onDismiss={this.onDismiss(index)}
+          transparent
+          visible
           {...modalOptions.modalProps}
         >
           <TouchableWithoutFeedback onPress={this.onDismiss(index)}>
@@ -74,12 +77,11 @@ export default class NavRender extends Component<NavigatorProp> {
           </View>
         </Modal>
       );
-    } else {
-      return null;
     }
+    return null;
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return <View>{this.props.modals.map(this.renderModal)}</View>;
   }
 }

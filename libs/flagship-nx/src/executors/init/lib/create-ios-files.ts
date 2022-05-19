@@ -1,8 +1,10 @@
-import { generateFiles, Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
+import { generateFiles } from '@nrwl/devkit';
 import { join } from 'path';
 
 import { deleteDiff } from './delete-diff';
-import { IosPermissionKeys, iosPermissionsMetadata } from './permissions';
+import type { IosPermissionKeys } from './permissions';
+import { iosPermissionsMetadata } from './permissions';
 import { writeRecursive } from './write-recursive';
 
 export interface CreateIosFilesOptions {
@@ -38,6 +40,7 @@ export interface CreateIosFilesOptions {
   };
 }
 
+// eslint-disable-next-line max-statements
 export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
   const iosRoot = join(options.projectRoot, 'ios');
   const podsPath = join(iosRoot, 'Pods');
@@ -48,7 +51,7 @@ export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
   );
 
   const permissionDescriptors = (
-    Object.entries(options.permissions ?? {}) as [IosPermissionKeys, string][]
+    Object.entries(options.permissions ?? {}) as Array<[IosPermissionKeys, string]>
   ).map(([permission, description]) => ({
     key: iosPermissionsMetadata[permission].usageDescriptionKey,
     value: description,
@@ -99,7 +102,7 @@ export const createIosFiles = (tree: Tree, options: CreateIosFilesOptions) => {
     }
   }
 
-  if (options?.buildConfig?.appleCert) {
+  if (options.buildConfig?.appleCert) {
     const { appleCert, distCert, distP12, profilesDir } = options.buildConfig;
 
     generateFiles(tree, join(__dirname, '../files/scripts/ios'), join(iosRoot), {

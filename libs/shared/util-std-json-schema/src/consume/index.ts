@@ -1,11 +1,13 @@
-import type { JSONSchema7Definition } from 'json-schema';
 import { toArray } from '@brandingbrand/standard-array';
 
-// eslint-disable-next-line complexity
+import type { JSONSchema7Definition } from 'json-schema';
+
+// eslint-disable-next-line complexity, max-statements
 export const consumeSchema = (
   schema?: JSONSchema7Definition,
   editorSchema?: JSONSchema7Definition
-) => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): JSONSchema7Definition | undefined => {
   if (editorSchema === undefined || schema === undefined) {
     return schema;
   }
@@ -141,14 +143,12 @@ export const consumeSchema = (
     delete schema.title;
     delete schema.type;
     delete schema.enum;
-  } else {
-    if (
-      schema.type &&
-      toArray(schema.type).some((type) => toArray(editorSchema.type).includes(type))
-    ) {
-      delete schema.title;
-      delete schema.type;
-    }
+  } else if (
+    schema.type &&
+    toArray(schema.type).some((type) => toArray(editorSchema.type).includes(type))
+  ) {
+    delete schema.title;
+    delete schema.type;
   }
 
   if (Object.keys(schema).every((key) => key === 'dependencies')) {

@@ -1,17 +1,18 @@
-import type { LegacyRoutableComponentClass } from '../legacy-route.type';
-import type { LegacyTab } from '../legacy-navigator.type';
-
 import React, { useContext, useState } from 'react';
 
-import { makeScreen, useActivatedRoute, useNavigator } from '../../router';
-import { useModals } from '../../modal';
 import { useAPI } from '../../app';
-
-import { LegacyNavigator } from '../legacy-navigator';
+import { useModals } from '../../modal';
+import { makeScreen, useActivatedRoute, useNavigator } from '../../router';
 import { useWebShell } from '../../shell.web';
 import { IsModalContext } from '../internal/is-modal.context';
+import { LegacyNavigator } from '../legacy-navigator';
+import type { LegacyTab } from '../legacy-navigator.type';
+import type { LegacyRoutableComponentClass } from '../legacy-route.type';
 
 /**
+ * @param Component
+ * @param tabs
+ * @param appConfig
  * @deprecated
  */
 export const makeLegacyScreen = (
@@ -33,16 +34,16 @@ export const makeLegacyScreen = (
 
     return (
       <Component
-        isWebModal={isModal}
-        componentId={componentId}
-        tabs={tabs}
-        navigator={navigator}
-        appConfig={appConfig}
         api={api}
-        match={activatedRoute}
-        location={router.location}
+        appConfig={appConfig}
+        componentId={componentId}
         devMenuHidden={false}
         hideDevMenu={() => {}}
+        isWebModal={isModal}
+        location={router.location}
+        match={activatedRoute}
+        navigator={navigator}
+        tabs={tabs}
         {...props}
         {...activatedRoute.query}
       />

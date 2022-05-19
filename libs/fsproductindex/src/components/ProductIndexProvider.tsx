@@ -1,15 +1,18 @@
-import React, { Component, ComponentClass } from 'react';
-import { compose } from 'redux';
-import { cloneDeep, isEqual, set } from 'lodash-es';
-import {
+import type { ComponentClass } from 'react';
+import React, { Component } from 'react';
+
+import type {
   CommerceTypes,
   FetchDataFunction,
   ReviewDataSource,
   ReviewTypes,
-  withCommerceData,
   WithCommerceProps,
   WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
+import { withCommerceData } from '@brandingbrand/fscommerce';
+
+import { cloneDeep, isEqual, set } from 'lodash-es';
+import { compose } from 'redux';
 
 // TODO: This should move into fscommerce
 export type CommerceToReviewMapFunction<
@@ -29,7 +32,7 @@ export interface WithProductIndexProviderProps<
   IdxType extends CommerceTypes.ProductIndex<ProductType> = CommerceTypes.ProductIndex<ProductType>
 > extends WithCommerceProviderProps<IdxType> {
   reviewDataSource?: ReviewDataSource;
-  commerceToReviewMap?: keyof ProductType | CommerceToReviewMapFunction<ProductType>;
+  commerceToReviewMap?: CommerceToReviewMapFunction<ProductType> | keyof ProductType;
   onReceiveCommerceData?: (data: IdxType) => void;
   disableReviews?: boolean;
 }
@@ -76,10 +79,9 @@ export interface WithProductIndexState<
  * `Product`
  * @template IdxType The type of product index data that will be provided. Defaults to
  * `ProductIndex`
- *
  * @param {ComponentClass<P & WithProductIndexProps<IdxType, ProductType>>} WrappedComponent A
  * component to wrap and provide product index data to as props.
- * @returns {ComponentClass<P & WithProductIndexProviderProps<IdxType, ProductType>>} A high order
+ * @return {ComponentClass<P & WithProductIndexProviderProps<IdxType, ProductType>>} A high order
  * component.
  */
 export type ProductIndexWrapper<
@@ -99,10 +101,9 @@ export type ProductIndexWrapper<
  * `Product`
  * @template IdxType The type of product index data that will be provided. Defaults to
  * `ProductIndex`
- *
- * @param {FetchDataFunction<P, IdxType>} fetchProducts A function that will return product index
+ * @param fetchProducts A function that will return product index
  * data.
- * @returns {ProductDetailWrapper<P>} A function that wraps a component and returns a new high order
+ * @return A function that wraps a component and returns a new high order
  * component.
  */
 function withProductIndexData<
@@ -114,51 +115,21 @@ function withProductIndexData<
    * A function that wraps a a component and returns a new high order component. The wrapped
    * component will be given product index data as props.
    *
-   * @param {ComponentClass<P & WithProductIndexProps>} WrappedComponent A component to wrap and
+   * @param WrappedComponent A component to wrap and
    * provide product index data to as props.
-   * @returns {ComponentClass<P & WithProductIndexProviderProps>} A high order component.
+   * @return A high order component.
    */
   return (WrappedComponent: ComponentClass<P & WithProductIndexProps<ProductType, IdxType>>) => {
     type ResultProps = P &
-      WithProductIndexProviderProps<ProductType, IdxType> &
-      WithCommerceProps<IdxType>;
+      WithCommerceProps<IdxType> &
+      WithProductIndexProviderProps<ProductType, IdxType>;
     type ResultState = WithProductIndexState<ProductType, IdxType>;
 
     class ProductIndexProvider extends Component<ResultProps, ResultState> {
       /**
-       * Request new reviews if commerce data has changed
-       *
-       * @param {ResultProps} prevProps - Previously set Props
-       */
-      componentDidUpdate(prevProps: ResultProps): void {
-        if (!isEqual(this.props.commerceData, prevProps.commerceData)) {
-          if (!this.props.disableReviews) {
-            this.requestReviews().catch((err) => console.warn('Could not get reviews', err));
-          }
-
-          if (this.props.onReceiveCommerceData && this.state.commerceData) {
-            this.props.onReceiveCommerceData(this.state.commerceData);
-          }
-        }
-      }
-
-      render(): JSX.Element {
-        const { commerceToReviewMap, onReceiveCommerceData, disableReviews, ...props } = this
-          .props as any; // TypeScript does not support rest parameters for generics :(
-
-        return (
-          <WrappedComponent
-            {...props}
-            commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
-            reviewsData={this.state && this.state.reviewsData}
-          />
-        );
-      }
-
-      /**
        * Request reviews from the ReviewsDataSource for products without reviews
        */
-      private requestReviews = async (): Promise<void> => {
+      private readonly requestReviews = async (): Promise<void> => {
         const {
           commerceData,
           commerceToReviewMap = 'id',
@@ -207,6 +178,38 @@ function withProductIndexData<
           commerceData: updatedCommerceData,
         });
       };
+
+      /**
+       * Request new reviews if commerce data has changed
+       *
+       * @param prevProps - Previously set Props
+       */
+      public componentDidUpdate(prevProps: ResultProps): void {
+        if (!isEqual(this.props.commerceData, prevProps.commerceData)) {
+          if (!this.props.disableReviews) {
+            this.requestReviews().catch((error) => {
+              console.warn('Could not get reviews', error);
+            });
+          }
+
+          if (this.props.onReceiveCommerceData && this.state.commerceData) {
+            this.props.onReceiveCommerceData(this.state.commerceData);
+          }
+        }
+      }
+
+      public render(): JSX.Element {
+        const { commerceToReviewMap, disableReviews, onReceiveCommerceData, ...props } = this
+          .props as any;
+
+        return (
+          <WrappedComponent
+            {...props}
+            commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
+            reviewsData={this.state && this.state.reviewsData}
+          />
+        );
+      }
     }
 
     return compose<ComponentClass<P & WithProductIndexProviderProps<ProductType, IdxType>>>(

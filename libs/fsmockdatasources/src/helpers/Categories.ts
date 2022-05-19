@@ -1,4 +1,6 @@
-export const Categories: import('@brandingbrand/fscommerce').CommerceTypes.Category = {
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
+export const Categories: CommerceTypes.Category = {
   id: 'root',
   title: 'Storefront Catalog - EN',
   handle: 'root',

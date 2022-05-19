@@ -1,18 +1,13 @@
-/* eslint-disable */
 import React, { Component, useContext } from 'react';
+
+import type { LayoutChangeEvent, StyleProp, TextStyle } from 'react-native';
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
+
 import PropTypes from 'prop-types';
-import {
-  Dimensions,
-  Image,
-  LayoutChangeEvent,
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import styles from './SliderEntry.style';
+
 import { EngagementContext } from '../lib/contexts';
+
+import styles from './SliderEntry.style';
 
 export interface RenderItemProps {
   data?: any;
@@ -44,9 +39,10 @@ export interface RenderItemState {
 const { height: viewportHeight } = Dimensions.get('window');
 
 class RenderImageTextItem extends Component<RenderItemProps & { context: any }, RenderItemState> {
-  static contextTypes: any = {
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
+
   constructor(props: RenderItemProps & { context: any }) {
     super(props);
     this.state = {
@@ -54,7 +50,8 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
       viewHeightChanged: false,
     };
   }
-  get image(): any {
+
+  private get image(): any {
     const {
       data: { source },
       options,
@@ -66,8 +63,8 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
     return <Image source={source} style={[styles.image, imagePadding]} />;
   }
 
-  _onLayout = (event: LayoutChangeEvent) => {
-    var { height } = event.nativeEvent.layout;
+  private readonly _onLayout = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
 
     if (
       !this.state.viewHeightChanged &&
@@ -80,7 +77,8 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
       });
     }
   };
-  onPress = () => {
+
+  private readonly onPress = () => {
     const {
       data: { link },
     } = this.props;
@@ -93,69 +91,69 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
       value: link,
     });
   };
-  render() {
+
+  public render() {
     const {
-      data: { ratio, showText, text, header, additional, eyebrow },
+      additionalStyle,
+      data: { additional, eyebrow, header, ratio, showText, text },
       even,
+      eyebrowStyle,
       grid,
-      itemWidth,
+      headerStyle,
       horizPadding = 0,
-      verticalSpacing = 0,
+      itemWidth,
+      noMargin,
+      numColumns = 2,
       options,
       overallHeight = 0,
-      totalItemWidth = 0,
-      numColumns = 2,
-      eyebrowStyle,
-      headerStyle,
       textStyle,
-      additionalStyle,
-      noMargin,
+      totalItemWidth = 0,
+      verticalSpacing = 0,
     } = this.props;
 
     let itemStyle: any = {};
     let imageStyle: any = {};
     const textPadding = options.textPadding || {};
     if (grid) {
-      if (ratio && itemWidth) {
-        itemStyle = {
-          width: noMargin ? totalItemWidth - itemWidth * (numColumns - 1) : itemWidth,
-          marginRight: noMargin ? 0 : horizPadding,
-          paddingHorizontal: 0,
-          marginBottom: verticalSpacing,
-        };
-      } else {
-        itemStyle = {
-          width: itemWidth,
-          height: viewportHeight * 0.36,
-          marginRight: even ? horizPadding : 0,
-          marginBottom: verticalSpacing,
-        };
-      }
+      itemStyle =
+        ratio && itemWidth
+          ? {
+              width: noMargin ? totalItemWidth - itemWidth * (numColumns - 1) : itemWidth,
+              marginRight: noMargin ? 0 : horizPadding,
+              paddingHorizontal: 0,
+              marginBottom: verticalSpacing,
+            }
+          : {
+              width: itemWidth,
+              height: viewportHeight * 0.36,
+              marginRight: even ? horizPadding : 0,
+              marginBottom: verticalSpacing,
+            };
 
       imageStyle = {
         width: '100%',
-        height: itemWidth / parseFloat(ratio),
+        height: itemWidth / Number.parseFloat(ratio),
       };
     } else {
-      if (ratio && itemWidth) {
-        itemStyle = {
-          width: itemWidth,
-          paddingRight: horizPadding,
-        };
-      } else {
-        itemStyle = {
-          width: itemWidth,
-          height: viewportHeight * 0.36,
-        };
-      }
+      itemStyle =
+        ratio && itemWidth
+          ? {
+              width: itemWidth,
+              paddingRight: horizPadding,
+            }
+          : {
+              width: itemWidth,
+              height: viewportHeight * 0.36,
+            };
       imageStyle = {
         width: '100%',
         height:
-          (itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) / parseFloat(ratio),
+          (itemWidth - Number.parseInt(options.itemHorizontalPaddingPercent, 10)) /
+          Number.parseFloat(ratio),
       };
     }
 
-    var textbg: any = {};
+    const textbg: any = {};
     if (options.backgroundColor) {
       textbg.backgroundColor = options.backgroundColor;
     }
@@ -174,20 +172,23 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
 
           {showText && (
             <View
-              style={[{ height: this.state.viewHeight - itemWidth / parseFloat(ratio) }, textbg]}
+              style={[
+                { height: this.state.viewHeight - itemWidth / Number.parseFloat(ratio) },
+                textbg,
+              ]}
             >
               <View style={[textPadding, { justifyContent: 'center' }]}>
-                {!!(eyebrow && eyebrow.value) && (
+                {Boolean(eyebrow && eyebrow.value) && (
                   <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>
                     {eyebrow.value}
                   </Text>
                 )}
-                {!!(header && header.value) && (
+                {Boolean(header && header.value) && (
                   <Text style={[headerStyle, { textAlign: options.textAlign }]}>
                     {header.value}
                   </Text>
                 )}
-                {!!(text && text.value) && (
+                {Boolean(text && text.value) && (
                   <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>
                 )}
               </View>
@@ -209,25 +210,25 @@ class RenderImageTextItem extends Component<RenderItemProps & { context: any }, 
               {
                 height:
                   overallHeight -
-                  (itemWidth - parseInt(options.itemHorizontalPaddingPercent, 10)) /
-                    parseFloat(ratio),
+                  (itemWidth - Number.parseInt(options.itemHorizontalPaddingPercent, 10)) /
+                    Number.parseFloat(ratio),
               },
               textbg,
             ]}
           >
             <View style={[textPadding, { justifyContent: 'center' }]}>
-              {!!(eyebrow && eyebrow.value) && (
+              {Boolean(eyebrow && eyebrow.value) && (
                 <Text style={[eyebrowStyle, { textAlign: options.textAlign }]}>
                   {eyebrow.value}
                 </Text>
               )}
-              {!!(header && header.value) && (
+              {Boolean(header && header.value) && (
                 <Text style={[headerStyle, { textAlign: options.textAlign }]}>{header.value}</Text>
               )}
-              {!!(text && text.value) && (
+              {Boolean(text && text.value) && (
                 <Text style={[textStyle, { textAlign: options.textAlign }]}>{text.value}</Text>
               )}
-              {!!(additional && additional.value) && (
+              {Boolean(additional && additional.value) && (
                 <Text style={[additionalStyle, { textAlign: options.textAlign }]}>
                   {additional.value}
                 </Text>

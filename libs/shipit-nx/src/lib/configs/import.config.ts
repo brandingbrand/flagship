@@ -1,4 +1,5 @@
-import { ShipConfig, ShipConfigOptions } from './ship.config';
+import type { ShipConfigOptions } from './ship.config';
+import { ShipConfig } from './ship.config';
 
 export interface ImportConfigOptions extends ShipConfigOptions {
   pullRequestNumber: string;

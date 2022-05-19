@@ -19,22 +19,23 @@
  */
 
 import React from 'react';
-import {
-  Image,
+
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import type {
+  ImageSourcePropType,
   ImageStyle,
   ImageURISource,
   StyleProp,
-  Text,
   TextStyle,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
-import { Distance } from '@brandingbrand/types-location';
-import { style as S } from '../styles/LocationItem';
+
+import type { Distance } from '@brandingbrand/types-location';
 
 import { formatAddress, formatDistance, formatHours } from '../lib/helpers';
-import { Address, Hour } from '../types/Store';
+import { style as S } from '../styles/LocationItem';
+import type { Address, Hour } from '../types/Store';
+
 import { Button } from './Button';
 
 export interface SerializableLocationItemProps {
@@ -71,14 +72,14 @@ export interface SerializableLocationItemProps {
 export interface LocationItemProps
   extends Omit<
     SerializableLocationItemProps,
-    | 'storeImageStyle'
-    | 'style'
-    | 'titleStyle'
-    | 'textStyle'
-    | 'linkStyle'
-    | 'linkTitleStyle'
     | 'buttonStyle'
     | 'buttonTitleStyle'
+    | 'linkStyle'
+    | 'linkTitleStyle'
+    | 'storeImageStyle'
+    | 'style'
+    | 'textStyle'
+    | 'titleStyle'
   > {
   // address
   address: Address;
@@ -90,18 +91,18 @@ export interface LocationItemProps
   onButtonPress?: () => void;
 
   // nav button
-  navIcon?: ImageURISource;
+  navIcon?: ImageSourcePropType;
   onNavButtonPress?: () => void;
 
   // distance
   distance?: Distance;
 
   // phone button
-  phoneIcon?: ImageURISource;
+  phoneIcon?: ImageSourcePropType;
   onPhoneButtonPress?: () => void;
 
   // store image
-  storeImage?: ImageURISource;
+  storeImage?: ImageSourcePropType;
   storeImageStyle?: StyleProp<ImageStyle>;
 
   // style
@@ -118,10 +119,10 @@ interface RenderOption {
   showDistance?: boolean;
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) => {
   const { format, style } = props;
 
-  // eslint-disable-next-line complexity
   const renderByFormat = (format: string) => {
     switch (format) {
       case '1':
@@ -153,17 +154,17 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
 
   const renderStoreDetail = (options: RenderOption = {}) => {
     const {
-      locationName,
       address,
-      hours,
-      hourFormat,
-      titleStyle,
-      textStyle,
       distance,
       distanceFormat,
+      hourFormat,
+      hours,
+      locationName,
+      textStyle,
+      titleStyle,
     } = props;
     return (
-      <View style={S.storeDetailContainer} accessible={true}>
+      <View accessible style={S.storeDetailContainer}>
         <Text style={[S.locationName, titleStyle]}>{locationName}</Text>
         <Text style={textStyle}>{formatAddress(address)}</Text>
         {options.showDistance && distance && (
@@ -177,7 +178,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
   };
 
   const renderNavIcon = (options: RenderOption = {}) => {
-    const { navIcon, distance, onNavButtonPress, distanceFormat, locationName } = props;
+    const { distance, distanceFormat, locationName, navIcon, onNavButtonPress } = props;
 
     if (!navIcon) {
       return null;
@@ -186,13 +187,13 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     const shouldShowDistance = options.showDistance && distance;
     return (
       <TouchableOpacity
-        style={S.navIconContainer}
-        onPress={onNavButtonPress}
         accessibilityLabel={`Start navigating to ${locationName}`}
-        accessible={true}
+        accessible
+        onPress={onNavButtonPress}
+        style={S.navIconContainer}
       >
         <View>
-          <Image source={navIcon} style={S.icon} resizeMode="contain" />
+          <Image resizeMode="contain" source={navIcon} style={S.icon} />
           {distance && shouldShowDistance && (
             <Text style={S.distance}>{formatDistance(distance, distanceFormat)}</Text>
           )}
@@ -202,7 +203,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
   };
 
   const renderPhoneIcon = () => {
-    const { phoneIcon, onPhoneButtonPress, locationName } = props;
+    const { locationName, onPhoneButtonPress, phoneIcon } = props;
 
     if (!phoneIcon) {
       return null;
@@ -210,18 +211,18 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
 
     return (
       <TouchableOpacity
-        style={S.phoneIconContainer}
-        onPress={onPhoneButtonPress}
         accessibilityLabel={`Call ${locationName}`}
-        accessible={true}
+        accessible
+        onPress={onPhoneButtonPress}
+        style={S.phoneIconContainer}
       >
-        <Image source={phoneIcon} style={S.icon} resizeMode="contain" />
+        <Image resizeMode="contain" source={phoneIcon} style={S.icon} />
       </TouchableOpacity>
     );
   };
 
   const renderBottomButton = () => {
-    const { buttonTitle, onButtonPress, buttonStyle, buttonTitleStyle } = props;
+    const { buttonStyle, buttonTitle, buttonTitleStyle, onButtonPress } = props;
 
     if (!onButtonPress) {
       console.warn('onButtonPress must be specified to display bottom button');
@@ -235,16 +236,16 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
 
     return (
       <Button
-        title={buttonTitle}
-        style={buttonStyle}
-        titleStyle={buttonTitleStyle}
         onPress={onButtonPress}
+        style={buttonStyle}
+        title={buttonTitle}
+        titleStyle={buttonTitleStyle}
       />
     );
   };
 
   const renderFormat1 = () => {
-    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = props;
+    const { linkStyle, linkTitleStyle, onPhoneButtonPress, phone } = props;
 
     if (!onPhoneButtonPress) {
       console.warn('onPhoneButtonPress is required for this format');
@@ -257,12 +258,12 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
           <View style={S.leftSection}>
             {renderStoreDetail()}
             <Button
-              link
-              style={[S.linkButton, linkStyle]}
-              titleStyle={[S.linkButtonText, linkTitleStyle]}
-              title={phone}
-              onPress={onPhoneButtonPress}
               accessibilityLabel={`call ${phone}`}
+              link
+              onPress={onPhoneButtonPress}
+              style={[S.linkButton, linkStyle]}
+              title={phone}
+              titleStyle={[S.linkButtonText, linkTitleStyle]}
             />
           </View>
           <View style={S.rightSection}>{renderNavIcon({ showDistance: true })}</View>
@@ -272,7 +273,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
   };
 
   const renderFormat2 = () => {
-    const { phone, onPhoneButtonPress, linkStyle, linkTitleStyle } = props;
+    const { linkStyle, linkTitleStyle, onPhoneButtonPress, phone } = props;
 
     if (!onPhoneButtonPress) {
       console.warn('onPhoneButtonPress is required for this format');
@@ -285,12 +286,12 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
           <View style={S.leftSection}>
             {renderStoreDetail()}
             <Button
-              link
-              style={[S.linkButton, linkStyle]}
-              titleStyle={[S.linkButtonText, linkTitleStyle]}
-              title={phone}
-              onPress={onPhoneButtonPress}
               accessibilityLabel={`call ${phone}`}
+              link
+              onPress={onPhoneButtonPress}
+              style={[S.linkButton, linkStyle]}
+              title={phone}
+              titleStyle={[S.linkButtonText, linkTitleStyle]}
             />
           </View>
           <View style={S.rightSection}>{renderNavIcon({ showDistance: true })}</View>
@@ -300,65 +301,57 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     );
   };
 
-  const renderFormat3 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{renderStoreDetail()}</View>
-          <View style={S.rightSection}>{renderNavIcon({ showDistance: true })}</View>
-        </View>
-        <View style={S.bottomSection}>{renderBottomButton()}</View>
+  const renderFormat3 = () => (
+    <View>
+      <View style={S.topSection}>
+        <View style={S.leftSection}>{renderStoreDetail()}</View>
+        <View style={S.rightSection}>{renderNavIcon({ showDistance: true })}</View>
       </View>
-    );
-  };
+      <View style={S.bottomSection}>{renderBottomButton()}</View>
+    </View>
+  );
 
-  const renderFormat4 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{renderStoreDetail()}</View>
-          <View style={S.rightSection}>{renderPhoneIcon()}</View>
-        </View>
-        <View style={S.bottomSection}>{renderBottomButton()}</View>
+  const renderFormat4 = () => (
+    <View>
+      <View style={S.topSection}>
+        <View style={S.leftSection}>{renderStoreDetail()}</View>
+        <View style={S.rightSection}>{renderPhoneIcon()}</View>
       </View>
-    );
-  };
+      <View style={S.bottomSection}>{renderBottomButton()}</View>
+    </View>
+  );
 
-  const renderFormat5 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
-          <View style={S.twoIconsContainer}>
-            {renderPhoneIcon()}
-            {renderNavIcon({ showDistance: false })}
-          </View>
+  const renderFormat5 = () => (
+    <View>
+      <View style={S.topSection}>
+        <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
+        <View style={S.twoIconsContainer}>
+          {renderPhoneIcon()}
+          {renderNavIcon({ showDistance: false })}
         </View>
       </View>
-    );
-  };
+    </View>
+  );
 
-  const renderFormat6 = () => {
-    return (
-      <View>
-        <View style={S.topSection}>
-          <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
-          <View style={S.twoIconsContainer}>
-            {renderPhoneIcon()}
-            {renderNavIcon({ showDistance: false })}
-          </View>
+  const renderFormat6 = () => (
+    <View>
+      <View style={S.topSection}>
+        <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
+        <View style={S.twoIconsContainer}>
+          {renderPhoneIcon()}
+          {renderNavIcon({ showDistance: false })}
         </View>
-        <View style={S.bottomSection}>{renderBottomButton()}</View>
       </View>
-    );
-  };
+      <View style={S.bottomSection}>{renderBottomButton()}</View>
+    </View>
+  );
 
   const renderFormat7 = () => {
     const { storeImage } = props;
     return (
       <View>
         <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          {storeImage !== undefined && <Image source={storeImage} style={S.storeImage} />}
           <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
           <View style={S.twoIconsContainerVertical}>
             {renderNavIcon({ showDistance: false })}
@@ -374,7 +367,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     return (
       <View>
         <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          {storeImage !== undefined && <Image source={storeImage} style={S.storeImage} />}
           <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
           <View style={S.twoIconsContainerVertical}>
             {renderNavIcon({ showDistance: false })}
@@ -391,7 +384,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     return (
       <View>
         <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          {storeImage !== undefined && <Image source={storeImage} style={S.storeImage} />}
           <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
           <View style={S.rightSection}>{renderNavIcon({ showDistance: false })}</View>
         </View>
@@ -405,7 +398,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
     return (
       <View>
         <View style={S.topSection}>
-          {!!storeImage && <Image source={storeImage} style={S.storeImage} />}
+          {storeImage !== undefined && <Image source={storeImage} style={S.storeImage} />}
           <View style={S.leftSection}>{renderStoreDetail({ showDistance: true })}</View>
           <View style={S.rightSection}>{renderPhoneIcon()}</View>
         </View>
@@ -415,7 +408,7 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
   };
 
   const renderFormat11 = () => {
-    const { linkStyle, linkTitleStyle, buttonTitle, onButtonPress } = props;
+    const { buttonTitle, linkStyle, linkTitleStyle, onButtonPress } = props;
 
     if (!onButtonPress) {
       console.warn('onButtonPress is required for this format');
@@ -434,10 +427,10 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
             {renderStoreDetail({ showDistance: true })}
             <Button
               link
-              style={[S.linkButton, linkStyle]}
-              titleStyle={[S.linkButtonText, linkTitleStyle]}
-              title={buttonTitle}
               onPress={onButtonPress}
+              style={[S.linkButton, linkStyle]}
+              title={buttonTitle}
+              titleStyle={[S.linkButtonText, linkTitleStyle]}
             />
           </View>
           <View style={[S.twoIconsContainerVertical, S.twoIconsContainerVerticalTall]}>

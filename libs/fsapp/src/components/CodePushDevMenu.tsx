@@ -1,6 +1,7 @@
 // We don't need to worry about translating the element strings
 // in this file since it should only be used in development
 import React, { Component } from 'react';
+
 import {
   Button,
   FlatList,
@@ -11,10 +12,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { AppConfigType } from '../types';
-import FSNetwork from '@brandingbrand/fsnetwork';
 import DeviceInfo from 'react-native-device-info';
+
+import FSNetwork from '@brandingbrand/fsnetwork';
+
 import NativeConstants from '../lib/native-constants';
+import type { AppConfigType } from '../types';
 
 const { CodePush } = NativeModules;
 
@@ -37,7 +40,7 @@ export interface Release {
   label: string;
   package_hash: string;
   blob_url: string;
-  diff_package_map: any;
+  diff_package_map: unknown;
   original_deployment: string;
   original_label: string;
   released_by: string;
@@ -63,34 +66,34 @@ export interface CodePushDevMenuStateTypes {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  column: {
     flex: 1,
-    borderBottomWidth: 1,
+  },
+  container: {
     borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    flex: 1,
+  },
+  currentRelease: {
+    marginTop: -20,
+    textAlign: 'center',
   },
   item: {
-    paddingLeft: 10,
-    fontSize: 15,
-    paddingVertical: 15,
-    borderTopWidth: 1,
     borderTopColor: '#ccc',
+    borderTopWidth: 1,
+    fontSize: 15,
+    paddingLeft: 10,
+    paddingVertical: 15,
   },
   pageTitle: {
-    textAlign: 'center',
-    fontWeight: 'bold',
     fontSize: 20,
+    fontWeight: 'bold',
     paddingVertical: 20,
+    textAlign: 'center',
   },
   rowContainer: {
     flex: 1,
     flexDirection: 'row',
-  },
-  column: {
-    flex: 1,
-  },
-  currentRelease: {
-    textAlign: 'center',
-    marginTop: -20,
   },
 });
 
@@ -98,8 +101,6 @@ export default class CodePushDevMenu extends Component<
   CodePushDevMenuPropTypes,
   CodePushDevMenuStateTypes
 > {
-  client?: FSNetwork;
-
   constructor(props: CodePushDevMenuPropTypes) {
     super(props);
 
@@ -127,7 +128,9 @@ export default class CodePushDevMenu extends Component<
           swimLanes: result.data,
         });
       })
-      .catch((e: any) => console.warn(e, e.response));
+      .catch((error: any) => {
+        console.warn(error, error.response);
+      });
 
     if (CodePush) {
       CodePush.getUpdateMetadata(CodePush.codePushUpdateStateRunning).then((version: string) => {
@@ -136,79 +139,44 @@ export default class CodePushDevMenu extends Component<
     }
   }
 
-  async componentDidMount(): Promise<void> {
-    this.setState({
-      version: DeviceInfo.getVersion(),
-    });
-  }
+  private readonly client?: FSNetwork;
 
-  render(): JSX.Element {
-    if (!NativeConstants.AppCenterToken) {
-      return <Text>Native build does not include CodePush support.</Text>;
-    }
+  private readonly renderSwimLanes = () => (
+    <View>
+      <Text style={styles.pageTitle}>Select A Lane</Text>
 
-    let view;
-    switch (this.state.view) {
-      case 'swimLanes':
-        view = this.renderSwimLanes();
-        break;
+      {this.state.swimLanes && this.state.swimLanes.length > 0 ? (
+        <FlatList
+          data={this.state.swimLanes}
+          renderItem={this.renderSwimLaneItem}
+          style={styles.container}
+        />
+      ) : (
+        <Text>No lanes setup for app</Text>
+      )}
 
-      case 'swimLane':
-        view = this.renderSwimLane();
-        break;
+      <Text style={styles.pageTitle}>Current Release</Text>
+      <Text style={styles.currentRelease}>
+        {this.state.currentVersion ? this.renderCurrentRelease() : 'Bundled'}
+      </Text>
 
-      case 'release':
-        view = this.renderRelease();
-        break;
+      <Text style={styles.pageTitle}>Native App</Text>
+      <Text style={styles.currentRelease}>{this.state.version}</Text>
+    </View>
+  );
 
-      default:
-        view = <Text>Loading...</Text>;
-    }
-
-    return <View>{view}</View>;
-  }
-
-  renderSwimLanes = () => {
-    return (
-      <View>
-        <Text style={styles.pageTitle}>Select A Lane</Text>
-
-        {this.state.swimLanes && this.state.swimLanes.length ? (
-          <FlatList
-            style={styles.container}
-            data={this.state.swimLanes}
-            renderItem={this.renderSwimLaneItem}
-          />
-        ) : (
-          <Text>No lanes setup for app</Text>
-        )}
-
-        <Text style={styles.pageTitle}>Current Release</Text>
-        <Text style={styles.currentRelease}>
-          {this.state.currentVersion ? this.renderCurrentRelease() : 'Bundled'}
-        </Text>
-
-        <Text style={styles.pageTitle}>Native App</Text>
-        <Text style={styles.currentRelease}>{this.state.version}</Text>
-      </View>
-    );
-  };
-
-  renderCurrentRelease = () => {
+  private readonly renderCurrentRelease = () => {
     const currentLane =
       this.state.swimLanes &&
-      this.state.swimLanes.find((lane) => {
-        return lane.key === this.state.currentVersion.deploymentKey;
-      });
+      this.state.swimLanes.find((lane) => lane.key === this.state.currentVersion.deploymentKey);
 
     if (currentLane) {
-      return currentLane.name + ' ' + this.state.currentVersion.label;
-    } else {
-      return '';
+      return `${currentLane.name} ${this.state.currentVersion.label}`;
     }
+    return '';
   };
 
-  renderSwimLaneItem = ({ item }: { item: SwimLane }): JSX.Element => {
+  private readonly renderSwimLaneItem = ({ item }: { item: SwimLane }): JSX.Element => {
     const {
       config: { deploymentKey },
     } = this.state;
@@ -222,8 +190,9 @@ export default class CodePushDevMenu extends Component<
     );
   };
 
-  viewLane = (item: SwimLane): (() => void) => {
-    return () => {
+  private readonly viewLane =
+    (item: SwimLane): (() => void) =>
+    () => {
       if (!this.client) {
         return;
       }
@@ -251,15 +220,15 @@ export default class CodePushDevMenu extends Component<
             releases,
           });
         })
-        .catch((e: any) => console.warn(e));
+        .catch((error: any) => {
+          console.warn(error);
+        });
     };
-  };
 
-  swimLaneKeyExtractor = (item: Release, index: number): string => {
-    return index.toString();
-  };
+  private readonly swimLaneKeyExtractor = (item: Release, index: number): string =>
+    index.toString();
 
-  renderSwimLane = () => {
+  private readonly renderSwimLane = () => {
     if (!this.state.swimLane) {
       return null;
     }
@@ -270,12 +239,12 @@ export default class CodePushDevMenu extends Component<
           <Text style={styles.pageTitle}>{this.state.swimLane.name}</Text>
         </TouchableOpacity>
 
-        {this.state.releases && this.state.releases.length ? (
+        {this.state.releases && this.state.releases.length > 0 ? (
           <FlatList
-            style={styles.container}
             data={this.state.releases}
             keyExtractor={this.swimLaneKeyExtractor}
             renderItem={this.renderReleaseItem}
+            style={styles.container}
           />
         ) : (
           <Text>No release in this lane</Text>
@@ -284,14 +253,12 @@ export default class CodePushDevMenu extends Component<
     );
   };
 
-  renderReleaseItem = ({ item }: { item: Release }): JSX.Element => {
+  private readonly renderReleaseItem = ({ item }: { item: Release }): JSX.Element => {
     let promotionLabel;
 
-    if (item.original_deployment) {
-      promotionLabel = `Promoted from ${item.original_deployment} ${item.original_label} On`;
-    } else {
-      promotionLabel = 'Released on';
-    }
+    promotionLabel = item.original_deployment
+      ? `Promoted from ${item.original_deployment} ${item.original_label} On`
+      : 'Released on';
 
     return (
       <TouchableOpacity key={item.label} onPress={this.viewRelease(item)}>
@@ -304,23 +271,21 @@ export default class CodePushDevMenu extends Component<
     );
   };
 
-  viewRelease = (item: Release) => {
-    return () => {
-      this.setState({
-        release: item,
-        view: 'release',
-      });
-    };
+  private readonly viewRelease = (item: Release) => () => {
+    this.setState({
+      release: item,
+      view: 'release',
+    });
   };
 
-  renderRelease = () => {
+  private readonly renderRelease = () => {
     if (!this.state.release) {
       return null;
     }
 
     // release will only have message if there has been an error in the Release opject in appcenter;
     // see https://openapi.appcenter.ms/#/codepush/codePushDeploymentReleases_get;
-    if (this.state.release.message && this.state.release.message.length) {
+    if (this.state.release.message && this.state.release.message.length > 0) {
       return this.state.release.message;
     }
 
@@ -369,56 +334,86 @@ export default class CodePushDevMenu extends Component<
         ) : null}
 
         <View style={{ marginTop: 50 }}>
-          <Button title={'Use this release'} onPress={this.updateTo(this.state.release)} />
+          <Button onPress={this.updateTo(this.state.release)} title="Use this release" />
         </View>
       </View>
     );
   };
 
-  updateTo = (release: Release) => {
-    return () => {
-      const update = {
-        downloadUrl: release.blob_url,
-        packageHash: release.package_hash,
-        label: release.label,
-        deploymentKey: this.state.swimLane ? this.state.swimLane.key : '',
-        appVersion: release.target_binary_range,
-        failedInstall: false,
-        isMandatory: false,
-        isPending: false,
-        packageSize: release.size,
-      };
-
-      CodePush.downloadUpdate(update, false)
-        .then((r: any) => {
-          console.log('Downloaded, installing...', r);
-
-          return CodePush.installUpdate(r, CodePush.codePushInstallModeImmediate, 0);
-        })
-        .then((r: any) => {
-          console.log('Installed, verifying...', r);
-
-          return CodePush.getUpdateMetadata(CodePush.codePushUpdateStatePending);
-        })
-        .then((r: any) => {
-          if (r.label === update.label) {
-            console.log('Verified!, restarting...', r);
-            CodePush.restartApp(false);
-          } else {
-            console.log('Pending does not match requested?', release, r);
-          }
-        })
-        .catch((e: any) => {
-          console.error('codepush error catch', e);
-        });
+  private readonly updateTo = (release: Release) => () => {
+    const update = {
+      downloadUrl: release.blob_url,
+      packageHash: release.package_hash,
+      label: release.label,
+      deploymentKey: this.state.swimLane ? this.state.swimLane.key : '',
+      appVersion: release.target_binary_range,
+      failedInstall: false,
+      isMandatory: false,
+      isPending: false,
+      packageSize: release.size,
     };
+
+    CodePush.downloadUpdate(update, false)
+      .then((r: unknown) => {
+        console.log('Downloaded, installing...', r);
+
+        return CodePush.installUpdate(r, CodePush.codePushInstallModeImmediate, 0);
+      })
+      .then((r: unknown) => {
+        console.log('Installed, verifying...', r);
+
+        return CodePush.getUpdateMetadata(CodePush.codePushUpdateStatePending);
+      })
+      .then((r: any) => {
+        if (r.label === update.label) {
+          console.log('Verified!, restarting...', r);
+          CodePush.restartApp(false);
+        } else {
+          console.log('Pending does not match requested?', release, r);
+        }
+      })
+      .catch((error: unknown) => {
+        console.error('codepush error catch', error);
+      });
   };
 
-  gotoSwimLanes = () => {
+  private readonly gotoSwimLanes = () => {
     this.setState({ view: 'swimLanes' });
   };
 
-  gotoSwimLane = () => {
+  private readonly gotoSwimLane = () => {
     this.setState({ view: 'swimLane' });
   };
+
+  public componentDidMount(): void {
+    this.setState({
+      version: DeviceInfo.getVersion(),
+    });
+  }
+
+  public render(): JSX.Element {
+    if (!NativeConstants.AppCenterToken) {
+      return <Text>Native build does not include CodePush support.</Text>;
+    }
+
+    let view;
+    switch (this.state.view) {
+      case 'swimLanes':
+        view = this.renderSwimLanes();
+        break;
+
+      case 'swimLane':
+        view = this.renderSwimLane();
+        break;
+
+      case 'release':
+        view = this.renderRelease();
+        break;
+
+      default:
+        view = <Text>Loading...</Text>;
+    }
+
+    return <View>{view}</View>;
+  }
 }

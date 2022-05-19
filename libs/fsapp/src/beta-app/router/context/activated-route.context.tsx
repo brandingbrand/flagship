@@ -1,11 +1,11 @@
-import type { ActivatedRoute, RouteData, RouteParams, RouteQuery } from '../types';
-
 import React, { createContext, useMemo } from 'react';
-import { defaults } from 'lodash-es';
 
 import { InjectionToken } from '@brandingbrand/fslinker';
 
+import { defaults } from 'lodash-es';
+
 import { InjectedContextProvider, useDependencyContext } from '../../lib/use-dependency';
+import type { ActivatedRoute, RouteData, RouteParams, RouteQuery } from '../types';
 
 export const defaultActivatedRoute: ActivatedRoute = {
   id: undefined,

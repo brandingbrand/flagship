@@ -1,8 +1,12 @@
-import type { AnyActionReducer, Effect, IStore } from './store.types';
-import { BehaviorSubject, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
-import { map, scan, switchMap, withLatestFrom } from 'rxjs/operators';
-import { ActionBus, AnyAction } from '../action-bus';
+import type { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { scan, switchMap, withLatestFrom } from 'rxjs/operators';
+
+import type { AnyAction } from '../action-bus';
+import { ActionBus } from '../action-bus';
 import { accumulateToArray } from '../internal/util/operators';
+
+import type { AnyActionReducer, Effect, IStore } from './store.types';
 
 /**
  * `Store` provides the state container and facilitates effects & reducers upon state.
@@ -10,14 +14,10 @@ import { accumulateToArray } from '../internal/util/operators';
  * @param initialState The initial state intended for the store.
  */
 export class Store<State> extends ActionBus implements IStore<State> {
-  private readonly _state$: BehaviorSubject<State>;
-  private readonly _reducer$ = new ReplaySubject<AnyActionReducer<State>>();
-  private readonly _reducedAction$ = new Subject<AnyAction>();
-
   constructor(initialState: State) {
     super();
-    const allReducers$ = this._reducer$.pipe(accumulateToArray());
-    this._state$ = new BehaviorSubject(initialState);
+    const allReducers$ = this.reducer$.pipe(accumulateToArray());
+    this.subject$ = new BehaviorSubject(initialState);
     const reducerSubscription = allReducers$
       .pipe(
         switchMap((reducers) =>
@@ -33,34 +33,38 @@ export class Store<State> extends ActionBus implements IStore<State> {
       )
       .subscribe({
         next: ([state, action]) => {
-          this._state$.next(state);
-          this._reducedAction$.next(action);
+          this.subject$.next(state);
+          this.reducedAction$.next(action);
         },
         complete: () => {
-          this._state$.complete();
+          this.subject$.complete();
         },
-        error: (err) => {
-          this._state$.error(err);
+        error: (err: unknown) => {
+          this.subject$.error(err);
         },
       });
 
     this.subscriptions.add(reducerSubscription);
   }
 
+  private readonly subject$: BehaviorSubject<State>;
+  private readonly reducer$ = new ReplaySubject<AnyActionReducer<State>>(Number.POSITIVE_INFINITY);
+  private readonly reducedAction$ = new Subject<AnyAction>();
+
   public get state(): State {
-    return this._state$.value;
+    return this.subject$.value;
   }
 
   public get state$(): Observable<State> {
-    return this._state$;
+    return this.subject$.asObservable();
   }
 
   public registerReducer = (reducer: AnyActionReducer<State>): void => {
-    this._reducer$.next(reducer);
+    this.reducer$.next(reducer);
   };
 
   public registerEffect = (effect: Effect<State>): Subscription => {
-    const subscription = effect(this._reducedAction$, this._state$).subscribe(this._action$);
+    const subscription = effect(this.reducedAction$, this.state$).subscribe(this._action$);
     this.subscriptions.add(subscription);
     return subscription;
   };

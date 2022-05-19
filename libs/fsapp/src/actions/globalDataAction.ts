@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import type { Action } from 'redux';
 
 export const GlobalDataActionType = 'UPDATE_GLOBAL';
 
@@ -6,9 +6,7 @@ export interface GlobalDataAction extends Action {
   data: any;
 }
 
-export function setGlobalData(data: any): GlobalDataAction {
-  return {
-    type: GlobalDataActionType,
-    data,
-  };
-}
+export const setGlobalData = (data: unknown): GlobalDataAction => ({
+  type: GlobalDataActionType,
+  data,
+});

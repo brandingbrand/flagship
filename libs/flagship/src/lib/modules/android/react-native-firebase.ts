@@ -1,9 +1,10 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import { Config } from '../../../types';
 import { logError, logInfo, logWarn } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
-export function postLink(configuration: Config): void {
+// eslint-disable-next-line max-statements
+export const postLink = (configuration: Config): void => {
   if (
     !(
       configuration.firebase &&
@@ -53,19 +54,20 @@ export function postLink(configuration: Config): void {
   let gradleBuild = fs.readFileSync(path.resolve('android', 'build.gradle'));
   const servicesDep = `classpath 'com.google.gms:google-services:4.0.1'`;
 
-  if (gradleBuild.indexOf(servicesDep) > -1) {
-    return logWarn('Firebase already imported into Android project');
+  if (gradleBuild.includes(servicesDep)) {
+    logWarn('Firebase already imported into Android project');
+    return;
   }
 
   gradleBuild = gradleBuild.replace(/(dependencies\s*?{\s*?$)/m, `$1\n        ${servicesDep}`);
 
   gradleBuild = gradleBuild.replace(
-    /(buildscript[\s\S]+?repositories\s*?{)/,
+    /(buildscript[\S\s]+?repositories\s*?{)/,
     `$1\n        google()`
   );
 
   gradleBuild = gradleBuild.replace(
-    /(allprojects[\s\S]+?repositories[\s\S]+?mavenLocal\s*?\(\s*?\))/,
+    /(allprojects[\S\s]+?repositories[\S\s]+?mavenLocal\s*?\(\s*?\))/,
     `$1\n        google()`
   );
 
@@ -89,4 +91,4 @@ export function postLink(configuration: Config): void {
   logInfo('updated MainApplication.java');
 
   logInfo('finished updating Android for Firebase');
-}
+};

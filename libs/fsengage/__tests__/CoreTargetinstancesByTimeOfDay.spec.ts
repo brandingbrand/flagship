@@ -3,7 +3,7 @@ import targetInstancesByTimeOfDay from '../src/modules/cms/providers/core/target
 const fixture = require('./ContentManagementSystem.fixture.json');
 
 describe('Core Content Management System Provider - TimeOfDay Target', () => {
-  test('Valid Location', (done) => {
+  it('valid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[0];
     const targets = fixture.payload.data._Targets;
 
@@ -23,18 +23,18 @@ describe('Core Content Management System Provider - TimeOfDay Target', () => {
     }
 
     targets[1]['Time-of-Day'] = {
-      time_start: hour + ':' + minutes,
-      time_end: endHour + ':' + endMinutes,
+      time_start: `${hour}:${minutes}`,
+      time_end: `${endHour}:${endMinutes}`,
     };
 
     const result = targetInstancesByTimeOfDay(instances, targets);
 
-    expect(result).toEqual(true);
+    expect(result).toBe(true);
 
     return done();
   });
 
-  test('Invalid Location', (done) => {
+  it('invalid Location', (done) => {
     const instances = fixture.payload.data.Homepage['Hero-Carousel'].instances[1];
     const targets = fixture.payload.data._Targets;
 
@@ -46,13 +46,13 @@ describe('Core Content Management System Provider - TimeOfDay Target', () => {
     const endMinutes = minutes < 30 ? 50 : 20;
 
     targets[1]['Time-of-Day'] = {
-      time_start: hour + ':' + startMinutes,
-      time_end: hour + ':' + endMinutes,
+      time_start: `${hour}:${startMinutes}`,
+      time_end: `${hour}:${endMinutes}`,
     };
 
     const result = targetInstancesByTimeOfDay(instances, targets);
 
-    expect(result).toEqual(false);
+    expect(result).toBe(false);
 
     return done();
   });

@@ -1,10 +1,16 @@
-import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
-import { Button, ButtonProps, SerializableFSButtonProps } from './Button';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import blueLogo from '../../assets/images/paypal-logo-blue.png';
 import whiteLogo from '../../assets/images/paypal-logo-white.png';
+
+import { Button } from './Button';
+import type { ButtonProps, SerializableFSButtonProps } from './Button';
 
 const componentTranslationKeys = translationKeys.flagship.payPalButton;
 
@@ -14,7 +20,7 @@ type SerializableLimitedButtonProps = Omit<
   'color' | 'light' | 'link' | 'palette'
 >;
 export type ButtonShape = 'pill' | 'rect';
-export type ButtonTheme = 'gold' | 'blue' | 'silver' | 'black';
+export type ButtonTheme = 'black' | 'blue' | 'gold' | 'silver';
 
 interface SharedInterface {
   shape: ButtonShape;
@@ -32,7 +38,7 @@ export interface SerializablePayPalCheckoutButtonProps
   tagLineStyle?: TextStyle;
 }
 
-type DefaultProps = Pick<PayPalCheckoutButtonProps, 'shape' | 'theme' | 'title' | 'tagLine'>;
+type DefaultProps = Pick<PayPalCheckoutButtonProps, 'shape' | 'tagLine' | 'theme' | 'title'>;
 
 const themes = {
   gold: {
@@ -66,12 +72,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 24,
   },
+  icon: {
+    height: 24,
+    width: 99,
+  },
   tagLine: {
     textAlign: 'center',
-  },
-  icon: {
-    width: 99,
-    height: 24,
   },
 });
 
@@ -84,7 +90,7 @@ export const PayPalCheckoutButton: FunctionComponent<PayPalCheckoutButtonProps> 
       tagLine: FSI18n.string(componentTranslationKeys.defaultTagLine),
     };
 
-    const { shape, style, tagLine, tagLineStyle, titleStyle, title, theme } = props;
+    const { shape, style, tagLine, tagLineStyle, theme, title, titleStyle } = props;
 
     const shapeVal = shape ? shape : defaultProps.shape;
     const themeVal = theme ? theme : defaultProps.theme;
@@ -113,12 +119,12 @@ export const PayPalCheckoutButton: FunctionComponent<PayPalCheckoutButtonProps> 
       <View style={{ paddingVertical: 10 }}>
         <Button
           {...buttonProps}
-          title={titleVal}
           icon={selectedTheme.icon}
           iconStyle={styles.icon}
+          title={titleVal}
           underlayColor={selectedTheme.bgActive}
         />
-        {!!tagLineVal && <Text style={[styles.tagLine, tagLineStyle]}>{tagLineVal}</Text>}
+        {Boolean(tagLineVal) && <Text style={[styles.tagLine, tagLineStyle]}>{tagLineVal}</Text>}
       </View>
     );
   }

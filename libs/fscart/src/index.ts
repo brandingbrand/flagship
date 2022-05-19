@@ -1,1 +1,2 @@
-export { default as Cart, CartProps } from './components/Cart';
+export type { CartProps } from './components/Cart';
+export { default as Cart } from './components/Cart';

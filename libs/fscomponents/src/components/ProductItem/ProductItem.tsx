@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import {
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  TextStyle,
-  TouchableWithoutFeedback,
-  View,
-  ViewStyle,
-} from 'react-native';
 
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { ButtonProps } from '../Button';
-import { ReviewIndicatorProps } from '../ReviewIndicator';
-import { SwatchesProps, SwatchItemType } from '../Swatches';
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import { style as S } from '../../styles/ProductItem';
+import type { ButtonProps } from '../Button';
+import type { ReviewIndicatorProps } from '../ReviewIndicator';
+import type { SwatchItemType, SwatchesProps } from '../Swatches';
 
 import {
   ProductItemBrand,
@@ -25,8 +21,6 @@ import {
   ProductItemTitle,
   ProductItemVariant,
 } from './components';
-
-import { style as S } from '../../styles/ProductItem';
 
 export interface ProductItemProps extends CommerceTypes.Product {
   style?: StyleProp<ViewStyle>;
@@ -104,67 +98,67 @@ export interface ProductItemProps extends CommerceTypes.Product {
   hideButton?: boolean;
 
   // orientation
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export class ProductItem extends Component<ProductItemProps> {
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
+  // eslint-disable-next-line max-lines-per-function
+  public render(): JSX.Element {
     const {
-      style,
-      contentStyle,
-      onPress,
-      extraElement = null,
-      title,
-      images,
-      imageStyle,
-      imageContainerStyle,
-      renderImage,
-      image, // deprecated
-      variantText,
-      variantTextStyle,
-      renderVariantText,
       brand,
       brandStyle,
+      buttonProps,
+      buttonStyle,
+      buttonText,
+      buttonTextStyle,
+      contentStyle,
+      extraElement = null,
+      hideBrand,
+      hideButton, // deprecated
+      hideImage,
+      hidePrice,
+      hidePromos,
+      hideReviews,
+      hideSwatches,
+      hideTitle,
+      hideVariantText,
+      image,
+      imageContainerStyle,
+      imageStyle,
+      images,
+      onButtonPress,
+      onPress,
+      orientation = 'vertical',
+      originalPrice,
+      originalPriceStyle,
+      price,
+      priceStyle,
+      promoContainerStyle,
+      promoStyle,
+      promos,
+      promotions,
       renderBrand,
-      titleStyle,
+      renderButton, // deprecated
+      renderImage,
+      renderPrice,
+      renderPromos,
+      renderReviews,
+      renderSwatches,
       renderTitle,
+      renderVariantText,
       review,
-      reviewStyle,
       reviewCountStyle,
       reviewIndicatorProps,
-      renderReviews,
-      price,
-      originalPrice,
-      priceStyle,
-      originalPriceStyle,
+      reviewStyle,
       salePriceStyle,
-      renderPrice,
-      promotions,
-      promoStyle,
-      promoContainerStyle,
-      renderPromos,
-      promos, // deprecated
+      style,
       swatchItems,
       swatchStyle,
       swatchesProps,
-      renderSwatches,
-      hidePrice,
-      hidePromos,
-      hideTitle,
-      hideVariantText,
-      hideBrand,
-      hideImage,
-      hideReviews,
-      hideSwatches,
-      hideButton,
-      buttonText,
-      buttonStyle,
-      buttonTextStyle,
-      buttonProps,
-      onButtonPress,
-      renderButton,
-      orientation = 'vertical',
+      title,
+      titleStyle,
+      variantText,
+      variantTextStyle,
     } = this.props;
 
     const isHorizontal = orientation === 'horizontal';
@@ -190,64 +184,64 @@ export class ProductItem extends Component<ProductItemProps> {
             <View style={isHorizontal ? S.horizontalLeft : null}>
               {!hideImage && (
                 <ProductItemImage
-                  images={images}
-                  imageStyle={imageStyle}
-                  imageContainerStyle={imageContainerStyle}
-                  renderImage={renderImage}
                   image={image}
+                  imageContainerStyle={imageContainerStyle}
+                  imageStyle={imageStyle}
+                  images={images}
+                  renderImage={renderImage}
                 />
               )}
               {!hideVariantText && (
                 <ProductItemVariant
+                  renderVariantText={renderVariantText}
                   variantText={variantText}
                   variantTextStyle={variantTextStyle}
-                  renderVariantText={renderVariantText}
                 />
               )}
             </View>
             <View style={[isHorizontal ? S.horizontalRight : null, contentStyle]}>
               {!hideSwatches && (
                 <ProductItemSwatches
+                  renderSwatches={renderSwatches}
                   swatchItems={swatchItems}
                   swatchStyle={swatchStyle}
                   swatchesProps={swatchesProps}
-                  renderSwatches={renderSwatches}
                 />
               )}
               {!hideBrand && (
                 <ProductItemBrand brand={brand} brandStyle={brandStyle} renderBrand={renderBrand} />
               )}
               {!hideTitle && (
-                <ProductItemTitle title={title} titleStyle={titleStyle} renderTitle={renderTitle} />
+                <ProductItemTitle renderTitle={renderTitle} title={title} titleStyle={titleStyle} />
               )}
               {!hidePrice && (
                 <ProductItemPrice
-                  price={price}
                   originalPrice={originalPrice}
-                  priceStyle={priceStyle}
                   originalPriceStyle={originalPriceStyle}
-                  salePriceStyle={salePriceStyle}
+                  price={price}
+                  priceStyle={priceStyle}
                   renderPrice={renderPrice}
+                  salePriceStyle={salePriceStyle}
                 />
               )}
               {!hideReviews && (
                 <ProductItemReviews
+                  renderReviews={renderReviews}
                   review={review}
-                  reviewStyle={reviewStyle}
+                  reviewCount={reviewCount}
                   reviewCountStyle={reviewCountStyle}
                   reviewIndicatorProps={reviewIndicatorProps}
-                  renderReviews={renderReviews}
+                  reviewStyle={reviewStyle}
                   reviewValue={reviewValue}
-                  reviewCount={reviewCount}
                 />
               )}
               {!hidePromos && (
                 <ProductItemPromos
-                  promotions={promotions}
-                  promoStyle={promoStyle}
                   promoContainerStyle={promoContainerStyle}
-                  renderPromos={renderPromos}
+                  promoStyle={promoStyle}
                   promos={promos}
+                  promotions={promotions}
+                  renderPromos={renderPromos}
                 />
               )}
               {extraElement}
@@ -256,8 +250,8 @@ export class ProductItem extends Component<ProductItemProps> {
           <View>
             {!hideButton && (
               <ProductItemButton
-                buttonText={buttonText}
                 buttonStyle={buttonStyle}
+                buttonText={buttonText}
                 buttonTextStyle={buttonTextStyle}
                 onButtonPress={onButtonPress}
                 renderButton={renderButton}

@@ -1,6 +1,10 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { EngagementContext } from '../lib/contexts';
+
 import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
@@ -43,7 +47,7 @@ export const TitleWithLink: React.FC<TitleWithLinkProps> = React.memo((props) =>
         <View style={[styles.titleContainer, titleContainer]}>
           <TextBlock {...contents.Text} />
         </View>
-        {!!contents?.TextLink?.enabled && (
+        {Boolean(contents?.TextLink?.enabled) && (
           <View style={styles.linkContainer}>
             <TouchableOpacity activeOpacity={1} onPress={onPress(contents.TextLink.link)}>
               <TextBlock {...contents.TextLink} />

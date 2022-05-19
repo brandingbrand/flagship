@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
-const S = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
+const styles = StyleSheet.create({
   button: {
     backgroundColor: 'white',
     padding: 10,
@@ -14,21 +14,24 @@ const S = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
   },
+  container: {
+    alignItems: 'center',
+  },
 });
 
 export interface PropType {
   searchArea: () => void;
-  style: any;
+  style: StyleProp<ViewStyle>;
 }
 
 export default class SeachAreaButton extends Component<PropType> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { searchArea, style } = this.props;
 
     return (
-      <View style={S.container}>
-        <TouchableOpacity style={[S.button, style]} onPress={searchArea}>
-          <Text style={S.buttonText}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={searchArea} style={[styles.button, style]}>
+          <Text style={styles.buttonText}>
             {FSI18n.string(translationKeys.flagship.storeLocator.actions.searchArea.actionBtn)}
           </Text>
         </TouchableOpacity>

@@ -59,11 +59,14 @@ export function flow<A extends readonly unknown[], B, C, D, E, F, G, H, I, J>(
   hi: (h: H) => I,
   ij: (i: I) => J
 ): (...a: A) => J;
+/**
+ *
+ * @param firstFunction
+ * @param functions
+ */
 export function flow(
   firstFunction: (...params: unknown[]) => unknown,
-  ...functions: ((value: unknown) => unknown)[]
+  ...functions: Array<(value: unknown) => unknown>
 ): (...params: unknown[]) => unknown {
-  return (...params) => {
-    return functions.reduce((val, fn) => fn(val), firstFunction(...params));
-  };
+  return (...params) => functions.reduce((val, fn) => fn(val), firstFunction(...params));
 }

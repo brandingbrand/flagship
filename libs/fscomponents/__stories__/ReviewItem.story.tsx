@@ -1,7 +1,9 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { ReviewItem } from '../src/components/ReviewItem';
 
 const review: import('@brandingbrand/fscommerce').ReviewTypes.Review = {
@@ -27,13 +29,13 @@ const review: import('@brandingbrand/fscommerce').ReviewTypes.Review = {
 
 storiesOf('ReviewItem', module).add('basic usage', () => (
   <ReviewItem
-    rating={number('value', review.rating)}
-    user={object('user', review.user)}
-    title={text('title', review.title)}
-    text={text('text', review.text || '')}
-    created={text('created', review.created)}
+    created={text('created', review.created as string)}
     feedback={object('feedback', review.feedback)}
     onHelpful={action('ReviewItem onHelpful')}
     onNotHelpful={action('ReviewItem onNotHelpful')}
+    rating={number('value', review.rating)}
+    text={text('text', review.text || '')}
+    title={text('title', review.title)}
+    user={object('user', review.user)}
   />
 ));

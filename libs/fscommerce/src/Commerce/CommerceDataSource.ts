@@ -1,10 +1,10 @@
-import { Product } from './CommerceTypes';
-import AccountDataSource from './interfaces/AccountDataSource';
-import CartDataSource from './interfaces/CartDataSource';
-import ContentDataSource from './interfaces/ContentDataSource';
-import ProductCatalogDataSource from './interfaces/ProductCatalogDataSource';
-import ProductRecommendationDataSource from './interfaces/ProductRecommendationDataSource';
-import ProductSearchDataSource from './interfaces/ProductSearchDataSource';
+import type { Product } from './CommerceTypes';
+import type AccountDataSource from './interfaces/AccountDataSource';
+import type CartDataSource from './interfaces/CartDataSource';
+import type ContentDataSource from './interfaces/ContentDataSource';
+import type ProductCatalogDataSource from './interfaces/ProductCatalogDataSource';
+import type ProductRecommendationDataSource from './interfaces/ProductRecommendationDataSource';
+import type ProductSearchDataSource from './interfaces/ProductSearchDataSource';
 
 export default interface CommerceDataSource
   extends AccountDataSource,
@@ -21,8 +21,8 @@ export default interface CommerceDataSource
   /**
    * Fetch information about multiple products as specified by an array of identifiers.
    *
-   * @param {Array.<string>} ids - An array of product identifiers to query
-   * @returns {Promise.<Array.<Product>>} A Promise representing an array of product metadata
+   * @param ids - An array of product identifiers to query
+   * @return A Promise representing an array of product metadata
    */
   fetchProducts?: (ids: string[]) => Promise<Product[]>;
 }

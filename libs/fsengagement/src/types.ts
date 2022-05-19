@@ -1,7 +1,10 @@
-import { ComponentClass, FunctionComponent } from 'react';
-import { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import type { ComponentClass, FunctionComponent } from 'react';
+
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+
 import type { Navigator } from '@brandingbrand/fsapp/legacy';
-import { EngagementService } from './EngagementService';
+
+import type { EngagementService } from './EngagementService';
 
 export interface ScreenProps {
   componentId?: string;
@@ -20,12 +23,8 @@ export interface Action extends EmitterProps {
   position?: number;
 }
 
-export interface ComponentList {
-  [key: string]: ComponentClass<any> | FunctionComponent<any>;
-}
-export interface AppSettings {
-  [key: string]: any;
-}
+export type ComponentList = Record<string, ComponentClass<any> | FunctionComponent<any>>;
+export type AppSettings = Record<string, any>;
 
 export interface Icon {
   type: string;
@@ -79,9 +78,9 @@ export interface JSON extends EmitterProps {
   id?: string;
   key?: string;
   storyType?: string;
-  tabbedItems?: any[];
-  AnimatedPageCounter?: any;
-  AnimatedNavTitle?: any;
+  tabbedItems?: unknown[];
+  AnimatedPageCounter?: unknown;
+  AnimatedNavTitle?: unknown;
   setScrollEnabled?: (enabled: boolean) => void;
   onBack?: () => void;
   fullScreenCardImage?: ImageURISource;
@@ -92,7 +91,7 @@ export interface BlockItem extends ScreenProps, JSON {
   index?: number;
   wrapper?: boolean;
   testing?: string;
-  contents?: any;
+  contents?: unknown;
   fadeIn?: boolean;
   forceBackground?: boolean;
   fullScreenCard?: boolean;
@@ -102,8 +101,8 @@ export interface BlockItem extends ScreenProps, JSON {
 
 export interface InjectedProps {
   messageId: string;
-  clickHandler: (id: string, story?: any) => void;
-  key?: any;
+  clickHandler: (id: string, story?: unknown) => void;
+  key?: unknown;
 }
 
 export interface InboxBlock extends InjectedProps {
@@ -116,7 +115,7 @@ export interface InboxBlock extends InjectedProps {
 export interface EngagmentEvent {
   type: string;
   id: string;
-  data: any;
+  data: unknown;
   fired: Date;
 }
 
@@ -147,11 +146,7 @@ export interface EngagementProfile {
   created: Date;
   modified: Date;
 
-  attributes: {
-    [key: string]: string;
-  };
+  attributes: Record<string, string>;
 
-  devices: {
-    [deviceID: string]: EngagmentDevice;
-  };
+  devices: Record<string, EngagmentDevice>;
 }

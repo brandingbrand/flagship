@@ -1,7 +1,9 @@
 import { pipe } from '@brandingbrand/standard-compose';
-import { mapOk } from './map';
+
 import { flatMap } from './flat-map';
-import { Ok, ok, Result } from './result';
+import { mapOk } from './map';
+import type { Ok, Result } from './result';
+import { ok } from './result';
 
 export const build: Ok<{}> = ok({});
 

@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { View } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { SearchBar } from '../src/components/SearchBar';
 
-import search from './assets/images/search.png';
 import locate from './assets/images/locate.png';
+import search from './assets/images/search.png';
 
 const icons = {
   search,
@@ -16,14 +19,14 @@ const icons = {
 storiesOf('SearchBar', module).add('basic usage', () => (
   <View style={{ flex: 1 }}>
     <SearchBar
-      placeholder={text('placeholder', 'Search by City, State, or Zip')}
-      showLocator={boolean('showLocator', true)}
       locateIcon={icons.locate}
-      showCancel={boolean('showCancel', false)}
-      showSearchIcon={boolean('showSearchIcon', true)}
-      searchIcon={icons.search}
-      onSubmit={action('SearchBar onSubmit')}
       onFocus={action('SearchBar onFocus')}
+      onSubmit={action('SearchBar onSubmit')}
+      placeholder={text('placeholder', 'Search by City, State, or Zip')}
+      searchIcon={icons.search}
+      showCancel={boolean('showCancel', false)}
+      showLocator={boolean('showLocator', true)}
+      showSearchIcon={boolean('showSearchIcon', true)}
     />
   </View>
 ));

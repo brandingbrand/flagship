@@ -1,7 +1,7 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import { Config } from '../../../types';
 import { logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
 /**
  * This script patches react-native-navigation to fix tab bar styling breakages introduced when
@@ -14,11 +14,10 @@ import { logInfo } from '../../../helpers';
  *
  * The changes are based on a patch suggested by a user in the RNN issue tracker.
  *
+ * @param configuration The project configuration.
  * @see https://github.com/wix/react-native-navigation/issues/7266#issuecomment-925706532
- *
- * @param {object} configuration The project configuration.
  */
-export function preLink(configuration: Config): void {
+export const preLink = (configuration: Config): void => {
   logInfo('Patching iOS for react-native-navigation');
 
   // Patch BottomTabsAppearancePresenter.m
@@ -191,4 +190,4 @@ export function preLink(configuration: Config): void {
   );
 
   logInfo('Successfully patched iOS for react-native-navigation');
-}
+};

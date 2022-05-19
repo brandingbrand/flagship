@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View } from 'react-native';
 import ReactDOM from 'react-dom';
+import { StyleSheet, View } from 'react-native';
 
 export interface PropType {
   component: typeof React.Component;
@@ -26,7 +26,7 @@ const S = StyleSheetCreate({
     height: '100%',
     marginLeft: 0,
     position: 'fixed',
-    zIndex: 10000,
+    zIndex: 10_000,
     top: 0,
     overflowX: 'hidden',
     transitionDuration: '0.3s',
@@ -44,8 +44,6 @@ const S = StyleSheetCreate({
 });
 
 export default class Drawer extends Component<PropType, DrawerState> {
-  drawView?: Element | Text | null;
-
   constructor(props: PropType) {
     super(props);
     this.state = {
@@ -53,21 +51,9 @@ export default class Drawer extends Component<PropType, DrawerState> {
     };
   }
 
-  componentDidUpdate = (prevProps: PropType, prevState: DrawerState): void => {
-    if (this.props.isOpen && !this.state.drawerVisible) {
-      this.setState({
-        drawerVisible: true,
-      });
-    }
-  };
+  private drawView?: Element | Text | null;
 
-  componentWillUnmount = (): void => {
-    if (this.drawView) {
-      this.drawView.removeEventListener('transitionend', this.animationListener);
-    }
-  };
-
-  animationListener = (e: Event): void => {
+  private readonly animationListener = (e: Event): void => {
     if (!this.props.isOpen) {
       this.setState({
         drawerVisible: false,
@@ -75,7 +61,7 @@ export default class Drawer extends Component<PropType, DrawerState> {
     }
   };
 
-  animationRef = (ref: View | null): void => {
+  private readonly animationRef = (ref: View | null): void => {
     if (ref) {
       if (this.drawView) {
         this.drawView.removeEventListener('transitionend', this.animationListener);
@@ -87,8 +73,22 @@ export default class Drawer extends Component<PropType, DrawerState> {
     }
   };
 
-  render(): JSX.Element {
-    const width = this.props.width;
+  public componentDidUpdate() {
+    if (this.props.isOpen && !this.state.drawerVisible) {
+      this.setState({
+        drawerVisible: true,
+      });
+    }
+  }
+
+  public componentWillUnmount() {
+    if (this.drawView) {
+      this.drawView.removeEventListener('transitionend', this.animationListener);
+    }
+  }
+
+  public render(): JSX.Element {
+    const { width } = this.props;
     const DrawerComponent = this.props.component;
     const orientationStyle = this.props.orientation === 'left' ? S.containerLeft : S.containerRight;
 
@@ -100,20 +100,19 @@ export default class Drawer extends Component<PropType, DrawerState> {
 
     let closedCss;
 
-    if (this.props.orientation === 'left') {
-      closedCss = {
-        marginLeft: '-' + width,
-      };
-    } else {
-      closedCss = {
-        marginRight: '-' + width,
-      };
-    }
+    closedCss =
+      this.props.orientation === 'left'
+        ? {
+            marginLeft: `-${width}`,
+          }
+        : {
+            marginRight: `-${width}`,
+          };
 
     return (
       <View
-        style={[S.container, propCss, orientationStyle, !this.props.isOpen && closedCss]}
         ref={this.animationRef}
+        style={[S.container, propCss, orientationStyle, !this.props.isOpen && closedCss]}
       >
         <DrawerComponent drawerVisible={this.state.drawerVisible} {...this.props} />
       </View>

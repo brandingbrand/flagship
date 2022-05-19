@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const toString = Object.prototype.toString;
+const { toString } = Object.prototype;
 
 /**
  * Gets the `toStringTag` of `value`.
  *
- * @private
  * @param value The value to query.
- * @returns Returns the `toStringTag`.
+ * @return Returns the `toStringTag`.
+ * @private
  */
 export const getTag = (value: unknown): string => {
   if (value === undefined) {

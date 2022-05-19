@@ -1,7 +1,10 @@
-import { ComponentType, ReactElement, ReactNode } from 'react';
-import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
-import { PageIndicatorProps } from '../PageIndicator';
-import { CarouselController } from './CarouselController';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
+
+import type { FlatListProps, StyleProp, ViewStyle } from 'react-native';
+
+import type { PageIndicatorProps } from '../PageIndicator';
+
+import type { CarouselController } from './CarouselController';
 
 export interface SlideChangeEvent {
   currentIndex: number;
@@ -11,14 +14,14 @@ export interface SlideChangeEvent {
 export interface MultiCarouselProps<ItemT>
   extends Pick<
     FlatListProps<ItemT>,
-    | 'accessible'
     | 'accessibilityHint'
     | 'accessibilityLabel'
     | 'accessibilityRole'
-    | 'style'
-    | 'renderItem'
+    | 'accessible'
     | 'data'
     | 'keyExtractor'
+    | 'renderItem'
+    | 'style'
   > {
   /**
    * Similar to `ref`, used to get ahold of the control functions for the
@@ -29,7 +32,7 @@ export interface MultiCarouselProps<ItemT>
   /**
    * The number of items to show per page, defaults to `auto`
    */
-  itemsPerPage?: 'auto' | number;
+  itemsPerPage?: number | 'auto';
 
   /**
    * The width to use for each item when `itemsPerPage`
@@ -59,8 +62,8 @@ export interface MultiCarouselProps<ItemT>
   contentContainerStyle?: StyleProp<ViewStyle>;
 
   /**
-   * @deprecated to be removed in fs12, use `hideScrollbar`
    * @platform web
+   * @deprecated to be removed in fs12, use `hideScrollbar`
    */
   hideOverflow?: boolean;
 

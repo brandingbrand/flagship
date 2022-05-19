@@ -1,13 +1,5 @@
-import {
-  Action,
-  applyMiddleware,
-  combineReducers,
-  compose,
-  createStore,
-  Middleware,
-  PreloadedState,
-  ReducersMapObject,
-} from 'redux';
+import type { Action, Middleware, PreloadedState, ReducersMapObject } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -25,7 +17,7 @@ const middleware = __DEV__
   : [thunk];
 
 const composeEnhancers =
-  __DEV__ && window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  __DEV__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : compose;
 
@@ -33,10 +25,9 @@ export const configureStore = <S, A extends Action>(
   initialState: PreloadedState<S> | undefined,
   reducers: ReducersMapObject<S, A>,
   customMiddleware?: Middleware[]
-) => {
-  return createStore(
+) =>
+  createStore(
     combineReducers(reducers),
     initialState,
     composeEnhancers(applyMiddleware(...middleware, ...(customMiddleware ?? [])))
   );
-};

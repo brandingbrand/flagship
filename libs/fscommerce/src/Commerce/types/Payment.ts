@@ -1,5 +1,6 @@
-import { CurrencyValue } from '../CommerceTypes';
-import { BasePaymentMethod } from './PaymentMethod';
+import type { CurrencyValue } from '../CommerceTypes';
+
+import type { BasePaymentMethod } from './PaymentMethod';
 
 /**
  * Information about a single payment made against an order.

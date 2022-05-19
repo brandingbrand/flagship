@@ -1,9 +1,9 @@
 import { logger } from '@nrwl/devkit';
-import { SingleBar, Presets } from 'cli-progress';
-import { green, grey } from 'colors';
 import chalk from 'chalk';
+import { Presets, SingleBar } from 'cli-progress';
+import { green, grey } from 'colors';
 
-import { ShipConfig } from '../configs/ship.config';
+import type { ShipConfig } from '../configs/ship.config';
 
 export type PhaseConstructor<C extends ShipConfig = ShipConfig> = new (config: C) => Phase;
 
@@ -13,7 +13,7 @@ export interface Phase {
 }
 
 export const runPhases = async <C extends ShipConfig>(
-  phases: PhaseConstructor<C>[],
+  phases: Array<PhaseConstructor<C>>,
   config: C
 ): Promise<void> => {
   for (const Phase of phases) {

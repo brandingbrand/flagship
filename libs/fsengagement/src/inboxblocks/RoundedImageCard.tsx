@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
-  DeviceEventEmitter,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { ViewStyle } from 'react-native';
+import { DeviceEventEmitter, Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
+import PropTypes from 'prop-types';
+import type { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
+
+import type { Action, CardProps, JSON } from '../types';
+
+import { TextBlock } from './TextBlock';
+
 const CARD_HEIGHT = 400;
 const styles = StyleSheet.create({
   bottom: {
@@ -32,10 +34,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
-
-import { Action, CardProps, JSON } from '../types';
-import { TextBlock } from './TextBlock';
-import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
 const { width: viewportWidth } = Dimensions.get('window');
 
 export interface ImageProp {
@@ -56,55 +54,29 @@ export interface RoundedImageCardProps extends CardProps {
 }
 
 export default class RoundedImageCardCard extends Component<RoundedImageCardProps> {
-  static childContextTypes: any = {
+  public static childContextTypes: any = {
     story: PropTypes.object,
     handleStoryAction: PropTypes.func,
     cardActions: PropTypes.object,
     id: PropTypes.string,
     name: PropTypes.string,
   };
-  static contextTypes: any = {
+
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
-  AnimatedImage: any;
-  myComponent: any;
-  viewComponent: any;
-  AnimatedContent: any;
-  isLoaded: boolean = false;
 
-  handleImageRef = (ref: any) => (this.AnimatedImage = ref);
-  handleViewRef = (ref: any) => (this.myComponent = ref);
-  handleContentRef = (ref: any) => (this.AnimatedContent = ref);
-  getChildContext = () => ({
-    story: this.props.story,
-    handleStoryAction: this.handleStoryAction,
-    cardActions: this.props.actions,
-    id: this.props.id,
-    name: this.props.name,
-  });
+  private AnimatedImage: any;
+  private AnimatedContent: any;
+  private myComponent: any;
+  private viewComponent: any;
+  private isLoaded = false;
 
-  componentDidMount(): void {
-    if (typeof this.props.index === 'number' && this.props.index <= 1) {
-      const timeout = 500 + this.props.index * 200;
-      setTimeout(() => {
-        this.myComponent.transition(
-          {
-            translateX: this.props.index ? -viewportWidth : viewportWidth,
-          },
-          {
-            translateX: 0,
-          },
-          600,
-          'ease-in-out-quart'
-        );
-        this.isLoaded = true;
-      }, timeout);
-    } else {
-      this.isLoaded = true;
-    }
-  }
+  private readonly handleImageRef = (ref: any) => (this.AnimatedImage = ref);
+  private readonly handleViewRef = (ref: any) => (this.myComponent = ref);
+  private readonly handleContentRef = (ref: any) => (this.AnimatedContent = ref);
 
-  onBack = () => {
+  private readonly onBack = () => {
     this.AnimatedImage.transitionTo(
       {
         scale: 1,
@@ -132,7 +104,7 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     );
   };
 
-  handleStoryAction = async (json: JSON) => {
+  private readonly handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
       title: this.props.name,
       id: this.props.id,
@@ -173,17 +145,20 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
       },
     });
   };
-  handlePressIn = (): void => {
+
+  private readonly handlePressIn = (): void => {
     // this.myComponent.transitionTo({
     //   scale: 0.98
     // }, 200, 'ease-out');
   };
-  handlePressOut = (): void => {
+
+  private readonly handlePressOut = (): void => {
     // this.myComponent.transitionTo({
     //   scale: 1
     // }, 200, 'ease-out');
   };
-  onCardPress = async (): Promise<void> => {
+
+  private readonly onCardPress = async (): Promise<void> => {
     const { handleAction } = this.context;
     const { actions, story, storyGradient } = this.props;
 
@@ -229,7 +204,36 @@ export default class RoundedImageCardCard extends Component<RoundedImageCardProp
     }
   };
 
-  render(): JSX.Element {
+  public getChildContext = () => ({
+    story: this.props.story,
+    handleStoryAction: this.handleStoryAction,
+    cardActions: this.props.actions,
+    id: this.props.id,
+    name: this.props.name,
+  });
+
+  public componentDidMount(): void {
+    if (typeof this.props.index === 'number' && this.props.index <= 1) {
+      const timeout = 500 + this.props.index * 200;
+      setTimeout(() => {
+        this.myComponent.transition(
+          {
+            translateX: this.props.index ? -viewportWidth : viewportWidth,
+          },
+          {
+            translateX: 0,
+          },
+          600,
+          'ease-in-out-quart'
+        );
+        this.isLoaded = true;
+      }, timeout);
+    } else {
+      this.isLoaded = true;
+    }
+  }
+
+  public render(): JSX.Element {
     const { contents, textOverlay } = this.props;
 
     const verticalMap: any = {

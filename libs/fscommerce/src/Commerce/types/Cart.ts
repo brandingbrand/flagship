@@ -1,11 +1,12 @@
-import { Address } from './Address';
-import { BaseProduct, Product } from './Product';
-import { CurrencyValue } from '../CommerceTypes';
-import { CustomerAccount } from './CustomerAccount';
-import { Payment } from './Payment';
-import { Promo } from './Promo';
-import { Shipment } from './Shipment';
-import { ProductPromotion } from './ProductPromotion';
+import type { CurrencyValue } from '../CommerceTypes';
+
+import type { Address } from './Address';
+import type { CustomerAccount } from './CustomerAccount';
+import type { Payment } from './Payment';
+import type { BaseProduct, Product } from './Product';
+import type { ProductPromotion } from './ProductPromotion';
+import type { Promo } from './Promo';
+import type { Shipment } from './Shipment';
 
 /**
  * Information about a cart. In Demandware transactions the cart is the base unit of a

@@ -1,10 +1,12 @@
-import { Commit, Diff } from '@brandingbrand/git';
+import type { Commit, Diff } from '@brandingbrand/git';
+
 import { escapeRegex } from '../utils/escape-regex.util';
 
 /**
  * Remove any modifications to paths matching `stripPatterns`.
  *
  * @param excludedPaths a list of projects to exclude
+ * @param pathMap
  * @return modified commit
  */
 export const mapPaths =
@@ -26,7 +28,7 @@ export const mapPaths =
     };
 
     const diffs = new Set<Diff>();
-    for (const diff of Array.from(commit.diffs)) {
+    for (const diff of commit.diffs) {
       const oldPath = diff.path;
       const newPath = rewriteCallback(oldPath);
       if (oldPath === newPath) {
@@ -34,7 +36,7 @@ export const mapPaths =
         continue;
       }
 
-      let body = diff.body;
+      let { body } = diff;
       body = body.replace(new RegExp(`^--- a/${escapeRegex(oldPath)}`, 'm'), `--- a/${newPath}`);
       body = body.replace(
         new RegExp(`^\\+\\+\\+ b/${escapeRegex(oldPath)}`, 'm'),

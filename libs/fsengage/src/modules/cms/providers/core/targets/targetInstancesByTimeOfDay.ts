@@ -1,10 +1,6 @@
 const kTimeOfDayKey = 'Time-of-Day';
 
-// eslint-disable-next-line complexity
-export default function targetInstancesByTimeOfDay(
-  instance: any,
-  targets: { [index: string]: any }
-): boolean {
+const targetInstancesByTimeOfDay = (instance: any, targets: Record<string, any>): boolean => {
   if (!instance) {
     return false;
   }
@@ -43,7 +39,7 @@ export default function targetInstancesByTimeOfDay(
     }
   }
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
 
   const campaignStartTime =
     targets[campaign] &&
@@ -73,4 +69,6 @@ export default function targetInstancesByTimeOfDay(
   }
 
   return true;
-}
+};
+
+export default targetInstancesByTimeOfDay;

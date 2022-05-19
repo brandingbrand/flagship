@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { TextBlock } from './TextBlock';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
+import PropTypes from 'prop-types';
+
 import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 export interface ImageWithTextProps {
   contents: any;
@@ -12,11 +15,12 @@ export interface ImageWithTextProps {
 }
 
 export default class ImageWithTextBlock extends Component<ImageWithTextProps> {
-  static contextTypes: any = {
+  public static contextTypes: any = {
     handleAction: PropTypes.func,
   };
-  render(): JSX.Element {
-    const { containerStyle, contents, cardContainerStyle } = this.props;
+
+  public render(): JSX.Element {
+    const { cardContainerStyle, containerStyle, contents } = this.props;
 
     return (
       <View style={containerStyle}>

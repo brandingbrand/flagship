@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 
-import { TextBlock } from './TextBlock';
-import { ImageBlock } from './ImageBlock';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import whenIcon from '../../assets/images/whenIcon.png';
 import whereIcon from '../../assets/images/whereIcon.png';
 import whyIcon from '../../assets/images/whyIcon.png';
+
+import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
   eventTitle: {
@@ -61,7 +63,7 @@ export interface EventBlockProps {
 }
 
 export default class EventBlock extends Component<EventBlockProps> {
-  shouldComponentUpdate(nextProps: EventBlockProps): boolean {
+  public shouldComponentUpdate(nextProps: EventBlockProps): boolean {
     return (
       nextProps.textStyle !== this.props.textStyle ||
       nextProps.titleStyle !== this.props.titleStyle ||
@@ -70,12 +72,12 @@ export default class EventBlock extends Component<EventBlockProps> {
     );
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
-      textStyle,
-      titleStyle,
       containerStyle,
       eventInfo: { when, where, why },
+      textStyle,
+      titleStyle,
     } = this.props;
 
     return (
@@ -89,7 +91,7 @@ export default class EventBlock extends Component<EventBlockProps> {
           <View style={styles.eventText}>
             <TextBlock text="WHEN" textStyle={[styles.eventTitle, titleStyle]} />
             {!when.textDate && !when.textTime && (
-              <TextBlock text={when.date + ' | ' + when.time} textStyle={textStyle} />
+              <TextBlock text={`${when.date} | ${when.time}`} textStyle={textStyle} />
             )}
             {when.textDate && <TextBlock text={when.textDate} textStyle={textStyle} />}
             {when.textTime && <TextBlock text={when.textTime} textStyle={textStyle} />}

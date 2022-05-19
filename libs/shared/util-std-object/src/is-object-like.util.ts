@@ -3,7 +3,7 @@
  * and has a `typeof` result of "object".
  *
  * @param value The value to check.
- * @returns Returns `true` if `value` is object-like, else `false`.
+ * @return Returns `true` if `value` is object-like, else `false`.
  * @example
  *
  * isObjectLike({})
@@ -18,6 +18,5 @@
  * isObjectLike(null)
  * // => false
  */
-export const isObjectLike = (value: unknown): value is object => {
-  return typeof value === 'object' && value !== null;
-};
+export const isObjectLike = (value: unknown): value is object =>
+  typeof value === 'object' && value !== null;

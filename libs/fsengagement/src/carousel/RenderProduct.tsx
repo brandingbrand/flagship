@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Dimensions,
-  Image,
-  Linking,
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { Dimensions, Image, Linking, Text, TouchableOpacity, View } from 'react-native';
+
 import styles from './SliderEntry.style';
 
 export interface RenderProductProps {
@@ -26,11 +20,12 @@ export interface RenderProductProps {
 const { height: viewportHeight } = Dimensions.get('window');
 
 export default class RenderProduct extends Component<RenderProductProps> {
-  get image(): any {
+  private get image(): JSX.Element {
     const { data } = this.props;
     return <Image source={{ uri: data.image.url }} style={styles.image} />;
   }
-  onProductPress = (): void => {
+
+  private readonly onProductPress = (): void => {
     const { data } = this.props;
     if (!data.deepLinkUrl) {
       return;
@@ -39,44 +34,45 @@ export default class RenderProduct extends Component<RenderProductProps> {
     Linking.canOpenURL(deeplink)
       .then((supported) => {
         if (!supported) {
-          alert("An error occurred: can't handle url " + deeplink);
+          alert(`An error occurred: can't handle url ${deeplink}`);
           return false;
-        } else {
-          if (this.props.onBackPress) {
-            this.props.onBackPress();
-          }
-          return Linking.openURL(deeplink);
         }
+        if (this.props.onBackPress) {
+          this.props.onBackPress();
+        }
+        return Linking.openURL(deeplink);
       })
-      .catch((err) => alert('An error occurred: ' + err));
+      .catch((error) => {
+        alert(`An error occurred: ${error}`);
+      });
   };
-  render(): JSX.Element {
+
+  public render(): JSX.Element {
     const {
       data: { name, price },
       even = false,
-      itemWidth,
       horizPadding = 0,
+      itemWidth,
       spaceBetweenHorizontal = 0,
       spaceBetweenVertical = 0,
     } = this.props;
 
     const ratio = '.75';
     let itemStyle: any = {};
-    if (ratio && itemWidth) {
-      itemStyle = {
-        width: even ? itemWidth - 1 : itemWidth,
-        height: itemWidth / parseFloat(ratio) + 65,
-        paddingHorizontal: horizPadding,
-        marginLeft: even ? spaceBetweenHorizontal : 0,
-        marginBottom: spaceBetweenVertical,
-      };
-    } else {
-      itemStyle = {
-        width: itemWidth,
-        height: viewportHeight * 0.36,
-        paddingHorizontal: horizPadding,
-      };
-    }
+    itemStyle =
+      ratio && itemWidth
+        ? {
+            width: even ? itemWidth - 1 : itemWidth,
+            height: itemWidth / Number.parseFloat(ratio) + 65,
+            paddingHorizontal: horizPadding,
+            marginLeft: even ? spaceBetweenHorizontal : 0,
+            marginBottom: spaceBetweenVertical,
+          }
+        : {
+            width: itemWidth,
+            height: viewportHeight * 0.36,
+            paddingHorizontal: horizPadding,
+          };
     return (
       <TouchableOpacity activeOpacity={1} style={itemStyle} onPress={this.onProductPress}>
         <View style={styles.imageContainerNoCard}>{this.image}</View>

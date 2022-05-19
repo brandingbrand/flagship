@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 import FSI18n from '@brandingbrand/fsi18n';
 
 const styles = StyleSheet.create({
@@ -29,7 +32,7 @@ export interface SerializablePriceProps extends PriceProps {
 }
 
 export const Price: React.FC<PriceProps> = React.memo((props) => {
-  const { price, priceStyle, originalPrice, originalPriceStyle, originalPriceFirst } = props;
+  const { originalPrice, originalPriceFirst, originalPriceStyle, price, priceStyle } = props;
   let salePriceStyle;
 
   if (!price || !price.value) {
@@ -39,18 +42,18 @@ export const Price: React.FC<PriceProps> = React.memo((props) => {
   let convertedPrice: string | undefined;
   try {
     convertedPrice = FSI18n.currency(price);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 
   let convertedOriginalPrice: string | undefined;
   try {
-    if (originalPrice?.value?.greaterThan?.(price.value)) {
+    if (originalPrice?.value.greaterThan(price.value)) {
       convertedOriginalPrice = FSI18n.currency(originalPrice);
       salePriceStyle = props.salePriceStyle;
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 
   if (!convertedPrice) {
@@ -61,24 +64,23 @@ export const Price: React.FC<PriceProps> = React.memo((props) => {
     return (
       <Text>
         {convertedOriginalPrice && (
-          <>
+          <React.Fragment>
             <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>{' '}
-          </>
+          </React.Fragment>
         )}
         <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
-      </Text>
-    );
-  } else {
-    return (
-      <Text>
-        <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
-        {convertedOriginalPrice && (
-          <>
-            {' '}
-            <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>
-          </>
-        )}
       </Text>
     );
   }
+  return (
+    <Text>
+      <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
+      {convertedOriginalPrice && (
+        <React.Fragment>
+          {' '}
+          <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>
+        </React.Fragment>
+      )}
+    </Text>
+  );
 });

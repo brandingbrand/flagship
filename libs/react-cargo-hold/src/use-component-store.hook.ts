@@ -1,5 +1,5 @@
-import { useReact } from '@brandingbrand/react-linker';
 import { Store } from '@brandingbrand/cargo-hold';
+import { useReact } from '@brandingbrand/react-linker';
 
 export interface ComponentStoreOptions<T> {
   createInitialState: () => T;

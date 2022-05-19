@@ -1,8 +1,8 @@
+/* eslint-disable sort-export-all/sort-export-all */
 export * as CommerceTypes from './Commerce/CommerceTypes';
 export * from './Commerce/CommerceTypes';
 
-export {
-  default as withCommerceData,
+export type {
   WithCommerceDataProps,
   WithCommerceProps,
   WithCommerceProviderProps,
@@ -10,28 +10,27 @@ export {
   FetchDataFunction,
   InitialDataFunction,
 } from './Commerce/CommerceProvider';
-export { default as CommerceDataSource } from './Commerce/CommerceDataSource';
+export { default as withCommerceData } from './Commerce/CommerceProvider';
+export type { default as CommerceDataSource } from './Commerce/CommerceDataSource';
 
 export * as ReviewTypes from './Review/ReviewTypes';
 export * from './Review/ReviewTypes';
 
-export {
-  ReviewDataSource,
-  AbstractReviewDataSource,
-  WriteReviewDataSource,
-} from './Review/ReviewDataSource';
+export type { ReviewDataSource, WriteReviewDataSource } from './Review/ReviewDataSource';
+export { AbstractReviewDataSource } from './Review/ReviewDataSource';
 
-export { AddressType, AddressTypeValidation } from './Address/AddressTypes';
-export { default as AddressDataSource } from './Address/AddressDataSource';
+export type { AddressType, AddressTypeValidation } from './Address/AddressTypes';
+export type { default as AddressDataSource } from './Address/AddressDataSource';
 
-export { default as AccountDataSource } from './Commerce/interfaces/AccountDataSource';
-export { default as CartDataSource } from './Commerce/interfaces/CartDataSource';
-export { default as ProductCatalogDataSource } from './Commerce/interfaces/ProductCatalogDataSource';
-export { default as ProductRecommendationDataSource } from './Commerce/interfaces/ProductRecommendationDataSource';
-export { default as ProductSearchDataSource } from './Commerce/interfaces/ProductSearchDataSource';
-export { default as ContentDataSource } from './Commerce/interfaces/ContentDataSource';
-export { ProductGroupDataSource } from './Commerce/interfaces/ProductGroupDataSource';
+export type { default as AccountDataSource } from './Commerce/interfaces/AccountDataSource';
+export type { default as CartDataSource } from './Commerce/interfaces/CartDataSource';
+export type { default as ProductCatalogDataSource } from './Commerce/interfaces/ProductCatalogDataSource';
+export type { default as ProductRecommendationDataSource } from './Commerce/interfaces/ProductRecommendationDataSource';
+export type { default as ProductSearchDataSource } from './Commerce/interfaces/ProductSearchDataSource';
+export type { default as ContentDataSource } from './Commerce/interfaces/ContentDataSource';
+export type { ProductGroupDataSource } from './Commerce/interfaces/ProductGroupDataSource';
 
-export { default as runMiddleware, MiddlewareFunction } from './lib/runMiddleware';
+export type { MiddlewareFunction } from './lib/runMiddleware';
+export { default as runMiddleware } from './lib/runMiddleware';
 
 export { AuthType } from './Commerce/types/CustomerAccount';

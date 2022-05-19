@@ -1,5 +1,7 @@
-import { MaybePromise } from '@brandingbrand/types-utility';
-import { isFailure, isOk, Result } from './result';
+import type { MaybePromise } from '@brandingbrand/types-utility';
+
+import type { Result } from './result';
+import { isFailure, isOk } from './result';
 
 export const flatMapAsync =
   <InputOkType, OutputOkType, FailureType>(

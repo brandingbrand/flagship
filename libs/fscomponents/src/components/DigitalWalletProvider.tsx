@@ -12,11 +12,14 @@
  * applePaySetupPress: () => void - Function to be invoked when AP setup button is pressed
  */
 
-import React, { ComponentClass, StatelessComponent } from 'react';
+import type { ComponentClass, StatelessComponent } from 'react';
+import React from 'react';
+
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { default as ApplePay } from '../lib/wallets/ApplePay';
+
 import { Alert } from './Alert';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 // State for the DigitalWalletProvider component
 export interface WithDigitalWalletState {
@@ -37,15 +40,12 @@ export interface InjectedProps {
   applePaySetupPress?: () => void;
 }
 
-export function withDigitalWallet<P extends {}>(
-  Component: ComponentClass<P & InjectedProps> | StatelessComponent<P & InjectedProps>
-): ComponentClass<P & ExternalProps> {
-  type ResultProps = P & ExternalProps;
+export const withDigitalWallet = <P,>(
+  Component: ComponentClass<InjectedProps & P> | StatelessComponent<InjectedProps & P>
+): ComponentClass<ExternalProps & P> => {
+  type ResultProps = ExternalProps & P;
 
   return class DigitalWalletProvider extends React.Component<ResultProps, WithDigitalWalletState> {
-    applePay: ApplePay;
-    promises: Promise<any>[] = [];
-
     constructor(props: ResultProps) {
       super(props);
 
@@ -57,10 +57,13 @@ export function withDigitalWallet<P extends {}>(
       // Handle more payment providers here...
     }
 
+    private readonly applePay: ApplePay;
+    private readonly promises: Array<Promise<unknown>> = [];
+
     // Function to be invoked when the Apple Pay setup button is pressed. If successful,
     // will update state to specify that the AP pay button should be displayed.
-    handleApplePaySetup = async () => {
-      return this.applePay
+    private readonly handleApplePaySetup = async () =>
+      this.applePay
         .setupApplePay()
         .then((success) => {
           if (success) {
@@ -72,13 +75,12 @@ export function withDigitalWallet<P extends {}>(
             Alert.alert(FSI18n.string(translationKeys.flagship.cart.digitalWallet.appleError));
           }
         })
-        .catch((e) => {
-          console.error(e);
+        .catch((error) => {
+          console.error(error);
           Alert.alert('Apple Pay was unable to complete your request.');
         });
-    };
 
-    async initApplePay(): Promise<void> {
+    private async initApplePay(): Promise<void> {
       return new Promise<void>((resolve, reject) => {
         // Check if user has Apple Pay on their device
         if (this.applePay.isEnabled()) {
@@ -92,7 +94,7 @@ export function withDigitalWallet<P extends {}>(
                   showApplePaySetupButton: false,
                 });
 
-                return resolve();
+                resolve();
               } else if (this.applePay.canCallSetup()) {
                 // User's device supports invoking the AP setup interface
                 this.setState({
@@ -100,26 +102,26 @@ export function withDigitalWallet<P extends {}>(
                   showApplePaySetupButton: true,
                 });
 
-                return resolve();
+                resolve();
               }
             })
-            .catch((e) => {
-              return reject(e);
+            .catch((error) => {
+              reject(error);
             });
         }
       });
     }
 
-    componentDidMount(): void {
-      Promise.all(this.promises).catch((e) => {
-        console.error(e);
+    public componentDidMount(): void {
+      Promise.all(this.promises).catch((error) => {
+        console.error(error);
       });
     }
 
-    render(): JSX.Element {
+    public render(): JSX.Element {
       return (
         <Component {...this.props} {...this.state} applePaySetupPress={this.handleApplePaySetup} />
       );
     }
   };
-}
+};

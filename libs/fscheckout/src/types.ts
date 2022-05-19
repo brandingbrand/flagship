@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 
-export type StepStatus = 'pending' | 'active' | 'done';
+export type StepStatus = 'active' | 'done' | 'pending';
 
 export interface Step {
   name: string;

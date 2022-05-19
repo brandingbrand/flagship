@@ -1,5 +1,6 @@
-import { Injector } from '@brandingbrand/fslinker';
 import type * as React from 'react';
+
+import { Injector } from '@brandingbrand/fslinker';
 
 import { REACT } from './react.token';
 

@@ -1,31 +1,30 @@
-export async function isGeolocationAllowed(): Promise<boolean> {
+export const isGeolocationAllowed = async (): Promise<boolean> =>
   // In web there is not a way to know the permission without notifiying the user.
-  return Promise.resolve(false);
-}
+  false;
 
-export async function requestGeolocationPermission(): Promise<boolean> {
+export const requestGeolocationPermission = async (): Promise<boolean> =>
   // In web we need to request location to trigger the permission prompt to the user.
-  return new Promise<boolean>((resolve, reject) => {
-    return navigator.geolocation.getCurrentPosition(
+  new Promise<boolean>((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
       (position) => {
         if (position) {
-          return resolve(true);
+          resolve(true);
+          return;
         }
 
-        return resolve(false);
+        resolve(false);
       },
       (error) => {
         if (__DEV__) {
           console.log(
-            `%cLocator\n%c Function: requestGeolocationPermission\n Error: `,
+            `%cLocator\n%c Function: requestGeolocationPermission\n Error:`,
             'color: blue',
             'color: grey',
             error
           );
         }
 
-        return reject(error);
+        reject(error);
       }
     );
   });
-}

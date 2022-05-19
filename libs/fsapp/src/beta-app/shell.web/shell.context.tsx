@@ -1,21 +1,23 @@
-import type { DrawerComponentType, ShellConfig, WebShell } from './types';
+import type { FC } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
-import React, { createContext, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import type { ViewStyle } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 
 import { InjectionToken } from '@brandingbrand/fslinker';
 
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
 import { useNavigator } from '../router';
 import { CreateWebStyles, lockScroll, unlockScroll } from '../utils';
 
-import { dummyShell } from './shell.dummy';
-import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
-import { DrawerContainer } from './drawer-container.component';
 import {
   DEFAULT_DRAWER_ANIMATION,
   DEFAULT_DRAWER_WIDTH,
   DEFAULT_OVERLAY_OPACITY,
 } from './constants';
+import { DrawerContainer } from './drawer-container.component';
+import { dummyShell } from './shell.dummy';
+import type { DrawerComponentType, ShellConfig, WebShell } from './types';
 
 export const WebShellContext = createContext<WebShell>(dummyShell);
 export const WEB_SHELL_CONTEXT_TOKEN = new InjectionToken<typeof WebShellContext>(
@@ -64,13 +66,12 @@ const styles = CreateWebStyles({
   },
 });
 
-// eslint-disable-next-line complexity
 export const WebShellProvider: FC<ShellConfig> = ({
-  header,
+  children,
   footer,
+  header,
   leftDrawer,
   rightDrawer,
-  children,
 }) => {
   const navigator = useNavigator();
   const [leftDrawerOpen, setLeftDrawer] = useState(false);
@@ -86,17 +87,25 @@ export const WebShellProvider: FC<ShellConfig> = ({
   const RightDrawer = rightDrawer;
 
   const toggleLeftDrawer = useCallback(
-    (open?: boolean) => setLeftDrawer(open ?? !leftDrawerOpen),
+    (open?: boolean) => {
+      setLeftDrawer(open ?? !leftDrawerOpen);
+    },
     [setLeftDrawer, leftDrawerOpen]
   );
 
   const toggleRightDrawer = useCallback(
-    (open?: boolean) => setRightDrawer(open ?? !rightDrawerOpen),
+    (open?: boolean) => {
+      setRightDrawer(open ?? !rightDrawerOpen);
+    },
     [setRightDrawer, rightDrawerOpen]
   );
 
-  const closeLeftDrawer = useCallback(() => toggleLeftDrawer(false), [toggleLeftDrawer]);
-  const closeRightDrawer = useCallback(() => toggleRightDrawer(false), [toggleLeftDrawer]);
+  const closeLeftDrawer = useCallback(() => {
+    toggleLeftDrawer(false);
+  }, [toggleLeftDrawer]);
+  const closeRightDrawer = useCallback(() => {
+    toggleRightDrawer(false);
+  }, [toggleLeftDrawer]);
   const closeAllDrawers = useCallback(() => {
     setLeftDrawer(false);
     setRightDrawer(false);
@@ -110,9 +119,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
     }
   }, [leftDrawerOpen, rightDrawerOpen]);
 
-  useEffect(() => {
-    return navigator.listen(closeAllDrawers);
-  }, []);
+  useEffect(() => navigator.listen(closeAllDrawers), []);
 
   const [leftWidth, leftDuration, leftOpacity, leftBackgroundColor] = useDrawerOptions(LeftDrawer);
   const [rightWidth, rightDuration, rightOpacity, rightBackgroundColor] =
@@ -164,12 +171,12 @@ export const WebShellProvider: FC<ShellConfig> = ({
 
         {LeftDrawer && (
           <DrawerContainer
-            position="left"
-            width={leftWidth}
-            open={leftDrawerOpen}
-            style={LeftDrawer.options?.style}
             animationDuration={leftDuration}
             onChange={setLeftActive}
+            open={leftDrawerOpen}
+            position="left"
+            style={LeftDrawer.options?.style}
+            width={leftWidth}
           >
             <LeftDrawer close={closeLeftDrawer} />
           </DrawerContainer>
@@ -177,12 +184,12 @@ export const WebShellProvider: FC<ShellConfig> = ({
 
         {RightDrawer && (
           <DrawerContainer
-            position="right"
-            width={rightWidth}
-            open={rightDrawerOpen}
-            style={RightDrawer.options?.style}
             animationDuration={rightDuration}
             onChange={setRightActive}
+            open={rightDrawerOpen}
+            position="right"
+            style={RightDrawer.options?.style}
+            width={rightWidth}
           >
             <RightDrawer close={closeRightDrawer} />
           </DrawerContainer>

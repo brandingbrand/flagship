@@ -1,14 +1,16 @@
-import React, { PureComponent, RefObject } from 'react';
-import { Animated, View, ViewProps } from 'react-native';
-import { FadeInImageProps } from './FadeInImageProps';
+import type { RefObject } from 'react';
+import React, { PureComponent } from 'react';
+
+import type { ViewProps } from 'react-native';
+import { Animated, View } from 'react-native';
+
+import type { FadeInImageProps } from './FadeInImageProps';
 
 export interface FadeInImageState {
   opacity: Animated.Value;
 }
 
 export class FadeInImage extends PureComponent<FadeInImageProps, FadeInImageState> {
-  private view: RefObject<View>;
-
   constructor(props: FadeInImageProps) {
     super(props);
 
@@ -19,21 +21,18 @@ export class FadeInImage extends PureComponent<FadeInImageProps, FadeInImageStat
     };
   }
 
-  render(): JSX.Element {
-    const { style, resizeMode = 'contain', resizeMethod = 'resize', source } = this.props;
+  private readonly view: RefObject<View>;
 
-    return (
-      <View ref={this.view}>
-        <Animated.Image
-          source={source}
-          style={[{ opacity: this.state.opacity }, style]}
-          resizeMode={resizeMode}
-          resizeMethod={resizeMethod}
-          onLoad={this.onLoad}
-        />
-      </View>
-    );
-  }
+  /**
+   * Invoked after the image finishes loading to animate the image from transparent to opaque.
+   */
+  private readonly onLoad = () => {
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  };
 
   // to make this component be able to use with TouchableHighlight
   // TODO: Figure out if this funciton is really needed
@@ -43,14 +42,19 @@ export class FadeInImage extends PureComponent<FadeInImageProps, FadeInImageStat
     }
   };
 
-  /**
-   * Invoked after the image finishes loading to animate the image from transparent to opaque.
-   */
-  private onLoad = () => {
-    Animated.timing(this.state.opacity, {
-      toValue: 1,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  };
+  public render(): JSX.Element {
+    const { resizeMethod = 'resize', resizeMode = 'contain', source, style } = this.props;
+
+    return (
+      <View ref={this.view}>
+        <Animated.Image
+          onLoad={this.onLoad}
+          resizeMethod={resizeMethod}
+          resizeMode={resizeMode}
+          source={source}
+          style={[{ opacity: this.state.opacity }, style]}
+        />
+      </View>
+    );
+  }
 }

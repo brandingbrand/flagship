@@ -1,10 +1,10 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import * as pods from '../../cocoapods';
-import { Config } from '../../../types';
 import { logError, logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as pods from '../../cocoapods';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
-export function preLink(configuration: Config): void {
+export const preLink = (configuration: Config): void => {
   if (
     !(
       configuration.firebase &&
@@ -29,10 +29,10 @@ export function preLink(configuration: Config): void {
   // Update AppDelegate.m with Firebase import and initialization
   const firebaseImport = '#import <Firebase.h>';
 
-  if (appDelegate.indexOf(firebaseImport) === -1) {
-    appDelegate = firebaseImport + '\n' + appDelegate;
+  if (!appDelegate.includes(firebaseImport)) {
+    appDelegate = `${firebaseImport}\n${appDelegate}`;
     appDelegate = appDelegate.replace(
-      /(didFinishLaunchingWithOptions[\s\S]+?{)/,
+      /(didFinishLaunchingWithOptions[\S\s]+?{)/,
       '$1\n  [FIRApp configure];'
     );
 
@@ -44,7 +44,7 @@ export function preLink(configuration: Config): void {
   const podfile = fs.readFileSync(path.ios.podfilePath());
   const firebasePod = `pod 'Firebase/Core', '6.13.0'`;
 
-  if (podfile.indexOf(firebasePod) === -1) {
+  if (!podfile.includes(firebasePod)) {
     pods.add([firebasePod]);
     logInfo('updated Podfile with Firebase pod');
   }
@@ -53,10 +53,10 @@ export function preLink(configuration: Config): void {
   // 5.4.0 was compiled with Xcode 10 which is not yet supported by Flagship
   const googleMeasurementPod = `pod 'GoogleAppMeasurement', '6.1.6'`;
 
-  if (podfile.indexOf(googleMeasurementPod) === -1) {
+  if (!podfile.includes(googleMeasurementPod)) {
     pods.add([googleMeasurementPod]);
     logInfo('updated Podfile with GoogleAppMeasurement pod');
   }
 
   logInfo('finished updating iOS for firebase');
-}
+};

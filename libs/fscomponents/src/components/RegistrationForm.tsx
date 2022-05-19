@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, View } from 'react-native';
-import { emailRegex } from '../lib/email';
-import { Form } from './Form';
-import { Button } from './Button';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { emailRegex } from '../lib/email';
+
+import { Button } from './Button';
+import { Form } from './Form';
 
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.registration;
 
 export interface RegistrationFormState {
@@ -15,68 +20,57 @@ export interface RegistrationFormState {
 
 export interface RegistrationFormProps {
   fieldsStyleConfig?: any; // the custom stylesheet we want to merge with the default stylesheet
-  onSubmit?: (value: any) => void; // the behaviour we want onpress of submit button
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
-  submitText?: any; // Text to override the submit button
-  style?: any;
+  onSubmit?: (value: unknown) => void; // the behaviour we want onpress of submit button
+  submitButtonStyle?: unknown;
+  submitTextStyle?: unknown;
+  submitText?: unknown; // Text to override the submit button
+  style?: unknown;
   fieldsOptions?: any; // any extra desired behaviour, like placeholders
-  value?: any;
+  value?: unknown;
 }
 
 // check for validity as part of the type
-const EmailType = t.refinement(t.String, (str: string) => {
-  return emailRegex.test((str || '').trim());
-});
+const EmailType = t.refinement(t.String, (str: string) => emailRegex.test((str || '').trim()));
 
 EmailType.getValidationErrorMessage = (s: string) => {
   if (!s) {
     return FSI18n.string(componentTranslationKeys.form.emailAddress.error.missing);
-  } else {
-    return FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid);
   }
+  return FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid);
 };
 
 // check for minimum password length of 6
-const PasswordType = t.refinement(t.String, (str: string) => {
-  return str.length >= 6;
-});
+const PasswordType = t.refinement(t.String, (str: string) => str.length >= 6);
 
 const styles = StyleSheet.create({
   defaultButtonStyle: {
     backgroundColor: '#867CDD',
-    borderRadius: 5,
     borderColor: '#473BC7',
+    borderRadius: 5,
   },
 });
 
 export class RegistrationForm extends Component<RegistrationFormProps, RegistrationFormState> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
-
-  constructor(props: any) {
+  constructor(props: RegistrationFormProps) {
     super(props);
 
     this.state = { value: props.value };
 
-    const ConfirmPasswordType = t.refinement(t.String, (value: string) => {
-      return value === this.state.value.password;
-    });
+    const ConfirmPasswordType = t.refinement(
+      t.String,
+      (value: string) => value === this.state.value.password
+    );
 
-    ConfirmPasswordType.getValidationErrorMessage = (s: string) => {
-      return FSI18n.string(componentTranslationKeys.errors.password.mismatch);
-    };
+    ConfirmPasswordType.getValidationErrorMessage = (s: string) =>
+      FSI18n.string(componentTranslationKeys.errors.password.mismatch);
 
     PasswordType.getValidationErrorMessage = (s: string) => {
-      if (s?.length < 6) {
+      if (s.length < 6) {
         return FSI18n.string(componentTranslationKeys.errors.password.tooShort, {
           characterCount: 6,
         });
-      } else {
-        return FSI18n.string(componentTranslationKeys.errors.password.invalid);
       }
+      return FSI18n.string(componentTranslationKeys.errors.password.invalid);
     };
 
     this.fieldsTypes = t.struct({
@@ -93,7 +87,9 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('lastName'),
+        onSubmitEditing: () => {
+          this.focusField('lastName');
+        },
         error: FSI18n.string(componentTranslationKeys.form.firstName.error),
       },
       lastName: {
@@ -101,7 +97,9 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('emailAddress'),
+        onSubmitEditing: () => {
+          this.focusField('emailAddress');
+        },
         error: FSI18n.string(componentTranslationKeys.form.lastName.error),
       },
       emailAddress: {
@@ -110,7 +108,9 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         autoCorrect: false,
         autoCapitalize: 'none',
         keyboardType: 'email-address',
-        onSubmitEditing: () => this.focusField('password'),
+        onSubmitEditing: () => {
+          this.focusField('password');
+        },
         error: FSI18n.string(componentTranslationKeys.form.emailAddress.error.invalid),
       },
       password: {
@@ -118,7 +118,9 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('confirmPassword'),
+        onSubmitEditing: () => {
+          this.focusField('confirmPassword');
+        },
         secureTextEntry: true,
         onChange: (e: any) => {
           const currentVal = this.state.value;
@@ -159,23 +161,22 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
       },
       ...props.fieldsStyleConfig,
     };
-  } // end constructor
-
-  componentDidMount(): void {
-    console.warn(
-      'RegistrationForm is deprecated and will be removed in the next version of Flagship.'
-    );
   }
 
-  handleSubmit = () => {
-    const value = this.form.getValue();
+  private form: Form | null = null;
+  private readonly fieldsStyleConfig: unknown;
+  private readonly fieldsTypes: unknown;
+  private readonly fieldsOptions: unknown;
+
+  private readonly handleSubmit = () => {
+    const value = this.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   };
 
-  focusField = (fieldName: string) => {
-    const field = this.form.getComponent(fieldName);
+  private readonly focusField = (fieldName: string) => {
+    const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
     if (ref.focus) {
@@ -183,27 +184,33 @@ export class RegistrationForm extends Component<RegistrationFormProps, Registrat
     }
   };
 
-  handleChange = (value: any) => {
+  private readonly handleChange = (value: unknown) => {
     this.setState({
       value,
     });
   };
 
-  render(): JSX.Element {
+  public componentDidMount(): void {
+    console.warn(
+      'RegistrationForm is deprecated and will be removed in the next version of Flagship.'
+    );
+  }
+
+  public render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={(ref) => (this.form = ref)}
-          fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
-          value={this.state.value}
+          fieldsTypes={this.fieldsTypes}
           onChange={this.handleChange}
+          ref={(ref) => (this.form = ref)}
+          value={this.state.value}
         />
         <Button
-          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
           onPress={this.handleSubmit}
           style={styles.defaultButtonStyle}
+          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
         />
       </View>
     );

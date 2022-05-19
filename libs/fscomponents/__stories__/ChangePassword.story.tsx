@@ -1,7 +1,10 @@
 import React from 'react';
-import { ChangePassword, FormValues } from '../src/components/ChangePasswordComponent';
-import { storiesOf } from '@storybook/react';
+
 import { object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import type { FormValues } from '../src/components/ChangePasswordComponent';
+import { ChangePassword } from '../src/components/ChangePasswordComponent';
 
 const fieldsOptions = {
   confirmPassword: {
@@ -37,19 +40,15 @@ const defaultStyle = {
   },
 };
 
-const renderChangePasswordBox = (): JSX.Element => {
-  return <ChangePassword onSubmit={onSubmit} />;
-};
+const renderChangePasswordBox = (): JSX.Element => <ChangePassword onSubmit={onSubmit} />;
 
-const renderCustomChangePasswordBox = (): JSX.Element => {
-  return (
-    <ChangePassword
-      onSubmit={onSubmit}
-      fieldsStyleConfig={object('style', defaultStyle)}
-      fieldsOptions={fieldsOptions}
-    />
-  );
-};
+const renderCustomChangePasswordBox = (): JSX.Element => (
+  <ChangePassword
+    fieldsOptions={fieldsOptions}
+    fieldsStyleConfig={object('style', defaultStyle)}
+    onSubmit={onSubmit}
+  />
+);
 
 storiesOf('ChangePassword', module)
   .add('custom styling', renderCustomChangePasswordBox)

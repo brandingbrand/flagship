@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { palette } from '../styles/variables';
 
 export interface SerializableRadioButtonLineProps {
@@ -35,80 +30,78 @@ export interface RadioButtonLineProps
 }
 
 const styles = StyleSheet.create({
+  circle: {
+    backgroundColor: palette.secondary,
+    borderRadius: 50,
+    height: 13,
+    width: 13,
+  },
   container: {
+    alignItems: 'center',
+    borderBottomColor: palette.secondary,
+    borderBottomWidth: 1,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     paddingLeft: 20,
     paddingRight: 18,
     paddingVertical: 25,
-    borderBottomWidth: 1,
-    borderBottomColor: palette.secondary,
-  },
-  text: {
-    fontSize: 15,
-    lineHeight: 30,
-    letterSpacing: 0.5,
-    color: palette.secondary,
-    textTransform: 'capitalize',
   },
   imageWrap: {
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
   },
   imagesRow: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   radioContainer: {
+    alignItems: 'center',
+    backgroundColor: palette.background,
+    borderColor: palette.secondary,
+    borderRadius: 50,
+    borderWidth: 1.5,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 30,
     height: 30,
-    borderWidth: 1.5,
-    borderColor: palette.secondary,
-    backgroundColor: palette.background,
-    borderRadius: 50,
+    justifyContent: 'center',
     marginLeft: 15,
+    width: 30,
   },
-  circle: {
-    width: 13,
-    height: 13,
-    borderRadius: 50,
-    backgroundColor: palette.secondary,
+  text: {
+    color: palette.secondary,
+    fontSize: 15,
+    letterSpacing: 0.5,
+    lineHeight: 30,
+    textTransform: 'capitalize',
   },
 });
 
 const RadioButtonLineInner: React.FunctionComponent<RadioButtonLineProps> = ({
-  text,
   active,
   activeOpacity,
+  disabled,
+  label,
+  onPress,
   styleContainer,
   styleText,
   styleTextActive,
-  onPress,
-  disabled,
-  label,
-}: RadioButtonLineProps): React.ReactElement => {
-  return (
-    <TouchableOpacity
-      style={[styles.container, styleContainer]}
-      activeOpacity={activeOpacity || 0}
-      onPress={onPress}
-      disabled={disabled}
-    >
-      <Text style={[styles.text, styleText, active ? styleTextActive : undefined]}>{text}</Text>
-      <View style={styles.imageWrap}>
-        {label}
-        <View style={styles.radioContainer}>{active && <View style={styles.circle} />}</View>
-      </View>
-    </TouchableOpacity>
-  );
-};
+  text,
+}: RadioButtonLineProps): React.ReactElement => (
+  <TouchableOpacity
+    activeOpacity={activeOpacity || 0}
+    disabled={disabled}
+    onPress={onPress}
+    style={[styles.container, styleContainer]}
+  >
+    <Text style={[styles.text, styleText, active ? styleTextActive : undefined]}>{text}</Text>
+    <View style={styles.imageWrap}>
+      {label}
+      <View style={styles.radioContainer}>{active && <View style={styles.circle} />}</View>
+    </View>
+  </TouchableOpacity>
+);
 
 export const RadioButtonLine = React.memo(RadioButtonLineInner);

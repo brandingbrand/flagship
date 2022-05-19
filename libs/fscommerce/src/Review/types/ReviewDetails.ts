@@ -1,6 +1,6 @@
-import { Review } from './Review';
-import { ReviewStatistics } from './ReviewStatistics';
-import { ReviewSummary } from './ReviewSummary';
+import type { Review } from './Review';
+import type { ReviewStatistics } from './ReviewStatistics';
+import type { ReviewSummary } from './ReviewSummary';
 
 /**
  * Details for a group of reviews

@@ -1,5 +1,7 @@
 import * as fs from 'fs-extra';
+
 import * as helpers from '../helpers';
+
 import * as path from './path';
 
 export {
@@ -15,10 +17,10 @@ let fileQueue: Record<string, { body: string; dirty?: (code: number) => void }> 
 /**
  * Clones a named resource from within FLAGSHIP into the project.
  *
- * @param {...string} resource A list of path components to the resource to copy.
- * @returns {void}
+ * @param resource A list of path components to the resource to copy.
+ * @return
  */
-export function clone(...resource: string[]): void {
+export const clone = (...resource: string[]): void => {
   const source = path.flagship.resolve(...resource);
   const destination = path.project.resolve(...resource);
 
@@ -32,18 +34,18 @@ export function clone(...resource: string[]): void {
   } else {
     copySync(source, destination);
   }
-}
+};
 
 /**
  * Copy a file or directory. The directory can have contents.
  *
- *  @param {string} src Note that if src is a directory it will copy everything inside of this
+ * @param src Note that if src is a directory it will copy everything inside of this
  *  directory, not the entire directory itself.
- *  @param {string} dest Note that if src is a file, dest cannot be a directory.
- *  @param {Object} options fs-extra copySync options.
- *  @returns {void}
+ * @param dest Note that if src is a file, dest cannot be a directory.
+ * @param options fs-extra copySync options.
+ * @return
  */
-export function copySync(src: string, dest: string, options?: Object): void {
+export const copySync = (src: string, dest: string, options?: Object): void => {
   // TODO: Use fs-extra type definition for options instead of Object
   src = path.resolve(src);
 
@@ -54,45 +56,44 @@ export function copySync(src: string, dest: string, options?: Object): void {
       // TODO: Traverse the directory and see if we have any cached files and move them instead of
       // flushing the cache.
       flushSync();
-      return fs.copySync(src, dest, options);
-    } else if (stat.isFile()) {
-      if (fileQueue[src]) {
-        return writeFileSync(dest, fileQueue[src]?.body ?? '');
-      }
+      fs.copySync(src, dest, options);
+      return;
+    } else if (stat.isFile() && fileQueue[src]) {
+      writeFileSync(dest, fileQueue[src]?.body ?? '');
+      return;
     }
   }
 
   // Source doesn't exist or isn't in the queue
-  return fs.copySync(src, dest, options);
-}
+  fs.copySync(src, dest, options);
+};
 
 /**
  * Checks if a keyword exists in a file.
  *
- * @param {string} path The path to the file to check for the keyword.
- * @param {string} keyword The keyword to search for in the file
- * @returns {boolean} True if the keyword exists in the file.
+ * @param path The path to the file to check for the keyword.
+ * @param keyword The keyword to search for in the file
+ * @return True if the keyword exists in the file.
  */
-export function doesKeywordExist(path: string, keyword: string | RegExp): boolean {
+export const doesKeywordExist = (path: string, keyword: RegExp | string): boolean => {
   const fileContent = readFileSync(path);
   if (typeof keyword === 'string') {
-    return fileContent.indexOf(keyword) > -1;
-  } else {
-    return keyword.test(fileContent);
+    return fileContent.includes(keyword);
   }
-}
+  return keyword.test(fileContent);
+};
 
 /**
  * Returns whether or not the given path exists.
  *
- * @param {string} src The path to check whether or not it exists.
- * @returns {boolean} Whether or not the path exists.
+ * @param src The path to check whether or not it exists.
+ * @return Whether or not the path exists.
  */
-export function existsSync(src: string): boolean {
+export const existsSync = (src: string): boolean => {
   src = path.resolve(src);
 
-  return !!fileQueue[src] || fs.existsSync(src);
-}
+  return Boolean(fileQueue[src]) || fs.existsSync(src);
+};
 
 /**
  * Flushes all pending writes in the write queue and purges the cache. This will bring the
@@ -100,9 +101,9 @@ export function existsSync(src: string): boolean {
  * but before anything that interacts with the filesystem outside of this library is allowed to
  * execute.
  *
- * @returns {void}
+ * @return
  */
-export function flushSync(): void {
+export const flushSync = (): void => {
   for (const name in fileQueue) {
     if (fileQueue.hasOwnProperty(name)) {
       const file = fileQueue[name];
@@ -117,16 +118,16 @@ export function flushSync(): void {
   }
 
   fileQueue = {};
-}
+};
 
 /**
  * Moves a file or directory, even across devices.
  *
- * @param {string} src The file or directory to move
- * @param {string} dest The destination for the file or directory
- * @returns {void}
+ * @param src The file or directory to move
+ * @param dest The destination for the file or directory
+ * @return
  */
-export function moveSync(src: string, dest: string): void {
+export const moveSync = (src: string, dest: string): void => {
   src = path.resolve(src);
   dest = path.resolve(dest);
 
@@ -137,7 +138,8 @@ export function moveSync(src: string, dest: string): void {
       // TODO: Traverse the directory and see if we have any cached files and move them instead of
       // flushing the cache
       flushSync();
-      return fs.moveSync(src, dest);
+      fs.moveSync(src, dest);
+      return;
     } else if (stat.isFile()) {
       const file = fileQueue[src];
 
@@ -156,16 +158,16 @@ export function moveSync(src: string, dest: string): void {
   }
 
   // Source doesn't exist or isn't in the queue
-  return fs.moveSync(src, dest);
-}
+  fs.moveSync(src, dest);
+};
 
 /**
  * Synchronously reads in the file at the given path and caches the contents in-memory.
  *
- * @param {string} src The path of the file to read.
- * @returns {string} The contents of the file.
+ * @param src The path of the file to read.
+ * @return The contents of the file.
  */
-export function readFileSync(src: string): string {
+export const readFileSync = (src: string): string => {
   const name = path.resolve(src);
 
   return (
@@ -174,15 +176,15 @@ export function readFileSync(src: string): string {
       body: fs.readFileSync(name, { encoding: 'utf8' }),
     }).body
   );
-}
+};
 
 /**
  * Synchronously removes a file from a given path.
  *
- * @param {string} src The path to remove.
- * @returns {void}
+ * @param src The path to remove.
+ * @return
  */
-export function removeSync(src: string): void {
+export const removeSync = (src: string): void => {
   const name = path.resolve(src);
   let file = fileQueue[name];
 
@@ -208,38 +210,39 @@ export function removeSync(src: string): void {
   }
 
   fs.removeSync(src);
-}
+};
 
 /**
  * Updates a file, replacing a given string with a new one.
  *
- * @param {string} path The path to the file to update.
- * @param {string} oldText The old text to replace.
- * @param {string} newText The replacement text.
- * @returns {void}
+ * @param path The path to the file to update.
+ * @param oldText The old text to replace.
+ * @param newText The replacement text.
+ * @return
  */
-export function update(path: string, oldText: string | RegExp, newText: string): void {
+export const update = (path: string, oldText: RegExp | string, newText: string): void => {
   // TODO: This should use a streaming buffer
 
   if (!doesKeywordExist(path, oldText)) {
-    return helpers.logError(`Couldn't find ${oldText} in ${path}`);
+    helpers.logError(`Couldn't find ${oldText} in ${path}`);
+    return;
   }
 
   const fileContent = readFileSync(path);
 
   helpers.logInfo(`updating ${helpers.colors.Dim}${path}${helpers.colors.Reset}`);
   writeFileSync(path, fileContent.replace(oldText, newText));
-}
+};
 
 /**
  * Updates the cached version of given file and schedules the file to be written to disk before
  * the process exits.
  *
- * @param {string} dest The path of the file to write.
- * @param {string} body The new body of the file.
- * @returns {void}
+ * @param dest The path of the file to write.
+ * @param body The new body of the file.
+ * @return
  */
-export function writeFileSync(dest: string, body: string): void {
+export const writeFileSync = (dest: string, body: string): void => {
   const name = path.resolve(dest);
   let file = fileQueue[name];
 
@@ -266,17 +269,17 @@ export function writeFileSync(dest: string, body: string): void {
     // Schedule the file to be written before the process closes.
     process.once('beforeExit', file.dirty);
   }
-}
+};
 
 /**
  * Appends text to a given file.
  *
- * @param {string} path The path to the file to update.
- * @param {string} text The replacement text.
+ * @param path The path to the file to update.
+ * @param text The replacement text.
  */
-export function append(path: string, text: string): void {
+export const append = (path: string, text: string): void => {
   const fileContent = readFileSync(path);
   writeFileSync(path, fileContent + text);
 
   helpers.logInfo(`file appended\n${path}`);
-}
+};

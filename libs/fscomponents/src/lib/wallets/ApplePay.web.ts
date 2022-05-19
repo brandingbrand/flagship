@@ -10,43 +10,37 @@ export type WindowApplePay = Window & {
 };
 
 export default class ApplePayWeb extends ApplePayBase {
-  theWindow: WindowApplePay;
-
   constructor(merchantIdentifier: string) {
     super(merchantIdentifier);
 
     this.theWindow = window as WindowApplePay;
   }
 
-  isEnabled(): boolean {
-    return this.theWindow && !!this.theWindow.ApplePaySession;
+  private readonly theWindow: WindowApplePay;
+
+  public isEnabled(): boolean {
+    return this.theWindow && Boolean(this.theWindow.ApplePaySession);
   }
 
-  canCallSetup(): boolean {
-    return (
-      this.theWindow &&
-      !!this.theWindow.ApplePaySession &&
-      !!this.theWindow.ApplePaySession.openPaymentSetup
-    );
+  public canCallSetup(): boolean {
+    return Boolean(this.theWindow && this.theWindow.ApplePaySession?.openPaymentSetup);
   }
 
-  async hasActiveCard(): Promise<boolean> {
+  public async hasActiveCard(): Promise<boolean> {
     if (this.theWindow && this.theWindow.ApplePaySession) {
-      const ApplePaySession = this.theWindow.ApplePaySession;
+      const { ApplePaySession } = this.theWindow;
 
       return ApplePaySession.canMakePaymentsWithActiveCard(this.merchantIdentifier);
-    } else {
-      return Promise.reject(new Error('Apple Pay is not enabled on this device.'));
     }
+    throw new Error('Apple Pay is not enabled on this device.');
   }
 
-  async setupApplePay(): Promise<boolean> {
+  public async setupApplePay(): Promise<boolean> {
     if (this.theWindow && this.theWindow.ApplePaySession) {
-      const ApplePaySession = this.theWindow.ApplePaySession;
+      const { ApplePaySession } = this.theWindow;
 
       return ApplePaySession.openPaymentSetup(this.merchantIdentifier);
-    } else {
-      return Promise.reject(new Error('Apple Pay is not enabled on this device.'));
     }
+    throw new Error('Apple Pay is not enabled on this device.');
   }
 }

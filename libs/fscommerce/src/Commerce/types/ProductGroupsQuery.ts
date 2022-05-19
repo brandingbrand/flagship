@@ -1,4 +1,4 @@
-import { ProductQuery } from './ProductQuery';
+import type { ProductQuery } from './ProductQuery';
 
 /**
  * A query with roughly the same structure as `ProductQuery`

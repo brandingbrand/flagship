@@ -1,6 +1,9 @@
-import { DistinctQuestion } from 'inquirer';
+import type { DistinctQuestion } from 'inquirer';
+
+import type { BaseConfig } from '../assets/base-config';
 import * as formatters from '../lib/formatters';
-type UsageDescriptions = keyof import('../assets/base-config').BaseConfig['usageDescriptionIOS'];
+
+type UsageDescriptions = keyof BaseConfig['usageDescriptionIOS'];
 
 export interface UsageDescriptionsAnswers {
   options: {

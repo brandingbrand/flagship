@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
-import { Form } from './Form';
-import { Button } from './Button';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { Button } from './Button';
+import { Form } from './Form';
+
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const t = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.changePassword;
 
 export interface ChangePasswordState {
-  value: any;
+  value: Partial<{ password: string }>;
 }
 
 export interface FormValues {
@@ -19,48 +25,40 @@ export interface FormValues {
 
 export interface ChangePasswordProps {
   // the custom stylesheet we want to merge with the default stylesheet
-  fieldsStyleConfig?: Record<string, any>;
-  onSubmit?: (values: FormValues) => void; // the behaviour we want onpress of submit button
+  fieldsStyleConfig?: Record<string, unknown>;
+  onSubmit?: (values: FormValues) => void; // the behavior we want onpress of submit button
   submitButtonStyle?: StyleProp<ViewStyle>;
   submitTextStyle?: StyleProp<TextStyle>;
   submitText?: string; // Text to override the submit button
   style?: StyleProp<ViewStyle>;
-  fieldsOptions?: Record<string, any>; // any extra desired behaviour, like placeholders
-  value?: any;
+  fieldsOptions?: Record<string, unknown>; // any extra desired behavior, like placeholders
+  value?: Partial<{ password: string }>;
 }
 
 // check for minimum password length of 6
-const PasswordType = t.refinement(t.String, (str: string) => {
-  return str.length >= 6;
-});
+const PasswordType = t.refinement(t.String, (str: string) => str.length >= 6);
 
 export class ChangePassword extends Component<ChangePasswordProps, ChangePasswordState> {
-  form?: Form | null;
-  fieldsStyleConfig: Record<string, any>;
-  fieldsTypes: Record<string, any>;
-  fieldsOptions: Record<string, any>;
-
   constructor(props: ChangePasswordProps) {
     super(props);
 
-    this.state = { value: props.value };
+    this.state = { value: props.value ?? {} };
 
-    const ConfirmPasswordType = t.refinement(t.String, (value: string) => {
-      return value === this.state.value.password;
-    });
+    const ConfirmPasswordType = t.refinement(
+      t.String,
+      (value: string) => value === this.state.value.password
+    );
 
-    ConfirmPasswordType.getValidationErrorMessage = (s: string) => {
-      return FSI18n.string(componentTranslationKeys.form.errors.password.mismatch);
-    };
+    ConfirmPasswordType.getValidationErrorMessage = (s: string) =>
+      FSI18n.string(componentTranslationKeys.form.errors.password.mismatch);
 
     PasswordType.getValidationErrorMessage = (s: string) => {
       if (s.length < 6) {
         return FSI18n.string(componentTranslationKeys.form.errors.password.tooShort, {
           minCharacters: 6,
         });
-      } else {
-        return FSI18n.string(componentTranslationKeys.form.errors.password.invalid);
       }
+      return FSI18n.string(componentTranslationKeys.form.errors.password.invalid);
     };
 
     this.fieldsTypes = t.struct({
@@ -75,7 +73,9 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('newPassword'),
+        onSubmitEditing: () => {
+          this.focusField('newPassword');
+        },
         secureTextEntry: true,
       },
       newPassword: {
@@ -83,7 +83,9 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
         returnKeyType: 'next',
         autoCorrect: false,
         autoCapitalize: 'none',
-        onSubmitEditing: () => this.focusField('confirmPassword'),
+        onSubmitEditing: () => {
+          this.focusField('confirmPassword');
+        },
         secureTextEntry: true,
         onChange: (e: { nativeEvent: { text: string } }) => {
           const currentVal = this.state.value;
@@ -126,20 +128,19 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     };
   } // end constructor
 
-  componentDidMount(): void {
-    console.warn(
-      'ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.'
-    );
-  }
+  public form?: Form | null;
+  public fieldsStyleConfig: Record<string, unknown>;
+  public fieldsTypes: Record<string, unknown>;
+  public fieldsOptions: Record<string, unknown>;
 
-  handleSubmit = () => {
+  private readonly handleSubmit = (): void => {
     const value = this.form?.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   };
 
-  focusField = (fieldName: string) => {
+  private readonly focusField = (fieldName: string): void => {
     const field = this.form?.getComponent(fieldName);
 
     const ref = field.refs.input;
@@ -148,27 +149,33 @@ export class ChangePassword extends Component<ChangePasswordProps, ChangePasswor
     }
   };
 
-  handleChange = (value: string) => {
+  private readonly handleChange = (value: { password?: string }): void => {
     this.setState({
       value,
     });
   };
 
-  render(): JSX.Element {
+  public componentDidMount(): void {
+    console.warn(
+      'ChangePasswordComponent is deprecated and will be removed in the next version of Flagship.'
+    );
+  }
+
+  public render(): JSX.Element {
     return (
       <View>
         <Form
-          ref={(ref) => (this.form = ref)}
-          fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
-          value={this.state.value}
+          fieldsTypes={this.fieldsTypes}
           onChange={this.handleChange}
+          ref={(ref) => (this.form = ref)}
+          value={this.state.value}
         />
         <Button
-          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
           onPress={this.handleSubmit}
           style={{ backgroundColor: '#867CDD', borderRadius: 5, borderColor: '#473BC7' }}
+          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
         />
       </View>
     );

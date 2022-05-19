@@ -1,41 +1,37 @@
 import React, { useState } from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { Button, ButtonProps } from './Button';
-import { ModalHalfScreen, ModalHalfScreenProps } from './ModalHalfScreen';
+
+import type { TextStyle, ViewStyle } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import closeIcon from '../../assets/images/iconClose.png';
+
+import type { ButtonProps } from './Button';
+import { Button } from './Button';
+import type { ModalHalfScreenProps } from './ModalHalfScreen';
+import { ModalHalfScreen } from './ModalHalfScreen';
 
 const styles = StyleSheet.create({
   button: {
     margin: 5,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    flexGrow: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    paddingVertical: 22,
   },
   closeBtn: {
     position: 'absolute',
     right: 5,
   },
   closeIcon: {
+    height: 12,
     margin: 10,
     width: 12,
-    height: 12,
+  },
+  modalHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  modalTitle: {
+    flexGrow: 1,
+    fontSize: 16,
+    paddingVertical: 22,
+    textAlign: 'center',
   },
 });
 
@@ -48,27 +44,29 @@ export interface NestingButtonsProps {
    * @default 3
    */
   maxCount?: number;
-  showMoreButtonProps?: Omit<ButtonProps, 'title' | 'onPress'>;
+  showMoreButtonProps?: Omit<ButtonProps, 'onPress' | 'title'>;
   containerStyle?: ViewStyle;
   modalContainerStyle?: ViewStyle;
   modalTitle?: string;
   modalTitleStyle?: TextStyle;
-  modalProps?: Omit<ModalHalfScreenProps, 'visible' | 'onRequestClose'>;
+  modalProps?: Omit<ModalHalfScreenProps, 'onRequestClose' | 'visible'>;
 }
 
 export const NestingButtons: React.FC<NestingButtonsProps> = React.memo((props) => {
   const [modalVisible, setModalVisibile] = useState<boolean>(false);
-  const toggleModal = () => setModalVisibile(!modalVisible);
+  const toggleModal = () => {
+    setModalVisibile(!modalVisible);
+  };
   const {
     buttonsProps,
-    showMoreTitle,
-    showMoreButtonProps,
-    modalProps,
     containerStyle,
     maxCount = 3,
+    modalContainerStyle,
+    modalProps,
     modalTitle,
     modalTitleStyle,
-    modalContainerStyle,
+    showMoreButtonProps,
+    showMoreTitle,
   } = props;
 
   const buttons = buttonsProps.map((buttonProps, index) => (
@@ -84,10 +82,10 @@ export const NestingButtons: React.FC<NestingButtonsProps> = React.memo((props) 
       <Button
         {...showMoreButtonProps}
         onPress={toggleModal}
-        title={showMoreTitle}
         style={[styles.button, showMoreButtonProps?.style]}
+        title={showMoreTitle}
       />
-      <ModalHalfScreen visible={modalVisible} onRequestClose={toggleModal} {...modalProps}>
+      <ModalHalfScreen onRequestClose={toggleModal} visible={modalVisible} {...modalProps}>
         <ScrollView style={modalContainerStyle}>
           <View style={styles.modalHeader}>
             <Text style={[styles.modalTitle, modalTitleStyle]}>{modalTitle}</Text>

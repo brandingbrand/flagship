@@ -1,16 +1,18 @@
-import React, { Component, ComponentClass } from 'react';
-import { compose } from 'redux';
-import { cloneDeep, isEqual, set } from 'lodash-es';
+import type { ComponentClass } from 'react';
+import React, { Component } from 'react';
 
-import {
+import type {
   CommerceTypes,
   FetchDataFunction,
   ReviewDataSource,
   ReviewTypes,
-  withCommerceData,
   WithCommerceProps,
   WithCommerceProviderProps,
 } from '@brandingbrand/fscommerce';
+import { withCommerceData } from '@brandingbrand/fscommerce';
+
+import { cloneDeep, isEqual, set } from 'lodash-es';
+import { compose } from 'redux';
 
 // TODO: This should move into fscommerce
 export type CommerceToReviewMapFunction<T extends CommerceTypes.Product = CommerceTypes.Product> = (
@@ -25,7 +27,7 @@ export type CommerceToReviewMapFunction<T extends CommerceTypes.Product = Commer
 export interface WithProductDetailProviderProps<
   T extends CommerceTypes.Product = CommerceTypes.Product
 > extends WithCommerceProviderProps<T> {
-  commerceToReviewMap: keyof T | CommerceToReviewMapFunction<T>;
+  commerceToReviewMap: CommerceToReviewMapFunction<T> | keyof T;
   reviewDataSource?: ReviewDataSource;
 }
 
@@ -53,10 +55,9 @@ export type WithProductDetailState<T extends CommerceTypes.Product = CommerceTyp
  * component will be given product detail data as props.
  *
  * @template T The type of product data that will be provided. Defaults to `Product`
- *
  * @param {ComponentClass<P & WithProductDetailProps>} WrappedComponent A component to wrap and
  * provide product detail data to as props.
- * @returns {ComponentClass<P & WithProductDetailProviderProps>} A high order component.
+ * @return {ComponentClass<P & WithProductDetailProviderProps>} A high order component.
  */
 export type ProductDetailWrapper<P, T extends CommerceTypes.Product = CommerceTypes.Product> = (
   WrappedComponent: ComponentClass<P & WithProductDetailProps<T>>
@@ -68,28 +69,26 @@ export type ProductDetailWrapper<P, T extends CommerceTypes.Product = CommerceTy
  *
  * @template P The original props of the wrapped component. They'll be passed through unmodified.
  * @template T The type of product data that will be provided. Defaults to `Product`
- *
- * @param {FetchDataFunction<P, T>} fetchProduct A function that will return product data.
- * @returns {ProductDetailWrapper<P>} A function that wraps a component and returns a new high order
+ * @param fetchProduct A function that will return product data.
+ * @return A function that wraps a component and returns a new high order
  * component.
  */
-export default function withProductDetailData<
-  P,
-  T extends CommerceTypes.Product = CommerceTypes.Product
->(fetchProduct: FetchDataFunction<P, T>): ProductDetailWrapper<P, T> {
-  type ResultProps = P & WithProductDetailProviderProps<T> & WithCommerceProps<T>;
+const withProductDetailData = <P, T extends CommerceTypes.Product = CommerceTypes.Product>(
+  fetchProduct: FetchDataFunction<P, T>
+): ProductDetailWrapper<P, T> => {
+  type ResultProps = P & WithCommerceProps<T> & WithProductDetailProviderProps<T>;
 
   /**
    * A function that wraps a a component and returns a new high order component. The wrapped
    * component will be given product detail data as props.
    *
-   * @param {ComponentClass<P & WithProductDetailProps>} WrappedComponent A component to wrap and
+   * @param WrappedComponent A component to wrap and
    * provide product detail data to as props.
-   * @returns {ComponentClass<P & WithProductDetailProviderProps>} A high order component.
+   * @return A high order component.
    */
   return (WrappedComponent: ComponentClass<P & WithProductDetailProps<T>>) => {
     class ProductDetailProvider extends Component<ResultProps, WithProductDetailState<T>> {
-      async componentDidUpdate(prevProps: ResultProps): Promise<void> {
+      public async componentDidUpdate(prevProps: ResultProps): Promise<void> {
         const { commerceToReviewMap, reviewDataSource } = this.props;
 
         // ts isn't detecting the commerceData type correctly, so we have to assert it
@@ -116,8 +115,8 @@ export default function withProductDetailData<
         }
       }
 
-      render(): JSX.Element {
-        const { commerceToReviewMap, ...props } = this.props as any; // TypeScript does not support rest parameters for generics :(
+      public render(): JSX.Element {
+        const { commerceToReviewMap, ...props } = this.props as any;
 
         return (
           <WrappedComponent
@@ -133,4 +132,6 @@ export default function withProductDetailData<
       withCommerceData<P, T>(fetchProduct)
     )(ProductDetailProvider);
   };
-}
+};
+
+export default withProductDetailData;

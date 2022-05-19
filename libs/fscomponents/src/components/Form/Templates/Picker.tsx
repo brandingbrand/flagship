@@ -1,21 +1,20 @@
-import React, { FC, ReactNode, useState } from 'react';
-import RNPickerSelect, { Item } from 'react-native-picker-select';
-import { palette } from '../../../styles/variables';
+import type { FC, ReactNode } from 'react';
+import React, { useState } from 'react';
 
-import {
-  Image,
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  StyleSheet,
-  Text,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import type { Item } from 'react-native-picker-select';
 
 import arrowDown from '../../../../assets/images/ArrowDown.png';
 import warning from '../../../../assets/images/warning.png';
+import { palette } from '../../../styles/variables';
 
 const icons = {
   arrowDown,
@@ -23,55 +22,55 @@ const icons = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    position: 'relative',
-    marginBottom: 30,
-  },
-  title: {
-    color: palette.primary,
-    letterSpacing: 0.5,
-    fontSize: 13,
-    lineHeight: 13,
-    marginBottom: 3,
-  },
-  textInput: {
-    width: '100%',
-    height: 55,
-    justifyContent: 'center',
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: palette.secondary,
-    backgroundColor: palette.background,
-    paddingHorizontal: 20,
-  },
   arrowIcon: {
     right: 20,
   },
-  inputValueText: {
-    fontWeight: '500',
-    fontSize: 17,
-    letterSpacing: 0.5,
-    color: palette.primary,
+  container: {
+    marginBottom: 30,
+    position: 'relative',
+    width: '100%',
   },
-  placeholder: {
-    fontWeight: '500',
-    fontSize: 17,
-    letterSpacing: 0.5,
-    color: palette.primary,
+  errorIconStyle: {
+    height: 11,
+    marginRight: 5,
+    width: 12,
   },
   errorMessage: {
     color: palette.error,
   },
-  errorIconStyle: {
-    width: 12,
-    height: 11,
-    marginRight: 5,
-  },
   errorWrapper: {
-    marginTop: 3,
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 3,
+  },
+  inputValueText: {
+    color: palette.primary,
+    fontSize: 17,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+  },
+  placeholder: {
+    color: palette.primary,
+    fontSize: 17,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+  },
+  textInput: {
+    backgroundColor: palette.background,
+    borderColor: palette.secondary,
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 55,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    width: '100%',
+  },
+  title: {
+    color: palette.primary,
+    fontSize: 13,
+    letterSpacing: 0.5,
+    lineHeight: 13,
+    marginBottom: 3,
   },
 });
 
@@ -101,21 +100,21 @@ interface SerializeableFormPickerProps {
 interface FormPickerProps
   extends Omit<
     SerializeableFormPickerProps,
+    | 'activeInputStyles'
     | 'containerStyles'
+    | 'errorContainerStyles'
+    | 'errorIconStyle'
+    | 'errorMessageStyle'
+    | 'imageStyles'
+    | 'imageWrapperStyle'
+    | 'placeholderStyles'
+    | 'textInputTextStyles'
     | 'textInputViewStyles'
     | 'titleStyles'
-    | 'placeholderStyles'
-    | 'errorMessageStyle'
-    | 'textInputTextStyles'
-    | 'activeInputStyles'
-    | 'imageWrapperStyle'
-    | 'errorContainerStyles'
-    | 'imageStyles'
-    | 'errorIconStyle'
   > {
   onBlur?: () => void;
   onFocus?: () => void;
-  setFormikField?: (field: string, value: any, shouldValidate?: boolean) => void;
+  setFormikField?: (field: string, value: unknown, shouldValidate?: boolean) => void;
   containerStyles?: StyleProp<ViewStyle>;
   textInputViewStyles?: StyleProp<ViewStyle>;
   titleStyles?: StyleProp<TextStyle>;
@@ -131,22 +130,22 @@ interface FormPickerProps
 
 const FormPicker: FC<FormPickerProps> = (props) => {
   const {
-    title,
     containerStyles,
-    titleStyles,
-    placeholder,
-    setFormikField,
-    textInputViewStyles,
-    textInputTextStyles,
-    placeholderStyles,
-    formFieldName,
-    errorsMessage,
-    errorMessageStyle,
-    required,
-    requiredSymbol,
+    errorContainerStyles,
     errorIcon,
     errorIconStyle,
-    errorContainerStyles,
+    errorMessageStyle,
+    errorsMessage,
+    formFieldName,
+    placeholder,
+    placeholderStyles,
+    required,
+    requiredSymbol,
+    setFormikField,
+    textInputTextStyles,
+    textInputViewStyles,
+    title,
+    titleStyles,
   } = props;
 
   const [pickerValue, setValue] = useState<string>('');
@@ -161,9 +160,8 @@ const FormPicker: FC<FormPickerProps> = (props) => {
   };
 
   const renderPickerIcon =
-    (icon: ImageSourcePropType, iconStyle?: StyleProp<ImageStyle>) => (): ReactNode => {
-      return <Image source={icon} style={[styles.arrowIcon, iconStyle]} />;
-    };
+    (icon: ImageSourcePropType, iconStyle?: StyleProp<ImageStyle>) => (): ReactNode =>
+      <Image source={icon} style={[styles.arrowIcon, iconStyle]} />;
 
   const pickerStyle = {
     inputIOSContainer: { ...styles.textInput, textInputViewStyles },
@@ -176,18 +174,18 @@ const FormPicker: FC<FormPickerProps> = (props) => {
   return (
     <View style={[styles.container, containerStyles]}>
       <Text style={[styles.title, titleStyles]}>
-        {required ? requiredSymbol || '*' + title : title}
+        {required ? requiredSymbol || `*${title}` : title}
       </Text>
       <RNPickerSelect
-        style={pickerStyle}
-        placeholder={placeholder}
+        Icon={renderPickerIcon(icons.arrowDown)}
         onValueChange={handleChange}
+        placeholder={placeholder}
+        style={pickerStyle}
         useNativeAndroidPickerStyle={false}
         value={pickerValue}
-        Icon={renderPickerIcon(icons.arrowDown)}
         {...props}
       />
-      {!!errorsMessage && (
+      {Boolean(errorsMessage) && (
         <View style={[styles.errorWrapper, errorContainerStyles]}>
           <Image
             source={errorIcon || icons.warning}

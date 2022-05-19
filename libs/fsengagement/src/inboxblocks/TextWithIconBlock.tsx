@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { TextBlock } from './TextBlock';
+import type { ImageStyle, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -35,7 +37,7 @@ export interface TextWithIconProps {
 }
 
 export default class TextWithIconBlock extends Component<TextWithIconProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { containerStyle, contents } = this.props;
     const imageDimensions: StyleProp<ImageStyle> = {};
     const iconSpacing: StyleProp<ViewStyle> = {
@@ -43,7 +45,7 @@ export default class TextWithIconBlock extends Component<TextWithIconProps> {
     };
     const iconWidth = contents.Image.iconWidth || 0;
     imageDimensions.width = iconWidth;
-    imageDimensions.height = iconWidth / parseFloat(contents.Image.ratio);
+    imageDimensions.height = iconWidth / Number.parseFloat(contents.Image.ratio);
     return (
       <View style={containerStyle}>
         <View style={styles.flexContainer}>

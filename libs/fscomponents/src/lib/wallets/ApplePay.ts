@@ -1,20 +1,20 @@
 import { default as ApplePayBase } from './ApplePay.base';
 
 export default class ApplePay extends ApplePayBase {
-  isEnabled(): boolean {
+  public isEnabled(): boolean {
     return false;
   }
 
-  canCallSetup(): boolean {
+  public canCallSetup(): boolean {
     return false;
   }
 
-  async hasActiveCard(): Promise<boolean> {
-    return Promise.reject(new Error('hasActiveCard Not Implemented'));
+  public async hasActiveCard(): Promise<boolean> {
+    throw new Error('hasActiveCard Not Implemented');
   }
 
-  async setupApplePay(): Promise<boolean> {
+  public async setupApplePay(): Promise<boolean> {
     // TODO: implement
-    return Promise.reject(new Error('setupApplePay Not Implemented'));
+    throw new Error('setupApplePay Not Implemented');
   }
 }

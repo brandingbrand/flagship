@@ -1,53 +1,53 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
   },
+  innerContainer: {
+    flex: 1,
+  },
+  list: {
+    flex: 1,
+  },
+  loadingIndicator: {
+    marginTop: 20,
+  },
+  locateMeButton: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+  },
+  locateMeIcon: {
+    height: 40,
+    width: 40,
+  },
   map: {
+    flex: 1,
+  },
+  mapVerticalContainer: {
     flex: 1,
   },
   mapVerticalList: {
     flex: 1,
   },
   mapVerticalSearchBar: {},
-  mapVerticalContainer: {
-    flex: 1,
-  },
-  loadingIndicator: {
-    marginTop: 20,
-  },
   noResultsText: {
     margin: 10,
-  },
-  list: {
-    flex: 1,
   },
   resultList: {
     flex: 1,
   },
-  locateMeIcon: {
-    width: 40,
-    height: 40,
-  },
-  locateMeButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-  },
-  slideMapContainer: {
-    ...StyleSheet.absoluteFillObject,
-  },
   slideListContainer: {
-    flex: 1,
     backgroundColor: 'white',
+    flex: 1,
   },
   slideListSearchBar: {
     padding: 10,
   },
-  innerContainer: {
-    flex: 1,
+  slideMapContainer: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

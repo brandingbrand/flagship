@@ -1,16 +1,18 @@
 import React from 'react';
-import { FieldOption, FormValues, LoginFormFK } from '../src/components/LoginFormFK';
-import { storiesOf } from '@storybook/react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
 import { object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import type { FieldOption, FormValues } from '../src/components/LoginFormFK';
+import { LoginFormFK } from '../src/components/LoginFormFK';
 
 const onSubmit = (values: FormValues) => {
   alert(`${text('title', 'Values submitted:')} ${values.emailAddress} ${values.password}`);
 };
 
-const renderLoginForm = () => {
-  return () => <LoginFormFK onSubmit={onSubmit} />;
-};
+const renderLoginForm = () => () => <LoginFormFK onSubmit={onSubmit} />;
 
 const renderCustomLoginForm = () => {
   const fieldOptions: FieldOption = {
@@ -37,10 +39,10 @@ const renderCustomLoginForm = () => {
 
   return () => (
     <LoginFormFK
-      onSubmit={onSubmit}
-      fieldsOptions={fieldOptions}
       fieldStyle={object('style', fieldStyle)}
+      fieldsOptions={fieldOptions}
       labelStyle={object('style', labelStyle)}
+      onSubmit={onSubmit}
       submitButtonStyle={object('style', buttonStyle)}
       submitText={text('title', 'Login')}
     />

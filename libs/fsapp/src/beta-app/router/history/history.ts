@@ -1,33 +1,24 @@
-import type {
-  Blocker,
-  FSRouterHistory,
-  HistoryOptions,
-  LoadingListener,
-  RequiredTitle,
-  ResolverListener,
-  Stack,
-  StackedLocation,
-} from './types';
-
 import { Linking, Platform } from 'react-native';
-import { AnimationOptions, LayoutTabsChildren, Navigation } from 'react-native-navigation';
+import type { AnimationOptions, LayoutTabsChildren } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
-import { DeepPartial } from '@brandingbrand/types-utility';
+import type { DeepPartial } from '@brandingbrand/types-utility';
+
 import { boundMethod } from 'autobind-decorator';
+import isEqual from 'fast-deep-equal';
 import {
-  Action,
-  Location,
   LocationDescriptor,
   LocationDescriptorObject,
   LocationListener,
-  parsePath,
-  TransitionPromptHook,
   UnregisterCallback,
+  parsePath,
 } from 'history';
+import type { Action, Location, TransitionPromptHook } from 'history';
 import { findLastIndex, isString, uniqueId } from 'lodash-es';
-import isEqual from 'fast-deep-equal';
 
-import {
+import { isDefined, promisedEntries } from '../../utils';
+import { StackedLocationDescriptor } from '../types';
+import type {
   ActivatedRoute,
   IndexedComponentRoute,
   MatchingRoute,
@@ -35,11 +26,14 @@ import {
   RouteParams,
   Routes,
   ScreenComponentType,
-  StackedLocationDescriptor,
 } from '../types';
-import { isDefined, promisedEntries } from '../../utils';
 
+import { ROOT_STACK } from './constants';
 import { INTERNAL, queueMethod } from './queue.decorator';
+import type { Blocker, FSRouterHistory, HistoryOptions, Stack, StackedLocation } from './types';
+import { LoadingListener, RequiredTitle, ResolverListener } from './types';
+import { normalizeLocationDescriptor } from './utils.base';
+import type { Matchers } from './utils.base';
 import {
   activateStacks,
   buildMatchers,
@@ -53,38 +47,8 @@ import {
   resolveRoute,
   stringifyLocation,
 } from './utils.native';
-import { Matchers, normalizeLocationDescriptor } from './utils.base';
-import { ROOT_STACK } from './constants';
 
 export class History implements FSRouterHistory {
-  public get stack(): Stack | undefined {
-    return this.stacks[this.activeStack];
-  }
-
-  public get action(): Action {
-    return this.actions[this.actions.length - 1] ?? 'PUSH';
-  }
-
-  public get location(): Location {
-    return this.store[this.activeIndex] ?? parsePath('');
-  }
-
-  public readonly length: number = 50;
-
-  private readonly matchers: Matchers = buildMatchers(this.routes);
-  private readonly actions: Action[] = [];
-
-  private activeIndex: number = -1;
-  private readonly store: StackedLocation[] = [];
-
-  private activeStack: number = -1;
-  private readonly stacks: Readonly<Stack>[] = [];
-
-  private readonly blockers: Map<string, Blocker> = new Map();
-  private readonly activationObservers: Map<string, ResolverListener> = new Map();
-  private readonly lactationObservers: Map<string, LocationListener> = new Map();
-  private readonly loadingObservers: Map<string, LoadingListener> = new Map();
-
   constructor(private readonly routes: Routes, protected readonly options?: HistoryOptions) {
     this.observeNavigation();
     const tabRoutes = this.routes.filter(isTabRoute);
@@ -95,14 +59,16 @@ export class History implements FSRouterHistory {
       matchStack(
         route,
         stackMatchers[i] as Promise<
-          (readonly [
-            (checkPath: string) =>
-              | {
-                  params: RouteParams;
-                }
-              | undefined,
-            RedirectRoute | IndexedComponentRoute
-          ])[]
+          Array<
+            readonly [
+              (checkPath: string) =>
+                | {
+                    params: RouteParams;
+                  }
+                | undefined,
+              IndexedComponentRoute | RedirectRoute
+            ]
+          >
         >
       )
     );
@@ -132,7 +98,7 @@ export class History implements FSRouterHistory {
                 : []),
             ];
 
-        const partialStacks: DeepPartial<Stack>[] = [
+        const partialStacks: Array<DeepPartial<Stack>> = [
           ...(stacks ?? []).map((layout, i) => ({
             id: layout.stack?.id,
             children: [
@@ -145,238 +111,82 @@ export class History implements FSRouterHistory {
           })),
         ];
 
-        const requiredStacks = partialStacks.filter(
-          (stack): stack is Required<Stack> => !!stack.id
+        const requiredStacks = partialStacks.filter((stack): stack is Required<Stack> =>
+          Boolean(stack.id)
         );
 
         this.stacks.push(...requiredStacks);
         this.store.push(
-          ...this.stacks
-            .map((stack, i) => stack.children.map((location) => ({ ...location, stack: i })))
-            .reduce((prev, next) => [...prev, ...next], [])
+          ...this.stacks.flatMap((stack, i) =>
+            stack.children.map((location) => ({ ...location, stack: i }))
+          )
         );
 
         this.activeStack = 0;
         this.activeIndex = this.store.length - 1;
-        setTimeout(async () => {
-          const activations = activatedPaths.map(async (path) => {
-            const matchingRoute = await matchRoute(this.matchers, path);
-            if (matchingRoute) {
-              const activatedRoute = await this.resolveRouteDetails(
-                matchingRoute.id,
-                matchingRoute
-              );
-              const observer = this.activationObservers.get(matchingRoute.id);
-              observer?.(activatedRoute);
-              return [matchingRoute, activatedRoute] as const;
-            }
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            const activations = activatedPaths.map(async (path) => {
+              const matchingRoute = await matchRoute(this.matchers, path);
+              if (matchingRoute) {
+                const activatedRoute = await this.resolveRouteDetails(
+                  matchingRoute.id,
+                  matchingRoute
+                );
+                const observer = this.activationObservers.get(matchingRoute.id);
+                observer?.(activatedRoute);
+                return [matchingRoute, activatedRoute] as const;
+              }
 
-            return [undefined, undefined] as const;
+              return [undefined, undefined] as const;
+            });
+
+            Promise.all(activations)
+              .then(async (activated) => {
+                await Navigation.setRoot(await activateStacks(root, activated));
+              })
+              .then(resolve)
+              .catch(reject);
           });
-
-          const activated = await Promise.all(activations);
-
-          await Navigation.setRoot(await activateStacks(root, activated));
         });
       })
       .catch();
   }
 
-  public open(path: string, state?: unknown): Promise<void>;
-  public open(location: LocationDescriptor): Promise<void>;
-  @boundMethod
-  @queueMethod
-  public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
-    const normalized = normalizeLocationDescriptor(to);
-    const path = stringifyLocation(normalized);
-    const index = this.getPathIndexInHistory(path, state);
-    const indexInStack = this.getPathIndexInStack(
-      (await this.getStackAffinity(path)) ?? this.activeStack,
-      path,
-      state
-    );
+  private readonly matchers: Matchers = buildMatchers(this.routes);
+  private readonly actions: Action[] = [];
 
-    if (indexInStack !== -1) {
-      await this.go(index - this.activeIndex, INTERNAL);
-    } else {
-      await this.push(path, state, INTERNAL);
-    }
+  private activeIndex = -1;
+  private readonly store: StackedLocation[] = [];
+
+  private activeStack = -1;
+  private readonly stacks: Array<Readonly<Stack>> = [];
+
+  private readonly blockers: Map<string, Blocker> = new Map();
+  private readonly activationObservers: Map<string, ResolverListener> = new Map();
+  private readonly lactationObservers: Map<string, LocationListener> = new Map();
+  private readonly loadingObservers: Map<string, LoadingListener> = new Map();
+
+  public get stack(): Stack | undefined {
+    return this.stacks[this.activeStack];
   }
 
-  public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
-  public push(location: StackedLocationDescriptor, _internal?: typeof INTERNAL): Promise<void>;
-  @boundMethod
-  @queueMethod
-  public async push(
-    to: StackedLocationDescriptor,
-    state?: unknown | typeof INTERNAL,
-    _internal?: typeof INTERNAL
-  ): Promise<void> {
-    const normalized = normalizeLocationDescriptor(to);
-    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
-      await Linking.openURL(normalized.pathname);
-    } else {
-      const newLocation = await this.getNextLocation(normalized, state, _internal !== undefined);
-      await this.updateLocation(newLocation, 'PUSH');
-    }
+  public get action(): Action {
+    return this.actions[this.actions.length - 1] ?? 'PUSH';
   }
 
-  @boundMethod
-  @queueMethod
-  async pushTo(path: string, screenId: string): Promise<void> {
-    const targetStack = this.stacks.findIndex(({ children }) =>
-      children.some(({ key }) => screenId === key)
-    );
-
-    const location = normalizeLocationDescriptor(path);
-    if (targetStack) {
-      await this.push({ ...location, stack: targetStack }, INTERNAL);
-    }
+  public get location(): Location {
+    return this.store[this.activeIndex] ?? parsePath('');
   }
 
-  public replace(path: string, state?: unknown): Promise<void>;
-  public replace(location: LocationDescriptor): Promise<void>;
-  @boundMethod
-  @queueMethod
-  public async replace(_to: LocationDescriptor, _state?: unknown): Promise<void> {
-    const normalized = normalizeLocationDescriptor(_to);
-    if (normalized.pathname && /^\w+:\/\//.exec(normalized.pathname)) {
-      await Linking.openURL(normalized.pathname);
-    } else {
-      const newLocation = await this.getNextLocation(normalized, _state, INTERNAL !== undefined);
-      await this.updateLocation(newLocation, 'REPLACE');
-    }
-  }
-
-  @boundMethod
-  @queueMethod
-  public async pop(): Promise<void> {
-    const stack = this.stack?.children ?? [];
-    const previousStack = stack[stack.length - 2];
-    if (!previousStack) {
-      return;
-    }
-    const newLocation = {
-      stack: this.activeStack,
-      ...previousStack,
-    };
-
-    await this.updateLocation(newLocation, 'POP');
-  }
-
-  @boundMethod
-  @queueMethod
-  async popTo(screenId: string): Promise<void> {
-    const screen = this.stacks
-      .flatMap(({ children }, stack) => children.map((location) => ({ ...location, stack })))
-      .find(({ key }) => key === screenId);
-
-    if (screen) {
-      await this.updateLocation(screen, 'POP');
-    }
-  }
-
-  @boundMethod
-  @queueMethod
-  async popToRoot(): Promise<void> {
-    const root = this.stack?.children[0];
-
-    if (root) {
-      await this.updateLocation({ ...root, stack: this.activeStack }, 'POP');
-    }
-  }
-
-  @boundMethod
-  @queueMethod
-  public async go(n: number, _internal?: typeof INTERNAL): Promise<void> {
-    if (n === 0) {
-      return;
-    }
-
-    const newLocation = this.store[this.activeIndex + n];
-    if (newLocation?.key) {
-      const inStack = this.getKeyIndexInStack(newLocation.stack, newLocation.key) !== -1;
-      await this.updateLocation(newLocation, inStack ? 'POP' : 'PUSH');
-    }
-  }
-
-  @boundMethod
-  @queueMethod
-  public async goBack(): Promise<void> {
-    return this.go(-1, INTERNAL);
-  }
-
-  @boundMethod
-  @queueMethod
-  public async goForward(): Promise<void> {
-    return this.go(1, INTERNAL);
-  }
-
-  @boundMethod
-  public block(prompt?: string | boolean | TransitionPromptHook): UnregisterCallback {
-    const id = uniqueId('blocker');
-    this.blockers.set(id, prompt ?? true);
-
-    return () => {
-      this.blockers.delete(id);
-    };
-  }
-
-  @boundMethod
-  public listen(listener: LocationListener): UnregisterCallback {
-    const id = uniqueId('subscriber');
-    this.lactationObservers.set(id, listener);
-
-    return () => {
-      this.lactationObservers.delete(id);
-    };
-  }
-
-  @boundMethod
-  public observeLoading(listener: LoadingListener): UnregisterCallback {
-    const id = uniqueId('loading-subscriber');
-    this.loadingObservers.set(id, listener);
-    return () => {
-      this.loadingObservers.delete(id);
-    };
-  }
-
-  @boundMethod
-  public registerResolver(id: string, listener: ResolverListener): UnregisterCallback {
-    this.activationObservers.set(id, listener);
-    return () => {
-      this.activationObservers.delete(id);
-    };
-  }
-
-  @boundMethod
-  public createHref(location: LocationDescriptorObject): string {
-    return stringifyLocation(location);
-  }
-
-  @queueMethod
-  public async updateTitle(title: RequiredTitle, componentId?: string): Promise<void> {
-    const key = componentId ?? this.location.key;
-    if (key) {
-      Navigation.mergeOptions(key, {
-        topBar: {
-          title:
-            typeof title === 'string'
-              ? {
-                  text: title,
-                }
-              : title,
-        },
-      });
-    }
-  }
+  public readonly length: number = 50;
 
   private async waitForNextLoadOf(location: Location): Promise<void> {
     if (this.location.pathname === location.pathname) {
-      return Promise.resolve();
+      return;
     }
 
-    return new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       let timeout: Parameters<typeof clearTimeout>[0] | undefined;
       if (Platform.OS === 'ios') {
         timeout = setTimeout(() => {
@@ -410,11 +220,13 @@ export class History implements FSRouterHistory {
   }
 
   private observeNavigation(): void {
-    Navigation.events().registerComponentDidAppearListener(async ({ componentId }) => {
+    Navigation.events().registerComponentDidAppearListener(({ componentId }) => {
       const index = this.getKeyIndexInHistory(componentId);
       if (index !== -1) {
         this.activeIndex = index;
-        this.lactationObservers.forEach((callback) => callback(this.location, this.action));
+        for (const callback of this.lactationObservers.values()) {
+          callback(this.location, this.action);
+        }
       }
     });
 
@@ -423,20 +235,18 @@ export class History implements FSRouterHistory {
     });
 
     Navigation.events().registerBottomTabPressedListener(({ tabIndex }) => {
-      if (tabIndex === this.activeStack) {
-        if (this.stack) {
-          void Navigation.popToRoot(this.stack.id)
-            .then(() => {
-              this.stack?.children.splice(1);
-            })
-            .catch();
-        }
+      if (tabIndex === this.activeStack && this.stack) {
+        void Navigation.popToRoot(this.stack.id)
+          .then(() => {
+            this.stack?.children.splice(1);
+          })
+          .catch();
       }
     });
 
     Navigation.events().registerScreenPoppedListener(() => {
       setTimeout(() => {
-        if (this.location?.key) {
+        if (this.location.key) {
           const index = this.getKeyIndexInStack(this.activeStack, this.location.key);
           if (index !== -1) {
             this.stack?.children.splice(index + 1);
@@ -449,7 +259,7 @@ export class History implements FSRouterHistory {
   private async getNextLocation(
     to: LocationDescriptor | StackedLocation,
     state: unknown = null,
-    stackAffinity: boolean = false
+    stackAffinity = false
   ): Promise<StackedLocation> {
     return Object.freeze({
       ...this.location,
@@ -464,7 +274,7 @@ export class History implements FSRouterHistory {
     });
   }
 
-  // eslint-disable-next-line complexity
+  // eslint-disable-next-line sonarjs/cognitive-complexity, max-statements
   private async updateLocation(location: StackedLocation, action: Action): Promise<void> {
     const baseOptions = (
       matchingRoute: MatchingRoute,
@@ -510,102 +320,94 @@ export class History implements FSRouterHistory {
       const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
       switch (action) {
         case 'PUSH':
-          if (matchingRoute) {
-            if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
-              this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails(location.key, {
-                ...matchingRoute,
-                data: {
-                  ...matchingRoute.data,
-                  ...(typeof location.state === 'object' ? location.state : {}),
-                },
-              });
-              const observer = this.activationObservers.get(matchingRoute.id);
-              observer?.(activatedRoute);
+          if (
+            matchingRoute &&
+            (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath)
+          ) {
+            this.setLoading(true);
+            const activatedRoute = await this.resolveRouteDetails(location.key, {
+              ...matchingRoute,
+              data: {
+                ...matchingRoute.data,
+                ...(typeof location.state === 'object' ? location.state : {}),
+              },
+            });
+            const observer = this.activationObservers.get(matchingRoute.id);
+            observer?.(activatedRoute);
 
-              const title =
-                typeof matchingRoute.title === 'function'
-                  ? await matchingRoute.title(activatedRoute)
-                  : matchingRoute.title;
+            const title =
+              typeof matchingRoute.title === 'function'
+                ? await matchingRoute.title(activatedRoute)
+                : matchingRoute.title;
 
-              const componentOptions =
-                'component' in matchingRoute
-                  ? matchingRoute.component
-                  : await matchingRoute.loadComponent(activatedRoute);
+            const componentOptions =
+              'component' in matchingRoute
+                ? matchingRoute.component
+                : await matchingRoute.loadComponent(activatedRoute);
 
-              const options = baseOptions(matchingRoute, componentOptions, title);
+            const options = baseOptions(matchingRoute, componentOptions, title);
 
-              this.store.push(location);
-              this.activeIndex = this.store.length - 1;
-              this.stacks[location.stack]?.children.push({ ...location, layout: options });
+            this.store.push(location);
+            this.activeIndex = this.store.length - 1;
+            this.stacks[location.stack]?.children.push({ ...location, layout: options });
 
-              if (this.activeStack !== location.stack) {
-                void this.switchStack(location.stack);
-                this.activeStack = location.stack;
-              }
+            if (this.activeStack !== location.stack) {
+              void this.switchStack(location.stack);
+              this.activeStack = location.stack;
+            }
 
-              if (Platform.OS === 'ios') {
-                void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
-              } else {
-                await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
-              }
+            if (Platform.OS === 'ios') {
+              void Navigation.push(this.stack?.id ?? ROOT_STACK, options);
+            } else {
+              await Navigation.push(this.stack?.id ?? ROOT_STACK, options);
             }
           }
           break;
 
         case 'REPLACE':
-          if (matchingRoute) {
-            // if the location is NOT the same as the previous one.
-            if (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath) {
-              this.setLoading(true);
-              const activatedRoute = await this.resolveRouteDetails(location.key, {
-                ...matchingRoute,
-                data: {
-                  ...matchingRoute.data,
-                  ...(typeof location.state === 'object' ? location.state : {}),
-                },
-              });
-              const observer = this.activationObservers.get(matchingRoute.id);
-              observer?.(activatedRoute);
+          if (
+            matchingRoute && // if the location is NOT the same as the previous one.
+            (!this.location || stringifyLocation(this.location) !== matchingRoute.matchedPath)
+          ) {
+            this.setLoading(true);
+            const activatedRoute = await this.resolveRouteDetails(location.key, {
+              ...matchingRoute,
+              data: {
+                ...matchingRoute.data,
+                ...(typeof location.state === 'object' ? location.state : {}),
+              },
+            });
+            const observer = this.activationObservers.get(matchingRoute.id);
+            observer?.(activatedRoute);
 
-              const title =
-                typeof matchingRoute.title === 'function'
-                  ? await matchingRoute.title(activatedRoute)
-                  : matchingRoute.title;
+            const title =
+              typeof matchingRoute.title === 'function'
+                ? await matchingRoute.title(activatedRoute)
+                : matchingRoute.title;
 
-              this.store[this.activeIndex] = location;
+            this.store[this.activeIndex] = location;
 
-              const componentOptions =
-                'component' in matchingRoute
-                  ? matchingRoute.component
-                  : await matchingRoute.loadComponent(activatedRoute);
+            const componentOptions =
+              'component' in matchingRoute
+                ? matchingRoute.component
+                : await matchingRoute.loadComponent(activatedRoute);
 
-              const layout = baseOptions(matchingRoute, componentOptions, title, {
-                setStackRoot: {
-                  enabled: false,
-                },
-              });
+            const layout = baseOptions(matchingRoute, componentOptions, title, {
+              setStackRoot: {
+                enabled: false,
+              },
+            });
 
-              // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
-              this.stacks[location.stack]?.children.pop();
-              this.stacks[location.stack]?.children.push({ ...location, layout });
+            // this.stack[location.stack] - refers to current main stack, should just be able to pop and push
+            this.stacks[location.stack]?.children.pop();
+            this.stacks[location.stack]?.children.push({ ...location, layout });
 
-              const otherLayout =
-                this.stack?.children
-                  .slice(0, this.stack.children.length - 1)
-                  .map(({ layout }) => layout) ?? [];
+            const otherLayout = this.stack?.children.slice(0, -1).map(({ layout }) => layout) ?? [];
 
-              if (Platform.OS === 'ios') {
-                void Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [
-                  ...otherLayout,
-                  layout,
-                ]);
-              } else {
-                await Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [
-                  ...otherLayout,
-                  layout,
-                ]);
-              }
+            if (Platform.OS === 'ios') {
+              void Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [...otherLayout, layout]);
+            } else {
+              await Navigation.setStackRoot(this.stack?.id ?? ROOT_STACK, [...otherLayout, layout]);
             }
           }
           break;
@@ -665,7 +467,7 @@ export class History implements FSRouterHistory {
     return route?.tabAffinity ? this.getStack(route.tabAffinity) : undefined;
   }
 
-  private getStack(stack: string | number): number {
+  private getStack(stack: number | string): number {
     return typeof stack === 'number' ? stack : this.stacks.findIndex(({ id }) => stack === id);
   }
 
@@ -704,7 +506,8 @@ export class History implements FSRouterHistory {
 
     return new Promise((resolve) => {
       if (updatedTab === this.activeStack) {
-        return resolve();
+        resolve();
+        return;
       }
 
       const observer = Navigation.events().registerComponentDidAppearListener(() => {
@@ -716,16 +519,205 @@ export class History implements FSRouterHistory {
   }
 
   private checkBlockers(location: Location, action: Action): boolean {
-    return [...this.blockers.values()].some((blocker) => () => {
+    return [...this.blockers.values()].some((blocker) => {
       if (typeof blocker === 'function') {
         return blocker(location, action);
-      } else {
-        return blocker;
       }
+
+      return blocker;
     });
   }
 
   private setLoading(loading: boolean): void {
-    this.loadingObservers.forEach((callback) => callback(loading));
+    for (const callback of this.loadingObservers.values()) {
+      callback(loading);
+    }
+  }
+
+  public open(path: string, state?: unknown): Promise<void>;
+  public open(location: LocationDescriptor): Promise<void>;
+  @boundMethod
+  @queueMethod
+  public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
+    const normalized = normalizeLocationDescriptor(to);
+    const path = stringifyLocation(normalized);
+    const index = this.getPathIndexInHistory(path, state);
+    const indexInStack = this.getPathIndexInStack(
+      (await this.getStackAffinity(path)) ?? this.activeStack,
+      path,
+      state
+    );
+
+    await (indexInStack !== -1
+      ? this.go(index - this.activeIndex, INTERNAL)
+      : this.push(path, state, INTERNAL));
+  }
+
+  public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
+  public push(location: StackedLocationDescriptor, _internal?: typeof INTERNAL): Promise<void>;
+  @boundMethod
+  @queueMethod
+  public async push(
+    to: StackedLocationDescriptor,
+    state?: unknown | typeof INTERNAL,
+    _internal?: typeof INTERNAL
+  ): Promise<void> {
+    const normalized = normalizeLocationDescriptor(to);
+    if (normalized.pathname && /^\w+:\/\//.test(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
+    } else {
+      const newLocation = await this.getNextLocation(normalized, state, _internal !== undefined);
+      await this.updateLocation(newLocation, 'PUSH');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  public async pushTo(path: string, screenId: string): Promise<void> {
+    const targetStack = this.stacks.findIndex(({ children }) =>
+      children.some(({ key }) => screenId === key)
+    );
+
+    const location = normalizeLocationDescriptor(path);
+    if (targetStack) {
+      await this.push({ ...location, stack: targetStack }, INTERNAL);
+    }
+  }
+
+  public replace(path: string, state?: unknown): Promise<void>;
+  public replace(location: LocationDescriptor): Promise<void>;
+  @boundMethod
+  @queueMethod
+  public async replace(_to: LocationDescriptor, _state?: unknown): Promise<void> {
+    const normalized = normalizeLocationDescriptor(_to);
+    if (normalized.pathname && /^\w+:\/\//.test(normalized.pathname)) {
+      await Linking.openURL(normalized.pathname);
+    } else {
+      const newLocation = await this.getNextLocation(normalized, _state, INTERNAL !== undefined);
+      await this.updateLocation(newLocation, 'REPLACE');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  public async pop(): Promise<void> {
+    const stack = this.stack?.children ?? [];
+    const previousStack = stack[stack.length - 2];
+    if (!previousStack) {
+      return;
+    }
+    const newLocation = {
+      stack: this.activeStack,
+      ...previousStack,
+    };
+
+    await this.updateLocation(newLocation, 'POP');
+  }
+
+  @boundMethod
+  @queueMethod
+  public async popTo(screenId: string): Promise<void> {
+    const screen = this.stacks
+      .flatMap(({ children }, stack) => children.map((location) => ({ ...location, stack })))
+      .find(({ key }) => key === screenId);
+
+    if (screen) {
+      await this.updateLocation(screen, 'POP');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  public async popToRoot(): Promise<void> {
+    const root = this.stack?.children[0];
+
+    if (root) {
+      await this.updateLocation({ ...root, stack: this.activeStack }, 'POP');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  public async go(n: number, _internal?: typeof INTERNAL): Promise<void> {
+    if (n === 0) {
+      return;
+    }
+
+    const newLocation = this.store[this.activeIndex + n];
+    if (newLocation?.key) {
+      const inStack = this.getKeyIndexInStack(newLocation.stack, newLocation.key) !== -1;
+      await this.updateLocation(newLocation, inStack ? 'POP' : 'PUSH');
+    }
+  }
+
+  @boundMethod
+  @queueMethod
+  public async goBack(): Promise<void> {
+    return this.go(-1, INTERNAL);
+  }
+
+  @boundMethod
+  @queueMethod
+  public async goForward(): Promise<void> {
+    return this.go(1, INTERNAL);
+  }
+
+  @boundMethod
+  public block(prompt?: TransitionPromptHook | boolean | string): UnregisterCallback {
+    const id = uniqueId('blocker');
+    this.blockers.set(id, prompt ?? true);
+
+    return () => {
+      this.blockers.delete(id);
+    };
+  }
+
+  @boundMethod
+  public listen(listener: LocationListener): UnregisterCallback {
+    const id = uniqueId('subscriber');
+    this.lactationObservers.set(id, listener);
+
+    return () => {
+      this.lactationObservers.delete(id);
+    };
+  }
+
+  @boundMethod
+  public observeLoading(listener: LoadingListener): UnregisterCallback {
+    const id = uniqueId('loading-subscriber');
+    this.loadingObservers.set(id, listener);
+    return () => {
+      this.loadingObservers.delete(id);
+    };
+  }
+
+  @boundMethod
+  public registerResolver(id: string, listener: ResolverListener): UnregisterCallback {
+    this.activationObservers.set(id, listener);
+    return () => {
+      this.activationObservers.delete(id);
+    };
+  }
+
+  @boundMethod
+  public createHref(location: LocationDescriptorObject): string {
+    return stringifyLocation(location);
+  }
+
+  @queueMethod
+  public async updateTitle(title: RequiredTitle, componentId?: string): Promise<void> {
+    const key = componentId ?? this.location.key;
+    if (key) {
+      Navigation.mergeOptions(key, {
+        topBar: {
+          title:
+            typeof title === 'string'
+              ? {
+                  text: title,
+                }
+              : title,
+        },
+      });
+    }
   }
 }

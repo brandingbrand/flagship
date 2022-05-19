@@ -1,46 +1,47 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  container: {},
-  searchBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  input: {
-    flex: 1,
-    fontSize: 14,
-    paddingHorizontal: 10,
-    height: 44,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  rightButton: {
-    padding: 10,
-  },
-  searchIcon: {
-    width: 30,
-    height: 25,
-    opacity: 0.2,
-    marginLeft: 10,
-  },
-  searchIconFocused: {
-    opacity: 1,
-  },
-  locateButton: {},
-  locateIcon: {
-    height: 25,
-    width: 25,
-    marginRight: 10,
-  },
   clearIconWrapper: {
     position: 'absolute',
     right: 0,
   },
+  container: {},
+  input: {
+    flex: 1,
+    fontSize: 14,
+    height: 44,
+    paddingHorizontal: 10,
+  },
+  inputContainer: {
+    alignContent: 'center',
+    alignItems: 'center',
+    borderColor: '#333',
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  locateButton: {},
+  locateIcon: {
+    height: 25,
+    marginRight: 10,
+    width: 25,
+  },
+  rightButton: {
+    padding: 10,
+  },
+  searchBarContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  searchIcon: {
+    height: 25,
+    marginLeft: 10,
+    opacity: 0.2,
+    width: 30,
+  },
+  searchIconFocused: {
+    opacity: 1,
+  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

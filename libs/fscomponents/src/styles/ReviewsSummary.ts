@@ -1,21 +1,22 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  container: {
-    padding: 10,
-    flexDirection: 'column',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    paddingBottom: 5,
-  },
-  countStyle: {},
   averageStyle: {
     paddingLeft: 10,
   },
+  container: {
+    flexDirection: 'column',
+    padding: 10,
+  },
+  countStyle: {},
   recommendStyle: {
     paddingTop: 10,
   },
+  row: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    paddingBottom: 5,
+  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

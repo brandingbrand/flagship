@@ -1,3 +1,1 @@
-import * as en from './en';
-
-export { en };
+export * as en from './en';

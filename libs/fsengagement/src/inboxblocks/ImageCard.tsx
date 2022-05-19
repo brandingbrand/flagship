@@ -1,13 +1,16 @@
 import React from 'react';
-import { DeviceEventEmitter, TouchableOpacity } from 'react-native';
-import { Action, CardProps, JSON } from '../types';
 
-import { TextBlock } from './TextBlock';
-import { CTABlock } from './CTABlock';
-import { ImageBlock } from './ImageBlock';
-import { CardContext, EngagementContext } from '../lib/contexts';
+import { DeviceEventEmitter, TouchableOpacity } from 'react-native';
+
 import { useNavigator } from '@brandingbrand/fsapp';
 import { Navigator } from '@brandingbrand/fsapp/legacy';
+
+import { CardContext, EngagementContext } from '../lib/contexts';
+import type { Action, CardProps, JSON } from '../types';
+
+import { CTABlock } from './CTABlock';
+import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 export interface ComponentProps extends CardProps {
   contents: any;
@@ -29,12 +32,13 @@ export const ImageCard: React.FunctionComponent<ComponentProps> = React.memo((pr
       return;
     }
     if (props.discoverPath && !(navigator instanceof Navigator)) {
-      return navigator.open(`${props.discoverPath}/${props.id}`, {
+      navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
         name: props.name,
         discoverPath: props.discoverPath,
       });
+      return;
     }
     return navigator.push({
       component: {
@@ -53,7 +57,7 @@ export const ImageCard: React.FunctionComponent<ComponentProps> = React.memo((pr
       },
     });
   };
-  // eslint-disable-next-line complexity
+
   const onCardPress = async (): Promise<void> => {
     const { actions, story, storyGradient } = props;
     if (!handleAction) {

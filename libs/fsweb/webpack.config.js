@@ -1,23 +1,24 @@
-const webpack = require('webpack');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const TerserJsPlugin = require('terser-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const BabelPluginReactNativeWeb = require('babel-plugin-react-native-web');
-const BabelPluginProposalPrivatePropertyInObject = require('@babel/plugin-proposal-private-property-in-object');
 const BabelPluginProposalClassProperties = require('@babel/plugin-proposal-class-properties');
 const BabelPluginProposalPrivateMethods = require('@babel/plugin-proposal-private-methods');
-const escapedSep = '\\' + path.sep;
+const BabelPluginProposalPrivatePropertyInObject = require('@babel/plugin-proposal-private-property-in-object');
+const autoprefixer = require('autoprefixer');
+const BabelPluginReactNativeWeb = require('babel-plugin-react-native-web');
+const CopyPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const TerserJsPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
+
+const escapedSep = `\\${path.sep}`;
 
 let webConfig;
 
 try {
   webConfig = require('./config.web.json');
-} catch (exception) {
+} catch {
   console.warn('Cannot find web config');
 }
 
@@ -129,31 +130,19 @@ const globalConfig = {
           {
             test: /\.m?jsx?$/,
             include: [
-              new RegExp('node_modules' + escapedSep + 'react-native-'),
-              new RegExp(
-                'node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'tcomb-form-native'
-              ),
-              new RegExp(
-                'node_modules' + escapedSep + '@react-native-community' + escapedSep + 'picker'
-              ),
-              new RegExp('packages' + escapedSep + 'fs'),
-              new RegExp('node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'fs'),
-              new RegExp(
-                'node_modules' + escapedSep + '@brandingbrand' + escapedSep + 'react-native-'
-              ),
-              new RegExp('node_modules' + escapedSep + '@react-native-community' + escapedSep),
-              new RegExp(
-                'node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpcore'
-              ),
-              new RegExp(
-                'node_modules' + escapedSep + '@adobe' + escapedSep + 'react-native-acpanalytics'
-              ),
-              new RegExp(
-                'node_modules' + escapedSep + '@commercetools' + escapedSep + 'platform-sdk'
-              ),
-              new RegExp('node_modules' + escapedSep + 'ix' + escapedSep),
+              new RegExp(`node_modules${escapedSep}react-native-`),
+              new RegExp(`node_modules${escapedSep}@brandingbrand${escapedSep}tcomb-form-native`),
+              new RegExp(`node_modules${escapedSep}@react-native-community${escapedSep}picker`),
+              new RegExp(`packages${escapedSep}fs`),
+              new RegExp(`node_modules${escapedSep}@brandingbrand${escapedSep}fs`),
+              new RegExp(`node_modules${escapedSep}@brandingbrand${escapedSep}react-native-`),
+              new RegExp(`node_modules${escapedSep}@react-native-community${escapedSep}`),
+              new RegExp(`node_modules${escapedSep}@adobe${escapedSep}react-native-acpcore`),
+              new RegExp(`node_modules${escapedSep}@adobe${escapedSep}react-native-acpanalytics`),
+              new RegExp(`node_modules${escapedSep}@commercetools${escapedSep}platform-sdk`),
+              new RegExp(`node_modules${escapedSep}ix${escapedSep}`),
             ],
-            exclude: new RegExp('node_modules' + escapedSep + 'react-native-web' + escapedSep),
+            exclude: new RegExp(`node_modules${escapedSep}react-native-web${escapedSep}`),
             use: [
               {
                 loader: require.resolve('babel-loader'),
@@ -268,7 +257,7 @@ module.exports = function (env, options) {
     globalConfig.output.filename = `static/js/[name].${timestamp}.js`;
     globalConfig.optimization = {
       usedExports: true,
-      minimize: env && env.enableDev ? false : true,
+      minimize: !(env && env.enableDev),
       minimizer: [
         new TerserJsPlugin({
           test: /.m?[jt]sx?/,
@@ -284,12 +273,13 @@ module.exports = function (env, options) {
         }),
       ],
     };
-    globalConfig.plugins = globalConfig.plugins.concat([
+    globalConfig.plugins = [
+      ...globalConfig.plugins,
       new ExtractTextPlugin({
         filename: 'static/css/[name].css',
       }),
       new webpack.DefinePlugin({
-        __DEV__: env && env.enableDev ? true : false,
+        __DEV__: Boolean(env && env.enableDev),
         __DEFAULT_ENV__: defaultEnv,
         BUNDLE_TIMESTAMP: timestamp.toString(),
       }),
@@ -334,7 +324,7 @@ module.exports = function (env, options) {
           '/web-icon@512.png',
         ],
       }),
-    ]);
+    ];
   } else {
     (!options || !options.json) && console.log('Webpacking for Development');
     globalConfig.devServer = {
@@ -343,7 +333,8 @@ module.exports = function (env, options) {
       port: 8080,
     };
     globalConfig.mode = 'development';
-    globalConfig.plugins = globalConfig.plugins.concat([
+    globalConfig.plugins = [
+      ...globalConfig.plugins,
       new ExtractTextPlugin({
         filename: 'static/css/bundle.css',
       }),
@@ -351,7 +342,7 @@ module.exports = function (env, options) {
         __DEV__: true,
         __DEFAULT_ENV__: defaultEnv,
       }),
-    ]);
+    ];
   }
 
   return globalConfig;

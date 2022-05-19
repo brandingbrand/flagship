@@ -1,7 +1,7 @@
-import type { FSRouterHistory } from './types';
 import { NO_NAVIGATOR_CONTEXT_ERROR } from './constants';
+import type { FSRouterHistory } from './types';
 
-const throwError = () => {
+const throwError = (): never => {
   throw new Error(NO_NAVIGATOR_CONTEXT_ERROR);
 };
 

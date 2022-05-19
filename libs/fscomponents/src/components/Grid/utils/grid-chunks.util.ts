@@ -1,4 +1,5 @@
-import { GridItem, isGridItem, Width, FullWidth, makeGridItem } from './grid.util';
+import type { GridItem, Width } from './grid.util';
+import { FullWidth, isGridItem, makeGridItem } from './grid.util';
 
 export type InsertRowTable<T> = Record<number, T>;
 
@@ -11,11 +12,12 @@ export interface ChunkOptions<T, E = undefined> {
 export const getAbsoluteWidth = (width: Width, totalColumns: number): number =>
   width === FullWidth || width > totalColumns ? totalColumns : width;
 
-const makeInserter = <T>(insertRows?: InsertRowTable<T>) => {
-  return (
+const makeInserter =
+  <T>(insertRows?: InsertRowTable<T>) =>
+  (
     columnIndex: number,
     row: number
-  ): { value: T | GridItem<T>; hasInserted: () => void } | undefined => {
+  ): { value: GridItem<T> | T; hasInserted: () => void } | undefined => {
     const insertedRow = insertRows?.[row];
     if (columnIndex === 0 && insertedRow) {
       return { value: makeGridItem(insertedRow, FullWidth), hasInserted: () => undefined };
@@ -23,7 +25,6 @@ const makeInserter = <T>(insertRows?: InsertRowTable<T>) => {
 
     return undefined;
   };
-};
 
 const gridHasSpace = (itemWidth: Width, columnsRemaining: number, totalColumns: number) => {
   if (totalColumns === columnsRemaining) {
@@ -39,32 +40,34 @@ const gridHasSpace = (itemWidth: Width, columnsRemaining: number, totalColumns: 
   return false;
 };
 
-// eslint-disable-next-line complexity
+/**
+ *
+ * @param iterator
+ * @param totalColumns
+ * @param options
+ */
+// eslint-disable-next-line max-statements
 export function* gridChunk<T, E = undefined>(
-  iterator: Iterable<T | GridItem<T>>,
+  iterator: Iterable<GridItem<T> | T>,
   totalColumns: number,
   options?: ChunkOptions<T, E>
-): Generator<GridItem<T | E>[], void> {
-  const { emptyValue, insertRows, autoFit } = options ?? {};
+): Generator<Array<GridItem<E | T>>, void> {
+  const { autoFit, emptyValue, insertRows } = options ?? {};
   const generator = iterator[Symbol.iterator]();
 
-  let buffer: GridItem<T | E>[] = [];
+  let buffer: Array<GridItem<E | T>> = [];
 
   let row = 0;
   let columnIndex = 0;
   const inserter = makeInserter(insertRows);
 
-  const createEmptyRow = (size: number): Iterable<GridItem<E>> => {
-    return {
-      *[Symbol.iterator]() {
-        for (let i = 0; i < size; i++) {
-          yield makeGridItem(emptyValue as E);
-        }
-
-        return;
-      },
-    };
-  };
+  const createEmptyRow = (size: number): Iterable<GridItem<E>> => ({
+    *[Symbol.iterator]() {
+      for (let i = 0; i < size; i++) {
+        yield makeGridItem(emptyValue as E);
+      }
+    },
+  });
 
   while (true) {
     const insertedItem = inserter(columnIndex, row);

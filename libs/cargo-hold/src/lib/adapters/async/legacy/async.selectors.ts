@@ -1,11 +1,12 @@
 import type { ILens } from '@brandingbrand/standard-lens';
-import { AsyncState, AsyncStatus } from '../async.types';
+
+import type { AsyncState, AsyncStatus } from '../async.types';
 
 export const makeSelectPayload =
   <Payload, FailPayload, Structure, EmptyPayload = Payload>(
     lens: ILens<Structure, AsyncState<Payload, FailPayload, EmptyPayload>>
   ) =>
-  (structure: Structure): Payload | EmptyPayload =>
+  (structure: Structure): EmptyPayload | Payload =>
     lens.get(structure).payload;
 
 export const makeSelectStatus =

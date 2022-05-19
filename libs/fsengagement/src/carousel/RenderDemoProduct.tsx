@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { Image, ImageURISource, Text, TouchableOpacity, View } from 'react-native';
-import styles from './SliderEntry.style';
-import { Navigator } from '@brandingbrand/fsapp';
+
+import type { ImageURISource } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+
+import type { Navigator } from '@brandingbrand/fsapp';
+
 import { OptionsModalPresentationStyle } from 'react-native-navigation/lib/dist/interfaces/Options';
 
 import stars from '../../assets/images/stars.png';
+
+import styles from './SliderEntry.style';
 
 export interface RenderDemoProductData {
   image: {
@@ -18,26 +23,27 @@ export interface RenderDemoProductData {
 export interface RenderDemoProductProps {
   data: RenderDemoProductData;
   index?: number;
-  parallax?: any;
-  parallaxProps?: any;
+  parallax?: unknown;
+  parallaxProps?: unknown;
   even?: boolean;
   navigator: Navigator;
   onPressOpenModal?: boolean;
-  products?: any[];
+  products?: unknown[];
   isDemoProduct?: boolean;
   horizPadding: number;
   itemWidth?: number;
 }
 
 export default class RenderDemoProduct extends Component<RenderDemoProductProps> {
-  get image(): JSX.Element {
+  private get image(): JSX.Element {
     const {
       data: { image },
     } = this.props;
 
     return <Image source={image.source} style={styles.image} />;
   }
-  openCarouselModal = () => {
+
+  private readonly openCarouselModal = () => {
     if (!this.props.onPressOpenModal) {
       return;
     }
@@ -72,32 +78,34 @@ export default class RenderDemoProduct extends Component<RenderDemoProductProps>
           },
         },
       })
-      .catch((e) => console.error(e));
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  render(): JSX.Element {
+
+  public render(): JSX.Element {
     const {
-      data: { title, image, price },
-      itemWidth,
+      data: { image, price, title },
       horizPadding = 0,
+      itemWidth,
     } = this.props;
     const { ratio } = image;
     const PROD_IMG_HEIGHT = 165;
     const PROD_ITEM_HEIGHT = 275;
 
     let itemStyle: any = {};
-    if (ratio && itemWidth) {
-      itemStyle = {
-        width: itemWidth,
-        height: PROD_ITEM_HEIGHT,
-        paddingHorizontal: horizPadding,
-      };
-    } else {
-      itemStyle = {
-        width: itemWidth,
-        height: PROD_ITEM_HEIGHT,
-        paddingHorizontal: horizPadding,
-      };
-    }
+    itemStyle =
+      ratio && itemWidth
+        ? {
+            width: itemWidth,
+            height: PROD_ITEM_HEIGHT,
+            paddingHorizontal: horizPadding,
+          }
+        : {
+            width: itemWidth,
+            height: PROD_ITEM_HEIGHT,
+            paddingHorizontal: horizPadding,
+          };
 
     return (
       <TouchableOpacity activeOpacity={1} style={itemStyle} onPress={this.openCarouselModal}>

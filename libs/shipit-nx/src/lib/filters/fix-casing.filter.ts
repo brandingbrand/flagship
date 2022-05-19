@@ -1,7 +1,7 @@
-import { Commit } from '@brandingbrand/git';
+import type { Commit } from '@brandingbrand/git';
 
 export const fixCasingFilter = (commit: Commit) => {
-  const diffs = Array.from(commit.diffs);
+  const diffs = [...commit.diffs];
 
   const duplicateFiles = diffs
     .map(({ path }) => path)
@@ -9,7 +9,7 @@ export const fixCasingFilter = (commit: Commit) => {
       (path, i) => diffs.findIndex((diff) => diff.path.toLowerCase() === path.toLowerCase()) !== i
     );
 
-  if (duplicateFiles.length) {
+  if (duplicateFiles.length > 0) {
     const originalDiff = diffs.filter(
       ({ body, path }) =>
         !(duplicateFiles.includes(path.toLowerCase()) && body.startsWith('new file mode'))

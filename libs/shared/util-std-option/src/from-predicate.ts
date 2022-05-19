@@ -1,5 +1,7 @@
 import type { Predicate, TypeGuard } from '@brandingbrand/types-utility';
-import { none, Option, some } from './option';
+
+import type { Option } from './option';
+import { none, some } from './option';
 
 export const fromTypeguard =
   <A, B extends A>(predicate: TypeGuard<A, B>): ((input: A) => Option<B>) =>

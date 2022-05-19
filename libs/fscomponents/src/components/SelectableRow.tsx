@@ -1,14 +1,8 @@
-import React, { FunctionComponent, memo } from 'react';
-import {
-  AccessibilityRole,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { AccessibilityRole, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export interface SelectableRowProps {
   title: string;
@@ -27,54 +21,54 @@ export interface SelectableRowProps {
 }
 
 const S = StyleSheet.create({
-  row: {
-    height: 50,
-    paddingLeft: 10,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+  circle: {
+    backgroundColor: 'black',
+    borderRadius: 50,
+    height: 13,
+    width: 13,
   },
   container: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#333132',
+    borderRadius: 50,
+    borderWidth: 1,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    height: 30,
     justifyContent: 'center',
     width: 30,
-    height: 30,
-    borderWidth: 1,
-    borderColor: '#333132',
-    backgroundColor: 'white',
-    borderRadius: 50,
   },
-  circle: {
-    width: 13,
-    height: 13,
-    borderRadius: 50,
-    backgroundColor: 'black',
+  marker: {
+    height: 50,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 15,
+  },
+  markerIcon: {
+    borderBottomWidth: 2,
+    borderColor: 'black',
+    borderLeftWidth: 2,
+    height: 10,
+    transform: [
+      {
+        rotate: '-45deg',
+      },
+    ],
+    width: 17,
+  },
+  row: {
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
+    height: 50,
+    justifyContent: 'center',
+    paddingLeft: 10,
   },
   rowText: {
     fontSize: 16,
   },
   selectedContainer: {
     borderWidth: 1.5,
-  },
-  marker: {
-    position: 'absolute',
-    right: 15,
-    height: 50,
-    justifyContent: 'center',
-  },
-  markerIcon: {
-    width: 17,
-    height: 10,
-    borderLeftWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    transform: [
-      {
-        rotate: '-45deg',
-      },
-    ],
   },
 });
 
@@ -98,22 +92,20 @@ export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props)
     return null;
   };
 
-  const renderRadioButton = () => {
-    return (
-      <View style={S.marker}>
-        <View style={props.selected ? [S.container, S.selectedContainer] : [S.container]}>
-          {props.selected && <View style={S.circle} />}
-        </View>
+  const renderRadioButton = () => (
+    <View style={S.marker}>
+      <View style={props.selected ? [S.container, S.selectedContainer] : [S.container]}>
+        {props.selected && <View style={S.circle} />}
       </View>
-    );
-  };
+    </View>
+  );
 
   return (
     <TouchableOpacity
-      style={[S.row, props.style]}
-      onPress={props.onPress}
       accessibilityLabel={props.accessibilityLabel || props.title}
       accessibilityRole={props.accessibilityRole || 'button'}
+      onPress={props.onPress}
+      style={[S.row, props.style]}
     >
       <Text
         style={[S.rowText, props.textStyle, props.selected ? props.selectedTextStyle : undefined]}

@@ -1,11 +1,14 @@
 import React from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import ContentLoader, { Rect } from '../../lib/RNContentLoader';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingHorizontal: 10,
     paddingBottom: 30,
+    paddingHorizontal: 10,
   },
 });
 
@@ -20,7 +23,7 @@ export interface SerializableCartItemGhostProps {
 export interface CartItemGhostProps
   extends Omit<
     SerializableCartItemGhostProps,
-    'style' | 'width' | 'height' | 'contentBackgroundColor' | 'contentForegroundColor'
+    'contentBackgroundColor' | 'contentForegroundColor' | 'height' | 'style' | 'width'
   > {
   style?: StyleProp<ViewStyle>;
   width?: number;
@@ -31,11 +34,11 @@ export interface CartItemGhostProps
 
 export const CartItemGhost: React.FC<CartItemGhostProps> = React.memo((props) => {
   const {
-    width = 350,
-    height = 232,
-    style,
     contentBackgroundColor,
     contentForegroundColor,
+    height = 232,
+    style,
+    width = 350,
   } = props;
 
   const title = {
@@ -90,11 +93,11 @@ export const CartItemGhost: React.FC<CartItemGhostProps> = React.memo((props) =>
   return (
     <View style={[styles.itemContainer, style]}>
       <ContentLoader
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
         backgroundColor={contentBackgroundColor || '#EFEFEF'}
         foregroundColor={contentForegroundColor || '#F9F9F9'}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        width={width}
       >
         <Rect rx="4" ry="4" {...title} />
         <Rect rx="4" ry="4" {...image} />

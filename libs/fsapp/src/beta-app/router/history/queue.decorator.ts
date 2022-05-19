@@ -3,27 +3,28 @@ import { uniqueId } from 'lodash-es';
 
 export const INTERNAL = Symbol('Internal Method');
 
-type QueueableMethod<A extends any[] = any[]> = (...args: A) => Promise<void>;
+type QueueableMethod<A extends unknown[] = unknown[]> = (...args: A) => Promise<void>;
 
 class LazyPromise<T> implements PromiseLike<T> {
-  private hotPromise?: Promise<T> | void;
   constructor(
     private readonly executor: (
-      resolve: (value: T | PromiseLike<T>) => void,
-      reject: (reason?: any) => void
+      resolve: (value: PromiseLike<T> | T) => void,
+      reject: (reason?: unknown) => void
     ) => void
   ) {}
 
-  async then<TResult1 = T, TResult2 = never>(
-    onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+  private hotPromise?: Promise<T> | void;
+
+  public async then<TResult1 = T, TResult2 = never>(
+    onfulfilled?: ((value: T) => PromiseLike<TResult1> | TResult1) | null | undefined,
+    onrejected?: ((reason: unknown) => PromiseLike<TResult2> | TResult2) | null | undefined
   ): Promise<TResult1 | TResult2> {
     if (!this.hotPromise) {
       this.hotPromise = new Promise<T>((resolve, reject) => {
         try {
           this.executor(resolve, reject);
-        } catch (ex) {
-          reject(ex);
+        } catch (error) {
+          reject(error);
         }
       });
     }
@@ -35,7 +36,7 @@ class LazyPromise<T> implements PromiseLike<T> {
 class QueueRunner {
   private readonly promises: Map<string, PromiseLike<void>> = new Map();
 
-  public async run<A extends any[], T extends QueueableMethod<A>>(
+  public async run<A extends unknown[], T extends QueueableMethod<A>>(
     method: T,
     args: A
   ): Promise<void> {
@@ -70,7 +71,7 @@ const runners = new WeakMap<Object, QueueRunner>();
 // Binds method to a class wide queue so that calls will always execute in order received
 export const queueMethod = (obj: object, propertyKey: string, descriptor: PropertyDescriptor) => {
   const originalMethod = obj[propertyKey as keyof typeof obj] as Function;
-  descriptor.value = async function (...args: any[]): Promise<void> {
+  descriptor.value = async function (...args: unknown[]): Promise<void> {
     // Bound to instance
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
@@ -91,8 +92,7 @@ export const queueMethod = (obj: object, propertyKey: string, descriptor: Proper
     // Internal calls should skip the queue
     if (args[args.length - 1] === INTERNAL) {
       return boundMethod(...args);
-    } else {
-      return runner.run(boundMethod, args);
     }
+    return runner.run(boundMethod, args);
   };
 };

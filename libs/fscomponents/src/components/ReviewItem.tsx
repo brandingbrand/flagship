@@ -1,24 +1,20 @@
-/* eslint-disable complexity */
-
 import React, { Component } from 'react';
-import {
-  Image,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
 
-import { ReviewTypes } from '@brandingbrand/fscommerce';
-import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
-import { MoreText, MoreTextProps } from './MoreText';
-import { Button } from './Button';
-import { style as S } from '../styles/ReviewItem';
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, Text, View } from 'react-native';
+
+import type { ReviewTypes } from '@brandingbrand/fscommerce';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
+import { style as S } from '../styles/ReviewItem';
+
+import { Button } from './Button';
+import type { MoreTextProps } from './MoreText';
+import { MoreText } from './MoreText';
+import type { ReviewIndicatorProps } from './ReviewIndicator';
+import { ReviewIndicator } from './ReviewIndicator';
 import { SyndicationIndicator } from './SyndicationIndicator';
+
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export enum RecommendationDisplayTypes {
@@ -75,35 +71,34 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     };
   }
 
-  onHelpful = () => {
+  private readonly onHelpful = () => {
     const { onHelpful } = this.props;
     if (onHelpful) {
       onHelpful(this.props);
     }
   };
 
-  onNotHelpful = () => {
+  private readonly onNotHelpful = () => {
     const { onNotHelpful } = this.props;
     if (onNotHelpful) {
       onNotHelpful(this.props);
     }
   };
 
-  renderSyndicatedIndicator = (): JSX.Element | undefined => {
+  private readonly renderSyndicatedIndicator = (): JSX.Element | undefined => {
     if (this.props.syndicationSource && this.props.syndicationSource.LogoImageUrl) {
       if (this.props.renderSyndicatedIndicator) {
         return this.props.renderSyndicatedIndicator(this.props.syndicationSource);
-      } else {
-        return (
-          <SyndicationIndicator
-            syndicationSource={this.props.syndicationSource}
-            rowStyle={this.props.rowStyle}
-          />
-        );
       }
-    } else {
-      return;
+      return (
+        <SyndicationIndicator
+          rowStyle={this.props.rowStyle}
+          syndicationSource={this.props.syndicationSource}
+        />
+      );
     }
+
+    return undefined;
   };
 
   /**
@@ -118,15 +113,15 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
    *   - NegativeOnly: recommendations are only displayed if the product is not recommended
    *   - Never: recommendations are never displayed
    */
-  renderRecommendation = (): React.ReactNode => {
+  private readonly renderRecommendation = (): React.ReactNode => {
     const {
-      recommendedImage,
-      recommendedStyle,
-      recommendedImageStyle,
-      recommendedImageBoxStyle,
-      recommendedRowStyle,
-      rowStyle,
       isRecommended,
+      recommendedImage,
+      recommendedImageBoxStyle,
+      recommendedImageStyle,
+      recommendedRowStyle,
+      recommendedStyle,
+      rowStyle,
       showRecommendations,
     } = this.props;
 
@@ -142,7 +137,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
         <View style={[S.row, rowStyle, recommendedRowStyle]}>
           {recommendedImage && (
             <View style={recommendedImageBoxStyle}>
-              <Image style={recommendedImageStyle} source={recommendedImage} />
+              <Image source={recommendedImage} style={recommendedImageStyle} />
             </View>
           )}
           <Text style={[S.recommended, recommendedStyle]}>
@@ -157,7 +152,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     return null;
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const {
       rating,
       title,
@@ -188,31 +183,31 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     return (
       <View style={[S.container, style]}>
         <View style={[S.row, rowStyle]}>
-          <ReviewIndicator value={rating} style={S.indicator} {...reviewIndicatorProps} />
+          <ReviewIndicator style={S.indicator} value={rating} {...reviewIndicatorProps} />
           {title && <Text style={[S.title, titleStyle]}>{title}</Text>}
         </View>
         {(user || created) && (
           <View style={[S.row, rowStyle]}>
             <Text style={[S.user, userStyle]}>
-              {user && user.name && 'By ' + user.name}
-              {created ? ' on ' + new Date(created).toLocaleDateString() : ''}
+              {user && user.name && `By ${user.name}`}
+              {created ? ` on ${new Date(created).toLocaleDateString()}` : ''}
             </Text>
           </View>
         )}
         {user && user.isVerifiedBuyer && (
           <View style={[S.row, { paddingBottom: 3 }, rowStyle, verifiedRowStyle]}>
-            {verifiedImage && <Image style={verifiedImageStyle} source={verifiedImage} />}
+            {verifiedImage && <Image source={verifiedImage} style={verifiedImageStyle} />}
             <Text style={[S.verified, verifiedStyle]}>
               {FSI18n.string(componentTranslationKeys.verified)}
             </Text>
           </View>
         )}
-        {!!text && (
+        {Boolean(text) && (
           <MoreText
-            text={text}
-            textMoreLessStyle={moreTextStyle}
             containerStyle={S.row}
             numberOfCharacters={325}
+            text={text}
+            textMoreLessStyle={moreTextStyle}
             {...moreTextProps}
           />
         )}
@@ -233,16 +228,16 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
         {onHelpful && onNotHelpful && (
           <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
             <Button
-              title={FSI18n.string(componentTranslationKeys.helpful)}
               light
               onPress={this.onHelpful}
               style={[S.button, buttonStyle]}
+              title={FSI18n.string(componentTranslationKeys.helpful)}
             />
             <Button
-              title={FSI18n.string(componentTranslationKeys.notHelpful)}
               light
               onPress={this.onNotHelpful}
               style={[S.button, buttonStyle]}
+              title={FSI18n.string(componentTranslationKeys.notHelpful)}
             />
           </View>
         )}

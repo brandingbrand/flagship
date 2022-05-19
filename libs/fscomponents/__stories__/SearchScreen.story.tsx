@@ -1,22 +1,21 @@
 import React from 'react';
 
+import { Text, View } from 'react-native';
+
+import { text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 
 import { SearchScreen } from '../src/components/SearchScreen';
-import { Text, View } from 'react-native';
-import { text } from '@storybook/addon-knobs';
 
 const onClose = () => {
   console.log('CLOSE');
 };
 
-const renderContentUnderSearchBar = () => {
-  return (
-    <View>
-      <Text>{text('title', 'This is Content Under SearchBar')}</Text>
-    </View>
-  );
-};
+const renderContentUnderSearchBar = () => (
+  <View>
+    <Text>{text('title', 'This is Content Under SearchBar')}</Text>
+  </View>
+);
 
 const searchBarProps = {
   inputTextStyle: {
@@ -29,19 +28,15 @@ const searchBarProps = {
   },
 };
 
-const renderCategoryLine = (): JSX.Element => {
-  return <SearchScreen onClose={onClose} />;
-};
+const renderCategoryLine = (): JSX.Element => <SearchScreen onClose={onClose} />;
 
-const renderCustomCategoryLine = (): JSX.Element => {
-  return (
-    <SearchScreen
-      onClose={onClose}
-      searchBarProps={searchBarProps}
-      renderContentUnderSearchBar={renderContentUnderSearchBar}
-    />
-  );
-};
+const renderCustomCategoryLine = (): JSX.Element => (
+  <SearchScreen
+    onClose={onClose}
+    renderContentUnderSearchBar={renderContentUnderSearchBar}
+    searchBarProps={searchBarProps}
+  />
+);
 
 storiesOf('SearchScreen', module)
   .add('basic usage', renderCategoryLine)

@@ -1,4 +1,4 @@
-import * as express from 'express';
+import type * as express from 'express';
 import { readFileSync } from 'fs';
 
 const hostPackageJSON = JSON.parse(readFileSync('../package.json', 'utf-8'));

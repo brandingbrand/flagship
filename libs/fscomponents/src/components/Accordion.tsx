@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   LayoutChangeEvent,
   StyleProp,
-  StyleSheet,
-  Text,
   TextStyle,
-  TouchableHighlight,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Animated, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+
 import ACCORDION_ARROW_ICON_DEFAULT from '../../assets/images/arrow.png';
 
 export interface AccordionProps {
@@ -44,7 +41,7 @@ export interface AccordionProps {
    * Whether to display the icon as an image w open/closed options,
    * an arrow which rotates on open/close, or plus/minus (default is plus/minus)
    */
-  iconFormat?: 'image' | 'plusminus' | 'arrow';
+  iconFormat?: 'arrow' | 'image' | 'plusminus';
   /**
    * Bottom padding
    *
@@ -54,7 +51,7 @@ export interface AccordionProps {
   /**
    * Whether to initialize as open or closed
    */
-  state?: 'open' | 'closed';
+  state?: 'closed' | 'open';
   /**
    * Color of the title touch highlight
    */
@@ -109,7 +106,7 @@ export interface AccordionProps {
   /**
    * Content of the accordion title
    */
-  title: string | JSX.Element;
+  title: JSX.Element | string;
   /**
    * Styles for the accordion title container
    */
@@ -150,6 +147,10 @@ const ACCORDION_ANIMATION_DURATION_DEFAULT = 200; // in ms
 const ACCORDION_TITLE_HEIGHT_DEFAULT = 50;
 
 const AccordionStyles = StyleSheet.create({
+  arrowImage: {
+    height: 20,
+    width: 12,
+  },
   container: {
     borderBottomColor: '#ccc',
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -163,30 +164,26 @@ const AccordionStyles = StyleSheet.create({
     right: 0,
     position: 'absolute',
   },
-  titleContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  iconImage: {
+    height: 15,
+    width: 15,
+  },
+  plusMinus: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    lineHeight: 20,
   },
   title: {
     flex: 1,
   },
-  arrowImage: {
-    width: 12,
-    height: 20,
-  },
-  plusMinus: {
-    fontSize: 20,
-    lineHeight: 20,
-    fontWeight: 'bold',
-  },
-  iconImage: {
-    width: 15,
-    height: 15,
+  titleContainer: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
   },
   titleImage: {
-    width: 50,
     height: 50,
+    width: 50,
   },
 });
 
@@ -204,7 +201,7 @@ const AccordionStyles = StyleSheet.create({
  * web the height is the padding + height of the children.)
  */
 export class Accordion extends Component<AccordionProps, AccordionState> {
-  static defaultProps: Partial<AccordionProps> = {
+  public static defaultProps: Partial<AccordionProps> = {
     titleUnderlayColor: 'transparent',
     paddingHorizontal: ACCORDION_PADDING_DEFAULT,
     titleTouchStyle: {
@@ -223,8 +220,130 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
     };
   }
 
-  // eslint-disable-next-line complexity
-  render(): JSX.Element {
+  /**
+   * Animates the content to a given height and rotates the disclosure indicator.
+   *
+   * @param height The height to which to animate the accordion.
+   * @param shouldOpen Whether to set the diclosure indicator to an open or closed state.
+   */
+  private readonly animateContent = (height: number, shouldOpen: boolean) => {
+    if (this.shouldEnableAnimation()) {
+      Animated.spring(this.state.contentHeightAnimation, {
+        bounciness: 0,
+        toValue: height,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      this.state.contentHeightAnimation.setValue(height);
+    }
+
+    // TODO - make the rotation customizable
+    Animated.timing(this.state.arrowTranslateAnimation, {
+      toValue: shouldOpen ? -90 : 90,
+      duration: this.props.animationDuration || ACCORDION_ANIMATION_DURATION_DEFAULT,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  /**
+   * On first layout, get the height of the contents so we can determine how high we should expand
+   * the container when we animate.
+   *
+   * @param event The layout event.
+   */
+  private readonly contentOnLayout = (event: LayoutChangeEvent) => {
+    const padding = this.props.padding || 0;
+    const height = event.nativeEvent.layout.height + padding;
+    if (height !== this.state.contentHeight) {
+      this.setState({
+        contentHeight: height,
+      });
+    }
+    if (this.state.isOpen) {
+      this.state.contentHeightAnimation.setValue(height);
+    }
+  };
+
+  /**
+   * Returns whether or not the accordion should animate opening.
+   *
+   * @return Returns true if the accordion should animate opening.
+   */
+  private readonly shouldEnableAnimation = (): boolean =>
+    !this.props.disableAnimation && !this.props.renderContent;
+
+  /**
+   * Renders the accordion disclosure icon as an arrow.
+   *
+   * @return The accordion disclosure icon.
+   */
+  private renderArrowIcon(): React.ReactNode {
+    const { arrowIconImage } = this.props;
+    const computedArrowStyle = {
+      transform: [
+        {
+          rotate: this.state.arrowTranslateAnimation.interpolate({
+            inputRange: [-90, 90],
+            outputRange: this.props.arrowRange || ['-90deg', '90deg'],
+          }),
+        },
+      ],
+    };
+
+    return (
+      <Animated.Image
+        source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
+        style={[AccordionStyles.arrowImage, this.props.arrowIconStyle, computedArrowStyle]}
+      />
+    );
+  }
+
+  /**
+   * Renders the accordion disclosure icon.
+   *
+   * @return The accordion disclosure icon.
+   */
+  private renderIcon(): React.ReactNode {
+    const { closedIconImage, closedIconStyle, iconFormat, openIconImage, openIconStyle } =
+      this.props;
+
+    if (iconFormat === 'arrow') {
+      return this.renderArrowIcon();
+    }
+
+    if (iconFormat === 'image' && (closedIconImage || openIconImage)) {
+      const { isOpen } = this.state;
+      const image = isOpen ? openIconImage : closedIconImage;
+      const imageStyle = isOpen ? openIconStyle : closedIconStyle;
+      if (image) {
+        return <Image source={image} style={[AccordionStyles.iconImage, imageStyle]} />;
+      }
+      return null;
+    }
+
+    const icon = this.state.isOpen ? '–' : '+';
+
+    return <Text style={[AccordionStyles.plusMinus, this.props.plusMinusStyle]}>{icon}</Text>;
+  }
+
+  /**
+   * Toggles the accordion open or closed.
+   */
+  private readonly toggleAccordion = () => {
+    const isCurrentlyOpen = this.state.isOpen;
+
+    this.setState({
+      isOpen: !isCurrentlyOpen,
+    });
+
+    if (isCurrentlyOpen) {
+      this.animateContent(0, false);
+    } else {
+      this.animateContent(this.state.contentHeight, true);
+    }
+  };
+
+  public render(): JSX.Element {
     let computedContentStyle = {};
     let layoutStyle;
 
@@ -252,10 +371,10 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
         ]}
       >
         <TouchableHighlight
+          accessibilityRole="button"
+          onPress={this.toggleAccordion}
           style={this.props.titleTouchStyle || Accordion.defaultProps.titleTouchStyle}
           underlayColor={this.props.titleUnderlayColor || Accordion.defaultProps.titleUnderlayColor}
-          onPress={this.toggleAccordion}
-          accessibilityRole={'button'}
         >
           <View
             style={[
@@ -302,129 +421,4 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
       </View>
     );
   }
-
-  /**
-   * Animates the content to a given height and rotates the disclosure indicator.
-   *
-   * @param {number} height The height to which to animate the accordion.
-   * @param {boolean} shouldOpen Whether to set the diclosure indicator to an open or closed state.
-   */
-  private animateContent = (height: number, shouldOpen: boolean) => {
-    if (this.shouldEnableAnimation()) {
-      Animated.spring(this.state.contentHeightAnimation, {
-        bounciness: 0,
-        toValue: height,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      this.state.contentHeightAnimation.setValue(height);
-    }
-
-    // TODO - make the rotation customizable
-    Animated.timing(this.state.arrowTranslateAnimation, {
-      toValue: shouldOpen ? -90 : 90,
-      duration: this.props.animationDuration || ACCORDION_ANIMATION_DURATION_DEFAULT,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  /**
-   * On first layout, get the height of the contents so we can determine how high we should expand
-   * the container when we animate.
-   *
-   * @param {LayoutChangeEvent} event The layout event.
-   */
-  private contentOnLayout = (event: LayoutChangeEvent) => {
-    const padding = this.props.padding || 0;
-    const height = event.nativeEvent.layout.height + padding;
-    if (height !== this.state.contentHeight) {
-      this.setState({
-        contentHeight: height,
-      });
-    }
-    if (this.state.isOpen) {
-      this.state.contentHeightAnimation.setValue(height);
-    }
-  };
-
-  /**
-   * Returns whether or not the accordion should animate opening.
-   *
-   * @returns {boolean} Returns true if the accordion should animate opening.
-   */
-  private shouldEnableAnimation = (): boolean => {
-    return !this.props.disableAnimation && !this.props.renderContent;
-  };
-
-  /**
-   * Renders the accordion disclosure icon as an arrow.
-   *
-   * @returns {React.ReactNode} The accordion disclosure icon.
-   */
-  private renderArrowIcon(): React.ReactNode {
-    const { arrowIconImage } = this.props;
-    const computedArrowStyle = {
-      transform: [
-        {
-          rotate: this.state.arrowTranslateAnimation.interpolate({
-            inputRange: [-90, 90],
-            outputRange: this.props.arrowRange || ['-90deg', '90deg'],
-          }),
-        },
-      ],
-    };
-
-    return (
-      <Animated.Image
-        source={arrowIconImage || ACCORDION_ARROW_ICON_DEFAULT}
-        style={[AccordionStyles.arrowImage, this.props.arrowIconStyle, computedArrowStyle]}
-      />
-    );
-  }
-
-  /**
-   * Renders the accordion disclosure icon.
-   *
-   * @returns {React.ReactNode} The accordion disclosure icon.
-   */
-  private renderIcon(): React.ReactNode {
-    const { closedIconImage, closedIconStyle, iconFormat, openIconImage, openIconStyle } =
-      this.props;
-
-    if (iconFormat === 'arrow') {
-      return this.renderArrowIcon();
-    }
-
-    if (iconFormat === 'image' && (closedIconImage || openIconImage)) {
-      const { isOpen } = this.state;
-      const image = isOpen ? openIconImage : closedIconImage;
-      const imageStyle = isOpen ? openIconStyle : closedIconStyle;
-      if (image) {
-        return <Image source={image} style={[AccordionStyles.iconImage, imageStyle]} />;
-      } else {
-        return null;
-      }
-    }
-
-    const icon = this.state.isOpen ? '–' : '+';
-
-    return <Text style={[AccordionStyles.plusMinus, this.props.plusMinusStyle]}>{icon}</Text>;
-  }
-
-  /**
-   * Toggles the accordion open or closed.
-   */
-  private toggleAccordion = () => {
-    const isCurrentlyOpen = this.state.isOpen;
-
-    this.setState({
-      isOpen: !isCurrentlyOpen,
-    });
-
-    if (isCurrentlyOpen) {
-      this.animateContent(0, false);
-    } else {
-      this.animateContent(this.state.contentHeight, true);
-    }
-  };
 }

@@ -1,10 +1,13 @@
-import React from 'react';
-import { AppConfigType } from '../types';
+import type React from 'react';
+
 import FSNetwork from '@brandingbrand/fsnetwork';
-import configureStore from '../store/configureStore';
-import { Store } from 'redux';
+
 import type { Request } from 'express';
+import type { Store } from 'redux';
+
 import AppRouter from '../lib/app-router';
+import configureStore from '../store/configureStore';
+import type { AppConfigType } from '../types';
 
 export interface WebApplication {
   element: JSX.Element;
@@ -12,18 +15,18 @@ export interface WebApplication {
 }
 
 export abstract class FSAppBase {
-  appConfig: AppConfigType;
-  api: FSNetwork;
-  store?: Store;
-  appRouter: AppRouter;
-
   constructor(appConfig: AppConfigType) {
     this.appConfig = appConfig;
     this.api = new FSNetwork(appConfig.remote || {});
     this.appRouter = new AppRouter(appConfig);
   }
 
-  updatedInitialState = async (excludeUncached?: boolean, req?: Request) => {
+  public readonly appConfig: AppConfigType;
+  public readonly api: FSNetwork;
+  public store?: Store;
+  public readonly appRouter: AppRouter;
+
+  public readonly updatedInitialState = async (excludeUncached?: boolean, req?: Request) => {
     let updatedState = this.appConfig.initialState || {};
     if (this.appConfig.cachedData) {
       updatedState = (
@@ -50,7 +53,7 @@ export abstract class FSAppBase {
     return updatedState;
   };
 
-  initApp = async () => {
+  public readonly initApp = async () => {
     if (!this.appConfig.serverSide) {
       this.store = await this.getReduxStore(await this.updatedInitialState());
     }
@@ -60,16 +63,15 @@ export abstract class FSAppBase {
     this.registerScreens();
   };
 
-  getReduxStore = async (initialState?: any) => {
-    return configureStore(
+  public readonly getReduxStore = async (initialState?: unknown) =>
+    configureStore(
       initialState || this.appConfig.initialState,
       this.appConfig.reducers,
       this.appConfig.storeMiddleware || []
     );
-  };
 
-  abstract getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined;
-  abstract registerScreens(): void;
-  abstract shouldShowDevMenu(): boolean;
-  abstract startApp(): Promise<void>;
+  public abstract getApp(appConfig?: AppConfigType, store?: Store): WebApplication | undefined;
+  public abstract registerScreens(): void;
+  public abstract shouldShowDevMenu(): boolean;
+  public abstract startApp(): Promise<void>;
 }

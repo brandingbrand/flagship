@@ -1,4 +1,4 @@
-export * from './providers';
+export * as AnalyticsTypes from './Analytics';
 export { default as Analytics } from './Analytics';
-import * as AnalyticsTypes from './Analytics';
-export { AnalyticsTypes };
+
+export * from './providers';

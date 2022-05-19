@@ -1,3 +1,29 @@
+import type { FC } from 'react';
+import React, { Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+
+import { AppRegistry } from 'react-native';
+import { Router } from 'react-router';
+import { Route as Screen, Switch } from 'react-router-dom';
+
+import { Injector } from '@brandingbrand/fslinker';
+
+import { noop } from 'lodash-es';
+import pathToRegexp from 'path-to-regexp';
+
+import { VersionOverlay } from '../development';
+import { ModalProvider } from '../modal';
+import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
+import { StaticImplements, buildPath, lazyComponent } from '../utils';
+
+import {
+  ActivatedRouteProvider,
+  NavigatorProvider,
+  defaultActivatedRoute,
+  useActivatedRoute,
+  useNavigator,
+} from './context';
+import { History } from './history';
+import { FSRouterBase } from './router.base';
 import type {
   ActivatedRoute,
   FSRouterConstructor,
@@ -5,33 +31,8 @@ import type {
   RedirectRoute,
   Route,
   RouterConfig,
-  Routes,
 } from './types';
-
-import { AppRegistry } from 'react-native';
-import React, { FC, Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
-
-import { Router } from 'react-router';
-import { Route as Screen, Switch } from 'react-router-dom';
-import pathToRegexp from 'path-to-regexp';
-import { noop } from 'lodash-es';
-
-import { Injector } from '@brandingbrand/fslinker';
-
-import { buildPath, lazyComponent, StaticImplements } from '../utils';
-import { VersionOverlay } from '../development';
-import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
-import { ModalProvider } from '../modal';
-
-import {
-  ActivatedRouteProvider,
-  defaultActivatedRoute,
-  NavigatorProvider,
-  useActivatedRoute,
-  useNavigator,
-} from './context';
-import { FSRouterBase } from './router.base';
-import { History } from './history';
+import { Routes } from './types';
 import { guardRoute, trackView } from './utils';
 
 export { NAVIGATOR_TOKEN } from './context/navigator.context';
@@ -40,15 +41,15 @@ interface ScreenMixinProps {
   route: Route;
 }
 
-const Guarded: FC<ScreenMixinProps> = ({ route, children }) => {
-  const { loading, data, ...activatedRoute } = useActivatedRoute();
+const Guarded: FC<ScreenMixinProps> = ({ children, route }) => {
+  const { data, loading, ...activatedRoute } = useActivatedRoute();
   const [show, setShow] = useState(false);
 
   useLayoutEffect(() => {
     guardRoute(route, activatedRoute).then(setShow).catch(noop);
   }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
 
-  return show ? <>{children}</> : null;
+  return show ? <React.Fragment>{children}</React.Fragment> : null;
 };
 
 interface RedirectProps {
@@ -57,7 +58,7 @@ interface RedirectProps {
 
 const Redirect: FC<RedirectProps> = ({ route }) => {
   const navigator = useNavigator();
-  const { loading, data, ...activatedRoute } = useActivatedRoute();
+  const { data, loading, ...activatedRoute } = useActivatedRoute();
 
   useLayoutEffect(() => {
     const redirect =
@@ -77,7 +78,7 @@ const Redirect: FC<RedirectProps> = ({ route }) => {
 
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
-  constructor(routes: Routes, private readonly options: RouterConfig & InternalRouterConfig) {
+  constructor(routes: Routes, private readonly options: InternalRouterConfig & RouterConfig) {
     super(routes, new History(routes, { basename: options.basename }));
     Injector.provide({ provide: WEB_SHELL_CONTEXT_TOKEN, useValue: WebShellContext });
     this.registerRoutes();
@@ -92,7 +93,7 @@ export class FSRouter extends FSRouterBase {
     ));
   }
 
-  private constructScreen = (
+  private readonly constructScreen = (
     route: Route,
     loading: boolean,
     routeDetails: ActivatedRoute,
@@ -104,12 +105,12 @@ export class FSRouter extends FSRouterBase {
     useLayoutEffect(() => {
       const isMatch = () => {
         if (!path) {
-          return path === routeDetails?.url;
-        } else if (!routeDetails?.url) {
+          return path === routeDetails.url;
+        } else if (!routeDetails.url) {
           return false;
         }
 
-        return !!pathToRegexp(path).exec(routeDetails.url?.split('?')?.[0] ?? '');
+        return Boolean(pathToRegexp(path).test(routeDetails.url.split('?')[0] ?? ''));
       };
 
       if (isMatch()) {
@@ -141,7 +142,7 @@ export class FSRouter extends FSRouterBase {
       );
 
       return (
-        <Screen key={id} path={path} exact={route.exact}>
+        <Screen exact={route.exact} key={id} path={path}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
             <Guarded route={route}>
               <ModalProvider screenWrap={this.options.screenWrap}>
@@ -153,7 +154,7 @@ export class FSRouter extends FSRouterBase {
       );
     } else if ('redirect' in route) {
       return (
-        <Screen key={id} path={path} exact={route.exact}>
+        <Screen exact={route.exact} key={id} path={path}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
             <Redirect route={route} />
           </ActivatedRouteProvider>
@@ -168,7 +169,7 @@ export class FSRouter extends FSRouterBase {
         );
     }
 
-    return <></>;
+    return <React.Fragment />;
   };
 
   private readonly Outlet = () => {

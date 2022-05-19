@@ -1,11 +1,17 @@
 /**
  * Component to display a product's brand, title, price, and review stars.
  */
-import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
-import { ReviewIndicator, ReviewIndicatorProps } from './ReviewIndicator';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import { Price } from './Price';
+import type { ReviewIndicatorProps } from './ReviewIndicator';
+import { ReviewIndicator } from './ReviewIndicator';
 
 export interface ProductMetadataProps extends CommerceTypes.Product {
   style?: StyleProp<ViewStyle>;
@@ -22,53 +28,53 @@ const styles = StyleSheet.create({
   brand: {
     lineHeight: 25,
   },
-  title: {
+  originalPrice: {
+    lineHeight: 25,
+    marginRight: 10,
+    textDecorationLine: 'line-through',
+  },
+  price: {
     lineHeight: 25,
   },
   priceContainer: {
     flexDirection: 'row',
   },
-  reviewsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  reviewCount: {
+    fontSize: 14,
   },
   reviewCountContainer: {
     marginLeft: 5,
   },
-  reviewCount: {
-    fontSize: 14,
-  },
-  originalPrice: {
-    lineHeight: 25,
-    textDecorationLine: 'line-through',
-    marginRight: 10,
-  },
-  price: {
-    lineHeight: 25,
+  reviewsContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   salePrice: {
     color: 'red',
+  },
+  title: {
+    lineHeight: 25,
   },
 });
 
 export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo(
   (props): JSX.Element => {
-    const renderBrand = (): JSX.Element => {
-      return <Text style={[styles.brand, props.brandStyle]}>{props.brand}</Text>;
-    };
-    const renderTitle = (): JSX.Element => {
-      return <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>;
-    };
+    const renderBrand = (): JSX.Element => (
+      <Text style={[styles.brand, props.brandStyle]}>{props.brand}</Text>
+    );
+    const renderTitle = (): JSX.Element => (
+      <Text style={[styles.title, props.titleStyle]}>{props.title}</Text>
+    );
     const renderPrice = (): JSX.Element => {
-      const { originalPriceStyle, priceStyle, salePriceStyle, originalPrice, price } = props;
+      const { originalPrice, originalPriceStyle, price, priceStyle, salePriceStyle } = props;
 
       return (
         <View style={styles.priceContainer}>
           <Price
-            originalPriceFirst={true}
             originalPrice={originalPrice}
-            price={price}
+            originalPriceFirst
             originalPriceStyle={StyleSheet.flatten([styles.originalPrice, originalPriceStyle])}
+            price={price}
             priceStyle={StyleSheet.flatten([styles.price, priceStyle])}
             salePriceStyle={StyleSheet.flatten([styles.salePrice, salePriceStyle])}
           />
@@ -78,7 +84,7 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo(
     const renderReviews = (): JSX.Element => {
       const { review, reviewCountStyle, reviewIndicatorProps } = props;
 
-      const statsType: { [p: string]: number } = {};
+      const statsType: Record<string, number> = {};
       const stats = (review && review.statistics) || statsType;
       const { averageRating, reviewCount } = stats;
 

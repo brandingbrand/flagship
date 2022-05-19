@@ -1,11 +1,14 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, object, select, text } from '@storybook/addon-knobs';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { SwatchItemType } from '../src/components/Swatches';
-import { ProductItem } from '../src/components/ProductItem';
+import { storiesOf } from '@storybook/react';
 import Decimal from 'decimal.js';
+
+import { ProductItem } from '../src/components/ProductItem';
+import type { SwatchItemType } from '../src/components/Swatches';
 
 const kActionOnPress = 'ProductItemVerticalList onPress';
 
@@ -52,11 +55,7 @@ storiesOf('ProductItem', module)
   .add('Horizontal', () => (
     <ProductItem
       {...object('Product', testProduct)}
-      style={object('style', defaultStyle)}
-      onPress={action(kActionOnPress)}
       buttonText={text('buttonText', 'Add to Cart')}
-      onButtonPress={action('ProductItemVerticalAction onButtonPress')}
-      swatchItems={object('swatchItems', testSwatches)}
       hideBrand={boolean('hideBrand', false)}
       hideButton={boolean('hideButton', false)}
       hideImage={boolean('hideImage', false)}
@@ -66,19 +65,18 @@ storiesOf('ProductItem', module)
       hideSwatches={boolean('hideSwatches', false)}
       hideTitle={boolean('hideTitle', false)}
       hideVariantText={boolean('hideVariantText', false)}
+      onButtonPress={action('ProductItemVerticalAction onButtonPress')}
+      onPress={action(kActionOnPress)}
       orientation={select('orientation', orientations, 'horizontal') as any}
+      style={object('style', defaultStyle)}
+      swatchItems={object('swatchItems', testSwatches)}
     />
   ))
   .add('Vertical', () => (
     <ProductItem
       {...object('Product', testProduct)}
-      style={object('style', defaultStyle)}
-      contentStyle={{ alignItems: 'center' }}
-      promoContainerStyle={{ alignItems: 'center' }}
-      onPress={action(kActionOnPress)}
       buttonText={text('buttonText', 'Add to Cart')}
-      onButtonPress={action('ProductItemVerticalAction onButtonPress')}
-      swatchItems={object('swatchItems', testSwatches)}
+      contentStyle={{ alignItems: 'center' }}
       hideBrand={boolean('hideBrand', false)}
       hideButton={boolean('hideButton', false)}
       hideImage={boolean('hideImage', false)}
@@ -88,6 +86,11 @@ storiesOf('ProductItem', module)
       hideSwatches={boolean('hideSwatches', false)}
       hideTitle={boolean('hideTitle', false)}
       hideVariantText={boolean('hideVariantText', false)}
+      onButtonPress={action('ProductItemVerticalAction onButtonPress')}
+      onPress={action(kActionOnPress)}
       orientation={select('orientation', orientations, 'vertical') as any}
+      promoContainerStyle={{ alignItems: 'center' }}
+      style={object('style', defaultStyle)}
+      swatchItems={object('swatchItems', testSwatches)}
     />
   ));

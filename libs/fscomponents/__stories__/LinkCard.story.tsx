@@ -1,12 +1,16 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { ImageStyle, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
+
 import {
   // boolean,
   object,
   text,
 } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { LinkCard } from '../src/components/LinkCard';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 const defaultTitleStyle: TextStyle = {
   fontWeight: 'bold',
@@ -35,16 +39,14 @@ const defaultStyle: ViewStyle = {
   borderBottomColor: '#DBDBDB',
 };
 
-storiesOf('LinkCard', module).add('basic usage', () => {
-  return (
-    <LinkCard
-      title={text('Title', 'Promo Title')}
-      titleStyle={object('Title Style', defaultTitleStyle)}
-      subtitle={text('Subtitle', 'Promo Subtitle')}
-      subtitleStyle={object('Subtitle Style', defaultSubtitleStyle)}
-      image={object('Image', { uri: 'https://via.placeholder.com/300x130' })}
-      imageStyle={object('Image Style', defaultImageStyle)}
-      style={object('Style', defaultStyle)}
-    />
-  );
-});
+storiesOf('LinkCard', module).add('basic usage', () => (
+  <LinkCard
+    image={object('Image', { uri: 'https://via.placeholder.com/300x130' })}
+    imageStyle={object('Image Style', defaultImageStyle)}
+    style={object('Style', defaultStyle)}
+    subtitle={text('Subtitle', 'Promo Subtitle')}
+    subtitleStyle={object('Subtitle Style', defaultSubtitleStyle)}
+    title={text('Title', 'Promo Title')}
+    titleStyle={object('Title Style', defaultTitleStyle)}
+  />
+));

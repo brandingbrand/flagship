@@ -12,8 +12,8 @@ If the path is wrong, switch the path: (your path may be different)
 ${bold('sudo xcode-select --switch /Applications/Xcode.app')}
 `;
 
-export const podRepoUpdate = async (iosDirectory: string) => {
-  return new Promise<void>((resolve, reject) => {
+export const podRepoUpdate = async (iosDirectory: string) =>
+  new Promise<void>((resolve, reject) => {
     const process = spawn('pod', ['repo', 'update'], {
       cwd: iosDirectory,
       stdio: [0, 1, 2],
@@ -30,7 +30,6 @@ export const podRepoUpdate = async (iosDirectory: string) => {
       reject(new Error(podRepoUpdateErrorMessage));
     });
   });
-};
 
 const podInstallErrorMessage = `
 Running ${bold('pod install')} failed, see above.
@@ -43,8 +42,8 @@ If the path is wrong, switch the path: (your path may be different)
 ${bold('sudo xcode-select --switch /Applications/Xcode.app')}
 `;
 
-export const podInstall = async (iosDirectory: string) => {
-  return new Promise<void>((resolve, reject) => {
+export const podInstall = async (iosDirectory: string) =>
+  new Promise<void>((resolve, reject) => {
     const process = spawn('pod', ['install'], {
       cwd: iosDirectory,
       stdio: [0, 1, 2],
@@ -61,4 +60,3 @@ export const podInstall = async (iosDirectory: string) => {
       reject(new Error(podInstallErrorMessage));
     });
   });
-};

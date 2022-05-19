@@ -1,4 +1,5 @@
-import { DistinctQuestion } from 'inquirer';
+import type { DistinctQuestion } from 'inquirer';
+
 import { warning } from '../lib/colors';
 import { tagPrefix } from '../lib/formatters';
 

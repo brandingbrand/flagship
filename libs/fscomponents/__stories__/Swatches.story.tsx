@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { StyleSheet } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
 import { boolean, number, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
 import { Swatches } from '../src/components/Swatches';
 
 const styles = StyleSheet.create({
@@ -31,18 +34,18 @@ const items = [
 
 storiesOf('Swatches', module).add('basic usage', () => (
   <Swatches
-    label={boolean('label', true)}
-    title={text('title', title)}
-    moreLessStyle={{ display: boolean('showMoreLess', false) ? 'flex' : 'none' }}
-    maxSwatches={number('maxSwatches', maxSwatches)}
     colorContainerStyle={{
       height: number('swatchSize', swatchSize),
       width: number('swatchSize', swatchSize),
     }}
-    labelTitleStyle={object('labelStyle', styles.label)}
-    style={object('containerStyle', styles.container)}
+    defaultValue="blue"
     items={items}
+    label={boolean('label', true)}
+    labelTitleStyle={object('labelStyle', styles.label)}
+    maxSwatches={number('maxSwatches', maxSwatches)}
+    moreLessStyle={{ display: boolean('showMoreLess', false) ? 'flex' : 'none' }}
     onChangeSwatch={action('Swatches onChangeSwatch')}
-    defaultValue={'blue'}
+    style={object('containerStyle', styles.container)}
+    title={text('title', title)}
   />
 ));

@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
+
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { ProductItemProps } from '../ProductItem';
-
 import heartIcon from '../../../../assets/images/heartIcon.png';
+import type { ProductItemProps } from '../ProductItem';
 
 const style = StyleSheet.create({
+  favButton: {
+    height: 30,
+    width: 30,
+  },
   favButtonContainer: {
     position: 'absolute',
-    top: 5,
     right: 5,
-  },
-  favButton: {
-    width: 30,
-    height: 30,
+    top: 5,
   },
 });
 
 export type ProductItemFavoriteButtonProps = Pick<
   ProductItemProps,
-  'renderFavButton' | 'onFavButtonPress' | 'favButtonImage'
+  'favButtonImage' | 'onFavButtonPress' | 'renderFavButton'
 >;
 
 export class ProductItemFavoriteButton extends Component<ProductItemFavoriteButtonProps> {
-  render(): React.ReactNode {
-    const { renderFavButton, onFavButtonPress, favButtonImage } = this.props;
+  public render(): React.ReactNode {
+    const { favButtonImage, onFavButtonPress, renderFavButton } = this.props;
 
     if (renderFavButton) {
       return renderFavButton();

@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 
-import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 import FSNetwork from '@brandingbrand/fsnetwork';
+
 import { cloneDeep } from 'lodash-es';
 import { stringify } from 'qs';
 
-import { Button, ButtonProps } from './Button';
-import { Modal } from './Modal';
+import type { ButtonProps } from './Button';
+import { Button } from './Button';
 import { Form } from './Form';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+import { Modal } from './Modal';
+
 // Using import with tcomb-form-native seems to cause issues with the object being undefined.
 const TcForm = require('@brandingbrand/tcomb-form-native');
+
 const componentTranslationKeys = translationKeys.flagship.feedback;
 
 const DEFAULT_BUTTON_TEXT = FSI18n.string(componentTranslationKeys.title);
@@ -64,7 +69,7 @@ export interface CMSFeedbackProps {
 
   // Options to customize how Tcomb Form & React Native Forms handle inputs.
   // See https://github.com/gcanti/tcomb-form-native#rendering-options
-  fieldOptions?: Record<string, any>;
+  fieldOptions?: Record<string, unknown>;
 
   closeButtonProps?: ButtonProps; // Props to send to Button component for close button
   openButtonProps?: ButtonProps; // Props to send to Button component for open button
@@ -85,12 +90,12 @@ export interface CMSFeedbackState {
 }
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    padding: 10,
+  errorMessage: {
+    color: 'red',
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginBottom: 10,
   },
   headerLeftCol: {
@@ -101,34 +106,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  modalContainer: {
+    padding: 10,
+  },
+  statusContainer: {
+    marginBottom: 10,
+    marginTop: 10,
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  statusContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  errorMessage: {
-    color: 'red',
-  },
 });
 
+/**
+ * @deprecated
+ */
 export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
-  form?: Form;
+  private form?: Form;
 
-  state: CMSFeedbackState = {
+  public state: CMSFeedbackState = {
     modalVisible: false,
     formVisible: true,
     successVisible: false,
     errorVisible: false,
   };
 
-  componentDidMount(): void {
-    console.warn('CMSFeedback is deprecated and will be removed in the next version of Flagship.');
-  }
-
-  submitReview = () => {
+  private readonly submitReview = () => {
     if (this.form) {
       const success = this.form.validate();
 
@@ -167,7 +171,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     }
   };
 
-  showSuccess = () => {
+  private readonly showSuccess = () => {
     this.setState({
       formVisible: false,
       successVisible: true,
@@ -175,7 +179,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     });
   };
 
-  renderSuccessMessage(): React.ReactNode {
+  private renderSuccessMessage(): React.ReactNode {
     if (!this.state.successVisible) {
       return null;
     }
@@ -193,14 +197,14 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  showError = () => {
+  private readonly showError = () => {
     this.setState({
       successVisible: false,
       errorVisible: true,
     });
   };
 
-  renderErrorMessage(): React.ReactNode {
+  private renderErrorMessage(): React.ReactNode {
     if (!this.state.errorVisible) {
       return null;
     }
@@ -218,7 +222,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  openModal = () => {
+  private readonly openModal = () => {
     this.setState({
       modalVisible: true,
       formVisible: true,
@@ -238,22 +242,20 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     }
   };
 
-  closeModal = () => {
+  private readonly closeModal = () => {
     this.setState({ modalVisible: false });
   };
 
-  renderModalHeader(): React.ReactNode {
+  private renderModalHeader(): React.ReactNode {
     let title: React.ReactNode;
 
-    if (this.props.renderModalTitle) {
-      title = this.props.renderModalTitle();
-    } else {
-      title = (
-        <Text style={[styles.title, this.props.modalTitleStyle]}>
-          {this.props.modalTitle || DEFAULT_MODAL_TITLE}
-        </Text>
-      );
-    }
+    title = this.props.renderModalTitle ? (
+      this.props.renderModalTitle()
+    ) : (
+      <Text style={[styles.title, this.props.modalTitleStyle]}>
+        {this.props.modalTitle || DEFAULT_MODAL_TITLE}
+      </Text>
+    );
 
     return (
       <View style={styles.header}>
@@ -263,7 +265,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  renderModalBody(): React.ReactNode {
+  private renderModalBody(): React.ReactNode {
     if (this.props.renderModalBody) {
       return this.props.renderModalBody();
     }
@@ -271,7 +273,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     return null;
   }
 
-  fieldOptions = () => {
+  private readonly fieldOptions = () => {
     const defaultOptions = {
       email: {
         label: FSI18n.string(componentTranslationKeys.form.email.label),
@@ -291,11 +293,11 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     return { ...defaultOptions, ...this.props.fieldOptions };
   };
 
-  setForm = (ref: Form) => {
+  private readonly setForm = (ref: Form) => {
     this.form = ref;
   };
 
-  renderModalForm(): React.ReactNode {
+  private renderModalForm(): React.ReactNode {
     if (!this.state.formVisible) {
       return null;
     }
@@ -307,7 +309,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  renderSubmitButton(): React.ReactNode {
+  private renderSubmitButton(): React.ReactNode {
     if (!this.state.formVisible) {
       return null;
     }
@@ -315,29 +317,29 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     return (
       <View>
         <Button
-          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
           onPress={this.submitReview}
+          title={FSI18n.string(componentTranslationKeys.actions.submit.actionBtn)}
           {...this.props.submitButtonProps}
         />
       </View>
     );
   }
 
-  renderCloseButton(): JSX.Element {
+  private renderCloseButton(): JSX.Element {
     return (
       <View>
         <Button
-          title={FSI18n.string(componentTranslationKeys.actions.submit.cancelBtn)}
           onPress={this.closeModal}
+          title={FSI18n.string(componentTranslationKeys.actions.submit.cancelBtn)}
           {...this.props.closeButtonProps}
         />
       </View>
     );
   }
 
-  renderModal(): JSX.Element {
+  private renderModal(): JSX.Element {
     return (
-      <Modal visible={this.state.modalVisible} onRequestClose={this.closeModal}>
+      <Modal onRequestClose={this.closeModal} visible={this.state.modalVisible}>
         <View style={[styles.modalContainer, this.props.modalContainerStyle]}>
           {this.renderModalHeader()}
           {this.renderModalBody()}
@@ -350,7 +352,7 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  renderOpenModalButton(): JSX.Element {
+  private renderOpenModalButton(): JSX.Element {
     return (
       <Button
         title={DEFAULT_BUTTON_TEXT}
@@ -360,7 +362,11 @@ export class CMSFeedback extends Component<CMSFeedbackProps, CMSFeedbackState> {
     );
   }
 
-  render(): JSX.Element {
+  public componentDidMount(): void {
+    console.warn('CMSFeedback is deprecated and will be removed in the next version of Flagship.');
+  }
+
+  public render(): JSX.Element {
     return (
       <View>
         {this.renderModal()}

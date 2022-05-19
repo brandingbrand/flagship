@@ -1,5 +1,6 @@
-import type FSNetwork from '@brandingbrand/fsnetwork';
-import type { Analytics } from '@brandingbrand/fsengage';
+import type { ComponentType, FC } from 'react';
+import { Component } from 'react';
+
 import type {
   OptionsBottomTab,
   OptionsStatusBar,
@@ -7,11 +8,14 @@ import type {
   OptionsTopBarButton,
   OptionsTopBarTitle,
 } from 'react-native-navigation';
-import type { ParsedQs } from 'qs';
-import type { ShellConfig } from '../shell.web';
-import type { LocationDescriptorObject } from 'history';
 
-import { Component, ComponentType, FC } from 'react';
+import type { Analytics } from '@brandingbrand/fsengage';
+import type FSNetwork from '@brandingbrand/fsnetwork';
+
+import type { LocationDescriptorObject } from 'history';
+import type { ParsedQs } from 'qs';
+
+import type { ShellConfig } from '../shell.web';
 
 export type ActionButton = OptionsTopBarButton & { onPress?: () => void };
 
@@ -29,7 +33,6 @@ export interface ScreenOptions {
  * Props are explicitly forbidden at top level components to ensure type safety.
  * To access route level data, ie `params` or `navigator` then used the provided
  * context.
- *
  * @see useNavigator - hook into the navigator context
  * @see useActivatedRoute - hook into the params, query and data context
  * @see useRouteParams - hook into the params context
@@ -62,7 +65,7 @@ export interface ActivatedRoute {
 }
 
 export interface Resolver<Data = unknown> {
-  resolve(): Data | Promise<Data>;
+  resolve: () => Data | Promise<Data>;
 }
 
 export type ResolverConstructor<Data = unknown> = new (route: ActivatedRoute) => Resolver<Data>;
@@ -71,17 +74,17 @@ export type ResolverConstructor<Data = unknown> = new (route: ActivatedRoute) =>
 export type ResolverFunction<Data = unknown> = (route: ActivatedRoute) => Data | Promise<Data>;
 
 export interface Activator {
-  activate(): boolean | Promise<boolean>;
+  activate: () => Promise<boolean> | boolean;
 }
 
 export type ActivatorConstructor = new (
-  route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
+  route: Pick<ActivatedRoute, 'params' | 'path' | 'query'>
 ) => Activator;
 
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
 export type ActivatorFunction = (
-  route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>
-) => boolean | Promise<boolean>;
+  route: Pick<ActivatedRoute, 'params' | 'path' | 'query'>
+) => Promise<boolean> | boolean;
 
 // Uses a similar pattern to that of the Angular and Vue
 // Routers, this should make it familiar to those who have
@@ -103,7 +106,7 @@ export type TopBarStyle = Omit<OptionsTopBar, 'title'> & {
 export interface ComponentRoute extends BaseRoute {
   readonly component: ScreenComponentType;
 
-  readonly title?: string | ((activatedRoute: ActivatedRoute) => string | Promise<string>);
+  readonly title?: string | ((activatedRoute: ActivatedRoute) => Promise<string> | string);
   readonly topBarStyle?: TopBarStyle;
   readonly statusBarStyle?: OptionsStatusBar;
 
@@ -148,12 +151,17 @@ export interface RouteCollection {
 
 export interface RedirectRoute extends BaseRoute {
   readonly redirect:
-    | ((route: Pick<ActivatedRoute, 'params' | 'query' | 'path'>) => string)
-    | string;
+    | string
+    | ((route: Pick<ActivatedRoute, 'params' | 'path' | 'query'>) => string);
 }
 
 /**
  * @description Schematic to used to build a route at the startup of the application.
+ * @note -- Exclusive Typing
+ *
+ * This can only be one of `ComponentRoute`, `LazyComponentRoute`, `ParentRoute` or `RedirectRoute`
+ * If these types are intersected then the type that matches first in the order above
+ * will be applied.
  * @see ComponentRoute - route that will render a given component
  * @see LazyComponentRoute - route that will render a dynamically loaded component
  * @see ParentRoute - route that contains child routes
@@ -165,13 +173,6 @@ export interface RedirectRoute extends BaseRoute {
  *   component: HomeComponent
  * }
  * ```
- *
- * @note -- Exclusive Typing
- *
- * This can only be one of `ComponentRoute`, `LazyComponentRoute`, `ParentRoute` or `RedirectRoute`
- * If these types are intersected then the type that matches first in the order above
- * will be applied.
- *
  * @example
  * ```ts
  * [
@@ -186,14 +187,14 @@ export interface RedirectRoute extends BaseRoute {
  * This typing will be more explicit when this issue is resolved:
  * https://github.com/Microsoft/TypeScript/issues/12936
  */
-export type Route = ComponentRoute | LazyComponentRoute | RedirectRoute | ParentRoute;
+export type Route = ComponentRoute | LazyComponentRoute | ParentRoute | RedirectRoute;
 
 /**
  * A list of routes
  *
  * @see Route
  */
-export type Routes = readonly (Route | RouteCollection)[];
+export type Routes = ReadonlyArray<Route | RouteCollection>;
 
 export type ExternalRoute = Route & { readonly tabAffinity?: string };
 export type ExternalRoutes = readonly ExternalRoute[];
@@ -204,7 +205,7 @@ export type ExternalRoutes = readonly ExternalRoute[];
  */
 export type ExternalRouteFactory =
   | Promise<ExternalRoutes>
-  | ((api?: FSNetwork) => Routes | Promise<ExternalRoutes>);
+  | ((api?: FSNetwork) => Promise<ExternalRoutes> | Routes);
 
 export type IndexedComponentRoute =
   | (ComponentRoute & {
@@ -237,12 +238,12 @@ export interface InternalRouterConfig {
 
 export interface FSRouter {
   readonly routes: Routes;
-  open(url: string): Promise<void>;
+  open: (url: string) => Promise<void>;
 }
 
 export interface FSRouterConstructor<T extends FSRouter = FSRouter> {
-  new (routes: Routes, options: RouterConfig & InternalRouterConfig): T;
-  register(options: RouterConfig & InternalRouterConfig): Promise<FSRouter>;
+  new (routes: Routes, options: InternalRouterConfig & RouterConfig): T;
+  register: (options: InternalRouterConfig & RouterConfig) => Promise<FSRouter>;
 }
 
 export type StackedLocationDescriptor = string | (LocationDescriptorObject & { stack?: number });

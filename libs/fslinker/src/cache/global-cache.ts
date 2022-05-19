@@ -1,5 +1,7 @@
-import { InjectionToken } from '../providers';
-import { InjectorCache, InMemoryCache } from './cache';
+import type { InjectionToken } from '../providers';
+
+import type { InjectorCache } from './cache';
+import { InMemoryCache } from './cache';
 
 // In order for the linker to be deterministic and used
 // across bundles the key needs to be a statically known
@@ -13,6 +15,8 @@ declare global {
 }
 
 export class GlobalInjectorCache extends InMemoryCache implements InjectorCache {
+  private static readonly cache: GlobalInjectorCache = new GlobalInjectorCache();
+
   public static get<T>(token: InjectionToken<T>): T | undefined {
     return this.cache.get(token);
   }
@@ -33,9 +37,8 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
     this.cache.reset();
   }
 
-  private static cache: GlobalInjectorCache = new GlobalInjectorCache();
-
   constructor() {
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
     // @ts-ignore ignore node specific type
     const globalObject = typeof global !== 'undefined' ? (global as typeof globalThis) : window;
 

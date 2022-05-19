@@ -1,4 +1,5 @@
-import { Failure, isOk, ok, Result } from './result';
+import type { Failure, Result } from './result';
+import { isOk, ok } from './result';
 
 export const applyUnwrappedParams =
   <Params extends unknown[], OkType, FailureType>(...params: Params) =>

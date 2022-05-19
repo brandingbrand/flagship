@@ -1,8 +1,9 @@
-const webpack = require('webpack');
-const path = require('path');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ModuleReplaceWebpackPlugin = require('module-replace-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+
 const FileLoader = require.resolve('file-loader');
 
 const BabelPluginTransformImports = require('babel-plugin-transform-imports');
@@ -13,7 +14,7 @@ let webConfig;
 
 try {
   webConfig = require('./config.web.json');
-} catch (exception) {
+} catch {
   console.warn('Cannot find web config');
 }
 
@@ -258,14 +259,14 @@ module.exports = function (env, options) {
     (env && env.defaultEnvName) || (webConfig && webConfig.defaultEnvName) || 'prod'
   );
 
-  let definitionPluginOptions = {
-    __DEV__: env && env.enableDev ? true : false,
+  const definitionPluginOptions = {
+    __DEV__: Boolean(env && env.enableDev),
     __DEFAULT_ENV__: JSON.stringify((env && env.defaultEnvName) || 'prod'),
   };
   const ReactNativeWebImageLoader = require.resolve('react-native-web-image-loader');
   !options.json && console.log('Webpacking for Production');
   ssrConfig.mode = 'production';
-  ssrConfig.optimization.minimize = env && env.enableDev ? false : true;
+  ssrConfig.optimization.minimize = !(env && env.enableDev);
 
   ssrConfig.module.rules[0].oneOf.unshift({
     test: [/\.gif$/, /\.jpe?g$/, /\.png$/],

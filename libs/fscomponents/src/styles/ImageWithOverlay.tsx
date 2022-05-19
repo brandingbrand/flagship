@@ -1,50 +1,51 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 const kFlexStart = 'flex-start';
 
 export const style = StyleSheet.create({
+  bottomCenter: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  bottomLeft: {
+    alignItems: kFlexStart,
+    justifyContent: 'flex-end',
+  },
+  bottomRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  centerLeft: {
+    alignItems: kFlexStart,
+    justifyContent: 'center',
+  },
+  centerRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
   overlayContainer: {
-    position: 'absolute',
     bottom: 0,
     left: 0,
+    position: 'absolute',
     right: 0,
     top: 0,
   },
-  bottomLeft: {
-    justifyContent: 'flex-end',
-    alignItems: kFlexStart,
-  },
-  bottomCenter: {
-    justifyContent: 'flex-end',
+  topCenter: {
     alignItems: 'center',
-  },
-  bottomRight: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  centerLeft: {
-    justifyContent: 'center',
-    alignItems: kFlexStart,
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centerRight: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: kFlexStart,
   },
   topLeft: {
-    justifyContent: kFlexStart,
     alignItems: kFlexStart,
-  },
-  topCenter: {
     justifyContent: kFlexStart,
-    alignItems: 'center',
   },
   topRight: {
-    justifyContent: kFlexStart,
     alignItems: 'flex-end',
+    justifyContent: kFlexStart,
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

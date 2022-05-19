@@ -1,10 +1,10 @@
 import { Repo } from '@brandingbrand/git';
 import { ShellCommand } from '@brandingbrand/shell';
 
-import { ShipConfig } from '../configs/ship.config';
+import type { ShipConfig } from '../configs/ship.config';
 import { tmpDir } from '../utils/temp-dir.util';
 
-import { Phase } from './phase';
+import type { Phase } from './phase';
 
 /**
  * This phase verifies integrity of the exported repository. This does so by
@@ -47,7 +47,9 @@ export class VerifyRepoPhase implements Phase {
     ).runSynchronously();
 
     const dirtyCommit = dirtyExportedRepo.getCommitFromID('HEAD');
-    if (dirtyCommit === undefined) throw new Error('Unexpected empty commit');
+    if (dirtyCommit === undefined) {
+      throw new Error('Unexpected empty commit');
+    }
 
     const filter = this.config.getEgressFilter();
     const filteredCommits = filter(dirtyCommit).map((commit) =>

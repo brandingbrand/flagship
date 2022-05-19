@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import type { PanResponderInstance } from 'react-native';
 import { PanResponder, View } from 'react-native';
 
 export interface GestureHandlerProps {
@@ -13,7 +15,6 @@ export interface GestureState {
   dx: number;
 }
 export default class GestureHandler extends Component<GestureHandlerProps, GestureHandlerState> {
-  private panResponder: any;
   constructor(props: GestureHandlerProps) {
     super(props);
     this.state = {
@@ -26,19 +27,16 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
     });
   }
 
-  render(): JSX.Element {
-    return (
-      <View {...this.panResponder.panHandlers} collapsable={false}>
-        {this.props.children}
-      </View>
-    );
-  }
-  private onMoveShouldSetPanResponder = (event: any, gestureState: GestureState): boolean => {
-    // don't set panresponder if we are tapping the card
-    return !(gestureState.dx === 0 && gestureState.dy === 0);
-  };
+  private readonly panResponder: PanResponderInstance;
 
-  private onPanResponderMove = (event: any, gestureState: GestureState): void => {
+  private readonly onMoveShouldSetPanResponder = (
+    event: unknown,
+    gestureState: GestureState
+  ): boolean =>
+    // don't set panresponder if we are tapping the card
+    !(gestureState.dx === 0 && gestureState.dy === 0);
+
+  private readonly onPanResponderMove = (event: unknown, gestureState: GestureState): void => {
     // if we make an initial gesture UP, we assume were attempting
     // a swipe up motion so freeze the carousel
     if (!this.state.stateSet && gestureState.dy <= -7 && Math.abs(gestureState.dx) < 7) {
@@ -49,7 +47,7 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
     }
   };
 
-  private onPanResponderRelease = (event: any, gestureState: GestureState): void => {
+  private readonly onPanResponderRelease = (event: unknown, gestureState: GestureState): void => {
     // if we have swiped up 50 pixels or more, swipe the story up into view
     // if not, cancel the swipe and re-enable the carousel
     if (gestureState.dy <= -50) {
@@ -61,4 +59,12 @@ export default class GestureHandler extends Component<GestureHandlerProps, Gestu
       stateSet: false,
     });
   };
+
+  public render(): JSX.Element {
+    return (
+      <View {...this.panResponder.panHandlers} collapsable={false}>
+        {this.props.children}
+      </View>
+    );
+  }
 }

@@ -1,22 +1,26 @@
-import type { Action, Store } from 'redux';
-import type { AppConfig, AppConstructor, IApp } from './types';
-
-import { FSNetwork } from '@brandingbrand/fsnetwork';
-import { InjectionToken, Injector } from '@brandingbrand/fslinker';
-import { boundMethod } from 'autobind-decorator';
 import { ReactReduxContext } from 'react-redux';
 
+import { InjectionToken, Injector } from '@brandingbrand/fslinker';
+import { FSNetwork } from '@brandingbrand/fsnetwork';
+
+import { boundMethod } from 'autobind-decorator';
+import type { Action, Store } from 'redux';
+
+import type { FSRouterType, Routes } from '../router';
+import { FSRouter } from '../router';
+import type { GenericState } from '../store';
+import { StoreManager } from '../store';
+
 import {
-  API_CONTEXT_TOKEN,
   APIContext,
+  API_CONTEXT_TOKEN,
   APP_CONTEXT_TOKEN,
   AppContext,
   REDUX_CONTEXT_TOKEN,
   REDUX_STORE_TOKEN,
 } from './context';
-import { FSRouter, FSRouterType, Routes } from '../router';
-import { GenericState, StoreManager } from '../store';
 import { makeScreenWrapper } from './screen.wrapper';
+import type { AppConfig, AppConstructor, IApp } from './types';
 import { getVersion } from './utils';
 
 export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN');
@@ -62,8 +66,6 @@ export abstract class FSAppBase implements IApp {
     return app;
   }
 
-  public readonly routes: Routes = this.router.routes;
-
   constructor(
     public readonly version: string,
     public readonly config: AppConfig,
@@ -80,11 +82,13 @@ export abstract class FSAppBase implements IApp {
     Injector.provide({ provide: REDUX_CONTEXT_TOKEN, useValue: ReactReduxContext });
   }
 
+  public readonly routes: Routes = this.router.routes;
+
   @boundMethod
   public async openUrl(url: string): Promise<void> {
     await this.router.open(url);
   }
 
-  abstract startApplication(): Promise<void>;
-  abstract stopApplication(): Promise<void>;
+  public abstract startApplication(): Promise<void>;
+  public abstract stopApplication(): Promise<void>;
 }

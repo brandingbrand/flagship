@@ -1,34 +1,28 @@
-import {
-  ExecutorContext,
-  names,
-  formatFiles,
-  readJson,
-  offsetFromRoot,
-  logger,
-} from '@nrwl/devkit';
-import { flushChanges, FsTree } from '@nrwl/tao/src/shared/tree';
+import type { ExecutorContext } from '@nrwl/devkit';
+import { formatFiles, logger, names, offsetFromRoot, readJson } from '@nrwl/devkit';
 import { ensureNodeModulesSymlink } from '@nrwl/react-native/src/utils/ensure-node-modules-symlink';
-import { join } from 'path';
+import { FsTree, flushChanges } from '@nrwl/tao/src/shared/tree';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import { platform } from 'os';
+import { join } from 'path';
 
-import { link } from './lib/link';
-import { removeExtension } from './lib/path';
-import { bundleVersion } from './lib/version';
-import { android, ios, PlatformSpecific } from './lib/platform';
-import { AndroidPermissionKeys, IosPermissionKeys } from './lib/permissions';
-
-import { createIosFiles } from './lib/create-ios-files';
 import { createAndroidFiles } from './lib/create-android-files';
 import { createFastlaneFiles } from './lib/create-fastlane-files';
-import { podInstall, podRepoUpdate } from './lib/pod-install';
+import { createIosFiles } from './lib/create-ios-files';
 import { findDependencies } from './lib/find-dependencies.util';
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
+import { link } from './lib/link';
+import { removeExtension } from './lib/path';
+import type { AndroidPermissionKeys, IosPermissionKeys } from './lib/permissions';
+import type { PlatformSpecific } from './lib/platform';
+import { android, ios } from './lib/platform';
+import { podInstall, podRepoUpdate } from './lib/pod-install';
+import { bundleVersion } from './lib/version';
 
 export interface InitExecutorOptions {
   main: string;
   packageJson: string;
-  appName?: string | PlatformSpecific<string>;
-  bundleIdentifier: string | PlatformSpecific<string>;
+  appName?: PlatformSpecific<string> | string;
+  bundleIdentifier: PlatformSpecific<string> | string;
 
   /**
    * @deprecated In Flagship 12 this should be made to be required.
@@ -93,8 +87,11 @@ interface PackageJson {
 /**
  * This really should be a generator, but until the template is converted into
  * an nx generator this will have to be an executor
+ *
+ * @param options
+ * @param context
  */
-// eslint-disable-next-line complexity
+
 export const initExecutor = async (
   options: InitExecutorOptions,
   context: ExecutorContext
@@ -156,7 +153,7 @@ export const initExecutor = async (
       mainPath,
       nativeConstants,
       versionName: version,
-      versionCode: android(options.versionCode) ?? parseInt(bundleVersion(version), 10),
+      versionCode: android(options.versionCode) ?? Number.parseInt(bundleVersion(version), 10),
       main: options.main,
       development: options.development,
       exceptionDomains: options.exceptionDomains,

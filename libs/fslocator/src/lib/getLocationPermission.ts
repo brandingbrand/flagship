@@ -1,10 +1,9 @@
 import { Alert, Platform } from 'react-native';
-import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
-
-// @ts-ignore TODO: Add typing support for react-native-open-settings
+// @ts-expect-error TODO: Add typing support for react-native-open-settings
 import OpenSettings from 'react-native-open-settings';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 
-export default async function getLocationPermission(): Promise<boolean> {
+const getLocationPermission = async (): Promise<boolean> => {
   const permissionToCheck =
     Platform.OS === 'ios'
       ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
@@ -26,7 +25,8 @@ export default async function getLocationPermission(): Promise<boolean> {
       { cancelable: false }
     );
     return false;
-  } else {
-    return true;
   }
-}
+  return true;
+};
+
+export default getLocationPermission;

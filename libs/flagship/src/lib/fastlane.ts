@@ -1,16 +1,16 @@
-import { Config } from '../types';
-import * as fs from './fs';
 import { logInfo } from '../helpers';
+import type { Config } from '../types';
+
+import * as fs from './fs';
 
 /**
  * Configures the project Fastfile from the project configuration.
  *
- * @param {string} path The path to the project Fastfile
- * @param {object} configuration The project configuration.
- * @param {string} version The project version.
+ * @param path The path to the project Fastfile
+ * @param configuration The project configuration.
+ * @param version The project version.
  */
-// eslint-disable-next-line complexity
-export function configure(path: string, configuration: Config, version: string): void {
+export const configure = (path: string, configuration: Config, version: string): void => {
   const buildConfig = configuration && configuration.buildConfig && configuration.buildConfig.ios;
 
   logInfo(`updating fastfile at ${path}`);
@@ -43,12 +43,10 @@ export function configure(path: string, configuration: Config, version: string):
         fs.update(
           path,
           /.+#PROJECT_MODIFY_FLAG_xcargs/g,
-          'xcargs: "' +
-            [
-              `DEVELOPMENT_TEAM='${buildConfig.exportTeamId}'`,
-              `PROVISIONING_PROFILE_SPECIFIER='${buildConfig.provisioningProfileName}'`,
-            ].join(' ') +
-            '" #PROJECT_MODIFY_FLAG_export_team_id'
+          `xcargs: "${[
+            `DEVELOPMENT_TEAM='${buildConfig.exportTeamId}'`,
+            `PROVISIONING_PROFILE_SPECIFIER='${buildConfig.provisioningProfileName}'`,
+          ].join(' ')}" #PROJECT_MODIFY_FLAG_export_team_id`
         );
       }
     }
@@ -56,7 +54,7 @@ export function configure(path: string, configuration: Config, version: string):
 
   // Inject App Center configurations
   if (configuration && configuration.appCenter) {
-    const { organization, distribute } = configuration.appCenter;
+    const { distribute, organization } = configuration.appCenter;
 
     fs.update(
       path,
@@ -86,7 +84,7 @@ export function configure(path: string, configuration: Config, version: string):
 
       if (!configuration.disableDevFeature) {
         const overrideVersion =
-          typeof configuration?.android?.build?.versionName === 'string'
+          typeof configuration.android?.build?.versionName === 'string'
             ? configuration.android.build.versionName
             : version;
 
@@ -98,4 +96,4 @@ export function configure(path: string, configuration: Config, version: string):
       }
     }
   }
-}
+};

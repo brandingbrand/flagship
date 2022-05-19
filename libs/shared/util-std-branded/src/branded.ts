@@ -4,10 +4,10 @@
  */
 export type Branded<T, Brand extends string> = T & { _tag: Brand };
 
-export type BrandingHelper<Brand extends string> = {
+export interface BrandingHelper<Brand extends string> {
   brand: <T extends object>(item: T) => Branded<T, Brand>;
   isBrand: <T>(item: T) => item is Branded<T, Brand>;
-};
+}
 
 export const makeBranding = <Brand extends string>(brand: Brand): BrandingHelper<Brand> => ({
   brand: <T extends object>(item: T): Branded<T, Brand> => ({
@@ -17,7 +17,7 @@ export const makeBranding = <Brand extends string>(brand: Brand): BrandingHelper
   isBrand: <T>(item: T): item is Branded<T, Brand> => {
     try {
       return (item as Branded<T, Brand>)._tag === brand;
-    } catch (e) {
+    } catch {
       return false;
     }
   },

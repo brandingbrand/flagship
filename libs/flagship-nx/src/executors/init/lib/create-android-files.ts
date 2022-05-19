@@ -1,7 +1,8 @@
-import { generateFiles, Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
+import { generateFiles } from '@nrwl/devkit';
 import { join } from 'path';
-import { AndroidPermissionKeys } from './permissions';
 
+import type { AndroidPermissionKeys } from './permissions';
 import { writeRecursive } from './write-recursive';
 
 export interface CreateAndroidFilesOptions {

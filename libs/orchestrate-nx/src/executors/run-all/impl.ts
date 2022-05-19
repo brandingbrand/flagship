@@ -1,8 +1,8 @@
-import { runExecutor, parseTargetString, ExecutorContext, logger } from '@nrwl/devkit';
-
+import type { ExecutorContext } from '@nrwl/devkit';
+import { logger, parseTargetString, runExecutor } from '@nrwl/devkit';
+import { cyan, red } from 'chalk';
 import { from, map, mergeAll, mergeMap } from 'rxjs';
 import { bufferedValuesFrom } from 'rxjs-for-await';
-import { cyan, red } from 'chalk';
 
 import { calculateDependencies } from '../../lib/calculate-dependencies';
 import { CONSOLE_PREFIX } from '../../lib/constants';
@@ -13,7 +13,23 @@ export interface RunAllExecutorOptions {
   options?: object;
 }
 
-export async function* runAll(options: RunAllExecutorOptions, context: ExecutorContext) {
+/**
+ *
+ * @param options
+ * @param context
+ * @return
+ */
+export async function* runAll(
+  options: RunAllExecutorOptions,
+  context: ExecutorContext
+): AsyncGenerator<
+  {
+    success: boolean;
+  },
+  {
+    success: boolean;
+  }
+> {
   logger.info(`${CONSOLE_PREFIX} Building dependencies...`);
   const dependencyList = await calculateDependencies(
     options.targets,
@@ -46,18 +62,18 @@ export async function* runAll(options: RunAllExecutorOptions, context: ExecutorC
       progress.set(execution.target, execution.success);
     }
 
-    const failedTask = Array.from(progress.entries())
+    const failedTask = [...progress.entries()]
       .filter(([, success]) => success === false)
       .map(([name]) => name);
 
-    if (failedTask.length) {
+    if (failedTask.length > 0) {
       logger.info(
         `${CONSOLE_PREFIX} Failed with task ${failedTask.map((task) => red(task)).join(', ')}...`
       );
       yield { success: false };
     }
 
-    if (Array.from(progress.values()).every((success) => success === true)) {
+    if ([...progress.values()].every((success) => success === true)) {
       if (!started) {
         started = true;
         logger.info(`${CONSOLE_PREFIX} All task started.`);
@@ -69,7 +85,7 @@ export async function* runAll(options: RunAllExecutorOptions, context: ExecutorC
 
   logger.info(`${CONSOLE_PREFIX} All task completed.`);
   return {
-    success: Array.from(progress.values()).every((success) => success === true),
+    success: [...progress.values()].every((success) => success === true),
   };
 }
 

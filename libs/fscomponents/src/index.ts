@@ -1,4 +1,5 @@
-export { default as applyDefaults, ProjectWrapperComponent } from './lib/applyDefaults';
+export type { ProjectWrapperComponent } from './lib/applyDefaults';
+export { default as applyDefaults } from './lib/applyDefaults';
 export { default as ApplePay } from './lib/wallets/ApplePay';
 export * from './components';
 export * from './lib/color';

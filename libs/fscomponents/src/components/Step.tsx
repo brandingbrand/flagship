@@ -1,24 +1,17 @@
-import React, { FunctionComponent, memo } from 'react';
-import {
-  Image,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 const componentTranslationKeys = translationKeys.flagship.step;
 
 const styles = StyleSheet.create({
   completedIcon: {
-    height: 32,
     flex: 0,
+    height: 32,
     width: 32,
   },
   container: {
@@ -44,7 +37,7 @@ export interface SerializableStepProps {
 }
 
 export interface StepProps
-  extends Omit<SerializableStepProps, 'completedIconStyle' | 'titleStyle' | 'style'> {
+  extends Omit<SerializableStepProps, 'completedIconStyle' | 'style' | 'titleStyle'> {
   completedIcon?: ImageURISource;
   completedIconStyle?: StyleProp<ImageStyle>;
   onPress?: () => void;
@@ -64,15 +57,13 @@ export const Step: FunctionComponent<StepProps> = memo((props): JSX.Element => {
 
     return (
       <Image
-        style={[styles.completedIcon, props.completedIconStyle]}
         source={props.completedIcon}
+        style={[styles.completedIcon, props.completedIconStyle]}
       />
     );
   };
 
-  const renderTitle = () => {
-    return <Text style={[styles.titleText, props.titleStyle]}>{props.title}</Text>;
-  };
+  const renderTitle = () => <Text style={[styles.titleText, props.titleStyle]}>{props.title}</Text>;
 
   if (props.completed) {
     const stepCompletedLabel = FSI18n.string(componentTranslationKeys.announcements.stepCompleted);
@@ -80,21 +71,20 @@ export const Step: FunctionComponent<StepProps> = memo((props): JSX.Element => {
 
     return (
       <TouchableOpacity
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
         onPress={props.onPress}
         style={[styles.container, props.style]}
-        accessibilityRole="button"
-        accessibilityLabel={accessibilityLabel}
       >
         {renderTitle()}
         {renderDoneIcon()}
       </TouchableOpacity>
     );
-  } else {
-    return (
-      <View style={[styles.container, props.style]}>
-        {renderTitle()}
-        {renderDoneIcon()}
-      </View>
-    );
   }
+  return (
+    <View style={[styles.container, props.style]}>
+      {renderTitle()}
+      {renderDoneIcon()}
+    </View>
+  );
 });

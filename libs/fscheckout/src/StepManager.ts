@@ -6,40 +6,39 @@
  * - Provider hooks for steps change
  */
 
-import { Step, StepStatus } from './types';
+import type { Step, StepStatus } from './types';
 
 export type StepListener = (nextSteps: Step[]) => void;
 export type StatusUpdates = { [status in StepStatus]?: string[] };
 
 export default class StepManager {
-  steps: Step[] = [];
-  history: Step[][] = [];
-  listeners: StepListener[] = [];
+  constructor(public steps: Step[] = []) {}
 
-  constructor(steps: Step[]) {
-    this.steps = steps;
-  }
+  private readonly history: Step[][] = [];
+  private readonly listeners: StepListener[] = [];
 
-  back(): Step[] | undefined {
+  public back(): Step[] | undefined {
     const nextStepsState = this.history.pop();
 
     if (nextStepsState) {
       this.steps = nextStepsState;
-      this.listeners.forEach((listener) => listener(nextStepsState));
+      for (const listener of this.listeners) {
+        listener(nextStepsState);
+      }
     }
 
     return nextStepsState;
   }
 
-  onChange(listener: StepListener): void {
+  public onChange(listener: StepListener): void {
     this.listeners.push(listener);
   }
 
-  getActive(): Step | undefined {
+  public getActive(): Step | undefined {
     return this.steps.find((step) => step.status === 'active');
   }
 
-  getNextActive(): Step {
+  public getNextActive(): Step {
     // try find step is not done or active, but previous is active
     let nextActiveStepIndex = this.steps.findIndex(
       (s, i) =>
@@ -63,7 +62,7 @@ export default class StepManager {
     return this.steps[nextActiveStepIndex] as Step;
   }
 
-  continue(): void {
+  public continue(): void {
     const activeStep = this.getActive();
     const nextActiveStep = this.getNextActive();
 
@@ -77,7 +76,7 @@ export default class StepManager {
     });
   }
 
-  goTo(stepName: string): void {
+  public goTo(stepName: string): void {
     const stepToBeActive = this.steps.find(
       (step) => step.name === stepName && step.status === 'done'
     );
@@ -99,28 +98,30 @@ export default class StepManager {
     });
   }
 
-  setSteps(statusUpdates: StatusUpdates): Step[] {
+  public setSteps(statusUpdates: StatusUpdates): Step[] {
     const nextStepsState = [...this.steps];
 
-    nextStepsState.forEach((step, i) => {
-      Object.keys(statusUpdates).forEach((status) => {
+    for (const [i, step] of nextStepsState.entries()) {
+      for (const status of Object.keys(statusUpdates)) {
         const _status = status as StepStatus;
         const updates = statusUpdates[_status] || [];
 
-        updates.forEach((_step) => {
+        for (const _step of updates) {
           if (step.status !== _status && _step === step.name) {
             nextStepsState[i] = {
               ...step,
               status: _status,
             };
           }
-        });
-      });
-    });
+        }
+      }
+    }
 
     this.history.push(this.steps);
     this.steps = nextStepsState;
-    this.listeners.forEach((listener) => listener(nextStepsState));
+    for (const listener of this.listeners) {
+      listener(nextStepsState);
+    }
 
     return nextStepsState;
   }

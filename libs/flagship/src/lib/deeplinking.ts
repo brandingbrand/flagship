@@ -4,12 +4,10 @@ import * as path from './path';
 /**
  * Adds handling for deep linking for Android
  *
- * @export
- * @param {string[]} associatedDomains domains that will be handled by the app
+ * @param associatedDomains domains that will be handled by the app
  *  (eg. www.example.com, not https://www.example.com)
- * @returns {void}
  */
-export function addDeeplinkHosts(associatedDomains: string[]): void {
+export const addDeeplinkHosts = (associatedDomains: string[]): void => {
   if (!Array.isArray(associatedDomains) || associatedDomains.length === 0) {
     return;
   }
@@ -35,4 +33,4 @@ export function addDeeplinkHosts(associatedDomains: string[]): void {
   fs.update(path.android.manifestPath(), '<!-- deep link intents -->', androidIntents.join('\n'));
 
   // not applicable to ios
-}
+};

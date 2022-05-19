@@ -1,25 +1,27 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
-import { PayPalCheckoutButton } from '../src/components/PayPalCheckoutButton';
+import { storiesOf } from '@storybook/react';
+
 import { withDigitalWallet } from '../src/components/DigitalWalletProvider';
-const emptyOnPress: () => void = () => {
-  return;
-};
-const PayPalButtonWrapper = (props: any) => {
-  return (
-    <PayPalCheckoutButton
-      shape={'pill'}
-      theme={'gold'}
-      tagLine={'PayPal Tagline'}
-      title={''}
-      onPress={emptyOnPress}
-    />
-  );
-};
+import { PayPalCheckoutButton } from '../src/components/PayPalCheckoutButton';
+
+const emptyOnPress: () => void = () => {};
+const PayPalButtonWrapper = (props: unknown) => (
+  <PayPalCheckoutButton
+    onPress={emptyOnPress}
+    shape="pill"
+    tagLine="PayPal Tagline"
+    theme="gold"
+    title=""
+  />
+);
 
 const PayPalButtonWithWallet = withDigitalWallet(PayPalButtonWrapper);
 
 storiesOf('PayPalButton', module).add('basic usage', () => (
-  <PayPalButtonWithWallet payPalMerchantIdentifier="com.bb.test" payPalOnPress={action('Pay')} />
+  <PayPalButtonWithWallet
+    applePayMerchantIdentifier="com.bb.test"
+    applePayOnPress={action('Pay')}
+  />
 ));

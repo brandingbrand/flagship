@@ -1,8 +1,8 @@
-import { ComponentRoute } from '../../../router';
-import { DrawerOptions, makeDrawer, ShellConfig } from '../../../shell.web';
-
-import { LegacyDrawer } from '../../legacy-drawer';
+import type { ComponentRoute } from '../../../router';
+import type { DrawerOptions, ShellConfig } from '../../../shell.web';
+import { makeDrawer } from '../../../shell.web';
 import { makeLegacyDrawer } from '../../components/legacy-drawer.component';
+import type { LegacyDrawer } from '../../legacy-drawer';
 
 export const drawerToWebShell = (
   legacyRoutes: Map<string, ComponentRoute>,

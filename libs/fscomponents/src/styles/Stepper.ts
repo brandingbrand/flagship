@@ -1,14 +1,13 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { ImageStyle, RegisteredStyle, TextStyle, ViewStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  buttonImage: {
-    width: 25,
-    height: 25,
-  },
   buttonDisable: {
-    tintColor: '#df3c2b',
     borderRadius: 1,
+    tintColor: '#df3c2b',
+  },
+  buttonImage: {
+    height: 25,
+    width: 25,
   },
   buttonIncreaseHorizontalLeft: {
     marginLeft: 5,
@@ -21,23 +20,25 @@ export const style = StyleSheet.create({
     marginRight: 10,
   },
   counterVertical: {
-    marginTop: 10,
     marginBottom: 10,
+    marginTop: 10,
   },
   stepperHorizontalContainer: {
+    alignItems: 'center',
+    borderColor: '#333',
+    borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 5,
-    borderWidth: 1,
-    borderColor: '#333',
   },
   stepperVerticalContainer: {
+    alignItems: 'center',
+    borderColor: '#333',
+    borderWidth: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 5,
-    borderWidth: 1,
-    borderColor: '#333',
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

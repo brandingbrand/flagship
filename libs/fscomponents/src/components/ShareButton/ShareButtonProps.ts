@@ -1,4 +1,4 @@
-import { ImageStyle, ShareContent, ShareOptions, StyleProp } from 'react-native';
+import type { ImageStyle, ShareContent, ShareOptions, StyleProp } from 'react-native';
 
 // Required: content.message OR content.url
 // Optional: content: title; options: dialogTitle, excludedActivityTypes, tintColor

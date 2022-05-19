@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore using ts-sinon instead of sinon causes a conflict between @types/node and @types/react
 import { assert, stub } from 'sinon';
 
+import type { ContentManagementSystemContext } from '../src/modules/cms/providers/ContentManagementSystemProvider';
 import CoreContentManagementSystemProvider from '../src/modules/cms/providers/core/CoreContentManagementSystemProvider';
-import { ContentManagementSystemContext } from '../src/modules/cms/providers/ContentManagementSystemProvider';
 
 const fixture = require('./ContentManagementSystem.fixture.json');
 const fixture2 = require('./ContentManagementSystem2.fixture.json');
@@ -35,26 +31,22 @@ describe('Content Management System Provider', () => {
     return done();
   });
 
-  describe('Core', () => {
-    test('Slot Content', (done) => {
+  describe('core', () => {
+    it('slot Content', (done) => {
       proxy = stub(CoreContentManagementSystemProvider.prototype as any, 'pullContent').callsFake(
-        async () => {
-          return Promise.resolve(fixture.payload);
-        }
+        async () => fixture.payload
       );
 
       const context: ContentManagementSystemContext = {
-        // @ts-ignore Partial object
+        // @ts-expect-error Partial object
         locator: {
-          getCurrentLocation: async () => {
-            return Promise.resolve(fixture.location.inside);
-          },
+          getCurrentLocation: async () => fixture.location.inside,
         },
       };
 
       core
         .contentForSlot('Homepage', 'Hero-Carousel', undefined, context)
-        .then((content: Record<string, any>) => {
+        .then((content: Record<string, unknown>) => {
           const expectedContent = fixture.payload.data.Homepage['Hero-Carousel'];
 
           // Removes the instance with invalid date.
@@ -63,7 +55,7 @@ describe('Content Management System Provider', () => {
           expect(content).toEqual(expectedContent);
 
           assert.calledOnce(
-            // @ts-ignore use of private method
+            // @ts-expect-error use of private method
             CoreContentManagementSystemProvider.prototype.pullContent
           );
 
@@ -72,29 +64,25 @@ describe('Content Management System Provider', () => {
         .catch(done);
     });
 
-    test('Slot Content Missing', (done) => {
+    it('slot Content Missing', (done) => {
       proxy = stub(CoreContentManagementSystemProvider.prototype as any, 'pullContent').callsFake(
-        async () => {
-          return Promise.resolve(fixture2);
-        }
+        async () => fixture2
       );
 
       const context: ContentManagementSystemContext = {
-        // @ts-ignore Partial object
+        // @ts-expect-error Partial object
         locator: {
-          getCurrentLocation: async () => {
-            return Promise.resolve(fixture.location.inside);
-          },
+          getCurrentLocation: async () => fixture.location.inside,
         },
       };
 
       core
         .contentForSlot('home', 'header-text', undefined, context)
-        .then((content: Record<string, any>) => {
+        .then((content: Record<string, unknown>) => {
           expect(content).toBeNull();
 
           assert.calledOnce(
-            // @ts-ignore use of private method
+            // @ts-expect-error use of private method
             CoreContentManagementSystemProvider.prototype.pullContent
           );
 

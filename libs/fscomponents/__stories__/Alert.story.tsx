@@ -4,10 +4,11 @@
 import React from 'react';
 
 import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
-import { Button } from '../src/components/Button';
-import { Alert } from '../src/components/Alert';
 import { boolean, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import { Alert } from '../src/components/Alert';
+import { Button } from '../src/components/Button';
 
 const simpleAlert = () => {
   Alert.alert(text('title', 'simple alert'));

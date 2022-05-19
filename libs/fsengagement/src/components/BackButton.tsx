@@ -1,7 +1,10 @@
 import React from 'react';
-import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
+
+import type { ImageStyle, StyleProp } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+
 import { useNavigator } from '@brandingbrand/fsapp';
-import { Navigator } from '@brandingbrand/fsapp/legacy';
+import type { Navigator } from '@brandingbrand/fsapp/legacy';
 
 import backArrow from '../../assets/images/backArrow.png';
 
@@ -27,9 +30,7 @@ export interface BackButtonProps {
 
 export const BackButton: React.FunctionComponent<BackButtonProps> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
-  const onBackPress = async (): Promise<void> => {
-    return navigator?.pop();
-  };
+  const onBackPress = async (): Promise<void> => navigator?.pop();
   return (
     <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
       <Image resizeMode="contain" source={backArrow} style={[styles.backIcon, props.style]} />

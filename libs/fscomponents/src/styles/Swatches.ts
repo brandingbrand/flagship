@@ -1,16 +1,32 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
+  borderBox: {
+    alignContent: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  colorContainerItem: {
+    borderRadius: 25,
+    height: 25,
+    margin: 5,
+    width: 25,
+  },
+  colorItem: {
+    borderRadius: 25,
+    flex: 1,
+  },
   container: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
   },
-  borderBox: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
+  imageContainerItem: {
+    margin: 3,
+  },
+  imageItem: {
+    height: 25,
+    width: 25,
   },
   labelContainer: {
     flexDirection: 'row',
@@ -19,55 +35,40 @@ export const style = StyleSheet.create({
   labelTitle: {
     fontWeight: 'bold',
   },
-  textContainerItem: {
-    borderWidth: 1,
-    borderColor: '#666666',
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingRight: 8,
-    paddingLeft: 8,
-    margin: 3,
-  },
-  selectedTextContainerItem: {
-    borderColor: 'black',
-    borderWidth: 2,
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingRight: 7,
-    paddingLeft: 7,
-  },
-  textItem: {
-    textAlign: 'center',
-  },
-  colorContainerItem: {
-    width: 25,
-    height: 25,
-    margin: 5,
-    borderRadius: 25,
-  },
   selectedColorContainerItem: {
     borderColor: 'black',
     borderWidth: 2,
     padding: 1,
-  },
-  colorItem: {
-    flex: 1,
-    borderRadius: 25,
-  },
-  imageContainerItem: {
-    margin: 3,
   },
   selectedImageContainerItem: {
     borderColor: 'black',
     borderWidth: 2,
     padding: 1,
   },
-  imageItem: {
-    width: 25,
-    height: 25,
-  },
   selectedImageItem: {
-    width: 19,
     height: 19,
+    width: 19,
+  },
+  selectedTextContainerItem: {
+    borderColor: 'black',
+    borderWidth: 2,
+    paddingBottom: 4,
+    paddingLeft: 7,
+    paddingRight: 7,
+    paddingTop: 4,
+  },
+  textContainerItem: {
+    borderColor: '#666666',
+    borderWidth: 1,
+    margin: 3,
+    paddingBottom: 5,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 5,
+  },
+  textItem: {
+    textAlign: 'center',
   },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

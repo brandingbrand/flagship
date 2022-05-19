@@ -1,18 +1,19 @@
 import React from 'react';
+
 import { DeviceEventEmitter, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { CardProps, JSON } from '../types';
-
-import { TextBlock } from './TextBlock';
-import { CTABlock } from './CTABlock';
-import { ImageBlock } from './ImageBlock';
-import { CardContext } from '../lib/contexts';
 import { useNavigator } from '@brandingbrand/fsapp';
 import { Navigator } from '@brandingbrand/fsapp/legacy';
 
 import timeIcon from '../../assets/images/time.png';
 import whenIcon from '../../assets/images/whenIcon.png';
 import whereIcon from '../../assets/images/whereIcon.png';
+import { CardContext } from '../lib/contexts';
+import type { CardProps, JSON } from '../types';
+
+import { CTABlock } from './CTABlock';
+import { ImageBlock } from './ImageBlock';
+import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
   whenIcon: {
@@ -66,12 +67,13 @@ export const EventCard: React.FunctionComponent<ComponentProps> = React.memo((pr
       return;
     }
     if (props.discoverPath && !(navigator instanceof Navigator)) {
-      return navigator.open(`${props.discoverPath}/${props.id}`, {
+      navigator.open(`${props.discoverPath}/${props.id}`, {
         json,
         backButton: true,
         name: props.name,
         discoverPath: props.discoverPath,
       });
+      return;
     }
     return navigator.push({
       component: {

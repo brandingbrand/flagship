@@ -1,194 +1,209 @@
-import { Step } from '../src/types';
 import StepManager from '../src/StepManager';
+import type { Step } from '../src/types';
 
-test('get active step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-  ]);
+describe('StepManager', () => {
+  it('get active step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+    ]);
 
-  const activeStep = stepManager.getActive();
-  expect(activeStep && activeStep.name).toBe('step1');
-});
+    const activeStep = stepManager.getActive();
 
-test('get active step if no active step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'pending' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-  ]);
+    expect(activeStep && activeStep.name).toBe('step1');
+  });
 
-  const activeStep = stepManager.getActive();
-  expect(activeStep).toBe(undefined);
-});
+  it('get active step if no active step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'pending' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+    ]);
 
-test('get next active step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-  ]);
+    const activeStep = stepManager.getActive();
 
-  const nextActiveStep = stepManager.getNextActive();
-  expect(nextActiveStep && nextActiveStep.name).toBe('step2');
-});
+    expect(activeStep).toBeUndefined();
+  });
 
-test('get next active step when next step is done', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
+  it('get next active step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+    ]);
 
-  const nextActiveStep = stepManager.getNextActive();
-  expect(nextActiveStep && nextActiveStep.name).toBe('step3');
-});
+    const nextActiveStep = stepManager.getNextActive();
 
-test('get next active step when all step are done', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'done' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'done' },
-  ]);
+    expect(nextActiveStep && nextActiveStep.name).toBe('step2');
+  });
 
-  const nextActiveStep = stepManager.getNextActive();
-  expect(nextActiveStep).toBe(undefined);
-});
+  it('get next active step when next step is done', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
 
-test('continue step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
+    const nextActiveStep = stepManager.getNextActive();
 
-  stepManager.continue();
-  expect(stepManager.steps[0]?.status).toBe('done');
-  expect(stepManager.steps[1]?.status).toBe('active');
-});
+    expect(nextActiveStep && nextActiveStep.name).toBe('step3');
+  });
 
-test('continue step when next step is done', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
+  it('get next active step when all step are done', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'done' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'done' },
+    ]);
 
-  stepManager.continue();
-  expect(stepManager.steps[0]?.status).toBe('done');
-  expect(stepManager.steps[1]?.status).toBe('done');
-  expect(stepManager.steps[2]?.status).toBe('active');
-});
+    const nextActiveStep = stepManager.getNextActive();
 
-test('continue step when all step are done', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'done' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'done' },
-  ]);
+    expect(nextActiveStep).toBeUndefined();
+  });
 
-  try {
+  it('continue step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
     stepManager.continue();
-  } catch (e: any) {
-    expect(e.message).toBeTruthy();
-  }
-});
 
-test('goTo step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
+    expect(stepManager.steps[0]?.status).toBe('done');
+    expect(stepManager.steps[1]?.status).toBe('active');
+  });
 
-  stepManager.goTo('step2');
-  expect(stepManager.steps[0]?.status).toBe('pending');
-  expect(stepManager.steps[1]?.status).toBe('active');
-  expect(stepManager.steps[2]?.status).toBe('pending');
-});
+  it('continue step when next step is done', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
 
-test('goTo step when the step is not done', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
+    stepManager.continue();
 
-  try {
+    expect(stepManager.steps[0]?.status).toBe('done');
+    expect(stepManager.steps[1]?.status).toBe('done');
+    expect(stepManager.steps[2]?.status).toBe('active');
+  });
+
+  it('continue step when all step are done', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'done' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'done' },
+    ]);
+
+    try {
+      stepManager.continue();
+    } catch (error: any) {
+      expect(error.message).toBeTruthy();
+    }
+  });
+
+  it('goTo step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
     stepManager.goTo('step2');
-  } catch (e: any) {
-    expect(e.message).toBeTruthy();
-  }
-});
 
-test('back step', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'done' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
-
-  stepManager.continue();
-  stepManager.back();
-  expect(stepManager.steps[0]?.status).toBe('active');
-  expect(stepManager.steps[1]?.status).toBe('done');
-});
-
-test('back step once after continue twice', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
-
-  stepManager.continue();
-  stepManager.continue();
-  stepManager.back();
-  expect(stepManager.steps[0]?.status).toBe('done');
-  expect(stepManager.steps[1]?.status).toBe('active');
-  expect(stepManager.steps[2]?.status).toBe('pending');
-});
-
-test('back step when there is no history', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
-
-  stepManager.back();
-  expect(stepManager.steps[0]?.status).toBe('active');
-  expect(stepManager.steps[1]?.status).toBe('pending');
-  expect(stepManager.steps[2]?.status).toBe('pending');
-});
-
-test('set steps', () => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
-
-  stepManager.setSteps({
-    done: ['step1', 'step2'],
-    active: ['step3'],
-  });
-  expect(stepManager.steps[0]?.status).toBe('done');
-  expect(stepManager.steps[1]?.status).toBe('done');
-  expect(stepManager.steps[2]?.status).toBe('active');
-});
-
-test('onChange on continue', (done) => {
-  const stepManager = new StepManager([
-    { name: 'step1', displayName: 'step 1', status: 'active' },
-    { name: 'step2', displayName: 'step 2', status: 'pending' },
-    { name: 'step3', displayName: 'step 3', status: 'pending' },
-  ]);
-
-  stepManager.onChange((nextSteps: Step[]) => {
-    expect(nextSteps[0]?.status).toBe('done');
-    expect(nextSteps[1]?.status).toBe('active');
-    expect(nextSteps[2]?.status).toBe('pending');
-    done();
+    expect(stepManager.steps[0]?.status).toBe('pending');
+    expect(stepManager.steps[1]?.status).toBe('active');
+    expect(stepManager.steps[2]?.status).toBe('pending');
   });
 
-  stepManager.continue();
+  it('goTo step when the step is not done', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    try {
+      stepManager.goTo('step2');
+    } catch (error: any) {
+      expect(error.message).toBeTruthy();
+    }
+  });
+
+  it('back step', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'done' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    stepManager.continue();
+    stepManager.back();
+
+    expect(stepManager.steps[0]?.status).toBe('active');
+    expect(stepManager.steps[1]?.status).toBe('done');
+  });
+
+  it('back step once after continue twice', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    stepManager.continue();
+    stepManager.continue();
+    stepManager.back();
+
+    expect(stepManager.steps[0]?.status).toBe('done');
+    expect(stepManager.steps[1]?.status).toBe('active');
+    expect(stepManager.steps[2]?.status).toBe('pending');
+  });
+
+  it('back step when there is no history', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    stepManager.back();
+
+    expect(stepManager.steps[0]?.status).toBe('active');
+    expect(stepManager.steps[1]?.status).toBe('pending');
+    expect(stepManager.steps[2]?.status).toBe('pending');
+  });
+
+  it('set steps', () => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    stepManager.setSteps({
+      done: ['step1', 'step2'],
+      active: ['step3'],
+    });
+
+    expect(stepManager.steps[0]?.status).toBe('done');
+    expect(stepManager.steps[1]?.status).toBe('done');
+    expect(stepManager.steps[2]?.status).toBe('active');
+  });
+
+  it('onChange on continue', (done) => {
+    const stepManager = new StepManager([
+      { name: 'step1', displayName: 'step 1', status: 'active' },
+      { name: 'step2', displayName: 'step 2', status: 'pending' },
+      { name: 'step3', displayName: 'step 3', status: 'pending' },
+    ]);
+
+    stepManager.onChange((nextSteps: Step[]) => {
+      expect(nextSteps[0]?.status).toBe('done');
+      expect(nextSteps[1]?.status).toBe('active');
+      expect(nextSteps[2]?.status).toBe('pending');
+
+      done();
+    });
+
+    stepManager.continue();
+  });
 });

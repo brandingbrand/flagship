@@ -35,7 +35,7 @@ export interface ContentResource {
   /**
    * Custom properties.
    */
-  customProperties: { [key: string]: string };
+  customProperties: Record<string, string>;
 }
 
 /**
@@ -66,7 +66,7 @@ export interface ContentSearchResult {
    * Map of selected refinement attribute id/value(s) pairs.
    * The sorting order is the same like in request URL.
    */
-  selectedRefinements: { [key: string]: string };
+  selectedRefinements: Record<string, string>;
 
   /**
    * The zero-based index of the first search hit to include in the result.

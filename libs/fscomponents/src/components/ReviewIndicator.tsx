@@ -1,8 +1,13 @@
-import React, { FC, useMemo } from 'react';
-import { AccessibilityRole, StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
+import type { FC } from 'react';
+import React, { useMemo } from 'react';
+
+import type { AccessibilityRole, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Text, View } from 'react-native';
+
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { style as S } from '../styles/ReviewIndicator';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
+
 const componentTranslationKeys = translationKeys.flagship.reviews;
 
 export interface ReviewIndicatorProps {
@@ -55,10 +60,10 @@ interface HalfStarProps {
 }
 
 const HalfStar: FC<HalfStarProps> = ({
-  itemSize,
-  itemColor,
-  emptyStar,
   emptyColor,
+  emptyStar,
+  itemColor,
+  itemSize,
   renderHalfStar,
 }) => {
   const customStarStyle = useMemo<StyleProp<TextStyle>>(
@@ -88,11 +93,10 @@ const HalfStar: FC<HalfStarProps> = ({
   return (
     <View style={[S.halfStarContainer, containerStarStyle]}>
       <View style={S.starHalfLeftWrap}>
-        <Star text="★" style={[S.starHalfLeft, customStarStyle]} />
+        <Star style={[S.starHalfLeft, customStarStyle]} text="★" />
       </View>
       <View style={S.starHalfRightWrap}>
         <Star
-          text={emptyStar === true ? '☆' : '★'}
           style={[
             customStarStyle,
             S.starHalfRight,
@@ -104,13 +108,14 @@ const HalfStar: FC<HalfStarProps> = ({
                 }
               : undefined,
           ]}
+          text={emptyStar === true ? '☆' : '★'}
         />
       </View>
     </View>
   );
 };
 
-const getItemData = (value: number, base: number = 5): NormalizedValue => {
+const getItemData = (value: number, base = 5): NormalizedValue => {
   if (value >= base) {
     return {
       full: base,
@@ -128,11 +133,11 @@ const getItemData = (value: number, base: number = 5): NormalizedValue => {
     hasHalf = false;
   } else if (decimal >= 0.25 && decimal <= 0.75) {
     hasHalf = true;
-    empty = empty - 1;
+    empty -= 1;
   } else {
     hasHalf = false;
-    full = full + 1;
-    empty = empty - 1;
+    full += 1;
+    empty -= 1;
   }
 
   return {
@@ -156,17 +161,17 @@ export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
   accessibilityLabel,
   accessibilityRole,
   accessible,
-  value,
   base,
+  dataSet,
+  emptyColor,
   emptyStar,
-  itemSize,
   itemColor,
-  style,
+  itemSize,
+  renderEmptyStar,
   renderFullStar,
   renderHalfStar,
-  renderEmptyStar,
-  emptyColor,
-  dataSet,
+  style,
+  value,
 }): JSX.Element => {
   const itemData = useMemo(() => getItemData(value, base), [base, value]);
   const fullStars = useMemo(() => newArray(itemData.full), [itemData.full]);
@@ -186,29 +191,28 @@ export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
 
   return (
     <View
-      style={[S.container, style]}
-      accessible={accessible}
       accessibilityHint={accessibilityHint}
-      accessibilityRole={accessibilityRole}
       accessibilityLabel={label}
+      accessibilityRole={accessibilityRole}
+      accessible={accessible}
+      style={[S.container, style]}
       {...{ dataSet }}
     >
       {fullStars.map((v) => (
-        <Star key={v} text="★" renderStar={renderFullStar} style={customStarStyle} />
+        <Star key={v} renderStar={renderFullStar} style={customStarStyle} text="★" />
       ))}
       {itemData.hasHalf && (
         <HalfStar
-          itemSize={itemSize}
-          itemColor={itemColor}
-          emptyStar={emptyStar}
           emptyColor={emptyColor}
+          emptyStar={emptyStar}
+          itemColor={itemColor}
+          itemSize={itemSize}
           renderHalfStar={renderHalfStar}
         />
       )}
       {emptyStars.map((v) => (
         <Star
           key={v}
-          text={emptyStar === true ? '☆' : '★'}
           renderStar={renderEmptyStar}
           style={[
             customStarStyle,
@@ -219,6 +223,7 @@ export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
                 }
               : undefined,
           ]}
+          text={emptyStar === true ? '☆' : '★'}
         />
       ))}
     </View>

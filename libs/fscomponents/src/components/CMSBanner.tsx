@@ -5,7 +5,9 @@
 
 import React, { Component } from 'react';
 
-import { Image, LayoutRectangle, Linking, StyleProp, View, ViewStyle } from 'react-native';
+import type { LayoutRectangle, StyleProp, ViewStyle } from 'react-native';
+import { Image, Linking, View } from 'react-native';
+
 import { TouchableOpacityLink } from './TouchableOpacityLink';
 
 export interface CMSBannerProps {
@@ -27,7 +29,7 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Compon
   P,
   CMSBannerState
 > {
-  state: CMSBannerState = {
+  public state = {
     containerWidth: 0,
   };
 
@@ -35,23 +37,23 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Compon
   // images does calculations based on width of the parent container, so
   // this will update the width in the state so the component re-renders
   // whenever the view is resized.
-  handleOnLayout = (e: { nativeEvent: { layout: LayoutRectangle } }) => {
+  protected handleOnLayout = (e: { nativeEvent: { layout: LayoutRectangle } }) => {
     this.setState({
       containerWidth: e.nativeEvent.layout.width,
     });
   };
 
-  handlePress = (instance: any) => () => {
+  protected readonly handlePress = (instance: any) => () => {
     if (this.props.onPress) {
       this.props.onPress(instance);
     } else {
-      Linking.openURL(instance.Link).catch((e) =>
-        console.log('Unable to open link', instance.Link)
-      );
+      Linking.openURL(instance.Link).catch((error) => {
+        console.log('Unable to open link', instance.Link);
+      });
     }
   };
 
-  renderInstance = (instance: any, i: number) => {
+  protected readonly renderInstance = (instance: any, i: number) => {
     const image = instance['Retina-Image'] || instance.Image;
     const imageWidth: number | undefined = this.props.imageWidth || this.state.containerWidth;
     let imageHeight = null;
@@ -65,20 +67,19 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Compon
     }
 
     let accessibilityLabel = null;
-    if (typeof this.props.getAccessibilityLabel === 'function') {
-      accessibilityLabel = this.props.getAccessibilityLabel(instance);
-    } else {
-      accessibilityLabel = instance.Title;
-    }
+    accessibilityLabel =
+      typeof this.props.getAccessibilityLabel === 'function'
+        ? this.props.getAccessibilityLabel(instance)
+        : instance.Title;
 
-    const accessible = !!instance.Link || !!this.props.accessible;
+    const accessible = Boolean(instance.Link) || Boolean(this.props.accessible);
 
     const ImageJsx = (
       <Image
-        source={{ uri: image.path }}
-        accessible={accessible}
         accessibilityLabel={accessibilityLabel}
+        accessible={accessible}
         resizeMode="contain"
+        source={{ uri: image.path }}
         style={{
           width: imageWidth,
           height: imageHeight,
@@ -88,8 +89,8 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Compon
 
     if (instance.Link) {
       return (
-        <View key={i} style={this.props.imageContainerStyle} onLayout={this.handleOnLayout}>
-          <TouchableOpacityLink onPress={this.handlePress(instance)} href={instance.Link}>
+        <View key={i} onLayout={this.handleOnLayout} style={this.props.imageContainerStyle}>
+          <TouchableOpacityLink href={instance.Link} onPress={this.handlePress(instance)}>
             {ImageJsx}
           </TouchableOpacityLink>
         </View>
@@ -97,11 +98,11 @@ export abstract class CMSBanner<P extends CMSBannerProps, S = {}> extends Compon
     }
 
     return (
-      <View key={i} style={this.props.imageContainerStyle} onLayout={this.handleOnLayout}>
+      <View key={i} onLayout={this.handleOnLayout} style={this.props.imageContainerStyle}>
         {ImageJsx}
       </View>
     );
   };
 
-  abstract render(): React.ReactNode;
+  public abstract render(): React.ReactNode;
 }

@@ -1,6 +1,6 @@
-import type { ComponentRoute } from '../../router';
-
 import { InjectionToken } from '@brandingbrand/fslinker';
+
+import type { ComponentRoute } from '../../router';
 
 /**
  * @internal

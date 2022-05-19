@@ -1,9 +1,14 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native';
+
 import { colors } from './index.style';
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth } = Dimensions.get('window');
 
+/**
+ *
+ * @param percentage
+ */
 export function wp(percentage: number): number {
   const value = (percentage * viewportWidth) / 100;
   return Math.round(value);

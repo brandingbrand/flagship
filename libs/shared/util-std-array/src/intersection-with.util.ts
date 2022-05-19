@@ -7,8 +7,9 @@
  * invoked with two arguments: (arrVal, othVal).
  *
  * @param comapritor The comparator invoked per element
+ * @param compareFunction
  * @param arrays The arrays to inspect.
- * @returns Returns the new array of intersecting values.
+ * @return Returns the new array of intersecting values.
  * @example
  *
  * const objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]

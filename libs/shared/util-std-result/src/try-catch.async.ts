@@ -1,5 +1,7 @@
-import { Lazy, MaybePromise } from '@brandingbrand/types-utility';
-import { fail, ok, Result } from './result';
+import type { Lazy, MaybePromise } from '@brandingbrand/types-utility';
+
+import type { Result } from './result';
+import { fail, ok } from './result';
 
 export const tryCatchAsync = async <OkType, FailureType>(
   throwingFn: Lazy<MaybePromise<OkType>>
@@ -7,8 +9,8 @@ export const tryCatchAsync = async <OkType, FailureType>(
   try {
     const result = await throwingFn();
     return ok(result);
-  } catch (e) {
-    return fail(e as FailureType);
+  } catch (error) {
+    return fail(error as FailureType);
   }
 };
 
@@ -20,7 +22,7 @@ export const withTryCatchAsync =
     try {
       const result = await throwingFn(...params);
       return ok(result);
-    } catch (e) {
-      return fail(e as FailureType);
+    } catch (error) {
+      return fail(error as FailureType);
     }
   };

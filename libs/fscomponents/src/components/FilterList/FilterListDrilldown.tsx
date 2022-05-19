@@ -1,24 +1,23 @@
 import React, { PureComponent } from 'react';
-import {
-  FlatList,
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   ListRenderItemInfo,
   StyleProp,
-  StyleSheet,
-  Text,
   TextStyle,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
-import { SelectableRow, SelectableRowProps } from '../SelectableRow';
-import { FilterItem } from './FilterItem';
-import { FilterItemValue } from './FilterItemValue';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import closeIcon from '../../../assets/images/clear.png';
+import type { SelectableRowProps } from '../SelectableRow';
+import { SelectableRow } from '../SelectableRow';
+
+import type { FilterItem } from './FilterItem';
+import type { FilterItemValue } from './FilterItemValue';
 
 const componentTranslationKeys = translationKeys.flagship.filterListDefaults;
 
@@ -89,31 +88,112 @@ export interface FilterListDrilldownProps {
 }
 
 const S = StyleSheet.create({
-  title: {
-    fontWeight: 'bold',
-    fontSize: 15,
-  },
-  titleSelected: {
-    fontWeight: '800',
-  },
-  valueButton: {
-    height: 40,
-  },
-  container: {
+  applyButton: {
     flex: 1,
+  },
+  arrow: {
+    borderBottomWidth: 1,
+    borderColor: '#555',
+    borderLeftWidth: 1,
+    height: 14,
+    width: 14,
+  },
+  arrowBack: {
+    transform: [{ rotate: '45deg' }],
+  },
+  arrowContainer: {
+    left: 15,
+    position: 'absolute',
+  },
+  arrowNext: {
+    transform: [{ rotate: '-135deg' }],
   },
   buttonsContainer: {
     flexDirection: 'row',
     marginRight: 10,
   },
+  closeButtonImage: {
+    height: 16,
+    width: 16,
+  },
+  container: {
+    flex: 1,
+  },
+  emptyCell: {
+    height: 100,
+  },
+  filterHeader: {
+    alignItems: 'center',
+    borderBottomColor: '#aaa',
+    borderBottomWidth: 1,
+    height: 50,
+    justifyContent: 'center',
+  },
+  filterTitle: {
+    fontSize: 20,
+  },
   firstLevelItem: {},
   firstLevelItemContainer: {
-    padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomColor: '#ccc',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
+  floatApplyButton: {
+    alignItems: 'center',
+    backgroundColor: '#333132',
+    bottom: 15,
+    justifyContent: 'center',
+    left: 20,
+    paddingVertical: 17,
+    position: 'absolute',
+    right: 20,
+  },
+  floatApplyButtonText: {
+    color: 'white',
+  },
+  floatResetButton: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#565555',
+    borderWidth: 1,
+    bottom: 80,
+    justifyContent: 'center',
+    left: 20,
+    paddingVertical: 16,
+    position: 'absolute',
+    right: 20,
+  },
+  floatResetButtonText: {
+    color: '#333132',
+  },
+  resetButton: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    left: 15,
+    position: 'absolute',
+    top: 0,
+  },
+  rightButton: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 15,
+  },
+  secondLevelHeader: {
+    alignItems: 'center',
+    borderBottomColor: '#aaa',
+    borderBottomWidth: 1,
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  secondLevelTitle: {
+    fontWeight: 'bold',
   },
   selectedValueStyle: {
     color: '#999',
@@ -121,96 +201,15 @@ const S = StyleSheet.create({
     marginTop: 3,
     maxWidth: 300,
   },
-  arrow: {
-    width: 14,
-    height: 14,
-    borderColor: '#555',
-    borderBottomWidth: 1,
-    borderLeftWidth: 1,
-  },
-  arrowBack: {
-    transform: [{ rotate: '45deg' }],
-  },
-  arrowNext: {
-    transform: [{ rotate: '-135deg' }],
-  },
-  arrowContainer: {
-    position: 'absolute',
-    left: 15,
-  },
-  secondLevelHeader: {
-    height: 50,
-    paddingHorizontal: 10,
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  secondLevelTitle: {
+  title: {
+    fontSize: 15,
     fontWeight: 'bold',
   },
-  resetButton: {
-    position: 'absolute',
-    left: 15,
-    top: 0,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+  titleSelected: {
+    fontWeight: '800',
   },
-  floatApplyButton: {
-    position: 'absolute',
-    left: 20,
-    right: 20,
-    bottom: 15,
-    paddingVertical: 17,
-    backgroundColor: '#333132',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  floatApplyButtonText: {
-    color: 'white',
-  },
-  floatResetButton: {
-    position: 'absolute',
-    left: 20,
-    right: 20,
-    bottom: 80,
-    paddingVertical: 16,
-    borderWidth: 1,
-    borderColor: '#565555',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  floatResetButtonText: {
-    color: '#333132',
-  },
-  rightButton: {
-    position: 'absolute',
-    right: 15,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  filterHeader: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 1,
-  },
-  filterTitle: {
-    fontSize: 20,
-  },
-  applyButton: {
-    flex: 1,
-  },
-  emptyCell: {
-    height: 100,
-  },
-  closeButtonImage: {
-    height: 16,
-    width: 16,
+  valueButton: {
+    height: 40,
   },
 });
 
@@ -231,25 +230,7 @@ export class FilterListDrilldown extends PureComponent<
     };
   }
 
-  componentDidUpdate(prevProps: FilterListDrilldownProps): void {
-    const stateChanges: Partial<FilterListDrilldownState> = {};
-
-    if (this.props.items !== prevProps.items && this.state.secondLevelItem) {
-      stateChanges.secondLevelItem = this.props.items.find(
-        (item) => item.id === this.state.secondLevelItem?.id
-      );
-    }
-
-    if (this.props.selectedItems !== prevProps.selectedItems) {
-      stateChanges.selectedItems = this.props.selectedItems;
-    }
-
-    if (Object.keys(stateChanges).length) {
-      this.setState(stateChanges as FilterListDrilldownState);
-    }
-  }
-
-  handleSelect = (id: string, value: string) => () => {
+  private readonly handleSelect = (id: string, value: string) => () => {
     const { selectedItems } = this.state;
     const singleFilterIds = this.props.singleFilterIds || defaultSingleFilterIds;
 
@@ -257,7 +238,7 @@ export class FilterListDrilldown extends PureComponent<
 
     const selectedItem = selectedItems[id];
     // if already selected, and it's not in the list of single filter
-    if (selectedItem && singleFilterIds.indexOf(id) === -1) {
+    if (selectedItem && !singleFilterIds.includes(id)) {
       const findIndex = selectedItem.indexOf(value);
       if (findIndex > -1) {
         selectedItem.splice(findIndex, 1);
@@ -281,11 +262,11 @@ export class FilterListDrilldown extends PureComponent<
     }
   };
 
-  renderFilterItemValue =
+  private readonly renderFilterItemValue =
     (filterItem: FilterItem, skipCustomRender?: boolean) =>
-    ({ item, index }: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>): JSX.Element => {
+    ({ index, item }: Omit<ListRenderItemInfo<FilterItemValue>, 'separators'>): JSX.Element => {
       const selectedItem = this.state.selectedItems[filterItem.id];
-      const selected = (selectedItem && selectedItem.indexOf(item.value) > -1) ?? false;
+      const selected = (selectedItem && selectedItem.includes(item.value)) ?? false;
 
       if (this.props.renderFilterItemValue && !skipCustomRender) {
         return this.props.renderFilterItemValue(
@@ -301,22 +282,21 @@ export class FilterListDrilldown extends PureComponent<
       return (
         <SelectableRow
           key={index}
-          title={item.title}
-          selected={selected}
           onPress={this.handleSelect(filterItem.id, item.value)}
+          selected={selected}
+          title={item.title}
           {...this.props.selectableRowProps}
         />
       );
     };
 
-  // eslint-disable-next-line complexity
-  renderFilterItem = (
-    { item, index }: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
-    skipCustomRender: boolean = false
+  private readonly renderFilterItem = (
+    { index, item }: Omit<ListRenderItemInfo<FilterItem>, 'separators'>,
+    skipCustomRender = false
   ): JSX.Element => {
     const selectedValues = this.state.selectedItems[item.id] || [];
     const selectedValueTitles = (item.values || [])
-      .filter((v: FilterItemValue) => selectedValues.indexOf(v.value) > -1)
+      .filter((v: FilterItemValue) => selectedValues.includes(v.value))
       .map((v: FilterItemValue) => v.title);
 
     if (this.props.renderFilterItem && !skipCustomRender) {
@@ -331,38 +311,38 @@ export class FilterListDrilldown extends PureComponent<
 
     return (
       <TouchableOpacity
-        style={[S.firstLevelItemContainer, this.props.itemStyle]}
-        onPress={this.drilldown(item)}
-        accessibilityRole={'button'}
         accessibilityHint={FSI18n.string(componentTranslationKeys.hintToggle)}
         accessibilityLabel={item.title}
+        accessibilityRole="button"
+        onPress={this.drilldown(item)}
+        style={[S.firstLevelItemContainer, this.props.itemStyle]}
       >
         <View style={S.firstLevelItem}>
           <Text
             style={[
               S.title,
-              selectedValueTitles.length ? S.titleSelected : false,
+              selectedValueTitles.length > 0 ? S.titleSelected : false,
               this.props.itemTextStyle,
-              (this.props.ignoreActiveStyleIds || []).indexOf(item.id) === -1 &&
-              selectedValueTitles.length
+              !(this.props.ignoreActiveStyleIds || []).includes(item.id) &&
+              selectedValueTitles.length > 0
                 ? this.props.itemTextSelectedStyle
                 : false,
             ]}
           >
             {item.title}
-            {selectedValueTitles.length && this.props.showSelectedCount !== false
+            {selectedValueTitles.length > 0 && this.props.showSelectedCount !== false
               ? ` (${selectedValueTitles.length})`
               : ''}
           </Text>
-          {selectedValueTitles.length || this.props.showUnselected !== false ? (
+          {selectedValueTitles.length > 0 || this.props.showUnselected !== false ? (
             <Text
+              ellipsizeMode="tail"
+              numberOfLines={1}
               style={[
                 S.selectedValueStyle,
-                (this.props.ignoreActiveStyleIds || []).indexOf(item.id) === -1 &&
+                !(this.props.ignoreActiveStyleIds || []).includes(item.id) &&
                   this.props.selectedValueStyle,
               ]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
             >
               {selectedValueTitles.join(', ') || FSI18n.string(componentTranslationKeys.all)}
             </Text>
@@ -373,43 +353,43 @@ export class FilterListDrilldown extends PureComponent<
     );
   };
 
-  handleApply = () => {
+  private readonly handleApply = () => {
     this.props.onApply(this.state.selectedItems, { isButtonPress: true });
   };
 
-  handleReset = () => {
+  private readonly handleReset = () => {
     this.setState({ selectedItems: {} });
     this.props.onReset({ isButtonPress: true });
   };
 
-  handleClose = () => {
+  private readonly handleClose = () => {
     if (this.props.onClose) {
       this.props.onClose();
     }
   };
 
-  drilldown = (item: FilterItem) => () => {
+  private readonly drilldown = (item: FilterItem) => () => {
     this.setState({
       secondLevelItem: item,
     });
   };
 
-  backToFirstLevel = () => {
+  private readonly backToFirstLevel = () => {
     this.setState({
       secondLevelItem: undefined,
     });
   };
 
-  getKey = (item: any, index: number) => {
-    return index.toString();
-  };
+  private readonly getKey = (item: unknown, index: number) => index.toString();
 
-  renderEmptyCell = () => {
-    return <View style={[S.emptyCell, this.props.optionsFooterStyles]} />;
-  };
+  private readonly renderEmptyCell = () => (
+    <View style={[S.emptyCell, this.props.optionsFooterStyles]} />
+  );
 
-  // eslint-disable-next-line complexity
-  renderSecondLevel = (item: FilterItem, skipCustomRender?: boolean): JSX.Element => {
+  private readonly renderSecondLevel = (
+    item: FilterItem,
+    skipCustomRender?: boolean
+  ): JSX.Element => {
     if (this.props.renderSecondLevel && !skipCustomRender) {
       return this.props.renderSecondLevel(item, this.backToFirstLevel, this.renderSecondLevel);
     }
@@ -417,11 +397,11 @@ export class FilterListDrilldown extends PureComponent<
     return (
       <View style={S.applyButton}>
         <TouchableOpacity
-          style={[S.secondLevelHeader, this.props.secondLevelHeaderStyle]}
-          onPress={this.backToFirstLevel}
-          accessibilityRole={'button'}
           accessibilityHint={FSI18n.string(componentTranslationKeys.hintBack)}
           accessibilityLabel={item.title}
+          accessibilityRole="button"
+          onPress={this.backToFirstLevel}
+          style={[S.secondLevelHeader, this.props.secondLevelHeaderStyle]}
         >
           <View style={S.arrowContainer}>
             <View style={[S.arrow, S.arrowBack]} />
@@ -431,10 +411,10 @@ export class FilterListDrilldown extends PureComponent<
           </Text>
           {this.props.onClose && this.props.secondLevelShowClose ? (
             <TouchableOpacity
-              style={[S.rightButton, this.props.closeButtonStyle]}
-              onPress={this.handleClose}
-              accessibilityRole={'button'}
               accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+              accessibilityRole="button"
+              onPress={this.handleClose}
+              style={[S.rightButton, this.props.closeButtonStyle]}
             >
               <Image
                 source={this.props.closeIcon || closeIcon}
@@ -444,18 +424,18 @@ export class FilterListDrilldown extends PureComponent<
           ) : null}
         </TouchableOpacity>
         <FlatList
-          keyExtractor={this.getKey}
-          data={item.values || []}
-          renderItem={this.renderFilterItemValue(item)}
-          extraData={this.state}
           ListFooterComponent={this.props.secondLevelShowApply ? this.renderEmptyCell : undefined}
+          data={item.values || []}
+          extraData={this.state}
+          keyExtractor={this.getKey}
+          renderItem={this.renderFilterItemValue(item)}
         />
         {this.props.secondLevelShowApply ? (
           <TouchableOpacity
-            style={[S.floatApplyButton, this.props.applyButtonStyle]}
-            onPress={this.handleApply}
-            accessibilityRole={'button'}
             accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
+            accessibilityRole="button"
+            onPress={this.handleApply}
+            style={[S.floatApplyButton, this.props.applyButtonStyle]}
           >
             <Text style={[S.floatApplyButtonText, this.props.applyButtonTextStyle]}>
               {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
@@ -466,54 +446,70 @@ export class FilterListDrilldown extends PureComponent<
     );
   };
 
-  renderDrilldownHeader = () => {
-    return (
-      <View style={[S.filterHeader, this.props.filterHeader]}>
-        {!this.props.floatingReset && Object.keys(this.state.selectedItems).length ? (
-          <TouchableOpacity
-            style={[S.resetButton, this.props.resetButtonStyle]}
-            onPress={this.handleReset}
-            accessibilityRole={'button'}
-            accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
-          >
-            <Text style={this.props.resetButtonTextStyle}>
-              {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
-            </Text>
-          </TouchableOpacity>
-        ) : null}
-        {this.props.onClose ? (
-          <TouchableOpacity
-            style={[S.rightButton, this.props.closeButtonStyle]}
-            onPress={this.handleClose}
-            accessibilityRole={'button'}
-            accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
-          >
-            <Image
-              source={this.props.closeIcon || closeIcon}
-              style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
-            />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={[S.rightButton, this.props.applyButtonStyle]}
-            onPress={this.handleApply}
-            accessibilityRole={'button'}
-            accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
-          >
-            <Text style={this.props.applyButtonTextStyle}>
-              {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
-            </Text>
-          </TouchableOpacity>
-        )}
-        <Text style={[S.filterTitle, this.props.filterTitleStyle]}>
-          {this.props.refineText ||
-            FSI18n.string(translationKeys.flagship.sort.actions.refine.actionBtn)}
-        </Text>
-      </View>
-    );
-  };
+  private readonly renderDrilldownHeader = () => (
+    <View style={[S.filterHeader, this.props.filterHeader]}>
+      {!this.props.floatingReset && Object.keys(this.state.selectedItems).length > 0 ? (
+        <TouchableOpacity
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
+          accessibilityRole="button"
+          onPress={this.handleReset}
+          style={[S.resetButton, this.props.resetButtonStyle]}
+        >
+          <Text style={this.props.resetButtonTextStyle}>
+            {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
+      {this.props.onClose ? (
+        <TouchableOpacity
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+          accessibilityRole="button"
+          onPress={this.handleClose}
+          style={[S.rightButton, this.props.closeButtonStyle]}
+        >
+          <Image
+            source={this.props.closeIcon || closeIcon}
+            style={[S.closeButtonImage, this.props.closeButtonImageStyle]}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          accessibilityLabel={FSI18n.string(componentTranslationKeys.done)}
+          accessibilityRole="button"
+          onPress={this.handleApply}
+          style={[S.rightButton, this.props.applyButtonStyle]}
+        >
+          <Text style={this.props.applyButtonTextStyle}>
+            {this.props.applyText || FSI18n.string(componentTranslationKeys.done)}
+          </Text>
+        </TouchableOpacity>
+      )}
+      <Text style={[S.filterTitle, this.props.filterTitleStyle]}>
+        {this.props.refineText ||
+          FSI18n.string(translationKeys.flagship.sort.actions.refine.actionBtn)}
+      </Text>
+    </View>
+  );
 
-  render(): React.ReactNode {
+  public componentDidUpdate(prevProps: FilterListDrilldownProps): void {
+    const stateChanges: Partial<FilterListDrilldownState> = {};
+
+    if (this.props.items !== prevProps.items && this.state.secondLevelItem) {
+      stateChanges.secondLevelItem = this.props.items.find(
+        (item) => item.id === this.state.secondLevelItem?.id
+      );
+    }
+
+    if (this.props.selectedItems !== prevProps.selectedItems) {
+      stateChanges.selectedItems = this.props.selectedItems;
+    }
+
+    if (Object.keys(stateChanges).length > 0) {
+      this.setState(stateChanges as FilterListDrilldownState);
+    }
+  }
+
+  public render(): React.ReactNode {
     return (
       <View style={[S.container, this.props.style]}>
         <View
@@ -524,25 +520,28 @@ export class FilterListDrilldown extends PureComponent<
         >
           {this.renderDrilldownHeader()}
           <FlatList
-            data={this.props.items}
-            renderItem={this.renderFilterItem}
-            extraData={this.state.selectedItems}
             ListFooterComponent={this.props.onClose ? this.renderEmptyCell : undefined}
+            data={this.props.items}
+            extraData={this.state.selectedItems}
+            renderItem={this.renderFilterItem}
           />
           {this.props.onClose ? (
             <TouchableOpacity
-              style={[S.floatApplyButton, this.props.applyButtonStyle]}
-              onPress={this.handleApply}
-              accessibilityRole={'button'}
               accessibilityLabel={FSI18n.string(componentTranslationKeys.apply)}
+              accessibilityRole="button"
+              onPress={this.handleApply}
+              style={[S.floatApplyButton, this.props.applyButtonStyle]}
             >
               <Text style={[S.floatApplyButtonText, this.props.applyButtonTextStyle]}>
                 {this.props.applyText || FSI18n.string(componentTranslationKeys.apply)}
               </Text>
             </TouchableOpacity>
           ) : null}
-          {this.props.floatingReset && Object.keys(this.state.selectedItems).length ? (
+          {this.props.floatingReset && Object.keys(this.state.selectedItems).length > 0 ? (
             <TouchableOpacity
+              accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
+              accessibilityRole="button"
+              onPress={this.handleReset}
               style={[
                 S.floatResetButton,
                 this.props.onClose
@@ -552,9 +551,6 @@ export class FilterListDrilldown extends PureComponent<
                     },
                 this.props.resetButtonStyle,
               ]}
-              onPress={this.handleReset}
-              accessibilityRole={'button'}
-              accessibilityLabel={FSI18n.string(componentTranslationKeys.clearAll)}
             >
               <Text style={[S.floatResetButtonText, this.props.resetButtonTextStyle]}>
                 {this.props.resetText || FSI18n.string(componentTranslationKeys.clearAll)}

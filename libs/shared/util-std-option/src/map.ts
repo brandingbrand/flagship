@@ -1,4 +1,5 @@
-import { isSome, Option, some } from './option';
+import type { Option } from './option';
+import { isSome, some } from './option';
 
 export const map =
   <Input, Output>(mapFn: (input: Input) => Output) =>

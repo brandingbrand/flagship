@@ -1,6 +1,8 @@
 import type { IPathLens } from '@brandingbrand/standard-lens';
 import type { MaybePromise } from '@brandingbrand/types-utility';
+
 import type { ActionSpecifier, AnyActionSpecifier, TypeGuard } from '../..';
+
 import type {
   AsyncBuilder,
   WithActionKey,
@@ -24,9 +26,12 @@ export function asyncBuilder<SuccessType, IdleType = SuccessType>(): AsyncBuilde
   WithIdleType<IdleType> &
   WithSuccessType<SuccessType>;
 export function asyncBuilder<SuccessType, FailureType, IdleType>(): AsyncBuilder &
+  WithFailureType<FailureType> &
   WithIdleType<IdleType> &
-  WithSuccessType<SuccessType> &
-  WithFailureType<FailureType>;
+  WithSuccessType<SuccessType>;
+/**
+ *
+ */
 export function asyncBuilder() {
   return {};
 }
@@ -38,8 +43,8 @@ export const asyncBuilderWithStructureLens = <
   OuterStructureType
 >(
   lens: IPathLens<OuterStructureType, AsyncState<SuccessType, FailureType, IdleType>>
-): WithPayloadTypes<SuccessType, FailureType, IdleType> &
-  WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> => ({
+): WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> &
+  WithPayloadTypes<SuccessType, FailureType, IdleType> => ({
   lens,
 });
 

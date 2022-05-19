@@ -1,40 +1,41 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    flex: 1,
+  button: {
+    alignSelf: 'stretch',
+    backgroundColor: '#555',
     height: 40,
     justifyContent: 'center',
+    marginBottom: 10,
     paddingHorizontal: 10,
-    fontSize: 14,
-  },
-  container: {},
-  innerContainer: {
-    flexDirection: 'row',
-  },
-  title: {
-    fontSize: 30,
-    alignSelf: 'center',
-    marginBottom: 30,
   },
   buttonText: {
+    alignSelf: 'center',
+    color: 'white',
     fontSize: 14,
     paddingHorizontal: 10,
-    color: 'white',
-    alignSelf: 'center',
   },
-  button: {
-    height: 40,
-    backgroundColor: '#555',
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
+  container: {},
   errorMessageText: {
     color: 'red',
   },
+  innerContainer: {
+    flexDirection: 'row',
+  },
+  textInput: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    flex: 1,
+    fontSize: 14,
+    height: 40,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  title: {
+    alignSelf: 'center',
+    fontSize: 30,
+    marginBottom: 30,
+  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

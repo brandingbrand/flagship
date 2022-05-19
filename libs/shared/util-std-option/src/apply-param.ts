@@ -1,4 +1,5 @@
-import { isSome, none, Option, some } from './option';
+import type { Option } from './option';
+import { isSome, none, some } from './option';
 
 export const applyUnwrappedParams =
   <Params extends unknown[]>(...params: Params) =>

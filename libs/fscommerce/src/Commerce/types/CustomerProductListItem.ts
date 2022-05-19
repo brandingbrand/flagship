@@ -1,5 +1,5 @@
-import { Product } from './Product';
-import { ItemLink } from './ItemLink';
+import type { ItemLink } from './ItemLink';
+import type { Product } from './Product';
 
 /**
  * Document representing a customer product list item.
@@ -52,5 +52,5 @@ export interface CustomerProductListItem {
   /**
    * The type of the item.
    */
-  type?: 'product' | 'gift_certificate';
+  type?: 'gift_certificate' | 'product';
 }

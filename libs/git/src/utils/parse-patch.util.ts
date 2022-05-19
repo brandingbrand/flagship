@@ -6,7 +6,12 @@ export type Yield = string;
  * @param patch the patch to parse
  * @yields the parsed patch
  */
-// eslint-disable-next-line complexity
+
+/**
+ *
+ * @param patch
+ */
+// eslint-disable-next-line max-statements
 export function* parsePatch(patch: string): Generator<Yield, void, void> {
   let contents = '';
   let lineNumber = 0;

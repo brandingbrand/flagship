@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  StyleProp,
-  Text,
-  TextInput,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
 
-import { style as S } from '../styles/Stepper';
+import type { ImageSourcePropType, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import increase from '../../assets/images/increaseImage.png';
 import decrease from '../../assets/images/decreaseImage.png';
+import increase from '../../assets/images/increaseImage.png';
+import { style as S } from '../styles/Stepper';
 
 const icons = {
   increase,
@@ -38,7 +29,7 @@ export interface SerializableStatelessStepperProps {
 }
 
 export interface StatelessStepperProps
-  extends Omit<SerializableStatelessStepperProps, 'stepperStyle' | 'counterStyle'> {
+  extends Omit<SerializableStatelessStepperProps, 'counterStyle' | 'stepperStyle'> {
   onChange?: (count: number) => void;
 
   // Stepper style
@@ -65,7 +56,7 @@ const defaultProps: Partial<StatelessStepperProps> = {
 };
 
 export const StatelessStepper = (props = defaultProps): JSX.Element => {
-  const kButtonTouchabilityOpacity: number = 0.5;
+  const kButtonTouchabilityOpacity = 0.5;
   const handleDecreasePress = () => {
     const oldCount = props.count;
     const newCount = oldCount && oldCount - 1;
@@ -131,7 +122,7 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
 
   const onTextChange = (text: string) => {
     text = text.replace(nonNumericRegex, '');
-    let value = parseInt(text, 10);
+    let value = Number.parseInt(text, 10);
 
     if (!isNaN(value)) {
       if (props.countUpperLimit && value > props.countUpperLimit) {
@@ -152,7 +143,7 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
     if (props.editable) {
       return (
         <TextInput
-          keyboardType={'phone-pad'}
+          keyboardType="phone-pad"
           onChangeText={onTextChange}
           style={counterStyle}
           value={counterText}
@@ -167,43 +158,37 @@ export const StatelessStepper = (props = defaultProps): JSX.Element => {
     counterText: string,
     counterStyle: StyleProp<TextStyle>,
     stepperStyle: StyleProp<ViewStyle>
-  ) => {
-    return (
-      <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
-        {renderDecreaseButton()}
-        {renderText(counterStyle ? counterStyle : S.counterHorizontalCenter, counterText)}
-        {renderIncreaseButton()}
-      </View>
-    );
-  };
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
+      {renderDecreaseButton()}
+      {renderText(counterStyle ? counterStyle : S.counterHorizontalCenter, counterText)}
+      {renderIncreaseButton()}
+    </View>
+  );
 
   const renderHorizontalLeft = (
     counterText: string,
     counterStyle: StyleProp<TextStyle>,
     stepperStyle: StyleProp<ViewStyle>
-  ) => {
-    return (
-      <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
-        {renderText(counterStyle ? counterStyle : S.counterHorizontalLeft, counterText)}
-        {renderDecreaseButton()}
-        {renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
-      </View>
-    );
-  };
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperHorizontalContainer}>
+      {renderText(counterStyle ? counterStyle : S.counterHorizontalLeft, counterText)}
+      {renderDecreaseButton()}
+      {renderIncreaseButton(S.buttonIncreaseHorizontalLeft)}
+    </View>
+  );
 
   const renderVertical = (
     counterText: string,
     counterStyle: StyleProp<TextStyle>,
     stepperStyle: StyleProp<ViewStyle>
-  ) => {
-    return (
-      <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
-        {renderIncreaseButton()}
-        {renderText(counterStyle ? counterStyle : S.counterVertical, counterText)}
-        {renderDecreaseButton()}
-      </View>
-    );
-  };
+  ) => (
+    <View style={stepperStyle ? stepperStyle : S.stepperVerticalContainer}>
+      {renderIncreaseButton()}
+      {renderText(counterStyle ? counterStyle : S.counterVertical, counterText)}
+      {renderDecreaseButton()}
+    </View>
+  );
 
   const { counterStyle, format, prefix, stepperStyle } = props;
   const { count } = props;

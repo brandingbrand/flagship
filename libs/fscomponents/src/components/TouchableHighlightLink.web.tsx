@@ -1,5 +1,8 @@
 import React from 'react';
-import { TouchableHighlight, TouchableHighlightProperties } from 'react-native';
+
+import type { TouchableHighlightProperties } from 'react-native';
+import { TouchableHighlight } from 'react-native';
+
 import { TouchableDelay } from './TouchableDelay';
 
 const TouchableHighlightWithHref: React.ComponentClass<TouchableHighlightLinkProps> =
@@ -10,14 +13,14 @@ export interface TouchableHighlightLinkProps extends TouchableHighlightPropertie
 }
 
 export class TouchableHighlightLink extends TouchableDelay<TouchableHighlightLinkProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { href, onPress, ...props } = this.props;
 
     return (
       <TouchableHighlightWithHref
         {...props}
-        href={href}
         accessibilityRole="link"
+        href={href}
         onPress={this.handleOnPress}
       >
         {this.props.children}

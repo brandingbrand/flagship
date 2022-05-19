@@ -1,5 +1,6 @@
 import * as FastCheck from 'fast-check';
-import { AsyncState } from '../lib/adapters/async/async.types';
+
+import type { AsyncState } from '../lib/adapters/async/async.types';
 
 export const asyncStateArbitrary = <Payload, FailPayload>(
   payloadArbitrary: FastCheck.Arbitrary<Payload>,

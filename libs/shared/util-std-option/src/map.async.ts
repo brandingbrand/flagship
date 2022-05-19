@@ -1,5 +1,7 @@
-import { MaybePromise } from '@brandingbrand/types-utility';
-import { isSome, Option, some } from './option';
+import type { MaybePromise } from '@brandingbrand/types-utility';
+
+import type { Option } from './option';
+import { isSome, some } from './option';
 
 export const mapAsync =
   <InputType, OutputType>(mapFn: (input: InputType) => MaybePromise<OutputType>) =>

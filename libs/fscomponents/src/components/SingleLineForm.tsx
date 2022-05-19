@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Form, FormLabelPosition } from './Form';
@@ -9,38 +11,32 @@ export interface SingleLineFormProps {
   fieldsStyleConfig?: any;
   labelPosition?: FormLabelPosition;
   onSubmit?: (value: any) => void;
-  submitButtonStyle?: any;
-  submitTextStyle?: any;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<ViewStyle>;
   submitText?: any;
   value?: any;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 const S = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'baseline',
+    flexDirection: 'row',
   },
   form: {
     flex: 1,
   },
   submitButtonStyle: {
-    width: 100,
-    backgroundColor: '#EEE',
-    padding: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EEE',
     height: 38,
+    justifyContent: 'center',
+    padding: 10,
+    width: 100,
   },
 });
 
 export class SingleLineForm extends PureComponent<SingleLineFormProps> {
-  form: any;
-  fieldsStyleConfig: any;
-  fieldsTypes: any;
-  fieldsOptions: any;
-  labelPosition: FormLabelPosition;
-
   constructor(props: SingleLineFormProps) {
     super(props);
 
@@ -56,41 +52,47 @@ export class SingleLineForm extends PureComponent<SingleLineFormProps> {
       typeof props.labelPosition === 'number' ? props.labelPosition : FormLabelPosition.Inline;
   }
 
-  componentDidMount(): void {
+  private form: any;
+  private readonly fieldsStyleConfig: any;
+  private readonly fieldsTypes: unknown;
+  private readonly fieldsOptions: unknown;
+  private readonly labelPosition: FormLabelPosition;
+
+  public componentDidMount(): void {
     console.warn(
       'SingleLineForm is deprecated and will be removed in the next version of Flagship.'
     );
   }
 
-  handleSubmit = () => {
+  private readonly handleSubmit = () => {
     const value = this.form.getValue();
     if (value && this.props.onSubmit) {
       this.props.onSubmit(value);
     }
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     // labelPosition 0 is 'above'
     return this.labelPosition === 0 ? (
       <View>
         <View style={[S.container, this.props.style]}>
           <Form
-            ref={(ref) => (this.form = ref)}
-            fieldsTypes={this.fieldsTypes}
             fieldsOptions={this.fieldsOptions}
             fieldsStyleConfig={this.fieldsStyleConfig}
+            fieldsTypes={this.fieldsTypes}
             labelPosition={this.labelPosition}
-            value={this.props.value}
+            ref={(ref) => (this.form = ref)}
             style={S.form}
+            value={this.props.value}
           />
         </View>
         <TouchableOpacity
+          onPress={this.handleSubmit}
           style={[
             S.submitButtonStyle,
             this.props.submitButtonStyle,
             { marginLeft: 10, marginTop: -12 },
           ]}
-          onPress={this.handleSubmit}
         >
           <Text style={this.props.submitTextStyle}>{this.props.submitText || 'Submit'}</Text>
         </TouchableOpacity>
@@ -98,17 +100,17 @@ export class SingleLineForm extends PureComponent<SingleLineFormProps> {
     ) : (
       <View style={[S.container, this.props.style]}>
         <Form
-          ref={(ref) => (this.form = ref)}
-          fieldsTypes={this.fieldsTypes}
           fieldsOptions={this.fieldsOptions}
           fieldsStyleConfig={this.fieldsStyleConfig}
+          fieldsTypes={this.fieldsTypes}
           labelPosition={this.labelPosition}
-          value={this.props.value}
+          ref={(ref) => (this.form = ref)}
           style={S.form}
+          value={this.props.value}
         />
         <TouchableOpacity
-          style={[S.submitButtonStyle, this.props.submitButtonStyle]}
           onPress={this.handleSubmit}
+          style={[S.submitButtonStyle, this.props.submitButtonStyle]}
         >
           <Text style={this.props.submitTextStyle}>{this.props.submitText || 'Submit'}</Text>
         </TouchableOpacity>

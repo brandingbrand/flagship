@@ -1,8 +1,9 @@
-import { join } from 'path';
-import { readdirSync } from 'fs';
-import { pipe } from 'fp-ts/lib/function';
+import type { Commit } from '@brandingbrand/git';
+import { Repo } from '@brandingbrand/git';
 
-import { Repo, Commit } from '@brandingbrand/git';
+import { pipe } from 'fp-ts/lib/function';
+import { readdirSync } from 'fs';
+import { join } from 'path';
 
 import {
   addTrackingData,
@@ -13,7 +14,7 @@ import {
   stripPaths,
   stripProjectPath,
 } from '../filters';
-import { Project, ProjectFilter } from '../utils/find-closed-projects.util';
+import type { Project, ProjectFilter } from '../utils/find-closed-projects.util';
 import { tmpDir } from '../utils/temp-dir.util';
 
 type CommitFilter = (changes: Commit) => Commit[];

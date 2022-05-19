@@ -1,8 +1,10 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { CMSBannerStacked } from '../src/components/CMSBannerStacked';
 
 import { CoreContentManagementSystemProvider } from '@brandingbrand/fsengage';
+
+import { storiesOf } from '@storybook/react';
+
+import { CMSBannerStacked } from '../src/components/CMSBannerStacked';
 
 const provider = new CoreContentManagementSystemProvider({
   propertyId: '443',
@@ -11,8 +13,8 @@ const provider = new CoreContentManagementSystemProvider({
 
 storiesOf('CMSBannerStacked', module).add('basic usage', () => (
   <CMSBannerStacked
-    cmsProviderManagementConfig={provider}
     cmsProviderGroup="Shop"
+    cmsProviderManagementConfig={provider}
     cmsProviderSlot="Banner-Carousel"
   />
 ));

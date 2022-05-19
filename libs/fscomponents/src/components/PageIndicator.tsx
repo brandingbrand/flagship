@@ -1,5 +1,8 @@
-import React, { FunctionComponent, memo } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React, { memo } from 'react';
+
+import type { StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export interface PageIndicatorProps {
   currentIndex: number;
@@ -10,25 +13,33 @@ export interface PageIndicatorProps {
 }
 
 const S = StyleSheet.create({
+  indicator: {
+    backgroundColor: '#ccc',
+    borderRadius: 5,
+    height: 8,
+    marginHorizontal: 10,
+    width: 8,
+  },
   indicatorContainer: {
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  indicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 5,
-    marginHorizontal: 10,
-    backgroundColor: '#ccc',
+    width: '100%',
   },
   indicatorSelected: {
     backgroundColor: '#777',
   },
 });
 
+const newArray = (num: number): number[] => {
+  const arr = [];
+  for (let i = 0; i < num; i++) {
+    arr.push(i);
+  }
+  return arr;
+};
+
 export const PageIndicator: FunctionComponent<PageIndicatorProps> = memo((props): JSX.Element => {
-  const { currentIndex, itemsCount, style, dotStyle, dotActiveStyle } = props;
+  const { currentIndex, dotActiveStyle, dotStyle, itemsCount, style } = props;
   return (
     <View style={[S.indicatorContainer, style]}>
       {newArray(itemsCount).map((i) => (
@@ -45,11 +56,3 @@ export const PageIndicator: FunctionComponent<PageIndicatorProps> = memo((props)
     </View>
   );
 });
-
-function newArray(num: number): number[] {
-  const arr = [];
-  for (let i = 0; i < num; i++) {
-    arr.push(i);
-  }
-  return arr;
-}

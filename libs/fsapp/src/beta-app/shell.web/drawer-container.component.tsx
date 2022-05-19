@@ -1,12 +1,15 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import type { FC } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
 import { findDOMNode } from 'react-dom';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 
 import { CreateWebStyles } from '../utils';
 
 const styles = CreateWebStyles({
   container: {
-    zIndex: 10000,
+    zIndex: 10_000,
     height: '100%',
     position: 'fixed',
     top: 0,
@@ -36,13 +39,13 @@ export interface DrawerProps {
 }
 
 export const DrawerContainer: FC<DrawerProps> = ({
-  open,
-  width,
-  position,
-  children,
   animationDuration,
-  style,
+  children,
   onChange,
+  open,
+  position,
+  style,
+  width,
 }) => {
   const view = useRef<View>(null);
   const [listener, setListener] = useState<EventListener>();
@@ -82,6 +85,7 @@ export const DrawerContainer: FC<DrawerProps> = ({
         {
           width,
           [positionProp]: open ? 0 : `calc(-1 * ${width})`,
+          // eslint-disable-next-line unicorn/no-useless-spread
           ...{ transitionDuration: animationDuration },
         },
       ]}

@@ -1,20 +1,14 @@
-import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
+import type { FC } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import React, { createContext, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { uniqueId } from 'lodash-es';
-
-// @ts-ignore TODO: Update `react-native-web` and replace this
+// @ts-expect-error TODO: Update `react-native-web` and replace this
 import Modal from 'react-native-web-modal';
 
 import { InjectionToken } from '@brandingbrand/fslinker';
 
-import { useNavigator } from '../router';
-import { lockScroll, unlockScroll } from '../utils.web';
+import { uniqueId } from 'lodash-es';
 
-import { NO_MODAL_CONTEXT_ERROR } from './constants';
-import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
-import { ActivatedRouteProvider, NavigatorProvider, useActivatedRoute } from '../router/context';
 import {
   API_CONTEXT_TOKEN,
   APP_CONTEXT_TOKEN,
@@ -23,6 +17,13 @@ import {
   useApp,
   useStore,
 } from '../app/context';
+import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
+import { useNavigator } from '../router';
+import { ActivatedRouteProvider, NavigatorProvider, useActivatedRoute } from '../router/context';
+import { lockScroll, unlockScroll } from '../utils.web';
+
+import { NO_MODAL_CONTEXT_ERROR } from './constants';
+import type { ModalComponentType, ModalProviderProps, ModalService } from './types';
 
 const DEFAULT_MODAL_SERVICE = {
   showModal: async () => {
@@ -38,19 +39,20 @@ const DEFAULT_MODAL_SERVICE = {
 
 export const ModalContext = createContext<ModalService>(DEFAULT_MODAL_SERVICE);
 export const MODAL_CONTEXT_TOKEN = new InjectionToken<typeof ModalContext>('MODAL_CONTEXT_TOKEN');
-export const useModals = () => useDependencyContext(MODAL_CONTEXT_TOKEN) ?? DEFAULT_MODAL_SERVICE;
+export const useModals = (): ModalService =>
+  useDependencyContext(MODAL_CONTEXT_TOKEN) ?? DEFAULT_MODAL_SERVICE;
 
 const navStyle = StyleSheet.create({
   backdrop: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    width: '100%',
-    height: '100%',
     backgroundColor: 'black',
+    bottom: 0,
+    height: '100%',
+    left: 0,
     opacity: 0.7,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: '100%',
   },
 });
 
@@ -88,7 +90,9 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
   // TODO: Animations, Styles
   const dismissAllModals = useCallback(async () => {
-    Object.values(closers).forEach((close) => close());
+    for (const close of Object.values(closers)) {
+      close();
+    }
   }, [setModals]);
 
   // TODO: Animations, Styles
@@ -99,6 +103,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
       return new Promise<T>((resolve, reject) => {
         setModals((modals) => ({
           ...modals,
+          // eslint-disable-next-line react/no-unstable-nested-components
           [id]: () => {
             const [visible, setVisible] = useState(true);
 
@@ -111,7 +116,9 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
             }, [visible]);
 
             useEffect(() => {
-              closers.current?.set(id, () => setVisible(false));
+              closers.current?.set(id, () => {
+                setVisible(false);
+              });
             }, []);
 
             const handleResolve = useCallback(
@@ -133,18 +140,16 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
               });
             }, [reject, removeModal]);
 
-            useEffect(() => {
-              return navigator.listen(handleReject);
-            }, [navigator]);
+            useEffect(() => navigator.listen(handleReject), [navigator]);
 
             const Provider = getApp()?.config.provider ?? React.Fragment;
             return (
               <Modal
+                animationType="fade"
                 key={id}
+                onRequestClose={handleReject}
                 transparent
                 visible={visible}
-                animationType="fade"
-                onRequestClose={handleReject}
                 {...modal.options}
               >
                 <InjectedContextProvider token={APP_CONTEXT_TOKEN} value={getApp}>
@@ -159,8 +164,8 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
                             <View style={modal.options?.style}>
                               {modal.options?.title ? <Text>{modal.options.title}</Text> : null}
                               <Content
-                                resolve={handleResolve}
                                 reject={handleReject}
+                                resolve={handleResolve}
                                 {...(props as P)}
                               />
                             </View>

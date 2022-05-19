@@ -1,16 +1,17 @@
-import * as zlib from 'zlib';
+import * as fsExtra from 'fs-extra';
+import * as inquirer from 'inquirer';
+import fetch from 'node-fetch';
 import * as stream from 'stream';
 import { extract } from 'tar';
 import { promisify } from 'util';
-import * as fsExtra from 'fs-extra';
-import fetch from 'node-fetch';
-import * as inquirer from 'inquirer';
+import * as zlib from 'zlib';
 
-import { BaseConfig, baseConfig } from './assets/base-config';
+import type { BaseConfig } from './assets/base-config';
+import { baseConfig } from './assets/base-config';
 import configDependencyPackageMap from './assets/pkg-map';
-import * as questions from './questions';
-import { newLineSuffix } from './lib/formatters';
 import { callout } from './lib/colors';
+import { newLineSuffix } from './lib/formatters';
+import * as questions from './questions';
 
 const TEMPLATE_URL = 'https://github.com/brandingbrand/flagship-template/archive/master.tar.gz';
 const pipeline = promisify(stream.pipeline);
@@ -25,14 +26,14 @@ type PromptAnswers = questions.AssociatedDomainsAnswers &
   questions.ZendeskChatAnswers;
 
 type UserConfig = PromptAnswers['config'];
-type Config = UserConfig & BaseConfig;
+type Config = BaseConfig & UserConfig;
 
 const clearDirectory = async () => {
   const contents = await fsExtra.readdir('./');
 
   // If the current directory is not empty or only contains git files,
   // ask the user if it's ok to delete them all.
-  if (contents.length !== 0 && !(contents.length === 1 && contents[0] === '.git')) {
+  if (contents.length > 0 && !(contents.length === 1 && contents[0] === '.git')) {
     const { clearContents, clearContentsConfirm } =
       await inquirer.prompt<questions.ClearContentsAnswers>(questions.clearContents);
 
@@ -65,9 +66,9 @@ const populateConfigs = async (): Promise<PromptAnswers> => {
     doExtendedConfig,
     exceptionDomains,
     names,
+    onlyWhenExtendedConfig,
     usageDescriptions,
     zendeskChat,
-    onlyWhenExtendedConfig,
   } = questions;
 
   // Questions will be asked in the order that they are defined in this array
@@ -82,9 +83,7 @@ const populateConfigs = async (): Promise<PromptAnswers> => {
     ...zendeskChat.map(onlyWhenExtendedConfig),
   ];
 
-  const answers = await inquirer.prompt<PromptAnswers>(orderedQuestions.map(newLineSuffix));
-
-  return answers;
+  return inquirer.prompt<PromptAnswers>(orderedQuestions.map(newLineSuffix));
 };
 
 const formatConfig = (config: Config) => {
@@ -112,16 +111,16 @@ const replaceConfig = async (config: Config) => {
   await fsExtra.remove('./env/common.js');
 };
 
-const getLatestDependency = async (pkg: string): Promise<{ [key: string]: string }> => {
+const getLatestDependency = async (pkg: string): Promise<Record<string, string>> => {
   // Finds the latest release version of a given packages
   const res = await fetch(`https://registry.npmjs.com/${pkg}`);
   const json = await res.json();
 
   if (json && typeof json === 'object') {
-    const distTags = (json as { [key: string]: unknown })['dist-tags'];
+    const distTags = (json as Record<string, unknown>)['dist-tags'];
 
     if (distTags && typeof distTags === 'object') {
-      const { latest } = distTags as { [key: string]: unknown };
+      const { latest } = distTags as Record<string, unknown>;
       return { [pkg]: `^${latest}` };
     }
   }
@@ -130,8 +129,7 @@ const getLatestDependency = async (pkg: string): Promise<{ [key: string]: string
 };
 
 const getPackageJson = async (config: Config) => {
-  const packageJsonStr = await fsExtra.readFile('./package.json', 'UTF-8');
-  const packageJson = JSON.parse(packageJsonStr);
+  const packageJson = await fsExtra.readJson('./package.json');
   packageJson.name = config.name;
   delete packageJson.author;
   delete packageJson.repository;
@@ -148,9 +146,10 @@ const getPackageJson = async (config: Config) => {
   // ie. if the user configures code-push, react-native-code-push
   // should be added to package.json so they don't have to
   const promises = Object.keys(configDependencyPackageMap)
-    .filter((key): key is keyof typeof configDependencyPackageMap => {
-      return config.hasOwnProperty(key) && configDependencyPackageMap.hasOwnProperty(key);
-    })
+    .filter(
+      (key): key is keyof typeof configDependencyPackageMap =>
+        config.hasOwnProperty(key) && configDependencyPackageMap.hasOwnProperty(key)
+    )
     .map(async (key) => getLatestDependency(configDependencyPackageMap[key]));
 
   const newDeps = await Promise.all(promises);
@@ -213,4 +212,6 @@ const main = async () => {
   showPostInstallMsg();
 };
 
-main().catch((e) => console.error(e));
+main().catch((error) => {
+  console.error(error);
+});

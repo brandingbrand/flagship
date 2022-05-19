@@ -1,6 +1,7 @@
-import { DistinctQuestion } from 'inquirer';
-import { QuestionFormatter } from '../lib/formatters';
+import type { DistinctQuestion } from 'inquirer';
+
 import { success } from '../lib/colors';
+import type { QuestionFormatter } from '../lib/formatters';
 
 export interface DoExtendedConfigAnswers {
   options: {

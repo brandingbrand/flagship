@@ -1,8 +1,12 @@
 import React from 'react';
+
 import { StyleSheet } from 'react-native';
-import { storiesOf } from '@storybook/react';
+
 import { boolean, number, object } from '@storybook/addon-knobs';
-import { IdStep, StepIndicator } from '../src/components/StepIndicator';
+import { storiesOf } from '@storybook/react';
+
+import type { IdStep } from '../src/components/StepIndicator';
+import { StepIndicator } from '../src/components/StepIndicator';
 
 const styles = StyleSheet.create({
   completed: {
@@ -10,19 +14,19 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   completedText: {
+    color: '#999',
     fontSize: 12,
     textAlign: 'center',
-    color: '#999',
   },
   current: {
-    borderWidth: 0,
     backgroundColor: 'rgb(88, 89, 91)',
+    borderWidth: 0,
   },
   currentText: {
+    color: '#ffffff',
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#ffffff',
   },
   default: {
     backgroundColor: '#bbb',
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const stepTitles: (string | IdStep)[] = [
+const stepTitles: Array<IdStep | string> = [
   {
     id: 1,
     name: 'Delivery',
@@ -60,12 +64,12 @@ storiesOf('StepIndicator', module).add('basic usage', () => (
   <StepIndicator
     completedStyle={styles.completed}
     completedTextStyle={styles.completedText}
+    currentStep={number('currentStep', 0, stepKnobOptions)}
     currentStyle={styles.current}
     currentTextStyle={styles.currentText}
-    currentStep={number('currentStep', 0, stepKnobOptions)}
     defaultStyle={styles.default}
     defaultTextStyle={styles.defaultText}
-    stepTitles={object('stepTitles', stepTitles)}
     line={boolean('Line', false)}
+    stepTitles={object('stepTitles', stepTitles)}
   />
 ));

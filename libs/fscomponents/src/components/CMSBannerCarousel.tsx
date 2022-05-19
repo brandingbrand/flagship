@@ -6,11 +6,13 @@
 // TODO: update after data normalize on FSEngage
 
 import React from 'react';
+
 import { View } from 'react-native';
 
-import { CMSProviderProps, withCMSProvider } from './CMSProvider';
-
-import { CMSBanner, CMSBannerProps } from './CMSBanner';
+import type { CMSBannerProps } from './CMSBanner';
+import { CMSBanner } from './CMSBanner';
+import type { CMSProviderProps } from './CMSProvider';
+import { withCMSProvider } from './CMSProvider';
 import { MultiCarousel } from './MultiCarousel';
 
 const DEFAULT_CAROUSEL_PROPS = {
@@ -22,7 +24,7 @@ export interface CMSBannerCarouselProps extends CMSBannerProps, CMSProviderProps
 }
 
 class CMSBannerCarousel extends CMSBanner<CMSBannerCarouselProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { carouselProps } = this.props;
     const { cmsData } = this.props;
 
@@ -35,8 +37,8 @@ class CMSBannerCarousel extends CMSBanner<CMSBannerCarouselProps> {
     return (
       <View style={this.props.style}>
         <MultiCarousel
-          itemsPerPage={1}
           data={cmsData.instances}
+          itemsPerPage={1}
           renderItem={this.renderInstance}
           {..._carouselProps}
         />

@@ -1,20 +1,22 @@
 import { withLens } from '@brandingbrand/standard-lens';
+
 import type { StateReducer } from '../store/store.types';
+
 import type { EntityId, EntityReducers, EntityState } from './entity.types';
 import type { EntityAdaptorDeps } from './entity.types.internal';
 
 // dedupe ids while preserving order
 const mergeIdLists = (...ids: EntityId[]): EntityId[] =>
-  ids.reduce((result, id) => {
+  ids.reduce<EntityId[]>((result, id) => {
     if (!result.includes(id)) {
       result.push(id);
     }
     return result;
-  }, [] as EntityId[]);
+  }, []);
 
 export const sortIfNeeded =
   <T, Structure = EntityState<T>>(deps: EntityAdaptorDeps<T, Structure>) =>
-  (items: Record<string | number, T>, idList?: EntityId[]): EntityId[] => {
+  (items: Record<number | string, T>, idList?: EntityId[]): EntityId[] => {
     if (!deps.isSorted) {
       return idList ?? Object.values(items).map(deps.idSelector);
     }
@@ -25,9 +27,8 @@ export const sortIfNeeded =
 
 export const fromEntityArray =
   <T, Structure = EntityState<T>>(deps: EntityAdaptorDeps<T, Structure>) =>
-  (items: T[]): Record<string | number, T> => {
-    return Object.fromEntries(items.map((val) => [deps.idSelector(val), val]));
-  };
+  (items: T[]): Record<number | string, T> =>
+    Object.fromEntries(items.map((val) => [deps.idSelector(val), val]));
 
 export const makeCreateState =
   <T, Structure = EntityState<T>>(deps: EntityAdaptorDeps<T, Structure>) =>
@@ -59,7 +60,7 @@ export const makeAddMany =
   (structure: Structure): Structure => {
     const state = deps.lens.get(structure);
     const newIds = items.map(deps.idSelector).filter((val) => !state.ids.includes(val));
-    if (!newIds.length) {
+    if (newIds.length === 0) {
       return structure;
     }
     const newItems = items.filter((val) => newIds.includes(deps.idSelector(val)));

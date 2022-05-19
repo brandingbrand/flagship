@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text } from 'react-native';
-import { ProductItemProps } from '../ProductItem';
+
 import { types, weights } from '../../../styles/variables';
+import type { ProductItemProps } from '../ProductItem';
 
 const styles = StyleSheet.create({
   title: {
@@ -9,11 +11,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export type ProductItemTitleProps = Pick<ProductItemProps, 'title' | 'titleStyle' | 'renderTitle'>;
+export type ProductItemTitleProps = Pick<ProductItemProps, 'renderTitle' | 'title' | 'titleStyle'>;
 
 export class ProductItemTitle extends Component<ProductItemTitleProps> {
-  render(): React.ReactNode {
-    const { title, titleStyle, renderTitle } = this.props;
+  public render(): React.ReactNode {
+    const { renderTitle, title, titleStyle } = this.props;
 
     if (renderTitle) {
       return renderTitle();

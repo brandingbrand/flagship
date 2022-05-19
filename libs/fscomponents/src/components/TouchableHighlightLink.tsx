@@ -1,5 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { TouchableHighlight, TouchableHighlightProperties } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React from 'react';
+
+import type { TouchableHighlightProperties } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 
 export interface TouchableHighlightLinkProps extends TouchableHighlightProperties {
   href?: string;

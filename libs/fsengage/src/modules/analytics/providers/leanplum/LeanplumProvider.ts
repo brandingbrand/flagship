@@ -1,7 +1,7 @@
 import { Leanplum } from '@leanplum/react-native-sdk';
 import Decimal from 'decimal.js';
 
-import AnalyticsProvider, {
+import type {
   App,
   Checkout,
   CheckoutAction,
@@ -21,8 +21,8 @@ import AnalyticsProvider, {
   TransactionAction,
   TransactionRefund,
 } from '../AnalyticsProvider';
-
-import AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
+import AnalyticsProvider from '../AnalyticsProvider';
+import type AnalyticsProviderConfiguration from '../types/AnalyticsProviderConfiguration';
 
 export interface LeanplumProviderConfiguration {
   appId: string;
@@ -31,8 +31,6 @@ export interface LeanplumProviderConfiguration {
 }
 
 export default class LeanplumProvider extends AnalyticsProvider {
-  monetizationEventName: string;
-
   constructor(
     commonConfiguration: AnalyticsProviderConfiguration,
     configuration: LeanplumProviderConfiguration
@@ -49,27 +47,35 @@ export default class LeanplumProvider extends AnalyticsProvider {
     // TODO: Enable 'trackAllAppScreens'
   }
 
-  async asyncInit(): Promise<void> {
-    // Do nothing
+  private _transformCouponsArray(coupons: string[] = []): Record<string, string> {
+    return coupons.reduce((coupons: any, coupon) => {
+      const couponCount = Object.keys(coupons).length;
+
+      coupons[`coupon${couponCount + 1}`] = coupon;
+
+      return coupons;
+    }, {});
   }
 
-  // Commerce Functions
+  public monetizationEventName: string;
 
-  contactCall(properties: ContactCall): void {
+  public async asyncInit(): Promise<void> {}
+
+  public contactCall(properties: ContactCall): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       number: properties.number,
     });
   }
 
-  contactEmail(properties: ContactEmail): void {
+  public contactEmail(properties: ContactEmail): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       to: properties.to,
     });
   }
 
-  clickGeneric(properties: ClickGeneric): void {
+  public clickGeneric(properties: ClickGeneric): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier as string,
@@ -78,12 +84,11 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  impressionGeneric(properties: ImpressionGeneric): void {
-    // TODO: Fix this implementation so its not identical to click
-    return this.clickGeneric(properties);
+  public impressionGeneric(properties: ImpressionGeneric): void {
+    this.clickGeneric(properties);
   }
 
-  locationDirections(properties: LocationDirections): void {
+  public locationDirections(properties: LocationDirections): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier as string,
@@ -91,11 +96,11 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  pageview(properties: Screenview): void {
+  public pageview(properties: Screenview): void {
     // Not supported since we are only targeting native environment.
   }
 
-  screenview(properties: Screenview): void {
+  public screenview(properties: Screenview): void {
     Leanplum.track('ScreenView', {
       component: properties.eventCategory,
       appId: this.appId,
@@ -105,7 +110,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  searchGeneric(properties: SearchGeneric): void {
+  public searchGeneric(properties: SearchGeneric): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       term: properties.term,
@@ -113,9 +118,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  // Enhanced Commerce Functions
-
-  addProduct(properties: Product): void {
+  public addProduct(properties: Product): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
@@ -130,12 +133,12 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  checkout(properties: Checkout, action: CheckoutAction): void {
+  public checkout(properties: Checkout, action: CheckoutAction): void {
     // Instead of attaching all products to one payload, I am sending them in separate ones to
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach((product) => {
+    for (const product of properties.products) {
       Leanplum.track(properties.eventAction, {
         component: properties.eventCategory,
         identifier: product.identifier,
@@ -149,7 +152,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
         step: action.step as number, // Checkout step.
         ...this._transformCouponsArray(product.coupons),
       });
-    });
+    }
 
     // Leanplum does not accept nested structures. So a separate event it is been sent for tracking
     // the checkout option, which do not need to be attached to every single product on the
@@ -161,7 +164,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  checkoutOption(properties: Generics, action: CheckoutAction): void {
+  public checkoutOption(properties: Generics, action: CheckoutAction): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       step: action.step as number,
@@ -169,7 +172,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  clickProduct(properties: Product, action?: ProductAction): void {
+  public clickProduct(properties: Product, action?: ProductAction): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
@@ -185,7 +188,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  clickPromotion(properties: Promotion): void {
+  public clickPromotion(properties: Promotion): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
@@ -195,7 +198,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  impressionProduct(properties: ImpressionProduct): void {
+  public impressionProduct(properties: ImpressionProduct): void {
     Leanplum.track(properties.eventAction, {
       component: properties.eventCategory,
       identifier: properties.identifier,
@@ -209,22 +212,22 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  impressionPromotion(properties: Promotion): void {
+  public impressionPromotion(properties: Promotion): void {
     // TODO: Fix this implementation so its not identical to clickPromotion
-    return this.clickPromotion(properties);
+    this.clickPromotion(properties);
   }
 
-  detailProduct(properties: Product, action?: ProductAction): void {
+  public detailProduct(properties: Product, action?: ProductAction): void {
     // TODO: Fix this implementation so its not identical to clickProduct
-    return this.clickProduct(properties);
+    this.clickProduct(properties);
   }
 
-  purchase(properties: Transaction, action: TransactionAction): void {
+  public purchase(properties: Transaction, action: TransactionAction): void {
     // Instead of attaching all products to one payload, I am sending them in separate ones to
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach((product) => {
+    for (const product of properties.products) {
       Leanplum.track('purchaseDetail', {
         component: properties.eventCategory,
         identifier: product.identifier,
@@ -238,7 +241,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
         index: product.index as number,
         ...this._transformCouponsArray(product.coupons),
       });
-    });
+    }
 
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
@@ -253,7 +256,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  refundAll(properties: Generics, action: TransactionAction): void {
+  public refundAll(properties: Generics, action: TransactionAction): void {
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
     Leanplum.track(properties.eventAction, {
@@ -267,12 +270,12 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  refundPartial(properties: TransactionRefund, action: TransactionAction): void {
+  public refundPartial(properties: TransactionRefund, action: TransactionAction): void {
     // Instead of attaching all products to one payload, I am sending them in separate ones to
     // support unlimited number of products. Leanplum only accepts 200 keys, which with the current
     // number of properties been tracked will mean just around 20 products.
     // Reference: https://www.leanplum.com/docs/ios/events#tracking-an-event
-    properties.products.forEach((product) => {
+    for (const product of properties.products) {
       Leanplum.track('refundPartialDetail', {
         component: properties.eventCategory,
         identifier: product.identifier,
@@ -280,7 +283,7 @@ export default class LeanplumProvider extends AnalyticsProvider {
         price: product.price as string,
         quantity: product.quantity,
       });
-    });
+    }
 
     const total = action.revenue && new Decimal(action.revenue).toNumber();
 
@@ -294,29 +297,15 @@ export default class LeanplumProvider extends AnalyticsProvider {
     });
   }
 
-  removeProduct(properties: Product): void {
+  public removeProduct(properties: Product): void {
     // TODO: Fix this implementation so its not identical to addProduct
-    return this.addProduct(properties);
+    this.addProduct(properties);
   }
 
-  // App Lifecycle Functions
-
-  lifecycle(properties: App): void {
+  public lifecycle(properties: App): void {
     Leanplum.track(properties.eventAction, {
       appId: this.appId,
       lifecycle: properties.lifecycle,
     });
-  }
-
-  // Helper Functions
-
-  private _transformCouponsArray(coupons: string[] = []): { [key: string]: string } {
-    return coupons.reduce((coupons: any, coupon) => {
-      const couponCount = Object.keys(coupons).length;
-
-      coupons[`coupon${couponCount + 1}`] = coupon;
-
-      return coupons;
-    }, {});
   }
 }

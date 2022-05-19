@@ -1,4 +1,5 @@
 import type { Observable, Subscription } from 'rxjs';
+
 import type { AnyAction } from '../action-bus';
 import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.types';
 
@@ -29,7 +30,7 @@ export type AnyActionReducer<State> = (action: AnyAction) => StateReducer<State>
  * @param action$ The Action observable
  * @param state$ The State observable (which behaves like a ReplaySubject, emitting current state
  * immediately after subscription)
- * @returns An observable of any follow-up actions desired. Beware, Effects are not like reducers,
+ * @return An observable of any follow-up actions desired. Beware, Effects are not like reducers,
  * which return unchanged anything not handled. In contrast, Effects should only return actions that
  * are not already part of the incoming `action$` observable. Doing otherwise would result in an
  * infinite loop.
@@ -47,13 +48,13 @@ export type Source = string | symbol;
 
 /**
  * A `SourcesList` defines the way to filter actions by 0 or more sources.
- * * The array may not be empty (instead, parameters of this type are typically optional, signifying
+ * The array may not be empty (instead, parameters of this type are typically optional, signifying
  * that no filtering of sources is desired)
- * * if `undefined` appears in the array, it signifies we desire there to be no source; any sourced
+ * if `undefined` appears in the array, it signifies we desire there to be no source; any sourced
  * actions are rejected.
- * * if a `string | symbol` appears in the array, only actions that match that value will be passed
+ * if a `string | symbol` appears in the array, only actions that match that value will be passed
  * through.
- * * if multiple values are present in the array, they are OR'd together.
+ * if multiple values are present in the array, they are OR'd together.
  *
  * @example [undefined, 'foo', Symbol('bar')]
  * // will allow either an unsourced action, one with
@@ -103,7 +104,7 @@ export interface IStore<State = any> {
    *
    * @param effect An effect that can react to any subset of the dispatched actions and emit any
    * necessary actions in response.
-   * @returns A Subscription object, as the effect is internally subscribed to.
+   * @return A Subscription object, as the effect is internally subscribed to.
    */
   registerEffect: (effect: Effect<State>) => Subscription;
 

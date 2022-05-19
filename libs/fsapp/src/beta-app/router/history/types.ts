@@ -1,3 +1,5 @@
+import type { Layout, OptionsTopBarTitle } from 'react-native-navigation';
+
 import type {
   History,
   Location,
@@ -5,7 +7,6 @@ import type {
   TransitionPromptHook,
   UnregisterCallback,
 } from 'history';
-import type { Layout, OptionsTopBarTitle } from 'react-native-navigation';
 
 import type { ActivatedRoute } from '../types';
 
@@ -19,32 +20,29 @@ export interface HistoryOptions {
 }
 
 export interface FSRouterHistory extends History {
-  open(path: string, state?: unknown): void;
-  open(location: LocationDescriptor): void;
+  open: ((location: LocationDescriptor) => void) & ((path: string, state?: unknown) => void);
 
-  push(path: string, state?: unknown): void;
-  push(location: LocationDescriptor): void;
+  push: ((location: LocationDescriptor) => void) & ((path: string, state?: unknown) => void);
 
-  pushTo(path: string, screenId: string): void;
+  pushTo: (path: string, screenId: string) => void;
 
-  replace(path: string, state?: unknown): void;
-  replace(location: LocationDescriptor): void;
+  replace: ((location: LocationDescriptor) => void) & ((path: string, state?: unknown) => void);
 
-  pop(): void;
-  popTo(screenId: string): void;
-  popToRoot(): void;
+  pop: () => void;
+  popTo: (screenId: string) => void;
+  popToRoot: () => void;
 
-  goBack(): void;
-  goForward(): void;
-  go(n: number): void;
+  goBack: () => void;
+  goForward: () => void;
+  go: (n: number) => void;
 
-  observeLoading(listener: LoadingListener): UnregisterCallback;
-  registerResolver(id: string, listener: ResolverListener): UnregisterCallback;
+  observeLoading: (listener: LoadingListener) => UnregisterCallback;
+  registerResolver: (id: string, listener: ResolverListener) => UnregisterCallback;
 
-  updateTitle(title: RequiredTitle, componentId?: string): void;
+  updateTitle: (title: RequiredTitle, componentId?: string) => void;
 }
 
-export type Blocker = string | boolean | TransitionPromptHook;
+export type Blocker = TransitionPromptHook | boolean | string;
 export type StackedLocation = Readonly<Location> & { readonly stack: number };
 
 export interface NativeLocation extends Location {
@@ -53,5 +51,5 @@ export interface NativeLocation extends Location {
 
 export interface Stack {
   readonly id: string;
-  readonly children: Readonly<NativeLocation>[];
+  readonly children: Array<Readonly<NativeLocation>>;
 }

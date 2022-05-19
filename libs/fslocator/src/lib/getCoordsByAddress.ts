@@ -1,11 +1,12 @@
 import Geocoder from 'react-native-geocoder';
-import { GeoLocation } from '@brandingbrand/types-location';
 
-export default async function getCoordsByAddress(
+import type { GeoLocation } from '@brandingbrand/types-location';
+
+const getCoordsByAddress = async (
   address: string,
   googleMapsAPIKey?: string
-): Promise<GeoLocation | undefined> {
-  return Geocoder.geocodeAddress(address).then((res) => {
+): Promise<GeoLocation | undefined> =>
+  Geocoder.geocodeAddress(address).then((res) => {
     const [firstRes] = res;
     if (firstRes) {
       return {
@@ -15,4 +16,5 @@ export default async function getCoordsByAddress(
     }
     return undefined;
   });
-}
+
+export default getCoordsByAddress;

@@ -1,6 +1,5 @@
-import { ProjectConfiguration, ProjectGraph } from '@nrwl/devkit';
+import type { ProjectConfiguration, ProjectGraph } from '@nrwl/devkit';
 import { existsSync } from 'fs';
-
 import { join } from 'path';
 
 import { readJson } from './read-json.util';
@@ -9,13 +8,12 @@ export const findDependencies = async (
   graph: ProjectGraph,
   originalProjectName: string
 ): Promise<Set<string>> => {
-  // eslint-disable-next-line complexity
   const internalFindDependencies = async (
     projectName: string,
     list = new Set<string>(),
     seen = new Set<string>(),
     nested = false
-  ) => {
+  ): Promise<Set<string>> => {
     // In case of bad circular dependencies
     if (seen.has(projectName)) {
       return list;
@@ -74,7 +72,7 @@ export const findDependencies = async (
     .map(([packageName]) => packageName);
 
   const webpackConfigs = Object.values(projectJson.targets ?? {})
-    .flatMap(({ options, configurations }) => [
+    .flatMap(({ configurations, options }) => [
       options?.webpackConfig,
       ...Object.values(configurations ?? {}).map(({ webpackConfig }) => webpackConfig),
     ])

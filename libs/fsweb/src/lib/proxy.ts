@@ -1,7 +1,8 @@
-import * as express from 'express';
+import type * as express from 'express';
 import * as proxy from 'http-proxy-middleware';
-import * as url from 'url';
 import * as path from 'path';
+import * as url from 'url';
+
 import { addCors } from './cors';
 import { demandwareProxyConfig } from './demandware';
 
@@ -39,9 +40,7 @@ const proxyEndpoint = (
       upstreamPath,
       proxy.createProxyMiddleware({
         target: upstreamTarget,
-        pathRewrite: (path, _req) => {
-          return path.replace(endpoint, upstreamPath);
-        },
+        pathRewrite: (path, _req) => path.replace(endpoint, upstreamPath),
         ...proxyConfig,
       })
     );
@@ -56,7 +55,7 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
     if (!env.dataSource.apiConfig) {
       console.error('"apiConfig" is required for proxy configuration');
     } else {
-      const apiConfig = env.dataSource.apiConfig;
+      const { apiConfig } = env.dataSource;
       let proxyConfig = {
         ...proxyBaseConfig,
         ...proxyConfigFile,
@@ -71,7 +70,7 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
         };
       }
 
-      const endpoint = apiConfig.endpoint;
+      const { endpoint } = apiConfig;
 
       if (endpoint) {
         if (Array.isArray(endpoint)) {
@@ -84,18 +83,16 @@ export const addProxy = (app: express.Express, env: any, preProxy?: () => void):
               preProxy();
             }
           };
-          endpoint.forEach((endpointEntry) => {
+          for (const endpointEntry of endpoint) {
             if (!proxyEndpoint(endpointEntry, app, proxyConfig, preProxyOnce)) {
               proxySuccess = false;
             }
-          });
+          }
           return proxySuccess;
-        } else {
-          return proxyEndpoint(endpoint, app, proxyConfig, preProxy);
         }
-      } else {
-        console.error('"endpoint" key is required for Proxy Configuration');
+        return proxyEndpoint(endpoint, app, proxyConfig, preProxy);
       }
+      console.error('"endpoint" key is required for Proxy Configuration');
     }
   }
   return false;

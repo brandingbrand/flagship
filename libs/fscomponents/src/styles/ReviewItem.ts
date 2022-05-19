@@ -1,47 +1,48 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
+  button: {
+    marginRight: 10,
+    marginTop: 8,
+    width: 120,
+  },
   container: {
-    padding: 10,
     flexDirection: 'column',
+    padding: 10,
+  },
+  helpful: {
+    color: '#555',
+    fontSize: 14,
+  },
+  indicator: {
+    marginBottom: 2,
+    marginLeft: -3,
+  },
+  recommended: {
+    color: '#000',
+    fontSize: 15,
   },
   row: {
     paddingBottom: 8,
   },
+  syndicatedLabel: {
+    color: '#767676',
+    display: 'flex',
+    flexDirection: 'column',
+    fontSize: 13,
+    justifyContent: 'center',
+  },
   title: {
     fontWeight: 'bold',
   },
-  indicator: {
-    marginLeft: -3,
-    marginBottom: 2,
+  user: {
+    color: '#555',
   },
   verified: {
     color: '#c45500',
     fontSize: 12,
     fontWeight: 'bold',
   },
-  helpful: {
-    color: '#555',
-    fontSize: 14,
-  },
-  syndicatedLabel: {
-    color: '#767676',
-    fontSize: 13,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  recommended: {
-    color: '#000',
-    fontSize: 15,
-  },
-  user: {
-    color: '#555',
-  },
-  button: {
-    width: 120,
-    marginTop: 8,
-    marginRight: 10,
-  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

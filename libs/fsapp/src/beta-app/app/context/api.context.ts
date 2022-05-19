@@ -1,6 +1,7 @@
 import { createContext } from 'react';
-import FSNetwork from '@brandingbrand/fsnetwork';
+
 import { InjectionToken } from '@brandingbrand/fslinker';
+import FSNetwork from '@brandingbrand/fsnetwork';
 
 import { useDependencyContext } from '../../lib/use-dependency';
 

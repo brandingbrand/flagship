@@ -1,4 +1,4 @@
-import { Address } from './Address';
+import type { Address } from './Address';
 
 /**
  * Object associating a billing address with a cart. (This is the billing address that will

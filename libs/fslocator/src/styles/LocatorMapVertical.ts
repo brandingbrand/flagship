@@ -1,11 +1,23 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+  },
+  inputContainer: {
+    borderWidth: 0,
+  },
+  locateMeButton: {
+    height: 40,
+    position: 'absolute',
+    right: 10,
+    top: -50,
+    width: 40,
+  },
+  locateMeIcon: {
+    height: 40,
+    width: 40,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -14,30 +26,18 @@ export const style = StyleSheet.create({
     flex: 1,
   },
   mapVerticalSearchBar: {
-    margin: 10,
     backgroundColor: 'white',
-    paddingTop: 2,
-    borderWidth: 1,
     borderColor: '#ccc',
+    borderWidth: 1,
+    margin: 10,
     overflow: 'hidden',
+    paddingTop: 2,
   },
-  locateMeIcon: {
-    width: 40,
-    height: 40,
-  },
-  locateMeButton: {
-    position: 'absolute',
-    right: 10,
-    top: -50,
-    width: 40,
-    height: 40,
-  },
-  resultListAndLocateMe: {},
   resultContainer: {
     backgroundColor: 'white',
   },
-  inputContainer: {
-    borderWidth: 0,
-  },
+  resultListAndLocateMe: {},
   seachAreaBtn: {},
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

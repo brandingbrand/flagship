@@ -1,9 +1,10 @@
-import * as fs from './fs';
-import * as path from './path';
 import * as helpers from '../helpers';
-import * as versionLib from './version';
+import type * as FlagshipTypes from '../types';
+
+import * as fs from './fs';
 import * as nativeConstants from './native-constants';
-import * as FlagshipTypes from '../types';
+import * as path from './path';
+import * as versionLib from './version';
 
 const kDefaultGoogleMapsAPIKey = '_FlagshipGoogleMapsAPIKey_';
 const EMULATOR_LOCALHOST_PROXY = '10.0.2.2';
@@ -47,44 +48,42 @@ const DEFAULT_ANDROID_CONFIG = {
 /**
  * generates android config merging defaults with overrides
  *
- * @param {FlagshipTypes.AndroidConfig | undefined} config - android config override
- * @returns {FlagshipTypes.AndroidConfig} android config
+ * @param config - android config override
+ * @return android config
  */
-export function androidConfigWithDefault(
+export const androidConfigWithDefault = (
   config: FlagshipTypes.AndroidConfig | undefined
-): FlagshipTypes.AndroidConfig {
-  return {
-    build: {
-      ...DEFAULT_ANDROID_CONFIG.build,
-      ...(config && config.build),
+): FlagshipTypes.AndroidConfig => ({
+  build: {
+    ...DEFAULT_ANDROID_CONFIG.build,
+    ...(config && config.build),
+  },
+  manifest: {
+    ...DEFAULT_ANDROID_CONFIG.manifest,
+    ...(config && config.manifest),
+    activityAttributes: {
+      ...DEFAULT_ANDROID_CONFIG.manifest.activityAttributes,
+      ...(config && config.manifest && config.manifest.activityAttributes),
     },
-    manifest: {
-      ...DEFAULT_ANDROID_CONFIG.manifest,
-      ...(config && config.manifest),
-      activityAttributes: {
-        ...DEFAULT_ANDROID_CONFIG.manifest.activityAttributes,
-        ...(config && config.manifest && config.manifest.activityAttributes),
-      },
-      applicationAttributes: {
-        ...DEFAULT_ANDROID_CONFIG.manifest.applicationAttributes,
-        ...(config && config.manifest && config.manifest.applicationAttributes),
-      },
+    applicationAttributes: {
+      ...DEFAULT_ANDROID_CONFIG.manifest.applicationAttributes,
+      ...(config && config.manifest && config.manifest.applicationAttributes),
     },
-  };
-}
+  },
+});
 
 /**
  * add additional dependencies to the app/build.gradle
  *
- * @param {FlagshipTypes.AndroidConfig} config - android config
+ * @param config - android config
  */
-export function additionalDependencies(config: FlagshipTypes.AndroidConfig): void {
+export const additionalDependencies = (config: FlagshipTypes.AndroidConfig): void => {
   let additionalDependencies: string[] = config.build?.additionalDependencies || [];
   if (config.build?.gifSupport !== false) {
-    additionalDependencies = additionalDependencies.concat(gifSupport);
+    additionalDependencies = [...additionalDependencies, ...gifSupport];
   }
   if (config.build?.webPSupport !== false) {
-    additionalDependencies = additionalDependencies.concat(webPSupport);
+    additionalDependencies = [...additionalDependencies, ...webPSupport];
   }
   if (additionalDependencies.length === 0) {
     return;
@@ -95,14 +94,14 @@ export function additionalDependencies(config: FlagshipTypes.AndroidConfig): voi
     '// __ADDITIONAL_DEPENDENCIES__',
     additionalDependencies.join('\n    ')
   );
-}
+};
 
 /**
  * add additional dependencies to the AndroidManifest
  *
- * @param {FlagshipTypes.AndroidConfig} config - android config
+ * @param config - android config
  */
-export function additionalPermissions(config: FlagshipTypes.AndroidConfig): void {
+export const additionalPermissions = (config: FlagshipTypes.AndroidConfig): void => {
   if (!config.manifest || !config.manifest.additionalPermissions) {
     return;
   }
@@ -113,14 +112,14 @@ export function additionalPermissions(config: FlagshipTypes.AndroidConfig): void
     '<!-- __ADDITIONAL_PERMISSIONS__ -->',
     additionalPermissions.join('\n    ')
   );
-}
+};
 
 /**
  * Updates app bundle id.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function bundleId(configuration: FlagshipTypes.Config): void {
+export const bundleId = (configuration: FlagshipTypes.Config): void => {
   if (!configuration.bundleIds || !configuration.bundleIds.android) {
     return;
   }
@@ -132,14 +131,14 @@ export function bundleId(configuration: FlagshipTypes.Config): void {
     /applicationId\s+".+"/,
     `applicationId "${configuration.bundleIds.android}"`
   );
-}
+};
 
 /**
  * Updates app display name.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function displayName(configuration: FlagshipTypes.Config): void {
+export const displayName = (configuration: FlagshipTypes.Config): void => {
   if (!configuration.displayName) {
     return;
   }
@@ -151,14 +150,14 @@ export function displayName(configuration: FlagshipTypes.Config): void {
     /<string name="app_name">[^<]+<\/string>/,
     `<string name="app_name">${configuration.displayName}</string>`
   );
-}
+};
 
 /**
  * Updates the Google Maps API key.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function googleMaps(configuration: FlagshipTypes.Config): void {
+export const googleMaps = (configuration: FlagshipTypes.Config): void => {
   if (!configuration.googleMapApiKey) {
     return;
   }
@@ -166,14 +165,14 @@ export function googleMaps(configuration: FlagshipTypes.Config): void {
   helpers.logInfo(`updating Google Maps API key`);
 
   fs.update(path.android.manifestPath(), kDefaultGoogleMapsAPIKey, configuration.googleMapApiKey);
-}
+};
 
 /**
  * Sets the app's icon.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function icon(configuration: FlagshipTypes.Config): void {
+export const icon = (configuration: FlagshipTypes.Config): void => {
   if (!configuration || !configuration.appIconDir || !configuration.appIconDir.android) {
     return;
   }
@@ -184,19 +183,19 @@ export function icon(configuration: FlagshipTypes.Config): void {
 
   try {
     fs.copySync(source, path.android.resourcesPath());
-  } catch (err: any) {
-    helpers.logError(`updating Android app icon`, err);
+  } catch (error: any) {
+    helpers.logError(`updating Android app icon`, error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * Sets the app's launch screen.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function launchScreen(configuration: FlagshipTypes.Config): void {
+export const launchScreen = (configuration: FlagshipTypes.Config): void => {
   if (!configuration || !configuration.launchScreen || !configuration.launchScreen.android) {
     return;
   }
@@ -207,19 +206,19 @@ export function launchScreen(configuration: FlagshipTypes.Config): void {
 
   try {
     fs.copySync(source, path.android.resourcesPath());
-  } catch (err: any) {
-    helpers.logError('updating Android launch screen', err);
+  } catch (error: any) {
+    helpers.logError('updating Android launch screen', error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * update android manifest .MainActivity activity attributes
  *
- * @param {FlagshipTypes.AndroidConfig} config - android config
+ * @param config - android config
  */
-export function mainActivityAttributes(config: FlagshipTypes.AndroidConfig): void {
+export const mainActivityAttributes = (config: FlagshipTypes.AndroidConfig): void => {
   if (!config.manifest || !config.manifest.activityAttributes) {
     return;
   }
@@ -236,14 +235,14 @@ export function mainActivityAttributes(config: FlagshipTypes.AndroidConfig): voi
     '__ACTIIVITY_ATTRIBUTES__="TEMPLATE"',
     newAttributes.join('\n            ')
   );
-}
+};
 
 /**
  * update android manifest .MainApplication application attributes
  *
- * @param {FlagshipTypes.AndroidConfig} config - android config
+ * @param config - android config
  */
-export function mainApplicationAttributes(config: FlagshipTypes.AndroidConfig): void {
+export const mainApplicationAttributes = (config: FlagshipTypes.AndroidConfig): void => {
   if (!config.manifest || !config.manifest.applicationAttributes) {
     return;
   }
@@ -260,14 +259,14 @@ export function mainApplicationAttributes(config: FlagshipTypes.AndroidConfig): 
     '__APP_ATTRIBUTES__="TEMPLATE"',
     newAttributes.join('\n        ')
   );
-}
+};
 
 /**
  * update android manifest with additional application elements
  *
- * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ * @param config - android configuration
  */
-export function mainApplicationElements(config: FlagshipTypes.AndroidConfig): void {
+export const mainApplicationElements = (config: FlagshipTypes.AndroidConfig): void => {
   if (!config.manifest || !config.manifest.additionalElements) {
     return;
   }
@@ -278,29 +277,29 @@ export function mainApplicationElements(config: FlagshipTypes.AndroidConfig): vo
     '<!-- __ADDITIONAL_APP_ELEMENTS -->',
     additionalElements.join('\n        ')
   );
-}
+};
 
 /**
  * Sets the app version number.
  *
- * @param {string} newVersion The version number to set.
- * @param {FlagshipoTypes.AndroidConfig} config - android configuration
+ * @param newVersion The version number to set.
+ * @param config - android configuration
  */
-export function version(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+export const version = (newVersion: string, config: FlagshipTypes.AndroidConfig): void => {
   helpers.logInfo(`setting Android version number to ${newVersion}`);
 
   versionName(newVersion, config);
   versionShortCode(newVersion, config);
   versionCode(newVersion, config);
-}
+};
 
 /**
  * update version name in gradle.properties
  *
- * @param {string} newVersion - package json version
- * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ * @param newVersion - package json version
+ * @param config - android configuration
  */
-function versionName(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+const versionName = (newVersion: string, config: FlagshipTypes.AndroidConfig): void => {
   const newVersionName =
     (config.build &&
       config.build.versionName &&
@@ -310,17 +309,17 @@ function versionName(newVersion: string, config: FlagshipTypes.AndroidConfig): v
     newVersion;
   fs.update(
     path.android.gradlePropertiesPath(),
-    /VERSION_NAME=[\d\.]+/,
+    /VERSION_NAME=[\d.]+/,
     `VERSION_NAME=${newVersionName}`
   );
-}
+};
 /**
  * update version short code in gradle.properties
  *
- * @param {string} newVersion - package json version
- * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ * @param newVersion - package json version
+ * @param config - android configuration
  */
-function versionShortCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+const versionShortCode = (newVersion: string, config: FlagshipTypes.AndroidConfig): void => {
   const newVersionShortCode =
     (config.build &&
       config.build.versionShortCode &&
@@ -333,15 +332,15 @@ function versionShortCode(newVersion: string, config: FlagshipTypes.AndroidConfi
     /VERSION_CODE_SHORT=\d+/,
     `VERSION_CODE_SHORT=${newVersionShortCode}`
   );
-}
+};
 
 /**
  * update version code in app/build.gradle
  *
- * @param {string} newVersion - package json version
- * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ * @param newVersion - package json version
+ * @param config - android configuration
  */
-function versionCode(newVersion: string, config: FlagshipTypes.AndroidConfig): void {
+const versionCode = (newVersion: string, config: FlagshipTypes.AndroidConfig): void => {
   const newVersionCode =
     (config.build &&
       config.build.versionCode &&
@@ -350,27 +349,27 @@ function versionCode(newVersion: string, config: FlagshipTypes.AndroidConfig): v
         : config.build.versionCode)) ||
     '"${project.VERSION_CODE_SHORT}".toInteger()';
   fs.update(path.android.gradlePath(), /^(\s*versionCode ).*$/m, `$1${newVersionCode}`);
-}
+};
 
 /**
  * Sets the default app URL scheme.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function urlScheme(configuration: FlagshipTypes.Config): void {
+export const urlScheme = (configuration: FlagshipTypes.Config): void => {
   const scheme = (configuration && configuration.urlScheme) || configuration.name.toLowerCase();
 
   helpers.logInfo(`setting Android URL scheme to ${scheme}`);
 
   fs.update(path.android.manifestPath(), /default-bb-rn-url-scheme/g, scheme);
-}
+};
 
 /**
  * Sets the default app URL scheme host.
  *
- * @param {FlagshipTypes.AndroidConfig} config - android configuration
+ * @param config - android configuration
  */
-export function urlSchemeHost(config: FlagshipTypes.AndroidConfig): void {
+export const urlSchemeHost = (config: FlagshipTypes.AndroidConfig): void => {
   if (config.manifest) {
     if (config.manifest.urlSchemeHost !== null) {
       const host = config.manifest.urlSchemeHost ?? '';
@@ -380,14 +379,14 @@ export function urlSchemeHost(config: FlagshipTypes.AndroidConfig): void {
       fs.update(path.android.manifestPath(), 'android:host="__URL_HOST_PATH__"', '');
     }
   }
-}
+};
 
 /**
  * Copy custom sentry properties file to android directory
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function sentryProperties(configuration: FlagshipTypes.Config): void {
+export const sentryProperties = (configuration: FlagshipTypes.Config): void => {
   if (!configuration || !configuration.sentry || !configuration.sentry.propertiesPath) {
     return;
   }
@@ -400,29 +399,32 @@ export function sentryProperties(configuration: FlagshipTypes.Config): void {
   try {
     fs.removeSync(destination);
     fs.copySync(source, destination);
-  } catch (err: any) {
-    helpers.logError(`updating Android Sentry properties`, err);
+  } catch (error: any) {
+    helpers.logError(`updating Android Sentry properties`, error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * Adds ShowDevMenu:"true" to NativeConstants for showing the dev menu
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function addDevMenuFlag(configuration: FlagshipTypes.Config): void {
+export const addDevMenuFlag = (configuration: FlagshipTypes.Config): void => {
   nativeConstants.addAndroid(configuration, 'ShowDevMenu', 'true');
-}
+};
 
 /**
  * Sets initial env in EnvSwitcher
  *
- * @param {object} configuration The project environment configuration.
- * @param {string} env The identifier for the environment for which to return the configuration.
+ * @param configuration The project environment configuration.
+ * @param env The identifier for the environment for which to return the configuration.
  */
-export function setEnvSwitcherInitialEnv(configuration: FlagshipTypes.Config, env: string): void {
+export const setEnvSwitcherInitialEnv = (
+  configuration: FlagshipTypes.Config,
+  env: string
+): void => {
   helpers.logInfo(`setting initial env in EnvSwitcher for Android`);
 
   const envSwitcherPath = path.resolve(
@@ -431,17 +433,17 @@ export function setEnvSwitcherInitialEnv(configuration: FlagshipTypes.Config, en
   );
   fs.update(
     envSwitcherPath,
-    /"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName\]/,
+    /"\w*";\s*\/\/\s*\[EnvSwitcher initialEnvName]/,
     `"${env}"; // [EnvSwitcher initialEnvName]`
   );
-}
+};
 
 /**
  * Adds exception domains for Network Security Config from the project configuration.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function exceptionDomains(configuration: FlagshipTypes.Config): void {
+export const exceptionDomains = (configuration: FlagshipTypes.Config): void => {
   const { exceptionDomains = [] } = configuration;
 
   if (Array.isArray(exceptionDomains) && exceptionDomains.length > 0) {
@@ -486,19 +488,18 @@ export function exceptionDomains(configuration: FlagshipTypes.Config): void {
       xml
     );
   }
-}
+};
 
-function hasExceptionDomain(
+const hasExceptionDomain = (
   domains: FlagshipTypes.Config['exceptionDomains'],
   target: string
-): boolean {
+): boolean => {
   const domainIndex = domains.findIndex((domain) => {
     if (typeof domain === 'string') {
       return domain === target;
-    } else {
-      return domain.domain === target;
     }
+    return domain.domain === target;
   });
 
   return domainIndex !== -1;
-}
+};

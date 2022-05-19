@@ -6,7 +6,7 @@ import { isObjectLike } from './is-object-like.util';
  * `Object` constructor or one with a `[[Prototype]]` of `null`.
  *
  * @param value The value to check.
- * @returns  Returns `true` if `value` is a plain object, else `false`.
+ * @return Returns `true` if `value` is a plain object, else `false`.
  * @example
  *
  * function Foo() {

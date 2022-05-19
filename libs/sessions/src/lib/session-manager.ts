@@ -1,8 +1,9 @@
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-
+// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore No types for react-native-cookies
 import * as CookieManager from 'react-native-cookies';
 import * as SInfo from 'react-native-sensitive-info';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 
 const SESSION_MANAGER_TOKEN = 'session-manager-token';
 
@@ -20,13 +21,11 @@ export interface SessionManagerOptions {
   restoreCookies?: () => Promise<void>;
 }
 
-const timeToExpiry = (expiryTime: Date): number => {
-  return new Date(expiryTime).getTime() - new Date().getTime();
-};
+const timeToExpiry = (expiryTime: Date): number => new Date(expiryTime).getTime() - Date.now();
 
 const shouldRefreshToken = (token: CommerceTypes.SessionToken): boolean => {
   const timeToRefresh = timeToExpiry(token.expiresAt);
-  return timeToRefresh > 0 && timeToRefresh < 300000;
+  return timeToRefresh > 0 && timeToRefresh < 300_000;
 };
 
 export class SessionManager {
@@ -34,8 +33,10 @@ export class SessionManager {
 
   public async set(token: CommerceTypes.SessionToken): Promise<void> {
     const tokenStringify = JSON.stringify(token);
-    await SInfo.setItem(SESSION_MANAGER_TOKEN, tokenStringify, sensitiveInfoOptions).catch((err) =>
-      console.log(err)
+    await SInfo.setItem(SESSION_MANAGER_TOKEN, tokenStringify, sensitiveInfoOptions).catch(
+      (error) => {
+        console.log(error);
+      }
     );
   }
 
@@ -46,7 +47,7 @@ export class SessionManager {
       if (token) {
         return token;
       }
-    } catch (e) {
+    } catch {
       /* let it fail silently */
     }
 
@@ -56,7 +57,7 @@ export class SessionManager {
         await this.set(token);
         return token;
       }
-    } catch (e) {
+    } catch {
       /* let it fail silently */
     }
 
@@ -68,7 +69,7 @@ export class SessionManager {
           await this.set(token);
           return token;
         }
-      } catch (e) {
+      } catch {
         /* let it fail silently */
       }
     }

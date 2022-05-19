@@ -1,28 +1,32 @@
-import {
+import type { FallbackCache, InjectorCache } from './cache';
+import { GlobalInjectorCache } from './cache';
+import type { InjectedClass } from './inject';
+import { getDependencies } from './inject';
+import { InjectionToken } from './providers';
+import type {
   BasicClassProvider,
   BasicFactoryProvider,
   ClassProvider,
   FactoryProvider,
   InjectedClassProvider,
   InjectedFactoryProvider,
-  InjectionToken,
   Provider,
   ValueProvider,
 } from './providers';
-import { FallbackCache, GlobalInjectorCache, InjectorCache } from './cache';
-import { getDependencies, InjectedClass } from './inject';
 
 export class Injector implements FallbackCache {
-  public static get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
+  private static readonly injector: Injector = new Injector(GlobalInjectorCache);
+
+  public static get<T>(token: InjectedClass<T> | InjectionToken<T>): T | undefined {
     return this.injector.get(token);
   }
 
-  public static has(token: InjectionToken | InjectedClass): boolean {
+  public static has(token: InjectedClass | InjectionToken): boolean {
     return this.injector.has(token);
   }
 
   public static require<T>(
-    token: InjectionToken<T> | InjectedClass<T>
+    token: InjectedClass<T> | InjectionToken<T>
   ): T extends undefined ? never : T {
     return this.injector.require(token);
   }
@@ -39,73 +43,9 @@ export class Injector implements FallbackCache {
     this.injector.reset();
   }
 
-  private static injector: Injector = new Injector(GlobalInjectorCache);
-
   constructor(private readonly cache: InjectorCache) {}
 
-  public get<T>(token: InjectionToken<T> | InjectedClass<T>): T | undefined {
-    return this.cache.get(token as InjectionToken<T>);
-  }
-
-  public has(token: InjectionToken | InjectedClass): boolean {
-    return this.cache.has(token as InjectionToken);
-  }
-
-  public require<T>(token: InjectionToken<T> | InjectedClass<T>): T extends undefined ? never : T {
-    const dependency = this.get(token);
-    if (dependency === undefined) {
-      throw new ReferenceError(
-        `${Injector.name}: Required ${(
-          token as InjectionToken<T>
-        ).uniqueKey.toString()} is undefined.
-If you are a developer seeing this message there can be a few causes:
-- You are requiring a token that is never provided
-- You are requiring a token that is not *yet* provided
-- One of your dependencies is requiring a token that is not provided
-
-In the event that your token is not provided, you will need to provide it via a
-\`Injector.provide()\`
-In the event that your token is not *yet* provided you will need to change your execution order.
-This error is common when working with module side effects.
-It may be necessary to use a factory to defer your dependency to after your token has been provided.
-`
-      );
-    }
-
-    return dependency as T extends undefined ? never : T;
-  }
-
-  public provide<D extends unknown[], T>(provider: Provider<D, T>): void {
-    if (!('provide' in provider)) {
-      throw new TypeError(
-        `${Injector.name}: Expected provider to specify a provide token, but none was provided.
-If you are a developer seeing this message then make sure that your parameter to
-\`Injector.provide()\` is of the correct type.`
-      );
-    }
-
-    if ('useValue' in provider) {
-      this.provideValue(provider);
-    } else if ('useFactory' in provider) {
-      this.provideFactory(provider);
-    } else if ('useClass' in provider) {
-      this.provideClass(provider);
-    } else {
-      throw new TypeError(
-        `${Injector.name}: Expected provider to provide either a value, factory or class, but none was provided.`
-      );
-    }
-  }
-
-  public remove(token: InjectionToken): void {
-    this.cache.remove(token);
-  }
-
-  public reset(): void {
-    this.cache.reset();
-  }
-
-  private verifyDeps(target: Function, deps: unknown[]): void | never {
+  private verifyDeps(target: Function, deps: unknown[]): never | void {
     if (deps.length !== target.length) {
       throw new ReferenceError(
         `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies.
@@ -114,7 +54,7 @@ Check that your dependency array matches your factory or classes required depend
     }
   }
 
-  private requireDep<T>(depOrToken: T | InjectionToken<T>): T {
+  private requireDep<T>(depOrToken: InjectionToken<T> | T): T {
     if (depOrToken instanceof InjectionToken) {
       return this.require(depOrToken);
     }
@@ -177,5 +117,67 @@ Check that your dependency array matches your factory or classes required depend
       ...(deps as ConstructorParameters<typeof provider['useClass']>)
     );
     this.cache.provide(provider.provide, value);
+  }
+
+  public get<T>(token: InjectedClass<T> | InjectionToken<T>): T | undefined {
+    return this.cache.get(token as InjectionToken<T>);
+  }
+
+  public has(token: InjectedClass | InjectionToken): boolean {
+    return this.cache.has(token as InjectionToken);
+  }
+
+  public require<T>(token: InjectedClass<T> | InjectionToken<T>): T extends undefined ? never : T {
+    const dependency = this.get(token);
+    if (dependency === undefined) {
+      throw new ReferenceError(
+        `${Injector.name}: Required ${(
+          token as InjectionToken<T>
+        ).uniqueKey.toString()} is undefined.
+If you are a developer seeing this message there can be a few causes:
+- You are requiring a token that is never provided
+- You are requiring a token that is not *yet* provided
+- One of your dependencies is requiring a token that is not provided
+
+In the event that your token is not provided, you will need to provide it via a
+\`Injector.provide()\`
+In the event that your token is not *yet* provided you will need to change your execution order.
+This error is common when working with module side effects.
+It may be necessary to use a factory to defer your dependency to after your token has been provided.
+`
+      );
+    }
+
+    return dependency as T extends undefined ? never : T;
+  }
+
+  public provide<D extends unknown[], T>(provider: Provider<D, T>): void {
+    if (!('provide' in provider)) {
+      throw new TypeError(
+        `${Injector.name}: Expected provider to specify a provide token, but none was provided.
+If you are a developer seeing this message then make sure that your parameter to
+\`Injector.provide()\` is of the correct type.`
+      );
+    }
+
+    if ('useValue' in provider) {
+      this.provideValue(provider);
+    } else if ('useFactory' in provider) {
+      this.provideFactory(provider);
+    } else if ('useClass' in provider) {
+      this.provideClass(provider);
+    } else {
+      throw new TypeError(
+        `${Injector.name}: Expected provider to provide either a value, factory or class, but none was provided.`
+      );
+    }
+  }
+
+  public remove(token: InjectionToken): void {
+    this.cache.remove(token);
+  }
+
+  public reset(): void {
+    this.cache.reset();
   }
 }

@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
-import { ApplePayButtonProps } from './ApplePayButtonProps';
+
+import type { ApplePayButtonProps } from './ApplePayButtonProps';
 
 export abstract class ApplePayButtonBase extends PureComponent<ApplePayButtonProps> {
-  abstract render(): React.ReactNode;
+  public abstract render(): React.ReactNode;
 }

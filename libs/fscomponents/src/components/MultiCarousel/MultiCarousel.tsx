@@ -7,25 +7,30 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Animated,
-  Easing,
-  FlatList,
+
+import type {
   GestureResponderEvent,
   LayoutChangeEvent,
   ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
+} from 'react-native';
+import {
+  Animated,
+  Easing,
+  FlatList,
   Platform,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import { PageIndicator } from '../PageIndicator';
-import { GoToOptions } from './CarouselController';
-import { MultiCarouselProps } from './MultiCarouselProps';
+
+import type { GoToOptions } from './CarouselController';
+import type { MultiCarouselProps } from './MultiCarouselProps';
 
 const DEFAULT_PEEK_SIZE = 0;
 const DEFAULT_ITEMS_PER_PAGE = 'auto';
@@ -34,57 +39,55 @@ const DEFAULT_PAGE_INDICATOR_COMPONENT = PageIndicator;
 const DEFAULT_KEY_EXTRACTOR = <ItemT extends { key?: string; id?: string }>(
   item: ItemT,
   index: number
-) => {
-  return item?.key ?? item?.id ?? `${index}`;
-};
+) => item.key ?? item.id ?? `${index}`;
 
 const styles = StyleSheet.create({
-  container: {
-    overflow: 'hidden',
-  },
-  goToNext: {
-    position: 'absolute',
-    top: '50%',
-    right: 0,
-    zIndex: 100,
-    marginTop: -15,
-    padding: 10,
-  },
-  goToPrev: {
-    position: 'absolute',
-    top: '50%',
-    left: 0,
-    zIndex: 100,
-    marginTop: -15,
-    padding: 10,
-  },
-  buttonPrevIcon: {
-    width: 25,
-    height: 25,
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    borderColor: 'black',
-    transform: [
-      {
-        rotate: '-45deg',
-      },
-    ],
-  },
   buttonNextIcon: {
-    width: 25,
-    height: 25,
-    borderTopWidth: 2,
-    borderRightWidth: 2,
     borderColor: 'black',
+    borderRightWidth: 2,
+    borderTopWidth: 2,
+    height: 25,
     transform: [
       {
         rotate: '45deg',
       },
     ],
+    width: 25,
+  },
+  buttonPrevIcon: {
+    borderColor: 'black',
+    borderLeftWidth: 2,
+    borderTopWidth: 2,
+    height: 25,
+    transform: [
+      {
+        rotate: '-45deg',
+      },
+    ],
+    width: 25,
+  },
+  container: {
+    overflow: 'hidden',
+  },
+  goToNext: {
+    marginTop: -15,
+    padding: 10,
+    position: 'absolute',
+    right: 0,
+    top: '50%',
+    zIndex: 100,
+  },
+  goToPrev: {
+    left: 0,
+    marginTop: -15,
+    padding: 10,
+    position: 'absolute',
+    top: '50%',
+    zIndex: 100,
   },
 });
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-lines-per-function, max-statements
 export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   const {
     accessible,
@@ -123,7 +126,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const scrollView = useRef<FlatList<ItemT>>(null);
 
-  const shouldAnimate = !!itemUpdated || !!itemsAreEqual;
+  const shouldAnimate = Boolean(itemUpdated) || Boolean(itemsAreEqual);
   const [opacity] = useState(() => new Animated.Value(shouldAnimate ? 0 : 1));
 
   const [prevData, setPrevData] = useState(data);
@@ -236,7 +239,9 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   );
 
   const handleLayout = useCallback(
-    (e: LayoutChangeEvent) => setContainerWidth(e.nativeEvent.layout.width),
+    (e: LayoutChangeEvent) => {
+      setContainerWidth(e.nativeEvent.layout.width);
+    },
     [containerWidth, setContainerWidth]
   );
 
@@ -253,7 +258,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   );
 
   const goToNext = useCallback(
-    async (options?: GoToOptions | GestureResponderEvent) => {
+    async (options?: GestureResponderEvent | GoToOptions) => {
       const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
 
       await goTo(nextIndex, options && 'animated' in options ? options : undefined);
@@ -262,7 +267,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   );
 
   const goToPrev = useCallback(
-    async (options?: GoToOptions | GestureResponderEvent) => {
+    async (options?: GestureResponderEvent | GoToOptions) => {
       const nextIndex = currentIndex - 1 < 0 ? 0 : currentIndex - 1;
 
       await goTo(nextIndex, options && 'animated' in options ? options : undefined);
@@ -347,7 +352,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   if (data.length <= 1) {
     return (
-      <View style={[{ alignItems: 'center' }, style]} onLayout={handleLayout}>
+      <View onLayout={handleLayout} style={[{ alignItems: 'center' }, style]}>
         <View style={[{ width: calculatedItemWidth }, itemStyle]}>
           {data[0] &&
             renderItem?.({
@@ -367,24 +372,24 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   return (
     <Animated.View style={[styles.container, style, { opacity }]}>
       <FlatList
-        ref={scrollView}
-        accessible={accessible}
         accessibilityHint={accessibilityHint}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole={accessibilityRole}
-        data={data}
-        renderItem={renderItemContainer}
-        keyExtractor={keyExtractor}
-        horizontal={true}
-        decelerationRate={0}
-        snapToAlignment="start"
-        snapToInterval={snapToInterval}
-        showsHorizontalScrollIndicator={false}
+        accessible={accessible}
         contentContainerStyle={contentContainerStyle}
+        data={data}
+        decelerationRate={0}
+        horizontal
+        keyExtractor={keyExtractor}
         onLayout={handleLayout}
         onScroll={handleScroll}
-        onScrollEndDrag={handleScrollEndDrag}
         onScrollBeginDrag={handleScrollBeginDrag}
+        onScrollEndDrag={handleScrollEndDrag}
+        ref={scrollView}
+        renderItem={renderItemContainer}
+        showsHorizontalScrollIndicator={false}
+        snapToAlignment="start"
+        snapToInterval={snapToInterval}
         {...{ dataSet }}
       />
 
@@ -394,33 +399,33 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
         PageIndicatorComponent
       ) : (
         <PageIndicatorComponent
-          style={pageIndicatorStyle}
           currentIndex={currentIndex}
-          itemsCount={numberOfPages}
-          dotStyle={dotStyle}
           dotActiveStyle={dotActiveStyle}
+          dotStyle={dotStyle}
+          itemsCount={numberOfPages}
+          style={pageIndicatorStyle}
         />
       )}
 
-      {currentIndex !== 0 && !!showArrow && (
+      {currentIndex !== 0 && Boolean(showArrow) && (
         <TouchableOpacity
-          accessibilityRole="button"
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
-          style={[styles.goToPrev, prevArrowContainerStyle]}
-          onPress={goToPrev}
+          accessibilityRole="button"
           onBlur={prevArrowOnBlur}
+          onPress={goToPrev}
+          style={[styles.goToPrev, prevArrowContainerStyle]}
         >
           <View style={[styles.buttonPrevIcon, prevArrowStyle]} />
         </TouchableOpacity>
       )}
 
-      {currentIndex !== numberOfPages - 1 && !!showArrow && (
+      {currentIndex !== numberOfPages - 1 && Boolean(showArrow) && (
         <TouchableOpacity
-          accessibilityRole="button"
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
-          style={[styles.goToNext, nextArrowContainerStyle]}
-          onPress={goToNext}
+          accessibilityRole="button"
           onBlur={nextArrowOnBlur}
+          onPress={goToNext}
+          style={[styles.goToNext, nextArrowContainerStyle]}
         >
           <View style={[styles.buttonNextIcon, nextArrowStyle]} />
         </TouchableOpacity>

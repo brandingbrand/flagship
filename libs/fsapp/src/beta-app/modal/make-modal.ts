@@ -1,9 +1,11 @@
 import type { ComponentType } from 'react';
-import type { Mutable } from '../utils';
-import type { ModalComponentProps, ModalComponentType, ModalOptions } from './types';
-import type { TopBarStyle } from '../router/types';
 
 import { uniqueId } from 'lodash-es';
+
+import type { TopBarStyle } from '../router/types';
+import type { Mutable } from '../utils';
+
+import type { ModalComponentProps, ModalComponentType, ModalOptions } from './types';
 
 export const makeModal = <T = void, P = {}>(
   component: ComponentType<ModalComponentProps<T> & P>,

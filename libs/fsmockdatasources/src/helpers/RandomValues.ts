@@ -1,55 +1,45 @@
 import { cities, firstNames, lastNames, latinWords, states } from './FakeData';
 
-const getRandomValueFromArray = (arr: string[]): string => {
-  return arr[Math.floor(Math.random() * arr.length)] ?? '';
-};
+const getRandomValueFromArray = (arr: string[]): string =>
+  arr[Math.floor(Math.random() * arr.length)] ?? '';
 
 /**
  * Generate a pseudo-random boolean value
  *
- * @returns true or false
+ * @return true or false
  */
-export const boolean = (): boolean => {
-  return Boolean(Math.round(Math.random()));
-};
+export const boolean = (): boolean => Boolean(Math.round(Math.random()));
 
 /**
  * Get a random US state abbreviation
  *
- * @returns A state abbreviation
+ * @return A state abbreviation
  */
-export const state = (): string => {
-  return getRandomValueFromArray(states);
-};
+export const state = (): string => getRandomValueFromArray(states);
 
 /**
  * Get a random city from the list of the 25 most populous US cities
  *
- * @returns The name of the city
+ * @return The name of the city
  */
-export const city = (): string => {
-  return getRandomValueFromArray(cities);
-};
+export const city = (): string => getRandomValueFromArray(cities);
 
 /**
  * Generate a pseudo-random integer between min (inclusive) and max (exclusive)
  *
  * @param min - The minimum value (inclusive)
  * @param max - The maximum value (exclusive)
- * @returns A random integer between min and max
+ * @return A random integer between min and max
  */
-export const number = (min: number = 1, max: number = 10): number => {
-  return Math.floor(Math.random() * (max - min) + min);
-};
+export const number = (min = 1, max = 10): number => Math.floor(Math.random() * (max - min) + min);
 
 /**
  * Generate a random name (first last) from a list of most popular first and last names
  *
- * @returns A generated
+ * @return A generated
  */
-export const name = (): string => {
-  return getRandomValueFromArray(firstNames) + ' ' + getRandomValueFromArray(lastNames);
-};
+export const name = (): string =>
+  `${getRandomValueFromArray(firstNames)} ${getRandomValueFromArray(lastNames)}`;
 
 /**
  * Generate a sentence comprised of lorem words with a min and max number of words.
@@ -57,13 +47,9 @@ export const name = (): string => {
  * @param minWords - The minimum number of words in the sentence (inclusive)
  * @param maxWords - The maximum number of words in the sentence (exclusive)
  * @param lastChar - An optional character to end the sentence other than a period, such as '?'
- * @returns A randomly-generated lorem sentence.
+ * @return A randomly-generated lorem sentence.
  */
-export const sentence = (
-  minWords: number = 5,
-  maxWords: number = 20,
-  lastChar: string = '.'
-): string => {
+export const sentence = (minWords = 5, maxWords = 20, lastChar = '.'): string => {
   // Get the first word and capitalize the first letter
   const firstWord = getRandomValueFromArray(latinWords);
   let sentence = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
@@ -72,7 +58,7 @@ export const sentence = (
   const numWords = number(minWords, maxWords - 1);
 
   for (let i = 0; i < numWords; ++i) {
-    sentence += ' ' + getRandomValueFromArray(latinWords);
+    sentence += ` ${getRandomValueFromArray(latinWords)}`;
   }
 
   return sentence + lastChar;
@@ -83,9 +69,9 @@ export const sentence = (
  *
  * @param minParagraphs - The minimum number of paragraphs to generate (inclusive)
  * @param maxParagraphs - The maximum number of paragraphs to generate (exclusive)
- * @returns A string containing paragraphs separated by newlines
+ * @return A string containing paragraphs separated by newlines
  */
-export const paragraphs = (minParagraphs: number = 1, maxParagraphs: number = 5): string => {
+export const paragraphs = (minParagraphs = 1, maxParagraphs = 5): string => {
   // Get random value for number of paragraphs to generate
   const numParagraphs = number(minParagraphs, maxParagraphs);
   let paragraphs = '';

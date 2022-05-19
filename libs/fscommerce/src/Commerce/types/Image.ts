@@ -1,4 +1,4 @@
-/*
+/**
  * @see https://github.com/facebook/react-native/blob/master/Libraries/Image/ImageSourcePropType.js
  */
 export interface Image {
@@ -27,7 +27,7 @@ export interface Image {
    * `headers` is an object representing the HTTP headers to send along with the
    * request for a remote image.
    */
-  headers?: { [key: string]: string };
+  headers?: Record<string, string>;
 
   /**
    * `cache` determines how the requests handles potentially cached
@@ -49,7 +49,7 @@ export interface Image {
    *
    * @platform ios
    */
-  cache?: 'default' | 'reload' | 'force-cache' | 'only-if-cached';
+  cache?: 'default' | 'force-cache' | 'only-if-cached' | 'reload';
 
   /**
    * `body` is the HTTP body to send with the request. This must be a valid

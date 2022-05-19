@@ -8,7 +8,7 @@ import { isIntegerArray } from '@brandingbrand/standard-array';
  *
  * @param a - integer
  * @param b - integer
- * @returns greatest common divisor
+ * @return greatest common divisor
  */
 const _greatestCommonDivisor = (a: number, b: number): number => {
   let k = 1;
@@ -25,21 +25,21 @@ const _greatestCommonDivisor = (a: number, b: number): number => {
 
   // Reduce `a` and/or `b` to odd numbers and keep track of the greatest power of 2 dividing both `a` and `b`...
   while (a % 2 === 0 && b % 2 === 0) {
-    a = a / 2; // right shift
-    b = b / 2; // right shift
-    k = k * 2; // left shift
+    a /= 2; // right shift
+    b /= 2; // right shift
+    k *= 2; // left shift
   }
 
   // Reduce `a` to an odd number...
   while (a % 2 === 0) {
-    a = a / 2; // right shift
+    a /= 2; // right shift
   }
 
   // Henceforth, `a` is always odd...
   while (b) {
     // Remove all factors of 2 in `b`, as they are not common...
     while (b % 2 === 0) {
-      b = b / 2; // right shift
+      b /= 2; // right shift
     }
     // `a` and `b` are both odd. Swap values such that `b` is the larger of the two values, and then set `b` to the difference (which is even)...
     if (a > b) {
@@ -47,7 +47,7 @@ const _greatestCommonDivisor = (a: number, b: number): number => {
       b = a;
       a = t;
     }
-    b = b - a; // b=0 iff b=a
+    b -= a; // b=0 iff b=a
   }
 
   // Restore common factors of 2...
@@ -59,7 +59,7 @@ const _greatestCommonDivisor = (a: number, b: number): number => {
  *
  * @param a - safe integer
  * @param b - safe integer
- * @returns greatest common divisor
+ * @return greatest common divisor
  */
 const bitwise = (a: number, b: number): number => {
   let k = 0;
@@ -93,7 +93,7 @@ const bitwise = (a: number, b: number): number => {
       b = a;
       a = t;
     }
-    b = b - a; // b=0 iff b=a
+    b -= a; // b=0 iff b=a
   }
   // Restore common factors of 2...
   return a << k;
@@ -103,9 +103,9 @@ const bitwise = (a: number, b: number): number => {
  * Computes the greatest common divisor.
  *
  * @param numbers - input array of integers
- * @returns greatest common divisor or null
+ * @return greatest common divisor or null
  */
-// eslint-disable-next-line complexity
+
 export const greatestCommonDivisor = (...numbers: [number, number, ...number[]]): number => {
   let a: number;
   let b: number;
@@ -136,9 +136,8 @@ export const greatestCommonDivisor = (...numbers: [number, number, ...number[]])
     }
     if (a <= Number.MAX_SAFE_INTEGER && b <= Number.MAX_SAFE_INTEGER) {
       return bitwise(a, b);
-    } else {
-      return _greatestCommonDivisor(a, b);
     }
+    return _greatestCommonDivisor(a, b);
   }
 
   // Convert any negative integers to positive integers...
@@ -153,11 +152,10 @@ export const greatestCommonDivisor = (...numbers: [number, number, ...number[]])
   a = numbers[0];
   for (i = 1; i < numbers.length; i++) {
     b = numbers[i] as number;
-    if (b <= Number.MAX_SAFE_INTEGER && a <= Number.MAX_SAFE_INTEGER) {
-      a = bitwise(a, b);
-    } else {
-      a = _greatestCommonDivisor(a, b);
-    }
+    a =
+      b <= Number.MAX_SAFE_INTEGER && a <= Number.MAX_SAFE_INTEGER
+        ? bitwise(a, b)
+        : _greatestCommonDivisor(a, b);
   }
 
   return a;

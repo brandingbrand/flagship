@@ -10,7 +10,7 @@ import type { Union } from 'ts-toolbelt';
  *
  * @param object The destination object.
  * @param sources The source objects.
- * @returns  Returns `object`.
+ * @return Returns `object`.
  * @example
  *
  * defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } })
@@ -22,7 +22,7 @@ export const defaultsDeep = <T extends object, S extends object[]>(
 ): T & Union.IntersectOf<S[number]> => {
   for (const source of sources) {
     if (source !== null) {
-      for (const key of Object.keys(source) as (keyof S[number])[]) {
+      for (const key of Object.keys(source) as Array<keyof S[number]>) {
         const currentValue = (object as S[number])[key];
         const updatedValue = (source as S[number])[key];
 
@@ -31,14 +31,12 @@ export const defaultsDeep = <T extends object, S extends object[]>(
             currentValue as unknown as object,
             updatedValue as unknown as object
           ) as unknown as typeof currentValue;
-        } else {
-          if (
-            currentValue === undefined ||
-            ((currentValue as unknown) === Object.prototype[key as keyof typeof Object.prototype] &&
-              !object.hasOwnProperty(key))
-          ) {
-            (object as S[number])[key] = updatedValue;
-          }
+        } else if (
+          currentValue === undefined ||
+          ((currentValue as unknown) === Object.prototype[key as keyof typeof Object.prototype] &&
+            !object.hasOwnProperty(key))
+        ) {
+          (object as S[number])[key] = updatedValue;
         }
       }
     }

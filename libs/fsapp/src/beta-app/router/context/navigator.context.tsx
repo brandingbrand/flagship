@@ -1,10 +1,11 @@
-import type { FSRouterHistory } from '../history';
+import type { FC } from 'react';
+import React, { createContext } from 'react';
 
-import React, { createContext, FC } from 'react';
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 
-import { dummyHistory } from '../history/history.dummy';
 import { InjectedContextProvider } from '../../lib/use-dependency';
+import type { FSRouterHistory } from '../history';
+import { dummyHistory } from '../history/history.dummy';
 
 export const NAVIGATOR_TOKEN = new InjectionToken<FSRouterHistory>('NAVIGATOR');
 
@@ -26,7 +27,7 @@ export const useNavigator = () => {
 export interface NavigatorProviderProps {
   value: FSRouterHistory;
 }
-export const NavigatorProvider: FC<NavigatorProviderProps> = ({ value, children }) => (
+export const NavigatorProvider: FC<NavigatorProviderProps> = ({ children, value }) => (
   <InjectedContextProvider token={NAVIGATOR_CONTEXT_TOKEN} value={value}>
     {children}
   </InjectedContextProvider>

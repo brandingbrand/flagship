@@ -1,9 +1,9 @@
 import type { Context } from 'react';
 
-import { InjectionToken } from '@brandingbrand/fslinker';
+import type { InjectionToken } from '@brandingbrand/fslinker';
 
-import { useToken } from './use-token.hook';
 import { REACT } from './react.token';
+import { useToken } from './use-token.hook';
 
 export const useContextToken = <T>(contextToken: InjectionToken<Context<T>>) => {
   const context = useToken(contextToken);

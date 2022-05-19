@@ -1,5 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { TouchableOpacity, TouchableOpacityProperties } from 'react-native';
+import type { FunctionComponent } from 'react';
+import React from 'react';
+
+import type { TouchableOpacityProperties } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 export interface TouchableOpacityLinkProps extends TouchableOpacityProperties {
   href?: string;

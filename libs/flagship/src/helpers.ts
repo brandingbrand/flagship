@@ -1,57 +1,57 @@
 export const colors = {
-  Reset: '\x1b[0m',
-  Bright: '\x1b[1m',
-  Dim: '\x1b[2m',
-  Underscore: '\x1b[4m',
-  Blink: '\x1b[5m',
-  Reverse: '\x1b[7m',
-  Hidden: '\x1b[8m',
+  Reset: '\u001B[0m',
+  Bright: '\u001B[1m',
+  Dim: '\u001B[2m',
+  Underscore: '\u001B[4m',
+  Blink: '\u001B[5m',
+  Reverse: '\u001B[7m',
+  Hidden: '\u001B[8m',
 
-  FgBlack: '\x1b[30m',
-  FgRed: '\x1b[31m',
-  FgGreen: '\x1b[32m',
-  FgYellow: '\x1b[33m',
-  FgBlue: '\x1b[34m',
-  FgMagenta: '\x1b[35m',
-  FgCyan: '\x1b[36m',
-  FgWhite: '\x1b[37m',
+  FgBlack: '\u001B[30m',
+  FgRed: '\u001B[31m',
+  FgGreen: '\u001B[32m',
+  FgYellow: '\u001B[33m',
+  FgBlue: '\u001B[34m',
+  FgMagenta: '\u001B[35m',
+  FgCyan: '\u001B[36m',
+  FgWhite: '\u001B[37m',
 
-  BgBlack: '\x1b[40m',
-  BgRed: '\x1b[41m',
-  BgGreen: '\x1b[42m',
-  BgYellow: '\x1b[43m',
-  BgBlue: '\x1b[44m',
-  BgMagenta: '\x1b[45m',
-  BgCyan: '\x1b[46m',
-  BgWhite: '\x1b[47m',
+  BgBlack: '\u001B[40m',
+  BgRed: '\u001B[41m',
+  BgGreen: '\u001B[42m',
+  BgYellow: '\u001B[43m',
+  BgBlue: '\u001B[44m',
+  BgMagenta: '\u001B[45m',
+  BgCyan: '\u001B[46m',
+  BgWhite: '\u001B[47m',
 };
 
-export function logInfo(...messages: string[]): void {
-  logWithType('info', [].slice.call(messages, 0));
-}
+export const logInfo = (...messages: string[]): void => {
+  logWithType('info', Array.prototype.slice.call(messages, 0));
+};
 
-export function logError(...messages: string[]): void {
-  logWithType('error', [].slice.call(messages, 0));
-}
+export const logError = (...messages: string[]): void => {
+  logWithType('error', Array.prototype.slice.call(messages, 0));
+};
 
-export function logWarn(...messages: string[]): void {
-  return logWithType('warn', [].slice.call(messages, 0));
-}
+export const logWarn = (...messages: string[]): void => {
+  logWithType('warn', Array.prototype.slice.call(messages, 0));
+};
 
-export function getCmdOption(argv: string[]): (a: string) => string | undefined {
-  return (optionName: string): string | undefined => {
-    const optionArgv = argv.slice(0).find((arg) => arg.indexOf(`--${optionName}=`) === 0);
+export const getCmdOption =
+  (argv: string[]): ((a: string) => string | undefined) =>
+  (optionName: string): string | undefined => {
+    const optionArgv = [...argv].find((arg) => arg.startsWith(`--${optionName}=`));
 
     return (optionArgv && optionArgv.split('=')[1]) || undefined;
   };
-}
 
-function logWithType(type: string, args: string[]): void {
+const logWithType = (type: string, args: string[]): void => {
   if (process.env.NODE_ENV === 'test') {
     return;
   }
 
-  const _args = args.slice(0);
+  const _args = [...args];
   switch (type) {
     case 'error':
       _args.unshift(`\n${colors.BgRed} ERROR ${colors.Reset}`);
@@ -71,4 +71,4 @@ function logWithType(type: string, args: string[]): void {
     default:
       throw new Error('expect 1st argument to be error, info or warn');
   }
-}
+};

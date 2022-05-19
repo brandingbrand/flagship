@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import { StyleSheet } from 'react-native';
+
 import { Swatches } from '../../Swatches';
-import { ProductItemProps } from '../ProductItem';
+import type { ProductItemProps } from '../ProductItem';
 
 const styles = StyleSheet.create({
   swatches: {
@@ -11,12 +13,12 @@ const styles = StyleSheet.create({
 
 export type ProductItemSwatchesProps = Pick<
   ProductItemProps,
-  'swatchItems' | 'swatchStyle' | 'swatchesProps' | 'renderSwatches'
+  'renderSwatches' | 'swatchesProps' | 'swatchItems' | 'swatchStyle'
 >;
 
 export class ProductItemSwatches extends Component<ProductItemSwatchesProps> {
-  render(): React.ReactNode {
-    const { swatchItems, swatchStyle, swatchesProps, renderSwatches } = this.props;
+  public render(): React.ReactNode {
+    const { renderSwatches, swatchItems, swatchStyle, swatchesProps } = this.props;
 
     if (renderSwatches) {
       return renderSwatches();

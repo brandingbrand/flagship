@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import {
-  ImageURISource,
-  StyleProp,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import type { ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
 
 import { style as S } from '../styles/Swatches';
 
-import { Swatch, SwatchProps, SwatchStyle } from './Swatch';
+import type { SwatchProps, SwatchStyle } from './Swatch';
+import { Swatch } from './Swatch';
 
 export interface SwatchItemType extends CommerceTypes.OptionValue {
   color?: string; // deprecated
@@ -44,13 +40,13 @@ export interface SwatchesProps
   extends SwatchStyle,
     Omit<
       SerializableSwatchesProps,
-      | 'style'
       | 'labelContainerStyle'
       | 'labelTitleStyle'
       | 'labelValueStyle'
-      | 'showingMoreStyle'
-      | 'showingLessStyle'
       | 'moreLessStyle'
+      | 'showingLessStyle'
+      | 'showingMoreStyle'
+      | 'style'
     > {
   style?: StyleProp<ViewStyle>;
   renderSwatch?: (swatch: SwatchProps) => React.ReactNode;
@@ -91,10 +87,10 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     let hasColor = false;
     let hasImage = false;
-    props.items.forEach((item) => {
-      hasColor = hasColor || !!item.color;
-      hasImage = hasImage || !!item.image;
-    });
+    for (const item of props.items) {
+      hasColor = hasColor || Boolean(item.color);
+      hasImage = hasImage || Boolean(item.image);
+    }
 
     if (hasColor) {
       console.error('Swatch "color" is deprecated. Please use "swatch" instead.');
@@ -120,21 +116,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     };
   }
 
-  componentDidUpdate(prevProps: SwatchesProps, prevState: SwatchesState): void {
-    if (
-      prevProps.defaultValue !== this.props.defaultValue ||
-      prevProps.items !== this.props.items
-    ) {
-      const selected = this.getSelectedSwatch(this.props);
-      if (selected !== null) {
-        this.setState({
-          selected,
-        });
-      }
-    }
-  }
-
-  getSelectedSwatch(props: SwatchesProps): SwatchesState['selected'] | null {
+  private getSelectedSwatch(props: SwatchesProps): SwatchesState['selected'] | null {
     const { defaultValue, items } = props;
 
     // Default swatch selection
@@ -154,7 +136,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     return null;
   }
 
-  onSelect = (swatch: SwatchProps) => {
+  private readonly onSelect = (swatch: SwatchProps) => {
     const option = {
       value: swatch.value || '',
       name: swatch.name || '',
@@ -167,89 +149,90 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
       },
     });
 
-    const { onColorPress, onChangeSwatch } = this.props;
+    const { onChangeSwatch, onColorPress } = this.props;
     if (onColorPress) {
       try {
         onColorPress(swatch);
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
     }
     if (onChangeSwatch) {
       try {
         onChangeSwatch(swatch.value || '');
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
     }
   };
 
-  _renderSwatch = (item: SwatchItemType, i: number) => {
+  private readonly _renderSwatch = (item: SwatchItemType, i: number) => {
     const { selected } = this.state;
     const {
       colorContainerStyle,
-      selectedColorContainerStyle,
-      disabledColorContainerStyle,
       colorStyle,
-      selectedColorStyle,
+      disabled,
+      disabledColorContainerStyle,
       disabledColorStyle,
-      textContainerStyle,
-      selectedTextContainerStyle,
+      disabledImageContainerStyle,
+      disabledImageStyle,
       disabledTextContainerStyle,
-      textStyle,
-      selectedTextStyle,
       disabledTextStyle,
       imageContainerStyle,
-      selectedImageContainerStyle,
-      disabledImageContainerStyle,
       imageStyle,
-      selectedImageStyle,
-      disabledImageStyle,
       renderSwatch,
-      disabled,
+      selectedColorContainerStyle,
+      selectedColorStyle,
+      selectedImageContainerStyle,
+      selectedImageStyle,
+      selectedTextContainerStyle,
+      selectedTextStyle,
+      textContainerStyle,
+      textStyle,
     } = this.props;
 
     return (
       <View key={i}>
         <Swatch
-          index={i}
-          disabled={disabled || item.available === false}
           colorContainerStyle={colorContainerStyle}
-          disabledColorContainerStyle={disabledColorContainerStyle}
-          selectedColorContainerStyle={selectedColorContainerStyle}
           colorStyle={colorStyle}
+          disabled={disabled || item.available === false}
+          disabledColorContainerStyle={disabledColorContainerStyle}
           disabledColorStyle={disabledColorStyle}
-          selectedColorStyle={selectedColorStyle}
-          textContainerStyle={textContainerStyle}
-          disabledTextContainerStyle={disabledTextContainerStyle}
-          selectedTextContainerStyle={selectedTextContainerStyle}
-          textStyle={textStyle}
-          disabledTextStyle={disabledTextStyle}
-          selectedTextStyle={selectedTextStyle}
-          imageContainerStyle={imageContainerStyle}
           disabledImageContainerStyle={disabledImageContainerStyle}
-          selectedImageContainerStyle={selectedImageContainerStyle}
-          imageStyle={imageStyle}
           disabledImageStyle={disabledImageStyle}
-          selectedImageStyle={selectedImageStyle}
-          selected={i === selected.index}
+          disabledTextContainerStyle={disabledTextContainerStyle}
+          disabledTextStyle={disabledTextStyle}
+          imageContainerStyle={imageContainerStyle}
+          imageStyle={imageStyle}
+          index={i}
           onSelect={this.onSelect}
           render={renderSwatch}
+          selected={i === selected.index}
+          selectedColorContainerStyle={selectedColorContainerStyle}
+          selectedColorStyle={selectedColorStyle}
+          selectedImageContainerStyle={selectedImageContainerStyle}
+          selectedImageStyle={selectedImageStyle}
+          selectedTextContainerStyle={selectedTextContainerStyle}
+          selectedTextStyle={selectedTextStyle}
+          textContainerStyle={textContainerStyle}
+          textStyle={textStyle}
           {...item}
         />
       </View>
     );
   };
 
-  _renderLabel = (swatch: SelectedSwatchItem) => {
-    const { title, labelContainerStyle, labelTitleStyle, labelValueStyle, renderLabel } =
+  private readonly renderLabel = (swatch: SelectedSwatchItem) => {
+    const { labelContainerStyle, labelTitleStyle, labelValueStyle, renderLabel, title } =
       this.props;
 
     const { selected } = this.state;
-    const name = selected.swatch.name;
+    const { name } = selected.swatch;
 
     if (renderLabel) {
-      return renderLabel(swatch);
+      renderLabel(swatch);
+      return;
     }
 
     return (
@@ -260,13 +243,13 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
     );
   };
 
-  toggleMoreLess = () => {
+  private readonly toggleMoreLess = () => {
     this.setState({ showMore: !this.state.showMore });
   };
 
-  _renderMoreLess = () => {
+  private readonly renderMoreLess = () => {
     const { shouldShowMoreLess, showMore } = this.state;
-    const { textStyle, moreLessStyle, onClickPlus, renderMoreLess } = this.props;
+    const { moreLessStyle, onClickPlus, renderMoreLess, textStyle } = this.props;
 
     if (shouldShowMoreLess) {
       let moreLess;
@@ -287,12 +270,25 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
           {moreLess}
         </TouchableOpacity>
       );
-    } else {
-      return null;
     }
+    return null;
   };
 
-  render(): JSX.Element {
+  public componentDidUpdate(prevProps: SwatchesProps, prevState: SwatchesState): void {
+    if (
+      prevProps.defaultValue !== this.props.defaultValue ||
+      prevProps.items !== this.props.items
+    ) {
+      const selected = this.getSelectedSwatch(this.props);
+      if (selected !== null) {
+        this.setState({
+          selected,
+        });
+      }
+    }
+  }
+
+  public render(): JSX.Element {
     const { items, label, maxSwatches, showingLessStyle, showingMoreStyle, style } = this.props;
 
     const { shouldShowMoreLess, showMore } = this.state;
@@ -306,17 +302,17 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     return (
       <View>
-        {label && this._renderLabel(swatch)}
+        {label && this.renderLabel(swatch)}
         <View>
           <View
+            // @ts-expect-error className is web-only
+            className={`swatch-scroll ${showMore ? 'showing-more' : 'showing-less'}`}
             style={[S.container, showMore ? showingMoreStyle : showingLessStyle, style]}
-            // @ts-ignore className is web-only
-            className={'swatch-scroll ' + (showMore ? 'showing-more' : 'showing-less')}
           >
             {displayItems.map(this._renderSwatch)}
-            {this.props.separateMoreButton ? null : this._renderMoreLess()}
+            {this.props.separateMoreButton ? null : this.renderMoreLess()}
           </View>
-          {this.props.separateMoreButton ? this._renderMoreLess() : null}
+          {this.props.separateMoreButton ? this.renderMoreLess() : null}
         </View>
       </View>
     );

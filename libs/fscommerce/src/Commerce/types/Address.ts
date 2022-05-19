@@ -1,4 +1,4 @@
-import { Person } from './Person';
+import type { Person } from './Person';
 
 /**
  * Information about an address.

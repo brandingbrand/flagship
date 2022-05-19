@@ -1,15 +1,15 @@
-import * as path from '../../path';
+import { logError, logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
 import * as fs from '../../fs';
 import * as nativeConstants from '../../native-constants';
-import { Config } from '../../../types';
-import { logError, logInfo } from '../../../helpers';
+import * as path from '../../path';
 
 /**
  * Patches iOS for the module.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function preLink(configuration: Config): void {
+export const preLink = (configuration: Config): void => {
   logInfo('patching iOS for react-native-codepush');
 
   if (!(configuration.codepush && configuration.codepush.appCenterToken)) {
@@ -57,4 +57,4 @@ export function preLink(configuration: Config): void {
   <key>CodePushDeploymentKey</key>
   <string>${configuration.codepush.ios.deploymentKey}</string>`
   );
-}
+};

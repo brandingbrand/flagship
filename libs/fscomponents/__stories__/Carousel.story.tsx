@@ -2,24 +2,25 @@
 // strings in this file since this is mainly a demo
 
 import React from 'react';
+
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-import { storiesOf } from '@storybook/react';
 import { boolean, number, object } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
 
 import { Carousel } from '../src/components/Carousel';
 
 const style = StyleSheet.create({
   slide: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   slideImage: {
-    justifyContent: 'center',
     alignItems: 'center',
-    width: 375,
     height: 150,
+    justifyContent: 'center',
+    width: 375,
   },
 });
 

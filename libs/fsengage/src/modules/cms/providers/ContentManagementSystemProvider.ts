@@ -1,30 +1,29 @@
-import { ContentManagementSystemProviderConfiguration } from './types/ContentManagementSystemProviderConfiguration';
+import type ContentManagementSystemLocator from '../requesters/ContentManagementSystemLocator';
 
-import ContentManagementSystemLocator from '../requesters/ContentManagementSystemLocator';
+import type { ContentManagementSystemProviderConfiguration } from './types/ContentManagementSystemProviderConfiguration';
 
 export interface ContentManagementSystemContext {
   locator: ContentManagementSystemLocator;
 }
 
 export default abstract class ContentManagementSystemProvider {
-  protected propertyId: string;
-  protected environment: number;
-
   // TODO | BD: Preview mode
-
   constructor(configuration: ContentManagementSystemProviderConfiguration) {
     this.propertyId = String(configuration.propertyId);
     this.environment = configuration.environment;
   }
 
-  abstract contentForSlot(
+  protected propertyId: string;
+  protected environment: number;
+
+  public abstract contentForSlot(
     group: string,
     slot: string,
     identifier?: string,
     context?: ContentManagementSystemContext
   ): Promise<{}>;
 
-  abstract contentForGroup(group: string): Promise<{}>;
+  public abstract contentForGroup(group: string): Promise<{}>;
 
-  abstract identifiersForSlot(group: string, slot: string): Promise<string[] | null>;
+  public abstract identifiersForSlot(group: string, slot: string): Promise<string[] | null>;
 }

@@ -1,9 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import { boolean, object } from '@storybook/addon-knobs';
-import { Price } from '../src/components/Price';
+import { storiesOf } from '@storybook/react';
 import Decimal from 'decimal.js';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
+
+import { Price } from '../src/components/Price';
 
 type SerializedPrice = Omit<CommerceTypes.CurrencyValue, 'value'> & { value: string };
 
@@ -23,11 +26,11 @@ const originalPrice: SerializedPrice = {
 
 storiesOf('Price', module).add('basic usage', () => (
   <Price
-    price={convertToCurrency(object('Price', price))}
     originalPrice={convertToCurrency(object('Original Price', originalPrice))}
     originalPriceFirst={boolean('Show Original Price First', false)}
-    priceStyle={object('Price Style', undefined)}
     originalPriceStyle={object('Original Price Style', undefined)}
+    price={convertToCurrency(object('Price', price))}
+    priceStyle={object('Price Style', undefined)}
     salePriceStyle={object('Sale Price Style', undefined)}
   />
 ));

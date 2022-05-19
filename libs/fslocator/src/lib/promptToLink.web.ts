@@ -1,12 +1,7 @@
 import { Alert } from '@brandingbrand/fscomponents';
 
-export default async function promptToLink({
-  title,
-  subTitle,
-  buttonText,
-  link,
-}: any): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
+const promptToLink = async ({ buttonText, link, subTitle, title }: any): Promise<void> =>
+  new Promise<void>((resolve, reject) => {
     Alert.alert({
       title,
       text: subTitle,
@@ -18,4 +13,5 @@ export default async function promptToLink({
       },
     });
   });
-}
+
+export default promptToLink;

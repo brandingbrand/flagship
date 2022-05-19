@@ -1,17 +1,18 @@
+import type { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
+
 import { fromPairs, memoize, partition } from 'lodash-es';
-import { ImageStyle, StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 /**
  * Create a style that will be applied based on a given `condition`
  *
  * @template T The schema of the style to apply based on the `condition`
- * @param {boolean | undefined} condition The condition to determine whether a `style`
+ * @param condition The condition to determine whether a `style`
  * should be applied oer not
- * @param {T} style The style to apply based on the given condition
- * @param {T} elseStyle The style to apply if the condition is not met
- * @returns {T | {}} If the condition is true then this returns the `style` otherwise
+ * @param style The style to apply based on the given condition
+ * @param elseStyle The style to apply if the condition is not met
+ * @return If the condition is true then this returns the `style` otherwise
  * an empty object.
- *
  * @example
  * const useStyles = makeStyles(({ props }) => ({
  *   root: conditionalStyle(props?.wide, { flex: 1 })
@@ -48,9 +49,8 @@ const HOST_STYLES = [
 /**
  * Extracts the styles that are affected by the parent
  *
- * @param {StyleProp<T>} style the style to extract host styles from
- * @returns {[Partial<T>, Partial<T>]} a tuple with the extracted styles
- *
+ * @param style the style to extract host styles from
+ * @return a tuple with the extracted styles
  * @example
  * ```jsx
  * // self styles = padding, margin, display(flex), flex, flexDirection, etc.
@@ -78,7 +78,7 @@ const HOST_STYLES = [
  * );
  * ```
  */
-export const extractHostStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
+export const extractHostStyles = <T extends ImageStyle | TextStyle | ViewStyle>(
   style?: StyleProp<T>
 ) => {
   if (!style) {
@@ -115,9 +115,8 @@ const CONTAINER_STYLES = [/display/, /Content/, /Items/, /flex(?!$)/];
 /**
  * Extracts the styles that affect the direct children
  *
- * @param {StyleProp<T>} style the style to extract nested styles from
- * @returns {[Partial<T>, Partial<T>]} a tuple with the extracted styles
- *
+ * @param style the style to extract nested styles from
+ * @return a tuple with the extracted styles
  * @example
  * ```jsx
  * // self styles = padding, margin, display(flex), flex, flexDirection, etc.
@@ -145,7 +144,7 @@ const CONTAINER_STYLES = [/display/, /Content/, /Items/, /flex(?!$)/];
  * );
  * ```
  */
-export const extractContainerStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
+export const extractContainerStyles = <T extends ImageStyle | TextStyle | ViewStyle>(
   style?: StyleProp<T>
 ) => {
   if (!style) {
@@ -165,7 +164,7 @@ export const extractContainerStyles = <T extends ViewStyle | ImageStyle | TextSt
   return [fromPairs(nestedStyles), fromPairs(nonNestedStyles)] as [Partial<T>, Partial<T>];
 };
 
-export const extractSandwichedStyles = <T extends ViewStyle | ImageStyle | TextStyle>(
+export const extractSandwichedStyles = <T extends ImageStyle | TextStyle | ViewStyle>(
   style?: StyleProp<T>
 ) => {
   const [host, updatedStyle] = extractHostStyles(style);
@@ -174,13 +173,13 @@ export const extractSandwichedStyles = <T extends ViewStyle | ImageStyle | TextS
 };
 
 export const extractFont = memoize(
-  (textStyles: TextStyle | StyleProp<TextStyle>): string | undefined => {
+  (textStyles: StyleProp<TextStyle> | TextStyle): string | undefined => {
     const styles = StyleSheet.flatten(textStyles);
 
-    return `${styles?.fontWeight ?? '400'} ${
-      (styles?.fontSize ?? 16) + (styles?.letterSpacing ?? 0) * 4 + 'px'
-    }/${(styles?.lineHeight ?? 1.2 * (styles?.fontSize ?? 16)) + 'px'} ${
-      styles?.fontFamily ??
+    return `${styles.fontWeight ?? '400'} ${`${
+      (styles.fontSize ?? 16) + (styles.letterSpacing ?? 0) * 4
+    }px`}/${`${styles.lineHeight ?? 1.2 * (styles.fontSize ?? 16)}px`} ${
+      styles.fontFamily ??
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
     }`;
   }

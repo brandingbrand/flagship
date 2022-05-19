@@ -1,24 +1,18 @@
-import type { FSRouterHistory } from '../router';
-import type { ModalService } from '../modal';
-import type { LegacyNavLayout, LegacyNavOptions, LegacyTab } from './legacy-navigator.type';
-
 import { Injector } from '@brandingbrand/fslinker';
 
-import { WebShell } from '../shell.web';
-
-import { BaseLegacyNavigator } from './internal/legacy-navigator.base';
-import { layoutToPath } from './internal/utils/layout-to-path';
-import { LEGACY_ROUTES } from './internal/screens.token';
+import type { ModalService } from '../modal';
+import type { FSRouterHistory } from '../router';
+import type { WebShell } from '../shell.web';
 
 import { makeLegacyModal } from './components/legacy-modal.component';
+import { BaseLegacyNavigator } from './internal/legacy-navigator.base';
+import { LEGACY_ROUTES } from './internal/screens.token';
+import { layoutToPath } from './internal/utils/layout-to-path';
+import type { LegacyNavLayout, LegacyNavOptions, LegacyTab } from './legacy-navigator.type';
 
 const legacyModals = () => {
-  const legacyRouteEntries = Array.from(Injector.get(LEGACY_ROUTES) ?? []);
-  return new Map(
-    legacyRouteEntries.map(([key, route]) => {
-      return [key, makeLegacyModal(route.component)];
-    })
-  );
+  const legacyRouteEntries = [...(Injector.get(LEGACY_ROUTES) ?? [])];
+  return new Map(legacyRouteEntries.map(([key, route]) => [key, makeLegacyModal(route.component)]));
 };
 
 /**
@@ -45,6 +39,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   private readonly modalScreens = legacyModals();
 
   /**
+   * @param layout
+   * @param alternateId
    * @deprecated
    */
   public async push(layout: LegacyNavLayout, alternateId?: string): Promise<void> {
@@ -70,6 +66,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param _options
+   * @param alternateId
    * @deprecated
    */
   public async popTo(_options?: LegacyNavOptions, alternateId?: string): Promise<void> {
@@ -77,6 +75,7 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param layout
    * @deprecated
    */
   public async setStackRoot(layout: LegacyNavLayout): Promise<void> {
@@ -84,6 +83,7 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param options
    * @deprecated
    */
   public mergeOptions(options: LegacyNavOptions): void {
@@ -97,6 +97,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param newProps
+   * @param alternateId
    * @deprecated
    */
   public async updateProps(newProps: object, alternateId?: string): Promise<void> {
@@ -104,6 +106,7 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param layout
    * @deprecated
    */
   public async showModal(layout: LegacyNavLayout): Promise<void> {
@@ -116,6 +119,8 @@ export class LegacyNavigator extends BaseLegacyNavigator {
   }
 
   /**
+   * @param _options
+   * @param alternateId
    * @deprecated
    */
   public async dismissModal(_options?: LegacyNavOptions, alternateId?: string): Promise<void> {

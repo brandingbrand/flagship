@@ -1,16 +1,16 @@
-import * as path from '../../path';
-import * as fs from '../../fs';
-import { Config } from '../../../types';
 import { logInfo } from '../../../helpers';
+import type { Config } from '../../../types';
+import * as fs from '../../fs';
+import * as path from '../../path';
 
 const kRepository = `maven { url 'https://repo.leanplum.com/' }`;
 
 /**
  * Patches Android for the module.
  *
- * @param {object} configuration The project configuration.
+ * @param configuration The project configuration.
  */
-export function postLink(configuration: Config): void {
+export const postLink = (configuration: Config): void => {
   logInfo('patching Android for react-native-leanplum');
 
   // Add the repository to the project repositories.
@@ -21,4 +21,4 @@ export function postLink(configuration: Config): void {
     'new RNLeanplumPackage()',
     'new RNLeanplumPackage(application)'
   );
-}
+};

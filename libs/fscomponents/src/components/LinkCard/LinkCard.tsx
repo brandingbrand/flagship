@@ -1,43 +1,42 @@
 import React from 'react';
-import {
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  StyleSheet,
-  Text,
   TextStyle,
-  TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import { LinkCardGhost } from './LinkCardGhost';
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import arrow from '../../../assets/images/ArrowWithStem.png';
 
+import { LinkCardGhost } from './LinkCardGhost';
+
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingBottom: 41,
-    paddingTop: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#DBDBDB',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingBottom: 41,
+    paddingHorizontal: 20,
+    paddingTop: 10,
   },
   image: {
-    marginBottom: 10,
-    width: 300,
     height: 130,
+    marginBottom: 10,
     resizeMode: 'contain',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    lineHeight: 23,
-    letterSpacing: 0.5,
+    width: 300,
   },
   subtitle: {
     fontSize: 15,
-    lineHeight: 22,
     letterSpacing: 0.5,
+    lineHeight: 22,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    lineHeight: 23,
   },
 });
 
@@ -57,7 +56,7 @@ export interface SerializableLinkCardProps {
 export interface LinkCardProps
   extends Omit<
     SerializableLinkCardProps,
-    'imageStyle' | 'titleStyle' | 'subtitleStyle' | 'style' | 'arrowImageStyle'
+    'arrowImageStyle' | 'imageStyle' | 'style' | 'subtitleStyle' | 'titleStyle'
   > {
   imageStyle?: StyleProp<ImageStyle>;
   titleStyle?: StyleProp<TextStyle>;
@@ -86,7 +85,7 @@ export const LinkCard: React.FunctionComponent<LinkCardProps> = React.memo(
     }
 
     return (
-      <TouchableOpacity onPress={onPress} disabled={!onPress} style={[styles.container, style]}>
+      <TouchableOpacity disabled={!onPress} onPress={onPress} style={[styles.container, style]}>
         <Image source={image} style={[styles.image, imageStyle]} />
         <Text style={[styles.title, titleStyle]}>{title}</Text>
         <Text style={[styles.subtitle, subtitleStyle]}>

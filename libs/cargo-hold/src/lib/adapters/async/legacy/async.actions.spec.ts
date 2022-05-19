@@ -1,6 +1,9 @@
 import * as FastCheck from 'fast-check';
+
 import type { AsyncAction } from '../async.action.types';
-import { AsyncActionCreators, createAsyncActionCreators } from './async.actions';
+
+import type { AsyncActionCreators } from './async.actions';
+import { createAsyncActionCreators } from './async.actions';
 
 describe('createAsyncActionCreators', () => {
   it('creates all actions', () => {
@@ -15,6 +18,7 @@ describe('createAsyncActionCreators', () => {
         (key, source, asyncType, payload) => {
           const asyncKey = asyncType as keyof AsyncActionCreators<string, unknown, unknown>;
           const actionCreators = createAsyncActionCreators(key, source);
+
           expect(actionCreators).toHaveProperty('init');
           expect(actionCreators[asyncKey]).toHaveProperty('type');
           expect(actionCreators[asyncKey].type).toBe(key);

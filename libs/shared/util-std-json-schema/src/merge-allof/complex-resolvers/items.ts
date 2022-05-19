@@ -1,7 +1,6 @@
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
-import type { ComplexResolver, MergeSchemas } from '../resolver.type';
-
 import { toArray, uniqueWith } from '@brandingbrand/standard-array';
+
+import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 
 import { compare } from '../../compare.util';
 import {
@@ -10,17 +9,21 @@ import {
   isSchemaDefinition,
   notUndefined,
 } from '../common';
+import type { ComplexResolver, MergeSchemas } from '../resolver.type';
 
 const removeFalseSchemasFromArray = (target: unknown[]) => {
-  target.forEach((schema, index) => {
+  for (const [index, schema] of target.entries()) {
     if (schema === false) {
       target.splice(index, 1);
     }
-  });
+  }
 };
 
-const getItemSchemas = (subSchemas: Pick<JSONSchema7, typeof keywords[number]>[], key: number) => {
-  return subSchemas.map((sub) => {
+const getItemSchemas = (
+  subSchemas: Array<Pick<JSONSchema7, typeof keywords[number]>>,
+  key: number
+) =>
+  subSchemas.map((sub) => {
     if (!sub) {
       return undefined;
     }
@@ -38,10 +41,9 @@ const getItemSchemas = (subSchemas: Pick<JSONSchema7, typeof keywords[number]>[]
 
     return undefined;
   });
-};
 
-const getAdditionalSchemas = (subSchemas: JSONSchema7[]) => {
-  return subSchemas.map((sub) => {
+const getAdditionalSchemas = (subSchemas: JSONSchema7[]) =>
+  subSchemas.map((sub) => {
     if (!sub) {
       return undefined;
     }
@@ -52,21 +54,20 @@ const getAdditionalSchemas = (subSchemas: JSONSchema7[]) => {
 
     return sub.items;
   });
-};
 
 // Provide source when array
 const mergeItems = (
-  group: Pick<JSONSchema7, typeof keywords[number]>[],
+  group: Array<Pick<JSONSchema7, typeof keywords[number]>>,
   mergeSchemas: MergeSchemas,
   items: JSONSchema7Definition[][]
 ) => {
   const allKeys = allUniqueKeys(items);
-  return allKeys.reduce((all, key) => {
+  return allKeys.reduce<Array<Pick<JSONSchema7, typeof keywords[number]>>>((all, key) => {
     const schemas = getItemSchemas(group, key);
     const compacted = uniqueWith(schemas.filter(notUndefined), compare);
     all[key] = mergeSchemas(compacted, [key]) as any;
     return all;
-  }, [] as Pick<JSONSchema7, typeof keywords[number]>[]);
+  }, []);
 };
 
 export const keywords = ['items', 'additionalItems'] as const;
@@ -77,15 +78,9 @@ export const resolver: ComplexResolver<typeof keywords[number]> = (values, paren
 
   // if all items keyword values are schemas, we can merge them as simple schemas
   // if not we need to merge them as mixed
-  if (itemsCompacted.every(isSchemaDefinition)) {
-    returnObject.items = mergers.items(items as JSONSchema7Definition[]);
-  } else {
-    returnObject.items = mergeItems(
-      values,
-      mergers.items,
-      items.map(toArray) as JSONSchema7Definition[][]
-    );
-  }
+  returnObject.items = itemsCompacted.every(isSchemaDefinition)
+    ? mergers.items(items as JSONSchema7Definition[])
+    : mergeItems(values, mergers.items, items.map(toArray) as JSONSchema7Definition[][]);
 
   let schemasAtLastPos;
   if (itemsCompacted.every(Array.isArray)) {

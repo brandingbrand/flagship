@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
-import { InjectedProps } from '../types';
+
+import type { StyleProp, TextStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import type { InjectedProps } from '../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +16,7 @@ export interface CardProps extends InjectedProps {
 }
 
 export default class WhiteInboxWrapper extends Component<CardProps> {
-  render(): JSX.Element {
+  public render(): JSX.Element {
     return <View style={styles.container}>{this.props.children}</View>;
   }
 }

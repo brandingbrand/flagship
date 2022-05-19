@@ -1,38 +1,8 @@
-import { ImageStyle, RegisteredStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-export { RegisteredStyle, ViewStyle, TextStyle, ImageStyle };
+import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  locateMeIcon: {
-    width: 40,
-    height: 40,
-  },
-  locateMeButton: {
-    position: 'absolute',
-    top: 70,
-    right: 20,
-  },
-  slideMapContainer: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  slideListContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  slideListSearchBar: {
-    margin: 10,
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingTop: 2,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    overflow: 'hidden',
   },
   innerContainer: {
     flex: 1,
@@ -40,4 +10,34 @@ export const style = StyleSheet.create({
   inputContainer: {
     borderWidth: 0,
   },
+  locateMeButton: {
+    position: 'absolute',
+    right: 20,
+    top: 70,
+  },
+  locateMeIcon: {
+    height: 40,
+    width: 40,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  slideListContainer: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  slideListSearchBar: {
+    backgroundColor: 'white',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    margin: 10,
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingTop: 2,
+  },
+  slideMapContainer: {
+    ...StyleSheet.absoluteFillObject,
+  },
 });
+
+export type { ImageStyle, RegisteredStyle, TextStyle, ViewStyle } from 'react-native';

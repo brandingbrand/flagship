@@ -1,27 +1,29 @@
 import React, { PureComponent } from 'react';
+
+import type { AccessibilityRole, ScaledSize } from 'react-native';
 import {
-  AccessibilityRole,
   Animated,
   Dimensions,
   NativeModules,
-  ScaledSize,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+
+import type { AccessibilityComponentType } from '../types/Store';
+
 import { Modal } from './Modal';
-import { AccessibilityComponentType } from '../types/Store';
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-  },
   animatedContent: {
+    backgroundColor: 'white',
+    bottom: -400,
     height: 400,
     position: 'absolute',
-    backgroundColor: 'white',
     width: '100%',
-    bottom: -400,
+  },
+  content: {
+    flex: 1,
   },
 });
 
@@ -54,9 +56,9 @@ export interface ModalHalfScreenProps {
   backgroundAccessibilityLabel?: string;
   onRequestClose: () => void;
   position?:
-    | ModalHalfScreenPosition.Top
+    | ModalHalfScreenPosition.Bottom
     | ModalHalfScreenPosition.Center
-    | ModalHalfScreenPosition.Bottom;
+    | ModalHalfScreenPosition.Top;
 }
 
 export interface ModalHalfScreenState {
@@ -77,47 +79,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     };
   }
 
-  componentDidMount(): void {
-    if (this.props.visible) {
-      this.showContent();
-    }
-
-    try {
-      this.setState({
-        height: this.props.height || Dimensions.get('window').height / 2,
-      });
-
-      Dimensions.addEventListener('change', this.dimensionsListener);
-
-      const statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
-      if (statusBarHeight !== this.state.statusBarHeight) {
-        this.setState({ statusBarHeight });
-      }
-    } catch (exception) {
-      console.warn(exception);
-    }
-  }
-
-  componentWillUnmount(): void {
-    Dimensions.removeEventListener('change', this.dimensionsListener);
-  }
-
-  componentDidUpdate(prevProps: ModalHalfScreenProps, prevState: ModalHalfScreenState): void {
-    if (
-      this.props.height &&
-      this.props.height !== prevProps.height &&
-      this.props.height !== prevState.height
-    ) {
-      this.setState({ height: this.props.height });
-    }
-    if (prevProps.visible && !this.props.visible) {
-      this.hideContent();
-    } else if (!prevProps.visible && this.props.visible) {
-      this.showContent();
-    }
-  }
-
-  dimensionsListener = (event: { window: ScaledSize; screen: ScaledSize }) => {
+  private readonly dimensionsListener = (event: { window: ScaledSize; screen: ScaledSize }) => {
     const { height } = event.window;
     const halfWindowHeight = height / 2;
 
@@ -126,7 +88,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }
   };
 
-  showContent = () => {
+  private readonly showContent = () => {
     this.setState({ visible: true }, () => {
       // Open the drawer after we start the modal fade animation
       Animated.spring(this.state.contentOffset, {
@@ -137,7 +99,7 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     });
   };
 
-  hideContent = () => {
+  private readonly hideContent = () => {
     // Close the drawer
     Animated.spring(this.state.contentOffset, {
       toValue: 0,
@@ -151,51 +113,20 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
     }, 100);
   };
 
-  renderBackground = () => {
-    return (
-      <TouchableWithoutFeedback
-        onPress={this.props.onRequestClose}
-        accessibilityRole={this.props.backgroundAccessibilityTraits || 'button'}
-        accessibilityLabel={this.props.backgroundAccessibilityLabel || 'Close the modal!'}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          }}
-        />
-      </TouchableWithoutFeedback>
-    );
-  };
-
-  render(): JSX.Element {
-    const config: ModalHalfScreenAnimationConfig = this.getAnimationConfig();
-    const stylesForAnimation = [
-      styles.animatedContent,
-      config.heightFromProps,
-      {
-        transform: [
-          {
-            translateY: this.state.contentOffset.interpolate(config.contentOffsetY),
-          },
-        ],
-      },
-    ];
-
-    return (
-      <Modal
-        transparent={true}
-        visible={this.state.visible}
-        animationType={'fade'}
-        onRequestClose={this.props.onRequestClose}
-      >
-        {this.renderBackground()}
-        <Animated.View style={[styles.content, stylesForAnimation]}>
-          {this.props.children}
-        </Animated.View>
-      </Modal>
-    );
-  }
+  private readonly renderBackground = () => (
+    <TouchableWithoutFeedback
+      accessibilityLabel={this.props.backgroundAccessibilityLabel || 'Close the modal!'}
+      accessibilityRole={this.props.backgroundAccessibilityTraits || 'button'}
+      onPress={this.props.onRequestClose}
+    >
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      />
+    </TouchableWithoutFeedback>
+  );
 
   private getAnimationConfig(): ModalHalfScreenAnimationConfig {
     const { height } = this.state;
@@ -230,5 +161,77 @@ export class ModalHalfScreen extends PureComponent<ModalHalfScreenProps, ModalHa
           }
         : {},
     };
+  }
+
+  public componentDidMount(): void {
+    if (this.props.visible) {
+      this.showContent();
+    }
+
+    try {
+      this.setState({
+        height: this.props.height || Dimensions.get('window').height / 2,
+      });
+
+      Dimensions.addEventListener('change', this.dimensionsListener);
+
+      const statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
+      if (statusBarHeight !== this.state.statusBarHeight) {
+        this.setState({ statusBarHeight });
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  public componentWillUnmount(): void {
+    Dimensions.removeEventListener('change', this.dimensionsListener);
+  }
+
+  public componentDidUpdate(
+    prevProps: ModalHalfScreenProps,
+    prevState: ModalHalfScreenState
+  ): void {
+    if (
+      this.props.height &&
+      this.props.height !== prevProps.height &&
+      this.props.height !== prevState.height
+    ) {
+      this.setState({ height: this.props.height });
+    }
+    if (prevProps.visible && !this.props.visible) {
+      this.hideContent();
+    } else if (!prevProps.visible && this.props.visible) {
+      this.showContent();
+    }
+  }
+
+  public render(): JSX.Element {
+    const config: ModalHalfScreenAnimationConfig = this.getAnimationConfig();
+    const stylesForAnimation = [
+      styles.animatedContent,
+      config.heightFromProps,
+      {
+        transform: [
+          {
+            translateY: this.state.contentOffset.interpolate(config.contentOffsetY),
+          },
+        ],
+      },
+    ];
+
+    return (
+      <Modal
+        animationType="fade"
+        onRequestClose={this.props.onRequestClose}
+        transparent
+        visible={this.state.visible}
+      >
+        {this.renderBackground()}
+        <Animated.View style={[styles.content, stylesForAnimation]}>
+          {this.props.children}
+        </Animated.View>
+      </Modal>
+    );
   }
 }

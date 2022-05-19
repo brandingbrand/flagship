@@ -1,8 +1,11 @@
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+
 import Decimal from 'decimal.js';
+
 import { DefaultCurrencyCode } from './Misc';
 
-type ApplicablePayments = import('@brandingbrand/fscommerce').CommerceTypes.ApplicablePayment[];
-type ShippingMethods = import('@brandingbrand/fscommerce').CommerceTypes.ShippingMethod[];
+type ApplicablePayments = CommerceTypes.ApplicablePayment[];
+type ShippingMethods = CommerceTypes.ShippingMethod[];
 export const PaymentMethods: ApplicablePayments = [
   {
     id: 'VISA',

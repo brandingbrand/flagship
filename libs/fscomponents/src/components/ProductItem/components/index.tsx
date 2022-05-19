@@ -1,4 +1,5 @@
 export * from './ProductItemBrand';
+export * from './ProductItemButton';
 export * from './ProductItemFavoriteButton';
 export * from './ProductItemImage';
 export * from './ProductItemPrice';
@@ -7,4 +8,3 @@ export * from './ProductItemReviews';
 export * from './ProductItemSwatches';
 export * from './ProductItemTitle';
 export * from './ProductItemVariant';
-export * from './ProductItemButton';

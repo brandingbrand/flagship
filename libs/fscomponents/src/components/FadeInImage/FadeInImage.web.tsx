@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
+
 import { Image } from 'react-native';
-import { FadeInImageProps } from './FadeInImageProps';
+
+import type { FadeInImageProps } from './FadeInImageProps';
 
 export class FadeInImage extends PureComponent<FadeInImageProps> {
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     return <Image {...this.props} />;
   }
 }

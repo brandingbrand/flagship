@@ -1,8 +1,7 @@
-import type { JSONSchema7 } from 'json-schema';
-
 import { cloneDeep } from '@brandingbrand/standard-object';
 
-import { consumeSchema } from './index';
+import type { JSONSchema7 } from 'json-schema';
+
 import {
   alignChildrenSchema,
   commerceDataSourceEditorSchema,
@@ -11,11 +10,14 @@ import {
   viewStyleSchema,
 } from '../../fixtures';
 
+import { consumeSchema } from '.';
+
 describe('consumeSchema', () => {
   it('should maintain object type if not all properties are consumed', () => {
     const duplicatedViewSchema = cloneDeep(viewStyleSchema);
 
     consumeSchema(duplicatedViewSchema, alignChildrenSchema);
+
     expect(duplicatedViewSchema).toStrictEqual(expect.objectContaining({ type: 'object' }));
   });
 
@@ -23,6 +25,7 @@ describe('consumeSchema', () => {
     const duplicatedAlignChildrenSchema = cloneDeep(alignChildrenSchema);
 
     consumeSchema(duplicatedAlignChildrenSchema, alignChildrenSchema);
+
     expect(duplicatedAlignChildrenSchema).toStrictEqual({});
   });
 
@@ -30,6 +33,7 @@ describe('consumeSchema', () => {
     const duplicatedViewSchema = cloneDeep(viewStyleSchema);
 
     consumeSchema(duplicatedViewSchema, alignChildrenSchema);
+
     expect(duplicatedViewSchema).toStrictEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
@@ -43,6 +47,7 @@ describe('consumeSchema', () => {
     const duplicatedLiftedSchema = cloneDeep(liftedSchema);
 
     consumeSchema(duplicatedLiftedSchema, duplicatedLiftedSchema);
+
     expect(duplicatedLiftedSchema).toStrictEqual({});
   });
 

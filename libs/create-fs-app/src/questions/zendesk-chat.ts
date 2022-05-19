@@ -1,4 +1,5 @@
-import * as inquirer from 'inquirer';
+import type * as inquirer from 'inquirer';
+
 import * as formatters from '../lib/formatters';
 import { requiredString } from '../lib/validation';
 

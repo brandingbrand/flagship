@@ -53,5 +53,5 @@ export interface ProductPromotion {
    *
    * @example '/images/promo.jpg'
    */
-  customProperties: { [propertyName: string]: any };
+  customProperties: Record<string, unknown>;
 }

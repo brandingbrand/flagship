@@ -1,4 +1,5 @@
-import { ActionCreator, createActionCreator } from '../../../action-bus';
+import type { ActionCreator } from '../../../action-bus';
+import { createActionCreator } from '../../../action-bus';
 
 /**
  * AsyncActionCreators are utilities to both filter reducers/effects and then trigger those reducers
@@ -6,23 +7,23 @@ import { ActionCreator, createActionCreator } from '../../../action-bus';
  *
  * @deprecated Use builder-based async functions.
  */
-export type AsyncActionCreators<
+export interface AsyncActionCreators<
   ActionKey extends string,
   Payload,
   FailPayload,
   EmptyPayload = Payload
-> = {
+> {
   init: ActionCreator<
     ActionKey,
     'async:init',
-    Payload | EmptyPayload,
-    [payload: Payload | EmptyPayload]
+    EmptyPayload | Payload,
+    [payload: EmptyPayload | Payload]
   >;
   load: ActionCreator<
     ActionKey,
     'async:load',
-    Payload | EmptyPayload,
-    [payload: Payload | EmptyPayload]
+    EmptyPayload | Payload,
+    [payload: EmptyPayload | Payload]
   >;
   loadMore: ActionCreator<ActionKey, 'async:load-more', Payload, [payload: Payload]>;
   succeed: ActionCreator<ActionKey, 'async:succeed', Payload, [payload: Payload]>;
@@ -30,17 +31,18 @@ export type AsyncActionCreators<
   revert: ActionCreator<
     ActionKey,
     'async:revert',
-    Payload | EmptyPayload,
-    [payload: Payload | EmptyPayload]
+    EmptyPayload | Payload,
+    [payload: EmptyPayload | Payload]
   >;
-};
+}
 
 /**
  *
  * @param actionKey The key by which you want to call async actions to set state.
  * @param source Optional source to emit with the actions to "lock in" these actions to target
  * specific reducers.
- * @returns `AsyncActionCreators` - init, load, succeed, fail, & revert.
+ * @param metadata
+ * @return `AsyncActionCreators` - init, load, succeed, fail, & revert.
  * @deprecated Use builder-based async functions.
  */
 export const createAsyncActionCreators = <

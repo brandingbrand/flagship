@@ -1,6 +1,6 @@
-import { Commit, Diff } from '@brandingbrand/git';
+import type { Commit, Diff } from '@brandingbrand/git';
 
-import { ShipConfig } from '../configs/ship.config';
+import type { ShipConfig } from '../configs/ship.config';
 import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.util';
 
 /**
@@ -17,7 +17,7 @@ export const stripPaths =
     }
 
     const diffs = new Set<Diff>();
-    for (const diff of Array.from(commit.diffs)) {
+    for (const diff of commit.diffs) {
       const { path } = diff;
       const isInProject = excludedPaths.some((project) => path.startsWith(project));
 

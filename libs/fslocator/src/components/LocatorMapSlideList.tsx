@@ -1,5 +1,5 @@
-import { SearchBar } from '@brandingbrand/fscomponents';
 import React, { Component } from 'react';
+
 import {
   Animated,
   Dimensions,
@@ -9,15 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { style as S } from '../styles/LocatorSlideList';
-import { Location } from '../types/Location';
-import { PropType as LocatorPropType } from './LocatorList';
-import MapView from './MapView';
-import ResultItemWithBack from './ResultItemWithBack';
-import ResultList from './ResultList';
+
+import { SearchBar } from '@brandingbrand/fscomponents';
 import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import defaultLocateMeIcon from '../../assets/images/locate-me.png';
+import { style as S } from '../styles/LocatorSlideList';
+import type { Location } from '../types/Location';
+
+import type { PropType as LocatorPropType } from './LocatorList';
+import MapView from './MapView';
+import ResultItemWithBack from './ResultItemWithBack';
+import ResultList from './ResultList';
 
 const MAP_HEIGHT = 300;
 const LIST_HEIGHT = 300;
@@ -32,14 +35,9 @@ export interface StateType {
   isMapCollapsed: boolean;
 }
 
-export type ListPosition = 'top' | 'middle' | 'bottom';
+export type ListPosition = 'bottom' | 'middle' | 'top';
 
 export default class LocatorMapSlideList extends Component<LocatorPropType, StateType> {
-  map: any;
-  panResponder: any;
-  listPosition: ListPosition = 'middle';
-  scrollY: number = 0;
-
   constructor(props: LocatorPropType) {
     super(props);
     this.state = {
@@ -50,114 +48,12 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     };
   }
 
-  componentDidUpdate(prevProps: LocatorPropType): void {
-    if (prevProps.locations !== this.props.locations) {
-      return this.moveToMiddle();
-    }
+  public map: unknown;
+  public panResponder: any;
+  private listPosition: ListPosition = 'middle';
+  private scrollY = 0;
 
-    if (!this.props.selectedLocation && prevProps.selectedLocation) {
-      return this.moveToTop();
-    }
-  }
-
-  moveToMiddle = () => {
-    this.listPosition = 'middle';
-    this.setState({
-      isMapCollapsed: true,
-      scrollable: false,
-    });
-
-    Animated.spring(this.state.listButtonY, {
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.spring(this.state.listY, {
-      bounciness: 0,
-      toValue: MAP_HEIGHT,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  moveToBottom = () => {
-    this.listPosition = 'bottom';
-    this.setState({
-      isMapCollapsed: false,
-      scrollable: false,
-    });
-
-    Animated.spring(this.state.listButtonY, {
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.spring(this.state.listY, {
-      bounciness: 0,
-      toValue: this.getPositionY('bottom'),
-      useNativeDriver: false,
-    }).start();
-  };
-
-  moveToTop = () => {
-    this.listPosition = 'top';
-    this.setState({
-      scrollable: true,
-    });
-
-    Animated.spring(this.state.listButtonY, {
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.spring(this.state.listY, {
-      bounciness: 0,
-      toValue: this.getPositionY('top'),
-      useNativeDriver: false,
-    }).start();
-  };
-
-  componentDidMount(): void {
-    this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        if (this.listPosition === 'middle') {
-          return true;
-        } else if (this.scrollY <= 0) {
-          if (gestureState.dy > 0) {
-            return true;
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      },
-
-      onPanResponderGrant: (evt: any, gestureState: any) => {
-        this.setState({ scrollable: true });
-
-        const listY = this.state.listY as any;
-        this.state.listY.setOffset(listY._value);
-        this.state.listY.setValue(0);
-      },
-      onPanResponderMove: (evt: any, gestureState: any) => {
-        if (this.listPosition === 'middle' && gestureState.dy < -LIST_HEIGHT) {
-          this.state.listY.setValue(-LIST_HEIGHT);
-          return;
-        }
-        if (this.listPosition === 'top' && gestureState.dy < SEARCH_BAR_HEIGHT) {
-          this.state.listY.setValue(0);
-          return;
-        }
-        Animated.event([null, { dy: this.state.listY }])(evt, gestureState);
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => false,
-      onPanResponderRelease: this.handleMoveRease,
-      onShouldBlockNativeResponder: (evt, gestureState) => true,
-    });
-  }
-
-  handleMoveRease = (evt: any, gestureState: any): void => {
+  private readonly handleMoveRease = (evt: unknown, gestureState: any): void => {
     this.state.listY.flattenOffset();
     const isUp = gestureState.dy < 0;
     const shouldMove = Math.abs(gestureState.dy) > 40 || Math.abs(gestureState.vy) > 1;
@@ -184,7 +80,7 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     });
   };
 
-  getPositionY = (listPosition: ListPosition): number => {
+  private readonly getPositionY = (listPosition: ListPosition): number => {
     switch (listPosition) {
       case 'top':
         return SEARCH_BAR_HEIGHT;
@@ -197,7 +93,7 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     }
   };
 
-  getNextPosition = (
+  private readonly getNextPosition = (
     isUp: boolean,
     shouldMove: boolean,
     listPosition: ListPosition
@@ -208,19 +104,11 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     return isUp ? 'top' : 'bottom';
   };
 
-  extractMapRef = (map: any) => (this.map = map);
-
-  handleScroll = (e: any) => {
+  private readonly handleScroll = (e: any) => {
     this.scrollY = e.nativeEvent.contentOffset.y;
   };
 
-  expandMap = () => {
-    this.setState({
-      isMapCollapsed: false,
-    });
-  };
-
-  handleShowList = () => {
+  private readonly handleShowList = () => {
     this.listPosition = 'top';
 
     Animated.spring(this.state.listButtonY, {
@@ -235,15 +123,15 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     }).start();
   };
 
-  handleItemPress = (location: Location) => {
+  private readonly handleItemPress = (location: Location) => {
     const { selectLocation } = this.props;
 
     this.moveToBottom();
     selectLocation(location);
   };
 
-  renderSearchBar = () => {
-    const { searchBarProps, renderSearchBar } = this.props;
+  private readonly renderSearchBar = () => {
+    const { renderSearchBar, searchBarProps } = this.props;
     return renderSearchBar ? (
       renderSearchBar({
         submitSearch: this.props.submitSearch,
@@ -251,37 +139,151 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
       })
     ) : (
       <SearchBar
-        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
-        onSubmit={this.props.submitSearch}
-        style={S.slideListSearchBar}
         containerStyle={S.inputContainer}
+        onSubmit={this.props.submitSearch}
+        placeholder={FSI18n.string(translationKeys.flagship.storeLocator.searchPlaceholder)}
+        style={S.slideListSearchBar}
         {...searchBarProps}
       />
     );
   };
 
-  render(): JSX.Element {
+  public componentDidUpdate(prevProps: LocatorPropType): void {
+    if (prevProps.locations !== this.props.locations) {
+      this.moveToMiddle();
+      return;
+    }
+
+    if (!this.props.selectedLocation && prevProps.selectedLocation) {
+      this.moveToTop();
+    }
+  }
+
+  public expandMap = () => {
+    this.setState({
+      isMapCollapsed: false,
+    });
+  };
+
+  public moveToMiddle = () => {
+    this.listPosition = 'middle';
+    this.setState({
+      isMapCollapsed: true,
+      scrollable: false,
+    });
+
+    Animated.spring(this.state.listButtonY, {
+      toValue: 0,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.spring(this.state.listY, {
+      bounciness: 0,
+      toValue: MAP_HEIGHT,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  public moveToBottom = () => {
+    this.listPosition = 'bottom';
+    this.setState({
+      isMapCollapsed: false,
+      scrollable: false,
+    });
+
+    Animated.spring(this.state.listButtonY, {
+      toValue: 0,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.spring(this.state.listY, {
+      bounciness: 0,
+      toValue: this.getPositionY('bottom'),
+      useNativeDriver: false,
+    }).start();
+  };
+
+  public moveToTop = () => {
+    this.listPosition = 'top';
+    this.setState({
+      scrollable: true,
+    });
+
+    Animated.spring(this.state.listButtonY, {
+      toValue: 0,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.spring(this.state.listY, {
+      bounciness: 0,
+      toValue: this.getPositionY('top'),
+      useNativeDriver: false,
+    }).start();
+  };
+
+  public componentDidMount(): void {
+    this.panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => false,
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        if (this.listPosition === 'middle') {
+          return true;
+        } else if (this.scrollY <= 0) {
+          if (gestureState.dy > 0) {
+            return true;
+          }
+          return false;
+        }
+        return false;
+      },
+
+      onPanResponderGrant: (evt: unknown, gestureState: unknown) => {
+        this.setState({ scrollable: true });
+
+        const listY = this.state.listY as any;
+        this.state.listY.setOffset(listY._value);
+        this.state.listY.setValue(0);
+      },
+      onPanResponderMove: (evt: unknown, gestureState: any) => {
+        if (this.listPosition === 'middle' && gestureState.dy < -LIST_HEIGHT) {
+          this.state.listY.setValue(-LIST_HEIGHT);
+          return;
+        }
+        if (this.listPosition === 'top' && gestureState.dy < SEARCH_BAR_HEIGHT) {
+          this.state.listY.setValue(0);
+          return;
+        }
+        Animated.event([null, { dy: this.state.listY }])(evt, gestureState);
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => false,
+      onPanResponderRelease: this.handleMoveRease,
+      onShouldBlockNativeResponder: (evt, gestureState) => true,
+    });
+  }
+
+  public extractMapRef = (map: unknown) => (this.map = map);
+
+  public render(): JSX.Element {
     const {
-      style,
-      locations,
-      useCurrentLocation,
-      locateMeIcon,
-      googleMapsAPIKey,
       currentLocation,
-      locationsNotFound,
-      locationItemProps,
+      deselectLocation,
+      googleMapsAPIKey,
       handleNavPress,
       handlePhonePress,
-      selectedLocation,
-      deselectLocation,
       handleRegionChange,
       handleRegionChangeComplete,
+      locateMeIcon,
+      locationItemProps,
+      locations,
+      locationsNotFound,
       mapMarkerIcon,
-      showLocateMe,
-      selectLocation,
+      mapStyle,
       renderLocationItem,
       renderLocationItemWithBack,
-      mapStyle,
+      selectLocation,
+      selectedLocation,
+      showLocateMe,
+      style,
+      useCurrentLocation,
     } = this.props;
 
     const listAniamtedStyle = {
@@ -291,7 +293,7 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
     const showListButtonAniamtedStyle = {
       transform: [{ translateY: this.state.listButtonY }],
     };
-    const shouldShowList = locationsNotFound || !!locations.length;
+    const shouldShowList = locationsNotFound || locations.length > 0;
     const center = selectedLocation && {
       latitude: selectedLocation.address.latlng.lat,
       longitude: selectedLocation.address.latlng.lng,
@@ -302,21 +304,21 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
         <View style={S.innerContainer}>
           <View style={S.slideMapContainer}>
             <MapView
-              onMakerPress={this.handleItemPress}
-              googleMapsAPIKey={googleMapsAPIKey}
-              ref={this.extractMapRef}
-              style={[S.map, mapStyle]}
-              locations={locations}
-              collapseHeight={MAP_HEIGHT}
               center={center}
-              isCollapsed={this.state.isMapCollapsed}
+              collapseHeight={MAP_HEIGHT}
               currentLocation={currentLocation}
+              googleMapsAPIKey={googleMapsAPIKey}
               handleRegionChange={handleRegionChange}
               handleRegionChangeComplete={handleRegionChangeComplete}
+              isCollapsed={this.state.isMapCollapsed}
+              locations={locations}
               mapMarkerIcon={mapMarkerIcon}
+              onMakerPress={this.handleItemPress}
+              ref={this.extractMapRef}
+              style={[S.map, mapStyle]}
             />
             {showLocateMe && (
-              <TouchableOpacity style={S.locateMeButton} onPress={useCurrentLocation}>
+              <TouchableOpacity onPress={useCurrentLocation} style={S.locateMeButton}>
                 <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
               </TouchableOpacity>
             )}
@@ -330,9 +332,9 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
             >
               <ResultList
                 {...this.props}
-                scrollEnabled={this.state.scrollable}
-                onScroll={this.handleScroll}
                 onItemPress={this.handleItemPress}
+                onScroll={this.handleScroll}
+                scrollEnabled={this.state.scrollable}
               />
             </Animated.View>
           )}
@@ -340,13 +342,13 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
           {selectedLocation && (
             <ResultItemWithBack
               deselectLocation={deselectLocation}
-              selectedLocation={selectedLocation}
               handleNavPress={handleNavPress}
               handlePhonePress={handlePhonePress}
               locationItemProps={locationItemProps}
-              selectLocation={selectLocation}
               renderLocationItem={renderLocationItem}
               renderLocationItemWithBack={renderLocationItemWithBack}
+              selectLocation={selectLocation}
+              selectedLocation={selectedLocation}
             />
           )}
         </View>

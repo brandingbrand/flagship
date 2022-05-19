@@ -1,24 +1,26 @@
 import { execSync as exec } from 'child_process';
+
+import { logError, logInfo, logWarn } from '../helpers';
+import type { NPMPackageConfig } from '../types';
+
 import * as fs from './fs';
 import * as path from './path';
-import { logError, logInfo, logWarn } from '../helpers';
-import { NPMPackageConfig } from '../types';
 
 /**
  * Sets the homepage in the package.json
  *
- * @param {string} homepage The homepage to use.
+ * @param homepage The homepage to use.
  */
-export function homepage(homepage: string): void {
+export const homepage = (homepage: string): void => {
   logInfo(`updating web/package.json homepage`);
 
   fs.update(packageJSONPath(), '{', `{"homepage": "${homepage}",`);
-}
+};
 
 /**
  * Performs a yarn install for web packages.
  */
-export function install(): void {
+export const install = (): void => {
   logInfo(`running yarn for Web`);
 
   const webPath = path.project.resolve('web');
@@ -31,27 +33,27 @@ export function install(): void {
     // Remove react dependency in web, the bundler will automatically pick up the one
     // from react-native
     fs.removeSync(path.project.resolve('web', 'node_modules', 'react'));
-  } catch (err: any) {
-    logError(`yarn for Web`, err);
+  } catch (error: any) {
+    logError(`yarn for Web`, error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * Creates symlinks in the web node_modules to all the dependencies in the host
  * project's package.json
  *
- * @param {object} packageJSON The project package.json
+ * @param packageJSON The project package.json
  */
-export function link(packageJSON: NPMPackageConfig): void {
+export const link = (packageJSON: NPMPackageConfig): void => {
   logInfo('linking web node_modules to parent node_modules');
 
   const parentNodeModules = path.project.resolve('..', '..', 'node_modules');
   const mainNodeModules = path.project.resolve('node_modules');
   const webNodeModules = path.project.resolve('web', 'node_modules');
 
-  Object.keys(packageJSON.dependencies || {}).forEach((dependency) => {
+  for (const dependency of Object.keys(packageJSON.dependencies || {})) {
     // Replace the `/` with the platform path separator
     // e.g. @brandingbrand/pirate-network to @brandingbrand\pirate-network
     const dependencyPath = dependency.split('/').join(path.sep);
@@ -91,15 +93,15 @@ export function link(packageJSON: NPMPackageConfig): void {
       // The source dependency did not exist
       logWarn(`could not locate dependency ${dependency} in node_modules`);
     }
-  });
-}
+  }
+};
 
 /**
  * Injects a script fragment at a given path in the HTML header.
  *
- * @param {*} fragmentPath The path to the HTML fragment to inject in the header.
+ * @param fragmentPath The path to the HTML fragment to inject in the header.
  */
-export function headerScripts(fragmentPath?: string): void {
+export const headerScripts = (fragmentPath?: string): void => {
   if (!fragmentPath) {
     return;
   }
@@ -111,22 +113,22 @@ export function headerScripts(fragmentPath?: string): void {
 
     fs.update(
       indexHTMLPath(),
-      /<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->/,
+      /<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->[\s.]+<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_HEADER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_HEADER_END-->`
     );
-  } catch (err: any) {
-    logError(`injecting web header scripts from ${fragmentPath}`, err);
+  } catch (error: any) {
+    logError(`injecting web header scripts from ${fragmentPath}`, error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * Injects a script fragment at a given path in the HTML footer.
  *
- * @param {*} fragmentPath The path to the HTML fragment to inject in the footer.
+ * @param fragmentPath The path to the HTML fragment to inject in the footer.
  */
-export function footerScripts(fragmentPath?: string): void {
+export const footerScripts = (fragmentPath?: string): void => {
   if (!fragmentPath) {
     return;
   }
@@ -138,22 +140,22 @@ export function footerScripts(fragmentPath?: string): void {
 
     fs.update(
       indexHTMLPath(),
-      /<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->[.\s]+<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->/,
+      /<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->[\s.]+<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->/,
       `<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_START-->${scripts}<!--FLAGSHIP_SCRIPT_INJECT_FOOTER_END-->`
     );
-  } catch (err: any) {
-    logError(`injecting web footer scripts from ${fragmentPath}`, err);
+  } catch (error: any) {
+    logError(`injecting web footer scripts from ${fragmentPath}`, error);
 
     process.exit(1);
   }
-}
+};
 
 /**
  * Sets the default title for the static HTML
  *
- * @param {string} title The default title for the static HTML.
+ * @param title The default title for the static HTML.
  */
-export function title(title?: string): void {
+export const title = (title?: string): void => {
   if (!title) {
     logWarn('No <title> specified for web, use "webTitle" in package.json to specify');
 
@@ -163,12 +165,12 @@ export function title(title?: string): void {
   logInfo(`updating web title to [${title}]`);
 
   fs.update(indexHTMLPath(), /<title>[^<]+<\/title>/, `<title>${title}</title>`);
-}
+};
 
 /**
  * Returns the path to the package.json
  *
- * @returns {string} The path to package.json
+ * @return The path to package.json
  */
 export function packageJSONPath(): string {
   return path.project.resolve('web', 'package.json');
@@ -177,7 +179,7 @@ export function packageJSONPath(): string {
 /**
  * Returns the path to the index.html
  *
- * @returns {string} The path to index.html
+ * @return The path to index.html
  */
 export function indexHTMLPath(): string {
   return path.project.resolve('web', 'public', 'index.html');

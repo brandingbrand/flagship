@@ -8,7 +8,7 @@ export const unlockScroll = () => {
   document.body.style.top = '';
   document.body.style.right = '';
   document.body.style.left = '';
-  window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+  window.scrollTo(0, Number.parseInt(scrollY || '0', 10) * -1);
 };
 
 export const lockScroll = () => {

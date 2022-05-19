@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import FSNetwork from '@brandingbrand/fsnetwork';
-import { setGlobalData } from '../actions/globalDataAction';
+
+import type FSNetwork from '@brandingbrand/fsnetwork';
+
 import qs from 'qs';
+
+import { setGlobalData } from '../actions/globalDataAction';
+import type { GenericNavProp } from '../lib/nav-wrapper.web';
+import Navigator from '../lib/nav-wrapper.web';
+import type { AppConfigType, DrawerConfig, NavModal } from '../types';
+
 import NavRender from './Navigator.web';
-import Navigator, { GenericNavProp } from '../lib/nav-wrapper.web';
-import { AppConfigType, DrawerConfig, NavModal } from '../types';
 
 // hack to avoid ts complaint about certain web-only properties not being valid
 const StyleSheetCreate: (obj: any) => StyleSheet.NamedStyles<any> = StyleSheet.create;
@@ -52,20 +58,17 @@ export interface GenericScreenState {
   navModals: NavModal[];
 }
 
-export default function wrapScreen(
+const wrapScreen = (
   PageComponent: any,
   appConfig: AppConfigType,
   api: FSNetwork,
   toggleDrawerFn?: (config: DrawerConfig) => void
-): any {
+): any => {
   if (!PageComponent) {
     throw new Error('no PageComponent passed to wrapScreen.web');
   }
 
   class GenericScreen extends Component<GenericScreenProp, GenericScreenState> {
-    navigator: Navigator;
-    showDevMenu: boolean;
-
     constructor(props: GenericScreenProp) {
       super(props);
       this.showDevMenu = __DEV__ || (appConfig.env && appConfig.env.isFLAGSHIP);
@@ -80,32 +83,22 @@ export default function wrapScreen(
         modals: props.modals || [],
       });
     }
-    updateModals = (navModals: NavModal[]): void => {
+
+    private readonly navigator: Navigator;
+    private readonly showDevMenu: boolean;
+
+    private readonly updateModals = (navModals: NavModal[]): void => {
       this.setState({ navModals });
     };
 
-    componentDidMount(): void {
-      const component = PageComponent.WrappedComponent || PageComponent;
-
-      if (appConfig.analytics && !component.disableTracking) {
-        let url = location.protocol + '//' + location.hostname;
-
-        if (this.props.location) {
-          url += this.props.location.pathname + this.props.location.search;
-        }
-
-        appConfig.analytics.screenview(component, { url });
-      }
-    }
-
-    onDismiss = (index: number): void => {
+    private readonly onDismiss = (index: number): void => {
       this.state.navModals.splice(index, 1);
       this.setState({
         navModals: this.state.navModals,
       });
     };
 
-    openDevMenu = () => {
+    private readonly openDevMenu = () => {
       this.navigator
         .push({
           component: {
@@ -122,26 +115,12 @@ export default function wrapScreen(
             },
           },
         })
-        .catch((err) => console.warn('openDevMenu SHOWMODAL error: ', err));
+        .catch((error) => {
+          console.warn('openDevMenu SHOWMODAL error:', error);
+        });
     };
 
-    render(): JSX.Element {
-      return (
-        <View style={styles.screenContainer}>
-          {this.renderPage()}
-          {this.renderVersion()}
-          <NavRender
-            {...this.props}
-            modals={this.state.navModals}
-            appConfig={appConfig}
-            onDismiss={this.onDismiss}
-            navigator={this.navigator}
-          />
-        </View>
-      );
-    }
-
-    renderVersion = () => {
+    private readonly renderVersion = () => {
       // DEV feature
       if (!this.showDevMenu || PageComponent.name === 'DevMenu' || this.props.devMenuHidden) {
         return null;
@@ -151,13 +130,13 @@ export default function wrapScreen(
         appConfig.version || (appConfig.packageJson && appConfig.packageJson.version) || '';
 
       return (
-        <TouchableOpacity style={styles.devNoteContainer} onPress={this.openDevMenu}>
+        <TouchableOpacity onPress={this.openDevMenu} style={styles.devNoteContainer}>
           <Text style={styles.devNote}>{`${versionlabel}`}</Text>
         </TouchableOpacity>
       );
     };
 
-    renderPage = () => {
+    private readonly renderPage = () => {
       const { location, match } = this.props;
       let passProps = {
         ...match.params,
@@ -178,28 +157,56 @@ export default function wrapScreen(
         <PageComponent
           {...this.props}
           {...passProps}
-          appConfig={appConfig}
           api={api}
+          appConfig={appConfig}
           navigator={this.navigator}
         />
       );
     };
+
+    public componentDidMount(): void {
+      const component = PageComponent.WrappedComponent || PageComponent;
+
+      if (appConfig.analytics && !component.disableTracking) {
+        let url = `${location.protocol}//${location.hostname}`;
+
+        if (this.props.location) {
+          url += this.props.location.pathname + this.props.location.search;
+        }
+
+        appConfig.analytics.screenview(component, { url });
+      }
+    }
+
+    public render(): JSX.Element {
+      return (
+        <View style={styles.screenContainer}>
+          {this.renderPage()}
+          {this.renderVersion()}
+          <NavRender
+            {...this.props}
+            appConfig={appConfig}
+            modals={this.state.navModals}
+            navigator={this.navigator}
+            onDismiss={this.onDismiss}
+          />
+        </View>
+      );
+    }
   }
 
-  function mapStateToProps(state: any, ownProps: GenericScreenProp): GenericScreenStateProp {
-    return {
-      devMenuHidden: state.global.devMenuHidden,
-    };
-  }
+  const mapStateToProps = (state: any, ownProps: GenericScreenProp): GenericScreenStateProp => ({
+    devMenuHidden: state.global.devMenuHidden,
+  });
 
-  function mapDispatchToProps(
+  const mapDispatchToProps = (
     dispatch: any,
     ownProps: GenericScreenProp
-  ): GenericScreenDispatchProp {
-    return {
-      hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
-    };
-  }
+  ): GenericScreenDispatchProp => ({
+    hideDevMenu: () => dispatch(setGlobalData({ devMenuHidden: true })),
+  });
 
   return connect(mapStateToProps, mapDispatchToProps)(GenericScreen);
-}
+};
+
+export default wrapScreen;

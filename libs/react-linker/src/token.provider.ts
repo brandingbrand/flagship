@@ -1,4 +1,5 @@
 import type { Context } from 'react';
+
 import type { InjectionToken } from '@brandingbrand/fslinker';
 
 import { useReact } from './use-react.hook';
@@ -10,7 +11,7 @@ export interface TokenProviderProps<T> {
   children?: React.ReactNode;
 }
 
-export const TokenProvider = <T>({ value, token, children }: TokenProviderProps<T>) => {
+export const TokenProvider = <T>({ children, token, value }: TokenProviderProps<T>) => {
   const React = useReact();
   const context = useToken(token);
 

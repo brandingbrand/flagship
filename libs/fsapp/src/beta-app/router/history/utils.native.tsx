@@ -1,13 +1,16 @@
-import type { ActivatedRoute, MatchingRoute, ParentRoute, Route, RouteCollection } from '../types';
-
 import React from 'react';
+
 import { Text } from 'react-native';
-import { Layout, LayoutRoot, LayoutTabsChildren, Navigation } from 'react-native-navigation';
+import type { Layout, LayoutRoot, LayoutTabsChildren } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
 import { defaultsDeep, uniqueId } from 'lodash-es';
 
-import { Matchers, matchRoute } from './utils.base';
+import type { ActivatedRoute, MatchingRoute, ParentRoute, Route, RouteCollection } from '../types';
+
 import { ROOT_STACK, ROOT_STACK_OPTIONS } from './constants';
+import { matchRoute } from './utils.base';
+import type { Matchers } from './utils.base';
 
 export const isTabRoute = (route: Route): route is RouteCollection => 'tab' in route;
 
@@ -17,31 +20,29 @@ export const isNotTabRoute = (route: Route): route is Exclude<Route, RouteCollec
 export const createStack = ([route, title]: readonly [
   MatchingRoute,
   string | undefined
-]): Layout => {
-  return {
-    stack: {
-      id: route.tabAffinity || ROOT_STACK,
-      children: [
-        {
-          component: {
-            name: route.id,
-            id: route.matchedPath,
-            options: {
-              statusBar: { ...route?.statusBarStyle },
-              topBar: {
-                ...route?.topBarStyle,
-                title: {
-                  ...route?.topBarStyle?.title,
-                  text: title ?? route.tabAffinity,
-                },
+]): Layout => ({
+  stack: {
+    id: route.tabAffinity || ROOT_STACK,
+    children: [
+      {
+        component: {
+          name: route.id,
+          id: route.matchedPath,
+          options: {
+            statusBar: { ...route.statusBarStyle },
+            topBar: {
+              ...route.topBarStyle,
+              title: {
+                ...route.topBarStyle?.title,
+                text: title ?? route.tabAffinity,
               },
             },
           },
         },
-      ],
-    },
-  };
-};
+      },
+    ],
+  },
+});
 
 export const resolveStack = async (
   route: MatchingRoute,
@@ -64,7 +65,7 @@ export const resolveStack = async (
   });
 };
 
-export const applyMatcher = async (matchers: Matchers, route: RouteCollection | ParentRoute) => {
+export const applyMatcher = async (matchers: Matchers, route: ParentRoute | RouteCollection) => {
   const component = await matchRoute(
     matchers,
     'initialPath' in route ? `/${route.initialPath}` : route.path ? `/${route.path}` : '/'
@@ -89,7 +90,7 @@ export const applyMatcher = async (matchers: Matchers, route: RouteCollection | 
   return undefined;
 };
 
-export const matchStack = async (route: RouteCollection | ParentRoute, matcher: Matchers) => {
+export const matchStack = async (route: ParentRoute | RouteCollection, matcher: Matchers) => {
   const component = await applyMatcher(matcher, route);
   return component ? createStack(component) : undefined;
 };
@@ -132,7 +133,7 @@ export const makeRootLayout = async (
     };
   }
 
-  if (tabs.length === 1 && tabs?.[0]) {
+  if (tabs.length === 1 && tabs[0]) {
     return tabs[0];
   }
 
@@ -144,17 +145,14 @@ export const makeRootLayout = async (
   return makeErrorComponent('Could not determine root route, check your route config...');
 };
 
-export const extractPagePaths = (root: Layout) => {
-  return (
-    root.bottomTabs?.children?.map(({ stack }) => stack?.children?.[0]?.component?.id) ?? [
-      root.stack?.children?.[0]?.component?.id,
-    ]
-  );
-};
+export const extractPagePaths = (root: Layout) =>
+  root.bottomTabs?.children?.map(({ stack }) => stack?.children?.[0]?.component?.id) ?? [
+    root.stack?.children?.[0]?.component?.id,
+  ];
 
 export const activateStacks = async (
   root: Layout,
-  activated: (readonly [MatchingRoute, ActivatedRoute] | readonly [undefined, undefined])[]
+  activated: Array<readonly [MatchingRoute, ActivatedRoute] | readonly [undefined, undefined]>
 ): Promise<LayoutRoot> => {
   if (root.bottomTabs?.children) {
     return {

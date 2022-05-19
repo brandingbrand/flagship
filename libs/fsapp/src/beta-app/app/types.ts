@@ -1,17 +1,20 @@
 import type { FC } from 'react';
-import type { Action, AnyAction, Store } from 'redux';
-import type { Analytics } from '@brandingbrand/fsengage';
+
 import type { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
 
-import type { FSRouter, RouterConfig, Routes } from '../router';
-import type { GenericState, StoreConfig } from '../store';
-import type { ShellConfig } from '../shell.web';
+import type { Analytics } from '@brandingbrand/fsengage';
+import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
+import type FSNetwork from '@brandingbrand/fsnetwork';
 
-import FSNetwork, { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
+import type { Action, AnyAction, Store } from 'redux';
+
+import type { FSRouter, RouterConfig, Routes } from '../router';
+import type { ShellConfig } from '../shell.web';
+import type { GenericState, StoreConfig } from '../store';
 
 export interface WebApplication {
   readonly element: JSX.Element;
-  getStyleElement(props?: Partial<React.StyleHTMLAttributes<HTMLStyleElement>>): JSX.Element;
+  getStyleElement: (props?: Partial<React.StyleHTMLAttributes<HTMLStyleElement>>) => JSX.Element;
 }
 
 export interface AppConfig<
@@ -47,12 +50,12 @@ export interface IApp {
   readonly config: AppConfig;
   readonly routes: Routes;
   readonly store?: Store;
-  openUrl(url: string): void;
-  startApplication(): Promise<void>;
-  stopApplication(): Promise<void>;
+  openUrl: (url: string) => void;
+  startApplication: () => Promise<void>;
+  stopApplication: () => Promise<void>;
 }
 
 export interface AppConstructor<T extends IApp = IApp> {
   new (version: string, config: AppConfig, router: FSRouter, api?: FSNetwork, store?: Store): T;
-  bootstrap(options: AppConfig): Promise<T>;
+  bootstrap: (options: AppConfig) => Promise<T>;
 }

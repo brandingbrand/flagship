@@ -1,24 +1,22 @@
 import React, { PureComponent } from 'react';
-import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import {
-  Image,
+
+import type {
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  StyleSheet,
-  Text,
   TextStyle,
-  TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { Stepper } from '../Stepper';
-import { CartItemDetails } from './CartItemDetails';
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+import FSI18n, { translationKeys } from '@brandingbrand/fsi18n';
 
 import decreaseBtn from '../../../assets/images/decreaseImage.png';
 import increaseBtn from '../../../assets/images/increaseImage.png';
+import { Stepper } from '../Stepper';
+
+import { CartItemDetails } from './CartItemDetails';
 
 export type CartItemUpdateQuantityFunction = (
   item: CommerceTypes.CartItem,
@@ -84,13 +82,13 @@ export interface CartItemProps
   extends CommerceTypes.CartItem,
     Omit<
       SerializableCartItemProps,
-      | 'stepperStyle'
+      | 'leftColumnStyle'
+      | 'quantityRowStyle'
       | 'removeButtonStyle'
       | 'removeButtonTextStyle'
-      | 'style'
-      | 'leftColumnStyle'
       | 'rightColumnStyle'
-      | 'quantityRowStyle'
+      | 'stepperStyle'
+      | 'style'
     > {
   /**
    * A function to invoke when the user wants to remove the item from cart.
@@ -173,29 +171,29 @@ const defaultStyle = StyleSheet.create({
   container: {
     flexDirection: 'row',
   },
+  quantityRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 10,
+  },
   rightColumn: {
     flex: 1,
     paddingLeft: 10,
   },
-  quantityRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-  },
 });
 
 export class CartItem extends PureComponent<CartItemProps, CartItemState> {
-  static defaultProps: Partial<CartItemProps> = {
+  public static defaultProps: Partial<CartItemProps> = {
     imageHeight: 100,
     imageWidth: 100,
   };
 
-  static getDerivedStateFromProps(
+  public static getDerivedStateFromProps(
     nextProps: CartItemProps,
     prevState: CartItemState
   ): Partial<CartItemState> | null {
     return {
-      image: nextProps.images && nextProps.images.find((img) => !!img.uri),
+      image: nextProps.images && nextProps.images.find((img) => Boolean(img.uri)),
       imageStyle: {
         height: nextProps.imageHeight,
         width: nextProps.imageWidth,
@@ -203,12 +201,80 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
     };
   }
 
-  state: CartItemState = {
+  public state: CartItemState = {
     image: undefined,
     imageStyle: undefined,
   };
 
-  render(): React.ReactNode {
+  private readonly renderRemoveButton = (): React.ReactNode => {
+    const { removeButtonStyle, removeButtonTextStyle, removeItem, renderRemoveButton, updateQty } =
+      this.props;
+
+    if (renderRemoveButton) {
+      return renderRemoveButton(this.props, updateQty, removeItem);
+    }
+
+    return (
+      <TouchableOpacity onPress={this.handleRemove}>
+        <View style={removeButtonStyle}>
+          <Text style={removeButtonTextStyle}>
+            {FSI18n.string(translationKeys.flagship.cart.actions.remove.actionBtn)}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  /**
+   * Renders the cart item image.
+   *
+   * @return The cart item image or null if there is no image.
+   */
+  private renderImage(): React.ReactNode {
+    if (!this.state.image) {
+      return null;
+    }
+
+    if (this.props.onImagePress) {
+      return (
+        <TouchableOpacity accessibilityRole="link" onPress={this.handleImagePress}>
+          <Image source={this.state.image} style={this.state.imageStyle} />
+        </TouchableOpacity>
+      );
+    }
+    return <Image source={this.state.image} style={this.state.imageStyle} />;
+  }
+
+  /**
+   * Increments the item quantity by one.
+   */
+  private readonly handleIncrease = async (): Promise<void> =>
+    this.props.updateQty(this.props, this.props.quantity + 1);
+
+  /**
+   * Decrements the item quantity by one. The quantity cannot go lower than zero.
+   */
+  private readonly handleDecrease = async (): Promise<void> => {
+    let { quantity } = this.props;
+
+    return this.props.updateQty(this.props, --quantity >= 0 ? quantity : 0);
+  };
+
+  /**
+   * Removes the item from cart.
+   */
+  private readonly handleRemove = async (): Promise<void> => this.props.removeItem(this.props);
+
+  /**
+   * Handles when the user taps the cart item image.
+   */
+  private readonly handleImagePress = () => {
+    if (this.props.onImagePress) {
+      this.props.onImagePress(this.props);
+    }
+  };
+
+  public render(): React.ReactNode {
     const {
       itemText,
       leftColumnStyle,
@@ -234,8 +300,8 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
           {(renderDetails && renderDetails(this.props, updateQty, removeItem)) || (
             <CartItemDetails
               itemText={itemText}
-              productId={productId}
               price={price}
+              productId={productId}
               totalPrice={totalPrice}
             />
           )}
@@ -243,11 +309,11 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
             {(renderStepper && renderStepper(this.props, updateQty, removeItem)) || (
               <Stepper
                 count={quantity}
-                stepperStyle={stepperStyle}
-                onDecreaseButtonPress={this.handleDecrease}
-                onIncreaseButtonPress={this.handleIncrease}
                 decreaseButtonImage={decreaseBtn}
                 increaseButtonImage={increaseBtn}
+                onDecreaseButtonPress={this.handleDecrease}
+                onIncreaseButtonPress={this.handleIncrease}
+                stepperStyle={stepperStyle}
               />
             )}
             {this.renderRemoveButton()}
@@ -257,76 +323,4 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
       </View>
     );
   }
-
-  private renderRemoveButton = (): React.ReactNode => {
-    const { renderRemoveButton, removeButtonStyle, removeButtonTextStyle, removeItem, updateQty } =
-      this.props;
-
-    if (renderRemoveButton) {
-      return renderRemoveButton(this.props, updateQty, removeItem);
-    }
-
-    return (
-      <TouchableOpacity onPress={this.handleRemove}>
-        <View style={removeButtonStyle}>
-          <Text style={removeButtonTextStyle}>
-            {FSI18n.string(translationKeys.flagship.cart.actions.remove.actionBtn)}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  /**
-   * Renders the cart item image.
-   *
-   * @returns {React.ReactNode} The cart item image or null if there is no image.
-   */
-  private renderImage(): React.ReactNode {
-    if (!this.state.image) {
-      return null;
-    }
-
-    if (this.props.onImagePress) {
-      return (
-        <TouchableOpacity accessibilityRole="link" onPress={this.handleImagePress}>
-          <Image source={this.state.image} style={this.state.imageStyle} />
-        </TouchableOpacity>
-      );
-    } else {
-      return <Image source={this.state.image} style={this.state.imageStyle} />;
-    }
-  }
-
-  /**
-   * Increments the item quantity by one.
-   */
-  private handleIncrease = async (): Promise<void> => {
-    return this.props.updateQty(this.props, this.props.quantity + 1);
-  };
-
-  /**
-   * Decrements the item quantity by one. The quantity cannot go lower than zero.
-   */
-  private handleDecrease = async (): Promise<void> => {
-    let { quantity } = this.props;
-
-    return this.props.updateQty(this.props, --quantity >= 0 ? quantity : 0);
-  };
-
-  /**
-   * Removes the item from cart.
-   */
-  private handleRemove = async (): Promise<void> => {
-    return this.props.removeItem(this.props);
-  };
-
-  /**
-   * Handles when the user taps the cart item image.
-   */
-  private handleImagePress = () => {
-    if (this.props.onImagePress) {
-      this.props.onImagePress(this.props);
-    }
-  };
 }

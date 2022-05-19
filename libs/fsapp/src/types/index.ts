@@ -1,6 +1,5 @@
-import { Analytics } from '@brandingbrand/fsengage';
-import { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
-import {
+import type { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
+import type {
   Layout,
   LayoutComponent,
   LayoutStack,
@@ -9,11 +8,14 @@ import {
   Options,
   OptionsTopBarButton,
 } from 'react-native-navigation';
-import { CommerceTypes } from '@brandingbrand/fscommerce';
-import { ImageRequireSource, ModalProps, ViewStyle } from 'react-native';
-import { PathFunction } from 'path-to-regexp';
+
+import type { CommerceTypes } from '@brandingbrand/fscommerce';
+import type { Analytics } from '@brandingbrand/fsengage';
+import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
+
 import type { Request } from 'express';
-import { Middleware } from 'redux';
+import type { PathFunction } from 'path-to-regexp';
+import type { Middleware } from 'redux';
 
 export interface DrawerType {
   screen: string;
@@ -22,7 +24,7 @@ export interface DrawerType {
 
 export interface DrawerConfig {
   side: 'left' | 'right';
-  to?: 'open' | 'closed' | 'toggle';
+  to?: 'closed' | 'open' | 'toggle';
 }
 
 export interface Drawer {
@@ -111,9 +113,9 @@ export interface AppConfigType {
   bottomTabsOptions?: Options;
   routerConfig?: RouterConfig;
   storeMiddleware?: Middleware[];
-  notFoundRedirect?: RoutableComponentClass | NavLayout | true;
-  uncachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
-  cachedData?: (initialState: any, req?: Request) => Promise<SSRData>;
+  notFoundRedirect?: NavLayout | RoutableComponentClass | true;
+  uncachedData?: (initialState: unknown, req?: Request) => Promise<SSRData>;
+  cachedData?: (initialState: unknown, req?: Request) => Promise<SSRData>;
 
   /**
    * Only affects Web.
@@ -133,19 +135,17 @@ export interface Tab extends LayoutComponent {
 
 export interface NavButton {
   button: OptionsTopBarButton;
-  action: (params: any) => void;
+  action: (params: unknown) => void;
 }
 
-export interface NavigatorButtons {
-  [key: string]: NavButton[];
-}
+export type NavigatorButtons = Record<string, NavButton[]>;
 
 export interface NavigatorEvent {
   id: string;
   type: string;
 }
 
-export interface Location<T = any> {
+export interface Location<T = unknown> {
   pathname: string;
   search: string;
   hash: string;
@@ -195,7 +195,7 @@ export interface PublishedPage {
 }
 
 export interface PropValue {
-  [key: string]: PropValue | boolean | string | number | string[];
+  [key: string]: PropValue | string[] | boolean | number | string;
 }
 
 export interface LayoutBuilderObject {
@@ -218,14 +218,8 @@ export interface Route {
   tabIndex?: number;
 }
 
-export interface RouterConfig {
-  [key: string]: Route;
-}
+export type RouterConfig = Record<string, Route>;
 
-export interface CMSRoutesConfig {
-  [key: string]: PublishedPage;
-}
+export type CMSRoutesConfig = Record<string, PublishedPage>;
 
-export interface CombinedRouter {
-  [key: string]: PublishedPage | Route;
-}
+export type CombinedRouter = Record<string, PublishedPage | Route>;

@@ -1,10 +1,8 @@
-import * as FSAppTypes from './types';
-import { FSApp } from './fsapp/FSApp';
-
-export * from './lib/helpers';
+export * from './beta-app';
 
 export { default as Navigator } from './lib/nav-wrapper';
 
-export { FSApp, FSAppTypes };
+export * from './lib/helpers';
 
-export * from './beta-app';
+export { FSApp } from './fsapp/FSApp';
+export * as FSAppTypes from './types';

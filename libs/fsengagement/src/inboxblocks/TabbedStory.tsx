@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
+
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import TabbedStoryItem from './TabbedStoryItem';
 
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+const { height: viewportHeight, width: viewportWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   backButton: {
@@ -61,16 +63,13 @@ export interface TabbedStoryProps {
 }
 
 export default class TabbedStory extends Component<TabbedStoryProps> {
-  constructor(props: TabbedStoryProps) {
-    super(props);
-  }
-  onCardPress = () => {
+  private readonly onCardPress = () => {
     if (this.props.onCardPress) {
       this.props.onCardPress();
     }
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { items } = this.props;
 
     return (

@@ -1,33 +1,33 @@
-import type { ActivatedRoute, MatchingRoute, Routes } from '../types';
-import type {
-  FSRouterHistory,
-  HistoryOptions,
-  LoadingListener,
-  RequiredTitle,
-  ResolverListener,
-} from './types';
-
 import { boundMethod } from 'autobind-decorator';
+import type { Action, History as BrowserHistory, Location, TransitionPromptHook } from 'history';
 import {
-  Action,
-  createBrowserHistory,
-  History as BrowserHistory,
-  Location,
   LocationDescriptor,
   LocationDescriptorObject,
   LocationListener,
-  TransitionPromptHook,
   UnregisterCallback,
+  createBrowserHistory,
 } from 'history';
 import { uniqueId } from 'lodash-es';
 
 import { promisedEntries } from '../../utils';
+import type { ActivatedRoute, MatchingRoute, Routes } from '../types';
 
-import { buildMatchers, matchRoute, resolveRoute, stringifyLocation } from './utils.web';
-import { createKey, Matchers } from './utils.base';
 import { INTERNAL, queueMethod } from './queue.decorator';
+import type { FSRouterHistory, HistoryOptions } from './types';
+import { LoadingListener, RequiredTitle, ResolverListener } from './types';
+import { createKey } from './utils.base';
+import type { Matchers } from './utils.base';
+import { buildMatchers, matchRoute, resolveRoute, stringifyLocation } from './utils.web';
 
 export class History implements FSRouterHistory {
+  constructor(private readonly routes: Routes, protected readonly options?: HistoryOptions) {
+    void this.initialNavigation()
+      .then(() => {
+        this.observeNavigation();
+      })
+      .catch();
+  }
+
   private get nextLoad(): Promise<void> {
     return new Promise((resolve) => {
       const remove = this.observeLoading(() => {
@@ -51,8 +51,9 @@ export class History implements FSRouterHistory {
 
   private readonly matchers: Matchers = buildMatchers(this.routes);
   private readonly browserHistory: BrowserHistory = createBrowserHistory({
-    ...(this.options?.basename ? { basename: this.options?.basename } : {}),
+    ...(this.options?.basename ? { basename: this.options.basename } : {}),
   });
+
   private readonly activationObservers: Map<string, ResolverListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
   private readonly locationObservers: Map<string, LocationListener> = new Map();
@@ -66,12 +67,91 @@ export class History implements FSRouterHistory {
     state: {},
     key: createKey(),
   });
-  constructor(private readonly routes: Routes, protected readonly options?: HistoryOptions) {
-    void this.initialNavigation()
-      .then(() => {
-        this.observeNavigation();
-      })
-      .catch();
+
+  private async initialNavigation(): Promise<void> {
+    const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
+
+    if (matchingRoute) {
+      await this.activateRoute(
+        this.browserHistory.location.key,
+        matchingRoute,
+        this.browserHistory.location.state
+      );
+      this._action = this.browserHistory.action;
+      this._location = this.browserHistory.location;
+      for (const listener of this.locationObservers.values()) {
+        listener(this.browserHistory.location, this.browserHistory.action);
+      }
+    }
+  }
+
+  private async activateRoute(
+    id: string | undefined,
+    matchingRoute: MatchingRoute,
+    state: unknown
+  ): Promise<void> {
+    this.setLoading(true);
+    const activatedRoute = await this.resolveRouteDetails(id, matchingRoute, state);
+    const observer = this.activationObservers.get(matchingRoute.id);
+    observer?.(activatedRoute);
+
+    const allObserver = this.activationObservers.get('all');
+    allObserver?.(activatedRoute);
+
+    const title =
+      typeof matchingRoute.title === 'function'
+        ? await matchingRoute.title(activatedRoute)
+        : matchingRoute.title;
+
+    if (title) {
+      document.title = title;
+    }
+
+    this.setLoading(false);
+  }
+
+  private observeNavigation(): void {
+    this.browserHistory.listen(async (location, action) => {
+      const unblock = this.browserHistory.block(true);
+      const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
+      if (matchingRoute) {
+        await this.activateRoute(location.key, matchingRoute, location.state);
+        this._action = action;
+        this._location = location;
+        for (const listener of this.locationObservers.values()) {
+          listener(location, action);
+        }
+        window.scrollTo(0, 0);
+        this.setLoading(false);
+        unblock();
+      } else {
+        unblock();
+      }
+    });
+  }
+
+  private setLoading(loading: boolean): void {
+    for (const callback of this.loadingObservers.values()) {
+      callback(loading);
+    }
+  }
+
+  private async resolveRouteDetails(
+    id: string | undefined,
+    matchingRoute: MatchingRoute,
+    state: unknown
+  ): Promise<ActivatedRoute> {
+    const resolvedData = await promisedEntries(resolveRoute(id, matchingRoute));
+    return {
+      id,
+      data: { ...resolvedData, ...(typeof state === 'object' ? state : {}) },
+      query: matchingRoute.query,
+      params: matchingRoute.params,
+      url: matchingRoute.matchedPath,
+      path: matchingRoute.path,
+      isExact: matchingRoute.path === matchingRoute.matchedPath,
+      loading: true,
+    };
   }
 
   public open(path: string, state?: unknown): Promise<void>;
@@ -81,9 +161,8 @@ export class History implements FSRouterHistory {
   public async open(to: LocationDescriptor, state?: unknown): Promise<void> {
     if (typeof to === 'string') {
       return this.push(to, state, INTERNAL);
-    } else {
-      return this.push(to, INTERNAL);
     }
+    return this.push(to, INTERNAL);
   }
 
   public push(path: string, state?: unknown, _internal?: typeof INTERNAL): Promise<void>;
@@ -96,19 +175,17 @@ export class History implements FSRouterHistory {
     _internal?: typeof INTERNAL
   ): Promise<void> {
     if (typeof to === 'string') {
-      if (/^\w+:\/\//.exec(to)) {
+      if (/^\w+:\/\//.test(to)) {
         window.location.href = to;
       } else {
         this.browserHistory.push(to, state);
         await this.nextLoad;
       }
-    } else {
-      if (to?.pathname && /^\w+:\/\//.exec(to.pathname)) {
-        window.location.href = to.pathname;
-      } else if (to) {
-        this.browserHistory.push(to);
-        await this.nextLoad;
-      }
+    } else if (to.pathname && /^\w+:\/\//.test(to.pathname)) {
+      window.location.href = to.pathname;
+    } else if (to) {
+      this.browserHistory.push(to);
+      await this.nextLoad;
     }
   }
 
@@ -123,7 +200,7 @@ export class History implements FSRouterHistory {
   @boundMethod
   @queueMethod
   public async replace(
-    pathOrLocation: string | LocationDescriptor,
+    pathOrLocation: LocationDescriptor | string,
     state?: unknown
   ): Promise<void> {
     if (typeof pathOrLocation === 'string') {
@@ -150,7 +227,7 @@ export class History implements FSRouterHistory {
 
   @boundMethod
   @queueMethod
-  popTo(): void {
+  public popTo(): void {
     throw new Error(
       `${History.name}: ${this.popTo.name}() is not implemented for web. Please use push() instead...`
     );
@@ -158,7 +235,7 @@ export class History implements FSRouterHistory {
 
   @boundMethod
   @queueMethod
-  async popToRoot(): Promise<void> {
+  public async popToRoot(): Promise<void> {
     await this.push('/', {}, INTERNAL);
   }
 
@@ -177,7 +254,7 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public block(prompt?: string | boolean | TransitionPromptHook): UnregisterCallback {
+  public block(prompt?: TransitionPromptHook | boolean | string): UnregisterCallback {
     return this.browserHistory.block(prompt);
   }
 
@@ -216,89 +293,5 @@ export class History implements FSRouterHistory {
   @queueMethod
   public async updateTitle(title: RequiredTitle): Promise<void> {
     document.title = typeof title === 'string' ? title : title.text;
-  }
-
-  private async initialNavigation(): Promise<void> {
-    const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
-
-    if (matchingRoute) {
-      await this.activateRoute(
-        this.browserHistory.location.key,
-        matchingRoute,
-        this.browserHistory.location.state
-      );
-      this._action = this.browserHistory.action;
-      this._location = this.browserHistory.location;
-      this.locationObservers.forEach((listener) => {
-        listener(this.browserHistory.location, this.browserHistory.action);
-      });
-    }
-  }
-
-  private async activateRoute(
-    id: string | undefined,
-    matchingRoute: MatchingRoute,
-    state: unknown
-  ): Promise<void> {
-    this.setLoading(true);
-    const activatedRoute = await this.resolveRouteDetails(id, matchingRoute, state);
-    const observer = this.activationObservers.get(matchingRoute.id);
-    observer?.(activatedRoute);
-
-    const allObserver = this.activationObservers.get('all');
-    allObserver?.(activatedRoute);
-
-    const title =
-      typeof matchingRoute.title === 'function'
-        ? await matchingRoute.title(activatedRoute)
-        : matchingRoute.title;
-
-    if (title) {
-      document.title = title;
-    }
-
-    this.setLoading(false);
-  }
-
-  private observeNavigation(): void {
-    this.browserHistory.listen(async (location, action) => {
-      const unblock = this.browserHistory.block(true);
-      const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
-      if (matchingRoute) {
-        await this.activateRoute(location.key, matchingRoute, location.state);
-        this._action = action;
-        this._location = location;
-        this.locationObservers.forEach((listener) => {
-          listener(location, action);
-        });
-        window.scrollTo(0, 0);
-        this.setLoading(false);
-        unblock();
-      } else {
-        unblock();
-      }
-    });
-  }
-
-  private setLoading(loading: boolean): void {
-    this.loadingObservers.forEach((callback) => callback(loading));
-  }
-
-  private async resolveRouteDetails(
-    id: string | undefined,
-    matchingRoute: MatchingRoute,
-    state: unknown
-  ): Promise<ActivatedRoute> {
-    const resolvedData = await promisedEntries(resolveRoute(id, matchingRoute));
-    return {
-      id,
-      data: { ...resolvedData, ...(typeof state === 'object' ? state : {}) },
-      query: matchingRoute.query,
-      params: matchingRoute.params,
-      url: matchingRoute.matchedPath,
-      path: matchingRoute.path,
-      isExact: matchingRoute.path === matchingRoute.matchedPath,
-      loading: true,
-    };
   }
 }

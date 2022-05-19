@@ -1,4 +1,4 @@
-import { ProductGroupsQuery, ProductGroups } from '../CommerceTypes';
+import type { ProductGroups, ProductGroupsQuery } from '../CommerceTypes';
 
 /**
  * Methods to request a group of product indexes from a data source
@@ -9,8 +9,8 @@ export interface ProductGroupDataSource {
    *
    * @param query A query including a `groupBy` used to fetch
    * product indexes from a data source and organize them by
-   * @returns A dictionary of ProductIndexes grouped by the
+   * @return A dictionary of ProductIndexes grouped by the
    * `groupBy`
    */
-  fetchProductGroups(query: ProductGroupsQuery): Promise<ProductGroups>;
+  fetchProductGroups: (query: ProductGroupsQuery) => Promise<ProductGroups>;
 }

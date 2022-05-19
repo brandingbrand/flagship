@@ -1,4 +1,5 @@
-import { isOk, Result } from './result';
+import type { Result } from './result';
+import { isOk } from './result';
 
 export const extract =
   <OkType, FailureType, Output>(

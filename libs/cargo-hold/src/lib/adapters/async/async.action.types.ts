@@ -38,10 +38,10 @@ export type AsyncAction<
   FailureType,
   IdleType = SuccessType
 > =
-  | AsyncInitAction<ActionKey, SuccessType | IdleType>
-  | AsyncLoadAction<ActionKey, SuccessType | IdleType>
   | AsyncFailAction<ActionKey, FailureType>
-  | AsyncSucceedAction<ActionKey, SuccessType>
-  | AsyncRevertAction<ActionKey, SuccessType | IdleType>;
+  | AsyncInitAction<ActionKey, IdleType | SuccessType>
+  | AsyncLoadAction<ActionKey, IdleType | SuccessType>
+  | AsyncRevertAction<ActionKey, IdleType | SuccessType>
+  | AsyncSucceedAction<ActionKey, SuccessType>;
 
 export type AsyncSubtypes = AsyncAction<string, unknown, unknown>['subtype'];

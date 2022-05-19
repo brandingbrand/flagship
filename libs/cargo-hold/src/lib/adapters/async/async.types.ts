@@ -1,7 +1,7 @@
-type BaseAsyncState<Status extends string, T> = {
+interface BaseAsyncState<Status extends string, T> {
   status: Status;
   payload: T;
-};
+}
 
 export type AsyncIdleState<T> = BaseAsyncState<'idle', T>;
 export type AsyncLoadingState<T> = BaseAsyncState<'loading', T>;
@@ -12,10 +12,10 @@ export type AsyncFailureState<T, FailureType> = BaseAsyncState<'failure', T> & {
 };
 
 export type AsyncState<SuccessType, FailureType, IdleType = SuccessType> =
-  | AsyncIdleState<SuccessType | IdleType>
-  | AsyncLoadingState<SuccessType | IdleType>
+  | AsyncFailureState<IdleType | SuccessType, FailureType>
+  | AsyncIdleState<IdleType | SuccessType>
   | AsyncLoadingMoreState<SuccessType>
-  | AsyncSuccessState<SuccessType>
-  | AsyncFailureState<SuccessType | IdleType, FailureType>;
+  | AsyncLoadingState<IdleType | SuccessType>
+  | AsyncSuccessState<SuccessType>;
 
 export type AsyncStatus = AsyncState<unknown, unknown>['status'];

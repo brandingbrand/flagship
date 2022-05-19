@@ -1,11 +1,10 @@
-import { Location } from '../../../requesters/ContentManagementSystemLocator';
+import type { Location } from '../../../requesters/ContentManagementSystemLocator';
 
-// eslint-disable-next-line complexity
-export default function targetInstancesByState(
+const targetInstancesByState = (
   instance: any,
-  targets: { [index: string]: any },
+  targets: Record<string, any>,
   location: Location
-): boolean {
+): boolean => {
   if (!instance) {
     return false;
   }
@@ -24,19 +23,21 @@ export default function targetInstancesByState(
     instance.targets['US-States'] &&
     instance.targets['US-States'].selected_states;
 
-  const campaign = instance.campaign;
+  const { campaign } = instance;
   const campaignUSStates =
     targets[campaign] &&
     targets[campaign]['US-States'] &&
     targets[campaign]['US-States'].selected_states;
 
-  if (instanceUSStates && instanceUSStates.indexOf(location.stateCode) === -1) {
+  if (instanceUSStates && !instanceUSStates.includes(location.stateCode)) {
     return false;
   }
 
-  if (campaignUSStates && campaignUSStates.indexOf(location.stateCode) === -1) {
+  if (campaignUSStates && !campaignUSStates.includes(location.stateCode)) {
     return false;
   }
 
   return true;
-}
+};
+
+export default targetInstancesByState;

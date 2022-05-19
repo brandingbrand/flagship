@@ -1,32 +1,24 @@
-import type { GridProps, GridRow } from './GridProps';
-
 import React, { isValidElement, useCallback, useMemo, useRef, useState } from 'react';
-import {
-  Animated,
-  FlatList,
-  ListRenderItem,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 
-import { useGridChunks } from './hooks';
-import { ChunkOptions, getAbsoluteWidth, InsertOptions, SizeOptions } from './utils';
+import type { ListRenderItem, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Animated, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import type { GridProps, GridRow } from './GridProps';
 import {
-  DEFAULT_MIN_COLUMNS,
-  DEFAULT_COLUMNS,
   DEFAULT_BACK_TOP_BUTTON_SHOW_AT_HEIGHT,
+  DEFAULT_COLUMNS,
   DEFAULT_KEY_EXTRACTOR,
+  DEFAULT_MIN_COLUMNS,
 } from './defaults';
+import { useGridChunks } from './hooks';
+import type { ChunkOptions, InsertOptions, SizeOptions } from './utils';
+import { getAbsoluteWidth } from './utils';
 
 const gridStyle = StyleSheet.create({
-  row: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
+  columnSeparator: {
+    backgroundColor: '#8E8E8E',
+    height: '100%',
+    width: 1,
   },
   item: {
     flexDirection: 'row',
@@ -36,29 +28,29 @@ const gridStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
+  row: {
+    flexDirection: 'row',
+    flexGrow: 1,
+    flexWrap: 'nowrap',
+  },
   rowSeparator: {
-    width: '100%',
+    backgroundColor: '#8E8E8E',
     height: 1,
-    backgroundColor: '#8E8E8E',
-  },
-  columnSeparator: {
-    height: '100%',
-    width: 1,
-    backgroundColor: '#8E8E8E',
-  },
-  scrollTopButtonContainer: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    zIndex: 200,
+    width: '100%',
   },
   scrollTopButton: {
     backgroundColor: '#eee',
     padding: 10,
   },
+  scrollTopButtonContainer: {
+    bottom: 30,
+    position: 'absolute',
+    right: 30,
+    zIndex: 200,
+  },
 });
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line max-lines-per-function
 export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   const {
     accessible,
@@ -133,12 +125,10 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         const calculatedColumns = Math.floor(width / (minColumnWidth ?? DEFAULT_MIN_COLUMNS));
 
         return Math.max(calculatedColumns, 1);
-      } else {
-        return 0;
       }
-    } else {
-      return columns ?? numColumns ?? DEFAULT_COLUMNS;
+      return 0;
     }
+    return columns ?? numColumns ?? DEFAULT_COLUMNS;
   }, [columns, numColumns, minColumnWidth, width]);
 
   const chunkOptions = useMemo<ChunkOptions<ItemT, null> & InsertOptions<ItemT> & SizeOptions>(
@@ -156,7 +146,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     [columnWidthTable, insertRows, insertAfter, insertEveryFrequency, insertEveryValues, autoFit]
   );
   const chunkedData = useGridChunks(data ?? [], totalColumns, chunkOptions);
-  const chunkedArray = useMemo(() => Array.from(chunkedData), [chunkedData]);
+  const chunkedArray = useMemo(() => [...chunkedData], [chunkedData]);
 
   const handleBackToTop = useCallback(() => {
     listView.current?.scrollToOffset({ offset: 0 });
@@ -194,8 +184,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   );
 
   const renderRow = useCallback<ListRenderItem<GridRow<ItemT>>>(
-    ({ index, separators, item }) => {
-      const showRowSeparator = chunkedArray?.length > index + 1;
+    ({ index, item, separators }) => {
+      const showRowSeparator = chunkedArray.length > index + 1;
       const columnWidth = 100 / totalColumns;
 
       return (
@@ -206,7 +196,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             const showColumnSeparator = (index + 1) % totalColumns !== 0;
 
             return (
-              <View key={index} style={[gridStyle.item, { width: widthPercent + '%' }]}>
+              <View key={index} style={[gridStyle.item, { width: `${widthPercent}%` }]}>
                 <View style={gridStyle.itemRow}>
                   {item.value &&
                     renderItem &&
@@ -241,36 +231,37 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     ]
   );
 
-  const rerenderTrigger = useMemo(() => {
-    return Symbol('This is used to mark a change that requires a rerender');
-  }, [listViewProps?.extraData, renderRow]);
+  const rerenderTrigger = useMemo(
+    () => Symbol('This is used to mark a change that requires a rerender'),
+    [listViewProps?.extraData, renderRow]
+  );
 
   return (
     <View style={gridContainerStyle}>
       <FlatList
-        ref={listView}
-        accessible={accessible}
-        accessibilityHint={accessibilityHint}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole={accessibilityRole}
-        data={chunkedArray}
-        renderItem={renderRow}
-        keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={ListFooterComponent ?? renderFooter}
         ListFooterComponentStyle={ListFooterComponentStyle}
         ListHeaderComponent={ListHeaderComponent ?? renderHeader}
         ListHeaderComponentStyle={ListHeaderComponentStyle}
-        style={style}
-        refreshControl={refreshControl}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        onScroll={showBackToTop || BackToTopComponent ? handleScroll : undefined}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
+        accessible={accessible}
+        data={chunkedArray}
+        extraData={rerenderTrigger}
+        keyExtractor={keyExtractor}
+        onContentSizeChange={setWidth}
         onEndReached={onEndReached}
         onEndReachedThreshold={onEndReachedThreshold}
         onLayout={onLayout}
-        onContentSizeChange={setWidth}
-        extraData={rerenderTrigger}
+        onRefresh={onRefresh}
+        onScroll={showBackToTop || BackToTopComponent ? handleScroll : undefined}
+        ref={listView}
+        refreshControl={refreshControl}
+        refreshing={refreshing}
+        renderItem={renderRow}
+        style={style}
         {...listViewProps}
         {...{ dataSet }}
       />
@@ -290,8 +281,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             renderBackToTopButton(handleBackToTop)
           ) : (
             <TouchableOpacity
-              style={[gridStyle.scrollTopButton, backToTopButtonStyle]}
               onPress={handleBackToTop}
+              style={[gridStyle.scrollTopButton, backToTopButtonStyle]}
             >
               <Text style={backToTopTextStyle}>{backToTopText ?? 'Top'}</Text>
             </TouchableOpacity>

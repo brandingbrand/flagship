@@ -1,3 +1,11 @@
+import type { LocationDescriptor, LocationDescriptorObject } from 'history';
+import { createPath, parsePath } from 'history';
+import type { Key } from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp';
+import { parse } from 'qs';
+
+import { env } from '../../env';
+import { buildPath } from '../../utils';
 import type {
   ActivatedRoute,
   IndexedComponentRoute,
@@ -11,62 +19,43 @@ import type {
   Routes,
   Tab,
 } from '../types';
-
-import { createPath, LocationDescriptor, LocationDescriptorObject, parsePath } from 'history';
-import { parse } from 'qs';
-
-import pathToRegexp, { Key } from 'path-to-regexp';
-
-import { env } from '../../env';
-import { buildPath } from '../../utils';
 import { guardRoute } from '../utils';
-import { fromPairs } from 'lodash-es';
 
-export const createKey = () => {
-  return Math.random().toString(36).substr(2, 8);
-};
+export const createKey = () => Math.random().toString(36).slice(2, 10);
 
-export const stringifyLocation = (location: LocationDescriptor) => {
-  return typeof location === 'string' ? location : createPath(location);
-};
+export const stringifyLocation = (location: LocationDescriptor) =>
+  typeof location === 'string' ? location : createPath(location);
 
 export const mapPromisedChildren = async <T>(
   route: Route,
-  callback: (route: Route) => T[] | Promise<T[]>
+  callback: (route: Route) => Promise<T[]> | T[]
 ) => {
   const childRoutes = 'children' in route ? route.children : [];
   const mappedChildren = await Promise.all(
     childRoutes.map(async (childRoute) => callback(childRoute))
   );
 
-  return mappedChildren.reduce((prev, next) => [...prev, ...next], []);
+  return mappedChildren.flat();
 };
 
-const matchPath = (path: string | undefined, route: Route) => {
-  return (checkPath: string) => {
-    if (!path) {
-      if (route.exact) {
-        return checkPath.split('?')[0] === '' ? { params: {} } : undefined;
-      }
-
-      return { params: {} };
+const matchPath = (path: string | undefined, route: Route) => (checkPath: string) => {
+  if (!path) {
+    if (route.exact) {
+      return checkPath.split('?')[0] === '' ? { params: {} } : undefined;
     }
 
-    const keys: Key[] = [];
-    const normalizedPath = path.length > 1 ? path.replace(/\/$/, '').replace('//', '/') : path;
-    const regex = pathToRegexp(normalizedPath, keys, { strict: route.exact });
-    const [url, ...params] = regex.exec(checkPath?.split('?')?.[0] ?? '') ?? [];
-    return url
-      ? {
-          params: keys.reduce<Record<string, string>>((memo, key, index) => {
-            return {
-              ...memo,
-              [key.name]: params[index] as string,
-            };
-          }, {}),
-        }
-      : undefined;
-  };
+    return { params: {} };
+  }
+
+  const keys: Key[] = [];
+  const normalizedPath = path.length > 1 ? path.replace(/\/$/, '').replace('//', '/') : path;
+  const regex = pathToRegexp(normalizedPath, keys, { strict: route.exact });
+  const [url, ...params] = regex.exec(checkPath.split('?')[0] ?? '') ?? [];
+  return url
+    ? {
+        params: Object.fromEntries(keys.map((key, index) => [key.name, params[index] as string])),
+      }
+    : undefined;
 };
 
 const buildMatcher = async (
@@ -74,10 +63,12 @@ const buildMatcher = async (
   tab?: Tab,
   prefix = ''
 ): Promise<
-  (readonly [
-    (checkPath: string) => { params: RouteParams } | undefined,
-    IndexedComponentRoute | RedirectRoute
-  ])[]
+  Array<
+    readonly [
+      (checkPath: string) => { params: RouteParams } | undefined,
+      IndexedComponentRoute | RedirectRoute
+    ]
+  >
 > => {
   const { id, path } = buildPath(route, prefix);
   const matchingRoute =
@@ -111,10 +102,10 @@ const buildMatcher = async (
 
 export const buildMatchers = async (routes: Routes, tab?: Tab) => {
   try {
-    return routes
+    return await routes
       .map(async (route) => buildMatcher(route, 'tab' in route ? route.tab : tab))
       .reduce(async (prev, next) => [...(await prev), ...(await next)], Promise.resolve([]));
-  } catch (e) {
+  } catch {
     return [];
   }
 };
@@ -132,13 +123,12 @@ export const resolve = async (
 
   if (isClass(resolver)) {
     return new resolver(activatedRoute).resolve();
-  } else {
-    return resolver(activatedRoute);
   }
+  return resolver(activatedRoute);
 };
 
 export const resolveRoute = (id: string | undefined, route: MatchingRoute): RouteData => {
-  const resolved = fromPairs(
+  const resolved = Object.fromEntries(
     Object.entries(route.resolve ?? {}).map(([key, resolver]) => [
       key,
       resolve(resolver, {
@@ -170,7 +160,7 @@ export const matchRoute = async (
     if (matched) {
       const routeInfo = {
         params: matched.params,
-        query: parse(search.substr(1)),
+        query: parse(search.slice(1)),
         path,
       };
       if (await guardRoute(route, routeInfo)) {
@@ -183,7 +173,7 @@ export const matchRoute = async (
           return {
             ...route,
             params: matched.params,
-            query: parse(search.substr(1)),
+            query: parse(search.slice(1)),
             matchedPath: path,
           };
         }
@@ -191,7 +181,7 @@ export const matchRoute = async (
     }
   }
 
-  return;
+  return undefined;
 };
 
 export const normalizeLocationDescriptor = (to: LocationDescriptor): LocationDescriptorObject => {
@@ -199,7 +189,7 @@ export const normalizeLocationDescriptor = (to: LocationDescriptor): LocationDes
     return normalizeLocationDescriptor(parsePath(to));
   }
 
-  let pathname = to.pathname;
+  let { pathname } = to;
 
   for (const url of env?.associatedDomains ?? []) {
     const regex = new RegExp(`^(https?:\\/\\/)?${url}`);

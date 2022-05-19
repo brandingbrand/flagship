@@ -1,7 +1,9 @@
 import React from 'react';
-import { UpdateNameOrEmail } from '../src/components/UpdateNameOrEmail';
-import { storiesOf } from '@storybook/react';
+
 import { boolean, object, text } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+
+import { UpdateNameOrEmail } from '../src/components/UpdateNameOrEmail';
 
 const onSubmit = (values: any) => {
   alert(`
@@ -26,9 +28,7 @@ const fieldsStyleConfig = {
   },
 };
 
-const renderUpdateNameOrEmail = (): JSX.Element => {
-  return <UpdateNameOrEmail onSubmit={onSubmit} />;
-};
+const renderUpdateNameOrEmail = (): JSX.Element => <UpdateNameOrEmail onSubmit={onSubmit} />;
 
 const renderCustomUpdateNameOrEmail = () => {
   const fieldsOption = {
@@ -43,9 +43,9 @@ const renderCustomUpdateNameOrEmail = () => {
 
   return (
     <UpdateNameOrEmail
-      onSubmit={onSubmit}
-      fieldsStyleConfig={object('style', fieldsStyleConfig)}
       fieldsOptions={object('option', fieldsOption)}
+      fieldsStyleConfig={object('style', fieldsStyleConfig)}
+      onSubmit={onSubmit}
     />
   );
 };
