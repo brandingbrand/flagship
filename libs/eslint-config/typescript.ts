@@ -365,7 +365,7 @@ export = {
       {
         selector: ['variable'],
         modifiers: ['destructured'],
-        format: ['camelCase'],
+        format: ['camelCase', 'PascalCase'],
         /**
          * A leading underscore when used with a destructured property denotes
          * that the parameter is explicitly being thrown away
