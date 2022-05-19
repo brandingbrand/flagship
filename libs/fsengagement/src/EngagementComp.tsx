@@ -1007,7 +1007,7 @@ const WithEngagement = (
     }
 
     private readonly dataKeyExtractor = (item: BlockItem): string =>
-      item.id || item.key || Math.floor(Math.random() * 1_000_000).toString();
+      item.id || item.key || Math.floor(Math.random() * 1000000).toString();
 
     public componentWillUnmount(): void {
       // Check if closing because of navigation change or ui

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { intersection } from '@brandingbrand/standard-array';
 
 import AJV from 'ajv';
@@ -1310,18 +1311,18 @@ describe('mergeAllOf', () => {
         mergeAndValidate({
           allOf: [
             {
-              multipleOf: 100_000,
+              multipleOf: 100000,
             },
             {
-              multipleOf: 1_000_000,
+              multipleOf: 1000000,
             },
             {
-              multipleOf: 500_000,
+              multipleOf: 500000,
             },
           ],
         })
       ).toStrictEqual({
-        multipleOf: 1_000_000,
+        multipleOf: 1000000,
       });
     });
   });

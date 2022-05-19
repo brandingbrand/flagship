@@ -26,7 +26,7 @@ const S = StyleSheetCreate({
     height: '100%',
     marginLeft: 0,
     position: 'fixed',
-    zIndex: 10_000,
+    zIndex: 10000,
     top: 0,
     overflowX: 'hidden',
     transitionDuration: '0.3s',

@@ -111,11 +111,11 @@ export const formatPhone = (str = ''): string => {
 // calculate distance between two geolocations in miles, with one decimal digit
 // https://stackoverflow.com/a/21623206
 export const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-  const p = 0.017_453_292_519_943_295; // Math.PI / 180
+  const p = 0.017453292519943295; // Math.PI / 180
   const c = Math.cos.bind(undefined);
   const a =
     0.5 - c((lat2 - lat1) * p) / 2 + (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
-  const miles = 12_742 * 0.621_371 * Math.asin(Math.sqrt(a)) * 10;
+  const miles = 12742 * 0.621371 * Math.asin(Math.sqrt(a)) * 10;
 
   return Math.round(miles) / 10;
 };

@@ -18,9 +18,9 @@ const defaultValue = {
   address2: 'APT 12',
   isPoBox: false,
   city: 'Pittsburgh',
-  postalCode: 15_203,
+  postalCode: 15203,
   stateCode: 'PA',
-  phone: 4_121_231_231,
+  phone: 4121231231,
   email: 'test@bb.com',
 };
 

@@ -61,7 +61,7 @@ const Marker = ({ lat, lng, onPress, selected }: any): JSX.Element => (
 
 export default class MapViewWeb extends Component<PropType, StateType> {
   public map: any;
-  private readonly defaultCenter: unknown = { lat: 39.506_061, lng: -96.409_026 };
+  private readonly defaultCenter: unknown = { lat: 39.506061, lng: -96.409026 };
   private readonly defaultZoom = 3;
 
   public state = {

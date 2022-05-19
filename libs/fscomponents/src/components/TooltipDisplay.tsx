@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 38,
-    zIndex: 10_000,
+    zIndex: 10000,
   },
   innerContainer: {
     paddingHorizontal: 20,

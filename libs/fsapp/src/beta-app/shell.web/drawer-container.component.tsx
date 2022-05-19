@@ -9,7 +9,7 @@ import { CreateWebStyles } from '../utils';
 
 const styles = CreateWebStyles({
   container: {
-    zIndex: 10_000,
+    zIndex: 10000,
     height: '100%',
     position: 'fixed',
     top: 0,

@@ -25,7 +25,7 @@ const timeToExpiry = (expiryTime: Date): number => new Date(expiryTime).getTime(
 
 const shouldRefreshToken = (token: CommerceTypes.SessionToken): boolean => {
   const timeToRefresh = timeToExpiry(token.expiresAt);
-  return timeToRefresh > 0 && timeToRefresh < 300_000;
+  return timeToRefresh > 0 && timeToRefresh < 300000;
 };
 
 export class SessionManager {

@@ -480,7 +480,7 @@ export default function (
     }
 
     private readonly dataKeyExtractor = (item: BlockItem): string =>
-      item.id || item.key || Math.floor(Math.random() * 1_000_000).toString();
+      item.id || item.key || Math.floor(Math.random() * 1000000).toString();
 
     public readonly setScrollEnabled = (enabled: boolean): void => {
       this.setState({

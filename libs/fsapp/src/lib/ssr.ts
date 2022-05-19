@@ -304,7 +304,7 @@ const handleRequestError =
     const debugMode = req.cookies.debug === 'on';
 
     if (!debugMode && !req.cookies.errorRetry) {
-      res.cookie('errorRetry', '1', { maxAge: 10_000 });
+      res.cookie('errorRetry', '1', { maxAge: 10000 });
 
       res.redirect(307, req.originalUrl);
     } else {
@@ -316,7 +316,7 @@ const handleRequestError =
       errorString += `<pre> ${sanitizedError} </pre>`;
 
       if (e && e.code === 'ECONNRESET' && !debugMode && req.cookies.errorRetry !== '2') {
-        res.cookie('errorRetry', '2', { maxAge: 10_000 });
+        res.cookie('errorRetry', '2', { maxAge: 10000 });
         errorString += `
           <script>
             window.location.reload();

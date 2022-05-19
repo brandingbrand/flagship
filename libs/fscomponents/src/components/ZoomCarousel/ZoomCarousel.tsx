@@ -42,7 +42,7 @@ const HEADER_HEIGHT = Platform.OS === 'ios' ? 64 : 68;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-const APPLE_EASING = Easing.bezier(0.2833, 0.99, 0.318_33, 0.99);
+const APPLE_EASING = Easing.bezier(0.2833, 0.99, 0.31833, 0.99);
 const defaultGapSize = 1;
 
 const S = StyleSheet.create({

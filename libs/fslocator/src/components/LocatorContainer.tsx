@@ -313,12 +313,12 @@ export default class LocatorContainer extends Component<PropType, StateType> {
 
     if (__DEV__) {
       this.setState({
-        currentLocation: { latitude: 40.712_783_7, longitude: -74.005_941_3 },
+        currentLocation: { latitude: 40.7127837, longitude: -74.0059413 },
       });
       this.fetchLocations(
         'Current Location',
-        40.712_783_7,
-        -74.005_941_3,
+        40.7127837,
+        -74.0059413,
         this.props.searchRadius || DEFAULT_RADIUS
       );
       return;
@@ -352,8 +352,8 @@ export default class LocatorContainer extends Component<PropType, StateType> {
         },
         {
           enableHighAccuracy: true,
-          timeout: 10_000,
-          maximumAge: 10_000,
+          timeout: 10000,
+          maximumAge: 10000,
           distanceFilter: 100,
           ...this.props.geoOptions,
         } as GeoOptions
