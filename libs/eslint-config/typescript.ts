@@ -379,7 +379,7 @@ export = {
     '@typescript-eslint/no-empty-interface': OFF(
       'Often has legitimate use when mocking out an API or showing intent'
     ),
-    '@typescript-eslint/no-explicit-any': [WARN, { fixToUnknown: true }],
+    '@typescript-eslint/no-explicit-any': [WARN, { fixToUnknown: false, ignoreRestArgs: true }],
     '@typescript-eslint/no-extra-non-null-assertion': WARN, // I really love that this rule had to be made.  `thing!!!!!!!!!!!!!!!.shutUpTypeScript()`, lol.
     '@typescript-eslint/no-extraneous-class': [
       WARN,
