@@ -198,16 +198,16 @@ export = {
         default: [
           'signature',
 
-          'private-constructor',
-          'protected-constructor',
-          'public-constructor',
-
           'private-static-field',
           'private-static-method',
           'protected-static-field',
           'protected-static-method',
           'public-static-field',
           'public-static-method',
+
+          'private-constructor',
+          'protected-constructor',
+          'public-constructor',
 
           'private-decorated-field',
           'protected-decorated-field',
@@ -219,15 +219,9 @@ export = {
           'protected-abstract-field',
           'public-abstract-field',
 
-          'private-decorated-method',
-          'protected-decorated-method',
-          'public-decorated-method',
-          'private-instance-method',
-          'protected-instance-method',
-          'public-instance-method',
-          'private-abstract-method',
-          'protected-abstract-method',
-          'public-abstract-method',
+          'private-method',
+          'protected-method',
+          'public-method',
         ],
       },
     ],
