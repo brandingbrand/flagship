@@ -252,7 +252,7 @@ export = {
     'react-redux/mapStateToProps-prefer-hoisted': WARN,
     'react-redux/mapStateToProps-prefer-parameters-names': WARN,
     'react-redux/mapStateToProps-prefer-selectors': WARN,
-    'react-redux/no-unused-prop-types': WARN,
+    'react-redux/no-unused-prop-types': SUCCESSOR('react/no-unused-prop-types'),
     'react-redux/prefer-separate-component-file': WARN,
     'react-redux/useSelector-prefer-selectors': WARN,
 
