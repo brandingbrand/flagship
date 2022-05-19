@@ -231,6 +231,11 @@ export = {
       {
         selector: ['memberLike'],
         format: ['camelCase', 'PascalCase'],
+        filter: {
+          regex: '^Content-Type$',
+          match: false,
+        },
+
         /**
          * Using leading underscores to denote private members is an
          * anti-pattern. This provides the illusion of privacy despite
