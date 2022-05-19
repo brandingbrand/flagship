@@ -817,7 +817,30 @@ export = {
       'While this is a good idea for consistency, it conflicts with `consistent-return` which I think is more important'
     ),
     'unicorn/no-zero-fractions': WARN,
-    'unicorn/numeric-separators-style': WARN,
+    'unicorn/numeric-separators-style': [
+      WARN,
+      {
+        onlyIfContainsSeparator: false,
+        // Disable through setting a really high `minimumDigits` due
+        // to android runtime not support number separators at present
+        hexadecimal: {
+          minimumDigits: 1000,
+          groupLength: 2,
+        },
+        binary: {
+          minimumDigits: 1000,
+          groupLength: 4,
+        },
+        octal: {
+          minimumDigits: 1000,
+          groupLength: 4,
+        },
+        number: {
+          minimumDigits: 1000,
+          groupLength: 3,
+        },
+      },
+    ],
     'unicorn/prefer-at': OFF(PROJECT_BY_PROJECT),
     'unicorn/prefer-add-event-listener': WARN,
     'unicorn/prefer-array-find': WARN,
