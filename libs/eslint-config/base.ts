@@ -699,7 +699,7 @@ export = {
 
     // plugin:sonarjs ************************************************************
     // rules URL: https://github.com/SonarSource/eslint-plugin-sonarjs#rules
-    'sonarjs/cognitive-complexity': WARN,
+    'sonarjs/cognitive-complexity': [WARN, 25],
     'sonarjs/elseif-without-else': OFF('this conflicts with no-else-return'),
     'sonarjs/max-switch-cases': WARN,
     'sonarjs/no-all-duplicated-branches': WARN,
