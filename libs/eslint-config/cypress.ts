@@ -14,6 +14,9 @@ export = {
     // plugin:eslint ***********************************************************
     // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
     'no-unused-expressions': SUCCESSOR('chai-friendly/no-unused-expressions'),
+    'max-statements': OFF(NOT_VALUABLE),
+    'max-classes-per-file': OFF(NOT_VALUABLE),
+    'max-lines-per-function': OFF(NOT_VALUABLE),
 
     // plugin:@typescript-eslint ***********************************************
     // rules URL: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin

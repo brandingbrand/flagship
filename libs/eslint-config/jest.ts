@@ -12,6 +12,7 @@ export = {
   rules: {
     // plugin:eslint ***********************************************************
     // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
+    'max-statements': OFF(NOT_VALUABLE),
     'max-classes-per-file': OFF(NOT_VALUABLE),
     'max-lines-per-function': OFF(NOT_VALUABLE),
 
