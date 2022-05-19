@@ -64,8 +64,10 @@ export = {
       {
         resolves:
           'use `expect(await promise)` instead. Jest allows you to test a promise resolve value using `await expect().resolves`. For consistency and readability this rule bans `expect().resolves` in favor of `expect(await promise)`.',
-        toBeFalsy: 'Avoid `toBeFalsy`',
-        toBeTruthy: 'Avoid `toBeTruthy`',
+        toBeFalsy:
+          'Checking if a value is simply falsy does not test very much as there are many cases where this could be true.',
+        toBeTruthy:
+          'Checking if a value is simply truthy does not test very much as there are many cases where this could be true.',
         toMatchSnapshot:
           'Use `toMatchInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewable by writing the snapshots inline in the test file.',
         toThrowErrorMatchingSnapshot:
