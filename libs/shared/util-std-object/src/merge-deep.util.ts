@@ -2,16 +2,19 @@ import type { O } from 'ts-toolbelt';
 
 export const mergeDeep = <T extends object[]>(...objects: T): O.MergeAll<object, T> => {
   const isObject = (obj: unknown): obj is Record<string, unknown> =>
-    Boolean(obj && typeof obj === 'object');
+    obj !== null && typeof obj === 'object';
 
   const deepMergeInner = (target: Record<string, unknown>, source: Record<string, unknown>) => {
     for (const key of Object.keys(source)) {
       const targetValue = target[key];
       const sourceValue = source[key];
 
-      if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
-        target[key] = targetValue.concat(sourceValue);
-      } else if (isObject(targetValue) && isObject(sourceValue)) {
+      if (
+        !Array.isArray(targetValue) &&
+        !Array.isArray(sourceValue) &&
+        isObject(targetValue) &&
+        isObject(sourceValue)
+      ) {
         target[key] = deepMergeInner({ ...targetValue }, sourceValue);
       } else {
         target[key] = sourceValue;
