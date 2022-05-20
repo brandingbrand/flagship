@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { merge, set } from 'lodash-es';
+import { merge, set } from 'lodash';
 
 import type {
   FSTranslationKeys,
