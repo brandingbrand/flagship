@@ -39,6 +39,7 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return {
     ...otherProperties,
     ...('properties' in jsonSchema
@@ -62,6 +63,13 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
           allOf: jsonSchema.allOf?.map((childSchema) =>
             dereference(childSchema, currentDefinitions)
           ),
+        }
+      : {}),
+    ...('items' in jsonSchema
+      ? {
+          items: Array.isArray(jsonSchema.items)
+            ? jsonSchema.items.map((childSchema) => dereference(childSchema, currentDefinitions))
+            : dereference(jsonSchema.items ?? {}, currentDefinitions),
         }
       : {}),
   } as JSONSchema7 as T;
