@@ -98,10 +98,12 @@ export const withAsyncCallback =
   });
 
 export const withMapOnSuccess =
-  <Input, PayloadType>(mapOnSuccess: (input: Input) => (oldPayload: PayloadType) => PayloadType) =>
+  <Input, PayloadType, StateType = PayloadType>(
+    mapOnSuccess: (input: Input) => (oldPayload: StateType) => PayloadType
+  ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithMapOnSuccess<Input, PayloadType> => ({
+  ): BuilderType & WithMapOnSuccess<Input, StateType, PayloadType> => ({
     ...builder,
     mapOnSuccess,
   });
@@ -116,10 +118,12 @@ export const withMapOnFailure =
   });
 
 export const withOptimisticUpdate =
-  <Input, PayloadType>(prediction: (input: Input) => (oldPayload: PayloadType) => PayloadType) =>
+  <Input, PayloadType, StateType = PayloadType>(
+    prediction: (input: Input) => (oldPayload: StateType) => PayloadType
+  ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithOptimisticUpdate<Input, PayloadType> => ({
+  ): BuilderType & WithOptimisticUpdate<Input, StateType, PayloadType> => ({
     ...builder,
     prediction,
   });
