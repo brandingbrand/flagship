@@ -281,7 +281,7 @@ const getExtraneousInputErrors: Validator = (input, target, options, paths) => {
 };
 
 export const mergeTopWithAnyOf = (ob: SchemaWithAnyOf): SchemaWithAnyOf => {
-  const { anyOf, title, ...rest } = ob;
+  const { anyOf, ...rest } = ob;
   if (!Array.isArray(anyOf) || Object.keys(rest).length === 0) {
     return ob;
   }
