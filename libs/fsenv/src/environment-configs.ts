@@ -6,13 +6,25 @@ declare global {
     cacheTTL: number;
   }
 
+  export interface CachingConfig {
+    components?: boolean;
+    fonts?: boolean;
+    routes?: boolean;
+    screens?: boolean;
+    theme?: boolean;
+  }
+
   export interface EnvironmentConfig {
     default?: boolean;
+    /**
+     * @deprecated
+     */
     disableCaching?: boolean;
     production?: boolean;
     hiddenEnvs?: string[];
     associatedDomains?: string[];
     engagement: EngagementConfig;
+    caching?: CachingConfig;
     [key: string]: unknown;
   }
 
