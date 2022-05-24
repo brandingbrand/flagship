@@ -64,7 +64,11 @@ export class Store<State> extends ActionBus implements IStore<State> {
   };
 
   public registerEffect = (effect: Effect<State>): Subscription => {
-    const subscription = effect(this.reducedAction$, this.state$).subscribe(this._action$);
+    const subscription = effect(this.reducedAction$, this.state$).subscribe({
+      next: (value) => {
+        this._action$.next(value);
+      },
+    });
     this.subscriptions.add(subscription);
     return subscription;
   };
