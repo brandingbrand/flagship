@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.63.0](https://github.com/brandingbrand/flagship/compare/v11.62.0...v11.63.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* **cargo-hold:** update async.builder functions with oldPayload to have third generic (cb56516)
+
+
+### Features
+
+* **cargo-hold:** add Dispatch type definition (9b42c5e)
+* **cargo-hold:** add getDefaultedEntity (6de248f)
+* **cargo-hold:** decenteralized handler registration logic (85c267f)
+
+
+
 # [11.62.0](https://github.com/brandingbrand/flagship/compare/v11.61.0...v11.62.0) (2022-05-18)
 
 

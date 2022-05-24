@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.63.0](https://github.com/brandingbrand/flagship/compare/v11.62.0...v11.63.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* **shared-util-std-json-schema:** merge title into any of (15960d9)
+
+
+### Features
+
+* **shared-util-std-json-schema:** support dereferencing items (0d087ae)
+
+
+
 # [11.62.0](https://github.com/brandingbrand/flagship/compare/v11.61.0...v11.62.0) (2022-05-18)
 
 

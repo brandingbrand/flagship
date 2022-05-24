@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.63.0](https://github.com/brandingbrand/flagship/compare/v11.62.0...v11.63.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* **shared-util-std-object:** merge only objects (a3663f1)
+
+
+
 # [11.62.0](https://github.com/brandingbrand/flagship/compare/v11.61.0...v11.62.0) (2022-05-18)
 
 
