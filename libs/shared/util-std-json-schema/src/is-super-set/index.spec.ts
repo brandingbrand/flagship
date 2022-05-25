@@ -1,5 +1,7 @@
 import {
   alignChildrenSchema,
+  commerceDataSourceEditorSchema,
+  commerceDataSourceSchema,
   liftedSchema,
   refinementsEditorSchema,
   refinementsSchema,
@@ -35,6 +37,12 @@ describe('isSuperSet', () => {
 
   it('should match a schema with an array of two objects of the same type', () => {
     const matches = inputSatisfies(refinementsSchema, refinementsEditorSchema);
+
+    expect(matches).toBe(true);
+  });
+
+  it('should match commerce data source editor to props', () => {
+    const matches = inputSatisfies(commerceDataSourceSchema, commerceDataSourceEditorSchema);
 
     expect(matches).toBe(true);
   });

@@ -60,6 +60,5 @@
       },
       "additionalProperties": false
     }
-  ],
-  "title": "commerceDataSource"
+  ]
 }
