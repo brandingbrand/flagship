@@ -30,7 +30,14 @@ import type {
 
 import { ROOT_STACK } from './constants';
 import { INTERNAL, queueMethod } from './queue.decorator';
-import type { Blocker, FSRouterHistory, HistoryOptions, Stack, StackedLocation } from './types';
+import type {
+  Blocker,
+  FSRouterHistory,
+  HistoryOptions,
+  NativeLocation,
+  Stack,
+  StackedLocation,
+} from './types';
 import { LoadingListener, RequiredTitle, ResolverListener } from './types';
 import { normalizeLocationDescriptor } from './utils.base';
 import type { Matchers } from './utils.base';
@@ -164,6 +171,7 @@ export class History implements FSRouterHistory {
 
   private readonly blockers: Map<string, Blocker> = new Map();
   private readonly activationObservers: Map<string, ResolverListener> = new Map();
+  private readonly destroyObservers: Map<string, LocationListener> = new Map();
   private readonly lactationObservers: Map<string, LocationListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
 
@@ -244,9 +252,11 @@ export class History implements FSRouterHistory {
       }
     });
 
-    Navigation.events().registerScreenPoppedListener(() => {
+    Navigation.events().registerScreenPoppedListener(({ componentId }) => {
       setTimeout(() => {
         if (this.location.key) {
+          this.notifyPopLocation(componentId);
+
           const index = this.getKeyIndexInStack(this.activeStack, this.location.key);
           if (index !== -1) {
             this.stack?.children.splice(index + 1);
@@ -422,7 +432,13 @@ export class History implements FSRouterHistory {
               stringifyLocation(location),
               location.state
             );
-            this.stacks[location.stack]?.children.splice(indexInStack + 1);
+            const poppedLocations =
+              this.stacks[location.stack]?.children.splice(indexInStack + 1) ?? [];
+            for (const poppedLoc of poppedLocations) {
+              if (typeof poppedLoc.key === 'string') {
+                this.notifyPopLocation(poppedLoc.key, poppedLoc);
+              }
+            }
 
             if (this.activeStack !== location.stack) {
               void this.switchStack(location.stack);
@@ -531,6 +547,16 @@ export class History implements FSRouterHistory {
   private setLoading(loading: boolean): void {
     for (const callback of this.loadingObservers.values()) {
       callback(loading);
+    }
+  }
+
+  private notifyPopLocation(id: string, location?: NativeLocation): void {
+    const lastLocation =
+      location ?? this.stack?.children[this.getKeyIndexInStack(this.activeStack, id)];
+
+    if (typeof lastLocation?.layout.component?.name === 'string') {
+      const observer = this.destroyObservers.get(lastLocation.layout.component.name);
+      observer?.(lastLocation, 'POP');
     }
   }
 
@@ -692,10 +718,18 @@ export class History implements FSRouterHistory {
   }
 
   @boundMethod
-  public registerResolver(id: string, listener: ResolverListener): UnregisterCallback {
+  public registerResolver(
+    id: string,
+    listener: ResolverListener,
+    destroyListener?: LocationListener
+  ): UnregisterCallback {
     this.activationObservers.set(id, listener);
+    if (destroyListener) {
+      this.destroyObservers.set(id, destroyListener);
+    }
     return () => {
       this.activationObservers.delete(id);
+      this.destroyObservers.delete(id);
     };
   }
 

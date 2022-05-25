@@ -4,6 +4,7 @@ import type {
   History,
   Location,
   LocationDescriptor,
+  LocationListener,
   TransitionPromptHook,
   UnregisterCallback,
 } from 'history';
@@ -37,7 +38,11 @@ export interface FSRouterHistory extends History {
   go: (n: number) => void;
 
   observeLoading: (listener: LoadingListener) => UnregisterCallback;
-  registerResolver: (id: string, listener: ResolverListener) => UnregisterCallback;
+  registerResolver: (
+    id: string,
+    listener: ResolverListener,
+    destroyListener?: LocationListener
+  ) => UnregisterCallback;
 
   updateTitle: (title: RequiredTitle, componentId?: string) => void;
 }

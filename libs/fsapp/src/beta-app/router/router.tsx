@@ -19,6 +19,7 @@ import {
 import { History, stringifyLocation } from './history';
 import { FSRouterBase } from './router.base';
 import type {
+  ActivatedRoute,
   ExternalRoute,
   ExternalRoutes,
   FSRouterConstructor,
@@ -73,9 +74,21 @@ export class FSRouter extends FSRouterBase {
         const LoadingPlaceholder = () => <React.Fragment>{this.options.loading}</React.Fragment>;
         if ('component' in route || 'loadComponent' in route) {
           let routeDetails = defaultActivatedRoute;
-          this.history.registerResolver(id, (details) => {
-            routeDetails = details;
-          });
+          const routeDetailCache: Map<string, ActivatedRoute> = new Map();
+          this.history.registerResolver(
+            id,
+            (details) => {
+              routeDetails = details;
+              if (typeof details.id === 'string') {
+                routeDetailCache.set(details.id, details);
+              }
+            },
+            (location) => {
+              if (typeof location.key === 'string') {
+                routeDetailCache.delete(location.key);
+              }
+            }
+          );
           const LazyComponent = lazyComponent<{ componentId: string }>(
             async () => {
               const AwaitedComponent =
@@ -86,7 +99,10 @@ export class FSRouter extends FSRouterBase {
 
               return ({ componentId }) => {
                 const [loading, setLoading] = useState(false);
-                const activatedRoute = useMemo(() => routeDetails, []);
+                const activatedRoute = useMemo(
+                  () => routeDetailCache.get(componentId),
+                  [componentId]
+                );
                 useEffect(() => this.history.observeLoading(setLoading), []);
 
                 useEffect(() => {
