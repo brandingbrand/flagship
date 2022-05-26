@@ -5,7 +5,9 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/react-native", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
-      "parserOptions": { "project": ["libs/fsproductindex/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": ["libs/fsproductindex/tsconfig.json", "libs/fsproductindex/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} }

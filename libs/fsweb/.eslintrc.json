@@ -5,7 +5,7 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts"],
-      "parserOptions": { "project": ["libs/fsweb/tsconfig.*?.json"] },
+      "parserOptions": { "project": ["libs/fsweb/tsconfig.json", "libs/fsweb/tsconfig.*?.json"] },
       "rules": {}
     },
     {

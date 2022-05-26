@@ -5,7 +5,9 @@
     {
       "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
-      "parserOptions": { "project": ["libs/types-location/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": ["libs/types-location/tsconfig.json", "libs/types-location/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }

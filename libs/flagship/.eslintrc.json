@@ -5,7 +5,9 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts"],
-      "parserOptions": { "project": ["libs/flagship/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": ["libs/flagship/tsconfig.json", "libs/flagship/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     {

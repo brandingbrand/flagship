@@ -5,7 +5,9 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
-      "parserOptions": { "project": ["libs/fsengage/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": ["libs/fsengage/tsconfig.json", "libs/fsengage/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} }

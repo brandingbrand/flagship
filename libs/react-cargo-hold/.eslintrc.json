@@ -5,7 +5,9 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/react", "brandingbrand/rxjs"],
       "files": ["*.ts", "*.tsx"],
-      "parserOptions": { "project": ["libs/react-cargo-hold/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": ["libs/react-cargo-hold/tsconfig.json", "libs/react-cargo-hold/tsconfig.*?.json"]
+      },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts", "*.spec.tsx"], "rules": {} }

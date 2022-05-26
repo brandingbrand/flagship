@@ -31,7 +31,11 @@ interface NormalizedSchema extends ConfigGeneratorSchema {
 
 const normalizeOptions = (tree: Tree, options: ConfigGeneratorSchema): NormalizedSchema => {
   const { root: projectRoot, targets } = readProjectConfiguration(tree, options.projectName);
-  const tsConfigPath = options.testing === Testing.Cypress ? 'tsconfig.json' : 'tsconfig.*?.json';
+  const defaultProjectPaths = [`${projectRoot}/tsconfig.json`];
+  const cypressProjectPaths = [`${projectRoot}/tsconfig.json`, `${projectRoot}/tsconfig.*?.json`];
+
+  const tsConfigPaths =
+    options.testing === Testing.Cypress ? defaultProjectPaths : cypressProjectPaths;
 
   const typeScriptExtensions =
     options.framework === Framework.React || options.framework === Framework.ReactNative
@@ -53,7 +57,7 @@ const normalizeOptions = (tree: Tree, options: ConfigGeneratorSchema): Normalize
     {
       extends: typeScriptPlugins,
       files: typeScriptExtensions.map((extension) => `*.${extension}`),
-      parserOptions: { project: [`${projectRoot}/${tsConfigPath}`] },
+      parserOptions: { project: tsConfigPaths },
       rules: {},
     },
     ...(options.testing !== Testing.None

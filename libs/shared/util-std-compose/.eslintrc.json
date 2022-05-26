@@ -5,7 +5,12 @@
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts"],
-      "parserOptions": { "project": ["libs/shared/util-std-compose/tsconfig.*?.json"] },
+      "parserOptions": {
+        "project": [
+          "libs/shared/util-std-compose/tsconfig.json",
+          "libs/shared/util-std-compose/tsconfig.*?.json"
+        ]
+      },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
