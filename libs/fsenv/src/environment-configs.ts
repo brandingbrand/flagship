@@ -12,6 +12,7 @@ declare global {
     routes?: boolean;
     screens?: boolean;
     theme?: boolean;
+    breakpoints?: boolean;
   }
 
   export interface EnvironmentConfig {
