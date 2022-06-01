@@ -189,6 +189,7 @@ export interface ChangePasswordTranslations<KeyType> {
 }
 
 export interface SortTranslations<KeyType> {
+  title?: KeyType;
   actions: {
     refine: {
       actionBtn: KeyType;
