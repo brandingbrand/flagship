@@ -63,8 +63,6 @@ export = {
     'jest/no-restricted-matchers': [
       WARN,
       {
-        resolves:
-          'use `expect(await promise)` instead. Jest allows you to test a promise resolve value using `await expect().resolves`. For consistency and readability this rule bans `expect().resolves` in favor of `expect(await promise)`.',
         toBeFalsy:
           'Checking if a value is simply falsy does not test very much as there are many cases where this could be true.',
         toBeTruthy:
