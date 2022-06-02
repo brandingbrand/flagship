@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.64.0](https://github.com/brandingbrand/flagship/compare/v11.63.0...v11.64.0) (2022-06-02)
+
+
+### Features
+
+* **workspace:** correct eslint parserOptions settings (feadfc3)
+
+
+
 # [11.63.0](https://github.com/brandingbrand/flagship/compare/v11.62.0...v11.63.0) (2022-05-24)
 
 
