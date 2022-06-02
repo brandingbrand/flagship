@@ -25,5 +25,3 @@ export const promisedEntries = async (data: Record<string, unknown>) =>
   );
 
 export type Mutable<T> = { -readonly [P in keyof T]?: T[P] };
-
-export { default as lazyComponent } from '@loadable/component';

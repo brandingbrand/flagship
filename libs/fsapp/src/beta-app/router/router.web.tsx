@@ -7,13 +7,14 @@ import { Route as Screen, Switch } from 'react-router-dom';
 
 import { Injector } from '@brandingbrand/fslinker';
 
+import lazyComponent from '@loadable/component';
 import { noop } from 'lodash-es';
 import pathToRegexp from 'path-to-regexp';
 
 import { VersionOverlay } from '../development';
 import { ModalProvider } from '../modal';
 import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
-import { StaticImplements, buildPath, lazyComponent } from '../utils';
+import { StaticImplements, buildPath } from '../utils';
 
 import {
   ActivatedRouteProvider,

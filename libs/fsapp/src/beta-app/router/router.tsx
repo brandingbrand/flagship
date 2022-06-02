@@ -3,12 +3,13 @@ import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import type { NavigationFunctionComponent, OptionsBottomTab } from 'react-native-navigation';
 import { Navigation } from 'react-native-navigation';
 
+import lazyComponent from '@loadable/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { VersionOverlay } from '../development/version-overlay.component';
 import { ModalProvider } from '../modal';
-import { StaticImplements, buildPath, lazyComponent } from '../utils';
+import { StaticImplements, buildPath } from '../utils';
 
 import {
   ActivatedRouteProvider,
