@@ -160,13 +160,6 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
      */
     ...ReactNative.getResolveOptions(platform),
     ...(platform === 'web' ? { alias: { ...reactConfig.resolve?.alias, ...webAliases } } : {}),
-    fallback: {
-      // TODO: remove @apidevtools/json-schema-ref-parser
-      // required for @apidevtools/json-schema-ref-parser
-      https: require.resolve('https-browserify'),
-      http: require.resolve('stream-http'),
-      buffer: require.resolve('buffer/'),
-    },
     ...(platform === 'web'
       ? {
           mainFields: ['browser', 'module', 'main'],
