@@ -7,4 +7,5 @@ export * from './Lazy';
 export * from './MaybePromise';
 export * from './Optional';
 export * from './Predicate';
+export * from './Serializable';
 export * from './TypeGuard';
