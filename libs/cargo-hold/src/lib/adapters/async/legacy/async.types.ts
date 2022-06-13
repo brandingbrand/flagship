@@ -47,7 +47,7 @@ export interface BaseCreateAsyncEffectOptions<
   mapOnFail: (
     result: FailedCallbackResult
   ) => (currentPayload: EmptyPayload | Payload, currentFailure?: FailPayload) => FailPayload;
-  predict?: (params: Params, state: EmptyPayload | Payload) => Payload;
+  predict?: (params: Params, state: EmptyPayload | Payload) => typeof state;
 }
 
 export type CreateAsyncEffectOptions<
