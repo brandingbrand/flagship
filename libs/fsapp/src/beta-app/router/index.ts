@@ -3,6 +3,7 @@ export {
   NavigatorContext,
   useNavigator,
   ActivatedRouteContext,
+  ActivatedRouteProvider,
   DataContext,
   LoadingContext,
   ParamContext,
