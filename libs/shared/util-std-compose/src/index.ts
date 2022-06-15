@@ -3,3 +3,4 @@ export * from './branch';
 export * from './branch-object';
 export * from './flow';
 export * from './pipe';
+export * from './pipe-promise';
