@@ -78,4 +78,26 @@ export function configure(path: string, configuration: Config): void {
       );
     }
   }
+
+  if (path.match(/(ios)/) && configuration.ios?.buildVersion) {
+    fs.update(
+      path,
+      /(lane :appcenter do\n[\s\S]+?increment_build)/,
+      'lane :appcenter do'
+    );
+  }
+
+  if (path.match(/(android)/) && configuration.android?.build?.versionCode) {
+    fs.update(
+      path,
+      /(lane :appcenter do\n[\s\S]+?increment_build)/,
+      'lane :appcenter do'
+    );
+
+    fs.update(
+      path,
+      /(lane :appcenter_bundle do\n[\s\S]+?increment_build)/,
+      'lane :appcenter_bundle do'
+    );
+  }
 }
