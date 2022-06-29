@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.65.0](https://github.com/brandingbrand/flagship/compare/v11.64.0...v11.65.0) (2022-06-29)
+
+
+### Bug Fixes
+
+* **fsapp:** detecting loadable component dependency (e251075)
+
+
+### Features
+
+* **fsapp:** export activateed route provider (78651e1)
+
+
+
 # [11.64.0](https://github.com/brandingbrand/flagship/compare/v11.63.0...v11.64.0) (2022-06-02)
 
 

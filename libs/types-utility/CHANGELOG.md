@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.65.0](https://github.com/brandingbrand/flagship/compare/v11.64.0...v11.65.0) (2022-06-29)
+
+
+### Features
+
+* **types-utility:** add Serializable (ecb64a1)
+
+
+
 # [11.64.0](https://github.com/brandingbrand/flagship/compare/v11.63.0...v11.64.0) (2022-06-02)
 
 

@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.65.0](https://github.com/brandingbrand/flagship/compare/v11.64.0...v11.65.0) (2022-06-29)
+
+
+### Features
+
+* **webpack-nx:** remove fallbacks for @apidevtools/json-schema-ref-parser (9f48b52)
+
+
+
 # [11.64.0](https://github.com/brandingbrand/flagship/compare/v11.63.0...v11.64.0) (2022-06-02)
 
 

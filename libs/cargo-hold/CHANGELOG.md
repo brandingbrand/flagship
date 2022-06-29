@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.65.0](https://github.com/brandingbrand/flagship/compare/v11.64.0...v11.65.0) (2022-06-29)
+
+
+### Features
+
+* **cargo-hold:** update return type of predict fn (3569d42)
+
+
+
 # [11.64.0](https://github.com/brandingbrand/flagship/compare/v11.63.0...v11.64.0) (2022-06-02)
 
 
