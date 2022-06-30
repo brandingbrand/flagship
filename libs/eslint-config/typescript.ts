@@ -176,7 +176,7 @@ export = {
       },
     ],
     '@typescript-eslint/explicit-member-accessibility': [
-      'warn',
+      WARN,
       {
         accessibility: 'explicit',
         overrides: {
@@ -227,7 +227,7 @@ export = {
     ],
     '@typescript-eslint/method-signature-style': WARN, // I use strictFunctionTypes, and thus anything that gets me more contravariant is my friend
     '@typescript-eslint/naming-convention': [
-      'warn',
+      WARN,
       {
         selector: ['memberLike'],
         format: ['camelCase', 'PascalCase'],
