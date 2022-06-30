@@ -1,4 +1,4 @@
-import { OFF, PROJECT_BY_PROJECT, TYPESCRIPT, WARN } from './utils';
+import { OFF, PROJECT_BY_PROJECT, SUCCESSOR, TYPESCRIPT, WARN } from './utils';
 
 export = {
   env: { es6: true },
@@ -28,7 +28,7 @@ export = {
     // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
     'import/first': WARN,
     'import/newline-after-import': WARN,
-    'import/no-duplicates': WARN,
+    'import/no-duplicates': SUCCESSOR('@typescript-eslint/no-duplicate-imports'),
     'import/no-import-module-exports': WARN,
     'import/no-relative-packages': OFF(PROJECT_BY_PROJECT),
     'import/order': [
