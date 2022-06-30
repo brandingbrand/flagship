@@ -172,7 +172,7 @@ export class History implements FSRouterHistory {
   private readonly blockers: Map<string, Blocker> = new Map();
   private readonly activationObservers: Map<string, ResolverListener> = new Map();
   private readonly destroyObservers: Map<string, LocationListener> = new Map();
-  private readonly lactationObservers: Map<string, LocationListener> = new Map();
+  private readonly locationObservers: Map<string, LocationListener> = new Map();
   private readonly loadingObservers: Map<string, LoadingListener> = new Map();
 
   public get stack(): Stack | undefined {
@@ -232,7 +232,7 @@ export class History implements FSRouterHistory {
       const index = this.getKeyIndexInHistory(componentId);
       if (index !== -1) {
         this.activeIndex = index;
-        for (const callback of this.lactationObservers.values()) {
+        for (const callback of this.locationObservers.values()) {
           callback(this.location, this.action);
         }
       }
@@ -701,10 +701,10 @@ export class History implements FSRouterHistory {
   @boundMethod
   public listen(listener: LocationListener): UnregisterCallback {
     const id = uniqueId('subscriber');
-    this.lactationObservers.set(id, listener);
+    this.locationObservers.set(id, listener);
 
     return () => {
-      this.lactationObservers.delete(id);
+      this.locationObservers.delete(id);
     };
   }
 

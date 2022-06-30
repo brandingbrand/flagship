@@ -29,7 +29,15 @@ export function asyncBuilder<SuccessType, FailureType, IdleType>(): AsyncBuilder
   WithFailureType<FailureType> &
   WithIdleType<IdleType> &
   WithSuccessType<SuccessType>;
-export function asyncBuilder() {
+
+/**
+ * Initializes a new async builder to be composed upon
+ * with additional async adapter functionality
+ *
+ * @return
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions -- Overloaded function
+export function asyncBuilder(): AsyncBuilder {
   return {};
 }
 

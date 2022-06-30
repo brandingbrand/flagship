@@ -1,4 +1,5 @@
-import { FC, Fragment } from 'react';
+import type { FC } from 'react';
+import { Fragment } from 'react';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';

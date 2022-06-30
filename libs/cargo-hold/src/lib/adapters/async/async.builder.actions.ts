@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { branchObject, pipe } from '@brandingbrand/standard-compose';
 
-import { ActionCreator, createActionCreator } from '../../action-bus';
+import type { ActionCreator } from '../../action-bus';
+import { createActionCreator } from '../../action-bus';
 
 import type {
   WithActionKey,
