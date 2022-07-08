@@ -664,7 +664,11 @@ export = {
     'jsdoc/require-hyphen-before-param-description': OFF(),
     'jsdoc/require-jsdoc': WARN,
     'jsdoc/require-param': WARN,
-    'jsdoc/require-param-description': WARN,
+    'jsdoc/require-param-description': OFF(
+      `In many cases there isn't much else to
+      say about a param beyond what it's name
+      already communicates`
+    ),
     'jsdoc/require-param-name': WARN,
     'jsdoc/require-param-type': WARN,
     'jsdoc/require-property': WARN,
@@ -673,7 +677,12 @@ export = {
     'jsdoc/require-property-type': WARN,
     'jsdoc/require-returns': WARN,
     'jsdoc/require-returns-check': WARN,
-    'jsdoc/require-returns-description': WARN,
+    'jsdoc/require-returns-description': OFF(
+      `In many cases there isn't much else to
+      say about a return of a function beyond
+      what the name of the function already
+      communicates`
+    ),
     'jsdoc/require-returns-type': WARN,
     'jsdoc/require-throws': WARN,
     'jsdoc/require-yields': WARN,
