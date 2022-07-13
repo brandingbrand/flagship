@@ -1,0 +1,50 @@
+{
+  "root": "libs/shared/util-std-parser",
+  "sourceRoot": "libs/shared/util-std-parser/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-parser",
+        "tsConfig": "libs/shared/util-std-parser/tsconfig.lib.json",
+        "project": "libs/shared/util-std-parser/package.json",
+        "entryFile": "libs/shared/util-std-parser/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-parser",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-parser/**/*.{ts,js}"],
+        "hasTypeAwareRules": true
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-parser"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-parser/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source", "scope:shared", "type:util"]
+}
