@@ -1,6 +1,11 @@
 {
   "deployment": {
     "application": "create-ssr",
-    "additional_applications": ["create-public-api", "create-private-api", "websocket-service"]
+    "additional_applications": [
+      "create-public-api",
+      "create-private-api",
+      "screen-service",
+      "websocket-service"
+    ]
   }
 }
