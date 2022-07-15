@@ -51,6 +51,10 @@ export const PathContext = createContext<string | undefined>(undefined);
 export const PATH_CONTEXT_TOKEN = new InjectionToken<typeof PathContext>('PATH_CONTEXT_TOKEN');
 export const useRoutePath = () => useDependencyContext(PATH_CONTEXT_TOKEN);
 
+export const UrlContext = createContext<string | undefined>(undefined);
+export const URL_CONTEXT_TOKEN = new InjectionToken<typeof UrlContext>('URL_CONTEXT_TOKEN');
+export const useRouteUrl = () => useDependencyContext(URL_CONTEXT_TOKEN);
+
 export const ActivatedRouteContext = createContext<Readonly<ActivatedRoute>>(defaultActivatedRoute);
 export const ACTIVATED_ROUTE_CONTEXT_TOKEN = new InjectionToken<typeof ActivatedRouteContext>(
   'ACTIVATED_ROUTE_CONTEXT_TOKEN'
@@ -71,15 +75,17 @@ export const ActivatedRouteProvider: React.FC<Partial<ActivatedRoute>> = ({
   return (
     <InjectedContextProvider token={SCREEN_ID_CONTEXT_TOKEN} value={activatedRoute.id}>
       <InjectedContextProvider token={PATH_CONTEXT_TOKEN} value={activatedRoute.path}>
-        <InjectedContextProvider token={LOADING_CONTEXT_TOKEN} value={activatedRoute.loading}>
-          <InjectedContextProvider token={QUERY_CONTEXT_TOKEN} value={activatedRoute.query}>
-            <InjectedContextProvider token={PARAM_CONTEXT_TOKEN} value={activatedRoute.params}>
-              <InjectedContextProvider token={DATA_CONTEXT_TOKEN} value={activatedRoute.data}>
-                <InjectedContextProvider
-                  token={ACTIVATED_ROUTE_CONTEXT_TOKEN}
-                  value={activatedRoute}
-                >
-                  {children}
+        <InjectedContextProvider token={URL_CONTEXT_TOKEN} value={activatedRoute.url}>
+          <InjectedContextProvider token={LOADING_CONTEXT_TOKEN} value={activatedRoute.loading}>
+            <InjectedContextProvider token={QUERY_CONTEXT_TOKEN} value={activatedRoute.query}>
+              <InjectedContextProvider token={PARAM_CONTEXT_TOKEN} value={activatedRoute.params}>
+                <InjectedContextProvider token={DATA_CONTEXT_TOKEN} value={activatedRoute.data}>
+                  <InjectedContextProvider
+                    token={ACTIVATED_ROUTE_CONTEXT_TOKEN}
+                    value={activatedRoute}
+                  >
+                    {children}
+                  </InjectedContextProvider>
                 </InjectedContextProvider>
               </InjectedContextProvider>
             </InjectedContextProvider>

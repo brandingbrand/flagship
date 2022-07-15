@@ -22,6 +22,8 @@ import {
   PathContext,
   QUERY_CONTEXT_TOKEN,
   QueryContext,
+  URL_CONTEXT_TOKEN,
+  UrlContext,
 } from './context';
 import type { FSRouterHistory } from './history';
 import type {
@@ -48,6 +50,7 @@ export abstract class FSRouterBase implements FSRouter {
     Injector.provide({ provide: QUERY_CONTEXT_TOKEN, useValue: QueryContext });
     Injector.provide({ provide: PARAM_CONTEXT_TOKEN, useValue: ParamContext });
     Injector.provide({ provide: PATH_CONTEXT_TOKEN, useValue: PathContext });
+    Injector.provide({ provide: URL_CONTEXT_TOKEN, useValue: UrlContext });
     Injector.provide({ provide: ACTIVATED_ROUTE_CONTEXT_TOKEN, useValue: ActivatedRouteContext });
     Injector.provide({ provide: NAVIGATOR_CONTEXT_TOKEN, useValue: NavigatorContext });
     Injector.provide({ provide: MODAL_CONTEXT_TOKEN, useValue: ModalContext });

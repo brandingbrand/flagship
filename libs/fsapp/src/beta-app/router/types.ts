@@ -41,7 +41,7 @@ export interface ScreenOptions {
  */
 export type ScreenFC = FC<{ componentId: string }> & ScreenOptions;
 export abstract class ScreenComponent<State = {}> extends Component<
-  { componentId: string },
+  { componentId?: string },
   State
 > {
   static buttons?: ScreenOptions['buttons'];

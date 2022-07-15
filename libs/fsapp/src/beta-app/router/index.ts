@@ -20,6 +20,7 @@ export {
   ButtonContext,
   useButtons,
   useButtonEffect,
+  useRouteUrl,
   ACTIVATED_ROUTE_CONTEXT_TOKEN,
   BUTTON_CONTEXT_TOKEN,
   DATA_CONTEXT_TOKEN,
@@ -27,6 +28,7 @@ export {
   NAVIGATOR_CONTEXT_TOKEN,
   PARAM_CONTEXT_TOKEN,
   PATH_CONTEXT_TOKEN,
+  URL_CONTEXT_TOKEN,
   QUERY_CONTEXT_TOKEN,
   SCREEN_ID_CONTEXT_TOKEN,
 } from './context';

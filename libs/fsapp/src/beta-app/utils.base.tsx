@@ -1,3 +1,5 @@
+import { uniqueId } from 'lodash';
+
 import type { Route, RouteCollection } from './router';
 
 export const StaticImplements =
@@ -13,7 +15,12 @@ const pathFromRoute = (route: Route, prefix?: string) =>
 
 export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
   const path = pathFromRoute(route, prefix);
-  const id = path || `${prefix ?? ''}/undefined`;
+
+  const id =
+    !('path' in route) || route.path === undefined
+      ? uniqueId('route')
+      : uniqueId(path || `${prefix ?? ''}/undefined`);
+
   return { id, path };
 };
 

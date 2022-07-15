@@ -1,9 +1,17 @@
 import type { FC } from 'react';
-import React, { Fragment, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { AppRegistry } from 'react-native';
-import { Router } from 'react-router';
-import { Route as Screen, Switch } from 'react-router-dom';
+import { Router, useLocation, useRouteMatch } from 'react-router';
+import { Route as Screen, matchPath } from 'react-router-dom';
 
 import { Injector } from '@brandingbrand/fslinker';
 
@@ -42,37 +50,157 @@ interface ScreenMixinProps {
   route: Route;
 }
 
-const Guarded: FC<ScreenMixinProps> = ({ children, route }) => {
+interface ScreenMixinProps {
+  route: Route;
+  id: string;
+}
+
+const GuardContext = React.createContext(
+  async (
+    _id: React.Key,
+    _route: Route,
+    _canActivate: () => Promise<boolean> | boolean
+  ): Promise<boolean> => {
+    throw new Error('Called outside of GuardContext');
+  }
+);
+
+const Switch: FC = ({ children }) => {
+  const location = useLocation();
+  const match = useRouteMatch();
+  const [blockedRoutes, setBlockedRoutes] = useState<Map<React.Key, Route>>(() => new Map());
+
+  const [element, computedMatch] = useMemo(() => {
+    let element: React.ReactElement | null = null;
+    let computedMatch: typeof match | null = null;
+
+    // We use React.Children.forEach instead of React.Children.toArray().find()
+    // here because toArray adds keys to all child elements and we do not want
+    // to trigger an unmount/remount for two <Route>s that render the same
+    // component at different URLs.
+    React.Children.forEach(children, (child) => {
+      if (computedMatch === null && React.isValidElement(child)) {
+        element = child;
+
+        if (child.key && blockedRoutes.has(child.key)) {
+          return;
+        }
+
+        const path = child.props.path || child.props.from;
+        computedMatch = path ? matchPath(location.pathname, { ...child.props, path }) : match;
+      }
+    });
+
+    return [element, computedMatch];
+  }, [blockedRoutes, children, location.pathname, match]);
+
+  const runGuard = useCallback(
+    async (id: React.Key, route: Route, canActivate: () => Promise<boolean> | boolean) => {
+      const willActivate = await canActivate();
+
+      if (!willActivate) {
+        setBlockedRoutes((currentBlockedRoutes) => new Map([...currentBlockedRoutes, [id, route]]));
+      }
+
+      return willActivate;
+    },
+    []
+  );
+
+  // Note: This is a hack because `canActivate()` is being checked via the React
+  // render cycle rather than outside of it
+  useLayoutEffect(() => {
+    if (location.pathname === '/') {
+      setBlockedRoutes(new Map());
+    } else {
+      // When not navigating back to `/` preserve
+      // any blockedRoutes that match the updated location
+      // so that updating route params does not trigger
+      // unmounting screens that may still match
+      setBlockedRoutes((currentBlockedRoutes) => {
+        const update = new Map();
+        for (const [id, blockedRoute] of currentBlockedRoutes.entries()) {
+          const path = blockedRoute.path !== undefined ? `/${blockedRoute.path}` : '/';
+          const matcher = pathToRegexp(path, { end: Boolean(blockedRoute.exact) });
+          if (matcher.test(location.pathname)) {
+            update.set(id, blockedRoute);
+          }
+        }
+
+        return update;
+      });
+    }
+  }, [location]);
+
+  return computedMatch && element ? (
+    <GuardContext.Provider value={runGuard}>
+      {React.cloneElement(element, { location, computedMatch })}
+    </GuardContext.Provider>
+  ) : null;
+};
+
+const Guarded: FC<ScreenMixinProps> = ({ children, id, route }) => {
   const { data, loading, ...activatedRoute } = useActivatedRoute();
   const [show, setShow] = useState(false);
+  const runGuard = useContext(GuardContext);
 
   useLayoutEffect(() => {
-    guardRoute(route, activatedRoute).then(setShow).catch(noop);
-  }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
+    let mounted = true;
+    runGuard(id, route, async () => guardRoute(route, activatedRoute))
+      .then((allowed) => {
+        if (mounted) {
+          setShow(allowed);
+        }
+      })
+      .catch(noop);
+
+    return () => {
+      mounted = false;
+    };
+  }, [
+    activatedRoute.params,
+    activatedRoute.path,
+    activatedRoute.query,
+    route,
+    activatedRoute,
+    runGuard,
+    id,
+  ]);
 
   return show ? <React.Fragment>{children}</React.Fragment> : null;
 };
 
 interface RedirectProps {
+  id: string;
   route: RedirectRoute;
 }
 
-const Redirect: FC<RedirectProps> = ({ route }) => {
+const Redirect: FC<RedirectProps> = ({ id, route }) => {
   const navigator = useNavigator();
   const { data, loading, ...activatedRoute } = useActivatedRoute();
+  const runGuard = useContext(GuardContext);
 
   useLayoutEffect(() => {
     const redirect =
       typeof route.redirect === 'string' ? route.redirect : route.redirect(activatedRoute);
 
-    guardRoute(route, activatedRoute)
+    runGuard(id, route, async () => guardRoute(route, activatedRoute))
       .then((allowed) => {
         if (allowed) {
           navigator.open(`/${redirect.replace(/^\//, '')}`);
         }
       })
       .catch(noop);
-  }, [navigator, activatedRoute.params, activatedRoute.path, activatedRoute.query]);
+  }, [
+    route,
+    navigator,
+    activatedRoute.params,
+    activatedRoute.path,
+    activatedRoute.query,
+    activatedRoute,
+    id,
+    runGuard,
+  ]);
 
   return null;
 };
@@ -104,20 +232,24 @@ export class FSRouter extends FSRouterBase {
     const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
 
     useLayoutEffect(() => {
-      const isMatch = () => {
-        if (!path) {
-          return path === routeDetails.url;
+      const isMatch = (): boolean => {
+        if (path === '/') {
+          return !route.exact || path === routeDetails.url;
         } else if (!routeDetails.url) {
           return false;
         }
 
-        return Boolean(pathToRegexp(path).test(routeDetails.url.split('?')[0] ?? ''));
+        return Boolean(
+          pathToRegexp(path, { end: Boolean(route.exact) }).test(
+            routeDetails.url.split('?')[0] ?? ''
+          )
+        );
       };
 
       if (isMatch()) {
         setFilteredRoute(routeDetails);
       }
-    }, [routeDetails]);
+    }, [path, route.exact, routeDetails]);
 
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(
@@ -126,7 +258,7 @@ export class FSRouter extends FSRouterBase {
             async () => {
               const AwaitedComponent =
                 'loadComponent' in route
-                  ? await route.loadComponent(routeDetails)
+                  ? await route.loadComponent(filteredRoute)
                   : route.component;
 
               return React.memo(({ componentId }) => {
@@ -145,7 +277,7 @@ export class FSRouter extends FSRouterBase {
       return (
         <Screen exact={route.exact} key={id} path={path}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
-            <Guarded route={route}>
+            <Guarded id={id} route={route}>
               <ModalProvider screenWrap={this.options.screenWrap}>
                 <LazyComponent componentId={id} />
               </ModalProvider>
@@ -157,7 +289,7 @@ export class FSRouter extends FSRouterBase {
       return (
         <Screen exact={route.exact} key={id} path={path}>
           <ActivatedRouteProvider {...filteredRoute} loading={loading}>
-            <Redirect route={route} />
+            <Redirect id={id} route={route} />
           </ActivatedRouteProvider>
         </Screen>
       );
