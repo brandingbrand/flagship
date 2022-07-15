@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.66.0](https://github.com/brandingbrand/flagship/compare/v11.65.0...v11.66.0) (2022-07-15)
+
+
+### Bug Fixes
+
+* **fsapp:** remove namespace exports (98d739c)
+
+
+
 # [11.65.0](https://github.com/brandingbrand/flagship/compare/v11.64.0...v11.65.0) (2022-06-29)
 
 
