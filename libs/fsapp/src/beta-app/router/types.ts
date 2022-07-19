@@ -64,6 +64,8 @@ export interface ActivatedRoute {
   readonly isExact: boolean;
 }
 
+export type PreActivatedRoute = Pick<ActivatedRoute, 'params' | 'path' | 'query'>;
+
 export interface Resolver<Data = unknown> {
   resolve: () => Data | Promise<Data>;
 }
@@ -73,18 +75,14 @@ export type ResolverConstructor<Data = unknown> = new (route: ActivatedRoute) =>
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
 export type ResolverFunction<Data = unknown> = (route: ActivatedRoute) => Data | Promise<Data>;
 
-export interface Activator {
+export interface Guard {
   activate: () => Promise<boolean> | boolean;
 }
 
-export type ActivatorConstructor = new (
-  route: Pick<ActivatedRoute, 'params' | 'path' | 'query'>
-) => Activator;
+export type ActivatorConstructor = new (route: PreActivatedRoute) => Guard;
 
 // Guaranteed to be in the context of a React Function, so hooks will work as expected.
-export type ActivatorFunction = (
-  route: Pick<ActivatedRoute, 'params' | 'path' | 'query'>
-) => Promise<boolean> | boolean;
+export type ActivatorFunction = (route: PreActivatedRoute) => Promise<boolean> | boolean;
 
 // Uses a similar pattern to that of the Angular and Vue
 // Routers, this should make it familiar to those who have

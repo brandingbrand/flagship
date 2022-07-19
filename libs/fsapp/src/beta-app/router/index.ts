@@ -67,4 +67,6 @@ export type {
   ExternalRoutes,
   ActionButton,
   ScreenOptions,
+  Guard,
+  PreActivatedRoute,
 } from './types';
