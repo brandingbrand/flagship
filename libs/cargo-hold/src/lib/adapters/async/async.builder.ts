@@ -1,7 +1,7 @@
 import type { IPathLens } from '@brandingbrand/standard-lens';
 import type { MaybePromise } from '@brandingbrand/types-utility';
 
-import type { ActionSpecifier, AnyActionSpecifier, TypeGuard } from '../..';
+import type { AnyAction, TypeGuard } from '../../action-bus';
 
 import type {
   AsyncBuilder,
@@ -29,9 +29,6 @@ export function asyncBuilder<SuccessType, FailureType, IdleType>(): AsyncBuilder
   WithFailureType<FailureType> &
   WithIdleType<IdleType> &
   WithSuccessType<SuccessType>;
-/**
- *
- */
 export function asyncBuilder() {
   return {};
 }
@@ -78,12 +75,12 @@ export const withMetadata =
   });
 
 export const withTriggerActionFilter =
-  <Specifier extends ActionSpecifier<string, any, unknown>>(
-    triggerActionFilter: TypeGuard<AnyActionSpecifier, Specifier>
+  <DesiredActionType extends AnyAction>(
+    triggerActionFilter: TypeGuard<AnyAction, DesiredActionType>
   ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithTriggerActionFilter<Specifier> => ({
+  ): BuilderType & WithTriggerActionFilter<DesiredActionType> => ({
     ...builder,
     triggerActionFilter,
   });

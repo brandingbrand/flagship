@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
+/* eslint-disable @typescript-eslint/consistent-type-definitions -- These may need to be types */
 import type { IPathLens } from '@brandingbrand/standard-lens';
 import type { MaybePromise } from '@brandingbrand/types-utility';
 
-import type { ActionSpecifier, AnyActionSpecifier, TypeGuard } from '../../action-bus';
+import type { AnyAction, TypeGuard } from '../../action-bus';
 
 import type { AsyncState } from './async.types';
 
@@ -29,27 +29,29 @@ export type WithPayloadTypes<
 export type WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> = {
   lens: IPathLens<OuterStructureType, AsyncState<SuccessType, FailureType, IdleType>>;
 };
-export type WithActionKey<ActionKey extends string> = {
-  actionKey: ActionKey;
+export type WithActionKey<ActionKeyType extends string> = {
+  actionKey: ActionKeyType;
 };
-export type WithMetadata<Metadata extends Record<string, unknown>> = {
-  metadata: Metadata;
+export type WithMetadata<MetadataType extends Record<string, unknown>> = {
+  metadata: MetadataType;
 };
-export type WithTriggerActionFilter<Specifier extends ActionSpecifier<string, any, unknown>> = {
-  triggerActionFilter: TypeGuard<AnyActionSpecifier, Specifier>;
+export type WithTriggerActionFilter<ActionType extends AnyAction> = {
+  triggerActionFilter: TypeGuard<AnyAction, ActionType>;
 };
-export type WithAsyncCallback<Input, Output> = {
-  callback: (input: Input) => MaybePromise<Output>;
+export type WithAsyncCallback<InputType, OutputType> = {
+  callback: (input: InputType) => MaybePromise<OutputType>;
 };
-export type WithMapOnSuccess<Input, State, OutputState = State> = {
-  mapOnSuccess: (input: Input) => (state: State) => OutputState;
+export type WithMapOnSuccess<InputType, StateType, OutputStateType = StateType> = {
+  mapOnSuccess: (input: InputType) => (state: StateType) => OutputStateType;
 };
-export type WithMapOnFailure<Input, FailureType, Output = FailureType> = {
-  mapOnFailure: (input: Input) => (oldFailure?: FailureType | undefined) => Output;
+export type WithMapOnFailure<InputType, FailureType, OutputType = FailureType> = {
+  mapOnFailure: (input: InputType) => (oldFailure?: FailureType | undefined) => OutputType;
 };
-export type WithOptimisticUpdate<Input, State, OutputState = State> = {
-  prediction: (input: Input) => (state: State) => OutputState;
+export type WithOptimisticUpdate<InputType, StateType, OutputStateType = StateType> = {
+  prediction: (input: InputType) => (state: StateType) => OutputStateType;
 };
 export type WithEnableLoadingMore = {
   enableLoadMore: boolean;
 };
+
+/* eslint-enable @typescript-eslint/consistent-type-definitions -- These may need to be types */

@@ -3,6 +3,7 @@ import equal from 'fast-deep-equal';
 import type {
   ActionOf,
   ActionSpecifier,
+  ActionSpecifierOf,
   AnyAction,
   AnyActionSpecifier,
   TypeGuard,
@@ -11,67 +12,117 @@ import type { NonEmptyArray } from '../internal/util/functional/non-empty-array.
 
 import type { ActionReducer, AnyActionReducer, SourcesList, StateReducer } from './store.types';
 
+/**
+ * Combines action reducers by calling each of them in succession
+ *
+ * @param reducers Reducers to combine
+ * @return Action reducer that combines all effects
+ */
 export const combineActionReducers =
-  <State extends {}>(...reducers: Array<AnyActionReducer<State>>): AnyActionReducer<State> =>
+  <StateType extends {}>(
+    ...reducers: Array<AnyActionReducer<StateType>>
+  ): AnyActionReducer<StateType> =>
   (action) =>
   (state) =>
     reducers.reduce((currentState, reducer) => reducer(action)(currentState), state);
 
+/**
+ * Makes it easier to build reducers by filtering actions first, narrowing their type.
+ * If the type matches it then calls the given reducer
+ *
+ * @param filter A function that filters the action down to the desired actions.
+ * @param reducer A reducer that operates on the desired action.
+ * @return A reducer that operates on any action.
+ */
 export const on =
-  <State, DesiredActionSpecifier extends ActionSpecifier<string, any, unknown>>(
-    filter: TypeGuard<AnyActionSpecifier, DesiredActionSpecifier>,
-    reducer: ActionReducer<State, ActionOf<DesiredActionSpecifier>>
-  ): AnyActionReducer<State> =>
+  <StateType, DesiredActionType extends AnyAction>(
+    filter: TypeGuard<AnyAction, DesiredActionType>,
+    reducer: ActionReducer<StateType, DesiredActionType>
+  ): AnyActionReducer<StateType> =>
   (action) => {
     if (filter(action)) {
-      // sorry for coercion. TS can't detect the typeguard logic through the ActionOf<> type.
-      return reducer(action as unknown as ActionOf<DesiredActionSpecifier>);
+      return reducer(action);
     }
     return (state) => state;
   };
 
+/**
+ * Filters actions based on the desired source. Actions that do no have a source will fail
+ * this filter.
+ *
+ * @param sources The list of acceptable sources that you want to filter for.
+ * @return True if the action has an acceptable source: false if otherwise.
+ * @deprecated
+ */
 export const requireSource =
   (...sources: Array<string | symbol | undefined>) =>
-  <ActionType extends ActionSpecifier<string, any, unknown>>(
-    action: ActionType
-  ): action is ActionType =>
+  <ActionType extends AnyAction>(action: ActionType): action is ActionType =>
     sources.length === 0 || sources.includes(action.source);
 
+/**
+ * Filters actions based on the desired source. Actions that do no have a source will pass
+ * this filter.
+ *
+ * @param sources The list of acceptable sources that you want to filter for.
+ * @return True if the action has an acceptable source or no source: false if otherwise.
+ * @deprecated
+ */
 export const optionalSource =
   (...sources: Array<string | symbol | undefined>) =>
-  <ActionType extends ActionSpecifier<string, any, unknown>>(
-    action: ActionType
-  ): action is ActionType =>
+  <ActionType extends AnyAction>(action: ActionType): action is ActionType =>
     sources.length === 0 || !action.source || sources.includes(action.source);
 
+/**
+ * Filters actions by the desired type
+ *
+ * @param actionTypes The desired action types.
+ * @return True if the type is one of the desired action types: false if otherwise.
+ */
 export const isType =
-  <ActionType extends ActionSpecifier<string, any, unknown>>(
-    ...actionTypes: NonEmptyArray<ActionType['type']>
-  ) =>
+  <ActionType extends AnyAction>(...actionTypes: NonEmptyArray<ActionType['type']>) =>
   (action: ActionSpecifier<string, any, unknown>): action is ActionType =>
     actionTypes.includes(action.type);
 
+/**
+ * Filters actions by the desired subtype
+ *
+ * @param actionSubtypes The desired action subtypes.
+ * @return True if the subtype is one of the desired action types: false if otherwise.
+ */
 export const isSubtype =
   <ActionType extends AnyAction>(...actionSubtypes: NonEmptyArray<ActionType['subtype']>) =>
   (action: AnyAction): action is ActionType =>
     actionSubtypes.includes(action.subtype);
-
+/**
+ * Type guard that tells you whether an action matches a given action specifier.
+ *
+ * @param specifier Action specifier to match
+ * @param extraSources Possible extra values of the source field that are allowed. (Deprecated)
+ * @return True if the action matches the specifier: false if not.
+ */
 export const matches =
-  <DesiredActionSpecifier extends AnyActionSpecifier>(
-    specifier: DesiredActionSpecifier,
+  <DesiredActionSpecifierType extends AnyActionSpecifier>(
+    specifier: DesiredActionSpecifierType,
     extraSources?: SourcesList
-  ): TypeGuard<AnyActionSpecifier, DesiredActionSpecifier> =>
-  (inputAction): inputAction is DesiredActionSpecifier =>
+  ): TypeGuard<AnyAction, ActionOf<DesiredActionSpecifierType>> =>
+  (inputAction): inputAction is ActionOf<DesiredActionSpecifierType> =>
     specifier.type === inputAction.type &&
     specifier.subtype === inputAction.subtype &&
     (extraSources === undefined || requireSource(specifier.source, ...extraSources)(inputAction)) &&
     equal(specifier.filterMetadata, inputAction.filterMetadata);
 
+/**
+ * Combines two type guards such that an action must comply with both.
+ *
+ * @param outerTypeguard First type guard to be called.
+ * @param innerTypeguard Second type guard to be called if the outer returns true.
+ * @return True if the action matches both specifiers: false if not.
+ */
 export const and =
   <
     RefinedActionType extends ActionType,
     ActionType extends OuterActionType,
-    OuterActionType extends AnyActionSpecifier = AnyActionSpecifier
+    OuterActionType extends AnyAction = AnyAction
   >(
     outerTypeguard: TypeGuard<OuterActionType, ActionType>,
     innerTypeguard: TypeGuard<ActionType, RefinedActionType>
@@ -79,11 +130,18 @@ export const and =
   (action): action is RefinedActionType =>
     outerTypeguard(action) && innerTypeguard(action);
 
+/**
+ * Combines two type guards such that an action must comply with either.
+ *
+ * @param typeguardA First type guard to be called.
+ * @param typeguardB Second type guard to be called if the first returns false.
+ * @return True if the action matches either specifiers: false if not.
+ */
 export const or =
   <
     ActionTypeA extends OuterActionType,
     ActionTypeB extends OuterActionType,
-    OuterActionType extends AnyActionSpecifier = AnyActionSpecifier
+    OuterActionType extends AnyAction = AnyAction
   >(
     typeguardA: TypeGuard<OuterActionType, ActionTypeA>,
     typeguardB: TypeGuard<OuterActionType, ActionTypeB>
@@ -91,6 +149,12 @@ export const or =
   (action): action is ActionTypeA | ActionTypeB =>
     typeguardA(action) || typeguardB(action);
 
+/**
+ * Combines two state reducers calling the inner and then the outer.
+ *
+ * @param outerReducer The state reducer
+ * @return A function that takes another reducer and returns the combined state reducer.
+ */
 export const composeStateReducers =
   <T>(outerReducer: StateReducer<T>) =>
   (innerReducer: StateReducer<T>): StateReducer<T> =>

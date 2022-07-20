@@ -1,11 +1,6 @@
 import type { ILens } from '@brandingbrand/standard-lens';
 
-import type {
-  ActionSpecifier,
-  AnyAction,
-  AnyActionSpecifier,
-  TypeGuard,
-} from '../../../action-bus';
+import type { ActionOf, ActionSpecifier, AnyAction, TypeGuard } from '../../../action-bus';
 import type { OptionalIfExtends } from '../../../internal/types';
 import type { AnyActionReducer, Effect, StateReducer } from '../../../store';
 import type { AsyncState, AsyncStatus } from '../async.types';
@@ -30,9 +25,7 @@ export interface AsyncSelectors<Payload, FailPayload, Structure, EmptyPayload> {
 }
 
 export interface BaseCreateAsyncEffectOptions<
-  DesiredActionSpecifier extends
-    | ActionSpecifier<string, string | undefined, Params>
-    | AnyAction<Params>,
+  DesiredActionType extends ActionSpecifier<string, string | undefined, Params>,
   Params extends unknown[],
   CallbackResult,
   Payload,
@@ -41,7 +34,7 @@ export interface BaseCreateAsyncEffectOptions<
   EmptyPayload = Payload
 > {
   loadingMore?: boolean;
-  when: TypeGuard<AnyActionSpecifier, DesiredActionSpecifier>;
+  when: TypeGuard<AnyAction, ActionOf<DesiredActionType>>;
   do: (...params: Params) => Promise<CallbackResult>;
   mapOnSuccess: (result: CallbackResult) => (currentPayload: EmptyPayload | Payload) => Payload;
   mapOnFail: (
@@ -51,9 +44,7 @@ export interface BaseCreateAsyncEffectOptions<
 }
 
 export type CreateAsyncEffectOptions<
-  DesiredActionSpecifier extends
-    | ActionSpecifier<string, string | undefined, Params>
-    | AnyAction<Params>,
+  DesiredActionType extends ActionSpecifier<string, string | undefined, Params>,
   Params extends unknown[],
   CallbackResult,
   Payload,
@@ -63,7 +54,7 @@ export type CreateAsyncEffectOptions<
 > = OptionalIfExtends<
   OptionalIfExtends<
     BaseCreateAsyncEffectOptions<
-      DesiredActionSpecifier,
+      DesiredActionType,
       Params,
       CallbackResult,
       Payload,
@@ -104,9 +95,7 @@ export interface AsyncAdaptor<
     lens: ILens<OuterStructure, Structure>
   ) => AsyncAdaptor<ActionKey, Payload, FailPayload, OuterStructure, EmptyPayload>;
   createEffect: <
-    DesiredActionSpecifier extends
-      | ActionSpecifier<string, string | undefined, Params>
-      | AnyAction<Params>,
+    DesiredActionSpecifier extends AnyAction<Params>,
     Params extends unknown[],
     CallbackResult = Payload,
     FailedCallbackResult = FailPayload

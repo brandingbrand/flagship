@@ -1,5 +1,5 @@
-interface BaseAsyncState<Status extends string, T> {
-  status: Status;
+interface BaseAsyncState<StatusType extends string, T> {
+  status: StatusType;
   payload: T;
 }
 

@@ -2,6 +2,7 @@ import * as FastCheck from 'fast-check';
 import { NEVER, of as just, merge } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import type { ActionSpecifierOf, AnyAction } from '../../../action-bus';
 import { matches } from '../../../store';
 
 import { createAsyncActionCreators } from './async.actions';
@@ -21,7 +22,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async () => result,
           });
           const action$ = merge(NEVER, just({ type: triggeringKey, payload: [actionPayload] }));
@@ -47,7 +48,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async () => result,
           });
           const action$ = merge(NEVER, just({ type: triggeringKey, payload: [actionPayload] }));
@@ -73,7 +74,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async (): Promise<unknown> => {
               throw result;
             },
@@ -101,7 +102,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async () => result,
             predict: (_params, _state) => result,
           });
@@ -128,7 +129,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async (): Promise<unknown> => {
               throw result;
             },
@@ -157,7 +158,7 @@ describe('makeAsyncEffect', () => {
         FastCheck.anything(),
         async (triggeringKey, result, actionPayload, oldState) => {
           const effect = createAsyncEffect({
-            when: matches({ type: triggeringKey }),
+            when: matches<ActionSpecifierOf<AnyAction<[]>>>({ type: triggeringKey }),
             do: async (): Promise<unknown> => {
               throw result;
             },

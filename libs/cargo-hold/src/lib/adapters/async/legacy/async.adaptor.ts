@@ -64,15 +64,13 @@ export const createAsyncAdaptor = <
     initialPayload: EmptyPayload | Payload
   ): AsyncState<Payload, FailPayload, EmptyPayload> => createIdleState(initialPayload);
   const createEffect = <
-    DesiredActionSpecifier extends
-      | ActionSpecifier<string, string | undefined, Params>
-      | AnyAction<Params>,
+    DesiredActionType extends AnyAction<Params>,
     Params extends unknown[],
     CallbackResult = Payload,
     FailedCallbackResult = FailPayload
   >(
     effectOptions: CreateAsyncEffectOptions<
-      DesiredActionSpecifier,
+      DesiredActionType,
       Params,
       CallbackResult,
       Payload,

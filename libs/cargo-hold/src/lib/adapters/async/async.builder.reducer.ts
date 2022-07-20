@@ -1,7 +1,7 @@
 import { branch, pipe } from '@brandingbrand/standard-compose';
 import { withLens } from '@brandingbrand/standard-lens';
 
-import type { ActionCreator } from '../../action-bus';
+import type { Action, ActionCreator } from '../../action-bus';
 import type { AnyActionReducer, StateReducer } from '../../store';
 import { combineActionReducers, matches, on } from '../../store';
 
@@ -35,30 +35,61 @@ import type {
   AsyncSuccessState,
 } from './async.types';
 
+/**
+ * Given a payload it will return a state reducer that gives us an idle state of that payload.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildInitStateReducer =
   <IdleType>(_builder: WithIdleType<IdleType>) =>
   (payload: IdleType) =>
   () =>
     createIdleState(payload);
 
+/**
+ * Given a payload it will return a state reducer that gives us a loading state of that payload.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildLoadingStateReducer =
   <SuccessType, IdleType>(_builder: WithIdleType<IdleType> & WithSuccessType<SuccessType>) =>
   (payload: IdleType | SuccessType) =>
   () =>
     createLoadingState(payload);
 
+/**
+ * Given a payload it will return a state reducer that gives us a loading more state
+ * of that payload.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildLoadingMoreStateReducer =
   <SuccessType>(_builder: WithSuccessType<SuccessType>) =>
   (payload: SuccessType) =>
   () =>
     createLoadingMoreState(payload);
 
+/**
+ * Given a payload it will return a state reducer that gives us a success state of that payload.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildSuccessStateReducer =
   <SuccessType>(_builder: WithSuccessType<SuccessType>) =>
   (payload: SuccessType) =>
   () =>
     createSuccessState(payload);
 
+/**
+ * Given a failure it will return a state reducer that gives us a failure state.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildFailureStateReducer =
   <SuccessType, FailureType, IdleType>(
     _builder: WithPayloadTypes<SuccessType, FailureType, IdleType>
@@ -67,39 +98,61 @@ export const buildFailureStateReducer =
   (state: AsyncState<SuccessType, FailureType, IdleType>) =>
     createFailureState(state.payload, failure);
 
+/**
+ * Given a payload it will return a state reducer that reverts to the given payload but leaving
+ * the status the same.
+ *
+ * @param _builder
+ * @return
+ */
 export const buildRevertStateReducer =
   <SuccessType, FailureType, IdleType>(
     _builder: WithPayloadTypes<SuccessType, FailureType, IdleType>
   ) =>
   (payload: IdleType | SuccessType): StateReducer<AsyncState<SuccessType, FailureType, IdleType>> =>
   (state: AsyncState<SuccessType, FailureType, IdleType>) =>
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- fixes a nuanced type issue.
     ({
       ...state,
       payload,
     } as AsyncState<SuccessType, FailureType, IdleType>);
 
 const makeActionReducer = <
-  ActionKey extends string,
-  Subtype extends string | undefined,
+  ActionKeyType extends string,
+  SubtypeType extends string | undefined,
   PayloadType,
   StateType,
   ParamsType extends unknown[]
 >(
-  actionCreator: ActionCreator<ActionKey, Subtype, PayloadType, ParamsType>,
+  actionCreator: ActionCreator<ActionKeyType, SubtypeType, PayloadType, ParamsType>,
   stateReducer: (payload: PayloadType) => StateReducer<StateType>
-) => on(matches(actionCreator), (action) => stateReducer(action.payload));
+): AnyActionReducer<StateType> =>
+  on(matches(actionCreator), (action) => stateReducer(action.payload));
 
-export const buildInitActionReducer = <ActionKey extends string, IdleType>(
-  builder: WithActionKey<ActionKey> & WithIdleType<IdleType>
+/**
+ * Given a builder this makes an action reducer that results in an idle state.
+ *
+ * @param builder A builder with an action key and an idle type.
+ * @return
+ */
+export const buildInitActionReducer = <ActionKeyType extends string, IdleType>(
+  builder: WithActionKey<ActionKeyType> & WithIdleType<IdleType>
 ): AnyActionReducer<AsyncIdleState<IdleType>> =>
   pipe(
     builder,
+    // buildInitActionCreator will take WithMetadata and do the right thing.
     branch(buildInitActionCreator, buildInitStateReducer),
     ([actionCreator, stateReducerCreator]) => makeActionReducer(actionCreator, stateReducerCreator)
   );
 
-export const buildLoadingActionReducer = <ActionKey extends string, SuccessType, IdleType>(
-  builder: WithActionKey<ActionKey> & WithIdleType<IdleType> & WithSuccessType<SuccessType>
+/**
+ * Given a builder this makes an action reducer that results in a loading state.
+ *
+ * @param builder A builder with an action key and a loading type.
+ * @return
+ */
+export const buildLoadingActionReducer = <ActionKeyType extends string, SuccessType, IdleType>(
+  builder: WithActionKey<ActionKeyType> & WithIdleType<IdleType> & WithSuccessType<SuccessType>
 ): AnyActionReducer<AsyncLoadingState<IdleType | SuccessType>> =>
   pipe(
     builder,
@@ -107,14 +160,18 @@ export const buildLoadingActionReducer = <ActionKey extends string, SuccessType,
     ([actionCreator, stateReducerCreator]) =>
       on(
         matches(actionCreator),
-        // slight coercion necessary as TS isn't picking up the union quite properly
         (action) =>
           stateReducerCreator(action.payload) as () => AsyncLoadingState<IdleType | SuccessType>
       )
   );
-
-export const buildLoadingMoreActionReducer = <ActionKey extends string, SuccessType>(
-  builder: WithActionKey<ActionKey> & WithSuccessType<SuccessType>
+/**
+ * Given a builder this makes an action reducer that results in a loading more state.
+ *
+ * @param builder A builder with an action key and a loading more type.
+ * @return
+ */
+export const buildLoadingMoreActionReducer = <ActionKeyType extends string, SuccessType>(
+  builder: WithActionKey<ActionKeyType> & WithSuccessType<SuccessType>
 ): AnyActionReducer<AsyncLoadingMoreState<SuccessType>> =>
   pipe(
     builder,
@@ -122,8 +179,14 @@ export const buildLoadingMoreActionReducer = <ActionKey extends string, SuccessT
     ([actionCreator, stateReducerCreator]) => makeActionReducer(actionCreator, stateReducerCreator)
   );
 
-export const buildSuccessActionReducer = <ActionKey extends string, SuccessType>(
-  builder: WithActionKey<ActionKey> & WithSuccessType<SuccessType>
+/**
+ * Given a builder this makes an action reducer that results in a success state.
+ *
+ * @param builder A builder with an action key and a success type.
+ * @return
+ */
+export const buildSuccessActionReducer = <ActionKeyType extends string, SuccessType>(
+  builder: WithActionKey<ActionKeyType> & WithSuccessType<SuccessType>
 ): AnyActionReducer<AsyncSuccessState<SuccessType>> =>
   pipe(
     builder,
@@ -131,13 +194,19 @@ export const buildSuccessActionReducer = <ActionKey extends string, SuccessType>
     ([actionCreator, stateReducerCreator]) => makeActionReducer(actionCreator, stateReducerCreator)
   );
 
+/**
+ * Given a builder this makes an action reducer that results in a failure state.
+ *
+ * @param builder A builder with an action key and payload types.
+ * @return
+ */
 export const buildFailureActionReducer = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   FailureType,
   IdleType
 >(
-  builder: WithActionKey<ActionKey> & WithPayloadTypes<SuccessType, FailureType, IdleType>
+  builder: WithActionKey<ActionKeyType> & WithPayloadTypes<SuccessType, FailureType, IdleType>
 ): AnyActionReducer<AsyncState<SuccessType, FailureType, IdleType>> =>
   pipe(
     builder,
@@ -154,13 +223,19 @@ export const buildFailureActionReducer = <
       )
   );
 
+/**
+ * Given a builder this makes an action reducer that results in a reverted payload.
+ *
+ * @param builder A builder with an action key and payload types.
+ * @return
+ */
 export const buildRevertActionReducer = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   FailureType,
   IdleType
 >(
-  builder: WithActionKey<ActionKey> & WithPayloadTypes<SuccessType, FailureType, IdleType>
+  builder: WithActionKey<ActionKeyType> & WithPayloadTypes<SuccessType, FailureType, IdleType>
 ): AnyActionReducer<AsyncState<SuccessType, FailureType, IdleType>> =>
   pipe(
     builder,
@@ -169,8 +244,20 @@ export const buildRevertActionReducer = <
       on(matches(actionCreator), (action) => stateReducerCreator(action.payload))
   );
 
-export const buildCombinedReducers = <ActionKey extends string, SuccessType, FailureType, IdleType>(
-  builder: WithActionKey<ActionKey> & WithPayloadTypes<SuccessType, FailureType, IdleType>
+/**
+ * Given a builder it makes an action reducer that looks for all of the async actions
+ * and performs the appropriate state change.
+ *
+ * @param builder A builder with an action key an payload types.
+ * @return
+ */
+export const buildCombinedReducers = <
+  ActionKeyType extends string,
+  SuccessType,
+  FailureType,
+  IdleType
+>(
+  builder: WithActionKey<ActionKeyType> & WithPayloadTypes<SuccessType, FailureType, IdleType>
 ): AnyActionReducer<AsyncState<SuccessType, FailureType, IdleType>> =>
   pipe(
     builder,
@@ -190,9 +277,16 @@ export const buildCombinedReducers = <ActionKey extends string, SuccessType, Fai
       )
   );
 
+/**
+ * Returns an action reducer from buildCombinedReducers, but run in a lens so that it handles
+ * a larger data structure.
+ *
+ * @param builder
+ * @return
+ */
 export const buildCombinedLensedReducers =
-  <ActionKey extends string, SuccessType, FailureType, IdleType, OuterStructureType>(
-    builder: WithActionKey<ActionKey> &
+  <ActionKeyType extends string, SuccessType, FailureType, IdleType, OuterStructureType>(
+    builder: WithActionKey<ActionKeyType> &
       WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> &
       WithPayloadTypes<SuccessType, FailureType, IdleType>
   ): AnyActionReducer<OuterStructureType> =>

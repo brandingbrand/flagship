@@ -13,10 +13,12 @@ import type { AnyActionReducer, Effect, IStore } from './store.types';
  *
  * @param initialState The initial state intended for the store.
  */
-export class Store<State> extends ActionBus implements IStore<State> {
-  constructor(initialState: State) {
+export class Store<StateType> extends ActionBus implements IStore<StateType> {
+  constructor(initialState: StateType) {
     super();
+    // Concatenates the reducers into an observable array.
     const allReducers$ = this.reducer$.pipe(accumulateToArray());
+    // Current state subject at any given time.
     this.subject$ = new BehaviorSubject(initialState);
     const reducerSubscription = allReducers$
       .pipe(
@@ -47,23 +49,51 @@ export class Store<State> extends ActionBus implements IStore<State> {
     this.subscriptions.add(reducerSubscription);
   }
 
-  private readonly subject$: BehaviorSubject<State>;
-  private readonly reducer$ = new ReplaySubject<AnyActionReducer<State>>(Number.POSITIVE_INFINITY);
+  private readonly subject$: BehaviorSubject<StateType>;
+  private readonly reducer$ = new ReplaySubject<AnyActionReducer<StateType>>(
+    Number.POSITIVE_INFINITY
+  );
+
+  /**
+   * A clone of the action$ that emits only once the state has been updated.
+   * Used for effects to guarantee the order of operations.
+   */
   private readonly reducedAction$ = new Subject<AnyAction>();
 
-  public get state(): State {
+  /**
+   * Synchronous getter for current state. Use `state$` when possible.
+   *
+   * @return Current state
+   */
+  public get state(): StateType {
     return this.subject$.value;
   }
 
-  public get state$(): Observable<State> {
+  /**
+   * Getter for the state observable
+   *
+   * @return The state observable
+   */
+  public get state$(): Observable<StateType> {
     return this.subject$.asObservable();
   }
 
-  public registerReducer = (reducer: AnyActionReducer<State>): void => {
+  /**
+   * Registers a new reducer to the store.
+   *
+   * @param reducer The reducer that gets registered to the store.
+   */
+  public registerReducer = (reducer: AnyActionReducer<StateType>): void => {
     this.reducer$.next(reducer);
   };
 
-  public registerEffect = (effect: Effect<State>): Subscription => {
+  /**
+   * Registers a new effect to the store.
+   *
+   * @param effect The effect to register.
+   * @return A subscription. Unsubscribe to the subscription to stop the effect from listening
+   */
+  public registerEffect = (effect: Effect<StateType>): Subscription => {
     const subscription = effect(this.reducedAction$, this.state$).subscribe({
       next: (value) => {
         this._action$.next(value);

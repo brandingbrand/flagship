@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { branchObject, pipe } from '@brandingbrand/standard-compose';
 
-import { createActionCreator } from '../../action-bus';
+import { ActionCreator, createActionCreator } from '../../action-bus';
 
 import type {
   WithActionKey,
@@ -12,7 +12,12 @@ import type {
   WithPayloadTypes,
   WithSuccessType,
 } from './async.builder.types';
-
+/**
+ * Takes a builder and returns an init action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildInitActionCreator = <
   ActionKey extends string,
   IdleType,
@@ -21,13 +26,19 @@ export const buildInitActionCreator = <
   builder: WithIdleType<IdleType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) =>
+): ActionCreator<ActionKey, 'async:init', IdleType, [IdleType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:init',
     callback: (idlePayload: IdleType) => idlePayload,
   });
 
+/**
+ * Takes a builder and returns a loading action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildLoadingActionCreator = <
   ActionKey extends string,
   SuccessType,
@@ -38,7 +49,7 @@ export const buildLoadingActionCreator = <
     WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) =>
+): ActionCreator<ActionKey, 'async:load', IdleType | SuccessType, [IdleType | SuccessType]> =>
   createActionCreator({
     ...builder,
     actionKey: builder.actionKey,
@@ -46,6 +57,12 @@ export const buildLoadingActionCreator = <
     callback: (loadingPayload: IdleType | SuccessType) => loadingPayload,
   });
 
+/**
+ * Takes a builder and returns a loading more action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildLoadingMoreActionCreator = <
   ActionKey extends string,
   SuccessType,
@@ -54,13 +71,19 @@ export const buildLoadingMoreActionCreator = <
   builder: WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) =>
+): ActionCreator<ActionKey, 'async:load-more', SuccessType, [SuccessType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:load-more',
     callback: (loadingPayload: SuccessType) => loadingPayload,
   });
 
+/**
+ * Takes a builder and returns a success action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildSucceedActionCreator = <
   ActionKey extends string,
   SuccessType,
@@ -69,13 +92,19 @@ export const buildSucceedActionCreator = <
   builder: WithSuccessType<SuccessType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) =>
+): ActionCreator<ActionKey, 'async:succeed', SuccessType, [SuccessType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:succeed',
     callback: (succeedPayload: SuccessType) => succeedPayload,
   });
 
+/**
+ * Takes a builder and returns a failure action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildFailActionCreator = <
   ActionKey extends string,
   FailureType,
@@ -84,13 +113,19 @@ export const buildFailActionCreator = <
   builder: WithFailureType<FailureType> &
     WithActionKey<ActionKey> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-) =>
+): ActionCreator<ActionKey, 'async:fail', FailureType, [FailureType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:fail',
     callback: (failure: FailureType) => failure,
   });
 
+/**
+ * Takes a builder and returns a revert action creator.
+ *
+ * @param builder
+ * @return
+ */
 export const buildRevertActionCreator = <
   ActionKey extends string,
   SuccessType,
@@ -108,6 +143,12 @@ export const buildRevertActionCreator = <
     callback: (revertPayload: SuccessType | IdleType) => revertPayload,
   });
 
+/**
+ * Builds a full suite of async action creators.
+ *
+ * @param builder
+ * @return
+ */
 export const buildActionCreators = <
   ActionKey extends string,
   SuccessType,

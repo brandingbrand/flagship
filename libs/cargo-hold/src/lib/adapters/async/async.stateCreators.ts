@@ -11,27 +11,31 @@ export const createIdleState = <IdleType>(payload: IdleType): AsyncIdleState<Idl
   payload,
 });
 
-export const createLoadingState = <Payload>(payload: Payload): AsyncLoadingState<Payload> => ({
+export const createLoadingState = <PayloadType>(
+  payload: PayloadType
+): AsyncLoadingState<PayloadType> => ({
   status: 'loading',
   payload,
 });
 
-export const createLoadingMoreState = <Payload>(
-  payload: Payload
-): AsyncLoadingMoreState<Payload> => ({
+export const createLoadingMoreState = <PayloadType>(
+  payload: PayloadType
+): AsyncLoadingMoreState<PayloadType> => ({
   status: 'loading-more',
   payload,
 });
 
-export const createSuccessState = <Payload>(payload: Payload): AsyncSuccessState<Payload> => ({
+export const createSuccessState = <PayloadType>(
+  payload: PayloadType
+): AsyncSuccessState<PayloadType> => ({
   status: 'success',
   payload,
 });
 
-export const createFailureState = <Payload, FailureType, EmptyPayload = Payload>(
-  payload: EmptyPayload | Payload,
+export const createFailureState = <PayloadType, FailureType, EmptyPayloadType = PayloadType>(
+  payload: EmptyPayloadType | PayloadType,
   failure: FailureType
-): AsyncFailureState<EmptyPayload | Payload, FailureType> => ({
+): AsyncFailureState<EmptyPayloadType | PayloadType, FailureType> => ({
   status: 'failure',
   payload,
   failure,

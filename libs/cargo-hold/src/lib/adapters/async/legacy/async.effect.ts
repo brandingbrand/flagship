@@ -4,7 +4,7 @@ import type { Observable } from 'rxjs';
 import { from, of as just, merge } from 'rxjs';
 import { filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import type { ActionSpecifier, AnyAction } from '../../../action-bus';
+import type { ActionSpecifier, AnyAction, AnyActionSpecifier } from '../../../action-bus';
 import type { Effect } from '../../../store';
 import { matches } from '../../../store';
 import type { AsyncAction } from '../async.action.types';
@@ -27,15 +27,13 @@ export const makeAsyncEffect =
     asyncActionCreators: AsyncActionCreators<AsyncActionKey, Payload, FailPayload, EmptyPayload>
   ) =>
   <
-    DesiredActionSpecifier extends
-      | ActionSpecifier<string, string | undefined, Params>
-      | AnyAction<Params>,
+    DesiredActionType extends ActionSpecifier<string, string | undefined, Params>,
     Params extends unknown[],
     CallbackResult,
     FailedCallbackResult
   >(
     effectOptions: CreateAsyncEffectOptions<
-      DesiredActionSpecifier,
+      DesiredActionType,
       Params,
       CallbackResult,
       Payload,

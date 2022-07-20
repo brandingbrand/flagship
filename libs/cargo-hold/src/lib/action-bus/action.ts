@@ -49,10 +49,10 @@ export const createActionCreator = <
 });
 
 export const createHandler =
-  <Specifier extends AnyActionSpecifier>(
-    guard: TypeGuard<AnyActionSpecifier, Specifier>,
+  <ActionType extends AnyAction>(
+    guard: TypeGuard<AnyAction, ActionType>,
     handler: ActionHandler<
-      Action<Specifier['type'], NonNullable<Specifier[typeof PAYLOAD]>, Specifier['subtype']>
+      Action<ActionType['type'], NonNullable<ActionType[typeof PAYLOAD]>, ActionType['subtype']>
     >
   ) =>
   (action$: Observable<AnyAction>) =>
@@ -62,9 +62,9 @@ export const createHandler =
           (
             value
           ): value is Action<
-            Specifier['type'],
-            NonNullable<Specifier[typeof PAYLOAD]>,
-            Specifier['subtype']
+            ActionType['type'],
+            NonNullable<ActionType[typeof PAYLOAD]>,
+            ActionType['subtype']
           > => guard(value)
         )
       )

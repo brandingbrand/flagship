@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/sort-type-union-intersection-members */
 import type { Result } from '@brandingbrand/standard-result';
 import { fail, isOk, ok } from '@brandingbrand/standard-result';
 import type { MaybePromise } from '@brandingbrand/types-utility';
 
 import { filter, from, of as just, map, merge, mergeMap, switchMap, withLatestFrom } from 'rxjs';
 
-import type {
-  ActionOf,
-  ActionSpecifier,
-  AnyAction,
-  AnyActionSpecifier,
-  TypeGuard,
-} from '../../action-bus';
+import type { AnyAction } from '../../action-bus';
 import type { Effect } from '../../store';
 
 import {
@@ -35,89 +28,86 @@ import type {
 import type { AsyncFailureState, AsyncState } from './async.types';
 
 export type AsyncEffectDeps<
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   FailureType,
   IdleType,
-  TriggerSpecifier extends AnyActionSpecifier,
-  CallbackResult
-> = WithPayloadTypes<SuccessType, FailureType, IdleType> &
-  WithActionKey<ActionKey> &
-  WithTriggerActionFilter<TriggerSpecifier> &
-  Partial<WithEnableLoadingMore> &
+  TriggerActionType extends AnyAction,
+  CallbackResultType
+> = Partial<WithEnableLoadingMore> &
   Partial<WithMapOnFailure<unknown, FailureType>> &
-  Partial<
-    WithOptimisticUpdate<
-      TriggerSpecifier extends ActionSpecifier<string, any, infer Payload> ? Payload : never,
-      SuccessType | IdleType,
-      SuccessType
-    >
-  > &
-  (CallbackResult extends SuccessType
-    ? WithAsyncCallback<
-        TriggerSpecifier extends ActionSpecifier<string, any, infer Payload> ? Payload : never,
-        SuccessType
-      > &
-        // mapOnSuccess is optional
-        Partial<WithMapOnSuccess<CallbackResult, SuccessType>>
-    : WithAsyncCallback<
-        TriggerSpecifier extends ActionSpecifier<string, any, infer Payload> ? Payload : never,
-        CallbackResult
-      > &
-        WithMapOnSuccess<CallbackResult, SuccessType | IdleType, SuccessType>);
+  Partial<WithOptimisticUpdate<TriggerActionType['payload'], IdleType | SuccessType, SuccessType>> &
+  WithActionKey<ActionKeyType> &
+  WithPayloadTypes<SuccessType, FailureType, IdleType> &
+  WithTriggerActionFilter<TriggerActionType> &
+  (CallbackResultType extends SuccessType
+    ? Partial<WithMapOnSuccess<CallbackResultType, SuccessType>> &
+        WithAsyncCallback<TriggerActionType['payload'], SuccessType>
+    : WithAsyncCallback<TriggerActionType['payload'], CallbackResultType> &
+        WithMapOnSuccess<CallbackResultType, IdleType | SuccessType, SuccessType>);
 
+/**
+ * Given a correctly-typed builder object, construct an Effect that will be triggered by the
+ * triggering action, instigate loading states, run optimistic predictions, and end with success or
+ * failure. Also reverts optimistic predictions if necessary on failure.
+ *
+ * @param builder
+ * @return The async effect
+ */
 export const buildAsyncEffect =
   <
-    ActionKey extends string,
+    ActionKeyType extends string,
     SuccessType,
     FailureType,
     IdleType,
-    TriggerSpecifier extends AnyActionSpecifier,
-    CallbackResult
+    TriggerActionType extends AnyAction,
+    CallbackResultType
   >(
     builder: AsyncEffectDeps<
-      ActionKey,
+      ActionKeyType,
       SuccessType,
       FailureType,
       IdleType,
-      TriggerSpecifier,
-      CallbackResult
+      TriggerActionType,
+      CallbackResultType
     >
   ): Effect<AsyncState<SuccessType, FailureType, IdleType>> =>
   (action$, state$) => {
+    // load$ gets triggered by the triggerActionFilter, runs the prediction if given, and emits
+    // loading or loadingMore actions
     const load$ = action$.pipe(
       // these typeguards don't have perfect Typescript defs
-      filter(
-        builder.triggerActionFilter as unknown as TypeGuard<AnyAction, ActionOf<TriggerSpecifier>>
-      ),
+      filter(builder.triggerActionFilter),
       withLatestFrom(state$),
-      map(([action, state]) => {
-        const newSuccessPayload = builder.prediction
-          ? builder.prediction(action.payload)(state.payload)
-          : state.payload;
-        if (
-          builder.enableLoadMore &&
-          (state.status === 'success' || state.status === 'loading-more')
-        ) {
-          return buildLoadingMoreActionCreator(builder).create(newSuccessPayload as SuccessType);
+      map(
+        ([action, state]: [TriggerActionType, AsyncState<SuccessType, FailureType, IdleType>]) => {
+          const predictedPayload = builder.prediction
+            ? builder.prediction(action.payload)(state.payload)
+            : state.payload;
+          if (
+            builder.enableLoadMore === true &&
+            (state.status === 'success' || state.status === 'loading-more')
+          ) {
+            return buildLoadingMoreActionCreator(builder).create(predictedPayload as SuccessType);
+          }
+          return buildLoadingActionCreator(builder).create(predictedPayload);
         }
-        return buildLoadingActionCreator(builder).create(newSuccessPayload);
-      })
+      )
     );
 
+    // callbackAction$ is also triggered by the triggerActionFilter, whose payload serves as the
+    // argument for the callback. It runs the callback, judges success vs failure, and emits the
+    // appropriate action accordingly. If it was a failure, also emits a revert if we had a prediction.
     const callbackAction$ = action$.pipe(
-      // these typeguards don't have perfect Typescript defs
-      filter(
-        builder.triggerActionFilter as unknown as TypeGuard<AnyAction, ActionOf<TriggerSpecifier>>
-      ),
+      filter(builder.triggerActionFilter),
       // grab state to get back to if we have optimistic updates on and we fail
       withLatestFrom(state$),
       switchMap(([action, stateAtStart]) =>
-        from<Promise<Result<CallbackResult, unknown>>>(
+        from(
           // take advantage of the flattening of Promises - wrap it in a promise regardless
-          new Promise<CallbackResult>((resolve, reject) => {
+          new Promise<CallbackResultType>((resolve, reject) => {
             try {
-              resolve(builder.callback(action.payload) as MaybePromise<CallbackResult>);
+              resolve(builder.callback(action.payload) as MaybePromise<CallbackResultType>);
             } catch (error) {
               reject(error);
             }
@@ -126,33 +116,37 @@ export const buildAsyncEffect =
             .catch(fail)
         ).pipe(
           // grab latest state for mapOnSuccess etc functions to use
-          // type coercion because "run the lens if we have one, and if we don't we'll assume the raw
-          // value is right" is not a simple Typescript concept.
           withLatestFrom(state$),
-          mergeMap(([wrappedResult, stateAtReturn]) => {
-            if (isOk(wrappedResult)) {
-              const result = wrappedResult.ok;
-              // Type coercion is due to Typescript not following unions quite right
-              const newState = builder.mapOnSuccess
-                ? builder.mapOnSuccess(result as CallbackResult & SuccessType)(
-                    stateAtReturn.payload as SuccessType
+          mergeMap(
+            ([wrappedResult, stateAtReturn]: [
+              Result<CallbackResultType, unknown>,
+              AsyncState<SuccessType, FailureType, IdleType>
+            ]) => {
+              if (isOk(wrappedResult)) {
+                const result = wrappedResult.ok;
+                // Type coercion is due to Typescript not following unions quite right
+                const mappedNewState = builder.mapOnSuccess
+                  ? builder.mapOnSuccess(result as CallbackResultType & SuccessType)(
+                      stateAtReturn.payload as SuccessType
+                    )
+                  : (result as unknown as SuccessType);
+                return just(buildSucceedActionCreator(builder).create(mappedNewState));
+              }
+              const result = wrappedResult.failure;
+              const mappedFailure = builder.mapOnFailure
+                ? builder.mapOnFailure(result)(
+                    (stateAtReturn as AsyncFailureState<IdleType | SuccessType, FailureType>)
+                      .failure
                   )
-                : (result as unknown as SuccessType);
-              return just(buildSucceedActionCreator(builder).create(newState));
+                : (result as FailureType);
+              return builder.prediction
+                ? just(
+                    buildRevertActionCreator(builder).create(stateAtStart.payload),
+                    buildFailActionCreator(builder).create(mappedFailure)
+                  )
+                : just(buildFailActionCreator(builder).create(mappedFailure));
             }
-            const result = wrappedResult.failure;
-            const mappedFailure = builder.mapOnFailure
-              ? builder.mapOnFailure(result)(
-                  (stateAtReturn as AsyncFailureState<SuccessType | IdleType, FailureType>).failure
-                )
-              : (result as FailureType);
-            return builder.prediction
-              ? just(
-                  buildRevertActionCreator(builder).create(stateAtStart.payload),
-                  buildFailActionCreator(builder).create(mappedFailure)
-                )
-              : just(buildFailActionCreator(builder).create(mappedFailure));
-          })
+          )
         )
       )
     );
@@ -160,25 +154,35 @@ export const buildAsyncEffect =
     return merge(load$, callbackAction$);
   };
 
+/**
+ * Given a correctly-typed builder object, construct an Effect that will be triggered by the
+ * triggering action, instigate loading states, run optimistic predictions, and end with success or
+ * failure. Also reverts optimistic predictions if necessary on failure. This runs inside a lens, so
+ * as to operate on a larger data structure.
+ *
+ * @param builder
+ * @return The async effect
+ */
 export const buildAsyncEffectWithLens =
   <
-    ActionKey extends string,
+    ActionKeyType extends string,
     SuccessType,
     FailureType,
     IdleType,
-    TriggerSpecifier extends AnyActionSpecifier,
-    CallbackResult,
+    ActionTriggerType extends AnyAction,
+    CallbackResultType,
     OuterStructureType
   >(
     builder: AsyncEffectDeps<
-      ActionKey,
+      ActionKeyType,
       SuccessType,
       FailureType,
       IdleType,
-      TriggerSpecifier,
-      CallbackResult
+      ActionTriggerType,
+      CallbackResultType
     > &
       WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType>
   ): Effect<OuterStructureType> =>
   (action$, state$) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- any is of limited scope and not worth specifying
     buildAsyncEffect(builder as any)(action$, state$.pipe(map(builder.lens.get)));
