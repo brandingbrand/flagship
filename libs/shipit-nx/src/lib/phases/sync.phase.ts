@@ -54,8 +54,7 @@ export class SyncPhase implements Phase {
 
     const sourceCommits = this.getSourceCommits(initialRevision, isFirstCommit);
     const filteredCommits = this.getFilteredCommits(sourceCommits);
-    const { destinationBranch, destinationRepo } = this.config;
-    destinationRepo.checkoutBranch(destinationBranch);
+    const { destinationRepo } = this.config;
 
     let progress = 0;
     for (const filterCommit of filteredCommits) {

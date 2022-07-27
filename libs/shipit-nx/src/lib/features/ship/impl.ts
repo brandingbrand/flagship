@@ -18,6 +18,7 @@ import { findProjectNames } from '../../utils/find-project-names.util';
 
 export interface ShipExecutorOptions {
   repo: string;
+  branch: string;
   dryRun?: boolean;
 }
 
@@ -27,6 +28,7 @@ export const shipIt = async (options: ShipExecutorOptions, context: ExecutorCont
   const config = new ShipConfig({
     sourcePath: context.root,
     destinationRepoURL: options.repo,
+    destinationBranch: options.branch,
     ...(context.projectName && context.projectName !== 'workspace'
       ? {
           project: context.projectName,

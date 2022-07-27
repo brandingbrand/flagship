@@ -7,6 +7,6 @@ export class ClonePhase implements Phase {
   public readonly readableName = `Clone and configure ${this.config.destinationRepo.url}`;
 
   public run(): void {
-    this.config.destinationRepo.clone().configure();
+    this.config.destinationRepo.clone(this.config.destinationBranch).configure();
   }
 }
