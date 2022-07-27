@@ -37,8 +37,8 @@ export interface ShipProjectOptions extends ShipConfigOptions {
 export class ShipConfig {
   constructor(public readonly options: ShipConfigOptions | ShipProjectOptions) {}
 
-  public readonly projectConfigs = new Map<string, Project>();
   private readonly destinationPath = tmpDir('brandingbrand-shipit-');
+  public readonly projectConfigs = new Map<string, Project>();
   public readonly sourceRepo = new Repo(this.options.sourcePath);
   public readonly destinationRepo = new Repo(this.destinationPath, this.options.destinationRepoURL);
   public readonly destinationBranch = this.options.destinationBranch ?? 'main';
@@ -62,10 +62,11 @@ export class ShipConfig {
       '.vscode/launch.json',
       'tools/internal',
     ];
+
     const projectSpecificExcludedPaths =
       'project' in this.options
         ? [join(this.options.projectRoot, 'package.json'), 'README.md']
-        : [];
+        : ['README.md'];
 
     const unusedPatches = readdirSync('patches')
       .map((fileName) => {
@@ -93,15 +94,14 @@ export class ShipConfig {
   }
 
   public get pathMap(): Record<string, string> {
-    const projectSpecificPathMap: Record<string, string> =
-      'project' in this.options
-        ? {
-            [join(this.options.projectRoot, 'README.md')]: 'README.md',
-          }
-        : {};
+    if ('project' in this.options) {
+      return {
+        [join(this.options.projectRoot, 'README.md')]: 'README.md',
+      };
+    }
 
     return {
-      ...projectSpecificPathMap,
+      'PUBLIC_README.md': 'README.md',
     };
   }
 
