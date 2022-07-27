@@ -34,6 +34,6 @@ export const stripPaths =
 export const stripProjectPath =
   (config: ShipConfig) =>
   (commit: Commit): Commit => {
-    const closedPaths = findFilteredProjectsForRevision(config, commit.id).map(({ root }) => root);
+    const closedPaths = findFilteredProjectsForRevision(config, commit).map(({ root }) => root);
     return stripPaths(closedPaths)(commit);
   };

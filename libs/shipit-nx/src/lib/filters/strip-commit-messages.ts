@@ -6,7 +6,7 @@ import { findFilteredProjectsForRevision } from '../utils/find-closed-projects.u
 export const stripCommitMessages =
   (config: ShipConfig) =>
   (commit: Commit): Commit => {
-    const excludedProjects = findFilteredProjectsForRevision(config, commit.id).map(
+    const excludedProjects = findFilteredProjectsForRevision(config, commit).map(
       ({ name }) => name
     );
 

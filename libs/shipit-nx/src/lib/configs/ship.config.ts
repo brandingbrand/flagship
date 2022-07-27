@@ -37,7 +37,7 @@ export interface ShipProjectOptions extends ShipConfigOptions {
 export class ShipConfig {
   constructor(public readonly options: ShipConfigOptions | ShipProjectOptions) {}
 
-  public readonly projectsByCommit = new Map<string, Project[]>();
+  public readonly projectConfigs = new Map<string, Project>();
   private readonly destinationPath = tmpDir('brandingbrand-shipit-');
   public readonly sourceRepo = new Repo(this.options.sourcePath);
   public readonly destinationRepo = new Repo(this.destinationPath, this.options.destinationRepoURL);
@@ -114,10 +114,10 @@ export class ShipConfig {
     return (commit: Commit) =>
       pipe(
         commit,
+        stripCommitMessages(this),
+        stripProjectPath(this),
         stripPaths(this.ignoredFiles),
         mapPaths(this.pathMap),
-        stripProjectPath(this),
-        stripCommitMessages(this),
         replaceText(this.sourceRepo.id, this.destinationRepo.id),
         replaceText(COMMIT_LINK, '($1)'),
         addTrackingData,
