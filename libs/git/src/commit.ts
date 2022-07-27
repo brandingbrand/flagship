@@ -42,6 +42,15 @@ export class Commit implements CommitData {
     return `${this.subject}\n\n${this.description}`;
   }
 
+  public get changedFiles(): string[] {
+    return (
+      [...this.diffs.values()]
+        // Ignore deleted files
+        .filter(({ body }) => !body.startsWith('deleted file mode'))
+        .map(({ path }) => path)
+    );
+  }
+
   private clone(updateProps: Partial<CommitData>): Commit {
     const prototype = Object.getPrototypeOf(this) as Function;
 

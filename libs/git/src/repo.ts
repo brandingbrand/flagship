@@ -52,7 +52,24 @@ const Cache = (): MethodDecorator => (target, _propertyKey, descriptor: Property
 };
 
 export class Repo implements SourceRepo, DestinationRepo {
-  constructor(public readonly path: string, private readonly sourceUrl?: string) {}
+  constructor(public readonly path: string, private readonly sourceUrl?: string) {
+    if (sourceUrl !== undefined) {
+      this.url = sourceUrl;
+    } else {
+      try {
+        this.url = this.gitCommand('remote', 'get-url', 'origin').runSynchronously().stdout.trim();
+      } catch {
+        this.url = undefined;
+      }
+    }
+
+    if (this.url !== undefined) {
+      this.id = extractRepoId(this.url);
+    }
+  }
+
+  public readonly url: string | undefined;
+  public readonly id: string | undefined;
 
   private get isRepo(): boolean {
     return fs.existsSync(join(this.path, '.git'));
@@ -73,6 +90,7 @@ export class Repo implements SourceRepo, DestinationRepo {
    *
    * @param commit the changes to stringify
    * @return the stringified change
+   * @throws
    */
   private stringifyPatch(commit: Commit): string {
     let renderedDiffs = '';
@@ -156,17 +174,6 @@ export class Repo implements SourceRepo, DestinationRepo {
       }
     }
     return commit.withDiffs(diffs);
-  }
-
-  public get url(): string {
-    return (
-      this.sourceUrl ??
-      this.gitCommand('remote', 'get-url', 'origin').runSynchronously().stdout.trim()
-    );
-  }
-
-  public get id(): string | undefined {
-    return extractRepoId(this.url);
   }
 
   public clone(): this {
@@ -392,9 +399,31 @@ export class Repo implements SourceRepo, DestinationRepo {
     return JSON.parse(file) as T;
   }
 
-  @Cache()
-  public getCommitIdFromRevision(revision: string): string {
-    return this.gitCommand('rev-list', '--max-count', '1', `${revision}`).runSynchronously().stdout;
+  public getRevisionId(revision: string): string {
+    return this.gitCommand('rev-list', '--max-count', '1', revision).runSynchronously().stdout;
+  }
+
+  public getPreviousRevisionIds(revision: string, count?: number): string[] {
+    return this.gitCommand(
+      'rev-list',
+      ...(count !== undefined ? ['--max-count', `${count}`] : []),
+      revision
+    )
+      .runSynchronously()
+      .stdout.trim()
+      .split('\n');
+  }
+
+  public getFutureRevisionIds(revision: string, count?: number): string[] {
+    return this.gitCommand(
+      'rev-list',
+      ...(count !== undefined ? ['--max-count', `${count}`] : []),
+      `${revision}..HEAD`
+    )
+      .runSynchronously()
+      .stdout.trim()
+      .split('\n')
+      .reverse();
   }
 
   public stageAll(): this {

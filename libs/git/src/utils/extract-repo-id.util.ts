@@ -1,17 +1,22 @@
+const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
+
+/**
+ * Matches any of the following extracting `someName/test`
+ *
+ * - git@github.com:someName/test.git
+ * - http://github.com/someName/test.git
+ * - http://www.github.com/someName/test.git
+ * - http://someName:something@github.com/someName/test.git
+ * - https://github.com/someName/test.git
+ * - https://www.github.com/someName/test.git
+ * - https://someName:something@github.com/someName/test.git
+ *
+ * @param url
+ * @return
+ */
 export const extractRepoId = (url: string): string | undefined => {
-  /**
-   * Matches any of the following extracting `someName/test`
-   *
-   * - git@github.com:someName/test.git
-   * - http://github.com/someName/some-repo.git
-   * - http://www.github.com/someName/some-repo.git
-   * - http://someName:something@github.com/someName/some-repo.git
-   * - https://github.com/someName/some-repo.git
-   * - https://www.github.com/someName/some-repo.git
-   * - https://someName:something@github.com/someName/some-repo.git
-   */
-  const repoUrlMatcher = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
-  const result = repoUrlMatcher.exec(url);
+  const result = REPO_URL_REGEX.exec(url);
+
   if (result === null) {
     return undefined;
   }
