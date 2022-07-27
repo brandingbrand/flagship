@@ -114,6 +114,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     prevArrowStyle,
     showArrow,
     style,
+    dataSet,
     itemUpdated,
     hidePageIndicator,
     hideOverflow,
@@ -486,7 +487,11 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   }
 
   return (
-    <Animated.View onLayout={handleLayout} style={[styles.container, style, { opacity }]}>
+    <Animated.View
+      onLayout={handleLayout}
+      style={[styles.container, style, { opacity }]}
+      {...{ dataSet }}
+    >
       <div
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}

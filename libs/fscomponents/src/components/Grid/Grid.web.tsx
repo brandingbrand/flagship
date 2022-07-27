@@ -175,7 +175,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
   }, [scrollView]);
 
   return (
-    <View style={gridContainerStyle}>
+    <View style={gridContainerStyle} {...{ dataSet }}>
       <ScrollView
         accessibilityHint={accessibilityHint}
         accessibilityLabel={accessibilityLabel}
@@ -191,7 +191,6 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         onLayout={onLayout}
         onScroll={handleScroll}
         refreshControl={scrollRefreshController}
-        {...{ dataSet }}
       >
         {ListHeaderComponent && (
           <View style={[ListHeaderComponentStyle, gridItemSizeStyles('fill')]}>

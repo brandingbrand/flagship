@@ -30,6 +30,7 @@ export const conditionalStyle = <T extends object>(
  * cannot be wrapped in another element without changing the behavior
  */
 const HOST_STYLES = [
+  /^display$/,
   /flex$/,
   /flexShrink/,
   /flexGrow/,
