@@ -105,13 +105,13 @@ export class Repo implements SourceRepo, DestinationRepo {
     // see: https://git-scm.com/docs/git-format-patch
     return dedent`
       From ${commit.id} Mon Sep 17 00:00:00 2001
-                          From: ${commit.author}
-                          Date: ${commit.timestamp}
-                          Subject: [PATCH] ${commitMessage}
+      From: ${commit.author}
+      Date: ${commit.timestamp}
+      Subject: [PATCH] ${commitMessage}
 
-                          ${renderedDiffs}
-                          --
-                          2.21.0
+      ${renderedDiffs}
+      --
+      2.21.0
     `;
   }
 
