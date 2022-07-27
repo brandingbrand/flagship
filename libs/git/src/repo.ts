@@ -261,6 +261,24 @@ export class Repo implements SourceRepo, DestinationRepo {
     return rootRevisions[rootRevisions.length - 1] ?? 'HEAD';
   }
 
+  public getRevisionDistance(
+    revisionA: string,
+    revisionB: string = this.getCurrentRevision()
+  ): number {
+    const rawOutput = this.gitCommand(
+      'rev-list',
+      '--count',
+      `${revisionA}..${revisionB}`
+    ).runSynchronously().stdout;
+
+    const count = Number.parseInt(rawOutput, 10);
+    if (Number.isNaN(count)) {
+      throw new TypeError('Invalid Revisions');
+    }
+
+    return count;
+  }
+
   public getBranch(): string {
     const branch = this.gitCommand('rev-parse', '--abbrev-ref', 'HEAD').runSynchronously().stdout;
 
