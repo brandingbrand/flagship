@@ -11,17 +11,10 @@ export class SyncPhase implements Phase {
   private readonly sourceRepo = this.config.sourceRepo;
   public readonly readableName = 'Synchronize repository';
 
-  private getSourceCommits(): Set<Commit> {
-    let initialRevision = this.config.destinationRepo.findLastSourceCommit();
-    let isFirstCommit = false;
-    if (initialRevision === undefined) {
-      // Seems like it's a new repo so there is no signed commit.
-      // Let's take the first one from our source repo instead.
-      initialRevision = this.sourceRepo.findFirstAvailableCommit();
-      isFirstCommit = true;
-    }
-
-    const sourceCommits = new Set<Commit>();
+  private *getSourceCommits(
+    initialRevision: string,
+    isFirstCommit: boolean
+  ): Generator<Commit, void> {
     const descendantsPath = this.sourceRepo.findDescendantsPath(initialRevision);
     const revisions = isFirstCommit
       ? [initialRevision, ...(descendantsPath ?? [])]
@@ -31,15 +24,13 @@ export class SyncPhase implements Phase {
       for (const revision of revisions) {
         const commit = this.sourceRepo.getCommitFromID(revision);
         if (commit !== undefined) {
-          sourceCommits.add(commit);
+          yield commit;
         }
       }
     }
-
-    return sourceCommits;
   }
 
-  private *getFilteredCommits(commits: Set<Commit>): Generator<Commit, void> {
+  private *getFilteredCommits(commits: Generator<Commit, void>): Generator<Commit, void> {
     const filter = this.config.getEgressFilter();
     for (const commit of commits) {
       for (const filteredCommit of filter(commit)) {
@@ -49,7 +40,19 @@ export class SyncPhase implements Phase {
   }
 
   public *run(): Generator<number, void> {
-    const sourceCommits = this.getSourceCommits();
+    let initialRevision = this.config.destinationRepo.findLastSourceCommit();
+    let isFirstCommit = false;
+    if (initialRevision === undefined) {
+      // Seems like it's a new repo so there is no signed commit.
+      // Let's take the first one from our source repo instead.
+      initialRevision = this.sourceRepo.findFirstAvailableCommit();
+      isFirstCommit = true;
+    }
+
+    const commitCount =
+      this.sourceRepo.getRevisionDistance(initialRevision) + (isFirstCommit ? 1 : 0);
+
+    const sourceCommits = this.getSourceCommits(initialRevision, isFirstCommit);
     const filteredCommits = this.getFilteredCommits(sourceCommits);
     const { destinationBranch, destinationRepo } = this.config;
     destinationRepo.checkoutBranch(destinationBranch);
@@ -66,20 +69,15 @@ export class SyncPhase implements Phase {
         try {
           destinationRepo.commitPatch(filterCommit);
         } catch (error: unknown) {
-          logger.error(
-            `Failed on ${filterCommit.header.type}(${filterCommit.header.scope}):${filterCommit.subject} by ${filterCommit.author}`
-          );
+          logger.error(`Failed on ${filterCommit.subject} by ${filterCommit.author}`);
           logger.error(filterCommit.id);
-          for (const diff of filterCommit.diffs) {
-            logger.error(diff.path);
-            logger.error(diff.body);
-          }
+
           throw error;
         }
       }
 
       progress += 1;
-      yield progress / sourceCommits.size;
+      yield progress / commitCount;
     }
   }
 }
