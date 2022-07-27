@@ -176,7 +176,7 @@ export class Repo implements SourceRepo, DestinationRepo {
     return commit.withDiffs(diffs);
   }
 
-  public clone(): this {
+  public clone(branch?: string): this {
     if (!this.isRepo) {
       if (this.sourceUrl === undefined) {
         throw new Error(`${this.path} is not a GIT repo.`);
@@ -184,7 +184,14 @@ export class Repo implements SourceRepo, DestinationRepo {
 
       const dir = dirname(this.path);
       const name = basename(this.path);
-      new ShellCommand(dir, 'git', 'clone', this.sourceUrl, name).runSynchronously();
+      new ShellCommand(
+        dir,
+        'git',
+        'clone',
+        ...(branch !== undefined ? ['--branch', branch] : []),
+        this.sourceUrl,
+        name
+      ).runSynchronously();
     }
 
     return this;
