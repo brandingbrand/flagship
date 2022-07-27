@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, Fragment } from 'react';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -56,7 +56,7 @@ const navStyle = StyleSheet.create({
   },
 });
 
-export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
+export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) => {
   const app = useApp();
   const api = useAPI();
   const store = useStore();
@@ -64,6 +64,7 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const route = useActivatedRoute();
   const getApp = useCallback(() => app, [app]);
   const [modals, setModals] = useState<Record<string, FC>>({});
+  const Wrapper = useMemo(() => screenWrap ?? Fragment, []);
 
   const closers = useRef<Map<string, () => void>>();
   if (closers.current === undefined) {
@@ -152,29 +153,25 @@ export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
                 visible={visible}
                 {...modal.options}
               >
-                <InjectedContextProvider token={APP_CONTEXT_TOKEN} value={getApp}>
-                  <InjectedContextProvider token={API_CONTEXT_TOKEN} value={api}>
-                    <NavigatorProvider value={navigator}>
-                      <InjectedReduxProvider store={store}>
-                        <ActivatedRouteProvider {...route}>
-                          <Provider>
-                            <TouchableWithoutFeedback onPress={handleReject}>
-                              <View style={[navStyle.backdrop, modal.options?.backdropStyle]} />
-                            </TouchableWithoutFeedback>
-                            <View style={modal.options?.style}>
-                              {modal.options?.title ? <Text>{modal.options.title}</Text> : null}
-                              <Content
-                                reject={handleReject}
-                                resolve={handleResolve}
-                                {...(props as P)}
-                              />
-                            </View>
-                          </Provider>
-                        </ActivatedRouteProvider>
-                      </InjectedReduxProvider>
-                    </NavigatorProvider>
-                  </InjectedContextProvider>
-                </InjectedContextProvider>
+                <Wrapper>
+                  <NavigatorProvider value={navigator}>
+                    <ActivatedRouteProvider {...route}>
+                      <Provider>
+                        <TouchableWithoutFeedback onPress={handleReject}>
+                          <View style={[navStyle.backdrop, modal.options?.backdropStyle]} />
+                        </TouchableWithoutFeedback>
+                        <View style={modal.options?.style}>
+                          {modal.options?.title ? <Text>{modal.options.title}</Text> : null}
+                          <Content
+                            reject={handleReject}
+                            resolve={handleResolve}
+                            {...(props as P)}
+                          />
+                        </View>
+                      </Provider>
+                    </ActivatedRouteProvider>
+                  </NavigatorProvider>
+                </Wrapper>
               </Modal>
             );
           },
