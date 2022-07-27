@@ -56,4 +56,24 @@ export = {
     '@angular-eslint/use-lifecycle-interface': WARN,
     '@angular-eslint/use-pipe-transform-interface': WARN,
   },
+  overrides: [
+    /**
+     * The return type of `loadChildren()` fails to be inferred
+     * when `async` keyword is used
+     */
+    {
+      files: ['*-routing.module.ts'],
+      rules: {
+        // plugin:@typescript-eslint ***********************************************
+        // rules URL: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
+
+        '@typescript-eslint/promise-function-async': [
+          WARN,
+          {
+            checkArrowFunctions: false,
+          },
+        ],
+      },
+    },
+  ],
 };
