@@ -52,23 +52,24 @@ const Cache = (): MethodDecorator => (target, _propertyKey, descriptor: Property
 };
 
 export class Repo implements SourceRepo, DestinationRepo {
-  constructor(public readonly path: string, private readonly sourceUrl?: string) {
-    if (sourceUrl !== undefined) {
-      this.url = sourceUrl;
-    } else {
-      try {
-        this.url = this.gitCommand('remote', 'get-url', 'origin').runSynchronously().stdout.trim();
-      } catch {
-        this.url = undefined;
-      }
-    }
+  constructor(public readonly path: string, public readonly url?: string) {
+    const githubToken = process.env.GITHUB_TOKEN;
 
-    if (this.url !== undefined) {
-      this.id = extractRepoId(this.url);
+    try {
+      const currentUrl =
+        this.url ?? this.gitCommand('remote', 'get-url', 'origin').runSynchronously().stdout.trim();
+      this.id = extractRepoId(currentUrl);
+    } catch {}
+
+    if (this.url !== undefined && this.id !== undefined && githubToken !== undefined) {
+      this.url = `https://${githubToken}@github.com/${this.id}.git`;
+
+      if (this.isRepo) {
+        this.gitCommand('remote', 'set-url', 'origin', this.url).runSynchronously();
+      }
     }
   }
 
-  public readonly url: string | undefined;
   public readonly id: string | undefined;
 
   private get isRepo(): boolean {
@@ -178,7 +179,7 @@ export class Repo implements SourceRepo, DestinationRepo {
 
   public clone(branch?: string): this {
     if (!this.isRepo) {
-      if (this.sourceUrl === undefined) {
+      if (this.url === undefined) {
         throw new Error(`${this.path} is not a GIT repo.`);
       }
 
@@ -189,7 +190,7 @@ export class Repo implements SourceRepo, DestinationRepo {
         'git',
         'clone',
         ...(branch !== undefined ? ['--branch', branch] : []),
-        this.sourceUrl,
+        this.url,
         name
       ).runSynchronously();
     }
