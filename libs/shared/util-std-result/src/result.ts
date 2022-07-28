@@ -19,3 +19,10 @@ export const isOk = <OkType, FailureType>(
 export const isFailure = <OkType, FailureType>(
   input: Result<OkType, FailureType>
 ): input is Failure<FailureType> => failureBrand.isBrand(input);
+
+export const isResult = <OkType, FailureType>(
+  input: unknown
+): input is Result<OkType, FailureType> =>
+  typeof input === 'object' &&
+  !Array.isArray(input) &&
+  (isFailure(input as Failure<FailureType>) || isOk(input as Ok<OkType>));
