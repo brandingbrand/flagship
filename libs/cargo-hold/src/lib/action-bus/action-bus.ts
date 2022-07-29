@@ -18,7 +18,7 @@ import type {
  * Action buses provide a way to subscribe to actions dispatched anywhere.
  */
 export class ActionBus {
-  protected readonly _action$ = new Subject<AnyAction>();
+  private readonly internalAction$ = new Subject<AnyAction>();
   protected readonly subscriptions = new Subscription();
 
   /**
@@ -27,7 +27,7 @@ export class ActionBus {
    * @return Action observable
    */
   public get action$(): Observable<AnyAction> {
-    return this._action$.asObservable();
+    return this.internalAction$.asObservable();
   }
 
   /**
@@ -36,7 +36,7 @@ export class ActionBus {
    * @param action The action to dispatch
    */
   public dispatch: Dispatch = (action) => {
-    this._action$.next(action);
+    this.internalAction$.next(action);
   };
 
   /**
@@ -67,13 +67,13 @@ export class ActionBus {
     if (handler) {
       const guard = guardOrActionHandler as TypeGuard<AnyActionSpecifier, ActionType>;
       const actionHandler = createHandler(guard, handler);
-      const subscription = actionHandler(this._action$);
+      const subscription = actionHandler(this.internalAction$);
       this.subscriptions.add(subscription);
       return subscription;
     }
 
     const actionHandler = guardOrActionHandler as AnyActionHandler;
-    const subscription = actionHandler(this._action$);
+    const subscription = actionHandler(this.internalAction$);
     this.subscriptions.add(subscription);
     return subscription;
   }
@@ -84,6 +84,6 @@ export class ActionBus {
    */
   public dispose = (): void => {
     this.subscriptions.unsubscribe();
-    this._action$.complete();
+    this.internalAction$.complete();
   };
 }

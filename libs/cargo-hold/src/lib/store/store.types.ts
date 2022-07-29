@@ -21,7 +21,7 @@ export type ActionReducer<State, ActionType extends AnyAction> = (
  * An `AnyActionReducer` is the supertype for any `ActionReducer` where we do not care about the
  * type of action. Notably, it does still return a typed `StateReducer`.
  */
-export type AnyActionReducer<State> = (action: AnyAction) => StateReducer<State>;
+export type AnyActionReducer<State = any> = (action: AnyAction) => StateReducer<State>;
 
 /**
  * An Effect is a function that takes an action observable and state observable, returning an
@@ -63,6 +63,8 @@ export type Source = string | symbol;
 export type SourcesList = NonEmptyArray<Source | undefined>;
 
 export interface IStore<State = any> extends ActionBus {
+  readonly initialState: State;
+
   /**
    * A snapshot of the most recent update to state. This value is not reactive so do not try to key
    * off of it for effects, instead use state$
@@ -82,6 +84,12 @@ export interface IStore<State = any> extends ActionBus {
    * observer subscribes.
    */
   readonly action$: Observable<AnyAction>;
+
+  /**
+   * An observable of the combined reducer of
+   * all registered reducers
+   */
+  readonly reducer$: Observable<AnyActionReducer<State>>;
 
   /**
    * Dispatch actions in order to trigger effects and/or reducers.
