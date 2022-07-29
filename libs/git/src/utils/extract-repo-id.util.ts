@@ -1,4 +1,4 @@
-const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?.*@?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
+const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?.*@?(?:w{3}.)?\w*\.\w*[/:](.*\/.*)/;
 
 /**
  * Matches any of the following extracting `someName/test`
@@ -17,7 +17,7 @@ const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?.*@?(?:w{3}.)?\w*\.\w*
  * @return
  */
 export const extractRepoId = (url: string): string | undefined => {
-  const result = REPO_URL_REGEX.exec(url);
+  const result = REPO_URL_REGEX.exec(url.replace(/\.git$/, ''));
 
   if (result === null) {
     return undefined;

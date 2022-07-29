@@ -13,6 +13,12 @@ describe('extractRepoId', () => {
     expect(id).toBe('someName/test');
   });
 
+  it('should extract id from http without .git', () => {
+    const id = extractRepoId('http://github.com/someName/test');
+
+    expect(id).toBe('someName/test');
+  });
+
   it('should extract id from http urls with www', () => {
     const id = extractRepoId('http://www.github.com/someName/test.git');
 
@@ -27,6 +33,12 @@ describe('extractRepoId', () => {
 
   it('should extract id from http urls with tokens', () => {
     const id = extractRepoId('http://token@github.com/someName/test.git');
+
+    expect(id).toBe('someName/test');
+  });
+
+  it('should extract id from https without .git', () => {
+    const id = extractRepoId('https://github.com/someName/test');
 
     expect(id).toBe('someName/test');
   });
