@@ -1,0 +1,18 @@
+{
+  "extends": ["../../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": [
+          "libs/shared/cargo-hold-devtools/tsconfig.json",
+          "libs/shared/cargo-hold-devtools/tsconfig.*?.json"
+        ]
+      },
+      "rules": {}
+    },
+    { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
+  ]
+}
