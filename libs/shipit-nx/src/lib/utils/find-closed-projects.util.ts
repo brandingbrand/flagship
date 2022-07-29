@@ -1,6 +1,6 @@
 import type { Commit } from '@brandingbrand/git';
 
-import { logger } from '@nrwl/devkit';
+import dedent from 'ts-dedent';
 
 import type { ShipConfig } from '../configs/ship.config';
 import type { StandaloneWorkspace } from '../models/standalone-workspace';
@@ -77,9 +77,13 @@ const findProjectsForCommit = (
       });
 
     for (const missingProjectConfig of missingProjectConfigs) {
-      logger.warn('');
-      logger.warn(`WARNING: ${missingProjectConfig.root} added before workspace.json reference...`);
-      logger.warn(`Assuming project name is ${missingProjectConfig.name}`);
+      config.addWarning(
+        dedent`
+          \n
+          WARNING: ${missingProjectConfig.root} added before workspace.json reference...
+          Assuming project name is ${missingProjectConfig.name}
+        `
+      );
     }
 
     return [...workspaceProjects, ...missingProjectConfigs];
@@ -135,11 +139,12 @@ export const findFilteredProjectsForRevision = (config: ShipConfig, commit: Comm
   for (const project of projects) {
     if (project.isConfigMissing === true) {
       if (!config.projectConfigs.has(project.name)) {
-        logger.warn('');
-        logger.warn(
-          `WARNING: workspace.json reference added BEFORE ${project.name} configuration...`
-        );
-        logger.warn(`Attempting to find project configuration from the future`);
+        config.addWarning(dedent`
+          \n
+          WARNING: workspace.json reference added BEFORE ${project.name} configuration...
+          Attempting to find project configuration from the future
+        `);
+
         const projectConfig = findProjectFromFutureRevision(config, id, project);
 
         if (projectConfig === null) {

@@ -1,6 +1,7 @@
 import type { Commit } from '@brandingbrand/git';
 import { Repo } from '@brandingbrand/git';
 
+import { logger } from '@nrwl/devkit';
 import { pipe } from 'fp-ts/lib/function';
 import { readdirSync } from 'fs';
 import { join } from 'path';
@@ -22,6 +23,7 @@ const COMMIT_LINK = /\(\[((?:\d|[a-f]){7})].*\/((?:\d|[a-f]){40})\)\)/;
 
 export interface ShipConfigOptions {
   readonly sourcePath: string;
+  readonly maxWarnings?: number;
   readonly destinationRepoURL: string;
   readonly destinationBranch?: string;
 }
@@ -37,6 +39,7 @@ export interface ShipProjectOptions extends ShipConfigOptions {
 export class ShipConfig {
   constructor(public readonly options: ShipConfigOptions | ShipProjectOptions) {}
 
+  private readonly warnings: string[] = [];
   private readonly destinationPath = tmpDir('brandingbrand-shipit-');
   public projectConfigsInitialized = false;
   public readonly projectConfigs = new Map<string, Project>();
@@ -142,4 +145,13 @@ export class ShipConfig {
 
     return !project.tags?.includes('open-source');
   };
+
+  public addWarning(warning: string): void {
+    this.warnings.push(warning);
+    if (this.options.maxWarnings !== undefined && this.warnings.length > this.options.maxWarnings) {
+      throw new Error(this.warnings.join('\n'));
+    } else {
+      logger.warn(warning);
+    }
+  }
 }
