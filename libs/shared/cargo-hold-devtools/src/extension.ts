@@ -157,7 +157,7 @@ export class DevtoolsExtension {
 
     const actionsUntilStop$ = actions$.pipe(takeUntil(stop$));
     const liftedUntilStop$ = liftedActions$.pipe(takeUntil(stop$));
-    this.start$ = start$.pipe(takeUntil(stop$));
+    this.start$ = start$;
 
     // Only take the action sources between the start/stop events
     this.actions$ = this.start$.pipe(switchMap(() => actionsUntilStop$));

@@ -3,8 +3,8 @@ import { IStore } from '@brandingbrand/cargo-hold';
 import { Inject } from '@brandingbrand/fslinker';
 
 import type { Observable, Observer, Subscription } from 'rxjs';
-import { ReplaySubject, merge, queueScheduler } from 'rxjs';
-import { map, observeOn, scan, skip, withLatestFrom } from 'rxjs/operators';
+import { ReplaySubject, queueScheduler } from 'rxjs';
+import { map, observeOn, scan, withLatestFrom } from 'rxjs/operators';
 
 import * as Actions from './actions';
 import { STORE_DEVTOOLS_CONFIG, StoreDevtoolsConfig } from './config';
@@ -30,14 +30,7 @@ export class StoreDevtools implements Observer<Actions.All> {
     const liftedInitialState = liftInitialState(cargoHold.initialState);
     const liftReducer = liftReducerWith(cargoHold.initialState, liftedInitialState, config);
 
-    const liftedAction$ = (
-      merge(
-        merge(cargoHold.action$.pipe(skip(1)), extension.actions$).pipe(map(liftAction)),
-        dispatcher.action$,
-        extension.liftedActions$
-      ) as Observable<LiftedAction>
-    ).pipe(observeOn(queueScheduler));
-
+    const liftedAction$ = cargoHold.action$.pipe(map(liftAction)).pipe(observeOn(queueScheduler));
     const liftedReducer$ = cargoHold.reducer$.pipe(map(liftReducer));
 
     const liftedStateSubject = new ReplaySubject<LiftedState>(1);
@@ -69,6 +62,10 @@ export class StoreDevtools implements Observer<Actions.All> {
         liftedStateSubject.next(state);
       });
 
+    const dispatchSubscription = extension.actions$.subscribe((action) => {
+      cargoHold.dispatch(action);
+    });
+
     const extensionStartSubscription = extension.start$.subscribe(() => {
       this.refresh();
     });
@@ -77,6 +74,7 @@ export class StoreDevtools implements Observer<Actions.All> {
     const state$ = liftedState$.pipe(map(unliftState));
 
     this.extensionStartSubscription = extensionStartSubscription;
+    this.dispatchSubscription = dispatchSubscription;
     this.stateSubscription = liftedStateSubscription;
     this.dispatcher = dispatcher;
     this.liftedState = liftedState$;
@@ -84,6 +82,7 @@ export class StoreDevtools implements Observer<Actions.All> {
   }
 
   private readonly stateSubscription: Subscription;
+  private readonly dispatchSubscription: Subscription;
   private readonly extensionStartSubscription: Subscription;
   public dispatcher: ActionBus;
   public liftedState: Observable<LiftedState>;
