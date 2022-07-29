@@ -1,4 +1,4 @@
-const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
+const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?.*@?(?:w{3}.)?\w*\.\w*[/:](.*\/.*).git/;
 
 /**
  * Matches any of the following extracting `someName/test`
@@ -7,9 +7,11 @@ const REPO_URL_REGEX = /(?:git@|ht{2}ps?:\/{2})(?:.*:.*@)?(?:w{3}.)?\w*\.\w*[/:]
  * - http://github.com/someName/test.git
  * - http://www.github.com/someName/test.git
  * - http://someName:something@github.com/someName/test.git
+ * - http://token@github.com/someName/test.git
  * - https://github.com/someName/test.git
  * - https://www.github.com/someName/test.git
  * - https://someName:something@github.com/someName/test.git
+ * - https://token@github.com/someName/test.git
  *
  * @param url
  * @return
