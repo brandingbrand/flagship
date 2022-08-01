@@ -127,7 +127,7 @@ export const findFilteredProjectsForRevision = (config: ShipConfig, commit: Comm
     changedFiles.includes('workspace.json') ||
     changedFiles.some((file) => file.endsWith('project.json'));
 
-  if (!hasProjectConfigsChanged) {
+  if (config.projectConfigsInitialized && !hasProjectConfigsChanged) {
     return [...config.projectConfigs.values()].filter(config.excludedProjectsFilter);
   }
 
@@ -152,6 +152,8 @@ export const findFilteredProjectsForRevision = (config: ShipConfig, commit: Comm
       config.projectConfigs.set(project.name, project);
     }
   }
+
+  config.projectConfigsInitialized = true;
 
   return [...config.projectConfigs.values()].filter(config.excludedProjectsFilter);
 };

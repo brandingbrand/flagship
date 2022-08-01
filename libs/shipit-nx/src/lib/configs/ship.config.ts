@@ -38,6 +38,7 @@ export class ShipConfig {
   constructor(public readonly options: ShipConfigOptions | ShipProjectOptions) {}
 
   private readonly destinationPath = tmpDir('brandingbrand-shipit-');
+  public projectConfigsInitialized = false;
   public readonly projectConfigs = new Map<string, Project>();
   public readonly sourceRepo = new Repo(this.options.sourcePath);
   public readonly destinationRepo = new Repo(this.destinationPath, this.options.destinationRepoURL);
