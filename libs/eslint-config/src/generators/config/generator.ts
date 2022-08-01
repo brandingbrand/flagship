@@ -1,15 +1,14 @@
-import type { ProjectConfiguration, Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
 import {
   formatFiles,
   generateFiles,
   names,
   offsetFromRoot,
   readProjectConfiguration,
-  updateProjectConfiguration,
 } from '@nrwl/devkit';
 import path from 'path';
 
-import { mergeDeep } from '../../utils/merge-deep.util';
+import { mergeProjectConfiguration } from '../../utils/merge-project-configuration.util';
 
 import type { ConfigGeneratorSchema } from './schema';
 import { Framework, Testing } from './schema';
@@ -91,16 +90,6 @@ const normalizeOptions = (tree: Tree, options: ConfigGeneratorSchema): Normalize
   };
 };
 
-const mergeProjectConfiguration = (
-  tree: Tree,
-  projectName: string,
-  configuration: Partial<ProjectConfiguration>
-): void => {
-  const existingConfiguration = readProjectConfiguration(tree, projectName);
-  const mergedConfiguration = mergeDeep(existingConfiguration, configuration);
-  updateProjectConfiguration(tree, projectName, mergedConfiguration);
-};
-
 const addEslintRc = (tree: Tree, options: NormalizedSchema): void => {
   const templateOptions = {
     ...options,
@@ -116,7 +105,7 @@ const runGenerator = async (tree: Tree, options: ConfigGeneratorSchema): Promise
   addEslintRc(tree, normalizedOptions);
   mergeProjectConfiguration(tree, options.projectName, {
     targets: {
-      lint: {
+      'lint': {
         executor: '@nrwl/linter:eslint',
         outputs: ['{options.outputFile}'],
         options: {
@@ -125,6 +114,9 @@ const runGenerator = async (tree: Tree, options: ConfigGeneratorSchema): Promise
           ],
           hasTypeAwareRules: true,
         },
+      },
+      'set-max-warnings': {
+        executor: 'eslint-config-brandingbrand:set-max-warnings',
       },
     },
   });

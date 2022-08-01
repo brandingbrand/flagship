@@ -4,6 +4,7 @@
   "description": "Enterprise Grade Linting",
   "license": "MIT",
   "generators": "./generators.json",
+  "builders": "./builders.json",
   "keywords": [
     "eslint",
     "eslint-config",

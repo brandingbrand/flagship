@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/eslint-config",
         "tsConfig": "libs/eslint-config/tsconfig.lib.json",
@@ -13,6 +15,7 @@
         "assets": [
           "libs/eslint-config/*.md",
           "libs/eslint-config/generators.json",
+          "libs/eslint-config/builders.json",
           {
             "glob": "**/files/**/*",
             "input": "libs/eslint-config",
@@ -28,12 +31,19 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/eslint-config/**/*.{ts,js}"],
+        "lintFilePatterns": [
+          "libs/eslint-config/**/*.{ts,js}"
+        ],
         "hasTypeAwareRules": true,
-        "maxWarnings": 0
+        "maxWarnings": 4
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "publish": {
       "executor": "ngx-deploy-npm:deploy",
@@ -44,9 +54,13 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npm install ./dist/libs/eslint-config --ignore-scripts --no-audit --no-fund"]
+        "commands": [
+          "npm install ./dist/libs/eslint-config --ignore-scripts --no-audit --no-fund"
+        ]
       }
     }
   },
-  "tags": ["open-source"]
+  "tags": [
+    "open-source"
+  ]
 }
