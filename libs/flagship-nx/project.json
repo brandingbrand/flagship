@@ -32,8 +32,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/flagship-nx/**/*.{ts,js}"],
-        "hasTypeAwareRules": true
+        "hasTypeAwareRules": true,
+        "maxWarnings": 65
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

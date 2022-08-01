@@ -28,8 +28,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-branded/**/*.{ts,js}"],
-        "hasTypeAwareRules": true
+        "hasTypeAwareRules": true,
+        "maxWarnings": 5
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

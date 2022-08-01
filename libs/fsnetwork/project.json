@@ -20,8 +20,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/fsnetwork/**/*.{ts,js}"],
-        "hasTypeAwareRules": true
+        "hasTypeAwareRules": true,
+        "maxWarnings": 10
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -19,8 +19,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-json-schema/**/*.{ts,js}"],
-        "hasTypeAwareRules": true
+        "hasTypeAwareRules": true,
+        "maxWarnings": 431
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -29,8 +29,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/utils-base64/**/*.{ts,js}"],
-        "hasTypeAwareRules": true
+        "hasTypeAwareRules": true,
+        "maxWarnings": 47
       }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -5,9 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/eslint-config",
         "tsConfig": "libs/eslint-config/tsconfig.lib.json",
@@ -31,15 +29,11 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/eslint-config/**/*.{ts,js}"
-        ],
+        "lintFilePatterns": ["libs/eslint-config/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 4
+        "maxWarnings": 0
       }
     },
     "set-max-warnings": {
@@ -54,13 +48,9 @@
     "install": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": [
-          "npm install ./dist/libs/eslint-config --ignore-scripts --no-audit --no-fund"
-        ]
+        "commands": ["npm install ./dist/libs/eslint-config --ignore-scripts --no-audit --no-fund"]
       }
     }
   },
-  "tags": [
-    "open-source"
-  ]
+  "tags": ["open-source"]
 }
