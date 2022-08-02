@@ -57,6 +57,7 @@ storiesOf('FilterListDrilldown', module)
       onReset={action('FilterList onReset')}
       singleFilterIds={['sort']}
       onClose={boolean('Show Close', true) ? action('FilterList onClose') : undefined}
+      showDrillDownHeader={boolean('Show Drill Down Header', true)}
       showUnselected={boolean('Show Unselected', false)}
       showSelectedCount={boolean('Show Selected Count', false)}
       secondLevelShowApply={boolean('Show Second Level Apply', false)}

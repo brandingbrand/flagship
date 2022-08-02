@@ -88,6 +88,7 @@ export interface FilterListDrilldownProps {
   secondLevelShowApply?: boolean;
   secondLevelShowClose?: boolean;
   optionsFooterStyles?: StyleProp<ViewStyle>;
+  showDrillDownHeader?: boolean;
 }
 
 const S = StyleSheet.create({
@@ -533,7 +534,12 @@ export class FilterListDrilldown extends PureComponent<
             display: this.state.secondLevelItem ? 'none' : 'flex'
           }}
         >
-          {this.renderDrilldownHeader()}
+          {
+            // Default to true
+            this.props.showDrillDownHeader === undefined || this.props.showDrillDownHeader ?
+              this.renderDrilldownHeader() :
+              null
+          }
           <FlatList
             data={this.props.items}
             renderItem={this.renderFilterItem}
