@@ -2,6 +2,29 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.67.0](https://github.com/brandingbrand/flagship/compare/v11.66.0...v11.67.0) (2022-08-02)
+
+
+### Bug Fixes
+
+* **git:** extract ids from git urls (7e68b64)
+* **git:** extract ids from urls without .git (6e357d9)
+* **git:** patch formatting (8ff4998)
+
+
+### Features
+
+* **git:** clone specific branch (1faa75b)
+* **git:** count commits (8ee8bbc)
+* **git:** use github token (d4f903f)
+
+
+### Performance Improvements
+
+* **git:** optimize git calls (c4beda5)
+
+
+
 # [11.66.0](https://github.com/brandingbrand/flagship/compare/v11.65.0...v11.66.0) (2022-07-15)
 
 

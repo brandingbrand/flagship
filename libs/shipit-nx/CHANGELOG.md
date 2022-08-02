@@ -2,6 +2,28 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.67.0](https://github.com/brandingbrand/flagship/compare/v11.66.0...v11.67.0) (2022-08-02)
+
+
+### Bug Fixes
+
+* **shipit-nx:** handle more invalid workspace edge cases (12a7a81)
+* **shipit-nx:** recalculate projects if starting commit does not have workspace diff (6e4e154)
+
+
+### Features
+
+* **shipit-nx:** allow setting max warnings (731c37f)
+* **shipit-nx:** public readme (892ddc4)
+* **shipit-nx:** ship to specific branch (f672937)
+
+
+### Performance Improvements
+
+* **shipit-nx:** streamline commits in generators (c668324)
+
+
+
 # [11.66.0](https://github.com/brandingbrand/flagship/compare/v11.65.0...v11.66.0) (2022-07-15)
 
 
