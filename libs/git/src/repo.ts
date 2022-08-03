@@ -245,6 +245,11 @@ export class Repo implements SourceRepo, DestinationRepo {
     return exitCode !== 0;
   }
 
+  public hasChanges(): boolean {
+    const { stdout } = this.gitCommand('status', '--porcelain').runSynchronously();
+    return stdout.trim() !== '';
+  }
+
   public findLastSourceCommit(): string | undefined {
     const log = this.gitCommand(
       'log',
