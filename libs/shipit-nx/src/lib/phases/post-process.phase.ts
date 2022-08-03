@@ -403,12 +403,14 @@ export class PostProcessPhase implements Phase {
       await this.syncDeps(destinationTree, destinationWorkspace, this.config.options);
     }
 
-    const message = new CommitMessage({
-      type: 'chore',
-      scope: 'release',
-      subject: 'export workspace',
-    });
+    if (this.config.destinationRepo.hasChanges()) {
+      const message = new CommitMessage({
+        type: 'chore',
+        scope: 'release',
+        subject: 'export workspace',
+      });
 
-    this.config.destinationRepo.stageAll().commit(message);
+      this.config.destinationRepo.stageAll().commit(message);
+    }
   }
 }
