@@ -12,10 +12,30 @@ index 4c27c3d..4e86583 100644
          const errorGroupBodyLines = errors.map((f) => `${output_1.output.dim('-')} ${f}`);
          return errors.length === 0
 diff --git a/node_modules/nx/src/tasks-runner/run-command.js b/node_modules/nx/src/tasks-runner/run-command.js
-index 39f223a..affc6a0 100644
+index 39f223a..9375c5a 100644
 --- a/node_modules/nx/src/tasks-runner/run-command.js
 +++ b/node_modules/nx/src/tasks-runner/run-command.js
-@@ -217,7 +217,7 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+@@ -165,12 +165,18 @@ function addTasksForProjectTarget({ project, target, configuration, overrides, e
+     });
+     const dependencyConfigs = (0, utils_1.getDependencyConfigs)({ project: project.name, target }, defaultDependencyConfigs, projectGraph);
+     if (dependencyConfigs) {
++        const startingSeenSet = new Set(seenSet);
+         for (const dependencyConfig of dependencyConfigs) {
++            const dependSeenSet = new Set(startingSeenSet)
+             addTasksForProjectDependencyConfig(project, {
+                 target,
+                 configuration,
+                 overrides,
+-            }, dependencyConfig, defaultDependencyConfigs, projectGraph, originalTargetExecutor, tasksMap, path, seenSet);
++            }, dependencyConfig, defaultDependencyConfigs, projectGraph, originalTargetExecutor, tasksMap, path, dependSeenSet);
++
++            for (const project of dependSeenSet) {
++                seenSet.add(project);
++            }
+         }
+     }
+     tasksMap.set(task.id, task);
+@@ -217,7 +223,7 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
          hasTarget: (0, project_graph_utils_1.projectHasTarget)(project, target),
      };
      const newPath = [...path, pathFragment];
@@ -24,7 +44,7 @@ index 39f223a..affc6a0 100644
      if (tasksMap.has(targetIdentifier)) {
          return;
      }
-@@ -230,11 +230,11 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+@@ -230,11 +236,11 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
                      (0, project_graph_utils_1.projectHasTarget)(depProject, dependencyConfig.target)) {
                      const depTargetId = getId({
                          project: depProject.name,
@@ -38,7 +58,7 @@ index 39f223a..affc6a0 100644
                          continue;
                      }
                      addTasksForProjectTarget({
-@@ -247,16 +247,15 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
+@@ -247,16 +253,15 @@ function addTasksForProjectDependencyConfig(project, { target, configuration, ov
                  }
                  else {
                      if (!depProject) {
