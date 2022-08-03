@@ -1,6 +1,8 @@
 import type { ILens } from '@brandingbrand/standard-lens';
 
-import type { EntityId, EntitySelectors, EntityState } from './entity.types';
+import type { EntityId, EntityState } from '../entity.types';
+
+import type { EntitySelectors } from './entity.types';
 
 /**
  * Take all of the entities in an entity state from a given lens and returns

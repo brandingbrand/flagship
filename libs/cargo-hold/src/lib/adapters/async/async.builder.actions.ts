@@ -20,14 +20,14 @@ import type {
  * @return
  */
 export const buildInitActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   IdleType,
   MetadataType extends Record<string, unknown> | undefined
 >(
   builder: WithIdleType<IdleType> &
-    WithActionKey<ActionKey> &
+    WithActionKey<ActionKeyType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-): ActionCreator<ActionKey, 'async:init', IdleType, [IdleType]> =>
+): ActionCreator<ActionKeyType, 'async:init', IdleType, [IdleType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:init',
@@ -41,16 +41,16 @@ export const buildInitActionCreator = <
  * @return
  */
 export const buildLoadingActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   IdleType,
   MetadataType extends Record<string, unknown> | undefined
 >(
   builder: WithIdleType<IdleType> &
     WithSuccessType<SuccessType> &
-    WithActionKey<ActionKey> &
+    WithActionKey<ActionKeyType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-): ActionCreator<ActionKey, 'async:load', IdleType | SuccessType, [IdleType | SuccessType]> =>
+): ActionCreator<ActionKeyType, 'async:load', IdleType | SuccessType, [IdleType | SuccessType]> =>
   createActionCreator({
     ...builder,
     actionKey: builder.actionKey,
@@ -65,14 +65,14 @@ export const buildLoadingActionCreator = <
  * @return
  */
 export const buildLoadingMoreActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   MetadataType extends Record<string, unknown> | undefined
 >(
   builder: WithSuccessType<SuccessType> &
-    WithActionKey<ActionKey> &
+    WithActionKey<ActionKeyType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-): ActionCreator<ActionKey, 'async:load-more', SuccessType, [SuccessType]> =>
+): ActionCreator<ActionKeyType, 'async:load-more', SuccessType, [SuccessType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:load-more',
@@ -86,14 +86,14 @@ export const buildLoadingMoreActionCreator = <
  * @return
  */
 export const buildSucceedActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   MetadataType extends Record<string, unknown> | undefined
 >(
   builder: WithSuccessType<SuccessType> &
-    WithActionKey<ActionKey> &
+    WithActionKey<ActionKeyType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-): ActionCreator<ActionKey, 'async:succeed', SuccessType, [SuccessType]> =>
+): ActionCreator<ActionKeyType, 'async:succeed', SuccessType, [SuccessType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:succeed',
@@ -107,14 +107,14 @@ export const buildSucceedActionCreator = <
  * @return
  */
 export const buildFailActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   FailureType,
   MetadataType extends Record<string, unknown> | undefined
 >(
   builder: WithFailureType<FailureType> &
-    WithActionKey<ActionKey> &
+    WithActionKey<ActionKeyType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
-): ActionCreator<ActionKey, 'async:fail', FailureType, [FailureType]> =>
+): ActionCreator<ActionKeyType, 'async:fail', FailureType, [FailureType]> =>
   createActionCreator({
     ...builder,
     subtype: 'async:fail',
@@ -128,13 +128,13 @@ export const buildFailActionCreator = <
  * @return
  */
 export const buildRevertActionCreator = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   FailureType,
   IdleType,
   MetadataType extends Record<string, unknown> | undefined
 >(
-  builder: WithActionKey<ActionKey> &
+  builder: WithActionKey<ActionKeyType> &
     WithPayloadTypes<SuccessType, FailureType, IdleType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
 ) =>
@@ -151,13 +151,13 @@ export const buildRevertActionCreator = <
  * @return
  */
 export const buildActionCreators = <
-  ActionKey extends string,
+  ActionKeyType extends string,
   SuccessType,
   FailureType,
   IdleType,
   MetadataType extends Record<string, unknown> | undefined
 >(
-  builder: WithActionKey<ActionKey> &
+  builder: WithActionKey<ActionKeyType> &
     WithPayloadTypes<SuccessType, FailureType, IdleType> &
     (MetadataType extends Record<string, unknown> ? WithMetadata<MetadataType> : {})
 ) =>

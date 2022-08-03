@@ -1,14 +1,18 @@
 import type { ILens } from '@brandingbrand/standard-lens';
 import { ComposableLens, createLens } from '@brandingbrand/standard-lens';
 
+import type { Comparer, EntityId, EntityState, IdSelector } from '../entity.types';
+
 import { makeCreateState, makeReducers } from './entity.reducer';
 import { getSelectors } from './entity.selectors';
-import type { Comparer, EntityAdaptor, EntityState, IdSelector } from './entity.types';
+import type { EntityAdaptor } from './entity.types';
 import type { EntityAdaptorDeps } from './entity.types.internal';
 
-export const defaultIdSelector = <T extends { id: number | string }>(item: T) => item.id;
+export type WithDefaultId = Record<'id', EntityId>;
 
-export interface CreateEntityAdaptorOptions<T, Structure> {
+export const defaultIdSelector = <T extends WithDefaultId>(item: T): EntityId => item.id;
+
+export interface CreateEntityAdaptorOptions<T, StateType> {
   /**
    * A function that can get an entityId out of the entity
    */
@@ -21,7 +25,7 @@ export interface CreateEntityAdaptorOptions<T, Structure> {
   /**
    * Optional lens that allows the adaptor to operate on larger data structures.
    */
-  lens?: ILens<Structure, EntityState<T>>;
+  lens?: ILens<StateType, EntityState<T>>;
 }
 
 /**
@@ -30,14 +34,14 @@ export interface CreateEntityAdaptorOptions<T, Structure> {
  * @param options Options to create the entity adapter.
  * @return
  */
-export const createEntityAdaptor = <T, StructureType>(
-  options: CreateEntityAdaptorOptions<T, StructureType>
-): EntityAdaptor<T, StructureType> => {
+export const createEntityAdaptor = <T, StateTypeType>(
+  options: CreateEntityAdaptorOptions<T, StateTypeType>
+): EntityAdaptor<T, StateTypeType> => {
   const isSorted = Boolean(options.comparer);
   const structureLens =
     options.lens ??
-    (createLens<StructureType>().fromPath() as unknown as ILens<StructureType, EntityState<T>>);
-  const deps: EntityAdaptorDeps<T, StructureType> = { ...options, lens: structureLens, isSorted };
+    (createLens<StateTypeType>().fromPath() as unknown as ILens<StateTypeType, EntityState<T>>);
+  const deps: EntityAdaptorDeps<T, StateTypeType> = { ...options, lens: structureLens, isSorted };
   const unlensedDeps: EntityAdaptorDeps<T, EntityState<T>> = {
     ...options,
     isSorted,
@@ -47,10 +51,10 @@ export const createEntityAdaptor = <T, StructureType>(
   const lensedReducers = makeReducers(deps);
   const reducers = makeReducers(unlensedDeps);
 
-  const withLens = <OuterStructureType>(
-    lens: ILens<OuterStructureType, StructureType>
-  ): EntityAdaptor<T, OuterStructureType> =>
-    createEntityAdaptor<T, OuterStructureType>({
+  const withLens = <OuterStateTypeType>(
+    lens: ILens<OuterStateTypeType, StateTypeType>
+  ): EntityAdaptor<T, OuterStateTypeType> =>
+    createEntityAdaptor<T, OuterStateTypeType>({
       ...options,
       lens: new ComposableLens(structureLens).withOuterLens(lens),
     });

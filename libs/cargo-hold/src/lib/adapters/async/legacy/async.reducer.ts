@@ -1,6 +1,7 @@
 import type { ILens } from '@brandingbrand/standard-lens';
 import { withLens } from '@brandingbrand/standard-lens';
 
+import { ActionOf, ActionSpecifierOf } from '../../../action-bus/action-bus.types';
 import type { StateReducer } from '../../../store';
 import { combineActionReducers, matches, on } from '../../../store';
 import {

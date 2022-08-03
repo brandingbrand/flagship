@@ -1,4 +1,4 @@
-import type { EntityId, EntityState } from './entity.types';
+import type { EntityId, EntityState } from '../entity.types';
 
 /**
  * Returns the entity for a given id, if no id is provided it returns the first entity.

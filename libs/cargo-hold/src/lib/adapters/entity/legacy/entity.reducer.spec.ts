@@ -2,9 +2,10 @@ import { createLens } from '@brandingbrand/standard-lens';
 
 import * as FastCheck from 'fast-check';
 
+import type { EntityState } from '../entity.types';
+
 import { defaultIdSelector } from './entity.adaptor';
 import { makeReducers } from './entity.reducer';
-import type { EntityState } from './entity.types';
 
 interface SampleItem {
   id: number;

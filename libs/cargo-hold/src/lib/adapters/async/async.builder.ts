@@ -22,9 +22,11 @@ import type {
 import type { AsyncState } from './async.types';
 
 export function asyncBuilder(): AsyncBuilder;
+
 export function asyncBuilder<SuccessType, IdleType = SuccessType>(): AsyncBuilder &
   WithIdleType<IdleType> &
   WithSuccessType<SuccessType>;
+
 export function asyncBuilder<SuccessType, FailureType, IdleType>(): AsyncBuilder &
   WithFailureType<FailureType> &
   WithIdleType<IdleType> &
@@ -58,17 +60,17 @@ export const withStructureLens =
     lens: IPathLens<OuterStructureType, AsyncState<SuccessType, FailureType, IdleType>>
   ) =>
   <BuilderType extends AsyncBuilder>(
-    asyncBuilder: BuilderType
+    builder: BuilderType
   ): BuilderType & WithLensInstance<IdleType, SuccessType, FailureType, OuterStructureType> => ({
-    ...asyncBuilder,
+    ...builder,
     lens,
   });
 
 export const withActionKey =
-  <ActionKey extends string>(actionKey: ActionKey) =>
+  <ActionKeyType extends string>(actionKey: ActionKeyType) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithActionKey<ActionKey> => ({
+  ): BuilderType & WithActionKey<ActionKeyType> => ({
     ...builder,
     actionKey,
   });
@@ -94,41 +96,45 @@ export const withTriggerActionFilter =
   });
 
 export const withAsyncCallback =
-  <Input, CallbackResult>(callback: (input: Input) => MaybePromise<CallbackResult>) =>
+  <InputType, CallbackResultType>(
+    callback: (input: InputType) => MaybePromise<CallbackResultType>
+  ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithAsyncCallback<Input, CallbackResult> => ({
+  ): BuilderType & WithAsyncCallback<InputType, CallbackResultType> => ({
     ...builder,
     callback,
   });
 
 export const withMapOnSuccess =
-  <Input, PayloadType, StateType = PayloadType>(
-    mapOnSuccess: (input: Input) => (oldPayload: StateType) => PayloadType
+  <InputType, PayloadType, StateType = PayloadType>(
+    mapOnSuccess: (input: InputType) => (oldPayload: StateType) => PayloadType
   ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithMapOnSuccess<Input, StateType, PayloadType> => ({
+  ): BuilderType & WithMapOnSuccess<InputType, StateType, PayloadType> => ({
     ...builder,
     mapOnSuccess,
   });
 
 export const withMapOnFailure =
-  <Input, FailureType>(mapOnFailure: (input: Input) => (oldFailure?: FailureType) => FailureType) =>
+  <InputType, FailureType>(
+    mapOnFailure: (input: InputType) => (oldFailure?: FailureType) => FailureType
+  ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithMapOnFailure<Input, FailureType> => ({
+  ): BuilderType & WithMapOnFailure<InputType, FailureType> => ({
     ...builder,
     mapOnFailure,
   });
 
 export const withOptimisticUpdate =
-  <Input, PayloadType, StateType = PayloadType>(
-    prediction: (input: Input) => (oldPayload: StateType) => PayloadType
+  <InputType, PayloadType, StateType = PayloadType>(
+    prediction: (input: InputType) => (oldPayload: StateType) => PayloadType
   ) =>
   <BuilderType extends AsyncBuilder>(
     builder: BuilderType
-  ): BuilderType & WithOptimisticUpdate<Input, StateType, PayloadType> => ({
+  ): BuilderType & WithOptimisticUpdate<InputType, StateType, PayloadType> => ({
     ...builder,
     prediction,
   });
