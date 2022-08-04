@@ -6,6 +6,7 @@ export * from './keys-of-type';
 export * from './lazy';
 export * from './maybe-promise';
 export * from './optional';
+export * from './optional-if-extends';
 export * from './predicate';
 export * from './serializable';
 export * from './type-guard';
