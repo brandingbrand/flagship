@@ -29,7 +29,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-cargo-hold/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 319
+        "maxWarnings": 60
       }
     },
     "set-max-warnings": {
