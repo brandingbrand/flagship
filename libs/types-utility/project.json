@@ -30,7 +30,7 @@
       "options": {
         "lintFilePatterns": ["libs/types-utility/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 11
+        "maxWarnings": 0
       }
     },
     "set-max-warnings": {
