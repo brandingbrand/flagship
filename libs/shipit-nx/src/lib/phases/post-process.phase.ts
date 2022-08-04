@@ -382,7 +382,6 @@ export class PostProcessPhase implements Phase {
     const destinationTree = new FsTree(this.config.destinationRepo.path, false);
 
     const sourceWorkspace = new Workspaces(sourceTree.root).readWorkspaceConfiguration();
-    const destinationWorkspace = new Workspaces(destinationTree.root).readWorkspaceConfiguration();
 
     this.cleanNxJson(sourceTree, sourceWorkspace, destinationTree);
     this.cleanTsConfig(sourceTree, sourceWorkspace, destinationTree);
@@ -399,6 +398,7 @@ export class PostProcessPhase implements Phase {
     flushChanges(destinationTree.root, destinationTree.listChanges());
     execSync(installCommand, { cwd: destinationTree.root });
 
+    const destinationWorkspace = new Workspaces(destinationTree.root).readWorkspaceConfiguration();
     if ('project' in this.config.options) {
       await this.syncDeps(destinationTree, destinationWorkspace, this.config.options);
     }
