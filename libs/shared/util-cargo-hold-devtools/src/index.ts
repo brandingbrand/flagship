@@ -1,0 +1,1 @@
+export { addDevtools } from './instrument';
