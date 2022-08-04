@@ -1,0 +1,43 @@
+{
+  "root": "libs/shared/util-cargo-hold-entity",
+  "sourceRoot": "libs/shared/util-cargo-hold-entity/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-cargo-hold-entity",
+        "main": "libs/shared/util-cargo-hold-entity/src/index.ts",
+        "tsConfig": "libs/shared/util-cargo-hold-entity/tsconfig.lib.json",
+        "assets": ["libs/shared/util-cargo-hold-entity/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-cargo-hold-entity/**/*.{ts,js}"],
+        "hasTypeAwareRules": true,
+        "maxWarnings": 75
+      }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-cargo-hold-entity"],
+      "options": {
+        "jestConfig": "libs/shared/util-cargo-hold-entity/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
