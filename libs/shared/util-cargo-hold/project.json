@@ -1,0 +1,54 @@
+{
+  "root": "libs/shared/util-cargo-hold",
+  "sourceRoot": "libs/shared/util-cargo-hold/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-cargo-hold",
+        "tsConfig": "libs/shared/util-cargo-hold/tsconfig.lib.json",
+        "project": "libs/shared/util-cargo-hold/package.json",
+        "entryFile": "libs/shared/util-cargo-hold/src/index.ts",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-cargo-hold",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-cargo-hold/**/*.{ts,js}"],
+        "hasTypeAwareRules": true,
+        "maxWarnings": 319
+      }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-cargo-hold"],
+      "options": {
+        "jestConfig": "libs/shared/util-cargo-hold/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source"]
+}
