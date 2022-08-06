@@ -371,7 +371,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
               async: false,
               typescript: {
                 configFile: options?.tsConfig,
-                memoryLimit: 4096,
+                memoryLimit: 8192,
               },
             }),
           ]
