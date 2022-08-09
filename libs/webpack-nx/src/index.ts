@@ -115,7 +115,7 @@ const webLoaders = [
   },
 ];
 
-const webBabelPlugins = [
+const reactNativeWebBabelPlugins = [
   [
     'module:babel-plugin-react-native-web',
     {
@@ -149,8 +149,20 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
           reactConfig.plugins?.find((plugin) => plugin instanceof ForkTsCheckerWebpackPlugin)
         ) || options?.buildLibsFromSource;
 
+  const alias =
+    platform === 'web'
+      ? {
+          ...webAliases,
+          ...(typeof reactConfig.resolve?.alias === 'object' &&
+          !Array.isArray(reactConfig.resolve.alias)
+            ? reactConfig.resolve.alias
+            : {}),
+        }
+      : reactConfig.resolve?.alias;
+
   const resolve = {
     ...reactConfig.resolve,
+    alias,
     exportsFields: ['exports'],
     /**
      * `getResolveOptions` returns additional resolution configuration for React Native.
@@ -159,7 +171,6 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
      * in their `package.json` might not work correctly.
      */
     ...ReactNative.getResolveOptions(platform),
-    ...(platform === 'web' ? { alias: { ...reactConfig.resolve?.alias, ...webAliases } } : {}),
     ...(platform === 'web'
       ? {
           mainFields: ['browser', 'module', 'main'],
@@ -183,6 +194,13 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       : {}),
   };
 
+  const webBabelPlugins =
+    !Array.isArray(alias) && alias?.['react-native'] === webAliases['react-native']
+      ? reactNativeWebBabelPlugins
+      : [];
+
+  const babelPlugins = platform === 'web' ? webBabelPlugins : [];
+
   const typeScriptLoaders = [
     {
       loader: require.resolve('babel-loader'),
@@ -198,7 +216,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
               : {},
           ],
         ],
-        plugins: [...(platform === 'web' ? webBabelPlugins : [])],
+        plugins: babelPlugins,
       },
     },
     {
@@ -282,12 +300,6 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             // It is not fully working when using options.esm.
             // ---
             {
-              test: /fallback-init\.util\.(ts|tsx)$/,
-              exclude: /node_modules/,
-              sideEffects: true,
-              use: typeScriptLoaders,
-            },
-            {
               test: /init\.util\.(ts|tsx)$/,
               exclude: /node_modules/,
               sideEffects: true,
@@ -351,7 +363,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
                           : {},
                       ],
                     ],
-                    plugins: [...(platform === 'web' ? webBabelPlugins : [])],
+                    plugins: babelPlugins,
                   },
                 },
               ],
@@ -363,8 +375,11 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     },
     plugins: [
       ...(reactConfig.plugins ?? []).filter(
-        (plugin) => !(plugin instanceof ForkTsCheckerWebpackPlugin)
+        (plugin) =>
+          !(plugin instanceof ForkTsCheckerWebpackPlugin) &&
+          !(plugin instanceof MiniCssExtractPlugin)
       ),
+      ...(platform === 'web' ? [new MiniCssExtractPlugin()] : []),
       ...(shouldForkTsCheck
         ? [
             new ForkTsCheckerWebpackPlugin({
