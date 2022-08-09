@@ -1,4 +1,6 @@
-import { REACT } from './react.token';
+import { REACT_TOKEN } from './react.token';
 import { useToken } from './use-token.hook';
 
-export const useReact = () => useToken(REACT);
+import type { ReactType } from '.';
+
+export const useReact = (): ReactType => useToken(REACT_TOKEN);

@@ -22,4 +22,4 @@ type UsedReactAPIs =
 
 export type ReactType = Pick<typeof React, UsedReactAPIs>;
 
-export const REACT = new InjectionToken<ReactType>('REACT_TOKEN');
+export const REACT_TOKEN = new InjectionToken<ReactType>('REACT_TOKEN');
