@@ -1,4 +1,4 @@
-import type { MaybePromise } from '@brandingbrand/types-utility';
+import type { MaybePromise } from '@brandingbrand/standard-types';
 
 import type { Option } from './option';
 import { isSome, some } from './option';

@@ -1,4 +1,4 @@
-import type { Predicate, TypeGuard } from '@brandingbrand/types-utility';
+import type { Predicate, TypeGuard } from '@brandingbrand/standard-types';
 
 import type { Option } from './option';
 import { isSome, none } from './option';
