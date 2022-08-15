@@ -2,7 +2,7 @@ import { Linking, Platform } from 'react-native';
 import type { AnimationOptions, LayoutTabsChildren } from 'react-native-navigation';
 import { Navigation } from 'react-native-navigation';
 
-import type { DeepPartial } from '@brandingbrand/types-utility';
+import type { DeepPartial } from '@brandingbrand/standard-types';
 
 import { boundMethod } from 'autobind-decorator';
 import isEqual from 'fast-deep-equal';
