@@ -1,4 +1,4 @@
-import type { Lazy } from '@brandingbrand/types-utility';
+import type { Lazy } from '@brandingbrand/standard-types';
 
 import type { Result } from './result';
 import { fail, ok } from './result';

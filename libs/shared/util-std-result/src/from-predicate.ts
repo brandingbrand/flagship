@@ -1,4 +1,4 @@
-import type { Lazy, Predicate, TypeGuard } from '@brandingbrand/types-utility';
+import type { Lazy, Predicate, TypeGuard } from '@brandingbrand/standard-types';
 
 import type { Result } from './result';
 import { fail, ok } from './result';

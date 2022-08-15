@@ -1,4 +1,4 @@
-import type { MaybePromise } from '@brandingbrand/types-utility';
+import type { MaybePromise } from '@brandingbrand/standard-types';
 
 import type { Result } from './result';
 import { isFailure, isOk } from './result';
