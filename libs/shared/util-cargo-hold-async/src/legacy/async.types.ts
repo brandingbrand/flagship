@@ -8,7 +8,7 @@ import type {
   TypeGuard,
 } from '@brandingbrand/cargo-hold';
 import type { ILens } from '@brandingbrand/standard-lens';
-import type { OptionalIfExtends } from '@brandingbrand/types-utility';
+import type { OptionalIfExtends } from '@brandingbrand/standard-types';
 
 import type { AsyncState, AsyncStatus } from '../async.types';
 

@@ -1,6 +1,6 @@
 import type { AnyAction, TypeGuard } from '@brandingbrand/cargo-hold';
 import type { IPathLens } from '@brandingbrand/standard-lens';
-import type { MaybePromise } from '@brandingbrand/types-utility';
+import type { MaybePromise } from '@brandingbrand/standard-types';
 
 import type {
   AsyncBuilder,

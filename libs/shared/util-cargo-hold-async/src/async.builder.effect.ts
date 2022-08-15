@@ -1,7 +1,7 @@
 import type { AnyAction, Effect } from '@brandingbrand/cargo-hold';
 import type { Result } from '@brandingbrand/standard-result';
 import { fail, isOk, ok } from '@brandingbrand/standard-result';
-import type { MaybePromise } from '@brandingbrand/types-utility';
+import type { MaybePromise } from '@brandingbrand/standard-types';
 
 import { filter, from, of as just, map, merge, mergeMap, switchMap, withLatestFrom } from 'rxjs';
 

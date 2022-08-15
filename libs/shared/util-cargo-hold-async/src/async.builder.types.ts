@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions -- These may need to be types */
 import type { AnyAction, TypeGuard } from '@brandingbrand/cargo-hold';
 import type { IPathLens } from '@brandingbrand/standard-lens';
-import type { MaybePromise } from '@brandingbrand/types-utility';
+import type { MaybePromise } from '@brandingbrand/standard-types';
 
 import type { AsyncState } from './async.types';
 
