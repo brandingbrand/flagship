@@ -1,0 +1,54 @@
+{
+  "root": "libs/shared/util-std-types",
+  "sourceRoot": "libs/shared/util-std-types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/util-std-types",
+        "entryFile": "libs/shared/util-std-types/src/index.ts",
+        "project": "libs/shared/util-std-types/package.json",
+        "tsConfig": "libs/shared/util-std-types/tsconfig.lib.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "compiler": "swc",
+        "format": ["esm", "cjs"],
+        "assets": [
+          {
+            "glob": "*.md",
+            "input": "libs/shared/util-std-types",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util-std-types/**/*.{ts,js}"],
+        "hasTypeAwareRules": true,
+        "maxWarnings": 30
+      }
+    },
+    "set-max-warnings": {
+      "executor": "eslint-config-brandingbrand:set-max-warnings"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/util-std-types"],
+      "options": {
+        "jestConfig": "libs/shared/util-std-types/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    }
+  },
+  "tags": ["open-source", "scope:shared", "type:util"]
+}
