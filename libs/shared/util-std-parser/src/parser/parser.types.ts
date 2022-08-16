@@ -4,6 +4,7 @@ import type { Failure, Ok, Result } from '@brandingbrand/standard-result';
 import type {
   CURSOR_END_KEY,
   CURSOR_KEY,
+  EMPTY_VALUE,
   FATAL_ERROR_KEY,
   INPUT_KEY,
   PARSER_BRANDING,
@@ -25,12 +26,9 @@ export type WithFatalError = Record<typeof FATAL_ERROR_KEY, string>;
 
 export type WithInput = Record<typeof INPUT_KEY, string>;
 
-export type WithValue<T> = Record<typeof VALUE_KEY, T>;
+export type WithValue<T> = Record<typeof VALUE_KEY, T | typeof EMPTY_VALUE>;
 
-/**
- * Parser Result types
- */
-export type ParserOk<T> = Ok<ParserBase & Partial<WithValue<T>> & WithCursorEnd>;
+export type ParserOk<T> = Ok<ParserBase & WithCursorEnd & WithValue<T>>;
 
 export type ParserFailure = Failure<ParserBase & Partial<WithFatalError>>;
 
