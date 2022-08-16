@@ -20,13 +20,13 @@ import type { CombinatorParserResults, CombinatorResult } from './combinator.typ
  * @param parser - Any `Parser`
  * @return A `Combinator`.
  */
-export const runParser =
+export const toCombinator =
   <T>(parser: Parser<T>) =>
   (args: ParserArgs): CombinatorResult<T, T> =>
     pipe(
       args,
       parser,
-      flatMapFailure((failure) => combinateFail<T>({ ...failure, results: [parseFail(failure)] })),
+      flatMapFailure((failure) => combinateFail({ ...failure, results: [parseFail(failure)] })),
       flatMap((success) => combinateOk<T>({ ...success, results: [parseOk(success)] }))
     );
 
@@ -38,7 +38,7 @@ export const runParser =
  * @return A function that takes a `CombinatorResult` and returns a merged
  *         `CombinatorResult`.
  */
-export const concatCombinatorResult =
+export const concatResult =
   <T>(prevResult: CombinatorResult<T>) =>
   (result: CombinatorResult<T>): CombinatorResult<T> => {
     /**
@@ -53,12 +53,12 @@ export const concatCombinatorResult =
       result,
       mapFailure(({ results }) => ({
         ...prevResult.ok,
-        results: [...prevResult.ok.results, ...results] as CombinatorParserResults<T>,
+        results: [...prevResult.ok.results, ...results] as CombinatorParserResults,
       })),
       mapOk(({ cursorEnd, results }) => ({
         ...prevResult.ok,
         cursorEnd,
-        results: [...prevResult.ok.results, ...results] as CombinatorParserResults<T>,
+        results: [...prevResult.ok.results, ...results] as CombinatorParserResults,
       }))
     );
   };

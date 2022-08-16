@@ -6,7 +6,7 @@ import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
 import { many } from './combinator.many';
 import { combinateFail, combinateOk } from './combinator.result';
 import type { CombinatorResult } from './combinator.types';
-import { runParser } from './combinator.util';
+import { toCombinator } from './combinator.util';
 
 export const any =
   <T>(...parsers: [Parser<T>, ...Array<Parser<T>>]) =>
@@ -50,7 +50,7 @@ export const maybe =
   ({ cursor = 0, input }: ParserArgs) =>
     pipe(
       { cursor, input },
-      runParser(parser),
+      toCombinator(parser),
       flatMap((success) => combinateOk<T>(success)),
       flatMapFailure((failure) =>
         combinateOk<T>({

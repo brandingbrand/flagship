@@ -14,33 +14,28 @@ import type { COMBINATOR_BRANDING } from './combinator.constants';
 
 export type CombinatorBase = Branded<Required<ParserArgs>, typeof COMBINATOR_BRANDING>;
 
-export type CombinatorParserResults<T> =
-  | [...Array<ParserOk<T>>, ParserResult<T>]
-  | [ParserResult<T>];
+export type CombinatorParserResults =
+  | [...Array<ParserOk<unknown>>, ParserResult<unknown>]
+  | [ParserResult<unknown>];
 
 /**
  * Utility types for composition
  */
-export type WithResults<T> = Record<'results', CombinatorParserResults<T>>;
+export type WithResults = Record<'results', CombinatorParserResults>;
 
-/**
- * Combinator Result types
- */
 export type CombinatorOk<T, V = T> = Ok<
-  CombinatorBase & WithCursorEnd & WithResults<T> & WithValue<V>
+  CombinatorBase & WithCursorEnd & WithResults & WithValue<V>
 >;
 
-export type CombinatorFailure<T> = Failure<
-  CombinatorBase & Partial<WithFatalError> & WithResults<T>
->;
+export type CombinatorFailure = Failure<CombinatorBase & Partial<WithFatalError> & WithResults>;
 
 export type CombinatorResult<T, V = T> = Result<
   CombinatorOk<T, V>['ok'],
-  CombinatorFailure<T>['failure']
+  CombinatorFailure['failure']
 >;
 
 /**
- * Combinator types
+ *
  */
 export type Combinator<T, V = T, ParsersT extends Array<Parser<T>> = Array<Parser<T>>> = (
   ...parsers: ParsersT

@@ -16,18 +16,20 @@ import type { CombinatorParserResults, CombinatorResult } from './combinator.typ
  * @return A CombinatorResult
  */
 export const many =
-  <T, ParsersT extends [Parser<T>, ...Array<Parser<T>>]>(...parsers: ParsersT) =>
+  <T, ParsersT extends [Parser<T>, ...Array<Parser<T>>] = [Parser<T>, ...Array<Parser<T>>]>(
+    ...parsers: ParsersT
+  ) =>
   (args: ParserArgs): CombinatorResult<T, T[]> =>
     pipe(
       args,
       parsers[0],
-      flatMapFailure((failure) => combinateFail<T>({ ...args, results: [parseFail(failure)] })),
+      flatMapFailure((failure) => combinateFail({ ...args, results: [parseFail(failure)] })),
       flatMap((success) =>
         combinateOk<T, T[]>({
           ...args,
           cursorEnd: success.cursorEnd,
           results: [parseOk(success)],
-          value: [success.value],
+          value: [success.value] as T[],
         })
       ),
       flatMap((success) => {
@@ -44,19 +46,19 @@ export const many =
            * Recursively calls itself with the remaining parsers until a parser has failed.
            * We've checked the length above so there will always be a fn at index 1.
            */
-          many<T, typeof remainingParsers>(...remainingParsers),
+          many<T>(...remainingParsers),
           flatMapFailure(({ results }) =>
             combinateFail({
               ...success,
-              results: [...success.results, ...results] as CombinatorParserResults<T>,
+              results: [...success.results, ...results] as CombinatorParserResults,
             })
           ),
           flatMap(({ cursorEnd, results, value }) =>
             combinateOk<T, T[]>({
               ...success,
               cursorEnd,
-              results: [...success.results, ...results] as CombinatorParserResults<T>,
-              value: [...success.value, ...value],
+              results: [...success.results, ...results] as CombinatorParserResults,
+              value: [...success.value, ...value] as T[],
             })
           )
         );
