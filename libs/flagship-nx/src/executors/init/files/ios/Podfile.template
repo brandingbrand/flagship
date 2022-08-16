@@ -29,5 +29,14 @@ target '<%= className %>' do
 
   post_install do |installer|
     nx_post_install(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # if the pod's target ios build version is lower than 9.0 update them to build against minimum of 9.
+        if Gem::Version.new('9.0') > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+        end
+      end
+    end
   end
+
 end
