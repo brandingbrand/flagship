@@ -1,7 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "cargo-hold": "libs/cargo-hold",
     "create-fs-app": "libs/create-fs-app",
     "eslint-config": "libs/eslint-config",
     "flagship": "libs/flagship",
@@ -26,10 +25,13 @@
     "git": "libs/git",
     "orchestrate-nx": "libs/orchestrate-nx",
     "polyfills": "libs/polyfills",
-    "react-cargo-hold": "libs/react-cargo-hold",
     "react-linker": "libs/react-linker",
     "sessions": "libs/sessions",
-    "shared-cargo-hold-devtools": "libs/shared/cargo-hold-devtools",
+    "shared-ui-react-cargo-hold": "libs/shared/ui-react-cargo-hold",
+    "shared-util-cargo-hold": "libs/shared/util-cargo-hold",
+    "shared-util-cargo-hold-async": "libs/shared/util-cargo-hold-async",
+    "shared-util-cargo-hold-devtools": "libs/shared/util-cargo-hold-devtools",
+    "shared-util-cargo-hold-entity": "libs/shared/util-cargo-hold-entity",
     "shared-util-std-array": "libs/shared/util-std-array",
     "shared-util-std-async": "libs/shared/util-std-async",
     "shared-util-std-branded": "libs/shared/util-std-branded",
@@ -42,10 +44,10 @@
     "shared-util-std-option": "libs/shared/util-std-option",
     "shared-util-std-parser": "libs/shared/util-std-parser",
     "shared-util-std-result": "libs/shared/util-std-result",
+    "shared-util-std-types": "libs/shared/util-std-types",
     "shell": "libs/shell",
     "shipit-nx": "libs/shipit-nx",
     "types-location": "libs/types-location",
-    "types-utility": "libs/types-utility",
     "utils-base64": "libs/utils-base64",
     "webpack-nx": "libs/webpack-nx"
   }

@@ -18,13 +18,13 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "build-demo", "init", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "build-demo", "generate", "init", "lint", "test", "e2e"]
       }
     },
     "s3": {
       "runner": "@pellegrims/nx-remotecache-s3",
       "options": {
-        "cacheableOperations": ["build", "build-demo", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "build-demo", "generate", "lint", "test", "e2e"]
       }
     }
   },
@@ -36,6 +36,10 @@
       }
     ],
     "build": [
+      {
+        "target": "generate",
+        "projects": "dependencies"
+      },
       {
         "target": "build",
         "projects": "dependencies"
@@ -59,6 +63,12 @@
       {
         "target": "build",
         "projects": "self"
+      }
+    ],
+    "lint": [
+      {
+        "target": "generate",
+        "projects": "dependencies"
       }
     ]
   },
