@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.68.0](https://github.com/brandingbrand/flagship/compare/v11.67.0...v11.68.0) (2022-08-16)
+
+
+### Bug Fixes
+
+* **webpack-nx:** memory issues (4fa468e)
+* **webpack-nx:** support aliasing of react-native module (2fcd76d)
+
+
+
 # [11.67.0](https://github.com/brandingbrand/flagship/compare/v11.66.0...v11.67.0) (2022-08-02)
 
 
