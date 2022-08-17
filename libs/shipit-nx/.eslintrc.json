@@ -3,10 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/node", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/node"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/shipit-nx/tsconfig.json", "libs/shipit-nx/tsconfig.*?.json"]
+        "project": ["libs/shipit-nx/tsconfig.*?.json"]
       },
       "rules": {}
     },

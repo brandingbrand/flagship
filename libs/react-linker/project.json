@@ -1,19 +1,16 @@
 {
-  "root": "libs/react-linker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/react-linker/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-linker",
+        "main": "libs/react-linker/src/index.ts",
         "tsConfig": "libs/react-linker/tsconfig.lib.json",
-        "project": "libs/react-linker/package.json",
-        "entryFile": "libs/react-linker/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -29,7 +26,7 @@
       "options": {
         "lintFilePatterns": ["libs/react-linker/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 6
+        "maxWarnings": 5
       }
     },
     "set-max-warnings": {
@@ -39,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/react-linker"],
       "options": {
-        "jestConfig": "libs/react-linker/jest.config.js",
+        "jestConfig": "libs/react-linker/jest.config.ts",
         "passWithNoTests": true
       }
     },

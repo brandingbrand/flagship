@@ -1,5 +1,5 @@
 {
-  "root": "libs/eslint-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/eslint-config/src",
   "projectType": "library",
   "targets": {
@@ -46,7 +46,7 @@
       }
     },
     "install": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["npm install ./dist/libs/eslint-config --ignore-scripts --no-audit --no-fund"]
       }

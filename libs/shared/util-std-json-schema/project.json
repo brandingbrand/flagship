@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/util-std-json-schema",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-json-schema/src",
   "projectType": "library",
   "targets": {
@@ -20,7 +20,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-json-schema/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 431
+        "maxWarnings": 435
       }
     },
     "set-max-warnings": {
@@ -30,7 +30,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-json-schema"],
       "options": {
-        "jestConfig": "libs/shared/util-std-json-schema/jest.config.js",
+        "jestConfig": "libs/shared/util-std-json-schema/jest.config.ts",
         "passWithNoTests": true
       }
     },

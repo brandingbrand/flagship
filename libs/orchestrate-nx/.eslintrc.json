@@ -6,7 +6,7 @@
       "extends": ["brandingbrand/typescript", "brandingbrand/node", "brandingbrand/rxjs"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/orchestrate-nx/tsconfig.json", "libs/orchestrate-nx/tsconfig.*?.json"]
+        "project": ["libs/orchestrate-nx/tsconfig.*?.json"]
       },
       "rules": {}
     },

@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsnetwork",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsnetwork/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsnetwork"],
       "options": {
-        "jestConfig": "libs/fsnetwork/jest.config.js",
+        "jestConfig": "libs/fsnetwork/jest.config.ts",
         "passWithNoTests": true
       }
     },

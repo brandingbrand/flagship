@@ -1,19 +1,16 @@
 {
-  "root": "libs/shared/util-std-option",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-option/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-option",
+        "main": "libs/shared/util-std-option/src/index.ts",
         "tsConfig": "libs/shared/util-std-option/tsconfig.lib.json",
-        "project": "libs/shared/util-std-option/package.json",
-        "entryFile": "libs/shared/util-std-option/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -39,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-option"],
       "options": {
-        "jestConfig": "libs/shared/util-std-option/jest.config.js",
+        "jestConfig": "libs/shared/util-std-option/jest.config.ts",
         "passWithNoTests": true
       }
     },

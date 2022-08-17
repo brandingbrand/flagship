@@ -1,5 +1,5 @@
 {
-  "root": "libs/flagship-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/flagship-nx/src",
   "projectType": "library",
   "targets": {
@@ -43,7 +43,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/flagship-nx"],
       "options": {
-        "jestConfig": "libs/flagship-nx/jest.config.js",
+        "jestConfig": "libs/flagship-nx/jest.config.ts",
         "passWithNoTests": true
       }
     },

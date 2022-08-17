@@ -1,5 +1,5 @@
 {
-  "root": "libs/polyfills",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/polyfills/src",
   "projectType": "library",
   "targets": {
@@ -30,7 +30,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/polyfills"],
       "options": {
-        "jestConfig": "libs/polyfills/jest.config.js",
+        "jestConfig": "libs/polyfills/jest.config.ts",
         "passWithNoTests": true
       }
     },

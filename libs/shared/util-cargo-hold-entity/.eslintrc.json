@@ -6,10 +6,7 @@
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "libs/shared/util-cargo-hold-entity/tsconfig.json",
-          "libs/shared/util-cargo-hold-entity/tsconfig.*?.json"
-        ]
+        "project": ["libs/shared/util-cargo-hold-entity/tsconfig.*?.json"]
       },
       "rules": {}
     },

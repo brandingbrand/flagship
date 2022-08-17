@@ -1,5 +1,5 @@
 {
-  "root": "libs/orchestrate-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/orchestrate-nx/src",
   "projectType": "library",
   "targets": {
@@ -19,7 +19,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/orchestrate-nx"],
       "options": {
-        "jestConfig": "libs/orchestrate-nx/jest.config.js",
+        "jestConfig": "libs/orchestrate-nx/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -53,7 +53,7 @@
       }
     },
     "install": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["npm install ./dist/libs/orchestrate-nx --ignore-scripts --no-audit --no-fund"]
       }

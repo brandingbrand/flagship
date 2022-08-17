@@ -1,5 +1,5 @@
 {
-  "root": "libs/fscommerce",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fscommerce/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fscommerce/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 175
+        "maxWarnings": 177
       }
     },
     "set-max-warnings": {
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fscommerce"],
       "options": {
-        "jestConfig": "libs/fscommerce/jest.config.js",
+        "jestConfig": "libs/fscommerce/jest.config.ts",
         "passWithNoTests": true
       }
     },

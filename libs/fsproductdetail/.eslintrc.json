@@ -3,10 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/react-native", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/react-native"],
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["libs/fsproductdetail/tsconfig.json", "libs/fsproductdetail/tsconfig.*?.json"]
+        "project": ["libs/fsproductdetail/tsconfig.*?.json"]
       },
       "rules": {}
     },

@@ -3,13 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "libs/shared/util-std-compose/tsconfig.json",
-          "libs/shared/util-std-compose/tsconfig.*?.json"
-        ]
+        "project": ["libs/shared/util-std-compose/tsconfig.*?.json"]
       },
       "rules": {}
     },

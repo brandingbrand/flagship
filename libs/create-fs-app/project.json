@@ -1,5 +1,5 @@
 {
-  "root": "libs/create-fs-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/create-fs-app/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/create-fs-app"],
       "options": {
-        "jestConfig": "libs/create-fs-app/jest.config.js",
+        "jestConfig": "libs/create-fs-app/jest.config.ts",
         "passWithNoTests": true
       }
     },

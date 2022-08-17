@@ -3,10 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/flagship/tsconfig.json", "libs/flagship/tsconfig.*?.json"]
+        "project": ["libs/flagship/tsconfig.*?.json"]
       },
       "rules": {}
     },

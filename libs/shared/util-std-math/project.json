@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/util-std-math",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-math/src",
   "projectType": "library",
   "targets": {
@@ -30,7 +30,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-math"],
       "options": {
-        "jestConfig": "libs/shared/util-std-math/jest.config.js",
+        "jestConfig": "libs/shared/util-std-math/jest.config.ts",
         "passWithNoTests": true
       }
     },

@@ -1,19 +1,16 @@
 {
-  "root": "libs/shell",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shell/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shell",
+        "main": "libs/shell/src/index.ts",
         "tsConfig": "libs/shell/tsconfig.lib.json",
-        "project": "libs/shell/package.json",
-        "entryFile": "libs/shell/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -39,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shell"],
       "options": {
-        "jestConfig": "libs/shell/jest.config.js",
+        "jestConfig": "libs/shell/jest.config.ts",
         "passWithNoTests": true
       }
     },

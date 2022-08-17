@@ -1,5 +1,5 @@
 {
-  "root": "libs/fscart",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fscart/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fscart"],
       "options": {
-        "jestConfig": "libs/fscart/jest.config.js",
+        "jestConfig": "libs/fscart/jest.config.ts",
         "passWithNoTests": true
       }
     },

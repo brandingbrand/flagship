@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/util-std-array",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-array/src",
   "projectType": "library",
   "targets": {
@@ -30,7 +30,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-array"],
       "options": {
-        "jestConfig": "libs/shared/util-std-array/jest.config.js",
+        "jestConfig": "libs/shared/util-std-array/jest.config.ts",
         "passWithNoTests": true
       }
     },

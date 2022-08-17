@@ -1,5 +1,5 @@
 {
-  "root": "libs/flagship",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/flagship/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -45,7 +45,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/flagship"],
       "options": {
-        "jestConfig": "libs/flagship/jest.config.js",
+        "jestConfig": "libs/flagship/jest.config.ts",
         "passWithNoTests": true
       }
     },

@@ -6,7 +6,7 @@
       "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/eslint-config/tsconfig.json", "libs/eslint-config/tsconfig.*?.json"]
+        "project": ["libs/eslint-config/tsconfig.*?.json"]
       },
       "rules": {
         "@typescript-eslint/naming-convention": "off"

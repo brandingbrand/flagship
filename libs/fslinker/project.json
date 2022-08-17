@@ -1,19 +1,17 @@
 {
-  "root": "libs/fslinker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fslinker/src",
   "projectType": "library",
   "tags": ["open-source"],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fslinker",
+        "main": "libs/fslinker/src/index.ts",
         "tsConfig": "libs/fslinker/tsconfig.lib.json",
-        "project": "libs/fslinker/package.json",
-        "entryFile": "libs/fslinker/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -39,7 +37,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fslinker"],
       "options": {
-        "jestConfig": "libs/fslinker/jest.config.js",
+        "jestConfig": "libs/fslinker/jest.config.ts",
         "passWithNoTests": true
       }
     },

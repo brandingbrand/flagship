@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsproductindex",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsproductindex/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -38,7 +38,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsproductindex"],
       "options": {
-        "jestConfig": "libs/fsproductindex/jest.config.js",
+        "jestConfig": "libs/fsproductindex/jest.config.ts",
         "passWithNoTests": true
       }
     },

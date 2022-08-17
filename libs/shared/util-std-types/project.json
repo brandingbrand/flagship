@@ -1,19 +1,17 @@
 {
-  "root": "libs/shared/util-std-types",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-types/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-types",
-        "entryFile": "libs/shared/util-std-types/src/index.ts",
+        "main": "libs/shared/util-std-types/src/index.ts",
         "project": "libs/shared/util-std-types/package.json",
         "tsConfig": "libs/shared/util-std-types/tsconfig.lib.json",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -29,7 +27,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-types/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 30
+        "maxWarnings": 0
       }
     },
     "set-max-warnings": {
@@ -39,7 +37,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-types"],
       "options": {
-        "jestConfig": "libs/shared/util-std-types/jest.config.js",
+        "jestConfig": "libs/shared/util-std-types/jest.config.ts",
         "passWithNoTests": true
       }
     },

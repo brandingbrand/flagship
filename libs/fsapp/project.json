@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsapp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsapp/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsapp/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 1660
+        "maxWarnings": 1663
       }
     },
     "set-max-warnings": {
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsapp"],
       "options": {
-        "jestConfig": "libs/fsapp/jest.config.js",
+        "jestConfig": "libs/fsapp/jest.config.ts",
         "passWithNoTests": true
       }
     },

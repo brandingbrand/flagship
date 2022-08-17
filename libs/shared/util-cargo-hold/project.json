@@ -1,19 +1,16 @@
 {
-  "root": "libs/shared/util-cargo-hold",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-cargo-hold/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-cargo-hold",
+        "main": "libs/shared/util-cargo-hold/src/index.ts",
         "tsConfig": "libs/shared/util-cargo-hold/tsconfig.lib.json",
-        "project": "libs/shared/util-cargo-hold/package.json",
-        "entryFile": "libs/shared/util-cargo-hold/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -39,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-cargo-hold"],
       "options": {
-        "jestConfig": "libs/shared/util-cargo-hold/jest.config.js",
+        "jestConfig": "libs/shared/util-cargo-hold/jest.config.ts",
         "passWithNoTests": true
       }
     },

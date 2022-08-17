@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsweb",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsweb/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -44,7 +44,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsweb/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 273
+        "maxWarnings": 272
       }
     },
     "set-max-warnings": {
@@ -54,7 +54,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsweb"],
       "options": {
-        "jestConfig": "libs/fsweb/jest.config.js",
+        "jestConfig": "libs/fsweb/jest.config.ts",
         "passWithNoTests": true
       }
     },

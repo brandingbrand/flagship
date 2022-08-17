@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsengage",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsengage/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsengage/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 1286
+        "maxWarnings": 1280
       }
     },
     "set-max-warnings": {
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsengage"],
       "options": {
-        "jestConfig": "libs/fsengage/jest.config.js",
+        "jestConfig": "libs/fsengage/jest.config.ts",
         "passWithNoTests": true
       }
     },

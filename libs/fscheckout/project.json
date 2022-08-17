@@ -1,5 +1,5 @@
 {
-  "root": "libs/fscheckout",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fscheckout/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fscheckout"],
       "options": {
-        "jestConfig": "libs/fscheckout/jest.config.js",
+        "jestConfig": "libs/fscheckout/jest.config.ts",
         "passWithNoTests": true
       }
     },

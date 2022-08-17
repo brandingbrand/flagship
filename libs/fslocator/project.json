@@ -1,5 +1,5 @@
 {
-  "root": "libs/fslocator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fslocator/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fslocator/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 382
+        "maxWarnings": 379
       }
     },
     "set-max-warnings": {
@@ -38,7 +38,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fslocator"],
       "options": {
-        "jestConfig": "libs/fslocator/jest.config.js",
+        "jestConfig": "libs/fslocator/jest.config.ts",
         "passWithNoTests": true
       }
     },

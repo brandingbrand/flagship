@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/util-cargo-hold-devtools",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-cargo-hold-devtools/src",
   "targets": {
     "build": {
@@ -28,7 +28,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-cargo-hold-devtools"],
       "options": {
-        "jestConfig": "libs/shared/util-cargo-hold-devtools/jest.config.js",
+        "jestConfig": "libs/shared/util-cargo-hold-devtools/jest.config.ts",
         "passWithNoTests": true
       }
     },

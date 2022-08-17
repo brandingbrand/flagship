@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/util-cargo-hold-async",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-cargo-hold-async/src",
   "targets": {
     "build": {
@@ -18,7 +18,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-cargo-hold-async/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 230
+        "maxWarnings": 179
       }
     },
     "set-max-warnings": {
@@ -28,7 +28,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-cargo-hold-async"],
       "options": {
-        "jestConfig": "libs/shared/util-cargo-hold-async/jest.config.js",
+        "jestConfig": "libs/shared/util-cargo-hold-async/jest.config.ts",
         "passWithNoTests": true
       }
     },

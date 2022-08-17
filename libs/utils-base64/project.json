@@ -1,20 +1,16 @@
 {
-  "root": "libs/utils-base64",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/utils-base64/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/utils-base64",
+        "main": "libs/utils-base64/src/index.ts",
         "tsConfig": "libs/utils-base64/tsconfig.lib.json",
-        "project": "libs/utils-base64/package.json",
-        "entryFile": "libs/utils-base64/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
-        "rollupConfig": "libs/utils-base64/rollup.config.js",
         "assets": [
           {
             "glob": "*.md",
@@ -40,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/utils-base64"],
       "options": {
-        "jestConfig": "libs/utils-base64/jest.config.js",
+        "jestConfig": "libs/utils-base64/jest.config.ts",
         "passWithNoTests": true
       }
     },

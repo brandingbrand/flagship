@@ -1,20 +1,16 @@
 {
-  "root": "libs/webpack-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/webpack-nx/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/webpack-nx",
+        "main": "libs/webpack-nx/src/index.ts",
         "tsConfig": "libs/webpack-nx/tsconfig.lib.json",
-        "project": "libs/webpack-nx/package.json",
-        "entryFile": "libs/webpack-nx/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
-        "rollupConfig": "libs/webpack-nx/rollup.config.js",
         "assets": [
           {
             "glob": "*.md",
@@ -40,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/webpack-nx"],
       "options": {
-        "jestConfig": "libs/webpack-nx/jest.config.js",
+        "jestConfig": "libs/webpack-nx/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -51,7 +47,7 @@
       }
     },
     "install": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["npm install ./dist/libs/webpack-nx --ignore-scripts --no-audit --no-fund"]
       }

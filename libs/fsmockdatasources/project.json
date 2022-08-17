@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsmockdatasources",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsmockdatasources/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsmockdatasources"],
       "options": {
-        "jestConfig": "libs/fsmockdatasources/jest.config.js",
+        "jestConfig": "libs/fsmockdatasources/jest.config.ts",
         "passWithNoTests": true
       }
     },

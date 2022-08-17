@@ -1,19 +1,16 @@
 {
-  "root": "libs/shared/util-std-async",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-std-async/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/util-std-async",
+        "main": "libs/shared/util-std-async/src/index.ts",
         "tsConfig": "libs/shared/util-std-async/tsconfig.lib.json",
-        "project": "libs/shared/util-std-async/package.json",
-        "entryFile": "libs/shared/util-std-async/src/index.ts",
         "buildableProjectDepsInPackageJsonType": "dependencies",
-        "compiler": "swc",
-        "format": ["esm", "cjs"],
         "assets": [
           {
             "glob": "*.md",
@@ -39,7 +36,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shared/util-std-async"],
       "options": {
-        "jestConfig": "libs/shared/util-std-async/jest.config.js",
+        "jestConfig": "libs/shared/util-std-async/jest.config.ts",
         "passWithNoTests": true
       }
     },

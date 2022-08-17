@@ -11,7 +11,8 @@
     "**/*.story.ts",
     "**/*.story.tsx",
     "__stories__/**/*",
-    "test-setup.ts"
+    "test-setup.ts",
+    "jest.config.ts"
   ],
   "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }

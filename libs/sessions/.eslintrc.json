@@ -3,10 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/sessions/tsconfig.json", "libs/sessions/tsconfig.*?.json"]
+        "project": ["libs/sessions/tsconfig.*?.json"]
       },
       "rules": {}
     },

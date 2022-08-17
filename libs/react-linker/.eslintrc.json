@@ -3,10 +3,10 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["libs/react-linker/tsconfig.json", "libs/react-linker/tsconfig.*?.json"]
+        "project": ["libs/react-linker/tsconfig.*?.json"]
       },
       "rules": {}
     },

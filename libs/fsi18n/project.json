@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsi18n",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsi18n/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsi18n"],
       "options": {
-        "jestConfig": "libs/fsi18n/jest.config.js",
+        "jestConfig": "libs/fsi18n/jest.config.ts",
         "passWithNoTests": true
       }
     },

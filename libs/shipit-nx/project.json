@@ -1,5 +1,5 @@
 {
-  "root": "libs/shipit-nx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shipit-nx/src",
   "projectType": "library",
   "targets": {
@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/shipit-nx/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 105
+        "maxWarnings": 103
       }
     },
     "set-max-warnings": {
@@ -38,7 +38,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/shipit-nx"],
       "options": {
-        "jestConfig": "libs/shipit-nx/jest.config.js",
+        "jestConfig": "libs/shipit-nx/jest.config.ts",
         "passWithNoTests": true
       }
     },

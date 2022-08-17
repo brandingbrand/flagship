@@ -1,5 +1,5 @@
 {
-  "root": "libs/fsproductdetail",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fsproductdetail/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsproductdetail/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 37
+        "maxWarnings": 39
       }
     },
     "set-max-warnings": {
@@ -38,7 +38,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fsproductdetail"],
       "options": {
-        "jestConfig": "libs/fsproductdetail/jest.config.js",
+        "jestConfig": "libs/fsproductdetail/jest.config.ts",
         "passWithNoTests": true
       }
     },

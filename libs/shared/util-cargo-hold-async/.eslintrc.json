@@ -6,10 +6,7 @@
       "extends": ["brandingbrand/typescript", "brandingbrand/rxjs"],
       "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "libs/shared/util-cargo-hold-async/tsconfig.json",
-          "libs/shared/util-cargo-hold-async/tsconfig.*?.json"
-        ]
+        "project": ["libs/shared/util-cargo-hold-async/tsconfig.*?.json"]
       },
       "rules": {}
     },

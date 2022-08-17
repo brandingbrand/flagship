@@ -112,7 +112,7 @@ If removing a project, make sure that all references to the project have been
 removed in all other projects first and that those changes are committed with
 proper scopes for each project they affect. Then remove the project and the
 references in `workspace.json` and `tsconfig.base.json` in the same commit. You
-can use the `@nrwl/workspace:remove` generator for this.
+can use the `nx:remove` generator for this.
 
 If renaming a project, treat it as if you were adding a new project, changing
 references in other projects then removing the old project. A renaming should

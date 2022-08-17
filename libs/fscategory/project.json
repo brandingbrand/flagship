@@ -1,5 +1,5 @@
 {
-  "root": "libs/fscategory",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/fscategory/src",
   "projectType": "library",
   "tags": ["open-source"],
@@ -31,7 +31,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/fscategory"],
       "options": {
-        "jestConfig": "libs/fscategory/jest.config.js",
+        "jestConfig": "libs/fscategory/jest.config.ts",
         "passWithNoTests": true
       }
     },

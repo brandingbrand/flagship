@@ -3,9 +3,9 @@
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "extends": ["brandingbrand/typescript", "brandingbrand/node", "brandingbrand/rxjs"],
+      "extends": ["brandingbrand/typescript", "brandingbrand/node"],
       "files": ["*.ts"],
-      "parserOptions": { "project": ["libs/git/tsconfig.json", "libs/git/tsconfig.*?.json"] },
+      "parserOptions": { "project": ["libs/git/tsconfig.*?.json"] },
       "rules": {}
     },
     { "extends": "brandingbrand/jest", "files": ["*.spec.ts"], "rules": {} }
