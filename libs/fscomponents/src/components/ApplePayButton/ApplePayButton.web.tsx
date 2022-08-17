@@ -109,8 +109,8 @@ export class ApplePayButton extends ApplePayButtonBase {
     return (
       <View style={this.props.style}>
         <style>{css}</style>
-        {this.props.showApplePaySetupButton && this.renderSetupButton()}
-        {this.props.showApplePayButton && this.renderPayButton()}
+        {this.props.showApplePaySetupButton === true ? this.renderSetupButton() : null}
+        {this.props.showApplePayButton === true ? this.renderPayButton() : null}
       </View>
     );
   }

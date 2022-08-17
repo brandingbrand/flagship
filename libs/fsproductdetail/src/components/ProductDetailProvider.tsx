@@ -122,7 +122,7 @@ const withProductDetailData = <P, T extends CommerceTypes.Product = CommerceType
           <WrappedComponent
             {...props}
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
-            reviewsData={this.state && this.state.reviewsData}
+            reviewsData={this.state ? this.state.reviewsData : null}
           />
         );
       }

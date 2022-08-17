@@ -167,11 +167,11 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
       <View accessible style={S.storeDetailContainer}>
         <Text style={[S.locationName, titleStyle]}>{locationName}</Text>
         <Text style={textStyle}>{formatAddress(address)}</Text>
-        {options.showDistance && distance && (
+        {options.showDistance && distance ? (
           <Text style={textStyle}>
             {formatDistance(distance, distanceFormat)} | {address.city}
           </Text>
-        )}
+        ) : null}
         <Text style={textStyle}>{formatHours(hours, new Date(), hourFormat)}</Text>
       </View>
     );
@@ -194,9 +194,9 @@ export const LocationItem: React.FunctionComponent<LocationItemProps> = (props) 
       >
         <View>
           <Image resizeMode="contain" source={navIcon} style={S.icon} />
-          {distance && shouldShowDistance && (
+          {distance && shouldShowDistance ? (
             <Text style={S.distance}>{formatDistance(distance, distanceFormat)}</Text>
-          )}
+          ) : null}
         </View>
       </TouchableOpacity>
     );

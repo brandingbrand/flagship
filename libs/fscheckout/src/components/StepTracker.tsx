@@ -137,7 +137,7 @@ export default class StepTracker extends Component<StepTrackerProps, StepTracker
               onPress={onPress}
               style={[styles.item, itemStyle, isActive && itemActiveStyle, isDone && itemDoneStyle]}
             >
-              {isDone && <Text style={[styles.check, checkStyle]}>&#10004;</Text>}
+              {isDone ? <Text style={[styles.check, checkStyle]}>&#10004;</Text> : null}
               <Text
                 style={[
                   styles.title,

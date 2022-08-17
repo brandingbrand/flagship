@@ -295,7 +295,7 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
 
     return (
       <View style={[defaultStyle.container, style]}>
-        {this.state.image && <View style={leftColumnStyle}>{this.renderImage()}</View>}
+        {this.state.image ? <View style={leftColumnStyle}>{this.renderImage()}</View> : null}
         <View style={[defaultStyle.rightColumn, rightColumnStyle]}>
           {(renderDetails && renderDetails(this.props, updateQty, removeItem)) || (
             <CartItemDetails
@@ -318,7 +318,7 @@ export class CartItem extends PureComponent<CartItemProps, CartItemState> {
             )}
             {this.renderRemoveButton()}
           </View>
-          {renderPromo && renderPromo(this.props, updateQty, removeItem)}
+          {renderPromo ? renderPromo(this.props, updateQty, removeItem) : null}
         </View>
       </View>
     );

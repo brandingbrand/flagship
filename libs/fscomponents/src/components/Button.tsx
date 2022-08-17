@@ -83,7 +83,7 @@ export class Button extends PureComponent<ButtonProps, ButtonState> {
     }
     return (
       <View style={[S.buttonView, viewStyle]}>
-        {icon && <Image source={icon} style={[S.icon, iconStyle]} />}
+        {icon ? <Image source={icon} style={[S.icon, iconStyle]} /> : null}
         <Text
           style={[
             S.text,

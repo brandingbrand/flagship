@@ -183,7 +183,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
 
     return (
       <View style={style}>
-        {product.options && (
+        {product.options ? (
           <View style={swatchesStyle}>
             {product.options.map((option, index) => {
               const defaultOption = optionValues.find((value) => option.name === option.id);
@@ -199,7 +199,7 @@ export class AddToCart extends PureComponent<AddToCartProps, AddToCartState> {
               );
             })}
           </View>
-        )}
+        ) : null}
         <View style={[{ flexDirection: 'row' }, actionBarStyle]}>
           <View style={[{ flex: 1 }, stepperStyle]}>{this.renderStepper()}</View>
           <View style={[{ flex: 1 }, buttonStyle]}>{this.renderButton()}</View>

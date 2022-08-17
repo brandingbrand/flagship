@@ -99,7 +99,7 @@ const RadioButtonLineInner: React.FunctionComponent<RadioButtonLineProps> = ({
     <Text style={[styles.text, styleText, active ? styleTextActive : undefined]}>{text}</Text>
     <View style={styles.imageWrap}>
       {label}
-      <View style={styles.radioContainer}>{active && <View style={styles.circle} />}</View>
+      <View style={styles.radioContainer}>{active ? <View style={styles.circle} /> : null}</View>
     </View>
   </TouchableOpacity>
 );

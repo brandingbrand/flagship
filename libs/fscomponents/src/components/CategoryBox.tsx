@@ -42,7 +42,7 @@ const CategoryBoxInner = (props: CategoryBoxProps): JSX.Element => {
       underlayColor={underlayColor || '#eee'}
     >
       <View style={S.boxInner}>
-        {showImage !== false && image && <Image source={image} style={imageStyle} />}
+        {showImage !== false && image ? <Image source={image} style={imageStyle} /> : null}
         <Text style={[S.boxText, titleStyle]}>{title}</Text>
       </View>
     </TouchableHighlight>

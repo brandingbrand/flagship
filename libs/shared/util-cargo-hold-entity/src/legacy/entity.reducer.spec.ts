@@ -190,7 +190,7 @@ describe('makeReducers', () => {
               expect(Object.values(result.entities)).not.toContain(item);
             }
 
-            expect(result).toEqual({
+            expect(result).toStrictEqual({
               ids: newItems.map(defaultIdSelector),
               entities: Object.fromEntries(newItems.map((item) => [defaultIdSelector(item), item])),
             });

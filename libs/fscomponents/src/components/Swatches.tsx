@@ -302,7 +302,7 @@ export class Swatches extends Component<SwatchesProps, SwatchesState> {
 
     return (
       <View>
-        {label && this.renderLabel(swatch)}
+        {label ? this.renderLabel(swatch) : null}
         <View>
           <View
             // @ts-expect-error className is web-only

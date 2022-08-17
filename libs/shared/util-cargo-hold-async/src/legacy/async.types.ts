@@ -16,105 +16,123 @@ import type { AsyncActionCreators } from './async.actions';
 
 export type AsyncStateReducer<T, FailureType> = StateReducer<AsyncState<T, FailureType>>;
 
-export interface AsyncReducers<Payload, FailPayload, Structure, EmptyPayload = Payload> {
-  init: (payload: EmptyPayload | Payload) => StateReducer<Structure>;
-  load: (payload: EmptyPayload | Payload) => StateReducer<Structure>;
-  loadMore: (payload: Payload) => StateReducer<Structure>;
-  succeed: (payload: Payload) => StateReducer<Structure>;
-  fail: (failure: FailPayload) => StateReducer<Structure>;
-  revert: (payload: EmptyPayload | Payload) => StateReducer<Structure>;
+export interface AsyncReducers<
+  PayloadType,
+  FailPayloadType,
+  StructureType,
+  EmptyPayloadType = PayloadType
+> {
+  init: (payload: EmptyPayloadType | PayloadType) => StateReducer<StructureType>;
+  load: (payload: EmptyPayloadType | PayloadType) => StateReducer<StructureType>;
+  loadMore: (payload: PayloadType) => StateReducer<StructureType>;
+  succeed: (payload: PayloadType) => StateReducer<StructureType>;
+  fail: (failure: FailPayloadType) => StateReducer<StructureType>;
+  revert: (payload: EmptyPayloadType | PayloadType) => StateReducer<StructureType>;
 }
 
-export interface AsyncSelectors<Payload, FailPayload, Structure, EmptyPayload> {
-  selectPayload: (structure: Structure) => EmptyPayload | Payload;
-  selectStatus: (structure: Structure) => AsyncStatus;
-  selectFailure: (structure: Structure) => FailPayload | undefined;
+export interface AsyncSelectors<PayloadType, FailPayloadType, StructureType, EmptyPayloadtype> {
+  selectPayload: (structure: StructureType) => EmptyPayloadtype | PayloadType;
+  selectStatus: (structure: StructureType) => AsyncStatus;
+  selectFailure: (structure: StructureType) => FailPayloadType | undefined;
 }
 
 export interface BaseCreateAsyncEffectOptions<
-  DesiredActionType extends ActionSpecifier<string, string | undefined, Params>,
-  Params extends unknown[],
-  CallbackResult,
-  Payload,
-  FailedCallbackResult,
-  FailPayload,
-  EmptyPayload = Payload
+  DesiredActionType extends ActionSpecifier<string, string | undefined, ParamsType>,
+  ParamsType extends unknown[],
+  CallbackResultType,
+  PayloadType,
+  FailedCallbackResultType,
+  FailPayloadType,
+  EmptyPayloadType = PayloadType
 > {
   loadingMore?: boolean;
   when: TypeGuard<AnyAction, ActionOf<DesiredActionType>>;
-  do: (...params: Params) => Promise<CallbackResult>;
-  mapOnSuccess: (result: CallbackResult) => (currentPayload: EmptyPayload | Payload) => Payload;
+  do: (...params: ParamsType) => Promise<CallbackResultType>;
+  mapOnSuccess: (
+    result: CallbackResultType
+  ) => (currentPayload: EmptyPayloadType | PayloadType) => PayloadType;
   mapOnFail: (
-    result: FailedCallbackResult
-  ) => (currentPayload: EmptyPayload | Payload, currentFailure?: FailPayload) => FailPayload;
-  predict?: (params: Params, state: EmptyPayload | Payload) => typeof state;
+    result: FailedCallbackResultType
+  ) => (
+    currentPayload: EmptyPayloadType | PayloadType,
+    currentFailure?: FailPayloadType
+  ) => FailPayloadType;
+  predict?: (params: ParamsType, state: EmptyPayloadType | PayloadType) => typeof state;
 }
 
 export type CreateAsyncEffectOptions<
-  DesiredActionType extends ActionSpecifier<string, string | undefined, Params>,
-  Params extends unknown[],
-  CallbackResult,
-  Payload,
-  FailedCallbackResult,
-  FailPayload,
-  EmptyPayload = Payload
+  DesiredActionType extends ActionSpecifier<string, string | undefined, ParamsType>,
+  ParamsType extends unknown[],
+  CallbackResultType,
+  PayloadType,
+  FailedCallbackResultType,
+  FailPayloadType,
+  EmptyPayloadType = PayloadType
 > = OptionalIfExtends<
   OptionalIfExtends<
     BaseCreateAsyncEffectOptions<
       DesiredActionType,
-      Params,
-      CallbackResult,
-      Payload,
-      FailedCallbackResult,
-      FailPayload,
-      EmptyPayload
+      ParamsType,
+      CallbackResultType,
+      PayloadType,
+      FailedCallbackResultType,
+      FailPayloadType,
+      EmptyPayloadType
     >,
-    FailPayload,
-    FailedCallbackResult,
+    FailPayloadType,
+    FailedCallbackResultType,
     'mapOnFail'
   >,
-  EmptyPayload | Payload,
-  CallbackResult,
+  EmptyPayloadType | PayloadType,
+  CallbackResultType,
   'mapOnSuccess'
 >;
 export interface AsyncAdaptor<
-  ActionKey extends string,
-  Payload,
-  FailPayload,
-  Structure,
-  EmptyPayload = Payload
+  ActionKeyType extends string,
+  PayloadType,
+  FailPayloadType,
+  StructureType,
+  EmptyPayloadType = PayloadType
 > {
   createState: (
-    initialPayload: EmptyPayload | Payload
-  ) => AsyncState<Payload, FailPayload, EmptyPayload>;
-  actionCreators: AsyncActionCreators<ActionKey, Payload, FailPayload, EmptyPayload>;
-  reducers: AsyncReducers<
-    Payload,
-    FailPayload,
-    AsyncState<Payload, FailPayload, EmptyPayload>,
-    EmptyPayload
+    initialPayload: EmptyPayloadType | PayloadType
+  ) => AsyncState<PayloadType, FailPayloadType, EmptyPayloadType>;
+  actionCreators: AsyncActionCreators<
+    ActionKeyType,
+    PayloadType,
+    FailPayloadType,
+    EmptyPayloadType
   >;
-  lensedReducers: AsyncReducers<Payload, FailPayload, Structure, EmptyPayload>;
-  combinedReducer: AnyActionReducer<Structure>;
-  payloadLens: ILens<AsyncState<Payload, FailPayload, EmptyPayload>, EmptyPayload | Payload>;
-  selectors: AsyncSelectors<Payload, FailPayload, Structure, EmptyPayload>;
+  reducers: AsyncReducers<
+    PayloadType,
+    FailPayloadType,
+    AsyncState<PayloadType, FailPayloadType, EmptyPayloadType>,
+    EmptyPayloadType
+  >;
+  lensedReducers: AsyncReducers<PayloadType, FailPayloadType, StructureType, EmptyPayloadType>;
+  combinedReducer: AnyActionReducer<StructureType>;
+  payloadLens: ILens<
+    AsyncState<PayloadType, FailPayloadType, EmptyPayloadType>,
+    EmptyPayloadType | PayloadType
+  >;
+  selectors: AsyncSelectors<PayloadType, FailPayloadType, StructureType, EmptyPayloadType>;
   withLens: <OuterStructure>(
-    lens: ILens<OuterStructure, Structure>
-  ) => AsyncAdaptor<ActionKey, Payload, FailPayload, OuterStructure, EmptyPayload>;
+    lens: ILens<OuterStructure, StructureType>
+  ) => AsyncAdaptor<ActionKeyType, PayloadType, FailPayloadType, OuterStructure, EmptyPayloadType>;
   createEffect: <
     DesiredActionSpecifier extends AnyAction<Params>,
     Params extends unknown[],
-    CallbackResult = Payload,
-    FailedCallbackResult = FailPayload
+    CallbackResult = PayloadType,
+    FailedCallbackResult = FailPayloadType
   >(
     effectOptions: CreateAsyncEffectOptions<
       DesiredActionSpecifier,
       Params,
       CallbackResult,
-      Payload,
+      PayloadType,
       FailedCallbackResult,
-      FailPayload,
-      EmptyPayload
+      FailPayloadType,
+      EmptyPayloadType
     >
-  ) => Effect<Structure>;
+  ) => Effect<StructureType>;
 }

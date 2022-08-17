@@ -95,9 +95,9 @@ export const CartCount: FC<CartCountProps> = memo((props): JSX.Element => {
         source={props.cartImage || DEFAULT_CART_IMAGE}
         style={[styles.image, props.cartImageStyle]}
       />
-      {props.count && (
+      {props.count ? (
         <Text style={[styles.text, styles[textPosition], props.textStyle]}>{props.count}</Text>
-      )}
+      ) : null}
     </View>
   );
 });

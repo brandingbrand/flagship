@@ -197,7 +197,7 @@ export default class FSCheckout extends Component<FSCheckoutProps, FSCheckoutSta
     const CustomScrollView = this.props.CustomScrollView || ScrollView;
 
     return (
-      <CustomScrollView ref={this.props.scrollViewRef} {...this.props.ScrollViewProps}>
+      <CustomScrollView ref={this.props.scrollViewRef} {...(this.props.ScrollViewProps as object)}>
         <FSCheckoutSteps
           activeStep={activeStep}
           animated={this.props.animated}

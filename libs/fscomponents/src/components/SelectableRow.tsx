@@ -95,7 +95,7 @@ export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props)
   const renderRadioButton = () => (
     <View style={S.marker}>
       <View style={props.selected ? [S.container, S.selectedContainer] : [S.container]}>
-        {props.selected && <View style={S.circle} />}
+        {props.selected ? <View style={S.circle} /> : null}
       </View>
     </View>
   );
@@ -112,7 +112,7 @@ export const SelectableRow: FunctionComponent<SelectableRowProps> = memo((props)
       >
         {props.title}
       </Text>
-      {props.radioButton && renderRadioButton()}
+      {props.radioButton ? renderRadioButton() : null}
       {!props.radioButton && props.selected ? renderCheckMark() : renderUncheckMark()}
     </TouchableOpacity>
   );

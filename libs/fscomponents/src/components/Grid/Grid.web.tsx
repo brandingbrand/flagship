@@ -192,7 +192,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         onScroll={handleScroll}
         refreshControl={scrollRefreshController}
       >
-        {ListHeaderComponent && (
+        {ListHeaderComponent ? (
           <View style={[ListHeaderComponentStyle, gridItemSizeStyles('fill')]}>
             {React.isValidElement(ListHeaderComponent) ? (
               ListHeaderComponent
@@ -200,13 +200,13 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
               <ListHeaderComponent />
             )}
           </View>
-        )}
+        ) : null}
         {/* deprecated */}
-        {renderHeader && (
+        {renderHeader ? (
           <View style={[ListHeaderComponentStyle, gridItemSizeStyles('fill')]}>
             {renderHeader()}
           </View>
-        )}
+        ) : null}
 
         {gridItems.length > 0 ? (
           <React.Fragment>
@@ -237,7 +237,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
           )
         ) : null}
 
-        {ListFooterComponent && (
+        {ListFooterComponent ? (
           <View style={[ListFooterComponentStyle, gridItemSizeStyles('fill')]}>
             {React.isValidElement(ListFooterComponent) ? (
               ListFooterComponent
@@ -245,16 +245,16 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
               <ListFooterComponent />
             )}
           </View>
-        )}
+        ) : null}
         {/* deprecated */}
-        {renderFooter && (
+        {renderFooter ? (
           <View style={[ListFooterComponentStyle, gridItemSizeStyles('fill')]}>
             {renderFooter()}
           </View>
-        )}
+        ) : null}
       </ScrollView>
 
-      {(showBackToTop || BackToTopComponent) && (
+      {showBackToTop || BackToTopComponent ? (
         <Animated.View
           style={[
             styles.scrollTopButtonContainer,
@@ -277,7 +277,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             </TouchableOpacity>
           )}
         </Animated.View>
-      )}
+      ) : null}
     </View>
   );
 };

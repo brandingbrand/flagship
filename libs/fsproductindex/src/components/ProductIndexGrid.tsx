@@ -513,15 +513,15 @@ export default class ProductIndexGrid extends Component<
         visible={visible}
       >
         {content}
-        {this.state.isLoading &&
-          this.props.filterInBackground &&
-          (this.props.renderModalLoading ? (
+        {this.state.isLoading && this.props.filterInBackground ? (
+          this.props.renderModalLoading ? (
             this.props.renderModalLoading()
           ) : (
             <View style={S.modelLoadingContainer}>
               <Loading />
             </View>
-          ))}
+          )
+        ) : null}
       </SelectedModal>
     );
   };
@@ -706,11 +706,11 @@ export default class ProductIndexGrid extends Component<
     return (
       <View style={S.noResultContainer}>
         <Text style={S.noResultText}>{FSI18n.string(componentTranslationKeys.noResults)}</Text>
-        {shouldShowReset && (
+        {shouldShowReset ? (
           <TouchableOpacity onPress={this.handleFilterReset} style={S.resetButton}>
             <Text>{FSI18n.string(componentTranslationKeys.resetFilters)}</Text>
           </TouchableOpacity>
-        )}
+        ) : null}
       </View>
     );
   };
@@ -841,8 +841,8 @@ export default class ProductIndexGrid extends Component<
           renderItem={this.renderItem}
           style={[S.list, listStyle]}
         />
-        {this.state.sortModalVisible && this.renderSortModal()}
-        {this.state.filterModalVisible && this.renderFilterModal()}
+        {this.state.sortModalVisible ? this.renderSortModal() : null}
+        {this.state.filterModalVisible ? this.renderFilterModal() : null}
       </View>
     );
   }

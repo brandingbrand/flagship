@@ -280,10 +280,10 @@ function withCommerceData<P, Data extends {}, Source = CommerceDataSource>(
         return (
           <WrappedComponent
             {...props}
-            commerceData={this.state && this.state.commerceData}
+            commerceData={this.state.commerceData}
             commerceLoadData={this.loadData}
             commerceProviderLoadMore={this.loadMore}
-            isLoading={this.state && this.state.isLoading}
+            isLoading={this.state.isLoading}
           />
         );
       }

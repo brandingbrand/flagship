@@ -249,9 +249,9 @@ export const StepIndicator: FunctionComponent<StepIndicatorProps> = memo((props)
       <React.Fragment>
         <View key={index} style={styles.indicatorWrap}>
           <View style={styles.wrap}>
-            {isComplete && ownRenderComplete(step)}
-            {isActive && ownRenderActive(step)}
-            {isIncomplete && ownRenderIncomplete(step)}
+            {isComplete ? ownRenderComplete(step) : null}
+            {isActive ? ownRenderActive(step) : null}
+            {isIncomplete ? ownRenderIncomplete(step) : null}
           </View>
           <Text
             style={[

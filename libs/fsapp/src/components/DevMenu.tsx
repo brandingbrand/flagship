@@ -114,7 +114,9 @@ export default class DevMenu extends Component<DevMenuProp, DevMenuState> {
         />
         <TouchableRow onPress={this.showDevView('envSwitcher')} text="Env Switcher" />
         <TouchableRow onPress={this.handleHideDevMenu} text="Hide Dev Menu" />
-        {codePushVisible && <TouchableRow onPress={this.showDevView('codepush')} text="Codepush" />}
+        {codePushVisible ? (
+          <TouchableRow onPress={this.showDevView('codepush')} text="Codepush" />
+        ) : null}
 
         {devMenuScreens.map(this.renderCustomDevScreen)}
       </View>

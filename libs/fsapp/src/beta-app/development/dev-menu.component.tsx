@@ -168,7 +168,9 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
         </TouchableRow>
         <TouchableRow onPress={showDevView('envSwitcher')}>Env Switcher</TouchableRow>
         <TouchableRow onPress={handleHideDevMenu}>Hide Dev Menu</TouchableRow>
-        {codePushVisible && <TouchableRow onPress={showDevView('codepush')}>Codepush</TouchableRow>}
+        {codePushVisible ? (
+          <TouchableRow onPress={showDevView('codepush')}>Codepush</TouchableRow>
+        ) : null}
 
         {devMenuScreens.map(renderCustomDevScreen)}
       </View>

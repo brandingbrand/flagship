@@ -198,22 +198,22 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             return (
               <View key={index} style={[gridStyle.item, { width: `${widthPercent}%` }]}>
                 <View style={gridStyle.itemRow}>
-                  {item.value &&
-                    renderItem &&
-                    renderItem({
-                      item: item.value,
-                      index,
-                      totalColumns,
-                      columns,
-                      separators,
-                    })}
-                  {(showRowSeparators || rowSeparatorStyle) && showRowSeparator && (
+                  {item.value && renderItem
+                    ? renderItem({
+                        item: item.value,
+                        index,
+                        totalColumns,
+                        columns,
+                        separators,
+                      })
+                    : null}
+                  {(showRowSeparators || rowSeparatorStyle) && showRowSeparator ? (
                     <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
-                  )}
+                  ) : null}
                 </View>
-                {(showColumnSeparators || columnSeparatorStyle) && showColumnSeparator && (
+                {(showColumnSeparators || columnSeparatorStyle) && showColumnSeparator ? (
                   <View style={[gridStyle.columnSeparator, columnSeparatorStyle]} />
-                )}
+                ) : null}
               </View>
             );
           })}
@@ -265,7 +265,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         {...listViewProps}
         {...{ dataSet }}
       />
-      {(showBackToTop || BackToTopComponent) && (
+      {showBackToTop || BackToTopComponent ? (
         <Animated.View
           style={[
             gridStyle.scrollTopButtonContainer,
@@ -288,7 +288,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             </TouchableOpacity>
           )}
         </Animated.View>
-      )}
+      ) : null}
     </View>
   );
 };

@@ -169,7 +169,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
           </TouchableWithoutFeedback>
         </View>
 
-        {LeftDrawer && (
+        {LeftDrawer ? (
           <DrawerContainer
             animationDuration={leftDuration}
             onChange={setLeftActive}
@@ -180,9 +180,9 @@ export const WebShellProvider: FC<ShellConfig> = ({
           >
             <LeftDrawer close={closeLeftDrawer} />
           </DrawerContainer>
-        )}
+        ) : null}
 
-        {RightDrawer && (
+        {RightDrawer ? (
           <DrawerContainer
             animationDuration={rightDuration}
             onChange={setRightActive}
@@ -193,7 +193,7 @@ export const WebShellProvider: FC<ShellConfig> = ({
           >
             <RightDrawer close={closeRightDrawer} />
           </DrawerContainer>
-        )}
+        ) : null}
       </View>
     </InjectedContextProvider>
   );

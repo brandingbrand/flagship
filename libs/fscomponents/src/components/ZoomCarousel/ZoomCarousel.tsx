@@ -699,8 +699,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           )}
         </View>
 
-        {this.props.showThumbnails &&
-          (this.props.renderThumbnails ? (
+        {this.props.showThumbnails ? (
+          this.props.renderThumbnails ? (
             this.props.renderThumbnails(this.state.currentIndex, this.handleThumbPress)
           ) : (
             <ScrollView
@@ -723,7 +723,8 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          ))}
+          )
+        ) : null}
       </View>
     );
   }

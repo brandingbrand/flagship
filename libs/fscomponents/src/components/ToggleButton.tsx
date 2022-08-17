@@ -199,7 +199,7 @@ export class ToggleButton extends Component<ToggleButtonProps, ToggleButtonState
                   isSelected && this.props.containerPinActiveStyle,
                 ]}
               >
-                {this.props.renderTogglePin && this.props.renderTogglePin()}
+                {this.props.renderTogglePin ? this.props.renderTogglePin() : null}
               </Animated.View>
             </Animated.View>
           </Animated.View>

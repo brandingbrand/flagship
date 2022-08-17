@@ -115,11 +115,11 @@ export default class MapViewNative extends Component<PropType> {
         ref={(map) => (this.map = map)}
         style={style}
       >
-        {currentLocation && (
+        {currentLocation ? (
           <Marker coordinate={currentLocation}>
             <CurrentLocationPin />
           </Marker>
-        )}
+        ) : null}
 
         {locations
           .filter((location) => Boolean(location.address.latlng.lat))

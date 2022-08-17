@@ -13,14 +13,14 @@ import { withDigitalWallet } from '../src/components/DigitalWalletProvider';
 
 const ApplePayButtonWrapper = (props: any) => (
   <View>
-    {(props.showApplePayButton || props.showApplePaySetupButton) && (
+    {props.showApplePayButton || props.showApplePaySetupButton ? (
       <ApplePayButton
         applePayOnPress={props.applePayOnPress}
         applePaySetupPress={props.applePaySetupPress}
         showApplePayButton={props.showApplePayButton}
         showApplePaySetupButton={props.showApplePaySetupButton}
       />
-    )}
+    ) : null}
     {!props.showApplePayButton && !props.showApplePaySetupButton && (
       <Text>Apple Pay is not supported on this device or browser</Text>
     )}

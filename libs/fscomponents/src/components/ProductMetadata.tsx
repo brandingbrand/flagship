@@ -101,9 +101,9 @@ export const ProductMetadata: FunctionComponent<ProductMetadataProps> = memo(
     };
     return (
       <View style={props.style}>
-        {props.brand && renderBrand()}
-        {props.title && renderTitle()}
-        {(props.originalPrice || props.price) && renderPrice()}
+        {props.brand ? renderBrand() : null}
+        {props.title ? renderTitle() : null}
+        {props.originalPrice || props.price ? renderPrice() : null}
         {typeof props.review !== 'undefined' && renderReviews()}
       </View>
     );

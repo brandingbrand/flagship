@@ -105,6 +105,7 @@ export class ShipConfig {
     }
 
     return {
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- File Name
       'PUBLIC_README.md': 'README.md',
     };
   }

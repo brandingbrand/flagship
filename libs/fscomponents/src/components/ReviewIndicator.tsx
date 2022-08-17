@@ -201,7 +201,7 @@ export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
       {fullStars.map((v) => (
         <Star key={v} renderStar={renderFullStar} style={customStarStyle} text="★" />
       ))}
-      {itemData.hasHalf && (
+      {itemData.hasHalf ? (
         <HalfStar
           emptyColor={emptyColor}
           emptyStar={emptyStar}
@@ -209,7 +209,7 @@ export const ReviewIndicator: FC<ReviewIndicatorProps> = ({
           itemSize={itemSize}
           renderHalfStar={renderHalfStar}
         />
-      )}
+      ) : null}
       {emptyStars.map((v) => (
         <Star
           key={v}

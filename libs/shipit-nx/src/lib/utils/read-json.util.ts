@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises';
 
-export const readJson = async <T>(file: string) => {
+export const readJson = async <T>(file: string): Promise<T> => {
   const buffer = await readFile(file);
-  const contents = buffer.toString('utf-8');
+  const contents = buffer.toString('utf8');
   return JSON.parse(contents) as T;
 };

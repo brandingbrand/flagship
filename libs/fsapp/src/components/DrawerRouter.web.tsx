@@ -318,7 +318,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
           appStyle.appDrawerDefault,
         ]}
       >
-        {this.leftDrawerComponent && (
+        {this.leftDrawerComponent ? (
           <Drawer
             backgroundColor={drawerLeftBackgroundColor}
             component={this.leftDrawerComponent}
@@ -328,8 +328,8 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
             width={drawerWidth}
             {...props}
           />
-        )}
-        {this.rightDrawerComponent && (
+        ) : null}
+        {this.rightDrawerComponent ? (
           <Drawer
             backgroundColor={drawerRightBackgroundColor}
             component={this.rightDrawerComponent}
@@ -339,7 +339,7 @@ export default class DrawerRouter extends Component<PropType, AppStateTypes> {
             width={drawerWidth}
             {...props}
           />
-        )}
+        ) : null}
         <View
           style={[
             appStyle.container,

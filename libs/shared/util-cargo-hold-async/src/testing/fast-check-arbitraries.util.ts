@@ -2,10 +2,10 @@ import * as FastCheck from 'fast-check';
 
 import type { AsyncState } from '../async.types';
 
-export const asyncStateArbitrary = <Payload, FailPayload>(
-  payloadArbitrary: FastCheck.Arbitrary<Payload>,
-  failPayloadArbitrary: FastCheck.Arbitrary<FailPayload>
-): FastCheck.Arbitrary<AsyncState<Payload, FailPayload>> =>
+export const asyncStateArbitrary = <PayloadType, FailPayloadType>(
+  payloadArbitrary: FastCheck.Arbitrary<PayloadType>,
+  failPayloadArbitrary: FastCheck.Arbitrary<FailPayloadType>
+): FastCheck.Arbitrary<AsyncState<PayloadType, FailPayloadType>> =>
   FastCheck.frequency(
     {
       arbitrary: FastCheck.record({
@@ -24,7 +24,9 @@ export const asyncStateArbitrary = <Payload, FailPayload>(
     }
   );
 
-export const asyncActionCreatorTypeArbitrary = () =>
+export const asyncActionCreatorTypeArbitrary = (): FastCheck.Arbitrary<
+  'fail' | 'init' | 'load' | 'revert' | 'succeed'
+> =>
   FastCheck.constantFrom(
     'init' as const,
     'load' as const,
@@ -33,7 +35,7 @@ export const asyncActionCreatorTypeArbitrary = () =>
     'revert' as const
   );
 
-export const sourceArbitrary = () =>
+export const sourceArbitrary = (): FastCheck.Arbitrary<string | symbol | undefined> =>
   FastCheck.option(FastCheck.oneof(FastCheck.string().map(Symbol), FastCheck.string()), {
     nil: undefined,
   });

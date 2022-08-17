@@ -49,7 +49,12 @@ export type ToggleActionType = ActionOf<typeof ToggleAction>;
 
 export const SetActionsActive = createActionCreator({
   actionKey: 'SET_ACTIONS_ACTIVE',
-  callback: (start: number, end: number, active = true) => ({ start, end, active }),
+  callback: (
+    start: number,
+    end: number,
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types -- Create Action Creator inference doesn't work well with TypeScript 4.7+
+    active: boolean = true
+  ): { start: number; end: number; active: boolean } => ({ start, end, active }),
 });
 export type SetActionsActiveType = ActionOf<typeof SetActionsActive>;
 

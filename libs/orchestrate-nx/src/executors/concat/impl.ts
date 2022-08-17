@@ -23,7 +23,7 @@ export const concatAll = async (
   try {
     const dependencyList = await calculateDependencies(
       options.targets,
-      context.workspace.targetDependencies
+      context.workspace.targetDefaults
     );
     const completedTask = new Set<string>();
 

@@ -52,7 +52,7 @@ export class Carousel extends Component<CarouselProps> {
                   }
                 : {}
             }
-            {...webOptions}
+            {...(webOptions as object)}
           >
             {React.Children.map(children ?? [], (child, i) => (
               <div key={i} style={{ height }}>
@@ -66,27 +66,27 @@ export class Carousel extends Component<CarouselProps> {
           style inner component like dots and pagination, it's expecting
           to use global css instead... So we came up with the hack that
           creates this style tag that scoped to this component */}
-        {currentPageIndicatorColor && (
+        {currentPageIndicatorColor ? (
           <style>
             {`#web-swiper-${this.id}
              .swiper-pagination-bullet.swiper-pagination-bullet-active {
                 background-color: ${currentPageIndicatorColor} }`}
           </style>
-        )}
-        {pageIndicatorColor && (
+        ) : null}
+        {pageIndicatorColor ? (
           <style>
             {`#web-swiper-${this.id}
             .swiper-pagination-bullet {
               background-color: ${pageIndicatorColor}; opacity: 1 }`}
           </style>
-        )}
-        {webPaddingBottom && (
+        ) : null}
+        {webPaddingBottom ? (
           <style>
             {`#web-swiper-${this.id}
             .swiper-wrapper {
               padding-bottom: ${webPaddingBottom}px }`}
           </style>
-        )}
+        ) : null}
       </View>
     );
   }

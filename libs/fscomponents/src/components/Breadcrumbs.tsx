@@ -87,11 +87,11 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = (props): JSX.Ele
         style={[BreadcrumbsStyles.breadcrumbContainer, props.breadcrumbContainerStyle]}
       >
         {title}
-        {(props.showTrailingSeparator || !isLast) && (
+        {props.showTrailingSeparator || !isLast ? (
           <Text style={[BreadcrumbsStyles.separator, props.separatorStyle]}>
             {props.separator ? props.separator : defaultProps.separator}
           </Text>
-        )}
+        ) : null}
       </View>
     );
   };

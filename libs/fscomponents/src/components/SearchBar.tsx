@@ -147,9 +147,9 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
 
     return (
       <View style={[S.inputContainer, containerStyle]}>
-        {showSearchIcon && searchIcon && (
+        {showSearchIcon && searchIcon ? (
           <Image resizeMode="contain" source={searchIcon} style={imageStyle} />
-        )}
+        ) : null}
         <TextInput
           accessibilityLabel={accessibilityLabel || 'search bar'}
           clearButtonMode={clearButtonMode || 'never'}
@@ -392,7 +392,7 @@ export class SearchBar extends PureComponent<SearchBarProps, SearchBarState> {
       <View ref={this.saveContainerRef} style={[S.container, style]}>
         <View style={S.searchBarContainer}>
           {showCancel === 'left' && this.renderCancelButton()}
-          {showLocator && this.renderLocateButton()}
+          {showLocator ? this.renderLocateButton() : null}
           {this.renderInput()}
           {(showCancel === true || showCancel === 'right') && this.renderCancelButton()}
         </View>

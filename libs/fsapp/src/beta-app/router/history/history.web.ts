@@ -54,9 +54,9 @@ export class History implements FSRouterHistory {
     ...(this.options?.basename ? { basename: this.options.basename } : {}),
   });
 
-  private readonly activationObservers: Map<string, ResolverListener> = new Map();
-  private readonly loadingObservers: Map<string, LoadingListener> = new Map();
-  private readonly locationObservers: Map<string, LocationListener> = new Map();
+  private readonly activationObservers = new Map<string, ResolverListener>();
+  private readonly loadingObservers = new Map<string, LoadingListener>();
+  private readonly locationObservers = new Map<string, LocationListener>();
 
   private _action: Action = this.browserHistory.action;
 

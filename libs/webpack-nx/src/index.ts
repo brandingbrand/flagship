@@ -245,7 +245,9 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             terserOptions: {
               mangle: true,
               compress: true,
+              // eslint-disable-next-line @typescript-eslint/naming-convention -- External API
               keep_fnames: keepClassNames,
+              // eslint-disable-next-line @typescript-eslint/naming-convention  -- External API
               keep_classnames: keepClassNames,
             },
           }),

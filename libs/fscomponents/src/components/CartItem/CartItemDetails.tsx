@@ -45,18 +45,22 @@ export const CartItemDetails: FunctionComponent<CartItemDetailsProps> = memo(
 
     return (
       <View style={style}>
-        {itemText && <Text style={[defaultStyles.detailText, detailTextStyle]}>{itemText}</Text>}
-        {productId && <Text style={[defaultStyles.detailText, detailTextStyle]}>#{productId}</Text>}
-        {convertedPrice && (
+        {itemText ? (
+          <Text style={[defaultStyles.detailText, detailTextStyle]}>{itemText}</Text>
+        ) : null}
+        {productId ? (
+          <Text style={[defaultStyles.detailText, detailTextStyle]}>#{productId}</Text>
+        ) : null}
+        {convertedPrice ? (
           <Text style={[defaultStyles.detailText, detailTextStyle]}>
             {FSI18n.string(componentTranslationKeys.unitPrice)}:{convertedPrice}
           </Text>
-        )}
-        {convertedTotalPrice && (
+        ) : null}
+        {convertedTotalPrice ? (
           <Text style={detailTextStyle}>
             {FSI18n.string(componentTranslationKeys.totalPrice)}:{convertedTotalPrice}
           </Text>
-        )}
+        ) : null}
       </View>
     );
   }

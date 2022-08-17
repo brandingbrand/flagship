@@ -75,9 +75,9 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = (pro
   return (
     <View style={[S.container, style]}>
       <View style={[S.row, rowStyle, reviewIndicatorRowStyle]}>
-        {reviewIndicatorTitleText && (
+        {reviewIndicatorTitleText ? (
           <Text style={reviewIndicatorTitleTextStyle}>{reviewIndicatorTitleText}</Text>
-        )}
+        ) : null}
         <ReviewIndicator value={value} {...reviewIndicatorProps} />
         <Text style={[S.averageStyle, averageStyle]}>
           {FSI18n.number(value, numberFormatting)} / {FSI18n.number(base, numberFormatting)}
@@ -88,7 +88,7 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = (pro
           <Text style={[S.countStyle, countStyle]}>{reviewIndicatorCopy}</Text>
         </View>
       )}
-      {recommend && (
+      {recommend ? (
         <View style={[S.row, rowStyle]}>
           <Text style={[S.recommendStyle, recommendStyle]}>
             {FSI18n.string(translationKeys.flagship.reviews.recommendCount, {
@@ -96,7 +96,7 @@ export const ReviewsSummary: React.FunctionComponent<ReviewsSummaryProps> = (pro
             })}
           </Text>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

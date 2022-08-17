@@ -229,7 +229,7 @@ const getTypeMatchErrors: Validator = (input, target, options, paths) => {
 
 const getRequiredInputErrors: Validator = (input, target, options, paths) => {
   // Verify that the target doesn't require anything missing from the input
-  const inputRequires: Set<string> = new Set(input.required);
+  const inputRequires = new Set<string>(input.required);
   for (const prop of target.required ?? []) {
     if (!inputRequires.has(prop)) {
       const hasDefault = hasOwnProperty.call(target.properties?.[prop], 'default');

@@ -229,14 +229,14 @@ export const VariantCartItem: React.FC<VariantCartItemProps> = React.memo((props
       <Text style={[styles.title, titleStyle]}>{item.title}</Text>
       <View style={styles.itemWrapper}>
         <View style={[styles.itemWrapperLeft, leftColumnStyle]}>
-          {image && (
+          {image ? (
             <TouchableHighlight
               disabled={Boolean(onImagePressHandler)}
               onPress={onImagePressHandler}
             >
               <Image source={image} style={[styles.productImage, productImageStyle]} />
             </TouchableHighlight>
-          )}
+          ) : null}
           {Boolean(onMoveToWishlist) && (
             <Button
               color="accent"

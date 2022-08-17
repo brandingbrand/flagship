@@ -391,14 +391,16 @@ export class ZoomCarousel extends Component<ZoomCarouselProps, ZoomCarouselState
           </div>
         </View>
 
-        {this.props.showThumbnails &&
-          (this.props.renderThumbnails
+        {this.props.showThumbnails
+          ? this.props.renderThumbnails
             ? this.props.renderThumbnails(this.state.currentIndex, this.goTo)
-            : this.renderThumbnails())}
-        {this.props.showImageCounter &&
-          (this.props.renderImageCounter
+            : this.renderThumbnails()
+          : null}
+        {this.props.showImageCounter
+          ? this.props.renderImageCounter
             ? this.props.renderImageCounter(this.state.currentIndex)
-            : this.renderImageCounter())}
+            : this.renderImageCounter()
+          : null}
       </View>
     );
   }

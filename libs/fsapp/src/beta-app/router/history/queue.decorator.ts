@@ -34,7 +34,7 @@ class LazyPromise<T> implements PromiseLike<T> {
 }
 
 class QueueRunner {
-  private readonly promises: Map<string, PromiseLike<void>> = new Map();
+  private readonly promises = new Map<string, PromiseLike<void>>();
 
   public async run<A extends unknown[], T extends QueueableMethod<A>>(
     method: T,

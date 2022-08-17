@@ -16,6 +16,7 @@ declare global {
   }
 
   export interface EnvironmentConfig {
+    [key: string]: unknown;
     default?: boolean;
     /**
      * @deprecated
@@ -26,7 +27,6 @@ declare global {
     associatedDomains?: string[];
     engagement: EngagementConfig;
     caching?: CachingConfig;
-    [key: string]: unknown;
   }
 
   // eslint-disable-next-line no-var

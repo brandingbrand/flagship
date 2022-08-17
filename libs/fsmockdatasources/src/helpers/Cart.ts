@@ -12,7 +12,7 @@ export class Cart {
   public payment?: CommerceTypes.Payment;
   public promos?: CommerceTypes.Promo[];
   public shipment?: CommerceTypes.Shipment;
-  public itemStore: Map<string, number> = new Map();
+  public itemStore = new Map<string, number>();
 
   protected calculateSubtotal(items: CommerceTypes.CartItem[]): CommerceTypes.CurrencyValue {
     const subtotal = {

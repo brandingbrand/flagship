@@ -36,7 +36,7 @@ export class Carousel extends Component<CarouselProps> {
         loop={loop ?? false}
         ref={(swiper) => (this.swiper = swiper)}
         showsPagination={showsPagination}
-        {...nativeOptions}
+        {...(nativeOptions as object)}
         nextButton={nextButton}
         prevButton={prevButton}
         showsButtons={showsButtons}

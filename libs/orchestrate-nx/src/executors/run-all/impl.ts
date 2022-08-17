@@ -33,7 +33,7 @@ export async function* runAll(
   logger.info(`${CONSOLE_PREFIX} Building dependencies...`);
   const dependencyList = await calculateDependencies(
     options.targets,
-    context.workspace.targetDependencies
+    context.workspace.targetDefaults
   );
   const dependencyExecution = await concatAll({ targets: dependencyList }, context);
 

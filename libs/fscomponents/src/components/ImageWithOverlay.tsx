@@ -33,7 +33,7 @@ const ImageWithOverlayInner = (props: ImageWithOverlayProps): JSX.Element => {
   return (
     <View style={style}>
       <FadeInImage {...imageProps} />
-      {overlay && <View style={[S.overlayContainer, overlayStyle]}>{overlay}</View>}
+      {overlay ? <View style={[S.overlayContainer, overlayStyle]}>{overlay}</View> : null}
     </View>
   );
 };

@@ -143,18 +143,18 @@ export default class Locator extends Component<LocatorPropType, LocatorStateType
         />
         <View>
           {this.renderSearchBar()}
-          {shouldShowSearchAreaButton && (
+          {shouldShowSearchAreaButton ? (
             <SeachAreaButton searchArea={searchArea} style={S.seachAreaBtn} />
-          )}
+          ) : null}
         </View>
         <View style={S.resultListAndLocateMe}>
-          {(this.state.orientation === 'vertical' || !shouldShowList) && showLocateMe && (
+          {(this.state.orientation === 'vertical' || !shouldShowList) && showLocateMe ? (
             <TouchableOpacity onPress={useCurrentLocation} style={S.locateMeButton}>
               <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
             </TouchableOpacity>
-          )}
+          ) : null}
 
-          {shouldShowList && this.renderList()}
+          {shouldShowList ? this.renderList() : null}
         </View>
       </View>
     );

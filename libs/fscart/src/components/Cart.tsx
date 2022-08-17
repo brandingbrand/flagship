@@ -157,7 +157,7 @@ class Cart extends Component<UnwrappedCartProps & WithCommerceProps<CommerceType
                 {...cartItemProps}
               />
             ))}
-        {renderPromoForm && renderPromoForm(commerceData)}
+        {renderPromoForm ? renderPromoForm(commerceData) : null}
         {renderSummary ? (
           renderSummary(commerceData)
         ) : (

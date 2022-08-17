@@ -37,7 +37,7 @@ export default class RenderItem extends Component<RenderItemProps> {
         parallaxFactor={0.35}
         showSpinner={true}
         spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
-        {...parallaxProps}
+        {...(parallaxProps as object)}
       />
     ) : (
       <Image source={source} style={styles.image} />

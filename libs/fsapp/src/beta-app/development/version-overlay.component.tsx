@@ -49,7 +49,7 @@ export const VersionOverlay: FC = ({ children }) => {
     <IsDevMenuShown.Provider value={showDevMenu}>
       <ToggleDevMenu.Provider value={toggleDevMenu}>
         {children}
-        {showDevMenu && <Version />}
+        {showDevMenu ? <Version /> : null}
       </ToggleDevMenu.Provider>
     </IsDevMenuShown.Provider>
   );

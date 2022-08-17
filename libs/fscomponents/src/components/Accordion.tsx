@@ -383,12 +383,12 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
               this.props.titleContainerStyle,
             ]}
           >
-            {this.props.titleImage && (
+            {this.props.titleImage ? (
               <Image
                 source={this.props.titleImage}
                 style={[AccordionStyles.titleImage, this.props.titleImageStyle]}
               />
-            )}
+            ) : null}
             <View
               style={[
                 AccordionStyles.title,
@@ -415,7 +415,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
             ]}
           >
             {this.props.content || this.props.children}
-            {this.state.isOpen && this.props.renderContent && this.props.renderContent()}
+            {this.state.isOpen && this.props.renderContent ? this.props.renderContent() : null}
           </View>
         </Animated.View>
       </View>

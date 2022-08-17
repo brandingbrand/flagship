@@ -260,7 +260,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
           {this.state.history.map(this.renderItem)}
         </React.Fragment>
       ) : null}
-      {this.props.renderNoResults && this.props.renderNoResults()}
+      {this.props.renderNoResults ? this.props.renderNoResults() : null}
     </ScrollView>
   );
 
@@ -307,7 +307,7 @@ export class SearchScreen extends PureComponent<SearchScreenProps, SearchScreenS
     return (
       <Text style={[S.suggestionTitle, this.props.itemTextStyle]}>
         {strArr.map((str: HighlightResult, i: number) => (
-          <Text key={i} style={str.isHighlight && S.suggestionHighlight}>
+          <Text key={i} style={str.isHighlight ? S.suggestionHighlight : null}>
             {str.str}
           </Text>
         ))}

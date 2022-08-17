@@ -63,11 +63,11 @@ export const Price: React.FC<PriceProps> = React.memo((props) => {
   if (originalPriceFirst) {
     return (
       <Text>
-        {convertedOriginalPrice && (
+        {convertedOriginalPrice ? (
           <React.Fragment>
             <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>{' '}
           </React.Fragment>
-        )}
+        ) : null}
         <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
       </Text>
     );
@@ -75,12 +75,12 @@ export const Price: React.FC<PriceProps> = React.memo((props) => {
   return (
     <Text>
       <Text style={[priceStyle, salePriceStyle]}>{convertedPrice}</Text>
-      {convertedOriginalPrice && (
+      {convertedOriginalPrice ? (
         <React.Fragment>
           {' '}
           <Text style={[styles.originalPrice, originalPriceStyle]}>{convertedOriginalPrice}</Text>
         </React.Fragment>
-      )}
+      ) : null}
     </Text>
   );
 });

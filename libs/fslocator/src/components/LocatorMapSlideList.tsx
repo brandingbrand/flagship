@@ -317,15 +317,15 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
               ref={this.extractMapRef}
               style={[S.map, mapStyle]}
             />
-            {showLocateMe && (
+            {showLocateMe ? (
               <TouchableOpacity onPress={useCurrentLocation} style={S.locateMeButton}>
                 <Image source={locateMeIcon || defaultLocateMeIcon} style={S.locateMeIcon} />
               </TouchableOpacity>
-            )}
+            ) : null}
             {this.renderSearchBar()}
           </View>
 
-          {shouldShowList && (
+          {shouldShowList ? (
             <Animated.View
               style={[S.slideListContainer, listAniamtedStyle]}
               {...this.panResponder.panHandlers}
@@ -337,9 +337,9 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
                 scrollEnabled={this.state.scrollable}
               />
             </Animated.View>
-          )}
+          ) : null}
 
-          {selectedLocation && (
+          {selectedLocation ? (
             <ResultItemWithBack
               deselectLocation={deselectLocation}
               handleNavPress={handleNavPress}
@@ -350,7 +350,7 @@ export default class LocatorMapSlideList extends Component<LocatorPropType, Stat
               selectLocation={selectLocation}
               selectedLocation={selectedLocation}
             />
-          )}
+          ) : null}
         </View>
 
         <Animated.View

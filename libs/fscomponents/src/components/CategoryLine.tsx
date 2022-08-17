@@ -88,12 +88,12 @@ export const CategoryLine: FunctionComponent<CategoryLineProps> = memo((props): 
       underlayColor={underlayColor || '#eee'}
     >
       <View style={S.rowInner}>
-        {showImageValue && image && <Image source={image} style={imageStyle} />}
+        {showImageValue && image ? <Image source={image} style={imageStyle} /> : null}
         <Text style={[S.buttonText, titleStyle]}>{title}</Text>
-        {showAccessoryValue && accessorySrc && (
+        {showAccessoryValue && accessorySrc ? (
           <Image resizeMode="contain" source={accessorySrc} style={accessoryStyle} />
-        )}
-        {renderAccessory && renderAccessory()}
+        ) : null}
+        {renderAccessory ? renderAccessory() : null}
       </View>
     </TouchableHighlightLink>
   );

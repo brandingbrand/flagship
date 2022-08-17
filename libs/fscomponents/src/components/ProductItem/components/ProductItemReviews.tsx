@@ -58,9 +58,9 @@ export class ProductItemReviews extends Component<ProductItemReviewsProps> {
     return (
       <View style={[style.reviewConatiner, reviewStyle]}>
         <ReviewIndicator value={avgRating} {...reviewIndicatorProps} />
-        {showReviewCount && count && (
+        {showReviewCount && count ? (
           <Text style={[style.reviewCountStyle, reviewCountStyle]}>({count})</Text>
-        )}
+        ) : null}
       </View>
     );
   }

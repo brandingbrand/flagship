@@ -14,21 +14,21 @@ export const getCenter = (locations: Location[]): GeoLocation => {
   const lat =
     (Math.max.apply(
       null,
-      locations.map((s) => s.address.latlng.lat)
+      locations.map((location) => location.address.latlng.lat)
     ) +
       Math.min.apply(
         null,
-        locations.map((s) => s.address.latlng.lat)
+        locations.map((location) => location.address.latlng.lat)
       )) /
     2;
   const lon =
     (Math.max.apply(
       null,
-      locations.map((s) => s.address.latlng.lng)
+      locations.map((location) => location.address.latlng.lng)
     ) +
       Math.min.apply(
         null,
-        locations.map((s) => s.address.latlng.lng)
+        locations.map((location) => location.address.latlng.lng)
       )) /
     2;
   return {

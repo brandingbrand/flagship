@@ -135,11 +135,11 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
     if (shouldDisplay) {
       return (
         <View style={[S.row, rowStyle, recommendedRowStyle]}>
-          {recommendedImage && (
+          {recommendedImage ? (
             <View style={recommendedImageBoxStyle}>
               <Image source={recommendedImage} style={recommendedImageStyle} />
             </View>
-          )}
+          ) : null}
           <Text style={[S.recommended, recommendedStyle]}>
             {isRecommended
               ? FSI18n.string(componentTranslationKeys.recommended)
@@ -184,24 +184,24 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
       <View style={[S.container, style]}>
         <View style={[S.row, rowStyle]}>
           <ReviewIndicator style={S.indicator} value={rating} {...reviewIndicatorProps} />
-          {title && <Text style={[S.title, titleStyle]}>{title}</Text>}
+          {title ? <Text style={[S.title, titleStyle]}>{title}</Text> : null}
         </View>
-        {(user || created) && (
+        {user || created ? (
           <View style={[S.row, rowStyle]}>
             <Text style={[S.user, userStyle]}>
-              {user && user.name && `By ${user.name}`}
+              {user && user.name ? `By ${user.name}` : null}
               {created ? ` on ${new Date(created).toLocaleDateString()}` : ''}
             </Text>
           </View>
-        )}
-        {user && user.isVerifiedBuyer && (
+        ) : null}
+        {user && user.isVerifiedBuyer ? (
           <View style={[S.row, { paddingBottom: 3 }, rowStyle, verifiedRowStyle]}>
-            {verifiedImage && <Image source={verifiedImage} style={verifiedImageStyle} />}
+            {verifiedImage ? <Image source={verifiedImage} style={verifiedImageStyle} /> : null}
             <Text style={[S.verified, verifiedStyle]}>
               {FSI18n.string(componentTranslationKeys.verified)}
             </Text>
           </View>
-        )}
+        ) : null}
         {Boolean(text) && (
           <MoreText
             containerStyle={S.row}
@@ -212,7 +212,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
           />
         )}
         {this.renderRecommendation()}
-        {feedback && feedback.positive && (
+        {feedback && feedback.positive ? (
           <View style={[S.row, rowStyle]}>
             <Text style={[S.helpful, helpfulStyle]}>
               {FSI18n.string(componentTranslationKeys.helpfulCount, {
@@ -220,12 +220,11 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
               })}
             </Text>
           </View>
-        )}
-        {indicateSyndicated &&
-          isSyndicated &&
-          syndicationSource &&
-          this.renderSyndicatedIndicator()}
-        {onHelpful && onNotHelpful && (
+        ) : null}
+        {indicateSyndicated && isSyndicated && syndicationSource
+          ? this.renderSyndicatedIndicator()
+          : null}
+        {onHelpful && onNotHelpful ? (
           <View style={[S.row, { flexDirection: 'row' }, rowStyle]}>
             <Button
               light
@@ -240,7 +239,7 @@ export class ReviewItem extends Component<ReviewItemProps, ReviewItemState> {
               title={FSI18n.string(componentTranslationKeys.notHelpful)}
             />
           </View>
-        )}
+        ) : null}
       </View>
     );
   }

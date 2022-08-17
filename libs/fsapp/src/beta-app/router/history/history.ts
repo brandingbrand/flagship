@@ -169,11 +169,11 @@ export class History implements FSRouterHistory {
   private activeStack = -1;
   private readonly stacks: Array<Readonly<Stack>> = [];
 
-  private readonly blockers: Map<string, Blocker> = new Map();
-  private readonly activationObservers: Map<string, ResolverListener> = new Map();
-  private readonly destroyObservers: Map<string, LocationListener> = new Map();
-  private readonly locationObservers: Map<string, LocationListener> = new Map();
-  private readonly loadingObservers: Map<string, LoadingListener> = new Map();
+  private readonly blockers = new Map<string, Blocker>();
+  private readonly activationObservers = new Map<string, ResolverListener>();
+  private readonly destroyObservers = new Map<string, LocationListener>();
+  private readonly locationObservers = new Map<string, LocationListener>();
+  private readonly loadingObservers = new Map<string, LoadingListener>();
 
   public get stack(): Stack | undefined {
     return this.stacks[this.activeStack];

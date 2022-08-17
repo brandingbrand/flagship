@@ -559,7 +559,7 @@ export class FilterListDrilldown extends PureComponent<
           ) : null}
         </View>
 
-        {this.state.secondLevelItem && this.renderSecondLevel(this.state.secondLevelItem)}
+        {this.state.secondLevelItem ? this.renderSecondLevel(this.state.secondLevelItem) : null}
       </View>
     );
   }

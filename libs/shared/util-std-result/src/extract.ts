@@ -2,11 +2,11 @@ import type { Result } from './result';
 import { isOk } from './result';
 
 export const extract =
-  <OkType, FailureType, Output>(
-    onOk: (input: OkType) => Output,
-    onFail: (input: FailureType) => Output
+  <OkType, FailureType, OutputType>(
+    onOk: (input: OkType) => OutputType,
+    onFail: (input: FailureType) => OutputType
   ) =>
-  (input: Result<OkType, FailureType>): Output => {
+  (input: Result<OkType, FailureType>): OutputType => {
     if (isOk(input)) {
       return onOk(input.ok);
     }

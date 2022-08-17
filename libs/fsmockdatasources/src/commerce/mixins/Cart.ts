@@ -19,7 +19,7 @@ export const CartMixin = <T extends Constructor>(superclass: T) =>
     }
 
     public cart: Cart;
-    public orders: Map<string, CommerceTypes.Order> = new Map();
+    public orders = new Map<string, CommerceTypes.Order>();
 
     public async addToCart(
       productId: string,

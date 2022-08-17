@@ -29,7 +29,7 @@ export const TextField: React.FC<FormFieldProps> = ({
   };
   return (
     <View style={S.inputContainer}>
-      {label && <Text style={[S.label, labelStyle]}>{label}</Text>}
+      {label ? <Text style={[S.label, labelStyle]}>{label}</Text> : null}
       <TextInput {...props} onBlur={setTouched} onChangeText={handleChange(fieldName)} />
       {meta.touched && meta.error ? (
         <Text style={[S.errorMessageText, errStyle]}>{meta.error}</Text>

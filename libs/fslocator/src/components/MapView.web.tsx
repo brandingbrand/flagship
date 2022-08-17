@@ -163,9 +163,9 @@ export default class MapViewWeb extends Component<PropType, StateType> {
           resetBoundsOnResize
           zoom={zoom}
         >
-          {currentLocation && (
+          {currentLocation ? (
             <CurrentLocationPin lat={currentLocation.latitude} lng={currentLocation.longitude} />
-          )}
+          ) : null}
 
           {locations.map((location, i) => (
             <Marker

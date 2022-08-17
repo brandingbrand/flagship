@@ -79,9 +79,9 @@ export interface WithProductIndexState<
  * `Product`
  * @template IdxType The type of product index data that will be provided. Defaults to
  * `ProductIndex`
- * @param {ComponentClass<P & WithProductIndexProps<IdxType, ProductType>>} WrappedComponent A
+ * @param WrappedComponent A
  * component to wrap and provide product index data to as props.
- * @return {ComponentClass<P & WithProductIndexProviderProps<IdxType, ProductType>>} A high order
+ * @return A high order
  * component.
  */
 export type ProductIndexWrapper<
@@ -206,7 +206,7 @@ function withProductIndexData<
           <WrappedComponent
             {...props}
             commerceData={(this.state && this.state.commerceData) || this.props.commerceData}
-            reviewsData={this.state && this.state.reviewsData}
+            reviewsData={this.state ? this.state.reviewsData : null}
           />
         );
       }
