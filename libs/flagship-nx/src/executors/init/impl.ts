@@ -2,7 +2,7 @@ import type { ExecutorContext } from '@nrwl/devkit';
 import { formatFiles, logger, names, offsetFromRoot, readJson } from '@nrwl/devkit';
 import { ensureNodeModulesSymlink } from '@nrwl/react-native/src/utils/ensure-node-modules-symlink';
 import { FsTree, flushChanges } from '@nrwl/tao/src/shared/tree';
-import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
+import { createProjectGraphAsync } from 'nx/src/project-graph/project-graph';
 import { platform } from 'os';
 import { join } from 'path';
 
