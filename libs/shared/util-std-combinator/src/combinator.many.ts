@@ -1,10 +1,16 @@
-import { pipe } from '@brandingbrand/standard-compose';
-import type { Parser, ParserArgs } from '@brandingbrand/standard-parser';
-import { parseFail, parseOk } from '@brandingbrand/standard-parser';
-import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
+import type { ParserOkFields, ParserResult } from '@brandingbrand/standard-parser';
+import type { Ok } from '@brandingbrand/standard-result';
+import { isFailure } from '@brandingbrand/standard-result';
+import { isOk } from '@brandingbrand/standard-result';
 
 import { combinateFail, combinateOk } from './combinator.result';
-import type { CombinatorParserResults, CombinatorResult } from './combinator.types';
+import type {
+  CombinatorParameters,
+  CombinatorParser,
+  CombinatorParserResult,
+  CombinatorParserResults,
+  CombinatorResult,
+} from './combinator.types';
 
 /**
  * Given any number of parsers as params, iterates through them
@@ -16,51 +22,40 @@ import type { CombinatorParserResults, CombinatorResult } from './combinator.typ
  * @return A CombinatorResult
  */
 export const many =
-  <T, ParsersT extends [Parser<T>, ...Array<Parser<T>>] = [Parser<T>, ...Array<Parser<T>>]>(
-    ...parsers: ParsersT
-  ) =>
-  (args: ParserArgs): CombinatorResult<T, T[]> =>
-    pipe(
-      args,
-      parsers[0],
-      flatMapFailure((failure) => combinateFail({ ...args, results: [parseFail(failure)] })),
-      flatMap((success) =>
-        combinateOk<T, T[]>({
-          ...args,
-          cursorEnd: success.cursorEnd,
-          results: [parseOk(success)],
-          value: [success.value] as T[],
-        })
-      ),
-      flatMap((success) => {
-        /** Succeeds by default when we've called all given parsers. */
-        if (parsers.length === 1) {
-          return combinateOk(success);
+  <T = unknown>(...parsers: CombinatorParameters<T>): CombinatorParser<T, T[]> =>
+  (args) =>
+    parsers.reduce(
+      (aggregate, parser) => {
+        if (isFailure(aggregate)) {
+          return aggregate;
         }
 
-        const remainingParsers = parsers.slice(1) as [Parser<T>, ...Array<Parser<T>>];
+        const parserResult: CombinatorParserResult<T> | ParserResult<T> = parser({
+          ...aggregate.ok,
+          cursor: aggregate.ok.cursorEnd,
+        });
 
-        return pipe(
-          { ...args, cursor: success.cursorEnd },
-          /**
-           * Recursively calls itself with the remaining parsers until a parser has failed.
-           * We've checked the length above so there will always be a fn at index 1.
-           */
-          many<T>(...remainingParsers),
-          flatMapFailure(({ results }) =>
-            combinateFail({
-              ...success,
-              results: [...success.results, ...results] as CombinatorParserResults,
-            })
-          ),
-          flatMap(({ cursorEnd, results, value }) =>
-            combinateOk<T, T[]>({
-              ...success,
-              cursorEnd,
-              results: [...success.results, ...results] as CombinatorParserResults,
-              value: [...success.value, ...value] as T[],
-            })
-          )
-        );
-      })
+        if (isOk(parserResult)) {
+          return combinateOk({
+            cursor: args.cursor,
+            cursorEnd: parserResult.ok.cursorEnd,
+            input: aggregate.ok.input,
+            value: [...aggregate.ok.value, parserResult.ok.value],
+            results: [...(aggregate.ok.results as Array<Ok<ParserOkFields<T>>>), parserResult],
+          });
+        }
+
+        return combinateFail({
+          input: args.input,
+          cursor: args.cursor,
+          fatal: parserResult.failure.fatal,
+          results: [...(aggregate.ok.results as Array<Ok<ParserOkFields<T>>>), parserResult],
+        });
+      },
+      combinateOk({
+        results: [] as unknown as CombinatorParserResults<T>,
+        value: [],
+        cursorEnd: args.cursor ?? 0,
+        ...args,
+      }) as CombinatorResult<T, T[]>
     );

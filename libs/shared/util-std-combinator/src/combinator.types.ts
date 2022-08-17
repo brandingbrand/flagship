@@ -2,48 +2,75 @@ import type { Branded } from '@brandingbrand/standard-branded';
 import type {
   Parser,
   ParserArgs,
-  ParserOk,
-  ParserResult,
+  ParserFailureFields,
+  ParserOkFields,
   WithCursorEnd,
-  WithFatalError,
   WithValue,
 } from '@brandingbrand/standard-parser';
 import type { Failure, Ok, Result } from '@brandingbrand/standard-result';
 
 import type { COMBINATOR_BRANDING } from './combinator.constants';
 
-export type CombinatorBase = Branded<Required<ParserArgs>, typeof COMBINATOR_BRANDING>;
+export type CombinatorParameter<T = unknown> = CombinatorParser<T> | Parser<T>;
 
-export type CombinatorParserResults =
-  | [...Array<ParserOk<unknown>>, ParserResult<unknown>]
-  | [ParserResult<unknown>];
+export type CombinatorParameters<T = unknown> = [
+  CombinatorParameter<T>,
+  ...Array<CombinatorParameter<T>>
+];
+
+/** Parser types */
+export type CombinatorParserResult<T = unknown> = Result<ParserOkFields<T>, ParserFailureFields>;
+
+export type CombinatorParserResults<T = unknown> =
+  | [...Array<Ok<ParserOkFields<T>>>, CombinatorParserResult<T>]
+  | [Ok<ParserOkFields<T>>];
+
+export type CombinatorParser<T = unknown, V = T> = (
+  args: CombinatorOk<T, T[]>['ok'] | ParserArgs
+) => CombinatorResult<T, V>;
 
 /**
  * Utility types for composition
  */
-export type WithResults = Record<'results', CombinatorParserResults>;
+export type WithParserResults<T = unknown> = Record<'results', CombinatorParserResults<T>>;
 
-export type CombinatorOk<T, V = T> = Ok<
-  CombinatorBase & WithCursorEnd & WithResults & WithValue<V>
+/**
+ * Results
+ */
+
+export type CombinatorFailureFields<T = unknown> = ParserFailureFields & WithParserResults<T>;
+
+export type CombinatorFailure<T = unknown> = Failure<
+  Branded<CombinatorFailureFields<T>, typeof COMBINATOR_BRANDING>
 >;
 
-export type CombinatorFailure = Failure<CombinatorBase & Partial<WithFatalError> & WithResults>;
+export type CombinatorOkFields<T = unknown, V = T> = Omit<ParserOkFields<T>, 'value'> &
+  WithCursorEnd &
+  WithParserResults<T> &
+  WithValue<V>;
 
-export type CombinatorResult<T, V = T> = Result<
+export type CombinatorOk<T = unknown, V = T> = Ok<
+  Branded<CombinatorOkFields<T, V>, typeof COMBINATOR_BRANDING>
+>;
+
+export type CombinatorResult<T = unknown, V = T> = Result<
   CombinatorOk<T, V>['ok'],
   CombinatorFailure['failure']
 >;
 
-/**
- *
- */
-export type Combinator<T, V = T, ParsersT extends Array<Parser<T>> = Array<Parser<T>>> = (
-  ...parsers: ParsersT
-) => (args: ParserArgs) => CombinatorResult<T, V>;
+export type ManyCombinatorResult<T = unknown> = CombinatorResult<T, T[]>;
 
-export type CombinatorConstructor<
-  T,
-  V = T,
-  ParsersT extends Array<Parser<T>> = Array<Parser<T>>,
-  ParamsT extends unknown[] = Array<Parser<T>>
-> = (...params: ParamsT) => Combinator<T, V, ParsersT>;
+/**
+ * Combinator
+ */
+
+export type Combinator<
+  T = unknown,
+  P extends CombinatorParameters<T> = CombinatorParameters<T>,
+  V = T
+> = (...parameters: P) => CombinatorParser<T, V>;
+
+export type ManyCombinator<
+  T = unknown,
+  P extends CombinatorParameters<T> = CombinatorParameters<T>
+> = Combinator<T, P, T[]>;

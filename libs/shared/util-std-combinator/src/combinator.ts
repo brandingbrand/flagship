@@ -1,68 +1,95 @@
 import { pipe } from '@brandingbrand/standard-compose';
-import type { Parser, ParserArgs, ParserOk } from '@brandingbrand/standard-parser';
-import { EMPTY_VALUE, parseFail, parseOk } from '@brandingbrand/standard-parser';
+import type { AnyParser, ParserOk } from '@brandingbrand/standard-parser';
+import { parseFail, parseOk } from '@brandingbrand/standard-parser';
 import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
 
 import { many } from './combinator.many';
 import { combinateFail, combinateOk } from './combinator.result';
-import type { CombinatorResult } from './combinator.types';
-import { toCombinator } from './combinator.util';
+import type {
+  Combinator,
+  CombinatorParameter,
+  CombinatorParser,
+  CombinatorParserResults,
+  ManyCombinator,
+} from './combinator.types';
+import { toCombinatorResult } from './combinator.util';
 
-export const any =
-  <T>(...parsers: [Parser<T>, ...Array<Parser<T>>]) =>
-  ({ cursor = 0, input }: ParserArgs): CombinatorResult<T, T> =>
+export const any: Combinator =
+  (...parsers) =>
+  ({ cursor = 0, input }) =>
     pipe(
-      { cursor, input },
-      parsers[0],
+      parsers[0]({ cursor, input }),
+      toCombinatorResult,
       flatMap((success) => combinateOk({ ...success, results: [parseOk(success)] })),
       flatMapFailure((failure) => {
         if (parsers.length === 1) {
           return combinateFail({ ...failure, results: [parseFail(failure)] });
         }
 
-        const remainingParsers = parsers.slice(1) as [Parser<T>, ...Array<Parser<T>>];
+        const remainingParsers = parsers.slice(1) as typeof parsers;
 
-        return pipe({ cursor, input }, any<T>(...remainingParsers));
+        return pipe({ cursor, input }, any(...remainingParsers));
       })
     );
 
 export const between =
-  <T>(start: Parser<T>, end: Parser<T>) =>
-  (parser: Parser<T>) =>
-  ({ cursor = 0, input }: ParserArgs): CombinatorResult<T, T> =>
+  (
+    start: CombinatorParameter,
+    end: CombinatorParameter
+  ): Combinator<unknown, [CombinatorParameter]> =>
+  (parser) =>
+  ({ cursor = 0, input }) =>
     pipe(
       { cursor, input },
-      many<T, [Parser<T>, Parser<T>, Parser<T>]>(start, parser, end),
-      flatMap((success) => {
-        const { value } = (success.results[1] as ParserOk<T>).ok;
+      many(start, parser, end),
+      flatMap(({ cursorEnd, results }) => {
+        const { value } = (results[1] as ParserOk<unknown>).ok;
 
-        return combinateOk({ ...success, value });
+        return combinateOk({
+          cursor,
+          cursorEnd,
+          input,
+          results,
+          value,
+        });
       })
     );
 
-export const either =
-  <T>(...parsers: [Parser<T>, Parser<T>]) =>
-  ({ cursor = 0, input }: ParserArgs) =>
-    pipe({ cursor, input }, any(...parsers));
-
-export const maybe =
-  <T>(parser: Parser<T>) =>
-  ({ cursor = 0, input }: ParserArgs) =>
+export const every: ManyCombinator =
+  (...parsers) =>
+  ({ cursor = 0, input }) =>
     pipe(
       { cursor, input },
-      toCombinator(parser),
-      flatMap((success) => combinateOk<T>(success)),
-      flatMapFailure((failure) =>
-        combinateOk<T>({
-          ...failure,
-          cursorEnd: cursor,
-          results: [parseFail(failure)],
-          value: EMPTY_VALUE,
-        })
-      )
+      many(parsers[0]),
+      flatMap((success) => {
+        if (parsers.length === 1) {
+          return combinateOk(success);
+        }
+
+        const remainingParsers = parsers.slice(1) as typeof parsers;
+
+        return pipe(
+          { cursor, input },
+          every(...remainingParsers),
+          flatMapFailure((failure) =>
+            combinateFail({
+              ...failure,
+              results: [...success.results, ...failure.results] as CombinatorParserResults,
+            })
+          ),
+          flatMap(({ cursorEnd, results, value }) =>
+            combinateOk({
+              ...success,
+              cursorEnd: cursorEnd >= success.cursorEnd ? cursorEnd : success.cursorEnd,
+              results: [...success.results, ...results] as CombinatorParserResults,
+              value: [...success.value, ...value],
+            })
+          )
+        );
+      })
     );
 
 export const surroundedBy =
-  <T>(delimiter: Parser<T>) =>
-  (parser: Parser<T>) =>
+  (delimiter: CombinatorParameter): Combinator<unknown, [CombinatorParser]> =>
+  (parser) =>
     between(delimiter, delimiter)(parser);

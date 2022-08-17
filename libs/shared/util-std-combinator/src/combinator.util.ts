@@ -1,64 +1,39 @@
 import { pipe } from '@brandingbrand/standard-compose';
-import type { Parser, ParserArgs } from '@brandingbrand/standard-parser';
-import { parseFail, parseOk } from '@brandingbrand/standard-parser';
-import {
-  flatMap,
-  flatMapFailure,
-  isFailure,
-  mapFailure,
-  mapOk,
-} from '@brandingbrand/standard-result';
+import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
 
+import { isCombinatorResult } from './combinator.guard';
 import { combinateFail, combinateOk } from './combinator.result';
-import type { CombinatorParserResults, CombinatorResult } from './combinator.types';
+import type { CombinatorParserResult, CombinatorResult } from './combinator.types';
 
 /**
- * Given a `Parser`, returns a `Combinator` that calls that parser and maps the
- * `ParserResult` to a `CombinatorResult`. This function can be used to initiate
- * a chain of `Combinators`.
+ * Accepts either a `ParserResult` or `CombinatorResult`. If the input is a
+ * `CombinatorResult`, returns that value. Otherwise, maps the `ParserResult`
+ * to a `CombinatorResult`. This enables us to work with both types of
+ * results in combinators.
  *
- * @param parser - Any `Parser`
- * @return A `Combinator`.
+ * @param result is any `CombinatorResult` or `ParserResult`.
+ * @return a `CombinatorResult`.
  */
-export const toCombinator =
-  <T>(parser: Parser<T>) =>
-  (args: ParserArgs): CombinatorResult<T, T> =>
-    pipe(
-      args,
-      parser,
-      flatMapFailure((failure) => combinateFail({ ...failure, results: [parseFail(failure)] })),
-      flatMap((success) => combinateOk<T>({ ...success, results: [parseOk(success)] }))
-    );
+export const toCombinatorResult = <T = unknown>(
+  result: CombinatorParserResult<T>
+): CombinatorResult<T, T> => {
+  if (isCombinatorResult<T>(result)) {
+    return result;
+  }
 
-/**
- * Given a `CombinatorOk`, returns a map function that merges the returned
- * `CombinatorResult` with the `CombinatorOk` regardless of success or failure.
- *
- * @param prevResult - Any `CombinatorFailure` or `CombinatorOk` value
- * @return A function that takes a `CombinatorResult` and returns a merged
- *         `CombinatorResult`.
- */
-export const concatResult =
-  <T>(prevResult: CombinatorResult<T>) =>
-  (result: CombinatorResult<T>): CombinatorResult<T> => {
-    /**
-     * If the previous result is a failure, do not concat the new
-     * result and return the unaltered previous result.
-     */
-    if (isFailure(prevResult)) {
-      return prevResult;
-    }
-
-    return pipe(
-      result,
-      mapFailure(({ results }) => ({
-        ...prevResult.ok,
-        results: [...prevResult.ok.results, ...results] as CombinatorParserResults,
-      })),
-      mapOk(({ cursorEnd, results }) => ({
-        ...prevResult.ok,
+  return pipe(
+    result,
+    flatMap(({ cursor, cursorEnd, input, value }) =>
+      combinateOk<T, T>({
+        cursor,
         cursorEnd,
-        results: [...prevResult.ok.results, ...results] as CombinatorParserResults,
-      }))
-    );
-  };
+        input,
+        results: [result],
+        value,
+      })
+    ),
+    flatMapFailure(({ cursor, fatal, input }) =>
+      combinateFail({ cursor, fatal, input, results: [result] })
+    )
+  );
+};
