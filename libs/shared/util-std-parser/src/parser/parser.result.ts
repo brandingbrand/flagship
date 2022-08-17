@@ -1,25 +1,27 @@
-import { makeBranding } from '@brandingbrand/standard-branded';
 import { fail, ok } from '@brandingbrand/standard-result';
 
-import { PARSER_BRANDING } from './parser.constants';
+import { brandParser } from './parser.brand';
 import type {
   ParserFailure,
+  ParserFailureFields,
   ParserOk,
+  ParserOkFields,
   WithCursor,
-  WithCursorEnd,
-  WithFatalError,
-  WithInput,
-  WithValue,
 } from './parser.types';
 
-export const { brand: brandParser, isBrand: isParser } = makeBranding(PARSER_BRANDING);
+export const parseFail = ({
+  cursor = 0,
+  fatal,
+  input,
+}: Omit<ParserFailureFields, 'cursor'> & Partial<WithCursor>): ParserFailure =>
+  typeof fatal === 'string'
+    ? fail(brandParser({ cursor, fatal, input }))
+    : fail(brandParser({ cursor, input }));
 
-export const parseFail: (
-  value: Partial<WithCursor & WithFatalError> & WithInput
-) => ParserFailure = ({ cursor = 0, input, ...value }) =>
-  fail(brandParser({ ...value, cursor, input }));
-
-export const parseOk: <T>(
-  args: Partial<WithCursor> & WithCursorEnd & WithInput & WithValue<T>
-) => ParserOk<T> = ({ cursor = 0, cursorEnd, input, value }) =>
+export const parseOk = <T = unknown>({
+  cursor = 0,
+  cursorEnd,
+  input,
+  value,
+}: Omit<ParserOkFields<T>, 'cursor'> & Partial<WithCursor>): ParserOk<T> =>
   ok(brandParser({ cursor, cursorEnd, input, value }));

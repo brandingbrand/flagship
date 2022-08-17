@@ -4,7 +4,6 @@ import type { Failure, Ok, Result } from '@brandingbrand/standard-result';
 import type {
   CURSOR_END_KEY,
   CURSOR_KEY,
-  EMPTY_VALUE,
   FATAL_ERROR_KEY,
   INPUT_KEY,
   PARSER_BRANDING,
@@ -13,7 +12,7 @@ import type {
 
 export type ParserArgs = Partial<WithCursor> & WithInput;
 
-export type ParserBase = Branded<Required<ParserArgs>, typeof PARSER_BRANDING>;
+// export type ParserBase = Branded<Required<ParserArgs>, typeof PARSER_BRANDING>;
 
 /**
  * Utility types for composition
@@ -26,11 +25,18 @@ export type WithFatalError = Record<typeof FATAL_ERROR_KEY, string>;
 
 export type WithInput = Record<typeof INPUT_KEY, string>;
 
-export type WithValue<T> = Record<typeof VALUE_KEY, T | typeof EMPTY_VALUE>;
+export type WithValue<T> = Record<typeof VALUE_KEY, T>;
 
-export type ParserOk<T> = Ok<ParserBase & WithCursorEnd & WithValue<T>>;
+/**
+ * Result types
+ */
+export type ParserOkFields<T = unknown> = Required<ParserArgs> & WithCursorEnd & WithValue<T>;
 
-export type ParserFailure = Failure<ParserBase & Partial<WithFatalError>>;
+export type ParserOk<T> = Ok<Branded<ParserOkFields<T>, typeof PARSER_BRANDING>>;
+
+export type ParserFailureFields = Partial<WithFatalError> & Required<ParserArgs>;
+
+export type ParserFailure = Failure<Branded<ParserFailureFields, typeof PARSER_BRANDING>>;
 
 export type ParserResult<T> = Result<ParserOk<T>['ok'], ParserFailure['failure']>;
 
@@ -40,5 +46,9 @@ export type ParserResult<T> = Result<ParserOk<T>['ok'], ParserFailure['failure']
 export type Parser<T> = (args: ParserArgs) => ParserResult<T>;
 
 export type Parsers<T> = [Parser<T>, ...Array<Parser<T>>];
+
+export type AnyParser = Parser<unknown>;
+
+export type AnyParsers = Parsers<unknown>;
 
 export type ParserConstructor<T, P extends unknown[] = unknown[]> = (...params: P) => Parser<T>;
