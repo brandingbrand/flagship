@@ -75,7 +75,7 @@ export class FSRouter extends FSRouterBase {
         const LoadingPlaceholder = () => <React.Fragment>{this.options.loading}</React.Fragment>;
         if ('component' in route || 'loadComponent' in route) {
           let routeDetails = defaultActivatedRoute;
-          const routeDetailCache: Map<string, ActivatedRoute> = new Map();
+          const routeDetailCache = new Map<string, ActivatedRoute>();
           this.history.registerResolver(
             id,
             (details) => {
@@ -101,7 +101,7 @@ export class FSRouter extends FSRouterBase {
               return ({ componentId }) => {
                 const [loading, setLoading] = useState(false);
                 const activatedRoute = useMemo(
-                  () => routeDetailCache.get(componentId),
+                  () => routeDetailCache.get(componentId) ?? routeDetailCache.get(id),
                   [componentId]
                 );
                 useEffect(() => this.history.observeLoading(setLoading), []);

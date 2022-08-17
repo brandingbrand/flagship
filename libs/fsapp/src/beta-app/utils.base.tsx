@@ -13,13 +13,20 @@ const pathFromRoute = (route: Route, prefix?: string) =>
     ? `${prefix?.replace(/\/$/, '') ?? ''}/${route.path.replace(/^\//, '') ?? ''}`
     : prefix ?? '/';
 
+const routeIds = new WeakMap<Route | RouteCollection, string>();
+
+export const setRouteId = (route: Route | RouteCollection): string => {
+  const id = uniqueId('route');
+  routeIds.set(route, id);
+  return id;
+};
+
+export const getRouteId = (route: Route | RouteCollection): string | undefined =>
+  routeIds.get(route);
+
 export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
   const path = pathFromRoute(route, prefix);
-
-  const id =
-    !('path' in route) || route.path === undefined
-      ? uniqueId('route')
-      : uniqueId(path || `${prefix ?? ''}/undefined`);
+  const id = getRouteId(route) ?? setRouteId(route);
 
   return { id, path };
 };
