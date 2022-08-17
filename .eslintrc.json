@@ -80,7 +80,7 @@
     {
       "files": [
         "environment.js",
-        "jest.config.js",
+        "jest.config.ts",
         "jest.preset.js",
         "metro.config.js",
         "react-native.config.js",

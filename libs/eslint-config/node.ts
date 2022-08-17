@@ -1,4 +1,12 @@
-import { BUGGY, NOT_RELEVANT, NOT_VALUABLE, OFF, TYPESCRIPT, WARN } from './utils';
+import {
+  BUGGY,
+  LARGE_PERFORMANCE_COST,
+  NOT_RELEVANT,
+  NOT_VALUABLE,
+  OFF,
+  TYPESCRIPT,
+  WARN,
+} from './utils';
 
 export = {
   env: { es6: true, node: true },
@@ -41,7 +49,7 @@ export = {
     'node/shebang': WARN,
 
     // Best Practices
-    'node/no-deprecated-api': WARN,
+    'node/no-deprecated-api': OFF(LARGE_PERFORMANCE_COST),
 
     // Stylistic Issues
     'node/callback-return': OFF(NOT_VALUABLE),

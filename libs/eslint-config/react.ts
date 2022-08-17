@@ -113,8 +113,12 @@ export = {
     ],
     'react/button-has-type': WARN,
     'react/default-props-match-prop-types': OFF('#ProptypesAreDead'),
-    // TODO (@wSedlacek) [eslint-plugin-react@>=7.30.0]: Reenable once `destructureInSignature` is published
-    'react/destructuring-assignment': [OFF(LARGE_PERFORMANCE_COST), 'always', {}],
+    // TODO (@wSedlacek) [eslint-plugin-react@>=7.31.0]: Enable after discussion
+    'react/destructuring-assignment': [
+      OFF(LARGE_PERFORMANCE_COST),
+      'always',
+      { destructureInSignature: 'always' },
+    ],
     'react/display-name': OFF(
       'The problem with this rule is that errors on stateless functional components called as functions (not components) e.g. `renderThings(props)` and not `<RenderThings {...props} />`.'
     ),
@@ -197,6 +201,7 @@ export = {
     'react/jsx-no-comment-textnodes': WARN,
     'react/jsx-no-constructed-context-values': WARN, // sure.. I guess..
     'react/jsx-no-duplicate-props': WARN,
+    'react/jsx-no-leaked-render': WARN,
     'react/jsx-no-literals': OFF(
       "yeah... this rule shouldn't exist - we should just fix the syntax highlighters."
     ),

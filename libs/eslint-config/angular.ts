@@ -19,7 +19,7 @@ export = {
     '@angular-eslint/component-class-suffix': [
       WARN,
       {
-        suffixes: ['Component', 'Page'],
+        suffixes: ['Component', 'Page', 'Dialog'],
       },
     ],
     '@angular-eslint/component-max-inline-declarations': WARN,

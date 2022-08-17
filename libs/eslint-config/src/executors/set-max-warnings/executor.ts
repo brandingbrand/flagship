@@ -1,7 +1,7 @@
 import type { ExecutorContext } from '@nrwl/devkit';
 import { logger, readJson } from '@nrwl/devkit';
 import { spawnSync } from 'child_process';
-import { FsTree, flushChanges } from 'nx/src/config/tree';
+import { FsTree, flushChanges } from 'nx/src/generators/tree';
 import { join } from 'path';
 
 import type { LintResult } from '../../types/lint-result.type';

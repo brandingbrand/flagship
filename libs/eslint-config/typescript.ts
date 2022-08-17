@@ -151,6 +151,7 @@ export = {
       "It would be nice to ban certain types, however there doesn't appear to be an option to disable the default disabled types"
     ),
     '@typescript-eslint/class-literal-property-style': WARN,
+    '@typescript-eslint/consistent-generic-constructors': WARN,
     '@typescript-eslint/consistent-indexed-object-style': WARN,
     '@typescript-eslint/consistent-type-assertions': [
       WARN,
@@ -198,26 +199,21 @@ export = {
         default: [
           'signature',
 
-          'private-static-field',
+          'static-field',
           'private-static-method',
-          'protected-static-field',
           'protected-static-method',
-          'public-static-field',
           'public-static-method',
 
           'private-constructor',
           'protected-constructor',
           'public-constructor',
 
-          'private-decorated-field',
-          'protected-decorated-field',
-          'public-decorated-field',
-          'private-instance-field',
-          'protected-instance-field',
-          'public-instance-field',
-          'private-abstract-field',
-          'protected-abstract-field',
-          'public-abstract-field',
+          /**
+           * Field initialization can depend on each other
+           * for example a private field that depends on a public
+           * filed of vice versa.
+           */
+          'field',
 
           'private-method',
           'protected-method',
@@ -377,6 +373,7 @@ export = {
     '@typescript-eslint/no-base-to-string': WARN,
     '@typescript-eslint/no-confusing-non-null-assertion': WARN,
     '@typescript-eslint/no-confusing-void-expression': WARN,
+    '@typescript-eslint/no-duplicate-enum-values': WARN,
     '@typescript-eslint/no-dynamic-delete': WARN,
     '@typescript-eslint/no-empty-interface': OFF(
       'Often has legitimate use when mocking out an API or showing intent'
@@ -424,6 +421,7 @@ export = {
       'using non-null assertions cancels the benefits of the strict null-checking mode..'
     ),
     '@typescript-eslint/no-var-requires': WARN,
+    '@typescript-eslint/parameter-properties': OFF(),
     '@typescript-eslint/prefer-as-const': WARN,
     '@typescript-eslint/prefer-enum-initializers': WARN,
     '@typescript-eslint/prefer-for-of': SUCCESSOR('unicorn/no-for-loop'),
@@ -465,4 +463,15 @@ export = {
     ],
     '@typescript-eslint/unified-signatures': WARN,
   },
+  overrides: [
+    {
+      files: ['jest.config.ts'],
+      rules: {
+        'import/no-anonymous-default-export': OFF(),
+        '@typescript-eslint/naming-convention': OFF(
+          'globals uses package names which use kebab case'
+        ),
+      },
+    },
+  ],
 };

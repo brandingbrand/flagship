@@ -37,8 +37,17 @@ export = {
     'jest/consistent-test-it': [WARN, { fn: 'it' }],
     'jest/expect-expect': [
       WARN,
-      { assertFunctionNames: ['expect', 'spectator.expectOne', 'spectator.expectConcurrent'] },
+      {
+        assertFunctionNames: [
+          'expect',
+          'spectator.expectOne',
+          'spectator.expectConcurrent',
+          'spectator.controller.expectOne',
+          'spectator.controller.expectNone',
+        ],
+      },
     ],
+    'jest/max-expects': WARN,
     'jest/max-nested-describe': WARN,
     'jest/no-alias-methods': WARN,
     'jest/no-commented-out-tests': WARN,
@@ -81,8 +90,10 @@ export = {
     'jest/prefer-expect-assertions': OFF(NOT_VALUABLE),
     'jest/prefer-expect-resolves': WARN,
     'jest/prefer-equality-matcher': WARN,
+    'jest/prefer-hooks-in-order': WARN,
     'jest/prefer-hooks-on-top': WARN,
     'jest/prefer-lowercase-title': [WARN, { ignoreTopLevelDescribe: true }],
+    'jest/prefer-mock-promise-shorthand': WARN,
     'jest/prefer-snapshot-hint': WARN,
     'jest/prefer-spy-on': WARN,
     'jest/prefer-strict-equal': WARN,
@@ -123,5 +134,9 @@ export = {
     'jest-formatting/padding-around-expect-groups': WARN,
     'jest-formatting/padding-around-test-blocks': WARN,
     'jest-formatting/padding-around-all': SUCCESSOR('jest-formatting (all _other_ rules)'),
+
+    // plugin:rxjs **************************************************************
+    // rules URL: https://github.com/cartant/eslint-plugin-rxjs
+    'rxjs/no-ignored-subscribe': OFF('Subscriptions are typically very short lived in test'),
   },
 };
