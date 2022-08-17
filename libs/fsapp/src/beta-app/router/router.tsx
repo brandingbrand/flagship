@@ -72,7 +72,9 @@ export class FSRouter extends FSRouterBase {
       const { id, path } = buildPath(route, prefix);
 
       if (!addedRoutes.has(id)) {
-        const LoadingPlaceholder = () => <React.Fragment>{this.options.loading}</React.Fragment>;
+        const LoadingPlaceholder: React.FC = () => (
+          <React.Fragment>{this.options.loading}</React.Fragment>
+        );
         if ('component' in route || 'loadComponent' in route) {
           let routeDetails = defaultActivatedRoute;
           const routeDetailCache = new Map<string, ActivatedRoute>();
@@ -99,19 +101,19 @@ export class FSRouter extends FSRouterBase {
               ));
 
               return ({ componentId }) => {
-                const [loading, setLoading] = useState(false);
+                const [isLoading, setIsLoading] = useState(false);
                 const activatedRoute = useMemo(
                   () => routeDetailCache.get(componentId) ?? routeDetailCache.get(id),
                   [componentId]
                 );
-                useEffect(() => this.history.observeLoading(setLoading), []);
+                useEffect(() => this.history.observeLoading(setIsLoading), []);
 
                 useEffect(() => {
                   trackView(this.options.analytics, route, activatedRoute, path);
                 }, [activatedRoute]);
 
                 return (
-                  <ActivatedRouteProvider {...activatedRoute} loading={loading}>
+                  <ActivatedRouteProvider {...activatedRoute} loading={isLoading}>
                     <ModalProvider screenWrap={this.options.screenWrap}>
                       <ButtonProvider>
                         <VersionOverlay>
