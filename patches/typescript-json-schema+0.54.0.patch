@@ -1,11 +1,14 @@
 diff --git a/node_modules/typescript-json-schema/dist/typescript-json-schema.js b/node_modules/typescript-json-schema/dist/typescript-json-schema.js
-index 1014da3..e1c4d3a 100644
+index 78f97ba..44430b9 100644
 --- a/node_modules/typescript-json-schema/dist/typescript-json-schema.js
 +++ b/node_modules/typescript-json-schema/dist/typescript-json-schema.js
-@@ -437,6 +437,9 @@ var JsonSchemaGenerator = (function () {
+@@ -453,6 +453,12 @@ var JsonSchemaGenerator = (function () {
              else if (flags & ts.TypeFlags.Boolean) {
                  definition.type = "boolean";
              }
++            else if (flags & ts.TypeFlags.ESSymbol) {
++                definition.type = "symbol";
++            }
 +            else if (flags & ts.TypeFlags.ESSymbol) {
 +                definition.type = "symbol";
 +            }
@@ -13,10 +16,10 @@ index 1014da3..e1c4d3a 100644
                  definition.type = "null";
              }
 diff --git a/node_modules/typescript-json-schema/typescript-json-schema.ts b/node_modules/typescript-json-schema/typescript-json-schema.ts
-index 1c8d83c..7fb323f 100644
+index 1187f91..cdb776a 100644
 --- a/node_modules/typescript-json-schema/typescript-json-schema.ts
 +++ b/node_modules/typescript-json-schema/typescript-json-schema.ts
-@@ -647,6 +647,8 @@ export class JsonSchemaGenerator {
+@@ -670,6 +670,8 @@ export class JsonSchemaGenerator {
                  definition.type = isInteger ? "integer" : "number";
              } else if (flags & ts.TypeFlags.Boolean) {
                  definition.type = "boolean";

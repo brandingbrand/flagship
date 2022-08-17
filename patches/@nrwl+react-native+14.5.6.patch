@@ -1,0 +1,14 @@
+diff --git a/node_modules/@nrwl/react-native/plugins/metro-resolver.js b/node_modules/@nrwl/react-native/plugins/metro-resolver.js
+index 813c7dc..f41ef1e 100644
+--- a/node_modules/@nrwl/react-native/plugins/metro-resolver.js
++++ b/node_modules/@nrwl/react-native/plugins/metro-resolver.js
+@@ -22,8 +22,7 @@ function getResolveRequest(extensions) {
+             console.log(chalk.cyan(`[Nx] Resolving: ${realModuleName}`));
+         const { resolveRequest } = _context, context = tslib_1.__rest(_context, ["resolveRequest"]);
+         const resolvedPath = defaultMetroResolver(context, realModuleName, platform, DEBUG) ||
+-            tsconfigPathsResolver(context, extensions, realModuleName, platform, DEBUG) ||
+-            pnpmResolver(extensions, context, realModuleName, DEBUG);
++            tsconfigPathsResolver(context, extensions, realModuleName, platform, DEBUG);
+         if (resolvedPath) {
+             return resolvedPath;
+         }
