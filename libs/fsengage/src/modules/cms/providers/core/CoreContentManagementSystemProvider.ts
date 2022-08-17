@@ -42,12 +42,14 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
 
     this.network = new FSNetwork({ baseURL });
     this.cache = {};
+    this.maxAge = 0;
   }
 
   private readonly productionBaseEndpoint: string = 'https://cdn.brandingbrand.com';
   private readonly developmentBaseEndpoint: string = 'https://cms-dsg-new.s3.amazonaws.com';
   private readonly network: FSNetwork;
   private cache: Record<string, Promise<unknown>>;
+  private maxAge: number;
 
   private currentInstances(content: any): unknown[] {
     let instances = (content && content.instances) || [];
@@ -128,12 +130,13 @@ export default class CoreContentManagementSystemProvider extends ContentManageme
     const propertyId = encodeURIComponent(this.propertyId);
     const path = `/prod/property${propertyId}/cms/${this.environment}.json`;
 
-    if (!this.cache[path]) {
+    if (!this.cache[path] || Date.now() > this.maxAge) {
       this.cache[path] = this.network.get(path).catch((error) => {
         delete this.cache[path];
 
         throw error;
       });
+      this.maxAge = Date.now() + 900000; // 15m
     }
 
     return this.cache[path];
