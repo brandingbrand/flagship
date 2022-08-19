@@ -1,17 +1,17 @@
 import { pipe } from '@brandingbrand/standard-compose';
-import type { ParserArgs } from '@brandingbrand/standard-parser';
+import type {
+  Parser,
+  ParserArgs,
+  ParserFailure,
+  ParserOk,
+  ParserOkFields,
+  ParserResult,
+} from '@brandingbrand/standard-parser';
+import { parseOk } from '@brandingbrand/standard-parser';
 import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
 
 import { many } from './combinator.many';
-import { combinateOk } from './combinator.result';
-import type {
-  CombinatorOk,
-  CombinatorParameter,
-  CombinatorParser,
-  CombinatorParserResults,
-  ManyCombinator,
-} from './combinator.types';
-import { toCombinatorResult } from './combinator.util';
+import type { Combinator } from './combinator.types';
 
 /**
  * Given a `Parser`, repeatedly runs that parser until it fails.
@@ -21,27 +21,38 @@ import { toCombinatorResult } from './combinator.util';
  *         a single time.
  */
 export const repeat =
-  <T>(parser: CombinatorParameter<T>): CombinatorParser<T, T[]> =>
-  ({ cursor = 0, input }) =>
-    pipe(
-      { cursor, input },
-      many(parser),
-      flatMap((success) =>
+  <T>(parser: Parser<T>): Parser<[T, ...T[]]> =>
+  (args) => {
+    const internalRepeat =
+      (internalParser: Parser<T, T>): Parser<[T, ...T[]]> =>
+      (internalArgs) =>
         pipe(
-          { cursor: success.cursorEnd, input },
-          repeat(parser),
-          flatMap(({ cursorEnd, results, value }) =>
-            combinateOk({
-              ...success,
-              cursorEnd,
-              results: [...success.results, ...results] as unknown as CombinatorParserResults<T>,
-              value: [...success.value, ...value],
-            })
-          ),
-          flatMapFailure(() => combinateOk(success))
-        )
-      )
-    );
+          internalArgs,
+          many(internalParser),
+          flatMap((success) =>
+            pipe(
+              { ...internalArgs, cursor: success.cursorEnd },
+              internalRepeat(internalParser),
+              flatMap<
+                ParserOk<[T, ...T[]]>['ok'],
+                ParserOk<[T, ...T[]]>['ok'],
+                ParserFailure['failure']
+              >(({ cursorEnd, value }) =>
+                parseOk({
+                  ...success,
+                  cursorEnd,
+                  value: [...(success.value as [T, ...T[]]), ...value],
+                })
+              ),
+              flatMapFailure(() =>
+                parseOk<[T, ...T[]]>(success as unknown as ParserOkFields<[T, ...T[]]>)
+              )
+            )
+          )
+        );
+
+    return internalRepeat(parser)(args);
+  };
 
 /**
  * Given a `Parser` (`terminator`), returns a `Combinator` that repeatedly runs a
@@ -53,22 +64,21 @@ export const repeat =
  * @return A `Combinator`.
  */
 export const repeatUntilTerminator =
-  <T>(terminator: CombinatorParameter): ManyCombinator<T> =>
+  <T>(terminator: Parser<T>): Combinator<T, [Parser<T, T>], T[]> =>
   (parser) =>
-  (args: CombinatorOk<T, T[]>['ok'] | ParserArgs) =>
+  (args: ParserArgs | ParserOkFields<T[]>) =>
     pipe(
       args,
       many(parser),
       flatMap((success) =>
         pipe(
           terminator({ cursor: success.cursorEnd, input: args.input }),
-          toCombinatorResult,
-          flatMap(() => combinateOk({ ...success, cursor: args.cursor })),
+          flatMap(() => parseOk({ ...success, cursor: args.cursor })),
           flatMapFailure(() =>
             pipe(
               { ...success, cursor: args.cursor },
               repeatUntilTerminator<T>(terminator)(parser),
-              flatMapFailure(() => combinateOk({ ...success, cursor: args.cursor }))
+              flatMapFailure(() => parseOk({ ...success, cursor: args.cursor }))
             )
           )
         )

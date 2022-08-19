@@ -1,16 +1,6 @@
-import type { ParserOkFields, ParserResult } from '@brandingbrand/standard-parser';
-import type { Ok } from '@brandingbrand/standard-result';
-import { isFailure } from '@brandingbrand/standard-result';
-import { isOk } from '@brandingbrand/standard-result';
-
-import { combinateFail, combinateOk } from './combinator.result';
-import type {
-  CombinatorParameters,
-  CombinatorParser,
-  CombinatorParserResult,
-  CombinatorParserResults,
-  CombinatorResult,
-} from './combinator.types';
+import type { Parser, ParserResult, Parsers } from '@brandingbrand/standard-parser';
+import { parseFail, parseOk } from '@brandingbrand/standard-parser';
+import { isFailure, isOk } from '@brandingbrand/standard-result';
 
 /**
  * Given any number of parsers as params, iterates through them
@@ -22,40 +12,37 @@ import type {
  * @return A CombinatorResult
  */
 export const many =
-  <T = unknown>(...parsers: CombinatorParameters<T>): CombinatorParser<T, T[]> =>
+  <T = unknown>(...parsers: Parsers<T>): Parser<T[], T[]> =>
   (args) =>
-    parsers.reduce(
+    parsers.reduce<ParserResult<T[]>>(
       (aggregate, parser) => {
         if (isFailure(aggregate)) {
           return aggregate;
         }
 
-        const parserResult: CombinatorParserResult<T> | ParserResult<T> = parser({
+        const parserResult: ParserResult<T> = parser({
           ...aggregate.ok,
           cursor: aggregate.ok.cursorEnd,
         });
 
         if (isOk(parserResult)) {
-          return combinateOk({
+          return parseOk({
             cursor: args.cursor,
             cursorEnd: parserResult.ok.cursorEnd,
             input: aggregate.ok.input,
             value: [...aggregate.ok.value, parserResult.ok.value],
-            results: [...(aggregate.ok.results as Array<Ok<ParserOkFields<T>>>), parserResult],
           });
         }
 
-        return combinateFail({
+        return parseFail({
           input: args.input,
           cursor: args.cursor,
           fatal: parserResult.failure.fatal,
-          results: [...(aggregate.ok.results as Array<Ok<ParserOkFields<T>>>), parserResult],
         });
       },
-      combinateOk({
-        results: [] as unknown as CombinatorParserResults<T>,
+      parseOk({
         value: [],
         cursorEnd: args.cursor ?? 0,
         ...args,
-      }) as CombinatorResult<T, T[]>
+      })
     );
