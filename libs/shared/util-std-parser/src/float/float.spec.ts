@@ -1,6 +1,6 @@
 import { parseFail, parseOk } from '../parser';
 
-import { parseFloat } from './float.parser';
+import { parseAnyFloat, parseFloat } from './float.parser';
 
 describe('parseFloat', () => {
   it('succeeds when expected', () => {
@@ -36,6 +36,24 @@ describe('parseFloat', () => {
         fatal: `parseFloat called with a numeric value that was not an float: \`NaN\``,
         input: 'foo55.5bar',
       })
+    );
+  });
+});
+
+describe('parseAnyFloat', () => {
+  it('should parse integers with more than one character', () => {
+    const results = parseAnyFloat({ input: '123.456789 ' });
+
+    expect(results).toStrictEqual(
+      parseOk({ input: '123.456789 ', cursor: 0, cursorEnd: 10, value: 123.456789 })
+    );
+  });
+
+  it('should start from cursor', () => {
+    const results = parseAnyFloat({ input: '123.456789 ', cursor: 3 });
+
+    expect(results).toStrictEqual(
+      parseOk({ input: '123.456789 ', cursor: 3, cursorEnd: 10, value: 0.456789 })
     );
   });
 });

@@ -1,5 +1,7 @@
 import type { Parser, ParserConstructor } from '../parser';
 
-export type RegExParser = Parser<RegExpExecArray>;
+export type RegExParser = Parser<string[]>;
 
-export type RegExParserConstructor = ParserConstructor<RegExpExecArray, [RegExp]>;
+export type RegExParserConstructor = ParserConstructor<string[], [RegExp]>;
+
+export type AnyRegExParser = Parser<RegExp>;

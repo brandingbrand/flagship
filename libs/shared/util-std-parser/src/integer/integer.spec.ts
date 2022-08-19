@@ -1,6 +1,6 @@
 import { parseFail, parseOk } from '../parser';
 
-import { parseInteger } from './integer.parser';
+import { parseAnyInteger, parseInteger } from './integer.parser';
 
 describe('parseInteger', () => {
   it('succeeds when expected', () => {
@@ -36,6 +36,24 @@ describe('parseInteger', () => {
         fatal: `parseInteger called with a numeric value that was not an integer: \`NaN\``,
         input: 'foo555bar',
       })
+    );
+  });
+});
+
+describe('parseAnyInteger', () => {
+  it('should parse integers with more than one character', () => {
+    const results = parseAnyInteger({ input: '123456789 ' });
+
+    expect(results).toStrictEqual(
+      parseOk({ input: '123456789 ', cursor: 0, cursorEnd: 9, value: 123456789 })
+    );
+  });
+
+  it('should start from cursor', () => {
+    const results = parseAnyInteger({ input: '123456789 ', cursor: 3 });
+
+    expect(results).toStrictEqual(
+      parseOk({ input: '123456789 ', cursor: 3, cursorEnd: 9, value: 456789 })
     );
   });
 });

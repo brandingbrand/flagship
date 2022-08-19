@@ -1,19 +1,19 @@
 import { parseFail, parseOk } from '../parser';
 
-import type { IntegerParserConstructor } from './integer.types';
+import type { IntegerParser, IntegerParserConstructor } from './integer.types';
 
 export const parseInteger: IntegerParserConstructor =
-  (int) =>
+  (integer) =>
   ({ cursor = 0, input }) => {
-    if (!Number.isInteger(int)) {
+    if (!Number.isInteger(integer)) {
       return parseFail({
         cursor,
-        fatal: `parseInteger called with a numeric value that was not an integer: \`${int}\``,
+        fatal: `parseInteger called with a numeric value that was not an integer: \`${integer}\``,
         input,
       });
     }
 
-    const value = `${int}`;
+    const value = `${integer}`;
     const cursorEnd = cursor + value.length;
 
     if (input.slice(cursor, cursorEnd) === value) {
@@ -21,7 +21,7 @@ export const parseInteger: IntegerParserConstructor =
         cursor,
         cursorEnd,
         input,
-        value: int,
+        value: integer,
       });
     }
 
@@ -30,3 +30,26 @@ export const parseInteger: IntegerParserConstructor =
       input,
     });
   };
+
+export const parseAnyInteger: IntegerParser = ({ cursor = 0, input }) => {
+  if (input.slice(cursor).length === 0) {
+    return parseFail({ cursor, input });
+  }
+
+  const nonIntegerIndex = [...input]
+    .slice(cursor)
+    .findIndex((character) => Number.isNaN(Number.parseInt(character, 10)));
+
+  if (nonIntegerIndex <= 0) {
+    return parseFail({ cursor, input });
+  }
+
+  const cursorEnd = cursor + nonIntegerIndex;
+
+  return parseOk({
+    cursor,
+    cursorEnd,
+    input,
+    value: Number.parseInt(input.slice(cursor, cursorEnd), 10),
+  });
+};
