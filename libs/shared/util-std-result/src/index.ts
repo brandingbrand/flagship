@@ -5,6 +5,7 @@ export * from './extract.async';
 export * from './flat-map';
 export * from './flat-map-all';
 export * from './flat-map.async';
+export * from './flatten';
 export * from './from-predicate';
 export * from './map';
 export * from './map.async';

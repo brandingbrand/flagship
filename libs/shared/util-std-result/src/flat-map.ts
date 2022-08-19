@@ -13,12 +13,23 @@ export const flatMap =
   };
 
 export const flatMapFailure =
-  <OkType, InputFailureType, OutputFailureType>(
-    flatMapFn: (input: InputFailureType) => Result<OkType, OutputFailureType>
+  <OutputOkType, InputFailureType, OutputFailureType>(
+    flatMapFn: (input: InputFailureType) => Result<OutputOkType, OutputFailureType>
   ) =>
-  (input: Result<OkType, InputFailureType>): Result<OkType, OutputFailureType> => {
+  <InputOkType>(
+    input: Result<InputOkType, InputFailureType>
+  ): Result<
+    OutputOkType extends unknown ? InputOkType : InputOkType | OutputOkType,
+    OutputFailureType
+  > => {
+    type ResultType = Result<
+      OutputOkType extends unknown ? InputOkType : InputOkType | OutputOkType,
+      OutputFailureType
+    >;
+
     if (isFailure(input)) {
-      return flatMapFn(input.failure);
+      return flatMapFn(input.failure) as ResultType;
     }
-    return input;
+
+    return input as ResultType;
   };
