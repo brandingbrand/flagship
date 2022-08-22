@@ -1,10 +1,8 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "brandingbrand",
   "affected": {
     "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
   },
   "implicitDependencies": {
     "package.json": {
@@ -16,7 +14,7 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "build-demo", "generate", "init", "lint", "test", "e2e"]
       }
@@ -24,53 +22,26 @@
     "s3": {
       "runner": "@pellegrims/nx-remotecache-s3",
       "options": {
-        "cacheableOperations": ["build", "build-demo", "generate", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "build-demo", "lint", "test", "e2e"]
       }
     }
   },
-  "targetDependencies": {
-    "publish": [
-      {
-        "target": "publish",
-        "projects": "dependencies"
-      }
-    ],
-    "build": [
-      {
-        "target": "generate",
-        "projects": "dependencies"
-      },
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ],
-    "build-demo": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      },
-      {
-        "target": "build-demo",
-        "projects": "dependencies"
-      }
-    ],
-    "install": [
-      {
-        "target": "install",
-        "projects": "dependencies"
-      },
-      {
-        "target": "build",
-        "projects": "self"
-      }
-    ],
-    "lint": [
-      {
-        "target": "generate",
-        "projects": "dependencies"
-      }
-    ]
+  "targetDefaults": {
+    "publish": {
+      "dependsOn": ["^publish"]
+    },
+    "build": {
+      "dependsOn": ["^generate", "^build"]
+    },
+    "build-demo": {
+      "dependsOn": ["^build", "^build-demo"]
+    },
+    "install": {
+      "dependsOn": ["^install", "build"]
+    },
+    "lint": {
+      "dependsOn": ["^generate"]
+    }
   },
   "generators": {
     "@nrwl/js": {
