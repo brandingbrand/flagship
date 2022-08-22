@@ -50,8 +50,11 @@ const findProjectsForCommit = (
         }
 
         try {
-          const project = config.sourceRepo.getJsonFromRevision<Project>(commitId, projectJson);
-          return normalizeProject(name, project);
+          const project = config.sourceRepo.getJsonFromRevision<Omit<Project, 'root'>>(
+            commitId,
+            projectJson
+          );
+          return normalizeProject(name, { ...project, root: path });
         } catch {
           return normalizeProject(name, { root: path, isConfigMissing: true });
         }
@@ -69,8 +72,11 @@ const findProjectsForCommit = (
         const name = root.split('/').slice(1).join('-');
         try {
           const projectJson = `${root}/project.json`;
-          const project = config.sourceRepo.getJsonFromRevision<Project>(commitId, projectJson);
-          return normalizeProject(name, project);
+          const project = config.sourceRepo.getJsonFromRevision<Omit<Project, 'root'>>(
+            commitId,
+            projectJson
+          );
+          return normalizeProject(name, { ...project, root });
         } catch {
           return normalizeProject(name, { root });
         }
@@ -101,11 +107,11 @@ const findProjectFromFutureRevision = (
   for (const futureRevision of futureRevisions) {
     try {
       const projectJson = `${project.root}/project.json`;
-      const futureConfig = config.sourceRepo.getJsonFromRevision<Project>(
+      const futureConfig = config.sourceRepo.getJsonFromRevision<Omit<Project, 'root'>>(
         futureRevision,
         projectJson
       );
-      return normalizeProject(project.name, futureConfig);
+      return normalizeProject(project.name, { ...futureConfig, root: project.root });
     } catch {
       continue;
     }
