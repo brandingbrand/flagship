@@ -302,6 +302,12 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             // It is not fully working when using options.esm.
             // ---
             {
+              test: /fallback-init\.util\.(ts|tsx)$/,
+              exclude: /node_modules/,
+              sideEffects: true,
+              use: typeScriptLoaders,
+            },
+            {
               test: /init\.util\.(ts|tsx)$/,
               exclude: /node_modules/,
               sideEffects: true,
