@@ -46,14 +46,14 @@ const parseBetweenQuote =
       return parseFail({ cursor, input, fatal: 'Non terminated quote' });
     }
 
-    const cursorEnd = cursor + nonEscapedQuoteIndex;
+    const cursorEnd = 2 + cursor + nonEscapedQuoteIndex;
 
     return parseOk({
       cursor,
       cursorEnd,
       input,
       value: input
-        .slice(cursor + 1, cursorEnd + 1)
+        .slice(cursor + 1, cursorEnd - 1)
         .replace(quote === DOUBLE_QUOTE ? ESCAPED_DOUBLE_QUOTE : ESCAPED_SINGLE_QUOTE, quote),
     });
   };

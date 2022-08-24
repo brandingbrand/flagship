@@ -11,6 +11,10 @@ import { parseFail, parseOk } from '../parser';
 import type { AlphaNumericParser, AnythingParser } from './general.types';
 
 export const parseAnything: AnythingParser = ({ cursor = 0, input }) => {
+  if (input.slice(cursor).length === 0) {
+    return parseFail({ cursor, input });
+  }
+
   const cursorEnd = input.length;
 
   return parseOk({

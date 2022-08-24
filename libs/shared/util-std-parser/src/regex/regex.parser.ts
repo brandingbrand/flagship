@@ -2,6 +2,8 @@ import { parseFail, parseOk } from '../parser';
 
 import type { AnyRegExParser, RegExParserConstructor } from './regex.types';
 
+const REGEX_FLAGS = new Set(['d', 'g', 'i', 'm', 's', 'u', 'y']);
+
 export const parseRegExp: RegExParserConstructor =
   (exp) =>
   ({ cursor = 0, input }) => {
@@ -13,7 +15,7 @@ export const parseRegExp: RegExParserConstructor =
       });
     }
 
-    const cursorEnd = value.index + (value[0] ?? '').length;
+    const cursorEnd = cursor + value.index + (value[0] ?? '').length;
 
     return parseOk({
       cursor,
@@ -50,15 +52,18 @@ export const parseAnyRegExp: AnyRegExParser = ({ cursor = 0, input }) => {
   }
 
   const patternEndAbsoluteIndex = cursor + nonEscapedSlashIndex + 1;
-  let regexEndIndex = [...input].slice(patternEndAbsoluteIndex).indexOf(' ');
+  let regexEndIndex = [...input]
+    .slice(patternEndAbsoluteIndex + 1)
+    .findIndex((character) => !REGEX_FLAGS.has(character));
+
   if (regexEndIndex === -1) {
-    regexEndIndex = input.length - patternEndAbsoluteIndex;
+    regexEndIndex = input.length - patternEndAbsoluteIndex - 1;
   }
 
-  const cursorEnd = cursor + nonEscapedSlashIndex + regexEndIndex;
+  const cursorEnd = 2 + cursor + nonEscapedSlashIndex + regexEndIndex;
 
-  const regExpString = input.slice(cursor + 1, cursorEnd - regexEndIndex + 1).replace(/\//g, '/');
-  const regExpFlags = input.slice(cursorEnd - regexEndIndex + 2, cursorEnd + 1).replace(/\//g, '/');
+  const regExpString = input.slice(cursor + 1, cursorEnd - regexEndIndex - 1).replace(/\//g, '/');
+  const regExpFlags = input.slice(cursorEnd - regexEndIndex, cursorEnd).replace(/\//g, '/');
 
   try {
     return parseOk({

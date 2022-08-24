@@ -52,7 +52,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '/something/',
         cursor: 0,
-        cursorEnd: 10,
+        cursorEnd: 11,
         value: /something/,
       })
     );
@@ -65,7 +65,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '12345/something/',
         cursor: 5,
-        cursorEnd: 15,
+        cursorEnd: 16,
         value: /something/,
       })
     );
@@ -78,7 +78,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '/something/   ',
         cursor: 0,
-        cursorEnd: 10,
+        cursorEnd: 11,
         value: /something/,
       })
     );
@@ -91,7 +91,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '12345/something/   ',
         cursor: 5,
-        cursorEnd: 15,
+        cursorEnd: 16,
         value: /something/,
       })
     );
@@ -104,7 +104,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '/something/gi',
         cursor: 0,
-        cursorEnd: 12,
+        cursorEnd: 13,
         value: /something/gi,
       })
     );
@@ -117,7 +117,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '12345/something/gi',
         cursor: 5,
-        cursorEnd: 17,
+        cursorEnd: 18,
         value: /something/gi,
       })
     );
@@ -130,7 +130,7 @@ describe('parseAnyRegExp', () => {
       parseOk({
         input: '/something/gi  ',
         cursor: 0,
-        cursorEnd: 12,
+        cursorEnd: 13,
         value: /something/gi,
       })
     );

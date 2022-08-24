@@ -7,7 +7,7 @@ export const parseSpace: SpaceParser = parseCharacter(SPACE);
 
 export const parseSpaces: SpacesParser = ({ cursor = 0, input }) => {
   if (input.slice(cursor).length === 0) {
-    return parseFail({ cursor, input, fatal: 'Unexpected end of input' });
+    return parseFail({ cursor, input });
   }
 
   if (input.charAt(cursor) !== ' ') {

@@ -3,6 +3,19 @@ import { parseFail, parseOk } from '../parser';
 import { parseBetweenDoubleQuote, parseBetweenSingleQuote } from './quote.parser';
 
 describe('parseBetweenDoubleQuote', () => {
+  it('should move the cursor to the end of the quote', () => {
+    const result = parseBetweenDoubleQuote({ input: '""', cursor: 0 });
+
+    expect(result).toStrictEqual(
+      parseOk({
+        input: '""',
+        cursor: 0,
+        cursorEnd: 2,
+        value: '',
+      })
+    );
+  });
+
   it('should extract values between quotes', () => {
     const result = parseBetweenDoubleQuote({ input: '"vitae eligendi voluptatem"   ', cursor: 0 });
 
@@ -10,7 +23,7 @@ describe('parseBetweenDoubleQuote', () => {
       parseOk({
         input: '"vitae eligendi voluptatem"   ',
         cursor: 0,
-        cursorEnd: 25,
+        cursorEnd: 27,
         value: 'vitae eligendi voluptatem',
       })
     );
@@ -26,7 +39,7 @@ describe('parseBetweenDoubleQuote', () => {
       parseOk({
         input: '   "vitae eligendi voluptatem"   ',
         cursor: 3,
-        cursorEnd: 28,
+        cursorEnd: 30,
         value: 'vitae eligendi voluptatem',
       })
     );
@@ -42,7 +55,7 @@ describe('parseBetweenDoubleQuote', () => {
       parseOk({
         input: '"vitae \\"eligendi\\" voluptatem"   ',
         cursor: 0,
-        cursorEnd: 29,
+        cursorEnd: 31,
         value: 'vitae "eligendi" voluptatem',
       })
     );
@@ -69,7 +82,7 @@ describe('parseBetweenSingleQuote', () => {
       parseOk({
         input: "'vitae eligendi voluptatem'   ",
         cursor: 0,
-        cursorEnd: 25,
+        cursorEnd: 27,
         value: 'vitae eligendi voluptatem',
       })
     );
@@ -85,7 +98,7 @@ describe('parseBetweenSingleQuote', () => {
       parseOk({
         input: "   'vitae eligendi voluptatem'   ",
         cursor: 3,
-        cursorEnd: 28,
+        cursorEnd: 30,
         value: 'vitae eligendi voluptatem',
       })
     );
@@ -101,7 +114,7 @@ describe('parseBetweenSingleQuote', () => {
       parseOk({
         input: "'vitae \\'eligendi\\' voluptatem'   ",
         cursor: 0,
-        cursorEnd: 29,
+        cursorEnd: 31,
         value: "vitae 'eligendi' voluptatem",
       })
     );
