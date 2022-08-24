@@ -42,7 +42,7 @@ export class EngagementService {
     });
   }
 
-  private readonly appId: string;
+  private appId: string;
   private readonly networkClient: FSNetwork;
   private readonly events: EngagmentEvent[] = [];
   private profileId?: string;
@@ -89,7 +89,14 @@ export class EngagementService {
   }
 
   // @TODO: does the profile need to be resynced anytime during a session?
-  public async getProfile(accountId?: string, forceProfileSync?: boolean): Promise<string> {
+  public async getProfile(
+    accountId?: string,
+    forceProfileSync?: boolean,
+    appId?: string
+  ): Promise<string> {
+    if (typeof appId === 'string') {
+      this.setAppId(appId);
+    }
     if (this.profileId && this.profileData && !forceProfileSync) {
       return this.profileId;
     }
@@ -162,6 +169,10 @@ export class EngagementService {
         console.log('failed to set push token', error);
       });
     }
+  }
+
+  public setAppId(id: string): void {
+    this.appId = id;
   }
 
   /**
