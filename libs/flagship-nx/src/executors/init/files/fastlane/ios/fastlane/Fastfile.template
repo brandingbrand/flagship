@@ -32,7 +32,7 @@ lane :appcenter do
     export_options: {
       provisioningProfiles: {
         "<%= bundleIdentifier %>" =>
-        "Branding Brand Enterprise"
+        "<%= ios.provisioningProfileName %>"
       }
     },
     xcargs: "DEVELOPMENT_TEAM='<%= ios.exportTeamId %>' PROVISIONING_PROFILE_SPECIFIER='<%= ios.provisioningProfileName %>'"
