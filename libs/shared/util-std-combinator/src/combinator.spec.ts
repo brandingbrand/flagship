@@ -1,4 +1,4 @@
-import { parseFail, parseOk, parseString } from '@brandingbrand/standard-parser';
+import { parseFail, parseOk, parseRegExp, parseString } from '@brandingbrand/standard-parser';
 
 import { any, between } from './combinator';
 
@@ -63,6 +63,15 @@ describe('between', () => {
         input: 'foobarbaz',
         value: 'bar',
       })
+    );
+  });
+
+  it('should parse between symbols of different length', () => {
+    const parser = between(parseString('$('), parseString(')'))(parseRegExp(/\w*/));
+    const result = parser({ input: '$(word)' });
+
+    expect(result).toStrictEqual(
+      parseOk({ input: '$(word)', cursor: 0, cursorEnd: 7, value: ['word'] })
     );
   });
 });

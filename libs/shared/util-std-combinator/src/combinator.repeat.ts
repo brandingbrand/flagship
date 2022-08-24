@@ -5,9 +5,8 @@ import type {
   ParserFailure,
   ParserOk,
   ParserOkFields,
-  ParserResult,
 } from '@brandingbrand/standard-parser';
-import { parseOk } from '@brandingbrand/standard-parser';
+import { flatMapParse, mapParseFailure, parseOk } from '@brandingbrand/standard-parser';
 import { flatMap, flatMapFailure } from '@brandingbrand/standard-result';
 
 import { many } from './combinator.many';
@@ -29,8 +28,12 @@ export const repeat =
         pipe(
           internalArgs,
           many(internalParser),
-          flatMap((success) =>
-            pipe(
+          flatMap((success) => {
+            if (success.cursorEnd === args.input.length) {
+              return parseOk(success as unknown as ParserOkFields<[T, ...T[]]>);
+            }
+
+            return pipe(
               { ...internalArgs, cursor: success.cursorEnd },
               internalRepeat(internalParser),
               flatMap<
@@ -47,8 +50,8 @@ export const repeat =
               flatMapFailure(() =>
                 parseOk<[T, ...T[]]>(success as unknown as ParserOkFields<[T, ...T[]]>)
               )
-            )
-          )
+            );
+          })
         );
 
     return internalRepeat(parser)(args);
@@ -70,17 +73,22 @@ export const repeatUntilTerminator =
     pipe(
       args,
       many(parser),
-      flatMap((success) =>
-        pipe(
+      flatMap((success) => {
+        if (success.cursorEnd === args.input.length) {
+          return parseOk({ ...success, cursor: args.cursor });
+        }
+
+        return pipe(
           terminator({ cursor: success.cursorEnd, input: args.input }),
           flatMap(() => parseOk({ ...success, cursor: args.cursor })),
           flatMapFailure(() =>
             pipe(
-              { ...success, cursor: args.cursor },
+              { ...success, cursor: success.cursorEnd },
               repeatUntilTerminator<T>(terminator)(parser),
-              flatMapFailure(() => parseOk({ ...success, cursor: args.cursor }))
+              mapParseFailure(() => ({ ...success, cursor: args.cursor }))
             )
           )
-        )
-      )
+        );
+      }),
+      flatMapParse((result: ParserOkFields<T[]>) => parseOk({ ...result, cursor: args.cursor }))
     );

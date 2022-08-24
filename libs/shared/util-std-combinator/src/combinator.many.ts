@@ -12,37 +12,46 @@ import { isFailure, isOk } from '@brandingbrand/standard-result';
  * @return A CombinatorResult
  */
 export const many =
-  <T = unknown>(...parsers: Parsers<T>): Parser<T[], T[]> =>
-  (args) =>
-    parsers.reduce<ParserResult<T[]>>(
-      (aggregate, parser) => {
-        if (isFailure(aggregate)) {
-          return aggregate;
-        }
+  <T = unknown>(...parsers: Parsers<T>): Parser<T[]> =>
+  (args) => {
+    const initialValue = (() => {
+      if ('value' in args) {
+        return Array.isArray(args.value) ? (args.value as T[]) : ([args.value] as T[]);
+      }
 
-        const parserResult: ParserResult<T> = parser({
-          ...aggregate.ok,
-          cursor: aggregate.ok.cursorEnd,
-        });
+      return [];
+    })();
 
-        if (isOk(parserResult)) {
-          return parseOk({
-            cursor: args.cursor,
-            cursorEnd: parserResult.ok.cursorEnd,
-            input: aggregate.ok.input,
-            value: [...aggregate.ok.value, parserResult.ok.value],
-          });
-        }
+    const initialResult = parseOk({
+      ...args,
+      value: initialValue,
+      cursorEnd: args.cursor ?? 0,
+    });
 
-        return parseFail({
-          input: args.input,
+    // eslint-disable-next-line unicorn/no-array-reduce -- Isolated Usage
+    return parsers.reduce<ParserResult<T[]>>((aggregate, parser) => {
+      if (isFailure(aggregate)) {
+        return aggregate;
+      }
+
+      const parserResult: ParserResult<T> = parser({
+        ...aggregate.ok,
+        cursor: aggregate.ok.cursorEnd,
+      });
+
+      if (isOk(parserResult)) {
+        return parseOk({
           cursor: args.cursor,
-          fatal: parserResult.failure.fatal,
+          cursorEnd: parserResult.ok.cursorEnd,
+          input: aggregate.ok.input,
+          value: [...aggregate.ok.value, parserResult.ok.value],
         });
-      },
-      parseOk({
-        value: [],
-        cursorEnd: args.cursor ?? 0,
-        ...args,
-      })
-    );
+      }
+
+      return parseFail({
+        input: args.input,
+        cursor: args.cursor,
+        fatal: parserResult.failure.fatal,
+      });
+    }, initialResult);
+  };
