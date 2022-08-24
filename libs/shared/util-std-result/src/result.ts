@@ -6,6 +6,16 @@ export type Failure<T> = Branded<{ failure: T }, 'failure'>;
 
 export type Result<OkType, FailureType> = Failure<FailureType> | Ok<OkType>;
 
+export type ExtractFailure<T extends Result<unknown, unknown>> = T extends Failure<
+  infer FailureType
+>
+  ? FailureType
+  : never;
+
+export type ExtractOk<T extends Result<unknown, unknown>> = T extends Ok<infer OkType>
+  ? OkType
+  : never;
+
 const okBrand = makeBranding('ok');
 const failureBrand = makeBranding('failure');
 
