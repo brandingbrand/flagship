@@ -29,6 +29,7 @@ export interface CreateAndroidFilesOptions {
   appIcon?: string;
   launchScreen?: string;
   googleServicesJson?: string;
+  googleMapsApiKey?: string;
   buildConfig?: {
     gradleVersion?: string;
     storeFile: string;

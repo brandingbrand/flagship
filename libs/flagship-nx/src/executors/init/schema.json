@@ -151,6 +151,9 @@
     "googleServicesJson": {
       "type": "string"
     },
+    "googleMapsApiKey": {
+      "type": "string"
+    },
     "appIcon": {
       "type": "object",
       "properties": {
