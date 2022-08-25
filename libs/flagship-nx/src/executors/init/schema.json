@@ -206,6 +206,9 @@
         "android": {
           "type": "object",
           "properties": {
+            "gradleVersion": {
+              "type": "string"
+            },
             "storeFile": {
               "type": "string"
             },

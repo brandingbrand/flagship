@@ -30,6 +30,7 @@ export interface CreateAndroidFilesOptions {
   launchScreen?: string;
   googleServicesJson?: string;
   buildConfig?: {
+    gradleVersion?: string;
     storeFile: string;
     keyAlias: string;
   };

@@ -69,6 +69,7 @@ export interface InitExecutorOptions {
       entitlementsFile?: string;
     };
     android?: {
+      gradleVersion?: string;
       storeFile: string;
       keyAlias: string;
     };
