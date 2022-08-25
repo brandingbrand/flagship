@@ -42,6 +42,8 @@ export interface InitExecutorOptions {
   googleServicesJson?: string;
   googleMapsApiKey?: string;
 
+  skipPodInstall?: boolean;
+
   activityAttributes?: Record<string, string>;
   applicationAttributes?: Record<string, string>;
 
@@ -190,7 +192,7 @@ export const initExecutor = async (
     ensureNodeModulesSymlink(context.root, projectRoot);
 
     await link(tree.root, projectRoot);
-    if (platform() === 'darwin') {
+    if (platform() === 'darwin' && options.skipPodInstall !== true) {
       const iosFolder = join(projectRoot, 'ios');
       await podRepoUpdate(iosFolder);
       await podInstall(iosFolder);

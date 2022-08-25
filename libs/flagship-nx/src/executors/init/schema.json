@@ -256,6 +256,9 @@
         }
       },
       "required": ["organization", "appName"]
+    },
+    "skipPodInstall": {
+      "type": "boolean"
     }
   },
   "required": ["main", "packageJson", "bundleIdentifier"]
