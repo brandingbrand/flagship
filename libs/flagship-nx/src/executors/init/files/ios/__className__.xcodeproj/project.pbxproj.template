@@ -388,6 +388,9 @@
 				PRODUCT_NAME = <%= className %>;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
+				<% if (buildConfig?.provisioningProfileName) { %>
+				PROVISIONING_PROFILE_SPECIFIER = "<%= buildConfig.provisioningProfileName %>";
+				<% } %>
 			};
 			name = Debug;
 		};
@@ -424,6 +427,9 @@
 				PRODUCT_NAME = <%= className %>;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
+				<% if (buildConfig?.provisioningProfileName) { %>
+				PROVISIONING_PROFILE_SPECIFIER = "<%= buildConfig.provisioningProfileName %>";
+				<% } %>
 			};
 			name = Release;
 		};

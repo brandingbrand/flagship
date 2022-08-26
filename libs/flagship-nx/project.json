@@ -13,6 +13,7 @@
         "assets": [
           "libs/flagship-nx/*.md",
           "libs/flagship-nx/executors.json",
+          "libs/flagship-nx/generators.json",
           {
             "glob": "**/files/**/*",
             "input": "libs/flagship-nx",

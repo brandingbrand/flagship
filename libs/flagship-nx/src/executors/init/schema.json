@@ -303,6 +303,39 @@
     "skipPodInstall": {
       "type": "boolean",
       "description": "Whether to skip the pod install on init"
+    },
+    "iosAppExtensions": {
+      "type": "object",
+      "description": "A dictionary of additional targets to add to Xcode Project",
+      "additionalProperties": {
+        "type": "object",
+        "description": "An App Extension to build along side the core App",
+        "properties": {
+          "appExtension": {
+            "type": "string",
+            "pattern": "^(.+):(.+)$",
+            "description": "The App Extension id from an Flagship plugin"
+          },
+          "bundleIdentifier": {
+            "type": "string",
+            "description": "The identifier to use for bundling this App Extension"
+          },
+          "profile": {
+            "type": "string",
+            "description": "The name of a profile used for this App Extension"
+          },
+          "entitlements": {
+            "type": "string",
+            "description": "A path to an entitlements file to use for this App Extension"
+          },
+          "options": {
+            "type": "object",
+            "description": "An additional options that this App Extension supports",
+            "additionalProperties": true
+          }
+        },
+        "required": ["appExtension", "bundleIdentifier"]
+      }
     }
   },
   "required": ["main", "packageJson", "bundleIdentifier"]

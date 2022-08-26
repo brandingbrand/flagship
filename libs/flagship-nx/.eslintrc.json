@@ -1,6 +1,6 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "**/files/**/*"],
   "overrides": [
     {
       "extends": ["brandingbrand/typescript", "brandingbrand/node", "brandingbrand/rxjs"],

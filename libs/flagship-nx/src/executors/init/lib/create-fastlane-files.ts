@@ -1,6 +1,5 @@
 import type { Tree } from '@nrwl/devkit';
-import { generateFiles } from '@nrwl/devkit';
-import { join } from 'path';
+import { generateFiles, joinPathFragments, names } from '@nrwl/devkit';
 
 import type { PlatformSpecific } from './platform';
 import { android, ios } from './platform';
@@ -22,6 +21,7 @@ export interface CreateFastlaneFilesOptions {
     distP12: string;
     provisioningProfileName: string;
   };
+  iosAppExtensions?: Record<string, { bundleIdentifier: string; profile?: string }>;
   android?: {
     storeFile: string;
     keyAlias: string;
@@ -29,17 +29,30 @@ export interface CreateFastlaneFilesOptions {
   dependencies: string[];
 }
 
-export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOptions) => {
+export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOptions): void => {
   const { appName, bundleIdentifier, ...otherOptions } = options;
 
   if (otherOptions.ios) {
+    const defualtProfile = otherOptions.ios.provisioningProfileName;
+    const provisioningProfiles = [
+      {
+        bundleIdentifier: ios(bundleIdentifier),
+        profile: defualtProfile,
+      },
+      ...Object.values(otherOptions.iosAppExtensions ?? {}).map((appExtension) => ({
+        bundleIdentifier: appExtension.bundleIdentifier,
+        profile: appExtension.profile ?? defualtProfile,
+      })),
+    ];
+
     generateFiles(
       tree,
-      join(__dirname, '../files/fastlane/ios'),
-      join(options.projectRoot, 'ios'),
+      joinPathFragments(__dirname, '../files/fastlane/ios'),
+      joinPathFragments(options.projectRoot, 'ios'),
       {
         bundleIdentifier: ios(bundleIdentifier),
         appName: ios(appName),
+        provisioningProfiles,
         ...otherOptions,
       }
     );
@@ -48,8 +61,8 @@ export const createFastlaneFiles = (tree: Tree, options: CreateFastlaneFilesOpti
   if (otherOptions.android) {
     generateFiles(
       tree,
-      join(__dirname, '../files/fastlane/android'),
-      join(options.projectRoot, 'android'),
+      joinPathFragments(__dirname, '../files/fastlane/android'),
+      joinPathFragments(options.projectRoot, 'android'),
       {
         bundleIdentifier: android(bundleIdentifier),
         appName: android(appName),

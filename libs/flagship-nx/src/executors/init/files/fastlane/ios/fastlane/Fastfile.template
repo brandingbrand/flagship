@@ -30,12 +30,11 @@ lane :appcenter do
     export_method: "<%= ios.exportMethod %>",
     export_team_id: "<%= ios.exportTeamId %>",
     export_options: {
-      provisioningProfiles: {
-        "<%= bundleIdentifier %>" =>
-        "<%= ios.provisioningProfileName %>"
+      provisioningProfiles: {<% for (const  { bundleIdentifier, profile } of provisioningProfiles) { %>
+        "<%= bundleIdentifier %>" => "<%- profile %>",<% } %>
       }
     },
-    xcargs: "DEVELOPMENT_TEAM='<%= ios.exportTeamId %>' PROVISIONING_PROFILE_SPECIFIER='<%= ios.provisioningProfileName %>'"
+    xcargs: "DEVELOPMENT_TEAM='<%= ios.exportTeamId %>'"
   )
 
   appcenter_upload(

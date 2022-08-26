@@ -1,0 +1,15 @@
+{
+  "ios": {
+    "appExtensions": {
+      "<%= appExtension %>": {
+        "infoPlist": "Info.plist",
+        "schema": "src/ios/app-extensions/<%= appExtension %>/<%= appExtension %>.schema.json",
+        "files": "src/ios/app-extensions/<%= appExtension %>/files",
+        "frameworks": [
+          "System/Library/Frameworks/NotificationCenter.framework",
+          "System/Library/Frameworks/Foundation.framework"
+        ]
+      }
+    }
+  }
+}

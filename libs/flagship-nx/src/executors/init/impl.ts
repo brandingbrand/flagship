@@ -82,6 +82,17 @@ export interface InitExecutorOptions {
     storePassword: string;
     keyPassword: string;
   };
+
+  iosAppExtensions?: Record<
+    string,
+    {
+      appExtension: string;
+      bundleIdentifier: string;
+      profile?: string;
+      entitlement?: string;
+      options?: object;
+    }
+  >;
 }
 
 interface PackageJson {
@@ -100,7 +111,7 @@ export const initExecutor = async (
   options: InitExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> => {
-  if (!context.projectName) {
+  if (context.projectName === undefined) {
     return { success: false };
   }
 
@@ -157,6 +168,7 @@ export const initExecutor = async (
       entitlementsFile: options.buildConfig?.ios?.entitlementsFile,
       dependencies: [...dependencies.values()],
       buildConfig: options.buildConfig?.ios,
+      appExtensions: options.iosAppExtensions,
     });
 
     createAndroidFiles(tree, {
@@ -197,6 +209,7 @@ export const initExecutor = async (
         ...options.appCenter,
         ...options.buildConfig,
         dependencies: [...dependencies.values()],
+        iosAppExtensions: options.iosAppExtensions,
       });
     }
 
