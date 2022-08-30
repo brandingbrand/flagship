@@ -20,7 +20,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-json-schema/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 435
+        "maxWarnings": 425
       }
     },
     "set-max-warnings": {

@@ -2,7 +2,8 @@
 import { intersection } from '@brandingbrand/standard-array';
 
 import AJV from 'ajv';
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from '../types';
 
 import { notUndefined } from './common';
 
@@ -10,7 +11,7 @@ import { mergeAllOf } from '.';
 
 const ajv = new AJV();
 
-const mergeAndValidate = (schema: JSONSchema7) => {
+const mergeAndValidate = (schema: JSONSchemaCreate) => {
   const result = mergeAllOf(schema);
   try {
     if (!ajv.validateSchema(result)) {
@@ -91,7 +92,7 @@ describe('mergeAllOf', () => {
   });
 
   it('does not use any original objects or arrays', () => {
-    const schema: JSONSchema7 = {
+    const schema: JSONSchemaCreate = {
       properties: {
         arr: {
           type: 'array',
@@ -112,7 +113,7 @@ describe('mergeAllOf', () => {
       ],
     };
 
-    const innerDeconstruct = (schema: JSONSchema7Definition): JSONSchema7Definition[] => {
+    const innerDeconstruct = (schema: JSONSchemaCreateDefinition): JSONSchemaCreateDefinition[] => {
       const allChildObj = Object.entries(schema).map(([key, val]) => {
         if (typeof val === 'object') {
           return innerDeconstruct(val);
@@ -123,7 +124,7 @@ describe('mergeAllOf', () => {
       return [schema, ...allChildObj.filter(notUndefined).flat()];
     };
 
-    const getAllObjects = (schema: JSONSchema7Definition | undefined) =>
+    const getAllObjects = (schema: JSONSchemaCreateDefinition | undefined) =>
       innerDeconstruct(schema ?? {}).flat();
     const inputObjects = getAllObjects(schema);
 
@@ -1669,7 +1670,7 @@ describe('mergeAllOf', () => {
               minLength: 7,
             },
           },
-        } as JSONSchema7,
+        } as JSONSchemaCreate,
       };
 
       (expected.person.properties as any).child = expected.person;

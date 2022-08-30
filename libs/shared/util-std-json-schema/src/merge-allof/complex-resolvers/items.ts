@@ -1,8 +1,7 @@
 import { toArray, uniqueWith } from '@brandingbrand/standard-array';
 
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
-
 import { compare } from '../../compare.util';
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from '../../types';
 import {
   allUniqueKeys,
   deleteUndefinedProperties,
@@ -20,7 +19,7 @@ const removeFalseSchemasFromArray = (target: unknown[]) => {
 };
 
 const getItemSchemas = (
-  subSchemas: Array<Pick<JSONSchema7, typeof keywords[number]>>,
+  subSchemas: Array<Pick<JSONSchemaCreate, typeof keywords[number]>>,
   key: number
 ) =>
   subSchemas.map((sub) => {
@@ -42,7 +41,7 @@ const getItemSchemas = (
     return undefined;
   });
 
-const getAdditionalSchemas = (subSchemas: JSONSchema7[]) =>
+const getAdditionalSchemas = (subSchemas: JSONSchemaCreate[]) =>
   subSchemas.map((sub) => {
     if (!sub) {
       return undefined;
@@ -57,12 +56,12 @@ const getAdditionalSchemas = (subSchemas: JSONSchema7[]) =>
 
 // Provide source when array
 const mergeItems = (
-  group: Array<Pick<JSONSchema7, typeof keywords[number]>>,
+  group: Array<Pick<JSONSchemaCreate, typeof keywords[number]>>,
   mergeSchemas: MergeSchemas,
-  items: JSONSchema7Definition[][]
+  items: JSONSchemaCreateDefinition[][]
 ) => {
   const allKeys = allUniqueKeys(items);
-  return allKeys.reduce<Array<Pick<JSONSchema7, typeof keywords[number]>>>((all, key) => {
+  return allKeys.reduce<Array<Pick<JSONSchemaCreate, typeof keywords[number]>>>((all, key) => {
     const schemas = getItemSchemas(group, key);
     const compacted = uniqueWith(schemas.filter(notUndefined), compare);
     all[key] = mergeSchemas(compacted, [key]) as any;
@@ -74,13 +73,13 @@ export const keywords = ['items', 'additionalItems'] as const;
 export const resolver: ComplexResolver<typeof keywords[number]> = (values, parents, mergers) => {
   const items = values.map((s) => s.items);
   const itemsCompacted = items.filter(notUndefined);
-  const returnObject: Pick<JSONSchema7, typeof keywords[number]> = {};
+  const returnObject: Pick<JSONSchemaCreate, typeof keywords[number]> = {};
 
   // if all items keyword values are schemas, we can merge them as simple schemas
   // if not we need to merge them as mixed
   returnObject.items = itemsCompacted.every(isSchemaDefinition)
-    ? mergers.items(items as JSONSchema7Definition[])
-    : mergeItems(values, mergers.items, items.map(toArray) as JSONSchema7Definition[][]);
+    ? mergers.items(items as JSONSchemaCreateDefinition[])
+    : mergeItems(values, mergers.items, items.map(toArray) as JSONSchemaCreateDefinition[][]);
 
   let schemasAtLastPos;
   if (itemsCompacted.every(Array.isArray)) {

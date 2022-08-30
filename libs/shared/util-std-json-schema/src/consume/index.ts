@@ -1,13 +1,13 @@
 import { toArray } from '@brandingbrand/standard-array';
 
-import type { JSONSchema7Definition } from 'json-schema';
+import type { JSONSchemaCreateDefinition } from '../types';
 
 // eslint-disable-next-line complexity, max-statements
 export const consumeSchema = (
-  schema?: JSONSchema7Definition,
-  editorSchema?: JSONSchema7Definition
+  schema?: JSONSchemaCreateDefinition,
+  editorSchema?: JSONSchemaCreateDefinition
   // eslint-disable-next-line sonarjs/cognitive-complexity
-): JSONSchema7Definition | undefined => {
+): JSONSchemaCreateDefinition | undefined => {
   if (editorSchema === undefined || schema === undefined) {
     return schema;
   }

@@ -1,7 +1,5 @@
 import { cloneDeep } from '@brandingbrand/standard-object';
 
-import type { JSONSchema7 } from 'json-schema';
-
 import {
   alignChildrenSchema,
   commerceDataSourceEditorSchema,
@@ -9,6 +7,7 @@ import {
   liftedSchema,
   viewStyleSchema,
 } from '../../fixtures';
+import type { JSONSchemaCreate } from '../types';
 
 import { consumeSchema } from '.';
 
@@ -52,7 +51,7 @@ describe('consumeSchema', () => {
   });
 
   it('should remove types', () => {
-    const schema: JSONSchema7 = {
+    const schema: JSONSchemaCreate = {
       enum: ['hidden', 'visible'],
       type: 'string',
       title: 'backfaceVisibility',

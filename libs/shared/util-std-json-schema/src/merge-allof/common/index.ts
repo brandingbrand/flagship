@@ -1,7 +1,7 @@
 import { unique, without } from '@brandingbrand/standard-array';
 import { isPlainObject } from '@brandingbrand/standard-object';
 
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from '../../types';
 
 export const indexes = (array: unknown[]) => Object.keys(array).map(Number);
 
@@ -25,9 +25,9 @@ export const getValues = <T>(schemas: T[], key: keyof T) =>
   schemas.map((schema) => (typeof schema === 'object' ? schema[key] : undefined));
 
 export const notUndefined = <T>(val: T | undefined): val is T => val !== undefined;
-export const isSchema = (val: unknown): val is JSONSchema7 => typeof val === 'object';
+export const isSchema = (val: unknown): val is JSONSchemaCreate => typeof val === 'object';
 
-export const isSchemaDefinition = (val: unknown): val is JSONSchema7Definition =>
+export const isSchemaDefinition = (val: unknown): val is JSONSchemaCreateDefinition =>
   isPlainObject(val) || val === true || val === false;
 
 export const isEmptySchema = (obj: unknown) =>
@@ -41,9 +41,9 @@ export const isTrue = (val: unknown): val is true => val === true;
 
 export const stringArray = (values: string[][]) => unique(values.flat()).sort();
 
-export const deleteUndefinedProperties = (returnObject: JSONSchema7) => {
+export const deleteUndefinedProperties = (returnObject: JSONSchemaCreate) => {
   // cleanup empty
-  for (const property of Object.keys(returnObject) as Array<keyof JSONSchema7>) {
+  for (const property of Object.keys(returnObject) as Array<keyof JSONSchemaCreate>) {
     if (returnObject.hasOwnProperty(property) && isEmptySchema(returnObject[property])) {
       delete returnObject[property];
     }

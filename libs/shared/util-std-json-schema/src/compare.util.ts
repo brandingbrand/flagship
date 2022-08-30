@@ -5,14 +5,15 @@ import { intersectionWith, toArray, unique, uniqueWith } from '@brandingbrand/st
 import { defaults, isPlainObject } from '@brandingbrand/standard-object';
 
 import isEqual from 'fast-deep-equal';
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from './types';
 
 const undef = <T>(val: T | undefined): val is undefined => val === undefined;
 
 const emptySchema = (schema: unknown): schema is true | {} | undefined =>
   undef(schema) || isEqual(schema, {}) || schema === true;
 
-const isSchema = (val: unknown): val is JSONSchema7Definition | undefined =>
+const isSchema = (val: unknown): val is JSONSchemaCreateDefinition | undefined =>
   undef(val) || isPlainObject(val) || val === true || val === false;
 
 const keys = (obj: unknown) => (isPlainObject(obj) || Array.isArray(obj) ? Object.keys(obj) : []);
@@ -202,8 +203,8 @@ export const compare = (
   const innerCompare = (a: unknown | undefined, b: unknown | undefined) => compare(a, b, options);
 
   return allKeys.every((key) => {
-    const aValue = a[key as keyof JSONSchema7];
-    const bValue = b[key as keyof JSONSchema7];
+    const aValue = a[key as keyof JSONSchemaCreate];
+    const bValue = b[key as keyof JSONSchemaCreate];
 
     if (schemaProps.includes(key as SchemaPropKey)) {
       type SchemaProp = typeof a[typeof schemaProps[number]];

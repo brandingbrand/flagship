@@ -1,10 +1,10 @@
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from './types';
 
 const refRegex = /^#\/definitions\/(.*)$/;
 
-export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
+export const dereference = <T extends JSONSchemaCreateDefinition = JSONSchemaCreate>(
   schema: T,
-  parentDefinitions?: JSONSchema7['definitions']
+  parentDefinitions?: JSONSchemaCreate['definitions']
 ): T => {
   if (schema === undefined) {
     return schema;
@@ -14,7 +14,7 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
     return schema;
   }
 
-  const jsonSchema: JSONSchema7 = schema;
+  const jsonSchema: JSONSchemaCreate = schema;
   const { $ref, definitions, ...otherProperties } = jsonSchema;
   const currentDefinitions = { ...definitions, ...parentDefinitions };
 
@@ -72,5 +72,5 @@ export const dereference = <T extends JSONSchema7Definition = JSONSchema7>(
             : dereference(jsonSchema.items ?? {}, currentDefinitions),
         }
       : {}),
-  } as JSONSchema7 as T;
+  } as JSONSchemaCreate as T;
 };

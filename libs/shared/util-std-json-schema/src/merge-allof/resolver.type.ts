@@ -1,9 +1,9 @@
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from '../types';
 
 export type MergeSchemas = (
-  schemas: JSONSchema7Definition[],
+  schemas: JSONSchemaCreateDefinition[],
   parents?: Array<number | string>
-) => JSONSchema7Definition | undefined;
+) => JSONSchemaCreateDefinition | undefined;
 
 export type Resolver<T> = (
   compacted: T[],
@@ -11,12 +11,12 @@ export type Resolver<T> = (
   mergeSchemas: MergeSchemas
 ) => T | undefined;
 
-type Merges<K extends keyof JSONSchema7> = {
+type Merges<K extends keyof JSONSchemaCreate> = {
   [Key in K]: MergeSchemas;
 };
 
-export type ComplexResolver<K extends keyof JSONSchema7> = (
-  values: JSONSchema7[],
+export type ComplexResolver<K extends keyof JSONSchemaCreate> = (
+  values: JSONSchemaCreate[],
   parents: Array<number | string>,
   mergers: Merges<K>
-) => JSONSchema7;
+) => JSONSchemaCreate;

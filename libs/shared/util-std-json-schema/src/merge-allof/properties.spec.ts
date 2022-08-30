@@ -1,7 +1,8 @@
 import { cloneDeep } from '@brandingbrand/standard-object';
 
 import AJV from 'ajv';
-import type { JSONSchema7Definition } from 'json-schema';
+
+import type { JSONSchemaCreateDefinition } from '../types';
 
 import { mergeAllOf as merger } from '.';
 
@@ -10,14 +11,14 @@ const ajv = new AJV({
 });
 
 const validateInputOutput = (
-  schema: JSONSchema7Definition,
-  transformedSchema: JSONSchema7Definition,
+  schema: JSONSchemaCreateDefinition,
+  transformedSchema: JSONSchemaCreateDefinition,
   obj: unknown
 ) => {
-  const validOriginal = ajv.validate(schema, obj);
-  const validNew = ajv.validate(transformedSchema, obj);
+  const isValidOriginal = ajv.validate(schema, obj);
+  const isValidNew = ajv.validate(transformedSchema, obj);
 
-  expect(validOriginal).toStrictEqual(validNew);
+  expect(isValidOriginal).toStrictEqual(isValidNew);
 };
 
 describe('properties', () => {
@@ -172,7 +173,7 @@ describe('properties', () => {
     });
 
     it('disallows all except matching patternProperties if both false', () => {
-      const schema: JSONSchema7Definition = {
+      const schema: JSONSchemaCreateDefinition = {
         allOf: [
           {
             type: 'object',
@@ -245,7 +246,7 @@ describe('properties', () => {
     });
 
     it('disallows all except matching patternProperties if both true', () => {
-      const schema: JSONSchema7Definition = {
+      const schema: JSONSchemaCreateDefinition = {
         allOf: [
           {
             type: 'object',
@@ -322,7 +323,7 @@ describe('properties', () => {
     });
 
     it('disallows all except matching patternProperties if one false', () => {
-      const schema: JSONSchema7Definition = {
+      const schema: JSONSchemaCreateDefinition = {
         allOf: [
           {
             type: 'object',
@@ -672,7 +673,7 @@ describe('properties', () => {
     });
 
     it('merges with properties if matching property name', () => {
-      const schema: JSONSchema7Definition = {
+      const schema: JSONSchemaCreateDefinition = {
         allOf: [
           {
             type: 'object',

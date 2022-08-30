@@ -6,17 +6,18 @@ import { toArray } from '@brandingbrand/standard-array';
 
 import AJV from 'ajv';
 import isEqual from 'fast-deep-equal';
-import type { JSONSchema7, JSONSchema7Definition, JSONSchema7Type } from 'json-schema';
+import type { JSONSchema7Type } from 'json-schema';
 
 import { mergeAllOf } from '../merge-allof';
+import type { JSONSchemaCreate, JSONSchemaCreateDefinition } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { hasOwnProperty } = Object.prototype;
 const ajv = new AJV();
 
 type Validator = (
-  input: JSONSchema7,
-  target: JSONSchema7,
+  input: JSONSchemaCreate,
+  target: JSONSchemaCreate,
   options: Options,
   paths: Paths
 ) => ErrorArray | undefined;
@@ -106,7 +107,7 @@ export const one = <T>(
   ] as ErrorArray;
 };
 
-export const isEmptyObject = (ob: JSONSchema7Definition): boolean => {
+export const isEmptyObject = (ob: JSONSchemaCreateDefinition): boolean => {
   if (ob === null || typeof ob !== 'object' || Array.isArray(ob)) {
     return false;
   }
@@ -138,7 +139,7 @@ export const subFormats: Record<string, string[]> = {
   'uri-reference': ['uri'],
 };
 
-export const cloneRefs = <T extends JSONSchema7>(ob: T): T => {
+export const cloneRefs = <T extends JSONSchemaCreate>(ob: T): T => {
   if (!ob || typeof ob !== 'object') {
     return ob;
   } else if (Array.isArray(ob)) {
@@ -292,7 +293,7 @@ export const mergeTopWithAnyOf = (ob: SchemaWithAnyOf): SchemaWithAnyOf => {
   // merged.
   //   If *all* branches fail, then it's irreconcilable and will/should fail.
   let error: Error | undefined;
-  const newAnyOf: JSONSchema7[] = [];
+  const newAnyOf: JSONSchemaCreate[] = [];
   for (const o of anyOf) {
     try {
       const merged = mergeAllOf({ allOf: [o, rest] });
@@ -311,16 +312,16 @@ export const mergeTopWithAnyOf = (ob: SchemaWithAnyOf): SchemaWithAnyOf => {
   }
 };
 
-const calculateEffectiveMinLength = (schema: JSONSchema7): number => {
+const calculateEffectiveMinLength = (schema: JSONSchemaCreate): number => {
   if (schema.type === 'string') {
     if (schema.minLength !== undefined) {
       return schema.minLength;
     } else if (schema.enum) {
-      return Math.min(...schema.enum.map((s) => (s as JSONSchema7[]).length));
+      return Math.min(...schema.enum.map((s) => (s as JSONSchemaCreate[]).length));
     }
   } else if (schema.allOf ?? schema.anyOf ?? schema.oneOf) {
     return Math.min(
-      ...((schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchema7[]).map((s) =>
+      ...((schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchemaCreate[]).map((s) =>
         calculateEffectiveMinLength(s)
       )
     );
@@ -331,16 +332,16 @@ const calculateEffectiveMinLength = (schema: JSONSchema7): number => {
   return -1;
 };
 
-const calculateEffectiveMaxLength = (schema: JSONSchema7): number => {
+const calculateEffectiveMaxLength = (schema: JSONSchemaCreate): number => {
   if (schema.type === 'string') {
     if (schema.minLength !== undefined) {
       return schema.minLength;
     } else if (schema.enum) {
-      return Math.max(...schema.enum.map((s) => (s as JSONSchema7[]).length));
+      return Math.max(...schema.enum.map((s) => (s as JSONSchemaCreate[]).length));
     }
   } else if (schema.allOf ?? schema.anyOf ?? schema.oneOf) {
     return Math.max(
-      ...((schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchema7[]).map((s) =>
+      ...((schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchemaCreate[]).map((s) =>
         calculateEffectiveMaxLength(s)
       )
     );
@@ -351,10 +352,10 @@ const calculateEffectiveMaxLength = (schema: JSONSchema7): number => {
   return -1;
 };
 
-const gatherEnumValues = (schema: JSONSchema7): unknown[] | undefined => {
+const gatherEnumValues = (schema: JSONSchemaCreate): unknown[] | undefined => {
   if (schema.allOf ?? schema.anyOf ?? schema.oneOf) {
     let enums: unknown[] | undefined;
-    for (const e of (schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchema7[]) {
+    for (const e of (schema.allOf ?? schema.anyOf ?? schema.oneOf) as JSONSchemaCreate[]) {
       const subEnums = gatherEnumValues(e);
       if (subEnums) {
         if (enums === undefined) {
@@ -738,7 +739,7 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
   // by the target.
   if (input.anyOf) {
     const { anyOf } = mergeTopWithAnyOf(input as SchemaWithAnyOf);
-    const errors = all(anyOf as JSONSchema7[], (branch, idx) =>
+    const errors = all(anyOf as JSONSchemaCreate[], (branch, idx) =>
       getErrors(branch, target, options, {
         input: [...paths.input, 'anyOf', idx],
         target: paths.target,
@@ -759,7 +760,7 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
   // that at least one is satisfied by the input
   if (target.anyOf) {
     const { anyOf } = mergeTopWithAnyOf(target as SchemaWithAnyOf);
-    const errors = some(anyOf as JSONSchema7[], (branch, idx) =>
+    const errors = some(anyOf as JSONSchemaCreate[], (branch, idx) =>
       getErrors(input, branch, options, {
         input: paths.input,
         target: [...paths.target, 'anyOf', idx],
@@ -780,8 +781,8 @@ const getAnyOfErrors: Validator = (input, target, options, paths) => {
 };
 
 const getInputPropertyErrors: Validator = (input, target, options, paths) => {
-  const subProps = (input.properties ?? {}) as Record<string, JSONSchema7>;
-  const superProps = (target.properties ?? {}) as Record<string, JSONSchema7>;
+  const subProps = (input.properties ?? {}) as Record<string, JSONSchemaCreate>;
+  const superProps = (target.properties ?? {}) as Record<string, JSONSchemaCreate>;
 
   if (subProps) {
     for (const prop in superProps) {
@@ -863,8 +864,8 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
     }
     for (let i = 0, len = target.items.length; i < len; i++) {
       const errors = getErrors(
-        input.items[i] as JSONSchema7,
-        target.items[i] as JSONSchema7,
+        input.items[i] as JSONSchemaCreate,
+        target.items[i] as JSONSchemaCreate,
         options,
         {
           input: [...paths.input, i],
@@ -888,10 +889,15 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
   } else if (Array.isArray(input.items)) {
     // TODO: What if *both* are arrays?
     for (const it of input.items) {
-      const errors = getErrors(it as JSONSchema7, (target.items ?? {}) as JSONSchema7, options, {
-        input: [...paths.input, 'items'],
-        target: [...paths.target, 'items'],
-      });
+      const errors = getErrors(
+        it as JSONSchemaCreate,
+        (target.items ?? {}) as JSONSchemaCreate,
+        options,
+        {
+          input: [...paths.input, 'items'],
+          target: [...paths.target, 'items'],
+        }
+      );
       if (errors?.length) {
         return [
           ...errors,
@@ -904,8 +910,8 @@ const getArrayErrors: Validator = (input, target, options, paths) => {
     }
   } else {
     const errors = getErrors(
-      (input.items ?? {}) as JSONSchema7,
-      (target.items ?? {}) as JSONSchema7,
+      (input.items ?? {}) as JSONSchemaCreate,
+      (target.items ?? {}) as JSONSchemaCreate,
       options,
       {
         input: [...paths.input, 'items'],
@@ -942,7 +948,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
       let targetMatch = false;
       let inputErrors: ErrorArray | undefined;
       for (const inputBranch of inputAnyOf) {
-        const errors = getErrors(inputBranch, targetBranch as JSONSchema7, options, {
+        const errors = getErrors(inputBranch, targetBranch as JSONSchemaCreate, options, {
           input: [...paths.input, 'anyOf', inputIndex],
           target: [...paths.target, 'anyOf', targetIndex],
         });
@@ -974,7 +980,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
   }
 
   if (target.allOf && Array.isArray(input.type)) {
-    const inputAnyOf = input.type.map((type): JSONSchema7 => ({ ...input, type }));
+    const inputAnyOf = input.type.map((type): JSONSchemaCreate => ({ ...input, type }));
 
     let targetIndex = 0;
     for (const targetBranch of target.allOf) {
@@ -983,7 +989,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
       let targetMatch = false;
       let inputErrors: ErrorArray | undefined;
       for (const inputBranch of inputAnyOf) {
-        const errors = getErrors(inputBranch, targetBranch as JSONSchema7, options, {
+        const errors = getErrors(inputBranch, targetBranch as JSONSchemaCreate, options, {
           input: [...paths.input, 'type', inputIndex],
           target: [...paths.target, 'anyOf', targetIndex],
         });
@@ -1015,7 +1021,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
   }
 
   if (input.allOf) {
-    const errors = all(input.allOf as JSONSchema7[], (e, idx) =>
+    const errors = all(input.allOf as JSONSchemaCreate[], (e, idx) =>
       getErrors(e, target, options, {
         input: [...paths.input, 'allOf', idx],
         target: paths.target,
@@ -1033,7 +1039,7 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
   }
 
   if (target.allOf) {
-    const errors = all(target.allOf as JSONSchema7[], (e, idx) =>
+    const errors = all(target.allOf as JSONSchemaCreate[], (e, idx) =>
       getErrors(input, e, options, {
         input: paths.input,
         target: [...paths.target, 'allOf', idx],
@@ -1053,16 +1059,16 @@ const getAllOfErrors: Validator = (input, target, options, paths) => {
   return undefined;
 };
 
-type SchemaWithAnyOf = JSONSchema7 & { anyOf: JSONSchema7[] };
+type SchemaWithAnyOf = JSONSchemaCreate & { anyOf: JSONSchemaCreate[] };
 
 const getOneOfErrors: Validator = (input, target, options, paths) => {
   if (input.oneOf) {
-    const cond = (e: JSONSchema7, idx: number) =>
+    const cond = (e: JSONSchemaCreate, idx: number) =>
       getErrors(e, target, options, {
         input: [...paths.input, 'oneOf', idx],
         target: paths.target,
       });
-    const errors = all(input.oneOf as JSONSchema7[], cond);
+    const errors = all(input.oneOf as JSONSchemaCreate[], cond);
     if (errors?.length) {
       return [
         ...errors,
@@ -1080,7 +1086,7 @@ const getOneOfErrors: Validator = (input, target, options, paths) => {
         input: paths.input,
         target: [...paths.target, 'oneOf'],
       },
-      target.oneOf as JSONSchema7[],
+      target.oneOf as JSONSchemaCreate[],
       (e, idx) =>
         getErrors(input, e, options, {
           input: paths.input,
@@ -1097,7 +1103,7 @@ const getOneOfErrors: Validator = (input, target, options, paths) => {
 
 const getNotErrors: Validator = (input, target, options, paths) => {
   if (input.not) {
-    const errors = getErrors(input.not as JSONSchema7, target, options, {
+    const errors = getErrors(input.not as JSONSchemaCreate, target, options, {
       input: [...paths.input, 'not'],
       target: paths.target,
     });
@@ -1112,7 +1118,7 @@ const getNotErrors: Validator = (input, target, options, paths) => {
   }
 
   if (target.not) {
-    const errors = getErrors(input, target.not as JSONSchema7, options, {
+    const errors = getErrors(input, target.not as JSONSchemaCreate, options, {
       input: paths.input,
       target: [...paths.target, 'not'],
     });
@@ -1129,7 +1135,7 @@ const getNotErrors: Validator = (input, target, options, paths) => {
   return undefined;
 };
 
-export const isValidTopLevelSchema = (schema: JSONSchema7Definition): boolean => {
+export const isValidTopLevelSchema = (schema: JSONSchemaCreateDefinition): boolean => {
   if (typeof schema !== 'object') {
     return false;
   }
@@ -1160,7 +1166,7 @@ export const isValidTopLevelSchema = (schema: JSONSchema7Definition): boolean =>
   return true;
 };
 
-const hasAllOf = (schema: JSONSchema7Definition): boolean => {
+const hasAllOf = (schema: JSONSchemaCreateDefinition): boolean => {
   if (!schema || typeof schema !== 'object') {
     return false;
   } else if ('allOf' in schema) {
@@ -1175,7 +1181,7 @@ const hasAllOf = (schema: JSONSchema7Definition): boolean => {
   return someBool(Object.values(schema ?? {}), hasAllOf);
 };
 
-const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
+const purgeEmptyAllOfObjects = (s: JSONSchemaCreate): JSONSchemaCreate => {
   if (!s || typeof s !== 'object') {
     return s;
   }
@@ -1190,7 +1196,7 @@ const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
       copy[i] = newVal;
       changed = changed || newVal !== oldVal;
     }
-    return changed ? copy : (s as JSONSchema7);
+    return changed ? copy : (s as JSONSchemaCreate);
   }
 
   if (s.type === 'object') {
@@ -1210,7 +1216,7 @@ const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
       for (const k in props) {
         if (hasOwnProperty.call(props, k)) {
           const oldVal = props[k];
-          const newVal = purgeEmptyAllOfObjects(oldVal as JSONSchema7);
+          const newVal = purgeEmptyAllOfObjects(oldVal as JSONSchemaCreate);
           if (newVal !== oldVal) {
             props[k] = newVal;
             changed = true;
@@ -1224,7 +1230,7 @@ const purgeEmptyAllOfObjects = (s: JSONSchema7): JSONSchema7 => {
   return s;
 };
 
-const tryMergeAllOf = (schema: JSONSchema7) => {
+const tryMergeAllOf = (schema: JSONSchemaCreate) => {
   try {
     const result = mergeAllOf(schema);
     if (typeof result !== 'object') {
@@ -1238,8 +1244,8 @@ const tryMergeAllOf = (schema: JSONSchema7) => {
 };
 
 export const inputSatisfies = (
-  input: JSONSchema7,
-  target: JSONSchema7,
+  input: JSONSchemaCreate,
+  target: JSONSchemaCreate,
   options: Partial<Options> | boolean = true
 ): boolean => {
   if (isEmptyObject(target)) {

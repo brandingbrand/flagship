@@ -1,8 +1,7 @@
 import { uniqueWith } from '@brandingbrand/standard-array';
 
-import type { JSONSchema7 } from 'json-schema';
-
 import { compare } from '../../compare.util';
+import type { JSONSchemaCreate } from '../../types';
 import {
   allUniqueKeys,
   deleteUndefinedProperties,
@@ -22,11 +21,11 @@ const removeFalseSchemas = (target: object) => {
 };
 
 const mergeSchemaGroup = (
-  group: Array<Pick<JSONSchema7, typeof keywords[number]>>,
+  group: Array<Pick<JSONSchemaCreate, typeof keywords[number]>>,
   mergeSchemas: MergeSchemas
 ) => {
   const allKeys = allUniqueKeys(group);
-  return allKeys.reduce<Pick<JSONSchema7, typeof keywords[number]>>((all, key) => {
+  return allKeys.reduce<Pick<JSONSchemaCreate, typeof keywords[number]>>((all, key) => {
     const schemas = getValues(group, key);
     const compacted = uniqueWith(schemas.filter(notUndefined), compare);
     all[key] = mergeSchemas(compacted, [key]) as any;
