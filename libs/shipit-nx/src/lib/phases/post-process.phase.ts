@@ -120,7 +120,7 @@ export class PostProcessPhase implements Phase {
     sourceTree: FsTree,
     sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
-  ) {
+  ): void {
     const nxJson = readJson<NxJson>(sourceTree, 'nx.json');
 
     if ('project' in this.config.options) {
@@ -143,7 +143,7 @@ export class PostProcessPhase implements Phase {
     sourceTree: FsTree,
     sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
-  ) {
+  ): void {
     const packageLockJson = readJson<PackageLockJson>(sourceTree, 'package-lock.json');
 
     // To remove the `file:package` references we need to
@@ -170,7 +170,7 @@ export class PostProcessPhase implements Phase {
     sourceTree: FsTree,
     sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
-  ) {
+  ): void {
     const packageJson = readJson<PackageJson>(sourceTree, 'package.json');
 
     const dependencyKeys = ['dependencies', 'devDependencies'] as const;
@@ -193,11 +193,12 @@ export class PostProcessPhase implements Phase {
     writeJson(destinationTree, 'package.json', sortPackageJson(packageJson));
   }
 
+  // eslint-disable-next-line max-statements
   private async cleanPackageJsonForProject(
     sourceTree: FsTree,
     destinationTree: FsTree,
     options: ShipProjectOptions
-  ) {
+  ): Promise<void> {
     const packageJson = readJson<PackageJson>(sourceTree, 'package.json');
 
     const originalVersion = packageJson.version;
@@ -207,6 +208,10 @@ export class PostProcessPhase implements Phase {
     packageJson.version = '0.0.1';
     packageJson.dependencies = {};
     packageJson.devDependencies = {};
+
+    delete packageJson.azureResourcePrefix;
+    delete packageJson.azureWorkloadName;
+    delete packageJson.terraformStateType;
 
     for (const dependency of options.dependencies) {
       // Ignore any workspace dependencies, those will be handled
@@ -260,8 +265,8 @@ export class PostProcessPhase implements Phase {
         delete packageJson.devDependencies[dependency];
         const original = originalDependencies[dependency] ?? originalDevDependencies[dependency];
 
-        if (original) {
-          packageJson.dependencies[dependency] = original ?? '';
+        if (original !== undefined) {
+          packageJson.dependencies[dependency] = original;
         }
       }
 
@@ -269,8 +274,8 @@ export class PostProcessPhase implements Phase {
         delete packageJson.dependencies[dependency];
         const original = originalDependencies[dependency] ?? originalDevDependencies[dependency];
 
-        if (original) {
-          packageJson.devDependencies[dependency] = original ?? '';
+        if (original !== undefined) {
+          packageJson.devDependencies[dependency] = original;
         }
       }
     }
@@ -317,7 +322,7 @@ export class PostProcessPhase implements Phase {
     sourceTree: FsTree,
     sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
-  ) {
+  ): void {
     const tsConfig = readJson<TsConfigJson>(sourceTree, 'tsconfig.base.json');
 
     if (tsConfig.compilerOptions?.paths) {
@@ -344,7 +349,7 @@ export class PostProcessPhase implements Phase {
     sourceTree: FsTree,
     sourceWorkspace: WorkspaceJsonConfiguration,
     destinationTree: FsTree
-  ) {
+  ): void {
     const workspaceJson = readJson<WorkspaceJson>(sourceTree, 'workspace.json');
     for (const projectName of Object.keys(workspaceJson.projects)) {
       const project = sourceWorkspace.projects[projectName];
@@ -363,7 +368,7 @@ export class PostProcessPhase implements Phase {
     destinationTree: FsTree,
     destinationWorkspace: WorkspaceJsonConfiguration,
     options: ShipProjectOptions
-  ) {
+  ): Promise<void> {
     if ('sync-deps' in (destinationWorkspace.projects[options.project ?? '']?.targets ?? {})) {
       // This will populate the dependencies for react-native auto linking
       await run(

@@ -65,6 +65,7 @@ export class ShipConfig {
       'CHANGELOG.md',
       '.vscode/launch.json',
       'tools/internal',
+      'docs/environments',
     ];
 
     const projectSpecificExcludedPaths =
