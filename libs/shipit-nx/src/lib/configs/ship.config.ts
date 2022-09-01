@@ -61,6 +61,7 @@ export class ShipConfig {
 
     const excludedPaths = [
       '.env.example',
+      '.azure',
       '.github',
       'CHANGELOG.md',
       '.vscode/launch.json',
