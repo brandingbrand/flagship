@@ -120,6 +120,19 @@ export const initExecutor = async (
     const graph = await createProjectGraphAsync();
     const dependencies = await findDependencies(tree, graph, context.projectName);
 
+    const formatAppName = (
+      appName: PlatformSpecific<string> | string
+    ): PlatformSpecific<string> | string => {
+      if (typeof appName === 'string') {
+        return appName
+          .replace(/&/g, '&amp;')
+          .replace(/'/g, "\\'")
+          .replace(/>/g, '&gt;')
+          .replace(/</g, '&lt;');
+      }
+      return appName;
+    };
+
     createIosFiles(tree, {
       projectRoot,
       rootOffset,
@@ -152,7 +165,7 @@ export const initExecutor = async (
       className,
       constantName,
       fileName,
-      name: android(options.appName) ?? name,
+      name: android(formatAppName(options.appName ?? name)),
       propertyName,
       mainPath,
       nativeConstants,
