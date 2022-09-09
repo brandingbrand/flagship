@@ -62,6 +62,7 @@
       "@brandingbrand/standard-async": ["libs/shared/util-std-async/src/index.ts"],
       "@brandingbrand/standard-branded": ["libs/shared/util-std-branded/src/index.ts"],
       "@brandingbrand/standard-collection": ["libs/shared/util-std-collection/src/index.ts"],
+      "@brandingbrand/standard-combinator": ["libs/shared/util-std-combinator/src/index.ts"],
       "@brandingbrand/standard-compose": ["libs/shared/util-std-compose/src/index.ts"],
       "@brandingbrand/standard-json-schema": ["libs/shared/util-std-json-schema/src/index.ts"],
       "@brandingbrand/standard-lens": ["libs/shared/util-std-lens/src/index.ts"],

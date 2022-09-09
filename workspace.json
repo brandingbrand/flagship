@@ -37,6 +37,7 @@
     "shared-util-std-async": "libs/shared/util-std-async",
     "shared-util-std-branded": "libs/shared/util-std-branded",
     "shared-util-std-collection": "libs/shared/util-std-collection",
+    "shared-util-std-combinator": "libs/shared/util-std-combinator",
     "shared-util-std-compose": "libs/shared/util-std-compose",
     "shared-util-std-json-schema": "libs/shared/util-std-json-schema",
     "shared-util-std-lens": "libs/shared/util-std-lens",
