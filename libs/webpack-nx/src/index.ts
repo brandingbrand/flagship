@@ -9,6 +9,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { DefinePlugin, ProvidePlugin } from 'webpack';
 import type { Configuration } from 'webpack';
+import SentryCliPlugin from '@sentry/webpack-plugin';
 
 /**
  * This is ha hack to get nx to auto generate the package.json so that
@@ -30,6 +31,7 @@ const _loadDeps = () => {
   require('@react-native-community/datetimepicker');
   require('react-native-web-webview');
   require('process');
+  require('@sentry/webpack-plugin');
 };
 
 interface ProgrammaticEnvironment {
@@ -37,6 +39,7 @@ interface ProgrammaticEnvironment {
     forkTsCheck?: boolean;
     esm?: boolean;
     keepNames?: boolean;
+    envPrefix?: string;
   };
 }
 
@@ -271,6 +274,14 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     }
   }
 
+  // Allow per-app Sentry configs. NX_TASK_TARGET_PROJECT is generated automatically and is the name
+  // of the project being built. For Create, for example, the envs should be
+  // CREATE_SENTRY_ORGANIZATION, CREATE_SENTRY_PROJECT, and CREATE_SENTRY_TOKEN
+  const envPrefix: string = (process.env.NX_TASK_TARGET_PROJECT ?? '').toUpperCase();
+  const sentryOrganization = process.env[`${envPrefix}_SENTRY_ORGANIZATION`];
+  const sentryProject = process.env[`${envPrefix}_SENTRY_PROJECT`];
+  const sentryToken = process.env[`${envPrefix}_SENTRY_TOKEN`];
+
   const demo =
     typeof environment === 'object' &&
     'configuration' in environment &&
@@ -410,6 +421,16 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
         __BASE_NAME__: packageJson?.homepage ? `"${packageJson.homepage}"` : `undefined`,
         ...(prod ? { __REACT_DEVTOOLS_GLOBAL_HOOK__: '({ isDisabled: true })' } : {}),
       }),
+      ...(prod && Boolean(sentryOrganization) && Boolean(sentryProject) && Boolean(sentryToken)
+        ? [
+            new SentryCliPlugin({
+              include: config.output?.path ?? '.',
+              org: sentryOrganization,
+              project: sentryProject,
+              authToken: sentryToken,
+            }),
+          ]
+        : []),
     ],
     node: {
       global: true,
