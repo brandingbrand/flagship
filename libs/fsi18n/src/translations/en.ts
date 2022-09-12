@@ -131,6 +131,14 @@ export const keys: FSTranslationKeys = {
         },
       },
     },
+    filter: {
+      title: 'Filter',
+      actions: {
+        apply: {
+          actionBtn: 'Apply',
+        },
+      },
+    },
     sort: {
       actions: {
         refine: {

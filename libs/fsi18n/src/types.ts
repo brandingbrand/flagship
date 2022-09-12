@@ -30,6 +30,7 @@ export interface FSTranslationKeys<KeyType = TranslationKey> extends Translation
     filterListDefaults: FilterListDefaultTranslations<KeyType>;
     feedback: FeedbackTranslations<KeyType>;
     changePassword: ChangePasswordTranslations<KeyType>;
+    filter: FilterTranslations<KeyType>;
     sort: SortTranslations<KeyType>;
     reviews: ReviewsTranslations<KeyType>;
     search: SearchTranslations<KeyType>;
@@ -184,6 +185,15 @@ export interface ChangePasswordTranslations<KeyType> {
     };
     confirmPassword: {
       label: KeyType;
+    };
+  };
+}
+
+export interface FilterTranslations<KeyType> {
+  title?: KeyType;
+  actions: {
+    apply: {
+      actionBtn: KeyType;
     };
   };
 }
