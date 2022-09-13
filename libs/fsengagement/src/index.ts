@@ -33,3 +33,4 @@ export default function (params: EngagementSettings): EngagementUtilities {
 
 export type { EngagementMessage, InboxBlock, InjectedProps, JSON as EngagementJSON } from './types';
 export type { EngagementScreenProps } from './EngagementComp';
+export type { EngagementService } from './EngagementService';
