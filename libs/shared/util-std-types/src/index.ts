@@ -1,6 +1,7 @@
 export * from './await';
 export * from './constructor';
 export * from './deep-partial';
+export * from './deep-required';
 export * from './function-properties';
 export * from './keys-of-type';
 export * from './lazy';
