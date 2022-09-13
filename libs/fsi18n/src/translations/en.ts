@@ -1,3 +1,5 @@
+import type { DeepRequired } from '@brandingbrand/standard-types';
+
 import type { EmailErrors, FSTranslationKeys, PasswordFormErrors } from '../types';
 
 export const passwordErrors: PasswordFormErrors = {
@@ -12,7 +14,11 @@ export const emailErrors: EmailErrors = {
   invalid: 'Please enter a valid email address',
 };
 
-export const keys: FSTranslationKeys = {
+/*
+ * Typically translation keys are optional, but these are used to generate keys for ALL languages
+ * to use so EVERY value is required to be filled in with something.
+ */
+export const keys: DeepRequired<FSTranslationKeys> = {
   flagship: {
     alertDefaults: {
       ok: 'OK',
@@ -140,6 +146,7 @@ export const keys: FSTranslationKeys = {
       },
     },
     sort: {
+      title: 'Sort By',
       actions: {
         refine: {
           actionBtn: 'Refine',

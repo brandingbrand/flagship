@@ -199,7 +199,7 @@ export interface FilterTranslations<KeyType> {
 }
 
 export interface SortTranslations<KeyType> {
-  title?: KeyType;
+  title: KeyType;
   actions: {
     refine: {
       actionBtn: KeyType;
