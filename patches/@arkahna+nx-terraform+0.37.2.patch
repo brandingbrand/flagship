@@ -1,0 +1,12 @@
+diff --git a/node_modules/@arkahna/nx-terraform/src/executors/destroy/executor.js b/node_modules/@arkahna/nx-terraform/src/executors/destroy/executor.js
+index af2f79d..24c7460 100644
+--- a/node_modules/@arkahna/nx-terraform/src/executors/destroy/executor.js
++++ b/node_modules/@arkahna/nx-terraform/src/executors/destroy/executor.js
+@@ -58,6 +58,7 @@ function runExecutor(options, context) {
+             terragruntConfigFile,
+             ...terragruntCliArgs,
+             ...(options.tfTarget ? ['-target', options.tfTarget] : []),
++            '-auto-approve',
+             '-destroy',
+         ];
+         try {
