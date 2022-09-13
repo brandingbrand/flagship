@@ -24,7 +24,10 @@ export const setRouteId = (route: Route | RouteCollection): string => {
 export const getRouteId = (route: Route | RouteCollection): string | undefined =>
   routeIds.get(route);
 
-export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
+export const buildPath = (
+  route: Route | RouteCollection,
+  prefix?: string
+): Record<string, string> => {
   const path = pathFromRoute(route, prefix);
   const id = getRouteId(route) ?? setRouteId(route);
 
