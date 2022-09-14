@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* **shared-util-std-parser:** cursor end indexes (890bac0)
+
+
+### Features
+
+* **shared-util-std-parser:** add empty types (2a83dc3)
+* **shared-util-std-parser:** parse any primitives (5d323df)
+* **shared-util-std-parser:** refactor parser, separate combinator (fd594d7)
+* **shared-util-std-parser:** regex parsing (3ad2035)
+
+
+
 # [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-09)
 
 

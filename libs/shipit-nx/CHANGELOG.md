@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* **shipit-nx:** remove root from project.json (f28f9eb)
+
+
+### Features
+
+* **shipit-nx:** added exclusion for azure (e88dad7)
+* **shipit-nx:** exclude nx-terraform projects (23ceb25)
+
+
+
 # [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-09)
 
 

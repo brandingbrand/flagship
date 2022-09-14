@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* **flagship:** updating depricated ios methods in app delegate (751df4b)
+* **flagship:** updating podfile to build pods against minimum of ios 9 (5578fd3)
+
+
+
 # [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-09)
 
 

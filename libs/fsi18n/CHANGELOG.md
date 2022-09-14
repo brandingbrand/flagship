@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-14)
+
+
+### Features
+
+* **fsi18n:** filter translations (3c909eb)
+
+
+
 # [11.70.0](https://github.com/brandingbrand/flagship/compare/v11.69.0...v11.70.0) (2022-09-09)
 
 
