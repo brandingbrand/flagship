@@ -1,6 +1,6 @@
 {
   "name": "brandingbrand",
-  "version": "11.69.0",
+  "version": "11.70.0",
   "private": true,
   "engines": {
     "node": "14",
@@ -306,6 +306,7 @@
     "@react-native-community/cli": "4.7.0",
     "@react-native-community/cli-platform-android": "4.7.0",
     "@react-native-community/cli-platform-ios": "4.7.0",
+    "@sentry/webpack-plugin": "^1.19.0",
     "@storybook/addon-actions": "^6.4.13",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-viewport": "^6.4.13",

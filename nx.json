@@ -27,6 +27,12 @@
     }
   },
   "targetDefaults": {
+    "apply": {
+      "dependsOn": ["^apply", "build"]
+    },
+    "tfinit": {
+      "dependsOn": ["^tfinit"]
+    },
     "publish": {
       "dependsOn": ["^publish"]
     },
