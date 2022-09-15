@@ -49,7 +49,7 @@ export interface Attribute {
 
 export interface EngagementServiceConfig {
   appId: string;
-  apiKey: string;
+  apiKey?: string;
   baseURL: string;
   cacheTTL?: number; // default = 10 mins
 }

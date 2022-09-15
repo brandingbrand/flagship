@@ -13,7 +13,7 @@ import type {
   EngagementProfile,
   EngagementServiceConfig,
   EngagmentEvent,
-  Segment
+  Segment,
 } from './types';
 
 export class EngagementService {
