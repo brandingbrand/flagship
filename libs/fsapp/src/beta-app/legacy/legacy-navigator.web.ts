@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-description */
 import { Injector } from '@brandingbrand/fslinker';
 
 import type { ModalService } from '../modal';

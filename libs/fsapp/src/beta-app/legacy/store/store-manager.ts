@@ -1,6 +1,7 @@
 import type { Action, PreloadedState } from 'redux';
 
 import { configureStore } from './configure-store';
+import { profileReducer } from './profile';
 import type { GenericState, StoreConfig } from './types';
 
 export class StoreManager<S extends GenericState, A extends Action> {
@@ -38,7 +39,7 @@ export class StoreManager<S extends GenericState, A extends Action> {
   public getReduxStore = async (initialState?: S) =>
     configureStore(
       (initialState ?? this.config.initialState) as unknown as PreloadedState<S>,
-      this.config.reducers,
+      { ...this.config.reducers, ...profileReducer },
       this.config.middleware
     );
 }

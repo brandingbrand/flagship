@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import type { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
 
 import type { IStore as CargoHoldStore } from '@brandingbrand/cargo-hold';
+import type { Attribute, EngagementService } from '@brandingbrand/engagement-utils';
 import type { Analytics } from '@brandingbrand/fsengage';
 import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 import type FSNetwork from '@brandingbrand/fsnetwork';
@@ -37,6 +38,7 @@ export interface AppConfig<
   readonly router: RouterConfig;
   readonly webShell?: ShellConfig;
   readonly remote?: FSNetworkRequestConfig;
+  readonly engagementService?: EngagementService;
 
   /**
    * @deprecated Use cargoHold instead
@@ -61,9 +63,12 @@ export interface IApp {
   readonly routes: Routes;
   readonly store?: Store;
   readonly cargoHold?: CargoHoldStore;
+  readonly engagementService?: EngagementService;
   openUrl: (url: string) => void;
   startApplication: () => Promise<void>;
   stopApplication: () => Promise<void>;
+  updateProfile: (attributes: Attribute[]) => Promise<boolean>;
+  getProfile: (accountId?: string) => Promise<string | undefined>;
 }
 
 export interface AppConstructor<T extends IApp = IApp> {
@@ -73,7 +78,8 @@ export interface AppConstructor<T extends IApp = IApp> {
     router: FSRouter,
     api?: FSNetwork,
     cargoHold?: CargoHoldStore,
-    store?: Store
+    store?: Store,
+    engagement?: EngagementService
   ): T;
   bootstrap: (options: AppConfig) => Promise<T>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-description */
 import { Navigation } from 'react-native-navigation';
 
 import type { ModalService } from '../modal';

@@ -1,6 +1,7 @@
 import { ReactReduxContext } from 'react-redux';
 
 import type { IStore as CargoHoldStore } from '@brandingbrand/cargo-hold';
+import type { Attribute, EngagementService } from '@brandingbrand/engagement-utils';
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { FSNetwork } from '@brandingbrand/fsnetwork';
 
@@ -35,8 +36,9 @@ export abstract class FSAppBase implements IApp {
     config: AppConfig<S, A, C>
   ): Promise<T> {
     const version = await getVersion(config);
-    const api = config.remote ? new FSNetwork(config.remote) : undefined;
-    const storeManager = config.state ? new StoreManager(config.state) : undefined;
+    const { engagementService, remote, state } = config;
+    const api = remote ? new FSNetwork(remote) : undefined;
+    const storeManager = state ? new StoreManager(state) : undefined;
     const store = !config.serverSide
       ? await storeManager?.getReduxStore(await storeManager.updatedInitialState())
       : undefined;
@@ -63,10 +65,12 @@ export abstract class FSAppBase implements IApp {
       router,
       api,
       cargoHold,
-      store as S extends GenericState ? (A extends Action ? Store<S, A> : undefined) : undefined
+      store as S extends GenericState ? (A extends Action ? Store<S, A> : undefined) : undefined,
+      engagementService
     );
     if (!config.serverSide) {
       await app.startApplication();
+      await app.getProfile();
     }
     return app;
   }
@@ -77,7 +81,8 @@ export abstract class FSAppBase implements IApp {
     protected readonly router: FSRouterType,
     public readonly api?: FSNetwork,
     public readonly cargoHold?: CargoHoldStore,
-    public readonly store?: Store
+    public readonly store?: Store,
+    public readonly engagementService?: EngagementService
   ) {
     Injector.provide({ provide: API_TOKEN, useValue: api });
     Injector.provide({ provide: REDUX_STORE_TOKEN, useValue: store });
@@ -93,6 +98,23 @@ export abstract class FSAppBase implements IApp {
   @boundMethod
   public async openUrl(url: string): Promise<void> {
     await this.router.open(url);
+  }
+
+  @boundMethod
+  public async updateProfile(attributes: Attribute[]): Promise<boolean> {
+    if (!this.engagementService) {
+      return false;
+    }
+    this.store?.dispatch({ type: 'PROFILE_UPDATE', value: attributes });
+    return this.engagementService.setProfileAttributes(attributes);
+  }
+
+  @boundMethod
+  public async getProfile(accountId?: string): Promise<string | undefined> {
+    if (!this.engagementService) {
+      return undefined;
+    }
+    return this.engagementService.getProfile(accountId);
   }
 
   public abstract startApplication(): Promise<void>;
