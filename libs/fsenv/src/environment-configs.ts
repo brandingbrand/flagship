@@ -1,9 +1,12 @@
+import type { ComponentList } from '@brandingbrand/engagement-utils';
+
 declare global {
   export interface EngagementConfig {
     appId: string;
     apiKey?: string;
     baseURL: string;
     cacheTTL: number;
+    components?: ComponentList;
   }
 
   export interface CachingConfig {
