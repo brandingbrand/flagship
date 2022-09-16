@@ -69,6 +69,7 @@ export interface IApp {
   stopApplication: () => Promise<void>;
   updateProfile: (attributes: Attribute[]) => Promise<boolean>;
   getProfile: (accountId?: string) => Promise<string | undefined>;
+  updateAccountId: (accountId: string) => Promise<void>;
 }
 
 export interface AppConstructor<T extends IApp = IApp> {

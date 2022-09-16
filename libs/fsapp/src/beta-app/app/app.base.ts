@@ -117,6 +117,11 @@ export abstract class FSAppBase implements IApp {
     return this.engagementService.getProfile(accountId);
   }
 
+  @boundMethod
+  public async updateAccountId(accountId: string): Promise<void> {
+    // TODO: implement api route to update user account
+  }
+
   public abstract startApplication(): Promise<void>;
   public abstract stopApplication(): Promise<void>;
 }
