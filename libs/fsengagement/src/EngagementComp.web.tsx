@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
+import type { EngagementService } from '@brandingbrand/engagement-utils';
 import { NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 import type { Navigator } from '@brandingbrand/fsapp/legacy';
 import { Injector } from '@brandingbrand/fslinker';
@@ -23,7 +24,6 @@ import { debounce } from 'lodash-es';
 
 import closeBronze from '../assets/images/closeBronze.png';
 
-import type { EngagementService } from './EngagementService';
 import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
 import { EngagementContext } from './lib/contexts';

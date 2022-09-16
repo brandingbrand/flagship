@@ -1,9 +1,10 @@
 import type { ComponentClass } from 'react';
 
+import type { EngagementServiceConfig } from '@brandingbrand/engagement-utils';
+import { EngagementService } from '@brandingbrand/engagement-utils';
+
 import type { EngagementScreenProps } from './EngagementComp';
 import EngagementComp from './EngagementComp';
-import type { EngagementServiceConfig } from './EngagementService';
-import { EngagementService } from './EngagementService';
 import layoutComponents from './inboxblocks';
 import type { ComponentList } from './types';
 
@@ -33,4 +34,3 @@ export default function (params: EngagementSettings): EngagementUtilities {
 
 export type { EngagementMessage, InboxBlock, InjectedProps, JSON as EngagementJSON } from './types';
 export type { EngagementScreenProps } from './EngagementComp';
-export type { EngagementService } from './EngagementService';

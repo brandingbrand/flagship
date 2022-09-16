@@ -23,6 +23,7 @@ import * as Animatable from 'react-native-animatable';
 import { Navigation } from 'react-native-navigation';
 import Carousel from 'react-native-snap-carousel';
 
+import type { EngagementService } from '@brandingbrand/engagement-utils';
 import { NAVIGATOR_TOKEN } from '@brandingbrand/fsapp';
 import type { Navigator } from '@brandingbrand/fsapp/legacy';
 import { Injector } from '@brandingbrand/fslinker';
@@ -35,7 +36,6 @@ import gradientImage from '../assets/images/gradient.png';
 import iconCloseXDark from '../assets/images/iconCloseXDark.png';
 import iconCloseXLight from '../assets/images/iconCloseXLight.png';
 
-import type { EngagementService } from './EngagementService';
 import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
 import TabbedStory from './inboxblocks/TabbedStory';

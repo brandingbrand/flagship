@@ -2,9 +2,8 @@ import type { ComponentClass, FunctionComponent } from 'react';
 
 import type { ImageStyle, ImageURISource, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
+import type { EngagementService } from '@brandingbrand/engagement-utils';
 import type { Navigator } from '@brandingbrand/fsapp/legacy';
-
-import type { EngagementService } from './EngagementService';
 
 export interface ScreenProps {
   componentId?: string;
