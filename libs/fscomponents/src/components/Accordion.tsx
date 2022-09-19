@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import type {
+  GestureResponderEvent,
   ImageSourcePropType,
   ImageStyle,
   LayoutChangeEvent,
@@ -133,6 +134,8 @@ export interface AccordionProps {
   titleTouchStyle?: StyleProp<ViewStyle>;
 
   dataSet?: Record<string, ''>;
+
+  liftPropsForm?: JSX.Element;
 }
 
 export interface AccordionState {
@@ -175,6 +178,7 @@ const AccordionStyles = StyleSheet.create({
   },
   title: {
     flex: 1,
+    flexDirection: 'row',
   },
   titleContainer: {
     alignItems: 'center',
@@ -329,7 +333,14 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
   /**
    * Toggles the accordion open or closed.
    */
-  private readonly toggleAccordion = () => {
+  private readonly toggleAccordion = (event: GestureResponderEvent): void => {
+    event.persist();
+    const target = event.target as unknown as HTMLInputElement | undefined;
+
+    if (target !== undefined && target.tagName === 'INPUT') {
+      return;
+    }
+
     const isCurrentlyOpen = this.state.isOpen;
 
     this.setState({
@@ -401,6 +412,7 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
               ) : (
                 this.props.title
               )}
+              {this.props.liftPropsForm}
             </View>
             {this.renderIcon()}
           </View>
