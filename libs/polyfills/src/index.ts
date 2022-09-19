@@ -1,5 +1,7 @@
 /* eslint-disable no-extend-native */
 import 'symbol-observable';
+import './global-this';
+
 import base64 from '@brandingbrand/utils-base64';
 
 if (!global.btoa) {
