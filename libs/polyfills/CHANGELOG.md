@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [11.71.1](https://github.com/brandingbrand/flagship/compare/v11.71.0...v11.71.1) (2022-09-19)
+
+
+### Bug Fixes
+
+* **polyfills:** globalThis polyfill for android (e6d26ff)
+
+
+
 # [11.71.0](https://github.com/brandingbrand/flagship/compare/v11.70.0...v11.71.0) (2022-09-14)
 
 
