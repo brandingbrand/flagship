@@ -26,7 +26,7 @@ export class EngagementService {
     this.networkClient = new FSNetwork({
       baseURL: config.baseURL,
       headers: {
-        'apikey': config.apiKey,
+        'apikey': config.apiKey ?? '',
         'Content-Type': 'application/json',
       },
     });
