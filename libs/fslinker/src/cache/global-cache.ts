@@ -10,7 +10,7 @@ import { InMemoryCache } from './cache';
 const GLOBAL_CACHE_KEY = '__FLAGSHIP_LINKER_GLOBAL_CACHE__';
 
 declare global {
-  // eslint-disable-next-line no-var
+  // eslint-disable-next-line no-var, @typescript-eslint/naming-convention, import/no-mutable-exports -- Used to declare globally on the global object
   export var __FLAGSHIP_LINKER_GLOBAL_CACHE__: Map<string, unknown>;
 }
 
@@ -21,12 +21,20 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
     return this.cache.get(token);
   }
 
+  public static getMany<T>(token: InjectionToken<T, 'many'>): T[] {
+    return this.cache.getMany(token);
+  }
+
   public static has(token: InjectionToken): boolean {
     return this.cache.has(token);
   }
 
-  public static provide<T>(token: InjectionToken<T>, value: T): void {
-    this.cache.provide(token, value);
+  public static provide<T>(
+    token: InjectionToken<T, 'many' | 'single'>,
+    value: T,
+    many?: boolean
+  ): void {
+    this.cache.provide(token, value, many);
   }
 
   public static remove(token: InjectionToken): void {
@@ -38,16 +46,18 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
   }
 
   constructor() {
-    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error -- Node Type
     // @ts-ignore ignore node specific type
     const globalObject = typeof global !== 'undefined' ? (global as typeof globalThis) : window;
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Cover uncommon case
     if (globalObject === undefined) {
       throw new ReferenceError(
         `${GlobalInjectorCache.name}: Unsupported environment, the global object could not be found`
       );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Cover uncommon case
     if (globalObject[GLOBAL_CACHE_KEY] === undefined) {
       globalObject[GLOBAL_CACHE_KEY] = new Map();
     }

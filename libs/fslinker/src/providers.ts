@@ -1,5 +1,5 @@
-export class InjectionToken<T = unknown> {
-  constructor(public readonly uniqueKey: string | symbol) {}
+export class InjectionToken<T = unknown, ManyType extends 'many' | 'single' = 'single'> {
+  constructor(public readonly uniqueKey: string | symbol, public readonly many?: ManyType) {}
   protected readonly brand: T | undefined;
 }
 
@@ -11,42 +11,101 @@ export type OrToken<A extends unknown[]> = {
   [K in keyof A]: A[K] | InjectionToken<A[K]>;
 };
 
-export interface ValueProvider<T = unknown> {
-  provide: InjectionToken<T>;
-  useValue: T;
-}
+export type ValueProvider<
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = ManyType extends 'many'
+  ? { provide: InjectionToken<T, ManyType>; useValue: T; many: true }
+  : { provide: InjectionToken<T, ManyType>; useValue: T; many?: false };
 
-export interface BasicClassProvider<D extends unknown[], T = undefined> {
-  provide: InjectionToken<T>;
-  useClass: new (...dependencies: D) => T;
-}
+// The `many?: boolean;` vs `many?: false;` checks are made
+// so that `single` tokens not provided with `many` which
+// would cause them to unexpected have Array values
+// at run type with no TypeScript errors the `many`
+// tokens on the other hand have checks to ensure
+// that arrays are always returned
 
-export interface InjectedClassProvider<D extends unknown[], T = undefined> {
-  provide: InjectionToken<T>;
-  useClass: new (...dependencies: D) => T;
-  deps: OrToken<D>;
-}
+export type BasicClassProvider<
+  D extends unknown[],
+  T = undefined,
+  ManyType extends 'many' | 'single' = 'single'
+> = ManyType extends 'many'
+  ? {
+      provide: InjectionToken<T, ManyType>;
+      useClass: new (...dependencies: D) => T;
+      many?: boolean;
+    }
+  : {
+      provide: InjectionToken<T, ManyType>;
+      useClass: new (...dependencies: D) => T;
+      many?: false;
+    };
 
-export type ClassProvider<D extends unknown[], T = unknown> =
-  | BasicClassProvider<D, T>
-  | InjectedClassProvider<D, T>;
+export type InjectedClassProvider<
+  D extends unknown[],
+  T = undefined,
+  ManyType extends 'many' | 'single' = 'single'
+> = ManyType extends 'many'
+  ? {
+      provide: InjectionToken<T, ManyType>;
+      useClass: new (...dependencies: D) => T;
+      deps: OrToken<D>;
+      many?: boolean;
+    }
+  : {
+      provide: InjectionToken<T, ManyType>;
+      useClass: new (...dependencies: D) => T;
+      deps: OrToken<D>;
+      many?: false;
+    };
 
-export interface BasicFactoryProvider<T = unknown> {
-  provide: InjectionToken<T>;
-  useFactory: () => T;
-}
+export type ClassProvider<
+  D extends unknown[],
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = BasicClassProvider<D, T, ManyType> | InjectedClassProvider<D, T, ManyType>;
 
-export interface InjectedFactoryProvider<D extends unknown[], T = unknown> {
-  provide: InjectionToken<T>;
-  useFactory: (...dependencies: D) => T;
-  deps: OrToken<D>;
-}
+export type BasicFactoryProvider<
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = ManyType extends 'many'
+  ? {
+      provide: InjectionToken<T, ManyType>;
+      useFactory: () => T;
+      many?: boolean;
+    }
+  : {
+      provide: InjectionToken<T, ManyType>;
+      useFactory: () => T;
+      many?: false;
+    };
 
-export type FactoryProvider<D extends unknown[], T = unknown> =
-  | BasicFactoryProvider<T>
-  | InjectedFactoryProvider<D, T>;
+export type InjectedFactoryProvider<
+  D extends unknown[],
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = ManyType extends 'many'
+  ? {
+      provide: InjectionToken<T>;
+      useFactory: (...dependencies: D) => T;
+      deps: OrToken<D>;
+      many?: boolean;
+    }
+  : {
+      provide: InjectionToken<T>;
+      useFactory: (...dependencies: D) => T;
+      deps: OrToken<D>;
+      many?: false;
+    };
 
-export type Provider<D extends unknown[], T = unknown> =
-  | ClassProvider<D, T>
-  | FactoryProvider<D, T>
-  | ValueProvider<T>;
+export type FactoryProvider<
+  D extends unknown[],
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = BasicFactoryProvider<T, ManyType> | InjectedFactoryProvider<D, T, ManyType>;
+
+export type Provider<
+  D extends unknown[],
+  T = unknown,
+  ManyType extends 'many' | 'single' = 'single'
+> = ClassProvider<D, T, ManyType> | FactoryProvider<D, T, ManyType> | ValueProvider<T, ManyType>;

@@ -2,14 +2,16 @@ import type { InjectionToken } from '../providers';
 
 export interface InjectorCache {
   get: <T>(token: InjectionToken<T>) => T | undefined;
+  getMany: <T>(token: InjectionToken<T, 'many'>) => T[];
   has: (token: InjectionToken) => boolean;
-  provide: <T>(token: InjectionToken<T>, value: T) => void;
+  provide: <T>(token: InjectionToken<T, 'many' | 'single'>, value: T, many?: boolean) => void;
   remove: (token: InjectionToken) => void;
   reset: () => void;
 }
 
 export interface FallbackCache {
   get: <T>(token: InjectionToken<T>) => T | undefined;
+  getMany: <T>(token: InjectionToken<T, 'many'>) => T[];
   has: (token: InjectionToken) => boolean;
 }
 
@@ -19,13 +21,15 @@ export class InMemoryCache {
     private readonly fallback?: FallbackCache
   ) {}
 
-  private verifyToken(token: InjectionToken): void {
+  private verifyToken(token: InjectionToken<unknown, 'many' | 'single'>): void {
     if (
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Type Guard
       !token ||
       (typeof token !== 'object' && typeof token !== 'function') ||
       !('uniqueKey' in token)
     ) {
       const actualType =
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Type Guard
         token !== null && typeof token === 'object'
           ? (token as object).constructor.name
           : typeof token;
@@ -35,18 +39,29 @@ export class InMemoryCache {
 
   public get<T>(token: InjectionToken<T>): T | undefined {
     this.verifyToken(token);
-    return (this.providers.get(token.uniqueKey) as T) ?? this.fallback?.get(token);
+    return (this.providers.get(token.uniqueKey) as T | undefined) ?? this.fallback?.get(token);
+  }
+
+  public getMany<T>(token: InjectionToken<T, 'many'>): T[] {
+    this.verifyToken(token);
+    const provider = this.providers.get(token.uniqueKey) as T | T[] | undefined;
+
+    if (provider === undefined) {
+      return this.fallback?.getMany(token) ?? [];
+    }
+
+    return Array.isArray(provider) ? provider : [provider];
   }
 
   public has(token: InjectionToken): boolean {
     this.verifyToken(token);
-    return this.providers.has(token.uniqueKey) ?? this.fallback?.has(token);
+    return this.providers.has(token.uniqueKey) || Boolean(this.fallback?.has(token));
   }
 
-  public provide<T>(token: InjectionToken<T>, value: T): void {
+  public provide<T>(token: InjectionToken<T, 'many' | 'single'>, value: T, many?: boolean): void {
     this.verifyToken(token);
 
-    if (this.providers.has(token.uniqueKey)) {
+    if (this.providers.has(token.uniqueKey) && many !== true) {
       throw new TypeError(
         `${
           InMemoryCache.name
@@ -62,7 +77,20 @@ more than a single version`
       );
     }
 
-    this.providers.set(token.uniqueKey, value);
+    if (many === true) {
+      const currentValue = this.providers.get(token.uniqueKey) as T | T[] | undefined;
+
+      if (currentValue === undefined) {
+        this.providers.set(token.uniqueKey, value);
+      } else {
+        this.providers.set(
+          token.uniqueKey,
+          Array.isArray(currentValue) ? [...currentValue, value] : [currentValue, value]
+        );
+      }
+    } else {
+      this.providers.set(token.uniqueKey, value);
+    }
   }
 
   public remove(token: InjectionToken): void {
