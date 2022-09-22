@@ -1,4 +1,4 @@
-import FSNetwork from '../src';
+import { FSNetwork } from '../src';
 
 describe('FSNetwork', () => {
   it('get request', async () => {
