@@ -5,7 +5,7 @@ import type { HttpContext } from './http-context';
 /**
  * Error response object from the network
  */
-export type FSNetworkError = AxiosError;
+export type FSNetworkError<T = any, D = any> = AxiosError<T, D>;
 
 /**
  * Configuration for the network request

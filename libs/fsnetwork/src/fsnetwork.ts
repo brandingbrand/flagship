@@ -24,6 +24,17 @@ export class FSNetwork {
   }
 
   /**
+   * Gets the full url that will be requested from a given config. baseUrl may contain more than
+   * just the hostname and url may contain an absolute url, so those config attributes cannot be used directly.
+   *
+   * @param config Configuration for the request.
+   * @return url that will be requested
+   */
+  public static getUriFromConfig(config: FSNetworkRequestConfig): string {
+    return axios.getUri(config);
+  }
+
+  /**
    * Creates a new instance of FSNetwork.
    *
    * @param config Default configuration to apply to every request.
