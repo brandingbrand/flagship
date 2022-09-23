@@ -18,7 +18,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-cargo-hold-async/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 179
+        "maxWarnings": 152
       }
     },
     "set-max-warnings": {

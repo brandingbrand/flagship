@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fscheckout/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 70
+        "maxWarnings": 52
       }
     },
     "set-max-warnings": {

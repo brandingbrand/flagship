@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsproductindex/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 248
+        "maxWarnings": 247
       }
     },
     "set-max-warnings": {

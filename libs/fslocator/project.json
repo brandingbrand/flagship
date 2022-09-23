@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fslocator/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 379
+        "maxWarnings": 376
       }
     },
     "set-max-warnings": {

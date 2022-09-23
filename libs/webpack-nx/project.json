@@ -26,7 +26,7 @@
       "options": {
         "lintFilePatterns": ["libs/webpack-nx/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 76
+        "maxWarnings": 40
       }
     },
     "set-max-warnings": {

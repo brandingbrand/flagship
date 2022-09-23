@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fscart/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 14
+        "maxWarnings": 13
       }
     },
     "set-max-warnings": {

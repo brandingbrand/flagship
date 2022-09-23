@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/shipit-nx/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 103
+        "maxWarnings": 95
       }
     },
     "set-max-warnings": {

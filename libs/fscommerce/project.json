@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fscommerce/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 177
+        "maxWarnings": 170
       }
     },
     "set-max-warnings": {
