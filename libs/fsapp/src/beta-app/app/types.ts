@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import type { RNSensitiveInfoOptions } from 'react-native-sensitive-info';
 
 import type { IStore as CargoHoldStore } from '@brandingbrand/cargo-hold';
-import type { Attribute, EngagementService } from '@brandingbrand/engagement-utils';
+import type { EngagementUtilities } from '@brandingbrand/engagement-utils';
 import type { Analytics } from '@brandingbrand/fsengage';
 import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 import type FSNetwork from '@brandingbrand/fsnetwork';
@@ -14,6 +14,8 @@ import type { GenericState, StoreConfig } from '../legacy/store';
 import type { FSRouter, RouterConfig, Routes } from '../router';
 import type { ShellConfig } from '../shell.web';
 import type { GlobalStateConfig } from '../store';
+
+export type AttributeValue = boolean | number | string;
 
 export interface WebApplication {
   readonly element: JSX.Element;
@@ -38,7 +40,7 @@ export interface AppConfig<
   readonly router: RouterConfig;
   readonly webShell?: ShellConfig;
   readonly remote?: FSNetworkRequestConfig;
-  readonly engagementService?: EngagementService;
+  readonly engagement?: EngagementUtilities;
 
   /**
    * @deprecated Use cargoHold instead
@@ -63,11 +65,11 @@ export interface IApp {
   readonly routes: Routes;
   readonly store?: Store;
   readonly cargoHold?: CargoHoldStore;
-  readonly engagementService?: EngagementService;
+  readonly engagement?: EngagementUtilities;
   openUrl: (url: string) => void;
   startApplication: () => Promise<void>;
   stopApplication: () => Promise<void>;
-  updateProfile: (attributes: Attribute[]) => Promise<boolean>;
+  updateProfile: (attributeObj: Record<string, AttributeValue>) => Promise<boolean>;
   getProfile: (accountId?: string) => Promise<string | undefined>;
   updateAccountId: (accountId: string) => Promise<void>;
 }
@@ -80,7 +82,7 @@ export interface AppConstructor<T extends IApp = IApp> {
     api?: FSNetwork,
     cargoHold?: CargoHoldStore,
     store?: Store,
-    engagement?: EngagementService
+    engagement?: EngagementUtilities
   ): T;
   bootstrap: (options: AppConfig) => Promise<T>;
 }
