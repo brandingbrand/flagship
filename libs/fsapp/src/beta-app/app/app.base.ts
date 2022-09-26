@@ -4,7 +4,9 @@ import { ReactReduxContext } from 'react-redux';
 
 import type { IStore as CargoHoldStore } from '@brandingbrand/cargo-hold';
 import type {
-  EngagementScreenProps, EngagementService, EngagementUtilities
+  EngagementScreenProps,
+  EngagementService,
+  EngagementUtilities,
 } from '@brandingbrand/engagement-utils';
 import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { FSNetwork } from '@brandingbrand/fsnetwork';
@@ -34,7 +36,9 @@ export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN')
 export const APP_CONFIG_TOKEN = new InjectionToken<AppConfig>('APP_CONFIG_TOKEN');
 export const API_TOKEN = new InjectionToken<FSNetwork>('API_TOKEN');
 export const ENGAGEMENT_SERVICE = new InjectionToken<EngagementService>('ENGAGEMENT_SERVICE');
-export const ENGAGEMENT_COMPONENT = new InjectionToken<ComponentClass<EngagementScreenProps>>('ENGAGEMENT_COMPONENT');
+export const ENGAGEMENT_COMPONENT = new InjectionToken<ComponentClass<EngagementScreenProps>>(
+  'ENGAGEMENT_COMPONENT'
+);
 
 export abstract class FSAppBase implements IApp {
   public static async bootstrap<S extends GenericState, A extends Action, T extends FSAppBase, C>(
@@ -117,7 +121,7 @@ export abstract class FSAppBase implements IApp {
     const attributes = Object.entries(attributeObj).map(([key, attr]) => ({
       key,
       value: JSON.stringify(attr),
-      type: typeof attr
+      type: typeof attr,
     }));
     this.store?.dispatch({ type: 'PROFILE_UPDATE', value: attributes });
     return this.engagement.engagementService.setProfileAttributes(attributes);

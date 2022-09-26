@@ -4,7 +4,7 @@ export {
   APP_VERSION_TOKEN,
   API_TOKEN,
   ENGAGEMENT_COMPONENT,
-  ENGAGEMENT_SERVICE
+  ENGAGEMENT_SERVICE,
 } from './app';
 export {
   useAPI,

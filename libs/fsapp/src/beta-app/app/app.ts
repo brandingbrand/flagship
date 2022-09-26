@@ -9,7 +9,11 @@ import { FSAppBase } from './app.base';
 import type { AppConstructor } from './types';
 
 export {
-  APP_CONFIG_TOKEN, APP_VERSION_TOKEN, API_TOKEN, ENGAGEMENT_COMPONENT, ENGAGEMENT_SERVICE
+  APP_CONFIG_TOKEN,
+  APP_VERSION_TOKEN,
+  API_TOKEN,
+  ENGAGEMENT_COMPONENT,
+  ENGAGEMENT_SERVICE,
 } from './app.base';
 
 @StaticImplements<AppConstructor>()
