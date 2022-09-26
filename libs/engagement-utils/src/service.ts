@@ -22,7 +22,7 @@ export class EngagementService {
     if (typeof config.cacheTTL === 'number') {
       this.cacheTTL = config.cacheTTL;
     }
-    this.environment = ~config.baseURL.indexOf('uat') ? 'UAT' : 'PROD';
+    this.environment = config.baseURL.includes('uat') ? 'UAT' : 'PROD';
     this.networkClient = new FSNetwork({
       baseURL: config.baseURL,
       headers: {
