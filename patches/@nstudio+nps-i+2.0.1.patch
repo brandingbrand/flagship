@@ -1,0 +1,15 @@
+diff --git a/node_modules/@nstudio/nps-i/index.mjs b/node_modules/@nstudio/nps-i/index.mjs
+index 77ac67d..be3e549 100755
+--- a/node_modules/@nstudio/nps-i/index.mjs
++++ b/node_modules/@nstudio/nps-i/index.mjs
+@@ -67,7 +67,9 @@ const main = async () => {
+   /* Find longest key */
+   let longestKey = '';
+   flatScripts.forEach((element) => {
+-    if (element.name.length > longestKey.length) longestKey = element.name;
++    // Remove zero width characters
++    const normalizedName = element.name.replace(/​/g, '');
++    if (normalizedName.length > longestKey.length) longestKey = normalizedName;
+   });
+
+   /* Width of key column */
