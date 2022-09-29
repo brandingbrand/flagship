@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.72.0](https://github.com/brandingbrand/flagship/compare/v11.71.2...v11.72.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* **flagship-nx:** adding character escapes in android app name (9f25d35)
+
+
+### Features
+
+* **flagship-nx:** customize gradle version (b0ae7d4)
+* **flagship-nx:** google maps api key (386e027)
+* **flagship-nx:** skip pod install (084359b)
+
+
+
 ## [11.71.2](https://github.com/brandingbrand/flagship/compare/v11.71.1...v11.71.2) (2022-09-20)
 
 

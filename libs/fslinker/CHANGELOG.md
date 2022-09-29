@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.72.0](https://github.com/brandingbrand/flagship/compare/v11.71.2...v11.72.0) (2022-09-29)
+
+
+### Features
+
+* **fslinker:** token multiplexing (fb3afaa)
+
+
+
 ## [11.71.2](https://github.com/brandingbrand/flagship/compare/v11.71.1...v11.71.2) (2022-09-20)
 
 
