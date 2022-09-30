@@ -12,7 +12,7 @@ import {
 } from './defaults';
 import { useGridChunks } from './hooks';
 import type { ChunkOptions, InsertOptions, SizeOptions } from './utils';
-import { getAbsoluteWidth } from './utils';
+import { getAbsoluteWidth, getColumnGapStyle } from './utils';
 
 const gridStyle = StyleSheet.create({
   columnSeparator: {
@@ -100,6 +100,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     rowSeparatorStyle,
     onEndReached,
     onEndReachedThreshold,
+    columnGap,
+    rowGap,
   } = props;
 
   const listView = useRef<FlatList<GridRow<ItemT>>>(null);
@@ -195,9 +197,27 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
             const widthPercent = Math.floor(columnWidth * columns * 100) / 100;
             const showColumnSeparator = (index + 1) % totalColumns !== 0;
 
+            const columnGapStyle =
+              columnGap !== undefined
+                ? getColumnGapStyle(index, totalColumns, columnGap)
+                : undefined;
+
+            const rowStyle = useMemo(
+              () => [gridStyle.itemRow, columnGapStyle],
+              [gridStyle.itemRow, columnGapStyle]
+            );
+            const rowSeparatorStyles = useMemo(
+              () => [gridStyle.rowSeparator, rowSeparatorStyle],
+              [gridStyle.rowSeparator, rowSeparatorStyle]
+            );
+            const colSeparatorStyles = useMemo(
+              () => [gridStyle.columnSeparator, columnSeparatorStyle],
+              [gridStyle.columnSeparator, columnSeparatorStyle]
+            );
+
             return (
               <View key={index} style={[gridStyle.item, { width: `${widthPercent}%` }]}>
-                <View style={gridStyle.itemRow}>
+                <View style={rowStyle}>
                   {item.value && renderItem
                     ? renderItem({
                         item: item.value,
@@ -207,13 +227,23 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
                         separators,
                       })
                     : null}
-                  {(showRowSeparators || rowSeparatorStyle) && showRowSeparator ? (
-                    <View style={[gridStyle.rowSeparator, rowSeparatorStyle]} />
-                  ) : null}
+                  {
+                    // we don't want this rendering if a value for rowGap is given
+                    (showRowSeparators || rowSeparatorStyle) &&
+                    showRowSeparator &&
+                    rowGap !== undefined ? (
+                      <View style={rowSeparatorStyles} />
+                    ) : null
+                  }
                 </View>
-                {(showColumnSeparators || columnSeparatorStyle) && showColumnSeparator ? (
-                  <View style={[gridStyle.columnSeparator, columnSeparatorStyle]} />
-                ) : null}
+                {
+                  // we don't want this rendering if a value for columnGap is given
+                  (showColumnSeparators || columnSeparatorStyle) &&
+                  showColumnSeparator &&
+                  columnGap !== undefined ? (
+                    <View style={colSeparatorStyles} />
+                  ) : null
+                }
               </View>
             );
           })}
@@ -235,6 +265,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     () => Symbol('This is used to mark a change that requires a rerender'),
     [listViewProps?.extraData, renderRow]
   );
+
+  const rowGapComponent = (): JSX.Element => <View style={{ height: rowGap }} />;
 
   return (
     <View style={gridContainerStyle}>
@@ -264,6 +296,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         style={style}
         {...listViewProps}
         {...{ dataSet }}
+        ItemSeparatorComponent={rowGapComponent}
       />
       {showBackToTop || BackToTopComponent ? (
         <Animated.View

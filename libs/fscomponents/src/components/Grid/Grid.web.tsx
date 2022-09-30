@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
   },
 });
 
+// columnGap and rowGap are valid React css properties, but the React Native props do not take this into account
+const gridGutterStyles = (columnGap?: number, rowGap?: number): ViewStyle =>
+  ({
+    columnGap,
+    rowGap,
+  } as unknown as ViewStyle);
+
 const fixedColumnStyles = (numColumns: number) =>
   ({ gridTemplateColumns: `repeat(${numColumns}, 1fr)` } as ViewStyle);
 
@@ -102,6 +109,8 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     renderFooter,
     renderHeader,
     showBackToTop,
+    columnGap,
+    rowGap,
   } = props;
 
   const scrollView = useRef<ScrollView>(null);
@@ -184,6 +193,7 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
         contentContainerStyle={[
           style,
           styles.grid,
+          gridGutterStyles(columnGap, rowGap),
           numColumns === 'auto'
             ? columnSizeStyles(minColumnWidth, autoFit)
             : fixedColumnStyles(columns ?? numColumns),

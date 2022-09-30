@@ -1,3 +1,5 @@
+import type { ViewStyle } from 'react-native';
+
 export const GridItemTag = Symbol('Grid Item Tag');
 export const FullWidth = 'fill';
 
@@ -42,5 +44,30 @@ export const makeGridItem = <T>(
     [GridItemTag]: GridItemTag,
     value,
     width: minMaxWidth(width, maxWidth),
+  };
+};
+
+export const getColumnGapStyle = (
+  index: number,
+  totalColumns: number,
+  columnGap: number
+): ViewStyle => {
+  const halfGutter = columnGap / 2;
+
+  /* right margin for the left most column, left for the rightmost,
+   * and both sides for the middle columns
+   */
+  if (index % totalColumns === 0) {
+    return {
+      marginRight: halfGutter,
+    };
+  } else if (index % totalColumns === totalColumns - 1) {
+    return {
+      marginLeft: halfGutter,
+    };
+  }
+  return {
+    marginRight: halfGutter,
+    marginLeft: halfGutter,
   };
 };

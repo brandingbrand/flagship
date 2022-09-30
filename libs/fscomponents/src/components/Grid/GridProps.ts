@@ -148,28 +148,28 @@ export interface GridProps<ItemT>
   /**
    * Whether or not to show a separator between columns in the grid.
    *
-   * @deprecated to be removed in fs12. Not supported on Web.
+   * @deprecated to be removed in fs12. Not supported on Web. Use columnGap for gutters
    */
   showColumnSeparators?: boolean;
 
   /**
    * Style to apply to the separator between columns in the grid.
    *
-   * @deprecated to be removed in fs12. Not supported on Web.
+   * @deprecated to be removed in fs12. Not supported on Web. Use columnGap for gutters.
    */
   columnSeparatorStyle?: StyleProp<ViewStyle>;
 
   /**
    * Whether or not to show a separator between rows in the grid.
    *
-   * @deprecated to be removed in fs12. Not supported on Web.
+   * @deprecated to be removed in fs12. Not supported on Web. Use rowGap for gutters.
    */
   showRowSeparators?: boolean;
 
   /**
    * Style to apply to the separator between rows in the grid.
    *
-   * @deprecated to be removed in fs12. Not supported on Web.
+   * @deprecated to be removed in fs12. Not supported on Web. Use rowGap for gutters.
    */
   rowSeparatorStyle?: StyleProp<ViewStyle>;
 
@@ -241,4 +241,14 @@ export interface GridProps<ItemT>
    * Wether or not a grid should add columns for empty spaces when all existing items have a column
    */
   autoFit?: boolean;
+
+  /**
+   * Space between columns in the grid.
+   */
+  columnGap?: number;
+
+  /**
+   * Space between rows in the grid.
+   */
+  rowGap?: number;
 }
