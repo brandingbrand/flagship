@@ -185,6 +185,9 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
     ]
   );
 
+  const rowSeparatorStyles = useMemo(() => [gridStyle.rowSeparator, rowSeparatorStyle], []);
+  const colSeparatorStyles = useMemo(() => [gridStyle.columnSeparator, columnSeparatorStyle], []);
+
   const renderRow = useCallback<ListRenderItem<GridRow<ItemT>>>(
     ({ index, item, separators }) => {
       const showRowSeparator = chunkedArray.length > index + 1;
@@ -202,22 +205,9 @@ export const Grid = <ItemT,>(props: GridProps<ItemT>) => {
                 ? getColumnGapStyle(index, totalColumns, columnGap)
                 : undefined;
 
-            const rowStyle = useMemo(
-              () => [gridStyle.itemRow, columnGapStyle],
-              [gridStyle.itemRow, columnGapStyle]
-            );
-            const rowSeparatorStyles = useMemo(
-              () => [gridStyle.rowSeparator, rowSeparatorStyle],
-              [gridStyle.rowSeparator, rowSeparatorStyle]
-            );
-            const colSeparatorStyles = useMemo(
-              () => [gridStyle.columnSeparator, columnSeparatorStyle],
-              [gridStyle.columnSeparator, columnSeparatorStyle]
-            );
-
             return (
               <View key={index} style={[gridStyle.item, { width: `${widthPercent}%` }]}>
-                <View style={rowStyle}>
+                <View style={[gridStyle.itemRow, columnGapStyle]}>
                   {item.value && renderItem
                     ? renderItem({
                         item: item.value,
