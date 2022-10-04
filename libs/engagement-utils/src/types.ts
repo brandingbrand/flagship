@@ -49,6 +49,19 @@ export interface StoryGradient {
   endFadePosition?: number;
 }
 
+export interface Empty {
+  message: string;
+  textStyle?: StyleProp<TextStyle>;
+}
+
+export interface HTML {
+  body: string;
+  link: string;
+  iframe: string;
+  image: JSON;
+  title: JSON;
+}
+
 export interface JSON extends EmitterProps {
   isBlog?: boolean;
   backArrow?: StyleProp<ImageStyle>;
@@ -96,11 +109,11 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   headerName?: string;
   animate?: boolean;
   cardPosition?: number;
-  navigator?: Navigator;
+  navigator?: any;
   renderHeader?: () => void;
   discoverPath?: string;
   deepLinkMethod?: DeeplinkMethod;
-  renderBackButton?: (navigation?: Navigator) => void;
+  renderBackButton?: (navigation?: any) => void;
 }
 
 export interface EngagementMessage {
