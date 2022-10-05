@@ -4,6 +4,7 @@ import { merge, set } from 'lodash';
 import type {
   FSTranslationKeys,
   I18n,
+  MappedCurrencySymbols,
   NumberLike,
   PluralTranslationKey,
   TranslationKey,
@@ -42,6 +43,43 @@ export default class I18nHelper {
     }
 
     return num;
+  }
+
+  /**
+   * Lets you override the currency symbol by providing mappedCurrencyCodes:{}
+   * in the env file. Ex: mappedCurrencyCodes: { AUD: 'A$'},
+   *
+   * @param num - Number to be formatted
+   * @param [currency] - ISO 4217 code for the currency you're trying to change
+   * @return - Formatted number
+   */
+
+  protected currencyWithCustomSymbol(
+    num: ICurrencyValue | NumberLike,
+    options: Intl.NumberFormatOptions
+  ): string {
+    if (typeof num === 'string' || num instanceof Decimal) {
+      num = this.convertToNumber(num);
+    }
+    if (typeof num !== 'number' || Number.isNaN(num)) {
+      throw INVALID_NUMBER_ERROR;
+    }
+    if (this.i18n.mappedCurrencyCodes !== undefined) {
+      const localizedFormat = new Intl.NumberFormat(this.currentLocale(), {
+        style: 'currency',
+        currency: options.currency,
+      });
+      const targetOverride = this.i18n.mappedCurrencyCodes[options.currency ?? ''] ?? undefined;
+
+      const reformated = localizedFormat.formatToParts(num).map((elm) => {
+        if (elm.type === 'currency' && targetOverride !== undefined) {
+          elm.value = targetOverride;
+        }
+        return elm;
+      });
+      return reformated.map((part) => part.value).join('');
+    }
+    return this.number(num, options);
   }
 
   /**
@@ -116,6 +154,25 @@ export default class I18nHelper {
   }
 
   /**
+   * Recursively merges new currency symbol overrides into any existing
+   *
+   * @param mappedCurrencyCodes - A locale-indexed object containing
+   * key/value pairs of string translations
+   * @return - All possible string translations
+   * @example FSI18n.addCurrencyOverrides({AUD: 'A$'});
+   */
+  public addCurrencyOverrides<T = TranslationKeys>(
+    mappedCurrencyCodes: MappedCurrencySymbols
+  ): FSTranslationKeys<string> & T {
+    if (!this.i18n.mappedCurrencyCodes) {
+      this.i18n.mappedCurrencyCodes = mappedCurrencyCodes;
+    } else {
+      merge(this.i18n.mappedCurrencyCodes, mappedCurrencyCodes);
+    }
+    return this.getAvailableCurrencySymbolOverrides();
+  }
+
+  /**
    * Change language
    *
    * @param locale - Set locale
@@ -144,6 +201,7 @@ export default class I18nHelper {
    * Used for code completion.
    *
    * @return Available string translations
+   * @throws MISSING_TRANSLATIONS_ERROR
    */
   public getAvailableStringTranslations<T = TranslationKeys>(): T {
     if (this.i18n.translations === undefined) {
@@ -156,6 +214,26 @@ export default class I18nHelper {
     );
 
     return merge({}, ...availableTranslations);
+  }
+
+  /**
+   * Creates an object matching the same structure as the translation definitions
+   * object, but with the string translation values replaced by their object path
+   *
+   * Used for code completion.
+   *
+   * @return Available string translations
+   * @throws MISSING_TRANSLATIONS_ERROR
+   */
+  public getAvailableCurrencySymbolOverrides<T = MappedCurrencySymbols>(): T {
+    if (this.i18n.mappedCurrencyCodes === undefined) {
+      throw MISSING_TRANSLATIONS_ERROR;
+    }
+
+    const { mappedCurrencyCodes } = this.i18n;
+    const availableCurrencyCodes = Object.keys(mappedCurrencyCodes);
+
+    return merge({}, ...availableCurrencyCodes);
   }
 
   /**
@@ -211,7 +289,7 @@ export default class I18nHelper {
       ...options,
     };
 
-    return this.number(num, currencyOptions);
+    return this.currencyWithCustomSymbol(num, currencyOptions);
   }
 
   /**
@@ -269,6 +347,8 @@ export default class I18nHelper {
   }
 
   /**
+   * Returns the current Locale
+   *
    * @return Current locale
    */
   public currentLocale(): string {

@@ -64,3 +64,26 @@ import FSI18n from '@brandingbrand/fsi18n';
 const importantDate = new Date('Nov 1, 2018');
 FSI18n.date(importantDate); // 01/11/2018
 ```
+
+### Currency Override
+
+Some clients might want Australian dollars to display as "A$ 19.99" instead of the default "AUD
+19.99"
+
+To get this to work you need represent each currency you want to override as a key value pair with
+the key being a three character ISO-4217 currency code and the value being the desired symbol.
+
+IOS-4217 standard: <https://www.iso.org/iso-4217-currency-codes.html>
+
+Here is an example of using the `addCurrencyOverrides()`
+
+```ts
+import FSI18n, { MappedCurrencySymbols } from '@brandingbrand/fsi18n';
+
+const currencyOverrides: MappedCurrencySymbols = {
+  AUD: 'A$',
+  USD: 'US$',
+};
+
+FSI18n.addCurrencyOverrides(currencyOverrides);
+```

@@ -1,4 +1,8 @@
+import type { IsoCurrencyCodes } from './currency-codes';
+
 export type NumberLike = number | string | import('decimal.js').Decimal;
+
+export type MappedCurrencySymbols = IsoCurrencyCodes & Record<string, string>;
 
 export interface I18n {
   locale: string;
@@ -6,6 +10,7 @@ export interface I18n {
   fallbacks?: boolean;
   translations: Translations;
   translate: (scope: TranslationKey, options?: I18n.TranslateOptions) => string;
+  mappedCurrencyCodes?: MappedCurrencySymbols;
 }
 
 export type Translations = Record<string, TranslationKeys>;

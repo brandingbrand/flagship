@@ -71,6 +71,20 @@ describe('fsi18n', () => {
         currency: 'eur',
       });
     });
+
+    it('should allow currency codes from translation file to overwrite the defaults', () => {
+      const testNumber = 1234.56;
+      const options = {
+        currency: 'USD',
+      };
+
+      i18n.addCurrencyOverrides({
+        USD: 'I WAS OVERRIDDEN ',
+      });
+      const currency = i18n.currency(testNumber, undefined, options);
+
+      expect(currency).toBe('I WAS OVERRIDDEN 1,234.56');
+    });
   });
 
   describe('percent', () => {
