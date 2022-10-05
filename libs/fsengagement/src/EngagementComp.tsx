@@ -216,6 +216,7 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   AnimatedImage?: unknown;
   welcomeHeader?: boolean;
   headerName?: string;
+  displayName?: string;
   animate?: boolean;
   cardPosition?: number;
   navigator?: Navigator;
@@ -1091,10 +1092,10 @@ const WithEngagement = (
 
     public render(): JSX.Element {
       const { json, navBarTitle } = this.props;
-      this.pageCounterStyle =
-        json && json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
-      this.pageNumberStyle =
-        json && json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
+      this.pageCounterStyle = json?.pageCounterStyle
+        ? json.pageCounterStyle
+        : this.pageCounterStyle;
+      this.pageNumberStyle = json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
       const navBarTitleStyle = (json && json.navBarTitleStyle) || {};
 
       return (
@@ -1104,6 +1105,7 @@ const WithEngagement = (
             story: this.props.backButton ? this.props.json : undefined,
             language: this.props.language,
             cardPosition: this.props.cardPosition || 0,
+            displayName: this.props.displayName,
           }}
         >
           <>

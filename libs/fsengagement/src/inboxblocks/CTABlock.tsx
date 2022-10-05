@@ -15,7 +15,7 @@ const images = {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1,
+    flexShrink: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -51,6 +51,7 @@ export interface CTABlockProps extends EmitterProps {
 export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
   const { buttonStyle, containerStyle, icon, localization, textStyle } = props;
   let { text } = props;
+
   const { cardPosition, handleAction, language } = React.useContext(EngagementContext);
   const { cardActions, handleStoryAction, story } = React.useContext(CardContext);
 

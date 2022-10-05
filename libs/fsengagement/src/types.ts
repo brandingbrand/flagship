@@ -97,6 +97,8 @@ export interface BlockItem extends ScreenProps, JSON {
   fullScreenCard?: boolean;
   animateIndex?: number;
   position?: number;
+  cardContainerStyle?: StyleProp<ViewStyle>;
+  parentHasFixedHeight?: boolean;
 }
 
 export interface InjectedProps {

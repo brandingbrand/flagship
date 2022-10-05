@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import type {
+  FlexStyle,
   ImageSourcePropType,
   ImageStyle,
   LayoutChangeEvent,
@@ -10,6 +11,14 @@ import type {
 import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
 
 import { EngagementContext } from '../lib/contexts';
+
+type FlexAlignType = 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch';
+export type FlexAlign = FlexAlignType | 'auto';
+export interface FlexMap {
+  left: FlexAlign;
+  center: FlexAlign;
+  right: FlexAlign;
+}
 
 export interface ImageBlockProps {
   source: ImageSourcePropType;
@@ -23,17 +32,22 @@ export interface ImageBlockProps {
   outerContainerStyle?: ViewStyle;
   link?: string;
   parentWidth?: number;
+  fixedWidth?: number;
+  fixedAlignment?: 'center' | 'left' | 'right';
 }
 
-export interface ImageDimensions {
-  width?: number;
-  height?: number;
-}
+export const alignmentMap: FlexMap = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
+
+export const mapAlignment = (value: 'center' | 'left' | 'right'): FlexAlign => alignmentMap[value];
 
 export const ImageBlock: React.FC<ImageBlockProps> = React.memo((props) => {
   const { handleAction, windowWidth } = React.useContext(EngagementContext);
 
-  const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
+  const [imageDimensions, setImageDimensions] = useState<FlexStyle>({
     height: 0,
     width: 0,
   });
@@ -44,6 +58,8 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo((props) => {
     resizeMode = 'cover',
     resizeMethod = 'resize',
     source,
+    fixedWidth,
+    fixedAlignment,
     link,
   } = props;
   if (!source) {
@@ -56,9 +72,12 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo((props) => {
   if (imageDimensions.width) {
     imageRatioStyle.width = imageDimensions.width;
   }
+  if (imageDimensions.alignSelf) {
+    imageRatioStyle.alignSelf = imageDimensions.alignSelf;
+  }
 
   // eslint-disable-next-line max-statements
-  const findImageRatio = (): ImageDimensions => {
+  const findImageRatio = (): FlexStyle => {
     const {
       cardContainerStyle,
       containerStyle,
@@ -72,57 +91,64 @@ export const ImageBlock: React.FC<ImageBlockProps> = React.memo((props) => {
     }
 
     const win = Dimensions.get('window');
-    const result: ImageDimensions = { height: undefined, width: undefined };
+    const result: FlexStyle = { height: undefined, width: undefined };
     result.width = parentWidth || windowWidth || win.width;
 
-    if (containerStyle) {
-      if (containerStyle.paddingLeft) {
-        result.width -= Number(containerStyle.paddingLeft);
+    if (fixedWidth) {
+      result.width = fixedWidth;
+      result.alignSelf = fixedAlignment ? mapAlignment(fixedAlignment) : 'center';
+    } else {
+      if (containerStyle) {
+        if (containerStyle.paddingLeft) {
+          result.width -= Number(containerStyle.paddingLeft);
+        }
+        if (containerStyle.marginLeft) {
+          result.width -= Number(containerStyle.marginLeft);
+        }
+        if (containerStyle.paddingRight) {
+          result.width -= Number(containerStyle.paddingRight);
+        }
+        if (containerStyle.marginRight) {
+          result.width -= Number(containerStyle.marginRight);
+        }
       }
-      if (containerStyle.marginLeft) {
-        result.width -= Number(containerStyle.marginLeft);
+
+      // check for parent container margin/padding
+      if (outerContainerStyle) {
+        if (outerContainerStyle.paddingLeft) {
+          result.width -= Number(outerContainerStyle.paddingLeft);
+        }
+        if (outerContainerStyle.marginLeft) {
+          result.width -= Number(outerContainerStyle.marginLeft);
+        }
+        if (outerContainerStyle.paddingRight) {
+          result.width -= Number(outerContainerStyle.paddingRight);
+        }
+        if (outerContainerStyle.marginRight) {
+          result.width -= Number(outerContainerStyle.marginRight);
+        }
       }
-      if (containerStyle.paddingRight) {
-        result.width -= Number(containerStyle.paddingRight);
-      }
-      if (containerStyle.marginRight) {
-        result.width -= Number(containerStyle.marginRight);
+
+      if (cardContainerStyle) {
+        if (cardContainerStyle.paddingLeft) {
+          result.width -= Number(cardContainerStyle.paddingLeft);
+        }
+        if (cardContainerStyle.marginLeft) {
+          result.width -= Number(cardContainerStyle.marginLeft);
+        }
+        if (cardContainerStyle.paddingRight) {
+          result.width -= Number(cardContainerStyle.paddingRight);
+        }
+        if (cardContainerStyle.marginRight) {
+          result.width -= Number(cardContainerStyle.marginRight);
+        }
       }
     }
 
-    // check for parent container margin/padding
-    if (outerContainerStyle) {
-      if (outerContainerStyle.paddingLeft) {
-        result.width -= Number(outerContainerStyle.paddingLeft);
-      }
-      if (outerContainerStyle.marginLeft) {
-        result.width -= Number(outerContainerStyle.marginLeft);
-      }
-      if (outerContainerStyle.paddingRight) {
-        result.width -= Number(outerContainerStyle.paddingRight);
-      }
-      if (outerContainerStyle.marginRight) {
-        result.width -= Number(outerContainerStyle.marginRight);
-      }
-    }
-
-    if (cardContainerStyle) {
-      if (cardContainerStyle.paddingLeft) {
-        result.width -= Number(cardContainerStyle.paddingLeft);
-      }
-      if (cardContainerStyle.marginLeft) {
-        result.width -= Number(cardContainerStyle.marginLeft);
-      }
-      if (cardContainerStyle.paddingRight) {
-        result.width -= Number(cardContainerStyle.paddingRight);
-      }
-      if (cardContainerStyle.marginRight) {
-        result.width -= Number(cardContainerStyle.marginRight);
-      }
-    }
     if (ratio) {
       result.height = result.width / Number.parseFloat(ratio);
     }
+    console.log('image result', result);
     return result;
   };
 

@@ -1,6 +1,12 @@
+import type { ComponentList } from '../types';
+
 import { CTABlock } from './CTABlock';
+import { CTARow } from './CTARow';
 import { Card } from './Card';
+import { Container } from './Container';
 import CustomCarouselBlock from './CustomCarouselBlock';
+import { DismissibleBanner } from './DismissibleBanner';
+import { DisplayNameMessage } from './DisplayNameMessage';
 import DividerBlock from './DividerBlock';
 import EventBlock from './EventBlock';
 import { EventCard } from './EventCard';
@@ -20,11 +26,13 @@ import { RecipeBlock } from './RecipeBlock';
 import RoundedImageCard from './RoundedImageCard';
 import ShareBlock from './ShareBlock';
 import ShopIngredientsBlock from './ShopIngredientsBlock';
+import { SideBySideImages } from './SideBySideImages';
 import SimpleCard from './SimpleCard';
 import StackedButtons from './StackedButtons';
 import Story from './Story';
 import TextBanner from './TextBanner';
 import { TextBlock } from './TextBlock';
+import { TextWithButton } from './TextWithButton';
 import TextWithIconBlock from './TextWithIconBlock';
 import { TitleWithLink } from './TitleWithLink';
 import TwinCTABlock from './TwinCTABlock';
@@ -32,7 +40,7 @@ import { VideoBlock } from './VideoBlock';
 import { VideoCard } from './VideoCard';
 import WhiteInboxWrapper from './WhiteInboxWrapper';
 
-export default {
+const layoutComponents: ComponentList = {
   Text: TextBlock,
   Image: ImageBlock,
   CTA: CTABlock,
@@ -66,4 +74,12 @@ export default {
   TitleWithLink,
   CustomCarousel: CustomCarouselBlock,
   IconText,
+  DisplayNameMessage,
+  DismissibleBanner,
+  Container,
+  TextWithButton,
+  CTARow,
+  SideBySideImages,
 };
+
+export default layoutComponents;

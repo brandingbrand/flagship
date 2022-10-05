@@ -8,6 +8,7 @@ export interface EngContext {
   language?: string;
   cardPosition?: number;
   windowWidth?: number;
+  displayName?: string;
 }
 export const EngagementContext = React.createContext<EngContext>({});
 export const CardContext = React.createContext<any>({});

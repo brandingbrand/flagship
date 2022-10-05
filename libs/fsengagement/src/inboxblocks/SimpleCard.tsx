@@ -5,9 +5,12 @@ import { StyleSheet, View } from 'react-native';
 
 import type { InboxBlock } from '../types';
 
+import type { CTABlockProps } from './CTABlock';
 import { CTABlock } from './CTABlock';
+import type { ImageBlockProps } from './ImageBlock';
 import { ImageBlock } from './ImageBlock';
 import ShareBlock from './ShareBlock';
+import type { TextBlockProps } from './TextBlock';
 import { TextBlock } from './TextBlock';
 
 const styles = StyleSheet.create({
@@ -45,10 +48,20 @@ const styles = StyleSheet.create({
   },
 });
 
+interface Contents {
+  Avatar: ImageBlockProps;
+  Username: TextBlockProps;
+  Date: TextBlockProps;
+  Text: TextBlockProps;
+  Image: ImageBlockProps;
+  Share: any;
+  CTA: CTABlockProps;
+}
+
 export interface ComponentProps {
   containerStyle?: StyleProp<TextStyle>;
   story?: InboxBlock;
-  contents: any;
+  contents: Contents;
 }
 
 export default class SimpleCard extends Component<ComponentProps> {
@@ -72,7 +85,7 @@ export default class SimpleCard extends Component<ComponentProps> {
         </View>
         <View style={styles.buttonRow}>
           <ShareBlock {...contents.Share} />
-          <CTABlock {...contents.CTA} story={this.props.story} />
+          <CTABlock {...contents.CTA} />
         </View>
       </View>
     );
