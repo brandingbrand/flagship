@@ -24,8 +24,9 @@ export const flattenRecord = <T extends Record<PropertyKey, Result<unknown, unkn
 
   try {
     const entries = Object.entries(results).map(([key, result]) => {
+      // if the result is ok, return just the "ok value", instead of the ok wrapped result
       if (isOk(result)) {
-        return [key, result as ExtractOk<T[typeof key]>] as const;
+        return [key, result.ok as T[typeof key]];
       }
 
       /*
