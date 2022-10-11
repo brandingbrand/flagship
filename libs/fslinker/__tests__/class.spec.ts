@@ -51,10 +51,10 @@ describe('injected class', () => {
     expect(instance?.dep).toBeInstanceOf(Dependency);
   });
 
-  it('should throw if an incorrect number of dependencies is provided', () => {
+  it('should not throw if a dependency overlaps with a default value', () => {
     class Dependency {}
     class Example {
-      constructor(public readonly dep: Dependency) {}
+      constructor(public readonly dep: Dependency, private readonly dep2 = new Dependency()) {}
     }
 
     const dependencyToken = new InjectionToken<Dependency>('DEPENDENCY_TOKEN');
@@ -66,10 +66,9 @@ describe('injected class', () => {
       injector.provide({
         provide: token,
         useClass: Example,
-        // @ts-expect-error
         deps: [dependencyToken, dependencyToken],
       });
-    }).toThrow(ReferenceError);
+    }).not.toThrow(ReferenceError);
   });
 
   it('should throw if a dependency is missing', () => {

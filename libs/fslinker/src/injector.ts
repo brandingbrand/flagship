@@ -52,7 +52,7 @@ export class Injector implements FallbackCache {
   constructor(private readonly cache: InjectorCache) {}
 
   private verifyDeps(target: Function, deps: unknown[]): never | void {
-    if (deps.length !== target.length) {
+    if (deps.length < target.length) {
       throw new ReferenceError(
         `${Injector.name}: ${target.name} requires ${target.length} dependencies but recieved ${deps.length} dependencies.
 Check that your dependency array matches your factory or classes required dependencies.`
