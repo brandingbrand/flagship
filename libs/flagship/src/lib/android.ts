@@ -33,6 +33,7 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
       'android:screenOrientation': 'fullSensor',
       'android:windowSoftInputMode': 'adjustResize',
+      'android:exported': 'true',
     },
     applicationAttributes: {
       'android:allowBackup': 'false',
@@ -227,17 +228,17 @@ export const mainActivityAttributes = (config: FlagshipTypes.AndroidConfig): voi
     return;
   }
   helpers.logInfo('updating manifest activity attributes');
-  const newAttributes: string[] = [];
+  const additionalAttributes: string[] = [];
   const attributes = config.manifest.activityAttributes || {};
   Object.keys(attributes).forEach((key: string) => {
     if (attributes[key]) {
-      newAttributes.push(`${key}=\"${attributes[key]}\"`);
+      additionalAttributes.push(`${key}=\"${attributes[key]}\"`);
     }
   });
   fs.update(
     path.android.manifestPath(),
     '__ACTIIVITY_ATTRIBUTES__="TEMPLATE"',
-    newAttributes.join('\n            ')
+    additionalAttributes.join('\n            ')
   );
 };
 
