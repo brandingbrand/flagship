@@ -49,6 +49,7 @@ const defaults = {
     'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
     'android:screenOrientation': 'fullSensor',
     'android:windowSoftInputMode': 'adjustResize',
+    'android:exported': 'true',
   },
   applicationAttributes: {
     'android:allowBackup': 'false',
@@ -60,7 +61,7 @@ const defaults = {
 };
 const ANDROID_PROXY = '10.0.2.2';
 
-export const createAndroidFiles = (tree: Tree, options: CreateAndroidFilesOptions) => {
+export const createAndroidFiles = (tree: Tree, options: CreateAndroidFilesOptions): void => {
   const androidRoot = join(options.projectRoot, 'android');
 
   generateFiles(tree, join(__dirname, '../files/android'), androidRoot, {

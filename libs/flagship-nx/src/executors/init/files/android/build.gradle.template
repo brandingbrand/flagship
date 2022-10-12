@@ -4,8 +4,8 @@ buildscript {
     ext {
         buildToolsVersion = "30.0.2"
         minSdkVersion = 19
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+        compileSdkVersion = 31
+        targetSdkVersion = 31
         supportLibVersion = "28.0.0"
         kotlinVersion = "1.3.72"
         RNNKotlinVersion = kotlinVersion
