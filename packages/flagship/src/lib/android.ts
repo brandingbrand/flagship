@@ -31,7 +31,8 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:launchMode': 'singleTask',
       'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
       'android:screenOrientation': 'fullSensor',
-      'android:windowSoftInputMode': 'adjustResize'
+      'android:windowSoftInputMode': 'adjustResize',
+      'android:exported': 'true',
     },
     applicationAttributes: {
       'android:allowBackup': 'false',
