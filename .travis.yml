@@ -7,9 +7,9 @@ stages:
 install:
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   - nvm install 12
-  - npm install -g yarn
+  - npm install -g yarn@^3.18.5
   - yarn install
-  - yarn global add lerna
+  - yarn global add lerna@^3.18.5
   - yarn --silent --non-interactive --ignore-scripts
 jobs:
   include:
