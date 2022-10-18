@@ -1,7 +1,30 @@
 default_platform :ios
 
+lane :increment_build do
+  begin
+    version = appcenter_fetch_version_number(
+      #PROJECT_MODIFY_FLAG_appcenter_api_token
+      owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
+      app_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_app_name_ios
+      version: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_app_version_ios
+    )
+
+    if version["build_number"]
+      build_number = increment_build_number(
+        build_number: version["build_number"].to_i + 1
+      )
+
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue
+    puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
+  end
+end
+
 # make a provisioned build and upload to appcenter
 lane :appcenter do
+  increment_build
+
   gym(
     scheme: "FLAGSHIP",
     clean: true,

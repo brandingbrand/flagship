@@ -1,5 +1,5 @@
 /* tslint:disable */
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dimensions,
@@ -12,6 +12,7 @@ import {
   View
 } from 'react-native';
 import styles from './SliderEntry.style';
+import { EngagementContext } from '../lib/contexts';
 
 export interface RenderItemProps {
   data?: any;
@@ -42,11 +43,11 @@ export interface RenderItemState {
 
 const { height: viewportHeight } = Dimensions.get('window');
 
-export default class RenderImageTextItem extends Component<RenderItemProps, RenderItemState> {
+class RenderImageTextItem extends Component<RenderItemProps & { context: any }, RenderItemState> {
   static contextTypes: any = {
     handleAction: PropTypes.func
   };
-  constructor(props: RenderItemProps) {
+  constructor(props: RenderItemProps & { context: any }) {
     super(props);
     this.state = {
       viewHeight: 0,
@@ -84,7 +85,7 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
     if (!link) {
       return;
     }
-    const { handleAction } = this.context;
+    const { handleAction } = this.props.context;
     handleAction({
       type: 'deep-link',
       value: link
@@ -228,3 +229,8 @@ export default class RenderImageTextItem extends Component<RenderItemProps, Rend
     );
   }
 }
+
+export default (props: RenderItemProps) => {
+  const context = useContext(EngagementContext);
+  return <RenderImageTextItem {...props} context={context} />;
+};

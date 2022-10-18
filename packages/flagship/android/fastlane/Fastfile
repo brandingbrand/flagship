@@ -1,6 +1,28 @@
 default_platform :android
 
+lane :increment_build do
+  begin
+    version = appcenter_fetch_version_number(
+      #PROJECT_MODIFY_FLAG_appcenter_api_token
+      owner_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_owner_name
+      app_name: "INJECTED_FROM_CONFIG", #PROJECT_MODIFY_FLAG_appcenter_app_name_android
+      #PROJECT_MODIFY_FLAG_appcenter_app_version_android
+    )
+
+    if version["build_number"]
+      build_number = version["build_number"].to_i + 1
+      sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue
+    puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
+  end
+end
+
 lane :appcenter do
+  increment_build
+
   # build the release variant
   gradle(task: "assembleRelease")
 
@@ -13,6 +35,8 @@ lane :appcenter do
 end
 
 lane :appcenter_bundle do
+  increment_build
+
   # build the release variant
   gradle(task: "bundleRelease")
 
