@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.18.0](https://github.com/brandingbrand/flagship/compare/v10.17.2...v10.18.0) (2022-01-04)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [10.17.2](https://github.com/brandingbrand/flagship/compare/v10.17.1...v10.17.2) (2021-12-07)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+## [10.17.1](https://github.com/brandingbrand/flagship/compare/v10.17.0...v10.17.1) (2021-11-18)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
+# [10.17.0](https://github.com/brandingbrand/flagship/compare/v10.16.0...v10.17.0) (2021-11-09)
+
+**Note:** Version bump only for package @brandingbrand/fslocator
+
+
+
+
+
 # [10.16.0](https://github.com/brandingbrand/flagship/compare/v10.15.0...v10.16.0) (2021-11-05)
 
 **Note:** Version bump only for package @brandingbrand/fslocator
