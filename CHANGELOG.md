@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [10.19.0](https://github.com/brandingbrand/flagship/compare/v10.18.0...v10.19.0) (2022-10-19)
+
+
+### Features
+
+* **flagship:** updating v10 to support android 12 ([67f19a8](https://github.com/brandingbrand/flagship/commit/67f19a800474290600a0036b3bb2fdb92fb097bf))
+
+
+
+
+
 # [10.18.0](https://github.com/brandingbrand/flagship/compare/v10.17.2...v10.18.0) (2022-01-04)
 
 
