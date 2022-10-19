@@ -32,7 +32,7 @@ const DEFAULT_ANDROID_CONFIG = {
       'android:configChanges': 'keyboard|keyboardHidden|orientation|screenSize',
       'android:screenOrientation': 'fullSensor',
       'android:windowSoftInputMode': 'adjustResize',
-      'android:exported': 'true',
+      'android:exported': 'true'
     },
     applicationAttributes: {
       'android:allowBackup': 'false',
