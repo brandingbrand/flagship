@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/orchestrate-nx",
-  "version": "11.73.1",
+  "version": "11.74.0",
   "main": "src/index.js",
   "executors": "./executors.json"
 }
