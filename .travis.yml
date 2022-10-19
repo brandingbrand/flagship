@@ -9,7 +9,7 @@ install:
   - nvm install 12
   - npm install -g yarn
   - yarn install
-  - yarn global add lerna
+  - yarn global add lerna@^3.18.5
   - yarn --silent --non-interactive --ignore-scripts
 jobs:
   include:
