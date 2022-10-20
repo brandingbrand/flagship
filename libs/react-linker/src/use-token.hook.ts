@@ -3,7 +3,7 @@ import { Injector } from '@brandingbrand/fslinker';
 
 import { REACT_TOKEN } from './react.token';
 
-export const useToken = <T>(token: InjectionToken<T>) => {
+export const useToken = <T>(token: InjectionToken<T>): T => {
   const { useRef } = Injector.require(REACT_TOKEN);
 
   const ref = useRef<T>();
