@@ -1,12 +1,14 @@
-import type { InjectionToken } from '../providers';
+import type { AnyInjectionToken } from '../providers';
+import { InjectionToken } from '../providers';
 
 export interface InjectorCache {
   get: <T>(token: InjectionToken<T>) => T | undefined;
   getMany: <T>(token: InjectionToken<T, 'many'>) => T[];
   has: (token: InjectionToken) => boolean;
   provide: <T>(token: InjectionToken<T, 'many' | 'single'>, value: T, many?: boolean) => void;
-  remove: (token: InjectionToken) => void;
+  remove: (token: AnyInjectionToken) => void;
   reset: () => void;
+  keys: () => IterableIterator<AnyInjectionToken>;
 }
 
 export interface FallbackCache {
@@ -21,7 +23,9 @@ export class InMemoryCache {
     private readonly fallback?: FallbackCache
   ) {}
 
-  private verifyToken(token: InjectionToken<unknown, 'many' | 'single'>): void {
+  private readonly tokens = new Map<string | symbol, AnyInjectionToken>();
+
+  private verifyToken(token: AnyInjectionToken): void {
     if (
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions -- Type Guard
       !token ||
@@ -82,6 +86,7 @@ more than a single version`
 
       if (currentValue === undefined) {
         this.providers.set(token.uniqueKey, value);
+        this.tokens.set(token.uniqueKey, token);
       } else {
         this.providers.set(
           token.uniqueKey,
@@ -93,12 +98,24 @@ more than a single version`
     }
   }
 
-  public remove(token: InjectionToken): void {
+  public remove(token: AnyInjectionToken): void {
     this.verifyToken(token);
     this.providers.delete(token.uniqueKey);
+    this.tokens.delete(token.uniqueKey);
   }
 
   public reset(): void {
     this.providers.clear();
+    this.tokens.clear();
+  }
+
+  public *keys(): IterableIterator<AnyInjectionToken> {
+    for (const key of this.providers.keys()) {
+      const token =
+        this.tokens.get(key) ??
+        (this.tokens.set(key, new InjectionToken(key)).get(key) as AnyInjectionToken);
+
+      yield token;
+    }
   }
 }

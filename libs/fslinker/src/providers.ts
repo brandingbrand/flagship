@@ -3,6 +3,8 @@ export class InjectionToken<T = unknown, ManyType extends 'many' | 'single' = 's
   protected readonly brand: T | undefined;
 }
 
+export type AnyInjectionToken = InjectionToken<unknown, 'many' | 'single'>;
+
 export type OfToken<A extends unknown[]> = {
   [K in keyof A]: InjectionToken<A[K]>;
 };

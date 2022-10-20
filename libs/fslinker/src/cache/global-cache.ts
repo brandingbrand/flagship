@@ -1,4 +1,4 @@
-import type { InjectionToken } from '../providers';
+import type { AnyInjectionToken, InjectionToken } from '../providers';
 
 import type { InjectorCache } from './cache';
 import { InMemoryCache } from './cache';
@@ -37,12 +37,16 @@ export class GlobalInjectorCache extends InMemoryCache implements InjectorCache 
     this.cache.provide(token, value, many);
   }
 
-  public static remove(token: InjectionToken): void {
+  public static remove(token: AnyInjectionToken): void {
     this.cache.remove(token);
   }
 
   public static reset(): void {
     this.cache.reset();
+  }
+
+  public static keys(): IterableIterator<AnyInjectionToken> {
+    return this.cache.keys();
   }
 
   constructor() {

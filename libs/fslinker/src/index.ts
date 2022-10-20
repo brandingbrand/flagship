@@ -13,4 +13,5 @@ export type {
   ClassProvider,
   FactoryProvider,
 } from './providers';
+export type { AnyInjectionToken } from './providers';
 export { InjectionToken } from './providers';

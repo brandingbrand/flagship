@@ -4,6 +4,7 @@ import type { InjectedClass } from './inject';
 import { getDependencies } from './inject';
 import { InjectionToken } from './providers';
 import type {
+  AnyInjectionToken,
   BasicClassProvider,
   BasicFactoryProvider,
   ClassProvider,
@@ -41,12 +42,16 @@ export class Injector implements FallbackCache {
     this.injector.provide(provider);
   }
 
-  public static remove(token: InjectionToken): void {
+  public static remove(token: AnyInjectionToken): void {
     this.injector.remove(token);
   }
 
   public static reset(): void {
     this.injector.reset();
+  }
+
+  public static keys(): IterableIterator<AnyInjectionToken> {
+    return this.injector.keys();
   }
 
   constructor(private readonly cache: InjectorCache) {}
@@ -199,11 +204,15 @@ If you are a developer seeing this message then make sure that your parameter to
     }
   }
 
-  public remove(token: InjectionToken): void {
+  public remove(token: AnyInjectionToken): void {
     this.cache.remove(token);
   }
 
   public reset(): void {
     this.cache.reset();
+  }
+
+  public keys(): IterableIterator<AnyInjectionToken> {
+    return this.cache.keys();
   }
 }
