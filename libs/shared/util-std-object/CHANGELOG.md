@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.75.0](https://github.com/brandingbrand/flagship/compare/v11.74.0...v11.75.0) (2022-10-27)
+
+
+### Features
+
+* **shared-util-std-object:** invert keys and values utility (08d041f)
+* **shared-util-std-object:** omit utility (17beed5)
+
+
+
 # [11.74.0](https://github.com/brandingbrand/flagship/compare/v11.73.1...v11.74.0) (2022-10-19)
 
 

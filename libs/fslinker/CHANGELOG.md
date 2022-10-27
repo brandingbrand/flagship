@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.75.0](https://github.com/brandingbrand/flagship/compare/v11.74.0...v11.75.0) (2022-10-27)
+
+
+### Bug Fixes
+
+* **fslinker:** allow injection parameters with default values (3aa601d)
+
+
+
 # [11.74.0](https://github.com/brandingbrand/flagship/compare/v11.73.1...v11.74.0) (2022-10-19)
 
 
