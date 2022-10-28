@@ -1,6 +1,7 @@
+/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React, { useMemo } from 'react';
 
-import { ImageBackground, View } from 'react-native';
+import { ImageBackground, TextStyle, View } from 'react-native';
 import type {
   ImageResizeMode,
   ImageStyle,
@@ -38,6 +39,15 @@ export interface ContainerState {
   height?: number;
 }
 
+type JustifyValue =
+  | 'center'
+  | 'flex-end'
+  | 'flex-start'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly'
+  | undefined;
+
 export const Container: React.FC<ContainerProps> = React.memo((props) => {
   const {
     cardContainerStyle,
@@ -58,7 +68,7 @@ export const Container: React.FC<ContainerProps> = React.memo((props) => {
     source: backgroundImageSource,
   } = backgroundImage;
 
-  const containerChildStyle: any = useMemo(() => {
+  const containerChildStyle: ViewStyle = useMemo(() => {
     if (typeof parentWidth === 'number' && typeof spaceBetween === 'number') {
       return {
         width: parentWidth - spaceBetween,
@@ -120,23 +130,25 @@ export const Container: React.FC<ContainerProps> = React.memo((props) => {
     bottom: 'flex-end',
   };
 
-  const textContainerStyle: any =
+  const textContainerStyle: TextStyle =
     verticalAlignment && Boolean(containerStyle?.height)
       ? {
           flex: 1,
-          justifyContent: verticalMap[verticalAlignment],
+          justifyContent: verticalMap[verticalAlignment] as JustifyValue,
         }
       : {};
 
   return (
     <>
-      {items.length > 0 && (!shouldUseBackground || !backgroundImageSource?.uri) && (
-        <View style={[containerStyle, containerChildStyle]}>
-          <View style={textContainerStyle as ViewStyle}>
-            <View style={{ width: '100%' }}>{items.map(renderBlock)}</View>
+      {items.length > 0 &&
+        (!shouldUseBackground ||
+          !(typeof backgroundImageSource?.uri === 'undefined' || !backgroundImageSource.uri)) && (
+          <View style={[containerStyle, containerChildStyle]}>
+            <View style={textContainerStyle as ViewStyle}>
+              <View style={{ width: '100%' }}>{items.map(renderBlock)}</View>
+            </View>
           </View>
-        </View>
-      )}
+        )}
       {items.length > 0 && shouldUseBackground && Boolean(backgroundImageSource?.uri) && (
         <ImageBackground
           source={backgroundImageSource as ImageURISource}
@@ -152,3 +164,4 @@ export const Container: React.FC<ContainerProps> = React.memo((props) => {
     </>
   );
 });
+/* eslint-enable unicorn/filename-case */

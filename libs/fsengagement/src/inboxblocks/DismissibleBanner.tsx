@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -6,13 +7,13 @@ import type {
   ImageStyle,
   ImageURISource,
   StyleProp,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import closeIcon from '../../assets/images/iconCloseXLight.png';
-
 import { EngagementContext } from '../lib/contexts';
 import type { BlockItem, CardProps } from '../types';
 
@@ -41,6 +42,15 @@ const styles = StyleSheet.create({
   },
 });
 
+type JustifyValue =
+  | 'center'
+  | 'flex-end'
+  | 'flex-start'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly'
+  | undefined;
+
 interface BackgroundImage {
   imageStyle?: StyleProp<ImageStyle>;
   resizeMode?: ImageResizeMode;
@@ -67,7 +77,7 @@ export interface DismissibleBannerState {
   showing?: Boolean;
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, sonarjs/cognitive-complexity -- Keeping as single component for simplicity
 export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((props) => {
   const {
     cardContainerStyle,
@@ -116,7 +126,7 @@ export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((p
   };
 
   const onPressBanner = (): void => {
-    if (handleAction && link) {
+    if (handleAction && typeof link === 'string') {
       handleAction({
         type: 'deep-link',
         value: link,
@@ -124,7 +134,7 @@ export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((p
     }
   };
 
-  const containerChildStyle: any = useMemo(() => {
+  const containerChildStyle: ViewStyle = useMemo(() => {
     if (typeof parentWidth === 'number' && typeof spaceBetween === 'number') {
       return {
         width: parentWidth - spaceBetween,
@@ -187,11 +197,11 @@ export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((p
     bottom: 'flex-end',
   };
 
-  const textContainerStyle: any =
+  const textContainerStyle: TextStyle =
     verticalAlignment && Boolean(containerStyle?.height)
       ? {
           flex: 1,
-          justifyContent: verticalMap[verticalAlignment],
+          justifyContent: verticalMap[verticalAlignment] as JustifyValue,
         }
       : {};
 
@@ -199,7 +209,7 @@ export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((p
     return null;
   }
 
-  if (link) {
+  if (typeof link === 'string') {
     return (
       <View>
         <TouchableOpacity activeOpacity={1} onPress={onPressBanner}>
@@ -257,3 +267,4 @@ export const DismissibleBanner: React.FC<DismissibleBannerProps> = React.memo((p
     </View>
   );
 });
+/* eslint-enable unicorn/filename-case -- Matches our naming scheme for components */

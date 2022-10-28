@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React from 'react';
 
 import type { StyleProp, TextStyle } from 'react-native';
@@ -75,3 +76,4 @@ export const DisplayNameMessage: React.FC<DisplayNameMessageProps> = React.memo(
     );
   }
 );
+/* eslint-enable unicorn/filename-case */

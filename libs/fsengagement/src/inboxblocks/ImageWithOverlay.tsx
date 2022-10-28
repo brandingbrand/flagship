@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React, { Component, useContext } from 'react';
 
 import type {
@@ -156,14 +157,34 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
           childWidth -= Number(containerStyle.marginRight);
         }
       }
-      if (texverlay && textOverlay?.options) {
-        if (textOverlay.options.horizontalLeftDistanceFromEdge) {
-          childWidth -= textOverlay.options.horizontalLeftDistanceFromEdge;
-        }
-        if (textOverlay.options.horizontalRightDistanceFromEdge) {
-          childWidth -= textOverlay.options.horizontalRightDistanceFromEdge;
+      if (typeof textOverlay === 'object' && textOverlay !== null) {
+        const overlay = textOverlay as Record<string, unknown>;
+
+        if ('options' in overlay && overlay.options !== null) {
+          const options = overlay.options as Record<string, number | string>;
+
+          if (
+            typeof options.horizontalLeftDistanceFromEdge !== 'undefined' &&
+            Boolean(options.horizontalLeftDistanceFromEdge)
+          ) {
+            childWidth -=
+              typeof options.horizontalLeftDistanceFromEdge === 'string'
+                ? Number.parseInt(options.horizontalLeftDistanceFromEdge, 10)
+                : options.horizontalLeftDistanceFromEdge;
+          }
+
+          if (
+            typeof options.horizontalRightDistanceFromEdge !== 'undefined' &&
+            Boolean(options.horizontalRightDistanceFromEdge)
+          ) {
+            childWidth -=
+              typeof options.horizontalRightDistanceFromEdge === 'string'
+                ? Number.parseInt(options.horizontalRightDistanceFromEdge, 10)
+                : options.horizontalRightDistanceFromEdge;
+          }
         }
       }
+
       parentWidthStyle = {
         parentWidth: childWidth,
       };
@@ -339,3 +360,4 @@ export default (props: ImageBlockProps) => {
   const context = useContext(EngagementContext);
   return <ImageWithOverlay {...props} context={context} />;
 };
+/* eslint-enable unicorn/filename-case */
