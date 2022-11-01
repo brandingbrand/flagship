@@ -263,7 +263,7 @@ export class FSRouter extends FSRouterBase {
 
               return React.memo(({ componentId }) => {
                 useEffect(() => {
-                  trackView(this.options.analytics, route, filteredRoute, path);
+                  trackView(this.options.analytics, route, filteredRoute);
                 }, [filteredRoute]);
 
                 return <AwaitedComponent componentId={componentId} />;
@@ -271,7 +271,7 @@ export class FSRouter extends FSRouterBase {
             },
             { fallback: this.options.loading }
           ),
-        [route]
+        [route, filteredRoute]
       );
 
       return (

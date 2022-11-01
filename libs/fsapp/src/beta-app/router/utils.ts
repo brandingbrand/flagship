@@ -114,17 +114,14 @@ export const resolveRoutes = async ({
 export const trackView = (
   analytics: Analytics | undefined,
   route: ComponentRoute | LazyComponentRoute,
-  filteredRoute: ActivatedRoute | undefined,
-  path: string | undefined
-) => {
+  filteredRoute: ActivatedRoute | undefined
+): void => {
   if (!__DEV__ && filteredRoute && !route.disableTracking) {
     void Promise.resolve(
       typeof route.title === 'string' ? route.title : route.title?.(filteredRoute)
     )
       .then((title) => {
-        analytics?.screenview(title ?? path ?? '', {
-          url: path ?? '',
-        });
+        analytics?.screenview(filteredRoute.path ?? '', { ...filteredRoute, title });
       })
       .catch();
   }

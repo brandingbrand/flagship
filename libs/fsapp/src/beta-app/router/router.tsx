@@ -109,8 +109,18 @@ export class FSRouter extends FSRouterBase {
                 useEffect(() => this.history.observeLoading(setIsLoading), []);
 
                 useEffect(() => {
-                  trackView(this.options.analytics, route, activatedRoute, path);
-                }, [activatedRoute]);
+                  const subscription = Navigation.events().registerComponentDidAppearListener(
+                    (appearingComponent) => {
+                      if (componentId === appearingComponent.componentId) {
+                        trackView(this.options.analytics, route, activatedRoute);
+                      }
+                    }
+                  );
+
+                  return () => {
+                    subscription.remove();
+                  };
+                }, [activatedRoute, componentId]);
 
                 return (
                   <ActivatedRouteProvider {...activatedRoute} loading={isLoading}>
