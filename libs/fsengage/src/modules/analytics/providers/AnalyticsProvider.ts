@@ -1,6 +1,6 @@
 import type Decimal from 'decimal.js';
 
-import type { BaseEvent, Campaign } from '../Analytics';
+import type { BaseEvent, Campaign, ScreenView } from '../Analytics';
 
 import type AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
 
@@ -194,9 +194,9 @@ export default abstract class AnalyticsProvider {
 
   public abstract locationDirections(properties: LocationDirections): void;
 
-  public abstract pageview(properties: Screenview): void;
+  public abstract pageview(properties: ScreenView | Screenview): void;
 
-  public abstract screenview(properties: Screenview): void;
+  public abstract screenview(properties: ScreenView | Screenview): void;
 
   public abstract searchGeneric(properties: SearchGeneric): void;
 

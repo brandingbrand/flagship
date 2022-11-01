@@ -40,8 +40,26 @@ export interface SearchGeneric extends BaseEvent {
   count?: number;
 }
 
+export interface Query {
+  [key: string]: Query | Query[] | string[] | string | undefined;
+}
+
+/**
+ * @deprecated use `ScreenView` instead (more required options)
+ */
 export interface Screenview extends BaseEvent {
   url: string;
+}
+
+export interface ScreenView extends BaseEvent {
+  id: string;
+  path: string;
+  data: Record<string, unknown>;
+  params: Record<string, string | undefined>;
+  query: Query;
+  url: string;
+  isExact: boolean;
+  title?: string;
 }
 
 // Enhanced Commerce Interfaces
@@ -1001,7 +1019,7 @@ export default class Analytics {
 
   // Public Commerce Functions
 
-  screenview(component: Component | string, properties: Screenview): void {
+  screenview(component: Component | string, properties: ScreenView | Screenview): void {
     const eventAction = this.kFunctionsEventAction[this.screenview.name];
     if (!eventAction) {
       return;
