@@ -1,6 +1,6 @@
 import type Decimal from 'decimal.js';
 
-import type { BaseEvent, Campaign, ScreenView } from '../Analytics';
+import type { BaseEvent, Campaign } from '../Analytics';
 
 import type AnalyticsProviderConfiguration from './types/AnalyticsProviderConfiguration';
 
@@ -39,9 +39,28 @@ export interface SearchGeneric extends Generics {
   count?: number;
 }
 
+export interface Query {
+  [key: string]: Query | Query[] | string[] | string | undefined;
+}
+
+/**
+ * @deprecated use `ScreenView` instead (more required options)
+ */
 export interface Screenview extends BaseEvent {
   eventCategory: string;
   url: string;
+}
+
+export interface ScreenView extends BaseEvent {
+  eventCategory: string;
+  id: string;
+  path: string;
+  data: Record<string, unknown>;
+  params: Record<string, string | undefined>;
+  query: Query;
+  url: string;
+  isExact: boolean;
+  title?: string;
 }
 
 export interface Checkout extends Generics {
