@@ -63,7 +63,7 @@ export = {
     'jest/no-focused-tests': WARN,
     'jest/no-hooks': OFF(NOT_VALUABLE),
     'jest/no-identical-title': WARN,
-    'jest/no-if': WARN,
+    'jest/no-if': SUCCESSOR('jest/no-conditional-in-test'),
     'jest/no-interpolation-in-snapshots': WARN,
     'jest/no-jasmine-globals': WARN,
     'jest/no-jest-import': WARN,
