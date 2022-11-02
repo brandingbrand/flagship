@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsengage/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 1280
+        "maxWarnings": 1206
       }
     },
     "set-max-warnings": {

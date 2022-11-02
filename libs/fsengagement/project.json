@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsengagement/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 2027
+        "maxWarnings": 2020
       }
     },
     "set-max-warnings": {

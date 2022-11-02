@@ -26,7 +26,7 @@
       "options": {
         "lintFilePatterns": ["libs/shared/util-std-lens/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 152
+        "maxWarnings": 151
       }
     },
     "set-max-warnings": {

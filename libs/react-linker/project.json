@@ -26,7 +26,7 @@
       "options": {
         "lintFilePatterns": ["libs/react-linker/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 5
+        "maxWarnings": 2
       }
     },
     "set-max-warnings": {

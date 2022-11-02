@@ -35,7 +35,7 @@
       "options": {
         "lintFilePatterns": ["libs/flagship/**/*.{ts,js}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 772
+        "maxWarnings": 770
       }
     },
     "set-max-warnings": {
