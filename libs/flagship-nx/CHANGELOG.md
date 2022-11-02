@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [11.75.1](https://github.com/brandingbrand/flagship/compare/v11.75.0...v11.75.1) (2022-11-02)
+
+
+### Bug Fixes
+
+* **flagship-nx:** fixing fs-nx template files for android 12 build target (3090751)
+
+
+
 # [11.75.0](https://github.com/brandingbrand/flagship/compare/v11.74.0...v11.75.0) (2022-10-27)
 
 
