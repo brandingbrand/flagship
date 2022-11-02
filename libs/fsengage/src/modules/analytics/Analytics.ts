@@ -158,97 +158,11 @@ export interface Campaign {
 // Class
 
 export default class Analytics {
-  private readonly kFunctionsName: Record<string, string> = {
-    addProduct: 'addProduct',
-    checkout: 'checkout',
-    checkoutOption: 'checkoutOption',
-    clickGeneric: 'clickGeneric',
-    clickProduct: 'clickProduct',
-    clickPromotion: 'clickPromotion',
-    contactCall: 'contactCall',
-    contactEmail: 'contactEmail',
-    detailProduct: 'detailProduct',
-    impressionGeneric: 'impressionGeneric',
-    impressionProduct: 'impressionProduct',
-    impressionPromotion: 'impressionPromotion',
-    lifecycleActive: 'lifecycleActive',
-    lifecycleBackground: 'lifecycleBackground',
-    lifecycleCreate: 'lifecycleCreate',
-    lifecycleClose: 'lifecycleClose',
-    lifecycleInactive: 'lifecycleInactive',
-    lifecycleStart: 'lifecycleStart',
-    lifecycleSuspend: 'lifecycleSuspend',
-    locationDirections: 'locationDirections',
-    purchase: 'purchase',
-    refundAll: 'refundAll',
-    refundPartial: 'refundPartial',
-    removeProduct: 'removeProduct',
-    screenview: 'screenview',
-    searchGeneric: 'searchGeneric',
-  };
-
-  private readonly kFunctionsEventAction: Record<string, string> = {
-    addProduct: 'add',
-    checkout: 'checkout',
-    checkoutOption: 'checkoutOption',
-    clickGeneric: 'click',
-    clickProduct: 'click',
-    clickPromotion: 'click',
-    contactCall: 'contact',
-    contactEmail: 'contact',
-    detailProduct: 'detail',
-    impressionGeneric: 'impression',
-    impressionProduct: 'impression',
-    impressionPromotion: 'impression',
-    lifecycleActive: 'lifecycle',
-    lifecycleBackground: 'lifecycle',
-    lifecycleCreate: 'lifecycle',
-    lifecycleClose: 'lifecycle',
-    lifecycleInactive: 'lifecycle',
-    lifecycleStart: 'lifecycle',
-    lifecycleSuspend: 'lifecycle',
-    locationDirections: 'location',
-    purchase: 'purchase',
-    refundAll: 'refund',
-    refundPartial: 'refundPartial',
-    removeProduct: 'remove',
-    screenview: 'screenview',
-    searchGeneric: 'search',
-  };
-
-  private readonly kFunctionsEventCategoryKey: Record<string, string> = {
-    addProduct: 'product',
-    clickGeneric: 'generic',
-    clickProduct: 'product',
-    clickPromotion: 'promotion',
-    contactCall: 'call',
-    contactEmail: 'email',
-    detailProduct: 'product',
-    locationDirections: 'directions',
-    refundAll: 'all',
-    refundPartial: 'partial',
-    removeProduct: 'product',
-    searchGeneric: 'generic',
-    impressionGeneric: 'generic',
-    impressionProduct: 'product',
-    impressionPromotion: 'promotion',
-  };
-
-  private readonly kFunctionsLifecycle: Record<string, string> = {
-    lifecycleActive: 'active',
-    lifecycleBackground: 'background',
-    lifecycleCreate: 'create',
-    lifecycleClose: 'close',
-    lifecycleInactive: 'inactive',
-    lifecycleStart: 'start',
-    lifecycleSuspend: 'suspend',
-  };
-
-  private readonly providers: AnalyticsProvider[];
-
   constructor(providers: AnalyticsProvider[]) {
     this.providers = providers;
   }
+
+  private readonly providers: AnalyticsProvider[];
 
   // Private Commerce Properties
 
@@ -256,20 +170,8 @@ export default class Analytics {
     component: Component | string,
     properties: ClickGeneric
   ): void => {
-    if (!this.kFunctionsName.clickGeneric) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickGeneric];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickGeneric]
-    );
+    const eventAction = 'click';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'generic');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -285,20 +187,8 @@ export default class Analytics {
   };
 
   private readonly contactCall = (component: Component | string, properties: ContactCall): void => {
-    if (!this.kFunctionsName.contactCall) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactCall];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.contactCall]
-    );
+    const eventAction = 'contact';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'call');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -317,19 +207,8 @@ export default class Analytics {
     component: Component | string,
     properties: ContactEmail
   ): void => {
-    if (!this.kFunctionsName.contactEmail) {
-      return;
-    }
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.contactEmail];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.contactEmail]
-    );
+    const eventAction = 'contact';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'email');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -348,20 +227,8 @@ export default class Analytics {
     component: Component | string,
     properties: ImpressionGeneric
   ): void => {
-    if (!this.kFunctionsName.impressionGeneric) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionGeneric];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionGeneric]
-    );
+    const eventAction = 'impression';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'generic');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -380,19 +247,8 @@ export default class Analytics {
     component: Component | string,
     properties: LocationDirections
   ): void => {
-    if (!this.kFunctionsName.locationDirections) {
-      return;
-    }
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.locationDirections];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.locationDirections]
-    );
+    const eventAction = 'location';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'directions');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -411,20 +267,8 @@ export default class Analytics {
     component: Component | string,
     properties: SearchGeneric
   ): void => {
-    if (!this.kFunctionsName.searchGeneric) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.searchGeneric];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.searchGeneric]
-    );
+    const eventAction = 'search';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'generic');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -445,20 +289,8 @@ export default class Analytics {
     component: Component | string,
     properties: Promotion
   ): void => {
-    if (!this.kFunctionsName.impressionPromotion) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionPromotion];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionPromotion]
-    );
+    const eventAction = 'impression';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'promotion');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -477,20 +309,8 @@ export default class Analytics {
     component: Component | string,
     properties: ImpressionProduct
   ): void => {
-    if (!this.kFunctionsName.impressionProduct) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.impressionProduct];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.impressionProduct]
-    );
+    const eventAction = 'impression';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'product');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -509,20 +329,8 @@ export default class Analytics {
     component: Component | string,
     properties: Promotion
   ): void => {
-    if (!this.kFunctionsName.clickPromotion) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickPromotion];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickPromotion]
-    );
+    const eventAction = 'click';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'promotion');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -542,20 +350,8 @@ export default class Analytics {
     properties: Product,
     action?: ProductAction
   ): void => {
-    if (!this.kFunctionsName.clickProduct) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.clickProduct];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.clickProduct]
-    );
+    const eventAction = 'click';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'product');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties, action);
@@ -578,20 +374,8 @@ export default class Analytics {
     properties: Product,
     action?: ProductAction
   ): void => {
-    if (!this.kFunctionsName.detailProduct) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.detailProduct];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.detailProduct]
-    );
+    const eventAction = 'detail';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'product');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -610,20 +394,8 @@ export default class Analytics {
   };
 
   private readonly addProduct = (component: Component | string, properties: Product): void => {
-    if (!this.kFunctionsName.addProduct) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.addProduct];
-    if (!eventAction) {
-      return;
-    }
-
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[this.kFunctionsName.addProduct]
-    );
+    const eventAction = 'add';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'product');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -639,14 +411,8 @@ export default class Analytics {
   };
 
   private readonly removeProduct = (component: Component | string, properties: Product): void => {
-    const key = this.kFunctionsName.removeProduct ?? '';
-
-    const eventAction = this.kFunctionsEventAction[key] ?? '';
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[key]
-    );
+    const eventAction = 'remove';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'product');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, properties);
@@ -666,14 +432,8 @@ export default class Analytics {
     products: RefundProduct[],
     action: TransactionAction
   ): void => {
-    const key = this.kFunctionsName.refundPartial ?? '';
-
-    const eventAction = this.kFunctionsEventAction[key] ?? '';
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[key]
-    );
+    const eventAction = 'refundPartial';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'partial');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, products, action);
@@ -692,14 +452,8 @@ export default class Analytics {
   };
 
   private readonly refundAll = (component: Component | string, action: TransactionAction): void => {
-    const key = this.kFunctionsName.refundAll ?? '';
-
-    const eventAction = this.kFunctionsEventAction[key] ?? '';
-    const eventCategory = this.geteventCategoryFromComponent(
-      component,
-      eventAction,
-      this.kFunctionsEventCategoryKey[key]
-    );
+    const eventAction = 'refund';
+    const eventCategory = this.geteventCategoryFromComponent(component, eventAction, 'all');
 
     if (__DEV__) {
       this.log(eventAction, eventCategory, undefined, action);
@@ -719,19 +473,8 @@ export default class Analytics {
   // Private Apps Lifecyle Properties
 
   private readonly lifecycleActive = (): void => {
-    if (!this.kFunctionsName.lifecycleActive) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleActive];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleActive];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'active';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -746,19 +489,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleBackground = (): void => {
-    if (!this.kFunctionsName.lifecycleBackground) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleBackground];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleBackground];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'background';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -773,19 +505,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleCreate = (): void => {
-    if (!this.kFunctionsName.lifecycleCreate) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleCreate];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleCreate];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'create';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -800,19 +521,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleClose = (): void => {
-    if (!this.kFunctionsName.lifecycleClose) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleClose];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleClose];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'close';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -827,19 +537,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleInactive = (): void => {
-    if (!this.kFunctionsName.lifecycleInactive) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleInactive];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleInactive];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'inactive';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -854,19 +553,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleStart = (): void => {
-    if (!this.kFunctionsName.lifecycleStart) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleStart];
-    if (!eventAction) {
-      return;
-    }
-
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleStart];
-    if (!lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'start';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -881,16 +569,8 @@ export default class Analytics {
   };
 
   private readonly lifecycleSuspend = (): void => {
-    if (!this.kFunctionsName.lifecycleSuspend || !this.kFunctionsName.lifecycleSuspend) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.lifecycleSuspend];
-    const lifecycle = this.kFunctionsLifecycle[this.kFunctionsName.lifecycleSuspend];
-
-    if (!eventAction || !lifecycle) {
-      return;
-    }
+    const eventAction = 'lifecycle';
+    const lifecycle = 'suspend';
 
     if (__DEV__) {
       this.log(eventAction, lifecycle);
@@ -914,7 +594,7 @@ export default class Analytics {
     let eventCategory: string;
 
     if (component instanceof Component) {
-      const anyComponent: any = component;
+      const anyComponent = component as Component & { analytics: Record<string, any> };
 
       eventActionKey = eventActionKey.toLowerCase();
       eventCategoryKey = eventCategoryKey && eventCategoryKey.toLowerCase();
@@ -963,43 +643,43 @@ export default class Analytics {
 
   // Public Commerce Properties
 
-  add = {
+  public readonly add = {
     product: this.addProduct,
   };
 
-  click = {
+  public readonly click = {
     generic: this.clickGeneric,
     product: this.clickProduct,
     promotion: this.clickPromotion,
   };
 
-  contact = {
+  public readonly contact = {
     call: this.contactCall,
     email: this.contactEmail,
   };
 
-  detail = {
+  public readonly detail = {
     product: this.detailProduct,
   };
 
-  location = {
+  public readonly location = {
     directions: this.locationDirections,
   };
 
-  refund = {
+  public readonly refund = {
     all: this.refundAll,
     partial: this.refundPartial,
   };
 
-  remove = {
+  public readonly remove = {
     product: this.removeProduct,
   };
 
-  search = {
+  public readonly search = {
     generic: this.searchGeneric,
   };
 
-  impression = {
+  public readonly impression = {
     generic: this.impressionGeneric,
     product: this.impressionProduct,
     promotion: this.impressionPromotion,
@@ -1007,7 +687,7 @@ export default class Analytics {
 
   // Public Apps Lifecyle Properties
 
-  lifecycle = {
+  public readonly lifecycle = {
     active: this.lifecycleActive,
     background: this.lifecycleBackground,
     close: this.lifecycleClose,
@@ -1018,12 +698,8 @@ export default class Analytics {
   };
 
   // Public Commerce Functions
-
-  screenview(component: Component | string, properties: ScreenView | Screenview): void {
-    const eventAction = this.kFunctionsEventAction[this.screenview.name];
-    if (!eventAction) {
-      return;
-    }
+  public screenview(component: Component | string, properties: ScreenView | Screenview): void {
+    const eventAction = 'screenview';
 
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
@@ -1050,16 +726,12 @@ export default class Analytics {
 
   // Public Enhanced Commerce Functions
 
-  checkout(component: Component | string, products: Product[], action: CheckoutAction): void {
-    if (!this.kFunctionsName.checkout) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkout];
-    if (!eventAction) {
-      return;
-    }
-
+  public checkout(
+    component: Component | string,
+    products: Product[],
+    action: CheckoutAction
+  ): void {
+    const eventAction = 'checkout';
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -1078,16 +750,8 @@ export default class Analytics {
     });
   }
 
-  checkoutOption(component: Component | string, action: CheckoutAction): void {
-    if (!this.kFunctionsName.checkoutOption) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.checkoutOption];
-    if (!eventAction) {
-      return;
-    }
-
+  public checkoutOption(component: Component | string, action: CheckoutAction): void {
+    const eventAction = 'checkoutOption';
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -1105,16 +769,12 @@ export default class Analytics {
     });
   }
 
-  purchase(component: Component | string, products: Product[], action: TransactionAction): void {
-    if (!this.kFunctionsName.purchase) {
-      return;
-    }
-
-    const eventAction = this.kFunctionsEventAction[this.kFunctionsName.purchase];
-    if (!eventAction) {
-      return;
-    }
-
+  public purchase(
+    component: Component | string,
+    products: Product[],
+    action: TransactionAction
+  ): void {
+    const eventAction = 'purchase';
     const eventCategory = this.geteventCategoryFromComponent(component, eventAction);
 
     if (__DEV__) {
@@ -1133,7 +793,7 @@ export default class Analytics {
     });
   }
 
-  setTrafficSource(campaignData: Campaign): void {
+  public setTrafficSource(campaignData: Campaign): void {
     this.triggerTask((provider) => {
       provider.setTrafficSource(campaignData);
     });
