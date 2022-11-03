@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.19.1](https://github.com/brandingbrand/flagship/compare/v10.19.0...v10.19.1) (2022-11-03)
+
+
+### Bug Fixes
+
+* **flagship:** updating android template files ([9164e70](https://github.com/brandingbrand/flagship/commit/9164e7051e3dd419617cdfb728ac03ff825bee30))
+
+
+
+
+
 # [10.19.0](https://github.com/brandingbrand/flagship/compare/v10.18.0...v10.19.0) (2022-10-19)
 
 
