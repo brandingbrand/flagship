@@ -80,7 +80,11 @@ export const ofType = <ActionType extends AnyActionSpecifier>(
       ActionType['type'],
       NonNullable<ActionType[typeof PAYLOAD]>,
       ActionType['subtype']
-    > => selectActions.some((selectAction) => selectAction.type === action.type)
+    > =>
+      selectActions.some(
+        (selectAction) =>
+          selectAction.type === action.type && selectAction.subtype === action.subtype
+      )
   );
 
 export const notOfType = (...selectActions: NonEmptyArray<AnyActionSpecifier>) =>
