@@ -18,12 +18,6 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
-<% if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-@import KlaviyoSwift;
-<% } %>
-<% if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-@import react_native_klaviyo_push;
-<% } %>
 
 
 #if __has_include(<RNCPushNotificationIOS.h>)
@@ -84,9 +78,6 @@ NSURL *jsCodeLocation;
   launchOptions = copyOfLaunchOptions;
 
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-<% if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-  [Klaviyo initSDK];
-<% } %>
   return YES;
 }
 
@@ -101,8 +92,6 @@ NSURL *jsCodeLocation;
 {
   <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
   [Leanplum didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-  <% } else if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-  [Klaviyo registerDeviceWithToken:deviceToken];
   <% } else { %>
   [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   <% } %>
@@ -119,8 +108,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
         };
         [Leanplum didReceiveRemoteNotification:userInfo
     fetchCompletionHandler:leanplumCompletionHandler];
-  <% } else if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-   // Intentionally do nothing
   <% } else { %>
   [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
   <% } %>
@@ -130,9 +117,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
   [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
-  <% } else if (dependencies.includes("@brandingbrand/react-native-klaviyo-push")) { %>
-   [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
- <% } else { %>
+  <% } else { %>
    [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
   <% } %>
 }
