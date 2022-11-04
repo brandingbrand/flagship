@@ -152,9 +152,11 @@ const fromPathTyped = <Structure>() => {
     Structure,
     Structure[Key1][Key2][Key3][Key4][Key5][Key6][Key7][Key8][Key9][Key10]
   >;
+  function fromPath(...keys: PropertyKey[]): ComposableLens<Structure, unknown>;
   /**
    *
    * @param keys
+   * @return
    */
   function fromPath(...keys: PropertyKey[]): unknown {
     return new ComposableLens(_fromPath(...keys));
