@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.76.0](https://github.com/brandingbrand/flagship/compare/v11.75.1...v11.76.0) (2022-11-04)
+
+
+### Features
+
+* **fsengagement:** add new core components (a0b18c0)
+* **fsengagement:** allow appId to be settable via getProfile (75d9bfe)
+
+
+
 ## [11.75.1](https://github.com/brandingbrand/flagship/compare/v11.75.0...v11.75.1) (2022-11-02)
 
 

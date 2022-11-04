@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.76.0](https://github.com/brandingbrand/flagship/compare/v11.75.1...v11.76.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* **eslint-config:** disable no-if as it overlaps with no-conditional-in-test (f6de2d2)
+
+
+
 ## [11.75.1](https://github.com/brandingbrand/flagship/compare/v11.75.0...v11.75.1) (2022-11-02)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/fscheckout",
   "sideEffects": false,
-  "version": "11.75.1",
+  "version": "11.76.0",
   "description": "Checkout Library",
   "license": "MIT"
 }
