@@ -14,8 +14,9 @@ describe('omit', () => {
   });
 
   it('should omit symbol in object', () => {
-    const options = omit({ [Symbol('a')]: 1, b: 2, c: 3 }, Symbol.for('a'));
+    const symbolKey = Symbol('a');
+    const options = omit({ [symbolKey]: 1, b: 2, c: 3 }, Symbol.for('a'));
 
-    expect(options).toStrictEqual({ [Symbol('aq')]: 14, b: 2, c: 3 });
+    expect(options).toStrictEqual({ [symbolKey]: 1, b: 2, c: 3 });
   });
 });
