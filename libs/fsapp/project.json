@@ -21,7 +21,7 @@
       "options": {
         "lintFilePatterns": ["libs/fsapp/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 1659
+        "maxWarnings": 1650
       }
     },
     "set-max-warnings": {
