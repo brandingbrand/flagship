@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useRef } from 'react';
 import React, {
   Fragment,
   useCallback,
@@ -17,7 +18,9 @@ import { Injector } from '@brandingbrand/fslinker';
 
 import lazyComponent from '@loadable/component';
 import { noop } from 'lodash-es';
+import { useObservableState } from 'observable-hooks';
 import pathToRegexp from 'path-to-regexp';
+import { ReplaySubject } from 'rxjs';
 
 import { VersionOverlay } from '../development';
 import { ModalProvider } from '../modal';
@@ -228,8 +231,9 @@ export class FSRouter extends FSRouterBase {
     routeDetails: ActivatedRoute,
     prefix?: string
   ): JSX.Element | JSX.Element[] => {
-    const { id, path } = useMemo(() => buildPath(route, prefix), []);
-    const [filteredRoute, setFilteredRoute] = useState(() => routeDetails);
+    const { id, path } = useMemo(() => buildPath(route, prefix), [prefix, route]);
+    const filteredRoute$ = useMemo(() => new ReplaySubject<ActivatedRoute>(1), []);
+    const filteredRoute = useObservableState(filteredRoute$, defaultActivatedRoute);
 
     useLayoutEffect(() => {
       const isMatch = (): boolean => {
@@ -247,9 +251,9 @@ export class FSRouter extends FSRouterBase {
       };
 
       if (isMatch()) {
-        setFilteredRoute(routeDetails);
+        filteredRoute$.next(routeDetails);
       }
-    }, [path, route.exact, routeDetails]);
+    }, [path, route.exact, routeDetails, filteredRoute$]);
 
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(
@@ -262,16 +266,20 @@ export class FSRouter extends FSRouterBase {
                   : route.component;
 
               return React.memo(({ componentId }) => {
+                const internalFilterRoute = useObservableState(
+                  filteredRoute$,
+                  defaultActivatedRoute
+                );
                 useEffect(() => {
-                  trackView(this.options.analytics, route, filteredRoute);
-                }, [filteredRoute]);
+                  trackView(this.options.analytics, route, internalFilterRoute);
+                }, [internalFilterRoute]);
 
                 return <AwaitedComponent componentId={componentId} />;
               });
             },
             { fallback: this.options.loading }
           ),
-        [route, filteredRoute]
+        [filteredRoute$, route]
       );
 
       return (
