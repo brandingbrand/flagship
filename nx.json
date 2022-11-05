@@ -40,7 +40,7 @@
       "dependsOn": ["^generate", "^build"]
     },
     "build-demo": {
-      "dependsOn": ["^build", "^build-demo"]
+      "dependsOn": ["^build"]
     },
     "install": {
       "dependsOn": ["^install", "build"]
