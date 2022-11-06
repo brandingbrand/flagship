@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [11.76.1](https://github.com/brandingbrand/flagship/compare/v11.76.0...v11.76.1) (2022-11-06)
+
+
+### Bug Fixes
+
+* **fsapp:** guard invalidation on route changes (2c15b29)
+
+
+
 # [11.76.0](https://github.com/brandingbrand/flagship/compare/v11.75.1...v11.76.0) (2022-11-04)
 
 
