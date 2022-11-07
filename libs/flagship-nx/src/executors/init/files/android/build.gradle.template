@@ -22,7 +22,7 @@ buildscript {
         <% if (buildConfig.gradleVersion) { %>
         classpath "com.android.tools.build:gradle:<%- buildConfig.gradleVersion %>"
         <% } else { %>
-        classpath("com.android.tools.build:gradle:3.5.3")
+        classpath("com.android.tools.build:gradle:4.2.0")
         <% } %>
         <% if (dependencies.includes("@brandingbrand/leanplum-push")) { %>
         classpath 'com.google.gms:google-services:4.3.3'
