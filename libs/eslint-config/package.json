@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-brandingbrand",
-  "version": "11.76.1",
+  "version": "11.77.0",
   "description": "Enterprise Grade Linting",
   "license": "MIT",
   "generators": "./generators.json",
