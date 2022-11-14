@@ -1,0 +1,11 @@
+{
+  "pipeline": {
+    "build": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}
