@@ -4,6 +4,9 @@
     "paths": {
       "@brandingbrand/kernel-cli": [
         "./packages/cli/src/index.ts"
+      ],
+      "@brandingbrand/kernel-core": [
+        "./packages/core/src/index.ts"
       ]
     }
   }
