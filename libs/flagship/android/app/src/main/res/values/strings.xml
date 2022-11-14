@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">FLAGSHIP</string>
-    <string name="facebook_app_id">__your-fb-app-id__</string>
-    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ALWAYS_SEND</string>
-    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true">ALWAYS_SEND</string>
-</resources>

@@ -1,7 +1,0 @@
-{
-  "name": "@brandingbrand/fsmockdatasources",
-  "sideEffects": false,
-  "version": "11.75.1",
-  "description": "Mock Commerce and Review Data Sources for Flagship",
-  "license": "MIT"
-}

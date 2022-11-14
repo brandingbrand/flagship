@@ -1,7 +1,0 @@
-{
-  "name": "@brandingbrand/fsnetwork",
-  "sideEffects": false,
-  "version": "11.75.1",
-  "description": "Networking libraries for Flagship",
-  "license": "MIT"
-}

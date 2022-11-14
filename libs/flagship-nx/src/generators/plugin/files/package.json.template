@@ -1,4 +1,0 @@
-{
-  "name": "<%= importPath %>",
-  "flagship": "./flagship.json"
-}

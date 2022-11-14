@@ -1,9 +1,0 @@
-{
-  "generators": {
-    "plugin": {
-      "factory": "./src/generators/plugin/generator",
-      "schema": "./src/generators/plugin/schema.json",
-      "description": "Create a new Flagship Plugin"
-    }
-  }
-}
