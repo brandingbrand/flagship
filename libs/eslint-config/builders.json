@@ -1,9 +1,0 @@
-{
-  "executors": {
-    "set-max-warnings": {
-      "implementation": "./src/executors/set-max-warnings/executor",
-      "schema": "./src/executors/set-max-warnings/schema.json",
-      "description": "set-max-warnings executor"
-    }
-  }
-}
