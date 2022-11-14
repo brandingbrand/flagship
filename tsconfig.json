@@ -1,6 +1,10 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "paths": {}
+    "paths": {
+      "@brandingbrand/kernel-cli": [
+        "./packages/cli/src/index.ts"
+      ]
+    }
   }
 }
