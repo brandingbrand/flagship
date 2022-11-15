@@ -1,9 +1,9 @@
-export * from "./cocoapods";
-export * from "./env";
-export * from "./fs";
-export * from "./logger";
-export * from "./native-constants";
-export * from "./os";
-export * from "./path";
-export * from "./plugins";
-export * from "./rename";
+export * as cocoapods from "./cocoapods";
+export * as env from "./env";
+export * as fs from "./fs";
+export * as logger from "./logger";
+export * as nativeConstants from "./native-constants";
+export * as os from "./os";
+export * as path from "./path";
+export * as plugins from "./plugins";
+export * as rename from "./rename";
