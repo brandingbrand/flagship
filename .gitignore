@@ -172,3 +172,7 @@ buck-out/
 apps/react-native/ios
 apps/react-native/android
 apps/**/*/*env.js
+
+# Yarn
+.yarn
+.yarnrc
