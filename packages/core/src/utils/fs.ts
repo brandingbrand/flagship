@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import * as fs from "fs-extra";
 
 import * as path from "./path";
@@ -19,7 +20,7 @@ let fileQueue: Record<
  * @param options fs-extra copySync options.
  * @return
  */
-export const copySync = (src: string, dest: string, options?: Object): void => {
+export const copySync = (src: string, dest: string, options?: never): void => {
   // TODO: Use fs-extra type definition for options instead of Object
   src = path.resolve(src);
 
