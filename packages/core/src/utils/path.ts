@@ -233,6 +233,43 @@ const getStylesPath = (): string =>
 const getFastfilePathAndroid = (): string =>
   resolvePathFromProject("android", "fastlane", "Fastfile");
 
+/**
+ * Returns the path to the kernel configuration
+ *
+ * @return The path to kernel configuration
+ */
+const getPathToConfig = (): string => resolvePathFromProject(".kernelrc");
+
+/**
+ * Resolves a path relative to the configuration directory
+ *
+ * @param paths A list of path components to resolve relative to the configuration
+ * @return A resolved path relative to the configuration directory
+ */
+const resolvePathFromConfig = (...paths: string[]): string =>
+  path.resolve.apply(path, [getPathToConfig(), ...paths]);
+
+/**
+ * Returns the path to the env configuration
+ *
+ * @return The path to the env configuration
+ */
+const getEnvPath = () => resolvePathFromConfig("env");
+
+/**
+ * Returns the path to the code signing configuration
+ *
+ * @return The path to the code signing configuration
+ */
+const getSigningPath = () => resolvePathFromConfig("signing");
+
+/**
+ * Returns the path to the assets configuration
+ *
+ * @return The path to the assets configuration
+ */
+const getAssetsPathConfig = () => resolvePathFromConfig("assets");
+
 export { basename, extname, normalize, resolve, sep } from "path";
 
 export const app = {
@@ -243,6 +280,14 @@ export const app = {
 export const project = {
   path: getPathToProject,
   resolve: resolvePathFromProject,
+};
+
+export const config = {
+  path: getPathToConfig,
+  resolve: resolvePathFromConfig,
+  envPath: getEnvPath,
+  signingPath: getSigningPath,
+  assetsPath: getAssetsPathConfig,
 };
 
 export const ios = {
