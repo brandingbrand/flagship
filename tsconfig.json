@@ -8,6 +8,7 @@
       "@brandingbrand/kernel-core": [
         "./packages/core/src/index.ts"
       ]
-    }
+    },
+    "esModuleInterop": true
   }
 }

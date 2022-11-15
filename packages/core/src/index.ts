@@ -1,1 +1,2 @@
-console.log("@brandingbrand/kernel-core");
+export * from "./utils";
+export * from "./types";
