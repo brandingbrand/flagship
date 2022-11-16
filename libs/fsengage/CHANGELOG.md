@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [11.77.1](https://github.com/brandingbrand/flagship/compare/v11.77.0...v11.77.1) (2022-11-16)
+
+
+
 # [11.77.0](https://github.com/brandingbrand/flagship/compare/v11.76.1...v11.77.0) (2022-11-09)
 
 
