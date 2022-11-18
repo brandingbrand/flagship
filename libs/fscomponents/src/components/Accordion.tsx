@@ -417,7 +417,9 @@ export class Accordion extends Component<AccordionProps, AccordionState> {
             {this.renderIcon()}
           </View>
         </TouchableHighlight>
-        <Animated.View style={[AccordionStyles.content, computedContentStyle]}>
+        <Animated.View
+          style={[this.state.isOpen ? {} : AccordionStyles.content, computedContentStyle]}
+        >
           <View
             onLayout={this.contentOnLayout}
             style={[
