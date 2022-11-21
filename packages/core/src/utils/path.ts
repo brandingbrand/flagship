@@ -15,7 +15,11 @@ const getPathToApp = (): string => {
     return _pathToApp;
   }
 
-  _pathToApp = path.resolve(__dirname, "..", "..", "..", "fsapp");
+  _pathToApp = resolvePathFromProject(
+    "node_modules",
+    "@brandingbrand",
+    "fsapp"
+  );
 
   return _pathToApp;
 };
@@ -54,6 +58,13 @@ const resolvePathFromApp = (...paths: string[]): string =>
  */
 const resolvePathFromProject = (...paths: string[]): string =>
   path.resolve.apply(path, [getPathToProject(), ...paths]);
+
+/**
+ * Resolves a path to the package.json
+ *
+ * @returns A path to the package.json relative to project path
+ */
+const getPackagePath = () => resolvePathFromProject("package.json");
 
 /**
  * Returns the path to the iOS Info.plist for the project.
@@ -280,6 +291,7 @@ export const app = {
 export const project = {
   path: getPathToProject,
   resolve: resolvePathFromProject,
+  packagePath: getPackagePath,
 };
 
 export const config = {

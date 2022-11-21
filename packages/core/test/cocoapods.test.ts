@@ -29,7 +29,7 @@ describe("cocoapods", () => {
     (childProcess.execSync as jest.Mock).mockImplementation(
       (cmd: string) => (stashedCmd = cmd)
     );
-    cocoapods.install();
+    cocoapods.install("ios");
 
     expect(stashedCmd).toMatch(
       `cd "${nodePath.join(tempRootDir, "ios")}" && pod install`
@@ -47,7 +47,7 @@ describe("cocoapods", () => {
       throw new Error("");
     });
 
-    cocoapods.install();
+    cocoapods.install("ios");
 
     expect(stashedCode).toEqual(1);
   });
@@ -66,7 +66,7 @@ describe("cocoapods", () => {
 
     // @ts-ignore
     os.linux = true;
-    cocoapods.install();
+    cocoapods.install("ios");
 
     expect(stashedCode).toEqual(null);
     expect(stashedCmd).toEqual(null);

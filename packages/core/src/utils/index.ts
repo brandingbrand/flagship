@@ -5,5 +5,6 @@ export * as logger from "./logger";
 export * as nativeConstants from "./native-constants";
 export * as os from "./os";
 export * as path from "./path";
+export * as platforms from "./platforms";
 export * as plugins from "./plugins";
 export * as rename from "./rename";

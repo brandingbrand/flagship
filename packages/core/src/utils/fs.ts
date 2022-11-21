@@ -1,5 +1,7 @@
 /* eslint-disable no-prototype-builtins */
-import * as fs from "fs-extra";
+import ejs from "ejs";
+import fs from "fs-extra";
+import nodePath from "path";
 
 import * as path from "./path";
 import * as helpers from "./logger";
@@ -266,4 +268,58 @@ export const append = (path: string, text: string): void => {
   writeFileSync(path, fileContent + text);
 
   helpers.logInfo(`file appended\n${path}`);
+};
+
+/**
+ * Copy a directory from a source location to destination location
+ * with a given ejs template configuration and platform.
+ *
+ * @param source The source location path
+ * @param dest The destination location path
+ * @param options ejs configuration
+ * @param platform Native platform
+ * @param root If it is root level directory
+ */
+export const copyDir = async (
+  source: string,
+  dest: string,
+  options: ejs.Data,
+  platform: "ios" | "android",
+  root = true
+) => {
+  const BINARIES = /(gradlew|\.(jar|keystore|png|jpg|gif))$/;
+
+  await fs.mkdirp(dest);
+
+  const files = await fs.readdir(source);
+
+  for (const f of files) {
+    if (
+      fs.lstatSync(nodePath.join(source, f)).isDirectory() &&
+      f !== platform &&
+      root
+    ) {
+      continue;
+    }
+    const target = nodePath.join(
+      dest,
+      ejs.render(f.replace(/^\$/, ""), options, {
+        openDelimiter: "{",
+        closeDelimiter: "}",
+      })
+    );
+
+    const file = nodePath.join(source, f);
+    const stats = await fs.stat(file);
+
+    if (stats.isDirectory()) {
+      await copyDir(file, target, options, platform, false);
+    } else if (!file.match(BINARIES)) {
+      const content = await fs.readFile(file, "utf8");
+
+      await fs.writeFile(target, ejs.render(content, options));
+    } else {
+      await fs.copyFile(file, target);
+    }
+  }
 };
