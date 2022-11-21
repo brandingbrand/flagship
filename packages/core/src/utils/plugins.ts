@@ -7,11 +7,11 @@ import * as path from "./path";
  * @returns {string[]} array of installed plugins
  */
 export const get = (): string[] => {
-  const { reactor, devDependencies } = require(`${path.project.resolve(
-    "package.json"
-  )}`);
+  const { kernel, devDependencies } = require(path.project.packagePath());
 
-  return reactor.bundles.filter((it: string) =>
+  if (!kernel?.bundles?.length) return [];
+
+  return kernel.bundles.filter((it: string) =>
     Object.keys(devDependencies).includes(it)
   );
 };

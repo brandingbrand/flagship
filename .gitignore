@@ -171,7 +171,7 @@ buck-out/
 # Demo App
 apps/react-native/ios
 apps/react-native/android
-apps/**/*/env/env*.js
+apps/**/*/.kernelrc/env/env*.js
 
 # Yarn
 .yarn

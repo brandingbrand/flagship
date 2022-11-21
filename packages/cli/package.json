@@ -33,6 +33,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@brandingbrand/kernel-core": "*",
     "commander": "^9.4.1"
   },
   "devDependencies": {

@@ -1,6 +1,8 @@
+import { execSync } from "child_process";
+
 import * as fs from "./fs";
 import * as helpers from "./logger";
-import { app, project } from "./path";
+import * as _path from "./path";
 import type { NPMPackageConfig } from "../types";
 
 const kEnvReplacementRegex = /{ENV\.([^}]+)}/g;
@@ -31,7 +33,7 @@ const toAppName = (projectName: string): string => {
  * @return The path to the environment configuration file.
  */
 export const path = (env: string): string =>
-  project.resolve("env", `env.${env}.js`);
+  _path.project.resolve("env", `env.${env}.js`);
 
 /**
  * Writes the current environment to env.js
@@ -40,7 +42,7 @@ export const path = (env: string): string =>
  */
 export const writeEnv = (configuration: unknown): void => {
   fs.writeFileSync(
-    project.resolve("env", "env.js"),
+    _path.project.resolve("env", "env.js"),
     `module.exports = ${JSON.stringify(configuration, null, 2)}`
   );
 };
@@ -128,7 +130,7 @@ export const createEnvIndex = (singleEnv?: string): void => {
   }
 
   const envs = fs
-    .readdirSync(project.resolve("env"))
+    .readdirSync(_path.project.resolve(".kernelrc", "env"))
     .filter((f: string) => f.match(envMatch));
 
   const envIndexFile = `module.exports = {\n${envs
@@ -137,11 +139,38 @@ export const createEnvIndex = (singleEnv?: string): void => {
       return (
         envName &&
         `"${envName.pop()}": require(${JSON.stringify(
-          project.resolve("env", env)
-        )})`
+          _path.project.resolve(".kernelrc", "env", env)
+        )}).default`
       );
     })
     .join(",\n")}\n}`;
 
-  fs.writeFileSync(app.resolve("src/project_env_index.js"), envIndexFile);
+  fs.writeFileSync(_path.app.resolve("src/project_env_index.js"), envIndexFile);
+};
+
+export const compile = (envName: string): void => {
+  helpers.logInfo("running yarn tsc");
+
+  try {
+    execSync(
+      `yarn tsc ${_path.project.resolve(
+        ".kernelrc",
+        "env",
+        "*.ts"
+      )} --skipLibCheck && cp ${_path.project.resolve(
+        ".kernelrc",
+        "env",
+        `env.${envName}.js`
+      )} ${_path.project.resolve(".kernelrc", "env", `env.js`)}`,
+      {
+        stdio: [0, 1, 2],
+      }
+    );
+  } catch {
+    helpers.logError(
+      "yarn tsc failed, ensure <project_root>/.kernelrc/env folder exists with env.*.ts files"
+    );
+
+    process.exit(1);
+  }
 };

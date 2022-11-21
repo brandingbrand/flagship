@@ -8,8 +8,8 @@ import * as helpers from "./logger";
 /**
  * Performs a pod install.
  */
-export const install = (): void => {
-  if (os.linux) {
+export const install = (platform: "ios" | "android"): void => {
+  if (os.linux || platform === "android") {
     return;
   }
 

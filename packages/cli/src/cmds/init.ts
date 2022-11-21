@@ -1,4 +1,12 @@
 import { program } from "commander";
+import {
+  cocoapods,
+  env,
+  fs,
+  path,
+  platforms,
+  plugins,
+} from "@brandingbrand/kernel-core";
 
 program
   .command("init")
@@ -11,5 +19,21 @@ program
   )
   .option("-r, --release", "bundle only store environment")
   .action(async (options) => {
-    // TODO init command
+    env.compile(options.env);
+    env.createEnvIndex();
+
+    const _platforms = platforms.get(options.platform);
+
+    for (const platform of _platforms) {
+      await fs.copyDir(
+        path.resolve(__dirname, "template"),
+        path.project.path(),
+        {},
+        platform
+      );
+
+      cocoapods.install(platform);
+
+      await plugins.execute({}, plugins.get(), platform);
+    }
   });
