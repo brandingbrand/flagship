@@ -70,7 +70,7 @@ configurations with code formatting rules.
 #### Type Checking
 
 Writing JavaScript without Type Checking is like playing web dev on
-hardcore mode. It is so easy to shot yourself, or your friend, in the foot.
+hardcore mode. It is so easy to shoot yourself, or your friend, in the foot.
 We have many great tools now that luckily make our lives much easier. Chief
 among them is TypeScript. While ESLint can enforce many type rules, TypeScript
 does a far better job so any rules that overlap with options or checking already
