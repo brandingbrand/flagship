@@ -478,7 +478,7 @@ export = {
           },
         ],
       },
-    ],
+    ] as const,
     'no-this-before-super': WARN,
     'no-useless-computed-key': WARN,
     'no-useless-constructor': WARN,
