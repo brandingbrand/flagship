@@ -9,9 +9,9 @@ import * as path from "./path";
 export const get = (): string[] => {
   const { kernel, devDependencies } = require(path.project.packagePath());
 
-  if (!kernel?.bundles?.length) return [];
+  if (!kernel?.plugins?.length) return [];
 
-  return kernel.bundles.filter((it: string) =>
+  return kernel.plugins.filter((it: string) =>
     Object.keys(devDependencies).includes(it)
   );
 };

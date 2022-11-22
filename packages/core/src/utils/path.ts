@@ -113,6 +113,14 @@ const getPbxprojFilePath = (configuration: Config): string =>
 const getNativeProjectPathIOS = (configuration: Config): string =>
   resolvePathFromProject("ios", configuration.name);
 
+const getAppIconSetPath = (configuration: Config) =>
+  resolvePathFromProject(
+    "ios",
+    configuration.name,
+    "Images.xcassets",
+    "AppIcon.appiconset"
+  );
+
 /**
  * Returns the path to the Fastfile
  *
@@ -309,6 +317,7 @@ export const ios = {
   podfilePath: getPodfilePath,
   pbxprojFilePath: getPbxprojFilePath,
   nativeProjectPath: getNativeProjectPathIOS,
+  appIconSetPath: getAppIconSetPath,
 };
 
 export const android = {

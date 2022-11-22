@@ -7,6 +7,9 @@
       ],
       "@brandingbrand/kernel-core": [
         "./packages/core/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-app-icon": [
+        "./packages/plugin-app-icon/src/index.ts"
       ]
     },
     "esModuleInterop": true
