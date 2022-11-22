@@ -28,7 +28,7 @@
       "options": {
         "lintFilePatterns": ["libs/fscomponents/**/*.{ts,tsx,js,jsx}"],
         "hasTypeAwareRules": true,
-        "maxWarnings": 2442
+        "maxWarnings": 3181
       }
     },
     "set-max-warnings": {
