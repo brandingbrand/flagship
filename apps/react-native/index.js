@@ -1,5 +1,17 @@
-import {AppRegistry} from 'react-native';
+import {FSAppBeta} from '@brandingbrand/fsapp';
 
 import App from './App';
 
-AppRegistry.registerComponent('HelloWorld', () => App);
+FSAppBeta.bootstrap({
+  version: '1.0.0',
+  router: {
+    routes: [
+      {
+        component: App,
+        topBarStyle: {
+          visible: false,
+        },
+      },
+    ],
+  },
+});

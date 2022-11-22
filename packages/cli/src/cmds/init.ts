@@ -33,7 +33,9 @@ program
       );
 
       cocoapods.install(platform);
+    }
 
+    for (const platform of _platforms) {
       await plugins.execute({}, plugins.get(), platform);
     }
   });

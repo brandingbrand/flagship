@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import ejs from "ejs";
-import fs from "fs-extra";
+import fs, { writeFile } from "fs-extra";
 import nodePath from "path";
 
 import * as path from "./path";
@@ -217,7 +217,35 @@ export const update = (
   helpers.logInfo(
     `updating ${helpers.colors.Dim}${path}${helpers.colors.Reset}`
   );
+
   writeFileSync(path, fileContent.replace(oldText, newText));
+};
+
+/**
+ * Updates a file asynchronously, replacing a given string with a new one.
+ *
+ * @param path The path to the file to update.
+ * @param oldText The old text to replace.
+ * @param newText The replacement text.
+ * @return
+ */
+export const updateAsync = async (
+  path: string,
+  oldText: RegExp | string,
+  newText: string
+): Promise<void> => {
+  if (!doesKeywordExist(path, oldText)) {
+    helpers.logError(`Couldn't find ${oldText} in ${path}`);
+    return;
+  }
+
+  const fileContent = readFileSync(path);
+
+  helpers.logInfo(
+    `updating ${helpers.colors.Dim}${path}${helpers.colors.Reset}`
+  );
+
+  await writeFile(path, fileContent.replace(oldText, newText));
 };
 
 /**
