@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+    fontFamily: 'Dosis-Regular',
   },
   highlight: {
     fontWeight: '700',

@@ -16,6 +16,9 @@
       ],
       "@brandingbrand/kernel-plugin-splash-screen": [
         "./packages/plugin-splash-screen/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-asset": [
+        "./packages/plugin-asset/src/index.ts"
       ]
     },
     "esModuleInterop": true
