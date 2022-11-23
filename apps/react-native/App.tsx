@@ -14,10 +14,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   useColorScheme,
   View,
-  Linking,
 } from 'react-native';
 
 import {
@@ -89,10 +87,6 @@ const App = () => {
             Read the docs to discover what to do next:
           </Section>
           <LearnMoreLinks />
-          <TouchableOpacity
-            onPress={() => Linking.openURL('https://www.google.com')}>
-            <Text>Press</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
