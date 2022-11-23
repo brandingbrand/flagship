@@ -15,8 +15,8 @@ RCT_EXPORT_MODULE();
 
 - (NSDictionary *)constantsToExport {
   return @{
-    @"installed": @YES
-    // [NativeConstants Inject]
+    @"installed": @YES,
+    @"ShowDevMenu": @"true"
   };
 }
 

@@ -1,4 +1,4 @@
-import { execSync as exec } from "child_process";
+import { execSync } from "child_process";
 
 import * as fs from "./fs";
 import * as os from "./os";
@@ -17,7 +17,7 @@ export const install = (platform: "ios" | "android"): void => {
 
   try {
     fs.flushSync();
-    exec(`cd "${path.project.resolve("ios")}" && pod install`, {
+    execSync(`cd "${path.project.resolve("ios")}" && pod install`, {
       stdio: [0, 1, 2],
     });
   } catch {

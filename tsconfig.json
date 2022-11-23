@@ -10,6 +10,9 @@
       ],
       "@brandingbrand/kernel-plugin-app-icon": [
         "./packages/plugin-app-icon/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-native-navigation": [
+        "./packages/plugin-native-navigation/src/index.ts"
       ]
     },
     "esModuleInterop": true
