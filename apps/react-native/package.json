@@ -28,6 +28,7 @@
     "@brandingbrand/kernel-cli": "*",
     "@brandingbrand/kernel-plugin-app-icon": "*",
     "@brandingbrand/kernel-plugin-native-navigation": "*",
+    "@brandingbrand/kernel-plugin-splash-screen": "*",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
@@ -103,8 +104,9 @@
   },
   "kernel": {
     "plugins": [
+      "@brandingbrand/kernel-plugin-native-navigation",
       "@brandingbrand/kernel-plugin-app-icon",
-      "@brandingbrand/kernel-plugin-native-navigation"
+      "@brandingbrand/kernel-plugin-splash-screen"
     ]
   }
 }

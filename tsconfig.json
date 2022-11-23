@@ -13,6 +13,9 @@
       ],
       "@brandingbrand/kernel-plugin-native-navigation": [
         "./packages/plugin-native-navigation/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-splash-screen": [
+        "./packages/plugin-splash-screen/src/index.ts"
       ]
     },
     "esModuleInterop": true
