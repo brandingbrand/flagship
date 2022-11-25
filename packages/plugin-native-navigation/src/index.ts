@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { execSync } from "child_process";
-import { path } from "@brandingbrand/kernel-core";
+import { fs, path } from "@brandingbrand/kernel-core";
 
 import { dependencies } from "./utils";
 
@@ -15,7 +13,7 @@ const ios = async () => {
     "postlink",
     "postLinkIOS.js"
   );
-  execSync(`chmod +x ${scriptPath}`);
+  await fs.chmod(scriptPath, "755");
   const rnnIOSLink = require(scriptPath);
 
   rnnIOSLink();
@@ -32,7 +30,7 @@ const android = async () => {
     "postlink",
     "postLinkAndroid.js"
   );
-  execSync(`chmod +x ${scriptPath}`);
+  await fs.chmod(scriptPath, "755");
   const rnnAndroidLink = require(scriptPath);
 
   rnnAndroidLink();

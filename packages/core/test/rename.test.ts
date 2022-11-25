@@ -10,7 +10,6 @@ global.process.cwd = () => nodePath.resolve(tempRootDir);
 
 describe("fs", () => {
   beforeEach(() => {
-    fsExtra.removeSync(tempRootDir);
     fsExtra.copySync(mockProjectDir, tempRootDir);
   });
 

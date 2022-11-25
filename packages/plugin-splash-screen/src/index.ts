@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { fs, path } from "@brandingbrand/kernel-core";
-import { execSync } from "child_process";
 
 const ios = async () => {
   const { iosSize = 212, backgroundColor = "#333132" } = {};
@@ -28,12 +26,10 @@ const ios = async () => {
     logoWidth: iosSize,
   });
 
-  execSync(
-    `mv -f ${path.project.resolve(
-      "ios",
-      "HelloWorld",
-      "BootSplash.storyboard"
-    )} ${path.project.resolve("ios", "HelloWorld", "LaunchScreen.storyboard")}`
+  await fs.move(
+    path.project.resolve("ios", "HelloWorld", "BootSplash.storyboard"),
+    path.project.resolve("ios", "HelloWorld", "LaunchScreen.storyboard"),
+    { overwrite: true }
   );
 };
 

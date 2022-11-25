@@ -10,7 +10,6 @@ global.process.cwd = () => nodePath.resolve(tempRootDir);
 
 describe("env", () => {
   beforeAll(() => {
-    fs.removeSync(tempRootDir);
     fs.copySync(mockProjectDir, tempRootDir);
   });
 
