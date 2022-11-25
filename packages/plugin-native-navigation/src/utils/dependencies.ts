@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { fs, path } from "@brandingbrand/kernel-core";
 
 export const check = () => {

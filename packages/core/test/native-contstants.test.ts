@@ -10,7 +10,6 @@ global.process.cwd = () => nodePath.resolve(tempRootDir);
 
 describe("native-constants", () => {
   beforeEach(() => {
-    fs.removeSync(tempRootDir);
     fs.copySync(mockProjectDir, tempRootDir);
   });
 

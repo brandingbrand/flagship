@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { path } from "@brandingbrand/kernel-core";
 
 const ios = () => {

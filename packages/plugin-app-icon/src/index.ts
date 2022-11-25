@@ -44,7 +44,7 @@ const ios = async () => {
     }
   }
 
-  fs.writeFileSync(
+  await fs.writeFile(
     path.project.resolve(
       path.ios.appIconSetPath({ name: "HelloWorld" } as any),
       "Contents.json"
@@ -103,11 +103,11 @@ const android = async () => {
       }
     }
   }
-  fs.mkdirSync(
+  await fs.mkdir(
     path.project.resolve(path.android.resourcesPath(), "mipmap-anydpi-v26")
   );
 
-  fs.writeFileSync(
+  await fs.writeFile(
     path.project.resolve(
       path.android.resourcesPath(),
       "mipmap-anydpi-v26",

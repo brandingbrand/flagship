@@ -15,7 +15,6 @@ describe("cocoapods", () => {
   beforeAll(() => {
     // @ts-ignore
     os.linux = false;
-    fs.removeSync(tempRootDir);
     fs.copySync(mockProjectDir, tempRootDir);
   });
 
