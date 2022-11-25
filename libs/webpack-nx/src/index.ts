@@ -103,6 +103,11 @@ const webLoaders = [
         options: {
           importLoaders: 1,
           sourceMap: true,
+          modules: {
+            localIdentName: '[name]_[local]_[hash:base64:5]',
+            mode: 'local',
+            exportLocalsConvention: 'camelCase',
+          },
         },
       },
     ],
