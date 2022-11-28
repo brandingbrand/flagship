@@ -28,7 +28,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*"
+    "@brandingbrand/kernel-core": "*",
+    "react-native-navigation": "^7.30.2"
   },
   "peerDependencies": {
     "react-native-navigation": "*"
