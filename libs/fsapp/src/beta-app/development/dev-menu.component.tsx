@@ -8,9 +8,11 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 // @ts-ignore no type definition file
 import CookieManager from 'react-native-cookies';
 import type { LayoutComponent } from 'react-native-navigation';
-import RNAppRestart from '@brandingbrand/react-native-app-restart';
 import SInfo from 'react-native-sensitive-info';
 import type { SensitiveInfoEntry } from 'react-native-sensitive-info';
+
+import RNAppRestart from '@brandingbrand/react-native-app-restart';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { omit } from 'lodash-es';
 
@@ -25,8 +27,8 @@ import CodePushDevMenu from './code-push.component';
 import StorageManager from './storage-manager.component';
 import { TouchableRow } from './touchable-row.component';
 
-const activeEnv = envs[`${EnvSwitcher.envName}`] || envs.prod;
-const hiddenEnvs: string[] = activeEnv?.hiddenEnvs || [];
+const activeEnv = envs[`${EnvSwitcher.envName}`] ?? envs.prod;
+const hiddenEnvs: string[] = activeEnv?.hiddenEnvs ?? [];
 
 const envsToDisplay: Record<string, string> = omit(envs, hiddenEnvs);
 
@@ -143,7 +145,7 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     setSelectedEnv(env);
   };
 
-  const switchToSelectedEnv = () => {
+  const switchToSelectedEnv = (): void => {
     EnvSwitcher.setEnv(selectedEnv).then(() => {
       restart();
     });
@@ -157,7 +159,7 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     setDevView(devView);
   };
 
-  const keepLastPage = () => {
+  const keepLastPage = (): void => {
     setDevKeepPage(!devKeepPage);
     AsyncStorage.setItem('devKeepPage', `${devKeepPage}`).catch((error) => {
       console.log('cannot set devKeepPage flag in AsyncStorage', error);
