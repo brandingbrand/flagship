@@ -3,9 +3,14 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { DevSettings, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore no type definition file
+import CookieManager from 'react-native-cookies';
 import type { LayoutComponent } from 'react-native-navigation';
-
+import RNAppRestart from '@brandingbrand/react-native-app-restart';
+import SInfo from 'react-native-sensitive-info';
+import type { SensitiveInfoEntry } from 'react-native-sensitive-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { omit } from 'lodash-es';
 
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-
+// eslint-disable-next-line max-lines-per-function -- DeveMenu Modal needs refactored
 export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
   const [devView, setDevView] = useState('menu');
   const [selectedEnv, setSelectedEnv] = useState('');
@@ -104,6 +109,23 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     resolve('hide');
   };
 
+  const clearLocalStorage = (): void => {
+    CookieManager.clearAll();
+    void AsyncStorage.clear();
+    void SInfo.getAllItems(app?.config.sInfoOptions ?? {}).then(
+      (values: [SensitiveInfoEntry[]]) => {
+        void Promise.all(
+          values[0].map(async (entry) =>
+            SInfo.deleteItem(
+              entry.key,
+              app?.config.sInfoOptions ?? { keychainService: entry.service }
+            )
+          )
+        );
+      }
+    );
+  };
+
   const restart = () => {
     resolve();
     // Reloading with a modal open causes the app to crash
@@ -111,7 +133,8 @@ export const DevMenu = makeModal<'hide' | void>(({ reject, resolve }) => {
     // but for now just wait for it to close.
     setTimeout(() => {
       app?.config.onDestroy?.();
-      DevSettings.reload();
+      clearLocalStorage();
+      RNAppRestart.restartApplication();
     }, 1000);
   };
 
