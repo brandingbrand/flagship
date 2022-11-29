@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fsk, path } from "@brandingbrand/kernel-core";
 
 export const check = () => {
   const { dependencies } = require(path.project.packagePath());
@@ -20,9 +20,9 @@ export const patch = async () => {
   );
   const keyword = "mainApplicationJava.replace";
 
-  const exists = fs.doesKeywordExist(rnnPath, keyword);
+  const exists = await fsk.doesKeywordExist(rnnPath, keyword);
 
   if (exists) {
-    await fs.updateAsync(rnnPath, keyword, keyword.replace(".", "?."));
+    await fsk.update(rnnPath, keyword, keyword.replace(".", "?."));
   }
 };

@@ -1,33 +1,33 @@
-import * as fsExtra from "fs-extra";
-import * as nodePath from "path";
+import fs from "fs-extra";
+import path from "path";
 
 import { rename } from "../src";
 
-const mockProjectDir = nodePath.join(__dirname, "fixtures", "mock_project");
-const tempRootDir = nodePath.join(__dirname, "__fs_test");
+const mockProjectDir = path.join(__dirname, "fixtures", "mock_project");
+const tempRootDir = path.join(__dirname, "__rename_test");
 
-global.process.cwd = () => nodePath.resolve(tempRootDir);
+global.process.cwd = () => path.resolve(tempRootDir);
 
-describe("fs", () => {
-  beforeEach(() => {
-    fsExtra.copySync(mockProjectDir, tempRootDir);
+describe("rename", () => {
+  beforeEach(async () => {
+    return fs.copy(mockProjectDir, tempRootDir);
   });
 
-  afterEach(() => {
-    fsExtra.removeSync(tempRootDir);
+  afterEach(async () => {
+    return fs.remove(tempRootDir);
   });
 
-  it("rename package directory", () => {
-    rename.pkgDirectory(
+  it("rename package directory", async () => {
+    await rename.pkgDirectory(
       "com.brandingbrand.reactnative.and.mockapp",
       "com.app.app",
-      nodePath.join(tempRootDir, "android/app/src/main"),
+      path.join(tempRootDir, "android/app/src/main"),
       "java"
     );
 
     expect(
-      fsExtra.pathExistsSync(
-        nodePath.join(tempRootDir, "android/app/src/main/java/com/app")
+      await fs.pathExists(
+        path.join(tempRootDir, "android/app/src/main/java/com/app/app")
       )
     ).toBeTruthy();
   });

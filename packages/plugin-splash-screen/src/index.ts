@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fs, fsk, path } from "@brandingbrand/kernel-core";
 
 const ios = async () => {
   const { iosSize = 212, backgroundColor = "#333132" } = {};
@@ -80,7 +80,7 @@ const android = async () => {
 `
   );
 
-  fs.update(
+  await fsk.update(
     path.android.mainActivityPath({
       bundleIds: { android: "com.helloworld" },
     } as never),
@@ -92,7 +92,7 @@ import androidx.annotation.Nullable;
 `
   );
 
-  fs.update(
+  await fsk.update(
     path.android.mainActivityPath({
       bundleIds: { android: "com.helloworld" },
     } as never),

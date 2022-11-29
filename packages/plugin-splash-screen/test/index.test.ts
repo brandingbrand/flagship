@@ -89,17 +89,19 @@ describe("plugin-splash-screen", () => {
     });
 
     expect(
-      fs
-        .statSync(
+      (
+        await fs.stat(
           pathk.project.resolve(pathk.android.resourcesPath(), "layout")
         )
-        .isDirectory()
+      ).isDirectory()
     ).toBeTruthy();
 
     expect(
-      fs
-        .readFileSync(path.resolve(pathk.project.path(), "MainActivity.java"))
-        .toString()
+      (
+        await fs.readFile(
+          path.resolve(pathk.project.path(), "MainActivity.java")
+        )
+      ).toString()
     ).toMatch("setContentView(R.layout.splash);");
   });
 });

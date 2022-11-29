@@ -10,12 +10,12 @@ const mockProjectDir = nodePath.join(__dirname, "fixtures", "mock_project");
 global.process.cwd = () => nodePath.resolve(tempRootDir);
 
 describe("path", () => {
-  beforeAll(() => {
-    fs.copySync(mockProjectDir, tempRootDir);
+  beforeAll(async () => {
+    return fs.copy(mockProjectDir, tempRootDir);
   });
 
-  afterAll(() => {
-    fs.removeSync(tempRootDir);
+  afterAll(async () => {
+    return fs.remove(tempRootDir);
   });
 
   it(`get ios fastfile path`, () => {
