@@ -1,11 +1,11 @@
 import { program } from "commander";
 import {
-  cocoapods,
-  env,
-  fs,
-  path,
+  pre,
+  post,
+  platform,
   platforms,
-  plugins,
+  prePlatform,
+  postPlatform,
 } from "@brandingbrand/kernel-core";
 
 program
@@ -19,23 +19,19 @@ program
   )
   .option("-r, --release", "bundle only store environment")
   .action(async (options) => {
-    env.compile(options.env);
-    env.createEnvIndex();
-
-    const _platforms = platforms.get(options.platform);
-
-    for (const platform of _platforms) {
-      await fs.copyDir(
-        path.resolve(__dirname, "template"),
-        path.project.path(),
-        {},
-        platform
-      );
-
-      cocoapods.install(platform);
+    for (const e of pre.executors) {
+      await e.execute(options, {}, __dirname);
     }
 
-    for (const platform of _platforms) {
-      await plugins.execute({}, plugins.get(), platform);
+    for (const u of [prePlatform, platform, postPlatform]) {
+      for (const p of platforms.get(options.platform)) {
+        for (const e of u.executors) {
+          await e.execute(options, {}, __dirname)[p]();
+        }
+      }
+    }
+
+    for (const e of post.executors) {
+      await e.execute(options, {}, __dirname);
     }
   });
