@@ -28,9 +28,11 @@ if [ "$IS_AMEND" -gt 0 ]; then
   ./node_modules/.bin/nx format:check --files $(git diff-tree --no-commit-id --name-only -r HEAD) $(git diff --name-only --cached) || (echo "The files above have formatting errors. Please run \`nx format\` to correct these." && exit 1)
   ./node_modules/.bin/nx affected:test --files $(git diff-tree --no-commit-id --name-only -r HEAD) $(git diff --name-only --cached) --parallel "${PARALLEL}"
   ./node_modules/.bin/nx affected:lint --files $(git diff-tree --no-commit-id --name-only -r HEAD) $(git diff --name-only --cached) --parallel "${PARALLEL}"
+  ./node_modules/.bin/nx affected --target=stylelint --files $(git diff-tree --no-commit-id --name-only -r HEAD) $(git diff --name-only --cached) --parallel "${PARALLEL}"
 else
   ./tools/verify-commit.ts $1
   ./node_modules/.bin/nx format:check --files $(git diff --name-only --cached) || (echo "The files above have formatting errors. Please run \`nx format\` to correct these." && exit 1)
   ./node_modules/.bin/nx affected:test --files $(git diff --name-only --cached) --parallel "${PARALLEL}"
   ./node_modules/.bin/nx affected:lint --files $(git diff --name-only --cached) --parallel "${PARALLEL}"
+  ./node_modules/.bin/nx affected --target=stylelint --files $(git diff --name-only --cached) --parallel "${PARALLEL}"
 fi
