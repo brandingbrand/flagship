@@ -104,6 +104,7 @@ const webLoaders = [
           importLoaders: 1,
           sourceMap: true,
           modules: {
+            auto: true,
             localIdentName: '[name]_[local]_[hash:base64:5]',
             mode: 'local',
             exportLocalsConvention: 'camelCase',
