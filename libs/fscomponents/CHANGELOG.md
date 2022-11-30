@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.78.0](https://github.com/brandingbrand/flagship/compare/v11.77.1...v11.78.0) (2022-11-30)
+
+
+### Features
+
+* **fscomponents:** only apply overflow when closed (69ad912)
+
+
+
 ## [11.77.1](https://github.com/brandingbrand/flagship/compare/v11.77.0...v11.77.1) (2022-11-16)
 
 
