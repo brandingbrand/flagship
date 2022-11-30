@@ -6,6 +6,7 @@
     "nrwl.angular-console",
     "firsttris.vscode-jest-runner",
     "hashicorp.terraform",
-    "hashicorp.hcl"
+    "hashicorp.hcl",
+    "stylelint.vscode-stylelint"
   ]
 }

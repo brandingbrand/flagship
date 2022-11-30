@@ -1,0 +1,11 @@
+{
+  "ignoreFiles": ["**/*"],
+  "overrides": [
+    {
+      "files": ["**/*.css"],
+      "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+      "rules": {}
+    }
+  ],
+  "rules": {}
+}
