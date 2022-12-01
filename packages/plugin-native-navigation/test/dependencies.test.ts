@@ -6,15 +6,15 @@ import { check, patch } from "../src/utils/dependencies";
 global.process.cwd = () => path.resolve(__dirname, "fixtures");
 
 describe("dependencies", () => {
-  beforeAll(() => {
-    fs.copyFileSync(
+  beforeAll(async () => {
+    return fs.copyFile(
       path.resolve(__dirname, "fixtures", "mock_path.js"),
       path.resolve(__dirname, "fixtures", "temp_mock_path.js")
     );
   });
 
-  afterAll(() => {
-    fs.removeSync(path.resolve(__dirname, "fixtures", "temp_mock_path.js"));
+  afterAll(async () => {
+    return fs.remove(path.resolve(__dirname, "fixtures", "temp_mock_path.js"));
   });
 
   it("check", () => {

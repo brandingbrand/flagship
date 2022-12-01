@@ -1,49 +1,48 @@
-import * as fsExtra from "fs-extra";
-import * as nodePath from "path";
+import path from "path";
 
-import { fs } from "../src";
+import { fs, fsk } from "../src";
 
-const mockProjectDir = nodePath.join(__dirname, "fixtures", "mock_project");
-const tempRootDir = nodePath.join(__dirname, "__fs_test");
+const mockProjectDir = path.join(__dirname, "fixtures", "mock_project");
+const tempRootDir = path.join(__dirname, "__fs_test");
 
-global.process.cwd = () => nodePath.resolve(tempRootDir);
+global.process.cwd = () => path.resolve(tempRootDir);
 
 describe("fs", () => {
-  beforeEach(() => {
-    fsExtra.copySync(mockProjectDir, tempRootDir);
+  beforeEach(async () => {
+    return fs.copy(mockProjectDir, tempRootDir);
   });
 
-  afterEach(() => {
-    fsExtra.removeSync(tempRootDir);
+  afterEach(async () => {
+    return fs.remove(tempRootDir);
   });
 
-  it("update", () => {
-    fs.update(
-      nodePath.join(tempRootDir, "ios/Podfile"),
-      "target 'MOCKAPP' do",
-      "target 'TESTAPP' do"
-    );
-
-    const body = fs
-      .readFileSync(nodePath.join(tempRootDir, "ios/Podfile"))
-      .toString();
-
-    expect(body).toMatch("target 'TESTAPP' do");
-  });
-
-  it("keyword does exist", () => {
+  it("keyword does exist", async () => {
     expect(
-      fs.doesKeywordExist(
-        nodePath.join(tempRootDir, "ios/Podfile"),
+      await fsk.doesKeywordExist(
+        path.join(tempRootDir, "ios/Podfile"),
         "Add new pods below this line"
       )
     ).toBeTruthy();
   });
 
-  it("keyword doesn't exist", () => {
+  it("update", async () => {
+    await fsk.update(
+      path.join(tempRootDir, "ios/Podfile"),
+      "target 'MOCKAPP' do",
+      "target 'TESTAPP' do"
+    );
+
+    const body = (
+      await fs.readFile(path.join(tempRootDir, "ios/Podfile"))
+    ).toString();
+
+    expect(body).toMatch("target 'TESTAPP' do");
+  });
+
+  it("keyword doesn't exist", async () => {
     expect(
-      fs.doesKeywordExist(
-        nodePath.join(tempRootDir, "ios/Podfile"),
+      await fsk.doesKeywordExist(
+        path.join(tempRootDir, "ios/Podfile"),
         "this string has no business in our podfile"
       )
     ).toBeFalsy();

@@ -1,6 +1,6 @@
+import fs from "fs-extra";
 import { sync } from "glob";
 
-import * as fs from "./fs";
 import * as path from "./path";
 import { logError, logInfo } from "./logger";
 
@@ -33,11 +33,11 @@ const getMatchingFiles = (directory: string, oldName: string): string[] => {
  * @param pathComponents Path components to the directory in which to
  * replace the project name.
  */
-export const pkgDirectory = (
+export const pkgDirectory = async (
   oldPkg: string,
   newPkg: string,
   ...pathComponents: string[]
-): void => {
+): Promise<void> => {
   const directory = path.project.resolve(...pathComponents);
   const oldPathPart = oldPkg.replace(/\./g, "/");
   const newPathPart = newPkg.replace(/\./g, "/");
@@ -48,7 +48,7 @@ export const pkgDirectory = (
     // Rename matching paths
     for (const oldPath of results) {
       const newPath = oldPath.replace(oldPathPart, newPathPart);
-      fs.moveSync(oldPath, newPath);
+      await fs.move(oldPath, newPath);
     }
 
     // since we only moved the bottom-most directory, traverse through the old
@@ -61,13 +61,16 @@ export const pkgDirectory = (
         return parts;
       }, [])
       .reverse()) {
-      const contents = fs.pathExistsSync(dir) && fs.readdirSync(dir);
+      const contents = (await fs.pathExists(dir)) && (await fs.readdir(dir));
       if (Array.isArray(contents) && contents.length === 0) {
-        fs.removeSync(dir);
+        await fs.remove(dir);
       }
     }
-  } catch (error: any) {
-    logError("renaming project files", error);
+  } catch (error: unknown) {
+    if (typeof error === "string") {
+      logError("renaming project files", error);
+    }
+
     process.exit(1);
   }
 

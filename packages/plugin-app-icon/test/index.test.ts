@@ -64,7 +64,7 @@ describe("plugin-app-icon", () => {
     await ios();
 
     expect(
-      fs.existsSync(
+      await fs.pathExists(
         pathk.project.resolve(
           "AppIcon.appiconset",
           "Icon-1024-ios-marketing.png"
@@ -93,7 +93,7 @@ describe("plugin-app-icon", () => {
     await android();
 
     expect(
-      fs.pathExistsSync(
+      await fs.pathExists(
         pathk.project.resolve("mipmap-xxxhdpi", "ic_launcher_background.png")
       )
     ).toBeTruthy();
