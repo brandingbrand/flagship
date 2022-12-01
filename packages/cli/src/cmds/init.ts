@@ -1,12 +1,5 @@
 import { program } from "commander";
-import {
-  pre,
-  post,
-  platform,
-  platforms,
-  prePlatform,
-  postPlatform,
-} from "@brandingbrand/kernel-core";
+import { init, platforms } from "@brandingbrand/kernel-core";
 
 program
   .command("init")
@@ -18,12 +11,13 @@ program
     "native"
   )
   .option("-r, --release", "bundle only store environment")
+  .option("-q, --quiet", "supress stdout")
   .action(async (options) => {
-    for (const e of pre.executors) {
+    for (const e of init.pre.executors) {
       await e.execute(options, {}, __dirname);
     }
 
-    for (const u of [prePlatform, platform, postPlatform]) {
+    for (const u of [init.prePlatform, init.platform, init.postPlatform]) {
       for (const p of platforms.get(options.platform)) {
         for (const e of u.executors) {
           await e.execute(options, {}, __dirname)[p]();
@@ -31,7 +25,7 @@ program
       }
     }
 
-    for (const e of post.executors) {
+    for (const e of init.post.executors) {
       await e.execute(options, {}, __dirname);
     }
   });

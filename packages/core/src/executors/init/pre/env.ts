@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 
-import { logger, path } from "../../utils";
+import { logger, path } from "../../../utils";
 
 export const execute = async (options: any, config: any, cliPath: string) => {
   let envMatch = /env.\w+.js/;

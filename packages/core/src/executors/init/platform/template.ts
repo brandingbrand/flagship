@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import ejs from "ejs";
 
-import { path as pathk } from "../../utils";
+import { path as pathk } from "../../../utils";
 
 export const execute = (options: any, config: any, cliPath: string) => {
   const copyDir = async (
