@@ -4,4 +4,7 @@ export * as path from "./path";
 export * as logger from "./logger";
 export * as rename from "./rename";
 export { default as fs } from "./fs";
+export * as spinner from "./spinner";
+export * as exec from "./exec-async";
 export * as platforms from "./platforms";
+export * as rimraf from "./rimraf-async";

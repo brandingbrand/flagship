@@ -1,6 +1,4 @@
-import { execSync } from "child_process";
-
-import { logger, os, path } from "../../utils";
+import { exec, logger, os, path } from "../../../utils";
 
 export const execute = (options: any, config: any, cliPath: string) => ({
   ios: async () => {
@@ -12,9 +10,7 @@ export const execute = (options: any, config: any, cliPath: string) => ({
     logger.logInfo("running pod install");
 
     try {
-      execSync(`cd "${path.project.resolve("ios")}" && pod install`, {
-        stdio: [0, 1, 2],
-      });
+      await exec.async(`cd "${path.project.resolve("ios")}" && pod install`);
     } catch {
       logger.logError(
         "pod install failed, here are the few things you can try to fix:\n" +
@@ -25,6 +21,6 @@ export const execute = (options: any, config: any, cliPath: string) => ({
     }
   },
   android: async () => {
-    logger.logInfo("not running pod install for android");
+    //
   },
 });

@@ -1,20 +1,16 @@
 import fs from "fs-extra";
-import { execSync } from "child_process";
 
-import { logger, path } from "../../utils";
+import { exec, logger, path } from "../../../utils";
 
 export const execute = async (options: any, config: any, cliPath: string) => {
   logger.logInfo("executing tsc compile");
 
-  execSync(
+  await exec.async(
     `yarn tsc ${path.project.resolve(
       ".kernelrc",
       "env",
       "*.ts"
-    )} --skipLibCheck`,
-    {
-      stdio: [0, 1, 2],
-    }
+    )} --skipLibCheck`
   );
 
   await fs.copyFile(

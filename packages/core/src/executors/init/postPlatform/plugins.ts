@@ -1,4 +1,4 @@
-import { path } from "../../utils";
+import { path } from "../../../utils";
 
 export const execute = (options: any, config: any, cliPath: string) => {
   const getPlugins = (): string[] => {
