@@ -1,6 +1,6 @@
 import { exec, logger, os, path } from "../../../utils";
 
-export const execute = (options: any, config: any, cliPath: string) => ({
+export const execute = (options: any, config: any) => ({
   ios: async () => {
     if (os.linux) {
       logger.logInfo("not running pod install on linux");

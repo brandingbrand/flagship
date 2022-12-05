@@ -1,6 +1,6 @@
 import { path } from "../../../utils";
 
-export const execute = (options: any, config: any, cliPath: string) => {
+export const execute = (options: any, config: any) => {
   const getPlugins = (): string[] => {
     const { kernel, devDependencies } = require(path.project.packagePath());
 
