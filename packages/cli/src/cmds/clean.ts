@@ -9,7 +9,7 @@ program
     "platform: ios, android or native (ios & android)",
     "native"
   )
-  .option("-q, --quiet", "supress stdout")
+  .option("-v, --verbose", "show stdout")
   .action(async (options) => {
     for (const e of clean.pre.executors) {
       await e.execute(options, {}, __dirname);

@@ -6,7 +6,7 @@
 import { spinner } from "../../../utils";
 
 export const execute = async (options: any, config: any, cliPath: string) => {
-  if (options.quiet) {
+  if (!options.verbose) {
     spinner.start("Adding keys to the app");
 
     //@ts-ignore
