@@ -6,7 +6,7 @@
 import { fs, fsk, path, spinner } from "../../../utils";
 
 export const execute = async (options: any, config: any, cliPath: string) => {
-  if (options.quiet) {
+  if (!options.verbose) {
     spinner.start("Initializing the app");
 
     //@ts-ignore

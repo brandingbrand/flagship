@@ -7,7 +7,7 @@ program
     "configure ios codesigning and/or android keystore signing config"
   )
   .option("-p, --platform [platform]", "platform: ios or android", "ios")
-  .option("-q, --quiet", "supress stdout")
+  .option("-v, --verbose", "show stdout")
   .action(async (options) => {
     for (const e of keys.pre.executors) {
       await e.execute(options, {}, __dirname);

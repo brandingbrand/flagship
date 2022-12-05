@@ -4,7 +4,7 @@
 import { fs, fsk, path, spinner } from "../../../utils";
 
 export const execute = async (options: any, config: any, cliPath: string) => {
-  if (options.quiet) {
+  if (!options.verbose) {
     if (
       await fs.pathExists(
         path.project.resolve("node_modules", "npmlog", "log.js")
