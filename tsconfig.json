@@ -11,14 +11,35 @@
       "@brandingbrand/kernel-plugin-app-icon": [
         "./packages/plugin-app-icon/src/index.ts"
       ],
+      "@brandingbrand/kernel-plugin-asset": [
+        "./packages/plugin-asset/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-fastlane": [
+        "./packages/plugin-fastlane/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-firebase-analytics": [
+        "./packages/plugin-firebase-analytics/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-firebase-app": [
+        "./packages/plugin-firebase-app/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-firebase-auth": [
+        "./packages/plugin-firebase-auth/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-google-signin": [
+        "./packages/plugin-google-signin/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-leanplum": [
+        "./packages/plugin-leanplum/src/index.ts"
+      ],
       "@brandingbrand/kernel-plugin-native-navigation": [
         "./packages/plugin-native-navigation/src/index.ts"
       ],
+      "@brandingbrand/kernel-plugin-permissions": [
+        "./packages/plugin-permissions/src/index.ts"
+      ],
       "@brandingbrand/kernel-plugin-splash-screen": [
         "./packages/plugin-splash-screen/src/index.ts"
-      ],
-      "@brandingbrand/kernel-plugin-asset": [
-        "./packages/plugin-asset/src/index.ts"
       ]
     },
     "esModuleInterop": true
