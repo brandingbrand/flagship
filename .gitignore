@@ -176,3 +176,15 @@ apps/**/*/.kernelrc/env/env*.js
 # Yarn
 .yarn
 .yarnrc
+
+# Astro
+dist/
+.output/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.production
+.DS_Store
