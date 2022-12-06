@@ -40,6 +40,12 @@
       ],
       "@brandingbrand/kernel-plugin-splash-screen": [
         "./packages/plugin-splash-screen/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-target-application": [
+        "./packages/plugin-target-application/src/index.ts"
+      ],
+      "@brandingbrand/kernel-plugin-target-extension": [
+        "./packages/plugin-target-extension/src/index.ts"
       ]
     },
     "esModuleInterop": true
