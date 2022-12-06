@@ -2,7 +2,7 @@ import fs from "fs-extra";
 
 import { logger, path } from "../../../utils";
 
-export const execute = async (options: any, config: any, cliPath: string) => {
+export const execute = async (options: any, config: any) => {
   let envMatch = /env.\w+.js/;
   if (options.release) {
     envMatch = new RegExp(`env\\.${options.env}\\.js`);

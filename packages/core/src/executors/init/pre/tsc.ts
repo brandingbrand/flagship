@@ -2,7 +2,7 @@ import fs from "fs-extra";
 
 import { exec, logger, path } from "../../../utils";
 
-export const execute = async (options: any, config: any, cliPath: string) => {
+export const execute = async (options: any, config: any) => {
   logger.logInfo("executing tsc compile");
 
   await exec.async(

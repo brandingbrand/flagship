@@ -3,9 +3,9 @@
 
 import { basename } from "path";
 
-import {exec, path, fs } from "../../../utils";
+import { exec, path, fs } from "../../../utils";
 
-export const execute = (options: any, config: any, cliPath: string) => ({
+export const execute = (options: any, config: any) => ({
   ios: async () => {
     const keychainName = process.env.KEY_CHAIN || "login.keychain";
     const keychain = `~/Library/Keychains/${keychainName}`;
@@ -78,7 +78,9 @@ export const execute = (options: any, config: any, cliPath: string) => ({
 -T /usr/bin/codesign || true`
     );
 
-    await exec.async(`mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles/`);
+    await exec.async(
+      `mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles/`
+    );
 
     await exec.async(
       `cp ${path.project.resolve(

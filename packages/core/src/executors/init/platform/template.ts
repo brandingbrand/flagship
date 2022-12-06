@@ -4,7 +4,7 @@ import ejs from "ejs";
 
 import { path as pathk } from "../../../utils";
 
-export const execute = (options: any, config: any, cliPath: string) => {
+export const execute = (options: any, config: any) => {
   const copyDir = async (
     source: string,
     dest: string,
@@ -52,14 +52,14 @@ export const execute = (options: any, config: any, cliPath: string) => {
   return {
     ios: async () =>
       copyDir(
-        path.resolve(cliPath, "template"),
+        path.resolve(__dirname, "template"),
         pathk.project.path(),
         config,
         "ios"
       ),
     android: async () =>
       copyDir(
-        path.resolve(cliPath, "template"),
+        path.resolve(__dirname, "template"),
         pathk.project.path(),
         config,
         "android"

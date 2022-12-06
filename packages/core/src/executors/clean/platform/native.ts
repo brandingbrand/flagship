@@ -3,7 +3,7 @@
 
 import { logger, path, rimraf } from "../../../utils";
 
-export const execute = (options: any, config: any, cliPath: string) => ({
+export const execute = (options: any, config: any) => ({
   ios: async () => {
     logger.logInfo("removing ios dir");
 

@@ -3,7 +3,7 @@
 
 import { spinner } from "../../../utils";
 
-export const execute = async (options: any, config: any, cliPath: string) => {
+export const execute = async (options: any, config: any) => {
   if (!options.verbose) {
     spinner.stop();
   }
