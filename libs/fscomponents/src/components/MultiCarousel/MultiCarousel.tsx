@@ -94,6 +94,8 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     accessibilityHint,
     accessibilityLabel,
     accessibilityRole,
+    autoplay,
+    autoplayTimeoutDuration = 5000,
     data,
     renderItem,
     PageIndicatorComponent = DEFAULT_PAGE_INDICATOR_COMPONENT,
@@ -133,6 +135,8 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const [initialScrollX, setInitialScrollX] = useState<number>();
+  const autoplayTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const [shouldPlay, setShouldPlay] = useState(true);
 
   const calculatedItemsPerPage = useMemo(() => {
     if (typeof itemsPerPage === 'number') {
@@ -155,7 +159,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const calculatedPeekSize = useMemo(
     () => (itemsPerPage === 'auto' ? containerWidth % itemWidth : peekSize),
-    [itemsPerPage, peekSize, containerWidth, calculatedItemsPerPage]
+    [itemsPerPage, containerWidth, itemWidth, peekSize]
   );
 
   const numberOfPages = useMemo(
@@ -173,7 +177,15 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     return itemsPerPage === 'auto'
       ? itemWidth
       : (containerWidth - calculatedPeekSize * (centerMode ? 2 : 1)) / calculatedItemsPerPage;
-  }, [itemWidth, containerWidth, calculatedPeekSize, centerMode, calculatedItemsPerPage]);
+  }, [
+    peekSize,
+    itemsPerPage,
+    itemWidth,
+    containerWidth,
+    calculatedPeekSize,
+    centerMode,
+    calculatedItemsPerPage,
+  ]);
 
   const snapToInterval = useMemo(
     () => calculatedItemWidth * Math.floor(calculatedItemsPerPage),
@@ -259,8 +271,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
 
   const goToNext = useCallback(
     async (options?: GestureResponderEvent | GoToOptions) => {
-      const nextIndex = currentIndex + 1 > numberOfPages - 1 ? numberOfPages - 1 : currentIndex + 1;
-
+      const nextIndex = currentIndex + 1 > numberOfPages - 1 ? 0 : currentIndex + 1;
       await goTo(nextIndex, options && 'animated' in options ? options : undefined);
     },
     [goTo, currentIndex, numberOfPages]
@@ -281,6 +292,52 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     },
     [goTo, currentIndex]
   );
+
+  const stopCarouselLooping = (): void => {
+    if (autoplayTimeout.current) {
+      clearTimeout(autoplayTimeout.current);
+    }
+    setShouldPlay(false);
+  };
+
+  const goToNextCancelCarousel = useCallback(async () => {
+    stopCarouselLooping();
+    await goToNext();
+  }, [goToNext]);
+
+  const goToPrevCancelCarousel = useCallback(async () => {
+    stopCarouselLooping();
+    await goToPrev();
+  }, [goToPrev]);
+
+  useEffect(() => {
+    if (pageWidth && autoplay && numberOfPages > 0 && shouldPlay) {
+      autoplayTimeout.current = setTimeout(async () => {
+        const options = {
+          animated: true,
+        };
+        // Animation is hardcoded at 200ms; stop animation to avoid glitch.
+        if (autoplayTimeoutDuration <= 300) {
+          options.animated = false;
+        }
+        await goToNext(options);
+      }, autoplayTimeoutDuration);
+      return () => {
+        if (autoplayTimeout.current) {
+          clearTimeout(autoplayTimeout.current);
+        }
+      };
+    }
+    return undefined;
+  }, [
+    numberOfPages,
+    currentIndex,
+    autoplay,
+    pageWidth,
+    shouldPlay,
+    autoplayTimeoutDuration,
+    goToNext,
+  ]);
 
   useEffect(() => {
     carouselController?.({
@@ -413,7 +470,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.prevBtn)}
           accessibilityRole="button"
           onBlur={prevArrowOnBlur}
-          onPress={goToPrev}
+          onPress={goToPrevCancelCarousel}
           style={[styles.goToPrev, prevArrowContainerStyle]}
         >
           <View style={[styles.buttonPrevIcon, prevArrowStyle]} />
@@ -425,7 +482,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
           accessibilityLabel={FSI18n.string(translationKeys.flagship.multiCarousel.nextBtn)}
           accessibilityRole="button"
           onBlur={nextArrowOnBlur}
-          onPress={goToNext}
+          onPress={goToNextCancelCarousel}
           style={[styles.goToNext, nextArrowContainerStyle]}
         >
           <View style={[styles.buttonNextIcon, nextArrowStyle]} />

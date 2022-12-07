@@ -203,9 +203,9 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     if (scrollView.current) {
       scrollView.current.scrollTo({ left: 0 });
     }
-  }, [scrollView.current, containerWidth]);
+  }, [containerWidth]);
 
-  const stopCarouselLooping = () => {
+  const stopCarouselLooping = (): void => {
     if (autoplayTimeout.current) {
       clearTimeout(autoplayTimeout.current);
     }
@@ -276,7 +276,7 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
         }, 0);
       }
     },
-    [animating, currentIndex, pageWidth, setAnimating, onSlideChange]
+    [animating, pageWidth, setAnimating]
   );
 
   const goToNext = useCallback(
@@ -303,15 +303,15 @@ export const MultiCarousel = <ItemT,>(props: MultiCarouselProps<ItemT>) => {
     [goTo, currentIndex]
   );
 
-  const goToNextCancelCarousel = async () => {
+  const goToNextCancelCarousel = useCallback(async () => {
     stopCarouselLooping();
     await goToNext();
-  };
+  }, [goToNext]);
 
-  const goToPrevCancelCarousel = async () => {
+  const goToPrevCancelCarousel = useCallback(async () => {
     stopCarouselLooping();
     await goToPrev();
-  };
+  }, [goToPrev]);
 
   useEffect(() => {
     if (pageWidth && autoplay && numberOfPages > 0 && !animating && shouldPlay) {
