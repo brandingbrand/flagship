@@ -8,7 +8,7 @@ export const StaticImplements =
 
 export const isDefined = <T,>(value: T | undefined): value is T => value !== undefined;
 
-const pathFromRoute = (route: Route, prefix?: string) =>
+const pathFromRoute = (route: Route, prefix?: string): string =>
   route.path !== undefined
     ? `${prefix?.replace(/\/$/, '') ?? ''}/${route.path.replace(/^\//, '') ?? ''}`
     : prefix ?? '/';
@@ -24,10 +24,7 @@ export const setRouteId = (route: Route | RouteCollection): string => {
 export const getRouteId = (route: Route | RouteCollection): string | undefined =>
   routeIds.get(route);
 
-export const buildPath = (
-  route: Route | RouteCollection,
-  prefix?: string
-): Record<string, string> => {
+export const buildPath = (route: Route | RouteCollection, prefix?: string) => {
   const path = pathFromRoute(route, prefix);
   const id = getRouteId(route) ?? setRouteId(route);
 
