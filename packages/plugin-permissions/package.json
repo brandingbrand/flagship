@@ -28,6 +28,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*"
+    "@brandingbrand/kernel-core": "*",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "react-native-permissions": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191"
   }
 }
