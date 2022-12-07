@@ -28,6 +28,12 @@
         "jestConfig": "libs/engagement-utils/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["open-source"]
