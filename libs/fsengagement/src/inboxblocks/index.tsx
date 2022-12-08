@@ -6,7 +6,6 @@ import { Card } from './Card';
 import { Container } from './Container';
 import CustomCarouselBlock from './CustomCarouselBlock';
 import { DismissibleBanner } from './DismissibleBanner';
-import { DisplayNameMessage } from './DisplayNameMessage';
 import DividerBlock from './DividerBlock';
 import EventBlock from './EventBlock';
 import { EventCard } from './EventCard';
@@ -17,6 +16,7 @@ import IconText from './IconTextBlock';
 import { ImageBlock } from './ImageBlock';
 import { ImageCard } from './ImageCard';
 import ImageCarouselBlock from './ImageCarouselBlock';
+import { ImageCarouselV2 } from './ImageCarouselV2';
 import ImageGrid from './ImageGrid';
 import ImageWithOverlay from './ImageWithOverlay';
 import ImageWithText from './ImageWithTextBlock';
@@ -29,6 +29,7 @@ import ShopIngredientsBlock from './ShopIngredientsBlock';
 import { SideBySideImages } from './SideBySideImages';
 import SimpleCard from './SimpleCard';
 import StackedButtons from './StackedButtons';
+import { StackedImageCarousel } from './StackedImageCarousel';
 import Story from './Story';
 import TextBanner from './TextBanner';
 import { TextBlock } from './TextBlock';
@@ -74,12 +75,13 @@ const layoutComponents: ComponentList = {
   TitleWithLink,
   CustomCarousel: CustomCarouselBlock,
   IconText,
-  DisplayNameMessage,
   DismissibleBanner,
   Container,
   TextWithButton,
   CTARow,
   SideBySideImages,
+  ImageCarouselV2,
+  StackedImageCarousel,
 };
 
 export default layoutComponents;

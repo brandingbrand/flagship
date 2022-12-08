@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React, { Component, useContext } from 'react';
 
@@ -18,8 +19,17 @@ import type { EngContext } from '../lib/contexts';
 import { EngagementContext } from '../lib/contexts';
 import type { BlockItem } from '../types';
 
-import { FlexAlign, FlexMap } from './ImageBlock';
+import type { FlexAlign, FlexMap } from './ImageBlock';
 
+export interface TextBelowOptions {
+  padding?: number;
+  backgroundColor?: string;
+}
+export interface TextBelowImage {
+  enabled: boolean;
+  options?: TextBelowOptions;
+  items: BlockItem[];
+}
 export interface ImageBlockProps {
   source: ImageURISource;
   resizeMode?: any;
@@ -30,7 +40,9 @@ export interface ImageBlockProps {
   containerStyle?: ViewStyle;
   outerContainerStyle?: ViewStyle;
   textOverlay?: any;
+  textBelowImage?: TextBelowImage;
   link?: string;
+  borderRadius?: number;
   parentWidth?: number;
   cardContainerStyle?: ViewStyle;
   fixedWidth?: number;
@@ -119,7 +131,6 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
     if (ratio !== undefined) {
       result.height = result.width / Number.parseFloat(ratio);
     }
-    console.log('overlay result', result);
     return result;
   };
 
@@ -133,7 +144,6 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
     }
   };
 
-  // eslint-disable-next-line max-statements
   private renderItem(item: BlockItem): React.ReactElement | null {
     const { private_blocks, private_type, ...restProps } = item;
 
@@ -254,6 +264,7 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
       source,
       textOverlay,
       link,
+      borderRadius = 0,
     } = this.props;
     if (!source) {
       return <View />;
@@ -313,6 +324,7 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
             <ImageBackground
               source={source}
               style={[{ height: 200 }, imageStyle, imageRatioStyle]}
+              imageStyle={{ borderRadius }}
               resizeMode={resizeMode}
               resizeMethod={resizeMethod}
             >
@@ -338,6 +350,7 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
         <ImageBackground
           source={source}
           style={[{ height: 200 }, imageStyle, imageRatioStyle]}
+          imageStyle={{ borderRadius }}
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
         >

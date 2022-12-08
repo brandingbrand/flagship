@@ -18,7 +18,7 @@ export const CarouselPagination = React.memo((props: any) => {
     positionOffset,
   } = pagination;
 
-  const containerOffset = -(containerStyle?.paddingLeft ?? 0 + containerStyle?.marginLeft ?? 0);
+  const containerOffset = -(containerStyle?.paddingLeft ?? 0 + (containerStyle?.marginLeft ?? 0));
   const defaultPosition = position === 'default' ? 0 : -dotSize;
   const paginationContainerStyle = {
     paddingVertical: 10,
