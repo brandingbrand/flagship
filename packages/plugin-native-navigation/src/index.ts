@@ -16,7 +16,7 @@ const ios = async () => {
   await fs.chmod(scriptPath, "755");
   const rnnIOSLink = require(scriptPath);
 
-  rnnIOSLink();
+  await rnnIOSLink();
 };
 
 const android = async () => {
@@ -33,7 +33,7 @@ const android = async () => {
   await fs.chmod(scriptPath, "755");
   const rnnAndroidLink = require(scriptPath);
 
-  rnnAndroidLink();
+  await rnnAndroidLink();
 };
 
 export { ios, android };

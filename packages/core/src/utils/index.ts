@@ -1,4 +1,5 @@
 export * as os from "./os";
+export * as env from "./env";
 export * as fsk from "./fsk";
 export * as path from "./path";
 export * as logger from "./logger";

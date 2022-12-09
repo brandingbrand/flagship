@@ -1,5 +1,5 @@
 import { program } from "commander";
-import { init, platforms } from "@brandingbrand/kernel-core";
+import { env, init, platforms } from "@brandingbrand/kernel-core";
 
 program
   .command("init")
@@ -14,18 +14,18 @@ program
   .option("-v, --verbose", "show stdout")
   .action(async (options) => {
     for (const e of init.pre.executors) {
-      await e.execute(options, {});
+      await e.execute(options, await env.get());
     }
 
     for (const u of [init.prePlatform, init.platform, init.postPlatform]) {
       for (const p of platforms.get(options.platform)) {
         for (const e of u.executors) {
-          await e.execute(options, {})[p]();
+          await e.execute(options, await env.get())[p]();
         }
       }
     }
 
     for (const e of init.post.executors) {
-      await e.execute(options, {});
+      await e.execute(options, await env.get());
     }
   });

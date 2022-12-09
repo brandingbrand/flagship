@@ -9,7 +9,7 @@ jest.mock("../../../node_modules/react-native-asset/lib");
 describe("plugin-asset", () => {
   it("ios", async () => {
     const linkAssets = require("../../../node_modules/react-native-asset/lib");
-    ios();
+    await ios();
 
     expect(linkAssets).toBeCalledWith({
       rootPath: pathk.project.path(),
@@ -27,9 +27,9 @@ describe("plugin-asset", () => {
     });
   });
 
-  it("android", () => {
+  it("android", async () => {
     const linkAssets = require("../../../node_modules/react-native-asset/lib");
-    android();
+    await android();
 
     expect(linkAssets).toBeCalledWith({
       rootPath: pathk.project.path(),

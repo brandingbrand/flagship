@@ -1,6 +1,6 @@
 import { path } from "@brandingbrand/kernel-core";
 
-const ios = () => {
+const ios = async () => {
   const { iosAssets = ["./assets/fonts"] } = {};
 
   const linkAsssets = require(path.project.resolve(
@@ -9,7 +9,7 @@ const ios = () => {
     "lib"
   ));
 
-  linkAsssets({
+  await linkAsssets({
     rootPath: path.project.path(),
     shouldUnlink: true,
     platforms: {
@@ -25,7 +25,7 @@ const ios = () => {
   });
 };
 
-const android = () => {
+const android = async () => {
   const { androidAssets = ["./assets/fonts"] } = {};
 
   const linkAsssets = require(path.project.resolve(
@@ -34,7 +34,7 @@ const android = () => {
     "lib"
   ));
 
-  linkAsssets({
+  await linkAsssets({
     rootPath: path.project.path(),
     shouldUnlink: true,
     platforms: {

@@ -10,13 +10,16 @@
 
 import React, {type PropsWithChildren} from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
+import {PERMISSIONS, request} from 'react-native-permissions';
 
 import {
   Colors,
@@ -63,6 +66,18 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const onPressLocationPermissions = () =>
+    Platform.select({
+      ios: request(PERMISSIONS.IOS.LOCATION_ALWAYS),
+      android: request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION),
+    });
+
+  const onPressCameraPermissions = () =>
+    Platform.select({
+      ios: request(PERMISSIONS.IOS.CAMERA),
+      android: request(PERMISSIONS.ANDROID.CAMERA),
+    });
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <ScrollView
@@ -83,6 +98,22 @@ const App = () => {
           <Section title="Debug">
             <DebugInstructions />
           </Section>
+          <TouchableOpacity onPress={onPressLocationPermissions}>
+            <Section title="Location Permissions">
+              <Text>
+                <Text style={styles.highlight}>Press Here</Text> to request
+                location permissions.
+              </Text>
+            </Section>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressCameraPermissions}>
+            <Section title="Camera Permissions">
+              <Text>
+                <Text style={styles.highlight}>Press Here</Text> to request
+                camera permissions.
+              </Text>
+            </Section>
+          </TouchableOpacity>
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>

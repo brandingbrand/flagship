@@ -20,6 +20,7 @@
     "react-native": "0.70.6",
     "react-native-device-info": "^5.6.5",
     "react-native-navigation": "^7.30.2",
+    "react-native-permissions": "^3.6.1",
     "react-native-sensitive-info": "^5.5.0"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "@brandingbrand/kernel-plugin-app-icon": "*",
     "@brandingbrand/kernel-plugin-asset": "*",
     "@brandingbrand/kernel-plugin-native-navigation": "*",
+    "@brandingbrand/kernel-plugin-permissions": "*",
     "@brandingbrand/kernel-plugin-splash-screen": "*",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
@@ -107,10 +109,11 @@
   },
   "kernel": {
     "plugins": [
+      "@brandingbrand/kernel-plugin-asset",
+      "@brandingbrand/kernel-plugin-permissions",
       "@brandingbrand/kernel-plugin-native-navigation",
       "@brandingbrand/kernel-plugin-app-icon",
-      "@brandingbrand/kernel-plugin-splash-screen",
-      "@brandingbrand/kernel-plugin-asset"
+      "@brandingbrand/kernel-plugin-splash-screen"
     ]
   }
 }
