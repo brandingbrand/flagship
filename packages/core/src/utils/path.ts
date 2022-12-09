@@ -82,7 +82,7 @@ const getInfoPlistPath = (configuration: Config): string =>
  * @return The path
  */
 const getAppDelegatePath = (configuration: Config): string =>
-  resolvePathFromProject("ios", configuration.name, "AppDelegate.m");
+  resolvePathFromProject("ios", configuration.name, "AppDelegate.mm");
 
 /**
  * Returns the path to the Podfile.
