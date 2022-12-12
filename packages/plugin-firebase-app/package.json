@@ -29,5 +29,8 @@
   "license": "ISC",
   "dependencies": {
     "@brandingbrand/kernel-core": "*"
+  },
+  "peerDependencies": {
+    "@react-native-firebase/app": "^14.12.0"
   }
 }
