@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import type { FlexStyle, ViewStyle } from 'react-native';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import ReactPlayer from 'react-player';
@@ -20,11 +19,11 @@ export interface VideoBlockProps {
   autoPlay?: boolean;
   repeat?: boolean;
   resizeMode?: 'contain' | 'cover' | 'none' | 'stretch';
-  style?: FlexStyle;
+  style?: any;
   muted?: boolean;
   fullscreen?: boolean;
-  containerStyle?: ViewStyle;
-  outerContainerStyle?: ViewStyle;
+  containerStyle?: any;
+  outerContainerStyle?: any;
 }
 
 const styles = StyleSheet.create({
@@ -59,7 +58,7 @@ const DEFAULT_WIDTH = Dimensions.get('window').width;
 
 // eslint-disable-next-line max-statements
 export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
-  const [isVideoPaused, setVideoPaused] = useState(false);
+  const [videoPaused, setVideoPaused] = useState(false);
   const { isCard } = React.useContext(CardContext);
   const { windowWidth } = React.useContext(EngagementContext);
   const player: any | null = null;
@@ -79,11 +78,11 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
     if (props.fullscreen) {
       player.presentFullscreenPlayer();
     } else {
-      setVideoPaused(!isVideoPaused);
+      setVideoPaused(!videoPaused);
     }
   };
 
-  const renderSocial = (src: string, type: string) => {
+  const renderSocial = (src: string, { height, width }: any, type: string) => {
     const socialID = src.replace(`${type}://`, '');
     const iframeUri =
       type === 'youtube'
@@ -109,7 +108,7 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
 
         {!isCard && (
           <TouchableOpacity onPress={toggleVideo} style={[styles.VideoButton, { width, height }]}>
-            {isVideoPaused && (
+            {videoPaused && (
               <View style={styles.VideoButtonWrapper}>
                 <View style={styles.VideoButtonInner} />
               </View>
@@ -121,45 +120,45 @@ export const VideoBlock: React.FC<VideoBlockProps> = React.memo((props) => {
   };
 
   const renderVideo = (src: string, size: any) => {
-    if (src.includes('youtube://') || src.includes('facebook://')) {
-      const type = src.includes('youtube://') ? 'youtube' : 'facebook';
-      return renderSocial(src, type);
-    } else if (src.includes('http://') || src.includes('https://')) {
+    if (~src.indexOf('youtube://') || ~src.indexOf('facebook://')) {
+      const type = ~src.indexOf('youtube://') ? 'youtube' : 'facebook';
+      return renderSocial(src, size, type);
+    } else if (~src.indexOf('http://') || ~src.indexOf('https://')) {
       return renderHttp(src, size);
     }
     return false;
   };
 
   if (containerStyle) {
-    if (containerStyle.paddingLeft !== undefined) {
+    if (containerStyle.paddingLeft) {
       blockStyle.width -= Number(containerStyle.paddingLeft);
     }
-    if (containerStyle.marginLeft !== undefined) {
+    if (containerStyle.marginLeft) {
       blockStyle.width -= Number(containerStyle.marginLeft);
     }
-    if (containerStyle.paddingRight !== undefined) {
+    if (containerStyle.paddingRight) {
       blockStyle.width -= Number(containerStyle.paddingRight);
     }
-    if (containerStyle.marginRight !== undefined) {
+    if (containerStyle.marginRight) {
       blockStyle.width -= Number(containerStyle.marginRight);
     }
   }
   if (outerContainerStyle) {
-    if (outerContainerStyle.paddingLeft !== undefined) {
-      blockStyle.width -= Number(outerContainerStyle.paddingLeft);
+    if (outerContainerStyle.paddingLeft) {
+      blockStyle.width -= outerContainerStyle.paddingLeft;
     }
-    if (outerContainerStyle.marginLeft !== undefined) {
-      blockStyle.width -= Number(outerContainerStyle.marginLeft);
+    if (outerContainerStyle.marginLeft) {
+      blockStyle.width -= outerContainerStyle.marginLeft;
     }
-    if (outerContainerStyle.paddingRight !== undefined) {
-      blockStyle.width -= Number(outerContainerStyle.paddingRight);
+    if (outerContainerStyle.paddingRight) {
+      blockStyle.width -= outerContainerStyle.paddingRight;
     }
-    if (outerContainerStyle.marginRight !== undefined) {
-      blockStyle.width -= Number(outerContainerStyle.marginRight);
+    if (outerContainerStyle.marginRight) {
+      blockStyle.width -= outerContainerStyle.marginRight;
     }
   }
 
-  blockStyle.height = typeof source.ratio === 'number' ? blockStyle.width / source.ratio : height;
+  blockStyle.height = source && source.ratio ? blockStyle.width / source.ratio : height;
 
   return (
     <View style={containerStyle}>

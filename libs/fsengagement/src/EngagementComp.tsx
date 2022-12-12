@@ -40,15 +40,7 @@ import EngagementWebView from './WebView';
 import { BackButton } from './components/BackButton';
 import TabbedStory from './inboxblocks/TabbedStory';
 import { EngagementContext } from './lib/contexts';
-import type {
-  Action,
-  BlockItem,
-  ComponentList,
-  DynamicData,
-  EmitterProps,
-  JSON,
-  ScreenProps,
-} from './types';
+import type { Action, BlockItem, ComponentList, EmitterProps, JSON, ScreenProps } from './types';
 
 Navigation.registerComponent('EngagementWebView', () => EngagementWebView);
 
@@ -225,7 +217,6 @@ export interface EngagementScreenProps extends ScreenProps, EmitterProps {
   welcomeHeader?: boolean;
   headerName?: string;
   displayName?: string;
-  dynamicData?: DynamicData;
   animate?: boolean;
   cardPosition?: number;
   navigator?: Navigator;
@@ -1101,7 +1092,9 @@ const WithEngagement = (
 
     public render(): JSX.Element {
       const { json, navBarTitle } = this.props;
-      this.pageCounterStyle = json.pageCounterStyle ? json.pageCounterStyle : this.pageCounterStyle;
+      this.pageCounterStyle = json?.pageCounterStyle
+        ? json.pageCounterStyle
+        : this.pageCounterStyle;
       this.pageNumberStyle = json.pageNumberStyle ? json.pageNumberStyle : this.pageNumberStyle;
       const navBarTitleStyle = (json && json.navBarTitleStyle) || {};
 
@@ -1113,7 +1106,6 @@ const WithEngagement = (
             language: this.props.language,
             cardPosition: this.props.cardPosition || 0,
             displayName: this.props.displayName,
-            dynamicData: this.props.dynamicData,
           }}
         >
           <>

@@ -14,7 +14,7 @@ export interface ActionsCard extends CardProps {
 
 export const Card: React.FunctionComponent<ActionsCard> = React.memo((props) => {
   const navigator = props.discoverPath ? useNavigator() : props.navigator;
-  const { dynamicData, handleAction } = React.useContext(EngagementContext);
+  const { handleAction } = React.useContext(EngagementContext);
 
   const handleStoryAction = async (json: JSON) => {
     DeviceEventEmitter.emit('viewStory', {
@@ -47,7 +47,6 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo((props) => 
           backButton: true,
           name: props.name,
           id: props.id,
-          dynamicData,
         },
       },
     });
@@ -73,7 +72,7 @@ export const Card: React.FunctionComponent<ActionsCard> = React.memo((props) => 
           storyGradient,
         });
       }
-    } else if (actions?.type) {
+    } else if (actions && actions.type) {
       handleAction(actions);
     }
   };
