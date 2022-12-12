@@ -27,13 +27,15 @@ describe("plugin-permissions", () => {
       );
 
     await ios({
-      permissions: {
-        ios: [
-          {
-            permission: "APP_TRACKING_TRANSPARENCY",
-            text: "This is a test",
-          },
-        ],
+      kernelPluginPermissions: {
+        kernel: {
+          ios: [
+            {
+              permission: "APP_TRACKING_TRANSPARENCY",
+              text: "This is a test",
+            },
+          ],
+        },
       },
     });
 
@@ -61,8 +63,10 @@ describe("plugin-permissions", () => {
       );
 
     await android({
-      permissions: {
-        android: ["ACCESS_FINE_LOCATION"],
+      kernelPluginPermissions: {
+        kernel: {
+          android: ["ACCESS_FINE_LOCATION"],
+        },
       },
     });
 
