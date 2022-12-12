@@ -10,9 +10,15 @@ export interface IOSPermissionType {
 
 export type AndroidPermissionType = AndroidPermission[];
 
-export interface PluginPermissionsConfig {
-  permissions: {
+interface Kernel {
+  kernel: {
     ios?: IOSPermissionType[];
     android?: AndroidPermissionType;
   };
+}
+
+export interface KernelPluginPermissions {
+  kernelPluginPermissions: {
+    [key: string]: any;
+  } & Kernel;
 }

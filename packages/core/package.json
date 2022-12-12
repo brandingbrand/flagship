@@ -30,6 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "cli-spinners": "^2.7.0",
+    "deepmerge": "^4.2.2",
     "ejs": "^3.1.8",
     "fastq": "^1.13.0",
     "fs-extra": "^10.1.0",
