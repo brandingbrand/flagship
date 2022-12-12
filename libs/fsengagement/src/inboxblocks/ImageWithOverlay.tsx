@@ -1,5 +1,4 @@
 /* eslint-disable max-statements */
-/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
 import React, { Component, useContext } from 'react';
 
 import type {
@@ -373,4 +372,3 @@ export default (props: ImageBlockProps) => {
   const context = useContext(EngagementContext);
   return <ImageWithOverlay {...props} context={context} />;
 };
-/* eslint-enable unicorn/filename-case */
