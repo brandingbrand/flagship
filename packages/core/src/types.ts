@@ -29,11 +29,11 @@ export interface IOS {
   /**
    * File path to app entitlements
    */
-  entitlementsFilePath: string;
+  entitlementsFilePath?: string;
   /**
    * Network exception domains
    */
-  exceptionDomains: Array<
+  exceptionDomains?: Array<
     | string
     | {
         domain: string;
@@ -55,7 +55,7 @@ export interface IOS {
   /**
    * Additional Plist values
    */
-  propertyList: string[];
+  propertyList?: string[];
   /**
    * Signing configuration
    */
@@ -79,7 +79,7 @@ export interface IOSVersion {
   /**
    * App version
    */
-  buildVersion?: string | ((packageVersion: string) => string);
+  buildVersion: string | ((packageVersion: string) => string);
   /**
    * App build number
    */
@@ -89,7 +89,7 @@ export interface BridgingHeader {
   /**
    * Additional imports to bridging header
    */
-  imports: string[];
+  imports?: string[];
 }
 
 export interface Pod {
@@ -119,7 +119,7 @@ export interface PodsConfig {
   /**
    * Additional required Pods
    */
-  pods: Pod[];
+  pods?: Pod[];
 }
 
 export interface IOSSigning {
@@ -136,8 +136,8 @@ export interface IOSSigning {
   /**
    * Development team id.
    */
-  exportTeamId?: string;
-  profilesDir?: string;
+  exportTeamId: string;
+  profilesDir: string;
   /**
    * Provisioning profile name
    */
@@ -154,14 +154,6 @@ export interface FrameworksConfig {
    */
   frameworkPath?: string;
 }
-export interface FindReplaceFile {
-  newText: string;
-  oldText: string;
-  /**
-   * Path to files relative to ios root
-   */
-  paths: string[];
-}
 
 // ANDROID
 export interface Android {
@@ -176,11 +168,11 @@ export interface Android {
   /**
    * MainApplication.java configuration
    */
-  mainApplication: MainApplication;
+  mainApplication?: MainApplication;
   /**
    * AndroidManifest.xml configuration
    */
-  manifest: Manifest;
+  manifest?: Manifest;
   /**
    * App package name
    */
@@ -188,7 +180,7 @@ export interface Android {
   /**
    * signing config
    */
-  signing: AndroidSigning;
+  signing?: AndroidSigning;
   /**
    * App version
    */
@@ -216,7 +208,7 @@ export interface AppGradle {
   /**
    * Additional dependencies for app/build.gradle
    */
-  dependencies: string[];
+  dependencies?: string[];
 }
 
 export interface ProjectGradle {
@@ -262,11 +254,11 @@ export interface MainApplication {
   /**
    * Additional packages for MainApplication.java
    */
-  additionalPackages: string[];
+  additionalPackages?: string[];
   /**
    * Additional imports for MainApplication.java
    */
-  additionalImports: string[];
+  additionalImports?: string[];
 }
 export interface Manifest {
   /**
@@ -281,11 +273,11 @@ export interface Manifest {
   /**
    * Additional elements to add inside the <application> tag
    */
-  applicationElements: string[];
+  applicationElements?: string[];
   /**
    * Additional elements to add inside the main <activity> tag
    */
-  mainActivityElements: string[];
+  mainActivityElements?: string[];
 }
 
 export interface Gradle {
