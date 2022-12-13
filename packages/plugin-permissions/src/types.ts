@@ -1,3 +1,5 @@
+import type { Plugin } from "@brandingbrand/kernel-core";
+
 import { ios, android } from "./utils";
 
 export type IOSPermission = keyof typeof ios.permissions;
@@ -10,15 +12,11 @@ export interface IOSPermissionType {
 
 export type AndroidPermissionType = AndroidPermission[];
 
-interface Kernel {
-  kernel: {
-    ios?: IOSPermissionType[];
-    android?: AndroidPermissionType;
-  };
+interface PluginPermissions {
+  ios?: IOSPermissionType[];
+  android?: AndroidPermissionType;
 }
 
 export interface KernelPluginPermissions {
-  kernelPluginPermissions: {
-    [key: string]: any;
-  } & Kernel;
+  kernelPluginPermissions: Plugin<PluginPermissions>;
 }

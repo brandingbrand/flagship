@@ -301,3 +301,14 @@ export interface FindReplaceFile {
    */
   paths: string[];
 }
+
+interface CoreConfig {
+  ios?: any;
+  android?: any;
+}
+
+interface Kernel<T> {
+  kernel: T;
+}
+
+export type Plugin<T> = CoreConfig & Kernel<T>;
