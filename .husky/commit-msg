@@ -20,9 +20,12 @@ set +e
 IS_AMEND=$(ps -wwo ppid=$PPID,command | grep 'git commit' | head -1 | grep -c -e '--amend')
 set -e
 
-
-PARALLEL=$(expr $(sysctl -n hw.logicalcpu 2>/dev/null || nproc 2>/dev/null || echo "5" ) - 2);
-PARALLEL="${NX_PARALLEL:-$PARALLEL}"
+if [ CI ]; then
+  PARALLEL="2";
+else
+  PARALLEL=$(expr $(sysctl -n hw.logicalcpu 2>/dev/null || nproc 2>/dev/null || echo "5" ) - 2);
+  PARALLEL="${NX_PARALLEL:-$PARALLEL}";
+fi
 
 if [ "$IS_AMEND" -gt 0 ]; then
   ./node_modules/.bin/nx format:check --files $(git diff-tree --no-commit-id --name-only -r HEAD) $(git diff --name-only --cached) || (echo "The files above have formatting errors. Please run \`nx format\` to correct these." && exit 1)
