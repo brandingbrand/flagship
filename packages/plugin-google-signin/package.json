@@ -29,5 +29,8 @@
   "license": "ISC",
   "dependencies": {
     "@brandingbrand/kernel-core": "*"
+  },
+  "peerDependencies": {
+    "@brandingbrand/kernel-plugin-firebase-app": "*"
   }
 }

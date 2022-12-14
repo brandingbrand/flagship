@@ -138,8 +138,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   if ([RCTLinkingManager application:application openURL:url options:options]) {
     return YES;
   }
-
-  return NO;
 }
 
 @end
