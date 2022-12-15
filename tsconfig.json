@@ -17,6 +17,9 @@
       "@brandingbrand/kernel-plugin-fastlane": [
         "./packages/plugin-fastlane/src/index.ts"
       ],
+      "@brandingbrand/kernel-plugin-fbsdk-next": [
+        "./packages/plugin-fbsdk-next/src/index.ts"
+      ],
       "@brandingbrand/kernel-plugin-firebase-analytics": [
         "./packages/plugin-firebase-analytics/src/index.ts"
       ],
