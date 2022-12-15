@@ -28,6 +28,7 @@ describe("plugin-fbsdk-next", () => {
       );
 
     await ios({
+      ios: { name: "HelloWorld" },
       kernelPluginFBSDKNext: {
         kernel: {
           ios: {
@@ -39,7 +40,7 @@ describe("plugin-fbsdk-next", () => {
           },
         },
       },
-    });
+    } as never);
 
     const infoPlist = (
       await fs.readFile(

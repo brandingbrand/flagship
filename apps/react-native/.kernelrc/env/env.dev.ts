@@ -1,19 +1,17 @@
+import { Config } from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
 
-const dev: {[key: string]: any} & KernelPluginPermissions = {
+const dev: Config & KernelPluginPermissions = {
   ios: {
-    foo: 'bar',
+    name: 'HelloWorld',
+    bundleId: 'com.helloworld',
+    displayName: 'Hello World',
   },
   android: {
-    foo: 'bar',
+    displayName: 'Hello World',
+    packageName: 'com.helloworld',
   },
   kernelPluginPermissions: {
-    ios: {
-      foo: 'baz',
-    },
-    android: {
-      foo: 'alpha'
-    },
     kernel: {
       ios: [
         {

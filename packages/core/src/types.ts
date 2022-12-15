@@ -1,23 +1,13 @@
 export interface Config {
   android: Android;
-  envSwitcher?: EnvSwitcher;
   ios: IOS;
 }
 
-export interface EnvSwitcher {
-  /** Array of environment names to hide from the Environment Switcher
-   *
-   * @example ['store']
-   */
-  hiddenEnvs?: string[];
-}
-
-//IOS
 export interface IOS {
   /**
-   * Add Obj-c headers to bridge
+   * Application source code name
    */
-  bridgingHeader?: BridgingHeader;
+  name: string;
   /**
    * Application Bundle ID
    */
@@ -47,27 +37,27 @@ export interface IOS {
   /**
    * iOS compile version target
    */
-  iosVersionTarget: string;
+  deploymentTarget?: string;
   /**
    * Additional Pods needed
    */
-  podsConfig: PodsConfig;
+  podfile?: Podfile;
   /**
    * Additional Plist values
    */
-  propertyList?: string[];
+  plist?: string[];
   /**
    * Signing configuration
    */
-  signing: IOSSigning;
+  signing?: IOSSigning;
   /**
    * App target devices
    */
-  targetedDevices: TargetedDevices;
+  targetedDevices?: TargetedDevices;
   /**
    * App version Info
    */
-  version: IOSVersion;
+  version?: IOSVersion;
 }
 
 export enum TargetedDevices {
@@ -75,51 +65,27 @@ export enum TargetedDevices {
   iPad = "iPad",
   Universal = "Universal",
 }
+
 export interface IOSVersion {
   /**
    * App version
    */
-  buildVersion: string | ((packageVersion: string) => string);
+  version: string;
   /**
    * App build number
    */
-  buildNumber: number;
-}
-export interface BridgingHeader {
-  /**
-   * Additional imports to bridging header
-   */
-  imports?: string[];
+  build: number;
 }
 
-export interface Pod {
+export interface Podfile {
   /**
-   * Pod name
+   * Additional podfile configuration
    */
-  name: string;
-  /**
-   * Pod source path if unpublished
-   */
-  source?: string;
-  /**
-   * Pod version
-   */
-  version?: string;
-}
-
-export interface PodsConfig {
-  /**
-   * Platform build target
-   */
-  minPlatformBuildTarget: string;
-  /**
-   * Minimum platform build target
-   */
-  minPodBuildTarget: string;
+  config?: string[];
   /**
    * Additional required Pods
    */
-  pods?: Pod[];
+  pods?: string[];
 }
 
 export interface IOSSigning {
@@ -164,11 +130,7 @@ export interface Android {
   /**
    * Gradle configuration
    */
-  gradle: Gradle;
-  /**
-   * MainApplication.java configuration
-   */
-  mainApplication?: MainApplication;
+  gradle?: Gradle;
   /**
    * AndroidManifest.xml configuration
    */
@@ -184,26 +146,25 @@ export interface Android {
   /**
    * App version
    */
-  version: AndroidVersion;
+  version?: AndroidVersion;
 }
 
 export interface AndroidVersion {
   /**
-   * App version name
+   * App version i.e. versionName
    */
-  versionName: string | ((packageVersion: string) => string);
+  version: string;
   /**
-   * App version
+   * App build i.e. versionCode
    */
-  versionCode: number;
+  build: number;
 }
 
 export interface AndroidSigning {
-  exportMethod?: string;
-  exportTeamId?: string;
   keyAlias?: string;
   storeFile?: string;
 }
+
 export interface AppGradle {
   /**
    * Additional dependencies for app/build.gradle
@@ -215,11 +176,11 @@ export interface ProjectGradle {
   /**
    * Android build tools version
    */
-  buildToolsVersion: string;
+  buildToolsVersion?: string;
   /**
    * Android compile SDK version
    */
-  compileSdkVersion: number;
+  compileSdkVersion?: number;
   /**
    * Kotlin version
    */
@@ -227,15 +188,15 @@ export interface ProjectGradle {
   /**
    * Min supported Android SDK
    */
-  minSdkVersion: number;
+  minSdkVersion?: number;
   /**
    * Specified NDK version
    */
-  ndkVersion: string;
+  ndkVersion?: string;
   /**
    * Additional repository search paths
    */
-  repositories: string[];
+  repositories?: string[];
   /**
    * Android support lib version
    */
@@ -243,23 +204,17 @@ export interface ProjectGradle {
   /**
    * Android target SDK version
    */
-  targetSdkVersion: number;
+  targetSdkVersion?: number;
   /**
    * Gradle wrapper version
    */
-  wrapperVersion: string;
+  wrapperVersion?: string;
+  /**
+   * Ext config
+   */
+  ext?: string;
 }
 
-export interface MainApplication {
-  /**
-   * Additional packages for MainApplication.java
-   */
-  additionalPackages?: string[];
-  /**
-   * Additional imports for MainApplication.java
-   */
-  additionalImports?: string[];
-}
 export interface Manifest {
   /**
    * Additional MainActivity attributes
@@ -269,7 +224,10 @@ export interface Manifest {
    * Additional Application attributes
    */
   applicationAttributes?: Record<string, string>;
-  urlSchemeHost?: string;
+  /**
+   * Url Scheme for intents
+   */
+  urlScheme?: UrlScheme;
   /**
    * Additional elements to add inside the <application> tag
    */
@@ -280,40 +238,36 @@ export interface Manifest {
   mainActivityElements?: string[];
 }
 
+export interface UrlScheme {
+  scheme: string;
+  host?: string;
+}
+
 export interface Gradle {
   /**
    * app/build.gradle config
    */
-  appGradle: AppGradle;
+  appGradle?: AppGradle;
   /**
    * Gradle wrapper distribution url
    */
-  distributionUrl: string;
+  distributionVersion?: string;
   /**
    * jvm args i.e. heap memory
    */
-  jvmArgs: string;
+  jvmArgs?: string;
   /**
    * build.gradle config
    */
-  projectGradle: ProjectGradle;
+  projectGradle?: ProjectGradle;
 }
 
-//NPM
-export interface NPMPackageConfig {
-  [key: string]: unknown;
-  dependencies?: Record<string, string>;
-  name: string;
-  version: string;
-}
-
-interface CoreConfig {
-  ios?: any;
-  android?: any;
+export interface PackageManager {
+  packageManager?: string;
 }
 
 interface Kernel<T> {
   kernel: T;
 }
 
-export type Plugin<T> = CoreConfig & Kernel<T>;
+export type Plugin<T> = Partial<Config> & Kernel<T>;

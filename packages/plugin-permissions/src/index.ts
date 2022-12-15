@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fsk, path } from "@brandingbrand/kernel-core";
 import { KernelPluginPermissions } from "./types";
 
 import * as utils from "./utils";
 
-const ios = async (config: KernelPluginPermissions) => {
+const ios = async (config: Config & KernelPluginPermissions) => {
   if (config.kernelPluginPermissions.kernel.ios) {
     await fsk.update(
       path.ios.podfilePath(),
@@ -14,7 +14,7 @@ const ios = async (config: KernelPluginPermissions) => {
     );
 
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(<plist[\s\S]+?<dict>)/,
       `$1\n${utils.ios.usageDescriptions(
         config.kernelPluginPermissions.kernel.ios

@@ -24,12 +24,13 @@ describe("plugin-firebase-app", () => {
       );
 
     await ios({
+      ios: { name: "HelloWorld" },
       firebaseApp: {
         ios: {
           googleServicesPath: "firebase/GoogleServices-Info.plist",
         },
       },
-    });
+    } as never);
 
     expect(
       (

@@ -1,23 +1,23 @@
-import { fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fsk, path } from "@brandingbrand/kernel-core";
 
 import { KernelPluginGoogleSignin } from "./types";
 
-const ios = async (config: KernelPluginGoogleSignin) => {
+const ios = async (config: Config & KernelPluginGoogleSignin) => {
   if (
     await fsk.doesKeywordExist(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       "CFBundleURLTypes"
     )
   ) {
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(CFBundleURLSchemes[\s\S]+?<array>)/,
       `$1
             <string>${config.kernelPluginGoogleSignin.kernel.ios.reversedClientId}</string>`
     );
   } else {
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(<plist[\s\S]+?<dict>)/,
       `$1
     <key>CFBundleURLTypes</key>
@@ -35,7 +35,7 @@ const ios = async (config: KernelPluginGoogleSignin) => {
   }
 
   await fsk.update(
-    path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+    path.ios.appDelegatePath(config),
     /(#import "AppDelegate.h")/,
     `$1
 #import <RNGoogleSignin/RNGoogleSignin.h>
@@ -43,7 +43,7 @@ const ios = async (config: KernelPluginGoogleSignin) => {
   );
 
   await fsk.update(
-    path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+    path.ios.appDelegatePath(config),
     /(if \(\[RCTLinkingManager[\s\S]+?})/,
     `$1
   if ([RNGoogleSignin application:application openURL:url options:options]) {

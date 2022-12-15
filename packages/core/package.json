@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
-    "postbuild": "cp -r src/template dist",
+    "postbuild": "cp -r src/template.ejs dist/template",
     "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "keywords": [],

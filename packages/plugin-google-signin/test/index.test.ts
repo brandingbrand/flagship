@@ -28,6 +28,7 @@ describe("plugin-google-signin", () => {
       );
 
     await ios({
+      ios: { name: "HelloWorld" },
       kernelPluginGoogleSignin: {
         kernel: {
           ios: {
@@ -36,7 +37,7 @@ describe("plugin-google-signin", () => {
           android: {},
         },
       },
-    });
+    } as never);
 
     expect(
       (

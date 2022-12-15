@@ -25,7 +25,7 @@ describe("path", () => {
   });
 
   it(`get info plist path`, () => {
-    expect(path.ios.infoPlistPath({ name: appName } as never)).toEqual(
+    expect(path.ios.infoPlistPath({ ios: { name: appName } } as never)).toEqual(
       nodePath.join(tempRootDir, `ios/${appName}/Info.plist`)
     );
   });
@@ -37,26 +37,30 @@ describe("path", () => {
   });
 
   it(`get pbxproj file path`, () => {
-    expect(path.ios.pbxprojFilePath({ name: appName } as never)).toEqual(
+    expect(
+      path.ios.pbxprojFilePath({ ios: { name: appName } } as never)
+    ).toEqual(
       nodePath.join(tempRootDir, `ios/${appName}.xcodeproj/project.pbxproj`)
     );
   });
 
   it(`get ios native project path`, () => {
-    expect(path.ios.nativeProjectPath({ name: appName } as never)).toEqual(
-      nodePath.join(tempRootDir, `ios/${appName}`)
-    );
+    expect(
+      path.ios.nativeProjectPath({ ios: { name: appName } } as never)
+    ).toEqual(nodePath.join(tempRootDir, `ios/${appName}`));
   });
 
   it(`get main activity path`, () => {
     expect(
       path.android.mainActivityPath({
-        name: appName,
+        android: {
+          packageName: "com.app",
+        },
       } as never)
     ).toEqual(
       nodePath.join(
         tempRootDir,
-        `android/app/src/main/java/com/brandingbrand/reactnative/and/mockapp/MainActivity.java`
+        `android/app/src/main/java/com/app/MainActivity.java`
       )
     );
   });
@@ -64,12 +68,14 @@ describe("path", () => {
   it(`get main application path`, () => {
     expect(
       path.android.mainApplicationPath({
-        name: appName,
+        android: {
+          packageName: "com.app",
+        },
       } as never)
     ).toEqual(
       nodePath.join(
         tempRootDir,
-        `android/app/src/main/java/com/brandingbrand/reactnative/and/mockapp/MainApplication.java`
+        `android/app/src/main/java/com/app/MainApplication.java`
       )
     );
   });
@@ -77,14 +83,11 @@ describe("path", () => {
   it(`get android native project path`, () => {
     expect(
       path.android.nativeProjectPath({
-        name: appName,
+        android: {
+          packageName: "com.app",
+        },
       } as never)
-    ).toEqual(
-      nodePath.join(
-        tempRootDir,
-        `android/app/src/main/java/com/brandingbrand/reactnative/and/mockapp`
-      )
-    );
+    ).toEqual(nodePath.join(tempRootDir, `android/app/src/main/java/com/app`));
   });
 
   it(`get app build.gradle path`, () => {
