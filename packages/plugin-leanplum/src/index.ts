@@ -1,13 +1,13 @@
 /* eslint-disable no-useless-escape */
 
-import { fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fsk, path } from "@brandingbrand/kernel-core";
 
 import type { KernelPluginLeanplum } from "./types";
 
-const ios = async (config: KernelPluginLeanplum) => {
+const ios = async (config: Config & KernelPluginLeanplum) => {
   if (!config.kernelPluginLeanplum?.kernel.ios?.swizzle) {
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(<plist[\s\S]+?<dict>)/,
       `$1
     <key>LeanplumSwizzlingEnabled</key>
@@ -15,14 +15,14 @@ const ios = async (config: KernelPluginLeanplum) => {
     );
 
     await fsk.update(
-      path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+      path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h")/,
       `$1
 "#import <Leanplum.h>"`
     );
 
     await fsk.update(
-      path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+      path.ios.appDelegatePath(config),
       /(@end)(?![\s\S]*\1)/g,
       `
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

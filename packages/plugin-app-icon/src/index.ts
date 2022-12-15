@@ -28,7 +28,7 @@ const ios = async () => {
       } as never);
 
       const outputFilePath = path.project.resolve(
-        path.ios.appIconSetPath({ name: "HelloWorld" } as any),
+        path.ios.appIconSetPath({ ios: { name: "HelloWorld" } } as any),
         outputFileName
       );
 
@@ -46,7 +46,7 @@ const ios = async () => {
 
   await fs.writeFile(
     path.project.resolve(
-      path.ios.appIconSetPath({ name: "HelloWorld" } as any),
+      path.ios.appIconSetPath({ ios: { name: "HelloWorld" } } as any),
       "Contents.json"
     ),
     JSON.stringify(contents, null, 2)

@@ -1,25 +1,25 @@
-import { fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fsk, path } from "@brandingbrand/kernel-core";
 
 import type { KernelPluginFBSDKNext } from "./types";
 
-const ios = async (config: KernelPluginFBSDKNext) => {
+const ios = async (config: Config & KernelPluginFBSDKNext) => {
   if (!config.kernelPluginFBSDKNext.kernel.ios) return;
 
   if (
     await fsk.doesKeywordExist(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       "CFBundleURLTypes"
     )
   ) {
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(CFBundleURLSchemes[\s\S]+?<array>)/,
       `$1
             <string>${config.kernelPluginFBSDKNext.kernel.ios?.urlScheme}</string>`
     );
   } else {
     await fsk.update(
-      path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+      path.ios.infoPlistPath(config),
       /(<plist[\s\S]+?<dict>)/,
       `$1
     <key>CFBundleURLTypes</key>
@@ -37,7 +37,7 @@ const ios = async (config: KernelPluginFBSDKNext) => {
   }
 
   await fsk.update(
-    path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+    path.ios.infoPlistPath(config),
     /(<plist[\s\S]+?<dict>)/,
     `$1
     <key>FacebookAppID</key>
@@ -51,12 +51,12 @@ const ios = async (config: KernelPluginFBSDKNext) => {
   if (config.kernelPluginFBSDKNext.kernel.ios?.queriesSchemes) {
     if (
       await fsk.doesKeywordExist(
-        path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+        path.ios.infoPlistPath(config),
         "LSApplicationQueriesSchemes"
       )
     ) {
       await fsk.update(
-        path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+        path.ios.infoPlistPath(config),
         /(LSApplicationQueriesSchemes[\s\S]+?<array>)/,
         `$1
         ${config.kernelPluginFBSDKNext.kernel.ios.queriesSchemes
@@ -67,7 +67,7 @@ const ios = async (config: KernelPluginFBSDKNext) => {
       );
     } else {
       await fsk.update(
-        path.ios.infoPlistPath({ name: "HelloWorld" } as any),
+        path.ios.infoPlistPath(config),
         /(<plist[\s\S]+?<dict>)/,
         `$1
     <key>LSApplicationQueriesSchemes</key>
@@ -83,14 +83,14 @@ const ios = async (config: KernelPluginFBSDKNext) => {
   }
 
   await fsk.update(
-    path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+    path.ios.appDelegatePath(config),
     /(#import "AppDelegate.h")/,
     `$1
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h>`
   );
 
   await fsk.update(
-    path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+    path.ios.appDelegatePath(config),
     /(if \(\[RCTLinkingManager[\s\S]+?})/,
     `$1
   if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url options:options]) {

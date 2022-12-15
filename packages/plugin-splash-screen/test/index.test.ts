@@ -39,7 +39,7 @@ describe("plugin-splash-screen", () => {
     await fs.remove(path.resolve(__dirname, "fixtures", "temp_mock_project"));
   });
   it("ios", async () => {
-    await ios();
+    await ios({ ios: { name: "HelloWorld" } } as never);
 
     expect(spy).toHaveBeenCalledWith({
       ios: { projectPath: pathk.project.resolve("ios", "HelloWorld") },
@@ -71,7 +71,7 @@ describe("plugin-splash-screen", () => {
       .spyOn(pathk.android, "mainActivityPath")
       .mockReturnValue(path.resolve(pathk.project.path(), "MainActivity.java"));
 
-    await android();
+    await android({ android: { packageName: "com.helloworld" } } as never);
 
     expect(spy).toHaveBeenCalledWith({
       ios: null,

@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { fs, fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
 
 import type { PluginFirebaseAppConfig } from "./types";
 
-const ios = async (config: PluginFirebaseAppConfig) => {
+const ios = async (config: Config & PluginFirebaseAppConfig) => {
   const { ios } = config.firebaseApp;
 
   if (ios) {
     await fs.copy(
       path.config.resolve("assets", ios.googleServicesPath),
       path.resolve(
-        path.ios.nativeProjectPath({ name: "HelloWorld" } as any),
+        path.ios.nativeProjectPath(config),
         "GoogleService-Info.plist"
       )
     );
 
     await fsk.update(
-      path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+      path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h)/,
       `$1
 #import <Firebase.h>`
     );
 
     await fsk.update(
-      path.ios.appDelegatePath({ name: "HelloWorld" } as any),
+      path.ios.appDelegatePath(config),
       /(didFinishLaunchingWithOptions[\s\S]+?{)/,
       `$1
   [FIRApp configure];`

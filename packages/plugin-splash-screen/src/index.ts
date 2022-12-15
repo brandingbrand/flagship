@@ -1,6 +1,6 @@
-import { fs, fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
 
-const ios = async () => {
+const ios = async (config: Config) => {
   const { iosSize = 212, backgroundColor = "#333132" } = {};
 
   const inputFile = path.project.resolve(
@@ -17,7 +17,7 @@ const ios = async () => {
   ));
 
   await generate({
-    ios: { projectPath: path.project.resolve("ios", "HelloWorld") },
+    ios: { projectPath: path.project.resolve("ios", config.ios.name) },
     android: null,
     workingPath: path.project.path(),
     logoPath: inputFile,
@@ -27,13 +27,13 @@ const ios = async () => {
   });
 
   await fs.move(
-    path.project.resolve("ios", "HelloWorld", "BootSplash.storyboard"),
-    path.project.resolve("ios", "HelloWorld", "LaunchScreen.storyboard"),
+    path.project.resolve("ios", config.ios.name, "BootSplash.storyboard"),
+    path.project.resolve("ios", config.ios.name, "LaunchScreen.storyboard"),
     { overwrite: true }
   );
 };
 
-const android = async () => {
+const android = async (config: Config) => {
   const { androidSize = 180, backgroundColor = "#333132" } = {};
 
   const inputFile = path.project.resolve(
@@ -81,9 +81,7 @@ const android = async () => {
   );
 
   await fsk.update(
-    path.android.mainActivityPath({
-      bundleIds: { android: "com.helloworld" },
-    } as never),
+    path.android.mainActivityPath(config),
     /(package[\s\S]+?;)/,
     `$1
 
@@ -93,9 +91,7 @@ import androidx.annotation.Nullable;
   );
 
   await fsk.update(
-    path.android.mainActivityPath({
-      bundleIds: { android: "com.helloworld" },
-    } as never),
+    path.android.mainActivityPath(config),
     /(public class[\s\S]+?{)/,
     `$1
     @Override

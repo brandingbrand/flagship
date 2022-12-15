@@ -28,6 +28,7 @@ describe("plugin-leanplum", () => {
       );
 
     await ios({
+      ios: { name: "HelloWorld" },
       kernelPluginLeanplum: {
         kernel: {
           ios: {
@@ -35,7 +36,7 @@ describe("plugin-leanplum", () => {
           },
         },
       },
-    });
+    } as never);
 
     expect(
       (

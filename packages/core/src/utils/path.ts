@@ -82,7 +82,7 @@ const getInfoPlistPath = (configuration: Config): string =>
  * @return The path
  */
 const getAppDelegatePath = (configuration: Config): string =>
-  resolvePathFromProject("ios", configuration.name, "AppDelegate.mm");
+  resolvePathFromProject("ios", configuration.ios.name, "AppDelegate.mm");
 
 /**
  * Returns the path to the Podfile.
@@ -100,7 +100,7 @@ const getPodfilePath = (): string => resolvePathFromProject("ios", "Podfile");
 const getPbxprojFilePath = (configuration: Config): string =>
   resolvePathFromProject(
     "ios",
-    `${configuration.name}.xcodeproj`,
+    `${configuration.ios.name}.xcodeproj`,
     "project.pbxproj"
   );
 
@@ -111,12 +111,12 @@ const getPbxprojFilePath = (configuration: Config): string =>
  * @return The path to the native project.
  */
 const getNativeProjectPathIOS = (configuration: Config): string =>
-  resolvePathFromProject("ios", configuration.name);
+  resolvePathFromProject("ios", configuration.ios.name);
 
 const getAppIconSetPath = (configuration: Config) =>
   resolvePathFromProject(
     "ios",
-    configuration.name,
+    configuration.ios.name,
     "Images.xcassets",
     "AppIcon.appiconset"
   );
@@ -168,10 +168,7 @@ const getManifestPath = (): string =>
  * @return The path to the native project.
  */
 const getNativeProjectPathAndriod = (configuration: Config): string => {
-  const pkgId =
-    configuration.bundleIds && configuration.bundleIds.android
-      ? configuration.bundleIds.android
-      : `com.brandingbrand.reactnative.and.${configuration.name}`;
+  const pkgId = configuration.android.packageName;
 
   return resolvePathFromProject(
     getMainPath(),

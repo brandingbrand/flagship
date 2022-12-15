@@ -27,6 +27,7 @@ describe("plugin-permissions", () => {
       );
 
     await ios({
+      ios: { name: "HelloWorld" },
       kernelPluginPermissions: {
         kernel: {
           ios: [
@@ -37,7 +38,7 @@ describe("plugin-permissions", () => {
           ],
         },
       },
-    });
+    } as never);
 
     expect(
       (
