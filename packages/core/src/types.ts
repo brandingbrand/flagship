@@ -1,6 +1,73 @@
-export interface CodepushConfig {
-  deploymentKey: string;
-  appKey: string;
+export interface Config {
+  android: Android;
+  envSwitcher?: EnvSwitcher;
+  ios: IOS;
+}
+
+export interface EnvSwitcher {
+  /** Array of environment names to hide from the Environment Switcher
+   *
+   * @example ['store']
+   */
+  hiddenEnvs?: string[];
+}
+
+//IOS
+export interface IOS {
+  /**
+   * Add Obj-c headers to bridge
+   */
+  bridgingHeader?: BridgingHeader;
+  /**
+   * Application Bundle ID
+   */
+  bundleId: string;
+  /**
+   * Application's display name
+   */
+  displayName: string;
+  /**
+   * File path to app entitlements
+   */
+  entitlementsFilePath?: string;
+  /**
+   * Network exception domains
+   */
+  exceptionDomains?: Array<
+    | string
+    | {
+        domain: string;
+        value: string;
+      }
+  >;
+  /**
+   * Additional frameworks to embed
+   */
+  frameworks?: FrameworksConfig[];
+  /**
+   * iOS compile version target
+   */
+  iosVersionTarget: string;
+  /**
+   * Additional Pods needed
+   */
+  podsConfig: PodsConfig;
+  /**
+   * Additional Plist values
+   */
+  propertyList?: string[];
+  /**
+   * Signing configuration
+   */
+  signing: IOSSigning;
+  /**
+   * App target devices
+   */
+  targetedDevices: TargetedDevices;
+  /**
+   * App version Info
+   */
+  version: IOSVersion;
 }
 
 export enum TargetedDevices {
@@ -8,231 +75,73 @@ export enum TargetedDevices {
   iPad = "iPad",
   Universal = "Universal",
 }
-
-export type IOSPermissionKeys =
-  | "APP_TRACKING_TRANSPARENCY"
-  | "BLUETOOTH_PERIPHERAL"
-  | "CALENDARS"
-  | "CAMERA"
-  | "CONTACTS"
-  | "FACE_ID"
-  | "LOCATION_ALWAYS"
-  | "LOCATION_WHEN_IN_USE"
-  | "MEDIA_LIBRARY"
-  | "MICROPHONE"
-  | "MOTION"
-  | "NOTIFICATIONS"
-  | "PHOTO_LIBRARY"
-  | "REMINDERS"
-  | "SIRI"
-  | "SPEECH_RECOGNITION"
-  | "STOREKIT";
-
-export type AndroidPermissionKeys =
-  | "ACCEPT_HANDOVER"
-  | "ACCESS_BACKGROUND_LOCATION"
-  | "ACCESS_COARSE_LOCATION"
-  | "ACCESS_FINE_LOCATION"
-  | "ACTIVITY_RECOGNITION"
-  | "ADD_VOICEMAIL"
-  | "ANSWER_PHONE_CALLS"
-  | "BODY_SENSORS"
-  | "CALL_PHONE"
-  | "CAMERA"
-  | "GET_ACCOUNTS"
-  | "PROCESS_OUTGOING_CALLS"
-  | "READ_CALENDAR"
-  | "READ_CALL_LOG"
-  | "READ_CONTACTS"
-  | "READ_EXTERNAL_STORAGE"
-  | "READ_PHONE_NUMBERS"
-  | "READ_PHONE_STATE"
-  | "READ_SMS"
-  | "RECEIVE_MMS"
-  | "RECEIVE_SMS"
-  | "RECEIVE_WAP_PUSH"
-  | "RECORD_AUDIO"
-  | "SEND_SMS"
-  | "USE_SIP"
-  | "WRITE_CALENDAR"
-  | "WRITE_CALL_LOG"
-  | "WRITE_CONTACTS"
-  | "WRITE_EXTERNAL_STORAGE";
-
-export interface UsageDescriptionIOS {
-  key: string;
-  string?: string;
-  array?: string[];
+export interface IOSVersion {
+  /**
+   * App version
+   */
+  buildVersion: string | ((packageVersion: string) => string);
+  /**
+   * App build number
+   */
+  buildNumber: number;
+}
+export interface BridgingHeader {
+  /**
+   * Additional imports to bridging header
+   */
+  imports?: string[];
 }
 
-export interface Config {
+export interface Pod {
+  /**
+   * Pod name
+   */
   name: string;
-  displayName: string;
-  associatedDomains: string[];
-  disableDevFeature?: boolean;
-  googleMapApiKey: string;
-
-  // TODO - unify with appCenter config
-  codepush?: {
-    appCenterToken: string;
-    android: CodepushConfig;
-    ios: CodepushConfig;
-  };
-
-  appCenter?: {
-    organization: string;
-    distribute?: {
-      appNameIOS?: string;
-      appNameAndroid?: string;
-    };
-  };
-
-  pushIcons?: {
-    android?: string;
-    ios?: string;
-  };
-  firebaseGoogleServices?: unknown;
-
-  zendeskChat?: {
-    accountKey: string;
-  };
-
-  firebase?: {
-    ios?: {
-      googleServicesPlistFile: string;
-    };
-    android?: {
-      googleServicesJsonFile: string;
-    };
-  };
-
-  exceptionDomains: Array<
-    | string
-    | {
-        domain: string;
-        value: string;
-      }
-  >;
-
-  buildConfig: {
-    android: {
-      exportMethod?: string;
-      exportTeamId?: string;
-      storeFile?: string;
-      keyAlias?: string;
-    };
-    ios: {
-      exportMethod?: string;
-      exportTeamId?: string;
-      provisioningProfileName: string;
-      appleCert?: string;
-      distCert?: string;
-      distP12?: string;
-      profilesDir?: string;
-    };
-  };
-
-  enabledCapabilitiesIOS?: string[];
-  entitlementsFileIOS?: string;
-  usageDescriptionIOS?: UsageDescriptionIOS[];
-
-  permissions?: {
-    ios?: { [k in IOSPermissionKeys]: string };
-    android?: AndroidPermissionKeys[];
-  };
-
-  UIBackgroundModes?: Array<{
-    string: string;
-  }>;
-
-  bundleIds: {
-    android: string;
-    ios: string;
-  };
-
-  appIconDir: {
-    android: string;
-    ios: string;
-  };
-
-  launchScreen: {
-    android: string;
-    ios: {
-      images: string;
-      xib?: string;
-      storyboard?: string;
-    };
-  };
-
-  urlScheme: string;
-
-  sentry: {
-    propertiesPath: string;
-  };
-
-  targetedDevices?: TargetedDevices;
-
   /**
-   * Array of environment names to hide from the Environment Switcher
-   *
-   * @example ['store']
+   * Pod source path if unpublished
    */
-  hiddenEnvs?: string[];
-
-  webPath?: string;
-  webTitle?: string;
-  webScriptInjectHeader?: string;
-  webScriptInjectFooter?: string;
-  android?: AndroidConfig;
-  ios?: IOSConfig;
-  adobeAnalytics?: {
-    ios: {
-      configPath: string;
-    };
-    android: {
-      configPath: string;
-    };
-  };
-}
-
-export interface AndroidBuildConfig {
-  additionalDependencies?: string[];
-  gifSupport?: boolean; // Defaults to true
-  webPSupport?: boolean; // Defaults to true
-  versionName?: string | ((packageVersion: string) => string);
-  versionShortCode?: string | ((packageVersion: string) => string);
-  versionCode?: string | ((packageVersion: string) => string);
-}
-
-export interface AndroidManifestConfig {
-  activityAttributes?: Record<string, string>;
-  additionalElements?: string[];
-  additionalPermissions?: string[];
-  applicationAttributes?: Record<string, string>;
-  urlSchemeHost?: string;
-}
-
-export interface AndroidConfig {
-  build?: AndroidBuildConfig;
-  manifest?: AndroidManifestConfig;
-}
-
-export interface IOSConfig {
-  pods?: PodsConfig;
-  buildVersion?: string;
+  source?: string;
   /**
-   * Add target extensions when initing.
-   * Requires additional provisioning profiles to be generated.
-   * Useful for Rich Push notifications or widgets.
+   * Pod version
    */
-  extensions?: IOSExtension[];
-  shortVersion?: string;
-  frameworks?: FrameworksConfig[];
+  version?: string;
 }
 
 export interface PodsConfig {
-  sources?: string[];
-  newPods?: string[];
+  /**
+   * Platform build target
+   */
+  minPlatformBuildTarget: string;
+  /**
+   * Minimum platform build target
+   */
+  minPodBuildTarget: string;
+  /**
+   * Additional required Pods
+   */
+  pods?: Pod[];
+}
+
+export interface IOSSigning {
+  /**
+   * Paths to certificates
+   */
+  appleCert?: string;
+  distCert?: string;
+  distP12?: string;
+  /**
+   * Export Method
+   */
+  exportMethod?: string;
+  /**
+   * Development team id.
+   */
+  exportTeamId: string;
+  profilesDir: string;
+  /**
+   * Provisioning profile name
+   */
+  provisioningProfileName: string;
 }
 
 export interface FrameworksConfig {
@@ -246,60 +155,156 @@ export interface FrameworksConfig {
   frameworkPath?: string;
 }
 
+// ANDROID
+export interface Android {
+  /**
+   * Android app display name
+   */
+  displayName: string;
+  /**
+   * Gradle configuration
+   */
+  gradle: Gradle;
+  /**
+   * MainApplication.java configuration
+   */
+  mainApplication?: MainApplication;
+  /**
+   * AndroidManifest.xml configuration
+   */
+  manifest?: Manifest;
+  /**
+   * App package name
+   */
+  packageName: string;
+  /**
+   * signing config
+   */
+  signing?: AndroidSigning;
+  /**
+   * App version
+   */
+  version: AndroidVersion;
+}
+
+export interface AndroidVersion {
+  /**
+   * App version name
+   */
+  versionName: string | ((packageVersion: string) => string);
+  /**
+   * App version
+   */
+  versionCode: number;
+}
+
+export interface AndroidSigning {
+  exportMethod?: string;
+  exportTeamId?: string;
+  keyAlias?: string;
+  storeFile?: string;
+}
+export interface AppGradle {
+  /**
+   * Additional dependencies for app/build.gradle
+   */
+  dependencies?: string[];
+}
+
+export interface ProjectGradle {
+  /**
+   * Android build tools version
+   */
+  buildToolsVersion: string;
+  /**
+   * Android compile SDK version
+   */
+  compileSdkVersion: number;
+  /**
+   * Kotlin version
+   */
+  kotlinVersion?: string;
+  /**
+   * Min supported Android SDK
+   */
+  minSdkVersion: number;
+  /**
+   * Specified NDK version
+   */
+  ndkVersion: string;
+  /**
+   * Additional repository search paths
+   */
+  repositories: string[];
+  /**
+   * Android support lib version
+   */
+  supportLibVersion?: string;
+  /**
+   * Android target SDK version
+   */
+  targetSdkVersion: number;
+  /**
+   * Gradle wrapper version
+   */
+  wrapperVersion: string;
+}
+
+export interface MainApplication {
+  /**
+   * Additional packages for MainApplication.java
+   */
+  additionalPackages?: string[];
+  /**
+   * Additional imports for MainApplication.java
+   */
+  additionalImports?: string[];
+}
+export interface Manifest {
+  /**
+   * Additional MainActivity attributes
+   */
+  activityAttributes?: Record<string, string>;
+  /**
+   * Additional Application attributes
+   */
+  applicationAttributes?: Record<string, string>;
+  urlSchemeHost?: string;
+  /**
+   * Additional elements to add inside the <application> tag
+   */
+  applicationElements?: string[];
+  /**
+   * Additional elements to add inside the main <activity> tag
+   */
+  mainActivityElements?: string[];
+}
+
+export interface Gradle {
+  /**
+   * app/build.gradle config
+   */
+  appGradle: AppGradle;
+  /**
+   * Gradle wrapper distribution url
+   */
+  distributionUrl: string;
+  /**
+   * jvm args i.e. heap memory
+   */
+  jvmArgs: string;
+  /**
+   * build.gradle config
+   */
+  projectGradle: ProjectGradle;
+}
+
+//NPM
 export interface NPMPackageConfig {
+  [key: string]: unknown;
+  dependencies?: Record<string, string>;
   name: string;
   version: string;
-  dependencies?: Record<string, string>;
-  [key: string]: unknown;
-}
-
-export interface IOSExtension {
-  /**
-   * Provisioning profile of the target extension
-   * ex: Flagship Project Extension
-   */
-  provisioningProfileName: string;
-  /**
-   * Bundle id for target extension
-   * ex: com.company.project.extension
-   */
-  bundleExtensionId: string;
-  /**
-   * Path from project root source
-   */
-  extensionPath: string;
-  /**
-   * Display name of target extension
-   */
-  displayName?: string;
-  /**
-   * PList file name in extension folder
-   * Extension-Info.plist
-   */
-  plistName?: string;
-  /**
-   * Entitlements file name in extension folder
-   */
-  entitlements: string;
-  /**
-   * Additional occurrences where text needs to be replaced on init
-   * Ex: Set a PList attribute
-   */
-  additionalFiles?: FindReplaceFile[];
-  /**
-   * Path to frameworks that need to be copied into target
-   * Needed for Widgets of apps using frameworks
-   */
-  frameworks?: string[];
-}
-
-export interface FindReplaceFile {
-  oldText: string;
-  newText: string;
-  /**
-   * Path to files relative to ios root
-   */
-  paths: string[];
 }
 
 interface CoreConfig {
