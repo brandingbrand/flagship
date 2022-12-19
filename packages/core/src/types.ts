@@ -199,21 +199,21 @@ export interface ProjectGradle {
    */
   repositories?: string[];
   /**
-   * Android support lib version
-   */
-  supportLibVersion?: string;
-  /**
    * Android target SDK version
    */
   targetSdkVersion?: number;
   /**
-   * Gradle wrapper version
-   */
-  wrapperVersion?: string;
-  /**
    * Ext config
    */
-  ext?: string;
+  ext?: string[];
+  /**
+   * Dependencies
+   */
+  dependencies?: string[];
+  /**
+   * Build repositories
+   */
+  buildRepositories?: string[];
 }
 
 export interface Manifest {

@@ -22,6 +22,11 @@ const prod: Config & KernelPluginPermissions = {
     name: 'HelloWorld',
     displayName: 'Hello World',
     packageName: 'com.helloworld',
+    manifest: {
+      urlScheme: {
+        scheme: "kernel"
+      }
+    }
   },
   kernelPluginPermissions: {
     kernel: {
