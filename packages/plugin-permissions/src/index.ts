@@ -9,7 +9,7 @@ const ios = async (config: Config & KernelPluginPermissions) => {
   if (config.kernelPluginPermissions.kernel.ios) {
     await fsk.update(
       path.ios.podfilePath(),
-      /(target 'HelloWorld' do)/,
+      /(target[\s\S]+?do)/,
       `$1\n${utils.ios.pods(config.kernelPluginPermissions.kernel.ios)}`
     );
 

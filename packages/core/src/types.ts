@@ -61,9 +61,9 @@ export interface IOS {
 }
 
 export enum TargetedDevices {
-  iPhone = "iPhone",
-  iPad = "iPad",
-  Universal = "Universal",
+  iPhone = "1",
+  iPad = "2",
+  Universal = "1,2",
 }
 
 export interface IOSVersion {

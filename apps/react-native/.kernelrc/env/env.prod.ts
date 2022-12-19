@@ -3,13 +3,14 @@ import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permiss
 
 const prod: Config & KernelPluginPermissions = {
   ios: {
-    name: 'HelloWorld',
-    bundleId: 'com.helloworld',
-    displayName: 'Hello World',
+    name: 'kernel',
+    bundleId: 'com.kernel',
+    displayName: 'Kernel',
   },
   android: {
-    displayName: 'Hello World',
-    packageName: 'com.helloworld',
+    name: 'kernel',
+    packageName: 'com.kernel',
+    displayName: 'Kernel',
   },
   kernelPluginPermissions: {
     kernel: {
