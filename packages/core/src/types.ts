@@ -23,13 +23,10 @@ export interface IOS {
   /**
    * Network exception domains
    */
-  exceptionDomains?: Array<
-    | string
-    | {
-        domain: string;
-        value: string;
-      }
-  >;
+  exceptionDomains?: Array<{
+    key: string;
+    value: Array<{ key: string; value: string | boolean }>;
+  }>;
   /**
    * Additional frameworks to embed
    */
@@ -57,7 +54,7 @@ export interface IOS {
   /**
    * App version Info
    */
-  version?: IOSVersion;
+  versioning?: IOSVersion;
 }
 
 export enum TargetedDevices {
@@ -124,6 +121,10 @@ export interface FrameworksConfig {
 // ANDROID
 export interface Android {
   /**
+   * Application source code name
+   */
+  name: string;
+  /**
    * Android app display name
    */
   displayName: string;
@@ -146,7 +147,7 @@ export interface Android {
   /**
    * App version
    */
-  version?: AndroidVersion;
+  versioning?: AndroidVersion;
 }
 
 export interface AndroidVersion {

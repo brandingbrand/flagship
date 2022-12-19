@@ -1,16 +1,27 @@
-import {Config} from '@brandingbrand/kernel-core';
+import {Config, TargetedDevices} from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
 
 const prod: Config & KernelPluginPermissions = {
   ios: {
-    name: 'kernel',
-    bundleId: 'com.kernel',
-    displayName: 'Kernel',
+    name: 'HelloWorld',
+    bundleId: 'com.helloworld',
+    displayName: 'Hello World',
+    exceptionDomains: [
+      {
+        key: 'localhost',
+        value: [
+          {
+            key: 'NSExceptionAllowsInsecureHTTPLoads',
+            value: true,
+          },
+        ],
+      },
+    ],
   },
   android: {
-    name: 'kernel',
-    packageName: 'com.kernel',
-    displayName: 'Kernel',
+    name: 'HelloWorld',
+    displayName: 'Hello World',
+    packageName: 'com.helloworld',
   },
   kernelPluginPermissions: {
     kernel: {
