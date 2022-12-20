@@ -1,8 +1,25 @@
 import React from 'react';
 
+import type { ViewStyle } from 'react-native';
 import { Pagination } from 'react-native-snap-carousel';
 
-export const CarouselPagination = React.memo((props: any) => {
+export interface PaginationProps {
+  dotColor: string;
+  inactiveDotColor: string;
+  dotSpacing: number;
+  dotSize: number;
+  inactiveDotOpacity: number;
+  inactiveDotScale: number;
+  position: string;
+  positionOffset: number;
+}
+export interface CarouselPaginationProps {
+  activeIndex: number;
+  containerStyle?: ViewStyle;
+  items: any;
+  pagination?: PaginationProps;
+}
+export const CarouselPagination = React.memo((props: CarouselPaginationProps) => {
   const { activeIndex, containerStyle, items, pagination } = props;
   if (!pagination || !items?.length) {
     return <></>;
@@ -18,7 +35,9 @@ export const CarouselPagination = React.memo((props: any) => {
     positionOffset,
   } = pagination;
 
-  const containerOffset = -(containerStyle?.paddingLeft ?? 0 + containerStyle?.marginLeft ?? 0);
+  const containerOffset = -(
+    Number(containerStyle?.paddingLeft ?? 0) + Number(containerStyle?.marginLeft ?? 0)
+  );
   const defaultPosition = position === 'default' ? 0 : -dotSize;
   const paginationContainerStyle = {
     paddingVertical: 10,

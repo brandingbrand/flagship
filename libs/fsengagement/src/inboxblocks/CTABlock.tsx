@@ -40,6 +40,7 @@ export interface CTABlockProps extends EmitterProps {
   action: string;
   text: string;
   icon?: Icon;
+  isReel?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
@@ -49,7 +50,7 @@ export interface CTABlockProps extends EmitterProps {
   localization?: LocalizationData[];
 }
 export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
-  const { buttonStyle, containerStyle, icon, localization, textStyle } = props;
+  const { buttonStyle, containerStyle, icon, isReel = false, localization, textStyle } = props;
   let { text } = props;
 
   const { cardPosition, handleAction, language } = React.useContext(EngagementContext);
@@ -118,7 +119,12 @@ export const CTABlock: React.FC<CTABlockProps> = React.memo((props) => {
 
   return (
     <View style={[styles.buttonContainer, containerStyle]}>
-      <TouchableOpacity style={buttonStyle} onPress={onButtonPress} activeOpacity={1}>
+      <TouchableOpacity
+        disabled={isReel}
+        style={buttonStyle}
+        onPress={onButtonPress}
+        activeOpacity={1}
+      >
         <View style={styles.buttonContents}>
           <Text style={textStyle}>{text}</Text>
           {icon && (

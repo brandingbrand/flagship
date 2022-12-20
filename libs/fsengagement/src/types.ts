@@ -61,6 +61,8 @@ export interface HTML {
   title: JSON;
 }
 
+export type DynamicData = Record<string, any>;
+
 export interface JSON extends EmitterProps {
   isBlog?: boolean;
   backArrow?: StyleProp<ImageStyle>;

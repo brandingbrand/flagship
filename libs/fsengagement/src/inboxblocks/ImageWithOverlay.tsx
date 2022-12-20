@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/filename-case -- Matches our naming scheme for components */
+/* eslint-disable max-statements */
 import React, { Component, useContext } from 'react';
 
 import type {
@@ -18,7 +18,26 @@ import type { EngContext } from '../lib/contexts';
 import { EngagementContext } from '../lib/contexts';
 import type { BlockItem } from '../types';
 
-import { FlexAlign, FlexMap } from './ImageBlock';
+import type { FlexAlign, FlexMap } from './ImageBlock';
+import type { VideoSource } from './VideoBlock';
+
+export interface TextBelowOptions {
+  padding?: number;
+  backgroundColor?: string;
+}
+export interface VideoCloseIcon {
+  position: 'center' | 'left' | 'none' | 'right';
+  color: 'dark' | 'light';
+}
+export interface TextBelowImage {
+  enabled: boolean;
+  options?: TextBelowOptions;
+  items: BlockItem[];
+}
+export interface VideoModalSource {
+  source: VideoSource;
+  closeIcon?: VideoCloseIcon;
+}
 
 export interface ImageBlockProps {
   source: ImageURISource;
@@ -30,7 +49,12 @@ export interface ImageBlockProps {
   containerStyle?: ViewStyle;
   outerContainerStyle?: ViewStyle;
   textOverlay?: any;
+  textBelowImage?: TextBelowImage;
   link?: string;
+  isReel?: boolean;
+  video?: VideoModalSource;
+  openModal?: (video: VideoModalSource) => void;
+  borderRadius?: number;
   parentWidth?: number;
   cardContainerStyle?: ViewStyle;
   fixedWidth?: number;
@@ -119,21 +143,21 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
     if (ratio !== undefined) {
       result.height = result.width / Number.parseFloat(ratio);
     }
-    console.log('overlay result', result);
     return result;
   };
 
-  private readonly onPress = (link: string) => () => {
+  private readonly onPress = (link?: VideoModalSource | string) => () => {
     const { handleAction } = this.props.context;
-    if (handleAction) {
+    if (typeof link === 'string' && handleAction) {
       handleAction({
         type: 'deep-link',
         value: link,
       });
+    } else if (typeof link !== 'string' && this.props.openModal && link?.source?.src) {
+      this.props.openModal(link);
     }
   };
 
-  // eslint-disable-next-line max-statements
   private renderItem(item: BlockItem): React.ReactElement | null {
     const { private_blocks, private_type, ...restProps } = item;
 
@@ -216,13 +240,17 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
       return null;
     }
 
+    const isReelProps = {
+      isReel: Boolean(this.props.isReel),
+    };
+
     const component = layoutComponents[private_type];
     if (!component) {
       return null;
     }
     return React.createElement(
       component,
-      { ...restProps, ...parentWidthStyle },
+      { ...restProps, ...parentWidthStyle, ...isReelProps },
       private_blocks?.map(this.renderItem)
     );
   }
@@ -254,6 +282,8 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
       source,
       textOverlay,
       link,
+      video,
+      borderRadius = 0,
     } = this.props;
     if (!source) {
       return <View />;
@@ -306,13 +336,14 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
         innerTextContainer.width = '100%';
       }
     }
-    if (link) {
+    if (link || video) {
       return (
-        <TouchableOpacity activeOpacity={1} onPress={this.onPress(link)}>
+        <TouchableOpacity activeOpacity={1} onPress={this.onPress(link ?? video)}>
           <View onLayout={this._onLayout} style={containerStyle}>
             <ImageBackground
               source={source}
               style={[{ height: 200 }, imageStyle, imageRatioStyle]}
+              imageStyle={{ borderRadius }}
               resizeMode={resizeMode}
               resizeMethod={resizeMethod}
             >
@@ -338,6 +369,7 @@ class ImageWithOverlay extends Component<ContextProps & ImageBlockProps, FlexSty
         <ImageBackground
           source={source}
           style={[{ height: 200 }, imageStyle, imageRatioStyle]}
+          imageStyle={{ borderRadius }}
           resizeMode={resizeMode}
           resizeMethod={resizeMethod}
         >
