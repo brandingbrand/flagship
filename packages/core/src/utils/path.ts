@@ -67,6 +67,14 @@ const resolvePathFromProject = (...paths: string[]): string =>
 const getPackagePath = () => resolvePathFromProject("package.json");
 
 /**
+ * Resolves a path to the package.json
+ *
+ * @returns A path to the package.json relative to project path
+ */
+const getPathToPlugin = (pluginName: string) =>
+  path.resolve.apply(__dirname, ["..", "..", "packages", pluginName]);
+
+/**
  * Returns the path to the iOS Info.plist for the project.
  *
  * @param configuration The project configuration.
@@ -83,6 +91,13 @@ const getInfoPlistPath = (configuration: Config): string =>
  */
 const getAppDelegatePath = (configuration: Config): string =>
   resolvePathFromProject("ios", configuration.ios.name, "AppDelegate.mm");
+
+/**
+ * Returns the path to iOS directory.
+ *
+ * @return The path
+ */
+const getRootDirPathIOS = (): string => resolvePathFromProject("ios");
 
 /**
  * Returns the path to the Podfile.
@@ -140,6 +155,13 @@ const getMainActivityPath = (configuration: Config): string =>
     getNativeProjectPathAndriod(configuration),
     "MainActivity.java"
   );
+
+/**
+ * Returns the path to iOS directory.
+ *
+ * @return The path
+ */
+const getRootDirPathAndroid = (): string => resolvePathFromProject("android");
 
 /**
  * Returns the path to MainApplication.java
@@ -297,6 +319,7 @@ export const project = {
   path: getPathToProject,
   resolve: resolvePathFromProject,
   packagePath: getPackagePath,
+  pluginPath: getPathToPlugin,
 };
 
 export const config = {
@@ -314,6 +337,7 @@ export const ios = {
   podfilePath: getPodfilePath,
   pbxprojFilePath: getPbxprojFilePath,
   nativeProjectPath: getNativeProjectPathIOS,
+  rootDirPath: getRootDirPathIOS,
   appIconSetPath: getAppIconSetPath,
 };
 
@@ -328,6 +352,7 @@ export const android = {
   debugPath: getDebugPath,
   assetsPath: getAssetsPath,
   resourcesPath: getResourcesPath,
+  rootDirPath: getRootDirPathAndroid,
   stringsPath: getStringsPath,
   stylesPath: getStylesPath,
   fastfilePath: getFastfilePathAndroid,
