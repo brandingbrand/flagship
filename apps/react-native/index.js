@@ -2,7 +2,7 @@ import React from 'react';
 import {FSAppBeta} from '@brandingbrand/fsapp';
 import {initializeReactLinker} from '@brandingbrand/react-linker';
 
-import App from './App';
+import App from './src/screens/App';
 
 initializeReactLinker(React);
 

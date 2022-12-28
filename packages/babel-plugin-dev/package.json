@@ -1,0 +1,26 @@
+{
+  "name": "@brandingbrand/kernel-babel-plugin-dev",
+  "version": "0.0.1",
+  "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
+    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@brandingbrand/kernel-core": "*"
+  }
+}
