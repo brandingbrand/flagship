@@ -71,4 +71,6 @@ const android = async (config: KernelPluginLeanplum) => {
   );
 };
 
+export * from "./types";
+
 export { ios, android };

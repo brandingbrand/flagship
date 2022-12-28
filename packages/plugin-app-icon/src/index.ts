@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import sharp from "sharp";
-import { Config, fs, logger, path } from "@brandingbrand/kernel-core";
+import { fs, logger, path } from "@brandingbrand/kernel-core";
+import type { Config } from "@brandingbrand/kernel-core";
 
 import { icons, rules } from "./utils";
+import type { KernelPluginAppIcon } from "./types";
 
-const ios = async (config: Config) => {
+const ios = async (config: Config & KernelPluginAppIcon) => {
+  const { appIconPath = "./assets/app-icon" } =
+    config.kernelPluginAppIcon?.kernel ?? {};
+
   const contents = { images: [] };
 
   for (const i of icons.ios) {
     const inputFile = path.project.resolve(
-      path.config.assetsPath(),
-      "app-icon",
+      path.config.resolve(appIconPath),
       i.inputFile
     );
 
@@ -50,11 +54,13 @@ const ios = async (config: Config) => {
   );
 };
 
-const android = async () => {
+const android = async (config: Config & KernelPluginAppIcon) => {
+  const { appIconPath = "./assets/app-icon" } =
+    config.kernelPluginAppIcon?.kernel ?? {};
+
   for (const i of icons.android) {
     const inputFilePath = path.project.resolve(
-      path.config.assetsPath(),
-      "app-icon",
+      path.config.resolve(appIconPath),
       i.inputFile
     );
     const inputFile = await (async function () {
@@ -118,5 +124,7 @@ const android = async () => {
 `
   );
 };
+
+export * from "./types";
 
 export { ios, android };

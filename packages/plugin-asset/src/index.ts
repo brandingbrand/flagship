@@ -1,7 +1,10 @@
 import { path } from "@brandingbrand/kernel-core";
 
-const ios = async () => {
-  const { iosAssets = ["./assets/fonts"] } = {};
+import type { KernelPluginAsset } from "./types";
+
+const ios = async (config: KernelPluginAsset) => {
+  const { assetPath = ["./assets/fonts"] } =
+    config.kernelPluginAsset?.kernel ?? {};
 
   const linkAsssets = require(path.project.resolve(
     "node_modules",
@@ -15,7 +18,7 @@ const ios = async () => {
     platforms: {
       ios: {
         enabled: true,
-        assets: iosAssets.map((it) => path.config.resolve(it)),
+        assets: assetPath.map((it) => path.config.resolve(it)),
       },
       android: {
         enabled: false,
@@ -25,8 +28,9 @@ const ios = async () => {
   });
 };
 
-const android = async () => {
-  const { androidAssets = ["./assets/fonts"] } = {};
+const android = async (config: KernelPluginAsset) => {
+  const { assetPath = ["./assets/fonts"] } =
+    config.kernelPluginAsset?.kernel ?? {};
 
   const linkAsssets = require(path.project.resolve(
     "node_modules",
@@ -44,10 +48,12 @@ const android = async () => {
       },
       android: {
         enabled: true,
-        assets: androidAssets.map((it) => path.config.resolve(it)),
+        assets: assetPath.map((it) => path.config.resolve(it)),
       },
     },
   });
 };
+
+export * from "./types";
 
 export { ios, android };

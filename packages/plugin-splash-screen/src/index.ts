@@ -1,13 +1,16 @@
-import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
+import type { Config } from "@brandingbrand/kernel-core";
+import { fs, fsk, path } from "@brandingbrand/kernel-core";
 
-const ios = async (config: Config) => {
-  const { iosSize = 212, backgroundColor = "#333132" } = {};
+import type { KernelPluginSplashScreen } from "./types";
 
-  const inputFile = path.project.resolve(
-    path.config.assetsPath(),
-    "splash-screen",
-    "logo.png"
-  );
+const ios = async (config: Config & KernelPluginSplashScreen) => {
+  const {
+    logoPath = "./assets/splash-screen/logo.png",
+    iosSize = 212,
+    backgroundColor = "#333132",
+  } = config.kernelPluginSplashScreen?.kernel ?? {};
+
+  const inputFile = path.config.resolve(logoPath);
   const { generate } = require(path.project.resolve(
     "node_modules",
     "react-native-bootsplash",
@@ -33,14 +36,14 @@ const ios = async (config: Config) => {
   );
 };
 
-const android = async (config: Config) => {
-  const { androidSize = 180, backgroundColor = "#333132" } = {};
+const android = async (config: Config & KernelPluginSplashScreen) => {
+  const {
+    logoPath = "./assets/splash-screen/logo.png",
+    androidSize = 180,
+    backgroundColor = "#333132",
+  } = {};
 
-  const inputFile = path.project.resolve(
-    path.config.assetsPath(),
-    "splash-screen",
-    "logo.png"
-  );
+  const inputFile = path.config.resolve(logoPath);
   const { generate } = require(path.project.resolve(
     "node_modules",
     "react-native-bootsplash",

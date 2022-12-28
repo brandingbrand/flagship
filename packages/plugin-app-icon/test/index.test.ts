@@ -90,7 +90,7 @@ describe("plugin-app-icon", () => {
       .spyOn(pathk.android, "resourcesPath")
       .mockReturnValue(pathk.project.path());
 
-    await android();
+    await android({} as never);
 
     expect(
       await fs.pathExists(
