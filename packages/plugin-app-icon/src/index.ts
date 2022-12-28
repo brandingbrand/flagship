@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import sharp from "sharp";
-import { fs, logger, path } from "@brandingbrand/kernel-core";
+import { Config, fs, logger, path } from "@brandingbrand/kernel-core";
 
 import { icons, rules } from "./utils";
 
-const ios = async () => {
+const ios = async (config: Config) => {
   const contents = { images: [] };
 
   for (const i of icons.ios) {
@@ -28,7 +28,7 @@ const ios = async () => {
       } as never);
 
       const outputFilePath = path.project.resolve(
-        path.ios.appIconSetPath({ ios: { name: "HelloWorld" } } as any),
+        path.ios.appIconSetPath(config),
         outputFileName
       );
 
@@ -45,10 +45,7 @@ const ios = async () => {
   }
 
   await fs.writeFile(
-    path.project.resolve(
-      path.ios.appIconSetPath({ ios: { name: "HelloWorld" } } as any),
-      "Contents.json"
-    ),
+    path.project.resolve(path.ios.appIconSetPath(config), "Contents.json"),
     JSON.stringify(contents, null, 2)
   );
 };

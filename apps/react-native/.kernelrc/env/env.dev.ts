@@ -8,6 +8,7 @@ const dev: Config & KernelPluginPermissions = {
     displayName: 'Hello World',
   },
   android: {
+    name: 'HelloWorld',
     displayName: 'Hello World',
     packageName: 'com.helloworld',
   },

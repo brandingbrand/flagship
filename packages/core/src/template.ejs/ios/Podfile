@@ -1,10 +1,17 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '<%- ios.deploymentTarget || 12.4 %>'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'HelloWorld' do
+<% ios.podfile?.config?.forEach(function(it) { %>
+<%- it %>
+<% }) %>
+
+target '<%= ios.name %>' do
+  <% ios.podfile?.pods?.forEach(function(it) { %>
+  <%- it %>
+  <% }) %>
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -26,7 +33,7 @@ target 'HelloWorld' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'HelloWorldTests' do
+  target '<%= ios.name %>Tests' do
     inherit! :complete
     # Pods for testing
   end

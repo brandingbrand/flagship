@@ -23,13 +23,10 @@ export interface IOS {
   /**
    * Network exception domains
    */
-  exceptionDomains?: Array<
-    | string
-    | {
-        domain: string;
-        value: string;
-      }
-  >;
+  exceptionDomains?: Array<{
+    key: string;
+    value: Array<{ key: string; value: string | boolean }>;
+  }>;
   /**
    * Additional frameworks to embed
    */
@@ -57,13 +54,13 @@ export interface IOS {
   /**
    * App version Info
    */
-  version?: IOSVersion;
+  versioning?: IOSVersion;
 }
 
 export enum TargetedDevices {
-  iPhone = "iPhone",
-  iPad = "iPad",
-  Universal = "Universal",
+  iPhone = "1",
+  iPad = "2",
+  Universal = "1,2",
 }
 
 export interface IOSVersion {
@@ -124,6 +121,10 @@ export interface FrameworksConfig {
 // ANDROID
 export interface Android {
   /**
+   * Application source code name
+   */
+  name: string;
+  /**
    * Android app display name
    */
   displayName: string;
@@ -146,7 +147,7 @@ export interface Android {
   /**
    * App version
    */
-  version?: AndroidVersion;
+  versioning?: AndroidVersion;
 }
 
 export interface AndroidVersion {
@@ -198,21 +199,21 @@ export interface ProjectGradle {
    */
   repositories?: string[];
   /**
-   * Android support lib version
-   */
-  supportLibVersion?: string;
-  /**
    * Android target SDK version
    */
   targetSdkVersion?: number;
   /**
-   * Gradle wrapper version
-   */
-  wrapperVersion?: string;
-  /**
    * Ext config
    */
-  ext?: string;
+  ext?: string[];
+  /**
+   * Dependencies
+   */
+  dependencies?: string[];
+  /**
+   * Build repositories
+   */
+  buildRepositories?: string[];
 }
 
 export interface Manifest {
