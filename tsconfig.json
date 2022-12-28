@@ -8,6 +8,9 @@
       "@brandingbrand/kernel-core": [
         "./packages/core/src/index.ts"
       ],
+      "@brandingbrand/kernel-component-dev": [
+        "./packages/component-dev/src/index.tsx"
+      ],
       "@brandingbrand/kernel-plugin-app-icon": [
         "./packages/plugin-app-icon/src/index.ts"
       ],
