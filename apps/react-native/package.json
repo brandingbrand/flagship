@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.19.4",
     "@babel/runtime": "^7.12.5",
     "@brandingbrand/kernel-cli": "*",
+    "@brandingbrand/kernel-component-dev": "*",
     "@brandingbrand/kernel-plugin-app-icon": "*",
     "@brandingbrand/kernel-plugin-asset": "*",
     "@brandingbrand/kernel-plugin-native-navigation": "*",
@@ -53,6 +54,7 @@
   "resolutions": {
     "metro-config": "0.72.3",
     "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-native": "0.70.6",
     "react-native-navigation": "^7.30.2"
   },

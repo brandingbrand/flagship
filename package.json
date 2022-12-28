@@ -15,6 +15,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.25.2",
     "@tsconfig/node16": "^1.0.3",
+    "@tsconfig/react-native": "^2.0.3",
     "@types/jest": "^29.2.2",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
@@ -35,9 +36,9 @@
   "resolutions": {
     "metro-config": "0.72.3",
     "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-native": "0.70.6",
     "react-native-navigation": "^7.30.2"
-
   },
   "eslintConfig": {
     "extends": [
@@ -70,10 +71,10 @@
       "pre-commit": "lint-staged"
     }
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*", "apps/*"],
+    "nohoist": ["**/react", "**/react/**"]
+  },
   "jest": {
     "preset": "ts-jest"
   }

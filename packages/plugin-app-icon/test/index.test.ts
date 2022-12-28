@@ -61,7 +61,7 @@ describe("plugin-app-icon", () => {
       .spyOn(pathk.ios, "appIconSetPath")
       .mockReturnValue(pathk.project.resolve("AppIcon.appiconset"));
 
-    await ios();
+    await ios({ ios: { name: "HelloWorld" } } as never);
 
     expect(
       await fs.pathExists(
