@@ -1,5 +1,5 @@
 import path from "path";
-import { path as pathk } from "@brandingbrand/kernel-core";
+import { fs, path as pathk } from "@brandingbrand/kernel-core";
 
 import { ios, android } from "../src";
 
@@ -9,17 +9,7 @@ jest.mock("glob", () => ({
   sync: () => [""],
 }));
 
-jest.mock("@brandingbrand/kernel-core", () => {
-  const core = jest.requireActual("@brandingbrand/kernel-core");
-
-  return {
-    ...core,
-    fs: {
-      ...core.fs,
-      chmod: jest.fn().mockResolvedValue(undefined),
-    },
-  };
-});
+jest.spyOn(fs, "chmod").mockResolvedValue(undefined);
 
 jest.mock("../src/utils/dependencies");
 
@@ -32,8 +22,11 @@ describe("plugin-native-navigation", () => {
         "autolink",
         "postlink",
         "postLinkIOS.js"
-      )
+      ),
+      () => jest.fn().mockResolvedValue(undefined)
     );
+
+    await ios();
 
     const postLinkIOS = require(pathk.project.resolve(
       "node_modules",
@@ -42,8 +35,6 @@ describe("plugin-native-navigation", () => {
       "postlink",
       "postLinkIOS.js"
     ));
-
-    await ios();
 
     expect(postLinkIOS).toBeCalled();
   });
@@ -56,8 +47,11 @@ describe("plugin-native-navigation", () => {
         "autolink",
         "postlink",
         "postLinkAndroid.js"
-      )
+      ),
+      () => jest.fn().mockResolvedValue(undefined)
     );
+
+    await android();
 
     const postLinkAndroid = require(pathk.project.resolve(
       "node_modules",
@@ -66,8 +60,6 @@ describe("plugin-native-navigation", () => {
       "postlink",
       "postLinkAndroid.js"
     ));
-
-    await android();
 
     expect(postLinkAndroid).toBeCalled();
   });
