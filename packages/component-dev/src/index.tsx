@@ -1,10 +1,3 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import Dev from './components/Dev';
 
-export default () => {
-  return (
-    <View>
-      <Text>dev</Text>
-    </View>
-  );
-};
+export default Dev;

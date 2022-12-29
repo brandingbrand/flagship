@@ -20,7 +20,6 @@ import {
   View,
 } from 'react-native';
 import {PERMISSIONS, request} from 'react-native-permissions';
-import Dev from '@brandingbrand/kernel-component-dev';
 
 import {
   Colors,
@@ -85,7 +84,6 @@ const App = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
-        <Dev />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
-  },
+  }
 });
 
 export default App;
