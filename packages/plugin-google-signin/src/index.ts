@@ -74,4 +74,6 @@ const android = async (config: KernelPluginGoogleSignin) => {
   );
 };
 
+export * from "./types";
+
 export { ios, android };

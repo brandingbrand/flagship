@@ -155,3 +155,5 @@ const android = async (config: KernelPluginFBSDKNext) => {
 };
 
 export { ios, android };
+
+export * from "./types";
