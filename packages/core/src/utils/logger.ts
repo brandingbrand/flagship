@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export const colors = {
   Reset: "\u001B[0m",
   Bright: "\u001B[1m",
@@ -75,4 +76,21 @@ const logWithType = (type: string, args: string[]): void => {
     default:
       throw new Error("expect 1st argument to be error, info or warn");
   }
+};
+
+export const log = (fn: Function, info: string) => {
+  return new Proxy(fn, {
+    apply: async (target, thisArg, args) => {
+      logInfo("=============================");
+      logInfo(info);
+      logInfo(thisArg);
+      logInfo(args as never);
+      logInfo("=============================");
+      try {
+        await target.apply(thisArg, args);
+      } catch (e: any) {
+        logError(e);
+      }
+    },
+  });
 };

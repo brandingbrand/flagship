@@ -2,7 +2,7 @@ import fs from "fs-extra";
 
 import { logger, path } from "../../../utils";
 
-export const execute = async (options: any, config: any) => {
+export const execute = logger.log(async (options: any, config: any) => {
   let envMatch = /env.\w+.js/;
   if (options.release) {
     envMatch = new RegExp(`env\\.${options.env}\\.js`);
@@ -31,4 +31,4 @@ export const execute = async (options: any, config: any) => {
     path.app.resolve("src/project_env_index.js"),
     envIndexFile
   );
-};
+}, "executors.init.pre.env :: creates env index and writes it to fsapp dist dir");
