@@ -1,4 +1,4 @@
-package com.helloworld;
+package <%- android.packageName %>;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

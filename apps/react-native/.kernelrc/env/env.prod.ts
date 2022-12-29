@@ -3,9 +3,9 @@ import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permiss
 
 const prod: Config & KernelPluginPermissions = {
   ios: {
-    name: 'HelloWorld',
-    bundleId: 'com.helloworld',
-    displayName: 'Hello World',
+    name: 'kernel',
+    bundleId: 'com.kerenl',
+    displayName: 'Kernel',
     exceptionDomains: [
       {
         key: 'localhost',
@@ -19,14 +19,14 @@ const prod: Config & KernelPluginPermissions = {
     ],
   },
   android: {
-    name: 'HelloWorld',
-    displayName: 'Hello World',
-    packageName: 'com.helloworld',
+    name: 'kernel',
+    displayName: 'Kernel',
+    packageName: 'com.kernel',
     manifest: {
       urlScheme: {
-        scheme: "kernel"
-      }
-    }
+        scheme: 'kernel',
+      },
+    },
   },
   kernelPluginPermissions: {
     kernel: {
