@@ -20,6 +20,11 @@ const prod: Config & KernelPluginPermissions = {
     signing: {
       distCertType: 'iPhone Distribution',
     },
+    frameworks: [
+      {
+        framework: 'SpriteKit.framework',
+      },
+    ],
   },
   android: {
     name: 'kernel',
