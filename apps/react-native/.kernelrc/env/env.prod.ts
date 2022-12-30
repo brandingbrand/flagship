@@ -17,6 +17,9 @@ const prod: Config & KernelPluginPermissions = {
         ],
       },
     ],
+    signing: {
+      distCertType: 'iPhone Distribution',
+    },
   },
   android: {
     name: 'kernel',
