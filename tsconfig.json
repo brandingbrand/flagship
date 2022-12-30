@@ -29,9 +29,6 @@
       "@brandingbrand/kernel-plugin-firebase-app": [
         "./packages/plugin-firebase-app/src/index.ts"
       ],
-      "@brandingbrand/kernel-plugin-firebase-auth": [
-        "./packages/plugin-firebase-auth/src/index.ts"
-      ],
       "@brandingbrand/kernel-plugin-google-signin": [
         "./packages/plugin-google-signin/src/index.ts"
       ],
