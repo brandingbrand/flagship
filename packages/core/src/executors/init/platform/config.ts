@@ -1,3 +1,5 @@
+import xcode from "xcode";
+
 import type { Config } from "../../../types";
 import { fs, path, rename } from "../../../utils";
 
@@ -13,6 +15,32 @@ export const execute = (options: any, config: Config) => {
             `${config.ios.name}.entitlements`
           )
         );
+      }
+
+      if (config.ios.frameworks) {
+        const projectPath = path.ios.pbxprojFilePath(config);
+        const project = xcode.project(projectPath);
+        project.parseSync();
+
+        for (const framework of config.ios.frameworks) {
+          if (framework.path) {
+            const source = path.config.resolve(
+              framework.path,
+              framework.framework
+            );
+            const destination = path.resolve(
+              path.ios.nativeProjectPath(config),
+              framework.framework
+            );
+            fs.copySync(source, destination);
+
+            project.addFramework(destination, { customFramework: true });
+          } else {
+            project.addFramework(framework.framework, {});
+          }
+        }
+
+        fs.writeFileSync(projectPath, project.writeSync());
       }
     },
     android: async () => {

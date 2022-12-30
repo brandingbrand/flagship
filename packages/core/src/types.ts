@@ -120,7 +120,7 @@ export interface FrameworksConfig {
   /**
    * iOS Framework directory path from project root source
    */
-  frameworkPath?: string;
+  path?: string;
 }
 
 // ANDROID
