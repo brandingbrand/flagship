@@ -92,6 +92,11 @@ export interface IOSSigning {
   appleCert?: string;
   distCert?: string;
   distP12?: string;
+  distCertType?:
+    | "iPhone Development"
+    | "iPhone Distribution"
+    | "Apple Development"
+    | "Apple Distribution";
   /**
    * Export Method
    */
@@ -99,12 +104,12 @@ export interface IOSSigning {
   /**
    * Development team id.
    */
-  exportTeamId: string;
-  profilesDir: string;
+  exportTeamId?: string;
+  profilesDir?: string;
   /**
    * Provisioning profile name
    */
-  provisioningProfileName: string;
+  provisioningProfileName?: string;
 }
 
 export interface FrameworksConfig {
