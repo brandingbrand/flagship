@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-splash-screen",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "publishConfig": {
     "access": "public"
