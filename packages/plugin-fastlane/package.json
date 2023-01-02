@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
+    "postbuild": "cp -r src/fastlane.template dist/fastlane.template",
     "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "keywords": [],

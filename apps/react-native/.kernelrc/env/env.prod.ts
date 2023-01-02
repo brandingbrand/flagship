@@ -24,6 +24,10 @@ const prod: Config &
     },
     signing: {
       distCertType: 'iPhone Distribution',
+      exportTeamId: "762H5V79XV",
+      exportMethod: "test",
+      provisioningProfileName: "Test Provisioning Profile",
+      profilesDir: "./xx"
     },
     frameworks: [
       {
@@ -35,6 +39,10 @@ const prod: Config &
     name: 'kernel',
     displayName: 'Kernel',
     packageName: 'com.kernel',
+    versioning: {
+      version: '0.0.1',
+      build: 1,
+    },
     manifest: {
       urlScheme: {
         scheme: 'kernel',

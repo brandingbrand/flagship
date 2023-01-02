@@ -15,7 +15,8 @@ const initFastFile = async (
 ) => {
   const templateDir = path.resolve(
     path.project.pluginPath("plugin-fastlane"),
-    "template",
+    "src",
+    "fastlane.template",
     pathConfig.platform,
     "fastlane"
   );
