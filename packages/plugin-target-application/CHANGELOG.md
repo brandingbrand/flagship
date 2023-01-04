@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-target-application
 
+## 0.0.2
+
+### Patch Changes
+
+- 90aaec0b9: implementation fixes
+- Updated dependencies [90aaec0b9]
+  - @brandingbrand/kernel-core@0.0.2
+
 ## 0.0.1
 
 ### Patch Changes
