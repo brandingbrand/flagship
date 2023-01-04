@@ -272,8 +272,14 @@ export interface PackageManager {
   packageManager?: string;
 }
 
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
 interface Kernel<T> {
   kernel: T;
 }
 
-export type Plugin<T> = Partial<Config> & Kernel<T>;
+export type Plugin<T> = DeepPartial<Config> & Kernel<T>;

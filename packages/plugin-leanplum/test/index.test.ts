@@ -62,7 +62,13 @@ describe("plugin-leanplum", () => {
         path.resolve(__dirname, "__leanplum_fixtures", "build.gradle")
       );
 
-    await android({});
+    jest
+      .spyOn(path.android, "mainApplicationPath")
+      .mockReturnValue(
+        path.resolve(__dirname, "__leanplum_fixtures", "MainApplication.java")
+      );
+
+    await android({ android: { packageName: "com.helloworld" } } as never);
 
     expect(
       (
@@ -70,7 +76,7 @@ describe("plugin-leanplum", () => {
           path.resolve(__dirname, "__leanplum_fixtures", "build.gradle")
         )
       ).toString()
-    ).toMatch("implementation 'com.leanplum:leanplum-fcm:5.3.3'");
+    ).toMatch("implementation 'com.leanplum:leanplum-fcm:5.7.0'");
 
     expect(
       (

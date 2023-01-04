@@ -25,9 +25,11 @@ describe("plugin-firebase-app", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      firebaseApp: {
-        ios: {
-          googleServicesPath: "firebase/GoogleServices-Info.plist",
+      kernelPluginFirebaseApp: {
+        kernel: {
+          ios: {
+            googleServicesPath: "firebase/GoogleServices-Info.plist",
+          },
         },
       },
     } as never);
@@ -65,11 +67,13 @@ describe("plugin-firebase-app", () => {
       );
 
     await android({
-      firebaseApp: {
-        android: {
-          firebaseBomVersion: "31.0.0",
-          googleServicesVersion: "4.3.1",
-          googleServicesPath: "firebase/google-services.json",
+      kernelPluginFirebaseApp: {
+        kernel: {
+          android: {
+            firebaseBomVersion: "31.0.0",
+            googleServicesVersion: "4.3.1",
+            googleServicesPath: "firebase/google-services.json",
+          },
         },
       },
     });
