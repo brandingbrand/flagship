@@ -2,10 +2,10 @@
 
 import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
 
-import type { PluginFirebaseAppConfig } from "./types";
+import type { KernelPluginFirebaseApp } from "./types";
 
-const ios = async (config: Config & PluginFirebaseAppConfig) => {
-  const { ios } = config.firebaseApp;
+const ios = async (config: Config & KernelPluginFirebaseApp) => {
+  const { ios } = config.kernelPluginFirebaseApp?.kernel ?? {};
 
   if (ios) {
     await fs.copy(
@@ -18,7 +18,7 @@ const ios = async (config: Config & PluginFirebaseAppConfig) => {
 
     await fsk.update(
       path.ios.appDelegatePath(config),
-      /(#import "AppDelegate.h)/,
+      /(#import "AppDelegate.h")/,
       `$1
 #import <Firebase.h>`
     );
@@ -32,8 +32,8 @@ const ios = async (config: Config & PluginFirebaseAppConfig) => {
   }
 };
 
-const android = async (config: PluginFirebaseAppConfig) => {
-  const { android } = config.firebaseApp;
+const android = async (config: KernelPluginFirebaseApp) => {
+  const { android } = config.kernelPluginFirebaseApp?.kernel ?? {};
 
   if (android) {
     await fs.copy(

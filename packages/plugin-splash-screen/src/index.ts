@@ -106,4 +106,6 @@ import androidx.annotation.Nullable;
   );
 };
 
+export * from "./types";
+
 export { ios, android };

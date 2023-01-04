@@ -86,14 +86,14 @@ const ios = async (config: Config & KernelPluginFBSDKNext) => {
     path.ios.appDelegatePath(config),
     /(#import "AppDelegate.h")/,
     `$1
-#import <FBSDKCoreKit/FBSDKCoreKit-swift.h>`
+#import <FBSDKCoreKit/FBSDKCoreKit.h>`
   );
 
   await fsk.update(
     path.ios.appDelegatePath(config),
     /(if \(\[RCTLinkingManager[\s\S]+?})/,
     `$1
-  if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url options:options]) {
+  if ([[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]) {
     return YES;
   }`
   );

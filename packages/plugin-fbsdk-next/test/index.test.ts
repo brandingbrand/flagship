@@ -60,7 +60,7 @@ describe("plugin-fbsdk-next", () => {
     expect(infoPlist).toMatch("<string>fbapp</string>");
     expect(infoPlist).toMatch("<string>fbapp-sharing</string>");
     expect(appDelegate).toMatch(
-      "[[FBSDKApplicationDelegate sharedInstance] application:app openURL:url options:options]"
+      "[[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]"
     );
   });
 

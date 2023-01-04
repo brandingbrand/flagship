@@ -18,7 +18,7 @@ const ios = async (config: Config & KernelPluginLeanplum) => {
       path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h")/,
       `$1
-"#import <Leanplum.h>"`
+#import <Leanplum.h>`
     );
 
     await fsk.update(
@@ -41,33 +41,42 @@ const ios = async (config: Config & KernelPluginLeanplum) => {
     [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
-{
-    [Leanplum didReceiveNotificationResponse:response];
-    completionHandler();
-}
-
--(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
-{
-    [Leanplum willPresentNotification:notification];
-    completionHandler(UNNotificationPresentationOptionNone);
-}
-
 $1`
     );
   }
 };
 
-const android = async (config: KernelPluginLeanplum) => {
+const android = async (config: Config & KernelPluginLeanplum) => {
   const version =
-    config.kernelPluginLeanplum?.kernel.android?.leanplumFCMVersion || "5.3.3";
+    config.kernelPluginLeanplum?.kernel.android?.leanplumFCMVersion || "5.7.0";
 
   await fsk.update(
     path.android.gradlePath(),
     /(dependencies {)/,
     `$1
       implementation 'com.leanplum:leanplum-fcm:${version}'
-      implementation 'com.google.firebase:firebase-messaging'`
+      implementation 'com.google.firebase:firebase-messaging'
+      implementation 'com.google.firebase:firebase-iid:21.1.0'`
+  );
+
+  await fsk.update(
+    path.android.mainApplicationPath(config),
+    /(^package [\s\S]+?;)/,
+    `$1
+
+import com.leanplum.Leanplum;
+import com.leanplum.annotations.Parser;
+import com.leanplum.LeanplumActivityHelper;`
+  );
+
+  await fsk.update(
+    path.android.mainApplicationPath(config),
+    /(super\.onCreate\(\);)/,
+    `$1
+    Leanplum.setApplicationContext(this);
+    Parser.parseVariables(this);
+    LeanplumActivityHelper.enableLifecycleCallbacks(this);
+`
   );
 };
 
