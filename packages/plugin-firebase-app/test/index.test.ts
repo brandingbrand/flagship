@@ -1,3 +1,4 @@
+import xcode from "xcode";
 import { fs, path } from "@brandingbrand/kernel-core";
 
 import { ios, android } from "../src";
@@ -22,6 +23,29 @@ describe("plugin-firebase-app", () => {
       .mockReturnValue(
         path.resolve(__dirname, "__firebase_app_fixtures", "AppDelegate.mm")
       );
+
+    jest
+      .spyOn(path.ios, "pbxprojFilePath")
+      .mockReturnValue(
+        path.resolve(__dirname, "__firebase_app_fixtures", "project.pbxproj")
+      );
+
+    jest.spyOn(xcode, "project").mockImplementation(() => {
+      return {
+        addResourceFile: jest.fn(),
+        parseSync: jest.fn(),
+        writeSync: () => "",
+        hash: {
+          project: {
+            objects: {
+              PBXGroup: {
+                "13B07FAE1A68108700A75B9A": { name: "helloworld" },
+              },
+            },
+          },
+        },
+      } as never;
+    });
 
     await ios({
       ios: { name: "HelloWorld" },

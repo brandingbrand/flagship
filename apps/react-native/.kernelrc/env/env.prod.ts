@@ -1,4 +1,4 @@
-import {Config, TargetedDevices} from '@brandingbrand/kernel-core';
+import {Config} from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
 
 const prod: Config & KernelPluginPermissions = {

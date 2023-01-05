@@ -28,7 +28,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*"
+    "@brandingbrand/kernel-core": "*",
+    "xcode": "^3.0.1"
   },
   "peerDependencies": {
     "@react-native-firebase/app": "^14.12.0"

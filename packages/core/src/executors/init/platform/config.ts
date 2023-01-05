@@ -40,7 +40,7 @@ export const execute = (options: any, config: Config) => {
           }
         }
 
-        fs.writeFileSync(projectPath, project.writeSync());
+        await fs.writeFile(projectPath, project.writeSync());
       }
     },
     android: async () => {
