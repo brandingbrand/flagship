@@ -27,8 +27,8 @@ const initFastFile = async (
   }
 
   await fs.copyFile(
-    path.resolve(templateDir, "PluginFile"),
-    path.resolve(targetDir, "PluginFile")
+    path.resolve(templateDir, "Pluginfile"),
+    path.resolve(targetDir, "Pluginfile")
   );
 
   const templateContent = await fs.readFile(
