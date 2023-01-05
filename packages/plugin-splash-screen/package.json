@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*",
+    "@brandingbrand/kernel-core": "^0.0.2",
     "react-native-bootsplash": "^4.3.3"
   }
 }

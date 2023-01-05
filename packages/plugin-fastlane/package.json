@@ -28,6 +28,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*"
+    "@brandingbrand/kernel-core": "^0.0.2"
   }
 }

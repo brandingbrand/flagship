@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*",
+    "@brandingbrand/kernel-core": "^0.0.2",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
