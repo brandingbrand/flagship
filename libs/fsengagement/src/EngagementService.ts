@@ -236,7 +236,7 @@ export class EngagementService {
 
     const lastEngagementFetch = await AsyncStorage.getItem('LAST_ENGAGEMENT_FETCH');
     return this.networkClient
-      .post(`/PublishedMessages/getInboxForProfile/${this.profileId}`, JSON.stringify(attributes))
+      .post(`/App/${this.appId}/fetchInbox/${this.profileId}`, JSON.stringify(attributes))
       .then((r: any) => r.data)
       .then((list: any) =>
         list.map((data: any) => ({
