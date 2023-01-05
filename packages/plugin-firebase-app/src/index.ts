@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import xcode from "xcode";
 import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
 
 import type { KernelPluginFirebaseApp } from "./types";
@@ -15,6 +14,18 @@ const ios = async (config: Config & KernelPluginFirebaseApp) => {
         "GoogleService-Info.plist"
       )
     );
+
+    const projectPath = path.ios.pbxprojFilePath(config);
+    const project = xcode.project(projectPath);
+    project.parseSync();
+    project.addResourceFile(
+      `${config.ios.name}/GoogleService-Info.plist`,
+      {},
+      Object.entries(project.hash.project.objects.PBXGroup)?.find(
+        ([, value]) => value.name === config.ios.name
+      )?.[0] ?? ""
+    );
+    await fs.writeFile(projectPath, project.writeSync());
 
     await fsk.update(
       path.ios.appDelegatePath(config),
