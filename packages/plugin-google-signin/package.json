@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-google-signin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,9 +28,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*"
+    "@brandingbrand/kernel-core": "^0.0.3"
   },
   "peerDependencies": {
-    "@brandingbrand/kernel-plugin-firebase-app": "*"
+    "@brandingbrand/kernel-plugin-firebase-app": "^0.0.3"
   }
 }

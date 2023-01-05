@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -33,7 +33,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "*",
+    "@brandingbrand/kernel-core": "^0.0.3",
     "commander": "^9.4.1"
   },
   "devDependencies": {
