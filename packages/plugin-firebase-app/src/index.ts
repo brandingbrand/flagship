@@ -20,7 +20,12 @@ const ios = async (config: Config & KernelPluginFirebaseApp) => {
     project.parseSync();
     project.addResourceFile(
       `${config.ios.name}/GoogleService-Info.plist`,
-      {},
+      {
+        target:
+          Object.entries(project.hash.project.objects.PBXNativeTarget)?.find(
+            ([, value]) => value.name === config.ios.name
+          )?.[0] ?? "",
+      },
       Object.entries(project.hash.project.objects.PBXGroup)?.find(
         ([, value]) => value.name === config.ios.name
       )?.[0] ?? ""
