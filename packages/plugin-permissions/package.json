@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-permissions",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.3",
+    "@brandingbrand/kernel-core": "^0.0.4",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
