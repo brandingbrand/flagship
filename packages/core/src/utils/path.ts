@@ -1,6 +1,6 @@
 import path from "path";
 
-import type { Config } from "../types";
+import type { Config } from "../types/types";
 
 let _pathToProject: string;
 let _pathToApp: string;

@@ -28,7 +28,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.4",
+    "@brandingbrand/kernel-core": "^0.0.4"
+  },
+  "devDependencies": {
     "xcode": "^3.0.1"
   },
   "peerDependencies": {
