@@ -29,6 +29,7 @@
     "@babel/runtime": "^7.12.5",
     "@brandingbrand/kernel-cli": "*",
     "@brandingbrand/kernel-component-dev": "*",
+    "@brandingbrand/kernel-plugin-env": "*",
     "@brandingbrand/kernel-plugin-app-icon": "*",
     "@brandingbrand/kernel-plugin-asset": "*",
     "@brandingbrand/kernel-plugin-native-navigation": "*",
@@ -113,6 +114,7 @@
   "kernel": {
     "plugins": [
       "@brandingbrand/kernel-plugin-asset",
+      "@brandingbrand/kernel-plugin-env",
       "@brandingbrand/kernel-plugin-permissions",
       "@brandingbrand/kernel-plugin-native-navigation",
       "@brandingbrand/kernel-plugin-app-icon",
