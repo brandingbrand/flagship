@@ -18,6 +18,7 @@ export type RequiredTitle = string | (OptionsTopBarTitle & { text: string });
 
 export interface HistoryOptions {
   basename?: string;
+  location?: Partial<Location>;
 }
 
 export interface FSRouterHistory extends History {

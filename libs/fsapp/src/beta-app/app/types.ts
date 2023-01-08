@@ -29,7 +29,6 @@ export interface AppConfig<
 > {
   readonly version: string;
   readonly root?: Element | string;
-  readonly serverSide?: true;
   /**
    * Only affects Web.
    *
@@ -68,10 +67,7 @@ export interface IApp {
   readonly engagement?: EngagementUtilities;
   openUrl: (url: string) => void;
   startApplication: () => Promise<void>;
-  stopApplication: () => Promise<void>;
-  updateProfile: (attributeObj: Record<string, AttributeValue>) => Promise<boolean>;
-  getProfile: (accountId?: string) => Promise<string | undefined>;
-  updateAccountId: (accountId: string) => Promise<void>;
+  stopApplication: () => void;
 }
 
 export interface AppConstructor<T extends IApp = IApp> {
@@ -85,4 +81,9 @@ export interface AppConstructor<T extends IApp = IApp> {
     engagement?: EngagementUtilities
   ): T;
   bootstrap: (options: AppConfig) => Promise<T>;
+}
+
+export interface AppServerElements {
+  element: JSX.Element;
+  getStyleElement: (props: unknown) => React.ReactElement;
 }

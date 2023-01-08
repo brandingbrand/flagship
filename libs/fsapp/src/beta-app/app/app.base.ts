@@ -12,7 +12,10 @@ import { InjectionToken, Injector } from '@brandingbrand/fslinker';
 import { FSNetwork } from '@brandingbrand/fsnetwork';
 
 import { boundMethod } from 'autobind-decorator';
+import type { Location } from 'history';
+import type ReactDOMServer from 'react-dom/server';
 import type { Action, Store } from 'redux';
+import { BehaviorSubject, filter, lastValueFrom, take } from 'rxjs';
 
 import type { GenericState } from '../legacy/store';
 import { StoreManager } from '../legacy/store';
@@ -29,7 +32,7 @@ import {
   REDUX_STORE_TOKEN,
 } from './context';
 import { makeScreenWrapper } from './screen.wrapper';
-import type { AppConfig, AppConstructor, AttributeValue, IApp } from './types';
+import type { AppConfig, AppConstructor, AppServerElements, AttributeValue, IApp } from './types';
 import { getVersion } from './utils';
 
 export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN');
@@ -49,9 +52,7 @@ export abstract class FSAppBase implements IApp {
     const { engagement, remote, state } = config;
     const api = remote ? new FSNetwork(remote) : undefined;
     const storeManager = state ? new StoreManager(state) : undefined;
-    const store = !config.serverSide
-      ? await storeManager?.getReduxStore(await storeManager.updatedInitialState())
-      : undefined;
+    const store = await storeManager?.getReduxStore(await storeManager.updatedInitialState());
     const cargoHold = config.cargoHold ? initializeCargoHold(config.cargoHold) : undefined;
 
     // eslint-disable-next-line prefer-const
@@ -78,10 +79,9 @@ export abstract class FSAppBase implements IApp {
       store as S extends GenericState ? (A extends Action ? Store<S, A> : undefined) : undefined,
       engagement
     );
-    if (!config.serverSide) {
-      await app.startApplication();
-      await app.getProfile();
-    }
+
+    await app.startApplication();
+    await app.getProfile();
     return app;
   }
 
@@ -106,6 +106,20 @@ export abstract class FSAppBase implements IApp {
   }
 
   public readonly routes: Routes = this.router.routes;
+  private readonly isStable = new BehaviorSubject(false);
+
+  protected markStable(): void {
+    this.isStable.next(true);
+  }
+
+  public async stable(): Promise<boolean> {
+    return lastValueFrom(
+      this.isStable.pipe(
+        filter((stable) => stable),
+        take(1)
+      )
+    );
+  }
 
   @boundMethod
   public async openUrl(url: string): Promise<void> {
@@ -140,6 +154,20 @@ export abstract class FSAppBase implements IApp {
     // TODO: implement api route to update user account
   }
 
+  public async fork(location: Partial<Location>, onDestroy: () => void): Promise<this> {
+    return (this.constructor as unknown as AppConstructor<this>).bootstrap({
+      ...this.config,
+      router: {
+        ...this.config.router,
+        location,
+      },
+      onDestroy,
+    });
+  }
+
   public abstract startApplication(): Promise<void>;
-  public abstract stopApplication(): Promise<void>;
+  public abstract stopApplication(): void;
+
+  public abstract getApplication(): AppServerElements;
+  public abstract getReactServerDom(): typeof ReactDOMServer;
 }

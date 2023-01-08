@@ -12,7 +12,7 @@ import type {
 import type { Analytics } from '@brandingbrand/fsengage';
 import type FSNetwork from '@brandingbrand/fsnetwork';
 
-import type { LocationDescriptorObject } from 'history';
+import type { Location, LocationDescriptorObject } from 'history';
 import type { ParsedQs } from 'qs';
 
 import type { ShellConfig } from '../shell.web';
@@ -225,6 +225,13 @@ export interface RouterConfig {
   readonly externalRoutes?: ExternalRouteFactory;
   readonly loading?: JSX.Element;
   readonly basename?: string;
+
+  /**
+   * Used for initial location to load durning ssr
+   *
+   * @platform server
+   */
+  readonly location?: Partial<Location>;
 }
 
 export interface InternalRouterConfig {

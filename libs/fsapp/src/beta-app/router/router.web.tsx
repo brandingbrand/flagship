@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import { useRef } from 'react';
 import React, {
   Fragment,
   useCallback,
@@ -43,15 +42,12 @@ import type {
   RedirectRoute,
   Route,
   RouterConfig,
+  ScreenComponentType,
 } from './types';
 import { Routes } from './types';
 import { guardRoute, trackView } from './utils';
 
 export { NAVIGATOR_TOKEN } from './context/navigator.context';
-
-interface ScreenMixinProps {
-  route: Route;
-}
 
 interface ScreenMixinProps {
   route: Route;
@@ -144,21 +140,21 @@ const Switch: FC = ({ children }) => {
 
 const Guarded: FC<ScreenMixinProps> = ({ children, id, route }) => {
   const { data, loading, ...activatedRoute } = useActivatedRoute();
-  const [show, setShow] = useState(false);
+  const [shouldShow, setShouldShow] = useState(() => !('canActivate' in route));
   const runGuard = useContext(GuardContext);
 
   useLayoutEffect(() => {
-    let mounted = true;
+    let isMounted = true;
     runGuard(id, route, async () => guardRoute(route, activatedRoute))
       .then((allowed) => {
-        if (mounted) {
-          setShow(allowed);
+        if (isMounted) {
+          setShouldShow(allowed);
         }
       })
       .catch(noop);
 
     return () => {
-      mounted = false;
+      isMounted = false;
     };
   }, [
     activatedRoute.params,
@@ -170,7 +166,7 @@ const Guarded: FC<ScreenMixinProps> = ({ children, id, route }) => {
     id,
   ]);
 
-  return show ? <React.Fragment>{children}</React.Fragment> : null;
+  return shouldShow ? <React.Fragment>{children}</React.Fragment> : null;
 };
 
 interface RedirectProps {
@@ -211,7 +207,7 @@ const Redirect: FC<RedirectProps> = ({ id, route }) => {
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: InternalRouterConfig & RouterConfig) {
-    super(routes, new History(routes, { basename: options.basename }));
+    super(routes, new History(routes, { basename: options.basename, location: options.location }));
     Injector.provide({ provide: WEB_SHELL_CONTEXT_TOKEN, useValue: WebShellContext });
     this.registerRoutes();
   }
@@ -256,31 +252,29 @@ export class FSRouter extends FSRouterBase {
     }, [path, route.exact, routeDetails, filteredRoute$]);
 
     if ('loadComponent' in route || 'component' in route) {
-      const LazyComponent = useMemo(
-        () =>
-          lazyComponent<{ componentId: string }>(
-            async () => {
-              const AwaitedComponent =
-                'loadComponent' in route
-                  ? await route.loadComponent(filteredRoute)
-                  : route.component;
+      const LazyComponent = useMemo(() => {
+        const makeTrackedComponent = (
+          Component: ScreenComponentType
+        ): React.FC<{ componentId: string }> =>
+          React.memo(({ componentId }) => {
+            const internalFilterRoute = useObservableState(filteredRoute$, defaultActivatedRoute);
 
-              return React.memo(({ componentId }) => {
-                const internalFilterRoute = useObservableState(
-                  filteredRoute$,
-                  defaultActivatedRoute
-                );
-                useEffect(() => {
-                  trackView(this.options.analytics, route, internalFilterRoute);
-                }, [internalFilterRoute]);
+            useEffect(() => {
+              trackView(this.options.analytics, route, internalFilterRoute);
+            }, [internalFilterRoute]);
 
-                return <AwaitedComponent componentId={componentId} />;
-              });
-            },
-            { fallback: this.options.loading }
-          ),
-        [filteredRoute$, route]
-      );
+            return <Component componentId={componentId} />;
+          });
+
+        if ('component' in route) {
+          return makeTrackedComponent(route.component);
+        }
+
+        return lazyComponent<{ componentId: string }>(
+          async () => makeTrackedComponent(await route.loadComponent(filteredRoute)),
+          { fallback: this.options.loading }
+        );
+      }, [filteredRoute$, route]);
 
       return (
         <Screen exact={route.exact} key={id} path={path}>
@@ -313,13 +307,13 @@ export class FSRouter extends FSRouterBase {
     return <React.Fragment />;
   };
 
-  private readonly Outlet = () => {
-    const [loading, setLoading] = useState(false);
+  private readonly Outlet = (): JSX.Element => {
+    const [isLoading, setIsLoading] = useState(false);
     const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(defaultActivatedRoute);
 
     const stopListening = useMemo(() => {
       const stopDetailsListening = this.history.registerResolver('all', setRouteDetails);
-      const stopLoadingListening = this.history.observeLoading(setLoading);
+      const stopLoadingListening = this.history.observeLoading(setIsLoading);
 
       return () => {
         stopDetailsListening();
@@ -331,13 +325,15 @@ export class FSRouter extends FSRouterBase {
 
     return (
       <NavigatorProvider value={this.history}>
-        <ActivatedRouteProvider {...routeDetails} loading={loading}>
+        <ActivatedRouteProvider {...routeDetails} loading={isLoading}>
           <ModalProvider>
             <WebShellProvider {...this.options.shell}>
               <VersionOverlay>
                 <Router history={this.history}>
                   <Switch>
-                    {this.routes.map((route) => this.constructScreen(route, loading, routeDetails))}
+                    {this.routes.map((route) =>
+                      this.constructScreen(route, isLoading, routeDetails)
+                    )}
                   </Switch>
                 </Router>
               </VersionOverlay>

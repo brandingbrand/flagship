@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'lodash-es';
 
 import type { Route, RouteCollection } from './router';
 
