@@ -1,4 +1,5 @@
 import * as ReactNative from '@callstack/repack';
+import LoadablePlugin from '@loadable/webpack-plugin';
 import getReactWebpackConfig from '@nrwl/react/plugins/webpack';
 import type { WebWebpackExecutorOptions } from '@nrwl/web/src/executors/webpack/webpack.impl';
 import SentryCliPlugin from '@sentry/webpack-plugin';
@@ -8,8 +9,16 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { join, parse } from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import type { PackageJson } from 'type-fest';
 import { DefinePlugin, ProvidePlugin } from 'webpack';
-import type { Configuration } from 'webpack';
+import type { Configuration, WebpackPluginInstance } from 'webpack';
+
+import type {
+  BuildEnvironment,
+  GetWebpackConfig,
+  ProgrammaticEnvironment,
+  ServeEnvironment,
+} from './types';
 
 /* eslint-disable @typescript-eslint/no-require-imports, node/global-require,
 node/prefer-global/process, @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention
@@ -36,31 +45,6 @@ const _loadDeps = (): void => {
 node/prefer-global/process, @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention
 */
 
-interface ProgrammaticEnvironment {
-  options: Partial<WebWebpackExecutorOptions> & {
-    forkTsCheck?: boolean;
-    esm?: boolean;
-    keepNames?: boolean;
-    envPrefix?: string;
-  };
-}
-
-interface BuildEnvironment {
-  configuration: string;
-  options: WebWebpackExecutorOptions;
-}
-
-interface ServeEnvironment {
-  configuration: string;
-  buildOptions: WebWebpackExecutorOptions;
-}
-
-type GetWebpackConfig = (
-  config: Configuration,
-  env?: BuildEnvironment | ProgrammaticEnvironment | ServeEnvironment,
-  platform?: string
-) => Configuration;
-
 const webAliases = {
   'react-native-svg': 'svgs',
   'react-native-webview': 'react-native-web-webview',
@@ -75,24 +59,24 @@ const webAliases = {
     'react-native-web/dist/modules/UnimplementedView',
 };
 
-const webLoaders = [
-  {
-    test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
-    loader: require.resolve('react-native-web-image-loader'),
-    options: {
-      name: 'static/media/[name].[hash:8].[ext]',
-      scalings: { '@2x': 2, '@3x': 3 },
-    },
-  },
-  {
-    test: /postMock.html$/,
-    use: {
-      loader: require.resolve('file-loader'),
-      options: {
-        name: '[name].[ext]',
-      },
-    },
-  },
+const webLoaders = (
+  isServer: boolean,
+  options?: ProgrammaticEnvironment['options'] | WebWebpackExecutorOptions
+) => [
+  ...(options === undefined ||
+  !('reactNativeImageLoader' in options) ||
+  options.reactNativeImageLoader !== false
+    ? [
+        {
+          test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve('react-native-web-image-loader'),
+          options: {
+            name: 'static/media/[name].[hash:8].[ext]',
+            scalings: { '@2x': 2, '@3x': 3 },
+          },
+        },
+      ]
+    : []),
   {
     test: /\.css$/,
     sideEffects: true,
@@ -108,22 +92,36 @@ const webLoaders = [
             localIdentName: '[name]_[local]_[hash:base64:5]',
             mode: 'local',
             exportLocalsConvention: 'camelCase',
+            exportOnlyLocals: isServer,
           },
         },
       },
     ],
   },
-  {
-    loader: require.resolve('file-loader'),
-    // Exclude `js` files to keep "css" loader working as it injects
-    // it's runtime that would otherwise processed through "file" loader.
-    // Also exclude `html` and `json` extensions so they get processed
-    // by webpacks internal loaders.
-    exclude: [/\.m?js$/, /\.html$/, /\.json$/],
-    options: {
-      name: 'static/media/[name].[hash:8].[ext]',
-    },
-  },
+  ...(!(options && 'html' in options) || options.html !== false
+    ? [
+        {
+          test: /postMock.html$/,
+          use: {
+            loader: require.resolve('file-loader'),
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        },
+        {
+          loader: require.resolve('file-loader'),
+          // Exclude `js` files to keep "css" loader working as it injects
+          // it's runtime that would otherwise processed through "file" loader.
+          // Also exclude `html` and `json` extensions so they get processed
+          // by webpacks internal loaders.
+          exclude: [/\.m?js$/, /\.html$/, /\.json$/],
+          options: {
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
+        },
+      ]
+    : []),
 ];
 
 const reactNativeWebBabelPlugins = [
@@ -135,9 +133,106 @@ const reactNativeWebBabelPlugins = [
   ],
 ];
 
+const getOptions = (
+  environment: BuildEnvironment | ProgrammaticEnvironment | ServeEnvironment | undefined
+):
+  | ProgrammaticEnvironment['options']
+  | (WebWebpackExecutorOptions & { target?: string })
+  | undefined => {
+  if (environment) {
+    if ('options' in environment) {
+      return environment.options;
+    }
+
+    if ('buildOptions' in environment) {
+      return environment.buildOptions;
+    }
+  }
+
+  return undefined;
+};
+
+const getOptimization = (
+  isProd: boolean,
+  isServer: boolean,
+  options: ProgrammaticEnvironment['options'] | WebWebpackExecutorOptions | undefined,
+  reactConfig: Configuration
+): Configuration['optimization'] | undefined => {
+  if (isProd || isServer) {
+    const shouldKeepClassNames = options && 'keepNames' in options ? options.keepNames : false;
+    const otherMinimizers =
+      reactConfig.optimization?.minimizer?.filter((plugin) => !(plugin instanceof TerserPlugin)) ??
+      [];
+
+    return {
+      ...reactConfig.optimization,
+      minimize: true,
+      minimizer: [
+        ...otherMinimizers,
+        new TerserPlugin({
+          extractComments: !isServer,
+          terserOptions: {
+            mangle: true,
+            compress: true,
+            // eslint-disable-next-line @typescript-eslint/naming-convention -- External API
+            keep_fnames: shouldKeepClassNames,
+            // eslint-disable-next-line @typescript-eslint/naming-convention  -- External API
+            keep_classnames: shouldKeepClassNames,
+          },
+        }),
+      ],
+    };
+  }
+
+  return reactConfig.optimization;
+};
+
+const getResolve = (
+  reactConfig: Configuration,
+  alias:
+    | Array<{ alias: string[] | string | false; name: string; onlyModule?: boolean | undefined }>
+    | Record<string, string[] | string | false>
+    | undefined,
+  platform: string,
+  isServer: boolean
+) => ({
+  ...reactConfig.resolve,
+  alias,
+  exportsFields: ['exports'],
+  /**
+   * `getResolveOptions` returns additional resolution configuration for React Native.
+   * If it's removed, you won't be able to use `<file>.<platform>.<ext>` (eg: `file.ios.js`)
+   * convention and some 3rd-party libraries that specify `react-native` field
+   * in their `package.json` might not work correctly.
+   */
+  ...ReactNative.getResolveOptions(platform),
+  ...(platform === 'web'
+    ? {
+        mainFields: isServer ? ['module', 'main'] : ['browser', 'module', 'main'],
+        aliasFields: isServer ? ['module', 'main'] : ['browser', 'module', 'main'],
+        extensions: [
+          ...(isServer ? ['.server.js', '.server.ts', '.server.jsx', '.server.tsx'] : []),
+          '.web.js',
+          '.web.jsx',
+          '.web.ts',
+          '.web.tsx',
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+          '.json',
+          // TODO: Remove tcomb-form
+          // Workaround for tcomb-form
+          '.ios.js',
+          '.ios.jsx',
+        ],
+      }
+    : {}),
+});
+
 // eslint-disable-next-line max-lines-per-function
 const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platform = 'web') => {
-  const prod = config.mode === 'production';
+  const isProd = config.mode === 'production';
   process.env.BABEL_ENV = config.mode;
 
   const reactConfig = (getReactWebpackConfig as unknown as GetWebpackConfig)({
@@ -145,13 +240,9 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
     module: { ...config.module, rules: [...(config.module?.rules ?? [])] },
   });
 
-  const options =
-    environment &&
-    ('options' in environment
-      ? environment.options
-      : 'buildOptions' in environment
-      ? environment.buildOptions
-      : undefined);
+  const options = getOptions(environment);
+
+  const isServer = typeof options === 'object' && 'server' in options && options.server === true;
 
   const shouldForkTsCheck =
     options && 'forkTsCheck' in options
@@ -171,39 +262,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
         }
       : reactConfig.resolve?.alias;
 
-  const resolve = {
-    ...reactConfig.resolve,
-    alias,
-    exportsFields: ['exports'],
-    /**
-     * `getResolveOptions` returns additional resolution configuration for React Native.
-     * If it's removed, you won't be able to use `<file>.<platform>.<ext>` (eg: `file.ios.js`)
-     * convention and some 3rd-party libraries that specify `react-native` field
-     * in their `package.json` might not work correctly.
-     */
-    ...ReactNative.getResolveOptions(platform),
-    ...(platform === 'web'
-      ? {
-          mainFields: ['browser', 'module', 'main'],
-          aliasFields: ['browser', 'module', 'main'],
-          extensions: [
-            '.web.js',
-            '.js',
-            '.json',
-            '.web.jsx',
-            '.jsx',
-            '.web.ts',
-            '.ts',
-            '.web.tsx',
-            '.tsx',
-            // TODO: Remove tcomb-form
-            // Workaround for tcomb-form
-            '.ios.js',
-            '.ios.jsx',
-          ],
-        }
-      : {}),
-  };
+  const resolve = getResolve(reactConfig, alias, platform, isServer);
 
   const webBabelPlugins =
     !Array.isArray(alias) && alias?.['react-native'] === webAliases['react-native']
@@ -234,40 +293,18 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       loader: require.resolve('ts-loader'),
       options: {
         configFile: options?.tsConfig,
-        transpileOnly: shouldForkTsCheck,
+        transpileOnly:
+          options && 'transpileOnly' in options ? options.transpileOnly : shouldForkTsCheck,
       },
     },
   ];
 
-  const optimization: Configuration['optimization'] = (() => {
-    if (prod) {
-      const keepClassNames = options && 'keepNames' in options ? options.keepNames : false;
-      const otherMinimizers =
-        reactConfig.optimization?.minimizer?.filter(
-          (plugin) => !(plugin instanceof TerserPlugin)
-        ) ?? [];
-
-      return {
-        ...reactConfig.optimization,
-        minimize: true,
-        minimizer: [
-          ...otherMinimizers,
-          new TerserPlugin({
-            terserOptions: {
-              mangle: true,
-              compress: true,
-              // eslint-disable-next-line @typescript-eslint/naming-convention -- External API
-              keep_fnames: keepClassNames,
-              // eslint-disable-next-line @typescript-eslint/naming-convention  -- External API
-              keep_classnames: keepClassNames,
-            },
-          }),
-        ],
-      };
-    }
-
-    return reactConfig.optimization;
-  })();
+  const optimization: Configuration['optimization'] = getOptimization(
+    isProd,
+    isServer,
+    options,
+    reactConfig
+  );
 
   if (typeof reactConfig.entry === 'object' && !Array.isArray(reactConfig.entry)) {
     for (const [key, value] of Object.entries(reactConfig.entry)) {
@@ -290,15 +327,23 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   const sentryProject = process.env[`${envPrefix}_SENTRY_PROJECT`];
   const sentryToken = process.env[`${envPrefix}_SENTRY_TOKEN`];
 
-  const demo =
+  const isDemo =
     typeof environment === 'object' &&
     'configuration' in environment &&
     environment.configuration === 'demo';
 
-  const packageJson = options?.root ? require(join(options.root, 'package.json')) : undefined;
+  const packageJson =
+    options?.root !== undefined
+      ? (require(join(options.root, 'package.json')) as PackageJson)
+      : undefined;
+
+  const javaScriptEntry =
+    typeof reactConfig.output?.filename === 'string' ? reactConfig.output.filename : undefined;
 
   const flagshipConfig: Configuration = {
     ...reactConfig,
+    output: isServer ? config.output : reactConfig.output,
+    target: options?.target ?? 'web',
     resolve: {
       ...resolve,
       plugins: [
@@ -395,7 +440,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
                 },
               ],
             },
-            ...(platform === 'web' ? webLoaders : []),
+            ...(platform === 'web' ? webLoaders(isServer, options) : []),
           ],
         },
       ],
@@ -409,7 +454,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
       ...(platform === 'web'
         ? [new MiniCssExtractPlugin({ filename: '[name].[hash:8].css' })]
         : []),
-      ...(shouldForkTsCheck
+      ...(shouldForkTsCheck === true
         ? [
             new ForkTsCheckerWebpackPlugin({
               async: false,
@@ -420,25 +465,44 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
             }),
           ]
         : []),
-      new ProvidePlugin({
-        process: 'process/browser',
-        Buffer: ['buffer', 'Buffer'],
-      }),
+      ...(isServer
+        ? []
+        : [
+            new ProvidePlugin({
+              process: 'process/browser',
+              Buffer: ['buffer', 'Buffer'],
+            }),
+          ]),
       new DefinePlugin({
-        __DEV__: !prod || demo,
-        __VERSION__: packageJson?.version ? `"${packageJson.version}"` : '"0.0.0"',
+        /* eslint-disable @typescript-eslint/naming-convention -- Global definitions */
+        __DEV__: !isProd || isDemo,
+        __VERSION__: packageJson?.version !== undefined ? `"${packageJson.version}"` : '"0.0.0"',
         __DEFAULT_ENV__: undefined,
-        __BASE_NAME__: packageJson?.homepage ? `"${packageJson.homepage}"` : `undefined`,
-        ...(prod ? { __REACT_DEVTOOLS_GLOBAL_HOOK__: '({ isDisabled: true })' } : {}),
+        __BASE_NAME__:
+          packageJson?.homepage !== undefined ? `"${packageJson.homepage}"` : `undefined`,
+        ...(isProd ? { __REACT_DEVTOOLS_GLOBAL_HOOK__: '({ isDisabled: true })' } : {}),
+        /* eslint-enable */
       }),
-      ...(prod && Boolean(sentryOrganization) && Boolean(sentryProject) && Boolean(sentryToken)
+      ...(isProd && Boolean(sentryOrganization) && Boolean(sentryProject) && Boolean(sentryToken)
         ? [
             new SentryCliPlugin({
               include: config.output?.path ?? '.',
               org: sentryOrganization,
               project: sentryProject,
               authToken: sentryToken,
-            }),
+            }) as unknown as WebpackPluginInstance,
+          ]
+        : []),
+
+      ...(options && 'loadableComponentStats' in options && options.loadableComponentStats === true
+        ? [
+            new LoadablePlugin({
+              filename: javaScriptEntry
+                ?.replace('[name].[contenthash:20]', 'loadable-stats')
+                .replace('[name]', 'loadable-stats')
+                .replace('main', 'loadable-stats')
+                .replace(/js$/, 'json'),
+            }) as unknown as WebpackPluginInstance,
           ]
         : []),
     ],
@@ -454,4 +518,4 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   return flagshipConfig;
 };
 
-export default getFlagshipWebpackConfig;
+export = getFlagshipWebpackConfig;

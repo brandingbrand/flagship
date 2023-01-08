@@ -1,0 +1,4 @@
+export = {
+  host: '',
+  key: '',
+};
