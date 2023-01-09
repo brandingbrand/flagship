@@ -1,12 +1,22 @@
-import type { ComponentList } from '@brandingbrand/engagement-utils';
+import { mergeDeep } from '@brandingbrand/standard-object';
 
 declare global {
+  // eslint-disable-next-line no-var, @typescript-eslint/naming-convention, import/no-mutable-exports -- Attaching to global object
+  export var __FLAGSHIP_ENVIRONMENT_CONFIGS__: Map<string, EnvironmentConfig> | undefined;
+
+  // eslint-disable-next-line no-var, @typescript-eslint/naming-convention, import/no-mutable-exports -- Attaching to global object
+  export var __FLAGSHIP_DEFAULT_ENVIRONMENT__: string | undefined;
+
+  // eslint-disable-next-line no-var, @typescript-eslint/naming-convention, import/no-mutable-exports -- Attaching to global object
+  export var __FLAGSHIP_ENVIRONMENT_OVERRIDE__:
+    | Record<string, Partial<EnvironmentConfig>>
+    | undefined;
+
   export interface EngagementConfig {
     appId: string;
     apiKey?: string;
     baseURL: string;
     cacheTTL: number;
-    components?: ComponentList;
   }
 
   export interface CachingConfig {
@@ -31,52 +41,67 @@ declare global {
     engagement: EngagementConfig;
     caching?: CachingConfig;
   }
-
-  // eslint-disable-next-line no-var
-  export var __FLAGSHIP_ENVIRONMENT_CONFIGS__: Map<string, EnvironmentConfig> | undefined;
-
-  // eslint-disable-next-line no-var
-  export var __FLAGSHIP_DEFAULT_ENVIRONMENT__: string | undefined;
 }
 
 const globalObject = typeof global !== 'undefined' ? global : window;
-const configs = (globalObject.__FLAGSHIP_ENVIRONMENT_CONFIGS__ = new Map<
-  string,
-  EnvironmentConfig
->());
+globalObject.__FLAGSHIP_ENVIRONMENT_CONFIGS__ = new Map<string, EnvironmentConfig>();
+const environmentConfigs = globalObject.__FLAGSHIP_ENVIRONMENT_CONFIGS__;
 
-export const getDefaultEnvironment = () => globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__;
+export const overrideEnvironmentConfig = (
+  override: Record<string, Partial<EnvironmentConfig>>
+): void => {
+  globalObject.__FLAGSHIP_ENVIRONMENT_OVERRIDE__ = override;
 
-export const setDefaultEnvironment = (environment: string) => {
-  globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__ = environment;
-};
-
-export const registerEnvironmentConfig = (environment: string, config: EnvironmentConfig) => {
-  configs.set(environment, config);
-};
-
-export const registerEnvironmentConfigs = (configs: Record<string, EnvironmentConfig>) => {
-  for (const [environment, config] of Object.entries(configs)) {
-    if (config.default) {
-      setDefaultEnvironment(environment);
-    }
-    registerEnvironmentConfig(environment, config);
+  for (const [environment, overrideConfig] of Object.entries(override)) {
+    const currentConfig = environmentConfigs.get(environment) ?? {};
+    environmentConfigs.set(
+      environment,
+      mergeDeep(currentConfig, overrideConfig as EnvironmentConfig)
+    );
   }
 };
 
-export const getEnvironmentConfig = (environment?: string) => {
+export const getDefaultEnvironment = (): string | undefined =>
+  globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__;
+
+export const setDefaultEnvironment = (environment: string): void => {
+  globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__ = environment;
+};
+
+export const registerEnvironmentConfig = (environment: string, config: EnvironmentConfig): void => {
+  environmentConfigs.set(environment, config);
+};
+
+export const registerEnvironmentConfigs = (configs: Record<string, EnvironmentConfig>): void => {
+  for (const [environment, config] of Object.entries(configs)) {
+    if (config.default === true) {
+      setDefaultEnvironment(environment);
+    }
+
+    registerEnvironmentConfig(environment, config);
+  }
+
+  if (globalObject.__FLAGSHIP_ENVIRONMENT_OVERRIDE__) {
+    overrideEnvironmentConfig(globalObject.__FLAGSHIP_ENVIRONMENT_OVERRIDE__);
+  }
+};
+
+export const getEnvironmentConfig = (environment?: string): EnvironmentConfig => {
   const currentEnvironment = environment ?? globalObject.__FLAGSHIP_DEFAULT_ENVIRONMENT__;
 
   if (currentEnvironment === undefined) {
     throw new Error('Default environment could not be found');
   }
 
-  if (!configs.has(currentEnvironment)) {
+  if (!environmentConfigs.has(currentEnvironment)) {
     throw new Error(`${currentEnvironment} is not registered as a valid environment`);
   }
 
-  return configs.get(currentEnvironment) as EnvironmentConfig;
+  return environmentConfigs.get(currentEnvironment) as EnvironmentConfig;
 };
 
 export const getEnvironmentConfigs = (): Record<string, EnvironmentConfig> =>
-  Object.fromEntries(configs.entries());
+  Object.fromEntries(environmentConfigs.entries());
+
+export const getOverride = (): Partial<EnvironmentConfig> | undefined =>
+  globalObject.__FLAGSHIP_ENVIRONMENT_OVERRIDE__;
